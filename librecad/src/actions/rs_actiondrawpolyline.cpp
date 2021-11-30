@@ -81,8 +81,11 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
-		,m_Reversed(1)
+		, m_Reversed(1)
 		, pPoints(new Points{})
+        , radiusSettingOn(false)
+        , angleSettingOn(false)
+        , optionsWidgetLoaded(false)
 {
 	actionType=RS2::ActionDrawPolyline;
     reset();
@@ -180,6 +183,8 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e) {
         deleteSnapper();
         init(getStatus()-1);
     }
+    radiusSettingOn = false;
+    angleSettingOn  = false;
 }
 
 double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
@@ -286,53 +291,54 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
     if (calculatedSegment)
 		mouse=pPoints->calculatedEndpoint;
 
-    switch (getStatus()) {
-    case SetStartpoint:
-        //	data.startpoint = mouse;
-        //printf ("SetStartpoint\n");
-		pPoints->point = mouse;
-		pPoints->history.clear();
-		pPoints->history.append(mouse);
-		pPoints->bHistory.clear();
-		pPoints->bHistory.append(0.0);
-		pPoints->start = pPoints->point;
-        setStatus(SetNextPoint);
-        graphicView->moveRelativeZero(mouse);
-        updateMouseButtonHints();
-        break;
+    switch (getStatus())
+    {
+        case SetStartpoint:
+            //	data.startpoint = mouse;
+            //printf ("SetStartpoint\n");
+            pPoints->point = mouse;
+            pPoints->history.clear();
+            pPoints->history.append(mouse);
+            pPoints->bHistory.clear();
+            pPoints->bHistory.append(0.0);
+            pPoints->start = pPoints->point;
+            setStatus(SetNextPoint);
+            graphicView->moveRelativeZero(mouse);
+            updateMouseButtonHints();
+            break;
 
-    case SetNextPoint:
-        graphicView->moveRelativeZero(mouse);
-		pPoints->point = mouse;
-		pPoints->history.append(mouse);
-		pPoints->bHistory.append(bulge);
-				if (!pPoints->polyline) {
-						pPoints->polyline = new RS_Polyline(container, pPoints->data);
-						pPoints->polyline->addVertex(pPoints->start, 0.0);
-                }
-				if (pPoints->polyline) {
-						pPoints->polyline->setNextBulge(bulge);
-						pPoints->polyline->addVertex(mouse, 0.0);
-						pPoints->polyline->setEndpoint(mouse);
-						if (pPoints->polyline->count()==1) {
-						pPoints->polyline->setLayerToActive();
-						pPoints->polyline->setPenToActive();
-								container->addEntity(pPoints->polyline);
-                        }
-                        deletePreview();
-                        // clearPreview();
-                        deleteSnapper();
-						graphicView->drawEntity(pPoints->polyline);
-                        drawSnapper();
-                }
-        //trigger();
-        //data.startpoint = data.endpoint;
-        updateMouseButtonHints();
-        //graphicView->moveRelativeZero(mouse);
-        break;
+        case SetNextPoint:
+            graphicView->moveRelativeZero(mouse);
+		    pPoints->point = mouse;
+		    pPoints->history.append(mouse);
+		    pPoints->bHistory.append(bulge);
+            if (!pPoints->polyline) {
+		            pPoints->polyline = new RS_Polyline(container, pPoints->data);
+		            pPoints->polyline->addVertex(pPoints->start, 0.0);
+            }
+            if (pPoints->polyline) {
+		            pPoints->polyline->setNextBulge(bulge);
+		            pPoints->polyline->addVertex(mouse, 0.0);
+		            pPoints->polyline->setEndpoint(mouse);
+		            if (pPoints->polyline->count()==1) {
+		            pPoints->polyline->setLayerToActive();
+		            pPoints->polyline->setPenToActive();
+				            container->addEntity(pPoints->polyline);
+                    }
+                    deletePreview();
+                    // clearPreview();
+                    deleteSnapper();
+		            graphicView->drawEntity(pPoints->polyline);
+                    drawSnapper();
+            }
+            //trigger();
+            //data.startpoint = data.endpoint;
+            updateMouseButtonHints();
+            //graphicView->moveRelativeZero(mouse);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -369,36 +375,103 @@ bool RS_ActionDrawPolyline::isReversed() const{
 }
 
 
-void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
+{
     QString c = e->getCommand().toLower();
 
-    switch (getStatus()) {
-    case SetStartpoint:
-        if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-            return;
-        }
-        break;
+    switch (getStatus())
+    {
+        case SetStartpoint:
+            if (checkCommand("help", c))
+            {
+                RS_DIALOGFACTORY->commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
+                return;
+            }
+            if (checkCommand("close", c))
+            {
+                e->accept();
+                close();
+                return;
+            }
+            break;
 
-    case SetNextPoint:
-        if (checkCommand("close", c)) {
-            close();
-            e->accept();
-            updateMouseButtonHints();
-            return;
+        case SetNextPoint:
+            if (checkCommand("undo", c))
+            {
+                undo();
+                e->accept();
+                updateMouseButtonHints();
+                return;
+            }
+            if (checkCommand("close", c))
+            {
+                e->accept();
+                close();
+                return;
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    if (radiusSettingOn || angleSettingOn)
+    {
+        bool ok;
+        double value = c.toDouble(&ok);
+
+        if (ok)
+        {
+            if (radiusSettingOn)
+            {
+                setRadius(value);
+            }
+            else /* if (angleSettingOn) */
+            {
+                if (value >= 0.0)
+                {
+                    setReversed(false);
+                }
+                else /* if (value < 0.0) */
+                {
+                    setReversed(true);
+                }
+
+                setAngle(value);
+            }
+
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+        }
+        else
+        {
+            QString settingMode("radius");
+            if (angleSettingOn) settingMode = "angle";
+
+            RS_DIALOGFACTORY->commandMessage(tr("'%1' is not an appropriate %2 value.").arg(c).arg(settingMode));
         }
 
-        if (checkCommand("undo", c)) {
-            undo();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-        break;
+        radiusSettingOn = false;
+        angleSettingOn  = false;
 
-    default:
-        break;
+        updateMouseButtonHints();
+        e->accept();
+        return;
+    }
+
+    if ((Mode == TanRad) && (checkCommand("radius", c)))
+    {
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a radius"));
+        radiusSettingOn = true;
+        e->accept();
+        return;
+    }
+
+    if ((Mode == Ang) && (checkCommand("angle", c)))
+    {
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify an angle"));
+        angleSettingOn = true;
+        e->accept();
+        return;
     }
 }
 
@@ -462,10 +535,13 @@ void RS_ActionDrawPolyline::updateMouseButtonHints() {
 }
 
 
-void RS_ActionDrawPolyline::showOptions() {
+void RS_ActionDrawPolyline::showOptions()
+{
     RS_ActionInterface::showOptions();
 
-    RS_DIALOGFACTORY->requestOptions(this, true);
+    RS_DIALOGFACTORY->requestOptions(this, true, optionsWidgetLoaded);
+
+    if (!optionsWidgetLoaded) optionsWidgetLoaded = true;
 }
 
 
@@ -481,8 +557,10 @@ void RS_ActionDrawPolyline::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-void RS_ActionDrawPolyline::close() {
-	if (pPoints->history.size()>2 && pPoints->start.valid) {
+void RS_ActionDrawPolyline::close()
+{
+	if (pPoints->history.size()>2 && pPoints->start.valid)
+    {
 		//data.endpoint = start;
 		//trigger();
 		if (pPoints->polyline) {
@@ -495,10 +573,11 @@ void RS_ActionDrawPolyline::close() {
 		trigger();
         setStatus(SetStartpoint);
 		graphicView->moveRelativeZero(pPoints->start);
-    } else {
-        RS_DIALOGFACTORY->commandMessage(
-            tr("Cannot close sequence of lines: "
-               "Not enough entities defined yet."));
+    }
+    else
+    {
+        if (getStatus() == SetNextPoint) trigger();
+        init(-1);
     }
 }
 

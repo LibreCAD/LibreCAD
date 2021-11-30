@@ -708,6 +708,9 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDrawPolyline:
+    case RS2::ActionDrawPolylineTangential:
+    case RS2::ActionDrawPolylineTanRadius:
+    case RS2::ActionDrawPolylineAngle:
         requestPolylineOptions(action, on, update);
         break;
 
@@ -888,22 +891,28 @@ void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
 /**
  * Shows a widget for options for the action: "draw polyline"
  */
-void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
-        bool on, bool update) {
+void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action, bool on, bool update)
+{
+    if (optionWidget)
+    {
+        static QG_PolylineOptions* toolWidget = nullptr;
 
+        if (!update)
+        {
+            if (toolWidget != nullptr)
+            {
+                delete toolWidget;
+                toolWidget = nullptr;
+            }
 
-	if (optionWidget) {
-		static QG_PolylineOptions* toolWidget = nullptr;
-		if (toolWidget) {
-            delete toolWidget;
-			toolWidget = nullptr;
-        }
-		if (on) {
-			toolWidget = new QG_PolylineOptions(optionWidget);
+            if (!on) return;
+
+            toolWidget = new QG_PolylineOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
-            toolWidget->show();
         }
+
+        toolWidget->setAction(action, update);
+        toolWidget->show();
     }
 }
 

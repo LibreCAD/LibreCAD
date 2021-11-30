@@ -455,6 +455,19 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionDrawLineRelAngle(*document, *view, M_PI_2, false);
         break;
     case RS2::ActionDrawPolyline:
+        RS_SETTINGS->writeEntry("Draw/PolylineMode", 0);
+        a = new RS_ActionDrawPolyline(*document, *view);
+        break;
+    case RS2::ActionDrawPolylineTangential:
+        RS_SETTINGS->writeEntry("Draw/PolylineMode", 1);
+        a = new RS_ActionDrawPolyline(*document, *view);
+        break;
+    case RS2::ActionDrawPolylineTanRadius:
+        RS_SETTINGS->writeEntry("Draw/PolylineMode", 2);
+        a = new RS_ActionDrawPolyline(*document, *view);
+        break;
+    case RS2::ActionDrawPolylineAngle:
+        RS_SETTINGS->writeEntry("Draw/PolylineMode", 3);
         a = new RS_ActionDrawPolyline(*document, *view);
         break;
     case RS2::ActionPolylineAdd:
