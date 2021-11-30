@@ -906,7 +906,10 @@ void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action, bool o
             }
 
             if (!on) return;
+        }
 
+        if (toolWidget == nullptr)
+        {
             toolWidget = new QG_PolylineOptions(optionWidget);
             optionWidget->addWidget(toolWidget);
         }
