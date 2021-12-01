@@ -158,8 +158,6 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e)
     RS_Vector mouse = snapPoint(e);
     double bulge=solveBulge(mouse);
 
-    if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
-
 	if (getStatus()==SetNextPoint && pPoints->point.valid) {
         deletePreview();
         // clearPreview();
