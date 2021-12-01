@@ -27,6 +27,7 @@
 #include <cmath>
 #include <QAction>
 #include <QMouseEvent>
+
 #include "rs_actiondrawpolyline.h"
 
 #include "rs_dialogfactory.h"
@@ -185,7 +186,14 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
 
         if (startPointSettingOn || endPointSettingOn)
         {
-            RS_CommandEvent equationCommandEventObject(QString::number(snapPoint(e).x));
+            QString pointNumberString(QString::number(snapPoint(e).x));
+
+            if (e->modifiers() == Qt::ControlModifier)
+            {
+                pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
+            }
+
+            RS_CommandEvent equationCommandEventObject(pointNumberString);
             commandEvent(&equationCommandEventObject);
             return;
         }
@@ -401,7 +409,7 @@ bool RS_ActionDrawPolyline::isReversed() const{
 
 void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 {
-    QString c = e->getCommand().toLower();
+    QString c = e->getCommand().toLower().replace(" ", "");
 
     switch (getStatus())
     {
@@ -451,6 +459,8 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
     {
         equationSettingOn = false;
 
+        shiftX = false;
+
         try
         {
             QString cRef = c;
@@ -497,8 +507,16 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         try
         {
-            muParserObject->SetExpr(c.toStdString());
+            bool isRelative = false;
+
+            if (c.startsWith("@")) isRelative = true;
+
+            if (c.startsWith("@@")) shiftX = true;
+
+            muParserObject->SetExpr(c.remove("@").toStdString());
             startPoint = muParserObject->Eval();
+
+            if (isRelative) startPoint += graphicView->getRelativeZero().x;
 
             RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the end point"));
 
@@ -520,8 +538,16 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         try
         {
-            muParserObject->SetExpr(c.toStdString());
+            bool isRelative = false;
+
+            if (c.startsWith("@")) isRelative = true;
+
+            if (c.startsWith("@@")) shiftX = true;
+
+            muParserObject->SetExpr(c.remove("@").toStdString());
             endPoint = muParserObject->Eval();
+
+            if (isRelative) endPoint += graphicView->getRelativeZero().x;
 
             if (endPoint == startPoint) throw -1;
 
@@ -565,16 +591,18 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         const double stepSize = (endPoint - startPoint) / (double) numberOfPolylines;
 
-        bool forwardDirection = true;
-
-        if (stepSize < 0) forwardDirection = false;
+        const int direction = (stepSize < 0) ? -1 : 1;
 
         double equation_xTerm = 0.0;
         muParserObject->DefineVar(_T("x"), &equation_xTerm);
 
         muParserObject->SetExpr(polyEquation.toStdString());
 
+        double plotting_xTerm = startPoint;
+
         equation_xTerm = startPoint;
+
+        if (shiftX) equation_xTerm = 0.0;
 
         if (getStatus() == SetStartpoint)
         {
@@ -587,13 +615,14 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             setStatus(SetNextPoint);
 
+            plotting_xTerm += stepSize;
             equation_xTerm += stepSize;
         }
 
-        while ((   forwardDirection && (equation_xTerm <= endPoint)) 
-        ||     ( ! forwardDirection && (equation_xTerm >= endPoint)))
+        while (((direction ==  1) && (plotting_xTerm <= endPoint)) 
+        ||     ((direction == -1) && (plotting_xTerm >= endPoint)))
         {
-            pPoints->point = RS_Vector(equation_xTerm, muParserObject->Eval());
+            pPoints->point = RS_Vector(plotting_xTerm, muParserObject->Eval());
             pPoints->history.append(pPoints->point);
 
             if (pPoints->polyline == nullptr)
@@ -615,13 +644,16 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
             deletePreview();
             graphicView->drawEntity(pPoints->polyline);
 
+            plotting_xTerm += stepSize;
             equation_xTerm += stepSize;
         }
 
         drawSnapper();
 
-        equation_xTerm = endPoint;
-        graphicView->moveRelativeZero(RS_Vector(endPoint, muParserObject->Eval()));
+        plotting_xTerm -= stepSize;
+        equation_xTerm -= stepSize;
+
+        graphicView->moveRelativeZero(RS_Vector(plotting_xTerm, muParserObject->Eval()));
 
         updateMouseButtonHints();
 

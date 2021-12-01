@@ -129,6 +129,7 @@ class RS_ActionDrawPolyline : public RS_PreviewActionInterface
 
         QString polyEquation;
 
+        bool    shiftX;
         bool    equationSettingOn;
         bool    startPointSettingOn;
         bool    endPointSettingOn;
