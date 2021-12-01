@@ -32,6 +32,10 @@
 #include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
+#include "rs_block.h"
+#include "rs_insert.h"
+#include "rs_dialogfactory.h"
+#include "qg_dialogfactory.h"
 
 
 
@@ -54,17 +58,28 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
 /**
  * Selects or deselects the given entity.
  */
-void RS_Selection::selectSingle(RS_Entity* e) {
-	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
+void RS_Selection::selectSingle(RS_Entity* e)
+{
+	if (e && (! (e->getLayer() && e->getLayer()->isLocked())))
+    {
 
-        if (graphicView) {
-            graphicView->deleteEntity(e);
-        }
+        if (graphicView) graphicView->deleteEntity(e);
 
        	e->toggleSelected();
 
-        if (graphicView) {
+        if (graphicView)
+        {
             graphicView->drawEntity(e);
+
+            if (e->isSelected() && (e->rtti() == RS2::EntityInsert))
+            {
+                const RS_Block *selectedBlock { ((RS_Insert *) e)->getBlockForInsert() };
+
+                if (selectedBlock != nullptr)
+                {
+                    QG_DIALOGFACTORY->displayBlockName(selectedBlock->getName());
+                }
+            }
         }
     }
 }

@@ -116,6 +116,7 @@
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
+#include "qc_applicationwindow.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -1980,6 +1981,18 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
 	if (selectionWidget) {
         selectionWidget->setNumber(num);
         selectionWidget->setTotalLength(length);
+    }
+}
+
+
+
+void QG_DialogFactory::displayBlockName(const QString& blockName)
+{
+    if (selectionWidget)
+    {
+        selectionWidget->flashAuxData( QString("Block Name"), 
+                                       blockName, 
+                                       QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
 }
 

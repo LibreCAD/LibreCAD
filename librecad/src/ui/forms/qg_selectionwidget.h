@@ -39,9 +39,18 @@ public:
 public slots:
     virtual void setNumber( int n );
     virtual void setTotalLength(double l );
+    virtual void flashAuxData( const QString& header, 
+                               const QString& data, 
+                               const unsigned int& timeout );
+    void removeAuxData();
 
 protected slots:
     virtual void languageChange();
+
+
+    private:
+
+        bool auxDataMode;
 
 };
 

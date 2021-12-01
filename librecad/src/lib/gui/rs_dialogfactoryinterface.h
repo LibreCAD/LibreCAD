@@ -427,6 +427,8 @@ public:
      */
     virtual void updateSelectionWidget(int num, double length) = 0;
 
+    virtual void displayBlockName(const QString& blockName) = 0;
+
     /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in command messages (such as a
