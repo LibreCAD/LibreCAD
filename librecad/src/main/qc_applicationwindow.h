@@ -80,6 +80,12 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
+
+    enum
+    {
+        DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT = 2000
+    };
+
     QC_ApplicationWindow();
     ~QC_ApplicationWindow();
 
