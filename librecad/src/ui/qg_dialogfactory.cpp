@@ -1986,13 +1986,14 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
 
 
 
-void QG_DialogFactory::displayBlockName(const QString& blockName)
+void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display)
 {
     if (selectionWidget)
     {
         selectionWidget->flashAuxData( QString("Block Name"), 
                                        blockName, 
-                                       QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
+                                       QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT, 
+                                       display);
     }
 }
 
