@@ -77,21 +77,27 @@ void RS_Selection::selectSingle(RS_Entity* e)
 
                 if (selectedBlock != nullptr)
                 {
-                    QG_DIALOGFACTORY->displayBlockName(selectedBlock->getName());
+                    QG_DIALOGFACTORY->displayBlockName(selectedBlock->getName(), true);
                 }
+            }
+            else
+            {
+                QG_DIALOGFACTORY->displayBlockName("", false);
             }
         }
     }
 }
 
 
-
 /**
  * Selects all entities on visible layers.
  */
-void RS_Selection::selectAll(bool select) {
-    if (graphicView) {
+void RS_Selection::selectAll(bool select)
+{
+    if (graphicView)
+    {
         //graphicView->deleteEntity(container);
+        QG_DIALOGFACTORY->displayBlockName("", false);
     }
 
 	//container->setSelected(select);
