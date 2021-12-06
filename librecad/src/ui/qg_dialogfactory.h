@@ -240,7 +240,7 @@ public:
 	static QString extToFormat(const QString& ext);
 	void updateArcTangentialOptions(const double& d, bool byRadius) override;
 
-    void displayBlockName(const QString& blockName) override;
+    void displayBlockName(const QString& blockName, const bool& display) override;
 
 
 protected:
