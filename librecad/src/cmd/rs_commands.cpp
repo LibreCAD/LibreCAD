@@ -334,6 +334,12 @@ RS_Commands::RS_Commands() {
 		 {"dd", QObject::tr("dd", "dimension - diametric")}},
 		RS2::ActionDimDiametric
 	},
+        //dimension arc
+        {
+	        {{"dimarc", QObject::tr("dimarc", "dimension - arc")}},
+	        {{"dac", QObject::tr("dac", "dimension - arc")}},
+	        RS2::ActionDimArc
+        },
         //dimension leader
         {
             {{"dimleader", QObject::tr("dimleader", "dimension - leader")}},

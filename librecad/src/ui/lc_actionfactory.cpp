@@ -558,6 +558,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DimAngular");
     a_map["DimAngular"] = action;
 
+    action = new QAction(tr("&Arc"), agm->dimension);
+    action->setIcon(QIcon(":/icons/dim_arc.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDimArc()));
+    action->setObjectName("DimArc");
+    a_map["DimArc"] = action;
+
     action = new QAction(tr("&Leader"), agm->dimension);
     action->setIcon(QIcon(":/icons/dim_leader.svg"));
     connect(action, SIGNAL(triggered()),

@@ -105,6 +105,7 @@
         <file>dim_leader.svg</file>
         <file>dim_linear.svg</file>
         <file>dim_radial.svg</file>
+        <file>dim_arc.svg</file>
         <file>distance_point_to_entity.svg</file>
         <file>distance_point_to_point.svg</file>
         <file>divide.svg</file>

@@ -142,6 +142,7 @@ HEADERS += \
     lib/engine/rs_dimension.h \
     lib/engine/rs_dimlinear.h \
     lib/engine/rs_dimradial.h \
+    lib/engine/rs_dimarc.h \
     lib/engine/rs_document.h \
     lib/engine/rs_ellipse.h \
     lib/engine/rs_entity.h \
@@ -240,6 +241,7 @@ SOURCES += \
     lib/engine/rs_dimension.cpp \
     lib/engine/rs_dimlinear.cpp \
     lib/engine/rs_dimradial.cpp \
+    lib/engine/rs_dimarc.cpp \
     lib/engine/rs_document.cpp \
     lib/engine/rs_ellipse.cpp \
     lib/engine/rs_entity.cpp \
@@ -337,6 +339,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondimleader.h \
     actions/rs_actiondimlinear.h \
     actions/rs_actiondimradial.h \
+    actions/rs_actiondimarc.h \
     actions/rs_actiondrawarc.h \
     actions/rs_actiondrawarc3p.h \
     actions/rs_actiondrawarctangential.h \
@@ -472,6 +475,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondimleader.cpp \
     actions/rs_actiondimlinear.cpp \
     actions/rs_actiondimradial.cpp \
+    actions/rs_actiondimarc.cpp \
     actions/rs_actiondrawarc.cpp \
     actions/rs_actiondrawarc3p.cpp \
     actions/rs_actiondrawarctangential.cpp \
