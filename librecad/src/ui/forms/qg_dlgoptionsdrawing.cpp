@@ -23,17 +23,21 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_dlgoptionsdrawing.h"
 
-#include <iostream>
+
 #include <cfloat>
 #include <QMessageBox>
-#include "rs_filterdxfrw.h"
-#include "rs_graphic.h"
-#include "rs_settings.h"
+
 #include "rs_math.h"
 #include "rs_font.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_settings.h"
+#include "rs_filterdxfrw.h"
+#include "qc_applicationwindow.h"
+
+#include "qg_dlgoptionsdrawing.h"
+
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -139,11 +143,13 @@ void QG_DlgOptionsDrawing::init() {
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
-void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
+void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
+{
     graphic = g;
 
-	if (graphic==nullptr) {
-		std::cout<<" QG_DlgOptionsDrawing::setGraphic(nullptr)\n";
+    if (graphic==nullptr)
+    {
+        RS_DEBUG->print(RS_Debug::D_ERROR, " QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
@@ -444,7 +450,9 @@ void QG_DlgOptionsDrawing::validate() {
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
-        graphic->setGridOn(cbGridOn->isChecked());
+
+        emit QC_ApplicationWindow::getAppWindow()->gridChanged(cbGridOn->isChecked());
+
 		*spacing=RS_Vector{0.0,0.0,0.0};
         if (cbXSpacing->currentText()==tr("auto")) {
 			spacing->x = 0.0;

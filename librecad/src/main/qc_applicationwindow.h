@@ -109,7 +109,7 @@ public slots:
     void slotError(const QString& msg);
 
     void slotWindowActivated(int);
-    void slotWindowActivated(QMdiSubWindow* w);
+    void slotWindowActivated(QMdiSubWindow* w, const bool& forced=false);
     void slotWindowsMenuAboutToShow();
     void slotWindowsMenuActivated(bool);
     void slotCascade();
