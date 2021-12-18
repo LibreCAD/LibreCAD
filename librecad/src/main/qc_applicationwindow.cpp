@@ -996,6 +996,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w)
 
     if (m->getDocument()->getLayerList()->get_isDisabled())
     {
+        actionHandler->killAllActions();
+
         emit windowsChanged(false);
 
         layerWidget->setLayerList(m->getDocument()->getLayerList(), showByBlock);
