@@ -979,7 +979,7 @@ void QC_ApplicationWindow::slotWindowActivated(int index){
 /**
  * Called when a document window was activated.
  */
-void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, const bool& forced)
+void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w)
 {
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
@@ -1009,15 +1009,6 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, const bool& for
     &&  (! (m->getDocument()->getLayerList()->get_isDisabled() || m->getDocument()->getLayerList()->get_wasDisabled()))) return;
 
     activedMdiSubWindow = w;
-
-    if (w->windowTitle().contains("Block"))
-    {
-        windowIsInBlockMode = true;
-    }
-    else
-    {
-        windowIsInBlockMode = false;
-    }
 
     enableFileActions(m);
 

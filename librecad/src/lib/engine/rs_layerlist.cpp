@@ -30,6 +30,7 @@
 #include "rs_layerlist.h"
 #include "rs_layer.h"
 #include "rs_layerlistlistener.h"
+#include "qc_applicationwindow.h"
 
 /**
  * Default constructor.
@@ -329,7 +330,7 @@ void RS_LayerList::detect_entire_layerlist_disabled()
 
     QMdiSubWindow *currentActiveWindow = (QMdiSubWindow *) QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::getMDIWindow();
 
-    QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::slotWindowActivated(currentActiveWindow, true);
+    QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::slotWindowActivated(currentActiveWindow);
 }
 
 
