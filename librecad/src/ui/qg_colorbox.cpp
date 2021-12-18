@@ -125,37 +125,50 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
 /**
  * Sets the color shown in the combobox to the given color.
  */
-void QG_ColorBox::setColor(const RS_Color& color) {
-    *currentColor = color;
-//std::cout<<"initial color: "<<color<<std::endl;
+void QG_ColorBox::setColor(const RS_Color& color)
+{
+   *currentColor = color;
+
+    //std::cout<<"initial color: "<<color<<std::endl;
+
     int cIndex;
 
-    if (color.isByLayer() && showByLayer) {
+    if (color.isByLayer() && showByLayer)
+    {
         cIndex=0;
-    } else if (color.isByBlock() && showByLayer) {
+    }
+    else if (color.isByBlock() && showByLayer)
+    {
         cIndex=1;
-    } else {
-        for(cIndex=colorIndexStart;cIndex< count() - 1;cIndex++) {
-	//searching for the color, allowing difference up to 2
-		QColor q(itemData(cIndex).value<QColor>());
-		if( abs(q.red() - color.red())
-		   +abs(q.green() - color.green())
-		   +abs(q.blue() - color.blue()) <= 3
-		) {
-			break;
-          }
-        }
-        /*color not found, default to "others...*/
-/*        if(cIndex == count() - 1) {
-       	    cIndex=findData(QColor(Qt::black)); //default to Qt::black
-        }*/
     }
-    setCurrentIndex(cIndex);
-//std::cout<<"Default color for choosing: cIndex="<<cIndex<<" "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
+    else
+    {
+        for (cIndex = colorIndexStart; cIndex < count(); cIndex++)
+        {
+            //searching for the color, allowing difference up to 2
+            QColor q(itemData(cIndex).value<QColor>());
 
-    if (currentIndex()!= count() -1 ) {
-        slotColorChanged(currentIndex());
+            if ((    abs(q.red()   - color.red()) 
+                   + abs(q.green() - color.green()) 
+                   + abs(q.blue()  - color.blue()) 
+
+                ) <= 3) break;
+        }
+
+        if (cIndex == count()) cIndex = 0;
+
+        /*color not found, default to "others...*/
+        /*        if(cIndex == count() - 1) {
+        cIndex=findData(QColor(Qt::black)); //default to Qt::black
+        }*/
+
     }
+
+    setCurrentIndex(cIndex);
+
+    //std::cout<<"Default color for choosing: cIndex="<<cIndex<<" "<<RS_Color(itemData(cIndex).value<QColor>())<<std::endl;
+
+    if (currentIndex() != 0) slotColorChanged(currentIndex());
 }
 
 /**
