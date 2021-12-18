@@ -274,8 +274,9 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_layer->setObjectName("layer_dockwidget");
     layer_widget = new QG_LayerWidget(action_handler, dock_layer, "Layer");
     layer_widget->setFocusPolicy(Qt::NoFocus);
-    connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
+    connect(layer_widget, &QG_LayerWidget::escape, main_window,  &QC_ApplicationWindow::slotFocus);
+    connect(main_window, &QC_ApplicationWindow::windowsChanged, layer_widget, &QG_LayerWidget::setEnabled);
+    connect(main_window, &QC_ApplicationWindow::signalLayerListEnabled, layer_widget, &QG_LayerWidget::setEnabled);
     dock_layer->setWidget(layer_widget);
 
     QDockWidget* dock_block = new QDockWidget(main_window);

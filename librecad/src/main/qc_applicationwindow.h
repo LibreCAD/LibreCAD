@@ -234,6 +234,8 @@ signals:
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
 
+    void signalLayerListEnabled(const bool = true);
+
 public:
     /**
      * @return Pointer to application window.

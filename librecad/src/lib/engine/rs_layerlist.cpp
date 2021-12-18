@@ -121,6 +121,8 @@ void RS_LayerList::activate(RS_Layer* layer, bool notify) {
        }
     }
 
+    detect_entire_layerlist_disabled();
+
     RS_DEBUG->print("RS_LayerList::activate end");
 }
 
@@ -300,12 +302,45 @@ int RS_LayerList::getIndex(RS_Layer* layer) {
 }
 
 
+bool RS_LayerList::get_isDisabled()
+{
+    return isDisabled;
+}
+
+
+bool RS_LayerList::get_wasDisabled()
+{
+    return wasDisabled;
+}
+
+
+void RS_LayerList::detect_entire_layerlist_disabled()
+{
+    bool activeLayer_locked_or_frozen = false;
+
+    if (activeLayer == nullptr) activeLayer_locked_or_frozen = true;
+
+    if (activeLayer->isLocked() || activeLayer->isFrozen()) activeLayer_locked_or_frozen = true;
+
+    wasDisabled = isDisabled;
+    isDisabled  = activeLayer_locked_or_frozen;
+
+    if (wasDisabled && isDisabled) return;
+
+    QMdiSubWindow *currentActiveWindow = (QMdiSubWindow *) QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::getMDIWindow();
+
+    QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::slotWindowActivated(currentActiveWindow, true);
+}
+
+
 /**
  * Switches on / off the given layer. 
  * Listeners are notified.
  */
 void RS_LayerList::toggle(const QString& name) {
     toggle(find(name));
+
+    detect_entire_layerlist_disabled();
 }
 
 
@@ -336,6 +371,8 @@ void RS_LayerList::toggle(RS_Layer* layer) {
         RS_LayerListListener *l = (RS_LayerListListener *)i;
         l->layerToggled(layer);
     }
+
+    detect_entire_layerlist_disabled();
 }
 
 
@@ -357,6 +394,8 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggledLock(layer);
     }
+
+    detect_entire_layerlist_disabled();
 }
 
 
@@ -420,6 +459,8 @@ void RS_LayerList::freezeAll(bool freeze) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggled(NULL);
     }
+
+    detect_entire_layerlist_disabled();
 }
 
 
@@ -442,6 +483,8 @@ void RS_LayerList::lockAll(bool lock) {
         RS_LayerListListener* l = layerListListeners.at(i);
         l->layerToggled(NULL);
     }
+
+    detect_entire_layerlist_disabled();
 }
 
 
