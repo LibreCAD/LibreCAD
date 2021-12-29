@@ -244,17 +244,18 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
 /*
     Parse for units in expression, and then convert their values into millimeter.
 
-    - by Melwyn Francis Carlo.
+    - by (2021) Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
 QString normalizedUnitsExpression(QString inputExpression)
 {
-    QRegExp regexNotAlpha("[^a-zA-Z\"]*");
+    QRegExp regexNotAlpha("[^a-zA-Z\"\']*");
 
     if (regexNotAlpha.exactMatch(inputExpression)) return inputExpression.trimmed();
 
     inputExpression = inputExpression.trimmed() + " ";
 
-    bool previousCharacterWasLetter = false;
+    bool previousCharacterWasLetter  = false;
+    bool previousExpressionWasNumber = false;
 
     QString outputExpression  = "";
     QString unitsBufferString = "";
@@ -264,7 +265,7 @@ QString normalizedUnitsExpression(QString inputExpression)
     {
         const QChar testCharacter = inputExpression.at(i);
 
-        if (testCharacter.isLetter() || (testCharacter == QChar('\"')))
+        if (testCharacter.isLetter() || (testCharacter == QChar('\"')) || (testCharacter == QChar('\'')))
         {
             unitsBufferString += testCharacter;
 
@@ -288,7 +289,11 @@ QString normalizedUnitsExpression(QString inputExpression)
 
                         if (valueUnits != RS2::None)
                         {
+                            if (previousExpressionWasNumber) outputExpression += "+";
+
                             outputExpression += QString::number(RS_Units::convert(value, valueUnits, RS2::Millimeter));
+
+                            previousExpressionWasNumber = true;
 
                             conversionSuccessful = true;
                         }
@@ -298,6 +303,8 @@ QString normalizedUnitsExpression(QString inputExpression)
                 if (!conversionSuccessful)
                 {
                     outputExpression += valueBufferString + unitsBufferString;
+
+                    previousExpressionWasNumber = false;
                 }
 
                 unitsBufferString = "";
@@ -315,7 +322,6 @@ QString normalizedUnitsExpression(QString inputExpression)
 
             previousCharacterWasLetter = false;
         }
-
     }
 
     return outputExpression;
@@ -354,6 +360,11 @@ double RS_Math::eval(QString expr, bool* ok) {
     }
 
     expr = normalizedUnitsExpression(expr);
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+    {
+        std::cout << " RS:Math::eval: expr = " << expr.toStdString() << std::endl;
+    }
 
     double ret(0.);
     try{
