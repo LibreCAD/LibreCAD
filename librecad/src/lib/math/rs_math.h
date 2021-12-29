@@ -127,12 +127,6 @@ public:
     static RS_VectorSolutions simultaneousQuadraticSolverFull(const std::vector<std::vector<double> >& m);
     static RS_VectorSolutions simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m);
 
-	/** \brief verify simultaneousQuadraticVerify a solution for simultaneousQuadratic
-	  *@param m the coefficient matrix
-	  *@param v a candidate to verify
-      *@return true, for a valid solution
-      **/
-	static bool simultaneousQuadraticVerify(const std::vector<std::vector<double> >& m, RS_Vector& v);
     /** wrapper for elliptic integral **/
     /**
      * wrapper of elliptic integral of the second type, Legendre form
