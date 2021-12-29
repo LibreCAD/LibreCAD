@@ -805,6 +805,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestDimensionOptions(action, on, update);
         break;
 
+    case RS2::ActionDimArc:
+        requestDimensionOptions(action, on, update);
+        break;
+
     case RS2::ActionModifyTrimAmount:
         requestTrimAmountOptions(action, on, update);
         break;
@@ -1761,7 +1765,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
     case RS2::EntityDimDiametric:
-    case RS2::EntityDimRadial: {
+    case RS2::EntityDimRadial:
+    case RS2::EntityDimArc: {
             QG_DlgDimension dlg(parent);
             dlg.setDim(*((RS_Dimension*)entity));
             if (dlg.exec()) {
