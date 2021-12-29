@@ -238,6 +238,7 @@ RS2::Unit RS_Units::stringToUnit(QString inputString)
     if (inputString == QObject::tr("\""))           return RS2::Inch;
     if (inputString == QObject::tr("foot"))         return RS2::Foot;
     if (inputString == QObject::tr("ft"))           return RS2::Foot;
+    if (inputString == QObject::tr("\'"))           return RS2::Foot;
     if (inputString == QObject::tr("mile"))         return RS2::Mile;
     if (inputString == QObject::tr("mi"))           return RS2::Mile;
     if (inputString == QObject::tr("millimeter"))   return RS2::Millimeter;
