@@ -80,6 +80,13 @@ protected:
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
 
+
+    private:
+
+        RS_Entity* highlightedEntity;
+
+        void highlightHoveredEntities(const RS_Vector& currentMousePosition);
+
 };
 
 #endif

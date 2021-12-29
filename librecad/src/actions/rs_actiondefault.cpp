@@ -109,6 +109,35 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 }
 
 
+/*
+   Highlights hovered entities that are visible and not locked.
+
+   - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePosition)
+{
+    for (auto entity : *graphicView->getContainer())
+    {
+        if (entity != nullptr)
+        {
+            if (entity->isVisible() && ! entity->isLocked())
+            {
+                double hoverTolerance { 10.0 / graphicView->getFactor().magnitude() };
+
+                if (hoverTolerance < 1.0) hoverTolerance = 1.0;
+
+                if (entity->isPointOnEntity(currentMousePosition, hoverTolerance))
+                {
+                    entity->setHighlighted(true);
+                    highlightedEntity=entity;
+                    graphicView->redraw(RS2::RedrawDrawing);
+                }
+            }
+        }
+    }
+}
+
+
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -116,9 +145,17 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 
+    if (highlightedEntity != nullptr)
+    {
+        highlightedEntity->setHighlighted(false);
+        highlightedEntity = nullptr;
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
+
     switch (getStatus()) {
     case Neutral:
         deleteSnapper();
+        highlightHoveredEntities(mouse);
         break;
     case Dragging:
         //v2 = graphicView->toGraph(e->x(), e->y());
