@@ -124,7 +124,14 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
             {
                 double hoverTolerance { 10.0 / graphicView->getFactor().magnitude() };
 
-                if (hoverTolerance < 1.0) hoverTolerance = 1.0;
+                if (entity->rtti() == RS2::EntityEllipse)
+                {
+                    hoverTolerance /= 10.0;
+                }
+                else
+                {
+                    if (hoverTolerance < 1.0) hoverTolerance = 1.0;
+                }
 
                 if (entity->isPointOnEntity(currentMousePosition, hoverTolerance))
                 {
