@@ -961,17 +961,44 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
 
     if (input_conicSections.size() != 2) return intersectionPoints;
 
+    std::vector<std::vector<double>> conicSections;
+
+    unsigned int numberOf_degenerateEquations = 0;
+
+    unsigned int degenerateEquation_number = 0;
+
     if ((input_conicSections[0].size() == 3) || (input_conicSections[1].size() == 3))
     {
-        return simultaneousQuadraticSolverMixed(input_conicSections);
+        for (int i = 0; i < 2; i++)
+        {
+            if (input_conicSections[i].size() == 3)
+            {
+                numberOf_degenerateEquations++;
+
+                degenerateEquation_number = i + 1;
+
+                const std::vector<double> adjustedCoefficients
+                {
+                    0.0, 0.0, 0.0, input_conicSections[i][0], input_conicSections[i][1], input_conicSections[i][2] 
+                };
+
+                conicSections.push_back(adjustedCoefficients);
+            }
+            else
+            {
+                conicSections.push_back(input_conicSections[i]);
+            }
+        }
+    }
+    else
+    {
+        conicSections = input_conicSections;
     }
 
-    if ((input_conicSections[0].size() != 6) || (input_conicSections[1].size() != 6))
+    if ((conicSections[0].size() != 6) || (conicSections[1].size() != 6))
     {
         return intersectionPoints;
     }
-
-    std::vector<std::vector<double>> conicSections = input_conicSections;
 
     for (int i = 0; i < 2; i++)
     {
@@ -1017,7 +1044,28 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     const Precise_Decimal e2 = conicSections[1][4];
     const Precise_Decimal f2 = conicSections[1][5];
 
-    if ((a1 == 0.0) || (a2 == 0.0) || (c1 == 0.0) || (c2 == 0.0)) return intersectionPoints;
+    std::vector<double> rootsAbscissae;
+
+    if (numberOf_degenerateEquations == 2)
+    {
+        Precise_Decimal denominatorTerm1 = (d1 * e2) - (d2 * e1);
+
+        if (fabs(denominatorTerm1) < RS_TOLERANCE) return intersectionPoints;
+
+        Precise_Decimal denominatorTerm2 = (d2 * e1) - (d1 * e2);
+
+        Precise_Decimal numeratorTerm1  = (e1 * f2) - (e2 * f1);
+        Precise_Decimal numeratorTerm2  = (d1 * f2) - (d2 * f1);
+
+        intersectionPoints.push_back(
+
+            RS_Vector( (numeratorTerm1 / denominatorTerm1).convert_to<double>(), 
+                       (numeratorTerm2 / denominatorTerm2).convert_to<double>()) 
+
+        );
+
+        return intersectionPoints;
+    }
 
     const Precise_Decimal a1_sq = a1 * a1;
     const Precise_Decimal b1_sq = b1 * b1;
@@ -1108,17 +1156,90 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
                   << std::endl << std::endl;
     }
 
-	std::vector<double> rootsAbscissae = quarticSolverFull(x_n_terms);
+    if (fabs(x_n_terms[4]) < RS_TOLERANCE)
+    {
+        if (fabs(x_n_terms[3]) < RS_TOLERANCE)
+        {
+            if (fabs(x_n_terms[2]) < RS_TOLERANCE)
+            {
+                if (fabs(x_n_terms[1]) < RS_TOLERANCE)
+                {
+                    return intersectionPoints;
+                }
+                else
+                {
+                    rootsAbscissae.push_back (-x_n_terms[0] / x_n_terms[1]);
+                }
+            }
+            else
+            {
+                if (fabs(x_n_terms[1]) < RS_TOLERANCE)
+                {
+                    const double sqrtTerm { - x_n_terms[0] / x_n_terms[2] };
+
+                    if (sqrtTerm < 0.0) return intersectionPoints;
+
+                    rootsAbscissae.push_back ( std::sqrt(sqrtTerm));
+                    rootsAbscissae.push_back (-std::sqrt(sqrtTerm));
+                }
+                else
+                {
+                    std::vector<double> quadraticCoefficients
+                    {
+                        x_n_terms[1] / x_n_terms[2], 
+                        x_n_terms[0] / x_n_terms[2]
+                    };
+
+                    rootsAbscissae = quadraticSolver(quadraticCoefficients);
+                }
+            }
+        }
+        else
+        {
+            std::vector<double> cubicCoefficients
+            {
+                x_n_terms[2] / x_n_terms[3], 
+                x_n_terms[1] / x_n_terms[3], 
+                x_n_terms[0] / x_n_terms[3]
+            };
+
+            rootsAbscissae = cubicSolver(cubicCoefficients);
+        }
+    }
+    else
+    {
+        rootsAbscissae = quarticSolverFull(x_n_terms);
+    }
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
     {
-        std::cout << " Number of quartic roots = " << rootsAbscissae.size() 
+        std::cout << " Number of roots = " << rootsAbscissae.size() 
                   << std::endl << std::endl;
     }
 
     for (double& rootX : rootsAbscissae)
     {
         const Precise_Decimal rootXPrecise = rootX;
+
+        if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+        {
+            std::cout << " RootX : " << rootX 
+                      << std::endl << std::endl;
+        }
+
+        if (numberOf_degenerateEquations == 2)
+        {
+            if (e1 != 0)
+            {
+                intersectionPoints.push_back(RS_Vector(rootX, (-((d1 * rootXPrecise) + f1) / e1).convert_to<double>()));
+            }
+            else if (e2 != 0)
+            {
+                intersectionPoints.push_back(RS_Vector(rootX, (-((d2 * rootXPrecise) + f2) / e2).convert_to<double>()));
+            }
+
+            continue;
+        }
 
         const Precise_Decimal sqrtTerm1 = boost::multiprecision::trunc(((((b1 * rootXPrecise) + e1) * ((b1 * rootXPrecise) + e1)) 
                                         - (4.0 * c1 * ((a1 * rootXPrecise * rootXPrecise) + (d1 * rootXPrecise) + f1))) * 1.0E+4) * 1.0E-4;
@@ -1133,13 +1254,15 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
                       << std::endl << std::endl;
         }
 
-        if ((sqrtTerm1 < 0.0) || (sqrtTerm2 < 0.0)) continue;
+        if ((numberOf_degenerateEquations == 0) && ((sqrtTerm1 < 0.0) || (sqrtTerm2 < 0.0))) continue;
 
         const Precise_Decimal numeratorTerm1 = (-b1 * rootXPrecise) - e1;
         const Precise_Decimal numeratorTerm2 = (-b2 * rootXPrecise) - e2;
 
         const Precise_Decimal denominatorTerm1 = 2.0 * c1;
         const Precise_Decimal denominatorTerm2 = 2.0 * c2;
+
+        if ((numberOf_degenerateEquations == 0) && ((denominatorTerm1 == 0.0) || (denominatorTerm2 == 0.0))) continue;
 
         const RS_Vector conic_1_points[2] = 
         {
@@ -1152,6 +1275,22 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
             RS_Vector(rootX, ((numeratorTerm2 + boost::multiprecision::sqrt(sqrtTerm2)) / denominatorTerm2).convert_to<double>()), 
             RS_Vector(rootX, ((numeratorTerm2 - boost::multiprecision::sqrt(sqrtTerm2)) / denominatorTerm2).convert_to<double>()) 
         };
+
+        if (numberOf_degenerateEquations != 0)
+        {
+            if (degenerateEquation_number != 1)
+            {
+                intersectionPoints.push_back(conic_1_points[0]);
+                intersectionPoints.push_back(conic_1_points[1]);
+            }
+            else
+            {
+                intersectionPoints.push_back(conic_2_points[0]);
+                intersectionPoints.push_back(conic_2_points[1]);
+            }
+
+            continue;
+        }
 
         if (((fabs(conic_1_points[0].x - conic_2_points[0].x) < 1.0E-4) 
         &&   (fabs(conic_1_points[0].y - conic_2_points[0].y) < 1.0E-4)) 
@@ -1190,76 +1329,5 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
     }
 
     return intersectionPoints;
-}
-
-
-RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m)
-{
-    RS_VectorSolutions ret;
-    auto p0=& (m[0]);
-    auto p1=& (m[1]);
-    if(p1->size()==3){
-        std::swap(p0,p1);
-    }
-    if(p1->size()==3) {
-            //linear
-			std::vector<double> sn(2,0.);
-			std::vector<std::vector<double> > ce;
-			ce.push_back(m[0]);
-			ce.push_back(m[1]);
-            ce[0][2]=-ce[0][2];
-            ce[1][2]=-ce[1][2];
-            if( RS_Math::linearSolver(ce,sn)) ret.push_back(RS_Vector(sn[0],sn[1]));
-            return ret;
-    }
-//    DEBUG_HEADER
-//    std::cout<<"p0: size="<<p0->size()<<"\n Solve[{("<< p0->at(0)<<")*x + ("<<p0->at(1)<<")*y + ("<<p0->at(2)<<")==0,";
-//    std::cout<<"("<< p1->at(0)<<")*x^2 + ("<<p1->at(1)<<")*x*y + ("<<p1->at(2)<<")*y^2 + ("<<p1->at(3)<<")*x +("<<p1->at(4)<<")*y+("
-//            <<p1->at(5)<<")==0},{x,y}]"<<std::endl;
-    const double& a=p0->at(0);
-    const double& b=p0->at(1);
-    const double& c=p0->at(2);
-    const double& d=p1->at(0);
-    const double& e=p1->at(1);
-    const double& f=p1->at(2);
-    const double& g=p1->at(3);
-    const double& h=p1->at(4);
-    const double& i=p1->at(5);
-    /**
-      y (2 b c d-a c e)-a c g+c^2 d = y^2 (a^2 (-f)+a b e-b^2 d)+y (a b g-a^2 h)+a^2 (-i)
-      */
-    std::vector<double> ce(3,0.);
-	const double& a2=a*a;
-	const double& b2=b*b;
-	const double& c2=c*c;
-    ce[0]= -f*a2+a*b*e-b2*d;
-    ce[1]=a*b*g-a2*h- (2*b*c*d-a*c*e);
-    ce[2]=a*c*g-c2*d-a2*i;
-//    DEBUG_HEADER
-//    std::cout<<"("<<ce[0]<<") y^2 + ("<<ce[1]<<") y + ("<<ce[2]<<")==0"<<std::endl;
-    std::vector<double> roots(0,0.);
-    if( fabs(ce[1])>RS_TOLERANCE15 && fabs(ce[0]/ce[1])<RS_TOLERANCE15){
-        roots.push_back( - ce[2]/ce[1]);
-    }else{
-        std::vector<double> ce2(2,0.);
-        ce2[0]=ce[1]/ce[0];
-        ce2[1]=ce[2]/ce[0];
-        roots=quadraticSolver(ce2);
-    }
-//    for(size_t i=0;i<roots.size();i++){
-//    std::cout<<"x="<<roots.at(i)<<std::endl;
-//    }
-
-
-    if(roots.size()==0)  {
-        return RS_VectorSolutions();
-    }
-    for(size_t i=0;i<roots.size();i++){
-        ret.push_back(RS_Vector(-(b*roots.at(i)+c)/a,roots.at(i)));
-//        std::cout<<ret.at(ret.size()-1).x<<", "<<ret.at(ret.size()-1).y<<std::endl;
-    }
-
-    return ret;
-
 }
 //EOF

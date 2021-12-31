@@ -125,7 +125,6 @@ public:
       *@return a RS_VectorSolutions contains real roots (x,y)
       */
     static RS_VectorSolutions simultaneousQuadraticSolverFull(const std::vector<std::vector<double> >& m);
-    static RS_VectorSolutions simultaneousQuadraticSolverMixed(const std::vector<std::vector<double> >& m);
 
     /** wrapper for elliptic integral **/
     /**
