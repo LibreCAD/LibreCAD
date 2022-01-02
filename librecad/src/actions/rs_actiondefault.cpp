@@ -136,7 +136,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                 bool isPointOnEntity = false;
 
                 if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader)) 
-                ||   (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText))
+                ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
                 {
                     double nearestDistanceTo_pointOnEntity;
 
@@ -153,11 +153,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                 if (isPointOnEntity)
                 {
-                    if (highlightedEntity != nullptr)
-                    {
-                        highlightedEntity->setHighlighted(false);
-                        highlightedEntity = nullptr;
-                    }
+                    if (highlightedEntity != nullptr) highlightedEntity->setHighlighted(false);
 
                     entity->setHighlighted(true);
                     highlightedEntity=entity;
