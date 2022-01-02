@@ -156,7 +156,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     if (highlightedEntity != nullptr) highlightedEntity->setHighlighted(false);
 
                     entity->setHighlighted(true);
-                    highlightedEntity=entity;
+                    highlightedEntity = entity;
                     graphicView->redraw(RS2::RedrawDrawing);
                 }
             }
