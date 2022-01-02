@@ -133,13 +133,30 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     if (hoverTolerance < 1.0) hoverTolerance = 1.0;
                 }
 
-                if (entity->isPointOnEntity(currentMousePosition, hoverTolerance))
+                bool isPointOnEntity = false;
+
+                if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader)) 
+                ||   (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText))
+                {
+                    double nearestDistanceTo_pointOnEntity;
+
+                    RS_Vector dummyVector = entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
+
+                    if (dummyVector) { /* This is a dummy code to suppress the 'unused variable' compiler warning. */ }
+
+                    if (nearestDistanceTo_pointOnEntity <= hoverTolerance) isPointOnEntity = true;
+                }
+                else
+                {
+                    isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance);
+                }
+
+                if (isPointOnEntity)
                 {
                     if (highlightedEntity != nullptr)
                     {
                         highlightedEntity->setHighlighted(false);
                         highlightedEntity = nullptr;
-                        graphicView->redraw(RS2::RedrawDrawing);
                     }
 
                     entity->setHighlighted(true);

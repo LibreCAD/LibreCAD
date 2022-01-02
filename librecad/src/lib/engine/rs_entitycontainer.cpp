@@ -229,6 +229,14 @@ bool RS_EntityContainer::toggleSelected() {
 }
 
 
+void RS_EntityContainer::setHighlighted(bool on)
+{
+    for (auto e : entities)
+    {
+        e->setHighlighted(on);
+    }
+}
+
 
 /**
  * Selects all entities within the given area.
