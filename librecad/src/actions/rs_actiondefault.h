@@ -83,6 +83,11 @@ protected:
 
     private:
 
+        static constexpr double minimumHoverTolerance =  1.0;
+
+        static constexpr double hoverToleranceFactor1 =  1.0;
+        static constexpr double hoverToleranceFactor2 = 10.0;
+
         RS_Entity* highlightedEntity;
 
         void highlightHoveredEntities(const RS_Vector& currentMousePosition);
