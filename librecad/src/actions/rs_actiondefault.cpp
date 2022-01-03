@@ -122,16 +122,15 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
         {
             if (entity->isVisible() && ! entity->isLocked())
             {
-                double hoverTolerance { 10.0 / graphicView->getFactor().magnitude() };
+                const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse) 
+                                                  ? hoverToleranceFactor1 
+                                                  : hoverToleranceFactor2;
 
-                if (entity->rtti() == RS2::EntityEllipse)
-                {
-                    hoverTolerance /= 10.0;
-                }
-                else
-                {
-                    if (hoverTolerance < 1.0) hoverTolerance = 1.0;
-                }
+                const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+
+                const double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance)) 
+                                                     ? minimumHoverTolerance 
+                                                     : hoverTolerance;
 
                 bool isPointOnEntity = false;
 
@@ -144,11 +143,11 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                     if (dummyVector) { /* This is a dummy code to suppress the 'unused variable' compiler warning. */ }
 
-                    if (nearestDistanceTo_pointOnEntity <= hoverTolerance) isPointOnEntity = true;
+                    if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
                 }
                 else
                 {
-                    isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance);
+                    isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
                 }
 
                 if (isPointOnEntity)
