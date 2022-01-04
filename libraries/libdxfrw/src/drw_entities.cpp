@@ -1805,7 +1805,7 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     case 93:
         if (pline) pline->vertexnum = reader->getInt32();
-        else loop->numedges = reader->getInt32();//aqui reserve
+        else if (loop) loop->numedges = reader->getInt32();//aqui reserve
         break;
     case 98: //seed points ??
         clearEntities();
