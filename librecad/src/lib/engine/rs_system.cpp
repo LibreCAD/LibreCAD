@@ -572,9 +572,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #ifdef Q_OS_UNIX
     RS_DEBUG->print( RS_Debug::D_ERROR, "RS_System::getDirectoryList: %s", appDir.toStdString().c_str());
     // for AppImage use relative paths from executable
-    // from packet manager the executable is in /usr/bin
+    // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
-    // so this should work for paket manager and AppImage distribution
+    // so this should work for package manager and AppImage distribution
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // Redhat style:
