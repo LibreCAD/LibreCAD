@@ -30,8 +30,10 @@
 
 #include <QObject>
 
+#include "rs_vector.h"
 #include "rs_snapper.h"
 
+class QTimer;
 class QKeyEvent;
 class RS_CommandEvent;
 class RS_CoordinateEvent;
@@ -60,6 +62,8 @@ public:
 
     void setName(const char* _name);
     QString getName();
+
+    virtual bool eventFilter(QObject *obj, QEvent *event) final override;
 
     virtual void init(int status=0);
     virtual void mouseMoveEvent(QMouseEvent*);
@@ -101,6 +105,25 @@ private:
      * corner (status 1).
      */
     int status;
+
+    QTimer *panTimer;
+
+    bool isPanTimerOn;
+
+    RS_Vector panOffset;
+
+    static constexpr int scrollbarWidth { 15 /* pixels */ };
+
+    static constexpr double panOffsetMagnitude = { 10.0 };
+
+    static constexpr double panTimerInterval_minimum {  10.0 };
+    static constexpr double panTimerInterval_maximum { 100.0 };
+
+    RS_Vector probedAreaOffset = RS_Vector(50 /* pixels */, 50 /* pixels */);
+
+
+    void autoPan() const;
+
 
 protected:
     /** Action name. Used internally for debugging */

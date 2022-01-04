@@ -24,13 +24,23 @@
 **
 **********************************************************************/
 
+
+#include <cmath>
+#include <iostream>
+
+#include <QTimer>
 #include <QKeyEvent>
-#include "rs_actioninterface.h"
-#include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_dialogfactory.h"
-#include "rs_coordinateevent.h"
+
+#include "lc_rect.h"
 #include "rs_debug.h"
+#include "rs_commands.h"
+#include "qc_mdiwindow.h"
+#include "rs_graphicview.h"
+#include "rs_dialogfactory.h"
+#include "rs_actioninterface.h"
+#include "rs_coordinateevent.h"
+#include "qc_applicationwindow.h"
+
 
 /**
  * Constructor.
@@ -72,9 +82,169 @@ RS_Snapper(container, graphicView) {
     //setSnapMode(graphicView.getDefaultSnapMode());
     actionType=RS2::ActionNone;
 
+    graphicView.installEventFilter(this);
+
+    panTimer = nullptr;
+
+    isPanTimerOn = false;
+
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 
 }
+
+
+/*
+    Decides when to auto-pan the CAD area, and by how much.
+
+    - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+bool RS_ActionInterface::eventFilter(QObject *obj, QEvent *event)
+{
+    const QEvent::Type currentEventType = event->type();
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+    {
+        DEBUG_HEADER
+
+        std::cout << " Current event type = " << currentEventType << std::endl 
+                  << std::endl;
+    }
+
+    if (currentEventType == QEvent::MouseMove) /* QEvent::MouseMove = 5 */
+    {
+        if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+        {
+            std::cout << " Status      = " << status     << std::endl 
+                      << " Action type = " << actionType << std::endl 
+                      << std::endl;
+        }
+
+        if (((status > 0) && (actionType > 1)) || ((status == 2) && (actionType == 1)))
+        {
+            QC_MDIWindow *mdiWindow = QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::getMDIWindow();
+
+            const RS_Vector cadArea_minCoord(mdiWindow->x(), mdiWindow->y());
+
+            const RS_Vector cadArea_maxCoord( mdiWindow->x() + mdiWindow->width()  - scrollbarWidth, 
+                                              mdiWindow->y() + mdiWindow->height() - scrollbarWidth);
+
+            const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
+
+            const LC_Rect cadArea_unprobed(cadArea_minCoord + probedAreaOffset, cadArea_maxCoord - probedAreaOffset);
+
+            RS_Vector mouseCoord(((QMouseEvent *) event)->x(), ((QMouseEvent *) event)->y());
+
+            if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+            {
+                std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width()  << "/" 
+                                                                      << cadArea_unprobed.height() << std::endl 
+                          << " Actual   CAD area width and height = " << cadArea_actual.width()    << "/" 
+                                                                      << cadArea_actual.height()   << std::endl 
+                          << " Mouse (cursor) position            = " << mouseCoord                << std::endl 
+                          << std::endl << std::endl;
+            }
+
+            if (cadArea_actual.inArea(mouseCoord) && ! cadArea_unprobed.inArea(mouseCoord))
+            {
+                mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
+
+                const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
+
+                double panOffset_angle { cadArea_centerPoint.angleTo(mouseCoord) };
+
+                /* It would be better if the below value was calculated in the code that deals with resizing the CAD area. */
+                const double quarterAngle { cadArea_centerPoint.angleTo(cadArea_actual.upperRightCorner()) };
+
+                double percentageFactor;
+
+                if (((panOffset_angle >  quarterAngle)         && (panOffset_angle <= (M_PI - quarterAngle))) 
+                ||  ((panOffset_angle > (quarterAngle + M_PI)) && (panOffset_angle <= (M_PI + M_PI - quarterAngle))))
+                {
+                    percentageFactor = (fabs((mouseCoord - cadArea_centerPoint).y) - (cadArea_unprobed.height() / 2.0)) 
+                                     / ((cadArea_actual.height() / 2.0)            - (cadArea_unprobed.height() / 2.0));
+                }
+                else
+                {
+                    percentageFactor = (fabs((mouseCoord - cadArea_centerPoint).x) - (cadArea_unprobed.width() / 2.0)) 
+                                     / ((cadArea_actual.width() / 2.0)             - (cadArea_unprobed.width() / 2.0));
+                }
+
+                const double panTimerInterval
+                {
+                        panTimerInterval_minimum 
+                    + ((panTimerInterval_maximum - panTimerInterval_minimum) * (1.0 - percentageFactor)) 
+                };
+
+                panOffset = RS_Vector::polar(panOffsetMagnitude, panOffset_angle);
+
+                panOffset.x = -panOffset.x;
+
+                if (isPanTimerOn)
+                {
+                    panTimer->setInterval(panTimerInterval);
+                }
+                else
+                {
+                    panTimer = new QTimer(this);
+                    connect(panTimer, &QTimer::timeout, this, &RS_ActionInterface::autoPan);
+                    panTimer->start(panTimerInterval);
+                    isPanTimerOn = true;
+                }
+
+                if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+                {
+                    std::cout << " CAD area centre point                = " << cadArea_centerPoint                << std::endl 
+                              << " Actual CAD area quarter angle (deg)  = " << quarterAngle * 180.0 / M_PI        << std::endl 
+                              << " Percentage factor                    = " << percentageFactor                   << std::endl 
+                              << " Pan offset angle (radians)           = " << panOffset_angle                    << std::endl 
+                              << " Pan offset angle (degrees)           = " << panOffset_angle * 180.0 / M_PI     << std::endl 
+                              << " Pan offset vector                    = " << panOffset                          << std::endl 
+                              << " Pan timer interval (ms)              = " << panTimerInterval                   << std::endl 
+                              << " Mouse (cursor) position (adjusted)   = " << mouseCoord                         << std::endl 
+                              << " Mouse position w.r.t. centre point   = " << mouseCoord - cadArea_centerPoint   << std::endl 
+                              << std::endl << std::endl;
+                }
+
+                return QObject::eventFilter(obj, event);
+            }
+        }
+    }
+
+    if ((currentEventType != QEvent::Paint)     /* QEvent::Paint   =  12 */
+    &&  (currentEventType != QEvent::ToolTip))  /* QEvent::ToolTip = 110 */
+    {
+        if (isPanTimerOn)
+        {
+            if (panTimer != nullptr)
+            {
+                delete panTimer;
+                panTimer = nullptr;
+            }
+
+            isPanTimerOn = false;
+        }
+    }
+
+    return QObject::eventFilter(obj, event);
+}
+
+
+/*
+    Auto-pans the CAD area.
+
+    - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void RS_ActionInterface::autoPan() const
+{
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+    {
+        std::cout << " Timer is ticking!" << std::endl 
+                  << std::endl;
+    }
+
+    graphicView->zoomPan((int) panOffset.x, (int) panOffset.y);
+}
+
 
 /**
  * Must be implemented to return the ID of this action.
