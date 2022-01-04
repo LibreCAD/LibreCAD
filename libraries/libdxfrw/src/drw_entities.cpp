@@ -1261,7 +1261,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         for (unsigned int i = 0; i < widthsnum; i++){
             double staW = buf->getBitDouble();
             double endW = buf->getBitDouble();
-            if (vertlist.size()< i) {
+            if (i < vertlist.size()) {
                 vertlist.at(i)->stawidth = staW;
                 vertlist.at(i)->endwidth = endW;
             }
