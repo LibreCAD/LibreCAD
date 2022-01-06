@@ -619,7 +619,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegExp("[;]"),
                                                                     QString::SkipEmptyParts);
     }
-    else if (subDirectory.startsWith( "po")) {
+    else if (subDirectory.startsWith( "qm")) {
         dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegExp("[;]"),
                                                                          QString::SkipEmptyParts);
     }
