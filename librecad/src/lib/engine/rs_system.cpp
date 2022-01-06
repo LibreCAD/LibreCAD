@@ -50,11 +50,20 @@ RS_System* RS_System::uniqueInstance = NULL;
  */
 void RS_System::init(const QString& appName,
                      const QString& appVersion,
-                     const QString& appDirName) {
+                     const QString& appDirName,
+                     const char *arg0) {
     this->appName = appName;
     this->appVersion = appVersion;
     this->appDirName = appDirName;
-    this->appDir = QCoreApplication::applicationDirPath();
+    if (QFile::decodeName( arg0).contains( "/.mount")) {
+        // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
+        // thus use argv[0] to extract the correct path to librecad executable
+        appDir = QFileInfo( QFile::decodeName( arg0)).absolutePath();
+    }
+    else {
+        // in regular application QCoreApplication::applicationDirPath() is preferred, see GitHub #1488
+        appDir = QCoreApplication::applicationDirPath();
+    }
 
     // when appDir is not HOME or CURRENT dir, search appDir too in getDirectoryList()
     externalAppDir = (!appDir.isEmpty()

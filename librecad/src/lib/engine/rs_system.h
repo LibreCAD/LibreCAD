@@ -65,7 +65,8 @@ public:
 
     void init(const QString& appName,
               const QString& appVersion,
-              const QString& appDirName);
+              const QString& appDirName,
+              const char *arg0);
     void initLanguageList();
     void initAllLanguagesList();
 

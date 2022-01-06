@@ -204,7 +204,7 @@ int main(int argc, char** argv)
     RS_DEBUG->print("param 0: %s", argv[0]);
 
     RS_SETTINGS->init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR));
+    RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
