@@ -412,8 +412,15 @@ void LC_DimArc::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 {
     RS_Dimension::rotate (center, angleVector);
 
-    dimArcData.startAngle.rotate (center, angleVector);
-    dimArcData.endAngle.rotate   (center, angleVector);
+    dimArcData.centre.rotate (center, angleVector);
+
+    const double arcDeltaAngle { dimArcData.startAngle.angleTo(dimArcData.endAngle) };
+
+    dimArcData.startAngle = RS_Vector(data.definitionPoint.angleTo(dimArcData.centre) - M_PI);
+
+    dimArcData.endAngle = dimArcData.startAngle;
+
+	dimArcData.endAngle.rotate (arcDeltaAngle);
 
     update();
 }
@@ -421,18 +428,17 @@ void LC_DimArc::rotate(const RS_Vector& center, const RS_Vector& angleVector)
 
 void LC_DimArc::scale(const RS_Vector& center, const RS_Vector& factor)
 {
-    RS_Dimension::scale (center, factor);
+    const double adjustedFactor = factor.x < factor.y 
+                                ? factor.x 
+                                : factor.y;
 
-    dimEndPoint   = dimArcData.centre + RS_Vector(dimArcData.endAngle).scale(dimArcData.radius);
-    dimStartPoint = dimArcData.centre + RS_Vector(dimArcData.startAngle).scale(dimArcData.radius);
+    const RS_Vector adjustedFactorVector(adjustedFactor, adjustedFactor);
 
-    dimEndPoint   *= factor;
-    dimStartPoint *= factor;
+    RS_Dimension::scale (center, adjustedFactorVector);
 
-    dimArcData.radius = (dimStartPoint.distanceTo(dimArcData.centre) + dimEndPoint.distanceTo(dimArcData.centre)) / 2.0;
+    dimArcData.centre.scale (center, adjustedFactorVector);
 
-    dimArcData.endAngle   *= factor;
-    dimArcData.startAngle *= factor;
+    dimArcData.radius *= adjustedFactor;
 
     update();
 }
@@ -440,11 +446,32 @@ void LC_DimArc::scale(const RS_Vector& center, const RS_Vector& factor)
 
 void LC_DimArc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
+    const RS_Vector previousDefinitionPoint = data.definitionPoint;
+
     RS_Dimension::mirror (axisPoint1, axisPoint2);
 
     dimArcData.centre.mirror     (axisPoint1, axisPoint2);
-    dimArcData.endAngle.mirror   (axisPoint1, axisPoint2);
-    dimArcData.startAngle.mirror (axisPoint1, axisPoint2);
+
+    /*
+        // Just another way of accomplishing the operation below this comment.
+
+        dimStartPoint.mirror (axisPoint1, axisPoint2);
+        dimEndPoint.mirror   (axisPoint1, axisPoint2);
+
+        dimArcData.startAngle = RS_Vector((dimStartPoint - dimArcData.centre).angle() - M_PI);
+        dimArcData.endAngle   = RS_Vector((dimEndPoint   - dimArcData.centre).angle() - M_PI);
+    */
+
+    const RS_Vector originPoint(0.0, 0.0);
+
+    const RS_Vector deltaAxisPoints = axisPoint2 - axisPoint1;
+
+    /* The minus one (-1) value denotes that mirroring changes direction (and hence, sign). */
+    dimArcData.startAngle.setPolar (-1.0, dimArcData.startAngle.angle());
+    dimArcData.endAngle.setPolar   (-1.0, dimArcData.endAngle.angle());
+
+    dimArcData.startAngle.mirror (originPoint, deltaAxisPoints);
+    dimArcData.endAngle.mirror   (originPoint, deltaAxisPoints);
 
     update();
 }
@@ -490,7 +517,7 @@ void LC_DimArc::calcDimension()
     extLine1 = new RS_Line (this, entityStartPoint, dimStartPoint);
     extLine2 = new RS_Line (this, entityEndPoint,   dimEndPoint);
 
-    /* */ RS_DEBUG->setLevel(RS_Debug::D_INFORMATIONAL);
+    /* RS_DEBUG->setLevel(RS_Debug::D_INFORMATIONAL); */
 
     RS_DEBUG->print( RS_Debug::D_INFORMATIONAL, 
                      "\n LC_DimArc::calcDimension: Start / end angles : %lf / %lf\n", 
@@ -532,4 +559,3 @@ std::ostream& operator << (std::ostream& os, const LC_DimArcData& input_dimArcDa
 
     return os;
 }
-
