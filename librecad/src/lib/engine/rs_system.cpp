@@ -47,20 +47,29 @@ RS_System* RS_System::uniqueInstance = NULL;
  * @param appVersion Application version (e.g. "1.2.3")
  * @param appDirName Application directory name used for
  *     subdirectories in /usr, /etc ~/.
- * @param appDir Absolute application directory (e.g. /opt/qcad)
- *                 defaults to current directory.
  */
-void RS_System::init(const QString& appName, const QString& appVersion,
-                     const QString& appDirName, const QString& appDir) {
+void RS_System::init(const QString& appName,
+                     const QString& appVersion,
+                     const QString& appDirName,
+                     const char *arg0) {
     this->appName = appName;
     this->appVersion = appVersion;
     this->appDirName = appDirName;
-    if (appDir == "") {
-        this->appDir = QDir::currentPath();
+    if (QFile::decodeName( arg0).contains( "/.mount")) {
+        // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
+        // thus use argv[0] to extract the correct path to librecad executable
+        appDir = QFileInfo( QFile::decodeName( arg0)).absolutePath();
     }
     else {
-        this->appDir = appDir;
+        // in regular application QCoreApplication::applicationDirPath() is preferred, see GitHub #1488
+        appDir = QCoreApplication::applicationDirPath();
     }
+
+    // when appDir is not HOME or CURRENT dir, search appDir too in getDirectoryList()
+    externalAppDir = (!appDir.isEmpty()
+                   && "/" != appDir
+                   && getHomeDir() != appDir
+                   && getCurrentDir() != appDir);
 
     RS_DEBUG->print("RS_System::init: System %s initialized.", appName.toLatin1().data());
     RS_DEBUG->print("RS_System::init: App dir: %s", appDir.toLatin1().data());
@@ -563,18 +572,19 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     dirList.append( getHomeDir() + "/." + appDirName + "/" + subDirectory);
 
     //local (application) directory has priority over other dirs:
-    if (!appDir.isEmpty() && appDir!="/" && appDir!=getHomeDir()) {
-        if (appDir != getCurrentDir() && subDirectory != QString( "plugins")) {// 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder, we should install plugins to system or ~/.LibreCAD/plugins/
+    if (!subDirectory.compare( "plugins")) {
+        // 17 Aug, 2011, Dongxu Li, do not look for plugins in the current folder,
+        // we should install plugins to system or ~/.librecad/plugins/
+        if (externalAppDir) {
             dirList.append( appDir + "/" + subDirectory);
         }
     }
 
 #ifdef Q_OS_UNIX
-    RS_DEBUG->print( RS_Debug::D_ERROR, "RS_System::getDirectoryList: %s", appDir.toStdString().c_str());
     // for AppImage use relative paths from executable
-    // from packet manager the executable is in /usr/bin
+    // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
-    // so this should work for paket manager and AppImage distribution
+    // so this should work for package manager and AppImage distribution
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
     // Redhat style:
@@ -618,7 +628,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegExp("[;]"),
                                                                     QString::SkipEmptyParts);
     }
-    else if (subDirectory.startsWith( "po")) {
+    else if (subDirectory.startsWith( "qm")) {
         dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegExp("[;]"),
                                                                          QString::SkipEmptyParts);
     }

@@ -63,8 +63,10 @@ public:
         return uniqueInstance;
     }
 
-    void init(const QString& appName, const QString& appVersion,
-              const QString& appDirName, const QString& appDir="");
+    void init(const QString& appName,
+              const QString& appVersion,
+              const QString& appDirName,
+              const char *arg0);
     void initLanguageList();
     void initAllLanguagesList();
 
@@ -83,13 +85,6 @@ public:
      */
     QString getCurrentDir() {
         return QDir::currentPath();
-    }
-
-    /**
-     * @return Application directory.
-     */
-    QString getAppDir() {
-        return appDir;
     }
 
     /**
@@ -200,7 +195,8 @@ protected:
     QString appDir;
 
     QStringList languageList;   //< List of available translations
-    bool initialized;
+    bool initialized {false};
+    bool externalAppDir {false};
     QList<QSharedPointer<RS_Locale> > allKnownLocales;
 };
 

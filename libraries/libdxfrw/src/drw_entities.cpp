@@ -1261,7 +1261,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         for (unsigned int i = 0; i < widthsnum; i++){
             double staW = buf->getBitDouble();
             double endW = buf->getBitDouble();
-            if (vertlist.size()< i) {
+            if (i < vertlist.size()) {
                 vertlist.at(i)->stawidth = staW;
                 vertlist.at(i)->endwidth = endW;
             }
@@ -1805,7 +1805,7 @@ void DRW_Hatch::parseCode(int code, dxfReader *reader){
         break;
     case 93:
         if (pline) pline->vertexnum = reader->getInt32();
-        else loop->numedges = reader->getInt32();//aqui reserve
+        else if (loop) loop->numedges = reader->getInt32();//aqui reserve
         break;
     case 98: //seed points ??
         clearEntities();
