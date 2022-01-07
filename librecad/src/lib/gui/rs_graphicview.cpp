@@ -1324,24 +1324,50 @@ const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
  *
  * @see drawIt()
  */
-void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter) {
-
+void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter)
+{
     int const zr = 20;
 
-    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
-	p.setScreenWidth(0);
-	painter->setPen(p);
-	//painter->setBrush(Qt::NoBrush);
-    auto vp=toGui(RS_Vector(0,0));
-    if( vp.x +zr<0 || vp.x-zr>getWidth()) return;
-    if( vp.y +zr<0 || vp.y-zr>getHeight()) return;
+    RS_Pen pen_xAxis (RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
+	pen_xAxis.setScreenWidth(0);
 
-    painter->drawLine(RS_Vector(vp.x-zr, vp.y),
-                      RS_Vector(vp.x+zr, vp.y)
-                      );
-    painter->drawLine(RS_Vector(vp.x, vp.y-zr),
-                      RS_Vector(vp.x, vp.y+zr)
-                      );
+    RS_Pen pen_yAxis (RS_Color(0,255,0), RS2::Width00, RS2::SolidLine);
+	pen_yAxis.setScreenWidth(0);
+
+    auto originPoint = toGui(RS_Vector(0,0));
+
+    if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth()))  return;
+    if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    const bool extendAxisLines { (bool) RS_SETTINGS->readNumEntry("/ExtendAxisLines", 0) };
+    RS_SETTINGS->endGroup();
+
+    double xAxisPoints [2];
+    double yAxisPoints [2];
+
+    if (extendAxisLines)
+    {
+        xAxisPoints [0] = 0.0;
+        xAxisPoints [1] = getWidth();
+
+        yAxisPoints [0] = 0.0;
+        yAxisPoints [1] = getHeight();
+    }
+    else
+    {
+        xAxisPoints [0] = originPoint.x - zr;
+        xAxisPoints [1] = originPoint.x + zr;
+
+        yAxisPoints [0] = originPoint.y - zr;
+        yAxisPoints [1] = originPoint.y + zr;
+    }
+
+    painter->setPen(pen_xAxis);
+    painter->drawLine(RS_Vector(xAxisPoints[0], originPoint.y), RS_Vector(xAxisPoints[1], originPoint.y));
+
+    painter->setPen(pen_yAxis);
+    painter->drawLine(RS_Vector(originPoint.x, yAxisPoints[0]), RS_Vector(originPoint.x, yAxisPoints[1]));
 }
 
 /**
@@ -1471,20 +1497,50 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
  *
  * @see drawIt()
  */
-void RS_GraphicView::drawGrid(RS_Painter *painter) {
-
+void RS_GraphicView::drawGrid(RS_Painter *painter)
+{
 	if (!(grid && isGridOn())) return;
-
 
 	// draw grid:
 	//painter->setPen(Qt::gray);
-	painter->setPen(gridColor);
+	//painter->setPen(gridColor); #1de207
 
-	//grid->updatePointArray();
-	auto const& pts = grid->getPoints();
-	for(auto const& v: pts){
-		painter->drawGridPoint(toGui(v));
-	}
+    painter->setPen(RS_Pen(gridColor, RS2::Width00, RS2::SolidLine));
+
+    RS_SETTINGS->beginGroup("/Appearance");
+
+    if (RS_SETTINGS->readNumEntry("/GridType", 0) == 0)
+    {
+	    //grid->updatePointArray();
+
+	    auto const& pts = grid->getPoints();
+	    for (auto const& v: pts) painter->drawGridPoint(toGui(v));
+    }
+    else
+    {
+        const RS_Vector cellSize = grid->getCellVector();
+
+        auto const& mx = grid->getMetaX();
+        for (auto const& x: mx)
+        {
+            for (int i = 1; i < 10; i++)
+            {
+                const double subX { x - (i * cellSize.x) };
+                painter->drawLine(RS_Vector(toGuiX(subX), 0), RS_Vector(toGuiX(subX), getHeight()));
+            }
+        }
+
+        auto const& my = grid->getMetaY();
+        for (auto const& y: my)
+        {
+            for (int j = 1; j < 10; j++)
+            {
+                const double subY { y - (j * cellSize.y) };
+                painter->drawLine(RS_Vector(0, toGuiY(subY)), RS_Vector(getWidth(), toGuiY(subY)));
+            }
+        }
+    }
+    RS_SETTINGS->endGroup();
 
 	// draw grid info:
 	//painter->setPen(Qt::white);
@@ -1494,8 +1550,6 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 	//       .arg(grid->getMetaSpacing());
 
 	updateGridStatusWidget(info);
-
-
 }
 
 
@@ -1514,10 +1568,22 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 	//bug# 3430258
 	grid->updatePointArray();
-	RS_Pen pen(metaGridColor,
-			   RS2::Width00,
-			   RS2::DotLine);
-	painter->setPen(pen);
+
+    RS_Pen pen;
+    RS2::LineType penLineType;
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    if (RS_SETTINGS->readNumEntry("/GridType", 0) == 0)
+    {
+        penLineType = RS2::DotLine;
+    }
+    else
+    {
+        penLineType = RS2::SolidLine;
+    }
+    RS_SETTINGS->endGroup();
+
+    painter->setPen(RS_Pen (metaGridColor, RS2::Width00, penLineType));
 
 	RS_Vector dv=grid->getMetaGridWidth().scale(factor);
 	double dx=fabs(dv.x);

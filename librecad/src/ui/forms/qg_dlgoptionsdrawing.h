@@ -75,6 +75,8 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+    void on_cbGridType_currentIndexChanged(int index);
+
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
