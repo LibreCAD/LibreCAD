@@ -34,6 +34,7 @@
 #include "lc_rect.h"
 #include "rs_debug.h"
 #include "rs_commands.h"
+#include "rs_settings.h"
 #include "qc_mdiwindow.h"
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
@@ -118,6 +119,12 @@ bool RS_ActionInterface::eventFilter(QObject *obj, QEvent *event)
                       << " Action type = " << actionType << std::endl 
                       << std::endl;
         }
+
+        RS_SETTINGS->beginGroup("/Appearance");
+        const bool autopanEnabled = (bool) RS_SETTINGS->readNumEntry("/Autopanning");
+        RS_SETTINGS->endGroup();
+
+        if ( ! autopanEnabled) return QObject::eventFilter(obj, event);
 
         if (((status > 0) && (actionType > 1)) || ((status == 2) && (actionType == 1)))
         {
@@ -493,4 +500,3 @@ QString RS_ActionInterface::command(const QString& cmd) {
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
 }
-
