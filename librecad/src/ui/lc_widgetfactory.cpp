@@ -497,54 +497,63 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/line.svg"));
+    tool_button->setToolTip(tr("Lines"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(line_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/circle.svg"));
+    tool_button->setToolTip(tr("Circles"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(circle_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/line_freehand.svg"));
+    tool_button->setToolTip(tr("Freehand"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(curve_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/ellipses.svg"));
+    tool_button->setToolTip(tr("Ellipses"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(ellipse_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/polylines.svg"));
+    tool_button->setToolTip(tr("PolyLines"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(polyline_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/select.svg"));
+    tool_button->setToolTip(tr("Select"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(select_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/dim_horizontal.svg"));
+    tool_button->setToolTip(tr("Dimensions"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(dimension_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/move_rotate.svg"));
+    tool_button->setToolTip(tr("Modify"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(modify_actions);
 
     tool_button = new QToolButton;
     tool_button->setPopupMode(QToolButton::InstantPopup);
     tool_button->setIcon(QIcon(":/icons/measure.svg"));
+    tool_button->setToolTip(tr("Measure"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
 
