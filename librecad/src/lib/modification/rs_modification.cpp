@@ -651,8 +651,12 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
     QString pasteBlockName = blockName;
 
+    bool pasteToNewDrawing = false;
+
     if (bc == nullptr)
     {
+        pasteToNewDrawing = true;
+
         if (graphic->findBlock(blockName))
         {
             pasteBlockName = graphic->getBlockList()->newName(blockName);
@@ -704,7 +708,7 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity to sub-insert");
                 return false;
             }
-        } else {
+        } else if (pasteToNewDrawing) {
             if (!pasteEntity(e, (RS_EntityContainer*)bc)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity");
                 return false;
