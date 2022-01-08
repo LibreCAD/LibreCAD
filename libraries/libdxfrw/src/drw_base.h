@@ -124,6 +124,7 @@ BAD_READ_BLOCKS,      /*!< error in block read process. */
 BAD_READ_ENTITIES,    /*!< error in entities read process. */
 BAD_READ_OBJECTS,     /*!< error in objects read process. */
 BAD_READ_SECTION,     /*!< error in sections read process. */
+BAD_CODE_PARSED,      /*!< error in any parseCodes() method. */
 };
 
 enum class DebugLevel {

@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -68,7 +69,7 @@ public:
     void addComment(std::string c);
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf, duint8 mv=0);
 private:
     bool getDouble(std::string key, double *varDouble);
