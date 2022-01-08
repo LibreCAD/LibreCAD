@@ -53,6 +53,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 								container, graphicView)
 	, pPoints(new Points{})
 	, restrBak(RS2::RestrictNothing)
+    , highlightedEntity(nullptr)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
