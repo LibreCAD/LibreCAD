@@ -653,8 +653,12 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
     bool pasteToNewDrawing = false;
 
+    double insertionAngle = i->getAngle();
+
     if (bc == nullptr)
     {
+        insertionAngle = 0.0;
+
         pasteToNewDrawing = true;
 
         if (graphic->findBlock(blockName))
@@ -667,11 +671,15 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
         bc->reparent(graphic);
         graphic->addBlock(bc);
     }
+    else
+    {
+        insertionPoint = i->getInsertionPoint();
+    }
 
     blocksDict[blockName] = pasteBlockName;
 
     // create insert for the new block
-    RS_InsertData di = RS_InsertData(pasteBlockName, insertionPoint, RS_Vector(1.0, 1.0), i->getAngle(), 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(pasteBlockName, insertionPoint, RS_Vector(1.0, 1.0), insertionAngle, 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* ic = new RS_Insert(container, di);
     ic->reparent(container);
     container->addEntity(ic);
