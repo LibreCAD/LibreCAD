@@ -79,6 +79,42 @@ void RS_ActionModifyRound::trigger() {
 
         deletePreview();
 
+        /*
+            Remove the old fillet, if it exists.
+
+            - by Melwyn Francis Carlo.
+        */
+        for (auto e : graphicView->getContainer()->getEntityList())
+        {
+            if (e->rtti() == RS2::EntityArc)
+            {
+                double refPointsDistance;
+
+                RS_Entity* entityConnectingTo_arcStartPoint = entity1;
+                RS_Entity* entityConnectingTo_arcEndPoint   = entity2;
+
+                RS_Vector dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
+
+                if (refPointsDistance > RS_TOLERANCE)
+                {
+                    entityConnectingTo_arcStartPoint = entity2;
+                    entityConnectingTo_arcEndPoint   = entity1;
+
+                    dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
+
+                    if (refPointsDistance > RS_TOLERANCE) continue;
+                }
+
+                dummyVector = entityConnectingTo_arcEndPoint->getNearestEndpoint(e->getEndpoint(), &refPointsDistance);
+
+                if (refPointsDistance > RS_TOLERANCE) continue;
+
+                container->removeEntity(e);
+
+                break;
+            }
+        }
+
         RS_Modification m(*container, graphicView);
 		m.round(pPoints->coord2,
 				pPoints->coord1,
