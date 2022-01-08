@@ -111,17 +111,26 @@ bool RS_Information::isTrimmable(RS_Entity* e1, RS_Entity* e2) {
 
                 // in the same polyline
                 RS_Polyline* pl = static_cast<RS_Polyline *>(e1->getParent());
+
                 int idx1 = pl->findEntity(e1);
                 int idx2 = pl->findEntity(e2);
-                RS_DEBUG->print("RS_Information::isTrimmable: "
-                                "idx1: %d, idx2: %d", idx1, idx2);
-                if (abs(idx1-idx2)==1 ||
-					(pl->isClosed() && abs(idx1-idx2)==int(pl->count()-1))) {
-                    // directly following entities
+
+                if (idx1 > idx2) std::swap(idx1, idx2);
+
+                const int delta_idx = idx2 - idx1;
+
+                RS_DEBUG->print("RS_Information::isTrimmable: idx1: %d, idx2: %d", idx1, idx2);
+
+                if ((delta_idx == 1) 
+                || ((delta_idx == 2) && (pl->entityAt(idx1 + 1)->rtti() == RS2::EntityArc)) 
+                ||  (pl->isClosed() && (delta_idx == int(pl->count() - 1))))
+                {
+                    // This condition implies that the entities are adjoining one another.
                     return true;
                 }
-                else {
-                    // not directly following entities
+                else
+                {
+                    // This condition implies that the entities are NOT adjoining one another.
                     return false;
                 }
             }
