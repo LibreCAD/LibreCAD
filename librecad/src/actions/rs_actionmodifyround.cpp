@@ -69,6 +69,44 @@ void RS_ActionModifyRound::init(int status) {
 }
 
 
+/*
+    Removes the old fillet, if it exists.
+
+    - by Melwyn Francis Carlo.
+*/
+bool RS_ActionModifyRound::removeOldFillet(RS_Entity* e, const bool& isPolyline)
+{
+    if (e->rtti() == RS2::EntityArc)
+    {
+        double refPointsDistance;
+
+        RS_Entity* entityConnectingTo_arcStartPoint = entity1;
+        RS_Entity* entityConnectingTo_arcEndPoint   = entity2;
+
+        RS_Vector dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
+
+        if (refPointsDistance > RS_TOLERANCE)
+        {
+            entityConnectingTo_arcStartPoint = entity2;
+            entityConnectingTo_arcEndPoint   = entity1;
+
+            dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
+
+            if (refPointsDistance > RS_TOLERANCE) return false;
+        }
+
+        dummyVector = entityConnectingTo_arcEndPoint->getNearestEndpoint(e->getEndpoint(), &refPointsDistance);
+
+        if (refPointsDistance > RS_TOLERANCE) return false;
+
+        if ( ! isPolyline) container->removeEntity(e);
+
+        return true;
+    }
+
+    return false;
+}
+
 
 void RS_ActionModifyRound::trigger() {
 
@@ -79,39 +117,32 @@ void RS_ActionModifyRound::trigger() {
 
         deletePreview();
 
-        /*
-            Remove the old fillet, if it exists.
+        bool foundPolyline = false;
 
-            - by Melwyn Francis Carlo.
-        */
-        for (auto e : graphicView->getContainer()->getEntityList())
+        if ((entity1->getParent() != nullptr) && (entity2->getParent() != nullptr))
         {
-            if (e->rtti() == RS2::EntityArc)
+            if ((entity1->getParent()->rtti() == RS2::EntityPolyline) 
+            &&  (entity2->getParent()->rtti() == RS2::EntityPolyline) 
+            &&  (entity1->getParent() == entity2->getParent()))
             {
-                double refPointsDistance;
+                foundPolyline = true;
 
-                RS_Entity* entityConnectingTo_arcStartPoint = entity1;
-                RS_Entity* entityConnectingTo_arcEndPoint   = entity2;
-
-                RS_Vector dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
-
-                if (refPointsDistance > RS_TOLERANCE)
+                for (auto e : entity1->getParent()->getEntityList())
                 {
-                    entityConnectingTo_arcStartPoint = entity2;
-                    entityConnectingTo_arcEndPoint   = entity1;
-
-                    dummyVector = entityConnectingTo_arcStartPoint->getNearestEndpoint(e->getStartpoint(), &refPointsDistance);
-
-                    if (refPointsDistance > RS_TOLERANCE) continue;
+                    if (removeOldFillet(e, foundPolyline))
+                    {
+                        entity1->getParent()->removeEntity(e);
+                        break;
+                    }
                 }
+            }
+        }
 
-                dummyVector = entityConnectingTo_arcEndPoint->getNearestEndpoint(e->getEndpoint(), &refPointsDistance);
-
-                if (refPointsDistance > RS_TOLERANCE) continue;
-
-                container->removeEntity(e);
-
-                break;
+        if ( ! foundPolyline)
+        {
+            for (auto e : graphicView->getContainer()->getEntityList())
+            {
+                if (removeOldFillet(e, foundPolyline)) break;
             }
         }
 

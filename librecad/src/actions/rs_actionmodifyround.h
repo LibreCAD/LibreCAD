@@ -84,6 +84,8 @@ private:
 	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
 	Status lastStatus;
+
+    bool removeOldFillet(RS_Entity* e, const bool& isPolyline);
 };
 
 #endif
