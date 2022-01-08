@@ -145,8 +145,9 @@ void QG_DlgOptionsDrawing::init() {
 void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     graphic = g;
 
-	if (graphic==nullptr) {
-		std::cout<<" QG_DlgOptionsDrawing::setGraphic(nullptr)\n";
+    if (graphic == nullptr)
+    {
+        RS_DEBUG->print(" QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
