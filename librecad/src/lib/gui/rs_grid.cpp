@@ -76,9 +76,8 @@ RS_Vector RS_Grid::snapGrid(const RS_Vector& coord) const {
 /**
  * Updates the grid point array.
  */
-void RS_Grid::updatePointArray() {
-	if (!graphicView->isGridOn()) return;
-
+void RS_Grid::updatePointArray()
+{
 	RS_Graphic* graphic = graphicView->getGraphic();
 
 	// auto scale grid?
@@ -134,6 +133,12 @@ void RS_Grid::updatePointArray() {
 		gridWidth = getImperialGridWidth(userGrid, scaleGrid, minGridSpacing);
 
 	}
+
+    if ( ! graphicView->isGridOn())
+    {
+        cellV.set(fabs(gridWidth.x),fabs(gridWidth.y));
+        return;
+    }
 
 	// RS_DEBUG->print("RS_Grid::update: 013");
 
