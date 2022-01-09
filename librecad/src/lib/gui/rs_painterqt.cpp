@@ -263,19 +263,30 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
  * @param a2 Angle 2 in rad
  * @param reversed true: clockwise, false: counterclockwise
  */
-void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
-                           double a1, double a2,
-                           bool reversed) {
-    if(radius<=0.5) {
+void RS_PainterQt::drawArc( const RS_Vector& cp, 
+                            double radius,
+                            double a1, 
+                            double a2,
+                            bool reversed)
+{
+    if (radius <= 0.5)
+    {
         drawGridPoint(cp);
-    } else {
-#ifdef __APPL1E__
-                drawArcMac(cp, radius, a1, a2, reversed);
-#else
-        QPolygon pa;
-        createArc(pa, cp, radius, a1, a2, reversed);
-        drawPolyline(pa);
-#endif
+    }
+    else
+    {
+        if (reversed)
+        {
+            a1 = 360.0 - a1;
+            a2 = 360.0 - a2;
+        }
+
+        QPainter::drawArc( toScreenX(cp.x - radius), 
+                           toScreenY(cp.y - radius), 
+                           2.0 * radius, 
+                           2.0 * radius, 
+                           a1  * 16.0 * 180.0 / M_PI, 
+                       (a2-a1) * 16.0 * 180.0 / M_PI);
     }
 }
 
