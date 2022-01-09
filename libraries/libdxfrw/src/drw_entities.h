@@ -1030,11 +1030,8 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    using DRW_Entity::parseDwg;
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf);
-    virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override {
-        DRW_UNUSED(version); DRW_UNUSED(buf); DRW_UNUSED(bs); return true;
-    }
+    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs = 0) override;
+    virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override;
 
 public:
     DRW_Coord getDefPoint() const {return defPoint;}      /*!< Definition point, code 10, 20 & 30 */

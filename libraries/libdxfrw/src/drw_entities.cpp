@@ -2410,7 +2410,28 @@ bool DRW_Dimension::parseCode(int code, dxfReader *reader){
     return true;
 }
 
-bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf){
+bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
+{
+    DRW_UNUSED( version);
+    DRW_UNUSED( buf);
+    DRW_UNUSED( bs);
+
+    DRW_DBG("DRW_Dimension::parseDwg(): base class implemntation should never be called direct!\n");
+
+    return false;
+}
+
+bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs /*= 0*/) {
+    dwgBuffer sBuff = *buf;
+    sBuf = buf;
+    if (version > DRW::AC1018) {//2007+
+        sBuf = &sBuff; //separate buffer for strings
+    }
+
+    if (!DRW_Entity::parseDwg( version, buf, sBuf, bs)) {
+        return false;
+    }
+
     DRW_DBG("\n***************************** parsing dimension *********************************************");
     if (version > DRW::AC1021) { //2010+
         duint8 dimVersion = buf->getRawChar8();
@@ -2462,17 +2483,10 @@ bool DRW_Dimension::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sB
 }
 
 bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    dwgBuffer sBuff = *buf;
-    dwgBuffer *sBuf = buf;
-    if (version > DRW::AC1018) {//2007+
-        sBuf = &sBuff; //separate buffer for strings
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
     }
-    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-    if (!ret)
-        return ret;
-    ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-    if (!ret)
-        return ret;
+
     if (oType == 0x15)
         DRW_DBG("\n***************************** parsing dim linear *********************************************\n");
     else
@@ -2493,10 +2507,11 @@ bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
         type |= 1;
     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
 
-    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimAligned::parseDwg()\n");
+        return false;
+    }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-    if (!ret)
-        return ret;
     dimStyleH = buf->getHandle();
     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
@@ -2507,94 +2522,75 @@ bool DRW_DimAligned::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     return buf->isGood();
  }
 
- bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-     dwgBuffer sBuff = *buf;
-     dwgBuffer *sBuf = buf;
-     if (version > DRW::AC1018) {//2007+
-         sBuf = &sBuff; //separate buffer for strings
-     }
-     bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-     if (!ret)
-         return ret;
-     ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-     if (!ret)
-         return ret;
-     DRW_DBG("\n***************************** parsing dim radial *********************************************\n");
-     DRW_Coord pt = buf->get3BitDouble();
-     setDefPoint(pt); //code 10
-     DRW_DBG("defPoint: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-     pt = buf->get3BitDouble();
-     setPt5(pt); //center pt  code 15
-     DRW_DBG("\ncenter point: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-     setRa40(buf->getBitDouble()); //leader length code 40
-     DRW_DBG("\nleader length: "); DRW_DBG(getRa40());
-     type |= 4;
-     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
+bool DRW_DimRadial::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
+    }
 
-     ret = DRW_Entity::parseDwgEntHandle(version, buf);
-     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-     if (!ret)
-         return ret;
-     dimStyleH = buf->getHandle();
-     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
-     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
-     DRW_DBG("anon block Handle: "); DRW_DBGHL(blockH.code, blockH.size, blockH.ref); DRW_DBG("\n");
-     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    DRW_DBG("\n***************************** parsing dim radial *********************************************\n");
+    DRW_Coord pt = buf->get3BitDouble();
+    setDefPoint(pt); //code 10
+    DRW_DBG("defPoint: "); DRW_DBGPT(pt.x, pt.y, pt.z);
+    pt = buf->get3BitDouble();
+    setPt5(pt); //center pt  code 15
+    DRW_DBG("\ncenter point: "); DRW_DBGPT(pt.x, pt.y, pt.z);
+    setRa40(buf->getBitDouble()); //leader length code 40
+    DRW_DBG("\nleader length: "); DRW_DBG(getRa40());
+    type |= 4;
+    DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
 
-     //    RS crc;   //RS */
-     return buf->isGood();
- }
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimRadial::parseDwg()\n");
+        return false;
+    }
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    dimStyleH = buf->getHandle();
+    DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
+    blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
+    DRW_DBG("anon block Handle: "); DRW_DBGHL(blockH.code, blockH.size, blockH.ref); DRW_DBG("\n");
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
 
- bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-     dwgBuffer sBuff = *buf;
-     dwgBuffer *sBuf = buf;
-     if (version > DRW::AC1018) {//2007+
-         sBuf = &sBuff; //separate buffer for strings
-     }
-     bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-     if (!ret)
-         return ret;
-     ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-     if (!ret)
-         return ret;
-     DRW_DBG("\n***************************** parsing dim diametric *********************************************\n");
-     DRW_Coord pt = buf->get3BitDouble();
-     setPt5(pt); //center pt  code 15
-     DRW_DBG("center point: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-     pt = buf->get3BitDouble();
-     setDefPoint(pt); //code 10
-     DRW_DBG("\ndefPoint: "); DRW_DBGPT(pt.x, pt.y, pt.z);
-     setRa40(buf->getBitDouble()); //leader length code 40
-     DRW_DBG("\nleader length: "); DRW_DBG(getRa40());
-     type |= 3;
-     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
+    //    RS crc;   //RS */
+    return buf->isGood();
+}
 
-     ret = DRW_Entity::parseDwgEntHandle(version, buf);
-     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-     if (!ret)
-         return ret;
-     dimStyleH = buf->getHandle();
-     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
-     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
-     DRW_DBG("anon block Handle: "); DRW_DBGHL(blockH.code, blockH.size, blockH.ref); DRW_DBG("\n");
-     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+bool DRW_DimDiametric::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
+    }
 
-     //    RS crc;   //RS */
-     return buf->isGood();
- }
+    DRW_DBG("\n***************************** parsing dim diametric *********************************************\n");
+    DRW_Coord pt = buf->get3BitDouble();
+    setPt5(pt); //center pt  code 15
+    DRW_DBG("center point: "); DRW_DBGPT(pt.x, pt.y, pt.z);
+    pt = buf->get3BitDouble();
+    setDefPoint(pt); //code 10
+    DRW_DBG("\ndefPoint: "); DRW_DBGPT(pt.x, pt.y, pt.z);
+    setRa40(buf->getBitDouble()); //leader length code 40
+    DRW_DBG("\nleader length: "); DRW_DBG(getRa40());
+    type |= 3;
+    DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
+
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimDiametric::parseDwg()\n");
+        return false;
+    }
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+    dimStyleH = buf->getHandle();
+    DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
+    blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
+    DRW_DBG("anon block Handle: "); DRW_DBGHL(blockH.code, blockH.size, blockH.ref); DRW_DBG("\n");
+    DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
+
+    //    RS crc;   //RS */
+    return buf->isGood();
+}
 
 bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    dwgBuffer sBuff = *buf;
-    dwgBuffer *sBuf = buf;
-    if (version > DRW::AC1018) {//2007+
-        sBuf = &sBuff; //separate buffer for strings
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
     }
-    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-    if (!ret)
-        return ret;
-    ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-    if (!ret)
-        return ret;
+
     DRW_DBG("\n***************************** parsing dim angular *********************************************\n");
     DRW_Coord pt;
     pt.x = buf->getRawDouble();
@@ -2616,10 +2612,11 @@ bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
     type |= 0x02;
     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
 
-    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimAngular::parseDwg()\n");
+        return false;
+    }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-    if (!ret)
-        return ret;
     dimStyleH = buf->getHandle();
     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
@@ -2631,17 +2628,10 @@ bool DRW_DimAngular::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
 }
 
 bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    dwgBuffer sBuff = *buf;
-    dwgBuffer *sBuf = buf;
-    if (version > DRW::AC1018) {//2007+
-        sBuf = &sBuff; //separate buffer for strings
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
     }
-    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-    if (!ret)
-        return ret;
-    ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-    if (!ret)
-        return ret;
+
     DRW_DBG("\n***************************** parsing dim angular3p *********************************************\n");
     DRW_Coord pt = buf->get3BitDouble();
     setDefPoint(pt); //code 10
@@ -2658,10 +2648,11 @@ bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
     type |= 0x05;
     DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
 
-    ret = DRW_Entity::parseDwgEntHandle(version, buf);
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimAngular3p::parseDwg()\n");
+        return false;
+    }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-    if (!ret)
-        return ret;
     dimStyleH = buf->getHandle();
     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
@@ -2673,17 +2664,10 @@ bool DRW_DimAngular3p::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs
 }
 
 bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
-    dwgBuffer sBuff = *buf;
-    dwgBuffer *sBuf = buf;
-    if (version > DRW::AC1018) {//2007+
-        sBuf = &sBuff; //separate buffer for strings
+    if (!DRW_Dimension::parseDwg(version, buf, nullptr, bs)) {
+        return false;
     }
-    bool ret = DRW_Entity::parseDwg(version, buf, sBuf, bs);
-    if (!ret)
-        return ret;
-    ret = DRW_Dimension::parseDwg(version, buf, sBuf);
-    if (!ret)
-        return ret;
+
     DRW_DBG("\n***************************** parsing dim ordinate *********************************************\n");
     DRW_Coord pt = buf->get3BitDouble();
     setDefPoint(pt);
@@ -2699,12 +2683,13 @@ bool DRW_DimOrdinate::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs)
     type =  (type2 & 1) ? type | 0x80 : type & 0xBF; //set bit 6
     DRW_DBG(" type (70) set: "); DRW_DBG(type);
     type |= 6;
-    DRW_DBG("\n  type (70) final: "); DRW_DBG(type);
+    DRW_DBG("\n  type (70) final: "); DRW_DBG(type); DRW_DBG("\n");
 
-    ret = DRW_Entity::parseDwgEntHandle(version, buf); DRW_DBG("\n");
+    if (!DRW_Entity::parseDwgEntHandle(version, buf)) {
+        DRW_DBG("Failed: parseDwgEntHandle() in DRW_DimAligned::parseDwg()\n");
+        return false;
+    }
     DRW_DBG("Remaining bytes: "); DRW_DBG(buf->numRemainingBytes()); DRW_DBG("\n");
-    if (!ret)
-        return ret;
     dimStyleH = buf->getHandle();
     DRW_DBG("dim style Handle: "); DRW_DBGHL(dimStyleH.code, dimStyleH.size, dimStyleH.ref); DRW_DBG("\n");
     blockH = buf->getHandle(); /* H 7 STYLE (hard pointer) */
