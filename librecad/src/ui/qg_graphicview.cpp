@@ -634,38 +634,29 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
 		RS_SETTINGS->endGroup();
 
-		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom)) {
-			const double zoomInOvershoot=1.20;
+      const double zoomOvershoot { 1.20 };
 
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomInOvershoot);
-				effect+=mainViewCenter;
-			}
+      RS2::ZoomDirection zoomDirection;
 
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::In, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
-		} else {
-			const double zoomOutUndershoot=0.30;
+		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom))
+      {
+         zoomDirection = RS2::In;
+      }
+      else
+      {
+         zoomDirection = RS2::Out;
+      }
 
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomOutUndershoot);
-				effect+=mainViewCenter;
-			}
-
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::Out, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
+		RS_Vector effect{mouse};
+		{
+			effect -= mainViewCenter;
+			effect.scale(zoomOvershoot);
+			effect += mainViewCenter;
 		}
-    }
+
+		setCurrentAction(new RS_ActionZoomIn( *container, *this,
+											           zoomDirection, RS2::Both,
+											           &effect, zoomFactor));
     redraw();
 
     QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
