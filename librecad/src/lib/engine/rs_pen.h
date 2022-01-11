@@ -111,6 +111,13 @@ public:
         return !getFlag(RS2::FlagInvalid);
     }
 
+    double getAlpha() const {
+        return alpha;
+    }
+    void setAlpha(double a) {
+        alpha = a;
+    }
+
     //RS_Pen& operator = (const RS_Pen& p) {
     //    lineType = p.lineType;
     //    width = p.width;
@@ -136,6 +143,8 @@ protected:
     RS2::LineWidth width;
 	double screenWidth;
     RS_Color color;
+
+    double alpha;
 };
 
 #endif

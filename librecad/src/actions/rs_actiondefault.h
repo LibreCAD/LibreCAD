@@ -27,6 +27,9 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
+
+#include <vector>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -88,7 +91,12 @@ protected:
         static constexpr double hoverToleranceFactor1 =  1.0;
         static constexpr double hoverToleranceFactor2 = 10.0;
 
+        static constexpr size_t minimumNumberOf_highlightedEntityDuplicates = 10;
+
+        size_t numberOf_highlightedEntityDuplicates;
+
         RS_Entity* highlightedEntity;
+        std::vector<RS_Entity*> highlightedEntityDuplicates;
 
         void highlightHoveredEntities(const RS_Vector& currentMousePosition);
 

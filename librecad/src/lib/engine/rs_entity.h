@@ -558,6 +558,16 @@ m0 x + m1 y + m2 =0
 	 */
 	virtual bool isArcCircleLine() const;
 
+    void setHighlightedEntityParent(RS_Entity* parent)
+    {
+        highlightedEntityParent = parent;
+    }
+
+    RS_Entity* getHighlightedEntityParent() const
+    {
+        return highlightedEntityParent;
+    }
+
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.
 	RS_EntityContainer* parent = nullptr;
@@ -580,6 +590,8 @@ protected:
 
 private:
 	std::map<QString, QString> varList;
+
+    RS_Entity* highlightedEntityParent;
 };
 
 #endif

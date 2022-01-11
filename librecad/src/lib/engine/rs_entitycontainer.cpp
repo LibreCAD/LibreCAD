@@ -489,6 +489,8 @@ unsigned int RS_EntityContainer::countSelected(bool deep, std::initializer_list<
 
 	for (RS_Entity* t: entities){
 
+      if (t->getHighlightedEntityParent() != nullptr) continue;
+
 		if (t->isSelected())
 			if (!types.size() || type.count(t->rtti()))
 				c++;

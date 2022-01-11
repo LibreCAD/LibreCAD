@@ -56,7 +56,7 @@
  *               E.g. a line might have a graphic entity or
  *               a polyline entity as parent.
  */
-RS_Entity::RS_Entity(RS_EntityContainer* parent) {
+RS_Entity::RS_Entity(RS_EntityContainer* parent) : highlightedEntityParent(nullptr) {
 
     this->parent = parent;
     init();

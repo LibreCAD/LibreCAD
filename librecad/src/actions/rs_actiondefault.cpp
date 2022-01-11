@@ -38,6 +38,7 @@
 #include "rs_debug.h"
 
 #include <cmath>
+#include <iostream>
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;
@@ -121,7 +122,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
     {
         if (entity != nullptr)
         {
-            if (entity->isVisible() && ! entity->isLocked())
+            if (entity->isVisible() && ! entity->isLocked() && (entity->getHighlightedEntityParent() == nullptr))
             {
                 const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse) 
                                                   ? hoverToleranceFactor1 
@@ -153,10 +154,74 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                 if (isPointOnEntity)
                 {
-                    if (highlightedEntity != nullptr) highlightedEntity->setHighlighted(false);
+                    RS_Color whiteColor(QColor(Qt::white));
 
-                    entity->setHighlighted(true);
+                    if (highlightedEntity != nullptr)
+                    {
+                        highlightedEntity->setHighlighted(false);
+
+                        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                        {
+                            container->removeEntity(highlightedEntityDuplicates.at(i));
+                        }
+                    }
+
                     highlightedEntity = entity;
+
+                    RS_Pen duplicatedPen = highlightedEntity->getPen(true);
+
+                    const double zoomFactor { graphicView->getFactor().x };
+
+                    double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
+                    if (duplicatedPen_width < 1.0) duplicatedPen_width = 1.0;
+
+                    numberOf_highlightedEntityDuplicates = 2.0 * zoomFactor;
+
+                    if (numberOf_highlightedEntityDuplicates < minimumNumberOf_highlightedEntityDuplicates)
+                    {
+                        numberOf_highlightedEntityDuplicates = minimumNumberOf_highlightedEntityDuplicates;
+                    }
+
+                    highlightedEntityDuplicates.resize(numberOf_highlightedEntityDuplicates);
+
+                    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+                    {
+                        DEBUG_HEADER
+
+                        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl 
+                                  << " Number of duplicate entities       = " << numberOf_highlightedEntityDuplicates << std::endl 
+                                  << " Duplicated pen width (mm)          = " << highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl 
+                                  << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
+                    }
+
+                    for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                    {
+                        RS_Entity* duplicatedEntity = highlightedEntity->clone();
+
+                        duplicatedEntity->setHighlightedEntityParent(highlightedEntity);
+
+                        duplicatedEntity->reparent(container);
+                        duplicatedEntity->setHighlighted(true);
+                        container->addEntity(duplicatedEntity);
+
+                        /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
+
+                        const double& gradientFactor { 1.25 * (double) (i + 1) / (double) numberOf_highlightedEntityDuplicates };
+
+                        duplicatedPen.setScreenWidth(25.0 * duplicatedPen_width * gradientFactor);
+
+                        /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
+                        const double& exponentialFactor { std::exp(-8.0 * gradientFactor) };
+
+                        duplicatedPen.setAlpha(exponentialFactor);
+
+                        duplicatedEntity->setPen(duplicatedPen);
+
+                        highlightedEntityDuplicates [i] = duplicatedEntity;
+                    }
+
+                    graphicView->redraw(RS2::RedrawDrawing);
+                    highlightedEntity->setHighlighted(true);
                     graphicView->redraw(RS2::RedrawDrawing);
                 }
             }
@@ -175,6 +240,12 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
     if (highlightedEntity != nullptr)
     {
         highlightedEntity->setHighlighted(false);
+
+        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+        {
+            container->removeEntity(highlightedEntityDuplicates.at(i));
+        }
+
         highlightedEntity = nullptr;
         graphicView->redraw(RS2::RedrawDrawing);
     }
@@ -375,7 +446,16 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
-                s.selectSingle(en);
+
+                if (en->getHighlightedEntityParent() != nullptr)
+                {
+                    s.selectSingle(en->getHighlightedEntityParent());
+                    highlightHoveredEntities(graphicView->toGraph(e->x(), e->y()));
+                }
+                else
+                {
+                    s.selectSingle(en);
+                }
 
                 RS_DIALOGFACTORY->updateSelectionWidget(
                             container->countSelected(),container->totalSelectedLength());
