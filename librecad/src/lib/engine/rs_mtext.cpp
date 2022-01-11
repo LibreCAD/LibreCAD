@@ -682,8 +682,14 @@ void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         }
     }
 
-    foreach (auto e, entities)
+    double patternOffset=0.;
+
+    for (auto e : ((RS_EntityContainer *) firstEntity())->getEntityList())
     {
-        view->drawEntity(painter, e);
+        for (auto sube : ((RS_EntityContainer *) e)->getEntityList())
+        {
+            sube->setPen(this->getPen(true));
+            sube->draw(painter, view, patternOffset);
+        }
     }
 }
