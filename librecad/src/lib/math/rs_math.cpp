@@ -43,6 +43,9 @@
 #endif
 
 
+RS2::Unit RS_Math::currentDrawingUnits = (RS2::Unit) 0;
+
+
 namespace {
 constexpr double m_piX2 = M_PI*2; //2*PI
 }
@@ -291,7 +294,7 @@ QString normalizedUnitsExpression(QString inputExpression)
                         {
                             if (previousExpressionWasNumber) outputExpression += "+";
 
-                            outputExpression += QString::number(RS_Units::convert(value, valueUnits, RS2::Millimeter));
+                            outputExpression += QString::number(RS_Units::convert(value, valueUnits, currentDrawingUnits));
 
                             previousExpressionWasNumber = true;
 

@@ -24,22 +24,40 @@
 **
 **********************************************************************/
 
-#ifndef RS_MATH_H
-#define RS_MATH_H
+
+#pragma once
+
 
 #include <vector>
+
+#include "rs.h"
+
 
 class RS_Vector;
 class RS_VectorSolutions;
 class QString;
 
+
 /**
  * Math functions.
  */
-class RS_Math {
-private:
-	RS_Math() = delete;
-public:
+class RS_Math
+{
+    private:
+
+	    RS_Math() = delete;
+
+        static RS2::Unit currentDrawingUnits;
+
+        static QString normalizedUnitsExpression(QString inputExpression);
+
+    public:
+
+        static void setCurrentDrawingUnits(RS2::Unit input_units)
+        {
+            currentDrawingUnits = input_units;
+        }
+
 	static int round(double v);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
@@ -149,4 +167,3 @@ public:
     static void test();
 };
 
-#endif
