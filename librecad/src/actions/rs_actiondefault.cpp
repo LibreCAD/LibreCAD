@@ -158,7 +158,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                     if (highlightedEntity != nullptr)
                     {
-                        highlightedEntity->setHighlighted(false);
+                        highlightedEntity->setHovered(false);
 
                         for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
                         {
@@ -167,6 +167,9 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     }
 
                     highlightedEntity = entity;
+
+                    /* This does not work for RS_Insert. */
+                    highlightedEntity->setHovered(true);
 
                     RS_Pen duplicatedPen = highlightedEntity->getPen(true);
 
@@ -221,8 +224,6 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     }
 
                     graphicView->redraw(RS2::RedrawDrawing);
-                    highlightedEntity->setHighlighted(true);
-                    graphicView->redraw(RS2::RedrawDrawing);
                 }
             }
         }
@@ -239,7 +240,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     if (highlightedEntity != nullptr)
     {
-        highlightedEntity->setHighlighted(false);
+        highlightedEntity->setHovered(false);
 
         for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
         {

@@ -188,6 +188,8 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Insert& i);
 
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 protected:
     RS_InsertData data;
 	mutable RS_Block* block;

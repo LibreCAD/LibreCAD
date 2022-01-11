@@ -1806,15 +1806,17 @@ void RS_EntityContainer::revertDirection() {
  * @param painter
  * @param view
  */
-void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view,
-                              double& /*patternOffset*/) {
+void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
+{
+	if ( ! (painter && view)) return;
 
-	if (!(painter && view)) {
-        return;
-    }
+    const bool entityIsHovered = (isHovered() && (rtti() != RS2::EntityGraphic)) 
+                               ? true 
+                               : false;
 
     foreach (auto e, entities)
     {
+        if (entityIsHovered) e->setPen(getPen());
         view->drawEntity(painter, e);
     }
 }

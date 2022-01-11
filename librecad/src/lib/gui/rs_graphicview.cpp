@@ -1042,9 +1042,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		}
 
 		// this entity is highlighted:
-		if (e->isHighlighted()) {
-			pen.setColor(highlightedColor);
-		}
+		if (e->isHighlighted() || e->isHovered()) pen.setColor(highlightedColor);
 	}
 
 	// deleting not drawing:

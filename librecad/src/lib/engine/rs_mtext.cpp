@@ -667,11 +667,10 @@ std::ostream& operator << (std::ostream& os, const RS_MText& p) {
     return os;
 }
 
+
 void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
 {
-    if (!(painter && view)) {
-        return;
-    }
+    if ( ! (painter && view)) return;
 
     if (!view->isPrintPreview() && !view->isPrinting())
     {
@@ -682,14 +681,17 @@ void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         }
     }
 
-    double patternOffset=0.;
+    if ( ! isHovered()) setHovered(getParent()->isHovered());
+
+    double patternOffset = 0.0;
 
     for (auto e : ((RS_EntityContainer *) firstEntity())->getEntityList())
     {
         for (auto sube : ((RS_EntityContainer *) e)->getEntityList())
         {
-            sube->setPen(this->getPen(true));
+            sube->setPen(getPen());
             sube->draw(painter, view, patternOffset);
         }
     }
 }
+
