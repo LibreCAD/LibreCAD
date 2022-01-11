@@ -203,6 +203,16 @@ public:
     virtual void setHighlighted(bool on);
 	virtual bool isHighlighted() const;
 
+    virtual void setHovered(bool on)
+    {
+        hovered = on;
+    }
+
+    virtual bool isHovered() const
+    {
+        return hovered;
+    }
+
 	bool isLocked() const;
 
 	void undoStateChanged(bool undone) override;
@@ -587,6 +597,8 @@ protected:
 
     //! auto updating enabled?
     bool updateEnabled;
+
+    bool hovered;
 
 private:
 	std::map<QString, QString> varList;
