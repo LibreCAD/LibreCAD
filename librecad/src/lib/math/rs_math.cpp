@@ -249,7 +249,7 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
 
     - by (2021) Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
-QString normalizedUnitsExpression(QString inputExpression)
+QString RS_Math::normalizedUnitsExpression(QString inputExpression)
 {
     QRegExp regexNotAlpha("[^a-zA-Z\"\']*");
 
