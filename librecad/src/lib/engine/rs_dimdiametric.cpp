@@ -86,7 +86,7 @@ RS_Entity* RS_DimDiametric::clone() const {
 QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
-	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+	double dist = RS_Units::convert(data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor());
 
     RS_Graphic* graphic = getGraphic();
 

@@ -995,6 +995,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
     enableFileActions(m);
 
+    RS_Units::setCurrentDrawingUnits(m->getDocument()->getGraphic()->getUnit());
+
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "

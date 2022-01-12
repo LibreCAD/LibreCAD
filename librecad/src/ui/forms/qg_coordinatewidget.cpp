@@ -92,6 +92,11 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
             aprec = graphic->getAnglePrecision();
         }
 
+        x  = RS_Units::convert(x);
+        y  = RS_Units::convert(y);
+        rx = RS_Units::convert(rx);
+        ry = RS_Units::convert(ry);
+
         // abs / rel coordinates:
         QString absX = RS_Units::formatLinear(x,
                                                graphic->getUnit(),

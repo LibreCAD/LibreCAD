@@ -106,7 +106,7 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-	double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
+	double dist = RS_Units::convert(edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor());
 
     RS_Graphic* graphic = getGraphic();
     QString ret;
