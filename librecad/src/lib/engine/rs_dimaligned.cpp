@@ -34,6 +34,7 @@
 #include "rs_constructionline.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 RS_DimAlignedData::RS_DimAlignedData():
 	extensionPoint1(false),
@@ -106,7 +107,11 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const
  * measurement of this dimension.
  */
 QString RS_DimAligned::getMeasuredLabel() {
-	double dist = RS_Units::convert(edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor());
+	double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
+    RS_SETTINGS->endGroup();
 
     RS_Graphic* graphic = getGraphic();
     QString ret;

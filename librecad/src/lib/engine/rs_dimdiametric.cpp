@@ -31,6 +31,7 @@
 #include "rs_graphic.h"
 #include "rs_units.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 RS_DimDiametricData::RS_DimDiametricData():
 	definitionPoint(false),
@@ -86,7 +87,11 @@ RS_Entity* RS_DimDiametric::clone() const {
 QString RS_DimDiametric::getMeasuredLabel() {
 
     // Definitive dimension line:
-	double dist = RS_Units::convert(data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor());
+	double dist = data.definitionPoint.distanceTo(edata.definitionPoint) * getGeneralFactor();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
+    RS_SETTINGS->endGroup();
 
     RS_Graphic* graphic = getGraphic();
 
