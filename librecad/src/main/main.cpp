@@ -55,16 +55,13 @@ int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
-    // Check first two arguments in order to decide if we want to run librecad
-    // as console dxf2pdf tool. On Linux we can create a link to librecad
-    // executable and  name it dxf2pdf. So, we can run either:
-    //
-    //     librecad dxf2pdf [options] ...
-    //
-    // or just:
-    //
-    //     dxf2pdf [options] ...
-    //
+    /* Check first two arguments in order to decide if we want to run librecad
+     * as console dxf2pdf tool. On Linux we can create a link to librecad
+     * executable and  name it dxf2pdf. So, we can run either:
+     *     librecad dxf2pdf [options] ...
+     * or just:
+     *     dxf2pdf [options] ...
+     */
     for (int i = 0; i < qMin(argc, 2); i++) {
         QString arg(argv[i]);
         if (i == 0) {
@@ -206,10 +203,8 @@ int main(int argc, char** argv)
     }
     RS_DEBUG->print("param 0: %s", argv[0]);
 
-    QFileInfo prgInfo( QFile::decodeName(argv[0]) );
-    QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
+    RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);

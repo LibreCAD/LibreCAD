@@ -1,0 +1,74 @@
+name: Linux build
+on:
+  push:
+    branches:
+      - master
+jobs:
+  Build:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt and dependencies
+        run: |
+          sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.9-focal
+          sudo apt-get -y update
+          sudo apt-get -qq install qt512-meta-full libgl-dev libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config qtchooser
+          sudo cp CI/qt512.conf /usr/share/qtchooser/
+          sudo ln -snf /usr/share/qtchooser/qt512.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2.0.0
+        with:
+          boost_version: 1.75.0
+          boost_install_dir: '${{ github.workspace }}/'
+
+      - name: Install Clang
+        run: |
+          sudo apt-get -qq install clang-10 clang-tools-10
+
+      - name: Build and analyze
+        run: |
+          export CC=gcc
+          export ANALYZE="scan-build-10 -o out "
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
+          ${ANALYZE}make release -j$(nproc)
+
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{ github.repository_owner }}/static-analyzer-reports
+          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
+          branch: gh-pages
+          force: true
+          directory: out
+
+      - name: Create AppImage
+        run: |
+          find unix/
+          ./CI/build-appimg.sh
+
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Continuous Build"
+          files: |
+            LibreCAD*.AppImage
+            LICENSE
+

@@ -190,6 +190,20 @@ protected:
 //    duint32 blockCtrl;
     duint32 nextEntLink{0};
     duint32 prevEntLink{0};
+
+private:
+    template <class T>
+    bool entryParse(T &e, dwgBuffer &buff, duint32 bs, bool &ret) {
+        ret = e.parseDwg( version, &buff, bs);
+        if (ret) {
+            parseAttribs(&e);
+            nextEntLink = e.nextEntLink;
+            prevEntLink = e.prevEntLink;
+        }
+
+        return ret;
+    }
+
 };
 
 

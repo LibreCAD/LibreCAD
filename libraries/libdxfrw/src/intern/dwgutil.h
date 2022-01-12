@@ -22,7 +22,7 @@ namespace DRW {
 namespace dwgRSCodec {
     void decode239I(duint8 *in, duint8 *out, duint32 blk);
     void decode251I(duint8 *in, duint8 *out, duint32 blk);
-};
+}
 
 class dwgCompressor {
     enum R21Consts {
@@ -127,6 +127,6 @@ namespace secEnum {
     };
 
     DWGSection getEnum(const std::string &nameSec);
-};
+}
 
 #endif // DWGUTIL_H

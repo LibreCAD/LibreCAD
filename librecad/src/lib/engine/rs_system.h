@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2021 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
 **
@@ -45,14 +46,11 @@
  * @author Andrew Mustun
  */
 class RS_System {
+
 protected:
     RS_System() {
         initialized = false;
     }
-//    ~RS_System() {
-//        while (!allKnownLocales.isEmpty())
-//             delete allKnownLocales.takeFirst();
-//    }
 
 public:
     /**
@@ -65,9 +63,11 @@ public:
         return uniqueInstance;
     }
 
-    void init(const QString& appName, const QString& appVersion,
-                  const QString& appDirName, const QString& appDir="");
-	void initLanguageList();
+    void init(const QString& appName,
+              const QString& appVersion,
+              const QString& appDirName,
+              const char *arg0);
+    void initLanguageList();
     void initAllLanguagesList();
 
     bool checkInit();
@@ -87,16 +87,9 @@ public:
         return QDir::currentPath();
     }
 
-	/**
-	 * @return Application directory.
-	 */
-    QString getAppDir() {
-		return appDir;
-	}
-
     /**
      * @return Application Data directory.
-    */
+     */
     QString getAppDataDir();
 
     /**
@@ -104,15 +97,15 @@ public:
      */
     QStringList getFontList() {
         QStringList ret = getFileList("fonts", "cxf");
-		return ret;
+        return ret;
     }
-	
+
     /**
      * @return A list of absolute paths to all NEW font files found.
      */
     QStringList getNewFontList() {
         QStringList ret = getFileList("fonts", "lff");
-                return ret;
+        return ret;
     }
 
     /**
@@ -120,7 +113,7 @@ public:
      */
     QStringList getPatternList() {
         QStringList ret = getFileList("patterns", "dxf");
-		return ret;
+        return ret;
     }
 
     /**
@@ -128,65 +121,69 @@ public:
      */
     QStringList getScriptList() {
         QStringList ret = getFileList("scripts/qsa", "qs");
-		return ret;
+        return ret;
     }
-	
+
     /**
      * @return A list of absolute paths to all machine configuration files found.
      */
     QStringList getMachineList() {
         QStringList ret = getFileList("machines", "cxm");
-		return ret;
+        return ret;
     }
-	
+
     /**
      * @return Absolute path to the documentation.
      */
     QString getDocPath() {
         QStringList lst = getDirectoryList("doc");
 
-        if( !(lst.isEmpty()) ){
+        if( !lst.isEmpty()) {
             return lst.first();
-        } else return QString();
+        }
+        else {
+            return QString();
+        }
     }
 
-	/**
-	 * @return The application name.
-	 */
-        QString getAppName() {
-		return appName;
-	}
+    /**
+     * @return The application name.
+     */
+    QString getAppName() {
+        return appName;
+    }
 
-	/**
-	 * @return The application version.
-	 */
-        QString getAppVersion() {
-		return appVersion;
-	}
+    /**
+     * @return The application version.
+     */
+    QString getAppVersion() {
+        return appVersion;
+    }
 
     QStringList getFileList(const QString& subDirectory,
-                              const QString& fileExtension);
-							  
+                            const QString& fileExtension);
+
     QStringList getDirectoryList(const QString& subDirectory);
-							  
+
     QStringList getLanguageList() {
-		return languageList;
-	}
-	
-        static QString languageToSymbol(const QString& lang);
-        static QString symbolToLanguage(const QString& symb);
+        return languageList;
+    }
 
-        static QString getEncoding(const QString& str);
+    static QString languageToSymbol(const QString& lang);
+    static QString symbolToLanguage(const QString& symb);
 
-        void loadTranslation(const QString& lang, const QString& langCmd);
+    static QString getEncoding(const QString& str);
+
+    void loadTranslation(const QString& lang, const QString& langCmd);
 
     static bool test();
 
-	/** Returns ISO code for given locale. Needed for win32 to convert 
-	 from system encodings. */
-        static QByteArray localeToISO(const QByteArray& locale);
+    /** Returns ISO code for given locale. Needed for win32 to convert
+     *  from system encodings.
+     */
+    static QByteArray localeToISO(const QByteArray& locale);
 
-    private:
+private:
     void addLocale(RS_Locale *locale);
 
 protected:
@@ -196,14 +193,11 @@ protected:
     QString appVersion;
     QString appDirName;
     QString appDir;
-	
-	//! List of available translations
 
-    QStringList languageList;
-    bool initialized;
+    QStringList languageList;   //< List of available translations
+    bool initialized {false};
+    bool externalAppDir {false};
     QList<QSharedPointer<RS_Locale> > allKnownLocales;
-
 };
 
 #endif
-

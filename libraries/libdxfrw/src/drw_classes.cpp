@@ -16,33 +16,6 @@
 #include "intern/dwgbuffer.h"
 #include "intern/drw_dbg.h"
 
-void DRW_Class::parseCode(int code, dxfReader *reader){
-    switch (code) {
-    case 1:
-        recName = reader->getUtf8String();
-        break;
-    case 2:
-        className = reader->getUtf8String();
-        break;
-    case 3:
-        appName = reader->getUtf8String();
-        break;
-    case 90:
-        proxyFlag = reader->getInt32();
-        break;
-    case 91:
-        instanceCount = reader->getInt32();
-        break;
-    case 280:
-        wasaProxyFlag = reader->getInt32();
-        break;
-    case 281:
-        entityFlag = reader->getInt32();
-        break;
-    default:
-        break;
-    }
-}
 
 bool DRW_Class::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *strBuf){
     DRW_DBG("\n***************************** parsing Class *********************************************\n");

@@ -276,6 +276,9 @@ void RS_MText::update()
         case 0x5C: {
             // code (e.g. \S, \P, ..)
             ++i;
+            if (static_cast<int>(data.text.length()) <= i) {
+                continue;
+            }
             int ch {data.text.at(i).unicode()};
             switch (ch) {
             case 'P':
@@ -324,23 +327,23 @@ void RS_MText::update()
 
                 // get upper string:
                 ++i;
-                while (data.text.at(i).unicode()!='^'
-                       && data.text.at(i).unicode()!='\\'
-                       && i < static_cast<int>(data.text.length()) ) {
+                while (static_cast<int>(data.text.length()) > i
+                       && data.text.at(i).unicode()!='^'
+                       && data.text.at(i).unicode()!='\\') {
                     upperText += data.text.at(i);
                     ++i;
                 }
 
                 ++i;
-
-                if ('^' == data.text.at(i - 1).unicode()
-                    && ' ' == data.text.at(i).unicode() ) {
+                if (static_cast<int>(data.text.length()) > i
+                        && '^' == data.text.at(i - 1).unicode()
+                        && ' ' == data.text.at(i).unicode() ) {
                     ++i;
                 }
 
                 // get lower string:
-                while (';' != data.text.at(i).unicode()
-                       && static_cast<int>(data.text.length()) > i) {
+                while (static_cast<int>(data.text.length()) > i
+                       && ';' != data.text.at(i).unicode()) {
                     lowerText += data.text.at(i);
                     ++i;
                 }
