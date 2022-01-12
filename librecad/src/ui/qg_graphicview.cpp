@@ -657,6 +657,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		setCurrentAction(new RS_ActionZoomIn( *container, *this,
 											           zoomDirection, RS2::Both,
 											           &effect, zoomFactor));
+    }
     redraw();
 
     QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
