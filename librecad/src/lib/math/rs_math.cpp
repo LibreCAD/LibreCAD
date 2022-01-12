@@ -291,7 +291,7 @@ QString RS_Math::normalizedUnitsExpression(QString inputExpression)
                         {
                             if (previousExpressionWasNumber) outputExpression += "+";
 
-                            outputExpression += QString::number(RS_Units::convert(value, valueUnits, RS_Units::currentDrawingUnits));
+                            outputExpression += QString::number(RS_Units::convert(value, valueUnits, RS_Units::getCurrentDrawingUnits()));
 
                             previousExpressionWasNumber = true;
 
