@@ -224,6 +224,8 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     }
 
                     graphicView->redraw(RS2::RedrawDrawing);
+
+                    return;
                 }
             }
         }
