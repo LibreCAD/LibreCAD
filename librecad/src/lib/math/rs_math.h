@@ -30,8 +30,6 @@
 
 #include <vector>
 
-#include "rs.h"
-
 
 class RS_Vector;
 class RS_VectorSolutions;
@@ -47,16 +45,9 @@ class RS_Math
 
 	    RS_Math() = delete;
 
-        static RS2::Unit currentDrawingUnits;
-
         static QString normalizedUnitsExpression(QString inputExpression);
 
     public:
-
-        static void setCurrentDrawingUnits(RS2::Unit input_units)
-        {
-            currentDrawingUnits = input_units;
-        }
 
 	static int round(double v);
     static double pow(double x, double y);

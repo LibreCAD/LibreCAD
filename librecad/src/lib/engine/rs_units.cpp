@@ -33,6 +33,10 @@
 #include "rs_vector.h"
 #include "rs_debug.h"
 
+
+RS2::Unit RS_Units::currentDrawingUnits = (RS2::Unit) 0;
+
+
 /**
  * Converts a DXF integer () to a Unit enum.
  */
