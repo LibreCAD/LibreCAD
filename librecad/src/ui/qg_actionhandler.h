@@ -32,7 +32,6 @@
 
 class QG_SnapToolBar;
 class RS_Layer;
-class RS_Pen;
 
 /**
  * This class can trigger actions (from menus, buttons, ...).
@@ -274,8 +273,6 @@ private:
     QG_SnapToolBar* snap_toolbar{nullptr};
     RS_GraphicView* view{nullptr};
     RS_Document*    document{nullptr};
-
-    RS_Pen *currentAppPen = nullptr;
 };
 
 #endif

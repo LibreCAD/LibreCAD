@@ -31,7 +31,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
 
-#include "rs_actionsnapmiddlemanual.h"
+#include "lc_actionsnapmiddlemanual.h"
 
 
 /*
@@ -49,23 +49,29 @@
 */
 
 
-RS_ActionSnapMiddleManual::RS_ActionSnapMiddleManual( RS_EntityContainer& container, 
-                                                      RS_GraphicView& graphicView) 
+LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual( RS_EntityContainer& container, 
+                                                      RS_GraphicView& graphicView, RS_Pen input_currentAppPen) 
                                                       :
-                                                      RS_PreviewActionInterface("Snap Middle Manual", container, graphicView)
+                                                      RS_PreviewActionInterface("Snap Middle Manual", container, graphicView), 
+                                                      currentAppPen(input_currentAppPen)
 {
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::RS_ActionSnapMiddleManual");
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");
 
     actionType = RS2::ActionSnapMiddleManual;
 }
 
 
-RS_ActionSnapMiddleManual::~RS_ActionSnapMiddleManual() = default;
-
-
-void RS_ActionSnapMiddleManual::init(int status)
+LC_ActionSnapMiddleManual::~LC_ActionSnapMiddleManual()// = default;
 {
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::init");
+    document->setActivePen(currentAppPen);
+
+    signalUnsetSnapMiddleManual();
+}
+
+
+void LC_ActionSnapMiddleManual::init(int status)
+{
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::init");
 
     RS_PreviewActionInterface::init(status);
 
@@ -75,7 +81,7 @@ void RS_ActionSnapMiddleManual::init(int status)
 }
 
 
-void RS_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
+void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
 {
     RS_Vector mouse = snapPoint(e);
 
@@ -100,7 +106,7 @@ void RS_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
 }
 
 
-void RS_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
+void LC_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
 {
     if (e->button() == Qt::LeftButton)
     {
@@ -124,7 +130,7 @@ void RS_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
         {
             case SetPercentage:
             case SetStartPoint:
-                init(-1);
+                init(-1);finish(false);
                 break;
 
             default:
@@ -135,13 +141,13 @@ void RS_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
 }
 
 
-void RS_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
+void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
 {
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::coordinateEvent");
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::coordinateEvent");
 
     if (e == nullptr)
     {
-        RS_DEBUG->print("RS_ActionSnapMiddleManual::coordinateEvent: event was nullptr");
+        RS_DEBUG->print("LC_ActionSnapMiddleManual::coordinateEvent: event was nullptr");
         return;
     }
 
@@ -166,6 +172,18 @@ void RS_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
                 const RS_Vector middleManualPoint = startPoint + ((endPoint - startPoint) * (percentage / 100.0));
 
                 graphicView->moveRelativeZero(middleManualPoint);
+
+                if (predecessor != NULL)
+                {
+                    if (predecessor->getName().compare("Default") != 0)
+                    {
+                        document->setActivePen(currentAppPen);
+			            RS_CoordinateEvent new_e (middleManualPoint);
+                        predecessor->coordinateEvent(&new_e);
+                        init(-1);
+                    }
+                }
+
                 setStatus(SetPercentage);
                 updateMouseButtonHints();
                 init(getStatus());
@@ -173,13 +191,13 @@ void RS_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
             break;
     }
 
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::coordinateEvent: OK");
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::coordinateEvent: OK");
 }
 
 
-void RS_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
+void LC_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
 {
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::commandEvent");
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::commandEvent");
 
     QString inputCommand = inputCommandEvent->getCommand().toLower();
 
@@ -225,11 +243,11 @@ void RS_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
             return;
     }
 
-    RS_DEBUG->print("RS_ActionSnapMiddleManual::commandEvent: OK");
+    RS_DEBUG->print("LC_ActionSnapMiddleManual::commandEvent: OK");
 }
 
 
-QStringList RS_ActionSnapMiddleManual::getAvailableCommands()
+QStringList LC_ActionSnapMiddleManual::getAvailableCommands()
 {
     QStringList actionCommandsList;
 
@@ -244,7 +262,7 @@ QStringList RS_ActionSnapMiddleManual::getAvailableCommands()
 }
 
 
-void RS_ActionSnapMiddleManual::updateMouseButtonHints()
+void LC_ActionSnapMiddleManual::updateMouseButtonHints()
 {
     switch (getStatus())
     {
