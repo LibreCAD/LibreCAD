@@ -277,8 +277,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
              << "DrawHatch"
              << "DrawImage"
              << "BlocksCreate"
-             << "DrawPoint"
-             << "SnapMiddleManual";
+             << "DrawPoint";
 
         auto toolbar = new QToolBar("DefaultCustom", this);
         toolbar->setObjectName("DefaultCustom");

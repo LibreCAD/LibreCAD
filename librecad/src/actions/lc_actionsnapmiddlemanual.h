@@ -26,6 +26,7 @@
 #pragma once
 
 
+#include "rs_pen.h"
 #include "rs_vector.h"
 #include "rs_previewactioninterface.h"
 
@@ -45,7 +46,7 @@
 */
 
 
-class RS_ActionSnapMiddleManual : public RS_PreviewActionInterface
+class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface
 {
     Q_OBJECT
 
@@ -59,10 +60,10 @@ class RS_ActionSnapMiddleManual : public RS_PreviewActionInterface
             SetEndPoint      /* Setting the endpoint   */
         };
 
-        RS_ActionSnapMiddleManual( RS_EntityContainer& container, 
-                                   RS_GraphicView& graphicView);
+        LC_ActionSnapMiddleManual( RS_EntityContainer& container, 
+                                   RS_GraphicView& graphicView, RS_Pen input_currentAppPen);
 
-       ~RS_ActionSnapMiddleManual() override;
+       ~LC_ActionSnapMiddleManual() override;
 
         void init(int status = 0)   override;
 
@@ -76,11 +77,17 @@ class RS_ActionSnapMiddleManual : public RS_PreviewActionInterface
 
         void updateMouseButtonHints() override;
 
+    signals:
+
+        void signalUnsetSnapMiddleManual();
+
     private:
 
         double percentage;
 
         RS_Vector startPoint;
         RS_Vector endPoint;
+
+        RS_Pen currentAppPen;
 };
 
