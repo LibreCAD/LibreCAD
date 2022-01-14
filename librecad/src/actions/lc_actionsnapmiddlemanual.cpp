@@ -186,6 +186,7 @@ void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
                 {
                     if (predecessor->getName().compare("Default") != 0)
                     {
+                        signalUnsetSnapMiddleManual();
                         document->setActivePen(currentAppPen);
                         RS_CoordinateEvent new_e (middleManualPoint);
                         predecessor->coordinateEvent(&new_e);
