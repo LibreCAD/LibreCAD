@@ -61,17 +61,14 @@ LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual( RS_EntityContainer& contai
 }
 
 
-LC_ActionSnapMiddleManual::~LC_ActionSnapMiddleManual()// = default;
-{
-    document->setActivePen(currentAppPen);
-
-    signalUnsetSnapMiddleManual();
-}
+LC_ActionSnapMiddleManual::~LC_ActionSnapMiddleManual() = default;
 
 
 void LC_ActionSnapMiddleManual::init(int status)
 {
     RS_DEBUG->print("LC_ActionSnapMiddleManual::init");
+
+    document->setActivePen(currentAppPen);
 
     RS_PreviewActionInterface::init(status);
 
@@ -103,6 +100,17 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
 
         drawPreview();
     }
+    else if (getStatus() == SetPercentage)
+    {
+        if (predecessor != NULL)
+        {
+            if (predecessor->getName().compare("Snap Middle Manual") == 0)
+            {
+                predecessor->init(-1);
+                init(-1);
+            }
+        }
+    }
 }
 
 
@@ -130,7 +138,8 @@ void LC_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
         {
             case SetPercentage:
             case SetStartPoint:
-                init(-1);finish(false);
+                finish();
+                signalUnsetSnapMiddleManual();
                 break;
 
             default:
@@ -178,7 +187,7 @@ void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
                     if (predecessor->getName().compare("Default") != 0)
                     {
                         document->setActivePen(currentAppPen);
-			            RS_CoordinateEvent new_e (middleManualPoint);
+                        RS_CoordinateEvent new_e (middleManualPoint);
                         predecessor->coordinateEvent(&new_e);
                         init(-1);
                     }
@@ -232,7 +241,7 @@ void LC_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
         case SetEndPoint:
             if (checkCommand("close", inputCommand))
             {
-                setStatus(SetPercentage);
+                setStatus(-1);
                 inputCommandEvent->accept();
                 updateMouseButtonHints();
                 return;
