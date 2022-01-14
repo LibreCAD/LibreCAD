@@ -1738,6 +1738,12 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
 
 void QG_ActionHandler::slotSnapMiddleManual()
 {
+    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)
+    {
+        getCurrentAction()->init(-1);
+        return;
+    }
+
     const RS_Pen currentAppPen { document->getActivePen() };
     const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
     document->setActivePen(snapMiddleManual_pen);
