@@ -122,6 +122,8 @@ QString RS_FilterDXFRW::lastError() const
         return (QObject::tr( "error reading DXF/DWG objects", "RS_FilterDXFRW"));
     case DRW::BAD_READ_SECTION:
         return (QObject::tr( "error reading DXF/DWG sections", "RS_FilterDXFRW"));
+    case DRW::BAD_CODE_PARSED:
+        return (QObject::tr( "error reading DXF/DWG code", "RS_FilterDXFRW"));
     default:
         break;
     }
