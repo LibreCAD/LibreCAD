@@ -129,20 +129,26 @@ void RS_ActionModifyRound::trigger() {
 
                 for (auto e : entity1->getParent()->getEntityList())
                 {
-                    if (removeOldFillet(e, foundPolyline))
+                    if ((e != entity1) && (e != entity2))
                     {
-                        entity1->getParent()->removeEntity(e);
-                        break;
+                        if (removeOldFillet(e, foundPolyline))
+                        {
+                            entity1->getParent()->removeEntity(e);
+                            break;
+                        }
                     }
                 }
             }
-        }
 
-        if ( ! foundPolyline)
-        {
-            for (auto e : graphicView->getContainer()->getEntityList())
+            if ( ! foundPolyline)
             {
-                if (removeOldFillet(e, foundPolyline)) break;
+                for (auto e : graphicView->getContainer()->getEntityList())
+                {
+                    if ((e != entity1) && (e != entity2))
+                    {
+                        if (removeOldFillet(e, foundPolyline)) break;
+                    }
+                }
             }
         }
 
