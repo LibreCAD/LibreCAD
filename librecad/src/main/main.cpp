@@ -79,6 +79,8 @@ int main(int argc, char** argv)
     QCoreApplication::setApplicationName("LibreCAD");
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
+printf("Version " XSTR(LC_VERSION) "\n");
+
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 7, 0))
     QGuiApplication::setDesktopFileName("librecad.desktop");
 #endif

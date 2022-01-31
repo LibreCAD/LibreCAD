@@ -47,7 +47,8 @@ QG_CircleOptions::QG_CircleOptions(QWidget* parent, Qt::WindowFlags fl)
  */
 QG_CircleOptions::~QG_CircleOptions()
 {
-	saveSettings();
+// don't save settings here, settings are saved on each successful call of updateRadius
+//	saveSettings();
 }
 
 /*
@@ -72,16 +73,17 @@ void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
         QString sr;
         if (update) {
             sr = QString("%1").arg(action->getRadius());
+			ui->leRadius->setText(sr);
         } else {
             RS_SETTINGS->beginGroup("/Draw");
             sr = RS_SETTINGS->readEntry("/CircleRadius", "1.0");
             RS_SETTINGS->endGroup();
-            action->setRadius(sr.toDouble());
+//			RS_DEBUG->print(RS_Debug::D_ERROR,"QG_CircleOptions::setAction, setRadius '%s'",qPrintable(sr));
+//            action->setRadius(RS_Math::eval(sr));
+			ui->leRadius->setText(sr);		/* calls updateRadius() indirectly via QT signal */
         }
-		ui->leRadius->setText(sr);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_CircleOptions::setAction: wrong action type");
+        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_CircleOptions::setAction: wrong action type");
 		action = nullptr;
     }
 
@@ -100,6 +102,8 @@ void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
 
 void QG_CircleOptions::updateRadius(const QString& r) {
     if (action) {
-        action->setRadius(RS_Math::eval(r));
+//		RS_DEBUG->print(RS_Debug::D_ERROR,"QG_CircleOptions::updateRadius, setRadius '%s'",qPrintable(r));
+		if(action->setRadius(r))
+			saveSettings();
     }
 }
