@@ -106,12 +106,12 @@ bool RS_ActionDrawCircleCR::setRadius(const QString& sr)
 
 	r = RS_Math::eval(sr,&ok);
 	if (!ok) {
-		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (expression)").arg(sr));
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid expression '%1' for radius").arg(sr));
 	} else if(r<0) {
-		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (negative)").arg(sr));
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid negative radius '%1'").arg(sr));
 		ok = false;
 	} else if(r<=RS_TOLERANCE) {
-		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (zero)").arg(sr));
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid zero radius '%1'").arg(sr));
 		ok = false;
 	} else {
 		data->radius=r;
