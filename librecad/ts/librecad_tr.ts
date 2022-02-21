@@ -5,7 +5,7 @@
     <name>ComboBoxOption</name>
     <message>
       <source>Frame</source>
-      <translation type="unfinished">Frame</translation>
+      <translation>Çerçeve</translation>
     </message>
     <message>
       <source>GroupBox</source>
@@ -13,14 +13,14 @@
     </message>
     <message>
       <source>Set</source>
-      <translation type="unfinished">Set</translation>
+      <translation>Ayarla</translation>
     </message>
   </context>
   <context>
     <name>DlgSplinePoints</name>
     <message>
       <source>SplinePoints</source>
-      <translation type="unfinished">SplinePoints</translation>
+      <translation>EğriNoktaları</translation>
     </message>
     <message>
       <source>Layer:</source>
@@ -32,19 +32,19 @@
     </message>
     <message>
       <source>Closed</source>
-      <translation type="unfinished">Closed</translation>
+      <translation>Kapalı</translation>
     </message>
     <message>
       <source>Spline Points</source>
-      <translation type="unfinished">Spline Points</translation>
+      <translation>Eğri Noktaları</translation>
     </message>
     <message>
       <source>Control Points</source>
-      <translation type="unfinished">Control Points</translation>
+      <translation>Kontrol Noktaları</translation>
     </message>
     <message>
       <source>Points on Spline</source>
-      <translation type="unfinished">Points on Spline</translation>
+      <translation>Eğrideki Noktalar</translation>
     </message>
   </context>
   <context>
@@ -52,12 +52,12 @@
     <message>
       <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-      <translation type="unfinished">radius=%1 is too small for points selected
-distance between points=%2 is larger than diameter=%3</translation>
+      <translation>yarıçap=%1 seçilen noktalar için çok küçük
+noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Select from two possible circle centers</source>
-      <translation type="unfinished">Select from two possible circle centers</translation>
+      <translation>İki olası daire merkezinden birini seçin</translation>
     </message>
     <message>
       <source>Specify first point</source>
@@ -77,14 +77,14 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Select circle center</source>
-      <translation type="unfinished">Select circle center</translation>
+      <translation>Çemberin merkezini seçin</translation>
     </message>
   </context>
   <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
       <source>Specify first control point</source>
-      <translation type="unfinished">Specify first control point</translation>
+      <translation>İlk kontrol noktasını belirtin</translation>
     </message>
     <message>
       <source>Cancel</source>
@@ -92,7 +92,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Specify next control point or [%1]</source>
-      <translation type="unfinished">Specify next control point or [%1]</translation>
+      <translation>Sonraki kontrol noktasını veya [%1] belirtin</translation>
     </message>
     <message>
       <source>Back</source>
@@ -100,15 +100,15 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Specify next control point</source>
-      <translation type="unfinished">Specify next control point</translation>
+      <translation>Sonraki kontrol noktasını belirtin</translation>
     </message>
     <message>
       <source>Cannot undo: Not enough entities defined yet.</source>
-      <translation type="unfinished">Cannot undo: Not enough entities defined yet.</translation>
+      <translation>Geri alınamıyor: Henüz yeterince öğe tanımlanmadı.</translation>
     </message>
     <message>
       <source>Cannot undo: Nothing could be redone.</source>
-      <translation type="unfinished">Cannot undo: Nothing could be redone.</translation>
+      <translation>Geri alınamaz: Hiçbir şey yeniden yapılamaz.</translation>
     </message>
   </context>
   <context>
@@ -119,7 +119,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Zoom &amp;Panning</source>
-      <translation type="unfinished">Zoom &amp;Panning</translation>
+      <translation>Yakınlaştır ve Kaydır</translation>
     </message>
     <message>
       <source>Select Entity</source>
@@ -131,7 +131,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Deselect Window</source>
-      <translation type="unfinished">Deselect Window</translation>
+      <translation>Pencere Seçimini Kaldır</translation>
     </message>
     <message>
       <source>(De-)Select &amp;Contour</source>
@@ -175,7 +175,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Parallel</source>
-      <translation type="unfinished">&amp;Parallel</translation>
+      <translation>&amp;Paralel</translation>
     </message>
     <message>
       <source>Parallel through point</source>
@@ -199,7 +199,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Tangent &amp;Orthogonal</source>
-      <translation type="unfinished">Tangent &amp;Orthogonal</translation>
+      <translation>Teğet Ortogonal</translation>
     </message>
     <message>
       <source>Orthogonal</source>
@@ -231,7 +231,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>2 Points, Radius</source>
-      <translation type="unfinished">2 Points, Radius</translation>
+      <translation>2 Nokta, Yarıçap</translation>
     </message>
     <message>
       <source>3 Points</source>
@@ -243,24 +243,24 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Circle &amp;Inscribed</source>
-      <translation type="unfinished">Circle &amp;Inscribed</translation>
+      <translation>&amp;İçe çizilmiş Çember</translation>
     </message>
     <message>
       <source>Tangential 2 Circles, Radius</source>
       <comment>circle tangential with two circles, and given radius</comment>
-      <translation type="unfinished">Tangential 2 Circles, Radius</translation>
+      <translation>2 Çembere Teğet, Yarıçap</translation>
     </message>
     <message>
       <source>Tangential 2 Circles, 1 Point</source>
-      <translation type="unfinished">Tangential 2 Circles, 1 Point</translation>
+      <translation>2 Çembere Teğet, 1 Nokta</translation>
     </message>
     <message>
       <source>Tangential &amp;3 Circles</source>
-      <translation type="unfinished">Tangential &amp;3 Circles</translation>
+      <translation>&amp;3 Çembere Teğet</translation>
     </message>
     <message>
       <source>Tangential, 2 P&amp;oints</source>
-      <translation type="unfinished">Tangential, 2 P&amp;oints</translation>
+      <translation>Teğet, 2 N&amp;okta</translation>
     </message>
     <message>
       <source>&amp;Center, Point, Angles</source>
@@ -272,7 +272,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Arc &amp;Tangential</source>
-      <translation type="unfinished">Arc &amp;Tangential</translation>
+      <translation>Yay &amp;Teğet</translation>
     </message>
     <message>
       <source>&amp;Ellipse (Axis)</source>
@@ -280,23 +280,23 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Ellipse &amp;Arc (Axis)</source>
-      <translation type="unfinished">Ellipse &amp;Arc (Axis)</translation>
+      <translation>Elips Y&amp;ayı (Eksen)</translation>
     </message>
     <message>
       <source>Ellipse &amp;Foci Point</source>
-      <translation type="unfinished">Ellipse &amp;Foci Point</translation>
+      <translation>Elips Odak Noktası</translation>
     </message>
     <message>
       <source>Ellipse &amp;4 Point</source>
-      <translation type="unfinished">Ellipse &amp;4 Point</translation>
+      <translation>Elips &amp;4 Nokta</translation>
     </message>
     <message>
       <source>Ellipse Center and &amp;3 Points</source>
-      <translation type="unfinished">Ellipse Center and &amp;3 Points</translation>
+      <translation>Elips Merkez ve &amp;3 Nokta</translation>
     </message>
     <message>
       <source>Ellipse &amp;Inscribed</source>
-      <translation type="unfinished">Ellipse &amp;Inscribed</translation>
+      <translation>&amp;İç Teğet Elips</translation>
     </message>
     <message>
       <source>&amp;Spline</source>
@@ -404,7 +404,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>Ctrl+R</source>
-      <translation type="unfinished">Ctrl+R</translation>
+      <translation>Ctrl+R</translation>
     </message>
     <message>
       <source>&amp;Rotate</source>
@@ -436,7 +436,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Divide</source>
-      <translation type="unfinished">&amp;Divide</translation>
+      <translation>Böl</translation>
     </message>
     <message>
       <source>&amp;Stretch</source>
@@ -448,7 +448,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>&amp;Fillet</source>
-      <translation type="unfinished">&amp;Fillet</translation>
+      <translation>Yuvarla</translation>
     </message>
     <message>
       <source>&amp;Explode Text into Letters</source>
@@ -468,7 +468,7 @@ distance between points=%2 is larger than diameter=%3</translation>
     </message>
     <message>
       <source>An&amp;gle between two lines</source>
-      <translation type="unfinished">An&amp;gle between two lines</translation>
+      <translation>İki çizgi arasındaki açı</translation>
     </message>
     <message>
       <source>&amp;Total length of selected entities</source>
