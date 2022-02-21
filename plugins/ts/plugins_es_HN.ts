@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="es-HN" sourcelanguage="en">
+<TS version="2.0" language="es_HN" sourcelanguage="en">
   <context>
     <name>AsciiFile</name>
     <message>
