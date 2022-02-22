@@ -300,11 +300,11 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Spline</source>
-      <translation type="unfinished">&amp;Spline</translation>
+      <translation>Eğri</translation>
     </message>
     <message>
       <source>&amp;Spline through points</source>
-      <translation type="unfinished">&amp;Spline through points</translation>
+      <translation>Noktalar arasına çizgi çiz</translation>
     </message>
     <message>
       <source>&amp;Polyline</source>
@@ -312,35 +312,35 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Add node</source>
-      <translation type="unfinished">&amp;Add node</translation>
+      <translation>Düğüm ekle</translation>
     </message>
     <message>
       <source>A&amp;ppend node</source>
-      <translation type="unfinished">A&amp;ppend node</translation>
+      <translation>Düğüm dahil et</translation>
     </message>
     <message>
       <source>&amp;Delete node</source>
-      <translation type="unfinished">&amp;Delete node</translation>
+      <translation>Düğümü Sil</translation>
     </message>
     <message>
       <source>Delete &amp;between two nodes</source>
-      <translation type="unfinished">Delete &amp;between two nodes</translation>
+      <translation>İki düğüm arasını sil</translation>
     </message>
     <message>
       <source>&amp;Trim segments</source>
-      <translation type="unfinished">&amp;Trim segments</translation>
+      <translation>Parçaları kırp</translation>
     </message>
     <message>
       <source>Create &amp;Equidistant Polylines</source>
-      <translation type="unfinished">Create &amp;Equidistant Polylines</translation>
+      <translation>&amp;Eşit Mesafeli Çoklu Çizgiler Oluştur</translation>
     </message>
     <message>
       <source>Create Polyline from Existing &amp;Segments</source>
-      <translation type="unfinished">Create Polyline from Existing &amp;Segments</translation>
+      <translation>Mevcut Parçalardan Çoklu Çizgi Oluştur</translation>
     </message>
     <message>
       <source>&amp;MText</source>
-      <translation type="unfinished">&amp;MText</translation>
+      <translation>ÇokluMetin</translation>
     </message>
     <message>
       <source>&amp;Text</source>
@@ -352,7 +352,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Insert &amp;Image</source>
-      <translation type="unfinished">Insert &amp;Image</translation>
+      <translation>Resim Ekle</translation>
     </message>
     <message>
       <source>&amp;Aligned</source>
@@ -400,7 +400,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Re&amp;vert direction</source>
-      <translation type="unfinished">Re&amp;vert direction</translation>
+      <translation>Yönü çe&amp;vir</translation>
     </message>
     <message>
       <source>Ctrl+R</source>
@@ -476,11 +476,11 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Polygonal &amp;Area</source>
-      <translation type="unfinished">Polygonal &amp;Area</translation>
+      <translation>Çokgen &amp;Alanı</translation>
     </message>
     <message>
       <source>&amp;Selection pointer</source>
-      <translation type="unfinished">&amp;Selection pointer</translation>
+      <translation>&amp;Seçim işaretçisi</translation>
     </message>
     <message>
       <source>&amp;Undo</source>
@@ -850,11 +850,11 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Height</source>
-      <translation type="unfinished">Height</translation>
+      <translation>Yükseklik</translation>
     </message>
     <message>
       <source>Font Size</source>
-      <translation type="unfinished">Font Size</translation>
+      <translation>Yazı tipi boyutu</translation>
     </message>
     <message>
       <source>Input the path of a Qt style sheet.</source>
@@ -873,7 +873,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     <name>LG_DimzerosBox</name>
     <message>
       <source>select:</source>
-      <translation type="unfinished">select:</translation>
+      <translation>seçim:</translation>
     </message>
     <message>
       <source>remove left</source>
@@ -908,14 +908,14 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Copies:</source>
-      <translation type="unfinished">Copies:</translation>
+      <translation>Kopyalar:</translation>
     </message>
   </context>
   <context>
     <name>QC_ActionGetEnt</name>
     <message>
       <source>Select object:</source>
-      <translation type="unfinished">Select object:</translation>
+      <translation>Nesne seç:</translation>
     </message>
     <message>
       <source>Cancel</source>
@@ -933,7 +933,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     <name>QC_ActionGetSelect</name>
     <message>
       <source>Select objects:</source>
-      <translation type="unfinished">Select objects:</translation>
+      <translation>Nesneleri Seçin:</translation>
     </message>
     <message>
       <source>Cancel</source>
@@ -1108,11 +1108,11 @@ Lütfen dosya izinlerine bakın.</translation>
     </message>
     <message>
       <source>Auto-saving drawing...</source>
-      <translation type="unfinished">Auto-saving drawing...</translation>
+      <translation>Çizim otomatik olarak kaydediliyor...</translation>
     </message>
     <message>
       <source>Auto-saved drawing</source>
-      <translation type="unfinished">Auto-saved drawing</translation>
+      <translation>Otomatik kaydedilen çizim</translation>
     </message>
     <message>
       <source>Cannot auto-save the file
@@ -1126,15 +1126,15 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Import</source>
-      <translation type="unfinished">Import</translation>
+      <translation>İçe aktar</translation>
     </message>
     <message>
       <source>&amp;Toolbars</source>
-      <translation type="unfinished">&amp;Toolbars</translation>
+      <translation>Araç Çubukları</translation>
     </message>
     <message>
       <source>Compiled on: %1</source>
-      <translation type="unfinished">Compiled on: %1</translation>
+      <translation>Derleme tarihi: %1</translation>
     </message>
     <message>
       <source>Version: %1</source>
@@ -1146,11 +1146,11 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Cannot save the file </source>
-      <translation type="unfinished">Cannot save the file </translation>
+      <translation>Dosya Kaydedilemiyor </translation>
     </message>
     <message>
       <source> , please check the filename and permissions.</source>
-      <translation type="unfinished"> , please check the filename and permissions.</translation>
+      <translation> , lütfen dosya adını ve izinleri kontrol edin.</translation>
     </message>
     <message>
       <source>Su&amp;b-Window mode</source>
@@ -1158,23 +1158,23 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Tile &amp;Vertically</source>
-      <translation type="unfinished">Tile &amp;Vertically</translation>
+      <translation>&amp;Dikey Olarak Döşe</translation>
     </message>
     <message>
       <source>Ta&amp;b mode</source>
-      <translation type="unfinished">Ta&amp;b mode</translation>
+      <translation>Sekme Modu</translation>
     </message>
     <message>
       <source>New document from template: </source>
-      <translation type="unfinished">New document from template: </translation>
+      <translation>Şablondan yeni belge: </translation>
     </message>
     <message>
       <source>Select Template aborted</source>
-      <translation type="unfinished">Select Template aborted</translation>
+      <translation>Şablon Seçimi iptal edildi</translation>
     </message>
     <message>
       <source>Auto-saving failed</source>
-      <translation type="unfinished">Auto-saving failed</translation>
+      <translation>Otomatik kaydetme başarısız oldu</translation>
     </message>
     <message>
       <source>File</source>
@@ -1198,31 +1198,31 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Export as</source>
-      <translation type="unfinished">Export as</translation>
+      <translation>Dışa Aktar</translation>
     </message>
     <message>
       <source>Compiler: Clang %1.%2.%3</source>
-      <translation type="unfinished">Compiler: Clang %1.%2.%3</translation>
+      <translation>Derleyici: Clang %1.%2.%3</translation>
     </message>
     <message>
       <source>Compiler: GNU GCC %1.%2.%3</source>
-      <translation type="unfinished">Compiler: GNU GCC %1.%2.%3</translation>
+      <translation>Derleyici: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
       <source>Qt Version: %1</source>
-      <translation type="unfinished">Qt Version: %1</translation>
+      <translation>Qt Sürümü: %1</translation>
     </message>
     <message>
       <source>Draft Mode</source>
-      <translation type="unfinished">Draft Mode</translation>
+      <translation>Taslak modu</translation>
     </message>
     <message>
       <source>Export as PDF</source>
-      <translation type="unfinished">Export as PDF</translation>
+      <translation>PDF olarak Dışa Aktar</translation>
     </message>
     <message>
       <source>Export</source>
-      <translation type="unfinished">Export</translation>
+      <translation>Dışa Aktar</translation>
     </message>
     <message>
       <source>Cannot open the file
@@ -1238,15 +1238,15 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Categories</source>
-      <translation type="unfinished">Categories</translation>
+      <translation>Kategoriler</translation>
     </message>
     <message>
       <source>&amp;Order</source>
-      <translation type="unfinished">&amp;Order</translation>
+      <translation>Sıralama</translation>
     </message>
     <message>
       <source>Order</source>
-      <translation type="unfinished">Order</translation>
+      <translation>Sıralama</translation>
     </message>
     <message>
       <source>Select</source>
@@ -1262,11 +1262,11 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>&amp;Curve</source>
-      <translation type="unfinished">&amp;Curve</translation>
+      <translation>Eğri</translation>
     </message>
     <message>
       <source>Curve</source>
-      <translation type="unfinished">Curve</translation>
+      <translation>Eğri</translation>
     </message>
     <message>
       <source>Ellipse</source>
@@ -1278,7 +1278,7 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Dimension</source>
-      <translation type="unfinished">Dimension</translation>
+      <translation>Ölçü</translation>
     </message>
     <message>
       <source>Modify</source>
@@ -1298,15 +1298,15 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Dock Areas</source>
-      <translation type="unfinished">Dock Areas</translation>
+      <translation>Yerleşim Alanları</translation>
     </message>
     <message>
       <source>Grid Status</source>
-      <translation type="unfinished">Grid Status</translation>
+      <translation>Izgara Durumu</translation>
     </message>
     <message>
       <source>Toolbars</source>
-      <translation type="unfinished">Toolbars</translation>
+      <translation>Araç çubukları</translation>
     </message>
     <message>
       <source>Dockwidgets</source>
@@ -1314,7 +1314,7 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Device Options</source>
-      <translation type="unfinished">Device Options</translation>
+      <translation>Aygıt seçenekleri</translation>
     </message>
     <message>
       <source>Device</source>
@@ -1662,11 +1662,11 @@ için açar</translation>
     </message>
     <message>
       <source>Unknown command: %1</source>
-      <translation type="unfinished">Unknown command: %1</translation>
+      <translation>Bilimeyen komut: %1</translation>
     </message>
     <message>
       <source>Command history and output</source>
-      <translation type="unfinished">Command history and output</translation>
+      <translation>Komut geçmişi ve çıktısı</translation>
     </message>
     <message>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;type in coordinates or commands&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -1675,7 +1675,7 @@ için açar</translation>
     <message>
       <source>escape</source>
       <comment>escape, go back from action steps</comment>
-      <translation type="unfinished">escape</translation>
+      <translation>çık</translation>
     </message>
   </context>
   <context>
@@ -1721,11 +1721,11 @@ için açar</translation>
     </message>
     <message utf8="true">
       <source>⌀ (Diameter)</source>
-      <translation type="unfinished">⌀ (Diameter)</translation>
+      <translation>⌀ (Çap)</translation>
     </message>
     <message utf8="true">
       <source>π (Pi)</source>
-      <translation type="unfinished">π (Pi)</translation>
+      <translation>π (Pi)</translation>
     </message>
   </context>
   <context>
@@ -1832,7 +1832,7 @@ için açar</translation>
     </message>
     <message>
       <source>Dimension</source>
-      <translation type="unfinished">Dimension</translation>
+      <translation>Ölçü</translation>
     </message>
   </context>
   <context>
@@ -1937,7 +1937,7 @@ için açar</translation>
     </message>
     <message>
       <source>insert (x):</source>
-      <translation type="unfinished">insert (x):</translation>
+      <translation>ekle (x):</translation>
     </message>
     <message>
       <source>Scale:</source>
@@ -1945,15 +1945,15 @@ için açar</translation>
     </message>
     <message>
       <source>Size (px):</source>
-      <translation type="unfinished">Size (px):</translation>
+      <translation>Boyut (px):</translation>
     </message>
     <message>
       <source>path:</source>
-      <translation type="unfinished">path:</translation>
+      <translation>yol:</translation>
     </message>
     <message>
       <source>insert (y):</source>
-      <translation type="unfinished">insert (y):</translation>
+      <translation>ekle (y):</translation>
     </message>
     <message>
       <source>Angle:</source>
@@ -1961,7 +1961,7 @@ için açar</translation>
     </message>
     <message>
       <source>DPI</source>
-      <translation type="unfinished">DPI</translation>
+      <translation>DPI</translation>
     </message>
   </context>
   <context>
@@ -2039,11 +2039,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Scale X:</source>
-      <translation type="unfinished">Scale X:</translation>
+      <translation>Ölçek X:</translation>
     </message>
     <message>
       <source>Scale Y:</source>
-      <translation type="unfinished">Scale Y:</translation>
+      <translation>Ölçek Y:</translation>
     </message>
   </context>
   <context>
@@ -2081,7 +2081,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMText</name>
     <message>
       <source>MText</source>
-      <translation type="unfinished">MText</translation>
+      <translation>ÇokluMetin</translation>
     </message>
     <message>
       <source>Layer:</source>
@@ -2101,7 +2101,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Alt+D</source>
-      <translation type="unfinished">Alt+D</translation>
+      <translation>Alt+D</translation>
     </message>
     <message>
       <source>Alignment</source>
@@ -2165,7 +2165,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Cut</source>
-      <translation type="unfinished">Cut</translation>
+      <translation>Kes</translation>
     </message>
     <message>
       <source>Copy</source>
@@ -2213,7 +2213,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
       <source>Pi (π)</source>
-      <translation type="unfinished">Pi (π)</translation>
+      <translation>Pi (π)</translation>
     </message>
     <message utf8="true">
       <source>Pound (£)</source>
@@ -2221,7 +2221,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
       <source>Yen (¥)</source>
-      <translation type="unfinished">Yen (¥)</translation>
+      <translation>Yen (¥)</translation>
     </message>
     <message utf8="true">
       <source>Times (×)</source>
@@ -2297,67 +2297,67 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>[0700-074F] Syriac</source>
-      <translation type="unfinished">[0700-074F] Syriac</translation>
+      <translation>[0700-074F] Süryanice</translation>
     </message>
     <message>
       <source>[0780-07BF] Thaana</source>
-      <translation type="unfinished">[0780-07BF] Thaana</translation>
+      <translation>[0780-07BF] Thaana</translation>
     </message>
     <message>
       <source>[0900-097F] Devanagari</source>
-      <translation type="unfinished">[0900-097F] Devanagari</translation>
+      <translation>[0900-097F] Devanagari</translation>
     </message>
     <message>
       <source>[0980-09FF] Bengali</source>
-      <translation type="unfinished">[0980-09FF] Bengali</translation>
+      <translation>[0980-09FF] Bengalce</translation>
     </message>
     <message>
       <source>[0A00-0A7F] Gurmukhi</source>
-      <translation type="unfinished">[0A00-0A7F] Gurmukhi</translation>
+      <translation>[0A00-0A7F] Gurmukhi</translation>
     </message>
     <message>
       <source>[0A80-0AFF] Gujarati</source>
-      <translation type="unfinished">[0A80-0AFF] Gujarati</translation>
+      <translation>[0A80-0AFF] Gujarati</translation>
     </message>
     <message>
       <source>[0B00-0B7F] Oriya</source>
-      <translation type="unfinished">[0B00-0B7F] Oriya</translation>
+      <translation>[0B00-0B7F] Oriya</translation>
     </message>
     <message>
       <source>[0B80-0BFF] Tamil</source>
-      <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+      <translation>[0B80-0BFF] Tamil</translation>
     </message>
     <message>
       <source>[0C00-0C7F] Telugu</source>
-      <translation type="unfinished">[0C00-0C7F] Telugu</translation>
+      <translation>[0C00-0C7F] Telugu</translation>
     </message>
     <message>
       <source>[0C80-0CFF] Kannada</source>
-      <translation type="unfinished">[0C80-0CFF] Kannada</translation>
+      <translation>[0C80-0CFF] Kannada</translation>
     </message>
     <message>
       <source>[0D00-0D7F] Malayalam</source>
-      <translation type="unfinished">[0D00-0D7F] Malayalam</translation>
+      <translation>[0D00-0D7F] Malayalam</translation>
     </message>
     <message>
       <source>[0D80-0DFF] Sinhala</source>
-      <translation type="unfinished">[0D80-0DFF] Sinhala</translation>
+      <translation>[0D80-0DFF] Sinhala</translation>
     </message>
     <message>
       <source>[0E00-0E7F] Thai</source>
-      <translation type="unfinished">[0E00-0E7F] Thai</translation>
+      <translation>[0E00-0E7F] Thai</translation>
     </message>
     <message>
       <source>[0E80-0EFF] Lao</source>
-      <translation type="unfinished">[0E80-0EFF] Lao</translation>
+      <translation>[0E80-0EFF] Lao</translation>
     </message>
     <message>
       <source>[0F00-0FFF] Tibetan</source>
-      <translation type="unfinished">[0F00-0FFF] Tibetan</translation>
+      <translation>[0F00-0FFF] Tibetçe</translation>
     </message>
     <message>
       <source>[1000-109F] Myanmar</source>
-      <translation type="unfinished">[1000-109F] Myanmar</translation>
+      <translation>[1000-109F] Myanmar</translation>
     </message>
     <message>
       <source>[10A0-10FF] Georgian</source>
@@ -2389,7 +2389,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>[1700-171F] Tagalog</source>
-      <translation type="unfinished">[1700-171F] Tagalog</translation>
+      <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
       <source>[1720-173F] Hanunoo</source>
