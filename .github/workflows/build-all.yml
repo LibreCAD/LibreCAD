@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-      - build_macos
+      - ci_dev
 
 jobs:
   BuildLinux:
@@ -51,6 +51,7 @@ jobs:
           git commit -m "latest analyzer report"
 
       - name: Push changes
+        if: github.repository_owner == 'LibreCAD'
         uses: ad-m/github-push-action@master
         with:
           repository: ${{ github.repository_owner }}/static-analyzer-reports
@@ -181,6 +182,7 @@ jobs:
           retention-days: 2
 
   UpdateAssets:
+    if: github.repository_owner == 'LibreCAD'
     needs: [BuildLinux, BuildMacOS, BuildWindows]
     runs-on: ubuntu-20.04
     steps:
