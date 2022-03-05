@@ -9,7 +9,7 @@
     </message>
     <message>
       <source>GroupBox</source>
-      <translation type="unfinished">GroupBox</translation>
+      <translation>GrupKutusu</translation>
     </message>
     <message>
       <source>Set</source>
@@ -504,7 +504,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>move to bottom</source>
-      <translation type="unfinished">move to bottom</translation>
+      <translation>aşağı taşı</translation>
     </message>
     <message>
       <source>lower after entity</source>
@@ -516,15 +516,15 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>move to top</source>
-      <translation type="unfinished">move to top</translation>
+      <translation>yukarı taşı</translation>
     </message>
     <message>
       <source>&amp;Show all</source>
-      <translation type="unfinished">&amp;Show all</translation>
+      <translation>Tümünü göster</translation>
     </message>
     <message>
       <source>&amp;Hide all</source>
-      <translation type="unfinished">&amp;Hide all</translation>
+      <translation>Tümünü gizle</translation>
     </message>
     <message>
       <source>&amp;Add Layer</source>
@@ -540,19 +540,19 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Toggle Layer Loc&amp;k</source>
-      <translation type="unfinished">Toggle Layer Loc&amp;k</translation>
+      <translation>Katman Kilidini Aç/Kapat</translation>
     </message>
     <message>
       <source>&amp;Toggle Layer Visibility</source>
-      <translation type="unfinished">&amp;Toggle Layer Visibility</translation>
+      <translation>Katman görünürlüğünü Aç/Kapat</translation>
     </message>
     <message>
       <source>Toggle Layer &amp;Print</source>
-      <translation type="unfinished">Toggle Layer &amp;Print</translation>
+      <translation>Katmanın Yazdırılmasını Aç/Kapat</translation>
     </message>
     <message>
       <source>Toggle &amp;Construction Layer</source>
-      <translation type="unfinished">Toggle &amp;Construction Layer</translation>
+      <translation>Yapı Katmanını Aç/Kapat</translation>
     </message>
     <message>
       <source>&amp;Add Block</source>
@@ -564,7 +564,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Rename Block</source>
-      <translation type="unfinished">&amp;Rename Block</translation>
+      <translation>Bloğu Yeniden Adlandır</translation>
     </message>
     <message>
       <source>&amp;Edit Block</source>
@@ -572,7 +572,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Save Block</source>
-      <translation type="unfinished">&amp;Save Block</translation>
+      <translation>Bloğu Kaydet</translation>
     </message>
     <message>
       <source>&amp;Insert Block</source>
@@ -580,7 +580,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Toggle Block &amp;Visibility</source>
-      <translation type="unfinished">Toggle Block &amp;Visibility</translation>
+      <translation>Blok görünürlüğünü Aç/Kapat</translation>
     </message>
     <message>
       <source>&amp;Create Block</source>
@@ -588,7 +588,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Ex&amp;plode</source>
-      <translation type="unfinished">Ex&amp;plode</translation>
+      <translation>&amp;Patlat</translation>
     </message>
     <message>
       <source>&amp;Application Preferences</source>
@@ -612,15 +612,15 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Ctrl+K</source>
-      <translation type="unfinished">Ctrl+K</translation>
+      <translation>Ctrl+K</translation>
     </message>
     <message>
       <source>Invert Selection</source>
-      <translation type="unfinished">Invert Selection</translation>
+      <translation>Seçimi Ters Çevir</translation>
     </message>
     <message>
       <source>Export as &amp;MakerCAM SVG...</source>
-      <translation type="unfinished">Export as &amp;MakerCAM SVG...</translation>
+      <translation>&amp;MakerCAM SVG olarak Dışa Aktar...</translation>
     </message>
     <message>
       <source>Zoom &amp;In</source>
@@ -636,7 +636,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Previous &amp;View</source>
-      <translation type="unfinished">Previous &amp;View</translation>
+      <translation>Önceki Görünüm</translation>
     </message>
     <message>
       <source>&amp;Redraw</source>
@@ -648,7 +648,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>New From &amp;Template</source>
-      <translation type="unfinished">New From &amp;Template</translation>
+      <translation>Şablondan Yeni Oluştur</translation>
     </message>
     <message>
       <source>&amp;Open...</source>
@@ -664,7 +664,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Export as image</source>
-      <translation type="unfinished">&amp;Export as image</translation>
+      <translation>Resim Olarak Dışa Aktar</translation>
     </message>
     <message>
       <source>&amp;Close</source>
@@ -676,7 +676,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Export as PDF</source>
-      <translation type="unfinished">Export as PDF</translation>
+      <translation>PDF olarak Dışa Aktar</translation>
     </message>
     <message>
       <source>Print Pre&amp;view</source>
@@ -692,15 +692,15 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>&amp;Fullscreen</source>
-      <translation type="unfinished">&amp;Fullscreen</translation>
+      <translation>Tam Ekran</translation>
     </message>
     <message>
       <source>Ctrl+Meta+F</source>
-      <translation type="unfinished">Ctrl+Meta+F</translation>
+      <translation>Ctrl+Meta+F</translation>
     </message>
     <message>
       <source>F11</source>
-      <translation type="unfinished">F11</translation>
+      <translation>F11</translation>
     </message>
     <message>
       <source>Ctrl+F11</source>
