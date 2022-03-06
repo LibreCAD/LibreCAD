@@ -704,7 +704,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Ctrl+F11</source>
-      <translation type="unfinished">Ctrl+F11</translation>
+      <translation>Ctrl+F11</translation>
     </message>
     <message>
       <source>&amp;Grid</source>
@@ -713,7 +713,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     <message>
       <source>Ctrl+G</source>
       <comment>Toggle Grid</comment>
-      <translation type="unfinished">Ctrl+G</translation>
+      <translation>Ctrl+G</translation>
     </message>
     <message>
       <source>&amp;Draft</source>
@@ -726,7 +726,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     <message>
       <source>Ctrl+I</source>
       <comment>Hide Statusbar</comment>
-      <translation type="unfinished">Ctrl+I</translation>
+      <translation>Ctrl+I</translation>
     </message>
     <message>
       <source>Focus on &amp;Command Line</source>
@@ -734,7 +734,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Widget Options</source>
-      <translation type="unfinished">Widget Options</translation>
+      <translation>Widget Seçenekleri</translation>
     </message>
     <message>
       <source>Left</source>
@@ -746,65 +746,65 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Top</source>
-      <translation type="unfinished">Top</translation>
+      <translation>Üst</translation>
     </message>
     <message>
       <source>Bottom</source>
-      <translation type="unfinished">Bottom</translation>
+      <translation>Alt</translation>
     </message>
     <message>
       <source>Floating</source>
-      <translation type="unfinished">Floating</translation>
+      <translation>Yüzer</translation>
     </message>
     <message>
       <source>Reload Style Sheet</source>
-      <translation type="unfinished">Reload Style Sheet</translation>
+      <translation>Stil sayfasını yeniden yükle</translation>
     </message>
     <message>
       <source>Device Options</source>
-      <translation type="unfinished">Device Options</translation>
+      <translation>Aygıt Seçenekleri</translation>
     </message>
     <message>
       <source>Mo&amp;ve and Rotate</source>
-      <translation type="unfinished">Mo&amp;ve and Rotate</translation>
+      <translation>Taşı ve Çevir</translation>
     </message>
     <message>
       <source>Tr&amp;im Two</source>
-      <translation type="unfinished">Tr&amp;im Two</translation>
+      <translation>İkili Kırp</translation>
     </message>
     <message>
       <source>O&amp;ffset</source>
-      <translation type="unfinished">O&amp;ffset</translation>
+      <translation>Ötele</translation>
     </message>
     <message>
       <source>Menu Creator</source>
-      <translation type="unfinished">Menu Creator</translation>
+      <translation>Menü Oluşturucu</translation>
     </message>
     <message>
       <source>Toolbar Creator</source>
-      <translation type="unfinished">Toolbar Creator</translation>
+      <translation>Araççubuğu oluşturucu</translation>
     </message>
   </context>
   <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
       <source>Export as</source>
-      <translation type="unfinished">Export as</translation>
+      <translation>Dışa Aktar</translation>
     </message>
   </context>
   <context>
     <name>LC_DeviceOptions</name>
     <message>
       <source>Form</source>
-      <translation type="unfinished">Form</translation>
+      <translation>Biçim</translation>
     </message>
     <message>
       <source>Device</source>
-      <translation type="unfinished">Device</translation>
+      <translation>Aygıt</translation>
     </message>
     <message>
       <source>Save</source>
-      <translation type="unfinished">Save</translation>
+      <translation>Kaydet</translation>
     </message>
   </context>
   <context>
@@ -815,34 +815,34 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Insert Image</source>
-      <translation type="unfinished">Insert Image</translation>
+      <translation>Resim Ekle</translation>
     </message>
   </context>
   <context>
     <name>LC_WidgetOptionsDialog</name>
     <message>
       <source>Widget Options</source>
-      <translation type="unfinished">Widget Options</translation>
+      <translation>Widget Seçenekleri</translation>
     </message>
     <message>
       <source>Toolbar</source>
-      <translation type="unfinished">Toolbar</translation>
+      <translation>Araç Çubuğu</translation>
     </message>
     <message>
       <source>Icon Size</source>
-      <translation type="unfinished">Icon Size</translation>
+      <translation>Simge Boyutu</translation>
     </message>
     <message>
       <source>General</source>
-      <translation type="unfinished">General</translation>
+      <translation>Genel</translation>
     </message>
     <message>
       <source>Style</source>
-      <translation type="unfinished">Style</translation>
+      <translation>Biçim</translation>
     </message>
     <message>
       <source>Style Sheet</source>
-      <translation type="unfinished">Style Sheet</translation>
+      <translation>Biçim Sayfası</translation>
     </message>
     <message>
       <source>Statusbar</source>
@@ -858,15 +858,15 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Input the path of a Qt style sheet.</source>
-      <translation type="unfinished">Input the path of a Qt style sheet.</translation>
+      <translation>Bir Qt stil sayfasının yolunu yazın.</translation>
     </message>
     <message>
       <source>side length in pixels</source>
-      <translation type="unfinished">side length in pixels</translation>
+      <translation>piksel cinsinden kenar uzunluğu</translation>
     </message>
     <message>
       <source>Use themed icons</source>
-      <translation type="unfinished">Use themed icons</translation>
+      <translation>Temalı simgeleri kullanın</translation>
     </message>
   </context>
   <context>
@@ -877,19 +877,19 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>remove left</source>
-      <translation type="unfinished">remove left</translation>
+      <translation>sola kaldır</translation>
     </message>
     <message>
       <source>remove right</source>
-      <translation type="unfinished">remove right</translation>
+      <translation>sağa kaldır</translation>
     </message>
     <message>
       <source>remove 0&apos;</source>
-      <translation type="unfinished">remove 0&apos;</translation>
+      <translation>0&apos; kaldır</translation>
     </message>
     <message>
       <source>remove 0&quot;</source>
-      <translation type="unfinished">remove 0&quot;</translation>
+      <translation>0&quot; kaldır</translation>
     </message>
   </context>
   <context>
@@ -904,7 +904,7 @@ noktalar arasındaki mesafe=%2 çaptan büyük=%3</translation>
     </message>
     <message>
       <source>Distance from original polyline</source>
-      <translation type="unfinished">Distance from original polyline</translation>
+      <translation>Orijinal çoklu çizgiden uzaklık</translation>
     </message>
     <message>
       <source>Copies:</source>
@@ -1119,10 +1119,10 @@ Lütfen dosya izinlerine bakın.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-      <translation type="unfinished">Cannot auto-save the file
+      <translation>Dosya otomatik olarak kaydedilemiyor
 %1
-Please check the permissions.
-Auto-save disabled.</translation>
+Lütfen izinleri kontrol edin.
+Otomatik kaydetme devre dışı bırakıldı.</translation>
     </message>
     <message>
       <source>Import</source>
@@ -1142,7 +1142,7 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Warning: File already opened : </source>
-      <translation type="unfinished">Warning: File already opened : </translation>
+      <translation>Uyarı: Dosya zaten açık: </translation>
     </message>
     <message>
       <source>Cannot save the file </source>
@@ -1154,7 +1154,7 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Su&amp;b-Window mode</source>
-      <translation type="unfinished">Su&amp;b-Window mode</translation>
+      <translation>Alt Pencere modu</translation>
     </message>
     <message>
       <source>Tile &amp;Vertically</source>
@@ -1190,7 +1190,7 @@ Auto-save disabled.</translation>
     </message>
     <message>
       <source>Snap Selection</source>
-      <translation type="unfinished">Snap Selection</translation>
+      <translation>Seçimi Yakala</translation>
     </message>
     <message>
       <source>Tool Options</source>
@@ -1228,13 +1228,13 @@ Auto-save disabled.</translation>
       <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-      <translation type="unfinished">Cannot open the file
+      <translation>Dosya açılamıyor
 %1
-Please check its existence and permissions.</translation>
+Lütfen dosyanın varlığını ve izinlerini kontrol edin.</translation>
     </message>
     <message>
       <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-      <translation type="unfinished">File &apos;%1&apos; does not exist. Opening aborted</translation>
+      <translation>&apos;%1&apos; dosyası mevcut değil. Açma işlemi iptal edildi</translation>
     </message>
     <message>
       <source>Categories</source>
@@ -1310,7 +1310,7 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Dockwidgets</source>
-      <translation type="unfinished">Dockwidgets</translation>
+      <translation>Widget yerleşimi</translation>
     </message>
     <message>
       <source>Device Options</source>
@@ -1318,35 +1318,35 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Device</source>
-      <translation type="unfinished">Device</translation>
+      <translation>Aygıt</translation>
     </message>
     <message>
       <source>&amp;Options</source>
-      <translation type="unfinished">&amp;Options</translation>
+      <translation>Seçenekler</translation>
     </message>
     <message>
       <source>Pl&amp;ugins</source>
-      <translation type="unfinished">Pl&amp;ugins</translation>
+      <translation>Eklentiler</translation>
     </message>
     <message>
       <source>Dime&amp;nsion</source>
-      <translation type="unfinished">Dime&amp;nsion</translation>
+      <translation>Ölçülendirme</translation>
     </message>
     <message>
       <source>Dock Wid&amp;gets</source>
-      <translation type="unfinished">Dock Wid&amp;gets</translation>
+      <translation>Widget'ları Yerleştir</translation>
     </message>
     <message>
       <source>Recent Files</source>
-      <translation type="unfinished">Recent Files</translation>
+      <translation>Son Kullanılan Dosyalar</translation>
     </message>
     <message>
       <source>Compiler: Microsoft Visual C++</source>
-      <translation type="unfinished">Compiler: Microsoft Visual C++</translation>
+      <translation>Derleyici: Microsoft Visual C++</translation>
     </message>
     <message>
       <source>Boost Version: %1.%2.%3</source>
-      <translation type="unfinished">Boost Version: %1.%2.%3</translation>
+      <translation>Yükseltme Sürümü: %1.%2.%3</translation>
     </message>
     <message>
       <source>Copy</source>
@@ -1354,43 +1354,43 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Contributors</source>
-      <translation type="unfinished">Contributors</translation>
+      <translation>Katkıda Bulunanlar</translation>
     </message>
     <message>
       <source>License</source>
-      <translation type="unfinished">License</translation>
+      <translation>Lisans</translation>
     </message>
     <message>
       <source>System</source>
-      <translation type="unfinished">System</translation>
+      <translation>Sistem</translation>
     </message>
     <message>
       <source>Toolbar Creator</source>
-      <translation type="unfinished">Toolbar Creator</translation>
+      <translation>Araççubuğu oluşturucu</translation>
     </message>
     <message>
       <source>Menu Creator</source>
-      <translation type="unfinished">Menu Creator</translation>
+      <translation>Menü Oluşturucu</translation>
     </message>
     <message>
       <source>Menu Assigner</source>
-      <translation type="unfinished">Menu Assigner</translation>
+      <translation>Menü Atayıcı</translation>
     </message>
     <message>
       <source>&amp;Tools</source>
-      <translation type="unfinished">&amp;Tools</translation>
+      <translation>Araçlar</translation>
     </message>
     <message>
       <source>&amp;Drawings</source>
-      <translation type="unfinished">&amp;Drawings</translation>
+      <translation>Çizimler</translation>
     </message>
     <message>
       <source>Help Links</source>
-      <translation type="unfinished">Help Links</translation>
+      <translation>Yardım Bağlantıları</translation>
     </message>
     <message>
       <source>Online</source>
-      <translation type="unfinished">Online</translation>
+      <translation>Çevrimiçi</translation>
     </message>
   </context>
   <context>
@@ -1414,7 +1414,7 @@ Please check its existence and permissions.</translation>
     <message>
       <source>escape</source>
       <comment>escape, go back from action steps</comment>
-      <translation type="unfinished">escape</translation>
+      <translation>çık</translation>
     </message>
   </context>
   <context>
@@ -1429,7 +1429,7 @@ Please check its existence and permissions.</translation>
     </message>
     <message>
       <source>Current Layer</source>
-      <translation type="unfinished">Current Layer</translation>
+      <translation>Geçerli Katman</translation>
     </message>
     <message>
       <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1534,15 +1534,15 @@ için açar</translation>
     </message>
     <message>
       <source>Create Block</source>
-      <translation type="unfinished">Create Block</translation>
+      <translation>Blok Oluştur</translation>
     </message>
     <message>
       <source>Add an empty block</source>
-      <translation type="unfinished">Add an empty block</translation>
+      <translation>Yeni boş bir blok ekle</translation>
     </message>
     <message>
       <source>save the active block to a file</source>
-      <translation type="unfinished">save the active block to a file</translation>
+      <translation>aktif bloğu bir dosyaya kaydet</translation>
     </message>
   </context>
   <context>
@@ -1597,35 +1597,35 @@ için açar</translation>
     </message>
     <message>
       <source>Dark Red</source>
-      <translation type="unfinished">Dark Red</translation>
+      <translation>Koyu Kırmızı</translation>
     </message>
     <message>
       <source>Dark Yellow</source>
-      <translation type="unfinished">Dark Yellow</translation>
+      <translation>Koyu Sarı</translation>
     </message>
     <message>
       <source>Dark Green</source>
-      <translation type="unfinished">Dark Green</translation>
+      <translation>Koyu Yeşil</translation>
     </message>
     <message>
       <source>Dark Cyan</source>
-      <translation type="unfinished">Dark Cyan</translation>
+      <translation>Koyu Deniz Mavisi</translation>
     </message>
     <message>
       <source>Dark Blue</source>
-      <translation type="unfinished">Dark Blue</translation>
+      <translation>Koyu Mavi</translation>
     </message>
     <message>
       <source>Dark Magenta</source>
-      <translation type="unfinished">Dark Magenta</translation>
+      <translation>Koyu Mor</translation>
     </message>
     <message>
       <source>Dark Gray</source>
-      <translation type="unfinished">Dark Gray</translation>
+      <translation>Koyu Gri</translation>
     </message>
     <message>
       <source>Custom</source>
-      <translation type="unfinished">Custom</translation>
+      <translation>Özel</translation>
     </message>
   </context>
   <context>
@@ -2977,7 +2977,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Crosshair</source>
-      <translation type="unfinished">Crosshair</translation>
+      <translation>Artı Hedef Göstergesi</translation>
     </message>
     <message>
       <source>Left crosshair with isometric grid</source>
@@ -2993,7 +2993,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Top</source>
-      <translation type="unfinished">Top</translation>
+      <translation>Üst</translation>
     </message>
     <message>
       <source>Right crosshair with isometric grid</source>
@@ -3017,7 +3017,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Isometric Grid</source>
-      <translation type="unfinished">Isometric Grid</translation>
+      <translation>İzometrik ıIzgara</translation>
     </message>
     <message>
       <source>Tick size:</source>
@@ -3033,7 +3033,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>General Scale:</source>
-      <translation type="unfinished">General Scale:</translation>
+      <translation>Genel Ölçek:</translation>
     </message>
     <message>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3045,7 +3045,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Text style:</source>
-      <translation type="unfinished">Text style:</translation>
+      <translation>Metin biçimi:</translation>
     </message>
     <message>
       <source>&apos;.&apos; (Period)</source>
@@ -3061,7 +3061,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Linear units:</source>
-      <translation type="unfinished">Linear units:</translation>
+      <translation>Doğrusal birimler:</translation>
     </message>
     <message>
       <source>Color:</source>
@@ -3069,11 +3069,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Length Factor:</source>
-      <translation type="unfinished">Length Factor:</translation>
+      <translation>Uzunluk katsayısı:</translation>
     </message>
     <message>
       <source>Angular units:</source>
-      <translation type="unfinished">Angular units:</translation>
+      <translation>Açısal birimler:</translation>
     </message>
     <message>
       <source>Linear zeros:</source>
@@ -3081,7 +3081,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Format units</source>
-      <translation type="unfinished">Format units</translation>
+      <translation>Biçim birimleri</translation>
     </message>
     <message>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3089,7 +3089,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Text size &amp; position</source>
-      <translation type="unfinished">Text size &amp; position</translation>
+      <translation>Metin boyutu &amp; konumu</translation>
     </message>
     <message>
       <source>Length to enlarge over dimension line</source>
@@ -3113,7 +3113,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Angular precision:</source>
-      <translation type="unfinished">Angular precision:</translation>
+      <translation>Açısal Hassasiyet:</translation>
     </message>
     <message>
       <source>Enlarge:</source>
@@ -3121,11 +3121,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Offset:</source>
-      <translation type="unfinished">Offset:</translation>
+      <translation>Ötele:</translation>
     </message>
     <message>
       <source>Linear precision:</source>
-      <translation type="unfinished">Linear precision:</translation>
+      <translation>Doğrusal Hassasiyet:</translation>
     </message>
     <message>
       <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -3141,19 +3141,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Text alignment:</source>
-      <translation type="unfinished">Text alignment:</translation>
+      <translation>Metin hizalaması:</translation>
     </message>
     <message>
       <source>Extension lines</source>
-      <translation type="unfinished">Extension lines</translation>
+      <translation>Uzatma çizgileri</translation>
     </message>
     <message>
       <source>Fixed length:</source>
-      <translation type="unfinished">Fixed length:</translation>
+      <translation>Sabit uzunluk:</translation>
     </message>
     <message>
       <source>fixed extension line legth</source>
-      <translation type="unfinished">fixed extension line legth</translation>
+      <translation>sabit uzatma çizgisi uzunluğu</translation>
     </message>
   </context>
   <context>
@@ -3252,11 +3252,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Alt+S</source>
-      <translation type="unfinished">Alt+S</translation>
+      <translation>Alt+S</translation>
     </message>
     <message>
       <source>Alt+U</source>
-      <translation type="unfinished">Alt+U</translation>
+      <translation>Alt+U</translation>
     </message>
     <message>
       <source>Minimal Grid Spacing (px):</source>
@@ -3264,15 +3264,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Program Defaults</source>
-      <translation type="unfinished">Program Defaults</translation>
+      <translation>Program Varsayılanları</translation>
     </message>
     <message>
       <source>Auto save time:</source>
-      <translation type="unfinished">Auto save time:</translation>
+      <translation>Otomatik kayıt süresi:</translation>
     </message>
     <message>
       <source>Drawing unit.</source>
-      <translation type="unfinished">Drawing unit.</translation>
+      <translation>Çizim birimi.</translation>
     </message>
     <message>
       <source>Time between automatic saving of the document in minutes.</source>
@@ -3284,11 +3284,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Auto backup</source>
-      <translation type="unfinished">Auto backup</translation>
+      <translation>Otomatik yedekleme</translation>
     </message>
     <message>
       <source>Template:</source>
-      <translation type="unfinished">Template:</translation>
+      <translation>Şablon:</translation>
     </message>
     <message>
       <source>St&amp;art Handle Color:</source>
@@ -3388,7 +3388,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Clear settings</source>
-      <translation type="unfinished">Clear settings</translation>
+      <translation>Ayarları temizle</translation>
     </message>
     <message>
       <source>This will also include custom menus and toolbars. Continue?</source>
@@ -3411,7 +3411,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Layers</source>
-      <translation type="unfinished">Layers</translation>
+      <translation>Katmanlar</translation>
     </message>
     <message>
       <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
@@ -3419,15 +3419,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Export invisible layers</source>
-      <translation type="unfinished">Export invisible layers</translation>
+      <translation>Gizli katmanları dışa aktar</translation>
     </message>
     <message>
       <source>Export visible construction layers</source>
-      <translation type="unfinished">Export visible construction layers</translation>
+      <translation>Görünür yapı katmanlarını dışa aktar</translation>
     </message>
     <message>
       <source>Blocks</source>
-      <translation type="unfinished">Blocks</translation>
+      <translation>Bloklar</translation>
     </message>
     <message>
       <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
@@ -3439,7 +3439,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Ellipses / Ellipse arcs</source>
-      <translation type="unfinished">Ellipses / Ellipse arcs</translation>
+      <translation>Elipsler / Elips yayları</translation>
     </message>
     <message>
       <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
@@ -3489,7 +3489,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Closed</source>
-      <translation type="unfinished">Closed</translation>
+      <translation>Kapalı</translation>
     </message>
   </context>
   <context>
@@ -3528,7 +3528,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>...</source>
-      <translation type="unfinished">...</translation>
+      <translation>...</translation>
     </message>
   </context>
   <context>
@@ -3571,7 +3571,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>...</source>
-      <translation type="unfinished">...</translation>
+      <translation>...</translation>
     </message>
   </context>
   <context>
@@ -3606,11 +3606,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>...</source>
-      <translation type="unfinished">...</translation>
+      <translation>...</translation>
     </message>
     <message>
       <source>Scale by the same factor at both x- and y- directions</source>
-      <translation type="unfinished">Scale by the same factor at both x- and y- directions</translation>
+      <translation>Hem x hem de y yönlerinde aynı katsayıyla ölçeklendirin</translation>
     </message>
     <message>
       <source>Isotropic Scaling</source>
@@ -3618,18 +3618,18 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>X</source>
-      <translation type="unfinished">X</translation>
+      <translation>X</translation>
     </message>
     <message>
       <source>Y</source>
-      <translation type="unfinished">Y</translation>
+      <translation>Y</translation>
     </message>
   </context>
   <context>
     <name>QG_DlgSpline</name>
     <message>
       <source>Spline</source>
-      <translation type="unfinished">Spline</translation>
+      <translation>Eğri</translation>
     </message>
     <message>
       <source>Layer:</source>
@@ -3641,11 +3641,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Degree:</source>
-      <translation type="unfinished">Degree:</translation>
+      <translation>Derece:</translation>
     </message>
     <message>
       <source>Closed</source>
-      <translation type="unfinished">Closed</translation>
+      <translation>Kapalı</translation>
     </message>
   </context>
   <context>
@@ -3760,7 +3760,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
       <source>Pi (π)</source>
-      <translation type="unfinished">Pi (π)</translation>
+      <translation>Pi (π)</translation>
     </message>
     <message utf8="true">
       <source>Pound (£)</source>
@@ -3768,7 +3768,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message utf8="true">
       <source>Yen (¥)</source>
-      <translation type="unfinished">Yen (¥)</translation>
+      <translation>Yen (¥)</translation>
     </message>
     <message utf8="true">
       <source>Times (×)</source>
@@ -3844,7 +3844,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>[0700-074F] Syriac</source>
-      <translation type="unfinished">[0700-074F] Syriac</translation>
+      <translation>[0700-074F] Süryanice</translation>
     </message>
     <message>
       <source>[0780-07BF] Thaana</source>
@@ -4232,7 +4232,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Font settings</source>
-      <translation type="unfinished">Font settings</translation>
+      <translation>Yazı tipi ayarları</translation>
     </message>
     <message>
       <source>Angle:</source>
@@ -4240,15 +4240,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Oblique:</source>
-      <translation type="unfinished">Oblique:</translation>
+      <translation>Eğik:</translation>
     </message>
     <message>
       <source>Width factor:</source>
-      <translation type="unfinished">Width factor:</translation>
+      <translation>Kalınlık katsayısı:</translation>
     </message>
     <message>
       <source>Font:</source>
-      <translation type="unfinished">Font:</translation>
+      <translation>Yazıtipi:</translation>
     </message>
     <message>
       <source>Baseline Left</source>
@@ -4256,7 +4256,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>...</source>
-      <translation type="unfinished">...</translation>
+      <translation>...</translation>
     </message>
     <message>
       <source>Baseline Right</source>
@@ -4268,15 +4268,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Fit</source>
-      <translation type="unfinished">Fit</translation>
+      <translation>Sığdır</translation>
     </message>
     <message utf8="true">
       <source>Diameter (⌀)</source>
-      <translation type="unfinished">Diameter (⌀)</translation>
+      <translation>Çap (⌀)</translation>
     </message>
     <message>
       <source>A&amp;ligned</source>
-      <translation type="unfinished">A&amp;ligned</translation>
+      <translation>Hiza&amp;lı</translation>
     </message>
     <message>
       <source>&amp;Middle</source>
@@ -4287,7 +4287,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_ExitDialog</name>
     <message>
       <source>QCad</source>
-      <translation type="unfinished">QCad</translation>
+      <translation>QCad</translation>
     </message>
     <message>
       <source>again Still No Text supplied.</source>
@@ -4295,30 +4295,30 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Save As...</source>
-      <translation type="unfinished">Save As...</translation>
+      <translation>Farklı Kaydet...</translation>
     </message>
   </context>
   <context>
     <name>QG_FileDialog</name>
     <message>
       <source>Drawing Exchange DXF 2000 %1</source>
-      <translation type="unfinished">Drawing Exchange DXF 2000 %1</translation>
+      <translation>Drawing Exchange DXF 2000 %1</translation>
     </message>
     <message>
       <source>Drawing Exchange DXF R12 %1</source>
-      <translation type="unfinished">Drawing Exchange DXF R12 %1</translation>
+      <translation>Drawing Exchange DXF R12 %1</translation>
     </message>
     <message>
       <source>LFF Font %1</source>
-      <translation type="unfinished">LFF Font %1</translation>
+      <translation>LFF Font %1</translation>
     </message>
     <message>
       <source>QCad Font %1</source>
-      <translation type="unfinished">QCad Font %1</translation>
+      <translation>QCad Font %1</translation>
     </message>
     <message>
       <source>Jww Drawing %1</source>
-      <translation type="unfinished">Jww Drawing %1</translation>
+      <translation>Jww Drawing %1</translation>
     </message>
     <message>
       <source>Drawing Exchange %1</source>
@@ -4330,20 +4330,20 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Drawing Exchange DXF 2007 %1</source>
-      <translation type="unfinished">Drawing Exchange DXF 2007 %1</translation>
+      <translation>Drawing Exchange DXF 2007 %1</translation>
     </message>
     <message>
       <source>Drawing Exchange DXF 2004 %1</source>
-      <translation type="unfinished">Drawing Exchange DXF 2004 %1</translation>
+      <translation>Drawing Exchange DXF 2004 %1</translation>
     </message>
     <message>
       <source>Drawing Exchange DXF R14 %1</source>
-      <translation type="unfinished">Drawing Exchange DXF R14 %1</translation>
+      <translation>Drawing Exchange DXF R14 %1</translation>
     </message>
     <message>
       <source>Block</source>
       <comment>block file</comment>
-      <translation type="unfinished">Block</translation>
+      <translation>Blok</translation>
     </message>
     <message>
       <source>Drawing</source>
@@ -4352,11 +4352,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Open %1</source>
-      <translation type="unfinished">Open %1</translation>
+      <translation>%1 Aç</translation>
     </message>
     <message>
       <source>Save %1 As</source>
-      <translation type="unfinished">Save %1 As</translation>
+      <translation>%1 Farklı Kaydet</translation>
     </message>
     <message>
       <source>dwg Drawing %1</source>
@@ -4364,7 +4364,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Untitled</source>
-      <translation type="unfinished">Untitled</translation>
+      <translation>İsimsiz</translation>
     </message>
   </context>
   <context>
@@ -4415,23 +4415,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
       <source>Borders</source>
-      <translation type="unfinished">Borders</translation>
+      <translation>Kenarlıklar</translation>
     </message>
     <message>
       <source>Top / Bottom - Border:</source>
-      <translation type="unfinished">Top / Bottom - Border:</translation>
+      <translation>Üst / Alt Kenarlıklar:</translation>
     </message>
     <message>
       <source>Left / Right - Border:</source>
-      <translation type="unfinished">Left / Right - Border:</translation>
+      <translation>Sol / Sağ Kenarlıklar:</translation>
     </message>
     <message>
       <source>set same size</source>
-      <translation type="unfinished">set same size</translation>
+      <translation>aynı boyutta ayarla</translation>
     </message>
     <message>
       <source>B&amp;lack</source>
-      <translation type="unfinished">B&amp;lack</translation>
+      <translation>Siyah</translation>
     </message>
   </context>
   <context>
@@ -4463,7 +4463,7 @@ The contents of a Construction Layer should not appear in printout.</translation
     </message>
     <message>
       <source>Construction Layer</source>
-      <translation type="unfinished">Construction Layer</translation>
+      <translation>Yapı Katmanı</translation>
     </message>
   </context>
   <context>
@@ -4514,19 +4514,19 @@ The contents of a Construction Layer should not appear in printout.</translation
     </message>
     <message>
       <source>Edit Layer &amp;Attributes</source>
-      <translation type="unfinished">Edit Layer &amp;Attributes</translation>
+      <translation>Katman Niteliklerini Düzenle</translation>
     </message>
     <message>
       <source>Toggle Layer &amp;Visibility</source>
-      <translation type="unfinished">Toggle Layer &amp;Visibility</translation>
+      <translation>Katman Görünürlüğünü Aç/Kapat</translation>
     </message>
     <message>
       <source>Toggle Layer &amp;Printing</source>
-      <translation type="unfinished">Toggle Layer &amp;Printing</translation>
+      <translation>Katmanın Yazdırılmasını Aç/Kapat</translation>
     </message>
     <message>
       <source>Toggle &amp;Construction Layer</source>
-      <translation type="unfinished">Toggle &amp;Construction Layer</translation>
+      <translation>Yapı Katmanını Aç/Kapat</translation>
     </message>
   </context>
   <context>
@@ -4905,83 +4905,83 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
       <source>0.15mm</source>
-      <translation type="unfinished">0.15mm</translation>
+      <translation>0.15mm</translation>
     </message>
     <message>
       <source>0.18mm (ISO)</source>
-      <translation type="unfinished">0.18mm (ISO)</translation>
+      <translation>0.18mm (ISO)</translation>
     </message>
     <message>
       <source>0.20mm</source>
-      <translation type="unfinished">0.20mm</translation>
+      <translation>0.20mm</translation>
     </message>
     <message>
       <source>0.25mm (ISO)</source>
-      <translation type="unfinished">0.25mm (ISO)</translation>
+      <translation>0.25mm (ISO)</translation>
     </message>
     <message>
       <source>0.30mm</source>
-      <translation type="unfinished">0.30mm</translation>
+      <translation>0.30mm</translation>
     </message>
     <message>
       <source>0.35mm (ISO)</source>
-      <translation type="unfinished">0.35mm (ISO)</translation>
+      <translation>0.35mm (ISO)</translation>
     </message>
     <message>
       <source>0.40mm</source>
-      <translation type="unfinished">0.40mm</translation>
+      <translation>0.40mm</translation>
     </message>
     <message>
       <source>0.50mm (ISO)</source>
-      <translation type="unfinished">0.50mm (ISO)</translation>
+      <translation>0.50mm (ISO)</translation>
     </message>
     <message>
       <source>0.53mm</source>
-      <translation type="unfinished">0.53mm</translation>
+      <translation>0.53mm</translation>
     </message>
     <message>
       <source>0.60mm</source>
-      <translation type="unfinished">0.60mm</translation>
+      <translation>0.60mm</translation>
     </message>
     <message>
       <source>0.70mm (ISO)</source>
-      <translation type="unfinished">0.70mm (ISO)</translation>
+      <translation>0.70mm (ISO)</translation>
     </message>
     <message>
       <source>0.80mm</source>
-      <translation type="unfinished">0.80mm</translation>
+      <translation>0.80mm</translation>
     </message>
     <message>
       <source>0.90mm</source>
-      <translation type="unfinished">0.90mm</translation>
+      <translation>0.90mm</translation>
     </message>
     <message>
       <source>1.00mm (ISO)</source>
-      <translation type="unfinished">1.00mm (ISO)</translation>
+      <translation>1.00mm (ISO)</translation>
     </message>
     <message>
       <source>1.06mm</source>
-      <translation type="unfinished">1.06mm</translation>
+      <translation>1.06mm</translation>
     </message>
     <message>
       <source>1.20mm</source>
-      <translation type="unfinished">1.20mm</translation>
+      <translation>1.20mm</translation>
     </message>
     <message>
       <source>1.40mm (ISO)</source>
-      <translation type="unfinished">1.40mm (ISO)</translation>
+      <translation>1.40mm (ISO)</translation>
     </message>
     <message>
       <source>1.58mm</source>
-      <translation type="unfinished">1.58mm</translation>
+      <translation>1.58mm</translation>
     </message>
     <message>
       <source>2.00mm (ISO)</source>
-      <translation type="unfinished">2.00mm (ISO)</translation>
+      <translation>2.00mm (ISO)</translation>
     </message>
     <message>
       <source>2.11mm</source>
-      <translation type="unfinished">2.11mm</translation>
+      <translation>2.11mm</translation>
     </message>
     <message>
       <source>- Unchanged -</source>
@@ -5106,83 +5106,83 @@ Do you want to replace it?</source>
     </message>
     <message>
       <source>Inch</source>
-      <translation type="unfinished">Inch</translation>
+      <translation>İnç</translation>
     </message>
     <message>
       <source>Foot</source>
-      <translation type="unfinished">Foot</translation>
+      <translation>Ayak</translation>
     </message>
     <message>
       <source>Mile</source>
-      <translation type="unfinished">Mile</translation>
+      <translation>Mil</translation>
     </message>
     <message>
       <source>Millimeter</source>
-      <translation type="unfinished">Millimeter</translation>
+      <translation>Milimetre</translation>
     </message>
     <message>
       <source>Centimeter</source>
-      <translation type="unfinished">Centimeter</translation>
+      <translation>Santimetre</translation>
     </message>
     <message>
       <source>Meter</source>
-      <translation type="unfinished">Meter</translation>
+      <translation>Metre</translation>
     </message>
     <message>
       <source>Kilometer</source>
-      <translation type="unfinished">Kilometer</translation>
+      <translation>Kilometre</translation>
     </message>
     <message>
       <source>Microinch</source>
-      <translation type="unfinished">Microinch</translation>
+      <translation>Mikro inç</translation>
     </message>
     <message>
       <source>Mil</source>
-      <translation type="unfinished">Mil</translation>
+      <translation>Mil</translation>
     </message>
     <message>
       <source>Yard</source>
-      <translation type="unfinished">Yard</translation>
+      <translation>Yard</translation>
     </message>
     <message>
       <source>Angstrom</source>
-      <translation type="unfinished">Angstrom</translation>
+      <translation>Angstrom</translation>
     </message>
     <message>
       <source>Nanometer</source>
-      <translation type="unfinished">Nanometer</translation>
+      <translation>Nanometre</translation>
     </message>
     <message>
       <source>Micron</source>
-      <translation type="unfinished">Micron</translation>
+      <translation>Mikron</translation>
     </message>
     <message>
       <source>Decimeter</source>
-      <translation type="unfinished">Decimeter</translation>
+      <translation>Desimetre</translation>
     </message>
     <message>
       <source>Decameter</source>
-      <translation type="unfinished">Decameter</translation>
+      <translation>Dekametre</translation>
     </message>
     <message>
       <source>Hectometer</source>
-      <translation type="unfinished">Hectometer</translation>
+      <translation>Hektometre</translation>
     </message>
     <message>
       <source>Gigameter</source>
-      <translation type="unfinished">Gigameter</translation>
+      <translation>Gigametre</translation>
     </message>
     <message>
       <source>Astro</source>
-      <translation type="unfinished">Astro</translation>
+      <translation>Astro</translation>
     </message>
     <message>
       <source>Lightyear</source>
-      <translation type="unfinished">Lightyear</translation>
+      <translation>Işık yılı</translation>
     </message>
     <message>
       <source>Parsec</source>
-      <translation type="unfinished">Parsec</translation>
+      <translation>Parsek</translation>
     </message>
     <message>
       <source>Loading..</source>
@@ -5194,27 +5194,27 @@ Do you want to replace it?</source>
     </message>
     <message>
       <source>Loading...</source>
-      <translation type="unfinished">Loading...</translation>
+      <translation>Yükleniyor...</translation>
     </message>
     <message>
       <source>enter an integer number</source>
-      <translation type="unfinished">enter an integer number</translation>
+      <translation>bir tamsayı değeri yazın</translation>
     </message>
     <message>
       <source>LibreCAD query</source>
-      <translation type="unfinished">LibreCAD query</translation>
+      <translation>LibreCAD sorgusu</translation>
     </message>
     <message>
       <source>enter a number</source>
-      <translation type="unfinished">enter a number</translation>
+      <translation>bir sayı yazın</translation>
     </message>
     <message>
       <source>enter text</source>
-      <translation type="unfinished">enter text</translation>
+      <translation>metni yazın</translation>
     </message>
     <message>
       <source>LFF Font %1</source>
-      <translation type="unfinished">LFF Font %1</translation>
+      <translation>LFF Font %1</translation>
     </message>
     <message>
       <source>Jww %1</source>
