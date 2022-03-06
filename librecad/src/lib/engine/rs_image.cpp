@@ -369,11 +369,18 @@ void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+    RS_Vector vp0(0., 0.);
+    RS_Vector vp1(axisPoint2 - axisPoint1);
+
+    data.uVector.mirror(vp0, vp1);
+    data.uVector.scale(-1.);
+    data.vVector.mirror(vp0, vp1);
+
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    RS_Vector vp0(0.,0.);
-    RS_Vector vp1( axisPoint2-axisPoint1 );
-    data.uVector.mirror(vp0,vp1);
-    data.vVector.mirror(vp0,vp1);
+    data.insertionPoint.move(-data.uVector * data.size.x);
+
+    img.reset(new QImage(img->mirrored(true, false)));
+
     calculateBorders();
 }
 
