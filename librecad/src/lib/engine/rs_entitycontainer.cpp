@@ -706,7 +706,8 @@ void RS_EntityContainer::renameInserts(const QString& oldName,
             if (i->getName()==oldName) {
                 i->setName(newName);
             }
-        } else if (e->isContainer()) {
+        }
+        if (e->isContainer()) {
             ((RS_EntityContainer*)e)->renameInserts(oldName, newName);
         }
     }
