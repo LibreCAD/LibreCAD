@@ -84,7 +84,7 @@ public:
     virtual void lineTo(int x, int y) = 0;
 
     virtual void drawGridPoint(const RS_Vector& p) = 0;
-    virtual void drawPoint(const RS_Vector& p) = 0;
+    virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize) = 0;
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2) = 0;
     virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void drawArc(const RS_Vector& cp, double radius,

@@ -39,6 +39,8 @@
 #include "rs_settings.h"
 #include "rs_layer.h"
 #include "rs_block.h"
+#include "dxf_format.h"
+#include "lc_defaults.h"
 
 
 /**
@@ -89,6 +91,10 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     //initialize printer vars bug #3602444
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
+
+	//set default values for point style
+	addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
+	addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
 
     setModified(false);
 }

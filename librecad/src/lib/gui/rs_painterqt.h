@@ -48,7 +48,7 @@ public:
     virtual void moveTo(int x, int y);
     virtual void lineTo(int x, int y);
     virtual void drawGridPoint(const RS_Vector& p);
-    virtual void drawPoint(const RS_Vector& p);
+    virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize);
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2);
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );

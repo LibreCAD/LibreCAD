@@ -27,6 +27,8 @@
 #include<cmath>
 #include "rs_painterqt.h"
 #include "rs_math.h"
+#include "rs_graphicview.h"
+#include "dxf_format.h"
 #include "rs_debug.h"
 
 namespace {
@@ -115,11 +117,86 @@ void RS_PainterQt::drawGridPoint(const RS_Vector& p) {
 /**
  * Draws a point at (x1, y1).
  */
-void RS_PainterQt::drawPoint(const RS_Vector& p) {
-    QPainter::drawLine(toScreenX(p.x-1), toScreenY(p.y),
-                       toScreenX(p.x+1), toScreenY(p.y));
-    QPainter::drawLine(toScreenX(p.x), toScreenY(p.y-1),
-                       toScreenX(p.x), toScreenY(p.y+1));
+void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
+	int screenX = toScreenX(p.x);
+	int screenY = toScreenY(p.y);
+	int halfPDSize = pdsize/2;
+
+	/*	PDMODE values =>
+		bits 0-3 = 0, centre dot
+		         = 1, centre blank
+		         = 2, centre +
+		         = 3, centre X
+		         = 4, centre vertical tick
+		bit 5 = 1 => added surrounding circle
+		bit 6 = 1 => added surrounding square
+	*/
+	switch (DXF_FORMAT_PDMode_getCentre(pdmode)) {
+	case DXF_FORMAT_PDMode_CentreDot:
+	default:
+		/*	Centre dot - use a tiny + to make it visible  */
+		QPainter::drawLine(screenX-1, screenY, screenX+1, screenY);
+		QPainter::drawLine(screenX, screenY-1, screenX, screenY+1);
+		break ;
+
+	case DXF_FORMAT_PDMode_CentreBlank:
+		/*	Centre is blank  */
+		break ;
+
+	case DXF_FORMAT_PDMode_CentrePlus:
+		/*	Centre +  */
+		QPainter::drawLine(screenX-pdsize, screenY, screenX+pdsize, screenY);
+		QPainter::drawLine(screenX, screenY-pdsize, screenX, screenY+pdsize);
+		break ;
+
+	case DXF_FORMAT_PDMode_CentreCross:
+		/*	Centre X  */
+		QPainter::drawLine(screenX-pdsize, screenY-pdsize, screenX+pdsize, screenY+pdsize);
+		QPainter::drawLine(screenX+pdsize, screenY-pdsize, screenX-pdsize, screenY+pdsize);
+		break ;
+
+	case DXF_FORMAT_PDMode_CentreTick:
+		/*	Centre vertical tick  */
+		QPainter::drawLine(screenX, screenY-halfPDSize, screenX, screenY);
+		break ;
+	}
+
+	/*	Surrounding circle if required  */
+	if (DXF_FORMAT_PDMode_hasEncloseCircle(pdmode)) {
+		/*	Approximate circle by an octagon  */
+		int xMin = screenX-halfPDSize;
+		int xMax = screenX+halfPDSize;
+		int yMin = screenY-halfPDSize;
+		int yMax = screenY+halfPDSize;
+		int octOffset = halfPDSize * 0.71;
+		int xOctMin = screenX - octOffset;
+		int xOctMax = screenX + octOffset;
+		int yOctMin = screenY - octOffset;
+		int yOctMax = screenY + octOffset;
+
+		QPainter::drawLine(screenX, yMin, xOctMax, yOctMin);
+		QPainter::drawLine(screenX, yMin, xOctMin, yOctMin);
+		QPainter::drawLine(screenX, yMax, xOctMax, yOctMax);
+		QPainter::drawLine(screenX, yMax, xOctMin, yOctMax);
+
+		QPainter::drawLine(xMin, screenY, xOctMin, yOctMin);
+		QPainter::drawLine(xMin, screenY, xOctMin, yOctMax);
+		QPainter::drawLine(xMax, screenY, xOctMax, yOctMin);
+		QPainter::drawLine(xMax, screenY, xOctMax, yOctMax);
+	}
+
+	/*	Surrounding square if required  */
+	if (DXF_FORMAT_PDMode_hasEncloseSquare(pdmode)) {
+		int xMin = screenX-halfPDSize;
+		int xMax = screenX+halfPDSize;
+		int yMin = screenY-halfPDSize;
+		int yMax = screenY+halfPDSize;
+
+		QPainter::drawLine(xMin, yMin, xMax, yMin);
+		QPainter::drawLine(xMin, yMax, xMax, yMax);
+		QPainter::drawLine(xMin, yMin, xMin, yMax);
+		QPainter::drawLine(xMax, yMin, xMax, yMax);
+	}
 }
 
 
