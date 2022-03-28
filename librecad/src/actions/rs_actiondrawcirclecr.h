@@ -74,7 +74,7 @@ public:
 
 	double getRadius() const;
 
-    void setRadius(double r);
+	bool setRadius(const QString& sr);
 
 protected:
     /**

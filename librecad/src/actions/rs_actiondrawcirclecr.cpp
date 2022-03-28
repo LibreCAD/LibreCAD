@@ -99,13 +99,25 @@ void RS_ActionDrawCircleCR::trigger() {
                     circle->getId());
 }
 
-void RS_ActionDrawCircleCR::setRadius(double r)
+bool RS_ActionDrawCircleCR::setRadius(const QString& sr)
 {
-    if(r>RS_TOLERANCE){
+	bool ok;
+	double r;
+
+	r = RS_Math::eval(sr,&ok);
+	if (!ok) {
+		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (expression)").arg(sr));
+	} else if(r<0) {
+		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (negative)").arg(sr));
+		ok = false;
+	} else if(r<=RS_TOLERANCE) {
+		RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (zero)").arg(sr));
+		ok = false;
+	} else {
 		data->radius=r;
-    }else{
-        RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid").arg(r));
-    }
+	}
+
+	return ok;
 }
 
 
