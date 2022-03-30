@@ -77,7 +77,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawLineRelAngle"]
             << a_map["DrawLinePolygonCenCor"]
             << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
-            << a_map["DrawLinePolygonCorCor"];
+            << a_map["DrawLinePolygonCorCor"]
+            << a_map["DrawPoint"];
 
     circle_actions
             << a_map["DrawCircle"]
@@ -136,7 +137,11 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DimRadial"]
             << a_map["DimDiametric"]
             << a_map["DimAngular"]
-            << a_map["DimLeader"];
+            << a_map["DimLeader"]
+            << a_map["DrawText"]
+            << a_map["DrawMText"]
+            << a_map["DrawHatch"]
+            << a_map["DrawImage"];
 
     modify_actions
             << a_map["ModifyMove"]
@@ -159,6 +164,12 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyExplodeText"]
             << a_map["BlocksExplode"]
             << a_map["ModifyDeleteQuick"];
+
+    order_actions
+            << a_map["OrderTop"]
+            << a_map["OrderBottom"]
+            << a_map["OrderRaise"]
+            << a_map["OrderLower"];
 
     info_actions
             << a_map["InfoDist"]
@@ -242,6 +253,11 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_info->setWindowTitle(QC_ApplicationWindow::tr("Info"));
     dock_info->add_actions(info_actions, columns, icon_size);
 
+    LC_DockWidget* dock_order = new LC_DockWidget(main_window);
+    dock_order->setObjectName("dock_order");
+    dock_order->setWindowTitle(QC_ApplicationWindow::tr("Order"));
+    dock_order->add_actions(order_actions, columns, icon_size);
+
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_line);
     main_window->tabifyDockWidget(dock_line, dock_polyline);
     dock_line->raise();
@@ -254,6 +270,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     main_window->tabifyDockWidget(dock_info, dock_select);
     dock_dimension->raise();
     main_window->addDockWidget(Qt::LeftDockWidgetArea, dock_modify);
+    main_window->tabifyDockWidget(dock_modify, dock_order);
 
     dock_line->hide();
     dock_polyline->hide();
@@ -264,6 +281,7 @@ void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size)
     dock_info->hide();
     dock_modify->hide();
     dock_select->hide();
+    dock_order->hide();
 }
 
 void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
@@ -548,6 +566,12 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
 
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/icons/order.svg"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(order_actions);
+
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 
     return categories_toolbar;
@@ -694,23 +718,13 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     dimension_menu->setTearOffEnabled(true);
     dimension_menu->addActions(dimension_actions);
 
-    // <[~ Order ~]>
-
-    QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
-    order_menu->setObjectName("order_menu");
-    order_menu->setTearOffEnabled(true);
-    order_menu->addAction(a_map["OrderTop"]);
-    order_menu->addAction(a_map["OrderBottom"]);
-    order_menu->addAction(a_map["OrderRaise"]);
-    order_menu->addAction(a_map["OrderLower"]);
-
     // <[~ Modify ~]>
 
     QMenu* modify_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Modify"));
     modify_menu->setIcon(QIcon(":/icons/move_rotate.svg"));
     modify_menu->setObjectName("Modify");
     modify_menu->setTearOffEnabled(true);
-    modify_menu->addMenu(order_menu);
+//    modify_menu->addMenu(order_menu);
     modify_menu->addActions(modify_actions);
 
     // <[~ Info ~]>
@@ -721,10 +735,23 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     info_menu->setTearOffEnabled(true);
     info_menu->addActions(info_actions);
 
-    tools_menu->addAction(a_map["DrawMText"]);
-    tools_menu->addAction(a_map["DrawText"]);
-    tools_menu->addAction(a_map["DrawHatch"]);
-    tools_menu->addAction(a_map["DrawPoint"]);
+    // <[~ Order ~]>
+
+//    QMenu* order_menu = new QMenu(QC_ApplicationWindow::tr("&Order"), menu_bar);
+    QMenu* order_menu = tools_menu->addMenu(QC_ApplicationWindow::tr("&Order"));
+    order_menu->setIcon(QIcon(":/icons/order.svg"));
+    order_menu->setObjectName("order_menu");
+    order_menu->setTearOffEnabled(true);
+//    order_menu->addAction(a_map["OrderTop"]);
+//    order_menu->addAction(a_map["OrderBottom"]);
+//    order_menu->addAction(a_map["OrderRaise"]);
+//    order_menu->addAction(a_map["OrderLower"]);
+    order_menu->addActions(order_actions);
+
+//    tools_menu->addAction(a_map["DrawMText"]);
+//    tools_menu->addAction(a_map["DrawText"]);
+//    tools_menu->addAction(a_map["DrawHatch"]);
+//    tools_menu->addAction(a_map["DrawPoint"]);
 
     // <[~ Layer ~]>
 

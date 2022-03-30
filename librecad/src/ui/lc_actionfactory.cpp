@@ -480,7 +480,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/icons/text.svg"), tr("&MText"), agm->other);
+    action = new QAction(QIcon(":/icons/mtext.svg"), tr("&MText"), agm->other);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
