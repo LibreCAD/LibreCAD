@@ -132,6 +132,7 @@
         <file>select_inverted.svg</file>
         <file>select_window.svg</file>
         <file>delete.svg</file>
+        <file>delete_freehand.svg</file>
         <file>total_length_selected_entities.svg</file>
         <file>zoom_pan.svg</file>
         <file>order.svg</file>

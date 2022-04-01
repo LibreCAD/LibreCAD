@@ -583,6 +583,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyDelete"] = action;
 
     action = new QAction(tr("Delete Freehand"), agm->modify);
+    action->setIcon(QIcon(":/icons/delete_freehand.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
