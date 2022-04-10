@@ -67,7 +67,7 @@ public:
     }
 
     /**
-     * Removes an entity from the entiy container. Implementation
+     * Removes an entity from the entity container. Implementation
      * from RS_Undo.
      */
     virtual void removeUndoable(RS_Undoable* u) {
