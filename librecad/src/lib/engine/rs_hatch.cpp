@@ -607,9 +607,10 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 //                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
 //                        jp<<pt1;
 //                    }
-                    if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
-                        pa<<pt1;
-                    pa<<pt2;
+                    if(!pa.size() || (pa.last() - pt1).manhattanLength() >= 1) {
+                        pa << pt1;
+                    }
+                    pa << pt2;
                 }
                     break;
 
