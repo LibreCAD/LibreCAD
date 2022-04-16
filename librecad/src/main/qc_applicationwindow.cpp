@@ -191,11 +191,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         font.setPointSize(fontsize);
         status_bar->setFont(font);
     }
-    if (allow_statusbar_height)
-    {
-        int height = settings.value("StatusbarHeight", 28).toInt();
-        status_bar->setMinimumHeight(height);
+    int height {64};
+    if (allow_statusbar_height) {
+        height = settings.value( "StatusbarHeight", 64).toInt();
     }
+    status_bar->setMinimumHeight( height);
+    status_bar->setMaximumHeight( height);
     settings.endGroup();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
