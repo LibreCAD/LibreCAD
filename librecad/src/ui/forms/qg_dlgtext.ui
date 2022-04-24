@@ -318,6 +318,9 @@
             <height>0</height>
            </size>
           </property>
+          <property name="focusPolicy">
+           <enum>Qt::WheelFocus</enum>
+          </property>
          </widget>
         </item>
        </layout>
@@ -1503,6 +1506,9 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
@@ -1537,6 +1543,7 @@
   <tabstop>bCopy</tabstop>
   <tabstop>bPaste</tabstop>
   <tabstop>teText</tabstop>
+  <tabstop>cbFont</tabstop>
   <tabstop>leHeight</tabstop>
   <tabstop>leAngle</tabstop>
   <tabstop>leOblique</tabstop>
