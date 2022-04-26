@@ -28,6 +28,7 @@
 #include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
+#include <QPalette>
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_font.h"
@@ -75,6 +76,10 @@ void QG_DlgMText::init() {
     isNew = false;
     updateUniCharComboBox(0);
     updateUniCharButton(0);
+	teText->QFrame::setLineWidth(2);
+	teText->QFrame::setMidLineWidth(0);
+	teText->QFrame::setFrameStyle(QFrame::Box|QFrame::Plain);
+    teText->installEventFilter(this);
 }
 
 
@@ -465,3 +470,37 @@ void QG_DlgMText::insertChar() {
     int c = t.mid(1, i1-1).toInt(NULL, 16);
     teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
 }
+
+bool QG_DlgMText::eventFilter(QObject *obj, QEvent *event)
+{
+    int type = event->type();
+
+    if (type == QEvent::FocusIn) 
+    {
+//        QFocusEvent *focusEvent = static_cast<QFocusEvent*>(event);
+//        int reason = focusEvent->reason();
+//        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgMText::eventFilter, FocusIn, reason '%d'",reason);
+        if ( obj == teText )
+    	{
+    		QPalette palette = teText->QFrame::QWidget::palette();
+			QColor color = palette.color(QPalette::Highlight);
+			palette.setColor(QPalette::WindowText, color);
+			teText->QFrame::QWidget::setPalette(palette);
+    	}
+    }
+    else if (type == QEvent::FocusOut) 
+    {
+//        QFocusEvent *focusEvent = static_cast<QFocusEvent*>(event);
+//        int reason = focusEvent->reason();
+//        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgMText::eventFilter, FocusOut, reason '%d'",reason);
+        if ( obj == teText )
+    	{
+    		QPalette palette = teText->QFrame::QWidget::palette();
+			QColor color = palette.color(QPalette::Dark);
+			palette.setColor(QPalette::WindowText, color);
+			teText->QFrame::QWidget::setPalette(palette);
+    	}
+    }
+    return(false);
+}
+
