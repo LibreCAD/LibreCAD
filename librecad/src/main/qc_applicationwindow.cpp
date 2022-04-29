@@ -58,6 +58,7 @@
 #include "rs_painterqt.h"
 #include "rs_selection.h"
 #include "rs_document.h"
+#include "rs_math.h"
 
 #include "lc_centralwidget.h"
 #include "qc_mdiwindow.h"
@@ -994,6 +995,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
     enableFileActions(m);
+
+    RS_Units::setCurrentDrawingUnits(m->getDocument()->getGraphic()->getUnit());
 
     if (m && m->getDocument()) {
 

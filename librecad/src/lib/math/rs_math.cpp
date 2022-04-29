@@ -34,6 +34,7 @@
 #include <QDebug>
 
 #include "rs_math.h"
+#include "rs_units.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
 
@@ -239,11 +240,99 @@ bool RS_Math::isSameDirection(double dir1, double dir2, double tol) {
 	return getAngleDifferenceU(dir1, dir2) < tol;
 }
 
+
+/*
+    Parse for units in expression, and then convert their values into millimeter.
+
+    - by (2021) Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+QString RS_Math::normalizedUnitsExpression(QString inputExpression)
+{
+    QRegExp regexNotAlpha("[^a-zA-Z\"\']*");
+
+    if (regexNotAlpha.exactMatch(inputExpression)) return inputExpression.trimmed();
+
+    inputExpression = inputExpression.trimmed() + " ";
+
+    bool previousCharacterWasLetter  = false;
+    bool previousExpressionWasNumber = false;
+
+    QString outputExpression  = "";
+    QString unitsBufferString = "";
+    QString valueBufferString = "";
+
+    for (int i = 0; i < inputExpression.length(); i++)
+    {
+        const QChar testCharacter = inputExpression.at(i);
+
+        if (testCharacter.isLetter() || (testCharacter == QChar('\"')) || (testCharacter == QChar('\'')))
+        {
+            unitsBufferString += testCharacter;
+
+            previousCharacterWasLetter = true;
+        }
+        else /* if ( ! testCharacter.isLetter()) */
+        {
+            if (previousCharacterWasLetter)
+            {
+                bool conversionSuccessful = false;
+
+                if (!valueBufferString.isEmpty())
+                {
+                    bool ok;
+
+                    double value = valueBufferString.toDouble(&ok);
+
+                    if (ok)
+                    {
+                        RS2::Unit valueUnits = RS_Units::stringToUnit(unitsBufferString);
+
+                        if (valueUnits != RS2::None)
+                        {
+                            if (previousExpressionWasNumber) outputExpression += "+";
+
+                            outputExpression += QString::number(RS_Units::convert(value, valueUnits, RS_Units::getCurrentDrawingUnits()));
+
+                            previousExpressionWasNumber = true;
+
+                            conversionSuccessful = true;
+                        }
+                    }
+                }
+
+                if (!conversionSuccessful)
+                {
+                    outputExpression += valueBufferString + unitsBufferString;
+
+                    previousExpressionWasNumber = false;
+                }
+
+                unitsBufferString = "";
+                valueBufferString = "";
+            }
+
+            if (testCharacter.isDigit() || (testCharacter == QChar('.')))
+            {
+                valueBufferString += testCharacter;
+            }
+            else
+            {
+                if (!testCharacter.isSpace()) outputExpression += testCharacter;
+            }
+
+            previousCharacterWasLetter = false;
+        }
+    }
+
+    return outputExpression;
+}
+
+
 /**
  * Evaluates a mathematical expression and returns the result.
  * If an error occurred, the given default value 'def' will be returned.
  */
-double RS_Math::eval(const QString& expr, double def) {
+double RS_Math::eval(QString expr, double def) {
 
     bool ok;
     double res = RS_Math::eval(expr, &ok);
@@ -262,13 +351,21 @@ double RS_Math::eval(const QString& expr, double def) {
  * Evaluates a mathematical expression and returns the result.
  * If an error occurred, ok will be set to false (if ok isn't NULL).
  */
-double RS_Math::eval(const QString& expr, bool* ok) {
+double RS_Math::eval(QString expr, bool* ok) {
     bool okTmp(false);
 	if(!ok) ok=&okTmp;
     if (expr.isEmpty()) {
         *ok = false;
         return 0.0;
     }
+
+    expr = normalizedUnitsExpression(expr);
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+    {
+        std::cout << " RS:Math::eval: expr = " << expr.toStdString() << std::endl;
+    }
+
     double ret(0.);
     try{
         mu::Parser p;

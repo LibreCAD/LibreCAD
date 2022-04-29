@@ -24,22 +24,31 @@
 **
 **********************************************************************/
 
-#ifndef RS_MATH_H
-#define RS_MATH_H
+
+#pragma once
+
 
 #include <vector>
+
 
 class RS_Vector;
 class RS_VectorSolutions;
 class QString;
 
+
 /**
  * Math functions.
  */
-class RS_Math {
-private:
-	RS_Math() = delete;
-public:
+class RS_Math
+{
+    private:
+
+	    RS_Math() = delete;
+
+        static QString normalizedUnitsExpression(QString inputExpression);
+
+    public:
+
 	static int round(double v);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
@@ -74,8 +83,8 @@ public:
     static bool isSameDirection(double dir1, double dir2, double tol);
 
 	//! \{ \brief evaluate a math string
-    static double eval(const QString& expr, double def=0.0);
-    static double eval(const QString& expr, bool* ok);
+    static double eval(QString expr, double def=0.0);
+    static double eval(QString expr, bool* ok);
 	//! \}
 
     static std::vector<double> quadraticSolver(const std::vector<double>& ce);
@@ -149,4 +158,3 @@ public:
     static void test();
 };
 
-#endif

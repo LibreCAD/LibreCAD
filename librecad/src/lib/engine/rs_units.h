@@ -39,8 +39,24 @@ class QString;
  *
  * @author Andrew Mustun
  */
-class RS_Units {
-public:
+class RS_Units
+{
+    private:
+
+        static RS2::Unit currentDrawingUnits;
+
+
+    public:
+
+        static void setCurrentDrawingUnits(RS2::Unit input_units)
+        {
+            currentDrawingUnits = input_units;
+        }
+
+        static RS2::Unit getCurrentDrawingUnits()
+        {
+            return currentDrawingUnits;
+        }
 
     //static char* unit2sign(RS2::Unit unit);
 
@@ -50,7 +66,7 @@ public:
     static RS2::Unit dxfint2unit(int dxfint);
 
     static QString unitToString(RS2::Unit u, bool t = true);
-    static RS2::Unit stringToUnit(const QString& u);
+    static RS2::Unit stringToUnit(QString inputString);
 
 	static bool isMetric(RS2::Unit u);
 	static double getFactorToMM(RS2::Unit u);

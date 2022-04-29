@@ -33,6 +33,10 @@
 #include "rs_vector.h"
 #include "rs_debug.h"
 
+
+RS2::Unit RS_Units::currentDrawingUnits = (RS2::Unit) 0;
+
+
 /**
  * Converts a DXF integer () to a Unit enum.
  */
@@ -228,54 +232,55 @@ QString RS_Units::unitToString(RS2::Unit u, bool t) {
 /**
  * Converts a string into a unit enum.
  */
-RS2::Unit RS_Units::stringToUnit(const QString& u) {
-    RS2::Unit ret = RS2::None;
+RS2::Unit RS_Units::stringToUnit(QString inputString)
+{
+    inputString = inputString.toLower();
 
-    if (u=="None") {
-        ret = RS2::None;
-    } else if (u==QObject::tr("Inch")) {
-        ret = RS2::Inch;
-    } else if (u==QObject::tr("Foot")) {
-        ret = RS2::Foot;
-    } else if (u==QObject::tr("Mile")) {
-        ret = RS2::Mile;
-    } else if (u==QObject::tr("Millimeter")) {
-        ret = RS2::Millimeter;
-    } else if (u==QObject::tr("Centimeter")) {
-        ret = RS2::Centimeter;
-    } else if (u==QObject::tr("Meter")) {
-        ret = RS2::Meter;
-    } else if (u==QObject::tr("Kilometer")) {
-        ret = RS2::Kilometer;
-    } else if (u==QObject::tr("Microinch")) {
-        ret = RS2::Microinch;
-    } else if (u==QObject::tr("Mil")) {
-        ret = RS2::Mil;
-    } else if (u==QObject::tr("Yard")) {
-        ret = RS2::Yard;
-    } else if (u==QObject::tr("Angstrom")) {
-        ret = RS2::Angstrom;
-    } else if (u==QObject::tr("Nanometer")) {
-        ret = RS2::Nanometer;
-    } else if (u==QObject::tr("Micron")) {
-        ret = RS2::Micron;
-    } else if (u==QObject::tr("Decimeter")) {
-        ret = RS2::Decimeter;
-    } else if (u==QObject::tr("Decameter")) {
-        ret = RS2::Decameter;
-    } else if (u==QObject::tr("Hectometer")) {
-        ret = RS2::Hectometer;
-    } else if (u==QObject::tr("Gigameter")) {
-        ret = RS2::Gigameter;
-    } else if (u==QObject::tr("Astro")) {
-        ret = RS2::Astro;
-    } else if (u==QObject::tr("Lightyear")) {
-        ret = RS2::Lightyear;
-    } else if (u==QObject::tr("Parsec")) {
-        ret = RS2::Parsec;
-    }
+    if (inputString == QObject::tr("none"))         return RS2::None;
+    if (inputString == QObject::tr("inch"))         return RS2::Inch;
+    if (inputString == QObject::tr("in"))           return RS2::Inch;
+    if (inputString == QObject::tr("\""))           return RS2::Inch;
+    if (inputString == QObject::tr("foot"))         return RS2::Foot;
+    if (inputString == QObject::tr("ft"))           return RS2::Foot;
+    if (inputString == QObject::tr("\'"))           return RS2::Foot;
+    if (inputString == QObject::tr("mile"))         return RS2::Mile;
+    if (inputString == QObject::tr("mi"))           return RS2::Mile;
+    if (inputString == QObject::tr("millimeter"))   return RS2::Millimeter;
+    if (inputString == QObject::tr("mm"))           return RS2::Millimeter;
+    if (inputString == QObject::tr("centimeter"))   return RS2::Centimeter;
+    if (inputString == QObject::tr("cm"))           return RS2::Centimeter;
+    if (inputString == QObject::tr("meter"))        return RS2::Meter;
+    if (inputString == QObject::tr("m"))            return RS2::Meter;
+    if (inputString == QObject::tr("kilometer"))    return RS2::Kilometer;
+    if (inputString == QObject::tr("km"))           return RS2::Kilometer;
+    if (inputString == QObject::tr("microinch"))    return RS2::Microinch;
+    if (inputString == QObject::tr("muin"))         return RS2::Microinch;
+    if (inputString == QObject::tr("mil"))          return RS2::Mil;
+    if (inputString == QObject::tr("yard"))         return RS2::Yard;
+    if (inputString == QObject::tr("yd"))           return RS2::Yard;
+    if (inputString == QObject::tr("angstrom"))     return RS2::Angstrom;
+    if (inputString == QObject::tr("a"))            return RS2::Angstrom;
+    if (inputString == QObject::tr("nanometer"))    return RS2::Nanometer;
+    if (inputString == QObject::tr("nm"))           return RS2::Nanometer;
+    if (inputString == QObject::tr("micrometer"))   return RS2::Micron;
+    if (inputString == QObject::tr("micron"))       return RS2::Micron;
+    if (inputString == QObject::tr("decimeter"))    return RS2::Decimeter;
+    if (inputString == QObject::tr("dm"))           return RS2::Decimeter;
+    if (inputString == QObject::tr("decameter"))    return RS2::Decameter;
+    if (inputString == QObject::tr("dam"))          return RS2::Decameter;
+    if (inputString == QObject::tr("hectometer"))   return RS2::Hectometer;
+    if (inputString == QObject::tr("hm"))           return RS2::Hectometer;
+    if (inputString == QObject::tr("gigameter"))    return RS2::Gigameter;
+    if (inputString == QObject::tr("gm"))           return RS2::Gigameter;
+    if (inputString == QObject::tr("astro"))        return RS2::Astro;
+    if (inputString == QObject::tr("au"))           return RS2::Astro;
+    if (inputString == QObject::tr("ua"))           return RS2::Astro;
+    if (inputString == QObject::tr("lightyear"))    return RS2::Lightyear;
+    if (inputString == QObject::tr("ly"))           return RS2::Lightyear;
+    if (inputString == QObject::tr("parsec"))       return RS2::Parsec;
+    if (inputString == QObject::tr("pc"))           return RS2::Parsec;
 
-    return ret;
+    return RS2::None;
 }
 
 
