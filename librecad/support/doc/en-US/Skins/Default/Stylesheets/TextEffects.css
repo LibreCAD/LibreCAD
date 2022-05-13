@@ -613,50 +613,46 @@ a.MCHelpControl
 	-pie-background: linear-gradient(#ffffff, #ececec);
 }
 
+.toolbar-buttons .button
+{
+	background: #ECECEC;
+	background: -moz-linear-gradient(top, #FFF 0%, #ECECEC 100%);
+	/* FF3.6+ */
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#FFF), color-stop(100%,#ECECEC));
+	/* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* Opera11.10+ */
+	background: -ms-linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* IE10+ */
+	background: linear-gradient(top, #FFF 0%,#ECECEC 100%);
+	/* W3C */
+	-pie-background: linear-gradient(#FFF, #ECECEC);
+	/*PIE*/
+}
+
 .button[disabled],
 .button.current-topic-index-button.disabled
 {
 	opacity: 0.5;
 }
 
-.button.previous-topic-button
+.button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/navigate-previous.png') no-repeat center center;
-	background: url('Images/navigate-previous.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/navigate-previous.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-previous.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background-repeat: no-repeat !important;
 }
 
-.button.next-topic-button
+.button.previous-topic-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/navigate-next.png') no-repeat center center;
-	background: url('Images/navigate-next.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/navigate-next.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/navigate-next.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/navigate-previous.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center;
+}
+
+.button.next-topic-button .button-icon
+{
+	background: transparent url('Images/navigate-next.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center;
 }
 
 .button.current-topic-index-button
@@ -687,124 +683,40 @@ a.MCHelpControl
 	display: none;
 }
 
-.button.expand-all-button
+.button.expand-all-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/expand.png') no-repeat center center;
-	background: url('Images/expand.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/expand.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/expand.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/expand.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/expand.png') no-repeat center center;
 }
 
-.button.collapse-all-button
+.button.collapse-all-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/collapse.png') no-repeat center center;
-	background: url('Images/collapse.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/collapse.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/collapse.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/collapse.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center;
 }
 
-.button.print-button
+.button.print-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/printer.png') no-repeat center center;
-	background: url('Images/printer.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/printer.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/printer.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/printer.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/printer.png') no-repeat center center;
 }
 
-.button.remove-highlight-button
+.button.remove-highlight-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/highlight.png') no-repeat center center;
-	background: url('Images/highlight.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/highlight.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/highlight.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/highlight.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/highlight.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/highlight.png') no-repeat center center;
 }
 
-.button.select-skin-button
+.button.select-skin-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/select-skin.png') no-repeat center center;
-	background: url('Images/select-skin.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/select-skin.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-skin.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/select-skin.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/select-skin.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/select-skin.png') no-repeat center center;
 }
 
-.button.select-language-button
+.button.select-language-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/select-language.png') no-repeat center center;
-	background: url('Images/select-language.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/select-language.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/select-language.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/select-language.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/select-language.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/select-language.png') no-repeat center center;
 }
 
 .invisible-label
@@ -836,6 +748,7 @@ a.MCHelpControl
 {
 	border: none;
 	width: 16px;
+	height: 16px;
 	margin: 0px 2px;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
@@ -872,47 +785,18 @@ a.MCHelpControl
 	background-size: 16px 16px;
 }
 
-.button.login-button
+.button.login-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/login.png') no-repeat center center;
-	background: url('Images/login.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/login.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/login.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/login.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/login.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/login.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/login.png') no-repeat center center;
 }
 
-.button.edit-user-profile-button
+.button.edit-user-profile-button .button-icon
 {
-	/* Old browsers */
-	/* FF3.6+ */
-	/* Chrome,Safari4+ */
-	/* Chrome10+,Safari5.1+ */
-	/* Opera11.10+ */
-	/* IE10+ */
-	/* W3C */
-	/*PIE*/
-	background: #ececec url('Images/edit-profile.png') no-repeat center center;
-	background: url('Images/edit-profile.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-	background: url('Images/edit-profile.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-	background: url('Images/edit-profile.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-	-pie-background: url('Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+	background: transparent url('Images/edit-profile.png') no-repeat center center;
+	-pie-background: transparent url('Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center;
 }
 
-/**/
 /* Feedback */
 
 .pulse-frame
@@ -1231,6 +1115,42 @@ button.mc-dropdown-item
 	font: inherit;
 }
 
+.buttons .button
+{
+	display: inline-flex;
+	overflow: hidden;
+}
+
+.buttons .button > div
+{
+	display: inline-flex;
+	margin: auto;
+}
+
+.button .button-icon-wrapper
+{
+	position: relative;
+	margin: auto;
+	width: 22px;
+	height: 22px;
+}
+
+.button .button-icon
+{
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	right: 0;
+	background-repeat: no-repeat !important;
+	background-position: center center !important;
+}
+
+.button .button-text
+{
+	margin-right: 3px;
+}
+
 .mc-dropdown-item
 {
 	display: block;
@@ -1376,6 +1296,241 @@ span.SearchHighlight.SearchHighlight10
 {
 	color: #ffffff;
 	background-color: #990099;
+}
+
+.button > div
+{
+	flex-direction: row;
+}
+
+.button.collapse-all-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.collapse-all-button > div
+{
+	
+}
+
+.button.collapse-all-button .button-icon-wrapper
+{
+	
+}
+
+.button.edit-user-profile-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.edit-user-profile-button > div
+{
+	
+}
+
+.button.edit-user-profile-button .button-icon-wrapper
+{
+	
+}
+
+.button.expand-all-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.expand-all-button > div
+{
+	
+}
+
+.button.expand-all-button .button-icon-wrapper
+{
+	
+}
+
+.button.login-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.login-button > div
+{
+	
+}
+
+.button.login-button .button-icon-wrapper
+{
+	
+}
+
+.button.next-topic-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.next-topic-button > div
+{
+	
+}
+
+.button.next-topic-button .button-icon-wrapper
+{
+	
+}
+
+.button.previous-topic-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.previous-topic-button > div
+{
+	
+}
+
+.button.previous-topic-button .button-icon-wrapper
+{
+	
+}
+
+.button.print-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.print-button > div
+{
+	
+}
+
+.button.print-button .button-icon-wrapper
+{
+	
+}
+
+.button.remove-highlight-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.remove-highlight-button > div
+{
+	
+}
+
+.button.remove-highlight-button .button-icon-wrapper
+{
+	
+}
+
+.button.select-language-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.select-language-button > div
+{
+	
+}
+
+.button.select-language-button .button-icon-wrapper
+{
+	
+}
+
+.button.select-skin-button
+{
+	background-repeat: no-repeat;
+	background: #ececec;
+	background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+	background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+	background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+	background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+	-pie-background: linear-gradient(#ffffff, #ececec);
+}
+
+.button.select-skin-button > div
+{
+	
+}
+
+.button.select-skin-button .button-icon-wrapper
+{
+	
 }
 
 .toolbar-button-drop-down.select-language-drop-down

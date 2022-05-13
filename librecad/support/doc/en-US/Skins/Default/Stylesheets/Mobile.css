@@ -24,27 +24,29 @@
 	.button.print-button
 	{
 		display: none;
-		background: #ececec url('Images/printer.png') no-repeat center center;
-		background: url('Images/printer.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/printer.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/printer.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/printer.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/printer.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/printer.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/printer.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.remove-highlight-button
 	{
 		display: none;
-		background: #ececec url('Images/highlight.png') no-repeat center center;
-		background: url('Images/highlight.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/highlight.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/highlight.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/highlight.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/highlight.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/highlight.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/highlight.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	#contentBodyInner
@@ -344,12 +346,6 @@
 	{
 		background: #ffffff url('Images/BannerHexagons.png') no-repeat;
 		-pie-background: #ffffff url('Skins/Default/Stylesheets/Images/BannerHexagons.png') no-repeat;
-	}
-
-	#navigation[role="complementary"]
-	{
-		background-repeat: repeat;
-		background-color: #ffffff;
 	}
 
 	#browseSequences.tabs-panel-content
@@ -700,16 +696,37 @@
 		
 	}
 
+	.button > div
+	{
+		
+	}
+
+	.button .button-icon
+	{
+		
+	}
+
+	.button .button-icon-wrapper
+	{
+		
+	}
+
+	.button .button-text
+	{
+		
+	}
+
 	.button.collapse-all-button
 	{
-		background: #ececec url('Images/collapse.png') no-repeat center center;
-		background: url('Images/collapse.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/collapse.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/collapse.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/collapse.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/collapse.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/collapse.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/collapse.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.current-topic-index-button
@@ -725,88 +742,100 @@
 		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
+	.button.current-topic-index-button .button-icon-wrapper
+	{
+		
+	}
+
 	.button.edit-user-profile-button
 	{
-		background: #ececec url('Images/edit-profile.png') no-repeat center center;
-		background: url('Images/edit-profile.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/edit-profile.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/edit-profile.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/edit-profile.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/edit-profile.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/edit-profile.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/edit-profile.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.expand-all-button
 	{
-		background: #ececec url('Images/expand.png') no-repeat center center;
-		background: url('Images/expand.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/expand.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/expand.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/expand.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/expand.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/expand.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/expand.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.login-button
 	{
-		background: #ececec url('Images/login.png') no-repeat center center;
-		background: url('Images/login.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/login.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/login.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/login.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/login.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/login.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/login.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.next-topic-button
 	{
-		background: #ececec url('Images/navigate-next.png') no-repeat center center;
-		background: url('Images/navigate-next.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/navigate-next.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/navigate-next.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/navigate-next.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/navigate-next.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/navigate-next.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/navigate-next.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.previous-topic-button
 	{
-		background: #ececec url('Images/navigate-previous.png') no-repeat center center;
-		background: url('Images/navigate-previous.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/navigate-previous.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/navigate-previous.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/navigate-previous.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/navigate-previous.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/navigate-previous.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/navigate-previous.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.select-language-button
 	{
-		background: #ececec url('Images/select-language.png') no-repeat center center;
-		background: url('Images/select-language.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/select-language.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/select-language.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/select-language.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/select-language.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/select-language.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/select-language.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.select-skin-button
 	{
-		background: #ececec url('Images/select-skin.png') no-repeat center center;
-		background: url('Images/select-skin.png') no-repeat center center, -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/select-skin.png') no-repeat center center, -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
-		background: url('Images/select-skin.png') no-repeat center center, -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
-		background: url('Images/select-skin.png') no-repeat center center, -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/select-skin.png') no-repeat center center, -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
-		background: url('Images/select-skin.png') no-repeat center center, linear-gradient(top, #ffffff 0%,#ececec 100%);
-		-pie-background: url('Skins/Default/Stylesheets/Images/select-skin.png') no-repeat center center, linear-gradient(#ffffff, #ececec);
+		background-repeat: no-repeat;
+		background: #ececec;
+		background: -moz-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffffff), color-stop(100%,#ececec));
+		background: -webkit-linear-gradient(top, #ffffff 0%, #ececec 100%);
+		background: -o-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: -ms-linear-gradient(top, #ffffff 0%,#ececec 100%);
+		background: linear-gradient(top, #ffffff 0%,#ececec 100%);
+		-pie-background: linear-gradient(#ffffff, #ececec);
 	}
 
 	.button.topic-ratings-button

@@ -308,8 +308,11 @@ html.right-layout .nav-closed #show-hide-navigation:after
 	/**/
 }
 
+.button.pulse-required,
+.button.feedback-required,
 .pulse-required,
 .feedback-required,
+.feedback-topic-required,
 .feedback-topic-required
 {
 	display: none;
@@ -319,7 +322,7 @@ html.right-layout .nav-closed #show-hide-navigation:after
 .feedback-active .feedback-required,
 .feedback-active.has-topic .feedback-topic-required
 {
-	display: block;
+	display: inline-flex;
 }
 
 /* Tabs */
@@ -1897,11 +1900,6 @@ a.activityText
 .MCWebHelpFramesetLink .MCWebHelpFramesetLinkTop a
 {
 	
-}
-
-#navigation[role="complementary"]
-{
-	background-color: #ffffff;
 }
 
 #browseSequences.tabs-panel-content

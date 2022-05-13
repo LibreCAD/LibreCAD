@@ -509,3 +509,190 @@ a.activityText:visited
 .central-logout-link {
     cursor: pointer;
 }
+
+.central-display {
+    display: inline-block !important;
+}
+
+.results-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 1em;
+    color: #076685;
+}
+
+.results-status {
+    display: block;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.results-status > div.failed {
+    width: max-content;
+    color: #fa4d55;
+    border: solid 1px #fa4d55;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+    margin-bottom: 1em;
+}
+
+.results-status > div.passed {
+    width: max-content;
+    color: #4dba6e;
+    border: solid 1px #4dba6e;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    padding-right: 1em;
+    padding-left: 1em;
+    margin-bottom: 1em;
+}
+
+.results-score {
+    font-size: 21px;
+    font-weight: bold;
+    margin-bottom: 1em;
+    width: max-content;
+    color: #45494C;
+}
+
+.results-question-wrapper {
+    border-bottom: solid 3px #e1e1e1;
+    padding-top: 2em;
+    margin-bottom: 1em;
+    font-size: 17px;
+    color: #45494C;
+}
+
+.results-questions-block > div:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.results-question {
+    margin-bottom: 1em;
+}
+
+.results-answer p, 
+.results-question p,
+.resultsQuestionFeedback p
+{
+    font-size: inherit;
+    margin-top: inherit;
+    margin-bottom: inherit;
+}
+
+.results-answer {
+    margin-bottom: 1em;
+    font-size: 14px;
+}
+
+.results-answer > div.answer-title {
+    font-weight: bold;
+    vertical-align: top;
+}
+
+.results-answer > div.answer-content {
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.results-answer > div.answer-content > p:first-child {
+    margin-top: 0;
+}
+
+.elearning-button {
+    box-shadow: initial;
+}
+
+.elearning-button:disabled {
+    opacity: initial;
+}
+
+.elearning-progress-wrapper {
+    display: inline-block;
+    padding-top: 2px;
+    float: left;
+}
+
+.elearning-progress-text {
+    font-size: 10px;
+    padding-left: 5em;
+    font-weight: bold;
+    text-align: left;
+    color: #076685;
+}
+
+.elearning-progress-bar {
+    box-sizing: initial;
+    border: 1px #ededed solid;
+    border-radius: 0px;
+    width: 200px;
+    margin-left: 3em;
+    margin-right: 3em;
+    height: 5px;
+    background-color: #e0e1e2;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.elearning-progress-bar-inner {
+    background-color: #076685;
+    height: 100%;
+}
+
+.elearning-warning {
+    color: #ffffff;
+    padding: 0.5em;
+    margin-bottom: 1em;
+}
+
+.elearning-incomplete-warning {
+    color: #ff0000;
+    background-color: transparent;
+    border: solid 1px #ff0000;
+    font-size: 14px;
+    font-weight: bold;
+    padding: 1.5em 1.5em 1em 1.5em;
+}
+
+.elearning-incomplete-warning ul {
+    margin-top: 1em;
+    margin-bottom: 1em;
+    margin-right: 0;
+    margin-left: 0;
+    padding: 0;
+    line-height: inherit;
+}
+
+.elearning-incomplete-warning li {
+    border: none;
+    background: none;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.elearning-incomplete-warning a {
+    color: #45494C;
+    font-weight: normal;
+}
+
+.elearning-maxed-attempts-warning {
+    background: #404040;
+    font-size: 14px;
+}
+
+.resultsQuestionFeedback {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.resultsQuestionFeedback.correctFeedback {
+    color: #4DBA6E;
+}
+
+.resultsQuestionFeedback.incorrectFeedback {
+    color: #FA4D55;
+}

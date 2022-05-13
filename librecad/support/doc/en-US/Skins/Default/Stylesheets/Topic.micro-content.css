@@ -39,8 +39,11 @@
 
 /* Feedback/Pulse */
 
+.micro-response .button.pulse-required,
+.micro-response .button.feedback-required,
 .micro-response .pulse-required,
 .micro-response .feedback-required,
+.micro-response .feedback-topic-required,
 .micro-response .feedback-topic-required
 {
 	display: none;
@@ -50,7 +53,7 @@
 .micro-response .feedback-active .feedback-required,
 .micro-response .feedback-active.has-topic .feedback-topic-required
 {
-	display: block;
+	display: inline-flex;
 }
 
 /* Login Dialog */
@@ -385,6 +388,46 @@
 {
 	font: inherit;
 	right: 0;
+}
+
+.micro-response .multipleChoice > fieldset
+{
+	border: none;
+}
+
+.micro-response .multipleChoice > .submitQuestionButton
+{
+	display: block;
+}
+
+.micro-response .multipleChoiceItem
+{
+	display: flex;
+}
+
+.micro-response .multipleChoiceItem > div
+{
+	display: inline-block;
+}
+
+.micro-response .multipleChoiceItem > div > p:first-child
+{
+	margin-top: 0;
+}
+
+.micro-response .multipleChoiceItem > input
+{
+	vertical-align: top;
+}
+
+.micro-response .topicQuestionFeedback
+{
+	display: none;
+}
+
+.micro-response .mc-el-hidden
+{
+	opacity: 0;
 }
 
 .micro-response .MCHelpControl-Related .MCHelpControl-RelatedHotSpot_

@@ -26,6 +26,8 @@
         <link rel="icon" sizes="16x16" href="../../../Skins/Favicons/favicon-16x16.png" />
         <script src="../../../Resources/Scripts/jquery.min.js" type="text/javascript">
         </script>
+        <script src="../../../Resources/Scripts/purify.min.js" type="text/javascript" defer="defer">
+        </script>
         <script src="../../../Resources/Scripts/require.min.js" type="text/javascript" defer="defer">
         </script>
         <script src="../../../Resources/Scripts/require.config.js" type="text/javascript" defer="defer">
@@ -42,11 +44,11 @@
         </p>
         <div>
             <div role="main" id="mc-main-content">
-                <h1 class="TOC4"><a name="kanchor55"></a>Setting up a drawing</h1>
-                <p><a name="kanchor56"></a>When you first get started with LibreCAD, you'll want to make sure your drawing is configured with the correct units, scale, and so forth. This only needs to be done once, and any changes you make will save to the default template that LibreCAD uses when you create a new drawing.</p>
-                <h2><a name="kanchor57"></a>Scale</h2>
+                <h1 class="TOC4"><a name="kanchor56"></a>Setting up a drawing</h1>
+                <p><a name="kanchor57"></a>When you first get started with LibreCAD, you'll want to make sure your drawing is configured with the correct units, scale, and so forth. This only needs to be done once, and any changes you make will save to the default template that LibreCAD uses when you create a new drawing.</p>
+                <h2><a name="kanchor58"></a>Scale</h2>
                 <p>For best results, drawings should be created full-scale (1:1). The zooming abilities of LibreCAD will make the whole drawing fit in the display window or zoom into the fine detail. </p>
-                <h2><a name="kanchor58"></a>Printing</h2>
+                <h2><a name="kanchor59"></a>Printing</h2>
                 <p>When producing output, the drawing will need to be scaled to fit the page. Output can be a printed page, a PDF, or another image format. </p>
                 <p>Determining dimension text size is addressed by the General Scale on the Dimensions tab of the Current Drawing Preferences. The General Scale is used to adjust the dimension text, arrows and related parameters to the sizes suitable for the required page format.</p>
                 <p>The value for the General Scale should be the <i>inverse</i> of the scale used for printing. For example, if the print scale is 1:10”, the General Scale should be 10 (10:1). Setting the General Scale to the inverse of the print scale results in the dimension text being the defined size on the printed drawing. The drawing is scaled down to fit the page and the dimension text is scaled up to be legible. The print scale can be determined by using LibreCAD’s print preview feature. See  the <a href="guide_printing.htm">Printing Guide</a> for more information.</p>
@@ -62,14 +64,14 @@
                         <li>While any scale can be used when printing a drawing there are commonly used scales for different types of drawings. Refer to <a href="../Appendices/append_drawingscales.htm">Drawing Scales in the appendix</a> for some examples.</li>
                     </ul>
                 </div>
-                <h2><a name="kanchor59"></a>Layers</h2>
+                <h2><a name="kanchor60"></a>Layers</h2>
                 <p>ProNest automatically adds layers to LibreCAD that are in your Importing Parts settings under the CAD Import tab. You can still modify or create new layers, but keep in mind that, when importing a part from LibreCAD to ProNest, ProNest will disregard any layers that aren't listed in your Importing Parts settings (ProNest <b>Settings</b> &gt; <b>Importing Parts</b> &gt;&#160;<b>CAD Import</b>).</p>
                 <p>Layers help organize drawings by allowing users to place and manage related entities. Layers can be thought of as transparent drawing sheets that can be placed on top of one another. Layers have the added advantage in that the pen attributes can be modified for all entities on the layer. Layers are added, removed, hidden and modified using the Layer List Dock.</p>
                 <p>
                     <img src="../../Images/invisible.svg" /> Hiding layers while drawing reduces the visual complexity and makes it easier to focus on the current drawing efforts.</p>
                 <p>
                     <img src="../../Images/locked.svg" /> Layers can be locked, which prevents accidental changes and can improve the performance when working with very large complex drawings.</p>
-                <h3><a name="kanchor60"></a>Construction Layers</h3>
+                <h3><a name="kanchor61"></a>Construction Layers</h3>
                 <p>A Construction Layer ( <img src="../../Images/construction_layer.svg" /> ) is a special layer used to create reference geometry to help align other drawing entities. A construction layer:</p>
                 <ul>
                     <li>contains lines that are an infinite length,</li>
@@ -77,7 +79,7 @@
                     <li>won't appear in ProNest when you import a drawing.</li>
                 </ul>
                 <p>Read more about <a href="guide_layers.htm">using layers</a>.</p>
-                <h2><a name="kanchor61"></a>Templates</h2>
+                <h2><a name="kanchor62"></a>Templates</h2>
                 <p>Templates are prototype drawings that provide the means to save basic parameters and settings so a drawing does not have to be configured each time a new one is started. The parameters and settings include the settings defined in the Drawing Preferences, such as the paper format, main unit of measure and format, and dimension format. Templates can also include layers and layer configuration, line type and thickness, pen color, and other drawing elements such as a border. </p>
                 <p>These settings are inherited by the drawings created from the template. Once the template has been prepared, it can be saved to any location where you have read/write permissions.</p>
                 <p>LibreCAD supports the use of multiple templates. A LibreCAD user that plans on creating similar drawings may require only one or two templates. A user that plans on several different types of drawings may want multiple templates. For example, templates can be set up for each paper size available  or for each paper orientation.</p>
