@@ -1503,7 +1503,6 @@
  </customwidgets>
  <tabstops>
   <tabstop>cbLayer</tabstop>
-  <tabstop>wPen</tabstop>
   <tabstop>cbFont</tabstop>
   <tabstop>leHeight</tabstop>
   <tabstop>cbDefault</tabstop>
@@ -1521,8 +1520,8 @@
   <tabstop>leAngle</tabstop>
   <tabstop>cbSymbol</tabstop>
   <tabstop>cbUniPage</tabstop>
-  <tabstop>bUnicode</tabstop>
   <tabstop>cbUniChar</tabstop>
+  <tabstop>bUnicode</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>bClear</tabstop>
   <tabstop>bLoad</tabstop>

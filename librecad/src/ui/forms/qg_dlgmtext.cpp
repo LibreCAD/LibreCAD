@@ -76,9 +76,54 @@ void QG_DlgMText::init() {
     isNew = false;
     updateUniCharComboBox(0);
     updateUniCharButton(0);
-	teText->QFrame::setLineWidth(2);
-	teText->QFrame::setMidLineWidth(0);
-	teText->QFrame::setFrameStyle(QFrame::Box|QFrame::Plain);
+
+    /*
+     * Ensure tabbing order of the widgets is as we would like. Using the Edit Tab
+     * Order tool in Qt Designer omits the "pen" compound widget from the tabbing
+     * list (as the tool is not aware that this user-written widget is a tabbable
+     * thing). The .ui file can be manually edited, but then if Qt Designer is used
+     * again to alter the layout, the pen widget gets dropped out of the order once
+     * more. Seems that the only reliable way of ensuring the order is correct is
+     * to set it programmatically.
+     */
+    QWidget::setTabOrder(cbLayer, wPen); // Layer widget -> Pen compound widget
+    QWidget::setTabOrder(wPen, cbFont); // Pen compound widget -> Font widget
+    QWidget::setTabOrder(cbFont, leHeight); // Font -> Height
+    QWidget::setTabOrder(leHeight, cbDefault); // etc
+    QWidget::setTabOrder(cbDefault, leLineSpacingFactor);
+    QWidget::setTabOrder(leLineSpacingFactor, teText);
+    QWidget::setTabOrder(teText, bTL);
+    QWidget::setTabOrder(bTL, bTC);
+    QWidget::setTabOrder(bTC, bTR);
+    QWidget::setTabOrder(bTR, bML);
+    QWidget::setTabOrder(bML, bMC);
+    QWidget::setTabOrder(bMC, bMR);
+    QWidget::setTabOrder(bMR, bBL);
+    QWidget::setTabOrder(bBL, bBC);
+    QWidget::setTabOrder(bBC, bBR);
+    QWidget::setTabOrder(bBR, leAngle);
+    QWidget::setTabOrder(leAngle, cbSymbol);
+    QWidget::setTabOrder(cbSymbol, cbUniPage);
+    QWidget::setTabOrder(cbUniPage, cbUniChar);
+    QWidget::setTabOrder(cbUniChar, bUnicode);
+    QWidget::setTabOrder(bUnicode, buttonBox);
+    QWidget::setTabOrder(buttonBox, bClear);
+    QWidget::setTabOrder(bClear, bLoad);
+    QWidget::setTabOrder(bLoad, bSave);
+    QWidget::setTabOrder(bSave, bCut);
+    QWidget::setTabOrder(bCut, bCopy);
+    QWidget::setTabOrder(bCopy, bPaste); // Copy -> Paste
+    QWidget::setTabOrder(bPaste, cbLayer); // Paste loops back to Layer
+
+    /*
+     * We are using the frame colour of the teText QTextEdit widget to indicate when
+     * this is the selected widget - there is no automatic highlight of this widget
+     * class on selection. Ensure that known state of frame on start, and install Qt
+     * Event filter in order to get callback on focus in/out of the widget.
+     */
+    teText->QFrame::setLineWidth(2);
+    teText->QFrame::setMidLineWidth(0);
+    teText->QFrame::setFrameStyle(QFrame::Box|QFrame::Plain);
     teText->installEventFilter(this);
 }
 
@@ -471,35 +516,26 @@ void QG_DlgMText::insertChar() {
     teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
 }
 
-bool QG_DlgMText::eventFilter(QObject *obj, QEvent *event)
-{
+/*
+ * Event filter is used to detect focus in/out of the teText QTextEdit widget.
+ * On focus in set the widget frame highlighted, on focus out revert to normal.
+ */
+bool QG_DlgMText::eventFilter(QObject *obj, QEvent *event) {
     int type = event->type();
-
-    if (type == QEvent::FocusIn) 
-    {
-//        QFocusEvent *focusEvent = static_cast<QFocusEvent*>(event);
-//        int reason = focusEvent->reason();
-//        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgMText::eventFilter, FocusIn, reason '%d'",reason);
-        if ( obj == teText )
-    	{
-    		QPalette palette = teText->QFrame::QWidget::palette();
-			QColor color = palette.color(QPalette::Highlight);
-			palette.setColor(QPalette::WindowText, color);
-			teText->QFrame::QWidget::setPalette(palette);
-    	}
-    }
-    else if (type == QEvent::FocusOut) 
-    {
-//        QFocusEvent *focusEvent = static_cast<QFocusEvent*>(event);
-//        int reason = focusEvent->reason();
-//        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgMText::eventFilter, FocusOut, reason '%d'",reason);
-        if ( obj == teText )
-    	{
-    		QPalette palette = teText->QFrame::QWidget::palette();
-			QColor color = palette.color(QPalette::Dark);
-			palette.setColor(QPalette::WindowText, color);
-			teText->QFrame::QWidget::setPalette(palette);
-    	}
+    if (type == QEvent::FocusIn) {
+        if (obj == teText) {
+            QPalette palette = teText->QFrame::QWidget::palette();
+            QColor color = palette.color(QPalette::Highlight);
+            palette.setColor(QPalette::WindowText, color);
+            teText->QFrame::QWidget::setPalette(palette);
+        }
+    } else if (type == QEvent::FocusOut) {
+        if (obj == teText) {
+            QPalette palette = teText->QFrame::QWidget::palette();
+            QColor color = palette.color(QPalette::Dark);
+            palette.setColor(QPalette::WindowText, color);
+            teText->QFrame::QWidget::setPalette(palette);
+        }
     }
     return(false);
 }
