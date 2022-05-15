@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -56,64 +57,67 @@ namespace DRW {
 */
 class DRW_TableEntry {
 public:
-    //initializes default values
-    DRW_TableEntry() {
-        tType = DRW::UNKNOWNT;
-        flags = 0;
-        numReactors = xDictFlag = 0;
-        parentHandle = 0;
-        curr = NULL;
-    }
+
+    DRW_TableEntry() {}
 
     virtual~DRW_TableEntry() {
-        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+        for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {
             delete *it;
+        }
 
         extData.clear();
     }
 
-    DRW_TableEntry(const DRW_TableEntry& e) {
-        tType = e.tType;
-        handle = e.handle;
-        parentHandle = e.parentHandle;
-        name = e.name;
-        flags = e.flags;
-        numReactors = e.numReactors;
-        xDictFlag = e.xDictFlag;
-        curr = e.curr;
-        for (std::vector<DRW_Variant*>::const_iterator it=e.extData.begin(); it!=e.extData.end(); ++it){
-            extData.push_back(new DRW_Variant(*(*it)));
+    DRW_TableEntry(const DRW_TableEntry& e) :
+        tType {e.tType},
+        handle {e.handle},
+        parentHandle {e.parentHandle},
+        name {e.name},
+        flags {e.flags},
+        xDictFlag {e.xDictFlag},
+        numReactors {e.numReactors},
+        curr {nullptr}
+    {
+        for (std::vector<DRW_Variant *>::const_iterator it = e.extData.begin(); it != e.extData.end(); ++it) {
+            DRW_Variant *src = *it;
+            DRW_Variant *dst = new DRW_Variant( *src);
+            extData.push_back( dst);
+            if (src == e.curr) {
+                curr = dst;
+            }
         }
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    virtual bool parseCode(int code, dxfReader *reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
-    void reset(){
-        flags =0;
-        for (std::vector<DRW_Variant*>::iterator it=extData.begin(); it!=extData.end(); ++it)
+    void reset() {
+        flags = 0;
+        for (std::vector<DRW_Variant*>::iterator it = extData.begin(); it != extData.end(); ++it) {
             delete *it;
+        }
         extData.clear();
+        curr = nullptr;
     }
 
 public:
-    enum DRW::TTYPE tType;     /*!< enum: entity type, code 0 */
-    duint32 handle;            /*!< entity identifier, code 5 */
-    int parentHandle;          /*!< Soft-pointer ID/handle to owner object, code 330 */
-    UTF8STRING name;           /*!< entry name, code 2 */
-    int flags;                 /*!< Flags relevant to entry, code 70 */
-    std::vector<DRW_Variant*> extData; /*!< FIFO list of extended data, codes 1000 to 1071*/
-
-private:
-    DRW_Variant* curr;
+    enum DRW::TTYPE tType {DRW::UNKNOWNT};  /*!< enum: entity type, code 0 */
+    duint32         handle {0};             /*!< entity identifier, code 5 */
+    int             parentHandle {0};       /*!< Soft-pointer ID/handle to owner object, code 330 */
+    UTF8STRING      name;                   /*!< entry name, code 2 */
+    int             flags {0};              /*!< Flags relevant to entry, code 70 */
+    std::vector<DRW_Variant*> extData;      /*!< FIFO list of extended data, codes 1000 to 1071*/
 
     //***** dwg parse ********/
 protected:
-    dint16 oType;
-    duint8 xDictFlag;
-    dint32 numReactors; //
-    duint32 objSize;  //RL 32bits object data size in bits
+    dint16  oType {0};
+    duint8  xDictFlag {0};
+    dint32  numReactors {0};
+    duint32 objSize {0};    //RL 32bits object data size in bits
+
+private:
+    DRW_Variant* curr {nullptr};
 };
 
 
@@ -153,7 +157,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -251,7 +255,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
     void update();
 
@@ -288,7 +292,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -320,7 +324,6 @@ public:
     }
 
 protected:
-//    void parseCode(int code, dxfReader *reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -358,7 +361,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -403,7 +406,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -435,7 +438,7 @@ public:
     * bit 1 (1) show out of limits
     * bit 2 (2) adaptive grid
     * bit 3 (4) allow subdivision
-    * bit 4 (8) follow dinamic SCP
+    * bit 4 (8) follow dynamic SCP
     **/
 };
 
@@ -459,7 +462,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -498,7 +501,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -526,7 +529,6 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader){DRW_TableEntry::parseCode(code, reader);}
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 };
 

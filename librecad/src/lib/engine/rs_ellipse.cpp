@@ -466,7 +466,7 @@ RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
     return p;
 }
 
-/** \brief implemented using an analytical aglorithm
+/** \brief implemented using an analytical algorithm
 * find nearest point on ellipse to a given point
 *
 * @author Dongxu Li <dongxuli2011@gmail.com>

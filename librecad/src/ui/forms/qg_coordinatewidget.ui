@@ -24,8 +24,8 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>500</width>
-    <height>50</height>
+    <width>1500</width>
+    <height>160</height>
    </size>
   </property>
   <property name="windowTitle">

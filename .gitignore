@@ -22,8 +22,10 @@ clean
 custom.*
 Unnamed
 
-# Unix generated directories (except Apple)
+# Unix generated directories and files (except Apple)
+appdir/
 unix/
+*.AppImage
 
 # Win/MSVC generated files and binaries
 windows/

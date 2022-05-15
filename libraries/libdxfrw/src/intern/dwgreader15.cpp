@@ -16,8 +16,6 @@
 #include <string>
 #include <sstream>
 #include <vector>
-#include <map>
-#include <list>
 #include "drw_dbg.h"
 #include "dwgreader15.h"
 #include "drw_textcodec.h"

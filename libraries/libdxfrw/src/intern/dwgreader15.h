@@ -27,12 +27,12 @@ public:
     bool readDwgHandles() override;
     bool readDwgTables(DRW_Header& hdr) override;
     bool readDwgBlocks(DRW_Interface& intfa) override;
-    bool readDwgEntities(DRW_Interface& intfa) override{
+    bool readDwgEntities(DRW_Interface& intfa) override {
         bool ret = true;
         ret = dwgReader::readDwgEntities(intfa, fileBuf.get());
         return ret;
     }
-    bool readDwgObjects(DRW_Interface& intfa) override{
+    bool readDwgObjects(DRW_Interface& intfa) override {
         bool ret = true;
         ret = dwgReader::readDwgObjects(intfa, fileBuf.get());
         return ret;
