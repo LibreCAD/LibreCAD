@@ -2449,7 +2449,6 @@ bool dxfRW::processViewport() {
         if (!vp.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
-        break;
     }
 
     return setError(DRW::BAD_READ_ENTITIES);
@@ -2672,8 +2671,8 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
         }
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
-            return setError( DRW::BAD_CODE_PARSED);
-        };
+            return setError(DRW::BAD_CODE_PARSED);
+        }
     }
 
     return setError(DRW::BAD_READ_ENTITIES);
