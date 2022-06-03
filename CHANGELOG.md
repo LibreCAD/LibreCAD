@@ -3,15 +3,22 @@
 ## [Unreleased]
 
 ### Added
+- symbols to unicode.lff
 - CHANGELOG.md - history of changes back to version 2.1.0
 - new error code from libdxfrw update
 - build Windows, MacOS and Linux packages in one action
 
 ### Changed
+- maximum size of status bar for hidpi displays
 - sync libdxfrw (072aecd)
 - copy/rename media files in desktop folder to remove whitespaces
 
 ### Fixed
+- spline issue with tolerance on ascii to double conversion
+- DXF viewport reading issue by updating libdxfrw
+- status bar height toggling on auto save
+- solid fill hatch issues
+- Ukrainian and symbol characters in unicode.lff
 - possible out of bounds read with MText entities
 - AppImage was broken by fix for #1488
 - wrong translations folder for additionals paths from settings
