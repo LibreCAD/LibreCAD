@@ -53,6 +53,11 @@ int RS_Math::round(double v) {
     return (int) lrint(v);
 }
 
+double RS_Math::round(const double v, const double precision)
+{
+    return precision * lround(v / precision);
+}
+
 /**
  * Save pow function
  */

@@ -40,7 +40,8 @@ class RS_Math {
 private:
 	RS_Math() = delete;
 public:
-	static int round(double v);
+    static int round(double v);
+    static double round(const double v, const double precision);
     static double pow(double x, double y);
     static RS_Vector pow(RS_Vector x, double y);
     static bool equal(const double d1, const double d2);

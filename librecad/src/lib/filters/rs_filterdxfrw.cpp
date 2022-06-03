@@ -185,6 +185,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         dxfRW dxfR(QFile::encodeName(file));
 
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
+        if (RS_Debug::D_DEBUGGING == RS_DEBUG->getLevel()) {
+            dxfR.setDebug(DRW::DebugLevel::Debug);
+        }
         bool success = dxfR.read(this, true);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
         //graphic->setAutoUpdateBorders(true);
@@ -635,11 +638,15 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 		return;
 	}
 
-        RS_Spline* spline;
-        if (data->degree>=1 && data->degree<=3) {
+    RS_Spline* spline;
+    if (data->degree >= 1 && data->degree <= 3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
-		if (data->knotslist.size())
-			d.knotslist = data->knotslist;
+        if (data->knotslist.size()) {
+            double tolknot {(0 >= data->tolknot) ? 1e-7 : data->tolknot};
+            for (auto const& k : data->knotslist) {
+                d.knotslist.push_back( RS_Math::round(k, tolknot));
+            }
+        }
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, data);
 
