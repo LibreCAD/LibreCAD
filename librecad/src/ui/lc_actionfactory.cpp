@@ -30,10 +30,13 @@
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
+LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
     , using_theme(false)
     , main_window(parent)
@@ -983,6 +986,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotOptionsDrawing()));
     action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
+    connect( main_window, &QC_ApplicationWindow::windowsChanged, action, &QAction::setEnabled);
 
     action = new QAction(tr("Widget Options"), agm->options);
     action->setObjectName("WidgetOptions");
