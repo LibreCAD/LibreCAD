@@ -484,8 +484,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			msg = tr("Saved drawing: %1").arg(name);
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
-			if (!recentFiles->indexOf(name))
-				recentFiles->add(name);
+
+			if (recentFiles->indexOf(name) == -1) recentFiles->add(name);
+
 			w->setWindowTitle(format_filename_caption(name) + "[*]");
 			if (w->getGraphicView()->isDraftMode())
 				w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
