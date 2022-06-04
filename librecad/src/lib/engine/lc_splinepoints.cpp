@@ -999,8 +999,10 @@ RS_Vector LC_SplinePoints::GetSplinePointAtDist(double dDist, int iStartSeg,
 
 	if(dDist <= dQuadDist)
 	{
-        double t0 = 0.0;
-        if (i == (iStartSeg + 1)) { t0 = dStartT; }
+        double t0 {0.0};
+        if (static_cast<size_t>(iStartSeg + 1) == i) {
+            t0 = dStartT;
+        }
 		double dt = GetQuadPointAtDist(vStart, vControl, vEnd, t0, dDist);
 		vRes = GetQuadPoint(vStart, vControl, vEnd, dt);
 		*piSeg = i - 1;
