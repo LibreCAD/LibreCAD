@@ -107,7 +107,7 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                format, prec);
 
         lCoord1->setText(absX + " , " + absY);
-        lCoord2->setText(relX + " , " + relY);
+        lCoord2->setText("@  " + relX + " , " + relY);
 
         // polar coordinates:
         RS_Vector v;
@@ -128,7 +128,7 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                format, prec);
         aStr = RS_Units::formatAngle(v.angle(),
                                                aformat, aprec);
-        str = rStr + " < " + aStr;
-        lCoord2b->setText(str);
+
+        lCoord2b->setText("@  " + rStr + " < " + aStr);
     }
 }
