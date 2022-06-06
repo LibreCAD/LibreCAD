@@ -255,6 +255,8 @@ public slots:
 	void slotBlocksExplode();
 	void slotOptionsDrawing();
 
+   void slotDeletePolylineNodePromptly();
+
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);

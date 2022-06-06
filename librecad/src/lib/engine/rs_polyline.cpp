@@ -23,17 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<iostream>
-#include<cmath>
-#include<cassert>
+
+
+#include <cmath>
+#include <cassert>
+
+#include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "qc_applicationwindow.h"
+
 #include "rs_polyline.h"
 
-#include "rs_debug.h"
-#include "rs_line.h"
-#include "rs_arc.h"
-#include "rs_graphicview.h"
-#include "rs_math.h"
-#include "rs_information.h"
 
 RS_PolylineData::RS_PolylineData():
 	startpoint(false)
@@ -92,6 +95,26 @@ RS_Entity* RS_Polyline::clone() const {
 	p->detach();
 	return p;
 }
+
+
+bool RS_Polyline::toggleSelected()
+{
+    if (!isSelected())
+    {
+        highlightedVertex = getNearestRef(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
+
+        QC_ApplicationWindow::getAppWindow()->getGraphicView()->moveRelativeZero(highlightedVertex);
+    }
+
+    return this->setSelected(!isSelected());
+}
+
+
+RS_Vector RS_Polyline::getHighlightedVertex()
+{
+    return highlightedVertex;
+}
+
 
 /**
  * Removes the last vertex of this polyline.
@@ -765,4 +788,3 @@ std::ostream& operator << (std::ostream& os, const RS_Polyline& l) {
 
     return os;
 }
-

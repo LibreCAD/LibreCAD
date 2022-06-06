@@ -36,6 +36,7 @@ class RS_Entity;
 class RS_EntityContainer;
 class RS_MText;
 class RS_Text;
+class RS_Line;
 class RS_Polyline;
 class RS_Document;
 class RS_Graphic;
@@ -233,6 +234,8 @@ public:
 	bool changeAttributes(RS_AttributesData& data);
     bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
 
+    void setDeletePolylineNodeMode();
+
         void copy(const RS_Vector& ref, const bool cut);
 private:
         void copyEntity(RS_Entity* e, const RS_Vector& ref, const bool cut);
@@ -276,6 +279,8 @@ public:
 		bool explodeTextIntoLetters();
         bool moveRef(RS_MoveRefData& data);
 
+        void deleteLineNode(RS_Line* polyline, const RS_Vector& node);
+
     bool splitPolyline(RS_Polyline& polyline,
                        RS_Entity& e1, RS_Vector v1,
                        RS_Entity& e2, RS_Vector v2,
@@ -297,6 +302,8 @@ private:
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
+
+    bool deletePolylineNodeMode;
 
 protected:
     RS_EntityContainer* container;
