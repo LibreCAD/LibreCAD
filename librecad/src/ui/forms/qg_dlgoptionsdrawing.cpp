@@ -802,6 +802,7 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     lDimUnit4->setText(sign);
     lDimUnit5->setText(sign);
     lDimUnit6->setText(sign);
+    lDimUnit7->setText(sign);
     //have to update paper size when unit changes
     updatePaperSize();
 }
