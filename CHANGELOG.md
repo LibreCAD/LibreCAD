@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [2.2.0-rc4] - 2022-06-07
 
 ### Added
 - symbols to unicode.lff
@@ -9,18 +9,28 @@
 - build Windows, MacOS and Linux packages in one action
 
 ### Changed
+- added tool tips to Categories tool widget (#1519)
+- added @ symbol to relative coordinates in status bar (#1452)
+- changed misleading unit label in curent drawing preferences (#1453)
+- changed tab order in text dialog (#1432)
 - maximum size of status bar for hidpi displays
 - sync libdxfrw (072aecd)
 - copy/rename media files in desktop folder to remove whitespaces
 
 ### Fixed
+- fixed renaming of nested blocks (#1527)
+- preserve list position in block and layer list (#1515)
+- fixed polyline issue when line type was changed (#1496)
+- add minutes label to auto save time in application preferences (#1412)
+- add files saved as with new name to recent files (#1364)
+- snap on middle point failed for spline through points (#1395)
 - spline issue with tolerance on ascii to double conversion
 - DXF viewport reading issue by updating libdxfrw
 - status bar height toggling on auto save
 - solid fill hatch issues
 - Ukrainian and symbol characters in unicode.lff
 - possible out of bounds read with MText entities
-- AppImage was broken by fix for #1488
+- AppImage was broken by fix for (#1488)
 - wrong translations folder for additionals paths from settings
 - getDirectoryList() failed on Linux when librecad is in $PATH (#1488)
 - bounds check in LWPolyline
