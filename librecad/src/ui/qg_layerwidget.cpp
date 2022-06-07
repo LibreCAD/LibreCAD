@@ -367,7 +367,6 @@ void QG_LayerWidget::update() {
         layerModel->setActiveLayer(nullptr);
         return;
     }
-    activateLayer(activeLayer);
 
     if (!lastLayer) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LayerWidget::update: nullptr lastLayer");
