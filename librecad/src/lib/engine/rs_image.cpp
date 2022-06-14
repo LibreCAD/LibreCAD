@@ -369,18 +369,11 @@ void RS_Image::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 
 void RS_Image::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
-    RS_Vector vp0(0., 0.);
-    RS_Vector vp1(axisPoint2 - axisPoint1);
-
-    data.uVector.mirror(vp0, vp1);
-    data.uVector.scale(-1.);
-    data.vVector.mirror(vp0, vp1);
-
     data.insertionPoint.mirror(axisPoint1, axisPoint2);
-    data.insertionPoint.move(-data.uVector * data.size.x);
-
-    img.reset(new QImage(img->mirrored(true, false)));
-
+    RS_Vector vp0(0.,0.);
+    RS_Vector vp1( axisPoint2-axisPoint1 );
+    data.uVector.mirror(vp0,vp1);
+    data.vVector.mirror(vp0,vp1);
     calculateBorders();
 }
 
@@ -398,11 +391,10 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
 								view->toGuiDY(data.vVector.magnitude())};
-    double angle = data.uVector.angle();
 
-	painter->drawImg(*img,
+    painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
-                     angle, scale);
+                     data.uVector, data.vVector, scale);
 
     if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();
