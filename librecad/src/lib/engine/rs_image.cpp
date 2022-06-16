@@ -391,11 +391,10 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
 								view->toGuiDY(data.vVector.magnitude())};
-    double angle = data.uVector.angle();
 
-	painter->drawImg(*img,
+    painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
-                     angle, scale);
+                     data.uVector, data.vVector, scale);
 
     if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();

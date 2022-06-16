@@ -110,9 +110,8 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
-        virtual void drawImg(QImage& img, const RS_Vector& pos,
-            double angle, const RS_Vector& factor) = 0;
-
+    virtual void drawImg(QImage& img, const RS_Vector& pos,
+                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) = 0;
     virtual void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text) = 0;
     virtual void drawTextV(int x1, int y1, int x2, int y2,

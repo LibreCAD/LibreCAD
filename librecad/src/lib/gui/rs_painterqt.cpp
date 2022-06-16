@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include<cmath>
+#include<memory>
+
 #include "rs_painterqt.h"
 #include "rs_math.h"
 #include "rs_debug.h"
@@ -398,12 +400,8 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
 }
 
 
-
-/**
- * Draws image.
- */
 void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
-                           double angle, const RS_Vector& factor) {
+                           const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
 
     // Render smooth only at close zooms
@@ -414,18 +412,25 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
       RS_PainterQt::setRenderHint(SmoothPixmapTransform);
     }
 
-    QMatrix wm;
-    wm.translate(pos.x, pos.y);
-    wm.rotate(RS_Math::rad2deg(-angle));
-    wm.scale(factor.x, factor.y);
-    setWorldMatrix(wm);
+    RS_Vector un = uVector/uVector.magnitude();
+    RS_Vector vn = vVector/vVector.magnitude();
 
+    // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
+    // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
+    std::unique_ptr<QMatrix> wm;
+    if(RS_Vector::crossP(uVector, vVector).z < 0) {
+        wm.reset(new QMatrix(un.x, -vn.x, -un.y, vn.y, pos.x, pos.y));
+    } else {
+        wm.reset( new QMatrix(un.x, vn.x, un.y, vn.y, pos.x, pos.y));
+    }
+
+    wm->scale(factor.x, factor.y);
+    setWorldMatrix(*wm);
 
     drawImage(0,-img.height(), img);
 
     restore();
 }
-
 
 
 void RS_PainterQt::drawTextH(int x1, int y1,
