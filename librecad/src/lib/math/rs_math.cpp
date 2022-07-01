@@ -55,7 +55,7 @@ int RS_Math::round(double v) {
 
 double RS_Math::round(const double v, const double precision)
 {
-    return precision * lround(v / precision);
+    return precision * llround(v / precision);
 }
 
 /**
