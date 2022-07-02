@@ -1,5 +1,16 @@
 # Change Log
 
+## [Unreleased]
+
+### Added
+
+### Changed
+- sync libdxfrw (a610710)
+
+### Fixed
+- spline issue on Windows (32-bit) from previous fix
+- image mirroring (#1525)
+
 ## [2.2.0-rc4] - 2022-06-07
 
 ### Added
@@ -9,6 +20,7 @@
 - build Windows, MacOS and Linux packages in one action
 
 ### Changed
+- sync libdxfrw (8378f39)
 - added tool tips to Categories tool widget (#1519)
 - added @ symbol to relative coordinates in status bar (#1452)
 - changed misleading unit label in curent drawing preferences (#1453)
