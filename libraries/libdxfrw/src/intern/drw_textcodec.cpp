@@ -202,7 +202,7 @@ std::string DRW_ConvTable::toUtf8(const std::string &s) {
         if (c < 0x80) {
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
@@ -344,7 +344,7 @@ std::string DRW_ConvDBCSTable::toUtf8(const std::string &s) {
             notFound = false;
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
@@ -433,7 +433,7 @@ std::string DRW_Conv932Table::toUtf8(const std::string &s) {
             notFound = false;
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
