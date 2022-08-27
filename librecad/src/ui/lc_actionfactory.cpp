@@ -1191,12 +1191,21 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("InvokeMenuCreator");
     a_map["InvokeMenuCreator"] = action;
 
+
+
     action = new QAction(tr("Toolbar Creator"), agm->widgets);
     action->setIcon(QIcon(":/icons/create_toolbar.svg"));
     connect(action, SIGNAL(triggered()),
             main_window, SLOT(invokeToolbarCreator()));
     action->setObjectName("InvokeToolbarCreator");
     a_map["InvokeToolbarCreator"] = action;
+    // ee modules
+    action = new QAction(tr("resistance"), agm->widgets);
+    action->setIcon(QIcon(":/icons/add.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotDrawImage()));
+    action->setObjectName("resistance");
+    a_map["ee_resistance"] = action;
 
     commonActions(a_map, agm);
 }

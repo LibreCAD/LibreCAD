@@ -192,6 +192,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["BlocksSave"]
             << a_map["BlocksCreate"]
             << a_map["BlocksExplode"];
+    ee_module_actions
+            <<a_map["ee_resistance"];
 }
 
 
@@ -547,6 +549,12 @@ QToolBar* LC_WidgetFactory::createCategoriesToolbar()
     tool_button->setIcon(QIcon(":/icons/measure.svg"));
     categories_toolbar->addWidget(tool_button);
     tool_button->addActions(info_actions);
+// add ee modules
+    tool_button = new QToolButton;
+    tool_button->setPopupMode(QToolButton::InstantPopup);
+    tool_button->setIcon(QIcon(":/icons/add.svg"));
+    categories_toolbar->addWidget(tool_button);
+    tool_button->addActions(ee_module_actions);
 
     main_window->addToolBar(Qt::LeftToolBarArea, categories_toolbar);
 
