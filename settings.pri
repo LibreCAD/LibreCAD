@@ -10,4 +10,3 @@ unix {
 win32 {
     INSTALLDIR = ../../windows
 }
-

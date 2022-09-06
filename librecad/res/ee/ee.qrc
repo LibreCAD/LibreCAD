@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/ee/basic_component">
+        <file>capacitance.png</file>
+        <file>line.png</file>
+        <file>resistance.png</file>
+        <file>source.png</file>
+    </qresource>
+    <qresource prefix="/ee/source">
+        <file>source.png</file>
+    </qresource>
+</RCC>

@@ -66,14 +66,14 @@ void RS_ActionDrawImage::init(int status) {
 
     reset();
 
-	pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
+    //pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
+    pImg->data.file  = QString("C:\\download\\git_there\\LibreCAD\\librecad\\res\\icons\\add.svg");
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
 	if (!pImg->data.file.isEmpty()) {
 		//std::cout << "file: " << pImg->data.file << "\n";
+        pImg->img = QImage(pImg->data.file);
 		//qDebug() << "file: " << pImg->data.file;
-
-		pImg->img = QImage(pImg->data.file);
 
         setStatus(SetTargetPoint);
     } else {
@@ -85,12 +85,30 @@ void RS_ActionDrawImage::init(int status) {
 
 
 void RS_ActionDrawImage::reset() {
+//    /** Handle of image definition. */
+//	int handle;
+//	/** Insertion point. */
+//	RS_Vector insertionPoint;
+//	/** u vector. Points along visual bottom of image. */
+//	RS_Vector uVector;
+//	/** v vector. Points along visual left of image. */
+//	RS_Vector vVector;
+//	/** Image size in pixel. */
+//	RS_Vector size;
+//	/** Path to image file. */
+//	QString file;
+//	/** Brightness (0..100, default: 50). */
+//	int brightness;
+//	/** Contrast (0..100, default: 50). */
+//	int contrast;
+//	/** Fade (0..100, default: 0). */
+//	int fade;
 	pImg->data = {
 				   0,
 				   {0.0,0.0},
 				   {1.0,0.0},
 				   {0.0,1.0},
-				   {1.0,1.0},
+                   {1,1},
 				   "",
 				   50, 50, 0
 			   };
@@ -100,7 +118,6 @@ void RS_ActionDrawImage::reset() {
 
 void RS_ActionDrawImage::trigger() {
     deletePreview();
-
 	if (!pImg->data.file.isEmpty()) {
         RS_Creation creation(container, graphicView);
 		creation.createImage(& pImg->data);
@@ -119,6 +136,8 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
         deletePreview();
 		//RS_Creation creation(preview, nullptr, false);
         //creation.createInsert(data);
+        pImg->data.uVector={0.0,0.1};
+        pImg->data.vVector={0,0.1};
 		double const w=pImg->img.width();
 		double const h=pImg->img.height();
 		RS_Line* line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};

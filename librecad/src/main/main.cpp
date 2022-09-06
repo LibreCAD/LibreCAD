@@ -153,7 +153,7 @@ int main(int argc, char** argv)
             }
             else
                 level=argstr.toStdString()[0];
-
+            level = 5;
             switch(level)
             {
             case '?' :
