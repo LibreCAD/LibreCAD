@@ -67,7 +67,7 @@ void RS_ActionDrawImage::init(int status) {
     reset();
 
     //pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
-    pImg->data.file  = QString("C:\\download\\git_there\\LibreCAD\\librecad\\res\\icons\\add.svg");
+    pImg->data.file  = QString(":/ee/basic_component/resistance.png");
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
 	if (!pImg->data.file.isEmpty()) {
@@ -122,7 +122,8 @@ void RS_ActionDrawImage::trigger() {
         RS_Creation creation(container, graphicView);
 		creation.createImage(& pImg->data);
     }
-
+    pImg->data.uVector={0.0,0.1};
+    pImg->data.vVector={0,0.1};
     graphicView->redraw(RS2::RedrawDrawing);
     graphicView->zoomAuto();
     finish(false);

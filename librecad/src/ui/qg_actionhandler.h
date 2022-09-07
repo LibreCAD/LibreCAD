@@ -254,7 +254,8 @@ public slots:
 	void slotBlocksCreate();
 	void slotBlocksExplode();
 	void slotOptionsDrawing();
-
+    void slotPlaceResistance();
+    void slotPlaceSource();
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);

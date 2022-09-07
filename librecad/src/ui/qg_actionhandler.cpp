@@ -168,7 +168,8 @@
 #include "rs_debug.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
-
+#include "rs_action_ee_resistance.h"
+#include "rs_action_ee_source.h"
 /**
  * Constructor
  */
@@ -935,6 +936,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
     case RS2::ActionOptionsDrawing:
         a = new RS_ActionOptionsDrawing(*document, *view);
+        break;
+    case RS2::ActionPlaceResistance:
+        a = new RS_ActionEeResistance(*document, *view);
+        break;
+    case RS2::ActionPlaceSource:
+        a = new RS_ActionEeSource(*document, *view);
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -1908,7 +1915,13 @@ void QG_ActionHandler::slotBlocksExplode() {
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
 }
+void QG_ActionHandler::slotPlaceResistance() {
+    setCurrentAction(RS2::ActionPlaceResistance);
+}
 
+void QG_ActionHandler::slotPlaceSource() {
+    setCurrentAction(RS2::ActionPlaceSource);
+}
 void QG_ActionHandler::set_view(RS_GraphicView* gview)
 {
     view = gview;
@@ -1943,6 +1956,5 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
     auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
     view->setCurrentAction(a);
 }
-
 // EOF
 

@@ -394,6 +394,8 @@ public:
 
         ActionScriptOpenIDE,
         ActionScriptRun,
+        ActionPlaceResistance,
+        ActionPlaceSource,
 
         /** Needed to loop through all actions */
         ActionLast

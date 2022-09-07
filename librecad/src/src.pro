@@ -453,7 +453,9 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionzoomprevious.h \
     actions/rs_actionzoomredraw.h \
     actions/rs_actionzoomscroll.h \
-    actions/rs_actionzoomwindow.h
+    actions/rs_actionzoomwindow.h \
+    actions/rs_action_ee_resistance.h \
+    actions/rs_action_ee_source.h
 
 SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionblocksattributes.cpp \
@@ -588,7 +590,9 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionzoomprevious.cpp \
     actions/rs_actionzoomredraw.cpp \
     actions/rs_actionzoomscroll.cpp \
-    actions/rs_actionzoomwindow.cpp
+    actions/rs_actionzoomwindow.cpp  \
+    actions/rs_action_ee_resistance.cpp \
+    actions/rs_action_ee_source.cpp
 
 
 

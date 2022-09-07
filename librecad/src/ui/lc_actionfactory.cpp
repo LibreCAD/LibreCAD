@@ -1199,13 +1199,20 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
             main_window, SLOT(invokeToolbarCreator()));
     action->setObjectName("InvokeToolbarCreator");
     a_map["InvokeToolbarCreator"] = action;
-    // ee modules
+    // ee  basic modules resistance
     action = new QAction(tr("resistance"), agm->widgets);
-    action->setIcon(QIcon(":/icons/add.svg"));
+    action->setIcon(QIcon(":/ee/basic_component/resistance.png"));
     connect(action, SIGNAL(triggered()),
-            action_handler, SLOT(slotDrawImage()));
-    action->setObjectName("resistance");
+            action_handler, SLOT(slotPlaceResistance()));
+    action->setObjectName("basic_component");
     a_map["ee_resistance"] = action;
+    //ee source
+    action = new QAction(tr("source"), agm->widgets);
+    action->setIcon(QIcon(":/ee/source/source.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPlaceSource()));
+    action->setObjectName("source");
+    a_map["ee_source"] = action;
 
     commonActions(a_map, agm);
 }
