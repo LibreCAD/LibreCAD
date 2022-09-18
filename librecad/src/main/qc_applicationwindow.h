@@ -196,8 +196,6 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void invokeLinkList();
-
     void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);
@@ -384,8 +382,6 @@ private:
 
     // --- Menus ---
     QMenu* windowsMenu {nullptr};
-    QMenu* scriptMenu {nullptr};
-    QMenu* helpMenu {nullptr};
     QMenu* testMenu {nullptr};
     QMenu* file_menu {nullptr};
 

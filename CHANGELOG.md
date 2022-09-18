@@ -5,6 +5,7 @@
 ### Added
 
 ### Changed
+- Help/Online menu, use links direct, instead of dialog with double click
 - sync libdxfrw (e0dad4c)
 
 ### Fixed

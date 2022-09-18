@@ -43,7 +43,7 @@
 #include <QFile>
 #include <QMenuBar>
 #include <QActionGroup>
-
+#include <QDesktopServices>
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
                                    QMap<QString, QAction*>& action_map,
@@ -773,9 +773,50 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     help_menu->setObjectName("Help");
     help_menu->setTearOffEnabled(true);
 
-    QAction* wiki_link = new QAction(QC_ApplicationWindow::tr("Online"), main_window);
-    connect(wiki_link, SIGNAL(triggered()), main_window, SLOT(invokeLinkList()));
-    help_menu->addAction(wiki_link);
+    QAction* online_wiki    = new QAction( QC_ApplicationWindow::tr( "&Wiki"), main_window);
+    QAction* online_manual  = new QAction( QC_ApplicationWindow::tr( "User's &Manual"), main_window);
+    QAction* online_commands= new QAction( QC_ApplicationWindow::tr( "&Commands"), main_window);
+    QAction* online_styles  = new QAction( QC_ApplicationWindow::tr( "&Style Sheets"), main_window);
+    QAction* online_widgets = new QAction( QC_ApplicationWindow::tr( "Wid&gets"), main_window);
+    QAction* online_forum   = new QAction( QC_ApplicationWindow::tr( "&Forum"), main_window);
+    QAction* online_chat    = new QAction( QC_ApplicationWindow::tr( "Zulip &Chat"), main_window);
+    QAction* online_release = new QAction( QC_ApplicationWindow::tr( "&Release Information"), main_window);
+    connect(online_wiki, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://dokuwiki.librecad.org/"));
+    });
+    connect(online_manual, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.readthedocs.io/"));
+    });
+    connect(online_commands, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.readthedocs.io/en/latest/ref/tools.html"));
+    });
+    connect(online_styles, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"));
+    });
+    connect(online_widgets, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets"));
+    });
+    connect(online_forum, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://forum.librecad.org/"));
+    });
+    connect(online_chat, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.zulipchat.com/"));
+    });
+    connect(online_release, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://github.com/LibreCAD/LibreCAD/releases"));
+    });
+
+    QMenu* online_menu = help_menu->addMenu( QC_ApplicationWindow::tr( "On&line"));
+    online_menu->setObjectName("online_menu");
+    online_menu->setTearOffEnabled(true);
+    online_menu->addAction( online_wiki);
+    online_menu->addAction( online_manual);
+    online_menu->addAction( online_commands);
+    online_menu->addAction( online_styles);
+    online_menu->addAction( online_widgets);
+    online_menu->addAction( online_forum);
+    online_menu->addAction( online_chat);
+    online_menu->addAction( online_release);
 
     help_menu->addSeparator();
 

@@ -3068,26 +3068,6 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
     }
 }
 
-void QC_ApplicationWindow::invokeLinkList()
-{
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Help Links"));
-    auto layout = new QVBoxLayout;
-    auto list = new LinkList(&dlg);
-    list->addLink(QObject::tr("Wiki"), "https://dokuwiki.librecad.org/");
-    list->addLink(QObject::tr("User's Manual"), "https://librecad.readthedocs.io/");
-    list->addLink(QObject::tr("Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html");
-    list->addLink(QObject::tr("Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets");
-    list->addLink(QObject::tr("Widgets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets");
-    list->addLink(QObject::tr("Forum"), "https://forum.librecad.org/");
-    list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
-    layout->addWidget(list);
-    dlg.setLayout(layout);
-    dlg.exec();
-}
-
 /**
  * Called by Qt after a toolbar or dockwidget right-click.
  * See QMainWindow::createPopupMenu() for more information.
