@@ -5,7 +5,7 @@
 ### Added
 
 ### Changed
-- sync libdxfrw (a610710)
+- sync libdxfrw (e0dad4c)
 
 ### Fixed
 - spline issue on Windows (32-bit) from previous fix
