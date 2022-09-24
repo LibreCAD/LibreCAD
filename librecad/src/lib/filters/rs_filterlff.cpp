@@ -275,7 +275,7 @@ bool RS_FilterLFF::fileExport(RS_Graphic& g, const QString& file, RS2::FormatTyp
 
 
 /**
- * Streams a double value to the gien stream cutting away trailing 0's.
+ * Streams a double value to the given stream cutting away trailing 0's.
  *
  * @param value A double value. e.g. 2.700000
  */
