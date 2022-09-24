@@ -9,6 +9,7 @@
 - sync libdxfrw (e0dad4c)
 
 ### Fixed
+- missing plugins on Redhat/Fedora and their branches (#1563)
 - spline issue on Windows (32-bit) from previous fix
 - image mirroring (#1525)
 

@@ -587,12 +587,13 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // so this should work for package manager and AppImage distribution
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
-    // Redhat style:
+    // try various locations for different Linux distributions
     dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
-    // Debian style:
+    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
 
     if (QStringLiteral( "plugins") == subDirectory) {
+        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName));
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
     }
 #endif
