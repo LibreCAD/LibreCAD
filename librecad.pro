@@ -15,4 +15,8 @@ exists( custom.pro ):include( custom.pro )
 
 OTHER_FILES = \
     CHANGELOG.md \
-    README.md
+    README.md \
+    desktop/librecad.desktop \
+    desktop/librecad.desktop.appdata.xml \
+    librecad/support/librecad.appdata.xml
+
