@@ -3,7 +3,7 @@
 ## [Unreleased]
 
 ### Added
-- librecad.desktop.appdata.xml for AppImage creation
+- librecad.appdata.xml for AppImage creation
 
 ### Changed
 - Help/Online menu, use links direct, instead of dialog with double click

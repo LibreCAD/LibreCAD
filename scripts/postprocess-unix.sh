@@ -7,7 +7,7 @@ RESOURCEDIR="${THISDIR}/unix/resources"
 APPDATADIR="${THISDIR}/unix/appdata"
 TSDIRLC="${LCDIR}/ts"
 TSDIRPI="${PIDIR}/ts"
-SPTDIR="${LCDIR}/support"
+SPTDIR="${THISDIR}/desktop"
 LRELEASE="lrelease"
 
 cd "${THISDIR}"

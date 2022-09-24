@@ -47,7 +47,7 @@ cp unix/resources/plugins/*.so appdir/usr/lib/librecad/
 cp -r unix/resources/qm appdir/usr/share/librecad/
 
 cp desktop/librecad.desktop appdir/usr/share/applications/
-cp desktop/librecad.desktop.appdata.xml appdir/usr/share/metainfo/
+cp desktop/librecad.appdata.xml appdir/usr/share/metainfo/
 
 cp -r librecad/support/doc/* appdir/usr/share/doc/librecad/
 cp -r librecad/support/fonts appdir/usr/share/librecad/

@@ -17,6 +17,5 @@ OTHER_FILES = \
     CHANGELOG.md \
     README.md \
     desktop/librecad.desktop \
-    desktop/librecad.desktop.appdata.xml \
-    librecad/support/librecad.appdata.xml
+    desktop/librecad.appdata.xml
 
