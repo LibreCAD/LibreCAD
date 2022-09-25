@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Copyright 2010-2022 LibreCAD contributors <info@librecad.org> -->
 <component type="desktop-application">
-<id>org.librecad.librecad2</id>
-    <metadata_license>CC BY-SA 4.0</metadata_license>
+<id>org.librecad.librecad</id>
+    <metadata_license>CC-BY-SA-4.0</metadata_license>
     <project_license>GPL-2.0</project_license>
     <name>LibreCAD</name>
     <summary>2D Computer Aided Design (CAD)</summary>

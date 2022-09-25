@@ -38,6 +38,7 @@ do
         cp "${tf}" "${RESOURCEDIR}/qm/${tf}"
 done
 
-# copy appdata.xml to unix/appdata/librecad.appdata.xml
+# copy desktop and appdata files to unix/appdata/
 mkdir -p "${APPDATADIR}"
-cp "${SPTDIR}"/librecad.appdata.xml "${APPDATADIR}"/
+cp "${SPTDIR}"/librecad.desktop "${APPDATADIR}"/
+cp "${SPTDIR}"/org.librecad.librecad.appdata.xml "${APPDATADIR}"/
