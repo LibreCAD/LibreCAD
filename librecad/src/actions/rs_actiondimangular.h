@@ -47,7 +47,7 @@ private:
         SetLine1,      ///< Choose 1st line
         SetLine2,      ///< Choose 2nd line
         SetPos,        ///< Choose position
-        SetText        ///< Setting text label in consle
+        SetText        ///< Setting text label in console
     };
 
 public:
