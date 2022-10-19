@@ -828,6 +828,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     connect(license, SIGNAL(triggered()), main_window, SLOT(invokeLicenseWindow()));
     help_menu->addAction(license);
 
+    QAction* donate = new QAction( QC_ApplicationWindow::tr( "&Donate"), main_window);
+    connect(donate, &QAction::triggered, main_window, [=](){
+        QDesktopServices::openUrl( QUrl( "https://librecad.org/donate.html"));
+    });
+    help_menu->addAction(donate);
+
     // <[~ Widgets Menu ~]>
 
     QMenu* widgets_menu = new QMenu("Widgets", menu_bar);
