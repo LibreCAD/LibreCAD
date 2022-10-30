@@ -28,7 +28,8 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include<memory>
+#include <list>
+#include <memory>
 #include "rs.h"
 
 class RS_Entity;
@@ -94,7 +95,7 @@ struct RS_SnapMode {
     static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings
 };
 
-typedef std::initializer_list<RS2::EntityType> EntityTypeList;
+typedef std::list<RS2::EntityType> EntityTypeList;
 
 /**
  * This class is used for snapping functions in a graphic view.
