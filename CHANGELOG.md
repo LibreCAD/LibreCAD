@@ -10,6 +10,7 @@
 - sync libdxfrw (e0dad4c)
 
 ### Fixed
+- flood of RS_Modification warnings when deleting (#1567)
 - clang regression with std::initializer_list<> (#1568)
 - missing plugins on Redhat/Fedora and their branches (#1563)
 - spline issue on Windows (32-bit) from previous fix

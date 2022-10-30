@@ -100,15 +100,18 @@ void RS_Modification::remove() {
     }
 
     LC_UndoSection undo( document);
+    bool invalidContainer {true};
 	// not safe (?)
     for(auto e: *container) {
         if (e && e->isSelected()) {
             e->setSelected(false);
             e->changeUndoState();
             undo.addUndoable(e);
-        } else {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
+            invalidContainer = false;
         }
+    }
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
@@ -131,15 +134,18 @@ void RS_Modification::revertDirection() {
 	}
 
 	std::vector<RS_Entity*> addList;
+    bool invalidContainer {true};
     for(auto e: *container) {
 		if (e && e->isSelected()) {
 			RS_Entity* ec = e->clone();
 			ec->revertDirection();
 			addList.push_back(ec);
-        } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::revertDirection: no valid container is selected");
+            invalidContainer = false;
         }
 	}
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::revertDirection: no valid container is selected");
+    }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
@@ -271,18 +277,22 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     // start undo cycle for the container if we're cutting
     LC_UndoSection undo( document, cut && handleUndo);
 
+    bool invalidContainer {true};
 	// copy entities / layers / blocks
 	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         if (e && e->isSelected()) {
             copyEntity(e, ref, cut);
-        } else {
-            RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::copy: no valid container is selected");
+            invalidContainer = false;
         }
     }
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy: OK");
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::copy: no valid container is selected");
+    }
+    else {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy: OK");
+    }
 }
 
 
