@@ -401,7 +401,7 @@ public:
     //! third corner (2D)
     const DRW_Coord & thirdCorner() { return thirdPoint; }
     //! fourth corner (2D)
-    const DRW_Coord & fourthCorner() { return thirdPoint; }
+    const DRW_Coord & fourthCorner() { return fourPoint; }
     //! thickness
     double thick() { return thickness; }
     //! elevation

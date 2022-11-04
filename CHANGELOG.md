@@ -7,7 +7,7 @@
 
 ### Changed
 - Help/Online menu, use links direct, instead of dialog with double click
-- sync libdxfrw (e0dad4c)
+- sync libdxfrw (d00615b)
 
 ### Fixed
 - missing resources in unix folder (#1570)

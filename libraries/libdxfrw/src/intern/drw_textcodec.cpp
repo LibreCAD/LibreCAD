@@ -511,13 +511,13 @@ std::string DRW_TextCodec::correctCodePage(const std::string& s) {
                cp=="ISO8859-1" || cp=="ISO8859-15" || cp=="ISO-IR-100" || cp=="L1" || cp=="IBM 850") {
         return "ANSI_1252";
         //Greek
-    } else if (cp=="ANSI_1253" || cp=="CP1253" || cp=="iso8859-7") {
+    } else if (cp=="ANSI_1253" || cp=="CP1253" || cp=="ISO8859-7") {
         return "ANSI_1253";
         //Turkish
-    } else if (cp=="ANSI_1254" || cp=="CP1254" || cp=="iso8859-9" || cp=="iso8859-3") {
+    } else if (cp=="ANSI_1254" || cp=="CP1254" || cp=="ISO8859-9" || cp=="ISO8859-3") {
         return "ANSI_1254";
         //Hebrew
-    } else if (cp=="ANSI_1255" || cp=="CP1255" || cp=="iso8859-8") {
+    } else if (cp=="ANSI_1255" || cp=="CP1255" || cp=="ISO8859-8") {
         return "ANSI_1255";
         //Arabic
     } else if (cp=="ANSI_1256" || cp=="CP1256" || cp=="ISO8859-6") {
