@@ -6,8 +6,9 @@
 - librecad.appdata.xml for AppImage creation
 
 ### Changed
+- mitigated DWG open warning and allow opening with errors
 - Help/Online menu, use links direct, instead of dialog with double click
-- sync libdxfrw (d00615b)
+- sync libdxfrw (d73a25c)
 
 ### Fixed
 - missing resources in unix folder (#1570)
