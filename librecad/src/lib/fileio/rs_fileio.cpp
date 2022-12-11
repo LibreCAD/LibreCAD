@@ -131,7 +131,7 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
                 QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
             }
 
-            return false;
+            return bImported;
         }
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_FileIO::fileImport: failed to import file: %s",
