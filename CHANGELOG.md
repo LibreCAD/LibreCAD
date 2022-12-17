@@ -1,6 +1,6 @@
 # Change Log
 
-## [Unreleased]
+## [2.2.0] - 2022-12-17
 
 ### Added
 - librecad.appdata.xml for AppImage creation
