@@ -660,7 +660,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>&amp;Sperre umschalten </translation>
+        <translation>&amp;Sperre umschalten</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
@@ -918,11 +918,11 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation>Menü erstellen...</translation>
+        <translation>Menü erstellen</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation>Werkzeugleiste erstellen...</translation>
+        <translation>Werkzeugleiste erstellen</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
@@ -1397,7 +1397,7 @@ Datum: %1</translation>
 Please check the permissions.</source>
         <translation>Kann Datei
 %1
-nicht  öffnen, bitte Berechtigungen prüfen.</translation>
+nicht &#xa0;öffnen, bitte Berechtigungen prüfen.</translation>
     </message>
     <message>
         <source>Cannot save the file
@@ -1571,7 +1571,7 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation>, bitte Dateinamen und Zugriffsrechte prüfen. </translation>
+        <translation> , bitte Dateinamen und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Please consider donating to LibreCAD to help maintain the source code and website.</source>
@@ -1807,15 +1807,15 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation>Werkzeugleiste erstellen...</translation>
+        <translation>Werkzeugleiste erstellen</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation>Menü erstellen...</translation>
+        <translation>Menü erstellen</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation>Menü zuweisen...</translation>
+        <translation>Menü zuweisen</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
