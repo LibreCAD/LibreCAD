@@ -458,7 +458,7 @@
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
         <source>select entities to change</source>
-        <translation>Objekte zum Ändern auswählen:</translation>
+        <translation>Objekte zum Ändern auswählen</translation>
     </message>
 </context>
 <context>
