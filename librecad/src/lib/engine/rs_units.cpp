@@ -33,6 +33,10 @@
 #include "rs_vector.h"
 #include "rs_debug.h"
 
+
+RS2::Unit RS_Units::currentDrawingUnits = (RS2::Unit) 0;
+
+
 /**
  * Converts a DXF integer () to a Unit enum.
  */
@@ -355,6 +359,13 @@ double RS_Units::getFactorToMM(RS2::Unit u) {
 		return 3.0856776e19;
     }
 
+}
+
+
+/* Default conversion : From RS2::Millimeter to Current Drawing Units. */
+double RS_Units::convert(double val)
+{
+    return convert(val, RS2::Millimeter, currentDrawingUnits);
 }
 
 
