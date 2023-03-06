@@ -33,6 +33,7 @@
 #include <QBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
+#include <QStatusBar>
 #include <QContextMenuEvent>
 
 #include <algorithm>
@@ -41,6 +42,7 @@
 #include "rs_blocklist.h"
 #include "qg_actionhandler.h"
 #include "rs_debug.h"
+#include "qc_applicationwindow.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
     blockVisible = QIcon(":/icons/visible.svg");
@@ -303,11 +305,21 @@ void QG_BlockWidget::restoreSelections() {
  * Activates the given block and makes it the active
  * block in the blocklist.
  */
-void QG_BlockWidget::activateBlock(RS_Block* block) {
+void QG_BlockWidget::activateBlock(RS_Block* block)
+{
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==NULL || blockList==NULL) {
+    if ((block == nullptr) || (blockList == nullptr))
+    {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_BlockWidget::activateBlock: nullptr block or blockList");
         return;
+    }
+
+    if (block->isSelectedInBlockList())
+    {
+        QC_ApplicationWindow::getAppWindow()->statusBar()
+                                            ->showMessage( QString("Block '%1' selected").arg(block->getName()), 
+                                                           QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
     }
 
     lastBlock = blockList->getActive();
