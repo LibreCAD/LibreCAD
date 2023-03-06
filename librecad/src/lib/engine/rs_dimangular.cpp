@@ -131,6 +131,7 @@ RS_Entity* RS_DimAngular::clone() const
     d->setOwner( isOwner());
     d->initId();
     d->detach();
+    d->updateDim();
 
     return d;
 }
@@ -341,19 +342,23 @@ void RS_DimAngular::updateDim(bool autoText /*= false*/)
 
     RS_Vector distV;
     double textAngle {0.0};
-    double angle1 {textPos.angleTo( dimCenter) - M_PI_2};
 
-    // rotate text so it's readable from the bottom or right (ISO)
-    // quadrant 1 & 4
-    if (angle1 > M_PI_2 * 3.0 + 0.001
-        || angle1 < M_PI_2 + 0.001) {
-        distV.setPolar( av.gap(), angle1 + M_PI_2);
-        textAngle = angle1;
-    }
-    // quadrant 2 & 3
-    else {
-        distV.setPolar( av.gap(), angle1 - M_PI_2);
-        textAngle = angle1 + M_PI;
+    if (!this->getInsideHorizontalText())
+    {
+        double angle1 {textPos.angleTo( dimCenter) - M_PI_2};
+
+        // rotate text so it's readable from the bottom or right (ISO)
+        // quadrant 1 & 4
+        if (angle1 > M_PI_2 * 3.0 + 0.001
+            || angle1 < M_PI_2 + 0.001) {
+            distV.setPolar( av.gap(), angle1 + M_PI_2);
+            textAngle = angle1;
+        }
+        // quadrant 2 & 3
+        else {
+            distV.setPolar( av.gap(), angle1 - M_PI_2);
+            textAngle = angle1 + M_PI;
+        }
     }
 
     // move text away from dimension line:

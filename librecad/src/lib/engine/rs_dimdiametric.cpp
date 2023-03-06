@@ -76,6 +76,7 @@ RS_Entity* RS_DimDiametric::clone() const {
 	d->setOwner(isOwner());
 	d->initId();
 	d->detach();
+   d->updateDim();
 	return d;
 }
 
