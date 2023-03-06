@@ -102,6 +102,24 @@ RS_Commands::RS_Commands() {
             {{"pl", QObject::tr("pl", "draw polyline")}},
             RS2::ActionDrawPolyline
         },
+        //draw polyline tangential
+        {
+            {{"polyline tangential", QObject::tr("polyline tangential", "draw polyline tangential")}},
+            {{"pltan", QObject::tr("pltan", "draw polyline tangential")}},
+            RS2::ActionDrawPolylineTangential
+        },
+        //draw polyline tan radius
+        {
+            {{"polyline tan radius", QObject::tr("polyline tan radius", "draw polyline tan radius")}},
+            {{"pltanrad", QObject::tr("pltanrad", "draw polyline tan radius")}},
+            RS2::ActionDrawPolylineTanRadius
+        },
+        //draw polyline angle
+        {
+            {{"polyline angle", QObject::tr("polyline angle", "draw polyline angle")}},
+            {{"plang", QObject::tr("plang", "draw polyline angle")}},
+            RS2::ActionDrawPolylineAngle
+        },
         //draw freehand line
         {
             {{"free", QObject::tr("free", "draw freehand line")}},
@@ -650,6 +668,7 @@ RS_Commands::RS_Commands() {
 
         {QObject::tr("radius"),"radius"},
         {QObject::tr("ra","radius"),"radius"},
+        {QObject::tr("rad","radius"),"radius"},
 
         {QObject::tr("reversed","reversed"),"reversed"},
         {QObject::tr("rev","reversed"),"reversed"},

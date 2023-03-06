@@ -23,44 +23,59 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#ifndef QG_POLYLINEOPTIONS_H
-#define QG_POLYLINEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+
+#pragma once
+
+
+#include <memory>
+#include <QWidget>
+
 
 class RS_ActionInterface;
 class RS_ActionDrawPolyline;
-namespace Ui {
-class Ui_PolylineOptions;
+
+
+namespace Ui
+{
+    class Ui_PolylineOptions;
 }
+
 
 class QG_PolylineOptions : public QWidget
 {
     Q_OBJECT
 
-public:
-    QG_PolylineOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_PolylineOptions();
+    public:
 
-public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void close();
-    virtual void undo();
-    virtual void updateRadius( const QString & s );
-    virtual void updateAngle( const QString & s );
-    virtual void updateDirection( bool );
-    virtual void updateMode( int m );
+        QG_PolylineOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+       ~QG_PolylineOptions();
 
-protected:
-    RS_ActionDrawPolyline* action;
 
-protected slots:
-    virtual void languageChange();
+    public slots:
 
-private:
-    void destroy();
-	std::unique_ptr<Ui::Ui_PolylineOptions> ui;
+        virtual void setAction( RS_ActionInterface * a, bool update );
+        virtual void close();
+        virtual void undo();
+        virtual void updateRadius    (const QString & s);
+        virtual void updateAngle     (const QString & s);
+        virtual void updateDirection (const bool    & toggled, const bool & update = false);
+        virtual void updateMode      (const int     & m);
+
+
+    protected:
+
+        RS_ActionDrawPolyline* action;
+
+
+    protected slots:
+
+        virtual void languageChange();
+
+
+    private:
+
+        void destroy();
+        std::unique_ptr<Ui::Ui_PolylineOptions> ui;
 };
 
-#endif // QG_POLYLINEOPTIONS_H
