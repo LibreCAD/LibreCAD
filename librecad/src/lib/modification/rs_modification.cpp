@@ -648,27 +648,48 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: no block to process");
         return false;
     }
-    // get name for this insert object
-    QString name_old = ib->getName();
-    QString name_new = name_old;
-    if (name_old != i->getName()) {
+
+    const QString& blockName(ib->getName());
+
+    if (blockName != i->getName()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: block and insert names don't coincide");
         return false;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: processing container: %s", name_old.toLatin1().data());
-    // rename if needed
-    if (graphic->findBlock(name_old)) {
-        name_new = graphic->getBlockList()->newName(name_old);
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: new block name: %s", name_new.toLatin1().data());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: processing container: %s", blockName.toLatin1().data());
+
+    RS_Block* bc = graphic->getBlockList()->find(blockName);
+
+    QString pasteBlockName = blockName;
+
+    bool pasteToNewDrawing = false;
+
+    double insertionAngle = i->getAngle();
+
+    if (bc == nullptr)
+    {
+        insertionAngle = 0.0;
+
+        pasteToNewDrawing = true;
+
+        if (graphic->findBlock(blockName))
+        {
+            pasteBlockName = graphic->getBlockList()->newName(blockName);
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: new block name: %s", pasteBlockName.toLatin1().data());
+        }
+
+        bc = new RS_Block(graphic, RS_BlockData(pasteBlockName, RS_Vector(0.0, 0.0), false));
+        bc->reparent(graphic);
+        graphic->addBlock(bc);
     }
-    blocksDict[name_old] = name_new;
-    // make new block in the destination
-    RS_BlockData db = RS_BlockData(name_new, RS_Vector(0.0, 0.0), false);
-    RS_Block* bc = new RS_Block(graphic, db);
-    bc->reparent(graphic);
-    graphic->addBlock(bc);
+    else
+    {
+        insertionPoint = i->getInsertionPoint();
+    }
+
+    blocksDict[blockName] = pasteBlockName;
+
     // create insert for the new block
-    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), i->getAngle(), 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(pasteBlockName, insertionPoint, RS_Vector(1.0, 1.0), insertionAngle, 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* ic = new RS_Insert(container, di);
     ic->reparent(container);
     container->addEntity(ic);
@@ -705,7 +726,7 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity to sub-insert");
                 return false;
             }
-        } else {
+        } else if (pasteToNewDrawing) {
             if (!pasteEntity(e, (RS_EntityContainer*)bc)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity");
                 return false;
