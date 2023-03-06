@@ -108,10 +108,12 @@ void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) return;
+void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e)
+{
+    if (e == nullptr) return;
 
-	*targetPoint = e->getCoordinate();
+    graphicView->moveRelativeZero(e->getCoordinate());
+   *targetPoint = e->getCoordinate();
     trigger();
 }
 

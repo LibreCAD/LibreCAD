@@ -88,11 +88,12 @@ void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
 
 
 
-void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e)
-        return;
+void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e)
+{
+    if (!e) return;
 
-	*referencePoint = e->getCoordinate();
+    graphicView->moveRelativeZero(e->getCoordinate());
+   *referencePoint = e->getCoordinate();
     trigger();
 }
 
