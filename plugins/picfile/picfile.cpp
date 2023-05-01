@@ -124,6 +124,7 @@ bool picPunto::failGUI(QString *msg)
 
 void picPunto::processFile(Document_Interface *doc)
 {
+    QString sep = " ";
     currDoc = doc;
     scale = (scaleedit->text()).toDouble();
 
@@ -136,11 +137,12 @@ void picPunto::processFile(Document_Interface *doc)
         QMessageBox::critical ( this, "picPunto", QString(tr("Can't open the file %1")).arg(fileedit->text()) );
          return;
     }
+    QString currlay = currDoc->getCurrentLayer();
     processFilePic(&infile);
     infile.close ();
 
     QMessageBox::information(this, "Info", QString(tr("%1 objects imported")).arg(cnt) );
-    currDoc = nullptr;
+    currDoc = NULL;
 }
 
 double picPunto::getPValue(QString p)
@@ -231,7 +233,7 @@ void picPunto::processFilePic(QFile* file)
 {
     //    QString outname, sep;
     QString sep = " ";
-    Qt::SplitBehavior skip = Qt::KeepEmptyParts;
+    QString::SplitBehavior skip = QString::KeepEmptyParts;
     QStringList data;
     QString cmd;
     pointData *pd;
