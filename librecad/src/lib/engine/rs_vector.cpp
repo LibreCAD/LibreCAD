@@ -28,7 +28,6 @@
 #include <cmath>
 #include <algorithm>
 #include "rs_vector.h"
-#include "rs_debug.h"
 #include "rs_math.h"
 #include "lc_rect.h"
 
@@ -785,7 +784,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
 										 double* dist, size_t* index) const {
 
 	double curDist{0.};
-    double minDist = RS_MAXDOUBLE;
+    double minDist = RS_TOLERANCE2;
 	RS_Vector closestPoint{false};
     int pos(0);
 
@@ -801,7 +800,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
         }
     }
 	if (dist) {
-        *dist = sqrt(minDist);
+        *dist = std::sqrt(minDist);
     }
 	if (index) {
         *index = pos;
