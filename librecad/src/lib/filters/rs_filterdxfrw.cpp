@@ -677,7 +677,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
     RS_DEBUG->print("RS_FilterDXF::addInsert");
 
     RS_Vector ip(data.basePoint.x, data.basePoint.y);
-    RS_Vector sc(data.xscale, data.yscale);
+    RS_Vector sc(data.xscale, data.yscale, data.zscale);
     RS_Vector sp(data.colspace, data.rowspace);
 
     //cout << "Insert: " << name << " " << ip << " " << cols << "/" << rows << endl;

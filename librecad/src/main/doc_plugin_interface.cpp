@@ -316,6 +316,7 @@ void Plugin_Entity::getData(QHash<int, QVariant> *data){
         data->insert(DPI::STARTANGLE, d.angle );
         data->insert(DPI::XSCALE, d.scaleFactor.x );
         data->insert(DPI::YSCALE, d.scaleFactor.y );
+        data->insert(1.0, d.scaleFactor.z );
         break;}
     case RS2::EntityMText: {
         data->insert(DPI::ETYPE, DPI::MTEXT);
@@ -988,7 +989,7 @@ void Doc_plugin_interface::addImage(int handle, QPointF *start, QPointF *uvr, QP
 void Doc_plugin_interface::addInsert(QString name, QPointF ins, QPointF scale, qreal rot){
     if (doc) {
         RS_Vector ip(ins.x(), ins.y());
-        RS_Vector sp(scale.x(), scale.y());
+	RS_Vector sp(scale.x(), scale.y(), 1.0);
 
         RS_InsertData id(name, ip, sp, rot, 1, 1, RS_Vector(0.0, 0.0));
         RS_Insert* entity = new RS_Insert(doc, id);
