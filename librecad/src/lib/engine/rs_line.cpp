@@ -31,7 +31,6 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_graphic.h"
 #include "rs_linetypepattern.h"
 #include "rs_information.h"
 #include "lc_quadratic.h"

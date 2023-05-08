@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-#include <iostream>
-#include <cmath>
 #include <algorithm>
-#include "rs_vector.h"
+#include <cmath>
+#include <iostream>
 #include "rs_math.h"
 #include "lc_rect.h"
+#include "rs_vector.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* remainder() */
@@ -50,9 +50,9 @@ RS_Vector::RS_Vector(double vx, double vy, double vz):
  * Constructor for a unit vector with given angle
  */
 RS_Vector::RS_Vector(double angle):
-	x(cos(angle))
-  ,y(sin(angle))
-  ,valid(true)
+    x(std::cos(angle))
+    ,y(std::sin(angle))
+    ,valid(true)
 {
 }
 
@@ -76,8 +76,8 @@ RS_Vector::operator bool() const
  * Sets to a unit vector by the direction angle
  */
 void RS_Vector::set(double angle) {
-    x = cos(angle);
-    y = sin(angle);
+    x = std::cos(angle);
+    y = std::sin(angle);
     z = 0.;
     valid = true;
 }
@@ -96,21 +96,21 @@ void RS_Vector::set(double vx, double vy, double vz) {
  * Sets a new position for the vector in polar coordinates.
  */
 void RS_Vector::setPolar(double radius, double angle) {
-    x = radius * cos(angle);
-    y = radius * sin(angle);
+    x = radius * std::cos(angle);
+    y = radius * std::sin(angle);
     z = 0.0;
     valid = true;
 }
 
 RS_Vector RS_Vector::polar(double rho, double theta){
-	return {rho*cos(theta), rho*sin(theta), 0.};
+    return {rho * std::cos(theta), rho * std::sin(theta), 0.};
 }
 
 /**
  * @return The angle from zero to this vector (in rad).
  */
 double RS_Vector::angle() const {
-	return RS_Math::correctAngle(atan2(y,x));
+    return RS_Math::correctAngle(std::atan2(y,x));
 }
 
 /**
@@ -128,8 +128,10 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
 double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
 	if (!valid || !v1.valid || !v2.valid) return 0.0;
 	RS_Vector const vStart(v1 - (*this));
-	RS_Vector const vEnd(v2 - (*this));
-	return RS_Math::correctAngle( atan2( vStart.x*vEnd.y-vStart.y*vEnd.x, vStart.x*vEnd.x+vStart.y*vEnd.y));
+    RS_Vector const vEnd(v2 - (*this));
+        return RS_Math::correctAngle(
+            std::atan2(vStart.x * vEnd.y - vStart.y * vEnd.x,
+                       vStart.x * vEnd.x + vStart.y * vEnd.y));
 }
 
 /**
@@ -139,8 +141,8 @@ double RS_Vector::magnitude() const {
     double ret(0.0);
     // Note that the z coordinate is also needed for 2d
     //   (due to definition of crossP())
-	if (valid)
-		ret = hypot(hypot(x, y), z);
+    if (valid)
+        ret = std::hypot(std::hypot(x, y), z);
 
     return ret;
 }
@@ -171,7 +173,7 @@ double RS_Vector::squaredTo(const RS_Vector& v1) const
  *
  */
 RS_Vector RS_Vector::lerp(const RS_Vector& v, double t) const {
-	return {x+(v.x-x)*t, y+(v.y-y)*t};
+    return {x + (v.x - x) * t, y + (v.y - y) * t};
 }
 
 /**
@@ -182,7 +184,7 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
         return RS_MAXDOUBLE;
     }
     else {
-        return (*this-v).magnitude();
+        return (*this - v).magnitude();
     }
 }
 
@@ -200,17 +202,18 @@ bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
  * of ordered vectors
  */
 bool RS_Vector::isInWindowOrdered(const RS_Vector& vLow,
-								  const RS_Vector& vHigh) const {
-	if(!valid) return false;
-	return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
+                                  const RS_Vector& vHigh) const {
+    if(!valid)
+        return false;
+    return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
 }
 
 /**
  * move to the closest integer point
  */
 RS_Vector RS_Vector::toInteger() {
-	x = rint(x);
-	y = rint(y);
+    x = std::rint(x);
+    y = std::rint(y);
     return *this;
 }
 
@@ -828,7 +831,7 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 	}
 	);
 
-	return sqrt(ret);
+    return std::sqrt(ret);
 }
 
 /** switch x,y for all vectors */
