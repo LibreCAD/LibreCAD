@@ -417,15 +417,15 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
 
     // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
     // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
-    std::unique_ptr<QMatrix> wm;
+    std::unique_ptr<QTransform> wm;
     if(RS_Vector::crossP(uVector, vVector).z < 0) {
-        wm.reset(new QMatrix(un.x, -vn.x, -un.y, vn.y, pos.x, pos.y));
+        wm.reset(new QTransform(un.x, -vn.x, -un.y, vn.y, pos.x, pos.y));
     } else {
-        wm.reset( new QMatrix(un.x, vn.x, un.y, vn.y, pos.x, pos.y));
+        wm.reset( new QTransform(un.x, vn.x, un.y, vn.y, pos.x, pos.y));
     }
 
     wm->scale(factor.x, factor.y);
-    setWorldMatrix(*wm);
+    setWorldTransform(*wm);
 
     drawImage(0,-img.height(), img);
 
@@ -447,10 +447,9 @@ void RS_PainterQt::drawTextV(int x1, int y1,
                              int x2, int y2,
                              const QString& text) {
     save();
-    QMatrix wm = worldMatrix();
+    QTransform wm = worldTransform();
     wm.rotate(-90.0);
-    setWorldMatrix(wm);
-    //rotate(-90.0);
+    setWorldTransform(wm);
 
     drawText(x1, y1, x2, y2,
              Qt::AlignRight|Qt::AlignVCenter,
