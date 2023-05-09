@@ -197,8 +197,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             linStep = 6.0;
         }
 
-        if (fabs(linStep/radius)<=1.0) {
-            aStep=asin(linStep/radius);
+        if (std::abs(linStep/radius)<=1.0) {
+            aStep=std::asin(linStep/radius);
         } else {
             aStep=1.0;
         }
@@ -218,8 +218,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.resize(i+1);
             pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
             for(a=a1+aStep; a<=a2; a+=aStep) {
-                cix = toScreenX(cp.x+cos(a)*radius);
-                ciy = toScreenY(cp.y-sin(a)*radius);
+                cix = toScreenX(cp.x+std::cos(a)*radius);
+                ciy = toScreenY(cp.y-std::sin(a)*radius);
                 //lineTo(cix, ciy);
                 pa.resize(i+1);
                 pa.setPoint(i++, cix, ciy);
@@ -239,8 +239,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
             //moveTo(toScreenX(p1.x), toScreenY(p1.y));
             for(a=a1-aStep; a>=a2; a-=aStep) {
-                cix = toScreenX(cp.x+cos(a)*radius);
-                ciy = toScreenY(cp.y-sin(a)*radius);
+                cix = toScreenX(cp.x+std::cos(a)*radius);
+                ciy = toScreenY(cp.y-std::sin(a)*radius);
                 //lineTo(cix, ciy);
                 pa.resize(i+1);
                 pa.setPoint(i++, cix, ciy);
@@ -310,7 +310,7 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                           double oy;
 
               if(2.0/radius<=1.0) {
-                  aStep=asin(2.0/radius);
+                aStep=std::asin(2.0/radius);
               } else {
                   aStep=1.0;
               }
@@ -326,16 +326,16 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
               //            toScreenY(cp.y-sin(a1)*radius));
               //moveTo(toScreenX(cp.x+cos(a1)*radius),
               //       toScreenY(cp.y-sin(a1)*radius));
-              ox = cp.x+cos(a1)*radius;
-              oy = cp.y-sin(a1)*radius;
+              ox = cp.x+std::cos(a1)*radius;
+              oy = cp.y-std::sin(a1)*radius;
               if(!reversed) {
                   // Arc Counterclockwise:
                   if(a1>a2-1.0e-10) {
                       a2+=2*M_PI;
                   }
                   for(a=a1+aStep; a<=a2; a+=aStep) {
-                      cix = cp.x+cos(a)*radius;
-                      ciy = cp.y-sin(a)*radius;
+                      cix = cp.x+std::cos(a)*radius;
+                      ciy = cp.y-std::sin(a)*radius;
                       //lineTo(cix, ciy);
                                           drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
                                           ox = cix;
@@ -349,8 +349,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                       a2-=2*M_PI;
                   }
                   for(a=a1-aStep; a>=a2; a-=aStep) {
-                      cix = cp.x+cos(a)*radius;
-                      ciy = cp.y-sin(a)*radius;
+                      cix = cp.x+std::cos(a)*radius;
+                      ciy = cp.y-std::sin(a)*radius;
                       drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
                                           ox = cix;
                                           oy = ciy;
@@ -360,8 +360,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                   }
               }
               drawLine(RS_Vector(ox, oy),
-                                        RS_Vector(cp.x+cos(a2)*radius,
-                     cp.y-sin(a2)*radius));
+                       RS_Vector(cp.x+std::cos(a2)*radius,
+                                 cp.y-std::sin(a2)*radius));
               //lineTo(toScreenX(cp.x+cos(a2)*radius),
               //       toScreenY(cp.y-sin(a2)*radius));
               //pa.resize(i+1);
