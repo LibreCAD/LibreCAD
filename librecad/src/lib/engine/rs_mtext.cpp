@@ -207,7 +207,7 @@ void RS_MText::setAlignment(int a) {
 int RS_MText::getNumberOfLines() {
     int c=1;
 
-    for (int i=0; i<(int)data.text.length(); ++i) {
+    for (qsizetype i = 0; i < data.text.length(); ++i) {
         if (data.text.at(i).unicode()==0x0A) {
             c++;
         }
@@ -257,8 +257,15 @@ void RS_MText::update()
     // Rotation, scaling and centering is done later
 
     // For every letter:
-    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
-        bool handled {false};
+    for (qsizetype i = 0; i < data.text.length(); ++i) {
+        // Handle \F not followed by {<codePage>}
+        if (data.text.midRef(i).startsWith(R"(\F)")
+            && data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
+            addLetter(*oneLine, data.text.at(i), *font, letterSpace, letterPos);
+            continue;
+        }
+
+        bool handled{false};
 
         switch (data.text.at(i).unicode()) {
         case 0x0A:
@@ -419,43 +426,7 @@ void RS_MText::update()
             // fall-through
         default: {
             // One Letter:
-            QString letterText {QString(data.text.at(i))};
-            if (nullptr == font->findLetter( letterText)) {
-                RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",
-                                qPrintable( letterText));
-                letterText = QChar( 0xfffd);
-            }
-
-            RS_DEBUG->print("RS_MText::update: insert a letter at pos: %f/%f", letterPos.x, letterPos.y);
-
-            RS_InsertData d( letterText,
-                             letterPos,
-                             RS_Vector( 1.0, 1.0),
-                             0.0,
-                             1,
-                             1,
-                             RS_Vector( 0.0, 0.0),
-                             font->getLetterList(),
-                             RS2::NoUpdate);
-
-            RS_Insert* letter {new RS_Insert(this, d)};
-            RS_Vector letterWidth;
-            letter->setPen( RS_Pen( RS2::FlagInvalid));
-            letter->setLayer( nullptr);
-            letter->update();
-            letter->forcedCalculateBorders();
-
-            letterWidth = RS_Vector( letter->getMax().x - letterPos.x, 0.0);
-            if (0 > letterWidth.x) {
-                letterWidth.x = -letterSpace.x;
-            }
-
-            oneLine->addEntity( letter);
-
-            // next letter position:
-            letterPos += letterWidth;
-            letterPos += letterSpace;
-
+            addLetter(*oneLine, data.text.at(i), *font, letterSpace, letterPos);
             break;
         } // outer default
         } // outer switch (data.text.at(i).unicode())
@@ -474,6 +445,58 @@ void RS_MText::update()
 }
 
 
+/**
+ * Used internally by update() to add a letter to one line
+ *
+ * @param RS_EntityContainer& oneLine the current entity container
+ * @param QChar letter the letter to add
+ * @param RS_Font& font the font to use
+ * @param const RS_Vector& letterSpace the letter width to use
+ * @param RS_Vector& letterPosition the current letter position; will be updated after addition
+ *
+ */
+void RS_MText::addLetter(RS_EntityContainer& oneLine,
+                         QChar letter,
+                         RS_Font& font,
+                         const RS_Vector& letterSpace,
+                         RS_Vector& letterPosition)
+{
+    QString letterText {QString(letter)};
+    if (nullptr == font.findLetter( letterText)) {
+        RS_DEBUG->print("RS_MText::update: missing font for letter( %s ), replaced it with QChar(0xfffd)",
+                        qPrintable( letterText));
+        letterText = QChar( 0xfffd);
+    }
+
+    RS_DEBUG->print("RS_MText::update: insert a letter at pos: %f/%f", letterPosition.x, letterPosition.y);
+
+    RS_InsertData d( letterText,
+                    letterPosition,
+                    RS_Vector( 1.0, 1.0),
+                    0.0,
+                    1,
+                    1,
+                    RS_Vector( 0.0, 0.0),
+                    font.getLetterList(),
+                    RS2::NoUpdate);
+
+    RS_Insert* letterEntity {new RS_Insert(this, d)};
+    letterEntity->setPen( RS_Pen( RS2::FlagInvalid));
+    letterEntity->setLayer( nullptr);
+    letterEntity->update();
+    letterEntity->forcedCalculateBorders();
+
+    RS_Vector letterWidth = RS_Vector( letterEntity->getMax().x - letterPosition.x, 0.0);
+    if (0 > letterWidth.x) {
+        letterWidth.x = -letterSpace.x;
+    }
+
+    oneLine.addEntity( letterEntity);
+
+    // next letter position:
+    letterPosition += letterWidth;
+    letterPosition += letterSpace;
+}
 
 /**
  * Used internally by update() to add a text line created with

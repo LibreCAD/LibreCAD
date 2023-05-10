@@ -30,6 +30,8 @@
 
 #include "rs_entitycontainer.h"
 
+class RS_Font;
+
 /**
  * Holds the data that defines a text entity.
  */
@@ -255,6 +257,8 @@ public:
 
 private:
     double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
+
+    void addLetter(RS_EntityContainer& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
 
 protected:
     RS_MTextData data;
