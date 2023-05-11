@@ -27,7 +27,6 @@
 #include <iostream>
 #include <cmath>
 #include <QDir>
-//#include <QDebug>
 
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"

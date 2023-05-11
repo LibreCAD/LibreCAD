@@ -29,7 +29,6 @@
 
 #include "rs_circle.h"
 #include "rs_line.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 #include "rs_information.h"

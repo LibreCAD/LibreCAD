@@ -35,7 +35,6 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_graphic.h"
 
 
 RS_SplineData::RS_SplineData(int _degree, bool _closed):

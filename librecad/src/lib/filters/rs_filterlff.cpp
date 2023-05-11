@@ -38,7 +38,6 @@
 #include "rs_system.h"
 #include "rs_block.h"
 #include "rs_polyline.h"
-#include "rs_insert.h"
 #include "rs_debug.h"
 
 

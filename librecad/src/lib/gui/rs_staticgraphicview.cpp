@@ -26,7 +26,6 @@
 #include<QSize>
 #include "rs_staticgraphicview.h"
 
-#include "rs_graphic.h"
 #include "rs_debug.h"
 
 
