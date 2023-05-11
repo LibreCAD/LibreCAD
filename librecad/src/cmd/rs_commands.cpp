@@ -725,17 +725,17 @@ void RS_Commands::updateAlias(){
     //alias file do no exist, create one with translated shortCommands
         if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
             QTextStream ts(&f);
-            ts << "#LibreCAD alias v1" << Qt::endl << Qt::endl;
-            ts << "# lines starting with # are comments" << Qt::endl;
-            ts << "# format are:" << Qt::endl;
-            ts << R"(# <alias>\t<command-untranslated>)" << Qt::endl;
-            ts << "# example"<<Qt::endl;
-            ts << "# l\tline"<<Qt::endl<<Qt::endl;
+            ts << "#LibreCAD alias v1" << '\n' << '\n';
+            ts << "# lines starting with # are comments" << '\n';
+            ts << "# format are:" << '\n';
+            ts << R"(# <alias>\t<command-untranslated>)" << '\n';
+            ts << "# example"<<'\n';
+            ts << "# l\tline"<<'\n'<<'\n';
             for(auto const& p: shortCommands){
                 auto const act=p.second;
                 for(auto const& pCmd: mainCommands){
                     if(pCmd.second==act){
-                        ts<<p.first<<'\t'<<pCmd.first<<Qt::endl;
+                        ts<<p.first<<'\t'<<pCmd.first<<'\n';
                         break;
                     }
                 }
