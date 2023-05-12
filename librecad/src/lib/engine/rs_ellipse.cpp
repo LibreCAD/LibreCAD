@@ -57,11 +57,11 @@ namespace{
 class EllipseDistanceFunctor
 {
 public:
-	EllipseDistanceFunctor(RS_Ellipse const* ellipse, double const& target) :
+    EllipseDistanceFunctor(RS_Ellipse const& ellipse, double const& target) :
 		distance{target}
 	  , e{ellipse}
-	  , ra{e->getMajorRadius()}
-	  , k2{1.- e->getRatio()*e->getRatio()}
+      , ra{e.getMajorRadius()}
+      , k2{1. - e.getRatio() * e.getRatio()}
 	  , k2ra{k2 * ra}
 	{
 	}
@@ -73,25 +73,17 @@ public:
 #else
 	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
-	double const cz=cos(z);
-	double const sz=sin(z);
-		//delta amplitude
-	double const d=sqrt(1-k2*sz*sz);
+        double const cz=std::cos(z);
+        double const sz=std::sin(z);
+        //delta amplitude
+        double const d=std::sqrt(1-k2*sz*sz);
 		// return f(x), f'(x) and f''(x)
-#if BOOST_VERSION > 104500
-	return boost::math::make_tuple(
-#else
-	return boost::fusion::make_tuple(
-#endif
-					e->getEllipseLength(z)-distance,
-					ra*d,
-					k2ra*sz*cz/d
-					);
-	}
+        return {e.getEllipseLength(z) - distance, ra * d, k2ra * sz * cz / d};
+        }
 
 private:
 	double distance;
-	RS_Ellipse const* const e;
+    RS_Ellipse const& e;
 	const double ra;
 	const double k2;
 	const double k2ra;
@@ -128,7 +120,7 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 		trimmed = trimAmount > 0 ? wholeLength - trimAmount : - trimAmount;
 
 	//solve equation of the distance by second order newton_raphson
-	EllipseDistanceFunctor X(&e, trimmed);
+    EllipseDistanceFunctor X{e, trimmed};
 	using namespace boost::math::tools;
 	double const sol =
 			halley_iterate<EllipseDistanceFunctor,double>(X,
@@ -138,8 +130,9 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 														  digits);
 
 	RS_Vector const vp = e.getEllipsePoint(sol);
-	if (dist) *dist = vp.distanceTo(coord);
-	return vp;
+    if (dist)
+        *dist = vp.distanceTo(coord);
+    return vp;
 }
 }
 
