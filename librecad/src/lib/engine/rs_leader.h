@@ -47,7 +47,7 @@ public:
 									  const RS_LeaderData& /*ld*/);
 
 	/** true: leader has an arrow head. false: no arrow. */
-	bool arrowHead;
+    bool arrowHead = false;
 };
 
 
