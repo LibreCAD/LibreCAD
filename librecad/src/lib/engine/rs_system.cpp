@@ -38,7 +38,12 @@
 
 #include <QStandardPaths>
 
-RS_System* RS_System::uniqueInstance = NULL;
+
+RS_System* RS_System::instance() {
+    static RS_System* uniqueInstance = new RS_System();
+    return uniqueInstance;
+}
+
 
 /**
  * Initializes the system.

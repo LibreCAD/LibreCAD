@@ -36,6 +36,7 @@
 #include "rs_graphic.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_units.h"
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

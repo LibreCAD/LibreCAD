@@ -109,7 +109,7 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
     int c=0;
 
 	if (layer) {
-		for(auto t: entities){
+        for(RS_Entity* t: entities){
 
 			if (t->getLayer() &&
                     t->getLayer()->getName()==layer->getName()) {
@@ -132,7 +132,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 
 		std::vector<RS_Entity*> toRemove;
 		//find entities on layer
-		for(auto e: entities){
+        for(RS_Entity* e: entities){
 			if (e->getLayer() &&
                     e->getLayer()->getName()==layer->getName()) {
 				toRemove.push_back(e);
@@ -141,7 +141,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 		// remove all entities on that layer:
 		if(toRemove.size()){
 			startUndoCycle();
-			for(auto e: toRemove){
+            for(RS_Entity* e: toRemove){
 				e->setUndoState(true);
 				e->setLayer("0");
 				addUndoable(e);
@@ -162,7 +162,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 			}
 		}
 
-		for(auto e: toRemove){
+        for(RS_Entity* e: toRemove){
 			e->setUndoState(true);
 			e->setLayer("0");
 		}

@@ -34,7 +34,7 @@ class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget
     Q_OBJECT
 
 public:
-    QG_CommandWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CommandWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CommandWidget();
 
     virtual bool eventFilter(QObject *obj, QEvent *event);
@@ -58,7 +58,7 @@ protected slots:
     virtual void chooseCommandFile();
 
 private:
-    QG_ActionHandler* actionHandler;
+    QG_ActionHandler* actionHandler = nullptr;
 };
 
 #endif // QG_COMMANDWIDGET_H

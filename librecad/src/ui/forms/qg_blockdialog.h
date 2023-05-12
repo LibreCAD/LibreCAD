@@ -36,7 +36,7 @@ class QG_BlockDialog : public QDialog, public Ui::QG_BlockDialog
     Q_OBJECT
 
 public:
-    QG_BlockDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_BlockDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_BlockDialog()=default;
 
     virtual RS_BlockData getBlockData();

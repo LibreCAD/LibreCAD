@@ -27,6 +27,7 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include "rs.h"
 #include "rs_math.h"
 #include "lc_rect.h"
 #include "rs_vector.h"

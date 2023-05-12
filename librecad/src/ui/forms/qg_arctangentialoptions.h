@@ -40,7 +40,7 @@ class QG_ArcTangentialOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
 	~QG_ArcTangentialOptions();
 
 public slots:

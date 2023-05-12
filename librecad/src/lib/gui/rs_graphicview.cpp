@@ -36,17 +36,18 @@
 
 #include "rs_graphicview.h"
 
-#include "rs_line.h"
-#include "rs_linetypepattern.h"
+#include "rs_color.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
+#include "rs_line.h"
+#include "rs_linetypepattern.h"
 #include "rs_painter.h"
 #include "rs_settings.h"
-#include "rs_dialogfactory.h"
 #include "rs_math.h"
-#include "rs_debug.h"
-#include "rs_color.h"
+#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

@@ -71,8 +71,8 @@ struct RS_InsertData {
 	QString name;
 	RS_Vector insertionPoint;
 	RS_Vector scaleFactor;
-	double angle;
-	int cols, rows;
+    double angle=0.;
+    int cols=0, rows=0;
 	RS_Vector spacing;
 	RS_BlockList* blockSource;
 	RS2::UpdateMode updateMode;

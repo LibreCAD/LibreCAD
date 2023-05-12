@@ -33,7 +33,7 @@ class QG_SelectionWidget : public QWidget, public Ui::QG_SelectionWidget
     Q_OBJECT
 
 public:
-    QG_SelectionWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_SelectionWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
     ~QG_SelectionWidget();
 
 public slots:

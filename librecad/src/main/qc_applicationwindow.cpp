@@ -48,66 +48,57 @@
 #include <QRegExp>
 #include <QSysInfo>
 
-#include "main.h"
+#include <boost/version.hpp>
 
+
+#include "comboboxoption.h"
+#include "doc_plugin_interface.h"
+#include "main.h"
+#include "textfileviewer.h"
+#include "twostackedlabels.h"
+#include "widgetcreator.h"
+
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionprintpreview.h"
+#include "rs_commands.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_document.h"
+#include "rs_painterqt.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
-#include "rs_actionlibraryinsert.h"
-#include "rs_painterqt.h"
 #include "rs_selection.h"
-#include "rs_document.h"
-
-#include "lc_centralwidget.h"
-#include "qc_mdiwindow.h"
-#include "qg_graphicview.h"
+#include "rs_units.h"
 
 #include "lc_actionfactory.h"
-#include "qg_actionhandler.h"
-
-#include "lc_widgetfactory.h"
-#include "qg_snaptoolbar.h"
-#include "qg_blockwidget.h"
-#include "qg_layerwidget.h"
-#include "qg_librarywidget.h"
-#include "qg_commandwidget.h"
-#include "qg_pentoolbar.h"
-
-#include "qg_coordinatewidget.h"
-#include "qg_selectionwidget.h"
-#include "qg_activelayername.h"
-#include "qg_mousewidget.h"
-#include "twostackedlabels.h"
-
-#include "qg_recentfiles.h"
-#include "qg_dlgimageoptions.h"
-#include "qg_filedialog.h"
-#include "qg_exitdialog.h"
-
-#include "rs_dialogfactory.h"
-#include "qc_dialogfactory.h"
-#include "doc_plugin_interface.h"
-#include "qc_plugininterface.h"
-#include "rs_commands.h"
-
-#include "lc_simpletests.h"
-#include "rs_debug.h"
-
-#include "lc_widgetoptionsdialog.h"
-#include "comboboxoption.h"
-
-#include "lc_printing.h"
-#include "actionlist.h"
-#include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
-#include "linklist.h"
-#include "colorwizard.h"
+#include "lc_centralwidget.h"
 #include "lc_penwizard.h"
-#include "textfileviewer.h"
+#include "lc_printing.h"
+#include "lc_widgetfactory.h"
+#include "lc_widgetoptionsdialog.h"
 #include "lc_undosection.h"
 
-#include <boost/version.hpp>
+#include "qc_dialogfactory.h"
+#include "qc_mdiwindow.h"
+#include "qc_plugininterface.h"
+
+#include "qg_actionhandler.h"
+#include "qg_activelayername.h"
+#include "qg_blockwidget.h"
+#include "qg_commandwidget.h"
+#include "qg_coordinatewidget.h"
+#include "qg_dlgimageoptions.h"
+#include "qg_exitdialog.h"
+#include "qg_filedialog.h"
+#include "qg_graphicview.h"
+#include "qg_layerwidget.h"
+#include "qg_pentoolbar.h"
+#include "qg_selectionwidget.h"
+#include "qg_snaptoolbar.h"
+#include "qg_mousewidget.h"
+#include "qg_recentfiles.h"
 
 QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 

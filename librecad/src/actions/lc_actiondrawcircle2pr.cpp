@@ -18,18 +18,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include<cmath>
+#include <cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "lc_actiondrawcircle2pr.h"
 
+#include "lc_actiondrawcircle2pr.h"
+#include "rs_circle.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
 #include "rs_point.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_previewactioninterface.h"
+
 
 
 struct LC_ActionDrawCircle2PR::Points
@@ -253,4 +255,3 @@ void LC_ActionDrawCircle2PR::updateMouseCursor() {
 }
 
 // EOF
-

@@ -32,6 +32,7 @@
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_units.h"
 
 
 RS_DimLinearData::RS_DimLinearData():

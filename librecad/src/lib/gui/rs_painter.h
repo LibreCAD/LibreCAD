@@ -28,6 +28,7 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_Color;
@@ -38,6 +39,7 @@ class QPolygon;
 class QPolygonF;
 class QImage;
 class QBrush;
+class QString;
 
 /**
  * This class is a common interface for a painter class. Such
@@ -162,7 +164,7 @@ protected:
     RS_Vector offset;
 
     // When set to true, only selected entities should be drawn
-    bool drawSelectedEntities;
+    bool drawSelectedEntities = false;
 
 
 };

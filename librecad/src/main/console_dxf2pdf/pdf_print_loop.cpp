@@ -29,6 +29,7 @@
 #include "rs_painterqt.h"
 #include "lc_printing.h"
 #include "rs_staticgraphicview.h"
+#include "rs_units.h"
 
 #include "pdf_print_loop.h"
 

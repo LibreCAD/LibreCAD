@@ -38,7 +38,6 @@
  */
 struct RS_PolylineData : public RS_Flags {
 	RS_PolylineData();
-	~RS_PolylineData()=default;
 	RS_PolylineData(const RS_Vector& startpoint,
                     const RS_Vector& endpoint,
 					bool closed);
@@ -147,8 +146,8 @@ protected:
 
 protected:
     RS_PolylineData data;
-    RS_Entity* closingEntity;
-	double nextBulge;
+    RS_Entity* closingEntity = nullptr;
+    double nextBulge = 0.;
 };
 
 #endif

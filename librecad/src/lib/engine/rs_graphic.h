@@ -34,9 +34,7 @@
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
 #include "rs_document.h"
-#include "rs_units.h"
 
-class RS_VariableDict;
 class QG_LayerWidget;
 
 /**
@@ -366,17 +364,17 @@ private:
         RS_VariableDict variableDict;
         RS2::CrosshairType crosshairType; //crosshair type used by isometric grid
         //if set to true, will refuse to modify paper scale
-        bool paperScaleFixed;
+        bool paperScaleFixed = false;
 
         // Paper margins in millimeters
-        double marginLeft;
-        double marginTop;
-        double marginRight;
-        double marginBottom;
+        double marginLeft = 0.;
+        double marginTop = 0.;
+        double marginRight = 0.;
+        double marginBottom = 0.;
 
         // Number of pages drawing occupies
-        int pagesNumH;
-        int pagesNumV;
+        int pagesNumH = 1;
+        int pagesNumV = 1;
 };
 
 

@@ -28,6 +28,7 @@
 #ifndef RS_COORDINATEEVENT_H
 #define RS_COORDINATEEVENT_H
 
+#include <rs_vector.h>
 
 /**
  * Coordinate Events.

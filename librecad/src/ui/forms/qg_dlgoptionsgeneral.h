@@ -33,7 +33,7 @@ class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
     Q_OBJECT
 
 public:
-    QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgOptionsGeneral();
     static int current_tab;
     void set_color(QComboBox* combo, QColor custom);

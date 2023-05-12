@@ -44,9 +44,9 @@ struct RS_SplineData {
 
 
 	/** Degree of the spline (1, 2, 3) */
-	size_t degree;
+    size_t degree = 3;
 	/** Closed flag. */
-	bool closed;
+    bool closed = false;
 	/** Control points of the spline. */
 	std::vector<RS_Vector> controlPoints;
 	std::vector<double> knotslist;

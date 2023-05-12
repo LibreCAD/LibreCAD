@@ -61,7 +61,7 @@ class RS_GraphicView : public QWidget
     Q_OBJECT
 
 public:
-	RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = 0);
+    RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = {});
 	virtual ~RS_GraphicView();
 
     void cleanUp();
@@ -460,9 +460,9 @@ private:
 	/** if true, graphicView is under cleanup */
 	bool m_bIsCleanUp=false;
 
-    bool panning;
+    bool panning = false;
 
-	bool scaleLineWidth;
+    bool scaleLineWidth = false;
 
 signals:
     void relative_zero_changed(const RS_Vector&);

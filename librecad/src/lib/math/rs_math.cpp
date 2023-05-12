@@ -33,6 +33,7 @@
 #include <QString>
 #include <QDebug>
 
+#include "rs.h"
 #include "rs_math.h"
 #include "rs_vector.h"
 #include "rs_debug.h"

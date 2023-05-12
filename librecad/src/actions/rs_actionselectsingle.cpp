@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionselectsingle.h"
-
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_selection.h"
+
+#include "rs_actionselectsingle.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_selection.h"
 
 
 

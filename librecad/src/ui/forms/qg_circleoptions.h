@@ -40,7 +40,7 @@ class QG_CircleOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_CircleOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_CircleOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_CircleOptions();
 
 public slots:

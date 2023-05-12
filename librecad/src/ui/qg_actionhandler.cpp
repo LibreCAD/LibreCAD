@@ -166,6 +166,7 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 
