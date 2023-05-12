@@ -28,6 +28,8 @@
 #include <iostream>
 #include <set>
 
+#include <QtGlobal>
+
 #include "qg_dialogfactory.h"
 
 #include "rs_arc.h"
@@ -1807,10 +1809,10 @@ void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref,
 
 void RS_EntityContainer::revertDirection() {
     for(int k = 0; k < entities.size() / 2; ++k) {
-#if (QT_VERSION >= QT_VERSION_CHECK(5, 14, 0))
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 13, 0))
         entities.swapItemsAt(k, entities.size() - 1 - k);
 #else
-        entities.swapItemsAt(k, entities.size() - 1 - k);
+        entities.swap(k, entities.size() - 1 - k);
 #endif
     }
 
