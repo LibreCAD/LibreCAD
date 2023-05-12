@@ -263,6 +263,11 @@ void RS_MText::update()
             && data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
             addLetter(*oneLine, data.text.at(i), *font, letterSpace, letterPos);
             continue;
+        } else if (data.text.midRef(i).startsWith(R"(\\)")) {
+            // Allow escape '\', needed to support "\S" and "\P" in string
+            // "\\S" and "\\P" to strings "\S" and "\P"
+            addLetter(*oneLine, data.text.at(i++), *font, letterSpace, letterPos);
+            continue;
         }
 
         bool handled{false};
