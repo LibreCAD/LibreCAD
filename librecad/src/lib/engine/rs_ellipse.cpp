@@ -77,8 +77,15 @@ public:
         double const sz=std::sin(z);
         //delta amplitude
         double const d=std::sqrt(1-k2*sz*sz);
-		// return f(x), f'(x) and f''(x)
-        return {e.getEllipseLength(z) - distance, ra * d, k2ra * sz * cz / d};
+        // return f(x), f'(x) and f''(x)
+#if BOOST_VERSION > 104500
+        return boost::math::make_tuple(
+#else
+        return boost::fusion::make_tuple(
+#endif
+                    e.getEllipseLength(z) - distance,
+                    ra * d,
+                    k2ra * sz * cz / d );
         }
 
 private:
