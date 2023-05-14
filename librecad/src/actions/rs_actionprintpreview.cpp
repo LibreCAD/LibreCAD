@@ -53,7 +53,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 						container, graphicView)
 	, hasOptions(false)
 	, m_bPaperOffset(false)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
     actionType=RS2::ActionFilePrintPreview;
     RS_SETTINGS->beginGroup("/PrintPreview");

@@ -23,19 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_actiondrawcirclecr.h"
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawcirclecr.h"
 
+#include "rs_circle.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -43,23 +43,20 @@
 RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles CR",
-						   container, graphicView)
-		,data(new RS_CircleData())
+                           container, graphicView)
+    ,data(std::make_unique<RS_CircleData>())
 {
 	actionType=RS2::ActionDrawCircleCR;
 
     reset();
 }
 
-
-
 RS_ActionDrawCircleCR::~RS_ActionDrawCircleCR() = default;
 
 
 void RS_ActionDrawCircleCR::reset() {
-	data.reset(new RS_CircleData{RS_Vector{false}, 0.0});
+    data = std::make_unique<RS_CircleData>();
 }
-
 
 
 void RS_ActionDrawCircleCR::init(int status) {

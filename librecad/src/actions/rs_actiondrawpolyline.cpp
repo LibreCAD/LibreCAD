@@ -82,7 +82,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
 		,m_Reversed(1)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawPolyline;
     reset();

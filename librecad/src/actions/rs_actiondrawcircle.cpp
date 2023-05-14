@@ -40,19 +40,16 @@
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
-						   container, graphicView)
-		,data(new RS_CircleData())
+                           container, graphicView)
+    ,data(std::make_unique<RS_CircleData>())
 {
 	actionType=RS2::ActionDrawCircle;
-    reset();
 }
-
-
 
 RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
-	data.reset(new RS_CircleData{});
+    data = std::make_unique<RS_CircleData>();
 }
 
 
@@ -185,13 +182,6 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
     default:
         break;
     }
-}
-
-
-
-QStringList RS_ActionDrawCircle::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
 }
 
 

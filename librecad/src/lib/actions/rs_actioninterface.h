@@ -32,12 +32,14 @@
 
 #include "rs_snapper.h"
 
-class QKeyEvent;
 class RS_CommandEvent;
 class RS_CoordinateEvent;
 class RS_Graphic;
 class RS_Document;
 class QAction;
+class QKeyEvent;
+class QString;
+class QStringList;
 
 /**
  * This is the interface that must be implemented for all
@@ -87,8 +89,8 @@ public:
 	virtual void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
-        QString command(const QString& cmd);
-        QString msgAvailableCommands();
+    QString command(const QString& cmd);
+    QString msgAvailableCommands();
 
 private:
     /**

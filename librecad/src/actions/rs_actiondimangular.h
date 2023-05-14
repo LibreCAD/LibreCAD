@@ -28,6 +28,8 @@
 #ifndef RS_ACTIONDIMANGULAR_H
 #define RS_ACTIONDIMANGULAR_H
 
+#include <vector>
+
 #include "rs_actiondimension.h"
 #include "rs_line.h"
 
@@ -78,7 +80,7 @@ private:
     RS_Vector   click2;                         ///< 2nd click pos
     RS_Vector   center;                         ///< Center of arc
     std::unique_ptr<RS_DimAngularData> edata;   ///< Data of new dimension
-    Status      lastStatus;                     ///< Last status before entering text
+    Status      lastStatus = SetLine1;                     ///< Last status before entering text
     std::vector<double> angles;                 ///< Array to sort line angles
     int         quadrantOffset {0};             ///< Offset on starting quadrant
 

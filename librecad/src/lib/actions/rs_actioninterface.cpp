@@ -28,7 +28,6 @@
 #include "rs_actioninterface.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
-#include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 
@@ -48,16 +47,20 @@
  *               is suspended and resumed again the cursor will always
  *               be reset to the one given here.
  */
-RS_ActionInterface::RS_ActionInterface(const char* name,
-                                       RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView) :
-RS_Snapper(container, graphicView) {
+RS_ActionInterface::RS_ActionInterface(const char *name,
+                                       RS_EntityContainer &container,
+                                       RS_GraphicView &graphicView)
+    :
+    RS_Snapper(container, graphicView)
+    , status{0}
+    , name{name}
+    , finished{false}
+    , graphic{container.getGraphic()}
+    , document{container.getDocument()}
+{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
 
-    this->name = name;
-    status = 0;
-    finished = false;
     //triggerOnResume = false;
 
     // graphic provides a pointer to the graphic if the
@@ -68,12 +71,7 @@ RS_Snapper(container, graphicView) {
     // document pointer will be used for undo / redo
     document = container.getDocument();
 
-    //this->cursor = cursor;
-    //setSnapMode(graphicView.getDefaultSnapMode());
-    actionType=RS2::ActionNone;
-
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
-
 }
 
 /**
@@ -181,7 +179,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  *  for the command line.
  */
 QStringList RS_ActionInterface::getAvailableCommands() {
-	return QStringList{};
+    return {};
 }
 
 /**

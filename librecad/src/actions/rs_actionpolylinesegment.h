@@ -28,7 +28,11 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Entity;
+class RS_EntityContainer;
+class RS_GraphicView;
 class RS_Polyline;
+class RS_Vector;
 
 /**
  * This action class can handle Create Polyline Existing from Segments
@@ -48,13 +52,13 @@ public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
 
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
+    void init(int status=0) override;
+
+    void trigger() override;
+
+    void mouseReleaseEvent(QMouseEvent* e) override;
+
+    void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
 	//! create polyline from segments
 	//! @param useSelected only create from selected entities
@@ -63,7 +67,7 @@ public:
 private:
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
 
-    RS_Entity* targetEntity;
+    RS_Entity* targetEntity = nullptr;
 };
 
 #endif

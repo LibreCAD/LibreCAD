@@ -19,21 +19,27 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include<vector>
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircletan2_1p.h"
 
+#include<vector>
+
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
 #include "lc_quadratic.h"
-#include "rs_coordinateevent.h"
 #include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+
+namespace {
+
+    //list of entity types supported by current action
+    const EntityTypeList enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
 
 struct RS_ActionDrawCircleTan2_1P::Points {
 	RS_Vector point;
@@ -43,7 +49,7 @@ struct RS_ActionDrawCircleTan2_1P::Points {
 	bool valid = false;
 	//keep a list of centers found
 	RS_VectorSolutions centers;
-        std::vector<RS_AtomicEntity*> circles;
+    std::vector<RS_AtomicEntity*> circles;
 };
 
 /**
@@ -55,7 +61,7 @@ RS_ActionDrawCircleTan2_1P::RS_ActionDrawCircleTan2_1P(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw tangent circle 2P",
 							   container, graphicView)
-	, pPoints(new Points{})
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircleTan2_1P;
 }
@@ -312,10 +318,6 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
     }
 }
 */
-
-QStringList RS_ActionDrawCircleTan2_1P::getAvailableCommands() {
-	return {};
-}
 
 void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
 	switch (getStatus()) {

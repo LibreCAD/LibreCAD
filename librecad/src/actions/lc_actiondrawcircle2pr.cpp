@@ -43,7 +43,7 @@ struct LC_ActionDrawCircle2PR::Points
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_ActionDrawCircleCR(container, graphicView)
-	,pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircle2PR;
 	reset();
