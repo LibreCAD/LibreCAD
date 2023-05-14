@@ -51,8 +51,8 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
         bool select)
         : RS_PreviewActionInterface("Select Window",
 							container, graphicView)
-		, select(select)
-		, pPoints(new Points{})
+        , select(select)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionSelectWindow;
 }
@@ -62,7 +62,7 @@ RS_ActionSelectWindow::~RS_ActionSelectWindow() = default;
 
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
-	pPoints.reset(new Points{});
+    pPoints = std::make_unique<Points>();
     //snapMode.clear();
     //snapMode.restriction = RS2::RestrictNothing;
 }

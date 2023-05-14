@@ -100,7 +100,7 @@ private:
      * first corner (status 0), and selecting the second
      * corner (status 1).
      */
-    int status;
+    int status = 0;
 
 protected:
     /** Action name. Used internally for debugging */
@@ -110,18 +110,18 @@ protected:
      * This flag is set when the action has terminated and
      * can be deleted.
      */
-    bool finished;
+    bool finished = false;
 
     /**
      * Pointer to the graphic is this container is a graphic.
      * NULL otherwise
      */
-    RS_Graphic* graphic;
+    RS_Graphic *graphic = nullptr;
 
-        /**
+    /**
          * Pointer to the document (graphic or block) or NULL.
          */
-        RS_Document* document;
+    RS_Document *document = nullptr;
 
     /**
      * Pointer to the default mouse cursor for this action or NULL.
@@ -131,7 +131,7 @@ protected:
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* predecessor;
+    RS_ActionInterface* predecessor = nullptr;
 
     /**
      * String prepended to the help text for currently available commands.
@@ -154,7 +154,7 @@ protected:
      */
     //static QString cmdNo;
     //static QString cmdNo2;
-    RS2::ActionType actionType;
+    RS2::ActionType actionType = RS2::ActionNone;
 };
 
 

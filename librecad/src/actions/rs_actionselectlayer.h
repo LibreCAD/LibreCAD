@@ -46,7 +46,7 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
 };
 
 #endif

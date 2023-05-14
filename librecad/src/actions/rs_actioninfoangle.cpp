@@ -53,8 +53,8 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Info Angle",
 						   container, graphicView)
 		,entity1(nullptr)
-		,entity2(nullptr)
-		, pPoints(new Points{})
+        ,entity2(nullptr)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionInfoAngle;
 }

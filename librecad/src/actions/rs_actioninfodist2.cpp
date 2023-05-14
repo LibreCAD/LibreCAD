@@ -24,10 +24,11 @@
 **
 **********************************************************************/
 
+#include "rs_actioninfodist2.h"
+
 #include <QAction>
 #include <QMouseEvent>
 
-#include "rs_actioninfodist2.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
@@ -40,14 +41,14 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist2",
                            container, graphicView)
-		,entity(nullptr)
-		,point(new RS_Vector{})
+        ,entity(nullptr)
+    ,point(std::make_unique<RS_Vector>())
 {
 	actionType=RS2::ActionInfoDist2;
 }
 
 RS_ActionInfoDist2::~RS_ActionInfoDist2() {
-    if(graphicView != NULL && graphicView->isCleanUp()==false){
+    if(graphicView != nullptr && graphicView->isCleanUp()==false){
         if( entity && entity->isHighlighted()){
             entity->setHighlighted(false);
             graphicView->redraw(RS2::RedrawDrawing);
@@ -56,7 +57,7 @@ RS_ActionInfoDist2::~RS_ActionInfoDist2() {
 }
 
 void RS_ActionInfoDist2::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 }
 
 
@@ -133,7 +134,7 @@ void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

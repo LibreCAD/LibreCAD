@@ -49,9 +49,9 @@ public:
 	void trigger() override;
 
 protected:
-    RS2::Direction direction;
-    bool hasOffset;
-    int offsetX, offsetY;
+    RS2::Direction direction = RS2::Up;
+    bool hasOffset = false;
+    int offsetX = 0, offsetY = 0;
 };
 
 #endif

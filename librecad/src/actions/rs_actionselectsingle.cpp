@@ -23,11 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_actionselectsingle.h"
 
 #include <QAction>
 #include <QMouseEvent>
 
-#include "rs_actionselectsingle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -92,11 +92,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
     }
     else
     {
-        if (entityTypeList.size()) {
-            en = catchEntity(e, entityTypeList);
-        }else{
-            en = catchEntity(e);
-        }
+        en = catchEntity(e, {entityTypeList.cbegin(), entityTypeList.cend()});
         trigger();
     }
 }

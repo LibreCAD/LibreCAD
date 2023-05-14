@@ -1786,7 +1786,7 @@ void RS_EntityContainer::moveRef(const RS_Vector& ref,
                                  const RS_Vector& offset) {
 
 
-    for(auto e: entities){
+    for(auto&& e: entities){
         e->moveRef(ref, offset);
     }
     if (autoUpdateBorders) {
@@ -1952,11 +1952,7 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
 
     static int indent = 0;
 
-    char* tab = new char[indent*2+1];
-    for(int i=0; i<indent*2; ++i) {
-        tab[i] = ' ';
-    }
-    tab[indent*2] = '\0';
+    std::string tab(indent * 2, ' ');
 
     ++indent;
 
@@ -1984,8 +1980,6 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
 
     os << tab << "Entities[" << id << "]: \n";
     for(auto t: ec){
-
-
         switch (t->rtti()) {
         case RS2::EntityInsert:
             os << tab << *((RS_Insert*)t);
@@ -2004,7 +1998,6 @@ std::ostream& operator << (std::ostream& os, RS_EntityContainer& ec) {
     os << tab << "\n\n";
     --indent;
 
-    delete[] tab;
     return os;
 }
 

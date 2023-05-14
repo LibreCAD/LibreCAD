@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
+#include "rs_actioninfodist.h"
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actioninfodist.h"
 
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -46,16 +47,16 @@ struct RS_ActionInfoDist::Points {
 RS_ActionInfoDist::RS_ActionInfoDist(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Info Dist",
-						   container, graphicView)
-		, pPoints(new Points{})
+                           container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionInfoDist;
 }
 
-RS_ActionInfoDist::~RS_ActionInfoDist()=default;
+RS_ActionInfoDist::~RS_ActionInfoDist() = default;
 
 void RS_ActionInfoDist::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 }
 
 
@@ -65,14 +66,14 @@ void RS_ActionInfoDist::trigger() {
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
 	if (pPoints->point1.valid && pPoints->point2.valid) {
-		auto dV = pPoints->point2 - pPoints->point1;
+        RS_Vector dV = pPoints->point2 - pPoints->point1;
 		QStringList dists;
 		for(double a: {dV.magnitude(), dV.x, dV.y}){
 			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
 										  graphic->getLinearFormat(), graphic->getLinearPrecision());
 		}
 
-		QString&& angle = RS_Units::formatAngle(dV.angle(),
+        QString angle = RS_Units::formatAngle(dV.angle(),
 												graphic->getAngleFormat(), graphic->getAnglePrecision());
 
 		RS_DIALOGFACTORY->commandMessage(
@@ -132,7 +133,7 @@ void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

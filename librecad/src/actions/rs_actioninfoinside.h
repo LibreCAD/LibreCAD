@@ -30,6 +30,8 @@
 #include<memory>
 #include "rs_actioninterface.h"
 
+class RS_EntityContainer;
+class RS_Vector;
 
 /**
  * This action class can handle user events for checking if
@@ -42,7 +44,7 @@ class RS_ActionInfoInside : public RS_ActionInterface {
 public:
     RS_ActionInfoInside(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
-	~RS_ActionInfoInside() override;
+    ~RS_ActionInfoInside() override;
 
 	void trigger() override;
 	void mouseMoveEvent(QMouseEvent* e) override;
