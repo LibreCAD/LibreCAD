@@ -207,7 +207,7 @@ void RS_MText::setAlignment(int a) {
 int RS_MText::getNumberOfLines() {
     int c=1;
 
-    for (qsizetype i = 0; i < data.text.length(); ++i) {
+    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
         if (data.text.at(i).unicode()==0x0A) {
             c++;
         }
@@ -257,7 +257,7 @@ void RS_MText::update()
     // Rotation, scaling and centering is done later
 
     // For every letter:
-    for (qsizetype i = 0; i < data.text.length(); ++i) {
+    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
         // Handle \F not followed by {<codePage>}
         if (data.text.midRef(i).startsWith(R"(\F)")
             && data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
