@@ -101,23 +101,19 @@ class QG_LayerWidget: public QWidget, public RS_LayerListListener {
     Q_OBJECT
 
 public:
-    QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                   const char* name=0, Qt::WindowFlags f = 0);
-	~QG_LayerWidget() = default;
+  QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent,
+                 const char *name = nullptr, Qt::WindowFlags f = {});
+  virtual ~QG_LayerWidget() = default;
 
-    void setLayerList(RS_LayerList* layerList, bool showByBlock);
+  void setLayerList(RS_LayerList *layerList, bool showByBlock);
 
-    void update();
-    void activateLayer(RS_Layer* layer, bool updateScroll=true);
+  void update();
+  void activateLayer(RS_Layer *layer, bool updateScroll = true);
 
-    virtual void layerActivated(RS_Layer* layer) {
-        activateLayer(layer);
-    }
-    virtual void layerAdded(RS_Layer* layer);
-    virtual void layerEdited(RS_Layer*) {
-        update();
-    }
-   virtual void layerRemoved(RS_Layer*) {
+  virtual void layerActivated(RS_Layer *layer) { activateLayer(layer); }
+  virtual void layerAdded(RS_Layer *layer);
+  virtual void layerEdited(RS_Layer *) { update(); }
+  virtual void layerRemoved(RS_Layer *) {
         update();
         activateLayer(layerList->at(0));
     }

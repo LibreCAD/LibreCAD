@@ -29,11 +29,11 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include "mainwindowx.h"
-
-#include "rs_pen.h"
-#include "rs_snapper.h"
 #include <QMap>
+
+#include "mainwindowx.h"
+#include "rs.h"
+
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -55,8 +55,10 @@ class QG_ActiveLayerName;
 class LC_SimpleTests;
 class LC_CustomToolbar;
 class QG_ActionHandler;
-class RS_GraphicView;
 class RS_Document;
+class RS_GraphicView;
+class RS_Pen;
+struct RS_SnapMode;
 class TwoStackedLabels;
 class LC_ActionGroupManager;
 class LC_PenWizard;
@@ -96,9 +98,6 @@ public:
 
     bool eventFilter(QObject *obj, QEvent *event) override;
 
-    QMap<QString, QAction*> a_map;
-    LC_ActionGroupManager* ag_manager {nullptr};
-
 public slots:
     void relayAction(QAction* q_action);
     void slotFocus();
@@ -128,8 +127,8 @@ public slots:
     void slotToggleTab();
     void slotZoomAuto();
 
-    void slotPenChanged(RS_Pen p);
-    void slotSnapsChanged(RS_SnapMode s);
+    void slotPenChanged(const RS_Pen& p);
+    //void slotSnapsChanged(const RS_SnapMode& s);
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
@@ -236,9 +235,7 @@ public:
     /**
      * @return Pointer to application window.
      */
-    static QC_ApplicationWindow* getAppWindow() {
-        return appWindow;
-    }
+    static QC_ApplicationWindow* getAppWindow();
 
     /**
      * @return Pointer to MdiArea.
@@ -337,8 +334,10 @@ private:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
+    QMap<QString, QAction*> a_map;
+    LC_ActionGroupManager* ag_manager {nullptr};
+
     /** Pointer to the application window (this). */
-    static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer {nullptr};
 
     QG_ActionHandler* actionHandler {nullptr};

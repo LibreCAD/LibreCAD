@@ -24,16 +24,20 @@
 **
 **********************************************************************/
 
-#include <QMdiArea>
-#include "rs_grid.h"
 #include "qc_dialogfactory.h"
+
+#include <QMdiArea>
+
 #include "qc_applicationwindow.h"
-#include "qg_blockwidget.h"
 #include "qc_mdiwindow.h"
+
+#include "qg_blockwidget.h"
 #include "qg_graphicview.h"
 
 #include "rs_blocklist.h"
 #include "rs_debug.h"
+#include "rs_grid.h"
+
 
 
 QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :

@@ -65,6 +65,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_document.h"
 #include "rs_painterqt.h"
+#include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
@@ -99,8 +100,6 @@
 #include "qg_snaptoolbar.h"
 #include "qg_mousewidget.h"
 #include "qg_recentfiles.h"
-
-QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -144,8 +143,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setCorner(Qt::BottomLeftCorner, Qt::LeftDockWidgetArea);
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
-
-    appWindow = this;
 
     QSettings settings;
 
@@ -308,7 +305,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
             mdiAreaCAD, SLOT(closeActiveSubWindow()));
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-            this, SLOT(slotPenChanged(RS_Pen)));
+            this, SLOT(slotPenChanged(const RS_Pen&)));
 
     auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
     connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
@@ -357,15 +354,21 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         int ms = 60000 * settings.value("Defaults/AutoSaveTime", 5).toInt();
         autosaveTimer->start(ms);
     }
-	
+
     // Disable menu and toolbar items
-    emit windowsChanged(false);
+    //emit windowsChanged(false);
 
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+}
+
+QC_ApplicationWindow *QC_ApplicationWindow::getAppWindow()
+{
+    static QC_ApplicationWindow *instance = new QC_ApplicationWindow();
+    return instance;
 }
 
 /**
@@ -991,7 +994,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
-                        "document: %d", m->getDocument()->getId());
+                        "document: %u", m->getDocument()->getId());
 
         bool showByBlock = m->getDocument()->rtti()==RS2::EntityBlock;
 
@@ -1398,7 +1401,7 @@ void QC_ApplicationWindow::slotToggleTab()
  * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
  */
-void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
+void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() begin");
 
     RS_DEBUG->print("Setting active pen...");
@@ -1411,14 +1414,14 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
 }
 
-/**
- * Called when something changed in the snaps tool bar
- */
-void QC_ApplicationWindow::slotSnapsChanged(RS_SnapMode snaps) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
+///**
+// * Called when something changed in the snaps tool bar
+// */
+//void QC_ApplicationWindow::slotSnapsChanged(const RS_SnapMode& snaps) {
+//    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
 
-    actionHandler->slotSetSnaps(snaps);
-}
+//    actionHandler->slotSetSnaps(snaps);
+//}
 
 
 
@@ -1439,7 +1442,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     RS_DEBUG->print("  creating MDI window");
 
-    QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
+    QC_MDIWindow *w = new QC_MDIWindow(doc, mdiAreaCAD, {});
 
     window_list << w;
 
@@ -2565,7 +2568,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
+                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
@@ -2631,7 +2634,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                     }
                 }
 
-                emit(printPreviewChanged(true));
+                emit printPreviewChanged(true);
             }
         }
     }

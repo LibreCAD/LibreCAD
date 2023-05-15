@@ -36,7 +36,7 @@
  */
 QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_ArcOptions{})
+    , ui(std::make_unique<Ui::Ui_ArcOptions>())
 {
 	ui->setupUi(this);
 }
