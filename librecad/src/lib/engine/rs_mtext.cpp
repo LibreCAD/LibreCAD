@@ -24,16 +24,17 @@
 **
 **********************************************************************/
 
-#include<iostream>
-#include<cmath>
-#include "rs_font.h"
 #include "rs_mtext.h"
 
+#include<iostream>
+#include<cmath>
+
+#include "rs_debug.h"
+#include "rs_font.h"
 #include "rs_fontlist.h"
+#include "rs_graphicview.h"
 #include "rs_insert.h"
 #include "rs_math.h"
-#include "rs_debug.h"
-#include "rs_graphicview.h"
 #include "rs_painter.h"
 
 RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
@@ -65,9 +66,9 @@ RS_MTextData::RS_MTextData(const RS_Vector& _insertionPoint,
 
 std::ostream& operator << (std::ostream& os, const RS_MTextData& td) {
 	os << "("
-	   <<td.insertionPoint<<','
-	  <<td.height<<','
-	 <<td.width<<','
+    <<td.insertionPoint<<','
+    <<td.height<<','
+    <<td.width<<','
 	<<td.valign<<','
 	<<td.halign<<','
 	<<td.drawingDirection<<','
@@ -207,7 +208,7 @@ void RS_MText::setAlignment(int a) {
 int RS_MText::getNumberOfLines() {
     int c=1;
 
-    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
+    for (decltype(data.text.length()) i = 0; i < data.text.length(); ++i) {
         if (data.text.at(i).unicode()==0x0A) {
             c++;
         }
@@ -257,7 +258,7 @@ void RS_MText::update()
     // Rotation, scaling and centering is done later
 
     // For every letter:
-    for (int i = 0; i < static_cast<int>(data.text.length()); ++i) {
+    for (decltype(data.text.length()) i = 0; i < data.text.length(); ++i) {
         // Handle \F not followed by {<codePage>}
         if (data.text.midRef(i).startsWith(R"(\F)")
             && data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
@@ -265,7 +266,9 @@ void RS_MText::update()
             continue;
         } else if (data.text.midRef(i).startsWith(R"(\\)")) {
             // Allow escape '\', needed to support "\S" and "\P" in string
-            // "\\S" and "\\P" to strings "\S" and "\P"
+            // "\S" is used for super/subscripts
+            // "\P" is used to start a new line
+            // "\\S" and "\\P" to get literal strings "\S" and "\P"
             addLetter(*oneLine, data.text.at(i++), *font, letterSpace, letterPos);
             continue;
         }
@@ -603,7 +606,7 @@ RS_Vector RS_MText::getNearestEndpoint(const RS_Vector& coord, double* dist)cons
 
 
 RS_VectorSolutions RS_MText::getRefPoints() const{
-		return RS_VectorSolutions({data.insertionPoint});
+        return {data.insertionPoint};
 }
 
 void RS_MText::move(const RS_Vector& offset) {
@@ -648,7 +651,7 @@ void RS_MText::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     vec.mirror(RS_Vector(0.0,0.0), axisPoint2-axisPoint1);
     data.angle = vec.angle();
 
-    bool corr;
+    bool corr = false;
     data.angle = RS_Math::makeAngleReadable(data.angle, readable, &corr);
 
     if (corr) {
@@ -713,7 +716,7 @@ void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         }
     }
 
-    foreach (auto e, entities)
+    foreach (auto&& e, entities)
     {
         view->drawEntity(painter, e);
     }
