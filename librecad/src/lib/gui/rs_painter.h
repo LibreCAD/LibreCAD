@@ -157,7 +157,7 @@ protected:
     /**
      * Current drawing mode.
      */
-    RS2::DrawingMode drawingMode;
+    RS2::DrawingMode drawingMode = RS2::ModeFull;
     /**
      * A fixed offset added to all entities drawn (useful for previews).
      */
