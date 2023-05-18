@@ -262,7 +262,7 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: loading translation: OK");
 
     RS_DEBUG->print("main: creating main window..");
-    QC_ApplicationWindow appWin;
+    QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
 #ifdef Q_OS_MAC
     app.installEventFilter(&appWin);
 #endif
