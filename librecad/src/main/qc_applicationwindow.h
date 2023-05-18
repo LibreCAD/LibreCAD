@@ -82,8 +82,6 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
-    QC_ApplicationWindow();
-    ~QC_ApplicationWindow();
 
     void initSettings();
     void storeSettings();
@@ -233,7 +231,7 @@ signals:
 
 public:
     /**
-     * @return Pointer to application window.
+     * @return accessor for the singleton application window.
      */
     static QC_ApplicationWindow* getAppWindow();
 
@@ -271,7 +269,7 @@ public:
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
+    void createNewDocument(const QString& fileName = {}, RS_Document* doc=nullptr);
 
     void redrawAll();
     void updateGrids();
@@ -305,6 +303,14 @@ protected:
     //! \}
 
 private:
+    // singleton
+    QC_ApplicationWindow();
+    ~QC_ApplicationWindow() override;
+
+    QC_ApplicationWindow(const QC_ApplicationWindow&) = delete;
+    QC_ApplicationWindow& operator= (const QC_ApplicationWindow&) = delete;
+    QC_ApplicationWindow(QC_ApplicationWindow&&) = delete;
+    QC_ApplicationWindow& operator= (QC_ApplicationWindow&&) = delete;
 
     QMenu* createPopupMenu() override;
 

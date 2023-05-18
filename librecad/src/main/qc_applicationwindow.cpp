@@ -365,6 +365,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
 }
 
+/**
+ * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
+ * @return QC_ApplicationWindow* the application window instance
+ */
 QC_ApplicationWindow *QC_ApplicationWindow::getAppWindow()
 {
     static QC_ApplicationWindow *instance = new QC_ApplicationWindow();
