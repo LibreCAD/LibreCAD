@@ -41,13 +41,7 @@ PluginCapabilities LC_Gear::getCapabilities() const
     return pluginCapabilities;
 }
 
-LC_Gear::LC_Gear()
-{
-}
-
-LC_Gear::~LC_Gear()
-{
-}
+LC_Gear::LC_Gear() = default;
 
 void LC_Gear::execComm(Document_Interface *doc,
                         QWidget *parent, QString cmd)
