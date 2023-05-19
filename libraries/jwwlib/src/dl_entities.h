@@ -1324,12 +1324,12 @@ struct DL_HatchEdgeData {
     /**
      * Edge type. 1=line, 2=arc.
      */
-    int type;
+    int type=0;
 
     /**
      * Set to true if this edge is fully defined.
      */
-    bool defined;
+    bool defined=false;
 
     /*! Start point (X). */
     double x1;
