@@ -105,16 +105,14 @@ double LenInt(double x)
     // Issue #1610 : when x is negative and much smaller than -1E5, sqrt(1+x*x) is very close to -x, so
     // brute force evaluation of x+y loses significant digits quickly when the absolute value of a negative
     // x gets larger. when x+y is evaluated to be negative, log(x+y) will become meaningless.
-    // The solution, for cases when x+y may lose significant digits, evaluating y=sqrt(1+x*x) as
-    // y=abs(x)*sqrt(1+1/x^2)=abs(x)*(1+1/(2*x^2)-1/(2*x^4)). Therefore,
-    // x+y=1/(2*abs(x))*(1-1/(x^2))
-    constexpr double xCuttOff=-1E5;
-    if (x >= xCuttOff) {
-        double y = std::sqrt(1 + x * x);
-        return std::log(x + y) + x * y;
+    // The solution, for negative x, when x+y may lose significant digits, evaluating log(x+y) as
+    //   log( y + x ) = log ((y^2 - x^2)/(y - x)) = - log(y - x)
+    double y = std::sqrt(1 + x * x);
+    if (std::signbit(x)){
+        return x * y - std::log(y - x);
+    } else {
+        return x * y + std::log(y + x);
     }
-    double dx=0.5/std::abs(x) * x * (1. - 1./(x*x));
-    return std::log(dx) + x * (std::abs(x) + dx) ;
 }
 
 double GetQuadLength(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2,
@@ -1554,12 +1552,7 @@ double DrawPatternLine(std::vector<double> const& pdPattern, int iPattern, doubl
 	if(dCurSegLen < dCurLen)
 	{
         double dt2bak=dt1;
-		dt2 = GetLinePointAtDist(dLen, dt1, dCurSegLen);
-        if (!std::isnormal(dt2)) {
-            dt2 = GetLinePointAtDist(dLen, dt1, dCurSegLen);
-            dt2 = GetLinePointAtDist(dLen, dt1, dCurSegLen);
-
-        }
+        dt2 = GetLinePointAtDist(dLen, dt1, dCurSegLen);
 		dCurLen -= dCurSegLen;
 	}
 	else 
@@ -1643,10 +1636,6 @@ double DrawPatternQuad(std::vector<double> const& pdPattern, int iPattern, doubl
 	if(dCurSegLen < dCurLen)
 	{
 		dt2 = GetQuadPointAtDist(x1, c1, x2, dt1, dCurSegLen);
-        if (!std::isnormal(dt2)) {
-            dt2 = GetQuadPointAtDist(x1, c1, x2, dt1, dCurSegLen);
-
-        }
 		dCurLen -= dCurSegLen;
 	}
 	else 
