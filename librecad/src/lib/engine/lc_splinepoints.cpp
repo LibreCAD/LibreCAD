@@ -134,7 +134,7 @@ double GetQuadLength(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& 
 
 	if(dDet > RS_TOLERANCE)
 	{
-		double dA = sqrt(dDet);
+        double dA = std::sqrt(dDet);
 		double v1 = (dx1*t1 + dx12)/dA;
 		double v2 = (dx1*t2 + dx12)/dA;
         dRes = (LenInt(v2) - LenInt(v1))*dDet/2.0/dx1/std::sqrt(dx1);
@@ -284,9 +284,6 @@ double GetQuadPointAtDist(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 		}
 	}
 
-    if (!std::isnormal(dRes)) {
-        std::cout<<"dRes"<<dRes<<std::endl;
-    }
 	return(dRes);
 }
 
