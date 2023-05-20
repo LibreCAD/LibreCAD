@@ -102,8 +102,19 @@ RS_Vector GetSubQuadControlPoint(const RS_Vector& x1,
 
 double LenInt(double x)
 {
-	double y = sqrt(1 + x*x); 
-	return log(x + y) + x*y;
+    // Issue #1610 : when x is negative and much smaller than -1E5, sqrt(1+x*x) is very close to -x, so
+    // brute force evaluation of x+y loses significant digits quickly when the absolute value of a negative
+    // x gets larger. when x+y is evaluated to be negative, log(x+y) will become meaningless.
+    // The solution, for cases when x+y may lose significant digits, evaluating y=sqrt(1+x*x) as
+    // y=abs(x)*sqrt(1+1/x^2)=abs(x)*(1+1/(2*x^2)-1/(2*x^4)). Therefore,
+    // x+y=1/(2*abs(x))*(1-1/(x^2))
+    constexpr double xCuttOff=-1E5;
+    if (x >= xCuttOff) {
+        double y = std::sqrt(1 + x * x);
+        return std::log(x + y) + x * y;
+    }
+    double dx=0.5/std::abs(x) * x * (1. - 1./(x*x));
+    return std::log(dx) + x * (std::abs(x) + dx) ;
 }
 
 double GetQuadLength(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2,
