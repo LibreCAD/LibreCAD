@@ -137,17 +137,17 @@ double GetQuadLength(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& 
 		double dA = sqrt(dDet);
 		double v1 = (dx1*t1 + dx12)/dA;
 		double v2 = (dx1*t2 + dx12)/dA;
-		dRes = (LenInt(v2) - LenInt(v1))*dDet/2.0/dx1/sqrt(dx1);
+        dRes = (LenInt(v2) - LenInt(v1))*dDet/2.0/dx1/std::sqrt(dx1);
 	}
 	else
 	{
 		if(dx1 < RS_TOLERANCE)
 		{
-			dRes = sqrt(dx2)*(t2 - t1);
+            dRes = std::sqrt(dx2)*(t2 - t1);
 		}
 		else
 		{
-			dx2 = sqrt(dx1);
+            dx2 = std::sqrt(dx1);
 			dRes = (t2 - t1)*(dx2*(t2 + t1)/2.0 + dx12/dx2);
 		}
 	}
@@ -172,19 +172,19 @@ double GetQuadLengthDeriv(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 
 	if(dDet > RS_TOLERANCE)
 	{
-		double dA = sqrt(dDet);
+        double dA = std::sqrt(dDet);
 		double v2 = (dx1*t2 + dx12)/dA;
 		double v3 = v2*v2;
 		double v4 = 1.0 + v3;
-		double v5 = sqrt(v4);
-		dRes = ((v2 + v5)/(v4 + v2*v5) + (2.0*v3 + 1.0)/v5)*dA/2.0/sqrt(dx1);
+        double v5 = std::sqrt(v4);
+        dRes = ((v2 + v5)/(v4 + v2*v5) + (2.0*v3 + 1.0)/v5)*dA/2.0/std::sqrt(dx1);
 	}
 	else
 	{
-		if(dx1 < RS_TOLERANCE) dRes = sqrt(dx2);
+        if(dx1 < RS_TOLERANCE) dRes = std::sqrt(dx2);
 		else
 		{
-			dx2 = sqrt(dx1);
+            dx2 = std::sqrt(dx1);
 			dRes = dx2*t2 + dx12/dx2;
 		}
 	}
@@ -213,12 +213,12 @@ double GetQuadPointAtDist(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 
 	if(dDet > RS_TOLERANCE)
 	{
-		double dA = sqrt(dDet);
+        double dA = std::sqrt(dDet);
 		double v1 = (dx1*t1 + dx12)/dA;
 		//double v2 = (dx1*t2 + dx12)/dA;
-		//dDist = (LenInt(v2) - LenInt(v1))*dDet/2.0/dx1/sqrt(dx1);
-		//LenInt(v2) = 2.0*dx1*sqrt(dx1)*dDist/dDet + LenInt(v1);
-		double dB = 2.0*dx1*sqrt(dx1)*dDist/dDet + LenInt(v1);
+        //dDist = (LenInt(v2) - LenInt(v1))*dDet/2.0/dx1/std::sqrt(dx1);
+        //LenInt(v2) = 2.0*dx1*std::sqrt(dx1)*dDist/dDet + LenInt(v1);
+        double dB = 2.0*dx1*std::sqrt(dx1)*dDist/dDet + LenInt(v1);
 
 		dCoefs.push_back(0.0);
 		dCoefs.push_back(0.0);
@@ -255,11 +255,11 @@ double GetQuadPointAtDist(const RS_Vector& x1, const RS_Vector& c1, const RS_Vec
 	{
 		if(dx1 < RS_TOLERANCE)
 		{
-			if(dx2 > RS_TOLERANCE) dRes = t1 + dDist/sqrt(dx2);
+            if(dx2 > RS_TOLERANCE) dRes = t1 + dDist/std::sqrt(dx2);
 		}
 		else
 		{
-			dx2 = sqrt(dx1);
+            dx2 = std::sqrt(dx1);
 			//dRes = (t2 - t1)*(dx2*(t2 + t1)/2.0 + dx12/dx2);
 
 			a0 = dx2/2.0;
@@ -708,16 +708,12 @@ void LC_SplinePoints::calculateBorders()
 
 RS_VectorSolutions LC_SplinePoints::getRefPoints() const
 {
-	RS_VectorSolutions ret;
-
-	if(data.cut)
-	{
-		std::copy(data.controlPoints.begin(), data.controlPoints.end(), std::back_inserter(ret));
-	} else {
-		std::copy(data.splinePoints.begin(), data.splinePoints.end(), std::back_inserter(ret));
-	}
-
-	return ret;
+    if(data.cut)
+    {
+        return {{data.controlPoints.begin(), data.controlPoints.end()}};
+    } else {
+        return {{data.splinePoints.begin(), data.splinePoints.end()}};
+    }
 }
 
 /** @return Start point of the entity */
@@ -1263,30 +1259,30 @@ void LC_SplinePoints::addControlPoint(const RS_Vector& v)
 	data.controlPoints.push_back(v);
 }
 
-double* GetMatrix(int iCount, bool bClosed, double *dt)
+std::vector<double> GetMatrix(int iCount, bool bClosed, const std::vector<double>& dt)
 {
-	if(bClosed && iCount < 3) return nullptr;
-	if(!bClosed && iCount < 4) return nullptr;
+    if(bClosed && (iCount < 3 || dt.size() != iCount))
+        return {};
+    if(!bClosed && (iCount < 4 || dt.size() != iCount -2))
+        return {};
 
-	int iDim = 0;
-	if(bClosed) iDim = 5*iCount - 6; // n + 2*(n - 1) + 2*(n - 2)
-	else iDim = 3*iCount - 8; // (n - 2) + 2*(n - 3)
+    // closed: iDim = 5*iCount - 6; // n + 2*(n - 1) + 2*(n - 2)
+    // not closed: iDim = 3*iCount - 8; // (n - 2) + 2*(n - 3)
+    int iDim = bClosed ? 5*iCount - 6 : 3*iCount - 8;
 
-	double *dRes = new double[iDim];
-
-	double x1, x2, x3;
+    std::vector<double> dRes(iDim);
 
 	if(bClosed)
 	{
-		double *pdDiag = dRes;
+        double *pdDiag = dRes.data();
 		double *pdDiag1 = &dRes[iCount];
 		double *pdDiag2 = &dRes[2*iCount - 1];
 		double *pdLastCol1 = &dRes[3*iCount - 2];
 		double *pdLastCol2 = &dRes[4*iCount - 4];
 
-		x1 = (1.0 - dt[0])*(1.0 - dt[0])/2.0;
-		x3 = dt[0]*dt[0]/2.0;
-		x2 = x1 + 2.0*dt[0]*(1.0 - dt[0]) + x3;
+        double x1 = (1.0 - dt[0])*(1.0 - dt[0])/2.0;
+        double x3 = dt[0]*dt[0]/2.0;
+        double x2 = x1 + 2.0*dt[0]*(1.0 - dt[0]) + x3;
 
         pdDiag[0] = std::sqrt(x2);
 		pdDiag1[0] = x3/pdDiag[0];
@@ -1342,18 +1338,18 @@ double* GetMatrix(int iCount, bool bClosed, double *dt)
 	}
 	else
 	{
-		double *pdDiag = dRes;
+        double *pdDiag = dRes.data();
 		double *pdDiag1 = &dRes[iCount - 2];
 		double *pdDiag2 = &dRes[2*iCount - 5];
 
-		x3 = dt[0]*dt[0]/2.0;
-		x2 = 2.0*dt[0]*(1.0 - dt[0]) + x3;
+        double x3 = dt[0]*dt[0]/2.0;
+        double x2 = 2.0*dt[0]*(1.0 - dt[0]) + x3;
         pdDiag[0] = std::sqrt(x2);
 		pdDiag1[0] = x3/pdDiag[0];
 
 		for(int i = 1; i < iCount - 3; i++)
 		{
-			x1 = (1.0 - dt[i])*(1.0 - dt[i])/2.0;
+            double x1 = (1.0 - dt[i])*(1.0 - dt[i])/2.0;
 			x3 = dt[i]*dt[i]/2.0;
 			x2 = x1 + 2.0*dt[i]*(1.0 - dt[i]) + x3;
 
@@ -1362,7 +1358,7 @@ double* GetMatrix(int iCount, bool bClosed, double *dt)
 			pdDiag1[i] = x3/pdDiag[i];
 		}
 
-		x1 = (1.0 - dt[iCount - 3])*(1.0 - dt[iCount - 3])/2.0;
+        double x1 = (1.0 - dt[iCount - 3])*(1.0 - dt[iCount - 3])/2.0;
 		x2 = x1 + 2.0*dt[iCount - 3]*(1.0 - dt[iCount - 3]);
 		pdDiag2[iCount - 4] = x1/pdDiag[iCount - 4];
         pdDiag[iCount - 3] = std::sqrt(x2 - pdDiag1[iCount - 4]*pdDiag2[iCount - 4]);
@@ -1403,13 +1399,12 @@ void LC_SplinePoints::UpdateControlPoints()
 	if(data.closed) iDim = n;
 	else iDim = n - 2;
 
-	double *dt = new double[iDim];
-	double dl1, dl2;
+    std::vector<double> dt(iDim);
 
 	if(data.closed)
 	{
-		dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(0)).magnitude();
-		dl2 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
+        double dl1 = (data.splinePoints.at(n - 1) - data.splinePoints.at(0)).magnitude();
+        double dl2 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
 		dt[0] = dl1/(dl1 + dl2);
 		for(int i = 1; i < iDim - 1; i++)
 		{
@@ -1423,8 +1418,8 @@ void LC_SplinePoints::UpdateControlPoints()
 	}
 	else
 	{
-		dl1 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
-		dl2 = (data.splinePoints.at(2) - data.splinePoints.at(1)).magnitude();
+        double dl1 = (data.splinePoints.at(1) - data.splinePoints.at(0)).magnitude();
+        double dl2 = (data.splinePoints.at(2) - data.splinePoints.at(1)).magnitude();
 		dt[0] = dl1/(dl1 + dl2/2.0);
 		for(int i = 1; i < iDim - 1; i++)
 		{
@@ -1437,18 +1432,19 @@ void LC_SplinePoints::UpdateControlPoints()
 		dt[iDim - 1] = dl1/(dl1 + 2.0*dl2);
 	}
 
-	double *pdMatrix = GetMatrix(n, data.closed, dt);
+    std::vector<double> pdMatrix = GetMatrix(n, data.closed, dt);
 
-	if(!pdMatrix) return;
+    if(pdMatrix.empty())
+        return;
 
-	double *dx = new double[iDim];
-	double *dy = new double[iDim];
-	double *dx2 = new double[iDim];
-	double *dy2 = new double[iDim];
+    std::vector<double> dx(iDim);
+    std::vector<double> dy(iDim);
+    std::vector<double> dx2(iDim);
+    std::vector<double> dy2(iDim);
 
 	if(data.closed)
 	{
-		double *pdDiag = pdMatrix;
+        double *pdDiag = pdMatrix.data();
 		double *pdDiag1 = &pdMatrix[n];
 		double *pdDiag2 = &pdMatrix[2*n - 1];
 		double *pdLastCol1 = &pdMatrix[3*n - 2];
@@ -1485,12 +1481,12 @@ void LC_SplinePoints::UpdateControlPoints()
 
 		for(int i = 0; i < iDim; i++)
 		{
-			data.controlPoints.push_back(RS_Vector(dx2[i], dy2[i]));
+            data.controlPoints.emplace_back(dx2[i], dy2[i]);
 		}
 	}
 	else
 	{
-		double *pdDiag = pdMatrix;
+        double *pdDiag = pdMatrix.data();
 		double *pdDiag1 = &pdMatrix[n - 2];
 		double *pdDiag2 = &pdMatrix[2*n - 5];
 
@@ -1518,19 +1514,10 @@ void LC_SplinePoints::UpdateControlPoints()
 		data.controlPoints.push_back(data.splinePoints.at(0));
 		for(int i = 0; i < iDim; i++)
 		{
-			data.controlPoints.push_back(RS_Vector(dx2[i], dy2[i]));
+            data.controlPoints.emplace_back(dx2[i], dy2[i]);
 		}
 		data.controlPoints.push_back(data.splinePoints.at(n - 1));
 	}
-
-	delete[] pdMatrix;
-
-	delete[] dt;
-
-	delete[] dy2;
-	delete[] dx2;
-	delete[] dy;
-	delete[] dx;
 }
 
 double GetLinePointAtDist(double dLen, double t1, double dDist)
