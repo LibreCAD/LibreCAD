@@ -1254,7 +1254,7 @@ void LC_SplinePoints::addControlPoint(const RS_Vector& v)
 	data.controlPoints.push_back(v);
 }
 
-std::vector<double> GetMatrix(int iCount, bool bClosed, const std::vector<double>& dt)
+std::vector<double> GetMatrix(size_t iCount, bool bClosed, const std::vector<double>& dt)
 {
     if(bClosed && (iCount < 3 || dt.size() != iCount))
         return {};
@@ -1293,7 +1293,7 @@ std::vector<double> GetMatrix(int iCount, bool bClosed, const std::vector<double
 		pdDiag1[1] = x3/pdDiag[1];
 		pdLastCol1[1] = -pdDiag2[0]*pdLastCol1[0]/pdDiag[1];
 
-		for(int i = 2; i < iCount - 2; i++)
+        for(size_t i = 2; i < iCount - 2; i++)
 		{
 			x1 = (1.0 - dt[i])*(1.0 - dt[i])/2.0;
 			x3 = dt[i]*dt[i]/2.0;
@@ -1320,7 +1320,7 @@ std::vector<double> GetMatrix(int iCount, bool bClosed, const std::vector<double
 
 		pdLastCol2[0] = x3/pdDiag[0];
 		double dLastColSum = pdLastCol1[0]*pdLastCol2[0];
-		for(int i = 1; i < iCount - 2; i++)
+        for(size_t i = 1; i < iCount - 2; i++)
 		{
 			pdLastCol2[i] = -pdLastCol2[i - 1]*pdDiag1[i - 1]/pdDiag[i];
 			dLastColSum += pdLastCol1[i]*pdLastCol2[i];
@@ -1342,7 +1342,7 @@ std::vector<double> GetMatrix(int iCount, bool bClosed, const std::vector<double
         pdDiag[0] = std::sqrt(x2);
 		pdDiag1[0] = x3/pdDiag[0];
 
-		for(int i = 1; i < iCount - 3; i++)
+        for(size_t i = 1; i < iCount - 3; i++)
 		{
             double x1 = (1.0 - dt[i])*(1.0 - dt[i])/2.0;
 			x3 = dt[i]*dt[i]/2.0;
