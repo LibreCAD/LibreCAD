@@ -53,7 +53,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow()");
 
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
 
     if (!appWindow || !parent) {
@@ -111,7 +111,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
 void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
 
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
 
     if (!blockWindow) {

@@ -52,7 +52,7 @@ void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 
 void RS_ActionBlocksSave::trigger() {
     RS_DEBUG->print("save block to file");
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
 	if(!appWindow) {
         finish(false);
         return;

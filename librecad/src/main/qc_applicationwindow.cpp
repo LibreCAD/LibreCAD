@@ -369,9 +369,11 @@ QC_ApplicationWindow::QC_ApplicationWindow()
  * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
  * @return QC_ApplicationWindow* the application window instance
  */
-QC_ApplicationWindow *QC_ApplicationWindow::getAppWindow()
+std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow()
 {
-    static QC_ApplicationWindow *instance = new QC_ApplicationWindow();
+    static auto instance = std::unique_ptr<QC_ApplicationWindow>(new QC_ApplicationWindow);
+    // singleton could be reset: cannot be called after reseting
+    Q_ASSERT(instance != nullptr);
     return instance;
 }
 

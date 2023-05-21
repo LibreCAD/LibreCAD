@@ -82,6 +82,7 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
+    ~QC_ApplicationWindow() override;
 
     void initSettings();
     void storeSettings();
@@ -233,7 +234,7 @@ public:
     /**
      * @return accessor for the singleton application window.
      */
-    static QC_ApplicationWindow* getAppWindow();
+    static std::unique_ptr<QC_ApplicationWindow>& getAppWindow();
 
     /**
      * @return Pointer to MdiArea.
@@ -305,7 +306,6 @@ protected:
 private:
     // singleton
     QC_ApplicationWindow();
-    ~QC_ApplicationWindow() override;
 
     QC_ApplicationWindow(const QC_ApplicationWindow&) = delete;
     QC_ApplicationWindow& operator= (const QC_ApplicationWindow&) = delete;
