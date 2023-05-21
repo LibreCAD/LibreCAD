@@ -788,7 +788,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
 										 double* dist, size_t* index) const {
 
 	double curDist{0.};
-    double minDist = RS_TOLERANCE2;
+    double minDist = RS_MAXDOUBLE;
 	RS_Vector closestPoint{false};
     int pos(0);
 
