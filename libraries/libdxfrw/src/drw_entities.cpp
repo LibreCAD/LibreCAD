@@ -1247,7 +1247,7 @@ bool DRW_LWPolyline::parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs){
                 vertex->y = buf->getDefaultDouble(pv->y);
             }
             pv = vertex;
-            vertlist.push_back(vertex);
+            vertlist.push_back(std::move(vertex));
         }
         //add bulges
         for (unsigned int i = 0; i < bulgesnum; i++){

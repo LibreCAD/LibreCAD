@@ -576,7 +576,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-    std::vector< std::pair<RS_Vector, double> > verList;
+    std::vector<std::pair<RS_Vector, double> > verList;
     for (auto const& v: data.vertlist)
         verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
 

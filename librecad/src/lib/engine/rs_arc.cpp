@@ -215,27 +215,20 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
 bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                                double bulge) {
     data.reversed = (bulge<0.0);
-    double alpha = atan(bulge)*4.0;
+    double alpha = std::atan(bulge)*4.0;
 
     RS_Vector middle = (startPoint+endPoint)/2.0;
     double dist = startPoint.distanceTo(endPoint)/2.0;
 
     // alpha can't be 0.0 at this point
-    data.radius = fabs(dist / sin(alpha/2.0));
+    data.radius = std::abs(dist / std::sin(alpha/2.0));
 
-    double wu = fabs(RS_Math::pow(data.radius, 2.0) - RS_Math::pow(dist, 2.0));
-    double h = sqrt(wu);
+    double wu = std::abs(data.radius*data.radius - dist*dist);
     double angle = startPoint.angleTo(endPoint);
+    bool reversed = std::signbit(bulge);
+    angle = reversed ? angle - M_PI_2 : angle + M_PI_2;
 
-    if (bulge>0.0) {
-		angle+=M_PI_2;
-    } else {
-		angle-=M_PI_2;
-    }
-
-    if (fabs(alpha)>M_PI) {
-        h*=-1.0;
-    }
+    double h = (std::abs(alpha)>M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
 
     data.center.setPolar(h, angle);
     data.center+=middle;
@@ -1085,14 +1078,13 @@ RS_Vector RS_Arc::getMiddlePoint() const {
  * @return Angle length in rad.
  */
 double RS_Arc::getAngleLength() const {
-    double ret;
     double a=getAngle1();
     double b=getAngle2();
 
     if (isReversed()) std::swap(a,b);
-    ret = RS_Math::correctAngle(b-a);
+    double ret = RS_Math::correctAngle(b-a);
     // full circle:
-    if (fabs(remainder(ret,2.*M_PI))<RS_TOLERANCE_ANGLE) {
+    if (std::abs(std::remainder(ret, 2.*M_PI))<RS_TOLERANCE_ANGLE) {
         ret = 2*M_PI;
     }
 
@@ -1114,7 +1106,7 @@ double RS_Arc::getLength() const {
  * Gets the arc's bulge (tangens of angle length divided by 4).
  */
 double RS_Arc::getBulge() const {
-    double bulge = tan(fabs(getAngleLength())/4.0);
+    double bulge = std::tan(std::abs(getAngleLength())/4.0);
     if (isReversed()) {
         bulge*=-1;
     }

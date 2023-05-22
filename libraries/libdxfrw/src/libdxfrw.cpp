@@ -2607,7 +2607,7 @@ bool dxfRW::processInsert() {
 
 bool dxfRW::processLWPolyline() {
     DRW_DBG("dxfRW::processLWPolyline");
-    int code;
+    int code=0;
     DRW_LWPolyline pl;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");

@@ -241,11 +241,11 @@ public:
     DRW_Vertex2D(double sx, double sy, double b): x(sx), y(sy), stawidth(0), endwidth(0), bulge(b) {}
 
 public:
-    double x;                 /*!< x coordinate, code 10 */
-    double y;                 /*!< y coordinate, code 20 */
-    double stawidth;          /*!< Start width, code 40 */
-    double endwidth;          /*!< End width, code 41 */
-    double bulge;             /*!< bulge, code 42 */
+    double x=0.;                 /*!< x coordinate, code 10 */
+    double y=0.;                 /*!< y coordinate, code 20 */
+    double stawidth=0.;          /*!< Start width, code 40 */
+    double endwidth=0.;          /*!< End width, code 41 */
+    double bulge=0.;             /*!< bulge, code 42 */
 };
 
 
