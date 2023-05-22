@@ -29,6 +29,8 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
+#include <memory>
+
 #include <QMap>
 
 #include "mainwindowx.h"
