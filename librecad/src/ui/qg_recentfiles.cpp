@@ -23,11 +23,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QFileInfo>
+#include "qg_recentfiles.h"
+
 #include <QAction>
 #include <QActionGroup>
+#include <QFileInfo>
 #include <QMenu>
-#include "qg_recentfiles.h"
 
 #include "rs_debug.h"
 #include "rs_settings.h"
@@ -43,11 +44,19 @@ QG_RecentFiles::QG_RecentFiles(QObject* parent, int number)
 
 QG_RecentFiles::~QG_RecentFiles()
 {
-	RS_SETTINGS->beginGroup("/RecentFiles");
-	for (int i=0; i<count(); ++i) {
-		RS_SETTINGS->writeEntry(QString("/File") + QString::number(i+1), get(i));
-	}
-	RS_SETTINGS->endGroup();
+    try {
+        saveToSettings();
+    } catch (...) {
+        RS_DEBUG->print("QG_RecentFiles::~QG_RecentFiles(): saving to settings caused an exception.");
+    }
+}
+
+void QG_RecentFiles::saveToSettings() const {
+    RS_SETTINGS->beginGroup("/RecentFiles");
+    for (int i=0; i<count(); ++i) {
+        RS_SETTINGS->writeEntry(QString("/File") + QString::number(i+1), get(i));
+    }
+    RS_SETTINGS->endGroup();
 }
 
 /**
@@ -154,6 +163,7 @@ void QG_RecentFiles::updateRecentFilesMenu() {
 	}
 	for (int j = numRecentFiles; j < getNumber(); ++j)
 		recentFilesAction[j]->setVisible(false);
+    saveToSettings();
 	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
 }
 
