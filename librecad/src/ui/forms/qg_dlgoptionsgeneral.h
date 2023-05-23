@@ -26,15 +26,20 @@
 #ifndef QG_DLGOPTIONSGENERAL_H
 #define QG_DLGOPTIONSGENERAL_H
 
+#include <QDialog>
 #include "ui_qg_dlgoptionsgeneral.h"
+
+class QColor;
+class QComboBox;
+class QString;
 
 class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
 {
     Q_OBJECT
 
 public:
-    QG_DlgOptionsGeneral(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_DlgOptionsGeneral();
+    QG_DlgOptionsGeneral(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    virtual ~QG_DlgOptionsGeneral() = default;
     static int current_tab;
     void set_color(QComboBox* combo, QColor custom);
 
@@ -43,8 +48,9 @@ public slots:
     virtual void ok();
 
 protected slots:
-    virtual void languageChange();
-    virtual void setTemplateFile();
+    void languageChange();
+    void setTemplateFile();
+    void setLibraryPath();
 
 private slots:
     void on_tabWidget_currentChanged(int index);
@@ -76,12 +82,11 @@ private slots:
     void setFontsFolder();
 
 private:
-    bool restartNeeded;
+    bool restartNeeded=false;
 
     void init();
-	void initComboBox(QComboBox* cb, QString text);
+    void initComboBox(QComboBox* cb, const QString& text);
     void destroy();
-
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H

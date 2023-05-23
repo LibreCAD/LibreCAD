@@ -297,7 +297,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     library_widget->setFocusPolicy(Qt::NoFocus);
     connect(library_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
     connect(main_window, SIGNAL(windowsChanged(bool)),
-            (QObject*)library_widget->bInsert, SLOT(setEnabled(bool)));
+            (QObject*) library_widget->getInsertButton(), SLOT(setEnabled(bool)));
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
 
