@@ -2981,6 +2981,25 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
     QMainWindow::keyPressEvent(e);
 }
 
+/**
+ * @brief QC_MDIWindow::dropEvent() allows dropping a file to the window
+ * @param event
+ */
+void QC_ApplicationWindow::dropEvent(QDropEvent* event)
+{
+    const QMimeData* mimeData = event->mimeData();
+
+    // find the file namepath from Url
+    if (mimeData->hasUrls() && !mimeData->urls().empty())
+    {
+        QList<QUrl> urlList = mimeData->urls();
+        QString file = urlList.front().toLocalFile();
+
+        // attempt to open the file
+        slotFileOpen(file);
+  }
+}
+
 QMdiArea const* QC_ApplicationWindow::getMdiArea() const{
     return mdiAreaCAD;
 }

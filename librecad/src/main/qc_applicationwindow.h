@@ -92,7 +92,8 @@ public:
     bool queryExit(bool force);
 
     /** Catch hotkey for giving focus to command line. */
-    virtual void keyPressEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void dropEvent(QDropEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
