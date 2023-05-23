@@ -380,17 +380,14 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // List of all directories that contain part libraries:
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
     directoryList.prepend(iconCacheLocation);
-    QStringList::Iterator it;
 
     QFileInfo fiDxf(dxfPath);
-    QString itemDir;
-    QString pngPath;
 
     // look in all possible system directories for PNG files
     //  in the current library path:
-    for (it=directoryList.begin(); it!=directoryList.end(); ++it) {
-        itemDir = (*it)+dir;
-        pngPath = itemDir + QDir::separator() + fiDxf.baseName() + ".png";
+    foreach (QString path, directoryList) {
+        QString itemDir = path + dir;
+        QString pngPath = itemDir + QDir::separator() + fiDxf.baseName() + ".png";
         RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: checking: '%s'",
                         pngPath.toLatin1().data());
         QFileInfo fiPng(pngPath);
@@ -414,7 +411,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
 //    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
-    pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
+    QString pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap buffer(128,128);
     RS_PainterQt painter(&buffer);
@@ -439,8 +436,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         }
 
         QImageWriter iio;
-        QImage img;
-        img = buffer.toImage();
+        QImage img = buffer.toImage();
         img = img.scaled(64,64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
         // iio.setImage(img);
         iio.setFileName(pngPath);
