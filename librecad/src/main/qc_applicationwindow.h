@@ -300,9 +300,7 @@ public:
 
 protected:
     void closeEvent(QCloseEvent*) override;
-    //! \{ accept drop files to open
-    virtual void dropEvent(QDropEvent* e) override;
-    virtual void dragEnterEvent(QDragEnterEvent * event) override;
+    void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
 
