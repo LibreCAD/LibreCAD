@@ -47,6 +47,23 @@
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
 
+namespace {
+    void writePng(const QString& pngPath, QPixmap pixmap)
+    {
+        QImageWriter iio;
+        QImage img = pixmap.toImage();
+        img = img.scaled(64,64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
+        // iio.setImage(img);
+        iio.setFileName(pngPath);
+        iio.setFormat("PNG");
+        if (!iio.write(img)) {
+            RS_DEBUG->print(RS_Debug::D_ERROR,
+                            "QG_LibraryWidget::getPathToPixmap: Cannot write thumbnail: '%s'",
+                            pngPath.toLatin1().data());
+        }
+    }
+}
+
 /*
  *  Constructs a QG_LibraryWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -410,7 +427,6 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
     // create all directories needed:
     RS_SYSTEM->createPaths(iconCacheLocation + dir);
 
-//    QString foo=iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
     QString pngPath = iconCacheLocation + dir + QDir::separator() + fiDxf.baseName() + ".png";
 
     QPixmap buffer(128,128);
@@ -435,18 +451,8 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
             gv.drawEntity(&painter, e);
         }
 
-        QImageWriter iio;
-        QImage img = buffer.toImage();
-        img = img.scaled(64,64, Qt::IgnoreAspectRatio, Qt::SmoothTransformation );
-        // iio.setImage(img);
-        iio.setFileName(pngPath);
-        iio.setFormat("PNG");
-        if (!iio.write(img)) {
-            pngPath = "";
-            RS_DEBUG->print(RS_Debug::D_ERROR,
-                            "QG_LibraryWidget::getPathToPixmap: Cannot write thumbnail: '%s'",
-                            pngPath.toLatin1().data());
-        }
+        // Write to PNG
+        writePng(pngPath, std::move(buffer));
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_LibraryWidget::getPathToPixmap: Cannot open file: '%s'",

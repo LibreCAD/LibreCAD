@@ -26,6 +26,8 @@
 #ifndef QG_LIBRARYWIDGET_H
 #define QG_LIBRARYWIDGET_H
 
+#include <memory>
+
 #include <QWidget>
 #include <QModelIndex>
 
@@ -51,7 +53,7 @@ public:
     }
 
 private:
-    QPushButton *bInsert=nullptr; //RLZ change bInsert to private
+    QPushButton *bInsert=nullptr;
 
     virtual QString getItemDir( QStandardItem * item );
     virtual QString getItemPath( QStandardItem * item );
