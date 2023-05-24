@@ -48,7 +48,7 @@
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 #if BOOST_VERSION > 104500
-#include <boost/math/tools/tuple.hpp>
+#include <boost/tuple/tuple.hpp>
 #endif
 #endif
 
@@ -69,7 +69,7 @@ public:
 		distance=target;
 	}
 #if BOOST_VERSION > 104500
-	boost::math::tuple<double, double, double> operator()(double const& z) const {
+    boost::tuples::tuple<double, double, double> operator()(double const& z) const {
 #else
 	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
@@ -79,7 +79,7 @@ public:
         double const d=std::sqrt(1-k2*sz*sz);
         // return f(x), f'(x) and f''(x)
 #if BOOST_VERSION > 104500
-        return boost::math::make_tuple(
+        return boost::tuples::make_tuple(
 #else
         return boost::fusion::make_tuple(
 #endif
