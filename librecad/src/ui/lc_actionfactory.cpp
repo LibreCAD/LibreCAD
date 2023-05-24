@@ -1303,6 +1303,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
         action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
     else
         action->setIcon(QIcon(":/icons/zoom_auto.svg"));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_F));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
     action->setObjectName("ZoomAuto");
     a_map["ZoomAuto"] = action;
