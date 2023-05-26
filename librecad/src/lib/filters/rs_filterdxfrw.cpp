@@ -630,15 +630,15 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 		setEntityAttributes(splinePoints, data);
 		currentContainer->addEntity(splinePoints);
 
-		for(auto const& vert: data->controllist) {
-			RS_Vector v(vert->x, vert->y);
-			splinePoints->addControlPoint(v);
+        for(auto const& vert: data->controllist) {
+            splinePoints->addControlPoint({vert->x, vert->y});
 		}
+
 		splinePoints->update();
 		return;
 	}
 
-    RS_Spline* spline;
+    RS_Spline* spline = nullptr;
     if (data->degree >= 1 && data->degree <= 3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
         if (data->knotslist.size()) {
@@ -658,13 +658,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
 	}
 	for (auto const& vert: data->controllist)
-		spline->addControlPoint({vert->x, vert->y});
+        spline->addControlPoint({vert->x, vert->y});
 
     if (data->ncontrol== 0 && data->degree != 2){
-		for (auto const& vert: data->fitlist)
-			spline->addControlPoint({vert->x, vert->y});
-
+        for (auto const& vert: data->fitlist)
+            spline->addControlPoint({vert->x, vert->y});
     }
+
     spline->update();
 }
 
@@ -2282,7 +2282,6 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
 }
 
 
-
 /**
  * Writes the given spline entity to the file.
  */
@@ -2314,40 +2313,31 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         return;
     }
 
-    DRW_Spline sp;
+    DRW_Spline sp{};
 
-    if (s->isClosed())
-        sp.flags = 11;
-    else
-        sp.flags = 8;
-    sp.ncontrol = s->getNumberOfControlPoints();
-    sp.degree = s->getDegree();
-    sp.nknots = sp.ncontrol + sp.degree + 1;
-
-    // write spline knots:
-	if (s->getData().knotslist.size()) {
-		sp.knotslist = s->getData().knotslist;
-	} else {
-		int k = sp.degree+1;
-		for (int i=1; i<=sp.nknots; i++) {
-			if (i<=k) {
-				sp.knotslist.push_back(0.0);
-			} else if (i<=sp.nknots-k) {
-				sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
-			} else {
-				sp.knotslist.push_back(1.0);
-			}
-		}
-	}
-
+    // dxf spline group code=70
+    // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+    sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
     // write spline control points:
-	auto cp = s->getControlPoints();
-	for (const RS_Vector& v: cp)
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+    for (const RS_Vector& v: s->getControlPoints())
+    {
+        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
+
+    if (s->isClosed()) {
+        // wrapping control points for closed splines: number of wrapped control points is the same as the degree
+        sp.controllist.insert(sp.controllist.end(), sp.controllist.cbegin(), sp.controllist.cbegin() + s->getDegree());
+    }
+
+    sp.ncontrol = sp.controllist.size();
+    sp.degree = s->getDegree();
+
+    // knot vector from RS_Spline
+    sp.knotslist = (s->isClosed()) ? s->knotu(sp.ncontrol, sp.degree + 1) : s->knot(sp.ncontrol, sp.degree + 1);
+    sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
     dxfW->writeSpline(&sp);
-
 }
 
 
@@ -2420,7 +2410,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 
 	// write spline control points:
 	for (auto const& v: cp)
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
 
 	getEntityAttributes(&sp, s);
 	dxfW->writeSpline(&sp);

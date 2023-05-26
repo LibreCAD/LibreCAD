@@ -209,6 +209,7 @@ enum TransparencyCodes {
 class DRW_Coord {
 public:
     DRW_Coord()=default;
+    DRW_Coord(double ix, double iy): x(ix), y(iy){}
     DRW_Coord(double ix, double iy, double iz): x(ix), y(iy),z(iz){}
 
 /*!< convert to unitary vector */

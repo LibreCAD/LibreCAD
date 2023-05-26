@@ -150,6 +150,8 @@ public:
 
 		void calculateBorders() override;
 
+        friend class RS_FilterDXFRW;
+
 private:
 		std::vector<double> knot(size_t num, size_t order) const;
 		void rbspline(size_t npts, size_t k, size_t p1,

@@ -24,18 +24,40 @@
 **
 **********************************************************************/
 
-#include<iostream>
-#include<cmath>
-#include<numeric>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <numeric>
 
 #include "rs_spline.h"
-
 
 #include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
 
+namespace {
+
+/**
+ * @brief wrappedControlPoints whether the spline control points are wrapped for closed splines
+ * @param splineData - spline data
+ * @return true - if the spline is cubic is closed and with control points wrapped.
+ */
+bool wrappedControlPoints(const RS_SplineData& splineData)
+{
+    const std::vector<RS_Vector>& controlPoints = splineData.controlPoints;
+    if (!splineData.closed || splineData.degree < 3 || controlPoints.size() < 2 * splineData.degree + 1)
+        return false;
+
+    // LibreCAD wrapped control points are used with knot vector size: control point number + degree + 1
+    if (controlPoints.size() + splineData.degree + 1 != splineData.knotslist.size())
+        return false;
+
+    return std::equal(controlPoints.cbegin(), controlPoints.cbegin() + splineData.degree,
+               controlPoints.cbegin() + controlPoints.size() - splineData.degree);
+}
+
+}
 
 RS_SplineData::RS_SplineData(int _degree, bool _closed):
 	degree(_degree)
@@ -174,12 +196,10 @@ void RS_Spline::update() {
 
     resetBorders();
 
+    // wrap control points, if it's not wrapped yet
 	std::vector<RS_Vector> tControlPoints = data.controlPoints;
-
-    if (data.closed) {
-		for (size_t i=0; i<data.degree; ++i) {
-			tControlPoints.push_back(data.controlPoints.at(i));
-        }
+    if (data.closed && (data.degree == 2 || !wrappedControlPoints(data))) {
+        tControlPoints.insert(tControlPoints.end(), data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree);
     }
 
 	const size_t npts = tControlPoints.size();
