@@ -2286,6 +2286,8 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
+    if (s==nullptr)
+        return;
 
     if (s->getNumberOfControlPoints() < s->getDegree()+1) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
@@ -2318,15 +2320,11 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     // dxf spline group code=70
     // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
     sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
+
     // write spline control points:
     for (const RS_Vector& v: s->getControlPoints())
     {
         sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
-    }
-
-    if (s->isClosed()) {
-        // wrapping control points for closed splines: number of wrapped control points is the same as the degree
-        sp.controllist.insert(sp.controllist.end(), sp.controllist.cbegin(), sp.controllist.cbegin() + s->getDegree());
     }
 
     sp.ncontrol = sp.controllist.size();
@@ -2351,7 +2349,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 
 	if(nCtrls < 3)
 	{
-		if(nCtrls > 1)
+        if(nCtrls > 1)
 		{
 			DRW_Line line;
 			line.basePoint.x = cp.at(0).x;

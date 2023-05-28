@@ -165,6 +165,14 @@ private:
 		              const std::vector<double>& h,
 		              std::vector<RS_Vector>& p) const;
 
+        /**
+         * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
+         *          only implemented for cubic splines
+         * @return bool - true, if the control points are already wrapped.
+         *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
+         */
+        bool hasWrappedControlPoints() const;
+
 protected:
 		RS_SplineData data;
 }
