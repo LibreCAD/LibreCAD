@@ -168,8 +168,8 @@ protected: //only for read dwg
 
 	duint8 xDictFlag = 0;
 	dint32 numReactors = 0; //
-    duint32 objSize;  //RL 32bits object data size in bits
-    dint16 oType;
+    duint32 objSize = 0;  //RL 32bits object data size in bits
+    dint16 oType = 0;
 
 private:
 	void init(DRW_Entity const& rhs);
@@ -189,20 +189,18 @@ class DRW_Point : public DRW_Entity {
 public:
     DRW_Point() {
         eType = DRW::POINT;
-        basePoint.z = extPoint.x = extPoint.y = 0;
         extPoint.z = 1;
-        thickness = 0;
     }
 
-    virtual void applyExtrusion() override {}
+    void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord basePoint;      /*!<  base point, code 10, 20 & 30 */
-    double thickness;         /*!< thickness, code 39 */
+    double thickness = 0.;         /*!< thickness, code 39 */
     DRW_Coord extPoint;       /*!<  Dir extrusion normal vector, code 210, 220 & 230 */
     // TNick: we're not handling code 50 - Angle of the X axis for
     // the UCS in effect when the point was drawn
@@ -223,7 +221,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord secPoint;        /*!< second point, code 11, 21 & 31 */
@@ -687,14 +685,9 @@ class DRW_Vertex : public DRW_Point {
 public:
     DRW_Vertex() {
         eType = DRW::VERTEX;
-        stawidth = endwidth = bulge = 0;
-        vindex1 = vindex2 = vindex3 = vindex4 = 0;
-        flags = identifier = 0;
     }
     DRW_Vertex(double sx, double sy, double sz, double b) {
-        stawidth = endwidth = 0;
-        vindex1 = vindex2 = vindex3 = vindex4 = 0;
-        flags = identifier = 0;
+        eType = DRW::VERTEX;
         basePoint.x = sx;
         basePoint.y =sy;
         basePoint.z =sz;
@@ -707,17 +700,17 @@ protected:
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0, double el=0);
 
 public:
-    double stawidth;          /*!< Start width, code 40 */
-    double endwidth;          /*!< End width, code 41 */
-    double bulge;             /*!< bulge, code 42 */
+    double stawidth = 0.;          /*!< Start width, code 40 */
+    double endwidth = 0.;          /*!< End width, code 41 */
+    double bulge = 0.;             /*!< bulge, code 42 */
 
-    int flags;                 /*!< vertex flag, code 70, default 0 */
-    double tgdir;           /*!< curve fit tangent direction, code 50 */
-    int vindex1;             /*!< polyface mesh vertex index, code 71, default 0 */
-    int vindex2;             /*!< polyface mesh vertex index, code 72, default 0 */
-    int vindex3;             /*!< polyface mesh vertex index, code 73, default 0 */
-    int vindex4;             /*!< polyface mesh vertex index, code 74, default 0 */
-    int identifier;           /*!< vertex identifier, code 91, default 0 */
+    int flags = 0;                 /*!< vertex flag, code 70, default 0 */
+    double tgdir = 0.;           /*!< curve fit tangent direction, code 50 */
+    int vindex1 = 0;             /*!< polyface mesh vertex index, code 71, default 0 */
+    int vindex2 = 0;             /*!< polyface mesh vertex index, code 72, default 0 */
+    int vindex3 = 0;             /*!< polyface mesh vertex index, code 73, default 0 */
+    int vindex4 = 0;             /*!< polyface mesh vertex index, code 74, default 0 */
+    int identifier = 0;           /*!< vertex identifier, code 91, default 0 */
 };
 
 //! Class to handle polyline entity
