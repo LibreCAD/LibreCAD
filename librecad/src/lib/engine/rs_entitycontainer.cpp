@@ -51,6 +51,9 @@ bool RS_EntityContainer::autoUpdateBorders = true;
 
 namespace {
 
+// the tolerance used to check topology of contours in hatching
+constexpr double contourTolerance = 1e-8;
+
 /**
  * Whether an entity is reversed: currently only allowed for arc/elliptic arc.
  *
@@ -1617,16 +1620,16 @@ bool RS_EntityContainer::optimizeContours() {
         vpStart=current->getStartpoint();
         vpEnd=current->getEndpoint();
     }
-    RS_Entity* next(nullptr);
+    RS_Entity* next = nullptr;
     //    std::cout<<"RS_EntityContainer::optimizeContours: 4"<<std::endl;
     /** connect entities **/
-    const QString errMsg=QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
+    const auto errMsg=QObject::tr("Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)");
 
-    while(count()>0) {
-        double dist(0.);
-        RS_Vector&& vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
-        if(dist>1e-8) {
-            if(vpEnd.squaredTo(vpStart) < 1e-8) {
+    while (count()>0) {
+        double dist = 0.;
+        RS_Vector vpTmp=getNearestEndpoint(vpEnd,&dist,&next);
+        if (dist > contourTolerance) {
+            if(vpEnd.squaredTo(vpStart) < contourTolerance) {
                 RS_Entity* e2=entityAt(0);
                 tmp.addEntity(e2->clone());
                 vpStart=e2->getStartpoint();
@@ -1673,6 +1676,7 @@ bool RS_EntityContainer::optimizeContours() {
     for(auto en: tmp){
         en->setProcessed(false);
         addEntity(en->clone());
+        en->reparent(this);
     }
     //    std::cout<<"RS_EntityContainer::optimizeContours: 6"<<std::endl;
 
@@ -1873,23 +1877,28 @@ double RS_EntityContainer::areaLineIntegral() const
             else
                 closedArea += e->areaLineIntegral();
         }
-        if (std::isnormal(lineIntegral))
-        {
-            RS_Vector startPoint = e->getStartpoint();
-            RS_Vector endPoint = e->getEndpoint();
+        RS_Vector startPoint = e->getStartpoint();
+        RS_Vector endPoint = e->getEndpoint();
 
-            // the line integral is always by the direction: from the start point to the end point
-            if (isReversed(e))
-                std::swap(startPoint, endPoint);
-            // assume the contour is a simple connected loop
-            if (previousPoint.valid && endPoint.squaredTo(previousPoint) <= RS_TOLERANCE15)
-            {
-                contourArea -= lineIntegral;
-                previousPoint = startPoint;
-            } else {
-                contourArea += lineIntegral;
-                previousPoint = endPoint;
-            }
+        // the line integral is always by the direction: from the start point to the end point
+        if (isReversed(e))
+            std::swap(startPoint, endPoint);
+        RS_Vector nearest;
+        if (previousPoint.valid) {
+            double distance = RS_MAXDOUBLE;
+            nearest = e->getNearestEndpoint(previousPoint, &distance);
+            if (distance > contourTolerance)
+                RS_DEBUG->print(RS_Debug::D_ERROR, "%s(): contour area calculation maybe incorrect: gap of %lg found at (%lg, %lg)",
+                                __func__, distance, previousPoint.x, previousPoint.y);
+        }
+        // assume the contour is a simple connected loop
+        if (previousPoint.valid && endPoint.squaredTo(nearest) <= RS_TOLERANCE15)
+        {
+            contourArea -= lineIntegral;
+            previousPoint = startPoint;
+        } else {
+            contourArea += lineIntegral;
+            previousPoint = endPoint;
         }
     }
     return std::abs(contourArea) + closedArea;
