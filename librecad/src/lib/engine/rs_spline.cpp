@@ -123,8 +123,16 @@ bool RS_Spline::isClosed() const {
  * Sets the closed flag of this spline.
  */
 void RS_Spline::setClosed(bool c) {
-		data.closed = c;
-		update();
+    if (data.closed == c)
+        return;
+
+    // when switching from closed to open, remove wrapped control points
+    if (data.closed && hasWrappedControlPoints()) {
+        data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), data.controlPoints.end());
+    }
+    data.closed = c;
+
+    update();
 }
 
 RS_VectorSolutions RS_Spline::getRefPoints() const
