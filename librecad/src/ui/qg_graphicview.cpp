@@ -59,7 +59,15 @@
 #endif
 
 namespace {
-RS_Entity* snapEntity(QG_GraphicView& view, const QMouseEvent* event)
+
+/**
+ * @brief snapEntity find the closest entity
+ * @param QG_GraphicView& view - the graphic view
+ * @param const QMouseEvent* event - the mouse event
+ * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ *                      returns nullptr, if no entity is found in range
+ */
+RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
 {
     if (event == nullptr)
         return nullptr;
@@ -87,23 +95,10 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
             eventHandler->setCurrentAction(action);
         action->setEntity(entity);
         action->trigger();
-        action->finish();
+        action->finish(false);
     }
 }
 
-RS_ActionInterface* getEditPropertyAction(QG_GraphicView& view, const QMouseEvent* event)
-{
-    RS_EntityContainer* container = view.getContainer();
-    if (container==nullptr)
-        return nullptr;
-    RS_Entity* entity = snapEntity(view, event);
-    // Cursor selection range CURSOR_SIZE
-    RS_ActionModifyEntity* action = (entity != nullptr) ? new RS_ActionModifyEntity(*container, view):nullptr;
-    if (action) {
-        action->setEntity(enity);
-
-    }
-}
 }
 
 /**
@@ -374,7 +369,10 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
                 QMenu* context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
                 context_menu->addActions(recent_actions);
+                // "Edit Entity" entry
+                addEditEntityEntry(event, *context_menu);
                 context_menu->exec(mapToGlobal(event->pos()));
+
             }
         }
         else back();
@@ -392,6 +390,26 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
+void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
+{
+    RS_Entity* entity = snapEntity(*this, event);
+    if (entity == nullptr)
+    return;
+    if (container==nullptr)
+        return;
+    auto* editPropertyAction = new RS_ActionModifyEntity(*container, *this);
+    if (editPropertyAction == nullptr)
+    return;
+    editPropertyAction->setEntity(entity);
+    auto* action = new QAction(QIcon(":/res/icons/properties.svg"),
+                               tr("Edit Properties"), &contextMenu);
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, editPropertyAction](){
+        getEventHandler()->setCurrentAction(editPropertyAction);
+        editPropertyAction->trigger();
+        editPropertyAction->finish(false);
+    });
+}
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {

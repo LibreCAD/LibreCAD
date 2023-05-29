@@ -159,6 +159,7 @@ protected:
     QMap<QString, QMenu*> menus;
 
 private:
+    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};
