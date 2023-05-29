@@ -39,6 +39,8 @@ QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
     , ui(std::make_unique<Ui::Ui_ArcOptions>())
 {
 	ui->setupUi(this);
+    connect(ui->rbPos, SIGNAL(toggled(bool)), this, SLOT(updateDirection(bool)));
+    connect(ui->rbNeg, SIGNAL(toggled(bool)), this, SLOT(updateDirection(bool)));
 }
 
 /*

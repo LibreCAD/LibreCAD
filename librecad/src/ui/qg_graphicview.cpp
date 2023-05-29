@@ -59,26 +59,49 @@
 #endif
 
 namespace {
+RS_Entity* snapEntity(QG_GraphicView& view, const QMouseEvent* event)
+{
+    if (event == nullptr)
+        return nullptr;
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return nullptr;
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
+    return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+}
 
 // Show the entity property dialog on the closest entity in range
 void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
 {
-    if (event == nullptr)
-        return;
-    RS_EntityContainer* container = view.getContainer();
-    if (container==nullptr)
-        return;
-    const QPoint mapped = event->pos();
-    double distance = RS_MAXDOUBLE;
-    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
-
+    RS_Entity* entity = snapEntity(view, event);
     // Cursor selection range CURSOR_SIZE
-    if (entity != nullptr && view.toGuiDX(distance) <= CURSOR_SIZE) {
+    if (entity != nullptr) {
+        RS_EntityContainer* container = view.getContainer();
+        if (container==nullptr)
+            return;
         auto* action = new RS_ActionModifyEntity(*container, view);
-        view.setCurrentAction(action);
+        RS_EventHandler* eventHandler = view.getEventHandler();
+        if (eventHandler != nullptr)
+            eventHandler->setCurrentAction(action);
         action->setEntity(entity);
         action->trigger();
         action->finish();
+    }
+}
+
+RS_ActionInterface* getEditPropertyAction(QG_GraphicView& view, const QMouseEvent* event)
+{
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return nullptr;
+    RS_Entity* entity = snapEntity(view, event);
+    // Cursor selection range CURSOR_SIZE
+    RS_ActionModifyEntity* action = (entity != nullptr) ? new RS_ActionModifyEntity(*container, view):nullptr;
+    if (action) {
+        action->setEntity(enity);
+
     }
 }
 }
