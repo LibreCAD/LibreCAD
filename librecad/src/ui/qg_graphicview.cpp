@@ -37,6 +37,7 @@
 #include "rs_actionzoomscroll.h"
 #include "rs_actionzoomauto.h"
 #include "rs_actionmodifydelete.h"
+#include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
 #include "rs_settings.h"
 #include "rs_painterqt.h"
@@ -56,6 +57,31 @@
 #else
 #define CURSOR_SIZE 15
 #endif
+
+namespace {
+
+// Show the entity property dialog on the closest entity in range
+void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
+{
+    if (event == nullptr)
+        return;
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return;
+    const QPoint mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
+
+    // Cursor selection range CURSOR_SIZE
+    if (entity != nullptr && view.toGuiDX(distance) <= CURSOR_SIZE) {
+        auto* action = new RS_ActionModifyEntity(*container, view);
+        view.setCurrentAction(action);
+        action->setEntity(entity);
+        action->trigger();
+        action->finish();
+    }
+}
+}
 
 /**
  * Constructor.
@@ -278,6 +304,9 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             {
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
+            } else {
+                // double click on an entity to edit entity properties
+                showEntityPropertiesDialog(*this, e);
             }
             break;
     }
