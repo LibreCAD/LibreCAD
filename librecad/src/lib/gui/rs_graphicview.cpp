@@ -24,6 +24,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_graphicview.h"
 
 #include<climits>
 #include<cmath>
@@ -34,7 +35,6 @@
 #include <QMouseEvent>
 #include <QtAlgorithms>
 
-#include "rs_graphicview.h"
 
 #include "rs_color.h"
 #include "rs_debug.h"
@@ -44,14 +44,36 @@
 #include "rs_grid.h"
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
-#include "rs_painter.h"
-#include "rs_settings.h"
 #include "rs_math.h"
+#include "rs_painter.h"
+#include "rs_snapper.h"
+#include "rs_settings.h"
 #include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+struct RS_GraphicView::ColorData {
+    /** background color (any color) */
+    RS_Color background;
+    /** foreground color (black or white) */
+    RS_Color foreground;
+    /** grid color */
+    RS_Color gridColor = Qt::gray;
+    /** meta grid color */
+    RS_Color metaGridColor;
+    /** selected color */
+    RS_Color selectedColor;
+    /** highlighted color */
+    RS_Color highlightedColor;
+    /** Start handle color */
+    RS_Color startHandleColor;
+    /** Intermediate (not start/end vertex) handle color */
+    RS_Color handleColor;
+    /** End handle color */
+    RS_Color endHandleColor;
+};
 
 /**
  * Constructor.
@@ -59,9 +81,9 @@
 RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
 	,eventHandler{new RS_EventHandler{this}}
-	,gridColor(Qt::gray)
-	,metaGridColor{64, 64, 64}
+    , m_colorData{std::make_unique<ColorData>()}
 	,grid{new RS_Grid{this}}
+    ,defaultSnapMode{std::make_unique<RS_SnapMode>()}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
     ,previousViewTime(QDateTime::currentDateTime())
@@ -107,7 +129,7 @@ void RS_GraphicView::setContainer(RS_EntityContainer* container) {
  */
 void RS_GraphicView::setFactorX(double f) {
 	if (!zoomFrozen) {
-		factor.x = fabs(f);
+        factor.x = std::abs(f);
 	}
 }
 
@@ -118,7 +140,7 @@ void RS_GraphicView::setFactorX(double f) {
  */
 void RS_GraphicView::setFactorY(double f) {
 	if (!zoomFrozen) {
-		factor.y = fabs(f);
+        factor.y = std::abs(f);
 	}
 }
 
@@ -134,9 +156,9 @@ void RS_GraphicView::setOffset(int ox, int oy) {
  */
 bool RS_GraphicView::isGridOn() const{
 	if (container) {
-		RS_Graphic* g = container->getGraphic();
-		if (g) {
-			return g->isGridOn();
+        RS_Graphic* graphic = container->getGraphic();
+        if (graphic != nullptr) {
+            return graphic->isGridOn();
 		}
 	}
 	return true;
@@ -722,8 +744,8 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 		}
 	}
 
-	zoomX=fabs(zoomX);
-	zoomY=fabs(zoomY);
+    zoomX=std::abs(zoomX);
+    zoomY=std::abs(zoomY);
 
 	// Borders in pixel after zoom
 	int pixLeft  =(int)(v1.x*zoomX);
@@ -966,7 +988,7 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
 void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 {
 	if (draftMode) {
-		painter->setPen(RS_Pen(foreground,
+        painter->setPen(RS_Pen(m_colorData->foreground,
 							   RS2::Width00, RS2::SolidLine));
 	}
 
@@ -1024,11 +1046,11 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
     // prevent background color on background drawing
     // and enhance visibility of black lines on dark backgrounds
-    RS_Color    penColor {pen.getColor().stripFlags()};
-    if ( penColor == background.stripFlags()
+    RS_Color    penColor{pen.getColor().stripFlags()};
+    if ( penColor == m_colorData->background.stripFlags()
          || (penColor.toIntColor() == RS_Color::Black
-             && penColor.colorDistance( background) < RS_Color::MinColorDistance)) {
-        pen.setColor( foreground);
+             && penColor.colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+        pen.setColor(m_colorData->foreground);
     }
 
 	if (!isPrinting() && !isPrintPreview())
@@ -1036,18 +1058,18 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		// this entity is selected:
 		if (e->isSelected()) {
 			pen.setLineType(RS2::DotLine);
-			pen.setColor(selectedColor);
+            pen.setColor(m_colorData->selectedColor);
 		}
 
 		// this entity is highlighted:
 		if (e->isHighlighted()) {
-			pen.setColor(highlightedColor);
+            pen.setColor(m_colorData->highlightedColor);
 		}
 	}
 
 	// deleting not drawing:
 	if (getDeleteMode()) {
-		pen.setColor(background);
+        pen.setColor(m_colorData->background);
 	}
 
 	painter->setPen(pen);
@@ -1144,15 +1166,15 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
 			for (size_t i=0; i<s.getNumber(); ++i) {
 				int sz = -1;
-				RS_Color col = handleColor;
+                RS_Color col = m_colorData->handleColor;
 				if (i == 0) {
-					col = startHandleColor;
+                    col = m_colorData->startHandleColor;
 				}
 				else if (i == s.getNumber() - 1) {
-					col = endHandleColor;
+                    col = m_colorData->endHandleColor;
 				}
 				if (getDeleteMode()) {
-					painter->drawHandle(toGui(s.get(i)), background, sz);
+                    painter->drawHandle(toGui(s.get(i)), m_colorData->background, sz);
 				} else {
 					painter->drawHandle(toGui(s.get(i)), col, sz);
 				}
@@ -1446,7 +1468,7 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 					  RS_Color(255,255,255));
 
 	// don't paint boundaries if zoom is to small
-	if (qMin(fabs(printAreaW/numX), fabs(printAreaH/numY)) > 2) {
+    if (qMin(std::abs(printAreaW/numX), std::abs(printAreaH/numY)) > 2) {
 		// boundaries between pages:
 		for (int pX = 1; pX < numX; pX++) {
 			double offset = ((double)printAreaW*pX)/numX;
@@ -1476,7 +1498,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
 	// draw grid:
 	//painter->setPen(Qt::gray);
-	painter->setPen(gridColor);
+    painter->setPen(m_colorData->gridColor);
 
 	//grid->updatePointArray();
 	auto const& pts = grid->getPoints();
@@ -1512,14 +1534,14 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 	//bug# 3430258
 	grid->updatePointArray();
-	RS_Pen pen(metaGridColor,
+    RS_Pen pen(m_colorData->metaGridColor,
 			   RS2::Width00,
 			   RS2::DotLine);
 	painter->setPen(pen);
 
 	RS_Vector dv=grid->getMetaGridWidth().scale(factor);
-	double dx=fabs(dv.x);
-	double dy=fabs(dv.y); //potential bug, need to recover metaGrid.width
+    double dx=std::abs(dv.x);
+    double dy=std::abs(dv.y); //potential bug, need to recover metaGrid.width
 	// draw meta grid:
 	auto mx = grid->getMetaX();
 	for(auto const& x: mx){
@@ -1532,17 +1554,17 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	}
 	auto my = grid->getMetaY();
 	if(grid->isIsometric()){//isometric metaGrid
-		dx=fabs(dx);
-		dy=fabs(dy);
+        dx=std::abs(dx);
+        dy=std::abs(dy);
 		if(!my.size()|| dx<1||dy<1) return;
 		RS_Vector baseMeta(toGui(RS_Vector(mx[0],my[0])));
 		// x-x0=k*dx, x-remainder(x-x0,dx)
-		RS_Vector vp0(-remainder(-baseMeta.x,dx)-dx,getHeight()-remainder(getHeight()-baseMeta.y,dy)+dy);
+        RS_Vector vp0(-std::remainder(-baseMeta.x,dx)-dx,getHeight()-remainder(getHeight()-baseMeta.y,dy)+dy);
 		RS_Vector vp1(vp0);
-		RS_Vector vp2(getWidth()-remainder(getWidth()-baseMeta.x,dx)+dx,vp0.y);
+        RS_Vector vp2(getWidth()-std::remainder(getWidth()-baseMeta.x,dx)+dx,vp0.y);
 		RS_Vector vp3(vp2);
-		int cmx = round((vp2.x - vp0.x)/dx);
-		int cmy = round((vp0.y +remainder(-baseMeta.y,dy)+dy)/dy);
+        int cmx = std::round((vp2.x - vp0.x)/dx);
+        int cmy = std::round((vp0.y + std::remainder(-baseMeta.y,dy)+dy)/dy);
 		for(int i=cmx+cmy+2;i>=0;i--){
 			if ( i <= cmx ) {
 				vp0.x += dx;
@@ -1594,14 +1616,14 @@ RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const
 
 RS_SnapMode RS_GraphicView::getDefaultSnapMode() const
 {
-	return defaultSnapMode;
+    return *defaultSnapMode;
 }
 
 /**
  * Sets the default snap mode used by newly created actions.
  */
 void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
-	defaultSnapMode = sm;
+    *defaultSnapMode = sm;
 	if (eventHandler) {
 		eventHandler->setSnapMode(sm);
 	}
@@ -1762,15 +1784,76 @@ RS_EventHandler* RS_GraphicView::getEventHandler() const{
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
-	background = bg;
+    m_colorData->background = bg;
 
     RS_Color black(0,0,0);
     if (black.colorDistance( bg) >= RS_Color::MinColorDistance) {
-        foreground = black;
+        m_colorData->foreground = black;
     }
     else {
-        foreground = RS_Color(255,255,255);
+        m_colorData->foreground = RS_Color(255,255,255);
     }
+}
+
+
+RS_Color RS_GraphicView::getBackground() const{
+    return m_colorData->background;
+}
+
+/**
+     * @return Current foreground color.
+     */
+RS_Color RS_GraphicView::getForeground() const{
+    return m_colorData->foreground;
+}
+
+/**
+     * Sets the grid color.
+     */
+void RS_GraphicView::setGridColor(const RS_Color& c) {
+    m_colorData->gridColor = c;
+}
+
+/**
+     * Sets the meta grid color.
+     */
+void RS_GraphicView::setMetaGridColor(const RS_Color& c) {
+    m_colorData->metaGridColor = c;
+}
+
+/**
+     * Sets the selection color.
+     */
+void RS_GraphicView::setSelectedColor(const RS_Color& c) {
+    m_colorData->selectedColor = c;
+}
+
+/**
+     * Sets the highlight color.
+     */
+void RS_GraphicView::setHighlightedColor(const RS_Color& c) {
+    m_colorData->highlightedColor = c;
+}
+
+/**
+     * Sets the color for the first handle (start vertex)
+     */
+void RS_GraphicView::setStartHandleColor(const RS_Color& c) {
+    m_colorData->startHandleColor = c;
+}
+
+/**
+     * Sets the color for handles, that are neither start nor end vertices
+     */
+void RS_GraphicView::setHandleColor(const RS_Color& c) {
+    m_colorData->handleColor = c;
+}
+
+/**
+     * Sets the color for the last handle (end vertex)
+     */
+void RS_GraphicView::setEndHandleColor(const RS_Color& c) {
+    m_colorData->endHandleColor = c;
 }
 
 void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {

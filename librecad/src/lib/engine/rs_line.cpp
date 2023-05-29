@@ -28,15 +28,17 @@
 
 #include "rs_line.h"
 
-#include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
-#include "rs_linetypepattern.h"
-#include "rs_information.h"
-#include "lc_quadratic.h"
-#include "rs_painterqt.h"
-#include "rs_circle.h"
 #include "lc_rect.h"
+
+#include "rs_circle.h"
+#include "rs_debug.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_linetypepattern.h"
+#include "rs_painter.h"
+#include "rs_painterqt.h"
+#include "lc_quadratic.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"

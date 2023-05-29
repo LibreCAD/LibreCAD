@@ -987,7 +987,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid)
     {
-        PixmapLayer1->fill(background);
+        PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
         drawLayer1((RS_Painter*)&painter1);
         painter1.end();

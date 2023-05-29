@@ -28,24 +28,31 @@
 #ifndef RS_GRAPHICVIEW_H
 #define RS_GRAPHICVIEW_H
 
-#include "rs_entitycontainer.h"
-#include "rs_snapper.h"
-#include "lc_rect.h"
-
-#include <QDateTime>
-#include <QMap>
 #include <tuple>
 #include <memory>
-#include <QAction>
 
+#include <QAction>
+#include <QDateTime>
+#include <QMap>
+
+#include "lc_rect.h"
+#include "rs.h"
 
 class QMouseEvent;
 class QKeyEvent;
+
 class RS_ActionInterface;
+class RS_Entity;
+class RS_EntityContainer;
 class RS_EventHandler;
+class RS_Color;
 class RS_CommandEvent;
+class RS_Graphic;
 class RS_Grid;
+class RS_Painter;
+
 struct RS_LineTypePattern;
+struct RS_SnapMode;
 
 
 /**
@@ -127,65 +134,47 @@ public:
 	/**
 		 * @return Current background color.
 		 */
-	RS_Color getBackground() const{
-		return background;
-	}
+    RS_Color getBackground() const;
 
 	/**
 		 * @return Current foreground color.
 		 */
-	RS_Color getForeground() const{
-		return foreground;
-	}
+    RS_Color getForeground() const;
 
 	/**
 		 * Sets the grid color.
 		 */
-	void setGridColor(const RS_Color& c) {
-		gridColor = c;
-	}
+    void setGridColor(const RS_Color& c);
 
 	/**
 		 * Sets the meta grid color.
 		 */
-	void setMetaGridColor(const RS_Color& c) {
-		metaGridColor = c;
-	}
+    void setMetaGridColor(const RS_Color& c);
 
 	/**
 		 * Sets the selection color.
 		 */
-	void setSelectedColor(const RS_Color& c) {
-		selectedColor = c;
-	}
+    void setSelectedColor(const RS_Color& c);
 
 	/**
 		 * Sets the highlight color.
 		 */
-	void setHighlightedColor(const RS_Color& c) {
-		highlightedColor = c;
-	}
+    void setHighlightedColor(const RS_Color& c);
 
 	/**
 		 * Sets the color for the first handle (start vertex)
 		 */
-	void setStartHandleColor(const RS_Color& c) {
-		startHandleColor = c;
-	}
+    void setStartHandleColor(const RS_Color& c);
 
 	/**
 		 * Sets the color for handles, that are neither start nor end vertices
 		 */
-	void setHandleColor(const RS_Color& c) {
-		handleColor = c;
-	}
+    void setHandleColor(const RS_Color& c);
 
 	/**
 		 * Sets the color for the last handle (end vertex)
 		 */
-	void setEndHandleColor(const RS_Color& c) {
-		endHandleColor = c;
-	}
+    void setEndHandleColor(const RS_Color& c);
 
 	/**
 	 * This virtual method can be overwritten to set the mouse
@@ -387,31 +376,16 @@ protected:
     RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
     RS_EventHandler* eventHandler;
 
-	/** background color (any color) */
-	RS_Color background;
-	/** foreground color (black or white) */
-	RS_Color foreground;
-	/** grid color */
-	RS_Color gridColor;
-	/** meta grid color */
-	RS_Color metaGridColor;
-	/** selected color */
-	RS_Color selectedColor;
-	/** highlighted color */
-	RS_Color highlightedColor;
-	/** Start handle color */
-	RS_Color startHandleColor;
-	/** Intermediate (not start/end vertex) handle color */
-	RS_Color handleColor;
-	/** End handle color */
-	RS_Color endHandleColor;
+    /** colors for different usages*/
+    struct ColorData;
+    std::unique_ptr<ColorData> m_colorData;
 	/** Grid */
 	std::unique_ptr<RS_Grid> grid;
 	/**
 		 * Current default snap mode for this graphic view. Used for new
 		 * actions.
 		 */
-	RS_SnapMode defaultSnapMode;
+    std::unique_ptr<RS_SnapMode> defaultSnapMode;
 	/**
 		 * Current default snap restriction for this graphic view. Used for new
 		 * actions.
@@ -433,7 +407,7 @@ private:
 	bool zoomFrozen=false;
 	bool draftMode=false;
 
-	RS_Vector factor=RS_Vector(1.,1.);
+    RS_Vector factor{1.,1.};
 	int offsetX=0;
 	int offsetY=0;
 

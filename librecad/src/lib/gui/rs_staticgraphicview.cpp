@@ -23,9 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include<QSize>
 #include "rs_staticgraphicview.h"
 
+#include<QSize>
+
+#include "rs_color.h"
 #include "rs_debug.h"
 
 
