@@ -364,14 +364,18 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
             {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             }
-            else if (!recent_actions.isEmpty())
+            else
             {
                 QMenu* context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                context_menu->addActions(recent_actions);
+                if (!recent_actions.empty())
+                    context_menu->addActions(recent_actions);
                 // "Edit Entity" entry
                 addEditEntityEntry(event, *context_menu);
-                context_menu->exec(mapToGlobal(event->pos()));
+                if (!context_menu->isEmpty())
+                    context_menu->exec(mapToGlobal(event->pos()));
+                else
+                    delete context_menu;
 
             }
         }
@@ -401,7 +405,7 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     if (editPropertyAction == nullptr)
     return;
     editPropertyAction->setEntity(entity);
-    auto* action = new QAction(QIcon(":/res/icons/properties.svg"),
+    auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
                                tr("Edit Properties"), &contextMenu);
     contextMenu.addAction(action);
     connect(action, &QAction::triggered, this, [this, editPropertyAction](){

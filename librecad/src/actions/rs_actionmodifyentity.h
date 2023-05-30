@@ -49,6 +49,8 @@ public:
     void setEntity(RS_Entity* en) {
         this->en=en;
     }
+    // display the entity as selected
+    void setDisplaySelected(bool selected);
 
 private:
     RS_Entity* en = nullptr;

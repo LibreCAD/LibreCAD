@@ -127,7 +127,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

@@ -270,7 +270,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
         auto toolbar = new QToolBar("DefaultCustom", this);
         toolbar->setObjectName("DefaultCustom");
-        foreach (auto action, list)
+        foreach (auto& action, list)
         {
             toolbar->addAction(a_map[action]);
         }
