@@ -207,7 +207,7 @@ void RS_ActionInterface::setStatus(int status) {
 /**
  * @return Current status of this action.
  */
-int RS_ActionInterface::getStatus() {
+int RS_ActionInterface::getStatus() const {
     return status;
 }
 
@@ -232,7 +232,7 @@ void RS_ActionInterface::updateMouseCursor() {}
 /**
  * @return true, if the action is finished and can be deleted.
  */
-bool RS_ActionInterface::isFinished() {
+bool RS_ActionInterface::isFinished() const {
     return finished;
 }
 

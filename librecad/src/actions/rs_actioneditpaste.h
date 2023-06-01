@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONEDITPASTE_H
 #define RS_ACTIONEDITPASTE_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 /**

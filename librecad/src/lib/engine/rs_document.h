@@ -47,7 +47,6 @@ class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
 	RS_Document(RS_EntityContainer* parent=nullptr);
-	virtual ~RS_Document() = default;
 
     virtual RS_LayerList* getLayerList() = 0;
     virtual RS_BlockList* getBlockList() = 0;
@@ -138,18 +137,17 @@ public:
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
-    bool modified;
+    bool modified = false;
     /** Active pen. */
     RS_Pen activePen;
     /** File name of the document or empty for a new document. */
     QString filename;
 	/** Auto-save file name of document. */
-        QString autosaveFilename;
+    QString autosaveFilename;
 	/** Format type */
-	RS2::FormatType formatType;
-    RS_GraphicView * gv;//used to read/save current view
+    RS2::FormatType formatType = RS2::FormatUnknown;
+    //used to read/save current view
+    RS_GraphicView * gv = nullptr;
 
 };
-
-
 #endif

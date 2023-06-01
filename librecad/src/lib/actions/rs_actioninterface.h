@@ -74,11 +74,11 @@ public:
     virtual void commandEvent(RS_CommandEvent*);
     virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
-    virtual int getStatus();
+    virtual int getStatus() const;
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual bool isFinished();
+    virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
