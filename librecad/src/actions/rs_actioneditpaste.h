@@ -31,6 +31,8 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
+
 /**
  * This action class can handle user events for pasting entities from
  * the clipboard into the current document.

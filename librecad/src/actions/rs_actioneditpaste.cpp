@@ -36,6 +36,7 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 #include "rs_units.h"
+#include "rs_vector.h"
 
 /**
  * Constructor.
@@ -46,9 +47,8 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
                                         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Edit Paste",
 						   container, graphicView)
-		, targetPoint(new RS_Vector{})
+        , targetPoint(std::make_unique<RS_Vector>())
 {}
-
 
 
 RS_ActionEditPaste::~RS_ActionEditPaste() = default;
@@ -56,9 +56,7 @@ RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
 void RS_ActionEditPaste::init(int status) {
     RS_PreviewActionInterface::init(status);
-    //trigger();
 }
-
 
 
 void RS_ActionEditPaste::trigger() {
@@ -66,7 +64,6 @@ void RS_ActionEditPaste::trigger() {
 
     RS_Modification m(*container, graphicView);
 	m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
-    //std::cout << *RS_Clipboard::instance();
 
 	graphicView->redraw(RS2::RedrawDrawing); 
 
@@ -98,7 +95,6 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
 }
 
 
-
 void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
@@ -109,14 +105,12 @@ void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 
-
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
 	if (e==nullptr) return;
 
 	*targetPoint = e->getCoordinate();
     trigger();
 }
-
 
 
 void RS_ActionEditPaste::updateMouseButtonHints() {
@@ -132,9 +126,7 @@ void RS_ActionEditPaste::updateMouseButtonHints() {
 }
 
 
-
 void RS_ActionEditPaste::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
 }
-
 // EOF
