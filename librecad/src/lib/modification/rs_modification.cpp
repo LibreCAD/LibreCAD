@@ -318,7 +318,23 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     // add entity to clipboard:
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %d/%d", e->getId(), e->rtti());
     RS_Entity* c = e->clone();
+
     c->move(-ref);
+
+    // issue #1616: copy&paste a rotated block results in a double rotated block
+    // At this point the copied block entities are already rotated, but at
+    // pasting, RS_Insert::update() would still rotate the entities again and
+    // cause double rotation.
+    bool isBlock = c->rtti() == RS2::EntityInsert;
+    double angle = isBlock ? static_cast<RS_Insert*>(c)->getAngle() : 0.;
+    // issue #1616: A quick fix: rotate back all block entities in the clipboard back by the
+    // rotation angle before pasting
+    if (isBlock && std::abs(std::remainder(angle, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
+    {
+        auto* insert = static_cast<RS_Insert*>(c);
+        //insert->rotate(insert->getData().insertionPoint, - angle);
+        insert->setAngle(0.);
+    }
 
     RS_CLIPBOARD->addEntity(c);
     copyLayers(e);
