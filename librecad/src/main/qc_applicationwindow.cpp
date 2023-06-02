@@ -1495,7 +1495,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
     } else {
-        w->setWindowTitle(tr("unnamed document %1").arg(id) + "[*]");
+        w->setWindowTitle(tr("Untitled Document %1").arg(id) + "[*]");
     }
 
     //check for draft mode
@@ -1981,7 +1981,7 @@ void QC_ApplicationWindow::slotFileExport() {
     statusBar()->showMessage(tr("Exporting drawing..."), 2000);
 
     QC_MDIWindow* w = getMDIWindow();
-    QString fn;
+
     if (w) {
 
         // read default settings:
@@ -2022,9 +2022,9 @@ void QC_ApplicationWindow::slotFileExport() {
         fileDlg.selectNameFilter(defFilter);
         fileDlg.setAcceptMode(QFileDialog::AcceptSave);
         fileDlg.setDirectory(defDir);
-        fn = QFileInfo(w->getDocument()->getFilename()).baseName();
-        if(fn==nullptr)
-            fn = "unnamed";
+
+        QString fn = getCurrentDocumentName();
+
         fileDlg.selectFile(fn);
 
         if (fileDlg.exec()==QDialog::Accepted) {
@@ -2341,6 +2341,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 //        if( strPdfFileName.isEmpty())
 //            strPdfFileName = "unnamed";
 		//fileDlg.selectFile(strPdfFileName);
+
+        fileDlg.selectFile(getCurrentDocumentName().append(".pdf"));
 
         if( QDialog::Accepted == fileDlg.exec()) {
             QStringList files = fileDlg.selectedFiles();
@@ -3639,3 +3641,34 @@ QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
 
     return wwd;
 }
+
+
+QString QC_ApplicationWindow::getCurrentDocumentName()
+{
+    QString currentDocumentName = QFileInfo(getAppWindow()->getDocument()->getFilename()).baseName();
+
+    if (currentDocumentName.isEmpty())
+    {
+        const QString currentDocumentTitle = getAppWindow()->windowTitle();
+
+        const QRegExp rx("\\d+");
+
+        int rxPos = rx.indexIn(currentDocumentTitle, 0);
+
+        int untitledDocNum = 1;
+
+        while (rxPos != -1)
+        {
+            untitledDocNum = rx.cap(0).toInt();
+
+            rxPos += rx.matchedLength();
+
+            rxPos = rx.indexIn(currentDocumentTitle, rxPos);
+        }
+
+        currentDocumentName = tr("Untitled%1").arg(untitledDocNum);
+    }
+
+    return currentDocumentName;
+}
+

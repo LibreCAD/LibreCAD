@@ -34,6 +34,7 @@
 #include "rs_settings.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
 #include "rs_debug.h"
+#include "qc_applicationwindow.h"
 
 LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
@@ -56,9 +57,11 @@ void LC_ActionFileExportMakerCam::trigger() {
 
         if (accepted) {
 
-            QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"),
-                                                                         "",
-                                                                         "Scalable Vector Graphics (*.svg)");
+            const QString defaultFileName = QC_ApplicationWindow::getAppWindow()->QC_ApplicationWindow::getCurrentDocumentName().append(".svg");
+
+            const QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog( tr("Export as"),
+                                                                                defaultFileName,
+                                                                                "Scalable Vector Graphics (*.svg)");
 
 			if (!filename.isEmpty()) {
 

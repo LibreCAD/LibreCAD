@@ -298,6 +298,8 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    QString getCurrentDocumentName();
+
 protected:
     void closeEvent(QCloseEvent*) override;
     void dragEnterEvent(QDragEnterEvent * event) override;
