@@ -223,16 +223,10 @@ public:
 	bool changeAttributes(RS_AttributesData& data);
     bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
 
-        void copy(const RS_Vector& ref, const bool cut);
-private:
-    void copyEntity(RS_Entity* e, const RS_Vector& ref, const bool cut);
-    void copyLayers(RS_Entity* e);
-    void copyBlocks(RS_Entity* e);
-    bool pasteLayers(RS_Graphic* source);
-    bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
-    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
+    void copy(const RS_Vector& ref, const bool cut);
+
 public:
-        void paste(const RS_PasteData& data, RS_Graphic* source=nullptr);
+    void paste(const RS_PasteData& data, RS_Graphic* source=nullptr);
 
     bool move(RS_MoveData& data);
     bool rotate(RS_RotateData& data);
@@ -283,6 +277,12 @@ public:
                             RS_AtomicEntity& segment2);
 
 private:
+    void copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut);
+    void copyLayers(RS_Entity* e);
+    void copyBlocks(RS_Entity* e);
+    bool pasteLayers(RS_Graphic* source);
+    bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
+    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
     void deselectOriginals(bool remove);
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);

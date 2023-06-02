@@ -464,9 +464,9 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     }
 
     // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = (RS_TOLERANCE < fabs(data.factor)) ? data.factor : 1.0;
+    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
     // scale factor as vector
-    RS_Vector vfactor = RS_Vector(factor, factor);
+    RS_Vector vfactor{factor, factor};
     // select source for paste
 	if (!source) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
@@ -475,7 +475,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         RS2::Unit sourceUnit = source->getUnit();
         RS2::Unit targetUnit = graphic->getUnit();
         factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        vfactor = RS_Vector(factor, factor);
+        vfactor = {factor, factor};
     } else {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from parts library");
     }
@@ -675,17 +675,17 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    if (!l) {
+    RS_Layer* layer = graphic->getLayerList()->find(ln);
+    if (!layer) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
         return false;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
-    ic->setLayer(l);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", layer->getName().toLatin1().data());
+    ic->setLayer(layer);
     ic->setPen(entity->getPen(false));
 
     // get relative insertion point
-    RS_Vector ip = RS_Vector(0.0, 0.0);
+    RS_Vector ip{0.0, 0.0};
     if (container->getId() != graphic->getId()) {
         ip = bc->getBasePoint();
     }
@@ -741,13 +741,13 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    if (!l) {
+    RS_Layer* layer = graphic->getLayerList()->find(ln);
+    if (!layer) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
         return false;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
-    e->setLayer(l);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", layer->getName().toLatin1().data());
+    e->setLayer(layer);
     e->setPen(entity->getPen(false));
 
     // scaling entity doesn't needed as it scaled with insert object
@@ -1752,7 +1752,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
 	for(auto ec: *container){
         if (ec->isSelected() ) {
-            if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
+            if ( std::abs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
     //non-isotropic scaling, replacing selected circles with ellipses
 				RS_Circle *c=static_cast<RS_Circle*>(ec);

@@ -40,6 +40,9 @@
 
 namespace {
 
+// Minimum scaling factor allowed
+constexpr double MIN_Scale_Factor = 1.0e-6;
+
 // update the entity pen according to the blockPen
 RS_Pen updatePen(RS_Pen&& pen, const RS_Pen& blockPen)
 {
@@ -139,7 +142,7 @@ void RS_Insert::update() {
         return;
     }
 
-    if (std::abs(data.scaleFactor.x)<1.0e-6 || std::abs(data.scaleFactor.y)<1.0e-6) {
+    if (std::abs(data.scaleFactor.x)<MIN_Scale_Factor || std::abs(data.scaleFactor.y)<MIN_Scale_Factor) {
         RS_DEBUG->print("RS_Insert::update: scale factor is 0");
         return;
     }
@@ -165,7 +168,7 @@ void RS_Insert::update() {
 //                                RS_DEBUG->print("RS_Insert::update: cloning entity");
 
                     RS_Entity* ne = nullptr;
-                    if ( (data.scaleFactor.x - data.scaleFactor.y)>1.0e-6) {
+                    if ( (data.scaleFactor.x - data.scaleFactor.y)>MIN_Scale_Factor) {
                         if (e->rtti()== RS2::EntityArc) {
                             RS_Arc* a= static_cast<RS_Arc*>(e);
                             ne = new RS_Ellipse{this,
@@ -199,8 +202,8 @@ void RS_Insert::update() {
 
                 // Move:
 //                                RS_DEBUG->print("RS_Insert::update: move 1");
-                    if (std::abs(data.scaleFactor.x)>1.0e-6 &&
-                            std::abs(data.scaleFactor.y)>1.0e-6) {
+                    if (std::abs(data.scaleFactor.x)>MIN_Scale_Factor &&
+                            std::abs(data.scaleFactor.y)>MIN_Scale_Factor) {
                         ne->move(data.insertionPoint +
                                  RS_Vector(data.spacing.x/data.scaleFactor.x*c,
                                            data.spacing.y/data.scaleFactor.y*r));
@@ -210,7 +213,7 @@ void RS_Insert::update() {
                     }
                 // Move because of block base point:
 //                                RS_DEBUG->print("RS_Insert::update: move 2");
-                    ne->move(blk->getBasePoint()*-1);
+                    ne->move(blk->getBasePoint()*(-1));
                 // Scale:
 //                                RS_DEBUG->print("RS_Insert::update: scale");
                     ne->scale(data.insertionPoint, data.scaleFactor);
