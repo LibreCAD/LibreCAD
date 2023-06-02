@@ -335,6 +335,7 @@ public:
         ActionSnapCenter,
         ActionSnapMiddle,
         ActionSnapDist,
+        ActionSnapMiddleManual,
         ActionSnapIntersection,
         ActionSnapIntersectionManual,
 

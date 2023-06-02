@@ -209,6 +209,7 @@ public slots:
 	void slotSnapCenter();
 	void slotSnapMiddle();
 	void slotSnapDist();
+   void slotSnapMiddleManual();
 	void slotSnapIntersection();
 	void slotSnapIntersectionManual();
 
