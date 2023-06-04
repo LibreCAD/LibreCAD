@@ -96,7 +96,7 @@ public:
     void setScreenWidth(double w) {
         screenWidth = w;
     }
-    const RS_Color& getColor() const {
+    RS_Color getColor() const {
         return color;
     }
     void setColor(const RS_Color& c) {

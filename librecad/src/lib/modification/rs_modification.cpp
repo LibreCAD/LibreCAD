@@ -94,6 +94,70 @@ RS_Block* addNewBlock(const QString& name, RS_Graphic& graphic)
     graphic.addBlock(b);
     return b;
 }
+
+RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4)
+{
+
+    RS_VectorSolutions sol;
+    if (limitEntity.isAtomic()) {
+        // intersection(s) of the two entities:
+        return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
+    }
+    if (limitEntity.isContainer()) {
+        auto ec = static_cast<const RS_EntityContainer*>(&limitEntity);
+
+        for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=ec->nextEntity(RS2::ResolveAll)) {
+
+            RS_VectorSolutions s2 = RS_Information::getIntersection(&trimEntity,
+                                                                    e, false);
+
+            std::copy_if(s2.begin(), s2.end(), std::back_inserter(sol), [e, tolerance](const RS_Vector& vp) {
+                return vp.valid && e->isPointOnEntity(vp, tolerance);
+            });
+        }
+    }
+    return sol;
+}
+
+RS_Arc* trimCircle(RS_Circle* circle, const RS_Vector& trimCoord, const RS_VectorSolutions& sol)
+{
+    double aStart=0.;
+    double aEnd=2.*M_PI;
+    switch(sol.size()){
+    case 0:
+        break;
+    case 1:
+        aStart=circle->getCenter().angleTo(sol.at(0));
+        aEnd=aStart + 2.*M_PI;
+        break;
+    default:
+    case 2:
+        //trim according to intersections
+        std::vector<double> angles;
+        const auto& center0=circle->getCenter();
+        for(const RS_Vector& vp : sol){
+            angles.push_back(center0.angleTo(vp));
+        }
+        //sort intersections by angle to circle center
+        std::sort(angles.begin(), angles.end());
+        const double a0=center0.angleTo(trimCoord);
+        for(size_t i=0; i<angles.size(); ++i){
+            aStart=angles.at(i);
+            aEnd=angles.at( (i+1)%angles.size());
+            if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                break;
+        }
+        break;
+    }
+    RS_ArcData arcData(circle->getCenter(),
+                 circle->getRadius(),
+                 aStart,
+                 aEnd,
+                 false);
+    return new RS_Arc(circle->getParent(), arcData);
+}
+
 }
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
@@ -2094,9 +2158,9 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                            RS_Entity* limitEntity,
                            bool both) {
 
-	if (!(trimEntity && limitEntity)) {
+    if (trimEntity == nullptr || limitEntity == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::trim: At least one entity is nullptr");
+                        "RS_Modification::trim: At least one entity is nullptr");
         return false;
     }
 
@@ -2106,38 +2170,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
     if(trimEntity->isLocked()|| !trimEntity->isVisible()) return false;
 
-    RS_VectorSolutions sol;
-    if (limitEntity->isAtomic()) {
-        // intersection(s) of the two entities:
-        sol = RS_Information::getIntersection(trimEntity, limitEntity, false);
-    } else if (limitEntity->isContainer()) {
-        RS_EntityContainer* ec = (RS_EntityContainer*)limitEntity;
+    RS_VectorSolutions sol = findIntersection(*trimEntity, *limitEntity);
 
-        //sol.alloc(128);
-
-        for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e;
-                e=ec->nextEntity(RS2::ResolveAll)) {
-            //for (int i=0; i<container->count(); ++i) {
-            //    RS_Entity* e = container->entityAt(i);
-
-            if (e) {
-
-                RS_VectorSolutions s2 = RS_Information::getIntersection(trimEntity,
-                                        e, false);
-
-                if (s2.hasValid()) {
-					for (const RS_Vector& vp: s2){
-						if (vp.valid) {
-							if (e->isPointOnEntity(vp, 1.0e-4)) {
-								sol.push_back(vp);
-                            }
-                        }
-                    }
-                    //break;
-                }
-            }
-        }
-    }
 //if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
     if (trimEntity->rtti()==RS2::EntityLine){
         RS_Line *lin = (RS_Line *)trimEntity;
@@ -2159,41 +2193,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
-        RS_Circle* c = static_cast<RS_Circle*>(trimEntity);
-        double aStart=0.;
-        double aEnd=2.*M_PI;
-        switch(sol.size()){
-        case 0:
-            break;
-        case 1:
-            aStart=c->getCenter().angleTo(sol.at(0));
-            aEnd=aStart+2.*M_PI;
-            break;
-        default:
-        case 2:
-            //trim according to intersections
-			std::vector<double> angles;
-            const auto& center0=c->getCenter();
-			for(const RS_Vector& vp : sol){
-				angles.push_back(center0.angleTo(vp));
-            }
-            //sort intersections by angle to circle center
-            std::sort(angles.begin(), angles.end());
-            const double a0=center0.angleTo(trimCoord);
-			for(size_t i=0; i<angles.size(); ++i){
-                aStart=angles.at(i);
-                aEnd=angles.at( (i+1)%angles.size());
-                if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
-                    break;
-            }
-            break;
-        }
-        RS_ArcData d(c->getCenter(),
-                     c->getRadius(),
-                     aStart,
-                     aEnd,
-                     false);
-        trimmed1 = new RS_Arc(trimEntity->getParent(), d);
+        trimmed1 = trimCircle(static_cast<RS_Circle*>(trimEntity), trimCoord, sol);
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
