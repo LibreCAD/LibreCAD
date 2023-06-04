@@ -28,6 +28,7 @@
 
 #include "rs_document.h"
 #include "rs_debug.h"
+#include "rs_layerlist.h"
 
 
 /**
@@ -37,18 +38,11 @@
  *        for blocks it's the blocklist.
  */
 RS_Document::RS_Document(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent), RS_Undo() {
-
+    : RS_EntityContainer{parent}
+    , activePen {RS_Color{RS2::FlagByLayer}, RS2::WidthByLayer, RS2::LineByLayer}
+    , autosaveFilename{ "Unnamed"}
+{
     RS_DEBUG->print("RS_Document::RS_Document() ");
-
-    filename = "";
-    autosaveFilename = "Unnamed";
-	formatType = RS2::FormatUnknown;
-    setModified(false);
-    RS_Color col(RS2::FlagByLayer);
-    activePen = RS_Pen(col, RS2::WidthByLayer, RS2::LineByLayer);
-
-    gv = NULL;//used to read/save current view
 }
 
 /**

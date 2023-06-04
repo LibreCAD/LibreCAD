@@ -30,7 +30,6 @@
 
 #include <vector>
 #include <iosfwd>
-#include "rs.h"
 
 /**
  * Represents a 3d vector (x/y/z)
@@ -153,8 +152,6 @@ public:
 	RS_VectorSolutions(std::initializer_list<RS_Vector> const& l);
 	RS_VectorSolutions(int num);
 
-	~RS_VectorSolutions()=default;
-
 	void alloc(size_t num);
     void clear();
 	/**
@@ -201,7 +198,7 @@ void set(size_t i, const RS_Vector& v);
 
 private:
 	std::vector<RS_Vector> vector;
-    bool tangent;
+    bool tangent = false;
 };
 
 #endif

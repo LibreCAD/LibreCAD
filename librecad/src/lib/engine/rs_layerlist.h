@@ -131,11 +131,11 @@ private:
     QList<RS_Layer*> layers;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> layerListListeners;
-    QG_LayerWidget* layerWidget;
+    QG_LayerWidget *layerWidget = nullptr;
     //! Currently active layer
-    RS_Layer* activeLayer;
+    RS_Layer *activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
-    bool modified;
+    bool modified = false;
 };
 
 #endif

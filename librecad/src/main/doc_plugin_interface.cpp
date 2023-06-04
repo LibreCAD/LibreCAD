@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include "doc_plugin_interface.h"
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
 #include <QFileInfo>
+
+#include "doc_plugin_interface.h"
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
 #include "rs_eventhandler.h"
-#include "rs_actionselect.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_line.h"
@@ -53,7 +53,7 @@
 #include "intern/qc_actiongetent.h"
 #include "rs_math.h"
 #include "rs_debug.h"
-// #include <QDebug>
+#include "rs_units.h"
 
 convLTW::convLTW(){
 //    QHash<int, QString> lType;

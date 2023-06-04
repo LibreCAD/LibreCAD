@@ -34,6 +34,7 @@
  * Holds the data that defines a point.
  */
 struct RS_PointData {
+    RS_PointData() = default;
     RS_PointData(const RS_Vector& pos): pos(pos) {}
 
     friend std::ostream& operator << (std::ostream& os, const RS_PointData& pd);

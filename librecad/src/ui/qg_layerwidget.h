@@ -54,10 +54,10 @@ public:
         NAME,
         LAST
     };
-    enum IconSize {
-        ICONWIDTH = 24,
-        ICONHEIGHT = 24,
-    };
+
+    // the default icon size
+    constexpr static int ICONWIDTH = 24;
+
 	QG_LayerModel(QObject * parent = nullptr);
 	~QG_LayerModel() = default;
     Qt::ItemFlags flags (const QModelIndex & index) const
@@ -73,11 +73,17 @@ public:
     QModelIndex parent ( const QModelIndex & index ) const;
     QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
     void setLayerList(RS_LayerList* ll);
-    RS_Layer *getLayer( int row );
-    QModelIndex getIndex (RS_Layer * lay);
+    RS_Layer *getLayer( int row ) const;
+    QModelIndex getIndex (RS_Layer * lay) const;
 
-    RS_Layer* getActiveLayer() { return activeLayer; };
-    void setActiveLayer(RS_Layer* l) { activeLayer = l; };
+    RS_Layer* getActiveLayer() const
+    {
+        return activeLayer;
+    }
+    void setActiveLayer(RS_Layer* l)
+    {
+        activeLayer = l;
+    }
 
 private:
     QList<RS_Layer*> listLayer;
@@ -101,23 +107,19 @@ class QG_LayerWidget: public QWidget, public RS_LayerListListener {
     Q_OBJECT
 
 public:
-    QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
-                   const char* name=0, Qt::WindowFlags f = 0);
-	~QG_LayerWidget() = default;
+  QG_LayerWidget(QG_ActionHandler *ah, QWidget *parent,
+                 const char *name = nullptr, Qt::WindowFlags f = {});
+  virtual ~QG_LayerWidget() = default;
 
-    void setLayerList(RS_LayerList* layerList, bool showByBlock);
+  void setLayerList(RS_LayerList *layerList, bool showByBlock);
 
-    void update();
-    void activateLayer(RS_Layer* layer, bool updateScroll=true);
+  void update();
+  void activateLayer(RS_Layer *layer, bool updateScroll = true);
 
-    virtual void layerActivated(RS_Layer* layer) {
-        activateLayer(layer);
-    }
-    virtual void layerAdded(RS_Layer* layer);
-    virtual void layerEdited(RS_Layer*) {
-        update();
-    }
-   virtual void layerRemoved(RS_Layer*) {
+  virtual void layerActivated(RS_Layer *layer) { activateLayer(layer); }
+  virtual void layerAdded(RS_Layer *layer);
+  virtual void layerEdited(RS_Layer *) { update(); }
+  virtual void layerRemoved(RS_Layer *) {
         update();
         activateLayer(layerList->at(0));
     }
@@ -160,11 +162,11 @@ protected:
 
 private:
     RS_LayerList* layerList;
-    bool showByBlock;
+    bool showByBlock = false;
     QLineEdit* matchLayerName;
     QTableView* layerView;
     QG_LayerModel *layerModel;
-    RS_Layer* lastLayer;   
+    RS_Layer* lastLayer;
     QG_ActionHandler* actionHandler;
 
     void restoreSelections();

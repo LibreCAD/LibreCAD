@@ -3,6 +3,7 @@
 ** This file was created for the LibreCAD project, a 2D CAD program.
 **
 ** Copyright (C) 2018 Alexander Pravdin <aledin@mail.ru>
+** Copyright (C) 2022 A. Stebich (librecad@mail.lordofbikes.de)
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -45,8 +46,6 @@ static void parseMarginsArg(QString, PdfPrintParams&);
 
 int console_dxf2pdf(int argc, char* argv[])
 {
-    //QT_REQUIRE_VERSION(argc, argv, "5.2.1");
-
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
     QApplication app(argc, argv);
@@ -55,78 +54,78 @@ int console_dxf2pdf(int argc, char* argv[])
     QCoreApplication::setApplicationVersion(XSTR(LC_VERSION));
 
     QFileInfo prgInfo(QFile::decodeName(argv[0]));
-    QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(),
-        XSTR(QC_APPDIR), prgDir);
+    RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
 
     QCommandLineParser parser;
 
-    QString appDesc;
-    QString librecad;
+    QStringList appDesc;
+    QString librecad( prgInfo.filePath());
     if (prgInfo.baseName() != "dxf2pdf") {
-        librecad = prgInfo.filePath();
-        appDesc = "\ndxf2pdf usage: " + prgInfo.filePath()
-            + " dxf2pdf [options] <dxf_files>\n";
+        librecad += " dxf2pdf"; // executable is not dxf2pdf, thus argv[1] must be 'dxf2pdf'
+        appDesc << "";
+        appDesc << "dxf2pdf " + QObject::tr( "usage: ") + librecad + QObject::tr( " [options] <dxf_files>");
     }
-    appDesc += "\nPrint a bunch of DXF files to PDF file(s).";
-    appDesc += "\n\n";
-    appDesc += "Examples:\n\n";
-    appDesc += "  " + librecad + " dxf2pdf *.dxf";
-    appDesc += "    -- print all dxf files to pdf files with the same names.\n";
-    appDesc += "\n";
-    appDesc += "  " + librecad + " dxf2pdf -o some.pdf *.dxf";
-    appDesc += "    -- print all dxf files to 'some.pdf' file.";
-    parser.setApplicationDescription(appDesc);
+    appDesc << "";
+    appDesc << "Print a bunch of DXF files to PDF file(s).";
+    appDesc << "";
+    appDesc << "Examples:";
+    appDesc << "";
+    appDesc << "  " + librecad + QObject::tr( " *.dxf");
+    appDesc << "    " + QObject::tr( "-- print all dxf files to pdf files with the same names.");
+    appDesc << "";
+    appDesc << "  " + librecad + QObject::tr( " -o some.pdf *.dxf");
+    appDesc << "    " + QObject::tr( "-- print all dxf files to 'some.pdf' file.");
+    parser.setApplicationDescription( appDesc.join( "\n"));
 
     parser.addHelpOption();
     parser.addVersionOption();
 
     QCommandLineOption fitOpt(QStringList() << "a" << "fit",
-        "Auto fit and center drawing to page.");
+        QObject::tr( "Auto fit and center drawing to page."));
     parser.addOption(fitOpt);
 
     QCommandLineOption centerOpt(QStringList() << "c" << "center",
-        "Auto center drawing on page.");
+        QObject::tr( "Auto center drawing on page."));
     parser.addOption(centerOpt);
 
     QCommandLineOption grayOpt(QStringList() << "k" << "grayscale",
-        "Print grayscale.");
+        QObject::tr( "Print grayscale."));
     parser.addOption(grayOpt);
 
     QCommandLineOption monoOpt(QStringList() << "m" << "monochrome",
-        "Print monochrome (black/white).");
+        QObject::tr( "Print monochrome (black/white)."));
     parser.addOption(monoOpt);
 
     QCommandLineOption pageSizeOpt(QStringList() << "p" << "paper",
-        "Paper size (Width x Height) in mm.", "WxH");
+        QObject::tr( "Paper size (Width x Height) in mm.", "WxH"));
     parser.addOption(pageSizeOpt);
 
     QCommandLineOption resOpt(QStringList() << "r" << "resolution",
-        "Output resolution (DPI).", "integer");
+        QObject::tr( "Output resolution (DPI).", "integer"));
     parser.addOption(resOpt);
 
     QCommandLineOption scaleOpt(QStringList() << "s" << "scale",
-        "Output scale. E.g.: 0.01 (for 1:100 scale).", "double");
+        QObject::tr( "Output scale. E.g.: 0.01 (for 1:100 scale)."), "double");
     parser.addOption(scaleOpt);
 
     QCommandLineOption marginsOpt(QStringList() << "f" << "margins",
-        "Paper margins in mm (integer or float).", "L,T,R,B");
+        QObject::tr( "Paper margins in mm (integer or float)."), "L,T,R,B");
     parser.addOption(marginsOpt);
 
     QCommandLineOption pagesNumOpt(QStringList() << "z" << "pages",
-        "Print on multiple pages (Horiz. x Vert.).", "HxV");
+        QObject::tr( "Print on multiple pages (Horiz. x Vert.)."), "HxV");
     parser.addOption(pagesNumOpt);
 
     QCommandLineOption outFileOpt(QStringList() << "o" << "outfile",
-        "Output PDF file.", "file");
+        QObject::tr( "Output PDF file.", "file"));
     parser.addOption(outFileOpt);
 
     QCommandLineOption outDirOpt(QStringList() << "t" << "directory",
-        "Target output directory.", "path");
+        QObject::tr( "Target output directory."), "path");
     parser.addOption(outDirOpt);
 
-    parser.addPositionalArgument("<dxf_files>", "Input DXF file(s)");
+    parser.addPositionalArgument(QObject::tr( "<dxf_files>"), QObject::tr( "Input DXF file(s)"));
 
     parser.process(app);
 

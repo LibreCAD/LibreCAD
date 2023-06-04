@@ -51,7 +51,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
     : RS_PreviewActionInterface("Default",
 								container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 	, restrBak(RS2::RestrictNothing)
 {
 

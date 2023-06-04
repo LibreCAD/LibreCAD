@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONDRAWCIRCLE_H
 #define RS_ACTIONDRAWCIRCLE_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 struct RS_CircleData;
@@ -52,7 +54,7 @@ public:
     RS_ActionDrawCircle(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
 	~RS_ActionDrawCircle() override;
-	
+
     void reset();
 
 	void init(int status=0) override;
@@ -64,7 +66,6 @@ public:
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
 	
 	void hideOptions() override;
 	void showOptions() override;

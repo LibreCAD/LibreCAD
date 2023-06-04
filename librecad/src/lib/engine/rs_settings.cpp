@@ -28,7 +28,6 @@
 #include <QSettings>
 #include "rs_settings.h"
 
-RS_Settings* RS_Settings::uniqueInstance = nullptr;
 bool RS_Settings::save_is_allowed = true;
 
 RS_Settings::RS_Settings():
@@ -37,9 +36,7 @@ RS_Settings::RS_Settings():
 }
 
 RS_Settings* RS_Settings::instance() {
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_Settings();
-	}
+    static RS_Settings* uniqueInstance = new RS_Settings();
 	return uniqueInstance;
 }
 
@@ -63,15 +60,6 @@ void RS_Settings::init(const QString& companyKey,
     //insertSearchPath(QSettings::Unix, "/usr/share/");
     initialized = true;
 }
-
-
-/**
- * Destructor
- */
-RS_Settings::~RS_Settings() {
-}
-
-
 
 void RS_Settings::beginGroup(const QString& group) {
     this->group = group;

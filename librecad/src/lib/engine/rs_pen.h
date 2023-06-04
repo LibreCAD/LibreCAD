@@ -44,12 +44,8 @@ public:
     /**
      * Creates a default pen (black, solid, width 0).
      */
-    RS_Pen() : RS_Flags() {
-        setColor(RS_Color(0,0,0));
-        setWidth(RS2::Width00);
-        setLineType(RS2::SolidLine);
-		setScreenWidth(0);
-    }
+    RS_Pen() = default;
+
     /**
      * Creates a pen with the given attributes.
      */
@@ -81,7 +77,6 @@ public:
     //    width = pen.width;
     //    color = pen.color;
     //}
-    virtual ~RS_Pen() {}
 
     RS2::LineType getLineType() const {
         return lineType;
@@ -101,7 +96,7 @@ public:
     void setScreenWidth(double w) {
         screenWidth = w;
     }
-    const RS_Color& getColor() const {
+    RS_Color getColor() const {
         return color;
     }
     void setColor(const RS_Color& c) {
@@ -132,10 +127,10 @@ public:
 
 
 protected:
-    RS2::LineType lineType;
-    RS2::LineWidth width;
-	double screenWidth;
-    RS_Color color;
+    RS2::LineType lineType = RS2::SolidLine;
+    RS2::LineWidth width = RS2::Width00;
+    double screenWidth = 0.;
+    RS_Color color{};
 };
 
 #endif

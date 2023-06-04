@@ -173,8 +173,15 @@ void RS_BlockList::remove(RS_Block* block) {
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 	if (block) {
 		if (!find(name)) {
+			QString oldName = block->getName();
 			block->setName(name);
 			setModified(true);
+
+			// when the renamed block is nested within other block, we need to rename its inserts as well
+			for(RS_Block* b: blocks) {
+				b->renameInserts(oldName, name);
+			}
+
 			return true;
 		}
 	}

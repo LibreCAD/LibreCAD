@@ -32,6 +32,7 @@
 #include "rs_solid.h"
 #include "rs_graphic.h"
 #include "rs_debug.h"
+#include "rs_units.h"
 
 RS_DimRadialData::RS_DimRadialData():
 	definitionPoint(false),

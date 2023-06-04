@@ -46,7 +46,7 @@ public:
 	void trigger() override;
 
 protected:
-    bool keepAspectRatio;
+    bool keepAspectRatio = false;
 };
 
 #endif

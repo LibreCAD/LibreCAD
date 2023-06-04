@@ -59,7 +59,7 @@ void RS_ActionBlocksAttributes::trigger() {
                 QString newName = d.name;
 
                 // update window title of opened block
-                QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+                auto& appWindow = QC_ApplicationWindow::getAppWindow();
                 QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
                 if (blockWindow) {
                     QString title = blockWindow->windowTitle();

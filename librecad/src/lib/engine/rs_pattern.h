@@ -30,6 +30,7 @@
 
 #include "rs_entitycontainer.h"
 
+class QString;
 class RS_PatternList;
 
 /**
@@ -41,7 +42,6 @@ class RS_PatternList;
 class RS_Pattern : public RS_EntityContainer {
 public:
     RS_Pattern(const QString& fileName);
-	virtual ~RS_Pattern()=default;
 	RS2::EntityType rtti() const{
 		return RS2::EntityPattern;
 	}
@@ -56,10 +56,7 @@ protected:
     QString fileName;
 
     //! Is this pattern currently loaded into memory?
-    bool loaded;
-
-	
+    bool loaded = false;
 };
-
 
 #endif

@@ -48,68 +48,58 @@
 #include <QRegExp>
 #include <QSysInfo>
 
-#include "main.h"
+#include <boost/version.hpp>
 
+
+#include "comboboxoption.h"
+#include "doc_plugin_interface.h"
+#include "main.h"
+#include "textfileviewer.h"
+#include "twostackedlabels.h"
+#include "widgetcreator.h"
+
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionprintpreview.h"
+#include "rs_commands.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_document.h"
+#include "rs_painterqt.h"
+#include "rs_pen.h"
 #include "rs_settings.h"
 #include "rs_staticgraphicview.h"
 #include "rs_system.h"
-#include "rs_actionlibraryinsert.h"
-#include "rs_painterqt.h"
 #include "rs_selection.h"
-#include "rs_document.h"
-
-#include "lc_centralwidget.h"
-#include "qc_mdiwindow.h"
-#include "qg_graphicview.h"
+#include "rs_units.h"
 
 #include "lc_actionfactory.h"
-#include "qg_actionhandler.h"
-
-#include "lc_widgetfactory.h"
-#include "qg_snaptoolbar.h"
-#include "qg_blockwidget.h"
-#include "qg_layerwidget.h"
-#include "qg_librarywidget.h"
-#include "qg_commandwidget.h"
-#include "qg_pentoolbar.h"
-
-#include "qg_coordinatewidget.h"
-#include "qg_selectionwidget.h"
-#include "qg_activelayername.h"
-#include "qg_mousewidget.h"
-#include "twostackedlabels.h"
-
-#include "qg_recentfiles.h"
-#include "qg_dlgimageoptions.h"
-#include "qg_filedialog.h"
-#include "qg_exitdialog.h"
-
-#include "rs_dialogfactory.h"
-#include "qc_dialogfactory.h"
-#include "doc_plugin_interface.h"
-#include "qc_plugininterface.h"
-#include "rs_commands.h"
-
-#include "lc_simpletests.h"
-#include "rs_debug.h"
-
-#include "lc_widgetoptionsdialog.h"
-#include "comboboxoption.h"
-
-#include "lc_printing.h"
-#include "actionlist.h"
-#include "widgetcreator.h"
 #include "lc_actiongroupmanager.h"
-#include "linklist.h"
-#include "colorwizard.h"
+#include "lc_centralwidget.h"
 #include "lc_penwizard.h"
-#include "textfileviewer.h"
+#include "lc_printing.h"
+#include "lc_widgetfactory.h"
+#include "lc_widgetoptionsdialog.h"
 #include "lc_undosection.h"
 
-#include <boost/version.hpp>
+#include "qc_dialogfactory.h"
+#include "qc_mdiwindow.h"
+#include "qc_plugininterface.h"
 
-QC_ApplicationWindow* QC_ApplicationWindow::appWindow = nullptr;
+#include "qg_actionhandler.h"
+#include "qg_activelayername.h"
+#include "qg_blockwidget.h"
+#include "qg_commandwidget.h"
+#include "qg_coordinatewidget.h"
+#include "qg_dlgimageoptions.h"
+#include "qg_exitdialog.h"
+#include "qg_filedialog.h"
+#include "qg_graphicview.h"
+#include "qg_layerwidget.h"
+#include "qg_pentoolbar.h"
+#include "qg_selectionwidget.h"
+#include "qg_snaptoolbar.h"
+#include "qg_mousewidget.h"
+#include "qg_recentfiles.h"
 
 #ifndef QC_APP_ICON
 # define QC_APP_ICON ":/main/librecad.png"
@@ -154,8 +144,6 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     setCorner(Qt::TopRightCorner, Qt::RightDockWidgetArea);
     setCorner(Qt::BottomRightCorner, Qt::RightDockWidgetArea);
 
-    appWindow = this;
-
     QSettings settings;
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: setting icon");
@@ -191,11 +179,12 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         font.setPointSize(fontsize);
         status_bar->setFont(font);
     }
-    if (allow_statusbar_height)
-    {
-        int height = settings.value("StatusbarHeight", 28).toInt();
-        status_bar->setMinimumHeight(height);
+    int height {64};
+    if (allow_statusbar_height) {
+        height = settings.value( "StatusbarHeight", 64).toInt();
     }
+    status_bar->setMinimumHeight( height);
+    status_bar->setMaximumHeight( height);
     settings.endGroup();
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating LC_CentralWidget");
@@ -281,7 +270,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
 
         auto toolbar = new QToolBar("DefaultCustom", this);
         toolbar->setObjectName("DefaultCustom");
-        foreach (auto action, list)
+        foreach (auto& action, list)
         {
             toolbar->addAction(a_map[action]);
         }
@@ -316,7 +305,7 @@ QC_ApplicationWindow::QC_ApplicationWindow()
             mdiAreaCAD, SLOT(closeActiveSubWindow()));
 
     connect(penToolBar, SIGNAL(penChanged(RS_Pen)),
-            this, SLOT(slotPenChanged(RS_Pen)));
+            this, SLOT(slotPenChanged(const RS_Pen&)));
 
     auto ctrl_l = new QShortcut(QKeySequence("Ctrl+L"), this);
     connect(ctrl_l, SIGNAL(activated()), actionHandler, SLOT(slotLayersAdd()));
@@ -365,15 +354,27 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         int ms = 60000 * settings.value("Defaults/AutoSaveTime", 5).toInt();
         autosaveTimer->start(ms);
     }
-	
+
     // Disable menu and toolbar items
-    emit windowsChanged(false);
+    //emit windowsChanged(false);
 
     RS_COMMANDS->updateAlias();
     //plugin load
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+}
+
+/**
+ * @brief QC_ApplicationWindow::getAppWindow() accessor for the application window singleton instance
+ * @return QC_ApplicationWindow* the application window instance
+ */
+std::unique_ptr<QC_ApplicationWindow>& QC_ApplicationWindow::getAppWindow()
+{
+    static auto instance = std::unique_ptr<QC_ApplicationWindow>(new QC_ApplicationWindow);
+    // singleton could be reset: cannot be called after reseting
+    Q_ASSERT(instance != nullptr);
+    return instance;
 }
 
 /**
@@ -483,8 +484,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			msg = tr("Saved drawing: %1").arg(name);
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
-			if (!recentFiles->indexOf(name))
-				recentFiles->add(name);
+
+			if (recentFiles->indexOf(name) == -1) recentFiles->add(name);
+
 			w->setWindowTitle(format_filename_caption(name) + "[*]");
 			if (w->getGraphicView()->isDraftMode())
 				w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
@@ -998,7 +1000,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
-                        "document: %d", m->getDocument()->getId());
+                        "document: %u", m->getDocument()->getId());
 
         bool showByBlock = m->getDocument()->rtti()==RS2::EntityBlock;
 
@@ -1405,7 +1407,7 @@ void QC_ApplicationWindow::slotToggleTab()
  * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
  */
-void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
+void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() begin");
 
     RS_DEBUG->print("Setting active pen...");
@@ -1418,14 +1420,14 @@ void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() end");
 }
 
-/**
- * Called when something changed in the snaps tool bar
- */
-void QC_ApplicationWindow::slotSnapsChanged(RS_SnapMode snaps) {
-    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
+///**
+// * Called when something changed in the snaps tool bar
+// */
+//void QC_ApplicationWindow::slotSnapsChanged(const RS_SnapMode& snaps) {
+//    RS_DEBUG->print("QC_ApplicationWindow::slotSnapsChanged() begin");
 
-    actionHandler->slotSetSnaps(snaps);
-}
+//    actionHandler->slotSetSnaps(snaps);
+//}
 
 
 
@@ -1446,7 +1448,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
 
     RS_DEBUG->print("  creating MDI window");
 
-    QC_MDIWindow* w = new QC_MDIWindow(doc, mdiAreaCAD, 0);
+    QC_MDIWindow *w = new QC_MDIWindow(doc, mdiAreaCAD, {});
 
     window_list << w;
 
@@ -2572,7 +2574,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 //generate a new print preview
                 RS_DEBUG->print("QC_ApplicationWindow::slotFilePrintPreview(): create");
 
-                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, 0);
+                QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
                 connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
@@ -2638,7 +2640,7 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                     }
                 }
 
-                emit(printPreviewChanged(true));
+                emit printPreviewChanged(true);
             }
         }
     }
@@ -2979,6 +2981,7 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
     QMainWindow::keyPressEvent(e);
 }
 
+
 QMdiArea const* QC_ApplicationWindow::getMdiArea() const{
     return mdiAreaCAD;
 }
@@ -3064,26 +3067,6 @@ void QC_ApplicationWindow::relayAction(QAction* q_action)
         const QString title(q_action->text().remove("&"));
         commandWidget->appendHistory(title + " : " + commands);
     }
-}
-
-void QC_ApplicationWindow::invokeLinkList()
-{
-    // author: ravas
-
-    QDialog dlg;
-    dlg.setWindowTitle(tr("Help Links"));
-    auto layout = new QVBoxLayout;
-    auto list = new LinkList(&dlg);
-    list->addLink(QObject::tr("Wiki"), "https://dokuwiki.librecad.org/");
-    list->addLink(QObject::tr("User's Manual"), "https://librecad.readthedocs.io/");
-    list->addLink(QObject::tr("Commands"), "https://librecad.readthedocs.io/en/latest/ref/tools.html");
-    list->addLink(QObject::tr("Style Sheets"), "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets");
-    list->addLink(QObject::tr("Widgets"), "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets");
-    list->addLink(QObject::tr("Forum"), "https://forum.librecad.org/");
-    list->addLink(QObject::tr("Release Information"), "https://github.com/LibreCAD/LibreCAD/releases");
-    layout->addWidget(list);
-    dlg.setLayout(layout);
-    dlg.exec();
 }
 
 /**

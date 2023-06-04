@@ -65,7 +65,6 @@ namespace Colors
 class RS_Settings {
 
 public:
-	~RS_Settings();
 	/**
      * @return Instance to the unique settings object.
      */
@@ -105,13 +104,12 @@ private:
 	void addToCache(const QString& key, const QVariant& value);
 
 protected:
-    static RS_Settings* uniqueInstance;
 
 	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;
     QString group;
-    bool initialized;
+    bool initialized = false;
 };
 
 #endif

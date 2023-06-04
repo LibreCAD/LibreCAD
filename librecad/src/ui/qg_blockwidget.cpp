@@ -256,7 +256,6 @@ QG_BlockWidget::~QG_BlockWidget() {
 void QG_BlockWidget::update() {
     RS_DEBUG->print("QG_BlockWidget::update()");
 
-    int yPos = blockView->verticalScrollBar()->value();
     RS_Block* activeBlock;
 
     if (blockList) {
@@ -277,7 +276,6 @@ void QG_BlockWidget::update() {
     activateBlock(activeBlock);
     lastBlock = b;
     blockView->resizeRowsToContents();
-    blockView->verticalScrollBar()->setValue(yPos);
 
     restoreSelections();
 
@@ -314,6 +312,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
 
     lastBlock = blockList->getActive();
     blockList->activate(block);
+    int yPos = blockView->verticalScrollBar()->value();
     QModelIndex idx = blockModel->getIndex (block);
 
     // remember selected status of the block
@@ -332,6 +331,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
     }
     block->selectedInBlockList(selected);
     blockView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
+    blockView->verticalScrollBar()->setValue(yPos);
 }
 
 /**

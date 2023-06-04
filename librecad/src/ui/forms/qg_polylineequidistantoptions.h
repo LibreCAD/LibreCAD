@@ -43,7 +43,7 @@ class QG_PolylineEquidistantOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_PolylineEquidistantOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_PolylineEquidistantOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_PolylineEquidistantOptions();
 
 public slots:

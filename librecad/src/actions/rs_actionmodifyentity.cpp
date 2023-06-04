@@ -42,16 +42,33 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyEntity;
 }
 
+void RS_ActionModifyEntity::setDisplaySelected(bool highlighted)
+{
+    if (en != nullptr) {
+        en->setSelected(highlighted);
+        graphicView->drawEntity(en);
+    }
+}
+
 void RS_ActionModifyEntity::trigger() {
-    if (en) {
+    if (en != nullptr) {
         RS_Entity* clone = en->clone();
+        bool selected = en->isSelected();
+        // RAII style: restore the highlighted status
+        std::shared_ptr<bool> scopedFlag(&selected, [this](bool* pointer) {
+            if (pointer != nullptr && en->isSelected() != *pointer) {
+                setDisplaySelected(*pointer);
+            }});
+        // Always show the entity being edited as "Selected"
+        setDisplaySelected(true);
+
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone)) {
             container->addEntity(clone);
 
             graphicView->deleteEntity(en);
-                        en->setSelected(false);
+            en->setSelected(false);
 
-                        clone->setSelected(false);
+            clone->setSelected(false);
             graphicView->drawEntity(clone);
 
             if (document) {
@@ -67,7 +84,6 @@ void RS_ActionModifyEntity::trigger() {
         } else {
             delete clone;
         }
-
     } else {
         RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
     }

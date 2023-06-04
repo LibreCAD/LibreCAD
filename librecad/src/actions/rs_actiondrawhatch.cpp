@@ -35,7 +35,7 @@
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
                                 :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
-								, data{new RS_HatchData{}}
+    , data{std::make_unique<RS_HatchData>()}
 {
     actionType = RS2::ActionDrawHatch;
 }
@@ -106,7 +106,7 @@ void RS_ActionDrawHatch::trigger() {
         return;
     }
 
-	std::unique_ptr<RS_Hatch> hatch{new RS_Hatch{container, *data}};
+    std::unique_ptr<RS_Hatch> hatch=std::make_unique<RS_Hatch>(container, *data);
     hatch->setLayerToActive();
     hatch->setPenToActive();
 	RS_EntityContainer* loop = new RS_EntityContainer(hatch.get());

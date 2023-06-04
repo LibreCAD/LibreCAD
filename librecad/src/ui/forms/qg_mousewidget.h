@@ -33,7 +33,7 @@ class QG_MouseWidget : public QWidget, public Ui::QG_MouseWidget
     Q_OBJECT
 
 public:
-    QG_MouseWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_MouseWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
     ~QG_MouseWidget();
 
 public slots:

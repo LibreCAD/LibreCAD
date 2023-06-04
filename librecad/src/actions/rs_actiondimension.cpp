@@ -24,11 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actiondimaligned.h"
-
-#include "rs_dimension.h"
+#include "rs_actiondimension.h"
 
 #include "rs_dialogfactory.h"
+#include "rs_dimension.h"
 #include "rs_graphicview.h"
 
 
@@ -42,13 +41,12 @@ RS_ActionDimension::RS_ActionDimension(const char* name,
 }
 
 
-
 RS_ActionDimension::~RS_ActionDimension() = default;
 
 
-
 void RS_ActionDimension::reset() {
-	data.reset(new RS_DimensionData(RS_Vector(false),
+    RS_PreviewActionInterface::init(0);
+    data=std::make_unique<RS_DimensionData>(RS_Vector(false),
 									RS_Vector(false),
 									RS_MTextData::VAMiddle,
 									RS_MTextData::HACenter,
@@ -56,8 +54,7 @@ void RS_ActionDimension::reset() {
 									1.0,
 									"",
 									"Standard",
-									0.0)
-			   );
+                                    0.0);
 	diameter = false;
 }
 

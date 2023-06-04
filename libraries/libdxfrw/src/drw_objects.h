@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -88,7 +89,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    virtual bool parseCode(int code, dxfReader *reader);
     virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) = 0;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer* strBuf, duint32 bs=0);
     void reset() {
@@ -156,7 +157,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -254,7 +255,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
     void update();
 
@@ -291,7 +292,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -323,7 +324,6 @@ public:
     }
 
 protected:
-//    void parseCode(int code, dxfReader *reader);
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -361,7 +361,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -406,7 +406,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -462,7 +462,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -501,7 +501,7 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader);
+    bool parseCode(int code, dxfReader *reader) override;
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 
 public:
@@ -529,7 +529,6 @@ public:
     }
 
 protected:
-    void parseCode(int code, dxfReader *reader){DRW_TableEntry::parseCode(code, reader);}
     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
 };
 

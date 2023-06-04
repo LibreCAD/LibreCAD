@@ -43,7 +43,7 @@ class QG_RecentFiles: public QObject
 
 public:
 	QG_RecentFiles(QObject* parent, int number);
-	virtual ~QG_RecentFiles();
+    ~QG_RecentFiles() override;
 
     void add(const QString& filename);
 
@@ -64,10 +64,15 @@ public:
 	void updateRecentFilesMenu();
 
 private:
+    /**
+     * @brief saveToSettings() save the current recent file list to the "RecentFiles"
+     * group of RS_Settings
+     */
+    void saveToSettings() const;
+
 	int const number;
 	QStringList files;
 	QList<QAction*> recentFilesAction;
 };
 
 #endif
-

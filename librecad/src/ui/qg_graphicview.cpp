@@ -37,6 +37,7 @@
 #include "rs_actionzoomscroll.h"
 #include "rs_actionzoomauto.h"
 #include "rs_actionmodifydelete.h"
+#include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
 #include "rs_settings.h"
 #include "rs_painterqt.h"
@@ -56,6 +57,49 @@
 #else
 #define CURSOR_SIZE 15
 #endif
+
+namespace {
+
+/**
+ * @brief snapEntity find the closest entity
+ * @param QG_GraphicView& view - the graphic view
+ * @param const QMouseEvent* event - the mouse event
+ * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ *                      returns nullptr, if no entity is found in range
+ */
+RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
+{
+    if (event == nullptr)
+        return nullptr;
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return nullptr;
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
+    return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+}
+
+// Show the entity property dialog on the closest entity in range
+void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
+{
+    RS_Entity* entity = snapEntity(view, event);
+    // Cursor selection range CURSOR_SIZE
+    if (entity != nullptr) {
+        RS_EntityContainer* container = view.getContainer();
+        if (container==nullptr)
+            return;
+        auto* action = new RS_ActionModifyEntity(*container, view);
+        RS_EventHandler* eventHandler = view.getEventHandler();
+        if (eventHandler != nullptr)
+            eventHandler->setCurrentAction(action);
+        action->setEntity(entity);
+        action->trigger();
+        action->finish(false);
+    }
+}
+
+}
 
 /**
  * Constructor.
@@ -278,6 +322,9 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             {
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
+            } else {
+                // double click on an entity to edit entity properties
+                showEntityPropertiesDialog(*this, e);
             }
             break;
     }
@@ -317,12 +364,19 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
             {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             }
-            else if (!recent_actions.isEmpty())
+            else
             {
                 QMenu* context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                context_menu->addActions(recent_actions);
-                context_menu->exec(mapToGlobal(event->pos()));
+                if (!recent_actions.empty())
+                    context_menu->addActions(recent_actions);
+                // "Edit Entity" entry
+                addEditEntityEntry(event, *context_menu);
+                if (!context_menu->isEmpty())
+                    context_menu->exec(mapToGlobal(event->pos()));
+                else
+                    delete context_menu;
+
             }
         }
         else back();
@@ -340,6 +394,26 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
+void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
+{
+    RS_Entity* entity = snapEntity(*this, event);
+    if (entity == nullptr)
+    return;
+    if (container==nullptr)
+        return;
+    auto* editPropertyAction = new RS_ActionModifyEntity(*container, *this);
+    if (editPropertyAction == nullptr)
+    return;
+    editPropertyAction->setEntity(entity);
+    auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
+                               tr("Edit Properties"), &contextMenu);
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, editPropertyAction](){
+        getEventHandler()->setCurrentAction(editPropertyAction);
+        editPropertyAction->trigger();
+        editPropertyAction->finish(false);
+    });
+}
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {
@@ -958,7 +1032,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid)
     {
-        PixmapLayer1->fill(background);
+        PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
         drawLayer1((RS_Painter*)&painter1);
         painter1.end();

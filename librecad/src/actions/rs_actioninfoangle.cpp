@@ -24,17 +24,18 @@
 **
 **********************************************************************/
 
-#include "rs_actioninfoangle.h"
+#include <cmath>
 
 #include <QAction>
-#include <cmath>
 #include <QMouseEvent>
+
+#include "rs_actioninfoangle.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_graphic.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -52,8 +53,8 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Info Angle",
 						   container, graphicView)
 		,entity1(nullptr)
-		,entity2(nullptr)
-		, pPoints(new Points{})
+        ,entity2(nullptr)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionInfoAngle;
 }

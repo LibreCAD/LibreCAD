@@ -234,7 +234,7 @@ public:
     //! Update the polyline list of vertex.
     /*!
     * The data is a QList of Plug_VertexData with the coordinates of each vertex to the
-    * polyline the cuurent vertex are removed and replaced for the new list.
+    * polyline the current vertex are removed and replaced for the new list.
     *  \param data pointer to a QList<Plug_VertexData> with the coordinates vertex's.
     */
     virtual void updatePolylineData(QList<Plug_VertexData> *data) = 0;

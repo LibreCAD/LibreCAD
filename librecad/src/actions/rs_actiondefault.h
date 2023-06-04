@@ -57,8 +57,6 @@ public:
                      RS_GraphicView& graphicView);
 	~RS_ActionDefault() override;
 
-	void finish(bool /*updateTB*/ = true ) override{}
-
 	void init(int status=0) override;
 
 	void keyPressEvent(QKeyEvent* e) override;

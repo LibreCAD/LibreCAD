@@ -51,7 +51,7 @@ struct RS_DimRadialData {
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
-    double leader;
+    double leader=0.;
 };
 
 std::ostream& operator << (std::ostream& os,

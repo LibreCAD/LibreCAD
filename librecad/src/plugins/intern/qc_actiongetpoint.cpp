@@ -50,7 +50,7 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
         , canceled(false)
 		, completed{false}
 		, setTargetPoint{false}
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
     pPoints->targetPoint = RS_Vector(0,0);
 }

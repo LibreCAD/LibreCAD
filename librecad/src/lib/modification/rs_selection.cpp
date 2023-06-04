@@ -26,12 +26,13 @@
 
 #include "rs_selection.h"
 
-#include "rs_line.h"
-#include "rs_information.h"
-#include "rs_polyline.h"
 #include "rs_entity.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_layer.h"
+#include "rs_line.h"
 
 
 
@@ -42,14 +43,12 @@
  *        entities. Usually that's an RS_Graphic entity but
  *        it can also be a polyline, text, ...
  */
-RS_Selection::RS_Selection(RS_EntityContainer& container,
-                           RS_GraphicView* graphicView) {
-    this->container = &container;
-    this->graphicView = graphicView;
-    graphic = container.getGraphic();
-}
-
-
+RS_Selection::RS_Selection(RS_EntityContainer &container,
+                           RS_GraphicView *graphicView)
+    : container{&container}
+    , graphic{container.getGraphic()}
+    , graphicView{graphicView}
+{}
 
 /**
  * Selects or deselects the given entity.
@@ -211,7 +210,7 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
  */
 void RS_Selection::selectContour(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 
@@ -294,14 +293,14 @@ void RS_Selection::selectContour(RS_Entity* e) {
  */
 void RS_Selection::selectLayer(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 
     bool select = !e->isSelected();
 
     RS_Layer* layer = e->getLayer(true);
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 

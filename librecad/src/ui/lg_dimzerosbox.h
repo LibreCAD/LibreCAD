@@ -2,7 +2,6 @@
 #define LG_DIMZEROSBOX_H
 
 #include <QComboBox>
-//#include <QAbstractTableModel>
 #include <QStandardItemModel>
 #include <QListView>
 
@@ -33,9 +32,9 @@ public:
     void setData(int i);
     int getData();
 private:
-    QStandardItemModel *model;
+    QStandardItemModel *model = nullptr;
     QListView *view;
-    bool dimLine;
+    bool dimLine =false;
     int convertDimZin(int v, bool toIdx);
 };
 

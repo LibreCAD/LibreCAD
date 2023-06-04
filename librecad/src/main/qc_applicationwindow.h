@@ -29,11 +29,13 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include "mainwindowx.h"
+#include <memory>
 
-#include "rs_pen.h"
-#include "rs_snapper.h"
 #include <QMap>
+
+#include "mainwindowx.h"
+#include "rs.h"
+
 
 class QMdiArea;
 class QMdiSubWindow;
@@ -55,8 +57,10 @@ class QG_ActiveLayerName;
 class LC_SimpleTests;
 class LC_CustomToolbar;
 class QG_ActionHandler;
-class RS_GraphicView;
 class RS_Document;
+class RS_GraphicView;
+class RS_Pen;
+struct RS_SnapMode;
 class TwoStackedLabels;
 class LC_ActionGroupManager;
 class LC_PenWizard;
@@ -80,8 +84,7 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
-    QC_ApplicationWindow();
-    ~QC_ApplicationWindow();
+    ~QC_ApplicationWindow() override;
 
     void initSettings();
     void storeSettings();
@@ -89,15 +92,13 @@ public:
     bool queryExit(bool force);
 
     /** Catch hotkey for giving focus to command line. */
-    virtual void keyPressEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void dropEvent(QDropEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
-
-    QMap<QString, QAction*> a_map;
-    LC_ActionGroupManager* ag_manager {nullptr};
 
 public slots:
     void relayAction(QAction* q_action);
@@ -128,8 +129,8 @@ public slots:
     void slotToggleTab();
     void slotZoomAuto();
 
-    void slotPenChanged(RS_Pen p);
-    void slotSnapsChanged(RS_SnapMode s);
+    void slotPenChanged(const RS_Pen& p);
+    //void slotSnapsChanged(const RS_SnapMode& s);
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
@@ -196,8 +197,6 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void invokeLinkList();
-
     void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);
@@ -236,11 +235,9 @@ signals:
 
 public:
     /**
-     * @return Pointer to application window.
+     * @return accessor for the singleton application window.
      */
-    static QC_ApplicationWindow* getAppWindow() {
-        return appWindow;
-    }
+    static std::unique_ptr<QC_ApplicationWindow>& getAppWindow();
 
     /**
      * @return Pointer to MdiArea.
@@ -276,7 +273,7 @@ public:
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
+    void createNewDocument(const QString& fileName = {}, RS_Document* doc=nullptr);
 
     void redrawAll();
     void updateGrids();
@@ -303,13 +300,18 @@ public:
 
 protected:
     void closeEvent(QCloseEvent*) override;
-    //! \{ accept drop files to open
-    virtual void dropEvent(QDropEvent* e) override;
-    virtual void dragEnterEvent(QDragEnterEvent * event) override;
+    void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
 
 private:
+    // singleton
+    QC_ApplicationWindow();
+
+    QC_ApplicationWindow(const QC_ApplicationWindow&) = delete;
+    QC_ApplicationWindow& operator= (const QC_ApplicationWindow&) = delete;
+    QC_ApplicationWindow(QC_ApplicationWindow&&) = delete;
+    QC_ApplicationWindow& operator= (QC_ApplicationWindow&&) = delete;
 
     QMenu* createPopupMenu() override;
 
@@ -339,8 +341,10 @@ private:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
+    QMap<QString, QAction*> a_map;
+    LC_ActionGroupManager* ag_manager {nullptr};
+
     /** Pointer to the application window (this). */
-    static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer {nullptr};
 
     QG_ActionHandler* actionHandler {nullptr};
@@ -384,8 +388,6 @@ private:
 
     // --- Menus ---
     QMenu* windowsMenu {nullptr};
-    QMenu* scriptMenu {nullptr};
-    QMenu* helpMenu {nullptr};
     QMenu* testMenu {nullptr};
     QMenu* file_menu {nullptr};
 

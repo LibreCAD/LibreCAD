@@ -78,7 +78,7 @@ protected:
     QString label;
     QString tol1;
     QString tol2;
-    bool diameter;
+    bool diameter = false;
 
     /**
      * Commands.

@@ -30,7 +30,7 @@
 LC_SimpleTests::LC_SimpleTests(QWidget *parent):
 	QObject(parent)
 {
-	auto appWin=QC_ApplicationWindow::getAppWindow();
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
 	QMenu* testMenu=appWin->menuBar()->addMenu(tr("De&bugging"));
 	testMenu->setObjectName("Debugging");
 
@@ -491,7 +491,7 @@ void LC_SimpleTests::slotTestDrawFreehand() {
  */
 void LC_SimpleTests::slotTestInsertBlock() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-	auto appWin=QC_ApplicationWindow::getAppWindow();
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
 
 	RS_Document* d = appWin->getDocument();
 	if (d && d->rtti()==RS2::EntityGraphic) {
@@ -634,7 +634,7 @@ void LC_SimpleTests::slotTestInsertBlock() {
  */
 void LC_SimpleTests::slotTestInsertEllipse() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-	auto appWin=QC_ApplicationWindow::getAppWindow();
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
 
 	RS_Document* d = appWin->getDocument();
 	if (d) {
@@ -965,7 +965,7 @@ void LC_SimpleTests::slotTestInsertImage() {
  */
 void LC_SimpleTests::slotTestUnicode() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-	auto appWin= QC_ApplicationWindow::getAppWindow();
+    auto& appWin= QC_ApplicationWindow::getAppWindow();
 
 	appWin->slotFileOpen("./fonts/unicode.cxf", RS2::FormatCXF);
 	RS_Document* d =appWin->getDocument();
@@ -1025,7 +1025,7 @@ void LC_SimpleTests::slotTestUnicode() {
  */
 void LC_SimpleTests::slotTestMath01() {
 	RS_DEBUG->print("%s\n: begin\n", __func__);
-	auto appWin=QC_ApplicationWindow::getAppWindow();
+    auto& appWin=QC_ApplicationWindow::getAppWindow();
 	RS_Document* d = appWin->getDocument();
 	if (d) {
 		RS_Graphic* graphic = (RS_Graphic*)d;
