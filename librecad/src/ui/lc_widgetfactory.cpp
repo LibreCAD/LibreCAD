@@ -152,7 +152,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyScale"]
             << a_map["ModifyMirror"]
             << a_map["ModifyMoveRotate"]
->>>>>>> master
             << a_map["ModifyRotate2"]
             << a_map["ModifyRevertDirection"]
             << a_map["ModifyTrim"]
