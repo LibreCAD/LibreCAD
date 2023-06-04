@@ -52,6 +52,50 @@
 #include "emu_c99.h"
 #endif
 
+namespace {
+
+/**
+ * @brief getPasteScale - find scaling factor for pasting
+ * @param const RS_PasteData& data - RS_PasteData
+ * @param RS_Graphic *& source - source graphic. If source is nullptr, the graphic on the clipboard is used instead
+ * @param const RS_Graphic& graphic - the target graphic
+ * @return
+ */
+RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS_Graphic& graphic)
+{
+
+    // adjust scaling factor for units conversion in case of clipboard paste
+    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
+    // select source for paste
+    if (source == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
+        source = RS_CLIPBOARD->getGraphic();
+        // graphics from the clipboard need to be scaled. From the part lib not:
+        RS2::Unit sourceUnit = source->getUnit();
+        RS2::Unit targetUnit = graphic.getUnit();
+        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %d", factor);
+    // scale factor as vector
+    return {factor, factor};
+}
+
+/**
+ * @brief addNewBlock() - create a new block
+ * @param name - name of the new block to create
+ * @param graphic - the target graphic
+ * @return RS_Block - the block created
+ */
+RS_Block* addNewBlock(const QString& name, RS_Graphic& graphic)
+{
+    RS_BlockData db = RS_BlockData(name, {0.0, 0.0}, false);
+    RS_Block* b = new RS_Block(&graphic, db);
+    b->reparent(&graphic);
+    graphic.addBlock(b);
+    return b;
+}
+}
+
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
 		double _factor,
 		double _angle,
@@ -479,29 +523,19 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         return;
     }
 
-    // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
     // scale factor as vector
-    RS_Vector vfactor{factor, factor};
+    RS_Vector vfactor = getPasteScale(data, source, *graphic);
     // select source for paste
-	if (!source) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
-        source = RS_CLIPBOARD->getGraphic();
-        // graphics from the clipboard need to be scaled. From the part lib not:
-        RS2::Unit sourceUnit = source->getUnit();
-        RS2::Unit targetUnit = graphic->getUnit();
-        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        vfactor = {factor, factor};
-    } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from parts library");
+    if (source == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::%s(): line %d: no source found", __func__, __LINE__);
+        return;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %d", factor);
 
     // default insertion point for container
     RS_Vector ip = data.insertionPoint;
 
     // remember active layer before inserting absent layers
-    RS_Layer *l = graphic->getActiveLayer();
+    RS_Layer *layer = graphic->getActiveLayer();
 
     // insert absent layers from source to graphic
     if (!pasteLayers(source)) {
@@ -509,47 +543,29 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         return;
     }
 
-    // select the same layer in graphic as in source
-    /*
-    auto a_layer = source->getActiveLayer();
-    if (!a_layer)
-    {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: copy wasn't properly finalized");
-        return;
-    }
-    QString ln = a_layer->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    */
-    if (!l) {
+    if (layer == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
         return;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", l->getName().toLatin1().data());
-    graphic->activateLayer(l);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
+    graphic->activateLayer(layer);
 
     // hash for renaming duplicated blocks
     QHash<QString, QString> blocksDict;
 
     // create block to paste entities as a whole
-    QString name_old = "paste-block";
-    if (data.blockName != nullptr) {
-        name_old = data.blockName;
-    }
-    QString name_new = name_old;
-    if (graphic->findBlock(name_old)) {
-        name_new = graphic->getBlockList()->newName(name_old);
+    QString name_old = (data.blockName != nullptr) ? data.blockName : "paste-block";
+    QString name_new = (graphic->findBlock(name_old) != nullptr) ? graphic->getBlockList()->newName(name_old) : name_old;
+    if (graphic->findBlock(name_old) != nullptr) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: paste block name: %s", name_new.toLatin1().data());
     }
     blocksDict[name_old] = name_new;
 
     // create block
-    RS_BlockData db = RS_BlockData(name_new, RS_Vector(0.0, 0.0), false);
-    RS_Block* b = new RS_Block(graphic, db);
-    b->reparent(graphic);
-    graphic->addBlock(b);
+    RS_Block* b = addNewBlock(name_new, *graphic);
 
     // create insert object for the paste block
-    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, 0., 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* i = new RS_Insert(document, di);
     i->setLayerToActive();
     i->setPenToActive();
@@ -558,7 +574,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // copy sub- blocks, inserts and entities from source to the paste block
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: copy content to the paste block");
-    for(auto e: * static_cast<RS_EntityContainer*>(source)) {
+    for(auto e: *source) {
 
         if (!e) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: nullptr entity in source");
@@ -652,22 +668,22 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert");
 
-    if (!entity || entity->rtti() != RS2::EntityInsert) {
+    RS_Insert* insert = dynamic_cast<RS_Insert*>(entity);
+    if (insert == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: no container to process");
         return false;
     }
 
-    RS_Insert* i = (RS_Insert*)entity;
     // get block for this insert object
-    RS_Block* ib = i->getBlockForInsert();
-    if (!ib) {
+    RS_Block* insertBlock = insert->getBlockForInsert();
+    if (insertBlock == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: no block to process");
         return false;
     }
     // get name for this insert object
-    QString name_old = ib->getName();
+    QString name_old = insertBlock->getName();
     QString name_new = name_old;
-    if (name_old != i->getName()) {
+    if (name_old != insert->getName()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: block and insert names don't coincide");
         return false;
     }
@@ -679,15 +695,12 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     }
     blocksDict[name_old] = name_new;
     // make new block in the destination
-    RS_BlockData db = RS_BlockData(name_new, RS_Vector(0.0, 0.0), false);
-    RS_Block* bc = new RS_Block(graphic, db);
-    bc->reparent(graphic);
-    graphic->addBlock(bc);
+    RS_Block* blockClone = addNewBlock(name_new, *graphic);
     // create insert for the new block
-    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), i->getAngle(), 1, 1, RS_Vector(0.0,0.0));
-    RS_Insert* ic = new RS_Insert(container, di);
-    ic->reparent(container);
-    container->addEntity(ic);
+    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), insert->getAngle(), 1, 1, RS_Vector(0.0,0.0));
+    RS_Insert* insertClone = new RS_Insert(container, di);
+    insertClone->reparent(container);
+    container->addEntity(insertClone);
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
@@ -697,18 +710,18 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
         return false;
     }
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", layer->getName().toLatin1().data());
-    ic->setLayer(layer);
-    ic->setPen(entity->getPen(false));
+    insertClone->setLayer(layer);
+    insertClone->setPen(entity->getPen(false));
 
     // get relative insertion point
     RS_Vector ip{0.0, 0.0};
     if (container->getId() != graphic->getId()) {
-        ip = bc->getBasePoint();
+        ip = blockClone->getBasePoint();
     }
 
     // copy content of block/insert to destination
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: copy content to the subcontainer");
-    for(auto* e: *i) {
+    for(auto* e: *insert) {
 
         if(!e) {
             RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::pasteInsert: nullptr entity in block");
@@ -717,20 +730,20 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
         if (e->rtti() == RS2::EntityInsert) {
             RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: process sub-insert for %s", ((RS_Insert*)e)->getName().toLatin1().data());
-            if (!pasteContainer(e, (RS_EntityContainer*)bc, blocksDict, ip)) {
+            if (!pasteContainer(e, blockClone, blocksDict, ip)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity to sub-insert");
                 return false;
             }
         } else {
-            if (!pasteEntity(e, (RS_EntityContainer*)bc)) {
+            if (!pasteEntity(e, blockClone)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity");
                 return false;
             }
         }
     }
 
-    ic->update();
-    ic->setSelected(false);
+    insertClone->update();
+    insertClone->setSelected(false);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: OK");
     return true;
