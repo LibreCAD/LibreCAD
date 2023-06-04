@@ -3124,6 +3124,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 case RS2::EntityDimDiametric:
                 case RS2::EntityDimAngular:
                 case RS2::EntityDimLeader:
+                case RS2::EntityDimArc:
                     rl = RS2::ResolveNone;
                     resolveLayer = true;
                     resolvePen = false;

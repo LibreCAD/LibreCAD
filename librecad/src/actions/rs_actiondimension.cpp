@@ -96,6 +96,7 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type) {
 	case RS2::ActionDimAngular:
 	case RS2::ActionDimDiametric:
 	case RS2::ActionDimRadial:
+	case RS2::ActionDimArc:
 		return true;
 	default:
 		return false;

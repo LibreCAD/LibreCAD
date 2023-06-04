@@ -1918,6 +1918,7 @@ bool RS_EntityContainer::ignoredOnModification() const
     case RS2::EntityDimDiametric: /**< Diametric Dimension */
     case RS2::EntityDimAngular:   /**< Angular Dimension */
     case RS2::EntityDimLeader:    /**< Leader Dimension */
+    case RS2::EntityDimArc:       /**< Arc Dimension */
     case RS2::EntityHatch:
         return true;
     default:
