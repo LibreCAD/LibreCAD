@@ -31,18 +31,18 @@
 
 struct LC_DimArcData
 {
-    LC_DimArcData();
+    LC_DimArcData() = default;
 
     LC_DimArcData(const LC_DimArcData& input_dimArcData);
 
-    LC_DimArcData( const double& input_radius, 
-                   const double& input_arcLength,
+    LC_DimArcData( double input_radius,
+                   double input_arcLength,
                    const RS_Vector& input_centre, 
                    const RS_Vector& input_endAngle, 
                    const RS_Vector& input_startAngle);
 
-    double radius;
-    double arcLength;
+    double radius = 0.;
+    double arcLength = 0.;
 
     RS_Vector centre;
     RS_Vector endAngle;
@@ -127,10 +127,10 @@ class LC_DimArc : public RS_Dimension
         RS_Vector dimStartPoint;
         RS_Vector dimEndPoint;
 
-        RS_Line* extLine1;
-        RS_Line* extLine2;
-        RS_Arc*  dimArc1;
-        RS_Arc*  dimArc2;
+        RS_Line* extLine1 = nullptr;
+        RS_Line* extLine2 = nullptr;
+        RS_Arc*  dimArc1 = nullptr;
+        RS_Arc*  dimArc2 = nullptr;
 
         void calcDimension();
 

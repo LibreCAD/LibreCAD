@@ -27,64 +27,48 @@
 #include <iostream>
 
 #include "rs_arc.h"
-#include "rs_line.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_line.h"
 #include "rs_mtext.h"
 #include "rs_solid.h"
-#include "rs_graphic.h"
+#include "rs_units.h"
 
 #include "lc_dimarc.h"
 
 
-LC_DimArcData::LC_DimArcData()
-               :
-               radius     (0.0), 
-               arcLength  (0.0), 
-               centre     (false), 
-               endAngle   (false), 
-               startAngle (false)
-{
-}
-
-
 LC_DimArcData::LC_DimArcData(const LC_DimArcData &input_dimArcData)
-               :
-               radius     (input_dimArcData.radius), 
-               arcLength  (input_dimArcData.arcLength), 
-               centre     (input_dimArcData.centre), 
-               endAngle   (input_dimArcData.endAngle), 
-               startAngle (input_dimArcData.startAngle)
+    :
+      radius     (input_dimArcData.radius),
+      arcLength  (input_dimArcData.arcLength),
+      centre     (input_dimArcData.centre),
+      endAngle   (input_dimArcData.endAngle),
+      startAngle (input_dimArcData.startAngle)
 {
 }
 
 
-LC_DimArcData::LC_DimArcData( const double& input_radius, 
-                              const double& input_arcLength, 
-                              const RS_Vector& input_centre, 
-                              const RS_Vector& input_endAngle, 
+LC_DimArcData::LC_DimArcData( double input_radius,
+                              double input_arcLength,
+                              const RS_Vector& input_centre,
+                              const RS_Vector& input_endAngle,
                               const RS_Vector& input_startAngle)
-               :
-               radius     (input_radius), 
-               arcLength  (input_arcLength), 
-               centre     (input_centre), 
-               endAngle   (input_endAngle), 
-               startAngle (input_startAngle)
+    :
+      radius     (input_radius),
+      arcLength  (input_arcLength),
+      centre     (input_centre),
+      endAngle   (input_endAngle),
+      startAngle (input_startAngle)
 {
 }
 
 
 LC_DimArc::LC_DimArc( RS_EntityContainer* parent, 
-                      const RS_DimensionData& input_commonDimData, 
+                      const RS_DimensionData& input_commonDimData,
                       const LC_DimArcData& input_dimArcData)
-                      :
-                      RS_Dimension (parent, input_commonDimData), 
-                      dimArcData (input_dimArcData), 
-                      dimStartPoint (false), 
-                      dimEndPoint (false), 
-                      extLine1 (nullptr), 
-                      extLine2 (nullptr), 
-                      dimArc1 (nullptr), 
-                      dimArc2 (nullptr)
+    :
+      RS_Dimension (parent, input_commonDimData),
+      dimArcData (input_dimArcData)
 {
     update();
 }
@@ -332,25 +316,25 @@ void LC_DimArc::updateDim(bool autoText /* = false */)
 
     const double cornerLeftX
     {
-        std::min(std::min(std::min(textRectCorners[0].x, textRectCorners[1].x), textRectCorners[2].x), textRectCorners[3].x)
+        std::min({textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x})
     };
 
     const double cornerRightX
     {
-        std::max(std::max(std::max(textRectCorners[0].x, textRectCorners[1].x), textRectCorners[2].x), textRectCorners[3].x)
+        std::max({textRectCorners[0].x, textRectCorners[1].x, textRectCorners[2].x, textRectCorners[3].x})
     };
 
     const double cornerBottomY
     {
-        std::min(std::min(std::min(textRectCorners[0].y, textRectCorners[1].y), textRectCorners[2].y), textRectCorners[3].y)
+        std::min({textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y})
     };
 
     const double cornerTopY
     {
-        std::max(std::max(std::max(textRectCorners[0].y, textRectCorners[1].y), textRectCorners[2].y), textRectCorners[3].y)
+        std::max({textRectCorners[0].y, textRectCorners[1].y, textRectCorners[2].y, textRectCorners[3].y})
     };
 
-    const double deltaOffset { 1.0E-2 };
+    constexpr double deltaOffset { 1.0E-2 };
 
     while (((dimArc1->getEndpoint().x < cornerLeftX)   || (dimArc1->getEndpoint().x > cornerRightX) 
     ||      (dimArc1->getEndpoint().y < cornerBottomY) || (dimArc1->getEndpoint().y > cornerTopY))
