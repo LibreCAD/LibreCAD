@@ -483,7 +483,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/icons/text.svg"), tr("&MText"), agm->other);
+    action = new QAction(QIcon(":/icons/mtext.svg"), tr("&MText"), agm->other);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
@@ -586,6 +586,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyDelete"] = action;
 
     action = new QAction(tr("Delete Freehand"), agm->modify);
+    action->setIcon(QIcon(":/icons/delete_freehand.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
@@ -820,14 +821,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Layer ~]>
 
-    action = new QAction(tr("&Show all"), agm->layer);
+    action = new QAction(tr("&Show all layers"), agm->layer);
     action->setIcon(QIcon(":/ui/visibleblock.png"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotLayersDefreezeAll()));
     action->setObjectName("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(tr("&Hide all"), agm->layer);
+    action = new QAction(tr("&Hide all layers"), agm->layer);
     action->setIcon(QIcon(":/ui/hiddenblock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));
@@ -899,14 +900,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Block ~]>
 
-    action = new QAction(tr("&Show all"), agm->block);
+    action = new QAction(tr("&Show all blocks"), agm->block);
     action->setIcon(QIcon(":/ui/blockdefreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksDefreezeAll()));
     action->setObjectName("BlocksDefreezeAll");
     a_map["BlocksDefreezeAll"] = action;
 
-    action= new QAction(tr("&Hide all"), agm->block);
+    action= new QAction(tr("&Hide all blocks"), agm->block);
     action->setIcon(QIcon(":/ui/blockfreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksFreezeAll()));
