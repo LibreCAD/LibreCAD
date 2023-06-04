@@ -785,7 +785,7 @@ void RS_EntityContainer::addRectangle(RS_Vector const& v0, RS_Vector const& v1)
  * Returns the first entity or nullptr if this graphic is empty.
  * @param level
  */
-RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
+RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) const {
     RS_Entity* e = nullptr;
     entIdx = -1;
     switch (level) {
@@ -867,7 +867,7 @@ RS_Entity* RS_EntityContainer::firstEntity(RS2::ResolveLevel level) {
  *              \li \p 1 (default) only Groups are resolved
  *              \li \p 2 all Entity Containers are resolved
  */
-RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
+RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) const {
     RS_Entity* e = nullptr;
     if(!entities.size()) return nullptr;
     entIdx = entities.size()-1;
@@ -922,7 +922,7 @@ RS_Entity* RS_EntityContainer::lastEntity(RS2::ResolveLevel level) {
  * Returns the next entity or container or \p nullptr if the last entity
  * returned by \p next() was the last entity in the container.
  */
-RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
+RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) const {
 
     //set entIdx pointing in next entity and check if is out of range
     ++entIdx;
@@ -1026,7 +1026,7 @@ RS_Entity* RS_EntityContainer::nextEntity(RS2::ResolveLevel level) {
  * Returns the prev entity or container or \p nullptr if the last entity
  * returned by \p prev() was the first entity in the container.
  */
-RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) {
+RS_Entity* RS_EntityContainer::prevEntity(RS2::ResolveLevel level) const {
     //set entIdx pointing in prev entity and check if is out of range
     --entIdx;
     switch (level) {
