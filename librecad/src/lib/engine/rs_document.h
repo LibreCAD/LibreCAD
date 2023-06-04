@@ -29,11 +29,11 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
-#include "rs_layerlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
 
 class RS_BlockList;
+class RS_LayerList;
 
 /**
  * Base class for documents. Documents can be either graphics or
@@ -85,7 +85,7 @@ public:
     /**
      * Sets the currently active drawing pen to p.
      */
-    void setActivePen(RS_Pen p) {
+    void setActivePen(const RS_Pen& p) {
         activePen = p;
     }
 
@@ -107,14 +107,14 @@ public:
     /**
      * Sets file name for the document currently loaded.
      */
-    void setFilename(const QString& fn) {
-        filename = fn;
+    void setFilename(QString fn) {
+        filename = std::move(fn);
     }
 
 	/**
 	 * Sets the documents modified status to 'm'.
 	 */
-	virtual void setModified(bool m) {
+    void setModified(bool m) {
 		//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
 		modified = m;
 	}
@@ -123,7 +123,7 @@ public:
 	 * @retval true The document has been modified since it was last saved.
 	 * @retval false The document has not been modified since it was last saved.
 	 */
-    virtual bool isModified() const {
+    bool isModified() const {
         return modified;
     }
 

@@ -142,8 +142,8 @@ public:
 	 * sets a new name for the block. Only called by blocklist to
 	 * assure that block names stay unique.
 	 */
-    void setName(const QString& n) {
-		data.name = n;
+    void setName(QString newName) {
+        data.name = std::move(newName);
     }
     
 	/**
