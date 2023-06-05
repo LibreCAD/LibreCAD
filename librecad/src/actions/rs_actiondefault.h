@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 

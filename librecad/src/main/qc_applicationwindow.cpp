@@ -1023,7 +1023,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
         // set pen from pen toolbar
         slotPenChanged(penToolBar->getPen());
 
-        pen_wiz->mdi_win = m;
+        pen_wiz->setMdiWindow(m);
 
         // update toggle button status:
         if (m->getGraphic()) {
