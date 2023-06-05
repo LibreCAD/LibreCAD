@@ -754,9 +754,9 @@ void RS_EntityContainer::updateSplines() {
     for (RS_Entity* e: entities){
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntitySpline  /*&& e->getParent()==this*/) {
-            ((RS_Spline*)e)->update();
+            e->update();
         } else if (e->isContainer() && e->rtti()!=RS2::EntityHatch) {
-            ((RS_EntityContainer*)e)->updateSplines();
+            static_cast<RS_EntityContainer*>(e)->updateSplines();
         }
     }
 

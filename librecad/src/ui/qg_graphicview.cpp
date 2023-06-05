@@ -84,6 +84,11 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
 void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
 {
     RS_Entity* entity = snapEntity(view, event);
+
+    // snap to the top selected parent
+    while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
+        entity = entity->getParent();
+
     // Cursor selection range CURSOR_SIZE
     if (entity != nullptr) {
         RS_EntityContainer* container = view.getContainer();

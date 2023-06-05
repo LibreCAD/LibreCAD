@@ -920,11 +920,11 @@ void RS_Graphic::centerToPage() {
 	auto s=getSize();
 	auto sMin=getMin();
     /** avoid zero size, bug#3573158 */
-    if(fabs(s.x)<RS_TOLERANCE) {
+    if(std::abs(s.x)<RS_TOLERANCE) {
         s.x=10.;
         sMin.x=-5.;
     }
-    if(fabs(s.y)<RS_TOLERANCE) {
+    if(std::abs(s.y)<RS_TOLERANCE) {
         s.y=10.;
         sMin.y=-5.;
     }
@@ -942,28 +942,27 @@ void RS_Graphic::centerToPage() {
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
 bool RS_Graphic::fitToPage() {
-    bool ret(true);
+    bool ret = true;
     RS_Vector ps = getPrintAreaSize();
     RS_Vector s = getSize();
     /** avoid zero size, bug#3573158 */
-    if(fabs(s.x)<RS_TOLERANCE) s.x=10.;
-    if(fabs(s.y)<RS_TOLERANCE) s.y=10.;
+    if(std::abs(s.x)<RS_TOLERANCE) s.x=10.;
+    if(std::abs(s.y)<RS_TOLERANCE) s.y=10.;
     double fx = RS_MAXDOUBLE;
     double fy = RS_MAXDOUBLE;
-    double fxy;
     //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
-	if (fabs(s.x) > RS_TOLERANCE) {
+    if (std::abs(s.x) > RS_TOLERANCE) {
         fx = ps.x / s.x;
         // ret=false;
     }
-	if (fabs(s.y) > RS_TOLERANCE) {
+    if (std::abs(s.y) > RS_TOLERANCE) {
         fy = ps.y / s.y;
         // ret=false;
     }
 
-    fxy = std::min(fx, fy);
+    double fxy = std::min(fx, fy);
     if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
         setPaperSize(
                     RS_Units::convert(RS_Vector(210.,297.)
