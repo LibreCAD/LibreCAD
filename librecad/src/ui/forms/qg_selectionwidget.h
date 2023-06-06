@@ -54,10 +54,8 @@ public slots:
 protected slots:
     virtual void languageChange();
 
-
-    private:
-
-        bool auxDataMode;
-        QTimer *timer;
+private:
+    bool auxDataMode    {false};
+    QTimer *timer       {nullptr};
 
 };
