@@ -53,8 +53,8 @@ struct RS_BlockData {
 	RS_Vector basePoint;
 
 	bool frozen {false};              //!< Frozen flag
-	bool visibleInBlockList {true};   //!< Visible in block list
-	bool selectedInBlockList {false}; //!< selected in block list
+    mutable bool visibleInBlockList {true};   //!< Visible in block list
+    mutable bool selectedInBlockList {false}; //!< selected in block list
 };
 
 
@@ -199,7 +199,7 @@ public:
      *
      * @param v true: selected, false: deselected
      */
-    void selectedInBlockList(bool v);
+    void selectedInBlockList(bool v) const;
 
     /**
      * Returns selection state of the block in block list

@@ -23,10 +23,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#ifndef QG_SELECTIONWIDGET_H
-#define QG_SELECTIONWIDGET_H
+
+
+#pragma once
+
 
 #include "ui_qg_selectionwidget.h"
+
+
+class QTimer;
+
 
 class QG_SelectionWidget : public QWidget, public Ui::QG_SelectionWidget
 {
@@ -39,10 +45,19 @@ public:
 public slots:
     virtual void setNumber( int n );
     virtual void setTotalLength(double l );
+    virtual void flashAuxData( const QString& header, 
+                               const QString& data, 
+                               const unsigned int& timeout, 
+                               const bool& flash);
+    void removeAuxData();
 
 protected slots:
     virtual void languageChange();
 
-};
 
-#endif // QG_SELECTIONWIDGET_H
+    private:
+
+        bool auxDataMode;
+        QTimer *timer;
+
+};

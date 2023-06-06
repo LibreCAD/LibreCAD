@@ -71,7 +71,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
      */
     beginResetModel();
     listBlock.clear();
-    if (bl == NULL){
+    if (bl == nullptr){
         endResetModel();
         return;
     }
@@ -89,7 +89,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 
 RS_Block *QG_BlockModel::getBlock( int row ){
     if ( row >= listBlock.size() || row < 0)
-        return NULL;
+        return nullptr;
     return listBlock.at(row);
 }
 
@@ -136,10 +136,10 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     setObjectName(name);
     actionHandler = ah;
-    blockList = NULL;
-    lastBlock = NULL;
+    blockList = nullptr;
+    lastBlock = nullptr;
 
-    blockModel = new QG_BlockModel;
+    blockModel = new QG_BlockModel(this);
     blockView = new QTableView(this);
     blockView->setModel (blockModel);
     blockView->setShowGrid (false);
@@ -242,13 +242,6 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
             this, &QG_BlockWidget::slotSelectionChanged);
 }
 
-/**
- * Destructor
- */
-QG_BlockWidget::~QG_BlockWidget() {
-    delete blockView;
-    delete blockModel;
-}
 
 /**
  * Updates the block box from the blocks in the graphic.
@@ -256,21 +249,15 @@ QG_BlockWidget::~QG_BlockWidget() {
 void QG_BlockWidget::update() {
     RS_DEBUG->print("QG_BlockWidget::update()");
 
-    RS_Block* activeBlock;
-
-    if (blockList) {
-        activeBlock = blockList->getActive();
-    } else {
-        activeBlock = NULL;
-    }
-
-    blockModel->setBlockList(blockList);
-
-    if (blockList==NULL) {
-        RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
+    if (blockList==nullptr) {
+        RS_DEBUG->print("QG_BlockWidget::update(): blockList is nullptr");
         blockModel->setActiveBlock(nullptr);
         return;
     }
+
+    RS_Block* activeBlock = (blockList != nullptr) ? blockList->getActive() : nullptr;
+
+    blockModel->setBlockList(blockList);
 
     RS_Block* b = lastBlock;
     activateBlock(activeBlock);
@@ -306,7 +293,7 @@ void QG_BlockWidget::restoreSelections() {
 void QG_BlockWidget::activateBlock(RS_Block* block) {
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==NULL || blockList==NULL) {
+    if (block==nullptr || blockList==nullptr) {
         return;
     }
 
@@ -338,7 +325,7 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
  * Called when the user activates (highlights) a block.
  */
 void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
-    if (!blockIdx.isValid() || blockList==NULL)
+    if (!blockIdx.isValid() || blockList==nullptr)
         return;
 
     RS_Block * block = blockModel->getBlock( blockIdx.row() );

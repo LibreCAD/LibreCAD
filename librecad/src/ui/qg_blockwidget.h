@@ -50,7 +50,6 @@ public:
         LAST
     };
     QG_BlockModel(QObject * parent = 0);
-	~QG_BlockModel() = default;
     Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
     int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
@@ -83,7 +82,6 @@ class QG_BlockWidget: public QWidget, public RS_BlockListListener {
 public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
                    const char* name=nullptr, Qt::WindowFlags f = {});
-    ~QG_BlockWidget();
 
     void setBlockList(RS_BlockList* blockList) {
         this->blockList = blockList;
@@ -124,13 +122,13 @@ protected:
 	virtual void keyPressEvent(QKeyEvent* e);
 
 private:
-    RS_BlockList* blockList;
-    QLineEdit* matchBlockName;
-    QTableView* blockView;
-    QG_BlockModel *blockModel;
-    RS_Block* lastBlock;
+    RS_BlockList* blockList = nullptr;
+    QLineEdit* matchBlockName = nullptr;
+    QTableView* blockView = nullptr;
+    QG_BlockModel *blockModel = nullptr;
+    RS_Block* lastBlock = nullptr;
 
-    QG_ActionHandler* actionHandler;
+    QG_ActionHandler* actionHandler = nullptr;
 
     void restoreSelections();
 };

@@ -310,7 +310,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_block->setWidget(block_widget);
 
     QDockWidget* dock_library = new QDockWidget(main_window);
-    dock_library->setWindowTitle(QC_ApplicationWindow::tr("Library Browser"));
+    dock_library->setWindowTitle(tr("Library Browser"));
     dock_library->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     dock_library->setObjectName("library_dockwidget");
     library_widget = new QG_LibraryWidget(dock_library, "Library");

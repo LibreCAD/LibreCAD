@@ -1407,7 +1407,7 @@ void QC_ApplicationWindow::slotToggleTab()
  * Called when something changed in the pen tool bar
  * (e.g. color, width, style).
  */
-void QC_ApplicationWindow::slotPenChanged(const RS_Pen& pen) {
+void QC_ApplicationWindow::slotPenChanged(RS_Pen pen) {
     RS_DEBUG->print("QC_ApplicationWindow::slotPenChanged() begin");
 
     RS_DEBUG->print("Setting active pen...");
@@ -3638,4 +3638,11 @@ QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
     }
 
     return wwd;
+}
+
+void QC_ApplicationWindow::showBlockActivated(const RS_Block *block)
+{
+    if (blockWidget != nullptr && block != nullptr) {
+        blockWidget->activateBlock(const_cast<RS_Block*>(block));
+    }
 }

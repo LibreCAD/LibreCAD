@@ -33,37 +33,41 @@
 
 #include <QMap>
 
-#include "mainwindowx.h"
 #include "rs.h"
+#include "rs_pen.h"
+#include "rs_snapper.h"
+#include "mainwindowx.h"
 
 
-class QMdiArea;
-class QMdiSubWindow;
-class QC_MDIWindow;
-class QG_LibraryWidget;
-class QG_CadToolBar;
-class QG_SnapToolBar;
+
+class LC_ActionGroupManager;
+class LC_CustomToolbar;
+class LC_PenWizard;
+class LC_SimpleTests;
 class QC_DialogFactory;
-class QG_LayerWidget;
+class QC_MDIWindow;
+class QC_PluginInterface;
+class QG_ActionHandler;
+class QG_ActiveLayerName;
 class QG_BlockWidget;
+class QG_CadToolBar;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
+class QG_LayerWidget;
+class QG_LibraryWidget;
 class QG_MouseWidget;
-class QG_SelectionWidget;
-class QG_RecentFiles;
 class QG_PenToolBar;
-class QC_PluginInterface;
-class QG_ActiveLayerName;
-class LC_SimpleTests;
-class LC_CustomToolbar;
-class QG_ActionHandler;
+class QG_RecentFiles;
+class QG_SelectionWidget;
+class QG_SnapToolBar;
+class QMdiArea;
+class QMdiSubWindow;
+class RS_Block;
 class RS_Document;
 class RS_GraphicView;
 class RS_Pen;
-struct RS_SnapMode;
 class TwoStackedLabels;
-class LC_ActionGroupManager;
-class LC_PenWizard;
+struct RS_SnapMode;
 
 struct DockAreas
 {
@@ -84,7 +88,13 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
-    ~QC_ApplicationWindow() override;
+
+    enum
+    {
+        DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT = 2000
+    };
+
+    ~QC_ApplicationWindow();
 
     void initSettings();
     void storeSettings();
@@ -92,8 +102,7 @@ public:
     bool queryExit(bool force);
 
     /** Catch hotkey for giving focus to command line. */
-    void keyPressEvent(QKeyEvent* e) override;
-    void dropEvent(QDropEvent* e) override;
+    virtual void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
@@ -129,8 +138,8 @@ public slots:
     void slotToggleTab();
     void slotZoomAuto();
 
-    void slotPenChanged(const RS_Pen& p);
-    //void slotSnapsChanged(const RS_SnapMode& s);
+    void slotPenChanged(RS_Pen p);
+    //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
@@ -197,6 +206,8 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
+    //void invokeLinkList();
+
     void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);
@@ -235,9 +246,9 @@ signals:
 
 public:
     /**
-     * @return accessor for the singleton application window.
+     * @return Pointer to application window.
      */
-    static std::unique_ptr<QC_ApplicationWindow>& getAppWindow();
+    static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
 
     /**
      * @return Pointer to MdiArea.
@@ -273,7 +284,7 @@ public:
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-    void createNewDocument(const QString& fileName = {}, RS_Document* doc=nullptr);
+	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
     void redrawAll();
     void updateGrids();
@@ -298,20 +309,20 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    // Highlight the active block in the block widget
+    void showBlockActivated(const RS_Block* block);
+
+
 protected:
     void closeEvent(QCloseEvent*) override;
-    void dragEnterEvent(QDragEnterEvent * event) override;
+    //! \{ accept drop files to open
+    virtual void dropEvent(QDropEvent* e) override;
+    virtual void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
 
 private:
-    // singleton
     QC_ApplicationWindow();
-
-    QC_ApplicationWindow(const QC_ApplicationWindow&) = delete;
-    QC_ApplicationWindow& operator= (const QC_ApplicationWindow&) = delete;
-    QC_ApplicationWindow(QC_ApplicationWindow&&) = delete;
-    QC_ApplicationWindow& operator= (QC_ApplicationWindow&&) = delete;
 
     QMenu* createPopupMenu() override;
 
@@ -325,7 +336,7 @@ private:
 	void doClose(QC_MDIWindow* w, bool activateNext = true);
 	void doActivate(QMdiSubWindow* w);
 	int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
-	void enableFileActions(QC_MDIWindow* w);
+    void enableFileActions(QC_MDIWindow* w);
 
     /**
      * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
@@ -345,6 +356,7 @@ private:
     LC_ActionGroupManager* ag_manager {nullptr};
 
     /** Pointer to the application window (this). */
+    static QC_ApplicationWindow* appWindow;
     QTimer *autosaveTimer {nullptr};
 
     QG_ActionHandler* actionHandler {nullptr};
@@ -388,6 +400,8 @@ private:
 
     // --- Menus ---
     QMenu* windowsMenu {nullptr};
+    QMenu* scriptMenu {nullptr};
+    QMenu* helpMenu {nullptr};
     QMenu* testMenu {nullptr};
     QMenu* file_menu {nullptr};
 
