@@ -31,6 +31,8 @@
 #include <cmath>
 #include <muParser.h>
 #include <QString>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QDebug>
 
 #include "rs.h"
@@ -44,7 +46,21 @@
 
 
 namespace {
-constexpr double m_piX2 = M_PI*2; //2*PI
+    constexpr double m_piX2 = M_PI*2; //2*PI
+    const QRegularExpression unitreg(
+        R"((?P<sign>^-?))"
+        R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS
+            R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)"
+            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|)"
+        R"((?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)"        // Metric
+            R"((?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?)"
+            R"((?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|)"
+        R"((?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"              // Imperial
+            R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+            R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
+                R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"                // rational inches
+            R"((?:inches|inch|in|"))?$)))"
+	);
 }
 
 /**
@@ -264,7 +280,50 @@ double RS_Math::eval(const QString& expr, double def) {
 
     return res;
 }
+/**
+ * Helper function for derationalize; convert one unit to base unit using
+ * provided regex match, named group, conversion factor, and default value.
+ */
+double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
+    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString("%1").arg(defval);
+    return input.toDouble() * factor;
+}
 
+/**
+ * Convert a string containing rational numbers (fractions) and / or
+ * various unit symbols into the current user unit (cm or inch).
+ * Note: only the gui cares about units, so all matched symbols are used naively.
+ */
+QString RS_Math::derationalize(const QString& expr) {
+	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
+
+	QRegularExpressionMatch match = unitreg.match(expr);
+	if (match.hasMatch()){
+		RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+			"RS_Math::derationalize: matches = '%s'", match.capturedTexts().join(", ").toLatin1().data());
+		double total = 0.0;
+		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
+
+        // convert_unit(<match obj ref>, <regex group name>, <unit->base conversion factor>, <default value>)
+        total += convert_unit(match, "degrees", 1.0, 0.0);
+        total += convert_unit(match, "minutes", 1/60.0, 0.0);
+        total += convert_unit(match, "seconds", 1/3600.0, 0.0);
+        total += convert_unit(match, "meters", 100.0, 0.0);
+        total += convert_unit(match, "centis", 1.0, 0.0);
+        total += convert_unit(match, "millis", 0.1, 0.0);
+        total += convert_unit(match, "yards", 36.0, 0.0);
+        total += convert_unit(match, "feet", 12.0, 0.0);
+        total += convert_unit(match, "inches", 1.0, 0.0);
+        total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
+		total *= sign;
+
+		RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
+		return QString("%1").arg(total);		
+	}
+	else {
+		return expr;
+	}
+}
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -277,14 +336,17 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         *ok = false;
         return 0.0;
     }
+
+    QString derationalized = derationalize(expr);
+
     double ret(0.);
     try{
         mu::Parser p;
         p.DefineConst(_T("pi"),M_PI);
 #ifdef _UNICODE
-        p.SetExpr(expr.toStdWString());
+        p.SetExpr(derationalized.toStdWString());
 #else
-        p.SetExpr(expr.toStdString());
+        p.SetExpr(derationalized.toStdString());
 #endif
         ret=p.Eval();
         *ok=true;
