@@ -702,10 +702,10 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData> *data){
 
 }
 
-void Plugin_Entity::move(QPointF offset){
+void Plugin_Entity::move(QPointF offset, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->move( RS_Vector(offset.x(), offset.y()) );
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->move( RS_Vector(offset.x(), offset.y()) );
@@ -714,12 +714,11 @@ void Plugin_Entity::move(QPointF offset){
         this->entity = ne;
 }
 
-void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, double angle)
-{
+void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp) {
 	RS_Entity *ne = entity->clone();
 	ne->move( RS_Vector(offset.x(), offset.y()) );
 	ne->rotate( RS_Vector(center.x(), center.y()) , angle);
-	bool ok = dpi->addToUndo(entity, ne);
+	bool ok = dpi->addToUndo(entity, ne, disp);
 	//if doc interface fails to handle for undo only modify original entity
 	if (!ok){
 		entity->move( RS_Vector(offset.x(), offset.y()) );
@@ -729,10 +728,10 @@ void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, dou
 		this->entity = ne;
 }
 
-void Plugin_Entity::rotate(QPointF center, double angle){
+void Plugin_Entity::rotate(QPointF center, double angle, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->rotate( RS_Vector(center.x(), center.y()) , angle);
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->rotate( RS_Vector(center.x(), center.y()) , angle);
@@ -741,11 +740,11 @@ void Plugin_Entity::rotate(QPointF center, double angle){
         this->entity = ne;
 }
 
-void Plugin_Entity::scale(QPointF center, QPointF factor){
+void Plugin_Entity::scale(QPointF center, QPointF factor, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->scale( RS_Vector(center.x(), center.y()),
                 RS_Vector(factor.x(), factor.y()) );
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->scale( RS_Vector(center.x(), center.y()),
@@ -767,14 +766,17 @@ doc(d)
 {
 }
 
-bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified){
+bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified,
+				     DPI::Disposition how) {
     if (doc) {
         doc->addEntity(modified);
         LC_UndoSection undo(doc);
         if (current->isSelected())
             current->setSelected(false);
-        current->changeUndoState();
-        undo.addUndoable(current);
+	if (how == DPI::DELETE_ORIGINAL) {
+	    current->changeUndoState();
+	    undo.addUndoable(current);
+	}
         undo.addUndoable(modified);
         return true;
     } else
