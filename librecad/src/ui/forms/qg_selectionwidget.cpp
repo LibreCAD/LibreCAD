@@ -46,7 +46,7 @@ QG_SelectionWidget::QG_SelectionWidget(QWidget* parent, const char* name, Qt::Wi
 
     timer = new QTimer(this);
     timer->setSingleShot(true);
-    timer->callOnTimeout(this, &QG_SelectionWidget::removeAuxData);
+    connect( timer, &QTimer::timeout, this, &QG_SelectionWidget::removeAuxData);
 }
 
 /*
