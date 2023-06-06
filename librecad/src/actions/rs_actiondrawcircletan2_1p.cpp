@@ -19,7 +19,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_actiondrawcircletan2_1p.h"
 
 #include<vector>
 
@@ -31,9 +30,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "lc_quadratic.h"
 #include "rs_point.h"
 #include "rs_preview.h"
+#include "lc_quadratic.h"
+
+#include "rs_actiondrawcircletan2_1p.h"
 
 namespace {
 
@@ -139,9 +140,16 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
 	for(const RS_Vector& vp: list){
 		auto ds=vp.distanceTo(pPoints->point)-RS_TOLERANCE;
         bool validBranch(true);
-        for(int j=0;j<2;j++){
-            if(pPoints->circles[j]->rtti()==RS2::EntityCircle||pPoints->circles[j]->rtti()==RS2::EntityArc){
-                if( vp.distanceTo(pPoints->circles[j]->getCenter()) <= ds) {
+        for(RS_AtomicEntity* cirlce : pPoints->circles){
+            // issue #1288, pull request #1445 by melwyncarlo: ignore center on circles
+            double distance = RS_MAXDOUBLE;
+            cirlce->getNearestPointOnEntity(vp, false, &distance);
+            if (distance < ds) {
+                validBranch=false;
+                break;
+            }
+            if(cirlce->rtti()==RS2::EntityCircle||cirlce->rtti()==RS2::EntityArc){
+                if( vp.distanceTo(cirlce->getCenter()) <= ds) {
                     validBranch=false;
                     break;
                 }
@@ -149,7 +157,7 @@ bool RS_ActionDrawCircleTan2_1P::getCenters()
         }
 		if(validBranch)  pPoints->centers.push_back(vp);
     }
-	return pPoints->centers.size()>0;
+    return pPoints->centers.size() > 0;
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
@@ -184,7 +192,7 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
     return true;
 }
 
-RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
+RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) const {
 	RS_Entity* ret=nullptr;
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
 	if (!en) return ret;
@@ -192,7 +200,7 @@ RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
 	for(auto p: pPoints->circles){
 		if(p && en->getId() == p->getId()) return ret; //do not pull in the same line again
     }
-	if(en->getParent() && en->getParent()->ignoredOnModification()){
+    if(en->getParent() != nullptr && en->getParent()->ignoredOnModification()){
 		return nullptr;
 	}
 	return en;
@@ -208,7 +216,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
         {
             pPoints->circles.resize(getStatus());
             RS_AtomicEntity*  en = static_cast<RS_AtomicEntity*>(catchCircle(e));
-			if (!en) return;
+            if (en == nullptr) return;
 //            circle = static_cast<RS_AtomicEntity*>(en);
             en->setHighlighted(true);
 			pPoints->circles.push_back(en);
