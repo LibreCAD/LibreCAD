@@ -62,11 +62,15 @@ void RS_ActionZoomPan::trigger() {
     if(getStatus()==SetPanEnd)
     {
         finish(false);
-        graphicView->setPanning(false);
-        graphicView->redraw();
     }
 }
 
+
+void RS_ActionZoomPan::finish(bool updateTB) {
+    RS_ActionInterface::finish(updateTB);
+    graphicView->setPanning(false);
+    graphicView->redraw();
+}
 
 
 void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
