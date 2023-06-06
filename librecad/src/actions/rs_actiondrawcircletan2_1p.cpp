@@ -192,7 +192,7 @@ bool RS_ActionDrawCircleTan2_1P::preparePreview(){
     return true;
 }
 
-RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) const {
+RS_Entity* RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent* e) {
 	RS_Entity* ret=nullptr;
     RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
 	if (!en) return ret;
