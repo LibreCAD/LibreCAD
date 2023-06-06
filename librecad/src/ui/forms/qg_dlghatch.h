@@ -35,7 +35,7 @@ class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_DlgHatch();
 
     void saveSettings();

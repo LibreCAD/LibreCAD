@@ -22,38 +22,43 @@
 **
 **********************************************************************/
 
+#include <map>
+
 #include "lc_printing.h"
 
-QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat f)
-{
-    switch (f) {
-    case RS2::A0: return QPrinter::A0;
-    case RS2::A1: return QPrinter::A1;
-    case RS2::A2: return QPrinter::A2;
-    case RS2::A3: return QPrinter::A3;
-    case RS2::A4: return QPrinter::A4;
+namespace {
 
-    /* Removed ISO "B" and "C" series, C5E, Comm10E, DLE, (envelope sizes) */
+// supported paper formats should be added here
+const std::map<RS2::PaperFormat, QPrinter::PageSize> paperToPage = {
+    {
+            {RS2::A0, QPrinter::A0},
+            {RS2::A1, QPrinter::A1},
+            {RS2::A2, QPrinter::A2},
+            {RS2::A3, QPrinter::A3},
+            {RS2::A4, QPrinter::A4},
 
-    case RS2::Letter: return QPrinter::Letter;
-    case RS2::Legal:  return QPrinter::Legal;
-    case RS2::Tabloid: return QPrinter::Tabloid;
+                /* Removed ISO "B" and "C" series,  C5E,  Comm10E,  DLE,  (envelope sizes) */
 
-    //case RS2::Ansi_A: return QPrinter::AnsiA;
-    //case RS2::Ansi_B: return QPrinter::AnsiB;
-    case RS2::Ansi_C: return QPrinter::AnsiC;
-    case RS2::Ansi_D: return QPrinter::AnsiD;
-    case RS2::Ansi_E: return QPrinter::AnsiE;
+            {RS2::Letter, QPrinter::Letter},
+            {RS2::Legal,  QPrinter::Legal},
+            {RS2::Tabloid, QPrinter::Tabloid},
 
-    case RS2::Arch_A: return QPrinter::ArchA;
-    case RS2::Arch_B: return QPrinter::ArchB;
-    case RS2::Arch_C: return QPrinter::ArchC;
-    case RS2::Arch_D: return QPrinter::ArchD;
-    case RS2::Arch_E: return QPrinter::ArchE;
+                //case RS2::Ansi_A, QPrinter::AnsiA},
+                //case RS2::Ansi_B, QPrinter::AnsiB},
+            {RS2::Ansi_C, QPrinter::AnsiC},
+            {RS2::Ansi_D, QPrinter::AnsiD},
+            {RS2::Ansi_E, QPrinter::AnsiE},
 
-    default:
-        break;
+            {RS2::Arch_A, QPrinter::ArchA},
+            {RS2::Arch_B, QPrinter::ArchB},
+            {RS2::Arch_C, QPrinter::ArchC},
+            {RS2::Arch_D, QPrinter::ArchD},
+            {RS2::Arch_E, QPrinter::ArchE},
     }
+};
+}
 
-    return QPrinter::Custom;
+QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
+{
+    return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPrinter::Custom;
 }

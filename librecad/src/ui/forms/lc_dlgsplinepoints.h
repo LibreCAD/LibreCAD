@@ -14,7 +14,7 @@ class LC_DlgSplinePoints : public QDialog
 {
 	Q_OBJECT
 public:
-	LC_DlgSplinePoints(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+	LC_DlgSplinePoints(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
 	virtual ~LC_DlgSplinePoints();
 
 public slots:

@@ -64,7 +64,7 @@ public:
 	void updateMouseCursor() override;
 
 private:
-	bool select;
+    bool select = false;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

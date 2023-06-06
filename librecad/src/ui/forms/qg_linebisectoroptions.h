@@ -40,7 +40,7 @@ class QG_LineBisectorOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LineBisectorOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LineBisectorOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LineBisectorOptions();
 
 public slots:

@@ -31,7 +31,6 @@
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_line.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
 
@@ -51,14 +50,13 @@ struct RS_ActionZoomWindow::Points {
 RS_ActionZoomWindow::RS_ActionZoomWindow(RS_EntityContainer& container,
         RS_GraphicView& graphicView, bool keepAspectRatio)
         : RS_PreviewActionInterface("Zoom Window",
-							container, graphicView)
-		, pPoints(new Points{})
-		, keepAspectRatio(keepAspectRatio)
+                            container, graphicView)
+    , pPoints(std::make_unique<Points>())
+    , keepAspectRatio(keepAspectRatio)
 {
 }
 
 RS_ActionZoomWindow::~RS_ActionZoomWindow() = default;
-
 
 void RS_ActionZoomWindow::init(int status) {
     RS_DEBUG->print("RS_ActionZoomWindow::init()");
@@ -166,6 +164,5 @@ void RS_ActionZoomWindow::updateMouseButtonHints() {
 void RS_ActionZoomWindow::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::MagnifierCursor);
 }
-
 
 // EOF

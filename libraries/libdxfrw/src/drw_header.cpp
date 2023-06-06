@@ -1,6 +1,7 @@
 /******************************************************************************
 **  libDXFrw - Library to read/write DXF files (ascii & binary)              **
 **                                                                           **
+**  Copyright (C) 2016-2022 A. Stebich (librecad@mail.lordofbikes.de)        **
 **  Copyright (C) 2011-2015 José F. Soriano, rallazz@gmail.com               **
 **                                                                           **
 **  This library is free software, licensed under the terms of the GNU       **
@@ -28,12 +29,12 @@ void DRW_Header::addComment(std::string c){
     comments += c;
 }
 
-void DRW_Header::parseCode(int code, dxfReader *reader){
+bool DRW_Header::parseCode(int code, dxfReader *reader){
     if (nullptr == curr && 9 != code) {
         DRW_DBG("invalid header code: ");
         DRW_DBG(code);
         DRW_DBG("\n");
-        return;
+        return false;
     }
 
     switch (code) {
@@ -109,6 +110,8 @@ void DRW_Header::parseCode(int code, dxfReader *reader){
     default:
         break;
     }
+
+    return true;
 }
 
 void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
@@ -1377,11 +1380,11 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(70, varInt);
         else
             writer->writeInt16(70, 1);
+        int insunits {Units::None};
+        getInt("$INSUNITS", &insunits);     // get $INSUNITS now to evaluate $MEASUREMENT
+        getInt("$MEASUREMENT", &varInt);    // just remove the variable from list
         writer->writeString(9, "$MEASUREMENT");
-        if (getInt("$MEASUREMENT", &varInt))
-            writer->writeInt16(70, varInt);
-        else
-            writer->writeInt16(70, 1);
+        writer->writeInt16(70, measurement( insunits));
         writer->writeString(9, "$CELWEIGHT");
         if (getInt("$CELWEIGHT", &varInt))
             writer->writeInt16(370, varInt);
@@ -1404,10 +1407,7 @@ void DRW_Header::write(dxfWriter *writer, DRW::Version ver){
             writer->writeInt16(290, 0);
         if (ver > DRW::AC1014) {
             writer->writeString(9, "$INSUNITS");
-            if (getInt("$INSUNITS", &varInt))
-                writer->writeInt16(70, varInt);
-            else
-                writer->writeInt16(70, 0);
+            writer->writeInt16(70, insunits);       // already fetched above for $MEASUREMENT
         }
         writer->writeString(9, "$HYPERLINKBASE");
         if (getStr("$HYPERLINKBASE", &varStr))
@@ -1760,7 +1760,8 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     duint32 bitSize = 0;
     duint32 endBitPos = 160; //start bit: 16 sentinel + 4 size
     DRW_DBG("\nbyte size of data: "); DRW_DBG(size);
-    if (((version == DRW::AC1021 || version == DRW::AC1027 ) && maintenanceVersion > 3) || version >= DRW::AC1032 ) { //2010+
+    if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
+        || DRW::AC1032 <= version) { //2010+
         duint32 hSize = buf->getRawLong32();
         endBitPos += 32; //start bit: + 4 height size
         DRW_DBG("\n2010+ & MV> 3, height 32b: "); DRW_DBG(hSize);
@@ -2390,7 +2391,8 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     }
 
     buf->setPosition(size+16+4); //read size +16 start sentinel + 4 size
-    if (((version == DRW::AC1021 || version == DRW::AC1027 ) && maintenanceVersion > 3) || version >= DRW::AC1032 ) { //2010+
+    if ((DRW::AC1024 <= version && 3 < maintenanceVersion)
+        || DRW::AC1032 <= version) { //2010+
         buf->getRawLong32();//advance 4 bytes (hisize)
     }
     DRW_DBG("\nsetting position to: "); DRW_DBG(buf->getPosition());
@@ -2451,3 +2453,19 @@ bool DRW_Header::parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *hBbuf
     return result;
 }
 
+int DRW_Header::measurement(const int unit) {
+    switch (unit) {
+        case Units::Inch:
+        case Units::Foot:
+        case Units::Mile:
+        case Units::Microinch:
+        case Units::Mil:
+        case Units::Yard:
+            return Units::English;
+
+        default:
+            break;
+    }
+
+    return Units::Metric;
+}

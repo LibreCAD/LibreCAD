@@ -153,6 +153,7 @@ Section "Install Section" SecInstall
   createShortCut "$SMPROGRAMS\LibreCAD\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 
   ; Open Donate URL
+  IfSilent +2
   Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
 SectionEnd

@@ -49,7 +49,7 @@ RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
 						   container, graphicView)
 		,entity1(nullptr)
 		,entity2(nullptr)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyBevel;

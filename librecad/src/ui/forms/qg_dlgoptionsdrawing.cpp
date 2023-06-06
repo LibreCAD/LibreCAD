@@ -27,13 +27,16 @@
 
 #include <iostream>
 #include <cfloat>
+
 #include <QMessageBox>
+
+#include "rs_debug.h"
+#include "rs_math.h"
 #include "rs_filterdxfrw.h"
+#include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_font.h"
-#include "rs_debug.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -802,6 +805,7 @@ void QG_DlgOptionsDrawing::updateUnitLabels() {
     lDimUnit4->setText(sign);
     lDimUnit5->setText(sign);
     lDimUnit6->setText(sign);
+    lDimUnit7->setText(sign);
     //have to update paper size when unit changes
     updatePaperSize();
 }

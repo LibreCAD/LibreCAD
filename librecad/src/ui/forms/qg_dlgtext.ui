@@ -1528,6 +1528,39 @@
    <header>qg_fontbox.h</header>
   </customwidget>
  </customwidgets>
+ <tabstops>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>bClear</tabstop>
+  <tabstop>bLoad</tabstop>
+  <tabstop>bSave</tabstop>
+  <tabstop>bCut</tabstop>
+  <tabstop>bCopy</tabstop>
+  <tabstop>bPaste</tabstop>
+  <tabstop>teText</tabstop>
+  <tabstop>leHeight</tabstop>
+  <tabstop>leAngle</tabstop>
+  <tabstop>leOblique</tabstop>
+  <tabstop>leWidthRel</tabstop>
+  <tabstop>bTL</tabstop>
+  <tabstop>bTC</tabstop>
+  <tabstop>bTR</tabstop>
+  <tabstop>bML</tabstop>
+  <tabstop>bMC</tabstop>
+  <tabstop>bMR</tabstop>
+  <tabstop>bLL</tabstop>
+  <tabstop>bLC</tabstop>
+  <tabstop>bLR</tabstop>
+  <tabstop>bBL</tabstop>
+  <tabstop>bBC</tabstop>
+  <tabstop>bBR</tabstop>
+  <tabstop>rbFit</tabstop>
+  <tabstop>rbAligned</tabstop>
+  <tabstop>rbMiddle</tabstop>
+  <tabstop>cbSymbol</tabstop>
+  <tabstop>cbUniPage</tabstop>
+  <tabstop>cbUniChar</tabstop>
+  <tabstop>bUnicode</tabstop>
+ </tabstops>
  <resources>
   <include location="../../../res/icons/icons.qrc"/>
  </resources>

@@ -27,7 +27,7 @@ CONFIG += qt \
     depend_includepath
 
 QT += widgets printsupport
-CONFIG += c++11
+CONFIG += c++14
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
@@ -40,7 +40,7 @@ DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
-    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${LC_VERSION}")
+    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe)" || echo "$${LC_VERSION}")
 
     macx {
         TARGET = LibreCAD
@@ -68,7 +68,7 @@ win32 {
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
-        LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${LC_VERSION}")
+        LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe || echo "$${LC_VERSION}")
     }
 
     RC_FILE = ../res/main/librecad.rc
@@ -142,6 +142,7 @@ HEADERS += \
     lib/engine/rs_dimension.h \
     lib/engine/rs_dimlinear.h \
     lib/engine/rs_dimradial.h \
+    lib/engine/lc_dimarc.h \
     lib/engine/rs_document.h \
     lib/engine/rs_ellipse.h \
     lib/engine/rs_entity.h \
@@ -240,6 +241,7 @@ SOURCES += \
     lib/engine/rs_dimension.cpp \
     lib/engine/rs_dimlinear.cpp \
     lib/engine/rs_dimradial.cpp \
+    lib/engine/lc_dimarc.cpp \
     lib/engine/rs_document.cpp \
     lib/engine/rs_ellipse.cpp \
     lib/engine/rs_entity.cpp \
@@ -337,6 +339,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondimleader.h \
     actions/rs_actiondimlinear.h \
     actions/rs_actiondimradial.h \
+    actions/lc_actiondimarc.h \
     actions/rs_actiondrawarc.h \
     actions/rs_actiondrawarc3p.h \
     actions/rs_actiondrawarctangential.h \
@@ -472,6 +475,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondimleader.cpp \
     actions/rs_actiondimlinear.cpp \
     actions/rs_actiondimradial.cpp \
+    actions/lc_actiondimarc.cpp \
     actions/rs_actiondrawarc.cpp \
     actions/rs_actiondrawarc3p.cpp \
     actions/rs_actiondrawarctangential.cpp \

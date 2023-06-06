@@ -47,7 +47,7 @@ public:
 									  const RS_LeaderData& /*ld*/);
 
 	/** true: leader has an arrow head. false: no arrow. */
-	bool arrowHead;
+    bool arrowHead = false;
 };
 
 
@@ -102,8 +102,8 @@ public:
 	friend std::ostream& operator << (std::ostream& os, const RS_Leader& l);
 
 protected:
-	RS_LeaderData data;
-	bool empty;
+    RS_LeaderData data;
+    bool empty = false;
 };
 
 #endif

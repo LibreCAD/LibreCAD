@@ -28,20 +28,21 @@
 #include <QMouseEvent>
 #include "rs_actioninfoarea.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
-#include "rs_line.h"
-#include "rs_infoarea.h"
-#include "rs_graphic.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_infoarea.h"
+#include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_units.h"
 
 RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
-							   container, graphicView)
-	, ia(new RS_InfoArea{})
+                               container, graphicView)
+    , ia(std::make_unique<RS_InfoArea>())
 {
 	actionType=RS2::ActionInfoArea;
 }
@@ -49,11 +50,11 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;
 
 void RS_ActionInfoArea::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 
     if(status==SetFirstPoint){
         deletePreview();
-		ia->reset();
+        ia = std::make_unique<RS_InfoArea>();
     }
 
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
@@ -126,7 +127,7 @@ void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

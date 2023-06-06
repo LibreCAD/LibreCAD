@@ -29,6 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
 
 /**
  * This action class can handle user events to trim entities.
@@ -61,8 +62,8 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* entity1;
-    RS_Entity* entity2;
+    RS_Entity* entity1 = nullptr;
+    RS_Entity* entity2 = nullptr;
 	std::unique_ptr<RS_Vector> coord;
 };
 

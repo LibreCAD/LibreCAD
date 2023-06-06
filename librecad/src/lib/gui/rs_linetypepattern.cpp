@@ -30,12 +30,11 @@
 
 RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& pattern):
 	pattern(pattern)
+    , num { pattern.size()}
 {
-    totalLength=0.;
-	num = pattern.size();
-	for(double const& l: this->pattern){
-		totalLength += fabs(l);
-	}
+    for(double l: pattern){
+        totalLength += std::abs(l);
+    }
 }
 
 //define all line patterns in pixels

@@ -23,41 +23,39 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawarctangential.h"
 
+#include<cmath>
+
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_arc.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_arc.h"
-#include "ui_qg_arctangentialoptions.h"
-#include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
                                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw arcs tangential",
 							   container, graphicView)
-	, point(new RS_Vector{})
-	, data(new RS_ArcData{})
+    , point(std::make_unique<RS_Vector>())
+    , data(std::make_unique<RS_ArcData>())
 {
 	actionType=RS2::ActionDrawArcTangential;
-    reset();
 }
-
-
 
 RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 
 void RS_ActionDrawArcTangential::reset() {
 	baseEntity = nullptr;
     isStartPoint = false;
-	*point = {};
+    *point = {};
+    data = std::make_unique<RS_ArcData>();
 }
 
 
@@ -118,7 +116,7 @@ void RS_ActionDrawArcTangential::preparePreview() {
         }
 
 		RS_Arc arc(nullptr, RS_ArcData());
-        bool suc;
+        bool suc = false;
         if (byRadius) {
 			suc = arc.createFrom2PDirectionRadius(startPoint, *point, direction, data->radius);
         } else {
@@ -207,25 +205,6 @@ void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     default:
         break;
     }
-}
-
-
-
-void RS_ActionDrawArcTangential::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-}
-
-
-
-QStringList RS_ActionDrawArcTangential::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
 }
 
 

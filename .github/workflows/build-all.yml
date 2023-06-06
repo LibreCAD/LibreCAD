@@ -1,0 +1,206 @@
+name: Continuous build
+on:
+  push:
+    branches:
+      - master
+      - ci_dev
+
+jobs:
+  BuildLinux:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt and dependencies
+        run: |
+          sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.9-focal
+          sudo apt-get -y update
+          sudo apt-get -qq install qt512-meta-full libgl-dev libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config qtchooser
+          sudo cp CI/qt512.conf /usr/share/qtchooser/
+          sudo ln -snf /usr/share/qtchooser/qt512.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+
+      - name: Install boost
+        uses: MarkusJx/install-boost@v2.0.0
+        with:
+          boost_version: 1.75.0
+          boost_install_dir: '${{ github.workspace }}/'
+
+      - name: Install Clang
+        run: |
+          sudo apt-get -qq install clang-10 clang-tools-10
+
+      - name: Build and analyze
+        run: |
+          export CC=gcc
+          export ANALYZE="scan-build-10 -o out "
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
+          ${ANALYZE}make release -j$(nproc)
+
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+
+      - name: Push changes
+        if: github.repository_owner == 'LibreCAD'
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{ github.repository_owner }}/static-analyzer-reports
+          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
+          branch: gh-pages
+          force: true
+          directory: out
+
+      - name: Create AppImage
+        run: |
+          find unix/
+          ./CI/build-appimg.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: LibreCAD*.AppImage
+          retention-days: 2
+
+  BuildMacOS:
+    runs-on: macos-11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt5 and dependencies
+        run: |
+          brew install boost qt5
+          brew link qt5 --force
+
+      - name: Build and packaging
+        run: |
+          scripts/build-osx.sh
+          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: LibreCAD*.dmg
+          retention-days: 2
+
+  BuildWindows:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Uninstall incorrect mingw
+        run: |
+          choco uninstall mingw --force
+          choco uninstall strawberryperl --force
+
+      - name: Install MinGW7.3 32-bit
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v2
+        with:
+          version: '5.12.11'
+          host: 'windows'
+          target: 'desktop'
+          dir: ..
+          arch: 'win32_mingw73'
+
+      - name: Install boost
+        shell: bash
+        run: |
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          7z x -o. -y boost.7z
+          mv boost_1_75_0 ../boost
+          rm boost.7z
+
+      - name: Debugging
+        if: ${{ always() }}
+        shell: cmd
+        run: |
+          set
+          echo.
+          dir c:\
+          echo.
+          dir d:\
+          echo.
+          dir d:\a
+          echo.
+          dir
+          echo.
+          dir ..
+          echo.
+          dir ..\boost
+          echo.
+          dir ..\Qt
+          echo.
+          dir ..\Qt\5.12.11\
+          echo.
+          dir ..\Qt\5.12.11\mingw73_32\
+          echo.
+          dir ..\Qt\5.12.11\mingw73_32\bin
+
+      - name: Build
+        run: |
+          set PATH=c:\msys64\mingw32\bin;%PATH%
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
+          echo SET:
+          set
+          pushd "${{ github.workspace }}\scripts"
+          build-windows.bat
+        shell: cmd
+
+      - name: Rename installer
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --always`.exe
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: LibreCAD-Installer*.exe
+          retention-days: 2
+
+  UpdateAssets:
+    if: github.repository_owner == 'LibreCAD'
+    needs: [BuildLinux, BuildMacOS, BuildWindows]
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Fetch artifacts
+        uses: actions/download-artifact@v2
+
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Continuous Build"
+          files: |
+            assets/LibreCAD*.*
+            LICENSE

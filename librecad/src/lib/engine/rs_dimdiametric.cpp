@@ -26,8 +26,6 @@
 
 #include<iostream>
 #include "rs_dimdiametric.h"
-#include "rs_mtext.h"
-#include "rs_solid.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
 #include "rs_debug.h"

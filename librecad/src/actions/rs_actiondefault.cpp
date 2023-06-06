@@ -23,21 +23,23 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <cmath>
+
 #include<QMouseEvent>
+
 #include "rs_actiondefault.h"
 
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
-#include "rs_commandevent.h"
 #include "rs_modification.h"
-#include "rs_selection.h"
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_selection.h"
 
-#include <cmath>
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;
@@ -51,7 +53,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
     : RS_PreviewActionInterface("Default",
 								container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 	, restrBak(RS2::RestrictNothing)
 {
 
@@ -307,7 +309,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
             // select single entity:
             RS_Entity* en = catchEntity(e);
 
-			if (en) {
+            if (en != nullptr) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
@@ -335,7 +337,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 
 			bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
-            bool select = (e->modifiers() & Qt::ShiftModifier) ? false : true;
+            bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
 			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(

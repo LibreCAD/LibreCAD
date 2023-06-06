@@ -40,7 +40,7 @@ class QG_DimOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_DimOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_DimOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_DimOptions();
 
 public slots:

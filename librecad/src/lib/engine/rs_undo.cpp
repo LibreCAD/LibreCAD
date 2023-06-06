@@ -259,8 +259,8 @@ std::shared_ptr<RS_UndoCycle> RS_Undo::getRedoCycle() {
   **/
 void RS_Undo::setGUIButtons() const
 {
-	auto appWin = QC_ApplicationWindow::getAppWindow();
-	if (!appWin) return;
+    auto& appWin = QC_ApplicationWindow::getAppWindow();
+    if (appWin==nullptr) return;
 	appWin->setRedoEnable(undoList.size() > 0 &&
 						  undoPointer+1 < int(undoList.size()));
 	appWin->setUndoEnable(undoList.size() > 0 && undoPointer >= 0);

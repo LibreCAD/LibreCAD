@@ -53,7 +53,7 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw rectangles",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawLineRectangle;
 }

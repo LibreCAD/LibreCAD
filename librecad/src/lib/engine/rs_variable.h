@@ -42,9 +42,9 @@
 class RS_Variable {
 	struct RS_VariableContents {
 		QString s;
-		int i;
-		double d;
-		RS_Vector v;
+        int i=0;
+        double d=0.;
+        RS_Vector v{false};
 	};
 public:
 	

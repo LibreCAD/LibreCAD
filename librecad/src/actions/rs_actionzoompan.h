@@ -62,10 +62,10 @@ public:
 protected:
     //RS_Vector v1;
     //RS_Vector v2;
-	int x1;
-	int y1;
-	int x2;
-	int y2;
+    int x1 = 0;
+    int y1 = 0;
+    int x2 = 0;
+    int y2 = 0;
 };
 
 #endif

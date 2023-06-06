@@ -38,7 +38,7 @@ class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
     Q_OBJECT
 
 public:
-    QG_DlgOptionsDrawing(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgOptionsDrawing(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_DlgOptionsDrawing();
 
 public slots:

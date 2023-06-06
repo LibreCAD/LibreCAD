@@ -34,9 +34,7 @@
 #include "rs_layerlist.h"
 #include "rs_variabledict.h"
 #include "rs_document.h"
-#include "rs_units.h"
 
-class RS_VariableDict;
 class QG_LayerWidget;
 
 /**
@@ -184,46 +182,25 @@ public:
     }
 
         // Wrappers for variable functions:
-    void clearVariables() {
-        variableDict.clear();
-    }
-    int countVariables() {
-        return variableDict.count();
-    }
+    void clearVariables();
+    int countVariables();
 
-    void addVariable(const QString& key, const RS_Vector& value, int code) {
-        variableDict.add(key, value, code);
-    }
-    void addVariable(const QString& key, const QString& value, int code) {
-        variableDict.add(key, value, code);
-    }
-    void addVariable(const QString& key, int value, int code) {
-        variableDict.add(key, value, code);
-    }
-    void addVariable(const QString& key, double value, int code) {
-        variableDict.add(key, value, code);
-    }
+    void addVariable(const QString& key, const RS_Vector& value, int code);
+    void addVariable(const QString& key, const QString& value, int code);
+    void addVariable(const QString& key, int value, int code);
+    void addVariable(const QString& key, double value, int code);
+    void removeVariable(const QString& key);
 
-    RS_Vector getVariableVector(const QString& key, const RS_Vector& def) {
-        return variableDict.getVector(key, def);
-    }
-    QString getVariableString(const QString& key, const QString& def) {
-        return variableDict.getString(key, def);
-    }
-    int getVariableInt(const QString& key, int def) {
-        return variableDict.getInt(key, def);
-    }
-    double getVariableDouble(const QString& key, double def) {
-        return variableDict.getDouble(key, def);
-    }
+    QHash<QString, RS_Variable>& getVariableDict();
 
-    void removeVariable(const QString& key) {
-        variableDict.remove(key);
-    }
+    RS_Vector getVariableVector(const QString& key, const RS_Vector& def) const;
 
-    QHash<QString, RS_Variable>& getVariableDict() {
-        return variableDict.getVariableDict();
-    }
+    QString getVariableString(const QString& key, const QString& def) const;
+
+    int getVariableInt(const QString& key, int def) const;
+
+    double getVariableDouble(const QString& key, double def) const;
+
 
     RS2::LinearFormat getLinearFormat();
     RS2::LinearFormat getLinearFormat(int f);
@@ -241,20 +218,20 @@ public:
     RS2::PaperFormat getPaperFormat(bool* landscape);
     void setPaperFormat(RS2::PaperFormat f, bool landscape);
 
-    double getPaperScale();
+    double getPaperScale() const;
     void setPaperScale(double s);
 
     virtual void setUnit(RS2::Unit u);
-    virtual RS2::Unit getUnit();
+    virtual RS2::Unit getUnit() const;
 
-    bool isGridOn();
+    bool isGridOn() const;
     void setGridOn(bool on);
-    bool isIsometricGrid();
+    bool isIsometricGrid() const;
     void setIsometricGrid(bool on);
     void setCrosshairType(RS2::CrosshairType chType);
-    RS2::CrosshairType getCrosshairType();
+    RS2::CrosshairType getCrosshairType() const;
 
-    bool isDraftOn();
+    bool isDraftOn() const;
     void setDraftOn(bool on);
 
     /** Sets the unit of this graphic's dimensions to 'u' */
@@ -366,17 +343,17 @@ private:
         RS_VariableDict variableDict;
         RS2::CrosshairType crosshairType; //crosshair type used by isometric grid
         //if set to true, will refuse to modify paper scale
-        bool paperScaleFixed;
+        bool paperScaleFixed = false;
 
         // Paper margins in millimeters
-        double marginLeft;
-        double marginTop;
-        double marginRight;
-        double marginBottom;
+        double marginLeft = 0.;
+        double marginTop = 0.;
+        double marginRight = 0.;
+        double marginBottom = 0.;
 
         // Number of pages drawing occupies
-        int pagesNumH;
-        int pagesNumV;
+        int pagesNumH = 1;
+        int pagesNumV = 1;
 };
 
 

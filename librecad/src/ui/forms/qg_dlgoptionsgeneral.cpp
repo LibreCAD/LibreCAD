@@ -27,11 +27,13 @@
 
 #include <QMessageBox>
 #include <QColorDialog>
+
+#include "qg_filedialog.h"
+
+#include "rs_debug.h"
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "qg_filedialog.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -54,15 +56,6 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgOptionsGeneral::~QG_DlgOptionsGeneral()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -210,16 +203,13 @@ void QG_DlgOptionsGeneral::init()
     restartNeeded = false;
 }
 
-void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, QString text) {
+void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, const QString& text) {
 	int idx = cb->findText(text);
 	if( idx < 0) {
 		idx =0;
 		cb->insertItem(idx, text);
 	}
 	cb->setCurrentIndex( idx );
-}
-
-void QG_DlgOptionsGeneral::destroy() {
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
@@ -424,5 +414,18 @@ void QG_DlgOptionsGeneral::setFontsFolder()
     {
         auto dir = dlg.selectedFiles()[0];
         lePathFonts->setText(QDir::toNativeSeparators(dir));
+    }
+}
+
+void QG_DlgOptionsGeneral::setLibraryPath()
+{
+    QG_FileDialog dlg(this);
+    dlg.setFileMode(QFileDialog::Directory);
+
+    if (dlg.exec())
+    {
+        auto dir = dlg.selectedFiles()[0];
+        lePathLibrary->setText(QDir::toNativeSeparators(dir));
+        setRestartNeeded();
     }
 }

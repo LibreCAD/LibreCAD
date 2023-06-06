@@ -102,7 +102,7 @@ void RS_ScriptList::removeScript(RS_Script* script) {
     //    activateScript(scripts.first());
     //}
 
-    // now it's save to delete the script
+    // now it's safe to delete the script
     //delete script;
 }
 

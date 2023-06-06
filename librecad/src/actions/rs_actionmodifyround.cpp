@@ -53,7 +53,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 						   container, graphicView)
 		,entity1(nullptr)
 		,entity2(nullptr)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyRound;

@@ -28,15 +28,16 @@
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_coordinateevent.h"
 
 RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Set the relative Zero",
-						   container, graphicView)
-		, pt(new RS_Vector{})
+                           container, graphicView)
+    , pt(std::make_unique<RS_Vector>())
 {
 	actionType=RS2::ActionSetRelativeZero;
 }
