@@ -490,8 +490,8 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
     QString ret;
 
     bool sign = (length<0.0);
-    int feet = (int)floor(fabs(length)/12);
-    double inches = fabs(length) - feet*12;
+    int feet = (int)floor(std::abs(length)/12);
+    double inches = std::abs(length) - feet*12;
 
     QString sInches = RS_Math::doubleToString(inches, prec);
 
@@ -522,28 +522,33 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
  * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-QString RS_Units::formatArchitectural(double length, RS2::Unit /*unit*/,
+QString RS_Units::formatArchitectural(double length, RS2::Unit unit,
                                         int prec, bool showUnit) {
-    QString ret;
-    bool neg = (length<0.0);
+    QString negativeSign = std::signbit(length)?"-":"";
 
-    int feet = (int)floor(fabs(length)/12);
-    double inches = fabs(length) - feet*12;
+    unsigned feet = convert(std::abs(length), unit, RS2::Foot);
+    double inches = convert(std::abs(length), unit, RS2::Inch) - feet * 12;
+
+    // potential rounding off
+    if (inches >= 12.) {
+        feet++;
+        inches -= 12.;
+    }
 
     QString sInches = formatFractional(inches, RS2::Inch, prec, showUnit);
 
+    // due to precision
     if (sInches=="12") {
         feet++;
         sInches = "0";
     }
 
-    if (neg) {
-        ret = QString("-%1'-%2\"").arg(feet).arg(sInches);
+    if (feet != 0) {
+        return QString(R"(%1%2'-%3")").arg(negativeSign).arg(feet).arg(sInches);
     } else {
-        ret = QString("%1'-%2\"").arg(feet).arg(sInches);
+        return QString(R"(%1")").arg(sInches);
     }
 
-    return ret;
 }
 
 
@@ -603,23 +608,15 @@ QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
 QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
                                      int prec, bool /*showUnit*/) {
 
-    QString ret;
-
-	unsigned num;            // number of complete inches (num' 7/128")
-	unsigned nominator;      // number of fractions (nominator/128)
-	unsigned denominator;    // (7/denominator)
-
     // sign:
-    QString neg = "";
-    if(length < 0) {
-        neg = "-";
-        length = fabs(length);
-    }
+    QString neg = std::signbit(length) ? "-" : "";
+    length = std::abs(length);
 
-	num = (unsigned)floor(length);
+    // number of complete inches (num' 7/128")
+    unsigned num = (unsigned) length;
 
-	denominator = 2<<prec;
-	nominator = (unsigned) RS_Math::round((length-num)*denominator);
+    unsigned denominator = 2<<prec;
+    unsigned nominator = (unsigned) RS_Math::round((length-num)*denominator);
 
     // fraction rounds up to 1:
     if (nominator==denominator) {
@@ -629,7 +626,7 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
     }
 
     // Simplify the fraction
-	if (nominator && denominator) {
+    if (nominator != 0 && denominator != 0) {
 		unsigned gcd = RS_Math::findGCD(nominator, denominator);
 		if (gcd) {
             nominator = nominator / gcd;
@@ -642,11 +639,12 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
         }
     }
 
-	if( num && nominator ) {
+    QString ret;
+    if (num != 0 && nominator != 0) {
         ret = QString("%1%2 %3/%4").arg(neg).arg(num).arg(nominator).arg(denominator);
-	} else if(nominator) {
+    } else if(nominator != 0) {
         ret = QString("%1%2/%3").arg(neg).arg(nominator).arg(denominator);
-	} else if(num) {
+    } else if(num != 0) {
         ret = QString("%1%2").arg(neg).arg(num);
     } else {
         ret = "0";
