@@ -33,10 +33,10 @@
 
   ;Name and file
   Name "${APPNAME}"
-  OutFile "../../generated/LibreCAD-Installer.exe"
+  OutFile "../../generated/${InstallerName}.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\LibreCAD"
+  InstallDir "${ProgramsFolder}\LibreCAD"
 
   ;Get installation folder from registry if available
   InstallDirRegKey HKCU "Software\LibreCAD" ""

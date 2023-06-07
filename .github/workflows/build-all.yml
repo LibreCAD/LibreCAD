@@ -181,9 +181,103 @@ jobs:
           path: LibreCAD-Installer*.exe
           retention-days: 2
 
+  BuildWindows64:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Uninstall incorrect mingw
+        run: |
+          choco uninstall mingw --force
+          choco uninstall strawberryperl --force
+
+      - name: Install MinGW8.1 64-bit
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw81'
+          dir: '..'
+          install-deps: 'true'
+          cache: 'false'
+          cache-key-prefix: 'install-qt-action'
+          setup-python: 'true'
+          tools: 'tools_ifw tools_qtcreator,qt.tools.qtcreator'
+          set-env: 'true'
+          tools-only: 'false'
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--external 7z'
+
+      - name: Install boost
+        shell: bash
+        run: |
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          7z x -o. -y boost.7z
+          mv boost_1_75_0 ../boost
+          rm boost.7z
+
+      - name: Debugging
+        if: ${{ always() }}
+        shell: cmd
+        run: |
+          set
+          echo.
+          dir c:\
+          echo.
+          dir d:\
+          echo.
+          dir d:\a
+          echo.
+          dir
+          echo.
+          dir ..
+          echo.
+          dir ..\boost
+          echo.
+          dir ..\Qt
+          echo.
+          dir ..\Qt\5.15.2\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\bin
+
+      - name: Build
+        run: |
+          set PATH=C:\msys64\mingw64\bin;%PATH%
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
+          echo SET:
+          set
+          pushd "${{ github.workspace }}\scripts"
+          build-windows.bat
+        shell: cmd
+
+      - name: Rename installer
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: LibreCAD-Installer*.exe
+          retention-days: 2
+
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows]
+    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
