@@ -1,4 +1,4 @@
-# DXF Converter
+# LibreCAD [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=master)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 [→ Download ←](https://github.com/LibreCAD/LibreCAD/wiki/Download)
 
@@ -15,9 +15,16 @@ Please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch represents the latest pre-release code,  
 and now requires Qt 5.2.1 or newer.  
+The 2.2 branch requires Qt 5.2.1 or newer
 The 2.1 branch will be the last to support Qt4.  
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
+# DXF Converter
+LibreCAD can be used as dxf to a pdf/png converter. For example, to convert a foo.dxf to foo.pdf or foo.png:
+```bash
+$ librecad dxf2pdf foo.dxf
+$ librecad dxf2png foo.dxf
+```
 - [Releases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
