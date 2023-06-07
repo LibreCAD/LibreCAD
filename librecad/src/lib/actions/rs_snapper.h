@@ -220,7 +220,7 @@ protected:
      */
     int middlePoints = 1;
     /**
-     * Snap range for catching entities.
+     * Snap range for catching entities. In GUI units
      */
     int snapRange = 0;
     bool finished{false};
