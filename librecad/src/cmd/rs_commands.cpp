@@ -26,37 +26,37 @@
 **********************************************************************/
 
 #include<vector>
+
 #include <QObject>
 #include <QTextStream>
+
 #include "rs_commands.h"
 
-#include "rs_system.h"
-#include "rs_dialogfactory.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_system.h"
 
 namespace {
-struct LC_CommandItem {
-	std::vector<std::pair<QString, QString>> const fullCmdList;
-	std::vector<std::pair<QString, QString>> const shortCmdList;
-	RS2::ActionType actionType;
-};
+    struct LC_CommandItem {
+        std::vector<std::pair<QString, QString>> const fullCmdList;
+        std::vector<std::pair<QString, QString>> const shortCmdList;
+        RS2::ActionType actionType;
+    };
 
-// helper function to check and report command collision
-template<typename T1, typename T2>
-bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value)
-{
-	if(!lookUp.count(key)) return true;
+    // helper function to check and report command collision
+    template<typename T1, typename T2>
+    bool isCollisionFree(std::map<T1, T2> const& lookUp, T1 const& key, T2 const& value)
+    {
+        if(!lookUp.count(key)) return true;
 
-	//report command string collision
-	QString msg=__FILE__+QObject::tr(": duplicated command: %1 is already taken by %2")
-			.arg(key).arg(value);
+        //report command string collision
+        QString msg=__FILE__+QObject::tr(": duplicated command: %1 is already taken by %2")
+                .arg(key).arg(value);
 
-	RS_DEBUG->print(RS_Debug::D_ERROR, "%s\n", msg.toStdString().c_str());
-	return false;
+        RS_DEBUG->print(RS_Debug::D_ERROR, "%s\n", msg.toStdString().c_str());
+        return false;
+    }
 }
-}
-
-RS_Commands* RS_Commands::uniqueInstance = nullptr;
 
 const char* RS_Commands::FnPrefix = "Fn";
 const char* RS_Commands::AltPrefix = "Alt-";
@@ -64,9 +64,7 @@ const char* RS_Commands::MetaPrefix = "Meta-";
 
 
 RS_Commands* RS_Commands::instance() {
-    if (!uniqueInstance) {
-        uniqueInstance = new RS_Commands();
-    }
+    static RS_Commands* uniqueInstance = new RS_Commands();
     return uniqueInstance;
 }
 
@@ -1054,7 +1052,7 @@ void RS_Commands::updateAlias(){
 /**
  * Tries to complete the given command (e.g. when tab is pressed).
  */
-QStringList RS_Commands::complete(const QString& cmd) {
+QStringList RS_Commands::complete(const QString& cmd) const {
     QStringList ret;
     for(auto const& p: mainCommands){
         if(p.first.startsWith(cmd, Qt::CaseInsensitive)){
@@ -1078,40 +1076,42 @@ QStringList RS_Commands::complete(const QString& cmd) {
  *
  * @return The translated command.
  */
-RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) {
+RS2::ActionType RS_Commands::cmdToAction(const QString& cmd, bool verbose) const {
     QString full = cmd.toLower();
     RS2::ActionType ret = RS2::ActionNone;
 
         // find command:
-//	RS2::ActionType* retPtr = mainCommands.value(cmd);
-        if ( mainCommands.count(cmd) ) {
-                ret = mainCommands[cmd];
-        } else if ( shortCommands.count(cmd) ) {
-                ret = shortCommands[cmd];
-		} else
-			return ret;
+    for(const auto& table: {mainCommands, shortCommands})
+    {
+        if (table.count(cmd)) {
+            ret = table.at(cmd);
+            break;
+        }
+    }
+    if (ret==RS2::ActionNone)
+        return ret;
 
-		if (!verbose) return ret;
-		// find full command to confirm to user:
-		for(auto const& p: mainCommands){
-			if(p.second==ret){
-				RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
-				RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
-				//                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
-				RS_DEBUG->print("RS_Commands::cmdToAction: "
-								"commandMessage: ok");
-				return ret;
-			}
-		}
-		RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
-		return ret;
+    if (!verbose) return ret;
+    // find full command to confirm to user:
+    for(auto const& p: mainCommands){
+        if(p.second==ret){
+            RS_DEBUG->print("RS_Commands::cmdToAction: commandMessage");
+            RS_DIALOGFACTORY->commandMessage(QObject::tr("Command: %1 (%2)").arg(full).arg(p.first));
+            //                                        RS_DialogFactory::instance()->commandMessage( QObject::tr("Command: %1").arg(full));
+            RS_DEBUG->print("RS_Commands::cmdToAction: "
+                            "commandMessage: ok");
+            return ret;
+        }
+    }
+    RS_DEBUG->print(QObject::tr("RS_Commands:: command not found: %1").arg(full).toStdString().c_str());
+    return ret;
 }
 
 /**
  * Gets the action for the given keycode. A keycode is a sequence
  * of key-strokes that is entered like hotkeys.
  */
-RS2::ActionType RS_Commands::keycodeToAction(const QString& code) {
+RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
 	if(code.size() < 1)
 		return RS2::ActionNone;
 
