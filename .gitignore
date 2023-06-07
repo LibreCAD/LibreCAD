@@ -104,6 +104,3 @@ core.*
 *.vcxproj
 *.vcxproj.filters
 *.sln
-
-#Files for testing
-*.dxf

@@ -85,6 +85,15 @@ void RS_System::init(const QString& appName,
 }
 
 
+void RS_System::init(const QString& appName,
+                     const QString& appVersion,
+                     const QString& appDirName,
+                     const QString& arg0)
+{
+    init(appName, appVersion, appDirName, arg0.toLatin1().data());
+}
+
+
 /**
  * Initializes the list of available translations.
  */

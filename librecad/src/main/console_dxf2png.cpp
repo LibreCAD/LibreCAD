@@ -92,7 +92,7 @@ int console_dxf2png(int argc, char* argv[])
     QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(app.organizationName(), app.applicationName());
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(),
-        XSTR(QC_APPDIR), prgDir);
+        XSTR(QC_APPDIR), prgDir.toLatin1().data());
 
     QCommandLineParser parser;
 
