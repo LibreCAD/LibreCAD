@@ -847,11 +847,14 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
 		size_t imax(i);
         double cmax(fabs(mt0[i][i]));
 		for(size_t j=i+1;j<mSize;++j) {
-            if(fabs(mt0[j][i]) > cmax ) {
+            if(std::abs(mt0[j][i]) > cmax ) {
                 imax=j;
-                cmax=fabs(mt0[j][i]);
+                cmax=std::abs(mt0[j][i]);
             }
         }
+	
+	// issue #1386: relax singular condition
+	// TODO: switch to QR-decomposition based algorithms
         if(cmax<RS_TOLERANCE) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
