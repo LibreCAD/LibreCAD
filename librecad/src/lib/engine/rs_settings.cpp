@@ -26,7 +26,23 @@
 
 // RVT_PORT changed QSettings s(QSettings::Ini) to QSettings s("./qcad.ini", QSettings::IniFormat);
 #include <QSettings>
+
 #include "rs_settings.h"
+
+namespace std {
+
+// custom deleter for std::unique_ptr<GroupGuard>
+template<>
+struct default_delete<RS_Settings::GroupGuard> {
+    void operator () (RS_Settings::GroupGuard* pointer) const {
+        if (pointer != nullptr) {
+            delete pointer;
+            RS_SETTINGS->endGroup();
+        }
+    }
+};
+
+}
 
 bool RS_Settings::save_is_allowed = true;
 
@@ -67,6 +83,11 @@ void RS_Settings::beginGroup(const QString& group) {
 
 void RS_Settings::endGroup() {
     this->group = "";
+}
+
+std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString group) {
+    this->group = std::move(group);
+    return std::make_unique<RS_Settings::GroupGuard>();
 }
 
 bool RS_Settings::writeEntry(const QString& key, int value) {
@@ -154,7 +175,9 @@ int RS_Settings::readNumEntry(const QString& key, int def)
 		value = s.value(str, QVariant(def));
 		cache[key] = value;
 	}
-	return value.toInt();
+    unsigned long long uValue = value.toULongLong();
+    uValue = uValue % 0x80000000;
+    return int(uValue);
 }
 
 
