@@ -1704,52 +1704,43 @@ bool RS_EntityContainer::hasEndpointsWithinWindow(const RS_Vector& v1, const RS_
 
 
 void RS_EntityContainer::move(const RS_Vector& offset) {
-    for(auto e: entities){
-
+    moveBorders(offset);
+    for(auto* e: entities){
         e->move(offset);
-        if (autoUpdateBorders) {
-            e->moveBorders(offset);
-        }
+        adjustBorders(e);
     }
-    if (autoUpdateBorders) {
-        moveBorders(offset);
-    }
+    if (autoUpdateBorders)
+        calculateBorders();
 }
 
 
 
 void RS_EntityContainer::rotate(const RS_Vector& center, const double& angle) {
-    RS_Vector angleVector(angle);
-
-    for(auto* e: entities){
-        e->rotate(center, angleVector);
-    }
-    if (autoUpdateBorders) {
-        calculateBorders();
-    }
+    rotate(center, RS_Vector{angle});
 }
 
 
 void RS_EntityContainer::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+    resetBorders();
 
-    for(auto e: entities){
+    for(auto* e: entities){
         e->rotate(center, angleVector);
+        adjustBorders(e);
     }
-    if (autoUpdateBorders) {
+    if (autoUpdateBorders)
         calculateBorders();
-    }
 }
 
 
 void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor) {
-    if (fabs(factor.x)>RS_TOLERANCE && fabs(factor.y)>RS_TOLERANCE) {
-
-        for(auto e: entities){
+    if (std::abs(factor.x)>RS_TOLERANCE && std::abs(factor.y)>RS_TOLERANCE) {
+        scaleBorders(center, factor);
+        for(auto* e: entities){
             e->scale(center, factor);
+            adjustBorders(e);
         }
-    }
-    if (autoUpdateBorders) {
-        calculateBorders();
+        if (autoUpdateBorders)
+            calculateBorders();
     }
 }
 
@@ -1758,8 +1749,10 @@ void RS_EntityContainer::scale(const RS_Vector& center, const RS_Vector& factor)
 void RS_EntityContainer::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     if (axisPoint1.distanceTo(axisPoint2)>RS_TOLERANCE) {
 
-        for(auto e: entities){
+        resetBorders();
+        for(auto* e: entities){
             e->mirror(axisPoint1, axisPoint2);
+            adjustBorders(e);
         }
     }
 }
@@ -1775,7 +1768,7 @@ void RS_EntityContainer::stretch(const RS_Vector& firstCorner,
         move(offset);
     } else {
 
-        for(auto e: entities){
+        for(auto* e: entities){
             e->stretch(firstCorner, secondCorner, offset);
         }
     }
@@ -1789,9 +1782,10 @@ void RS_EntityContainer::stretch(const RS_Vector& firstCorner,
 void RS_EntityContainer::moveRef(const RS_Vector& ref,
                                  const RS_Vector& offset) {
 
-
-    for(auto&& e: entities){
+    resetBorders();
+    for(auto* e: entities){
         e->moveRef(ref, offset);
+        adjustBorders(e);
     }
     if (autoUpdateBorders) {
         calculateBorders();
@@ -1802,9 +1796,10 @@ void RS_EntityContainer::moveRef(const RS_Vector& ref,
 void RS_EntityContainer::moveSelectedRef(const RS_Vector& ref,
                                          const RS_Vector& offset) {
 
-
-    for(auto e: entities){
+    resetBorders();
+    for(auto* e: entities){
         e->moveSelectedRef(ref, offset);
+        adjustBorders(e);
     }
     if (autoUpdateBorders) {
         calculateBorders();
@@ -1858,7 +1853,7 @@ double RS_EntityContainer::areaLineIntegral() const
     // edges:
 
     RS_Vector previousPoint;
-    for(auto e: entities){
+    for(auto* e: entities){
         e->setLayer(getLayer());
         double lineIntegral = 0.;
         switch (e->rtti()) {
