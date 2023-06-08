@@ -5,3 +5,4 @@
 !define Mingw_Ver 	"mingw81_64"
 !define InstallerName 	"LibreCAD-Installer"
 !define ProgramsFolder 	"$PROGRAMFILES64"
+!define AppKeyName 	"LibreCADx64"
