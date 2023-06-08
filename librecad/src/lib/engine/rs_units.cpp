@@ -24,14 +24,40 @@
 **
 **********************************************************************/
 
-#include<iostream>
 #include<cmath>
-#include <QObject>
-#include <QStringList>
+#include<iostream>
+#include<limits>
+
+#include<QObject>
+#include<QStringList>
+
 #include "rs_units.h"
+
+#include "rs_debug.h"
 #include "rs_math.h"
 #include "rs_vector.h"
-#include "rs_debug.h"
+
+namespace {
+
+/**
+ * @brief isAbsInRange whether the absolute value is in the range of [0, unsigned_max]
+ * @param double length - the value to check
+ * @return bool - true, the absolute value of the input can be rounded up to a an unsigned integer
+ */
+bool isAbsInRange(double length)
+{
+    if (std::isnan(length) || !std::isfinite(length) ) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg", length);
+        return false;
+    }
+    if (std::abs(length) > std::numeric_limits<unsigned>::max()) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "length=%lg is too big in magnitude for the current dimension type", length);
+        return false;
+    }
+    return true;
+}
+
+}
 
 /**
  * Converts a DXF integer () to a Unit enum.
@@ -485,13 +511,14 @@ QString RS_Units::formatDecimal(double length, RS2::Unit unit,
  * @param prec Precision of the value (e.g. 0.001 or 1/128 = 0.0078125)
  & @param showUnit Append unit to the value.
  */
-QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
+QString RS_Units::formatEngineering(double length, RS2::Unit unit,
                                       int prec, bool /*showUnit*/) {
-    QString ret;
+    // Avoid value cannot be represented by an unsigned integer
+    if (!isAbsInRange(length))
+        return "<Invalid length>";
 
-    bool sign = (length<0.0);
-    int feet = (int)floor(std::abs(length)/12);
-    double inches = std::abs(length) - feet*12;
+    unsigned feet = convert(std::abs(length), unit, RS2::Foot);
+    double inches = convert(std::abs(length), unit, RS2::Inch) - feet * 12;
 
     QString sInches = RS_Math::doubleToString(inches, prec);
 
@@ -500,17 +527,14 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
         sInches="0";
     }
 
-	if (feet) {
-        ret = QString("%1'-%2\"").arg(feet).arg(sInches);
+    QString ret;
+    if (feet > 0) {
+        ret = QString(R"(%1'-%2")").arg(feet).arg(sInches);
     } else {
-        ret = QString("%1\"").arg(sInches);
+        ret = sInches + '"';
     }
 
-    if (sign) {
-        ret = "-" + ret;
-    }
-
-    return ret;
+    return std::signbit(length) ? "-" + ret : ret;
 }
 
 
@@ -524,6 +548,10 @@ QString RS_Units::formatEngineering(double length, RS2::Unit /*unit*/,
  */
 QString RS_Units::formatArchitectural(double length, RS2::Unit unit,
                                         int prec, bool showUnit) {
+    // Avoid value cannot be represented by an unsigned integer
+    if (!isAbsInRange(length))
+        return "<Invalid length>";
+
     QString negativeSign = std::signbit(length)?"-":"";
 
     unsigned feet = convert(std::abs(length), unit, RS2::Foot);
@@ -563,15 +591,15 @@ QString RS_Units::formatArchitectural(double length, RS2::Unit unit,
  */
 QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
                                             int prec, bool showUnit) {
+    // Avoid value cannot be represented by an unsigned integer
+    if (!isAbsInRange(length))
+        return "<Invalid length>";
+
     QString ret;
-    bool neg = (length<0.0);
-    QString zero = "0";
+    bool neg = std::signbit(length);
 
-    if (neg)
-        length = length * -1.0;
-
-    ret = RS_Math::doubleToString(length, prec + 1);
-    int iLast = QString(ret.right(1)).toInt();
+    ret = RS_Math::doubleToString(std::abs(length), prec + 1);
+    unsigned iLast = QString(ret.right(1)).toUInt();
 
     // round on 0.005 and use superscript 5
     if ((iLast > 2) && (iLast < 8)) {
@@ -581,6 +609,7 @@ QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
     }
 
     // return values < 1.00m in cm (0.42 -> 42)
+    const QChar zero = '0';
     if (ret.startsWith(zero)) {
         ret = ret.split(".")[1];
         // eliminate leading zeros (0.07 -> 7)
@@ -591,10 +620,7 @@ QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
     if (showUnit) {
         ret = QString("%1 %2").arg(ret).arg(unitToSign(unit));
     }
-    if (neg) {
-        ret = QString("-%1").arg(ret);
-    }
-    return ret;
+    return std::signbit(length) ? "-" + ret : ret;
 }
 
 /**
@@ -607,13 +633,13 @@ QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
  */
 QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
                                      int prec, bool /*showUnit*/) {
+    // Avoid value cannot be represented by an unsigned integer
+    if (!isAbsInRange(length))
+        return "<Invalid length>";
 
-    // sign:
-    QString neg = std::signbit(length) ? "-" : "";
-    length = std::abs(length);
 
     // number of complete inches (num' 7/128")
-    unsigned num = (unsigned) length;
+    unsigned num = (unsigned) std::abs(length);
 
     unsigned denominator = 2<<prec;
     unsigned nominator = (unsigned) RS_Math::round((length-num)*denominator);
@@ -639,6 +665,8 @@ QString RS_Units::formatFractional(double length, RS2::Unit /*unit*/,
         }
     }
 
+    // sign:
+    QString neg = std::signbit(length) ? "-" : "";
     QString ret;
     if (num != 0 && nominator != 0) {
         ret = QString("%1%2 %3/%4").arg(neg).arg(num).arg(nominator).arg(denominator);
@@ -668,19 +696,18 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
                                 int prec) {
 
     QString ret;
-    double value;
+    double value = std::fmod(angle, 2. * M_PI);
 
     switch (format) {
     case RS2::Surveyors:
     case RS2::DegreesDecimal:
     case RS2::DegreesMinutesSeconds:
-        value = RS_Math::rad2deg(angle);
-        break;
-    case RS2::Radians:
-        value = angle;
+        value = RS_Math::rad2deg(value);
         break;
     case RS2::Gradians:
-        value = RS_Math::rad2gra(angle);
+        value = RS_Math::rad2gra(value);
+        break;
+    case RS2::Radians:
         break;
     default:
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -703,12 +730,12 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
         break;
 
     case RS2::DegreesMinutesSeconds: {
-            int vDegrees, vMinutes;
+            unsigned vDegrees, vMinutes;
             double vSeconds;
             QString degrees, minutes, seconds;
 
-            vDegrees = (int)floor(value);
-            vMinutes = (int)floor((value - vDegrees) * 60.0);
+            vDegrees = (unsigned)std::floor(value);
+            vMinutes = (unsigned)std::floor((value - vDegrees) * 60.0);
             vSeconds = (value - vDegrees - (vMinutes/60.0)) * 3600.0;
 
             seconds = RS_Math::doubleToString(vSeconds, (prec>1 ? prec-2 : 0));
@@ -747,8 +774,8 @@ QString RS_Units::formatAngle(double angle, RS2::AngleFormat format,
         break;
     case RS2::Surveyors: {
         QString prefix,suffix;
-        int quadrant;
-        quadrant = ((int)floor(value)/90);
+        unsigned quadrant;
+        quadrant = ((unsigned)std::floor(value)/90);
         switch(quadrant){
             case 0:
                 prefix="N";
