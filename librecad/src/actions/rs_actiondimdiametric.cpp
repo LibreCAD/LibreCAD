@@ -47,7 +47,8 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Diametric Dimensions",
                     container, graphicView)
-    , pos(std::make_unique<RS_Vector>())
+        , pos{std::make_unique<RS_Vector>()}
+        , edata{std::make_unique<RS_DimDiametricData>()}
 {
 	actionType=RS2::ActionDimDiametric;
     reset();
@@ -58,7 +59,7 @@ RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();
 
-    *edata= {{}, 0.0};
+    *edata = {{}, 0.0};
 	entity = nullptr;
 	*pos = {};
     RS_DIALOGFACTORY->requestOptions(this, true, true);
