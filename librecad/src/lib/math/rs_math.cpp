@@ -922,7 +922,10 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
                 cmax=std::abs(mt0[j][i]);
             }
         }
-        if(cmax<RS_TOLERANCE2) return false; //singular matrix
+	
+	// issue #1386: relax singular condition
+	// TODO: switch to QR-decomposition based algorithms
+        if(cmax<RS_TOLERANCE) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
 		}
