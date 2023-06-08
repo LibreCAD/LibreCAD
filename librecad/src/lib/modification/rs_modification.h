@@ -44,7 +44,8 @@ class RS_GraphicView;
 /**
  * Holds the data needed for move modifications.
  */
-struct RS_MoveData {
+class RS_MoveData {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -55,7 +56,8 @@ struct RS_MoveData {
 /**
  * Holds the data needed for offset modifications.
  */
-struct RS_OffsetData {
+class RS_OffsetData {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -66,7 +68,8 @@ struct RS_OffsetData {
 /**
  * Holds the data needed for rotation modifications.
  */
-struct RS_RotateData {
+class RS_RotateData {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -79,7 +82,8 @@ struct RS_RotateData {
 /**
  * Holds the data needed for scale modifications.
  */
-struct RS_ScaleData {
+class RS_ScaleData {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -91,7 +95,8 @@ struct RS_ScaleData {
 /**
  * Holds the data needed for mirror modifications.
  */
-struct RS_MirrorData {
+class RS_MirrorData {
+public:
     bool copy = false;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -103,7 +108,8 @@ struct RS_MirrorData {
 /**
  * Holds the data needed for move/rotate modifications.
  */
-struct RS_MoveRotateData {
+class RS_MoveRotateData {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -117,7 +123,8 @@ struct RS_MoveRotateData {
 /**
  * Holds the data needed for rotation around two centers modifications.
  */
-struct RS_Rotate2Data {
+class RS_Rotate2Data {
+public:
     int number = 0;
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
@@ -132,8 +139,8 @@ struct RS_Rotate2Data {
 /**
  * Holds the data needed for beveling modifications.
  */
-struct RS_BevelData
-{
+class RS_BevelData {
+public:
     double length1 = 0.;
     double length2 = 0.;
     bool trim = false;
@@ -145,7 +152,8 @@ struct RS_BevelData
 /**
  * Holds the data needed for rounding modifications.
  */
-struct RS_RoundData {
+class RS_RoundData {
+public:
     double radius = 0.;
     bool trim = false;
 };

@@ -79,7 +79,7 @@ bool slotFileExport(RS_Graphic* graphic,
 /// \param argv
 /// \return
 ///
-int console_dxf2png(int argc, char* argv[])
+int console_dxf2png(int argc, char** argv)
 {
     RS_DEBUG->setLevel(RS_Debug::D_NOTHING);
 
