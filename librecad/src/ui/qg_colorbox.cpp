@@ -50,7 +50,7 @@ const QString customItemText = QObject::tr("Custom Picked");
     }
 
 
-    void addColors(QG_ColorBox& colorBox, std::vector<std::pair<Qt::GlobalColor, QString>> colors)
+	void addColors(QG_ColorBox& colorBox, const std::vector<std::pair<Qt::GlobalColor, QString>> & colors)
     {
         for(const auto& color: colors)
             colorBox.addColor(color.first, color.second);
@@ -116,31 +116,29 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     QString red(tr("Red"));
     addColor(Qt::red,red);
     colorIndexStart=findText(red); // keep the starting point of static colors
-    auto staticColorNames = std::initializer_list<std::pair<Qt::GlobalColor, QString>>{
-        {Qt::darkRed,tr("Dark Red")}
-          , {Qt::yellow,tr("Yellow")}
-          , {Qt::darkYellow,tr("Dark Yellow")}
-          , {Qt::green,tr("Green")}
-          , {Qt::darkGreen,tr("Dark Green")}
-          , {Qt::cyan,tr("Cyan")}
-          , {Qt::darkCyan,tr("Dark Cyan")}
-          , {Qt::blue,tr("Blue")}
-          , {Qt::darkBlue,tr("Dark Blue")}
-          , {Qt::magenta,tr("Magenta")}
-          , {Qt::darkMagenta,tr("Dark Magenta")}
-    };
-    addColors(*this, staticColorNames);
+	addColors(*this, {
+		{Qt::darkRed,tr("Dark Red")},
+		{Qt::yellow,tr("Yellow")},
+		{Qt::darkYellow,tr("Dark Yellow")},
+		{Qt::green,tr("Green")},
+		{Qt::darkGreen,tr("Dark Green")},
+		{Qt::cyan,tr("Cyan")},
+		{Qt::darkCyan,tr("Dark Cyan")},
+		{Qt::blue,tr("Blue")},
+		{Qt::darkBlue,tr("Dark Blue")},
+		{Qt::magenta,tr("Magenta")},
+		{Qt::darkMagenta,tr("Dark Magenta")},
+	});
 
     // a special "Black/White" color
     addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
 
     // Gray colors
-    auto grayColorNames = std::initializer_list<std::pair<Qt::GlobalColor, QString>>{
-        {Qt::gray,tr("Gray")}
-          , {Qt::darkGray,tr("Dark Gray")}
-          , {Qt::lightGray,tr("Light Gray")}
-    };
-    addColors(*this, grayColorNames);
+	addColors(*this, {
+		{Qt::gray,tr("Gray")},
+		{Qt::darkGray,tr("Dark Gray")},
+		{Qt::lightGray,tr("Light Gray")},
+	});
     //static colors ends here
     // add custom colors from settings
     readCustomColorSettings();
