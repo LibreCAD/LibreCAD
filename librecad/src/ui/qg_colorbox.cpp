@@ -161,7 +161,7 @@ void QG_ColorBox::readCustomColorSettings()
 {
     QString group = tr("/ColorBox");
     auto guard = RS_SETTINGS->beginGroupGuard(tr("/ColorBox"));
-    for(int i=0; i<Max_Custom_Colors; i++) {
+    for(decltype(Max_Custom_Colors) i=0; i<Max_Custom_Colors; i++) {
         QString colorName = customColorName.arg(i);
         int color = RS_SETTINGS->readNumEntry(colorName, -1);
         if (color < 0)
