@@ -101,7 +101,7 @@ QString LC_DimArc::getMeasuredLabel()
 
         RS2::LinearFormat format = currentGraphic->getLinearFormat(dimlunit);
 
-        measuredLabel = RS_Units::formatLinear(dimArcData.arcLength, RS2::None, format, dimdec);
+        measuredLabel = RS_Units::formatLinear(dimArcData.arcLength, getGraphicUnit(), format, dimdec);
 
         if (format == RS2::Decimal) measuredLabel = stripZerosLinear(measuredLabel, dimzin);
 
