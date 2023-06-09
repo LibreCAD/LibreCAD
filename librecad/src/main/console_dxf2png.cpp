@@ -23,34 +23,33 @@
 ******************************************************************************/
 
 
-#include <QtCore>
-#include <QCoreApplication>
 #include <QApplication>
-
+#include <QCoreApplication>
 #include <QImageWriter>
+#include <QtCore>
 #include <QtSvg>
 
-#include "rs.h"
-#include "rs_graphic.h"
-#include "rs_painterqt.h"
+#include "console_dxf2pdf.h"
+
 #include "lc_printing.h"
-#include "rs_staticgraphicview.h"
 
-#include "rs_debug.h"
-#include "rs_fontlist.h"
-#include "rs_patternlist.h"
-#include "rs_settings.h"
-#include "rs_system.h"
-
-#include "rs_document.h"
-#include "rs_math.h"
+#include "main.h"
 
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
-#include "main.h"
+#include "rs.h"
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_fontlist.h"
+#include "rs_graphic.h"
+#include "rs_math.h"
+#include "rs_painterqt.h"
+#include "rs_patternlist.h"
+#include "rs_settings.h"
+#include "rs_staticgraphicview.h"
+#include "rs_system.h"
 
-#include "console_dxf2pdf.h"
 
 ///////////////////////////////////////////////////////////////////////
 /// \brief openDocAndSetGraphic opens a DXF file and prepares all its graphics content
@@ -151,6 +150,8 @@ int console_dxf2png(int argc, char* argv[])
 
     QFileInfo dxfFileInfo(dxfFile);
     QString fn = dxfFileInfo.completeBaseName(); // original DXF file name
+    if(fn.isEmpty())
+        fn = "unnamed";
 
     // Set output filename from user input if present
     QString outFile = parser.value(outFileOpt);
@@ -160,13 +161,10 @@ int console_dxf2png(int argc, char* argv[])
         outFile = dxfFileInfo.path() + "/" + outFile;
     }
 
-    if(fn == nullptr)
-        fn = "unnamed";
-
     // Open the file and process the graphics
 
-    RS_Document *doc;
-    RS_Graphic *graphic;
+    RS_Document *doc = nullptr;
+    RS_Graphic *graphic = nullptr;
 
     if (!openDocAndSetGraphic(&doc, &graphic, dxfFile))
         return 1;
@@ -228,7 +226,7 @@ int console_dxf2png(int argc, char* argv[])
     bool ret = slotFileExport(graphic, outFile, format, pngSize, borders,
                 black, bw);
 
-    qDebug() << "Printing" << dxfFile << "to" << outFile << "DONE";
+    qDebug() << "Printing" << dxfFile << "to" << outFile << (ret ? "Done" : "Failed");
     return 0;
 }
 
