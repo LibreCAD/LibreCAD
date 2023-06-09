@@ -272,6 +272,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <stdio.h>
+#include <malloc.h>
 
 SHP_CVSID("$Id: shpopen.c,v 1.73 2012-01-24 22:33:01 fwarmerdam Exp $")
 
@@ -504,8 +505,8 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /*      ensure the result string indicates binary to avoid common       */
 /*      problems on Windows.                                            */
 /* -------------------------------------------------------------------- */
-    if( strcmp(pszAccess,"rb+") == 0 || strcmp(pszAccess,"r+b") == 0
-        || strcmp(pszAccess,"r+") == 0 )
+    if( strncmp(pszAccess,"rb+", 4) == 0 || strncmp(pszAccess,"r+b", 4) == 0
+        || strncmp(pszAccess,"r+", 4) == 0 )
         pszAccess = "r+b";
     else
         pszAccess = "rb";
@@ -531,9 +532,9 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /*	Compute the base (layer) name.  If there is any extension	*/
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
-    pszBasename = (char *) malloc(strlen(pszLayer)+5);
-    strcpy( pszBasename, pszLayer );
-    for( i = strlen(pszBasename)-1; 
+    pszBasename = (char *) malloc(strnlen(pszLayer, 128)+5);
+    strncpy( pszBasename, pszLayer, malloc_usable_size(pszBasename) -1 );
+    for( i = strnlen(pszBasename, malloc_usable_size(pszBasename) -1)-1;
          i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
              && pszBasename[i] != '\\';
          i-- ) {}
@@ -545,19 +546,19 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /*	Open the .shp and .shx files.  Note that files pulled from	*/
 /*	a PC to Unix with upper case filenames won't work!		*/
 /* -------------------------------------------------------------------- */
-    pszFullname = (char *) malloc(strlen(pszBasename) + 5);
-    sprintf( pszFullname, "%s.shp", pszBasename ) ;
+    pszFullname = (char *) malloc(strnlen(pszBasename, 128) + 5);
+    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shp", pszBasename ) ;
     psSHP->fpSHP = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     if( psSHP->fpSHP == NULL )
     {
-        sprintf( pszFullname, "%s.SHP", pszBasename );
+        snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.SHP", pszBasename );
         psSHP->fpSHP = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     }
     
     if( psSHP->fpSHP == NULL )
     {
-        char *pszMessage = (char *) malloc(strlen(pszBasename)*2+256);
-        sprintf( pszMessage, "Unable to open %s.shp or %s.SHP.", 
+        char *pszMessage = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszFullname)-1)*2+256);
+        snprintf( pszMessage, malloc_usable_size(pszMessage)-1,"Unable to open %s.shp or %s.SHP.",
                   pszBasename, pszBasename );
         psHooks->Error( pszMessage );
         free( pszMessage );
@@ -569,18 +570,18 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
         return NULL;
     }
 
-    sprintf( pszFullname, "%s.shx", pszBasename );
+    snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.shx", pszBasename );
     psSHP->fpSHX =  psSHP->sHooks.FOpen(pszFullname, pszAccess );
     if( psSHP->fpSHX == NULL )
     {
-        sprintf( pszFullname, "%s.SHX", pszBasename );
+        snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.SHX", pszBasename );
         psSHP->fpSHX = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     }
     
     if( psSHP->fpSHX == NULL )
     {
-        char *pszMessage = (char *) malloc(strlen(pszBasename)*2+256);
-        sprintf( pszMessage, "Unable to open %s.shx or %s.SHX.", 
+        char *pszMessage = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszBasename)-1)*2+256);
+        snprintf( pszMessage,malloc_usable_size(pszMessage)-1, "Unable to open %s.shx or %s.SHX.",
                   pszBasename, pszBasename );
         psHooks->Error( pszMessage );
         free( pszMessage );
@@ -633,7 +634,7 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
     {
         char szError[200];
         
-        sprintf( szError, 
+        snprintf( szError, sizeof(szError) -1,
                  "Record count in .shp header is %d, which seems\n"
                  "unreasonable.  Assuming header is corrupt.",
                  psSHP->nRecords );
@@ -701,7 +702,7 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
     {
         char szError[200];
 
-        sprintf(szError, 
+        snprintf(szError, sizeof(szError) -1,
                 "Not enough memory to allocate requested memory (nRecords=%d).\n"
                 "Probably broken SHP file", 
                 psSHP->nRecords );
@@ -720,7 +721,7 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
     {
         char szError[200];
 
-        sprintf( szError, 
+        snprintf( szError, sizeof(szError)-1,
                  "Failed to read all values for %d records in .shx file.",
                  psSHP->nRecords );
         psSHP->sHooks.Error( szError );
@@ -737,7 +738,7 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
     }
     
     /* In read-only mode, we can close the SHX now */
-    if (strcmp(pszAccess, "rb") == 0)
+    if (strncmp(pszAccess, "rb", 3) == 0)
     {
         psSHP->sHooks.FClose( psSHP->fpSHX );
         psSHP->fpSHX = NULL;
@@ -878,9 +879,9 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
 /*	Compute the base (layer) name.  If there is any extension	*/
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
-    pszBasename = (char *) malloc(strlen(pszLayer)+5);
-    strcpy( pszBasename, pszLayer );
-    for( i = strlen(pszBasename)-1; 
+    pszBasename = (char *) malloc(strnlen(pszLayer, 128)+5);
+    strncpy( pszBasename, pszLayer,malloc_usable_size(pszBasename) -1 );
+    for( i = strnlen(pszBasename, malloc_usable_size(pszFullname)-1)-1;
          i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
              && pszBasename[i] != '\\';
          i-- ) {}
@@ -891,8 +892,8 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
 /* -------------------------------------------------------------------- */
 /*      Open the two files so we can write their headers.               */
 /* -------------------------------------------------------------------- */
-    pszFullname = (char *) malloc(strlen(pszBasename) + 5);
-    sprintf( pszFullname, "%s.shp", pszBasename );
+    pszFullname = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszBasename)-1) + 5);
+    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shp", pszBasename );
     fpSHP = psHooks->FOpen(pszFullname, "wb" );
     if( fpSHP == NULL )
     {
@@ -900,7 +901,7 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
         goto error;
     }
 
-    sprintf( pszFullname, "%s.shx", pszBasename );
+    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shx", pszBasename );
     fpSHX = psHooks->FOpen(pszFullname, "wb" );
     if( fpSHX == NULL )
     {
@@ -1471,7 +1472,7 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
         if( nExpectedSize < psSHP->nFileSize ) // due to unsigned int overflow
         {
             char str[128];
-            sprintf( str, "Failed to write shape object. "
+            snprintf( str, sizeof(str)-1, "Failed to write shape object. "
                      "File size cannot reach %u + %u.",
                      psSHP->nFileSize, nRecordSize );
             psSHP->sHooks.Error( str );
@@ -1599,7 +1600,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
             /* Reallocate previous successful size for following features */
             psSHP->pabyRec = (uchar *) malloc(psSHP->nBufSize);
 
-            sprintf( szError, 
+            snprintf( szError, sizeof(szError)-1,
                      "Not enough memory to allocate requested memory (nBufSize=%d). "
                      "Probably broken SHP file", psSHP->nBufSize );
             psSHP->sHooks.Error( szError );
@@ -1626,7 +1627,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
          * for example to detect if file is truncated.
          */
         char str[128];
-        sprintf( str,
+        snprintf( str, sizeof(str) -1,
                  "Error in fseek() reading object from .shp file at offset %u",
                  psSHP->panRecOffset[hEntity]);
 
@@ -1641,7 +1642,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
          * for example to detect if file is truncated.
          */
         char str[128];
-        sprintf( str,
+        snprintf( str, sizeof(str)-1,
                  "Error in fread() reading object of size %u at offset %u from .shp file",
                  nEntitySize, psSHP->panRecOffset[hEntity] );
 

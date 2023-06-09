@@ -85,7 +85,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    if (strcmp(line, line2) == 0) {
+    if (strncmp(line, line2, 21) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel

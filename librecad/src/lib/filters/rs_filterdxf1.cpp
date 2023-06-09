@@ -1704,10 +1704,10 @@ char* RS_FilterDXF1::getBufLineCh() {
 
 // Copy buffer from a given string:
 //
-void RS_FilterDXF1::copyBufFrom(const char* _buf) {
+void RS_FilterDXF1::copyBufFrom(const char* _buf, int length) {
     if(_buf) {
-        fBuf = new char[strlen(_buf)+16];
-        strcpy(fBuf, _buf);
+        fBuf = new char[strnlen(_buf, length-1)+16];
+        strncpy(fBuf, _buf, length);
     }
 }
 
