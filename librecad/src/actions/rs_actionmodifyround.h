@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_RoundData;
+struct RS_RoundData;
 
 /**
  * This action class can handle user events to round corners.

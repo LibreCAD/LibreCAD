@@ -22,6 +22,7 @@
 **
 ******************************************************************************/
 
+#include <memory>
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -56,7 +57,7 @@
 /// for further manipulations
 /// \return
 //////////////////////////////////////////////////////////////////////
-static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
+static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString);
 
 static void touchGraphic(RS_Graphic*);
 
@@ -163,11 +164,11 @@ int console_dxf2png(int argc, char* argv[])
 
     // Open the file and process the graphics
 
-    RS_Document *doc = nullptr;
-    RS_Graphic *graphic = nullptr;
+    std::unique_ptr<RS_Document> doc = openDocAndSetGraphic(dxfFile);
 
-    if (!openDocAndSetGraphic(&doc, &graphic, dxfFile))
+    if (doc == nullptr || doc->getGraphic() == nullptr)
         return 1;
+    RS_Graphic *graphic = doc->getGraphic();
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
@@ -231,26 +232,23 @@ int console_dxf2png(int argc, char* argv[])
 }
 
 
-static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
-                                 QString& dxfFile)
+static std::unique_ptr<RS_Document> openDocAndSetGraphic(QString dxfFile)
 {
-    *doc = new RS_Graphic();
+    auto doc = std::make_unique<RS_Graphic>();
 
-    if (!(*doc)->open(dxfFile, RS2::FormatUnknown)) {
+    if (!doc->open(dxfFile, RS2::FormatUnknown)) {
         qDebug() << "ERROR: Failed to open document" << dxfFile;
         qDebug() << "Check if file exists";
-        delete *doc;
-        return false;
+        return {};
     }
 
-    *graphic = (*doc)->getGraphic();
-    if (*graphic == nullptr) {
+    RS_Graphic* graphic = doc->getGraphic();
+    if (graphic == nullptr) {
         qDebug() << "ERROR: No graphic in" << dxfFile;
-        delete *doc;
-        return false;
+        return {};
     }
 
-    return true;
+    return doc;
 }
 
 static void touchGraphic(RS_Graphic* graphic)

@@ -27,9 +27,9 @@
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
 
-#include "rs_vector.h"
-#include "rs_pen.h"
 #include <QHash>
+#include "rs_pen.h"
+#include "rs_vector.h"
 
 class RS_AtomicEntity;
 class RS_Entity;
@@ -164,8 +164,7 @@ struct RS_MoveRefData {
 /**
  * Holds the data needed for changing attributes.
  */
-class RS_AttributesData {
-public:
+struct RS_AttributesData {
         QString layer;
         RS_Pen pen;
         bool changeLayer = false;
@@ -179,8 +178,7 @@ public:
 /**
  * Holds the data needed for pasting.
  */
-class RS_PasteData {
-public:
+struct RS_PasteData {
         RS_PasteData(RS_Vector insertionPoint,
                 double factor,
                 double angle,
