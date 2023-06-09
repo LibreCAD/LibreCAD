@@ -33,8 +33,13 @@ CONFIG += c++14
 }
 
 GEN_LIB_DIR = ../../generated/lib
-PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
-		$$GEN_LIB_DIR/libjwwlib.a
+msvc {
+	PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib \
+			$$GEN_LIB_DIR/jwwlib.lib
+} else {
+	PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
+			$$GEN_LIB_DIR/libjwwlib.a
+}
 
 DESTDIR = $${INSTALLDIR}
 
