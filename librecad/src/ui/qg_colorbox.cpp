@@ -24,6 +24,8 @@
 **
 **********************************************************************/
 
+#include <vector>
+#include <tuple>
 
 #include <QColorDialog>
 #include <QPainter>
@@ -45,6 +47,13 @@ const QString customItemText = QObject::tr("Custom Picked");
         return std::abs(lhs.red() - rhs.red())
             + std::abs(lhs.green() - rhs.green())
             + std::abs(lhs.blue() - rhs.blue());
+    }
+
+
+    void addColors(QG_ColorBox& colorBox, std::vector<std::pair<Qt::GlobalColor, QString>> colors)
+    {
+        for(const auto& color: colors)
+            colorBox.addColor(color.first, color.second);
     }
 }
 
@@ -80,11 +89,6 @@ QG_ColorBox::QG_ColorBox(bool showByLayer, bool showUnchanged,
 
 QG_ColorBox::~QG_ColorBox() = default;
 
-void QG_ColorBox::addColors(std::initializer_list<std::pair<Qt::GlobalColor, QString>> colors)
-{
-    for(const auto& color: colors)
-        addColor(color.first, color.second);
-}
 
 /**
  * Initialisation (called from constructor or manually but only
@@ -125,10 +129,10 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
           , {Qt::magenta,tr("Magenta")}
           , {Qt::darkMagenta,tr("Dark Magenta")}
     };
-    addColors(staticColorNames);
+    addColors(*this, staticColorNames);
 
     // a special "Black/White" color
-    addItem(QIcon(":/ui/color07.png"), tr("Black / White"),QColor(Qt::black));
+    addItem(QIcon(":/ui/color07.png"), tr("Black / White"), QColor(Qt::black));
 
     // Gray colors
     auto grayColorNames = std::initializer_list<std::pair<Qt::GlobalColor, QString>>{
@@ -136,8 +140,8 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
           , {Qt::darkGray,tr("Dark Gray")}
           , {Qt::lightGray,tr("Light Gray")}
     };
-    addColors(grayColorNames);
-//static colors ends here
+    addColors(*this, grayColorNames);
+    //static colors ends here
     // add custom colors from settings
     readCustomColorSettings();
 
@@ -159,7 +163,7 @@ void QG_ColorBox::readCustomColorSettings()
     auto guard = RS_SETTINGS->beginGroupGuard(tr("/ColorBox"));
     for(int i=0; i<Max_Custom_Colors; i++) {
         QString colorName = customColorName.arg(i);
-        unsigned color = RS_SETTINGS->readNumEntry(colorName, -1);
+        int color = RS_SETTINGS->readNumEntry(colorName, -1);
         if (color < 0)
             break;
         addColor(QRgb{color}, tr("Custom Picked"));

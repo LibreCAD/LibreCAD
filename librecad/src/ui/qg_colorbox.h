@@ -28,7 +28,7 @@
 #define QG_COLORBOX_H
 
 #include <memory>
-#include <tuple>
+
 #include <QComboBox>
 
 class QColor;
@@ -63,7 +63,6 @@ signals:
     void colorChanged(const RS_Color& color);
 
 private:
-    void addColors(std::initializer_list<std::pair<Qt::GlobalColor, QString>> colors);
     int addCustomColor(const RS_Color& color);
     // add custom color items from rs_settings
     void readCustomColorSettings();

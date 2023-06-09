@@ -24,7 +24,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_librarywidget.h"
 
 #include <QApplication>
 #include <QDateTime>
@@ -38,8 +37,9 @@
 #include <QTreeView>
 #include <QVBoxLayout>
 
-#include "qg_actionhandler.h"
+#include "qg_librarywidget.h"
 
+#include "qg_actionhandler.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_debug.h"
 #include "rs_painterqt.h"
@@ -175,8 +175,8 @@ void QG_LibraryWidget::refresh() {
  */
 void QG_LibraryWidget::scanTree() {
     QStringList directoryList = RS_SYSTEM->getDirectoryList("library");
-    for (int i = 0; i < directoryList.size(); ++i) {
-        appendTree(nullptr, directoryList.at(i));
+    foreach(auto& directory, directoryList) {
+        appendTree(nullptr, directory);
     }
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -219,14 +219,14 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 
 	if (!item) item = dirModel->invisibleRootItem();
 
-    for (int i = 0; i < lDirectoryList.size(); ++i) {
+    foreach (const auto& lDirectory, lDirectoryList) {
 		QStandardItem* newItem=nullptr;
 
         // Look for an item already existing and take this
         //   instead of making a new one:
         for (int j = 0; j < item->rowCount(); ++j) {
 			QStandardItem* const searchItem = item->child (j);
-            if (searchItem->text() == lDirectoryList.at(i)) {
+            if (searchItem->text() == lDirectory) {
                 newItem=searchItem;
                 break;
             }
@@ -234,10 +234,10 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
 
         // Create new item if no existing was found:
 		if (!newItem) {
-                newItem = new QStandardItem(QIcon(":/ui/folderclosed.png"), lDirectoryList.at(i));
+                newItem = new QStandardItem(QIcon(":/ui/folderclosed.png"), lDirectory);
                 item->setChild(item->rowCount(), newItem);
         }
-        appendTree(newItem, directory+QDir::separator()+lDirectoryList.at(i));
+        appendTree(newItem, directory+QDir::separator()+lDirectory);
     }
     item->sortChildren ( 0, Qt::AscendingOrder );
 }
@@ -249,7 +249,7 @@ void QG_LibraryWidget::appendTree(QStandardItem* item, QString directory) {
  */
 void QG_LibraryWidget::expandView( QModelIndex idx ){
     QStandardItem * item = dirModel->itemFromIndex ( idx );
-    if (item != 0)
+    if (item != nullptr)
         item->setIcon(QIcon(":/ui/folderopen.png"));
 }
 
