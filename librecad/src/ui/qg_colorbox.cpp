@@ -159,14 +159,13 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
 
 void QG_ColorBox::readCustomColorSettings()
 {
-    QString group = tr("/ColorBox");
     auto guard = RS_SETTINGS->beginGroupGuard(tr("/ColorBox"));
-    for(decltype(Max_Custom_Colors) i=0; i<Max_Custom_Colors; i++) {
+    for(size_t i=0; i<Max_Custom_Colors; i++) {
         QString colorName = customColorName.arg(i);
         int color = RS_SETTINGS->readNumEntry(colorName, -1);
         if (color < 0)
             break;
-        addColor(QRgb{color}, tr("Custom Picked"));
+        addColor(static_cast<QRgb>(color), tr("Custom Picked"));
     }
 }
 
