@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>548</width>
+    <width>580</width>
     <height>441</height>
    </rect>
   </property>
@@ -47,7 +47,7 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>110</width>
+           <width>1</width>
            <height>20</height>
           </size>
          </property>
@@ -165,6 +165,12 @@
              <verstretch>0</verstretch>
             </sizepolicy>
            </property>
+           <property name="minimumSize">
+            <size>
+             <width>67</width>
+             <height>0</height>
+            </size>
+           </property>
            <property name="text">
             <string>Layer:</string>
            </property>
@@ -174,7 +180,30 @@
           </widget>
          </item>
          <item>
-          <widget class="QG_LayerBox" name="cbLayer" native="true"/>
+          <widget class="QG_LayerBox" name="cbLayer" native="true">
+           <property name="minimumSize">
+            <size>
+             <width>70</width>
+             <height>25</height>
+            </size>
+           </property>
+           <property name="focusPolicy">
+            <enum>Qt::StrongFocus</enum>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>0</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
          </item>
         </layout>
        </item>
@@ -185,6 +214,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
          </property>
         </widget>
        </item>
@@ -249,7 +281,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>16</height>
+            <height>2</height>
            </size>
           </property>
          </spacer>
@@ -275,7 +307,7 @@
           <property name="sizeHint" stdset="0">
            <size>
             <width>20</width>
-            <height>16</height>
+            <height>2</height>
            </size>
           </property>
          </spacer>
@@ -314,9 +346,12 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>0</width>
-            <height>0</height>
+            <width>100</width>
+            <height>25</height>
            </size>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::WheelFocus</enum>
           </property>
          </widget>
         </item>
@@ -909,7 +944,7 @@
           </property>
           <property name="minimumSize">
            <size>
-            <width>280</width>
+            <width>200</width>
             <height>0</height>
            </size>
           </property>
@@ -1503,6 +1538,9 @@
    </item>
    <item>
     <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="focusPolicy">
+      <enum>Qt::StrongFocus</enum>
+     </property>
      <property name="standardButtons">
       <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
      </property>
@@ -1529,6 +1567,8 @@
   </customwidget>
  </customwidgets>
  <tabstops>
+  <tabstop>cbLayer</tabstop>
+  <tabstop>cbFont</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>bClear</tabstop>
   <tabstop>bLoad</tabstop>
@@ -1560,6 +1600,14 @@
   <tabstop>cbUniPage</tabstop>
   <tabstop>cbUniChar</tabstop>
   <tabstop>bUnicode</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>bClear</tabstop>
+  <tabstop>bLoad</tabstop>
+  <tabstop>bSave</tabstop>
+  <tabstop>bCut</tabstop>
+  <tabstop>bCopy</tabstop>
+  <tabstop>bPaste</tabstop>
+  <tabstop>teText</tabstop>
  </tabstops>
  <resources>
   <include location="../../../res/icons/icons.qrc"/>

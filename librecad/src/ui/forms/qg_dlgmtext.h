@@ -76,6 +76,8 @@ private:
     void init();
     void destroy();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif // QG_DLGMTEXT_H
