@@ -30,6 +30,8 @@
 #include <QGraphicsScene>
 #include "ui_qg_dlgoptionsdrawing.h"
 
+class QStringList;
+
 class RS_Graphic;
 class RS_Vector;
 
@@ -38,7 +40,7 @@ class QG_DlgOptionsDrawing : public QDialog, public Ui::QG_DlgOptionsDrawing
     Q_OBJECT
 
 public:
-    QG_DlgOptionsDrawing(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgOptionsDrawing(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_DlgOptionsDrawing();
 
 public slots:
@@ -75,16 +77,19 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+	void on_rbRelSize_toggled(bool checked);
+
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
+	void updateLPtSzUnits();
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
     void showEvent(QShowEvent* event) override;
 
 private:
-    QStringList listPrec1;
+    std::unique_ptr<QStringList> listPrec1;
     RS_Graphic* graphic;
     QGraphicsScene* paperScene;
 	std::unique_ptr<RS_Vector> spacing;

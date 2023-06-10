@@ -48,7 +48,7 @@ public:
     virtual void moveTo(int x, int y);
     virtual void lineTo(int x, int y);
     virtual void drawGridPoint(const RS_Vector& p);
-    virtual void drawPoint(const RS_Vector& p);
+    virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize);
     virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2);
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
     virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );
@@ -70,8 +70,8 @@ public:
                              double angle,
                              double a1, double a2,
                              bool reversed);
-        virtual void drawImg(QImage& img, const RS_Vector& pos,
-            double angle, const RS_Vector& factor);
+    virtual void drawImg(QImage& img, const RS_Vector& pos,
+                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor);
     virtual void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text);
     virtual void drawTextV(int x1, int y1, int x2, int y2,
@@ -110,8 +110,8 @@ public:
 
 protected:
     RS_Pen lpen;
-    long rememberX; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
-    long rememberY;
+    long rememberX = 0; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
+    long rememberY = 0;
 };
 
 #endif

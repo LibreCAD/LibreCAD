@@ -35,10 +35,10 @@ struct PdfPrintParams {
         QString outDir;
         QString outFile;
         int resolution = 1200;
-        bool centerOnPage;
-        bool fitToPage;
-        bool monochrome;
-        bool grayscale;
+        bool centerOnPage=false;
+        bool fitToPage=false;
+        bool monochrome=false;
+        bool grayscale=false;
         double scale = 0.0;  // If scale <= 0.0, use value from dxf file.
         RS_Vector pageSize;  // If zeros, use value from dxf file.
         struct {
@@ -59,9 +59,10 @@ class PdfPrintLoop : public QObject {
 public:
 
     PdfPrintLoop(PdfPrintParams& params, QObject* parent=0) :
-        QObject(parent) {
-        this->params = params;
-    };
+        QObject(parent)
+        , params{params}
+    {
+    }
 
 public slots:
 
@@ -72,10 +73,9 @@ signals:
     void finished();
 
 private:
+    PdfPrintParams params{};
 
-    PdfPrintParams params;
-
-    void printOneDxfToOnePdf(QString&);
+    void printOneDxfToOnePdf(const QString&);
     void printManyDxfToOnePdf();
 };
 

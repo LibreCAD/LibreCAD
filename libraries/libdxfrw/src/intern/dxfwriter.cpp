@@ -221,9 +221,9 @@ dxfWriterAscii::dxfWriterAscii(std::ofstream *stream):dxfWriter(stream){
 bool dxfWriterAscii::writeString(int code, std::string text) {
 //    *filestr << code << std::endl << text << std::endl ;
     filestr->width(3);
-    *filestr << std::right << code << std::endl;
+    *filestr << std::right << code << '\n';
     filestr->width(0);
-    *filestr << std::left << text << std::endl;
+    *filestr << std::left << text << '\n';
     /*    std::getline(*filestr, strData, '\0');
     DBG(strData); DBG("\n");*/
     return (filestr->good());
@@ -232,9 +232,9 @@ bool dxfWriterAscii::writeString(int code, std::string text) {
 bool dxfWriterAscii::writeInt16(int code, int data) {
 //    *filestr << std::right << code << std::endl << data << std::endl;
     filestr->width(3);
-    *filestr << std::right << code << std::endl;
+    *filestr << std::right << code << '\n';
     filestr->width(5);
-    *filestr << data << std::endl;
+    *filestr << data << '\n';
     return (filestr->good());
 }
 
@@ -245,9 +245,9 @@ bool dxfWriterAscii::writeInt32(int code, int data) {
 bool dxfWriterAscii::writeInt64(int code, unsigned long long int data) {
 //    *filestr << code << std::endl << data << std::endl;
     filestr->width(3);
-    *filestr << std::right << code << std::endl;
+    *filestr << std::right << code << '\n';
     filestr->width(5);
-    *filestr << data << std::endl;
+    *filestr << data << '\n';
     return (filestr->good());
 }
 
@@ -256,15 +256,15 @@ bool dxfWriterAscii::writeDouble(int code, double data) {
 //    filestr->precision(12);
 //    *filestr << code << std::endl << data << std::endl;
     filestr->width(3);
-    *filestr << std::right << code << std::endl;
-    *filestr << data << std::endl;
+    *filestr << std::right << code << '\n';
+    *filestr << data << '\n';
 //    filestr->precision(prec);
     return (filestr->good());
 }
 
 //saved as int or add a bool member??
 bool dxfWriterAscii::writeBool(int code, bool data) {
-    *filestr << code << std::endl << data << std::endl;
+    *filestr << code << '\n' << data << '\n';
     return (filestr->good());
 }
 

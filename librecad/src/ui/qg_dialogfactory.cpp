@@ -116,6 +116,7 @@
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
+#include "qc_applicationwindow.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -804,6 +805,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDimAngular:
+        requestDimensionOptions(action, on, update);
+        break;
+
+    case RS2::ActionDimArc:
         requestDimensionOptions(action, on, update);
         break;
 
@@ -1770,7 +1775,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
     case RS2::EntityDimDiametric:
-    case RS2::EntityDimRadial: {
+    case RS2::EntityDimRadial:
+    case RS2::EntityDimArc: {
             QG_DlgDimension dlg(parent);
             dlg.setDim(*((RS_Dimension*)entity));
             if (dlg.exec()) {
@@ -1989,6 +1995,19 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
 	if (selectionWidget) {
         selectionWidget->setNumber(num);
         selectionWidget->setTotalLength(length);
+    }
+}
+
+
+
+void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display)
+{
+    if (selectionWidget)
+    {
+        selectionWidget->flashAuxData( QString("Block Name"), 
+                                       blockName, 
+                                       QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT, 
+                                       display);
     }
 }
 

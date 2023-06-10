@@ -37,7 +37,7 @@ class QG_CircleTan2Options : public QWidget
     Q_OBJECT
 
 public:
-    QG_CircleTan2Options(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_CircleTan2Options(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_CircleTan2Options();
 
 public slots:

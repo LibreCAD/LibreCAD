@@ -53,7 +53,7 @@ class QG_GraphicView:   public RS_GraphicView,
     Q_OBJECT
 
 public:
-    QG_GraphicView(QWidget* parent = 0, Qt::WindowFlags f = 0, RS_Document* doc = 0);
+    QG_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {}, RS_Document *doc = nullptr);
 	~QG_GraphicView() override;
 
 	int getWidth() const override;
@@ -159,6 +159,7 @@ protected:
     QMap<QString, QMenu*> menus;
 
 private:
+    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};

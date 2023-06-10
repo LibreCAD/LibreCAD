@@ -25,11 +25,9 @@
 
 #include "rs_locale.h"
 
-RS_Locale::RS_Locale() {
-}
-RS_Locale::RS_Locale(const QString &canonical):
-QLocale(toCanonical(canonical)){
-}
+RS_Locale::RS_Locale(const QString &canonical)
+    : QLocale(toCanonical(canonical))
+{}
 
 void RS_Locale::setCanonical(const QString &_canonical) {
     canonical=_canonical;
@@ -57,10 +55,11 @@ void RS_Locale::setName(const QString &_name) {
     localeName=_name;
 }
 
-QString RS_Locale::getCanonical() {
+QString RS_Locale::getCanonical() const {
     return canonical;
 }
-QString RS_Locale::getName() {
+
+QString RS_Locale::getName() const {
     return localeName;
 }
 
@@ -69,4 +68,3 @@ QString RS_Locale::name() const{
 }
 
 //EOF
-

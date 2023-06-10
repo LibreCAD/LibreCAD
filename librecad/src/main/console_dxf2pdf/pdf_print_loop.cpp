@@ -29,11 +29,12 @@
 #include "rs_painterqt.h"
 #include "lc_printing.h"
 #include "rs_staticgraphicview.h"
+#include "rs_units.h"
 
 #include "pdf_print_loop.h"
 
 
-static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
+static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, PdfPrintParams&);
 static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
@@ -42,7 +43,7 @@ static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
 void PdfPrintLoop::run()
 {
     if (params.outFile.isEmpty()) {
-        for (auto f : params.dxfFiles) {
+        for (auto &&f : params.dxfFiles) {
             printOneDxfToOnePdf(f);
         }
     } else {
@@ -53,7 +54,7 @@ void PdfPrintLoop::run()
 }
 
 
-void PdfPrintLoop::printOneDxfToOnePdf(QString& dxfFile) {
+void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
 
     // Main code logic and flow for this method is originally stolen from
     // QC_ApplicationWindow::slotFilePrint(bool printPDF) method.
@@ -170,7 +171,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
 
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
-    QString& dxfFile)
+    const QString& dxfFile)
 {
     *doc = new RS_Graphic();
 

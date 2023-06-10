@@ -49,7 +49,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionModifyMove;
 }
@@ -127,7 +127,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

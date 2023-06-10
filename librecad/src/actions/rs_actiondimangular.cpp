@@ -54,10 +54,10 @@ void RS_ActionDimAngular::reset()
     RS_ActionDimension::reset();
 
     actionType = RS2::ActionDimAngular;
-    edata.reset( new RS_DimAngularData( RS_Vector( false),
+    edata = std::make_unique<RS_DimAngularData>( RS_Vector( false),
                                         RS_Vector( false),
                                         RS_Vector( false),
-                                        RS_Vector( false)) );
+                                        RS_Vector( false));
     RS_DIALOGFACTORY->requestOptions( this, true, true);
 }
 

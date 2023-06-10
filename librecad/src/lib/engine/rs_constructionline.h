@@ -35,22 +35,15 @@
  * Holds the data that defines a construction line (a line
  * which is not limited to both directions).
  */
-class RS_ConstructionLineData {
-public:
+struct RS_ConstructionLineData {
     /**
 	 * Default constructor
      */
-	RS_ConstructionLineData();
+    RS_ConstructionLineData() = default;
 
     RS_ConstructionLineData(const RS_Vector& point1,
-							const RS_Vector& point2);
+                            const RS_Vector& point2);
 
-    friend class RS_ConstructionLine;
-
-    friend std::ostream& operator << (std::ostream& os,
-									  const RS_ConstructionLineData& ld);
-
-private:
     RS_Vector point1;
     RS_Vector point2;
 };

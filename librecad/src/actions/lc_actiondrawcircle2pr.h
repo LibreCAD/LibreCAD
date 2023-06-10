@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONDRAWCIRCLE2PR_H
 #define LC_ACTIONDRAWCIRCLE2PR_H
 
-#include "rs_previewactioninterface.h"
 #include "rs_actiondrawcirclecr.h"
 
 /**

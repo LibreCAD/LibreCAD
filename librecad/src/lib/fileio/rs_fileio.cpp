@@ -66,22 +66,71 @@ bool RS_FileIO::fileImport(RS_Graphic& graphic, const QString& file,
 		std::unique_ptr<RS_FilterInterface>&& filter(getImportFilter(file, t));
 		if (filter){
 #ifdef DWGSUPPORT
-            if (file.endsWith(".dwg",Qt::CaseInsensitive)){
-                QMessageBox::StandardButton sel = QMessageBox::warning(qApp->activeWindow(), QObject::tr("Warning"),
-                                                  QObject::tr("experimental, save your work first.\nContinue?"),
-                                                  QMessageBox::Ok|QMessageBox::Cancel, QMessageBox::NoButton);
-                if (sel == QMessageBox::Cancel)
-                    return false;
+            bool isDwg {file.endsWith( ".dwg", Qt::CaseInsensitive)};
+            if (isDwg) {
+                QApplication::restoreOverrideCursor();  // disable WaitCursor for massagebox
+
+                // use QStringList to avoid "\n" in translation strings
+                QStringList info { QObject::tr("DWG support is not complete!"),
+                                   "",
+                                   QObject::tr("If this file fails to open try an older DWG format"),
+                                   QObject::tr("or try to find a converter to make it a DXF file.") };
+
+                QMessageBox::information( qApp->activeWindow(),
+                                          QObject::tr("Information"),
+                                          info.join( "\n"),
+                                          QMessageBox::Ok,
+                                          QMessageBox::NoButton);
+                QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
             }
 #endif
             bool bImported {filter->fileImport(graphic, file, t)};
             if (!bImported) {
-                QMessageBox::critical( qApp->activeWindow(),
-                                       QObject::tr("Error"),
-                                       QObject::tr( "Import error:\n    %1", "fileImport").arg( filter->lastError()),
-                                       QMessageBox::Ok,
-                                       QMessageBox::NoButton);
+                QApplication::restoreOverrideCursor();  // disable WaitCursor for massagebox
+
+                QString strTitle {QObject::tr("Error", "fileImport")};
+                QString strError {QObject::tr("Import error:", "fileImport")};
+                QString strLastError( "    %1");
+#ifdef DWGSUPPORT
+                if (isDwg) {
+                    if (graphic.isEmpty()) {
+                        QMessageBox::critical( qApp->activeWindow(),
+                                               strTitle,
+                                               QStringList( {strError, strLastError}).join( "\n").arg( filter->lastError()),
+                                               QMessageBox::Ok,
+                                               QMessageBox::NoButton);
+                    }
+                    else {
+                        QStringList message { strError,
+                                    strLastError,
+                                    "",
+                                    QObject::tr("Anyhow, there are some entities identified.", "dwgImport"),
+                                    QObject::tr("If you open the file now, the drawing may be not complete or unusable.", "dwgImport"),
+                                    "",
+                                    QObject::tr("Ignore error and open the file?", "dwgImport"),
+                                         };
+                        QMessageBox::StandardButton answer = QMessageBox::warning( qApp->activeWindow(),
+                                                                                   QObject::tr("Warning"),
+                                                                                   message.join( "\n").arg( filter->lastError()),
+                                                                                   QMessageBox::Yes | QMessageBox::No,
+                                                                                   QMessageBox::NoButton);
+                        if (QMessageBox::Yes == answer) {
+                            return true;   // open the file anyhow
+                        }
+                    }
+                }
+                else
+#endif
+                {
+                    QMessageBox::critical( qApp->activeWindow(),
+                                           strTitle,
+                                           QStringList( {strError, strLastError}).join( "\n").arg( filter->lastError()),
+                                           QMessageBox::Ok,
+                                           QMessageBox::NoButton);
+                }
+                QApplication::setOverrideCursor( QCursor(Qt::WaitCursor));
             }
+
             return bImported;
         }
         RS_DEBUG->print(RS_Debug::D_WARNING,

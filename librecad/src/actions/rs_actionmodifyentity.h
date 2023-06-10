@@ -29,6 +29,7 @@
 
 #include "rs_actioninterface.h"
 
+class RS_Entity;
 
 /**
  * This action class can handle user events to select entities.
@@ -45,9 +46,14 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseCursor() override;
     void updateMouseButtonHints() override;
+    void setEntity(RS_Entity* en) {
+        this->en=en;
+    }
+    // display the entity as selected
+    void setDisplaySelected(bool selected);
 
 private:
-    RS_Entity* en;
+    RS_Entity* en = nullptr;
 };
 
 #endif

@@ -28,13 +28,13 @@
 #ifndef RS_OVERLAYBOX_H
 #define RS_OVERLAYBOX_H
 
+#include <iosfwd>
 #include "rs_atomicentity.h"
 
 /**
  * Holds the data that defines a line.
  */
-class RS_OverlayBoxData {
-public:
+struct RS_OverlayBoxData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
@@ -43,15 +43,11 @@ public:
     RS_OverlayBoxData(const RS_Vector& corner1, const RS_Vector& corner2)
                      : corner1(corner1), corner2(corner2) {}
 
-    friend class RS_OverlayBox;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld);
-
-public:
     RS_Vector corner1;
     RS_Vector corner2;
 };
 
+std::ostream& operator << (std::ostream& os, const RS_OverlayBoxData& ld);
 
 /**
  * Class for a line entity.
@@ -95,6 +91,7 @@ public:
 	RS_Vector getNearestMiddle(const RS_Vector&, double*,int)const override{return {};}
 	RS_Vector getNearestDist(double, const RS_Vector&, double*)const override{return {};}
 	double getDistanceToPoint(const RS_Vector&, RS_Entity**, RS2::ResolveLevel, double)const override{return -1;}//is -1 right here
+    friend std::ostream& operator << (std::ostream& os, const RS_OverlayBox& l);
 
 protected:
     RS_OverlayBoxData data;

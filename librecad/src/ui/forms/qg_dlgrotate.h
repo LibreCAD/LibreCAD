@@ -28,14 +28,14 @@
 
 #include "ui_qg_dlgrotate.h"
 
-class RS_RotateData;
+struct RS_RotateData;
 
 class QG_DlgRotate : public QDialog, public Ui::QG_DlgRotate
 {
     Q_OBJECT
 
 public:
-    QG_DlgRotate(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgRotate(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgRotate();
 
 public slots:
@@ -46,11 +46,11 @@ protected slots:
     virtual void languageChange();
 
 private:
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
-    int numberMode;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
+    int numberMode = 0;
     QString copies;
-    RS_RotateData* data;
+    RS_RotateData* data = nullptr;
     QString angle;
 
     void init();

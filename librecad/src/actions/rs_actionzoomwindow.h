@@ -44,8 +44,7 @@ public:
     RS_ActionZoomWindow(RS_EntityContainer& container,
                         RS_GraphicView& graphicView,
                         bool keepAspectRatio=true);
-
-	~RS_ActionZoomWindow() override;
+    ~RS_ActionZoomWindow() override;
 
 	void init(int status=0) override;
 	void trigger() override;
@@ -59,7 +58,7 @@ protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 
-    bool keepAspectRatio;
+    bool keepAspectRatio = false;
 };
 
 #endif

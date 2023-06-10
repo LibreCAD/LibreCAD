@@ -342,11 +342,14 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
 //        std::cout<<"mouseCoord.distanceTo(snapSpot)="<<mouseCoord.distanceTo(snapSpot)<<std::endl;
         //        std::cout<<"snapRange="<<snapRange<<std::endl;
 
-        //retreat to snapFree when distance is more than half grid
+        //retreat to snapFree when distance is more than quarter grid
+        // issue #1619: snapFree beyond "snapRange", which is in GUI units
         if(snapMode.snapFree){
-			RS_Vector const& ds=mouseCoord - pImpData->snapSpot;
-			RS_Vector const& grid=graphicView->getGrid()->getCellVector()*0.5;
-			if( fabs(ds.x) > fabs(grid.x) ||  fabs(ds.y) > fabs(grid.y) ) pImpData->snapSpot = mouseCoord;
+            const RS_Vector ds=mouseCoord - pImpData->snapSpot;
+            const RS_Vector grid=graphicView->getGrid()->getCellVector()*0.25;
+            if( std::abs(ds.x) > std::abs(grid.x)
+                || std::abs(ds.y) > std::abs(grid.y)
+                || graphicView->toGuiDX(ds.magnitude()) >= snapRange) pImpData->snapSpot = mouseCoord;
         }
 
         //another choice is to keep snapRange in GUI coordinates instead of graph coordinates
@@ -992,7 +995,7 @@ RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector
     }
 
     double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
-    angle -= remainder(angle,angularResolution);
+    angle -= std::remainder(angle,angularResolution);
     angle *= M_PI/180.;
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
     res += referenceCoord;

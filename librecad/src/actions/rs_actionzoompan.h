@@ -52,6 +52,7 @@ public:
                      RS_GraphicView& graphicView);
 
 	void init(int status=0) override;
+    void finish(bool updateTB = true ) override;
 	void trigger() override;
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mousePressEvent(QMouseEvent* e) override;
@@ -62,10 +63,10 @@ public:
 protected:
     //RS_Vector v1;
     //RS_Vector v2;
-	int x1;
-	int y1;
-	int x2;
-	int y2;
+    int x1 = 0;
+    int y1 = 0;
+    int x2 = 0;
+    int y2 = 0;
 };
 
 #endif

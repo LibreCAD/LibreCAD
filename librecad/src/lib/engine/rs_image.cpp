@@ -25,15 +25,14 @@
 **********************************************************************/
 #include<iostream>
 #include <QImage>
-#include "rs_image.h"
-#include "rs_line.h"
-#include "rs_settings.h"
 
-#include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_painterqt.h"
+#include "rs_image.h"
+#include "rs_line.h"
 #include "rs_math.h"
+#include "rs_painter.h"
+#include "rs_settings.h"
 
 RS_ImageData::RS_ImageData(int _handle,
 						   const RS_Vector& _insertionPoint,
@@ -391,11 +390,10 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
 								view->toGuiDY(data.vVector.magnitude())};
-    double angle = data.uVector.angle();
 
-	painter->drawImg(*img,
+    painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
-                     angle, scale);
+                     data.uVector, data.vVector, scale);
 
     if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();

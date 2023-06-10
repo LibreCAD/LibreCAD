@@ -40,35 +40,34 @@ class QG_ArcTangentialOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ArcTangentialOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-	~QG_ArcTangentialOptions();
+    QG_ArcTangentialOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
+    virtual ~QG_ArcTangentialOptions();
 
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateRadius(const QString& s  );
     virtual void updateAngle(const QString& s  );
     virtual void updateByRadius(const bool br);
+    void on_leRadius_editingFinished();
 
-
-protected:
-    RS_ActionDrawArcTangential* action;
-
-protected slots:
-    virtual void languageChange();
-
-private slots:
-	void on_leRadius_editingFinished();
-
-	void on_leAngle_editingFinished();
+    void on_leAngle_editingFinished();
 
     void on_rbRadius_clicked(bool checked);
 
     void on_rbAngle_clicked(bool checked);
 
+
+protected:
+    RS_ActionDrawArcTangential* action = nullptr;
+
+protected slots:
+    virtual void languageChange();
+
+private slots:
+
 private:
 	std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
 	void saveSettings();
-
 };
 
 #endif // QG_ARCTANGENTIALOPTIONS_H

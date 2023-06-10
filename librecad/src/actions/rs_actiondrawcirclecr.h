@@ -81,7 +81,6 @@ protected:
      * Circle data defined so far.
      */
 	std::unique_ptr<RS_CircleData> data;
-	
 };
 
 #endif

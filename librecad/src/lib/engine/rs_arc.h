@@ -27,6 +27,8 @@
 #ifndef RS_ARC_H
 #define RS_ARC_H
 
+#include <iosfwd>
+
 #include "rs_atomicentity.h"
 class LC_Quadratic;
 
@@ -36,7 +38,6 @@ class LC_Quadratic;
  */
 struct RS_ArcData {
 	RS_ArcData() = default;
-	~RS_ArcData() = default;
 
 	RS_ArcData(const RS_Vector& center,
 			   double radius,
@@ -48,10 +49,10 @@ struct RS_ArcData {
 	bool isValid() const;
 
 	RS_Vector center;
-	double radius;
-	double angle1;
-	double angle2;
-	bool reversed;
+    double radius = 0.;
+    double angle1 = 0.;
+    double angle2 = 0.;
+    bool reversed = false;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
@@ -88,7 +89,7 @@ public:
 	RS_VectorSolutions getRefPoints() const override;
 
     /** Sets new arc parameters. **/
-    void setData(RS_ArcData d) {
+    void setData(const RS_ArcData& d) {
         data = d;
     }
 

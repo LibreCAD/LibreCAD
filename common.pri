@@ -25,6 +25,10 @@ win32 {
     COPY = cp
 }
 
+# use c++ only
+QMAKE_CC = g++
+QMAKE_CFLAGS = -std=c++1y
+
 # Windows compiler settings
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
@@ -69,13 +73,13 @@ QMAKE_CFLAGS_ISYSTEM = ""
 # svg support
 QT += svg
 
-greaterThan( QT_MAJOR_VERSION, 4) {
-	CONFIG += c++11
+greaterThan( QT_MAJOR_VERSION, 5) {
+    CONFIG += c++1y
 }else{
     unix|macx|win32-g++ {
         # no such option for MSVC
-	QMAKE_CXXFLAGS += -std=c++11
-	QMAKE_CXXFLAGS_DEBUG += -std=c++11
+    QMAKE_CXXFLAGS += -std=c++1y
+    QMAKE_CXXFLAGS_DEBUG += -std=c++1y
     }
 }
 

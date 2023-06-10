@@ -82,8 +82,8 @@ public:
 
 private:
 
-	bool hasOptions;
-	bool m_bPaperOffset;
+    bool hasOptions = false;
+    bool m_bPaperOffset = false;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

@@ -1,3 +1,9 @@
+# LibreCAD root folder
+/*.dxf
+/*.sh
+/*.txt
+/\.*
+
 # Apple generated directories
 LibreCAD.app/
 LibreCAD.pbproj/
@@ -11,6 +17,9 @@ Info.plist
 
 *.autosave
 *~
+*.patch
+*.rej
+\#*.dxf
 
 # filenames, anywhere
 Makefile.in

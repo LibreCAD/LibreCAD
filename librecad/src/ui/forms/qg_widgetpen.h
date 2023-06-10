@@ -34,7 +34,7 @@ class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
     Q_OBJECT
 
 public:
-    QG_WidgetPen(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_WidgetPen(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_WidgetPen();
 
     virtual bool isColorUnchanged();
@@ -48,6 +48,9 @@ public slots:
 protected slots:
     virtual void languageChange();
 
+protected:
+	virtual void focusInEvent(QFocusEvent *event);
+	virtual void focusOutEvent(QFocusEvent *event);
 };
 
 #endif // QG_WIDGETPEN_H
