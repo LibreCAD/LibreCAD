@@ -67,7 +67,7 @@ public:
 
 	void showOptions() override;
 	void hideOptions() override;
-    void setRadius(const double& r);
+	bool setRadius(const QString& sr);
 	double getRadius() const;
 
 

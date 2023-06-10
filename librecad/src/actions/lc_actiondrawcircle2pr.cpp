@@ -53,7 +53,9 @@ LC_ActionDrawCircle2PR::~LC_ActionDrawCircle2PR() = default;
 
 void LC_ActionDrawCircle2PR::reset() {
 	deletePreview();
+	double radius = data->radius;
 	*data = {};
+	data->radius = radius;
 	pPoints->point1 = {};
 	pPoints->point2 = {};
 }
@@ -174,6 +176,7 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
 
 	RS_Vector mouse = e->getCoordinate();
+	double distance = 0.0;
 
 	switch (getStatus()) {
 	case SetPoint1:
@@ -183,13 +186,14 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
 		break;
 
 	case SetPoint2:
-		if(mouse.distanceTo(pPoints->point1) <= 2.*data->radius){
+		distance = mouse.distanceTo(pPoints->point1);
+		if(distance <= 2.*data->radius){
 			pPoints->point2 = mouse;
 			graphicView->moveRelativeZero(mouse);
 			setStatus(SelectCenter);
 		}else{
 			RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
-											 arg(data->radius).arg(pPoints->point1.distanceTo(pPoints->point2)).arg(2.*data->radius));
+											 arg(data->radius).arg(distance).arg(2.*data->radius));
 		}
 		break;
 
