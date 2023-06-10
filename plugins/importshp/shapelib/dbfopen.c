@@ -158,10 +158,10 @@
 
 #include "shapefil.h"
 
-#include <math.h>
-#include <stdlib.h>
-#include <ctype.h>
-#include <string.h>
+#include <cctype>
+#include <cmath>
+#include <cstdlib>
+#include <cstring>
 
 SHP_CVSID("$Id: dbfopen.c,v 1.89 2011-07-24 05:59:25 fwarmerdam Exp $")
 
@@ -170,6 +170,9 @@ SHP_CVSID("$Id: dbfopen.c,v 1.89 2011-07-24 05:59:25 fwarmerdam Exp $")
 #  define TRUE		1
 #endif
 
+namespace {
+    constexpr int Max_File_Name_Length = 255;
+}
 /************************************************************************/
 /*                             SfRealloc()                              */
 /*                                                                      */
@@ -409,8 +412,8 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
     pszBasename = (char *) malloc(strnlen(pszFilename, 127)+5);
-    strncpy( pszBasename, pszFilename, malloc_usable_size(pszBasename));
-    for( i = strnlen(pszBasename, malloc_usable_size(pszBasename)-1)-1;
+    strncpy( pszBasename, pszFilename, Max_File_Name_Length);
+    for( i = strnlen(pszBasename, Max_File_Name_Length)-1;
 	 i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
 	       && pszBasename[i] != '\\';
 	 i-- ) {}
@@ -419,7 +422,7 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
         pszBasename[i] = '\0';
 
     pszFullname = (char *) malloc(strnlen(pszBasename, 128) + 5);
-    snprintf( pszFullname, malloc_usable_size(pszFullname), "%s.dbf", pszBasename );
+    snprintf( pszFullname, Max_File_Name_Length, "%s.dbf", pszBasename );
         
     psDBF = (DBFHandle) calloc( 1, sizeof(DBFInfo) );
     psDBF->fp = psHooks->FOpen( pszFullname, pszAccess );
@@ -427,15 +430,15 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
 
     if( psDBF->fp == NULL )
     {
-        snprintf( pszFullname, malloc_usable_size(pszFullname),"%s.DBF", pszBasename );
+        snprintf( pszFullname, Max_File_Name_Length,"%s.DBF", pszBasename );
         psDBF->fp = psDBF->sHooks.FOpen(pszFullname, pszAccess );
     }
 
-    snprintf( pszFullname, malloc_usable_size(pszFullname),"%s.cpg", pszBasename );
+    snprintf( pszFullname, Max_File_Name_Length,"%s.cpg", pszBasename );
     pfCPG = psHooks->FOpen( pszFullname, "r" );
     if( pfCPG == NULL )
     {
-        snprintf( pszFullname, malloc_usable_size(pszFullname),"%s.CPG", pszBasename );
+        snprintf( pszFullname, Max_File_Name_Length,"%s.CPG", pszBasename );
         pfCPG = psHooks->FOpen( pszFullname, "r" );
     }
 
@@ -493,7 +496,7 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
     psDBF->pszCodePage = NULL;
     if( pfCPG )
     {
-        size_t n;
+        size_t n = 0;
         memset( pabyBuf, 0, nBufSize);
         psDBF->sHooks.FRead( pabyBuf, nBufSize - 1, 1, pfCPG );
         n = strcspn( (char *) pabyBuf, "\n\r" );
@@ -501,15 +504,15 @@ DBFOpenLL( const char * pszFilename, const char * pszAccess, SAHooks *psHooks )
         {
             pabyBuf[n] = '\0';
             psDBF->pszCodePage = (char *) malloc(n + 1);
-            memncpy( psDBF->pszCodePage, pabyBuf, n + 1, n );
+            memcpy( psDBF->pszCodePage, pabyBuf, n + 1);
         }
 		psDBF->sHooks.FClose( pfCPG );
     }
     if( psDBF->pszCodePage == NULL && pabyBuf[29] != 0 )
     {
-        snprintf( (char *) pabyBuf, malloc_usable_size(pabyBuf)-1, "LDID/%d", psDBF->iLanguageDriver );
-        psDBF->pszCodePage = (char *) malloc(strnlen((char*)pabyBuf,  malloc_usable_size(pabyBuf)-1) + 1);
-        strncpy( psDBF->pszCodePage, (char *) pabyBuf , malloc_usable_size(psDBF->pszCodePage)-1);
+        snprintf( (char *) pabyBuf, Max_File_Name_Length, "LDID/%d", psDBF->iLanguageDriver );
+        psDBF->pszCodePage = (char *) malloc(strnlen((char*)pabyBuf,  Max_File_Name_Length) + 1);
+        strncpy( psDBF->pszCodePage, (char *) pabyBuf , nBufSize);
     }
 
 /* -------------------------------------------------------------------- */
@@ -670,8 +673,8 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
     pszBasename = (char *) malloc(strnlen(pszFilename, 127)+5);
-    strncpy( pszBasename, pszFilename, malloc_usable_size(pszBasename) );
-    for( i = strnlen(pszBasename,  malloc_usable_size(pszBasename)-1)-1;
+    strncpy( pszBasename, pszFilename, Max_File_Name_Length);
+    for( i = strnlen(pszBasename, Max_File_Name_Length)-1;
 	 i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
 	       && pszBasename[i] != '\\';
 	 i-- ) {}
@@ -679,8 +682,8 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
     if( pszBasename[i] == '.' )
         pszBasename[i] = '\0';
 
-    pszFullname = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszBasename)-1) + 5);
-    snprintf( pszFullname, malloc_usable_size(pszFullname), "%s.dbf", pszBasename );
+    pszFullname = (char *) malloc(strnlen(pszBasename, Max_File_Name_Length) + 5);
+    snprintf( pszFullname, Max_File_Name_Length, "%s.dbf", pszBasename );
 
 /* -------------------------------------------------------------------- */
 /*      Create the file.                                                */
@@ -705,7 +708,7 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
     }
 
 
-    snprintf( pszFullname, malloc_usable_size(pszFullname), "%s.cpg", pszBasename );
+    snprintf( pszFullname, Max_File_Name_Length, "%s.cpg", pszBasename );
     if( pszCodePage != NULL )
     {
         if( strncmp( pszCodePage, "LDID/", 5 ) == 0 )
@@ -757,8 +760,8 @@ DBFCreateLL( const char * pszFilename, const char * pszCodePage, SAHooks *psHook
     psDBF->pszCodePage = NULL;
     if( pszCodePage )
     {
-        psDBF->pszCodePage = (char * ) malloc( strnlen(pszCodePage, 127) + 1 );
-        strncpy( psDBF->pszCodePage, pszCodePage, malloc_usable_size(psDBF->pszCodePage));
+        psDBF->pszCodePage = (char * ) malloc( strnlen(pszCodePage, 511) + 1 );
+        strncpy( psDBF->pszCodePage, pszCodePage, 511);
     }
 
     return( psDBF );

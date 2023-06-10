@@ -266,13 +266,13 @@
 
 #include "shapefil.h"
 
-#include <math.h>
-#include <limits.h>
-#include <assert.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-#include <malloc.h>
+#include <algorithm>
+#include <cassert>
+#include <climits>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cstring>
 
 SHP_CVSID("$Id: shpopen.c,v 1.73 2012-01-24 22:33:01 fwarmerdam Exp $")
 
@@ -290,10 +290,6 @@ typedef unsigned int	      int32;
 #endif
 
 #define ByteCopy( a, b, c )	memcpy( b, a, c )
-#ifndef MAX
-#  define MIN(a,b)      ((a<b) ? a : b)
-#  define MAX(a,b)      ((a>b) ? a : b)
-#endif
 
 #if defined(WIN32) || defined(_WIN32)
 #  ifndef snprintf
@@ -302,6 +298,12 @@ typedef unsigned int	      int32;
 #endif
 
 static int 	bBigEndian;
+
+namespace {
+
+constexpr int Max_File_Name_Length = 255;
+
+}
 
 
 /************************************************************************/
@@ -532,9 +534,9 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /*	Compute the base (layer) name.  If there is any extension	*/
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
-    pszBasename = (char *) malloc(strnlen(pszLayer, 128)+5);
-    strncpy( pszBasename, pszLayer, malloc_usable_size(pszBasename) -1 );
-    for( i = strnlen(pszBasename, malloc_usable_size(pszBasename) -1)-1;
+    pszBasename = (char *) malloc(strnlen(pszLayer, Max_File_Name_Length)+5);
+    strncpy( pszBasename, pszLayer, Max_File_Name_Length);
+    for( i = strnlen(pszBasename, Max_File_Name_Length)-1;
          i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
              && pszBasename[i] != '\\';
          i-- ) {}
@@ -546,19 +548,19 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
 /*	Open the .shp and .shx files.  Note that files pulled from	*/
 /*	a PC to Unix with upper case filenames won't work!		*/
 /* -------------------------------------------------------------------- */
-    pszFullname = (char *) malloc(strnlen(pszBasename, 128) + 5);
-    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shp", pszBasename ) ;
+    pszFullname = (char *) malloc(strnlen(pszBasename, Max_File_Name_Length) + 5);
+    snprintf( pszFullname, Max_File_Name_Length, "%s.shp", pszBasename ) ;
     psSHP->fpSHP = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     if( psSHP->fpSHP == NULL )
     {
-        snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.SHP", pszBasename );
+        snprintf( pszFullname, Max_File_Name_Length,"%s.SHP", pszBasename );
         psSHP->fpSHP = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     }
     
     if( psSHP->fpSHP == NULL )
     {
-        char *pszMessage = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszFullname)-1)*2+256);
-        snprintf( pszMessage, malloc_usable_size(pszMessage)-1,"Unable to open %s.shp or %s.SHP.",
+        char *pszMessage = (char *) malloc(strnlen(pszBasename, Max_File_Name_Length));
+        snprintf( pszMessage, Max_File_Name_Length,"Unable to open %s.shp or %s.SHP.",
                   pszBasename, pszBasename );
         psHooks->Error( pszMessage );
         free( pszMessage );
@@ -570,18 +572,18 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
         return NULL;
     }
 
-    snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.shx", pszBasename );
+    snprintf( pszFullname, Max_File_Name_Length,"%s.shx", pszBasename );
     psSHP->fpSHX =  psSHP->sHooks.FOpen(pszFullname, pszAccess );
     if( psSHP->fpSHX == NULL )
     {
-        snprintf( pszFullname, malloc_usable_size(pszFullname)-1,"%s.SHX", pszBasename );
+        snprintf( pszFullname, Max_File_Name_Length,"%s.SHX", pszBasename );
         psSHP->fpSHX = psSHP->sHooks.FOpen(pszFullname, pszAccess );
     }
     
     if( psSHP->fpSHX == NULL )
     {
-        char *pszMessage = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszBasename)-1)*2+256);
-        snprintf( pszMessage,malloc_usable_size(pszMessage)-1, "Unable to open %s.shx or %s.SHX.",
+        char *pszMessage = (char *) malloc(strnlen(pszBasename, 511));
+        snprintf( pszMessage, 511, "Unable to open %s.shx or %s.SHX.",
                   pszBasename, pszBasename );
         psHooks->Error( pszMessage );
         free( pszMessage );
@@ -691,10 +693,10 @@ SHPOpenLL( const char * pszLayer, const char * pszAccess, SAHooks *psHooks )
     psSHP->nMaxRecords = psSHP->nRecords;
 
     psSHP->panRecOffset = (unsigned int *)
-        malloc(sizeof(unsigned int) * MAX(1,psSHP->nMaxRecords) );
+        malloc(sizeof(unsigned int) * std::max(1,psSHP->nMaxRecords) );
     psSHP->panRecSize = (unsigned int *)
-        malloc(sizeof(unsigned int) * MAX(1,psSHP->nMaxRecords) );
-    pabyBuf = (uchar *) malloc(8 * MAX(1,psSHP->nRecords) );
+        malloc(sizeof(unsigned int) * std::max(1,psSHP->nMaxRecords) );
+    pabyBuf = (uchar *) malloc(8 * std::max(1,psSHP->nRecords) );
 
     if (psSHP->panRecOffset == NULL ||
         psSHP->panRecSize == NULL ||
@@ -879,9 +881,9 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
 /*	Compute the base (layer) name.  If there is any extension	*/
 /*	on the passed in filename we will strip it off.			*/
 /* -------------------------------------------------------------------- */
-    pszBasename = (char *) malloc(strnlen(pszLayer, 128)+5);
-    strncpy( pszBasename, pszLayer,malloc_usable_size(pszBasename) -1 );
-    for( i = strnlen(pszBasename, malloc_usable_size(pszFullname)-1)-1;
+    pszBasename = (char *) malloc(strnlen(pszLayer, Max_File_Name_Length)+5);
+    strncpy( pszBasename, pszLayer, Max_File_Name_Length);
+    for( i = strnlen(pszBasename, Max_File_Name_Length);
          i > 0 && pszBasename[i] != '.' && pszBasename[i] != '/'
              && pszBasename[i] != '\\';
          i-- ) {}
@@ -892,8 +894,8 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
 /* -------------------------------------------------------------------- */
 /*      Open the two files so we can write their headers.               */
 /* -------------------------------------------------------------------- */
-    pszFullname = (char *) malloc(strnlen(pszBasename, malloc_usable_size(pszBasename)-1) + 5);
-    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shp", pszBasename );
+    pszFullname = (char *) malloc(strnlen(pszBasename, Max_File_Name_Length) + 5);
+    snprintf( pszFullname, Max_File_Name_Length, "%s.shp", pszBasename );
     fpSHP = psHooks->FOpen(pszFullname, "wb" );
     if( fpSHP == NULL )
     {
@@ -901,7 +903,7 @@ SHPCreateLL( const char * pszLayer, int nShapeType, SAHooks *psHooks )
         goto error;
     }
 
-    snprintf( pszFullname, malloc_usable_size(pszFullname)-1, "%s.shx", pszBasename );
+    snprintf( pszFullname, Max_File_Name_Length, "%s.shx", pszBasename );
     fpSHX = psHooks->FOpen(pszFullname, "wb" );
     if( fpSHX == NULL )
     {
@@ -1027,15 +1029,15 @@ SHPComputeExtents( SHPObject * psObject )
     
     for( i = 0; i < psObject->nVertices; i++ )
     {
-        psObject->dfXMin = MIN(psObject->dfXMin, psObject->padfX[i]);
-        psObject->dfYMin = MIN(psObject->dfYMin, psObject->padfY[i]);
-        psObject->dfZMin = MIN(psObject->dfZMin, psObject->padfZ[i]);
-        psObject->dfMMin = MIN(psObject->dfMMin, psObject->padfM[i]);
+        psObject->dfXMin = std::min(psObject->dfXMin, psObject->padfX[i]);
+        psObject->dfYMin = std::min(psObject->dfYMin, psObject->padfY[i]);
+        psObject->dfZMin = std::min(psObject->dfZMin, psObject->padfZ[i]);
+        psObject->dfMMin = std::min(psObject->dfMMin, psObject->padfM[i]);
 
-        psObject->dfXMax = MAX(psObject->dfXMax, psObject->padfX[i]);
-        psObject->dfYMax = MAX(psObject->dfYMax, psObject->padfY[i]);
-        psObject->dfZMax = MAX(psObject->dfZMax, psObject->padfZ[i]);
-        psObject->dfMMax = MAX(psObject->dfMMax, psObject->padfM[i]);
+        psObject->dfXMax = std::max(psObject->dfXMax, psObject->padfX[i]);
+        psObject->dfYMax = std::max(psObject->dfYMax, psObject->padfY[i]);
+        psObject->dfZMax = std::max(psObject->dfZMax, psObject->padfZ[i]);
+        psObject->dfMMax = std::max(psObject->dfMMax, psObject->padfM[i]);
     }
 }
 
@@ -1096,7 +1098,7 @@ SHPCreateObject( int nSHPType, int nShapeId, int nParts,
         || nSHPType == SHPT_ARCZ || nSHPType == SHPT_POLYGONZ
         || nSHPType == SHPT_MULTIPATCH )
     {
-        psObject->nParts = MAX(1,nParts);
+        psObject->nParts = std::max(1,nParts);
 
         psObject->panPartStart = (int *)
             calloc(sizeof(int), psObject->nParts);
@@ -1471,7 +1473,7 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
         unsigned int nExpectedSize = psSHP->nFileSize + nRecordSize;
         if( nExpectedSize < psSHP->nFileSize ) // due to unsigned int overflow
         {
-            char str[128];
+            char str[256];
             snprintf( str, sizeof(str)-1, "Failed to write shape object. "
                      "File size cannot reach %u + %u.",
                      psSHP->nFileSize, nRecordSize );
@@ -1552,14 +1554,14 @@ SHPWriteObject(SHPHandle psSHP, int nShapeId, SHPObject * psObject )
 
     for( i = 0; i < psObject->nVertices; i++ )
     {
-        psSHP->adBoundsMin[0] = MIN(psSHP->adBoundsMin[0],psObject->padfX[i]);
-        psSHP->adBoundsMin[1] = MIN(psSHP->adBoundsMin[1],psObject->padfY[i]);
-        psSHP->adBoundsMin[2] = MIN(psSHP->adBoundsMin[2],psObject->padfZ[i]);
-        psSHP->adBoundsMin[3] = MIN(psSHP->adBoundsMin[3],psObject->padfM[i]);
-        psSHP->adBoundsMax[0] = MAX(psSHP->adBoundsMax[0],psObject->padfX[i]);
-        psSHP->adBoundsMax[1] = MAX(psSHP->adBoundsMax[1],psObject->padfY[i]);
-        psSHP->adBoundsMax[2] = MAX(psSHP->adBoundsMax[2],psObject->padfZ[i]);
-        psSHP->adBoundsMax[3] = MAX(psSHP->adBoundsMax[3],psObject->padfM[i]);
+        psSHP->adBoundsMin[0] = std::min(psSHP->adBoundsMin[0],psObject->padfX[i]);
+        psSHP->adBoundsMin[1] = std::min(psSHP->adBoundsMin[1],psObject->padfY[i]);
+        psSHP->adBoundsMin[2] = std::min(psSHP->adBoundsMin[2],psObject->padfZ[i]);
+        psSHP->adBoundsMin[3] = std::min(psSHP->adBoundsMin[3],psObject->padfM[i]);
+        psSHP->adBoundsMax[0] = std::max(psSHP->adBoundsMax[0],psObject->padfX[i]);
+        psSHP->adBoundsMax[1] = std::max(psSHP->adBoundsMax[1],psObject->padfY[i]);
+        psSHP->adBoundsMax[2] = std::max(psSHP->adBoundsMax[2],psObject->padfZ[i]);
+        psSHP->adBoundsMax[3] = std::max(psSHP->adBoundsMax[3],psObject->padfM[i]);
     }
 
     return( nShapeId  );
@@ -1578,7 +1580,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
 {
     int                  nEntitySize, nRequiredSize;
     SHPObject           *psShape;
-    char                 szErrorMsg[128];
+    char                 szErrorMsg[256];
 
 /* -------------------------------------------------------------------- */
 /*      Validate the record/entity number.                              */
@@ -1626,7 +1628,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
          * TODO - mloskot: Consider detailed diagnostics of shape file,
          * for example to detect if file is truncated.
          */
-        char str[128];
+        char str[256];
         snprintf( str, sizeof(str) -1,
                  "Error in fseek() reading object from .shp file at offset %u",
                  psSHP->panRecOffset[hEntity]);
@@ -1641,7 +1643,7 @@ SHPReadObject( SHPHandle psSHP, int hEntity )
          * TODO - mloskot: Consider detailed diagnostics of shape file,
          * for example to detect if file is truncated.
          */
-        char str[128];
+        char str[256];
         snprintf( str, sizeof(str)-1,
                  "Error in fread() reading object of size %u at offset %u from .shp file",
                  nEntitySize, psSHP->panRecOffset[hEntity] );
