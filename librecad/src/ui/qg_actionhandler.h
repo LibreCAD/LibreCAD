@@ -177,6 +177,7 @@ public slots:
 	void slotDimRadial();
 	void slotDimDiametric();
 	void slotDimAngular();
+	void slotDimArc();
 	void slotDimLeader();
 
 	void slotModifyAttributes();

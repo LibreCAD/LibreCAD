@@ -48,6 +48,10 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlag
 	, ui(new Ui::Ui_ArcTangentialOptions{})
 {
 	ui->setupUi(this);
+    connect(ui->rbRadius, SIGNAL(clicked()), this, SLOT(on_rbRadius_clicked));
+    connect(ui->rbAngle, SIGNAL(clicked()), this, SLOT(on_rbAngle_clicked));
+    connect(ui->leRadius, SIGNAL(editingFinished()), this, SLOT(on_leRadius_editingFinished));
+    connect(ui->leAngle, SIGNAL(editingFinished()), this, SLOT(on_leAngle_editingFinished));
 }
 
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions()

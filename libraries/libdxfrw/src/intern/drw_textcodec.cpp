@@ -75,7 +75,7 @@ void DRW_TextCodec::setVersion(const std::string &v, bool dxfFormat){
     version = DRW::UNKNOWNV;
     for ( auto it = DRW::dwgVersionStrings.begin(); it != DRW::dwgVersionStrings.end(); ++it )
     {
-        if ( std::strcmp( v.c_str(), it->first ) == 0 ) {
+        if ( std::strncmp( v.c_str(), it->first, 32) == 0 ) {
             version = it->second;
             setVersion( it->second, dxfFormat);
             break;
@@ -202,7 +202,7 @@ std::string DRW_ConvTable::toUtf8(const std::string &s) {
         if (c < 0x80) {
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
@@ -344,7 +344,7 @@ std::string DRW_ConvDBCSTable::toUtf8(const std::string &s) {
             notFound = false;
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
@@ -433,7 +433,7 @@ std::string DRW_Conv932Table::toUtf8(const std::string &s) {
             notFound = false;
             //check for \U+ encoded text
             if (c == '\\') {
-                if (it+6 < s.end() && *(it+1) == 'U' && *(it+2) == '+')  {
+                if (s.end()-it > 6 && *(it+1) == 'U' && *(it+2) == '+')  {
                     res += encodeText(std::string(it, it+7));
                     it +=6;
                 } else {
@@ -511,13 +511,13 @@ std::string DRW_TextCodec::correctCodePage(const std::string& s) {
                cp=="ISO8859-1" || cp=="ISO8859-15" || cp=="ISO-IR-100" || cp=="L1" || cp=="IBM 850") {
         return "ANSI_1252";
         //Greek
-    } else if (cp=="ANSI_1253" || cp=="CP1253" || cp=="iso8859-7") {
+    } else if (cp=="ANSI_1253" || cp=="CP1253" || cp=="ISO8859-7") {
         return "ANSI_1253";
         //Turkish
-    } else if (cp=="ANSI_1254" || cp=="CP1254" || cp=="iso8859-9" || cp=="iso8859-3") {
+    } else if (cp=="ANSI_1254" || cp=="CP1254" || cp=="ISO8859-9" || cp=="ISO8859-3") {
         return "ANSI_1254";
         //Hebrew
-    } else if (cp=="ANSI_1255" || cp=="CP1255" || cp=="iso8859-8") {
+    } else if (cp=="ANSI_1255" || cp=="CP1255" || cp=="ISO8859-8") {
         return "ANSI_1255";
         //Arabic
     } else if (cp=="ANSI_1256" || cp=="CP1256" || cp=="ISO8859-6") {

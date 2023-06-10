@@ -41,7 +41,6 @@ struct RS_SolidData
      * Default constructor. Leaves the data object uninitialized.
      */
     RS_SolidData();
-    ~RS_SolidData() = default;
 
     /**
      * Constructor for a solid with 3 corners.

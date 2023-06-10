@@ -81,7 +81,7 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
 
 
 void QG_DlgPolyline::updatePolyline() {
-    polyline->setClosed(cbClosed->isChecked(), 0.0);
+    polyline->setClosed(cbClosed->isChecked());
     polyline->setPen(wPen->getPen());
     polyline->setLayer(cbLayer->currentText());
         polyline->update();

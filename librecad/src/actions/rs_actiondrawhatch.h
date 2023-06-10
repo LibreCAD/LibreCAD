@@ -30,7 +30,6 @@
 #include "rs_previewactioninterface.h"
 
 struct RS_HatchData;
-class RS_Hatch;
 
 /**
  * This action class can handle user events to draw hatches.

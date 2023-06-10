@@ -98,10 +98,10 @@ protected:
     /**
      * Is the angle fixed?
      */
-    bool fixedAngle;
+    bool fixedAngle = false;
 
 	/** Last status before entering text or angle. */
-    Status lastStatus;
+    Status lastStatus = SetExtPoint1;
 };
 
 #endif

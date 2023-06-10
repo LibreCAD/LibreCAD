@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -56,8 +58,6 @@ public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
 	~RS_ActionDefault() override;
-
-	void finish(bool /*updateTB*/ = true ) override{}
 
 	void init(int status=0) override;
 

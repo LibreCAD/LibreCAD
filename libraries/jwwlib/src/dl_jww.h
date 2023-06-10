@@ -281,8 +281,8 @@ public:
        if (value && value[0] != '\0') {
             double ret;
             if (strchr(value, ',') != NULL) {
-               char* tmp = new char[strlen(value)+1];
-               strcpy(tmp, value);
+               char* tmp = new char[strnlen(value, 20)+1];
+               strncpy(tmp, value, 20);
                DL_WriterA::strReplace(tmp, ',', '.');
                ret = atof(tmp);
       		   delete[] tmp;

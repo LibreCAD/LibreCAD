@@ -34,7 +34,7 @@ class QG_DlgDimension : public QDialog, public Ui::QG_DlgDimension
     Q_OBJECT
 
 public:
-    QG_DlgDimension(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgDimension(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgDimension();
 
 public slots:

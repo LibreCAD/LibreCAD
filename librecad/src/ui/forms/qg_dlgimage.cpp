@@ -24,9 +24,10 @@
 **********************************************************************/
 #include "qg_dlgimage.h"
 
-#include "rs_image.h"
 #include "rs_graphic.h"
+#include "rs_image.h"
 #include "rs_math.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_DlgImage as a child of 'parent', with the
@@ -40,16 +41,6 @@ QG_DlgImage::QG_DlgImage(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
-
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgImage::~QG_DlgImage()
-{
-    delete val;
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -63,7 +54,7 @@ void QG_DlgImage::languageChange()
 
 void QG_DlgImage::setImage(RS_Image& e) {
     image = &e;
-    val = new QDoubleValidator(leScale);
+    val = std::make_unique<QDoubleValidator>(leScale);
     //pen = spline->getPen();
     wPen->setPen(image->getPen(false), true, false, "Pen");
     RS_Graphic* graphic = image->getGraphic();
@@ -74,12 +65,12 @@ void QG_DlgImage::setImage(RS_Image& e) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
-    leInsertX->setValidator(val);
-    leInsertY->setValidator(val);
-    leWidth->setValidator(val);
-    leHeight->setValidator(val);
-    leScale->setValidator(val);
-    leAngle->setValidator(val);
+    leInsertX->setValidator(val.get());
+    leInsertY->setValidator(val.get());
+    leWidth->setValidator(val.get());
+    leHeight->setValidator(val.get());
+    leScale->setValidator(val.get());
+    leAngle->setValidator(val.get());
     scale = image->getUVector().magnitude();
     leInsertX->setText(QString("%1").arg(image->getInsertionPoint().x));
     leInsertY->setText(QString("%1").arg(image->getInsertionPoint().y));

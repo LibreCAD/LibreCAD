@@ -85,7 +85,7 @@ bool dxfRW::read(DRW_Interface *interface_, bool ext){
     filestr.close();
     iface = interface_;
     DRW_DBG("dxfRW::read 2\n");
-    if (strcmp(line, line2) == 0) {
+    if (strncmp(line, line2, 21) == 0) {
         filestr.open (fileName.c_str(), std::ios_base::in | std::ios::binary);
         binFile = true;
         //skip sentinel
@@ -314,15 +314,17 @@ bool dxfRW::writeLayer(DRW_Layer *ent){
 
 bool dxfRW::writeTextstyle(DRW_Textstyle *ent){
     writer->writeString(0, "STYLE");
+    //stringstream cause crash in OS/X, bug#3597944
+    std::string name=ent->name;
+    transform(name.begin(), name.end(), name.begin(), toupper);
     if (!dimstyleStd) {
-        //stringstream cause crash in OS/X, bug#3597944
-        std::string name=ent->name;
-        transform(name.begin(), name.end(), name.begin(), toupper);
-        if (name == "STANDARD")
+        if (name == "STANDARD"){
             dimstyleStd = true;
+        }
     }
     if (version > DRW::AC1009) {
         writer->writeString(5, toHexStr(++entCount));
+        textStyleMap[name] = entCount;
     }
 
     if (version > DRW::AC1012) {
@@ -541,12 +543,20 @@ bool dxfRW::writeDimstyle(DRW_Dimstyle *ent){
     if ( version > DRW::AC1018 && ent->dimfxlon !=0 )
         writer->writeInt16(290, ent->dimfxlon);
     if (version > DRW::AC1009) {
-        writer->writeUtf8String(340, ent->dimtxsty);
+        std::string txstyname = ent->dimtxsty;
+        std::transform(txstyname.begin(), txstyname.end(), txstyname.begin(),::toupper);
+        if(textStyleMap.count(txstyname) > 0) {
+            int txstyHandle = (*(textStyleMap.find(txstyname))).second;
+            writer->writeUtf8String(340, toHexStr(txstyHandle));
+        }
     }
     if (version > DRW::AC1014) {
-        writer->writeUtf8String(341, ent->dimldrblk);
-        writer->writeInt16(371, ent->dimlwd);
-        writer->writeInt16(372, ent->dimlwe);
+        if(blockMap.count(ent->dimldrblk) > 0) {
+            int blkHandle = (*(blockMap.find(ent->dimldrblk))).second;
+            writer->writeUtf8String(341, toHexStr(blkHandle));
+            writer->writeInt16(371, ent->dimlwd);
+            writer->writeInt16(372, ent->dimlwe);
+        }
     }
     return true;
 }
@@ -2449,7 +2459,6 @@ bool dxfRW::processViewport() {
         if (!vp.parseCode(code, reader)) {
             return setError( DRW::BAD_CODE_PARSED);
         }
-        break;
     }
 
     return setError(DRW::BAD_READ_ENTITIES);
@@ -2608,7 +2617,7 @@ bool dxfRW::processInsert() {
 
 bool dxfRW::processLWPolyline() {
     DRW_DBG("dxfRW::processLWPolyline");
-    int code;
+    int code=0;
     DRW_LWPolyline pl;
     while (reader->readRec(&code)) {
         DRW_DBG(code); DRW_DBG("\n");
@@ -2672,8 +2681,8 @@ bool dxfRW::processVertex(DRW_Polyline *pl) {
         }
 
         if (!v->parseCode(code, reader)) { //the members of v are reinitialized here
-            return setError( DRW::BAD_CODE_PARSED);
-        };
+            return setError(DRW::BAD_CODE_PARSED);
+        }
     }
 
     return setError(DRW::BAD_READ_ENTITIES);

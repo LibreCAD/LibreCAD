@@ -64,7 +64,6 @@ public:
 
 	//        void coordinateEvent(RS_CoordinateEvent* e) override;
 	//    void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
 	void finish(bool updateTB=true) override;
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
@@ -77,9 +76,6 @@ public:
 
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-
-    //list of entity types supported by current action
-    const EntityTypeList enTypeList = EntityTypeList {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
 };
 
 #endif

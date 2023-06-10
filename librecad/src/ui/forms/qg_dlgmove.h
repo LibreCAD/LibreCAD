@@ -26,16 +26,17 @@
 #ifndef QG_DLGMOVE_H
 #define QG_DLGMOVE_H
 
+#include <QString>
 #include "ui_qg_dlgmove.h"
 
-class RS_MoveData;
+struct RS_MoveData;
 
 class QG_DlgMove : public QDialog, public Ui::QG_DlgMove
 {
     Q_OBJECT
 
 public:
-    QG_DlgMove(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgMove(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgMove();
 
 public slots:
@@ -46,11 +47,11 @@ protected slots:
     virtual void languageChange();
 
 private:
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
-    int numberMode;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
+    int numberMode = 0;
     QString copies;
-    RS_MoveData* data;
+    RS_MoveData* data = nullptr;
 
     void init();
     void destroy();

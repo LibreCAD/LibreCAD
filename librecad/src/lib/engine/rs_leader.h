@@ -32,22 +32,19 @@
 #include "rs_entitycontainer.h"
 
 
-
 /**
  * Holds the data that defines a leader.
  */
-class RS_LeaderData {
-public:
+struct RS_LeaderData {
 	RS_LeaderData() = default;
-	RS_LeaderData(bool arrowHeadFlag) {
-		arrowHead = arrowHeadFlag;
+    RS_LeaderData(bool arrowHeadFlag) : arrowHead{arrowHeadFlag} {
 	}
 
 	friend std::ostream& operator << (std::ostream& os,
 									  const RS_LeaderData& /*ld*/);
 
 	/** true: leader has an arrow head. false: no arrow. */
-	bool arrowHead;
+    bool arrowHead = false;
 };
 
 
@@ -59,7 +56,7 @@ public:
  */
 class RS_Leader : public RS_EntityContainer {
 public:
-	RS_Leader(RS_EntityContainer* parent=NULL);
+    RS_Leader(RS_EntityContainer* parent=nullptr);
 	RS_Leader(RS_EntityContainer* parent,
 			  const RS_LeaderData& d);
 
@@ -102,8 +99,8 @@ public:
 	friend std::ostream& operator << (std::ostream& os, const RS_Leader& l);
 
 protected:
-	RS_LeaderData data;
-	bool empty;
+    RS_LeaderData data;
+    bool empty = false;
 };
 
 #endif

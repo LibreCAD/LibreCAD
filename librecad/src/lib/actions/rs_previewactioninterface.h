@@ -59,7 +59,7 @@ protected:
      * Preview that holds the entities to be previewed.
      */
 	std::unique_ptr<RS_Preview> preview;
-    bool hasPreview;//whether preview is in use
+    bool hasPreview = false;//whether preview is in use
 //    /**
 //     * Current offset of the preview.
 //     */

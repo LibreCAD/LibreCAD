@@ -53,7 +53,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 						   container, graphicView)
 		,entity1(nullptr)
 		,entity2(nullptr)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetEntity1)
 {
 	actionType=RS2::ActionModifyRound;
@@ -218,6 +218,16 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
             setStatus(SetTrim);
 			pPoints->data.trim = !pPoints->data.trim;
 			RS_DIALOGFACTORY->requestOptions(this, true, true);
+        } else {
+            bool ok;
+            double r = RS_Math::eval(c, &ok);
+            if(ok && r > 1.0e-10) {
+                e->accept();
+                pPoints->data.radius = r;
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            setStatus(lastStatus);
         }
         break;
 
@@ -305,17 +315,18 @@ void RS_ActionModifyRound::hideOptions() {
 void RS_ActionModifyRound::updateMouseButtonHints() {
 	switch (getStatus()) {
 	case SetEntity1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first entity"),
-											tr("Back"));
+		RS_DIALOGFACTORY->updateMouseWidget(
+            tr("Specify first entity or enter radius <%1>").arg(getRadius()),
+            tr("Back"));
 		break;
 	case SetEntity2:
 		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
 											tr("Back"));
 		break;
-	case SetRadius:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
-											tr("Cancel"));
-		break;
+    case SetRadius:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
+                                            tr("Cancel"));
+        break;
 		/*case SetTrim:
 				RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
 													"");

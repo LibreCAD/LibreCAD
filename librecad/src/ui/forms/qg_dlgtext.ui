@@ -1569,6 +1569,14 @@
  <tabstops>
   <tabstop>cbLayer</tabstop>
   <tabstop>cbFont</tabstop>
+  <tabstop>buttonBox</tabstop>
+  <tabstop>bClear</tabstop>
+  <tabstop>bLoad</tabstop>
+  <tabstop>bSave</tabstop>
+  <tabstop>bCut</tabstop>
+  <tabstop>bCopy</tabstop>
+  <tabstop>bPaste</tabstop>
+  <tabstop>teText</tabstop>
   <tabstop>leHeight</tabstop>
   <tabstop>leAngle</tabstop>
   <tabstop>leOblique</tabstop>

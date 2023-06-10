@@ -58,10 +58,10 @@ signals:
     void widthChanged(RS2::LineWidth);
 
 private:
-    RS2::LineWidth currentWidth;
-    bool showByLayer;
-    bool showUnchanged;
-    bool unchanged;
+    RS2::LineWidth currentWidth = RS2::Width00;
+    bool showByLayer = false;
+    bool showUnchanged = false;
+    bool unchanged = false;
 };
 
 #endif

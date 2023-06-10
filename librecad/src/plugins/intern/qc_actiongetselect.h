@@ -27,11 +27,12 @@
 #ifndef QC_ACTIONGETSELECT_H
 #define QC_ACTIONGETSELECT_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_modification.h"
+#include <memory>
+#include "rs_actioninterface.h"
 
-class Plug_Entity;
 class Doc_plugin_interface;
+class Plug_Entity;
+class QString;
 
 
 /**
@@ -52,23 +53,23 @@ public:
 public:
     QC_ActionGetSelect(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~QC_ActionGetSelect();
+    ~QC_ActionGetSelect() override;
 
-    virtual void init(int status=0);
+    virtual void init(int status=0) override;
 	
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void keyPressEvent(QKeyEvent* e);
+    virtual void mouseReleaseEvent(QMouseEvent* e) override;
+    virtual void keyPressEvent(QKeyEvent* e) override;
 	
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
+    virtual void updateMouseButtonHints() override;
+    virtual void updateMouseCursor() override;
 
     void setMessage(QString msg);
 	bool isCompleted() const{return completed;}
 	void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
 
 private:
-    bool completed;
-	QString message;
+    bool completed = false;
+    std::unique_ptr<QString> message;
 
 };
 

@@ -38,7 +38,7 @@ class QG_SnapDistOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_SnapDistOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_SnapDistOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_SnapDistOptions();
 
 public slots:

@@ -34,7 +34,7 @@ class QG_DlgPolyline : public QDialog, public Ui::QG_DlgPolyline
     Q_OBJECT
 
 public:
-    QG_DlgPolyline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgPolyline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgPolyline();
 
 public slots:

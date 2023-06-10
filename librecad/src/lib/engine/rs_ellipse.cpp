@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -27,17 +27,18 @@
 
 #include "rs_ellipse.h"
 
+#include  "lc_quadratic.h"
+
 #include "rs_circle.h"
-#include "rs_line.h"
-#include "rs_graphic.h"
+#include "rs_debug.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_information.h"
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include  "lc_quadratic.h"
+#include "rs_painter.h"
 #include "rs_painterqt.h"
-#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -49,7 +50,7 @@
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 #if BOOST_VERSION > 104500
-#include <boost/math/tools/tuple.hpp>
+#include <boost/tuple/tuple.hpp>
 #endif
 #endif
 
@@ -58,11 +59,11 @@ namespace{
 class EllipseDistanceFunctor
 {
 public:
-	EllipseDistanceFunctor(RS_Ellipse const* ellipse, double const& target) :
+    EllipseDistanceFunctor(RS_Ellipse const& ellipse, double const& target) :
 		distance{target}
 	  , e{ellipse}
-	  , ra{e->getMajorRadius()}
-	  , k2{1.- e->getRatio()*e->getRatio()}
+      , ra{e.getMajorRadius()}
+      , k2{1. - e.getRatio() * e.getRatio()}
 	  , k2ra{k2 * ra}
 	{
 	}
@@ -70,29 +71,28 @@ public:
 		distance=target;
 	}
 #if BOOST_VERSION > 104500
-	boost::math::tuple<double, double, double> operator()(double const& z) const {
+    boost::tuples::tuple<double, double, double> operator()(double const& z) const {
 #else
 	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
-	double const cz=cos(z);
-	double const sz=sin(z);
-		//delta amplitude
-	double const d=sqrt(1-k2*sz*sz);
-		// return f(x), f'(x) and f''(x)
+        double const cz=std::cos(z);
+        double const sz=std::sin(z);
+        //delta amplitude
+        double const d=std::sqrt(1-k2*sz*sz);
+        // return f(x), f'(x) and f''(x)
 #if BOOST_VERSION > 104500
-	return boost::math::make_tuple(
+        return boost::tuples::make_tuple(
 #else
-	return boost::fusion::make_tuple(
+        return boost::fusion::make_tuple(
 #endif
-					e->getEllipseLength(z)-distance,
-					ra*d,
-					k2ra*sz*cz/d
-					);
-	}
+                    e.getEllipseLength(z) - distance,
+                    ra * d,
+                    k2ra * sz * cz / d );
+        }
 
 private:
 	double distance;
-	RS_Ellipse const* const e;
+    RS_Ellipse const& e;
 	const double ra;
 	const double k2;
 	const double k2ra;
@@ -129,7 +129,7 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 		trimmed = trimAmount > 0 ? wholeLength - trimAmount : - trimAmount;
 
 	//solve equation of the distance by second order newton_raphson
-	EllipseDistanceFunctor X(&e, trimmed);
+    EllipseDistanceFunctor X{e, trimmed};
 	using namespace boost::math::tools;
 	double const sol =
 			halley_iterate<EllipseDistanceFunctor,double>(X,
@@ -139,8 +139,9 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 														  digits);
 
 	RS_Vector const vp = e.getEllipsePoint(sol);
-	if (dist) *dist = vp.distanceTo(coord);
-	return vp;
+    if (dist)
+        *dist = vp.distanceTo(coord);
+    return vp;
 }
 }
 
@@ -356,8 +357,8 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     } else {
         ret=0.;
     }
-    x1=fmod(x1,M_PI);
-    x2=fmod(x2,M_PI);
+    x1=std::fmod(x1,M_PI);
+    x2=std::fmod(x2,M_PI);
     if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
         ret += RS_Math::ellipticIntegral_2(k,x2)-RS_Math::ellipticIntegral_2(k,x1);
     }
@@ -1050,14 +1051,14 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     if(isReversed()) {
         std::swap(amin,amax);
     }
-    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+    double da=std::fmod(amax-amin+2.*M_PI, 2.*M_PI);
     if ( da < RS_TOLERANCE ) {
         da = 2.*M_PI; //whole ellipse
     }
     RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
     double a=getCenter().angleTo(vp);
     int counts(middlePoints + 1);
-    int i( static_cast<int>(fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
+    int i( static_cast<int>(std::fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
     if(!i) i++; // remove end points
     if(i==counts) i--;
     a=amin + da*(double(i)/double(counts))-getAngle();
@@ -1182,7 +1183,7 @@ void RS_Ellipse::correctAngles() {
         double *pa1= & data.angle1;
         double *pa2= & data.angle2;
         if (isReversed()) std::swap(pa1,pa2);
-        *pa2 = *pa1 + fmod(*pa2 - *pa1, 2.*M_PI);
+        *pa2 = *pa1 + std::fmod(*pa2 - *pa1, 2.*M_PI);
         if ( fabs(data.angle1 - data.angle2) < RS_TOLERANCE_ANGLE ) *pa2 += 2.*M_PI;
 }
 
@@ -1726,7 +1727,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     for(unsigned short i=0;i<4;i++){
 		RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
 		auto vpIts=RS_Information::getIntersection(
-                    static_cast<RS_Entity*>(this), &line, true);
+                    this, &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
 		for(const RS_Vector& vp: vpIts){
@@ -1828,11 +1829,11 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 
 	std::vector<double> ds(pat->num, 0.);
 
-	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
+    double dpmm=painter->getDpmm();
 	for (size_t i = 0; i < pat->num; i++) {
-		ds[i]= dpmm * pat->pattern[i]; //pattern length
-		if(fabs(ds[i]) < 1.)
-			ds[i] = copysign(1., ds[i]);
+        ds[i]= dpmm * pat->pattern[i]; //pattern length
+        if(std::abs(ds[i]) < 1.)
+            ds[i] = std::copysign(1., ds[i]);
 	}
 
     double curA(a1);
@@ -1840,8 +1841,8 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 
 	//draw patterned ellipse
 	for (size_t i=0; notDone; i = (i + 1) % pat->num) {
-		double nextA = curA + std::abs(ds[i])/
-				RS_Vector(ra*sin(curA), rb*cos(curA)).magnitude();
+        double nextA = curA + std::abs(ds[i])/
+                                  RS_Vector(ra*std::sin(curA), rb*std::cos(curA)).magnitude();
 		if (nextA > a2){
 			nextA = a2;
 			notDone = false;

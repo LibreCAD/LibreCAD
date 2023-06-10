@@ -33,7 +33,6 @@
 #include <QList>
 #include <QSharedPointer>
 
-#include "rs_debug.h"
 #include "rs_locale.h"
 
 #define RS_SYSTEM RS_System::instance()
@@ -47,26 +46,21 @@
  */
 class RS_System {
 
-protected:
-    RS_System() {
-        initialized = false;
-    }
-
 public:
     /**
      * @return Instance to the unique system object.
      */
-    static RS_System* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_System();
-        }
-        return uniqueInstance;
-    }
+    static RS_System *instance();
 
     void init(const QString& appName,
               const QString& appVersion,
               const QString& appDirName,
               const char *arg0);
+
+    void init(const QString& appName,
+              const QString& appVersion,
+              const QString& appDirName,
+              const QString& arg0);
     void initLanguageList();
     void initAllLanguagesList();
 
@@ -184,10 +178,10 @@ public:
     static QByteArray localeToISO(const QByteArray& locale);
 
 private:
+    RS_System() = default;
     void addLocale(RS_Locale *locale);
 
 protected:
-    static RS_System* uniqueInstance;
 
     QString appName;
     QString appVersion;

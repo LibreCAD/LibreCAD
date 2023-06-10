@@ -25,9 +25,10 @@
 #ifndef LC_MAKERCAMSVG_H
 #define LC_MAKERCAMSVG_H
 
-#include <string>
 #include <memory>
+#include <string>
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_Arc;

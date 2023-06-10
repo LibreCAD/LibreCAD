@@ -31,7 +31,7 @@
 
 /**
  * This action class can handle user events to draw 
- * simple lines at a gien angle.
+ * simple lines at a given angle.
  *
  * @author Andrew Mustun
  */

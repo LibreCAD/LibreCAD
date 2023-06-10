@@ -38,7 +38,12 @@
 
 #include <QStandardPaths>
 
-RS_System* RS_System::uniqueInstance = NULL;
+
+RS_System* RS_System::instance() {
+    static RS_System* uniqueInstance = new RS_System();
+    return uniqueInstance;
+}
+
 
 /**
  * Initializes the system.
@@ -77,6 +82,15 @@ void RS_System::init(const QString& appName,
 
     initAllLanguagesList();
     initLanguageList();
+}
+
+
+void RS_System::init(const QString& appName,
+                     const QString& appVersion,
+                     const QString& appDirName,
+                     const QString& arg0)
+{
+    init(appName, appVersion, appDirName, arg0.toLatin1().data());
 }
 
 
@@ -587,12 +601,13 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // so this should work for package manager and AppImage distribution
     dirList.append( QDir::cleanPath( appDir + "/../share/doc/" + appDirName + "/" + subDirectory));
 
-    // Redhat style:
+    // try various locations for different Linux distributions
     dirList.append( QDir::cleanPath( appDir + "/../share/" + appDirName + "/" + subDirectory));
-    // Debian style:
+    dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName + "/" + subDirectory));
     dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName + "/" + subDirectory));
 
     if (QStringLiteral( "plugins") == subDirectory) {
+        dirList.append( QDir::cleanPath( appDir + "/../lib64/" + appDirName));
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
     }
 #endif

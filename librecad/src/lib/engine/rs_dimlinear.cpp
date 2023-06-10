@@ -29,11 +29,10 @@
 #include "rs_dimlinear.h"
 #include "rs_line.h"
 #include "rs_constructionline.h"
-#include "rs_mtext.h"
-#include "rs_solid.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_units.h"
 
 
 RS_DimLinearData::RS_DimLinearData():
@@ -123,7 +122,7 @@ QString RS_DimLinear::getMeasuredLabel() {
             int dimdec = getGraphicVariableInt("$DIMDEC", 4);
             int dimzin = getGraphicVariableInt("$DIMZIN", 1);
             RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-            ret = RS_Units::formatLinear(dist, RS2::None, format, dimdec);
+            ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
             if (format == RS2::Decimal)
                 ret = stripZerosLinear(ret, dimzin);
             //verify if units are decimal and comma separator

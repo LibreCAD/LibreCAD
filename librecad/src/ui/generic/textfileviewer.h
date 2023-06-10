@@ -27,9 +27,9 @@
 #define TEXTFILEVIEWER_H
 
 #include <QFrame>
-#include <QString>
 
 class QListWidgetItem;
+class QString;
 
 namespace Ui {
 class TextFileViewer;
@@ -50,7 +50,7 @@ public slots:
     void loadFile(QListWidgetItem* item);
 
 private:
-    Ui::TextFileViewer* ui;
+    Ui::TextFileViewer* ui = nullptr;
 };
 
 #endif // TEXTFILEVIEWER_H

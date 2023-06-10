@@ -31,11 +31,6 @@
 #include "lc_quadratic.h"
 #include "rs_math.h"
 
-RS_ConstructionLineData::RS_ConstructionLineData():
-	point1(false),
-	point2(false)
-{}
-
 RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
 						const RS_Vector& point2):
 	point1(point1)

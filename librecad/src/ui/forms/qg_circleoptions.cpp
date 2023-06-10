@@ -31,13 +31,14 @@
 #include "rs_actiondrawcirclecr.h"
 #include "ui_qg_circleoptions.h"
 
+
 /*
  *  Constructs a QG_CircleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 QG_CircleOptions::QG_CircleOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_CircleOptions{})
+    , ui(std::make_unique<Ui::Ui_CircleOptions>())
 {
 	ui->setupUi(this);
 }
@@ -66,7 +67,7 @@ void QG_CircleOptions::saveSettings() {
 }
 
 void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
+    if (a != nullptr && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
         action = static_cast<RS_ActionDrawCircleCR*>(a);
 
         QString sr;
@@ -76,7 +77,7 @@ void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->beginGroup("/Draw");
             sr = RS_SETTINGS->readEntry("/CircleRadius", "1.0");
             RS_SETTINGS->endGroup();
-            action->setRadius(sr.toDouble());
+            updateRadius(sr);
         }
 		ui->leRadius->setText(sr);
     } else {
@@ -88,18 +89,11 @@ void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
 }
 
 
-/*void QG_CircleOptions::setData(RS_CircleData* d) {
-    data = d;
-
-    RS_SETTINGS->beginGroup("/Draw");
-    QString r = RS_SETTINGS->readEntry("/CircleRadius", "1.0");
-    RS_SETTINGS->endGroup();
-
-    leRadius->setText(r);
-}*/
-
-void QG_CircleOptions::updateRadius(const QString& r) {
-    if (action) {
-        action->setRadius(RS_Math::eval(r));
+void QG_CircleOptions::updateRadius(const QString& rText) {
+    if (action != nullptr && rText.size() > 0) {
+        bool ok=false;
+        double radius = RS_Math::eval(rText, &ok);
+        if (ok && radius > RS_TOLERANCE)
+            action->setRadius(radius);
     }
 }
