@@ -547,9 +547,8 @@ RS_VectorSolutions::RS_VectorSolutions():
 {
 }
 
-RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
-	vector( l.begin(), l.end())
-  ,tangent(false)
+RS_VectorSolutions::RS_VectorSolutions(std::vector<RS_Vector> vectors):
+    vector(std::move(vectors))
 {
 }
 
@@ -557,14 +556,12 @@ RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
  * Constructor for num solutions.
  */
 RS_VectorSolutions::RS_VectorSolutions(int num):
-	vector(num, RS_Vector(false))
-  ,tangent(false)
+    vector(num, RS_Vector(false))
 {
 }
 
-RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> const& l):
-	vector(l)
-  ,tangent(false)
+RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> list):
+    vector(list)
 {
 }
 
@@ -601,6 +598,12 @@ size_t RS_VectorSolutions::size() const
 {
 	return vector.size();
 }
+
+bool RS_VectorSolutions::empty() const
+{
+    return vector.empty();
+}
+
 /**
  * Deletes vector array and resets everything.
  */
@@ -629,10 +632,7 @@ size_t RS_VectorSolutions::getNumber() const {
  * @retval false There's no valid solution.
  */
 bool RS_VectorSolutions::hasValid() const {
-	for(const RS_Vector& v: vector)
-		if (v.valid)  return true;
-
-    return false;
+    return std::any_of(vector.cbegin(), vector.cend(), [](const RS_Vector& point) {return bool(point); });
 }
 
 void RS_VectorSolutions::resize(size_t n){
@@ -643,14 +643,24 @@ const std::vector<RS_Vector>& RS_VectorSolutions::getVector() const {
     return vector;
 }
 
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::cbegin() const
+{
+    return vector.cbegin();
+}
+
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::cend() const
+{
+    return vector.cend();
+}
+
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::begin() const
 {
-	return vector.begin();
+    return vector.cbegin();
 }
 
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::end() const
 {
-	return vector.end();
+    return vector.cend();
 }
 
 std::vector<RS_Vector>::iterator RS_VectorSolutions::begin()

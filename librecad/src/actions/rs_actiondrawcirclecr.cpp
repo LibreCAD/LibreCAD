@@ -23,10 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_actiondrawcirclecr.h"
+
+#include <cmath>
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actiondrawcirclecr.h"
 
 #include "rs_circle.h"
 #include "rs_commandevent.h"

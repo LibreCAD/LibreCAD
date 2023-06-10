@@ -148,8 +148,8 @@ class RS_VectorSolutions {
 public:
 	typedef RS_Vector value_type;
 	RS_VectorSolutions();
-	RS_VectorSolutions(const std::vector<RS_Vector>& s);
-	RS_VectorSolutions(std::initializer_list<RS_Vector> const& l);
+    RS_VectorSolutions(std::vector<RS_Vector> vectors);
+    RS_VectorSolutions(std::initializer_list<RS_Vector> list);
 	RS_VectorSolutions(int num);
 
 	void alloc(size_t num);
@@ -165,9 +165,10 @@ public:
 	RS_Vector&  operator [] (const size_t i);
 	size_t getNumber() const;
 	size_t size() const;
+    bool empty() const;
     void resize(size_t n);
     bool hasValid() const;
-void set(size_t i, const RS_Vector& v);
+    void set(size_t i, const RS_Vector& v);
     void push_back(const RS_Vector& v);
 	void removeAt(const size_t i);
 	RS_VectorSolutions& push_back(const RS_VectorSolutions& v);
@@ -178,9 +179,11 @@ void set(size_t i, const RS_Vector& v);
     double getClosestDistance(const RS_Vector& coord,
                               int counts = -1); //default to search all
 	const std::vector<RS_Vector>& getVector() const;
-	std::vector<RS_Vector>::const_iterator begin() const;
-	std::vector<RS_Vector>::const_iterator end() const;
-	std::vector<RS_Vector>::iterator begin();
+    std::vector<RS_Vector>::const_iterator cbegin() const;
+    std::vector<RS_Vector>::const_iterator cend() const;
+    std::vector<RS_Vector>::const_iterator begin() const;
+    std::vector<RS_Vector>::const_iterator end() const;
+    std::vector<RS_Vector>::iterator begin();
 	std::vector<RS_Vector>::iterator end();
 	void rotate(double ang);
     void rotate(const RS_Vector& angleVector);
