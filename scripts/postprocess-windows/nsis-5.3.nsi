@@ -153,6 +153,7 @@ Section "Install Section" SecInstall
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
 
   ; Open Donate URL
+  IfSilent +2
   Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
 SectionEnd

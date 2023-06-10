@@ -44,7 +44,7 @@ RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
 					container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	init();
 }

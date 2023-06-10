@@ -31,13 +31,14 @@
 #include <QPolygon>
 #include <QString>
 
-#include "rs_entity.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -45,10 +46,10 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_units.h"
 #include "rs_vector.h"
-#include "rs_information.h"
+
 #include "lc_quadratic.h"
-#include "rs_debug.h"
 
 /**
  * Default constructor.

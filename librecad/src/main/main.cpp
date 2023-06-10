@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
+** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -46,6 +47,7 @@
 #include "rs_debug.h"
 
 #include "console_dxf2pdf.h"
+#include "console_dxf2png.h"
 
 
 /**
@@ -55,13 +57,16 @@ int main(int argc, char** argv)
 {
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
-    /* Check first two arguments in order to decide if we want to run librecad
-     * as console dxf2pdf tool. On Linux we can create a link to librecad
-     * executable and  name it dxf2pdf. So, we can run either:
-     *     librecad dxf2pdf [options] ...
-     * or just:
-     *     dxf2pdf [options] ...
-     */
+    // Check first two arguments in order to decide if we want to run librecad
+    // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
+    // librecad executable and  name it dxf2pdf. So, we can run either:
+    //
+    //     librecad dxf2pdf [options] ...
+    //
+    // or just:
+    //
+    //     dxf2pdf [options] ...
+    //
     for (int i = 0; i < qMin(argc, 2); i++) {
         QString arg(argv[i]);
         if (i == 0) {
@@ -69,6 +74,9 @@ int main(int argc, char** argv)
         }
         if (arg.compare("dxf2pdf") == 0) {
             return console_dxf2pdf(argc, argv);
+        }
+        if (arg.compare("dxf2png") == 0) {
+            return console_dxf2png(argc, argv);
         }
     }
 
@@ -107,6 +115,7 @@ int main(int argc, char** argv)
             qDebug()<<"Commands:";
             qDebug()<<"";
             qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
+            qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
             qDebug()<<"";
             qDebug()<<"Options:";
             qDebug()<<"";
@@ -203,8 +212,10 @@ int main(int argc, char** argv)
     }
     RS_DEBUG->print("param 0: %s", argv[0]);
 
+    QFileInfo prgInfo( QFile::decodeName(argv[0]) );
+    QString prgDir(prgInfo.absolutePath());
     RS_SETTINGS->init(app.organizationName(), app.applicationName());
-    RS_SYSTEM->init( app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), argv[0]);
+    RS_SYSTEM->init(app.applicationName(), app.applicationVersion(), XSTR(QC_APPDIR), prgDir);
 
     // parse command line arguments that might not need a launched program:
     QStringList fileList = handleArgs(argc, argv, argClean);
@@ -262,7 +273,7 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: loading translation: OK");
 
     RS_DEBUG->print("main: creating main window..");
-    QC_ApplicationWindow appWin;
+    QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
 #ifdef Q_OS_MAC
     app.installEventFilter(&appWin);
 #endif
@@ -358,6 +369,9 @@ int main(int argc, char** argv)
     int return_code = app.exec();
 
     RS_DEBUG->print("main: exited Qt event loop");
+
+    // Destroy the singleton
+    QC_ApplicationWindow::getAppWindow().reset();
 
     return return_code;
 }

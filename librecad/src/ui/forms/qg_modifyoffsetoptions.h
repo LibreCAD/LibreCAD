@@ -43,7 +43,7 @@ class QG_ModifyOffsetOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ModifyOffsetOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_ModifyOffsetOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_ModifyOffsetOptions();
 
 public slots:

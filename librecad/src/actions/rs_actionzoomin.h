@@ -49,8 +49,8 @@ public:
 	void trigger() override;
 
 protected:
-    double zoom_factor;
-    RS2::ZoomDirection direction;
+    double zoom_factor = 1.;
+    RS2::ZoomDirection direction = RS2::In;
     RS2::Axis axis;
 	std::unique_ptr<RS_Vector> center;
 };

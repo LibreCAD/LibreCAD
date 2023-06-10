@@ -34,7 +34,7 @@ class QG_DlgText : public QDialog, public Ui::QG_DlgText
     Q_OBJECT
 
 public:
-    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgText();
 
     virtual int getAlignment();

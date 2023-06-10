@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include<cmath>
+#include<memory>
+
 #include "rs_painterqt.h"
 #include "rs_math.h"
 #include "rs_graphicview.h"
@@ -272,8 +274,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             linStep = 6.0;
         }
 
-        if (fabs(linStep/radius)<=1.0) {
-            aStep=asin(linStep/radius);
+        if (std::abs(linStep/radius)<=1.0) {
+            aStep=std::asin(linStep/radius);
         } else {
             aStep=1.0;
         }
@@ -293,8 +295,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.resize(i+1);
             pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
             for(a=a1+aStep; a<=a2; a+=aStep) {
-                cix = toScreenX(cp.x+cos(a)*radius);
-                ciy = toScreenY(cp.y-sin(a)*radius);
+                cix = toScreenX(cp.x+std::cos(a)*radius);
+                ciy = toScreenY(cp.y-std::sin(a)*radius);
                 //lineTo(cix, ciy);
                 pa.resize(i+1);
                 pa.setPoint(i++, cix, ciy);
@@ -314,8 +316,8 @@ void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
             pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
             //moveTo(toScreenX(p1.x), toScreenY(p1.y));
             for(a=a1-aStep; a>=a2; a-=aStep) {
-                cix = toScreenX(cp.x+cos(a)*radius);
-                ciy = toScreenY(cp.y-sin(a)*radius);
+                cix = toScreenX(cp.x+std::cos(a)*radius);
+                ciy = toScreenY(cp.y-std::sin(a)*radius);
                 //lineTo(cix, ciy);
                 pa.resize(i+1);
                 pa.setPoint(i++, cix, ciy);
@@ -385,7 +387,7 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                           double oy;
 
               if(2.0/radius<=1.0) {
-                  aStep=asin(2.0/radius);
+                aStep=std::asin(2.0/radius);
               } else {
                   aStep=1.0;
               }
@@ -401,16 +403,16 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
               //            toScreenY(cp.y-sin(a1)*radius));
               //moveTo(toScreenX(cp.x+cos(a1)*radius),
               //       toScreenY(cp.y-sin(a1)*radius));
-              ox = cp.x+cos(a1)*radius;
-              oy = cp.y-sin(a1)*radius;
+              ox = cp.x+std::cos(a1)*radius;
+              oy = cp.y-std::sin(a1)*radius;
               if(!reversed) {
                   // Arc Counterclockwise:
                   if(a1>a2-1.0e-10) {
                       a2+=2*M_PI;
                   }
                   for(a=a1+aStep; a<=a2; a+=aStep) {
-                      cix = cp.x+cos(a)*radius;
-                      ciy = cp.y-sin(a)*radius;
+                      cix = cp.x+std::cos(a)*radius;
+                      ciy = cp.y-std::sin(a)*radius;
                       //lineTo(cix, ciy);
                                           drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
                                           ox = cix;
@@ -424,8 +426,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                       a2-=2*M_PI;
                   }
                   for(a=a1-aStep; a>=a2; a-=aStep) {
-                      cix = cp.x+cos(a)*radius;
-                      ciy = cp.y-sin(a)*radius;
+                      cix = cp.x+std::cos(a)*radius;
+                      ciy = cp.y-std::sin(a)*radius;
                       drawLine(RS_Vector(ox, oy), RS_Vector(cix, ciy));
                                           ox = cix;
                                           oy = ciy;
@@ -435,8 +437,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
                   }
               }
               drawLine(RS_Vector(ox, oy),
-                                        RS_Vector(cp.x+cos(a2)*radius,
-                     cp.y-sin(a2)*radius));
+                       RS_Vector(cp.x+std::cos(a2)*radius,
+                                 cp.y-std::sin(a2)*radius));
               //lineTo(toScreenX(cp.x+cos(a2)*radius),
               //       toScreenY(cp.y-sin(a2)*radius));
               //pa.resize(i+1);
@@ -475,12 +477,8 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
 }
 
 
-
-/**
- * Draws image.
- */
 void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
-                           double angle, const RS_Vector& factor) {
+                           const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
 
     // Render smooth only at close zooms
@@ -491,18 +489,25 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
       RS_PainterQt::setRenderHint(SmoothPixmapTransform);
     }
 
-    QMatrix wm;
-    wm.translate(pos.x, pos.y);
-    wm.rotate(RS_Math::rad2deg(-angle));
-    wm.scale(factor.x, factor.y);
-    setWorldMatrix(wm);
+    RS_Vector un = uVector/uVector.magnitude();
+    RS_Vector vn = vVector/vVector.magnitude();
 
+    // Image mirroring is switching the handedness of u-v vectors pair which can be detected by
+    // looking at the sign of the z component of their cross product. If z is negative image is mirrored.
+    std::unique_ptr<QTransform> wm;
+    if(RS_Vector::crossP(uVector, vVector).z < 0) {
+        wm.reset(new QTransform(un.x, -vn.x, -un.y, vn.y, pos.x, pos.y));
+    } else {
+        wm.reset( new QTransform(un.x, vn.x, un.y, vn.y, pos.x, pos.y));
+    }
+
+    wm->scale(factor.x, factor.y);
+    setWorldTransform(*wm);
 
     drawImage(0,-img.height(), img);
 
     restore();
 }
-
 
 
 void RS_PainterQt::drawTextH(int x1, int y1,
@@ -519,10 +524,9 @@ void RS_PainterQt::drawTextV(int x1, int y1,
                              int x2, int y2,
                              const QString& text) {
     save();
-    QMatrix wm = worldMatrix();
+    QTransform wm = worldTransform();
     wm.rotate(-90.0);
-    setWorldMatrix(wm);
-    //rotate(-90.0);
+    setWorldTransform(wm);
 
     drawText(x1, y1, x2, y2,
              Qt::AlignRight|Qt::AlignVCenter,

@@ -26,16 +26,18 @@
 #ifndef QG_DLGMIRROR_H
 #define QG_DLGMIRROR_H
 
+#include <QString>
 #include "ui_qg_dlgmirror.h"
 
-class RS_MirrorData;
+
+struct RS_MirrorData;
 
 class QG_DlgMirror : public QDialog, public Ui::QG_DlgMirror
 {
     Q_OBJECT
 
 public:
-    QG_DlgMirror(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgMirror(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgMirror();
 
 public slots:
@@ -46,11 +48,11 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_MirrorData* data;
+    RS_MirrorData* data = nullptr;
     QString copies;
-    int numberMode;
-    bool useCurrentLayer;
-    bool useCurrentAttributes;
+    int numberMode = 0;
+    bool useCurrentLayer = false;
+    bool useCurrentAttributes = false;
 
     void init();
     void destroy();

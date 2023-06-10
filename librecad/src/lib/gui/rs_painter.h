@@ -28,6 +28,7 @@
 #ifndef RS_PAINTER_H
 #define RS_PAINTER_H
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_Color;
@@ -38,6 +39,7 @@ class QPolygon;
 class QPolygonF;
 class QImage;
 class QBrush;
+class QString;
 
 /**
  * This class is a common interface for a painter class. Such
@@ -110,9 +112,8 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
-        virtual void drawImg(QImage& img, const RS_Vector& pos,
-            double angle, const RS_Vector& factor) = 0;
-
+    virtual void drawImg(QImage& img, const RS_Vector& pos,
+                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) = 0;
     virtual void drawTextH(int x1, int y1, int x2, int y2,
                            const QString& text) = 0;
     virtual void drawTextV(int x1, int y1, int x2, int y2,
@@ -156,14 +157,14 @@ protected:
     /**
      * Current drawing mode.
      */
-    RS2::DrawingMode drawingMode;
+    RS2::DrawingMode drawingMode = RS2::ModeFull;
     /**
      * A fixed offset added to all entities drawn (useful for previews).
      */
     RS_Vector offset;
 
     // When set to true, only selected entities should be drawn
-    bool drawSelectedEntities;
+    bool drawSelectedEntities = false;
 
 
 };

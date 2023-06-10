@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONINFOAREA_H
 #define RS_ACTIONINFOAREA_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
 class RS_InfoArea;
@@ -51,7 +52,7 @@ public:
 public:
     RS_ActionInfoArea(RS_EntityContainer& container,
                       RS_GraphicView& graphicView);
-	~RS_ActionInfoArea() override;
+    ~RS_ActionInfoArea() override;
 
 	void init(int status=0) override;
 	void trigger() override;

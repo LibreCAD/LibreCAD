@@ -140,7 +140,7 @@
  * try to improve SHPAPI_CALL docs
  */
 
-#include <stdio.h>
+#include <cstdio>
 
 #ifdef USE_DBMALLOC
 #include <dbmalloc.h>

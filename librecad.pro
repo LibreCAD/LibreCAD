@@ -12,3 +12,10 @@ SUBDIRS     = \
 message(We will be using CPP11 features)
 
 exists( custom.pro ):include( custom.pro )
+
+OTHER_FILES = \
+    CHANGELOG.md \
+    README.md \
+    desktop/librecad.desktop \
+    desktop/org.librecad.librecad.appdata.xml
+

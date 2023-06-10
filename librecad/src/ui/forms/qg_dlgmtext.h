@@ -34,7 +34,7 @@ class QG_DlgMText : public QDialog, public Ui::QG_DlgMText
     Q_OBJECT
 
 public:
-    QG_DlgMText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgMText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgMText();
 
     virtual int getAlignment();
@@ -76,6 +76,8 @@ private:
     void init();
     void destroy();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
 };
 
 #endif // QG_DLGMTEXT_H

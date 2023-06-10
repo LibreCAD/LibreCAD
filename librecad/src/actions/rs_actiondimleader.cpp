@@ -45,7 +45,7 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw leaders",
                            container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
  {
 	actionType=RS2::ActionDimLeader;
     reset();
@@ -209,13 +209,6 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
-
-QStringList RS_ActionDimLeader::getAvailableCommands() {
-    QStringList cmd;
-
-    return cmd;
-}
 
 void RS_ActionDimLeader::updateMouseButtonHints() {
 	switch (getStatus()) {

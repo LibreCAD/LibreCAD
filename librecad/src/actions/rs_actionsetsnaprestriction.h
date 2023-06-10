@@ -46,7 +46,7 @@ public:
 	void trigger() override;
 
 protected:
-    RS2::SnapRestriction snapRes;
+    RS2::SnapRestriction snapRes = RS2::RestrictNothing;
 };
 
 #endif

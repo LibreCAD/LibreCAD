@@ -8,6 +8,7 @@ APPDATADIR="${THISDIR}/unix/appdata"
 TSDIRLC="${LCDIR}/ts"
 TSDIRPI="${PIDIR}/ts"
 SPTDIR="${LCDIR}/support"
+DESKTOPDIR="${THISDIR}/desktop"
 LRELEASE="lrelease"
 
 cd "${THISDIR}"
@@ -38,6 +39,7 @@ do
         cp "${tf}" "${RESOURCEDIR}/qm/${tf}"
 done
 
-# copy appdata.xml to unix/appdata/librecad.appdata.xml
+# copy desktop and appdata files to unix/appdata/
 mkdir -p "${APPDATADIR}"
-cp "${SPTDIR}"/librecad.appdata.xml "${APPDATADIR}"/
+cp "${DESKTOPDIR}"/librecad.desktop "${APPDATADIR}"/
+cp "${DESKTOPDIR}"/org.librecad.librecad.appdata.xml "${APPDATADIR}"/

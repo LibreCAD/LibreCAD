@@ -53,7 +53,7 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 		,line2(nullptr)
 		,length(10.)
 		,number(1)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetLine1)
 {
 	actionType=RS2::ActionDrawLineBisector;

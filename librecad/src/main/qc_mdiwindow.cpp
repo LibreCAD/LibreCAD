@@ -39,8 +39,6 @@
 #include <QPainter>
 
 #include "rs_graphic.h"
-#include "rs_settings.h"
-#include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "rs_insert.h"
 #include "rs_mtext.h"
@@ -48,7 +46,7 @@
 #include "qg_graphicview.h"
 #include "rs_debug.h"
 
-int QC_MDIWindow::idCounter = 0;
+unsigned QC_MDIWindow::idCounter = 0;
 
 /**
  * Constructor.
@@ -72,7 +70,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document* doc, QWidget* parent, Qt::WindowFlags wf
         owner = false;
     }
 
-    graphicView = new QG_GraphicView(this, 0, document);
+    graphicView = new QG_GraphicView(this, {}, document);
     graphicView->setObjectName("graphicview");
 
     connect(graphicView, SIGNAL(previous_zoom_state(bool)),
@@ -137,7 +135,7 @@ RS_Document* QC_MDIWindow::getDocument() const{
 	return document;
 }
 
-int QC_MDIWindow::getId() const{
+unsigned QC_MDIWindow::getId() const{
 	return id;
 }
 
@@ -464,8 +462,8 @@ std::ostream& operator << (std::ostream& os, QC_MDIWindow& w) {
     } else {
         os << "  parentWindow: NULL\n";
     }
-	int i=0;
-	for(auto p: w.childWindows){
+    int i=0;
+    for(auto p: const_cast<const QList<QC_MDIWindow*>&>(w.childWindows)){
 		os << "  childWindow[" << i++ << "]: "
 		   << p->getId() << "\n";
 	}

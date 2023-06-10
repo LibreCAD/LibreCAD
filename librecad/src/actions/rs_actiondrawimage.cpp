@@ -51,8 +51,8 @@ struct RS_ActionDrawImage::ImageData {
 RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Image",
-							   container, graphicView)
-	, pImg(new ImageData{})
+                               container, graphicView)
+    , pImg(std::make_unique<ImageData>())
 	, lastStatus(ShowDialog)
 {
 	actionType=RS2::ActionDrawImage;
@@ -325,8 +325,5 @@ void RS_ActionDrawImage::updateMouseButtonHints() {
         break;
     }
 }
-
-
-
 
 // EOF

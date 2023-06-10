@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
+#include "rs_actionsnapintersectionmanual.h"
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionsnapintersectionmanual.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -45,8 +46,8 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 	:RS_PreviewActionInterface("Trim Entity",
 							   container, graphicView)
 	,entity1(nullptr)
-	,entity2(nullptr)
-	,coord(new RS_Vector{})
+    ,entity2(nullptr)
+    ,coord(std::make_unique<RS_Vector>())
 {
 }
 

@@ -7,20 +7,18 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Install Qt and dependencies
         run: |
-          sudo add-apt-repository -y ppa:beineri/opt-qt-5.12.9-focal
           sudo apt-get -y update
-          sudo apt-get -qq install qt512-meta-full libgl-dev libmuparser-dev libboost-dev libfreetype6-dev libicu-dev pkg-config qtchooser
-          sudo cp CI/qt512.conf /usr/share/qtchooser/
-          sudo ln -snf /usr/share/qtchooser/qt512.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config
+          sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
 
       - name: Install boost
         uses: MarkusJx/install-boost@v2.0.0
@@ -30,12 +28,12 @@ jobs:
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-10 clang-tools-10
+          sudo apt-get -qq install clang-15 clang-tools-15
 
       - name: Build and analyze
         run: |
           export CC=gcc
-          export ANALYZE="scan-build-10 -o out "
+          export ANALYZE="scan-build-15 -o out "
           ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
           ${ANALYZE}make release -j$(nproc)
 
@@ -181,9 +179,102 @@ jobs:
           path: LibreCAD-Installer*.exe
           retention-days: 2
 
+  BuildWindows64:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+
+      - name: Uninstall incorrect mingw
+        run: |
+          choco uninstall mingw --force
+          choco uninstall strawberryperl --force
+
+      - name: Install MinGW8.1 64-bit
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw81'
+          dir: '..'
+          install-deps: 'true'
+          cache: 'false'
+          cache-key-prefix: 'install-qt-action'
+          setup-python: 'true'
+          set-env: 'true'
+          tools-only: 'false'
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--external 7z'
+
+      - name: Install boost
+        shell: bash
+        run: |
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          7z x -o. -y boost.7z
+          mv boost_1_75_0 ../boost
+          rm boost.7z
+
+      - name: Debugging
+        if: ${{ always() }}
+        shell: cmd
+        run: |
+          set
+          echo.
+          dir c:\
+          echo.
+          dir d:\
+          echo.
+          dir d:\a
+          echo.
+          dir
+          echo.
+          dir ..
+          echo.
+          dir ..\boost
+          echo.
+          dir ..\Qt
+          echo.
+          dir ..\Qt\5.15.2\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\bin
+
+      - name: Build
+        run: |
+          set PATH=C:\msys64\mingw64\bin;%PATH%
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
+          echo SET:
+          set
+          pushd "${{ github.workspace }}\scripts"
+          build-windows.bat
+        shell: cmd
+
+      - name: Rename installer
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: assets
+          path: LibreCAD-Installer*.exe
+          retention-days: 2
+
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows]
+    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code

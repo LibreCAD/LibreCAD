@@ -37,7 +37,7 @@
  */
 QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_BevelOptions{})
+    , ui(std::make_unique<Ui::Ui_BevelOptions>())
 {
 	ui->setupUi(this);
 }
@@ -72,7 +72,7 @@ void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
 
         QString sd1;
         QString sd2;
-                QString st;
+        QString st;
         if (update) {
             sd1 = QString("%1").arg(action->getLength1());
             sd2 = QString("%1").arg(action->getLength2());

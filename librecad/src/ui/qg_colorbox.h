@@ -27,9 +27,11 @@
 #ifndef QG_COLORBOX_H
 #define QG_COLORBOX_H
 
-#include <QComboBox>
 #include <memory>
 
+#include <QComboBox>
+
+class QColor;
 class RS_Color;
 
 /**
@@ -46,7 +48,7 @@ public:
 
     RS_Color getColor() const;
 
-    void addColor(Qt::GlobalColor color, QString text);
+    void addColor(QColor color, QString text);
     void setColor(const RS_Color& color);
     void setLayerColor(const RS_Color& color);
 
@@ -61,11 +63,17 @@ signals:
     void colorChanged(const RS_Color& color);
 
 private:
+    int addCustomColor(const RS_Color& color);
+    // add custom color items from rs_settings
+    void readCustomColorSettings();
+    void writeCustomColorSettings();
+
+    int findColor(const RS_Color& color);
     std::unique_ptr<RS_Color> currentColor;
-    int colorIndexStart;
-    bool showByLayer;
-	bool showUnchanged;
-	bool unchanged;
+    int colorIndexStart = 0;
+    bool showByLayer = true;
+    bool showUnchanged = true;
+    bool unchanged = true;
 };
 
 #endif

@@ -29,6 +29,7 @@
 #include "rs_previewactioninterface.h"
 
 class RS_AtomicEntity;
+class RS_Entity;
 
 /**
  * This action class can handle user events to move entities.
@@ -62,9 +63,9 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* delEntity;
-	RS_AtomicEntity* Segment1;
-	RS_AtomicEntity* Segment2;
+    RS_Entity* delEntity = nullptr;
+    RS_AtomicEntity* Segment1 = nullptr;
+    RS_AtomicEntity* Segment2 = nullptr;
 };
 
 #endif

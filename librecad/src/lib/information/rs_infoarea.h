@@ -61,10 +61,10 @@ private:
     double calcSubArea(const RS_Vector& p1, const RS_Vector& p2);
 
 	std::vector<RS_Vector> thePoints;
-    double baseY;
-    double area;
-    double circumference;
-    bool calculationNeeded;
+    double baseY = 0.;
+    double area = 0.;
+    double circumference = 0.;
+    bool calculationNeeded = false;
 };
 
 #endif

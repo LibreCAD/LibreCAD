@@ -26,6 +26,8 @@
 #include "qg_mousewidget.h"
 
 #include <QVariant>
+#include <QSettings>
+
 #include "rs_settings.h"
 
 /*
@@ -38,9 +40,19 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     setObjectName(name);
     setupUi(this);
 
+    QSettings settings;
+    settings.beginGroup("Widgets");
+    int allow_statusbar_height = settings.value("AllowStatusbarHeight", 0).toInt();
+    int height {64};
+    if (allow_statusbar_height) {
+        height = settings.value( "StatusbarHeight", 64).toInt();
+    }
+
+    setMinimumHeight( height);
+    setMaximumHeight( height);
     lLeftButton->setText("");
     lRightButton->setText("");
-    lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg"));
+    lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg").scaled( height, height));
 }
 
 /*

@@ -45,7 +45,7 @@ RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& con
                 RS_GraphicView& graphicView)
                 :RS_PreviewActionInterface("Delete between two nodes",
 												   container, graphicView)
-				, pPoints(new Points{})
+				, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionPolylineDelBetween;
 }

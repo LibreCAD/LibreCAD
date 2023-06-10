@@ -13,7 +13,7 @@ class MainWindowX : public QMainWindow
     Q_OBJECT
 
 public:
-    explicit MainWindowX(QWidget* parent = 0);
+    explicit MainWindowX(QWidget* parent = nullptr);
 
     void sortWidgetsByTitle(QList<QDockWidget*>& list);
     void sortWidgetsByTitle(QList<QToolBar*>& list);

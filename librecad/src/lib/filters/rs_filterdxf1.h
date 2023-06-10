@@ -80,7 +80,7 @@ public:
     void    setFSize(unsigned _s) {
         fSize=_s;
     }
-    void    copyBufFrom(const char* _buf);
+    void    copyBufFrom(const char* _buf, int length);
     bool    gotoBufLine(char* _lstr);
     bool    gotoBufLineString(char* _lstr);
 

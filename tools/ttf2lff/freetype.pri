@@ -21,7 +21,7 @@ win32 {
 
     exists($${FREETYPE_DIR}/include/ft2build.h) {
         INCLUDEPATH += "$${FREETYPE_DIR}/include" "$${FREETYPE_DIR}/include/freetype2"
-        LIBS += -L"$${FREETYPE_DIR}/lib" -lfreetype
+        LIBS += -L"$${FREETYPE_DIR}/lib" -lfreetype -lz
 
         message(ttf2lff using includes in $${FREETYPE_DIR}/include and $${FREETYPE_DIR}/include/freetype2)
         message(ttf2lff using libs in $${FREETYPE_DIR}/lib)

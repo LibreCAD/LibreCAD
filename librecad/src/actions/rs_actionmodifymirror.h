@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_MirrorData;
+struct RS_MirrorData;
 
 /**
  * This action class can handle user events to mirror entities.
