@@ -32,8 +32,8 @@ jobs:
 
       - name: Build and analyze
         run: |
-          export CC=gcc
-          export ANALYZE="scan-build-15 -o out "
+          export CC=g++
+          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
           ${ANALYZE}make release -j$(nproc)
 
@@ -113,14 +113,23 @@ jobs:
         with:
           msystem: MINGW32
 
-      - name: Install Qt
-        uses: jurplel/install-qt-action@v2
+      - name: Install Qt-5.12
+        uses: jurplel/install-qt-action@v3
         with:
           version: '5.12.11'
           host: 'windows'
           target: 'desktop'
-          dir: ..
           arch: 'win32_mingw73'
+          dir: '..'
+          install-deps: 'true'
+          cache: 'false'
+          cache-key-prefix: 'install-qt-action'
+          setup-python: 'true'
+          set-env: 'true'
+          tools-only: 'false'
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--external 7z'
 
       - name: Install boost
         shell: bash
@@ -197,7 +206,7 @@ jobs:
         with:
           msystem: MINGW64
 
-      - name: Install Qt
+      - name: Install Qt-5.15
         uses: jurplel/install-qt-action@v3
         with:
           version: '5.15.2'
