@@ -198,6 +198,26 @@
         <file>text_align_topcenter.svg</file>
         <file>text_align_topleft.svg</file>
         <file>text_align_topright.svg</file>
+        <file>point_dot.svg</file>
+        <file>point_dot_circle.svg</file>
+        <file>point_dot_square.svg</file>
+        <file>point_dot_circle_square.svg</file>
+        <file>point_blank.svg</file>
+        <file>point_blank_circle.svg</file>
+        <file>point_blank_square.svg</file>
+        <file>point_blank_circle_square.svg</file>
+        <file>point_cross.svg</file>
+        <file>point_cross_circle.svg</file>
+        <file>point_cross_square.svg</file>
+        <file>point_cross_circle_square.svg</file>
+        <file>point_plus.svg</file>
+        <file>point_plus_circle.svg</file>
+        <file>point_plus_square.svg</file>
+        <file>point_plus_circle_square.svg</file>
+        <file>point_tick.svg</file>
+        <file>point_tick_circle.svg</file>
+        <file>point_tick_square.svg</file>
+        <file>point_tick_circle_square.svg</file>
         <file>options.svg</file>
         <file>line_polygon_cen_tan.svg</file>
         <file>noconstruction.svg</file>

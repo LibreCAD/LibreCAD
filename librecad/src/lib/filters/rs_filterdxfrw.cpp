@@ -54,6 +54,8 @@
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
 #include "rs_math.h"
+#include "dxf_format.h"
+#include "lc_defaults.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -1338,6 +1340,11 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     graphic->getVariableInt("$AUNITS", 0);
     graphic->getVariableInt("$AUPREC", 4);
 
+	//initialize points drawing style vars if not present in dxf file
+	if( graphic->getVariableInt("$PDMODE", -999) < 0)
+		graphic->addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_VarName);
+	if( graphic->getVariableDouble("$PDSIZE", -999.9) < -100.0)
+		graphic->addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_VarName);
 
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
     acadver.replace(QRegExp("[a-zA-Z]"), "");

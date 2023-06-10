@@ -77,9 +77,12 @@ private slots:
 
     void on_tabWidget_currentChanged(int index);
 
+	void on_rbRelSize_toggled(bool checked);
+
 private:
     void updateCBLengthPrecision(QComboBox* u, QComboBox* l);
     void updateCBAnglePrecision(QComboBox* u, QComboBox* p);
+	void updateLPtSzUnits();
 
 protected:
     void resizeEvent(QResizeEvent* event) override;
