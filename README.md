@@ -25,9 +25,12 @@ LibreCAD can be used as dxf to a pdf/png converter. For example, to convert a fo
 $ librecad dxf2pdf foo.dxf
 $ librecad dxf2png foo.dxf
 ```
+# Releases and Milestones
+
 - [Releases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
+# libdxfrw
 [libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
 
 **Requests and Bug reports**
