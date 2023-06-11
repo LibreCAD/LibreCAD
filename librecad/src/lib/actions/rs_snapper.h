@@ -28,8 +28,8 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include <list>
 #include <memory>
+#include <list>
 #include "rs.h"
 
 class RS_Entity;
@@ -146,7 +146,7 @@ public:
          * @see catchEntity()
          */
         void setSnapRange(int r) {
-                snapRange = r;
+                catchEntityGuiRange = r;
         }
 
         /**manually set snapPoint*/
@@ -222,7 +222,7 @@ protected:
     /**
      * Snap range for catching entities. In GUI units
      */
-    int snapRange = 0;
+    int catchEntityGuiRange = 32;
     bool finished{false};
 
 private:
@@ -230,7 +230,7 @@ private:
 	std::unique_ptr<ImpData> pImpData;
 
     struct Indicator;
-    Indicator* snap_indicator{nullptr};
+    std::unique_ptr<Indicator> snap_indicator;
 };
 
 #endif
