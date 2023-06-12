@@ -291,11 +291,10 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@v3
 
-      - uses: meeDamian/github-release@2.0
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.MY_CUSTOM_TAG }}
-          name: Upload latest pre-release
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
           title: "Continuous Build"
