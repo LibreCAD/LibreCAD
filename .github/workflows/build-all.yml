@@ -294,7 +294,7 @@ jobs:
       - uses: meeDamian/github-release@2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: ${{ env.MY_CUSTOM_TAG }}
+          tag: `git describe --always`
           name: Upload latest pre-release
           automatic_release_tag: "latest"
           prerelease: true
