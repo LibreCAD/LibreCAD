@@ -291,10 +291,16 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@v3
 
+      - name: Setup ENV
+        # https://docs.github.com/en/free-pro-team@latest/actions/reference/workflow-commands-for-github-actions#setting-an-environment-variable
+        run: |
+            echo "RELEASE_TAG=${GITHUB_REF:10}" >> $GITHUB_ENV
+            echo "RELEASE_NAME=$GITHUB_WORKFLOW" >> $GITHUB_ENV
+
       - uses: meeDamian/github-release@2.0
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          tag: `git describe --always`
+          tag: ${{ env.RELEASE_TAG }}
           name: Upload latest pre-release
           automatic_release_tag: "latest"
           prerelease: true
