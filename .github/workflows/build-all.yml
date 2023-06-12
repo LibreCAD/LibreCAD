@@ -8,6 +8,8 @@ on:
 jobs:
   BuildLinux:
     runs-on: ubuntu-22.04
+    env:
+      platform_version: 22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -22,9 +24,10 @@ jobs:
           sudo rm -rf /usr/local/lib/android
 
       - name: Install boost
-        uses: MarkusJx/install-boost@v2.0.0
+        uses: MarkusJx/install-boost@v2.4.4
         with:
           boost_version: 1.75.0
+          platform_version: 22.04
           boost_install_dir: '${{ github.workspace }}/'
 
       - name: Install Clang
@@ -65,7 +68,7 @@ jobs:
           ./CI/build-appimg.sh
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: LibreCAD*.AppImage
@@ -75,7 +78,7 @@ jobs:
     runs-on: macos-11
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -90,7 +93,7 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: LibreCAD*.dmg
@@ -100,7 +103,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -183,7 +186,7 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: LibreCAD-Installer*.exe
@@ -193,7 +196,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
@@ -276,7 +279,7 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: assets
           path: LibreCAD-Installer*.exe
@@ -288,12 +291,12 @@ jobs:
     runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Fetch artifacts
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
 
       - name: Upload latest pre-release
         uses: "marvinpinto/action-automatic-releases@latest"
