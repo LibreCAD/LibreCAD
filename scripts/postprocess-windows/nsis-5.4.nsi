@@ -18,7 +18,6 @@
   !include "MUI2.nsh"
   !include "WinVer.nsh"
 
-  !define APPNAME "LibreCAD"
   !define MUI_ICON "..\..\librecad\res\main\librecad.ico"
   !define MUI_UNICON "..\..\librecad\res\main\uninstall.ico"
 

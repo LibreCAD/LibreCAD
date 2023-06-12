@@ -6,3 +6,4 @@
 !define InstallerName 	"LibreCAD-Installer"
 !define ProgramsFolder 	"$PROGRAMFILES"
 !define AppKeyName 	"LibreCAD"
+!define APPNAME "LibreCAD"
