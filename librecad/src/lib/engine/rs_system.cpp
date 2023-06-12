@@ -578,9 +578,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif // Q_OS_MAC
 
-#ifdef Q_OS_WIN32
+#if (defined (_WIN32) || defined (_WIN64))
     dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
-#endif // Q_OS_WIN32
+#endif // Q_OS_WIN32 or Q_OS_WIN64
 
     // Unix home directory, it's old style but some people might have stuff there.
     dirList.append( getHomeDir() + "/." + appDirName + "/" + subDirectory);

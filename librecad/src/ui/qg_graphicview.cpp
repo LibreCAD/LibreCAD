@@ -24,38 +24,38 @@
 **
 **********************************************************************/
 
-#include "qg_graphicview.h"
 
+#include <QDebug>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMenu>
-#include <QDebug>
 #include <QNativeGestureEvent>
 
-#include "rs_actionzoomin.h"
-#include "rs_actionzoompan.h"
-#include "rs_actionzoomscroll.h"
-#include "rs_actionzoomauto.h"
+#include "qg_graphicview.h"
+
+#include "qg_dialogfactory.h"
+#include "qg_scrollbar.h"
+
+#include "rs_actiondefault.h"
 #include "rs_actionmodifydelete.h"
 #include "rs_actionmodifyentity.h"
 #include "rs_actionselectsingle.h"
-#include "rs_settings.h"
-#include "rs_painterqt.h"
-#include "rs_dialogfactory.h"
-#include "qg_dialogfactory.h"
-#include "rs_eventhandler.h"
-#include "rs_actiondefault.h"
-
-
-#include "qg_scrollbar.h"
-#include "rs_modification.h"
+#include "rs_actionzoomauto.h"
+#include "rs_actionzoomin.h"
+#include "rs_actionzoompan.h"
+#include "rs_actionzoomscroll.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_eventhandler.h"
 #include "rs_graphic.h"
+#include "rs_modification.h"
+#include "rs_painterqt.h"
+#include "rs_settings.h"
 
-#ifdef Q_OS_WIN32
-#define CURSOR_SIZE 16
+#if (defined (_WIN32) || defined (_WIN64))
+    #define CURSOR_SIZE 16
 #else
-#define CURSOR_SIZE 15
+    #define CURSOR_SIZE 15
 #endif
 
 namespace {
@@ -103,7 +103,6 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
         action->finish(false);
     }
 }
-
 }
 
 /**
