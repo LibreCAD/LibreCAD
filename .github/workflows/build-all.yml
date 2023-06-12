@@ -23,13 +23,6 @@ jobs:
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
-      - name: Install boost
-        uses: MarkusJx/install-boost@v2.4.4
-        with:
-          boost_version: 1.75.0
-          platform_version: 22.04
-          boost_install_dir: '${{ github.workspace }}/'
-
       - name: Install Clang
         run: |
           sudo apt-get -qq install clang-15 clang-tools-15
@@ -38,7 +31,7 @@ jobs:
         run: |
           export CC=g++
           export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository

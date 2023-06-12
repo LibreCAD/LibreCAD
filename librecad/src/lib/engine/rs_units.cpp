@@ -595,10 +595,7 @@ QString RS_Units::formatArchitecturalMetric(double length, RS2::Unit unit,
     if (!isAbsInRange(length))
         return "<Invalid length>";
 
-    QString ret;
-    bool neg = std::signbit(length);
-
-    ret = RS_Math::doubleToString(std::abs(length), prec + 1);
+    QString ret = RS_Math::doubleToString(std::abs(length), prec + 1);
     unsigned iLast = QString(ret.right(1)).toUInt();
 
     // round on 0.005 and use superscript 5
