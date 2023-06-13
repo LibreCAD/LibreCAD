@@ -598,8 +598,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         }
     }
 
-
-    RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", appDir: ") + appDir);
+    RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir));
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
@@ -618,9 +617,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
     }
 #endif
-    for (auto& dir: ret) {
+    for (auto& dir: dirList) {
 
-        RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", dir: ") + dir);
+        RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir));
     }
 
 #ifdef Q_OS_MAC
@@ -674,7 +673,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     for (auto& dir: ret) {
 
-        RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", dir: ") + dir);
+
+        RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir));
     }
 
     return ret;
