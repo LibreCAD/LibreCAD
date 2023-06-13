@@ -45,68 +45,68 @@ public:
     RS_PainterQt( QPaintDevice* pd);
     virtual ~RS_PainterQt()=default;
 
-    virtual void moveTo(int x, int y);
-    virtual void lineTo(int x, int y);
-    virtual void drawGridPoint(const RS_Vector& p);
-    virtual void drawPoint(const RS_Vector& p, int pdmode, int pdsize);
-    virtual void drawLine(const RS_Vector& p1, const RS_Vector& p2);
+    void moveTo(int x, int y) override;
+    void lineTo(int x, int y) override;
+    void drawGridPoint(const RS_Vector& p) override;
+    void drawPoint(const RS_Vector& p, int pdmode, int pdsize) override;
+    void drawLine(const RS_Vector& p1, const RS_Vector& p2) override;
     //virtual void drawRect(const RS_Vector& p1, const RS_Vector& p2);
-    virtual void fillRect ( const QRectF & rectangle, const RS_Color & color );
-    virtual void fillRect ( const QRectF & rectangle, const QBrush & brush );
-    virtual void drawArc(const RS_Vector& cp, double radius,
+    void fillRect ( const QRectF & rectangle, const RS_Color & color ) override;
+    void fillRect ( const QRectF & rectangle, const QBrush & brush ) override;
+    void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          const RS_Vector& p1, const RS_Vector& p2,
-                         bool reversed);
+                         bool reversed) override;
 
-    virtual void drawArc(const RS_Vector& cp, double radius,
+    void drawArc(const RS_Vector& cp, double radius,
                          double a1, double a2,
-                         bool reversed);
+                         bool reversed) override;
     virtual void drawArcMac(const RS_Vector& cp, double radius,
                          double a1, double a2,
                          bool reversed);
-    virtual void drawCircle(const RS_Vector&, double radius);
-    virtual void drawEllipse(const RS_Vector& cp,
+    void drawCircle(const RS_Vector&, double radius) override;
+    void drawEllipse(const RS_Vector& cp,
                              double radius1, double radius2,
                              double angle,
                              double a1, double a2,
-                             bool reversed);
-    virtual void drawImg(QImage& img, const RS_Vector& pos,
-                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor);
-    virtual void drawTextH(int x1, int y1, int x2, int y2,
-                           const QString& text);
-    virtual void drawTextV(int x1, int y1, int x2, int y2,
-                           const QString& text);
+                             bool reversed) override;
+    void drawImg(QImage& img, const RS_Vector& pos,
+                               const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
+    void drawTextH(int x1, int y1, int x2, int y2,
+                           const QString& text) override;
+    void drawTextV(int x1, int y1, int x2, int y2,
+                           const QString& text) override;
 
-    virtual void fillRect(int x1, int y1, int w, int h,
-                          const RS_Color& col);
+    void fillRect(int x1, int y1, int w, int h,
+                          const RS_Color& col) override;
 
-    virtual void fillTriangle(const RS_Vector& p1,
+    void fillTriangle(const RS_Vector& p1,
                               const RS_Vector& p2,
-                              const RS_Vector& p3);
+                              const RS_Vector& p3) override;
 
-    virtual void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill);
-    virtual void drawPath ( const QPainterPath & path );
-    virtual void erase();
-    virtual int getWidth() const;
+    void drawPolygon(const QPolygon& a,Qt::FillRule rule=Qt::WindingFill) override;
+    void drawPath ( const QPainterPath & path ) override;
+    void erase() override;
+    int getWidth() const override;
     /** get Density per millimeter on screen/print device
       *@return density per millimeter in pixel/mm
       */
-    virtual double getDpmm() const;
-    virtual int getHeight() const;
+    double getDpmm() const override;
+    int getHeight() const override;
 
 
-    virtual RS_Pen getPen() const;
-    virtual void setPen(const RS_Pen& pen);
-    virtual void setPen(const RS_Color& color);
-    virtual void setPen(int r, int g, int b);
-    virtual void disablePen();
+    RS_Pen getPen() const override;
+    void setPen(const RS_Pen& pen) override;
+    void setPen(const RS_Color& color) override;
+    void setPen(int r, int g, int b) override;
+    void disablePen() override;
     //virtual void setColor(const QColor& color);
-    virtual const QBrush& brush() const;
-    virtual void setBrush(const RS_Color& color);
-    virtual void setBrush(const QBrush& color);
+    const QBrush& brush() const override;
+    void setBrush(const RS_Color& color) override;
+    void setBrush(const QBrush& color) override;
 
-    virtual void setClipRect(int x, int y, int w, int h);
-    virtual void resetClipping();
+    void setClipRect(int x, int y, int w, int h) override;
+    void resetClipping() override;
 
 protected:
     RS_Pen lpen;

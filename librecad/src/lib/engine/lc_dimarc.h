@@ -76,7 +76,7 @@ class LC_DimArc : public RS_Dimension
             return dimArcData;
         }
 
-        double getRadius() const
+        double getRadius() const override
         {
             return dimArcData.radius;
         }
@@ -96,7 +96,7 @@ class LC_DimArc : public RS_Dimension
             return dimArcData.endAngle.angle();
         }
 
-        RS_Vector getCenter() const
+        RS_Vector getCenter() const override
         {
             return dimArcData.centre;
         }

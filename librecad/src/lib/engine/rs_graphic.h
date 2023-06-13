@@ -69,7 +69,7 @@ public:
     bool save(bool isAutoSave = false) override;
     bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
     bool open(const QString& filename, RS2::FormatType type) override;
-    bool loadTemplate(const QString &filename, RS2::FormatType type);
+    bool loadTemplate(const QString &filename, RS2::FormatType type) override;
 
         // Wrappers for Layer functions:
     void clearLayers() {

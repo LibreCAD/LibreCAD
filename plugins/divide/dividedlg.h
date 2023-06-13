@@ -31,7 +31,7 @@ public:
     ~dividedlg();
 
 protected:
-    bool eventFilter( QObject *, QEvent * );
+    bool eventFilter( QObject *, QEvent * ) override;
 
 public slots:
     void onWhichButtonSlot( bool );

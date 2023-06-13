@@ -56,6 +56,34 @@ namespace {
         RS_DEBUG->print(RS_Debug::D_ERROR, "%s\n", msg.toStdString().c_str());
         return false;
     }
+
+    // write alias file
+    void writeAliasFile(QFile& file,
+                        const std::map<QString, RS2::ActionType>& shortCommands,
+                        const std::map<QString, RS2::ActionType>& mainCommands
+)
+    {
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate))
+            return;
+        QTextStream ts(&file);
+        ts << "#LibreCAD alias v1\n\n";
+        ts << "# lines starting with # are comments\n";
+        ts << "# format are:\n";
+        ts << R"(# <alias>\t<command-untranslated>)" "\n";
+        ts << "# example\n";
+        ts << "# l\tline\n\n";
+
+        // the reverse look up from action type to avoid quadratic time complexity
+        auto actionToMain = std::map<RS2::ActionType, QString>();
+        for(auto const& pairMain: mainCommands)
+            if (actionToMain.count(pairMain.second) == 0)
+                actionToMain.emplace(pairMain.second, pairMain.first);
+        for(auto const& pairShort: shortCommands)
+            if (actionToMain.count(pairShort.second) == 0)
+                ts<<pairShort.first<<'\t'<<actionToMain.at(pairShort.second)<<'\n';
+
+        ts.flush();
+    }
 }
 
 const char* RS_Commands::FnPrefix = "Fn";
@@ -1008,27 +1036,8 @@ void RS_Commands::updateAlias(){
             }
         }
     } else {
-    //alias file do no exist, create one with translated shortCommands
-        if (f.open(QIODevice::WriteOnly | QIODevice::Truncate)) {
-            QTextStream ts(&f);
-            ts << "#LibreCAD alias v1" << endl << endl;
-            ts << "# lines starting with # are comments" << endl;
-            ts << "# format are:" << endl;
-            ts << R"(# <alias>\t<command-untranslated>)" << endl;
-            ts << "# example"<<endl;
-            ts << "# l\tline"<<endl<<endl;
-            for(auto const& p: shortCommands){
-                auto const act=p.second;
-                for(auto const& pCmd: mainCommands){
-                    if(pCmd.second==act){
-                        ts<<p.first<<'\t'<<pCmd.first<<endl;
-                        break;
-                    }
-                }
-            }
-            ts.flush();
-        }
-
+        //alias file does no exist, create one with translated shortCommands
+        writeAliasFile(f, shortCommands, mainCommands);
     }
     //update alias file with non present commands
 //RLZ: to be written

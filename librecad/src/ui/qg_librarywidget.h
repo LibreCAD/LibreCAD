@@ -62,7 +62,7 @@ private:
 
 public slots:
     virtual void setActionHandler( QG_ActionHandler * ah );
-    virtual void keyPressEvent( QKeyEvent * e );
+    void keyPressEvent( QKeyEvent *e ) override;
     virtual void insert();
     virtual void refresh();
     virtual void scanTree();

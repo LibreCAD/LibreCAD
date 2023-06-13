@@ -82,10 +82,10 @@ public:
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
-    virtual void suspend();
-    virtual void resume();
-    virtual void hideOptions();
-    virtual void showOptions();
+    void suspend() override;
+    void resume() override;
+    void hideOptions() override;
+    void showOptions() override;
 	virtual void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);

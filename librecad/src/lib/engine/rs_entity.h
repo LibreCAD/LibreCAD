@@ -78,7 +78,10 @@ public:
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-    virtual RS2::EntityType rtti() const = 0;
+    virtual RS2::EntityType rtti() const
+    {
+        return RS2::EntityUnknown;
+    }
 
     /**
      * Identify all entities as undoable entities.

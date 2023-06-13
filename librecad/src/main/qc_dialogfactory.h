@@ -38,10 +38,9 @@
 class QC_DialogFactory: public QG_DialogFactory {
 public:
 	QC_DialogFactory(QWidget* parent, QToolBar* ow);
-	virtual ~QC_DialogFactory() = default;
 
-	virtual void requestEditBlockWindow(RS_BlockList* blockList = nullptr);
-	virtual void closeEditBlockWindow(RS_Block* block = nullptr);
+    void requestEditBlockWindow(RS_BlockList* blockList = nullptr) override;
+    void closeEditBlockWindow(RS_Block* block = nullptr) override;
 };
 
 #endif

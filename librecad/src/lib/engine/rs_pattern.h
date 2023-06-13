@@ -42,7 +42,7 @@ class RS_PatternList;
 class RS_Pattern : public RS_EntityContainer {
 public:
     RS_Pattern(const QString& fileName);
-	RS2::EntityType rtti() const{
+    RS2::EntityType rtti() const override {
 		return RS2::EntityPattern;
 	}
 

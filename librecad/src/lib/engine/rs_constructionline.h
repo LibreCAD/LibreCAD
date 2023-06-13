@@ -56,16 +56,16 @@ struct RS_ConstructionLineData {
  */
 class RS_ConstructionLine : public RS_AtomicEntity {
 public:
-	RS_ConstructionLine()=default;
+    RS_ConstructionLine() = default;
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-	virtual RS_Entity* clone() const;
+    virtual RS_Entity* clone() const override;
 
 	virtual ~RS_ConstructionLine()=default;
 
     /**	@return RS2::EntityConstructionLine */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const override{
         return RS2::EntityConstructionLine;
     }
 
@@ -124,7 +124,7 @@ m0 x + m1 y + m2 =0
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_ConstructionLine& l);
 
-    virtual void calculateBorders();
+    void calculateBorders() override;
 
 protected:
     RS_ConstructionLineData data;

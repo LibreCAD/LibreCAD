@@ -60,18 +60,18 @@ public:
 
 	QG_LayerModel(QObject * parent = nullptr);
 	~QG_LayerModel() = default;
-    Qt::ItemFlags flags (const QModelIndex & index) const
+    Qt::ItemFlags flags (const QModelIndex & index) const override
     {
         if (index.column() == 5)
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
         else
             return Qt::ItemIsEnabled;
     }
-    int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
-    int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
-    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-    QModelIndex parent ( const QModelIndex & index ) const;
-    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
+    int columnCount(const QModelIndex &/*parent*/) const  override {return LAST;}
+    int rowCount ( const QModelIndex & parent = {} ) const override;
+    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
+    QModelIndex parent ( const QModelIndex & index ) const override;
+    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const override;
     void setLayerList(RS_LayerList* ll);
     RS_Layer *getLayer( int row ) const;
     QModelIndex getIndex (RS_Layer * lay) const;
@@ -116,23 +116,23 @@ public:
   void update();
   void activateLayer(RS_Layer *layer, bool updateScroll = true);
 
-  virtual void layerActivated(RS_Layer *layer) { activateLayer(layer); }
-  virtual void layerAdded(RS_Layer *layer);
-  virtual void layerEdited(RS_Layer *) { update(); }
-  virtual void layerRemoved(RS_Layer *) {
+  void layerActivated(RS_Layer *layer) override { activateLayer(layer);}
+  void layerAdded(RS_Layer *layer) override;
+  void layerEdited(RS_Layer *) override { update(); }
+  void layerRemoved(RS_Layer *) override {
         update();
         activateLayer(layerList->at(0));
     }
-    virtual void layerToggled(RS_Layer*) {
+    void layerToggled(RS_Layer*) override {
         update();
     }
-    virtual void layerToggledLock(RS_Layer*) {
+    void layerToggledLock(RS_Layer*) override {
         update();
     }
-    virtual void layerToggledPrint(RS_Layer*) {
+    void layerToggledPrint(RS_Layer*) override {
         update();
     }
-    virtual void layerToggledConstruction(RS_Layer*) {
+    void layerToggledConstruction(RS_Layer*) override {
         update();
     }
 
@@ -157,8 +157,8 @@ public slots:
     void activateLayer(int row);
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *e);
-    virtual void keyPressEvent(QKeyEvent* e);
+    void contextMenuEvent(QContextMenuEvent *e) override;
+    virtual void keyPressEvent(QKeyEvent* e) override;
 
 private:
     RS_LayerList* layerList;
