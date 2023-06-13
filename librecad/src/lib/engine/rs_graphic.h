@@ -52,7 +52,7 @@ public:
     //}
 
     /** @return RS2::EntityGraphic */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const override {
         return RS2::EntityGraphic;
     }
 
@@ -65,10 +65,10 @@ public:
         return &blockList;
     }
 
-    virtual void newDoc();
-    virtual bool save(bool isAutoSave = false);
-    virtual bool saveAs(const QString& filename, RS2::FormatType type, bool force = false);
-    virtual bool open(const QString& filename, RS2::FormatType type);
+    void newDoc() override;
+    bool save(bool isAutoSave = false) override;
+    bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
+    bool open(const QString& filename, RS2::FormatType type) override;
     bool loadTemplate(const QString &filename, RS2::FormatType type);
 
         // Wrappers for Layer functions:
@@ -93,7 +93,7 @@ public:
     virtual void addLayer(RS_Layer* layer) {
         layerList.add(layer);
     }
-    virtual void addEntity(RS_Entity* entity);
+    void addEntity(RS_Entity* entity) override;
     virtual void removeLayer(RS_Layer* layer);
     virtual void editLayer(RS_Layer* layer, const RS_Layer& source) {
         layerList.edit(layer, source);
