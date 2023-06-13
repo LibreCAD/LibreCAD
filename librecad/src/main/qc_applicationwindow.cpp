@@ -648,7 +648,7 @@ void QC_ApplicationWindow::loadPlugins() {
             if (!fileName.contains(".dylib"))
                 continue;
             #endif
-#if (defined (_WIN32) || defined (_WIN64))
+#if (defined (_WIN32) || defined (_WIN32) || defined (_WIN64))
             if (!fileName.contains(".dll"))
                 continue;
 #endif

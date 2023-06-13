@@ -64,10 +64,13 @@ void RS_System::init(const QString& appName,
         // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
         // thus use argv[0] to extract the correct path to librecad executable
         appDir = QFileInfo( QFile::decodeName( arg0)).absolutePath();
+        RS_DEBUG->printUnicode(QString("arg0:")+ QString(arg0));
+        RS_DEBUG->printUnicode(QString("appDir:")+ appDir);
     }
     else {
         // in regular application QCoreApplication::applicationDirPath() is preferred, see GitHub #1488
         appDir = QCoreApplication::applicationDirPath();
+        RS_DEBUG->printUnicode(QString("appDir2:")+ appDir);
     }
 
     // when appDir is not HOME or CURRENT dir, search appDir too in getDirectoryList()
@@ -575,10 +578,10 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     QString subDirectory = QDir::fromNativeSeparators( _subDirectory);
 
 #ifdef Q_OS_MAC
-    dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
+    dirList.append( QStandardPaths::writableLocation() + "/" + appDirName + "/" + subDirectory);
 #endif // Q_OS_MAC
 
-#if (defined (_WIN32) || defined (_WIN64))
+#if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64))
     dirList.append( QStandardPaths::writableLocation( QStandardPaths::DocumentsLocation) + "/" + appDirName + "/" + subDirectory);
 #endif // Q_OS_WIN32 or Q_OS_WIN64
 
@@ -594,7 +597,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         }
     }
 
-#ifdef Q_OS_UNIX
+#if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
     // from package manager the executable is in /usr/bin
     // in AppImage the executable is APPDIR/usr/bin
