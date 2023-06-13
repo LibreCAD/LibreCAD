@@ -1551,7 +1551,7 @@ double DrawPatternLine(std::vector<double> const& pdPattern, int iPattern, doubl
 	double dCurLen = dLen;
 	if(dCurSegLen < dCurLen)
 	{
-        double dt2bak=dt1;
+//        double dt2bak=dt1;
         dt2 = GetLinePointAtDist(dLen, dt1, dCurSegLen);
 		dCurLen -= dCurSegLen;
 	}

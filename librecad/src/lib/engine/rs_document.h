@@ -48,7 +48,7 @@ class RS_Document : public RS_EntityContainer,
 public:
 	RS_Document(RS_EntityContainer* parent=nullptr);
 
-    virtual RS_LayerList* getLayerList() = 0;
+    virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
 
     virtual void newDoc() = 0;
@@ -61,7 +61,7 @@ public:
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
      */
-    virtual bool isDocument() const {
+    bool isDocument() const override {
         return true;
     }
 
@@ -69,7 +69,7 @@ public:
      * Removes an entity from the entity container. Implementation
      * from RS_Undo.
      */
-    virtual void removeUndoable(RS_Undoable* u) {
+    void removeUndoable(RS_Undoable* u) override {
         if (u && u->undoRtti()==RS2::UndoableEntity && u->isUndone()) {
 			removeEntity(static_cast<RS_Entity*>(u));
         }

@@ -58,10 +58,10 @@ public:
 
     virtual unsigned long int countLayerEntities(RS_Layer* layer);
 
-    virtual RS_LayerList* getLayerList() {
+    RS_LayerList* getLayerList() override {
         return &layerList;
     }
-    virtual RS_BlockList* getBlockList() {
+    RS_BlockList* getBlockList() override {
         return &blockList;
     }
 

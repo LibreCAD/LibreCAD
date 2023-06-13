@@ -104,8 +104,8 @@ public:
         return data.basePoint;
     }
 
-    virtual RS_LayerList* getLayerList();
-    virtual RS_BlockList* getBlockList();
+    RS_LayerList* getLayerList() override;
+    RS_BlockList* getBlockList() override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.
