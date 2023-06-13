@@ -521,6 +521,7 @@ QString RS_System::getAppDataDir() {
         if (!dir.mkpath( appData))
             return QString();
     }
+    RS_DEBUG->printUnicode(QString("appData: ") + appData);
     return appData;
 }
 
@@ -597,6 +598,9 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         }
     }
 
+
+    RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", appDir: ") + appDir);
+
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
     // from package manager the executable is in /usr/bin
@@ -614,6 +618,10 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         dirList.append( QDir::cleanPath( appDir + "/../lib/" + appDirName));
     }
 #endif
+    for (auto& dir: ret) {
+
+        RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", dir: ") + dir);
+    }
 
 #ifdef Q_OS_MAC
     // Apple uses the resource directory
@@ -662,6 +670,11 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
             ret += (*it);
             RS_DEBUG->print( (*it).toLatin1() );
         }
+    }
+
+    for (auto& dir: ret) {
+
+        RS_DEBUG->printUnicode(QString(__func__)+ "(): line "+__LINE__ + QString(", dir: ") + dir);
     }
 
     return ret;
