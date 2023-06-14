@@ -111,6 +111,7 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
 QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
     :RS_GraphicView(parent, f)
     ,device("Mouse")
+    ,librecad_selection_cursor (new QCursor (QPixmap (":ui/librecad_selection_cursor.png"), CURSOR_SIZE + 35, CURSOR_SIZE + 35))
     ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
@@ -197,7 +198,20 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
     switch (c) {
     default:
     case RS2::ArrowCursor:
-        setCursor(Qt::ArrowCursor);
+        {
+            RS_SETTINGS->beginGroup("/Appearance");
+
+            if (RS_SETTINGS->readEntry("/selection_arrow_type", "Default").compare("LibreCAD") == 0)
+            {
+                setCursor(*librecad_selection_cursor);
+            }
+            else
+            {
+                setCursor(Qt::ArrowCursor);
+            }
+
+            RS_SETTINGS->endGroup();
+        }
         break;
     case RS2::UpArrowCursor:
         setCursor(Qt::UpArrowCursor);

@@ -135,6 +135,8 @@ protected:
     QG_ScrollBar* vScrollBar;
     //! Layout used to fit in the view and the scrollbars.
     QGridLayout* layout;
+    //! LibreCAD Selection Cursor
+    std::unique_ptr<QCursor> librecad_selection_cursor;
     //! CAD mouse cursor
     std::unique_ptr<QCursor> curCad;
     //! Delete mouse cursor

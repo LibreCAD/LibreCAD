@@ -100,6 +100,9 @@ void QG_DlgOptionsGeneral::init()
     // graphic view:
 
     // Snap Indicators
+    QString selection_arrow_type = RS_SETTINGS->readEntry("/selection_arrow_type", "Default");
+    selection_arrow_type_combobox->setCurrentIndex(selection_arrow_type_combobox->findText(selection_arrow_type));
+
     bool indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
     indicator_lines_checkbox->setChecked(indicator_lines_state);
 
@@ -234,6 +237,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
+        RS_SETTINGS->writeEntry("/selection_arrow_type", selection_arrow_type_combobox->currentText());
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
