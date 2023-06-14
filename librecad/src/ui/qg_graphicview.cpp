@@ -460,7 +460,7 @@ bool QG_GraphicView::event(QEvent *event)
  */
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
-        switch (e->device()) {
+        switch (e->deviceType()) {
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {
@@ -493,7 +493,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                 mouseReleaseEvent(&ev);
             } else if (e->type()==QEvent::TabletMove) {
                 QMouseEvent ev(QEvent::MouseMove, e->pos(),
-                               Qt::NoButton, 0, Qt::NoModifier);//RLZ
+                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
                 mouseMoveEvent(&ev);
             }
             break;
@@ -560,7 +560,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(e->x(), e->y());
+    RS_Vector mouse = toGraph(e->position().x(), e->position().y());
 
     if (device == "Trackpad")
     {
@@ -629,7 +629,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    if (e->delta() == 0) {
+    if (e->angleDelta().isNull()) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this
         e->accept();
         return;
@@ -641,26 +641,24 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // scroll up / down:
     if (e->modifiers()==Qt::ControlModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().y()>0)?RS2::Up : RS2::Down;
         }
     }
 
     // scroll left / right:
     else if	(e->modifiers()==Qt::ShiftModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Up : RS2::Down;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
         }
     }
 
@@ -677,11 +675,11 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		switch(direction){
 		case RS2::Left:
 		case RS2::Right:
-            delta = (inv_h) ? -e->delta() : e->delta();
+            delta = (inv_h) ? -e->angleDelta().x() : e->angleDelta().x();
 			hScrollBar->setValue(hScrollBar->value()+delta);
 			break;
 		default:
-            delta = (inv_v) ? -e->delta() : e->delta();
+            delta = (inv_v) ? -e->angleDelta().y() : e->angleDelta().y();
 			vScrollBar->setValue(vScrollBar->value()+delta);
 		}
 
@@ -712,7 +710,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
 		RS_SETTINGS->endGroup();
 
-		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom)) {
+        if ((e->angleDelta().y()>0 && !invZoom) || (e->angleDelta().y()<0 && invZoom)) {
 			const double zoomInOvershoot=1.20;
 
 			RS_Vector effect{mouse};
@@ -747,7 +745,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     redraw();
 
     QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
-                                         QPoint(e->x(), e->y()),
+                                         e->position(),
                                          Qt::NoButton, Qt::NoButton,
                                          Qt::NoModifier);
     eventHandler->mouseMoveEvent(event);

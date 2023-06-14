@@ -64,13 +64,13 @@ void RS_System::init(const QString& appName,
         // in AppImage QCoreApplication::applicationDirPath() directs to /lib64 of mounted AppImage
         // thus use argv[0] to extract the correct path to librecad executable
         appDir = QFileInfo( QFile::decodeName( arg0)).absolutePath();
-        RS_DEBUG->printUnicode(QString("arg0:")+ QString(arg0));
-        RS_DEBUG->printUnicode(QString("appDir:")+ appDir);
+        RS_DEBUG->print("%s\n", (QString("arg0:")+ QString(arg0)).toStdString().c_str());
+        RS_DEBUG->print("%s\n", (QString("appDir:")+ appDir).toStdString().c_str());
     }
     else {
         // in regular application QCoreApplication::applicationDirPath() is preferred, see GitHub #1488
         appDir = QCoreApplication::applicationDirPath();
-        RS_DEBUG->printUnicode(QString("appDir2:")+ appDir);
+        RS_DEBUG->print("%s\n", (QString("appDir2:")+ appDir).toStdString().c_str());
     }
 
     // when appDir is not HOME or CURRENT dir, search appDir too in getDirectoryList()
@@ -521,7 +521,7 @@ QString RS_System::getAppDataDir() {
         if (!dir.mkpath( appData))
             return QString();
     }
-    RS_DEBUG->printUnicode(QString("appData: ") + appData);
+    RS_DEBUG->print("%s\n", (QString("appData: ") + appData).toStdString().c_str());
     return appData;
 }
 
@@ -556,11 +556,9 @@ QStringList RS_System::getFileList(const QString& subDirectory,
 
         if (dir.exists() && dir.isReadable()) {
             QStringList files = dir.entryList( QStringList( "*." + fileExtension));
-            for (QStringList::Iterator it2 = files.begin();
-                 it2 != files.end();
-                 it2++) {
-
-                fileList += path + "/" + (*it2);
+            for(QString& file: files)
+            {
+                fileList += path + "/" + file;
             }
         }
     }
@@ -598,7 +596,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
         }
     }
 
-    RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir));
+    RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(appDir).toStdString().c_str());
 
 #if (defined(Q_OS_WIN32) || defined(Q_OS_WIN64) || defined(Q_OS_UNIX))
     // for AppImage use relative paths from executable
@@ -619,7 +617,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 #endif
     for (auto& dir: dirList) {
 
-        RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir));
+        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3\n").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
     }
 
 #ifdef Q_OS_MAC
@@ -638,6 +636,8 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
     if (subDirectory == "fonts") {
+        QString savedFonts = RS_SETTINGS->readEntry( "/Fonts", "");
+        RS_DEBUG->print("saved fonts: %s\n", savedFonts.toStdString().c_str());
         dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegExp("[;]"),
                                                                   QString::SkipEmptyParts);
     }
@@ -674,7 +674,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     for (auto& dir: ret) {
 
 
-        RS_DEBUG->printUnicode(QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir));
+        RS_DEBUG->print("%s\n", QString("%1(): line %2: dir=%3").arg(__func__).arg(__LINE__).arg(dir).toStdString().c_str());
     }
 
     return ret;

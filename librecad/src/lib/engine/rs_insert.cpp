@@ -221,7 +221,7 @@ void RS_Insert::update() {
 //                                RS_DEBUG->print("RS_Insert::update: rotate");
                     ne->rotate(data.insertionPoint, data.angle);
 
-                    RS_DEBUG->print(RS_Debug::D_ERROR, "ne: angle: %lg\n", data.angle);
+                   // RS_DEBUG->print(RS_Debug::D_ERROR, "ne: angle: %lg\n", data.angle);
                 // Select:
                     ne->setSelected(isSelected());
 

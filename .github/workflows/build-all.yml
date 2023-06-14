@@ -105,18 +105,18 @@ jobs:
           choco uninstall mingw --force
           choco uninstall strawberryperl --force
 
-      - name: Install MinGW7.3 32-bit
+      - name: Install MinGW8.1 32-bit
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW32
 
-      - name: Install Qt-5.12
+      - name: Install Qt-5.15
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.12.11'
+          version: '5.15.2'
           host: 'windows'
           target: 'desktop'
-          arch: 'win32_mingw73'
+          arch: 'win32_mingw81'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -156,11 +156,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.12.11\
+          dir ..\Qt\5.15.2\
           echo.
-          dir ..\Qt\5.12.11\mingw73_32\
+          dir ..\Qt\5.15.2\mingw81_32\
           echo.
-          dir ..\Qt\5.12.11\mingw73_32\bin
+          dir ..\Qt\5.15.2\mingw81_32\bin
 
       - name: Build
         run: |
