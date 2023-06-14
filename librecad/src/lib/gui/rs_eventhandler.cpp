@@ -89,7 +89,7 @@ void RS_EventHandler::back() {
  * Go enter pressed event for current action.
  */
 void RS_EventHandler::enter() {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Enter, 0);
+    QKeyEvent e(QEvent::KeyPress, Qt::Key_Enter, {});
     keyPressEvent(&e);
 }
 

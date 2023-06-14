@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <fstream>
 
 #include <QTextStream>
 #include <QStringList>

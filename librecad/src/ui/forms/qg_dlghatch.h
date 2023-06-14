@@ -42,11 +42,11 @@ public:
 
 public slots:
     virtual void polish();
-    virtual void showEvent( QShowEvent * e );
+    void showEvent( QShowEvent * e ) override;
     virtual void setHatch( RS_Hatch & h, bool isNew );
     virtual void updateHatch();
     virtual void setPattern( const QString & p );
-	virtual void resizeEvent( QResizeEvent * );
+    void resizeEvent( QResizeEvent * ) override;
 	virtual void updatePreview();
 
 protected slots:

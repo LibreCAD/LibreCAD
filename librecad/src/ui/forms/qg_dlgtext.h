@@ -68,7 +68,7 @@ public slots:
     virtual void insertSymbol( int );
     virtual void updateUniCharButton( int );
     virtual void insertChar();
-    virtual void reject();
+    void reject() override;
 
 protected slots:
     virtual void languageChange();

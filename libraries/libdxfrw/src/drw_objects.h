@@ -324,7 +324,7 @@ public:
     }
 
 protected:
-    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0);
+    bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
 //Note:    int DRW_TableEntry::flags; contains code 70 of block
