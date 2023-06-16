@@ -242,6 +242,8 @@ public slots:
 	void slotLayersToggleLock();
 	void slotLayersTogglePrint();
 	void slotLayersToggleConstruction();
+    void slotLayersExportSelected();
+    void slotLayersExportVisible();
 
 	void slotBlocksDefreezeAll();
 	void slotBlocksFreezeAll();

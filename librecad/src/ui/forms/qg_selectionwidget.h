@@ -24,9 +24,12 @@
 **
 **********************************************************************/
 
+#ifndef QG_SELECTIONWIDGET_H
+#define QG_SELECTIONWIDGET_H
 
+#if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
-
+#endif // _MSC_VER > 1000
 
 #include "ui_qg_selectionwidget.h"
 
@@ -39,7 +42,7 @@ class QG_SelectionWidget : public QWidget, public Ui::QG_SelectionWidget
     Q_OBJECT
 
 public:
-    QG_SelectionWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
+    QG_SelectionWidget(QWidget* parent = nullptr, const char* name = nullptr, Qt::WindowFlags fl = {});
     ~QG_SelectionWidget();
 
 public slots:
@@ -59,3 +62,4 @@ private:
     QTimer *timer       {nullptr};
 
 };
+#endif // QG_SELECTIONWIDGET_H

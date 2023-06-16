@@ -667,7 +667,7 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
          ++it ) {
         if (QFileInfo( *it).isDir()) {
             ret += (*it);
-            RS_DEBUG->print( (*it).toLatin1() );
+            RS_DEBUG->print(*it);
         }
     }
 

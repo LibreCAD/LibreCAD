@@ -86,6 +86,7 @@ public:
     RS_DebugLevel getLevel();
     void print(RS_DebugLevel level, const char* format ...);
     void print(const char* format ...);
+    void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
     void setStream(FILE* s) {

@@ -409,6 +409,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionlayerstoggleview.h \
     actions/rs_actionlayerstoggleprint.h \
     actions/lc_actionlayerstoggleconstruction.h \
+    actions/lc_actionlayersexport.h \
     actions/rs_actionlibraryinsert.h \
     actions/rs_actionlockrelativezero.h \
     actions/rs_actionmodifyattributes.h \
@@ -545,6 +546,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionlayerstoggleview.cpp \
     actions/rs_actionlayerstoggleprint.cpp \
     actions/lc_actionlayerstoggleconstruction.cpp \
+    actions/lc_actionlayersexport.cpp \
     actions/rs_actionlibraryinsert.cpp \
     actions/rs_actionlockrelativezero.cpp \
     actions/rs_actionmodifyattributes.cpp \
@@ -707,7 +709,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/colorcombobox.h \
     ui/generic/colorwizard.h \
     ui/lc_penwizard.h \
-    ui/generic/textfileviewer.h
+    ui/generic/textfileviewer.h \
+    ui/lc_filedialogservice.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -810,7 +813,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/colorcombobox.cpp \
     ui/generic/colorwizard.cpp \
     ui/lc_penwizard.cpp \
-    ui/generic/textfileviewer.cpp
+    ui/generic/textfileviewer.cpp \
+    ui/lc_filedialogservice.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_arcoptions.ui \

@@ -21,9 +21,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#ifndef LC_DIMARC_H
+#define LC_DIMARC_H
 
-
+#if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
+#endif // _MSC_VER > 1000
 
 
 #include "rs_dimension.h"
@@ -141,4 +144,6 @@ class LC_DimArc : public RS_Dimension
                     const double direction, 
                     const RS_Pen& pen);
 };
+
+#endif // LC_DIMARC_H
 

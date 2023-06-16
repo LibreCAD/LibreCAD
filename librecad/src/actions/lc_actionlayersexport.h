@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2021 Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+** Copyright (C) 2021 Melwyn Francis Carlo
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -22,58 +22,51 @@
 **
 **********************************************************************/
 
-#ifndef LC_ACTIONDIMARC_H
-#define LC_ACTIONDIMARC_H
+#ifndef LC_ACTIONLAYERSEXPORT_H
+#define LC_ACTIONLAYERSEXPORT_H
 
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "lc_dimarc.h"
-#include "rs_actiondimension.h"
+#include "rs_actioninterface.h"
 
 
-class LC_ActionDimArc : public RS_ActionDimension
+class QString;
+class RS_LayerList;
+
+
+/*
+    This action class exports the current selected layers as a drawing file, 
+    either as individual files, or combined within a single file.
+*/
+
+
+class LC_ActionLayersExport : public RS_ActionInterface
 {
     Q_OBJECT
 
-    private:
-
-        enum Status
-        {
-            SetEntity, 
-            SetPos 
-        };
-
-
     public:
 
-    LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
-   ~LC_ActionDimArc() override;
+        enum Mode
+        {
+            SelectedMode = 0,
+            VisibleMode 
+        };
 
-    void reset()   override;
-    void trigger() override;
+        LC_ActionLayersExport( RS_EntityContainer& document, 
+                               RS_GraphicView& graphicView, 
+                               RS_LayerList* inputLayersList, 
+                               Mode inputExportMode);
 
-    void mouseMoveEvent(QMouseEvent* e)    override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
+        void init(int status=0) override;
 
-    void showOptions() override;
-    void hideOptions() override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e)       override;
-
-    QStringList getAvailableCommands() override;
-
-    void updateMouseButtonHints() override;
-
+        void trigger() override;
 
     private:
 
-        RS_Entity* selectedArcEntity;
+        RS_LayerList* layersList = nullptr;
 
-        LC_DimArcData dimArcData;
-
-        void setRadius(const RS_Vector& selectedPosition);
+        Mode exportMode = SelectedMode;
 };
-#endif //LC_ACTIONDIMARC_H
+#endif // LC_ACTIONLAYERSEXPORT_H

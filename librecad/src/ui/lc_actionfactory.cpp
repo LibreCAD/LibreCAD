@@ -905,6 +905,16 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersToggleConstruction");
     a_map["LayersToggleConstruction"] = action;
 
+    action = new QAction(tr("&Export Selected Layer(s)"), agm->layer);
+    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportSelected);
+    action->setObjectName("LayersExportSelected");
+    a_map["LayersExportSelected"] = action;
+
+    action = new QAction(tr("Export &Visible Layer(s)"), agm->layer);
+    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportVisible);
+    action->setObjectName("LayersExportVisible");
+    a_map["LayersExportVisible"] = action;
+
     // <[~ Block ~]>
 
     action = new QAction(tr("&Show all blocks"), agm->block);

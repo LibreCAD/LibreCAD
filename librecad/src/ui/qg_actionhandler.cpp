@@ -111,6 +111,8 @@
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "lc_actionlayerstoggleconstruction.h"
+#include "lc_actionlayersexport.h"
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -876,6 +878,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersToggleConstruction:
         a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersExportSelected:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+        break;
+    case RS2::ActionLayersExportVisible:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
         break;
         // Block actions:
         //
@@ -1866,6 +1874,14 @@ void QG_ActionHandler::slotLayersTogglePrint() {
 
 void QG_ActionHandler::slotLayersToggleConstruction() {
     setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
 }
 
 

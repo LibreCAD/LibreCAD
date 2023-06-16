@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2021 Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+** Copyright (C) 2021 Melwyn Francis Carlo
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -22,58 +22,46 @@
 **
 **********************************************************************/
 
-#ifndef LC_ACTIONDIMARC_H
-#define LC_ACTIONDIMARC_H
+#ifndef LC_FILEDIALOGSERVICE_H
+#define LC_FILEDIALOGSERVICE_H
+
 
 #if defined(_MSC_VER) && _MSC_VER > 1000
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "lc_dimarc.h"
-#include "rs_actiondimension.h"
+#include "rs.h"
+
+class QString;
+
+/*
+    This service class centralizes the file I/O user interface.
+*/
 
 
-class LC_ActionDimArc : public RS_ActionDimension
+namespace LC_FileDialogService
 {
-    Q_OBJECT
-
-    private:
-
-        enum Status
+        enum FileDialogMode
         {
-            SetEntity, 
-            SetPos 
+            /* List of open modes. */
+
+
+            /* List of save modes.*/
+            SaveDrawing = 0,
+            ExportLayersSelected = 1,
+            ExportLayersVisible = 2
         };
 
+        struct FileDialogResult
+        {
+            QString dirPath;
+            QString filePath;
+            QString fileName;
+            QString fileExtension;
+            RS2::FormatType fileType;
+            int checkState = 0;
+        };
 
-    public:
-
-    LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
-   ~LC_ActionDimArc() override;
-
-    void reset()   override;
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e)    override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
-    void showOptions() override;
-    void hideOptions() override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e)       override;
-
-    QStringList getAvailableCommands() override;
-
-    void updateMouseButtonHints() override;
-
-
-    private:
-
-        RS_Entity* selectedArcEntity;
-
-        LC_DimArcData dimArcData;
-
-        void setRadius(const RS_Vector& selectedPosition);
-};
-#endif //LC_ACTIONDIMARC_H
+        LC_FileDialogService::FileDialogResult getFileDetails(FileDialogMode const& fileDialogMode);
+}
+#endif // LC_FILEDIALOGSERVICE_H

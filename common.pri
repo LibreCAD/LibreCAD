@@ -1,7 +1,6 @@
 
 # include user-defined things in every qmake project
 exists( custom.pro ):include( custom.pro )
-exists( custom.pri ):include( custom.pri )
 
 include( settings.pri )
 
@@ -53,7 +52,7 @@ win32 {
 
     # The .NET 2003 compiler (at least) is touchy about its own headers ...
     win32-msvc2003 {
-       # Silence "unused formal parameter" warnings about unused `_Iosbase` 
+       # Silence "unused formal parameter" warnings about unused `_Iosbase`
        # in the header file `xloctime` (a Vc7 header after all!).
        QMAKE_CXXFLAGS += /wd4100
     }

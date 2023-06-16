@@ -44,7 +44,7 @@ class QG_LayerWidget;
  */
 class RS_Graphic : public RS_Document {
 public:
-    RS_Graphic(RS_EntityContainer* parent=NULL);
+    RS_Graphic(RS_EntityContainer* parent=nullptr);
     virtual ~RS_Graphic();
 
     //virtual RS_Entity* clone() {
@@ -201,6 +201,16 @@ public:
 
     double getVariableDouble(const QString& key, double def) const;
 
+
+    RS_VariableDict getVariableDictObject()
+    {
+        return variableDict;
+    }
+
+    void setVariableDictObject(RS_VariableDict inputVariableDict)
+    {
+        variableDict = inputVariableDict;
+    }
 
     RS2::LinearFormat getLinearFormat();
     RS2::LinearFormat getLinearFormat(int f);
