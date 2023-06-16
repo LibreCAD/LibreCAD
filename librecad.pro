@@ -11,7 +11,7 @@ SUBDIRS     = \
 # c++14 is now obligatory for LibreCAD
 message(We will be using CPP14 features)
 
-exists( custom.pri ):include( custom.pri )
+exists(custom.pro):include( custom.pro )
 
 OTHER_FILES = \
     CHANGELOG.md \
