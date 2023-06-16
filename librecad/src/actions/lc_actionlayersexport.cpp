@@ -304,7 +304,7 @@ QString paddedIndex(int index, int totalNumber)
     if (totalNumber <= 1 || totalNumber > 10) return "";
     // the maximum string size needed
     int fieldWidth=QString::number(totalNumber).size();
-    auto str = QString("%1").arg(index, fieldWidth, 10, '0');
+    auto str = QString("%1").arg(index, fieldWidth, 10, QChar{'0'});
     return str;
 }
 }
