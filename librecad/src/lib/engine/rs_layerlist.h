@@ -30,8 +30,8 @@
 #define RS_LAYERLIST_H
 
 #include <QList>
-#include "rs_layer.h"
 
+class RS_Layer;
 class RS_LayerListListener;
 class QG_LayerWidget;
 
