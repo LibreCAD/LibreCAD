@@ -37,8 +37,6 @@ class QString;
 /*
     This service class centralizes the file I/O user interface.
 */
-
-
 namespace LC_FileDialogService
 {
         enum FileDialogMode
@@ -58,10 +56,10 @@ namespace LC_FileDialogService
             QString filePath;
             QString fileName;
             QString fileExtension;
-            RS2::FormatType fileType;
+            RS2::FormatType fileType = RS2::FormatUnknown;
             int checkState = 0;
         };
 
-        LC_FileDialogService::FileDialogResult getFileDetails(FileDialogMode const& fileDialogMode);
+        FileDialogResult getFileDetails(FileDialogMode const& fileDialogMode);
 }
 #endif // LC_FILEDIALOGSERVICE_H

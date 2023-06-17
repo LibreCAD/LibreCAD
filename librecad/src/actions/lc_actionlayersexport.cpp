@@ -52,7 +52,6 @@ struct default_delete<RS_Graphic> {
             ptr->setParent(nullptr);
             // newDoc() will delete all current member entities; needed to avoid memory leak
             ptr->newDoc();
-            RS_DEBUG->print("RS_Graphic deleter called\n");
             delete ptr;
         }
     }
@@ -162,7 +161,6 @@ void LC_ActionLayersExport::init(int status)
     trigger();
 }
 
-
 void LC_ActionLayersExport::trigger()
 {
     RS_DEBUG->print("LC_ActionLayersExport::trigger");
@@ -251,8 +249,7 @@ void LC_ActionLayersExport::trigger()
                                     result.dirPath + "/" 
                                                    + result.fileName 
                                                    + paddedIndex(currentExportLayerIndex + 1, layersToExport.size()) 
-                                                   + result.fileExtension 
-                               );
+                                                   + result.fileExtension);
         }
 
         // Shallow traversing

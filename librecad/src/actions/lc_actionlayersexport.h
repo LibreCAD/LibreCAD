@@ -33,6 +33,8 @@
 
 
 class QString;
+class RS_EntityContainer;
+class RS_GraphicView;
 class RS_LayerList;
 
 
