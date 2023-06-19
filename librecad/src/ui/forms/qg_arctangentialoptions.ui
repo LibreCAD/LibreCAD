@@ -133,38 +133,5 @@
   <tabstop>leAngle</tabstop>
  </tabstops>
  <resources/>
- <connections>
-  <connection>
-   <sender>leRadius</sender>
-   <signal>editingFinished()</signal>
-   <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>on_leRadius_editingFinished()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>editingFinished()</signal>
-   <receiver>QG_ArcTangentialOptions</receiver>
-   <slot>on_leAngle_editingFinished()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>70</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>

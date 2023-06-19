@@ -40,7 +40,7 @@ class QG_DimLinearOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_DimLinearOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_DimLinearOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_DimLinearOptions();
 
 public slots:

@@ -177,6 +177,7 @@ public slots:
 	void slotDimRadial();
 	void slotDimDiametric();
 	void slotDimAngular();
+	void slotDimArc();
 	void slotDimLeader();
 
 	void slotModifyAttributes();
@@ -241,6 +242,8 @@ public slots:
 	void slotLayersToggleLock();
 	void slotLayersTogglePrint();
 	void slotLayersToggleConstruction();
+    void slotLayersExportSelected();
+    void slotLayersExportVisible();
 
 	void slotBlocksDefreezeAll();
 	void slotBlocksFreezeAll();

@@ -43,6 +43,7 @@
 #include "qc_applicationwindow.h"
 
 
+
 /**
  * Constructor.
  *
@@ -59,16 +60,20 @@
  *               is suspended and resumed again the cursor will always
  *               be reset to the one given here.
  */
-RS_ActionInterface::RS_ActionInterface(const char* name,
-                                       RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView) :
-RS_Snapper(container, graphicView) {
+RS_ActionInterface::RS_ActionInterface(const char *name,
+                                       RS_EntityContainer &container,
+                                       RS_GraphicView &graphicView)
+    :
+    RS_Snapper(container, graphicView)
+    , status{0}
+    , name{name}
+    , finished{false}
+    , graphic{container.getGraphic()}
+    , document{container.getDocument()}
+{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
 
-    this->name = name;
-    status = 0;
-    finished = false;
     //triggerOnResume = false;
 
     // graphic provides a pointer to the graphic if the
@@ -90,7 +95,6 @@ RS_Snapper(container, graphicView) {
     isPanTimerOn = false;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
-
 }
 
 
@@ -358,7 +362,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  *  for the command line.
  */
 QStringList RS_ActionInterface::getAvailableCommands() {
-	return QStringList{};
+    return {};
 }
 
 /**
@@ -383,7 +387,7 @@ void RS_ActionInterface::setStatus(int status) {
 /**
  * @return Current status of this action.
  */
-int RS_ActionInterface::getStatus() {
+int RS_ActionInterface::getStatus() const {
     return status;
 }
 
@@ -408,7 +412,7 @@ void RS_ActionInterface::updateMouseCursor() {}
 /**
  * @return true, if the action is finished and can be deleted.
  */
-bool RS_ActionInterface::isFinished() {
+bool RS_ActionInterface::isFinished() const {
     return finished;
 }
 

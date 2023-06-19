@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONINFOANGLE_H
 #define RS_ACTIONINFOANGLE_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
 /**
@@ -48,7 +49,7 @@ public:
 public:
     RS_ActionInfoAngle(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-	~RS_ActionInfoAngle() override;
+    ~RS_ActionInfoAngle() override;
 
 	void init(int status) override;
 	void trigger() override;
@@ -57,9 +58,9 @@ public:
 	void updateMouseCursor() override;
 
 private:
-	RS_Entity* entity1;
+    RS_Entity* entity1 = nullptr;
 
-    RS_Entity* entity2;
+    RS_Entity* entity2 = nullptr;
 
 	struct Points;
 	std::unique_ptr<Points> pPoints;

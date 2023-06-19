@@ -39,38 +39,36 @@
 #include "rs_preview.h"
 
 struct RS_ActionDrawArc3P::Points {
-RS_ArcData data;
-/**
- * 1st point.
- */
-RS_Vector point1;
-/**
- * 2nd point.
- */
-RS_Vector point2;
-/**
- * 3rd point.
- */
-RS_Vector point3;
+    RS_ArcData data;
+    /**
+     * 1st point.
+     */
+    RS_Vector point1;
+    /**
+     * 2nd point.
+     */
+    RS_Vector point2;
+    /**
+     * 3rd point.
+     */
+    RS_Vector point3;
 };
 
 RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw arcs 3P",
 						   container, graphicView)
-		, pPoints(new Points())
+        , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawArc3P;
-    reset();
 }
-
 
 
 RS_ActionDrawArc3P::~RS_ActionDrawArc3P() = default;
 
 
 void RS_ActionDrawArc3P::reset() {
-	pPoints.reset(new Points{});
+    pPoints = std::make_unique<Points>();
 }
 
 
@@ -223,12 +221,9 @@ void RS_ActionDrawArc3P::commandEvent(RS_CommandEvent* e) {
 }
 
 
-
 QStringList RS_ActionDrawArc3P::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+    return {{"center"}};
 }
-
 
 
 void RS_ActionDrawArc3P::updateMouseButtonHints() {

@@ -24,38 +24,86 @@
 **
 **********************************************************************/
 
-#include "qg_graphicview.h"
 
+#include <QDebug>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMenu>
-#include <QDebug>
 #include <QNativeGestureEvent>
 
+#include "qg_graphicview.h"
+
+#include "qg_dialogfactory.h"
+#include "qg_scrollbar.h"
+
+#include "rs_actiondefault.h"
+#include "rs_actionmodifydelete.h"
+#include "rs_actionmodifyentity.h"
+#include "rs_actionselectsingle.h"
+#include "rs_actionzoomauto.h"
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomscroll.h"
-#include "rs_actionzoomauto.h"
-#include "rs_actionmodifydelete.h"
-#include "rs_actionselectsingle.h"
-#include "rs_settings.h"
-#include "rs_painterqt.h"
-#include "rs_dialogfactory.h"
-#include "qg_dialogfactory.h"
-#include "rs_eventhandler.h"
-#include "rs_actiondefault.h"
-
-
-#include "qg_scrollbar.h"
-#include "rs_modification.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_eventhandler.h"
 #include "rs_graphic.h"
+#include "rs_modification.h"
+#include "rs_painterqt.h"
+#include "rs_settings.h"
 
-#ifdef Q_OS_WIN32
-#define CURSOR_SIZE 16
+#if (defined (_WIN32) || defined (_WIN64))
+    #define CURSOR_SIZE 16
 #else
-#define CURSOR_SIZE 15
+    #define CURSOR_SIZE 15
 #endif
+
+namespace {
+
+/**
+ * @brief snapEntity find the closest entity
+ * @param QG_GraphicView& view - the graphic view
+ * @param const QMouseEvent* event - the mouse event
+ * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ *                      returns nullptr, if no entity is found in range
+ */
+RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
+{
+    if (event == nullptr)
+        return nullptr;
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return nullptr;
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
+    return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+}
+
+// Show the entity property dialog on the closest entity in range
+void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
+{
+    RS_Entity* entity = snapEntity(view, event);
+
+    // snap to the top selected parent
+    while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
+        entity = entity->getParent();
+
+    // Cursor selection range CURSOR_SIZE
+    if (entity != nullptr) {
+        RS_EntityContainer* container = view.getContainer();
+        if (container==nullptr)
+            return;
+        auto* action = new RS_ActionModifyEntity(*container, view);
+        RS_EventHandler* eventHandler = view.getEventHandler();
+        if (eventHandler != nullptr)
+            eventHandler->setCurrentAction(action);
+        action->setEntity(entity);
+        action->trigger();
+        action->finish(false);
+    }
+}
+}
 
 /**
  * Constructor.
@@ -278,6 +326,9 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             {
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
+            } else {
+                // double click on an entity to edit entity properties
+                showEntityPropertiesDialog(*this, e);
             }
             break;
     }
@@ -317,12 +368,19 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
             {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             }
-            else if (!recent_actions.isEmpty())
+            else
             {
                 QMenu* context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                context_menu->addActions(recent_actions);
-                context_menu->exec(mapToGlobal(event->pos()));
+                if (!recent_actions.empty())
+                    context_menu->addActions(recent_actions);
+                // "Edit Entity" entry
+                addEditEntityEntry(event, *context_menu);
+                if (!context_menu->isEmpty())
+                    context_menu->exec(mapToGlobal(event->pos()));
+                else
+                    delete context_menu;
+
             }
         }
         else back();
@@ -340,6 +398,26 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
+void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
+{
+    RS_Entity* entity = snapEntity(*this, event);
+    if (entity == nullptr)
+    return;
+    if (container==nullptr)
+        return;
+    auto* editPropertyAction = new RS_ActionModifyEntity(*container, *this);
+    if (editPropertyAction == nullptr)
+    return;
+    editPropertyAction->setEntity(entity);
+    auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
+                               tr("Edit Properties"), &contextMenu);
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, editPropertyAction](){
+        getEventHandler()->setCurrentAction(editPropertyAction);
+        editPropertyAction->trigger();
+        editPropertyAction->finish(false);
+    });
+}
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {
@@ -382,7 +460,7 @@ bool QG_GraphicView::event(QEvent *event)
  */
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
-        switch (e->device()) {
+        switch (e->deviceType()) {
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {
@@ -415,7 +493,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                 mouseReleaseEvent(&ev);
             } else if (e->type()==QEvent::TabletMove) {
                 QMouseEvent ev(QEvent::MouseMove, e->pos(),
-                               Qt::NoButton, 0, Qt::NoModifier);//RLZ
+                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
                 mouseMoveEvent(&ev);
             }
             break;
@@ -482,7 +560,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(e->x(), e->y());
+    RS_Vector mouse = toGraph(e->position().x(), e->position().y());
 
     if (device == "Trackpad")
     {
@@ -551,7 +629,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    if (e->delta() == 0) {
+    if (e->angleDelta().isNull()) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this
         e->accept();
         return;
@@ -563,26 +641,24 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // scroll up / down:
     if (e->modifiers()==Qt::ControlModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().y()>0)?RS2::Up : RS2::Down;
         }
     }
 
     // scroll left / right:
     else if	(e->modifiers()==Qt::ShiftModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Up : RS2::Down;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
         }
     }
 
@@ -599,11 +675,11 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		switch(direction){
 		case RS2::Left:
 		case RS2::Right:
-            delta = (inv_h) ? -e->delta() : e->delta();
+            delta = (inv_h) ? -e->angleDelta().x() : e->angleDelta().x();
 			hScrollBar->setValue(hScrollBar->value()+delta);
 			break;
 		default:
-            delta = (inv_v) ? -e->delta() : e->delta();
+            delta = (inv_v) ? -e->angleDelta().y() : e->angleDelta().y();
 			vScrollBar->setValue(vScrollBar->value()+delta);
 		}
 
@@ -634,7 +710,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
 		RS_SETTINGS->endGroup();
 
-		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom)) {
+        if ((e->angleDelta().y()>0 && !invZoom) || (e->angleDelta().y()<0 && invZoom)) {
 			const double zoomInOvershoot=1.20;
 
 			RS_Vector effect{mouse};
@@ -669,7 +745,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     redraw();
 
     QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
-                                         QPoint(e->x(), e->y()),
+                                         e->position(),
                                          Qt::NoButton, Qt::NoButton,
                                          Qt::NoModifier);
     eventHandler->mouseMoveEvent(event);
@@ -958,7 +1034,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid)
     {
-        PixmapLayer1->fill(background);
+        PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
         drawLayer1((RS_Painter*)&painter1);
         painter1.end();

@@ -40,7 +40,7 @@ class QG_LibraryInsertOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LibraryInsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LibraryInsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LibraryInsertOptions();
 
 public slots:

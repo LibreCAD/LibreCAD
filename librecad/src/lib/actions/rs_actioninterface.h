@@ -40,6 +40,9 @@ class RS_CoordinateEvent;
 class RS_Graphic;
 class RS_Document;
 class QAction;
+class QKeyEvent;
+class QString;
+class QStringList;
 
 /**
  * This is the interface that must be implemented for all
@@ -76,23 +79,23 @@ public:
     virtual void commandEvent(RS_CommandEvent*);
     virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
-    virtual int getStatus();
+    virtual int getStatus() const;
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual bool isFinished();
+    virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
-    virtual void suspend();
-    virtual void resume();
-    virtual void hideOptions();
-    virtual void showOptions();
+    void suspend() override;
+    void resume() override;
+    void hideOptions() override;
+    void showOptions() override;
 	virtual void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
-        QString command(const QString& cmd);
-        QString msgAvailableCommands();
+    QString command(const QString& cmd);
+    QString msgAvailableCommands();
 
 private:
     /**
@@ -104,7 +107,7 @@ private:
      * first corner (status 0), and selecting the second
      * corner (status 1).
      */
-    int status;
+    int status = 0;
 
     QTimer *panTimer;
 
@@ -133,18 +136,18 @@ protected:
      * This flag is set when the action has terminated and
      * can be deleted.
      */
-    bool finished;
+    bool finished = false;
 
     /**
      * Pointer to the graphic is this container is a graphic.
      * NULL otherwise
      */
-    RS_Graphic* graphic;
+    RS_Graphic *graphic = nullptr;
 
-        /**
+    /**
          * Pointer to the document (graphic or block) or NULL.
          */
-        RS_Document* document;
+    RS_Document *document = nullptr;
 
     /**
      * Pointer to the default mouse cursor for this action or NULL.
@@ -154,7 +157,7 @@ protected:
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* predecessor;
+    RS_ActionInterface* predecessor = nullptr;
 
     /**
      * String prepended to the help text for currently available commands.
@@ -177,7 +180,7 @@ protected:
      */
     //static QString cmdNo;
     //static QString cmdNo2;
-    RS2::ActionType actionType;
+    RS2::ActionType actionType = RS2::ActionNone;
 };
 
 

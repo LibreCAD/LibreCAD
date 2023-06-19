@@ -49,10 +49,10 @@ public:
 	void updateMouseCursor() override;
 
 private:
-	std::initializer_list<RS2::EntityType> const entityTypeList;
+    const std::vector<RS2::EntityType> entityTypeList;
 
-    RS_Entity* en;
-    RS_ActionInterface* actionSelect;
+    RS_Entity* en = nullptr;
+    RS_ActionInterface* actionSelect = nullptr;
 };
 
 #endif

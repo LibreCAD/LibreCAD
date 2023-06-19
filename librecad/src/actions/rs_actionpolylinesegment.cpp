@@ -31,7 +31,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_arc.h"
-#include "rs_line.h"
 #include "rs_polyline.h"
 #include "rs_debug.h"
 

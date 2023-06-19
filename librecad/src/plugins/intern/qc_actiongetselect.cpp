@@ -23,37 +23,33 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include "qc_actiongetselect.h"
 
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include "qc_actiongetselect.h"
+
 #include "doc_plugin_interface.h"
+#include "rs_actionselectsingle.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_actionselectsingle.h"
-// #include <QDebug>
-
 #include "rs_snapper.h"
 
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
 		:RS_ActionInterface("Get Select", container, graphicView)
-		,completed(false)
-		,message(tr("Select objects:"))
+        , completed(false)
+        , message(std::make_unique<QString>(tr("Select objects:")))
 {
     actionType = RS2::ActionGetSelect;
 }
 
-QC_ActionGetSelect::~QC_ActionGetSelect()
-{
-    // qDebug() << "~QC_ActionGetSelect";
-}
+QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
     case Select:
-		RS_DIALOGFACTORY->updateMouseWidget(message, tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(*message, tr("Cancel"));
             break;
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
@@ -67,7 +63,7 @@ void QC_ActionGetSelect::updateMouseCursor() {
 }
 
 void QC_ActionGetSelect::setMessage(QString msg){
-	message = msg;
+    *message = std::move(msg);
 }
 
 void QC_ActionGetSelect::init(int status) {

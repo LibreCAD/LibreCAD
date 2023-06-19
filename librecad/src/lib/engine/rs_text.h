@@ -106,23 +106,23 @@ struct RS_TextData {
     /** Second point for fit or aligned*/
     RS_Vector secondPoint;
     /** Nominal (initial) text height */
-    double height;
+    double height = 0.;
     /** Width/Height relation */
-    double widthRel;
+    double widthRel = 0.;
     /** Vertical alignment */
-    VAlign valign;
+    VAlign valign = VABaseline;
     /** Horizontal alignment */
-    HAlign halign;
+    HAlign halign = HALeft;
     /** Text Generation */
-    TextGeneration textGeneration;
+    TextGeneration textGeneration = None;
     /** Text string */
     QString text;
     /** Text style name */
     QString style;
     /** Rotation angle */
-    double angle;
+    double angle = 0.;
     /** Update mode */
-    RS2::UpdateMode updateMode;
+    RS2::UpdateMode updateMode = RS2::NoUpdate;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_TextData& td);
@@ -139,12 +139,11 @@ class RS_Text : public RS_EntityContainer {
 public:
     RS_Text(RS_EntityContainer* parent,
             const RS_TextData& d);
-	virtual ~RS_Text() = default;
 
-    virtual RS_Entity* clone() const override;
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityText */
-    virtual RS2::EntityType rtti() const override{
+    RS2::EntityType rtti() const override{
         return RS2::EntityText;
     }
 
@@ -251,13 +250,13 @@ protected:
      * This property is updated by the update method.
      * @see update
      */
-    double usedTextWidth;
+    double usedTextWidth = 0.;
     /**
      * Text height used by the current contents of this text entity.
      * This property is updated by the update method.
      * @see update
      */
-    double usedTextHeight;
+    double usedTextHeight = 0.;
 };
 
 #endif

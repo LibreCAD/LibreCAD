@@ -30,10 +30,13 @@
 
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
+LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
     , using_theme(false)
     , main_window(parent)
@@ -480,7 +483,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Misc ~]>
 
-    action = new QAction(QIcon(":/icons/text.svg"), tr("&MText"), agm->other);
+    action = new QAction(QIcon(":/icons/mtext.svg"), tr("&MText"), agm->other);
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotDrawMText()));
     action->setObjectName("DrawMText");
@@ -558,6 +561,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DimAngular");
     a_map["DimAngular"] = action;
 
+    action = new QAction(tr("&Arc"), agm->dimension);
+    action->setIcon(QIcon(":/icons/dim_arc.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDimArc()));
+    action->setObjectName("DimArc");
+    a_map["DimArc"] = action;
+
     action = new QAction(tr("&Leader"), agm->dimension);
     action->setIcon(QIcon(":/icons/dim_leader.svg"));
     connect(action, SIGNAL(triggered()),
@@ -583,6 +593,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyDelete"] = action;
 
     action = new QAction(tr("Delete Freehand"), agm->modify);
+    action->setIcon(QIcon(":/icons/delete_freehand.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
@@ -817,14 +828,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     // <[~ Layer ~]>
 
-    action = new QAction(tr("&Show all"), agm->layer);
+    action = new QAction(tr("&Show all layers"), agm->layer);
     action->setIcon(QIcon(":/ui/visibleblock.png"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotLayersDefreezeAll()));
     action->setObjectName("LayersDefreezeAll");
     a_map["LayersDefreezeAll"] = action;
 
-    action = new QAction(tr("&Hide all"), agm->layer);
+    action = new QAction(tr("&Hide all layers"), agm->layer);
     action->setIcon(QIcon(":/ui/hiddenblock.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotLayersFreezeAll()));
@@ -894,16 +905,26 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("LayersToggleConstruction");
     a_map["LayersToggleConstruction"] = action;
 
+    action = new QAction(tr("&Export Selected Layer(s)"), agm->layer);
+    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportSelected);
+    action->setObjectName("LayersExportSelected");
+    a_map["LayersExportSelected"] = action;
+
+    action = new QAction(tr("Export &Visible Layer(s)"), agm->layer);
+    connect(action, &QAction::triggered, action_handler, &QG_ActionHandler::slotLayersExportVisible);
+    action->setObjectName("LayersExportVisible");
+    a_map["LayersExportVisible"] = action;
+
     // <[~ Block ~]>
 
-    action = new QAction(tr("&Show all"), agm->block);
+    action = new QAction(tr("&Show all blocks"), agm->block);
     action->setIcon(QIcon(":/ui/blockdefreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksDefreezeAll()));
     action->setObjectName("BlocksDefreezeAll");
     a_map["BlocksDefreezeAll"] = action;
 
-    action= new QAction(tr("&Hide all"), agm->block);
+    action= new QAction(tr("&Hide all blocks"), agm->block);
     action->setIcon(QIcon(":/ui/blockfreeze.png"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotBlocksFreezeAll()));
@@ -983,6 +1004,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotOptionsDrawing()));
     action->setObjectName("OptionsDrawing");
     a_map["OptionsDrawing"] = action;
+    connect( main_window, &QC_ApplicationWindow::windowsChanged, action, &QAction::setEnabled);
 
     action = new QAction(tr("Widget Options"), agm->options);
     action->setObjectName("WidgetOptions");
@@ -1299,6 +1321,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
         action->setIcon(QIcon::fromTheme("zoom-fit-best", QIcon(":/icons/zoom_auto.svg")));
     else
         action->setIcon(QIcon(":/icons/zoom_auto.svg"));
+    action->setShortcut(QKeySequence(Qt::CTRL | Qt::Key_F));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotZoomAuto()));
     action->setObjectName("ZoomAuto");
     a_map["ZoomAuto"] = action;

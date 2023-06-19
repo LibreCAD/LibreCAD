@@ -52,10 +52,10 @@ public:
 
 private:
     //! Width
-    int width;
+    int width = 0;
 
     //! Height
-    int height;
+    int height = 0;
 };
 
 #endif

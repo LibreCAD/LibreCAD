@@ -169,4 +169,12 @@ void RS_Debug::printUnicode(const QString& text) {
 }
 
 
+/**
+ * Prints the unicode for every character in the given string.
+ */
+void RS_Debug::print(const QString& text) {
+    std::cerr<<text.toStdString()<<std::endl;
+}
+
+
 // EOF

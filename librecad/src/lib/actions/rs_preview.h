@@ -40,7 +40,6 @@
 class RS_Preview : public RS_EntityContainer {
 public:
     RS_Preview(RS_EntityContainer* parent=nullptr);
-	~RS_Preview() = default;
     virtual RS2::EntityType rtti() const override{
         return RS2::EntityPreview;
     }
@@ -54,7 +53,7 @@ public:
     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 private:
-	int maxEntities;
+    int maxEntities = 0;
 };
 
 #endif

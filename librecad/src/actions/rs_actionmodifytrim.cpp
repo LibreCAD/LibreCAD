@@ -49,7 +49,7 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
 						   container, graphicView)
 		, trimEntity{nullptr}
 		, limitEntity{nullptr}
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		, both{both}
 {
 }

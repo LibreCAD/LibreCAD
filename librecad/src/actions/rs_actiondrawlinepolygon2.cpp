@@ -47,7 +47,7 @@ RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Polygons (Corner,Corner)", container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,number(3)
 		,lastStatus(SetCorner1)
 {

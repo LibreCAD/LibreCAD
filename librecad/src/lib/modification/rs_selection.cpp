@@ -24,15 +24,23 @@
 **
 **********************************************************************/
 
-#include "rs_selection.h"
 
-#include "rs_line.h"
-#include "rs_information.h"
-#include "rs_polyline.h"
+#include "qc_applicationwindow.h"
+
+#include "qg_dialogfactory.h"
+
+#include "rs_block.h"
+#include "rs_dialogfactory.h"
 #include "rs_entity.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
+#include "rs_insert.h"
 #include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_polyline.h"
 
+#include "rs_selection.h"
 
 
 /**
@@ -43,10 +51,11 @@
  *        it can also be a polyline, text, ...
  */
 RS_Selection::RS_Selection(RS_EntityContainer& container,
-                           RS_GraphicView* graphicView) {
-    this->container = &container;
-    this->graphicView = graphicView;
-    graphic = container.getGraphic();
+                           RS_GraphicView* graphicView):
+    container{&container}
+    , graphic{container.getGraphic()}
+    , graphicView{graphicView}
+{
 }
 
 
@@ -54,17 +63,35 @@ RS_Selection::RS_Selection(RS_EntityContainer& container,
 /**
  * Selects or deselects the given entity.
  */
-void RS_Selection::selectSingle(RS_Entity* e) {
-	if (e && (! (e->getLayer() && e->getLayer()->isLocked()))) {
+void RS_Selection::selectSingle(RS_Entity* e)
+{
+	if (e && (! (e->getLayer() && e->getLayer()->isLocked())))
+    {
 
-        if (graphicView) {
-            graphicView->deleteEntity(e);
-        }
+        if (graphicView) graphicView->deleteEntity(e);
 
        	e->toggleSelected();
 
-        if (graphicView) {
+        if (graphicView)
+        {
             graphicView->drawEntity(e);
+
+            if (e->isSelected() && (e->rtti() == RS2::EntityInsert))
+            {
+                const RS_Block *selectedBlock = static_cast<RS_Insert*>(e)->getBlockForInsert();
+
+                if (selectedBlock != nullptr)
+                {
+                    // Display the selected block as active in the block widget
+                    QC_ApplicationWindow::getAppWindow()->showBlockActivated(selectedBlock);
+                    // Display the selected block name
+                    QG_DIALOGFACTORY->displayBlockName(selectedBlock->getName(), true);
+                }
+            }
+            else
+            {
+                QG_DIALOGFACTORY->displayBlockName("", false);
+            }
         }
     }
 }
@@ -211,7 +238,7 @@ void RS_Selection::selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
  */
 void RS_Selection::selectContour(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 
@@ -294,16 +321,14 @@ void RS_Selection::selectContour(RS_Entity* e) {
  */
 void RS_Selection::selectLayer(RS_Entity* e) {
 
-    if (e==NULL) {
+    if (e==nullptr)
         return;
-    }
 
     bool select = !e->isSelected();
 
     RS_Layer* layer = e->getLayer(true);
-    if (layer==NULL) {
+    if (layer==nullptr)
         return;
-    }
 
     QString layerName = layer->getName();
 	selectLayer(layerName, select);
@@ -324,7 +349,7 @@ void RS_Selection::selectLayer(const QString& layerName, bool select) {
 
             RS_Layer* l = en->getLayer(true);
 
-            if (l && l->getName()==layerName) {
+            if (l != nullptr && l->getName()==layerName) {
                 if (graphicView) {
                     graphicView->deleteEntity(en);
                 }

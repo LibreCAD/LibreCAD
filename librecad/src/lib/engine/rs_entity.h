@@ -61,7 +61,6 @@ class QString;
 class RS_Entity : public RS_Undoable {
 public:
 	RS_Entity(RS_EntityContainer* parent=nullptr);
-	virtual ~RS_Entity() = default;
 
     void init();
     virtual void initId();
@@ -74,14 +73,15 @@ public:
 
     void resetBorders();
 	void moveBorders(const RS_Vector& offset);
-	void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
+    void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-	virtual RS2::EntityType rtti() const{
-		return RS2::EntityUnknown;
-	}
+    virtual RS2::EntityType rtti() const
+    {
+        return RS2::EntityUnknown;
+    }
 
     /**
      * Identify all entities as undoable entities.

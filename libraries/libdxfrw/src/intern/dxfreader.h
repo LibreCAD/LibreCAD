@@ -31,7 +31,7 @@ public:
         filestr = stream;
         type = INVALID;
     }
-    virtual ~dxfReader(){}
+    virtual ~dxfReader() = default;
     bool readRec(int *code);
 
     std::string getString() {return strData;}
@@ -74,31 +74,29 @@ private:
 class dxfReaderBinary : public dxfReader {
 public:
     dxfReaderBinary(std::ifstream *stream):dxfReader(stream){skip = false; }
-    virtual ~dxfReaderBinary() {}
-    virtual bool readCode(int *code);
-    virtual bool readString(std::string *text);
-    virtual bool readString();
-    virtual bool readBinary();
-    virtual bool readInt16();
-    virtual bool readInt32();
-    virtual bool readInt64();
-    virtual bool readDouble();
-    virtual bool readBool();
+    bool readCode(int *code) override;
+    bool readString(std::string *text) override;
+    bool readString() override;
+    bool readBinary() override;
+    bool readInt16() override;
+    bool readInt32() override;
+    bool readInt64() override;
+    bool readDouble() override;
+    bool readBool() override;
 };
 
 class dxfReaderAscii : public dxfReader {
 public:
     dxfReaderAscii(std::ifstream *stream):dxfReader(stream){skip = true; }
-    virtual ~dxfReaderAscii(){}
-    virtual bool readCode(int *code);
-    virtual bool readString(std::string *text);
-    virtual bool readString();
-    virtual bool readBinary();
-    virtual bool readInt16();
-    virtual bool readDouble();
-    virtual bool readInt32();
-    virtual bool readInt64();
-    virtual bool readBool();
+    bool readCode(int *code) override;
+    bool readString(std::string *text) override;
+    bool readString() override;
+    bool readBinary() override;
+    bool readInt16() override;
+    bool readDouble() override;
+    bool readInt32() override;
+    bool readInt64() override;
+    bool readBool() override;
 };
 
 #endif // DXFREADER_H

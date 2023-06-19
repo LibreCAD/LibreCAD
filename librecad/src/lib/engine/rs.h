@@ -144,6 +144,7 @@ public:
         EntityDimRadial,    /**< Radial Dimension */
         EntityDimDiametric, /**< Diametric Dimension */
         EntityDimAngular,   /**< Angular Dimension */
+        EntityDimArc,       /**< Arc Dimension */
         EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
@@ -295,6 +296,7 @@ public:
         ActionDimRadial,
         ActionDimDiametric,
         ActionDimAngular,
+        ActionDimArc,
         ActionDimLeader,
 
         ActionModifyAttributes,
@@ -366,6 +368,8 @@ public:
         ActionLayersToggleLock,
         ActionLayersTogglePrint,
         ActionLayersToggleConstruction,
+        ActionLayersExportSelected,
+        ActionLayersExportVisible,
 
         ActionBlocksDefreezeAll,
         ActionBlocksFreezeAll,

@@ -18,7 +18,7 @@
 class dxfWriter {
 public:
     dxfWriter(std::ofstream *stream){filestr = stream; /*count =0;*/}
-    virtual ~dxfWriter(){}
+    virtual ~dxfWriter() = default;
     virtual bool writeString(int code, std::string text) = 0;
     bool writeUtf8String(int code, std::string text);
     bool writeUtf8Caps(int code, std::string text);
@@ -32,7 +32,7 @@ public:
     void setCodePage(const std::string &c){encoder.setCodePage(c, true);}
     std::string getCodePage(){return encoder.getCodePage();}
 protected:
-    std::ofstream *filestr;
+    std::ofstream *filestr = nullptr;
 private:
     DRW_TextCodec encoder;
 };
@@ -40,25 +40,23 @@ private:
 class dxfWriterBinary : public dxfWriter {
 public:
     dxfWriterBinary(std::ofstream *stream):dxfWriter(stream){}
-    virtual ~dxfWriterBinary() {}
-    virtual bool writeString(int code, std::string text);
-    virtual bool writeInt16(int code, int data);
-    virtual bool writeInt32(int code, int data);
-    virtual bool writeInt64(int code, unsigned long long int data);
-    virtual bool writeDouble(int code, double data);
-    virtual bool writeBool(int code, bool data);
+    bool writeString(int code, std::string text) override;
+    bool writeInt16(int code, int data) override;
+    bool writeInt32(int code, int data) override;
+    bool writeInt64(int code, unsigned long long int data) override;
+    bool writeDouble(int code, double data) override;
+    bool writeBool(int code, bool data) override;
 };
 
 class dxfWriterAscii : public dxfWriter {
 public:
     dxfWriterAscii(std::ofstream *stream);
-    virtual ~dxfWriterAscii(){}
-    virtual bool writeString(int code, std::string text);
-    virtual bool writeInt16(int code, int data);
-    virtual bool writeInt32(int code, int data);
-    virtual bool writeInt64(int code, unsigned long long int data);
-    virtual bool writeDouble(int code, double data);
-    virtual bool writeBool(int code, bool data);
+    bool writeString(int code, std::string text) override;
+    bool writeInt16(int code, int data) override;
+    bool writeInt32(int code, int data) override;
+    bool writeInt64(int code, unsigned long long int data) override;
+    bool writeDouble(int code, double data) override;
+    bool writeBool(int code, bool data) override;
 };
 
 #endif // DXFWRITER_H
