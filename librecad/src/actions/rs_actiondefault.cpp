@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include <cmath>
+#include <iostream>
 
 #include<QMouseEvent>
 
@@ -40,8 +41,6 @@
 #include "rs_preview.h"
 #include "rs_selection.h"
 
-#include <cmath>
-#include <iostream>
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;
@@ -157,7 +156,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                 if (isPointOnEntity)
                 {
-                    RS_Color whiteColor(QColor(Qt::white));
+                    RS_Color whiteColor{{Qt::white}};
 
                     if (highlightedEntity != nullptr)
                     {
