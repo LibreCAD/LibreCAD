@@ -126,6 +126,9 @@ void QG_DlgOptionsGeneral::init()
     int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
     cb_antialiasing->setChecked(checked?true:false);
 
+    checked = RS_SETTINGS->readNumEntry("/Autopanning");
+    cb_autopanning->setChecked(checked?true:false);
+
     checked = RS_SETTINGS->readNumEntry("/ScrollBars");
     scrollbars_check_box->setChecked(checked?true:false);
 
@@ -240,6 +243,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 

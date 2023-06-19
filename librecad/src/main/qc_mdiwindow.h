@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,31 +15,34 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 
 #ifndef QC_MDIWINDOW_H
 #define QC_MDIWINDOW_H
 
-#include <QMdiSubWindow>
-#include <QList>
-#include "rs.h"
-#include "rs_layerlistlistener.h"
-#include "rs_blocklistlistener.h"
+#include <memory>
 
+#include <QList>
+#include <QMdiSubWindow>
+
+#include "rs.h"
+#include "rs_blocklistlistener.h"
+#include "rs_layerlistlistener.h"
+
+class QCloseEvent;
 class QG_GraphicView;
+class QMdiArea;
 class RS_Document;
+class RS_EventHandler;
 class RS_Graphic;
 class RS_Pen;
-class QMdiArea;
-class RS_EventHandler;
-class QCloseEvent;
 
 /**
  * MDI document window. Contains a document and a view (window).
@@ -60,7 +63,7 @@ public:
 
 public slots:
 
-	void slotPenChanged(const RS_Pen& p);
+    void slotPenChanged(const RS_Pen& p);
     void slotFileNew();
     bool slotFileNewTemplate(const QString& fileName, RS2::FormatType type);
     bool slotFileOpen(const QString& fileName, RS2::FormatType type);
@@ -68,23 +71,24 @@ public slots:
     bool slotFileSaveAs(bool &cancelled);
     void slotFilePrint();
     void slotZoomAuto();
+    void autoPan() const;
 
 public:
     /** @return Pointer to graphic view */
-	QG_GraphicView* getGraphicView() const;
+    QG_GraphicView* getGraphicView() const;
 
     /** @return Pointer to document */
-	RS_Document* getDocument() const;
-	
-    /** @return Pointer to graphic or NULL */
-	RS_Graphic* getGraphic() const;
+    RS_Document* getDocument() const;
 
-	/** @return Pointer to current event handler */
-	RS_EventHandler* getEventHandler() const;
+    /** @return Pointer to graphic or NULL */
+    RS_Graphic* getGraphic() const;
+
+    /** @return Pointer to current event handler */
+    RS_EventHandler* getEventHandler() const;
 
     void addChildWindow(QC_MDIWindow* w);
     void removeChildWindow(QC_MDIWindow* w);
-	QList<QC_MDIWindow*>& getChildWindows();
+    QList<QC_MDIWindow*>& getChildWindows();
 
     QC_MDIWindow* getPrintPreview();
 
@@ -110,7 +114,7 @@ public:
      */
     unsigned getId() const;
 
-	friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
+    friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
 
     bool has_children();
 
@@ -118,14 +122,13 @@ signals:
     void signalClosing(QC_MDIWindow*);
 
 protected:
-    void closeEvent(QCloseEvent*) override;
+    void closeEvent(QCloseEvent *) override;
+    bool eventFilter(QObject *obj, QEvent *event) override;
 
 private:
     void drawChars();
 
 private:
-    /** ID counter */
-    static unsigned idCounter;
     /** window ID */
     unsigned id = 0;
     /** Graphic view */
@@ -133,17 +136,21 @@ private:
     /** Document */
     RS_Document* document = nullptr;
     /** Does the window own the document? */
-    bool owner = false;
+    bool m_owner = false;
     /**
      * List of known child windows that show blocks of the same drawing.
      */
     QList<QC_MDIWindow*> childWindows;
     /**
-     * Pointer to parent window which needs to know if this window 
+     * Pointer to parent window which needs to know if this window
      * is closed or NULL.
      */
     QC_MDIWindow* parentWindow{nullptr};
-    QMdiArea* cadMdiArea = nullptr;
+    QMdiArea *cadMdiArea = nullptr;
+
+    // For auto panning by the cursor close to the view border
+    struct AutoPanData;
+    std::unique_ptr<AutoPanData> m_panData;
 };
 
 

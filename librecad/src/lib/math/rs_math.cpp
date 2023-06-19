@@ -95,7 +95,7 @@ double RS_Math::pow(double x, double y) {
 }
 
 /* pow of vector components */
-RS_Vector RS_Math::pow(RS_Vector vp, double y) {
+RS_Vector RS_Math::pow(const RS_Vector& vp, double y) {
     return RS_Vector(std::pow(vp.x, y), std::pow(vp.y, y));
 }
 
@@ -585,7 +585,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     //std::cout<<"p="<<p<<"\tq="<<q<<std::endl;
     double discriminant= (1./27)*p*p*p+(1./4)*q*q;
     if ( std::abs(p)< 1.0e-75) {
-        ans.push_back((q>0)?-pow(q,(1./3)):pow(-q,(1./3)));
+        ans.push_back(std::cbrt(q));
         ans[0] -= shift;
 //        DEBUG_HEADER
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
@@ -601,7 +601,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 			std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
         }
         double u,v;
-        u= (q<=0) ? pow(r[0], 1./3): -pow(-r[1],1./3);
+        u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;
@@ -612,9 +612,9 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
 	}else{
 		std::complex<double> u(q,0),rt[3];
-		u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
-		rt[0]=u-p/(3.*u)-shift;
-		std::complex<double> w(-0.5,sqrt(3.)/2);
+        u=std::pow(-0.5*u - std::sqrt(0.25*u*u+p*p*p/27), 1./3);
+        rt[0]=u-p/(3.*u)-shift;
+        std::complex<double> w(-0.5, std::sqrt(3.)/2);
 		rt[1]=u*w-p/(3.*u*w)-shift;
 		rt[2]=u/w-p*w/(3.*u)-shift;
 		//        DEBUG_HEADER
