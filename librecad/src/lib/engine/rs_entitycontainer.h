@@ -79,6 +79,8 @@ public:
 	bool setSelected(bool select=true) override;
 	bool toggleSelected() override;
 
+    void setHighlighted(bool on) override;
+
 	virtual void selectWindow(RS_Vector v1, RS_Vector v2,
 				bool select=true, bool cross=false);
 

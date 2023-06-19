@@ -40,6 +40,8 @@
 #include "rs_preview.h"
 #include "rs_selection.h"
 
+#include <cmath>
+#include <iostream>
 
 struct RS_ActionDefault::Points {
 	RS_Vector v1;
@@ -55,6 +57,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 								container, graphicView)
 	, pPoints(std::make_unique<Points>())
 	, restrBak(RS2::RestrictNothing)
+    , highlightedEntity(nullptr)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
@@ -111,6 +114,128 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 }
 
 
+/*
+   Highlights hovered entities that are visible and not locked.
+
+   - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePosition)
+{
+    for (auto entity : *graphicView->getContainer())
+    {
+        if (entity != nullptr)
+        {
+            if (entity->isVisible() && ! entity->isLocked() && (entity->getHighlightedEntityParent() == nullptr))
+            {
+                const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse) 
+                                                  ? hoverToleranceFactor1 
+                                                  : hoverToleranceFactor2;
+
+                const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+
+                const double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance)) 
+                                                     ? minimumHoverTolerance 
+                                                     : hoverTolerance;
+
+                bool isPointOnEntity = false;
+
+                if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader)) 
+                ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
+                {
+                    double nearestDistanceTo_pointOnEntity;
+
+                    RS_Vector dummyVector = entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
+
+                    if (dummyVector) { /* This is a dummy code to suppress the 'unused variable' compiler warning. */ }
+
+                    if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
+                }
+                else
+                {
+                    isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
+                }
+
+                if (isPointOnEntity)
+                {
+                    RS_Color whiteColor(QColor(Qt::white));
+
+                    if (highlightedEntity != nullptr)
+                    {
+                        highlightedEntity->setHovered(false);
+
+                        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                        {
+                            container->removeEntity(highlightedEntityDuplicates.at(i));
+                        }
+                    }
+
+                    highlightedEntity = entity;
+
+                    /* This does not work for RS_Insert. */
+                    highlightedEntity->setHovered(true);
+
+                    RS_Pen duplicatedPen = highlightedEntity->getPen(true);
+
+                    const double zoomFactor { graphicView->getFactor().x };
+
+                    double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
+                    if (duplicatedPen_width < 1.0) duplicatedPen_width = 1.0;
+
+                    numberOf_highlightedEntityDuplicates = 2.0 * zoomFactor;
+
+                    if (numberOf_highlightedEntityDuplicates < minimumNumberOf_highlightedEntityDuplicates)
+                    {
+                        numberOf_highlightedEntityDuplicates = minimumNumberOf_highlightedEntityDuplicates;
+                    }
+
+                    highlightedEntityDuplicates.resize(numberOf_highlightedEntityDuplicates);
+
+                    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
+                    {
+                        DEBUG_HEADER
+
+                        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl 
+                                  << " Number of duplicate entities       = " << numberOf_highlightedEntityDuplicates << std::endl 
+                                  << " Duplicated pen width (mm)          = " << highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl 
+                                  << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
+                    }
+
+                    for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                    {
+                        RS_Entity* duplicatedEntity = highlightedEntity->clone();
+
+                        duplicatedEntity->setHighlightedEntityParent(highlightedEntity);
+
+                        duplicatedEntity->reparent(container);
+                        duplicatedEntity->setHighlighted(true);
+                        container->addEntity(duplicatedEntity);
+
+                        /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
+
+                        const double& gradientFactor { 1.25 * (double) (i + 1) / (double) numberOf_highlightedEntityDuplicates };
+
+                        duplicatedPen.setScreenWidth(25.0 * duplicatedPen_width * gradientFactor);
+
+                        /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
+                        const double& exponentialFactor { std::exp(-8.0 * gradientFactor) };
+
+                        duplicatedPen.setAlpha(exponentialFactor);
+
+                        duplicatedEntity->setPen(duplicatedPen);
+
+                        highlightedEntityDuplicates [i] = duplicatedEntity;
+                    }
+
+                    graphicView->redraw(RS2::RedrawDrawing);
+
+                    return;
+                }
+            }
+        }
+    }
+}
+
+
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -118,9 +243,23 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 
+    if (highlightedEntity != nullptr)
+    {
+        highlightedEntity->setHovered(false);
+
+        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+        {
+            container->removeEntity(highlightedEntityDuplicates.at(i));
+        }
+
+        highlightedEntity = nullptr;
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
+
     switch (getStatus()) {
     case Neutral:
         deleteSnapper();
+        highlightHoveredEntities(mouse);
         break;
     case Dragging:
         //v2 = graphicView->toGraph(e->x(), e->y());
@@ -313,7 +452,16 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
-                s.selectSingle(en);
+
+                if (en->getHighlightedEntityParent() != nullptr)
+                {
+                    s.selectSingle(en->getHighlightedEntityParent());
+                    highlightHoveredEntities(graphicView->toGraph(e->x(), e->y()));
+                }
+                else
+                {
+                    s.selectSingle(en);
+                }
 
                 RS_DIALOGFACTORY->updateSelectionWidget(
                             container->countSelected(),container->totalSelectedLength());

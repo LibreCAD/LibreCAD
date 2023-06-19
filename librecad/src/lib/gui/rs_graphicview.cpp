@@ -1031,7 +1031,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 			}
 		}
 
-		pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+        if (pen.getAlpha() == 1.0) pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
 	}
 	else
 	{
@@ -1058,13 +1058,12 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		// this entity is selected:
 		if (e->isSelected()) {
 			pen.setLineType(RS2::DotLine);
-            pen.setColor(m_colorData->selectedColor);
+			pen.setColor(m_colorData->selectedColor);
 		}
 
 		// this entity is highlighted:
-		if (e->isHighlighted()) {
-            pen.setColor(m_colorData->highlightedColor);
-		}
+		if (e->isHighlighted() || e->isHovered())
+			pen.setColor(m_colorData->selectedColor);
 	}
 
 	// deleting not drawing:

@@ -203,6 +203,16 @@ public:
     virtual void setHighlighted(bool on);
 	virtual bool isHighlighted() const;
 
+    virtual void setHovered(bool on)
+    {
+        hovered = on;
+    }
+
+    virtual bool isHovered() const
+    {
+        return hovered;
+    }
+
 	bool isLocked() const;
 
 	void undoStateChanged(bool undone) override;
@@ -558,6 +568,16 @@ m0 x + m1 y + m2 =0
 	 */
 	virtual bool isArcCircleLine() const;
 
+    void setHighlightedEntityParent(RS_Entity* parent)
+    {
+        highlightedEntityParent = parent;
+    }
+
+    RS_Entity* getHighlightedEntityParent() const
+    {
+        return highlightedEntityParent;
+    }
+
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.
 	RS_EntityContainer* parent = nullptr;
@@ -578,8 +598,12 @@ protected:
     //! auto updating enabled?
     bool updateEnabled;
 
+    bool hovered;
+
 private:
 	std::map<QString, QString> varList;
+
+    RS_Entity* highlightedEntityParent;
 };
 
 #endif

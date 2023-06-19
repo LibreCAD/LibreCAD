@@ -29,6 +29,9 @@
 
 #include <memory>
 
+
+#include <vector>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -59,6 +62,8 @@ public:
                      RS_GraphicView& graphicView);
 	~RS_ActionDefault() override;
 
+	void finish(bool /*updateTB*/ = true ) override{}
+
 	void init(int status=0) override;
 
 	void keyPressEvent(QKeyEvent* e) override;
@@ -79,6 +84,23 @@ protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
+
+
+    private:
+
+        static constexpr double minimumHoverTolerance =  1.0;
+
+        static constexpr double hoverToleranceFactor1 =  1.0;
+        static constexpr double hoverToleranceFactor2 = 10.0;
+
+        static constexpr size_t minimumNumberOf_highlightedEntityDuplicates = 10;
+
+        size_t numberOf_highlightedEntityDuplicates;
+
+        RS_Entity* highlightedEntity;
+        std::vector<RS_Entity*> highlightedEntityDuplicates;
+
+        void highlightHoveredEntities(const RS_Vector& currentMousePosition);
 
 };
 

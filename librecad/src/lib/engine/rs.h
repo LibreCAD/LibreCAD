@@ -117,9 +117,16 @@ public:
         FormatJWC            /**< JWC Format type */
     };
 
-    /**
-     * Entity types returned by the rtti() method
-     */
+    /*
+        Entity types returned by the rtti() method.
+
+        NOTE: Dated 2 January, 2022, by Melwyn Francis Carlo:
+              If adding newer 'EntityDim's to the EntityType enumeration, 
+              then make sure that it is added between 'EntityDimAligned' and 
+              'EntityDimLeader'. If you do not wish to do so, then update the 
+              'RS_ActionDefault::highlightHoveredEntities' function at the 
+              line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
+    */
     enum EntityType {
         EntityUnknown,      /**< Unknown */
         EntityContainer,    /**< Container */

@@ -608,7 +608,12 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
     default:
         break;
     }
-    QPen p(lpen.getColor(), RS_Math::round(lpen.getScreenWidth()),
+
+    QColor pColor { lpen.getColor() };
+
+    pColor.setAlphaF(pen.getAlpha());
+
+    QPen p(pColor, RS_Math::round(lpen.getScreenWidth()),
 		   rsToQtLineType(lpen.getLineType()));
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);

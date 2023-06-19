@@ -395,3 +395,16 @@ std::ostream& operator << (std::ostream& os, const RS_Insert& i) {
     return os;
 }
 
+void RS_Insert::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
+{
+    if ( ! (painter && view)) return;
+
+    double patternOffset = 0.0;
+
+    for (auto e : getEntityList())
+    {
+        e->setPen(getPen());
+        e->draw(painter, view, patternOffset);
+    }
+}
+
