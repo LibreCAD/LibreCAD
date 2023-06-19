@@ -205,7 +205,7 @@ void LC_ActionLayersExport::trigger()
 
     int currentExportLayerIndex = 0;
 
-    while (currentExportLayerIndex < layersToExport.size())
+    for (int currentExportLayerIndex = 0; currentExportLayerIndex < layersToExport.size(); currentExportLayerIndex++)
     {
         auto documentDeepCopy = std::make_unique<RS_Graphic>();
         documentDeepCopy->newDoc();
@@ -214,6 +214,7 @@ void LC_ActionLayersExport::trigger()
         ScopedLayerList duplicateLayersList = documentDeepCopy->getLayerList();
 
         QString modifiedFilePath;
+        QString copiedLayers;
 
         bool exportLayer0 = false;
 
@@ -233,6 +234,7 @@ void LC_ActionLayersExport::trigger()
                 RS_Layer *duplicateLayer = originalLayersList->find (layerName)->clone();
 
                 duplicateLayersList.add(duplicateLayer);
+                copiedLayers += (copiedLayers.isEmpty() ?"":" ") +  QString(R"("%1")").arg(layerName);
             }
         }
         /* Individualize all layers. */
@@ -243,6 +245,7 @@ void LC_ActionLayersExport::trigger()
             RS_Layer *duplicateLayer = originalLayersList->find (layersToExport.at (currentExportLayerIndex))->clone();
 
             duplicateLayersList.add(duplicateLayer);
+            copiedLayers = layersToExport.at(currentExportLayerIndex);
 
             /* Note that the QString::append() function causes a bug; hence the '+' overload operator. */
             modifiedFilePath = QDir::toNativeSeparators (
@@ -259,9 +262,8 @@ void LC_ActionLayersExport::trigger()
                 continue;
             QString entityLayerName = entity->getLayer()->getName();
             RS_Layer* copiedLayer = duplicateLayersList.find(entityLayerName);
-            if (copiedLayer == nullptr)
+            if (copiedLayer == nullptr || entityLayerName.compare("0") == 0 && !exportLayer0)
                 continue;
-            if (entityLayerName.compare("0") == 0 && !exportLayer0) continue;
 
             /* It does a 'new' internally. */
             RS_Entity *duplicateEntity = entity->clone();
@@ -273,15 +275,13 @@ void LC_ActionLayersExport::trigger()
         /* Saving. */
         documentDeepCopy->setGraphicView(graphicView);
 
-        const bool saveWasSuccessful = documentDeepCopy->saveAs(modifiedFilePath, result.fileType, true);
-        RS_DIALOGFACTORY->commandMessage(tr(R"(Saving layer "%1" as "%2" )")
-                                         .arg(layersToExport.at(currentExportLayerIndex))
-                                         .arg(modifiedFilePath));
+        bool saveWasSuccessful = documentDeepCopy->saveAs(modifiedFilePath, result.fileType, true);
 
-        currentExportLayerIndex++;
-
-        if (!saveWasSuccessful)
+        if (saveWasSuccessful)
         {
+            RS_DIALOGFACTORY->commandMessage(
+                tr(R"(Saving layer "%1" as "%2" )").arg(copiedLayers).arg(modifiedFilePath));
+        } else {
             RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionLayersExport::trigger: Error encountered while exporting layers");
             return;
         }
