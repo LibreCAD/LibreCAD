@@ -587,23 +587,23 @@ protected:
     RS_Vector maxV;
 
     //! Pointer to layer
-    RS_Layer* layer;
+    RS_Layer* layer = nullptr;
 
     //! Entity id
-    unsigned long int id;
+    unsigned long id = 0u;
 
     //! pen (attributes) for this entity
     RS_Pen pen;
 
     //! auto updating enabled?
-    bool updateEnabled;
+    bool updateEnabled = false;
 
-    bool hovered;
+    bool hovered =false;
 
 private:
-	std::map<QString, QString> varList;
+    std::map<QString, QString> varList;
 
-    RS_Entity* highlightedEntityParent;
+    RS_Entity* highlightedEntityParent = nullptr;
 };
 
 #endif

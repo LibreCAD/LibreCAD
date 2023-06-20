@@ -84,7 +84,7 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
         return nullptr;
     const QPointF mapped = event->pos();
     double distance = RS_MAXDOUBLE;
-    RS_Entity* entity = container->getNearestEntity(view.toGraph({mapped.x(), mapped.y()}), &distance);
+    RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
     return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
 }
 
@@ -606,7 +606,11 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    RS_Vector mouse = toGraph(e->position().x(), e->position().y());
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    RS_Vector mouse = toGraph(e->position());
+#else
+    RS_Vector mouse = toGraph(e->x(), e->y());
+#endif
 
     if (device == "Trackpad")
     {
@@ -790,12 +794,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     }
     redraw();
 
-    QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
-                                         e->position(),
-                                         Qt::NoButton, Qt::NoButton,
-                                         Qt::NoModifier);
-    eventHandler->mouseMoveEvent(event);
-    delete event;
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+    QMouseEvent event{QEvent::MouseMove, e->position(), Qt::NoButton, Qt::NoButton, Qt::NoModifier};
+#else
+    QMouseEvent event{QEvent::MouseMove, {e->x(), e->y}, Qt::NoButton, Qt::NoButton, Qt::NoModifier};
+#endif
+    eventHandler->mouseMoveEvent(&event);
 
     e->accept();
 }

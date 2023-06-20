@@ -1687,7 +1687,7 @@ double RS_GraphicView::toGuiDY(double d) const{
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(RS_Vector v) const{
+RS_Vector RS_GraphicView::toGraph(const RS_Vector& v) const{
 	return RS_Vector(toGraphX(RS_Math::round(v.x)),
 					 toGraphY(RS_Math::round(v.y)));
 }
@@ -1697,10 +1697,18 @@ RS_Vector RS_GraphicView::toGraph(RS_Vector v) const{
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(int x, int y) const{
-	return RS_Vector(toGraphX(x), toGraphY(y));
+RS_Vector RS_GraphicView::toGraph(const QPointF& position) const
+{
+    return toGraph(position.x(), position.y());
 }
 
+/**
+ * Translates two screen coordinates to a vector in real coordinates.
+ */
+RS_Vector RS_GraphicView::toGraph(int x, int y) const
+{
+    return RS_Vector(toGraphX(x), toGraphY(y));
+}
 
 /**
  * Translates a screen coordinate in X to a real coordinate X.
