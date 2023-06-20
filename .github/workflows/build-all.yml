@@ -294,15 +294,16 @@ jobs:
       - name: Upload latest pre-release
         uses: actions/upload-artifact@v3
         with:
-          prerelease: true
-          title: "Continuous Build"
+          retention-days: 2
           name: assets
           path: assets/LibreCAD*.*
 
       - uses: actions/upload-artifact@v3
         with:
 
-          prerelease: true
+    
+
+          retention-days: 2
           title: "Continuous Build"
           name: assets
           path: LICENSE
