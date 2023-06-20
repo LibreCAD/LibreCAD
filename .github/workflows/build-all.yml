@@ -300,10 +300,6 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-
-    
-
           retention-days: 2
-          title: "Continuous Build"
           name: assets
           path: LICENSE
