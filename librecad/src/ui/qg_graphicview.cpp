@@ -37,7 +37,6 @@
 
 #include "qg_graphicview.h"
 
-
 #include "qg_dialogfactory.h"
 #include "qg_scrollbar.h"
 #include "rs_actiondefault.h"
@@ -114,19 +113,31 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
 }
 }
 
-
+// Support auto-panning when the cursor is close to the view border
 struct QG_GraphicView::AutoPanData
 {
+    void start(double interval, QG_GraphicView &view)
+    {
+        m_delayCounter = 0;
+        panTimer = std::make_unique<QTimer>(&view);
+        panTimer->start(interval);
+        connect(panTimer.get(), &QTimer::timeout, &view, &QG_GraphicView::autoPanStep);
+    }
+
     std::unique_ptr<QTimer> panTimer;
 
     QPoint panOffset;
 
+    unsigned m_delayCounter = 0u;
+    // skip the first events, to avoid unintensional panning
+    const unsigned delayCounterMax = 10u;
     const double panOffsetMagnitude = 20.0;
 
     const double panTimerInterval_minimum = 20.0;
     const double panTimerInterval_maximum = 100.0;
 
-    RS_Vector probedAreaOffset = RS_Vector(50 /* pixels */, 50 /* pixels */);
+    // the sensitive border of the view
+    const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
 };
 
 
@@ -591,7 +602,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (container==NULL) {
+    if (container==nullptr) {
         return;
     }
 
@@ -792,7 +803,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
 void QG_GraphicView::keyPressEvent(QKeyEvent* e)
 {
-    if (container==NULL) {
+    if (container==nullptr) {
         return;
     }
 
@@ -850,7 +861,7 @@ void QG_GraphicView::adjustOffsetControls()
 
         running = true;
 
-        if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
+        if (container==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
             return;
         }
 
@@ -1237,9 +1248,7 @@ void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
     if (m_panData->panTimer != nullptr) {
         m_panData->panTimer->setInterval(panTimerInterval);
     } else {
-        m_panData->panTimer = std::make_unique<QTimer>(this);
-        connect(m_panData->panTimer.get(), &QTimer::timeout, this, &QG_GraphicView::autoPan);
-        m_panData->panTimer->start(panTimerInterval);
+        m_panData->start(panTimerInterval, *this);
     }
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
@@ -1304,9 +1313,14 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
     Auto-pans the CAD area.
     - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
-void QG_GraphicView::autoPan()
+void QG_GraphicView::autoPanStep()
 {
-    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, " Timer is ticking!");
+    // skip first steps to avoid unintensional panning
+    m_panData->m_delayCounter = std::min(++ m_panData->m_delayCounter, m_panData->delayCounterMax);
+    if (m_panData->m_delayCounter < m_panData->delayCounterMax)
+        return;
+
+    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
 
     zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }

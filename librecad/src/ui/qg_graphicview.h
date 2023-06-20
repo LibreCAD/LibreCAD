@@ -123,12 +123,11 @@ protected:
 	void resizeEvent(QResizeEvent* e) override;
 
     QList<QAction*> recent_actions;
+    void autoPanStep();
 
 private slots:
     void slotHScrolled(int value);
     void slotVScrolled(int value);
-
-    void autoPan();
 
 protected:
     //! Horizontal scrollbar.
