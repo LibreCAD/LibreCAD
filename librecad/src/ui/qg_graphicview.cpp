@@ -24,18 +24,22 @@
 **
 **********************************************************************/
 
+#include <cmath>
+#include <iostream>
 
 #include <QDebug>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMenu>
 #include <QNativeGestureEvent>
+#include <QPoint>
+#include <QTimer>
 
 #include "qg_graphicview.h"
 
+
 #include "qg_dialogfactory.h"
 #include "qg_scrollbar.h"
-
 #include "rs_actiondefault.h"
 #include "rs_actionmodifydelete.h"
 #include "rs_actionmodifyentity.h"
@@ -48,11 +52,16 @@
 #include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_painterqt.h"
 #include "rs_settings.h"
 
-#if (defined (_WIN32) || defined (_WIN64))
+#ifdef EMU_C99
+#include "emu_c99.h"
+#endif
+
+#if (defined (Q_OS_WIN32) || defined (Q_OS_WIN64))
     #define CURSOR_SIZE 16
 #else
     #define CURSOR_SIZE 15
@@ -105,6 +114,22 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
 }
 }
 
+
+struct QG_GraphicView::AutoPanData
+{
+    std::unique_ptr<QTimer> panTimer;
+
+    QPoint panOffset;
+
+    const double panOffsetMagnitude = 20.0;
+
+    const double panTimerInterval_minimum = 20.0;
+    const double panTimerInterval_maximum = 100.0;
+
+    RS_Vector probedAreaOffset = RS_Vector(50 /* pixels */, 50 /* pixels */);
+};
+
+
 /**
  * Constructor.
  */
@@ -118,6 +143,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
+    , m_panData{std::make_unique<AutoPanData>()}
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
@@ -421,6 +447,13 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {
+    if (isAutoPan(event)) {
+    startAutoPanTimer(event);
+    event->accept();
+    return;
+    }
+    m_panData->panTimer.reset();
+    // handle auto-panning
     event->accept();
     eventHandler->mouseMoveEvent(event);
 }
@@ -525,10 +558,12 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
+    // stop auto-panning
+    m_panData->panTimer.reset();
+
     eventHandler->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
-
 
 void QG_GraphicView::enterEvent(QEvent* e) {
     eventHandler->mouseEnterEvent();
@@ -1151,4 +1186,127 @@ void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
 {
     destroyMenu(activator);
     menus[activator] = menu;
+}
+
+void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
+{
+    if (event == nullptr)
+        return;
+    const RS_Vector cadArea_minCoord(0., 0.);
+    const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
+    const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
+                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+
+    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
+
+    const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
+    RS_Vector offset = mouseCoord - cadArea_centerPoint;
+    offset = {std::abs(offset.x) - cadArea_unprobed.width() / 2.,
+              std::abs(offset.y) - cadArea_unprobed.height() / 2.};
+    offset = {std::max(offset.x, 1.), std::max(offset.y, 1.)};
+
+    double panOffset_angle{cadArea_centerPoint.angleTo(mouseCoord)};
+
+    /* It would be better if the below value was calculated in the code that deals with resizing the CAD area. */
+    const double quarterAngle = cadArea_centerPoint.angleTo(cadArea_actual.upperRightCorner());
+
+    double percentageFactor = 1.;
+
+    if (((panOffset_angle > quarterAngle) && (panOffset_angle <= (M_PI - quarterAngle)))
+        || ((panOffset_angle > (quarterAngle + M_PI))
+            && (panOffset_angle <= (M_PI + M_PI - quarterAngle)))) {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).y)
+                            - (cadArea_unprobed.height() / 2.0))
+                           / ((cadArea_actual.height() / 2.0) - (cadArea_unprobed.height() / 2.0));
+    } else {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).x)
+                            - (cadArea_unprobed.width() / 2.0))
+                           / ((cadArea_actual.width() / 2.0) - (cadArea_unprobed.width() / 2.0));
+    }
+
+    const double panTimerInterval{
+        m_panData->panTimerInterval_minimum
+        + ((m_panData->panTimerInterval_maximum - m_panData->panTimerInterval_minimum)
+           * (1.0 - percentageFactor))};
+
+    offset = RS_Vector::polar(offset.magnitude(), M_PI - panOffset_angle);
+    m_panData->panOffset = {static_cast<int>(offset.x), static_cast<int>(offset.y)};
+
+    if (m_panData->panTimer != nullptr) {
+        m_panData->panTimer->setInterval(panTimerInterval);
+    } else {
+        m_panData->panTimer = std::make_unique<QTimer>(this);
+        connect(m_panData->panTimer.get(), &QTimer::timeout, this, &QG_GraphicView::autoPan);
+        m_panData->panTimer->start(panTimerInterval);
+    }
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
+        std::cout << " CAD area centre point                = " << cadArea_centerPoint << std::endl
+                  << " Actual CAD area quarter angle (deg)  = " << quarterAngle * 180.0 / M_PI
+                  << std::endl
+                  << " Percentage factor                    = " << percentageFactor << std::endl
+                  << " Pan offset angle (radians)           = " << panOffset_angle << std::endl
+                  << " Pan offset angle (degrees)           = " << panOffset_angle * 180.0 / M_PI
+                  << std::endl
+                  << " Pan offset vector                    = " << m_panData->panOffset.x() << ", "
+                  << m_panData->panOffset.y()
+                  << std::endl
+                  //<< " Pan timer interval (ms)              = " << m_panData->panTimer->interfac
+                  << std::endl
+                  << " Mouse (cursor) position (adjusted)   = " << mouseCoord << std::endl
+                  << " Mouse position w.r.t. centre point   = " << mouseCoord - cadArea_centerPoint
+                  << std::endl
+                  << std::endl
+                  << std::endl;
+    }
+}
+
+
+bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
+{
+    if (event == nullptr)
+        return false;
+    RS_SETTINGS->beginGroupGuard("/Appearance");
+    const bool autopanEnabled = (bool) RS_SETTINGS->readNumEntry("/Autopanning", 0);
+
+    if (!autopanEnabled)
+        return false;
+
+    const RS_Vector cadArea_minCoord(0., 0.);
+
+    const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
+
+    const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
+
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
+                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+    if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)
+        return false;
+
+    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
+        std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/"
+                  << cadArea_unprobed.height() << std::endl
+                  << " Actual   CAD area width and height = " << cadArea_actual.width() << "/"
+                  << cadArea_actual.height() << std::endl
+                  << " Mouse (cursor) position            = " << mouseCoord << std::endl
+                  << std::endl;
+    }
+
+    return cadArea_actual.inArea(mouseCoord) && !cadArea_unprobed.inArea(mouseCoord);
+}
+
+
+/*
+    Auto-pans the CAD area.
+    - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void QG_GraphicView::autoPan()
+{
+    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, " Timer is ticking!");
+
+    zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }
