@@ -292,12 +292,18 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Upload latest pre-release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: actions/upload-artifact@v3
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
           prerelease: true
           title: "Continuous Build"
-          files: |
-            assets/LibreCAD*.*
-            LICENSE
+          name: assets
+          path: assets/LibreCAD*.*
+
+      - uses: actions/upload-artifact@v3
+        with:
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Continuous Build"
+          name: assets
+          path: LICENSE
