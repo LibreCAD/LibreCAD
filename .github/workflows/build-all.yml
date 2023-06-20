@@ -294,7 +294,6 @@ jobs:
       - name: Upload latest pre-release
         uses: actions/upload-artifact@v3
         with:
-          automatic_release_tag: "latest"
           prerelease: true
           title: "Continuous Build"
           name: assets
@@ -302,7 +301,7 @@ jobs:
 
       - uses: actions/upload-artifact@v3
         with:
-          automatic_release_tag: "latest"
+
           prerelease: true
           title: "Continuous Build"
           name: assets
