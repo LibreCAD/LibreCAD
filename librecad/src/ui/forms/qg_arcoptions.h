@@ -40,7 +40,7 @@ class QG_ArcOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ArcOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_ArcOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     virtual ~QG_ArcOptions();
 
 public slots:
