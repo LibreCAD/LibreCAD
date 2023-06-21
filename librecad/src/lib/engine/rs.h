@@ -619,8 +619,10 @@ public:
     /**
      * Axis specification for zooming actions.
      */
-    enum Axis {
-        OnlyX, OnlyY, Both
+    enum Axis : unsigned short {
+        OnlyX = 0,
+        OnlyY,
+        Both
     };
 
     /**

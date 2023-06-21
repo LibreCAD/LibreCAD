@@ -68,6 +68,22 @@
 
 namespace {
 
+
+/*
+         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+         *
+         * Benchmarks:
+         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+         * 1.175 - still a bit choppy
+         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+         * 1.137 - seems to work well for me
+         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+         * 1.000 - goes nowhere. :)
+         */
+constexpr double zoomFactor = 1.137;
+
+
 /**
  * @brief snapEntity find the closest entity
  * @param QG_GraphicView& view - the graphic view
@@ -158,7 +174,7 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    if (doc)
+    if (doc != nullptr)
     {
         setContainer(doc);
         doc->setGraphicView(this);
@@ -229,9 +245,9 @@ void QG_GraphicView::setBackground(const RS_Color& bg) {
 /**
  * Sets the mouse cursor to the given type.
  */
-void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
+void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 
-    switch (c) {
+    switch (cursorType) {
     default:
     case RS2::ArrowCursor:
         setCursor(Qt::ArrowCursor);
@@ -720,7 +736,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         bool inv_v = (RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0) == 1);
         RS_SETTINGS->endGroup();
 
-        int delta;
+        int delta = 0;
 
 		switch(direction){
 		case RS2::Left:
@@ -739,128 +755,85 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     // zoom in / out:
     else if (e->modifiers()==0) {
+        auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
+        bool invZoom = RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1;
 
-        /*
-         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
-         *
-         * Benchmarks:
-         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
-         * 1.175 - still a bit choppy
-         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
-         * 1.137 - seems to work well for me
-         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
-         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
-         * 1.000 - goes nowhere. :)
-         */
-		const double zoomFactor=1.137;
+        RS2::ZoomDirection zoomDirection = ((e->angleDelta().y() > 0) != invZoom) ? RS2::In : RS2::Out;
 
-		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
+        RS_Vector& zoomCenter = mouse;
 
-		RS_SETTINGS->beginGroup("/Defaults");
-		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
-		RS_SETTINGS->endGroup();
-
-        if ((e->angleDelta().y()>0 && !invZoom) || (e->angleDelta().y()<0 && invZoom)) {
-			const double zoomInOvershoot=1.20;
-
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomInOvershoot);
-				effect+=mainViewCenter;
-			}
-
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::In, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
-		} else {
-			const double zoomOutUndershoot=0.30;
-
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomOutUndershoot);
-				effect+=mainViewCenter;
-			}
-
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::Out, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
-		}
+        setCurrentAction(new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter, zoomFactor));
     }
     redraw();
 
-
+    QMouseEvent event
+    {
+        QEvent::MouseMove,
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
-    QMouseEvent event{QEvent::MouseMove, e->position(), Qt::NoButton, Qt::NoButton, Qt::NoModifier};
+            e->position(),
 #else
-    QMouseEvent event{QEvent::MouseMove, {e->x(), e->y}, Qt::NoButton, Qt::NoButton, Qt::NoModifier};
+            {e->x(), e->y},
 #endif
+            Qt::NoButton, Qt::NoButton, Qt::NoModifier
+    };
     eventHandler->mouseMoveEvent(&event);
 
     e->accept();
 }
 
 
-void QG_GraphicView::keyPressEvent(QKeyEvent* e)
-{
-    if (container==nullptr) {
-        return;
+    void QG_GraphicView::keyPressEvent(QKeyEvent * e)
+    {
+        if (container == nullptr) {
+            return;
+        }
+
+        bool scroll = false;
+        RS2::Direction direction = RS2::Up;
+
+        switch (e->key()) {
+        case Qt::Key_Left:
+            scroll = true;
+            direction = RS2::Right;
+            break;
+        case Qt::Key_Right:
+            scroll = true;
+            direction = RS2::Left;
+            break;
+        case Qt::Key_Up:
+            scroll = true;
+            direction = RS2::Up;
+            break;
+        case Qt::Key_Down:
+            scroll = true;
+            direction = RS2::Down;
+            break;
+        default:
+            scroll = false;
+            break;
+        }
+
+        if (scroll) {
+            setCurrentAction(new RS_ActionZoomScroll(direction, *container, *this));
+        }
+        eventHandler->keyPressEvent(e);
     }
 
-    bool scroll = false;
-    RS2::Direction direction = RS2::Up;
-
-    switch (e->key()) {
-    case Qt::Key_Left:
-        scroll = true;
-        direction = RS2::Right;
-        break;
-    case Qt::Key_Right:
-        scroll = true;
-        direction = RS2::Left;
-        break;
-    case Qt::Key_Up:
-        scroll = true;
-        direction = RS2::Up;
-        break;
-    case Qt::Key_Down:
-        scroll = true;
-        direction = RS2::Down;
-        break;
-    default:
-        scroll = false;
-        break;
+    void QG_GraphicView::keyReleaseEvent(QKeyEvent * e)
+    {
+        eventHandler->keyReleaseEvent(e);
     }
 
-    if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction,
-                         *container, *this));
-    }
-    eventHandler->keyPressEvent(e);
-}
-
-
-void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
-{
-    eventHandler->keyReleaseEvent(e);
-}
-
-/**
+    /**
  * Called whenever the graphic view has changed.
  * Adjusts the scrollbar ranges / steps.
  */
-void QG_GraphicView::adjustOffsetControls()
-{
-    if (scrollbars)
+    void QG_GraphicView::adjustOffsetControls()
     {
-        static bool running = false;
+        if (scrollbars) {
+            static bool running = false;
 
-        if (running) {
+            if (running) {
                 return;
         }
 
