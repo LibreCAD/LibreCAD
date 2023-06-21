@@ -520,7 +520,11 @@ bool QG_GraphicView::event(QEvent *event)
  */
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         switch (e->deviceType()) {
+#else
+        switch (e->device()) {
+#endif
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {

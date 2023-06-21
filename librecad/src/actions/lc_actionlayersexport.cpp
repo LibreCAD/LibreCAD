@@ -262,7 +262,7 @@ void LC_ActionLayersExport::trigger()
                 continue;
             QString entityLayerName = entity->getLayer()->getName();
             RS_Layer* copiedLayer = duplicateLayersList.find(entityLayerName);
-            if (copiedLayer == nullptr || entityLayerName.compare("0") == 0 && !exportLayer0)
+            if (copiedLayer == nullptr || (entityLayerName.compare("0") == 0 && !exportLayer0))
                 continue;
 
             /* It does a 'new' internally. */
