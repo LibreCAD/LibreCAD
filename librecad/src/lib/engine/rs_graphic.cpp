@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_graphic.h"
-
 #include <iostream>
 #include <cmath>
 
 #include <QDir>
 
+#include "rs_graphic.h"
+
+#include "dxf_format.h"
+#include "lc_defaults.h"
 #include "rs_block.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -38,8 +40,6 @@
 #include "rs_layer.h"
 #include "rs_math.h"
 #include "rs_settings.h"
-#include "dxf_format.h"
-#include "lc_defaults.h"
 #include "rs_units.h"
 
 
@@ -352,6 +352,7 @@ bool RS_Graphic::save(bool isAutoSave)
             }
 
 			actualName = filename;
+            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
             if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
                 BackupDrawingFile(filename);
         }

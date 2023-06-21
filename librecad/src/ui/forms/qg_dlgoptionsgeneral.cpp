@@ -26,6 +26,7 @@
 #include "qg_dlgoptionsgeneral.h"
 
 #include <QMessageBox>
+#include <qc_applicationwindow.h>
 #include <QColorDialog>
 
 #include "qg_filedialog.h"
@@ -56,6 +57,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
+    connect(cbAutoBackup, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 }
 
 /*
@@ -432,4 +435,11 @@ void QG_DlgOptionsGeneral::setLibraryPath()
         lePathLibrary->setText(QDir::toNativeSeparators(dir));
         setRestartNeeded();
     }
+}
+
+void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
+{
+    bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    appWindow->startAutoSave(allowBackup);
 }

@@ -124,7 +124,6 @@
  */
 QC_ApplicationWindow::QC_ApplicationWindow()
     : ag_manager(new LC_ActionGroupManager(this))
-    , autosaveTimer(nullptr)
     , actionHandler(new QG_ActionHandler(this))
     , current_subwindow(nullptr)
     , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
@@ -346,14 +345,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
         commandWidget->leCommand->readCommandFile(command_file);
 
     // Activate autosave timer
-    if (settings.value("Defaults/AutoBackupDocument", 1).toBool())
-    {
-        autosaveTimer = new QTimer(this);
-        autosaveTimer->setObjectName("autosave");
-        connect(autosaveTimer, SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
-        int ms = 60000 * settings.value("Defaults/AutoSaveTime", 5).toInt();
-        autosaveTimer->start(ms);
-    }
+    bool allowAutoSave = settings.value("Defaults/AutoBackupDocument", 1).toBool();
+    startAutoSave(allowAutoSave);
 
     // Disable menu and toolbar items
     //emit windowsChanged(false);
@@ -363,6 +356,28 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     loadPlugins();
 
     statusBar()->showMessage(qApp->applicationName() + " Ready", 2000);
+}
+
+void QC_ApplicationWindow::startAutoSave(bool startAutoBackup)
+{
+    if (startAutoBackup)
+    {
+        if (m_autosaveTimer == nullptr) {
+            m_autosaveTimer = std::make_unique<QTimer>(this);
+            m_autosaveTimer->setObjectName("autosave");
+            connect(m_autosaveTimer.get(), SIGNAL(timeout()), this, SLOT(slotFileAutoSave()));
+        }
+        if (!m_autosaveTimer->isActive()) {
+            // autosaving has been turned on. Make a backup immediately
+            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
+            RS_SETTINGS->writeEntry("/AutoBackupDocument", 1);
+            slotFileAutoSave();
+            int ms = 60000 * RS_SETTINGS->readNumEntry("AutoSaveTime", 5);
+            m_autosaveTimer->start(ms);
+        }
+    } else {
+        m_autosaveTimer.reset();
+    }
 }
 
 /**
@@ -491,12 +506,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			if (w->getGraphicView()->isDraftMode())
 				w->setWindowTitle(w->windowTitle() + " [" + tr("Draft Mode") + "]");
 
-			if (autosaveTimer && !autosaveTimer->isActive())
-			{
-				RS_SETTINGS->beginGroup("/Defaults");
-				autosaveTimer->start(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5) * 60 * 1000);
-				RS_SETTINGS->endGroup();
-			}
+            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
+            bool autoBackup = RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1) == 1;
+            startAutoSave(autoBackup);
 		}
 		else {
 			msg = tr("Cannot save the file ") +
@@ -1945,7 +1957,14 @@ bool QC_ApplicationWindow::slotFileSaveAll()
  * Autosave.
  */
 void QC_ApplicationWindow::slotFileAutoSave() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave()");
+    RS_DEBUG->print("QC_ApplicationWindow::slotFileAutoSave(): begin");
+
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
+    if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1) == 0) {
+        RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "QC_ApplicationWindow::%s: /Defaults/AutoBackupDocument is disabled\n", __func__);
+        startAutoSave(false);
+        return;
+    }
 
     statusBar()->showMessage(tr("Auto-saving drawing..."), 2000);
 
@@ -1958,7 +1977,7 @@ void QC_ApplicationWindow::slotFileAutoSave() {
             statusBar()->showMessage(tr("Auto-saved drawing"), 2000);
         } else {
             // error
-            autosaveTimer->stop();
+            m_autosaveTimer->stop();
             QMessageBox::information(this, QMessageBox::tr("Warning"),
                                      tr("Cannot auto-save the file\n%1\nPlease "
                                         "check the permissions.\n"

@@ -300,7 +300,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     this->layerList = layerList;
     this->showByBlock = showByBlock;
-    if (layerList != NULL) {
+    if (layerList != nullptr) {
         this->layerList->setLayerWitget(this);
     }
     update();
@@ -366,8 +366,8 @@ void QG_LayerWidget::update() {
         return;
     }
 
-    if (!lastLayer) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LayerWidget::update: nullptr lastLayer");
+    if (lastLayer == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr lastLayer");
         lastLayer = activeLayer;
     }
 
@@ -381,7 +381,7 @@ void QG_LayerWidget::restoreSelections() {
 
     QItemSelectionModel* selectionModel = layerView->selectionModel();
 
-    for (auto layer: *layerList) {
+    for (auto* layer: *layerList) {
         if (!layer) continue;
         if (!layer->isVisibleInLayerList()) continue;
         if (!layer->isSelectedInLayerList()) continue;

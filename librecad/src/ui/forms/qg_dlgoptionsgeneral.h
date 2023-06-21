@@ -46,6 +46,7 @@ public:
 public slots:
     virtual void setRestartNeeded();
     virtual void ok();
+    void onAutoBackupChanged(int state);
 
 protected slots:
     void languageChange();

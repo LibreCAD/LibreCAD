@@ -312,6 +312,9 @@ public:
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
 
+    // Auto-save
+    void startAutoSave(bool enabled);
+
 
 protected:
     void closeEvent(QCloseEvent*) override;
@@ -357,7 +360,7 @@ private:
 
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
-    QTimer *autosaveTimer {nullptr};
+    std::unique_ptr<QTimer> m_autosaveTimer;
 
     QG_ActionHandler* actionHandler {nullptr};
 
