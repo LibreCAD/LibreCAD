@@ -24,21 +24,43 @@
 **
 **********************************************************************/
 
-#include<QAction>
+#include <QAction>
+#include <QList>
 #include <QMouseEvent>
+
 #include "rs_actionmodifyround.h"
+
+#include "rs_commandevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 namespace{
-auto eType={ RS2::EntityLine , RS2::EntityPolyline , RS2::EntityArc ,
-                                           RS2::EntityCircle , RS2::EntityEllipse , RS2::EntitySpline};
+// supported entity types for fillet
+EntityTypeList eType = {{RS2::EntityLine,
+                         RS2::EntityPolyline,
+                         RS2::EntityArc,
+                         RS2::EntityCircle,
+                         RS2::EntityEllipse,
+                         RS2::EntitySpline}};
+
+// Whether the point is on an endPoint of the entity
+bool atEndPoint(RS_Entity &entity, const RS_Vector &point)
+{
+    double distance = 1.;
+    RS_Vector endPoint;
+    entity.getNearestEndpoint(point, &distance);
+    return distance < RS_TOLERANCE;
+}
+
+bool atEndPoint(RS_Entity &entity1, RS_Entity &entity2, const RS_Vector &point)
+{
+    return atEndPoint(entity1, point) || atEndPoint(entity2, point);
+}
 }
 
 struct RS_ActionModifyRound::Points {
@@ -56,7 +78,7 @@ RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
 		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetEntity1)
 {
-	actionType=RS2::ActionModifyRound;
+    setActionType(RS2::ActionModifyRound);
 }
 
 RS_ActionModifyRound::~RS_ActionModifyRound() = default;
@@ -69,6 +91,31 @@ void RS_ActionModifyRound::init(int status) {
 }
 
 
+/*
+    Removes the old fillet, if it exists.
+
+    - by Melwyn Francis Carlo.
+*/
+bool RS_ActionModifyRound::removeOldFillet(RS_Entity* e, const bool& isPolyline)
+{
+    if (e == nullptr || e->rtti() != RS2::EntityArc || entity1 == nullptr || entity2 == nullptr)
+        return false;
+
+    auto isChained = [this](const RS_Vector &point) {
+        return atEndPoint(*entity1, *entity2, point);
+    };
+    std::vector<RS_Vector> endPoints = {e->getStartpoint(), e->getEndpoint()};
+
+    bool chained = std::all_of(endPoints.begin(), endPoints.end(), isChained);
+    if (!chained)
+        return false;
+
+    if (!isPolyline)
+        container->removeEntity(e);
+
+    return true;
+}
+
 
 void RS_ActionModifyRound::trigger() {
 
@@ -78,6 +125,41 @@ void RS_ActionModifyRound::trigger() {
             entity2 && entity2->isAtomic()) {
 
         deletePreview();
+
+        bool foundPolyline = false;
+
+        if ((entity1->getParent() != nullptr) && (entity2->getParent() != nullptr))
+        {
+            if ((entity1->getParent()->rtti() == RS2::EntityPolyline) 
+            &&  (entity2->getParent()->rtti() == RS2::EntityPolyline) 
+            &&  (entity1->getParent() == entity2->getParent()))
+            {
+                foundPolyline = true;
+
+                for (auto* e : entity1->getParent()->getEntityList())
+                {
+                    if ((e != entity1) && (e != entity2))
+                    {
+                        if (removeOldFillet(e, foundPolyline))
+                        {
+                            entity1->getParent()->removeEntity(e);
+                            break;
+                        }
+                    }
+                }
+            }
+
+            if (!foundPolyline) {
+                for (auto* e : graphicView->getContainer()->getEntityList())
+                {
+                    if ((e != entity1) && (e != entity2))
+                    {
+                        if (removeOldFillet(e, foundPolyline))
+                            break;
+                    }
+                }
+            }
+        }
 
         RS_Modification m(*container, graphicView);
 		m.round(pPoints->coord2,

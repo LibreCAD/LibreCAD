@@ -464,8 +464,7 @@ bool RS_EntityContainer::removeEntity(RS_Entity* entity) {
     //RLZ TODO: in Q3PtrList if 'entity' is nullptr remove the current item-> at.(entIdx)
     //    and sets 'entIdx' in next() or last() if 'entity' is the last item in the list.
     //    in LibreCAD is never called with nullptr
-    bool ret;
-    ret = entities.removeOne(entity);
+    bool ret = entities.removeOne(entity);
 
     if (autoDelete && ret) {
         delete entity;

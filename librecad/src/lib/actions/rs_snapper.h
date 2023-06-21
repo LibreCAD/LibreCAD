@@ -95,7 +95,7 @@ struct RS_SnapMode {
     static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings
 };
 
-typedef std::list<RS2::EntityType> EntityTypeList;
+using EntityTypeList = std::list<RS2::EntityType>;
 
 /**
  * This class is used for snapping functions in a graphic view.

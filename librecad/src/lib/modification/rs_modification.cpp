@@ -2858,6 +2858,8 @@ bool RS_Modification::round(const RS_Vector& coord,
     RS_Entity* par1 = creation.createParallel(coord, data.radius, 1, entity1);
     RS_Entity* par2 = creation.createParallel(coord, data.radius, 1, entity2);
 
+    if ((par1 == nullptr) || (par2 == nullptr)) return false;
+
     RS_VectorSolutions sol2 =
         RS_Information::getIntersection(entity1, entity2, false);
 
