@@ -240,7 +240,7 @@ void LC_ActionLayersExport::trigger()
         /* Individualize all layers. */
         else
         {
-            if (layersToExport.at (currentExportLayerIndex).compare("0") == 0) exportLayer0 = true;
+            if (layersToExport.at(currentExportLayerIndex).compare("0") == 0) exportLayer0 = true;
 
             RS_Layer *duplicateLayer = originalLayersList->find (layersToExport.at (currentExportLayerIndex))->clone();
 

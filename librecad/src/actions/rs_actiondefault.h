@@ -80,6 +80,10 @@ public:
 	void updateMouseCursor() override;
 //    void resume() override;
 
+    // clear temporary entities for highlighting
+    void clearHighLighting(RS_Entity* entity);
+    const std::vector<RS_Entity*>& getHighLightingDuplicates() const;
+
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
