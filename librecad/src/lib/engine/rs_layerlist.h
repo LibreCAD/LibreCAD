@@ -85,6 +85,10 @@ public:
     void freezeAll(bool freeze);
     void lockAll(bool lock);
 
+    bool get_isDisabled();
+    bool get_wasDisabled();
+    void detect_entire_layerlist_disabled();
+
     //! sets the layerWidget pointer in RS_LayerListClass
     void setLayerWitget(QG_LayerWidget * lw) {
         layerWidget=lw;
@@ -135,7 +139,11 @@ private:
     //! Currently active layer
     RS_Layer *activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
+
     bool modified = false;
+
+    bool isDisabled = false;
+    bool wasDisabled = false;
 };
 
 #endif
