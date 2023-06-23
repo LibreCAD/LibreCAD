@@ -47,6 +47,21 @@ struct RS_ActionDefault::Points {
 	RS_Vector v2;
 };
 
+namespace {
+
+// snap angle tolerance in degrees
+constexpr double SnapAngle_Tolerance = 15.;
+
+// Glowing effects on Mouse hover
+constexpr double minimumHoverTolerance =  1.0;
+
+constexpr double hoverToleranceFactor1 =  1.0;
+constexpr double hoverToleranceFactor2 = 10.0;
+
+constexpr size_t minHighLightDuplicates = 4;
+constexpr size_t maxHighLightDuplicates = 20;
+}
+
 /**
  * Constructor.
  */
@@ -56,11 +71,10 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 								container, graphicView)
 	, pPoints(std::make_unique<Points>())
 	, restrBak(RS2::RestrictNothing)
-    , highlightedEntity(nullptr)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
-	actionType=RS2::ActionDefault;
+    setActionType(RS2::ActionDefault);
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -120,7 +134,8 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 */
 void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePosition)
 {
-    for (auto entity : *graphicView->getContainer())
+    double screenTolerance = graphicView->toGraphDX( 0.01*std::min(graphicView->getWidth(), graphicView->getHeight()));
+    for (auto* entity : *graphicView->getContainer())
     {
         if (entity != nullptr)
         {
@@ -132,10 +147,11 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                 const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
 
-                const double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance)) 
+                double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                                      ? minimumHoverTolerance 
                                                      : hoverTolerance;
 
+                hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
                 bool isPointOnEntity = false;
 
                 if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader)) 
@@ -162,7 +178,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     {
                         highlightedEntity->setHovered(false);
 
-                        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                        for (unsigned int i = 0; i < nHighLightDuplicates; i++)
                         {
                             container->removeEntity(highlightedEntityDuplicates.at(i));
                         }
@@ -180,26 +196,25 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
                     if (duplicatedPen_width < 1.0) duplicatedPen_width = 1.0;
 
-                    numberOf_highlightedEntityDuplicates = 2.0 * zoomFactor;
+                    nHighLightDuplicates = 2.0 * zoomFactor;
+                    std::cout<<__func__<<": line "<<__LINE__<<" : nHighLightDuplicates="<<nHighLightDuplicates<<std::endl;
 
-                    if (numberOf_highlightedEntityDuplicates < minimumNumberOf_highlightedEntityDuplicates)
-                    {
-                        numberOf_highlightedEntityDuplicates = minimumNumberOf_highlightedEntityDuplicates;
-                    }
+                    nHighLightDuplicates = std::max(nHighLightDuplicates, minHighLightDuplicates);
+                    nHighLightDuplicates = std::min(nHighLightDuplicates, maxHighLightDuplicates);
 
-                    highlightedEntityDuplicates.resize(numberOf_highlightedEntityDuplicates);
+                    highlightedEntityDuplicates.resize(nHighLightDuplicates);
 
                     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
                     {
                         DEBUG_HEADER
 
                         std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl 
-                                  << " Number of duplicate entities       = " << numberOf_highlightedEntityDuplicates << std::endl 
+                                  << " Number of duplicate entities       = " << nHighLightDuplicates << std::endl
                                   << " Duplicated pen width (mm)          = " << highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl 
                                   << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
                     }
 
-                    for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+                    for (unsigned int i = 0; i < nHighLightDuplicates; i++)
                     {
                         RS_Entity* duplicatedEntity = highlightedEntity->clone();
 
@@ -211,7 +226,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                         /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
 
-                        const double& gradientFactor { 1.25 * (double) (i + 1) / (double) numberOf_highlightedEntityDuplicates };
+                        const double& gradientFactor { 1.25 * (double) (i + 1) / (double) nHighLightDuplicates };
 
                         duplicatedPen.setScreenWidth(25.0 * duplicatedPen_width * gradientFactor);
 
@@ -234,7 +249,6 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
     }
 }
 
-
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -246,7 +260,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
     {
         highlightedEntity->setHovered(false);
 
-        for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+        for (unsigned int i = 0; i < nHighLightDuplicates; i++)
         {
             container->removeEntity(highlightedEntityDuplicates.at(i));
         }
@@ -301,7 +315,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1, SnapAngle_Tolerance);
             pPoints->v2 = mouse;
         }
 
@@ -323,7 +337,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1, SnapAngle_Tolerance);
             pPoints->v2 = mouse;
         }
 
@@ -390,7 +404,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case Moving: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, SnapAngle_Tolerance);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
@@ -410,7 +424,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case MovingRef: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, SnapAngle_Tolerance);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
@@ -570,4 +584,23 @@ void RS_ActionDefault::updateMouseCursor() {
     }
 }
 
+
+const std::vector<RS_Entity*>& RS_ActionDefault::getHighLightingDuplicates() const
+{
+    return highlightedEntityDuplicates;
+}
+
+void RS_ActionDefault::clearHighLighting(RS_Entity* entity)
+{
+    if (highlightedEntity!=nullptr && highlightedEntity->getHighlightedEntityParent() == entity)
+        highlightedEntity=nullptr;
+    for (unsigned int i = 0; i < nHighLightDuplicates; i++)
+    {
+        if (highlightedEntityDuplicates.at(i) != nullptr
+                && highlightedEntityDuplicates.at(i)->getHighlightedEntityParent() == entity)
+            container->removeEntity(highlightedEntityDuplicates.at(i));
+    }
+
+    graphicView->redraw(RS2::RedrawDrawing);
+}
 // EOF

@@ -101,7 +101,38 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
     const QPointF mapped = event->pos();
     double distance = RS_MAXDOUBLE;
     RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
+
+    // Avoid using temporary entities for highlighting
+    while(entity != nullptr && entity->getHighlightedEntityParent() != nullptr)
+        entity = entity->getHighlightedEntityParent();
+
     return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+}
+
+void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
+{
+    RS_EntityContainer* container = view.getContainer();
+    if (entity == nullptr || container == nullptr)
+        return;
+    auto* action = new RS_ActionModifyEntity(*container, view);
+    if (action == nullptr)
+        return;
+    action->setEntity(entity);
+    view.setCurrentAction(action);
+    action->trigger();
+    action->finish(false);
+
+    //container->removeEntity(entity);
+    auto* doc = dynamic_cast<RS_Document*>(container);
+    if (doc != nullptr)
+        doc->startUndoCycle();
+    // delete any temporary highlighting duplicates of the original
+    auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
+    if (defaultAction != nullptr)
+    {
+        defaultAction->clearHighLighting(entity);
+    }
+    doc->endUndoCycle();
 }
 
 // Show the entity property dialog on the closest entity in range
@@ -113,19 +144,7 @@ void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
     while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
         entity = entity->getParent();
 
-    // Cursor selection range CURSOR_SIZE
-    if (entity != nullptr) {
-        RS_EntityContainer* container = view.getContainer();
-        if (container==nullptr)
-            return;
-        auto* action = new RS_ActionModifyEntity(*container, view);
-        RS_EventHandler* eventHandler = view.getEventHandler();
-        if (eventHandler != nullptr)
-            eventHandler->setCurrentAction(action);
-        action->setEntity(entity);
-        action->trigger();
-        action->finish(false);
-    }
+    launchEditProperty(view, entity);
 }
 }
 
@@ -458,26 +477,20 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     return;
     if (container==nullptr)
         return;
-    auto* editPropertyAction = new RS_ActionModifyEntity(*container, *this);
-    if (editPropertyAction == nullptr)
-    return;
-    editPropertyAction->setEntity(entity);
     auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
                                tr("Edit Properties"), &contextMenu);
     contextMenu.addAction(action);
-    connect(action, &QAction::triggered, this, [this, editPropertyAction](){
-        getEventHandler()->setCurrentAction(editPropertyAction);
-        editPropertyAction->trigger();
-        editPropertyAction->finish(false);
+    connect(action, &QAction::triggered, this, [this, entity](){
+        launchEditProperty(*this, entity);
     });
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {
     if (isAutoPan(event)) {
-    startAutoPanTimer(event);
-    event->accept();
-    return;
+        startAutoPanTimer(event);
+        event->accept();
+        return;
     }
     m_panData->panTimer.reset();
     // handle auto-panning
@@ -776,7 +789,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
             e->position(),
 #else
-            {e->x(), e->y},
+            QPointF{e->x(), e->y},
 #endif
             Qt::NoButton, Qt::NoButton, Qt::NoModifier
     };
