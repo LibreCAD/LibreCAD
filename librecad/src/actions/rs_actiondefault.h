@@ -92,16 +92,9 @@ protected:
 
     private:
 
-        static constexpr double minimumHoverTolerance =  1.0;
+        size_t nHighLightDuplicates;
 
-        static constexpr double hoverToleranceFactor1 =  1.0;
-        static constexpr double hoverToleranceFactor2 = 10.0;
-
-        static constexpr size_t minimumNumberOf_highlightedEntityDuplicates = 10;
-
-        size_t numberOf_highlightedEntityDuplicates;
-
-        RS_Entity* highlightedEntity;
+        RS_Entity* highlightedEntity = nullptr;
         std::vector<RS_Entity*> highlightedEntityDuplicates;
 
         void highlightHoveredEntities(const RS_Vector& currentMousePosition);
