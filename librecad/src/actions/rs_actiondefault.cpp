@@ -60,6 +60,7 @@ constexpr double hoverToleranceFactor2 = 10.0;
 
 constexpr size_t minHighLightDuplicates = 4;
 constexpr size_t maxHighLightDuplicates = 20;
+
 }
 
 /**
@@ -586,4 +587,23 @@ void RS_ActionDefault::updateMouseCursor() {
     }
 }
 
+
+const std::vector<RS_Entity*>& RS_ActionDefault::getHighLightingDuplicates() const
+{
+    return highlightedEntityDuplicates;
+}
+
+void RS_ActionDefault::clearHighLighting(RS_Entity* entity)
+{
+    if (highlightedEntity!=nullptr && highlightedEntity->getHighlightedEntityParent() == entity)
+        highlightedEntity=nullptr;
+    for (unsigned int i = 0; i < numberOf_highlightedEntityDuplicates; i++)
+    {
+        if (highlightedEntityDuplicates.at(i) != nullptr
+                && highlightedEntityDuplicates.at(i)->getHighlightedEntityParent() == entity)
+            container->removeEntity(highlightedEntityDuplicates.at(i));
+    }
+
+    graphicView->redraw(RS2::RedrawDrawing);
+}
 // EOF
