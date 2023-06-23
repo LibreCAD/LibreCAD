@@ -49,14 +49,17 @@ struct RS_ActionDefault::Points {
 
 namespace {
 
+// snap angle tolerance in degrees
+constexpr double SnapAngle_Tolerance = 15.;
+
+// Glowing effects on Mouse hover
 constexpr double minimumHoverTolerance =  1.0;
 
 constexpr double hoverToleranceFactor1 =  1.0;
 constexpr double hoverToleranceFactor2 = 10.0;
 
-constexpr size_t minHighLightDuplicates = 10;
+constexpr size_t minHighLightDuplicates = 4;
 constexpr size_t maxHighLightDuplicates = 20;
-
 }
 
 /**
@@ -246,7 +249,6 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
     }
 }
 
-#include <iostream>
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
@@ -254,7 +256,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 
-    std::cout<<__func__<<": line "<<__LINE__<<" : container.size="<<container->count()<<std::endl;
     if (highlightedEntity != nullptr)
     {
         highlightedEntity->setHovered(false);
@@ -267,7 +268,6 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         highlightedEntity = nullptr;
         graphicView->redraw(RS2::RedrawDrawing);
     }
-    std::cout<<__func__<<": line "<<__LINE__<<" : container.size="<<container->count()<<std::endl;
 
     switch (getStatus()) {
     case Neutral:
@@ -315,7 +315,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1, SnapAngle_Tolerance);
             pPoints->v2 = mouse;
         }
 
@@ -337,7 +337,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1, SnapAngle_Tolerance);
             pPoints->v2 = mouse;
         }
 
@@ -404,7 +404,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case Moving: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, SnapAngle_Tolerance);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
@@ -424,7 +424,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case MovingRef: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, SnapAngle_Tolerance);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
