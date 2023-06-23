@@ -37,7 +37,7 @@ public slots:
     void checkAccept();
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     void readSettings();
@@ -77,8 +77,6 @@ class LC_Gear : public QObject, QC_PluginInterface
     lc_Geardlg      *parameters_dialog {nullptr};
 
  public:
-    LC_Gear();
-    ~LC_Gear();
 
     virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
     virtual QString name() const Q_DECL_OVERRIDE;

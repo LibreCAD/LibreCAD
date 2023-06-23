@@ -28,7 +28,10 @@
 #ifndef RS_MTEXT_H
 #define RS_MTEXT_H
 
+#include <iosfwd>
 #include "rs_entitycontainer.h"
+
+class RS_Font;
 
 /**
  * Holds the data that defines a text entity.
@@ -110,27 +113,27 @@ struct RS_MTextData {
 	/** Insertion point */
 	RS_Vector insertionPoint;
 	/** Nominal (initial) text height */
-	double height;
+    double height = 0.;
 	/** Reference rectangle width */
-	double width;
-	/** Vertical alignment */
-	VAlign valign;
+    double width = 0.;
+    /** Vertical alignment */
+    VAlign valign = VATop;
 	/** Horizontal alignment */
-	HAlign halign;
+    HAlign halign = HALeft;
 	/** Drawing direction */
-	MTextDrawingDirection drawingDirection;
+    MTextDrawingDirection drawingDirection = LeftToRight;
 	/** Line spacing style */
-	MTextLineSpacingStyle lineSpacingStyle;
+    MTextLineSpacingStyle lineSpacingStyle = AtLeast;
 	/** Line spacing factor */
-	double lineSpacingFactor;
+    double lineSpacingFactor = 1.;
 	/** Text string */
 	QString text;
 	/** Text style name */
 	QString style;
 	/** Rotation angle */
-	double angle;
+    double angle = 0.;
 	/** Update mode */
-	RS2::UpdateMode updateMode;
+    RS2::UpdateMode updateMode = RS2::NoUpdate;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_MTextData& td);
@@ -256,6 +259,8 @@ public:
 private:
     double updateAddLine(RS_EntityContainer* textLine, int lineCounter);
 
+    void addLetter(RS_EntityContainer& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
+
 protected:
     RS_MTextData data;
 
@@ -264,13 +269,13 @@ protected:
      * This property is updated by the update method.
      * @see update
      */
-    double usedTextWidth;
+    double usedTextWidth = 0.;
     /**
      * Text height used by the current contents of this text entity.
      * This property is updated by the update method.
      * @see update
      */
-    double usedTextHeight;
+    double usedTextHeight = 0.;
 };
 
 #endif

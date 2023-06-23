@@ -40,7 +40,7 @@ class QG_ImageOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ImageOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_ImageOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_ImageOptions();
 
 public slots:

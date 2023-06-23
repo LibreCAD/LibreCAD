@@ -61,7 +61,6 @@ class QString;
 class RS_Entity : public RS_Undoable {
 public:
 	RS_Entity(RS_EntityContainer* parent=nullptr);
-	virtual ~RS_Entity() = default;
 
     void init();
     virtual void initId();
@@ -74,14 +73,15 @@ public:
 
     void resetBorders();
 	void moveBorders(const RS_Vector& offset);
-	void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
+    void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-	virtual RS2::EntityType rtti() const{
-		return RS2::EntityUnknown;
-	}
+    virtual RS2::EntityType rtti() const
+    {
+        return RS2::EntityUnknown;
+    }
 
     /**
      * Identify all entities as undoable entities.
@@ -202,6 +202,16 @@ public:
 	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
 	virtual bool isHighlighted() const;
+
+    virtual void setHovered(bool on)
+    {
+        hovered = on;
+    }
+
+    virtual bool isHovered() const
+    {
+        return hovered;
+    }
 
 	bool isLocked() const;
 
@@ -558,6 +568,16 @@ m0 x + m1 y + m2 =0
 	 */
 	virtual bool isArcCircleLine() const;
 
+    void setHighlightedEntityParent(RS_Entity* parent)
+    {
+        highlightedEntityParent = parent;
+    }
+
+    RS_Entity* getHighlightedEntityParent() const
+    {
+        return highlightedEntityParent;
+    }
+
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.
 	RS_EntityContainer* parent = nullptr;
@@ -567,19 +587,23 @@ protected:
     RS_Vector maxV;
 
     //! Pointer to layer
-    RS_Layer* layer;
+    RS_Layer* layer = nullptr;
 
     //! Entity id
-    unsigned long int id;
+    unsigned long id = 0u;
 
     //! pen (attributes) for this entity
     RS_Pen pen;
 
     //! auto updating enabled?
-    bool updateEnabled;
+    bool updateEnabled = false;
+
+    bool hovered =false;
 
 private:
-	std::map<QString, QString> varList;
+    std::map<QString, QString> varList;
+
+    RS_Entity* highlightedEntityParent = nullptr;
 };
 
 #endif

@@ -26,9 +26,11 @@
 #include "qg_widgetpen.h"
 
 #include <QVariant>
+#include "qevent.h"
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
+#include "rs_debug.h"
 
 /*
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
@@ -38,7 +40,11 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+//    cbColor->setFocusPolicy(Qt::StrongFocus);
+//    cbWidth->setFocusPolicy(Qt::StrongFocus);
+//    cbLineType->setFocusPolicy(Qt::StrongFocus);
+//    setTabOrder(cbColor, cbWidth); // cbColor to cbWidth
+//    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
 }
 
 void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
@@ -94,4 +100,25 @@ void QG_WidgetPen::languageChange()
 {
     retranslateUi(this);
 }
+
+/*
+ *  When tabbing in to the widget, passes the focus to the 
+ *  cbColor subwidget.
+ */
+void QG_WidgetPen::focusInEvent(QFocusEvent *event)
+{
+    int reason = event->reason();
+    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusInEvent, reason '%d'",reason);
+//	if ( reason == Qt::BacktabFocusReason )
+//	    cbLineType->setFocus();
+//	else
+//	    cbColor->setFocus();
+}
+
+void QG_WidgetPen::focusOutEvent(QFocusEvent *event)
+{
+    int reason = event->reason();
+    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusOutEvent, reason '%d'",reason);
+}
+
 

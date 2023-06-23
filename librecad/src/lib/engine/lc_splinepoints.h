@@ -50,12 +50,11 @@ struct LC_SplinePointsData
 	* Default constructor. Leaves the data object uninitialized.
 	*/
     LC_SplinePointsData() = default;
-	~LC_SplinePointsData() = default;
 
 	LC_SplinePointsData(bool closed, bool cut);
 
-	bool closed;
-	bool cut;
+    bool closed = false;
+    bool cut = false;
 	/** points on the spline. */
 	std::vector<RS_Vector> splinePoints;
 	std::vector<RS_Vector> controlPoints;

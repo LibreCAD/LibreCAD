@@ -74,14 +74,13 @@ public:
 
 	double getRadius() const;
 
-    void setRadius(double r);
+	bool setRadius(const QString& sr);
 
 protected:
     /**
      * Circle data defined so far.
      */
 	std::unique_ptr<RS_CircleData> data;
-	
 };
 
 #endif

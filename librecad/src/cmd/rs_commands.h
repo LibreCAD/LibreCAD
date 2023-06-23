@@ -32,6 +32,9 @@
 #include <map>
 #include "rs.h"
 
+class QString;
+class QStringList;
+
 #define RS_COMMANDS RS_Commands::instance()
 
 /**
@@ -50,9 +53,9 @@ public:
      */
     static RS_Commands* instance();
 
-    QStringList complete(const QString& cmd);
-    RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true);
-    RS2::ActionType keycodeToAction(const QString& code);
+    QStringList complete(const QString& cmd) const;
+    RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true) const;
+    RS2::ActionType keycodeToAction(const QString& code) const;
 
     static QString command(const QString& cmd);
 
@@ -73,14 +76,13 @@ public:
       */
     static QString filterCliCal(const QString& cmd);
 
-protected:
-    static RS_Commands* uniqueInstance;
-
 private:
     RS_Commands() ;
     ~RS_Commands()=delete;
-    RS_Commands(RS_Commands& ) = delete;
-    RS_Commands& operator = ( RS_Commands& ) = delete;
+    RS_Commands(const RS_Commands &) = delete;
+    RS_Commands &operator=(const RS_Commands &) = delete;
+    RS_Commands(RS_Commands &&) = delete;
+    RS_Commands &operator=(RS_Commands &&) = delete;
 
     std::map<QString, RS2::ActionType> mainCommands;
     std::map<QString, RS2::ActionType> shortCommands;
@@ -89,4 +91,3 @@ private:
 };
 
 #endif
-

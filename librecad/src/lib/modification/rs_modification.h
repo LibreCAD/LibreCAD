@@ -27,9 +27,9 @@
 #ifndef RS_MODIFICATION_H
 #define RS_MODIFICATION_H
 
-#include "rs_vector.h"
-#include "rs_pen.h"
 #include <QHash>
+#include "rs_pen.h"
+#include "rs_vector.h"
 
 class RS_AtomicEntity;
 class RS_Entity;
@@ -44,11 +44,10 @@ class RS_GraphicView;
 /**
  * Holds the data needed for move modifications.
  */
-class RS_MoveData {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_MoveData {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector offset;
 };
 
@@ -56,25 +55,23 @@ public:
 /**
  * Holds the data needed for offset modifications.
  */
-class RS_OffsetData {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_OffsetData {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector coord;
-    double distance;
+    double distance = 0.;
 };
 
 /**
  * Holds the data needed for rotation modifications.
  */
-class RS_RotateData {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_RotateData {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector center;
-    double angle;
+    double angle = 0.;
 };
 
 
@@ -82,11 +79,10 @@ public:
 /**
  * Holds the data needed for scale modifications.
  */
-class RS_ScaleData {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_ScaleData {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector referencePoint;
     RS_Vector factor;
 };
@@ -95,11 +91,10 @@ public:
 /**
  * Holds the data needed for mirror modifications.
  */
-class RS_MirrorData {
-public:
-    bool copy;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_MirrorData {
+    bool copy = false;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector axisPoint1;
     RS_Vector axisPoint2;
 };
@@ -108,14 +103,13 @@ public:
 /**
  * Holds the data needed for move/rotate modifications.
  */
-class RS_MoveRotateData {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_MoveRotateData {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector referencePoint;
-        RS_Vector offset;
-        double angle;
+    RS_Vector offset;
+    double angle = 0.;
 };
 
 
@@ -123,15 +117,14 @@ public:
 /**
  * Holds the data needed for rotation around two centers modifications.
  */
-class RS_Rotate2Data {
-public:
-    int number;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
+struct RS_Rotate2Data {
+    int number = 0;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
     RS_Vector center1;
     RS_Vector center2;
-    double angle1;
-    double angle2;
+    double angle1 = 0.;
+    double angle2 = 0.;
 };
 
 
@@ -139,11 +132,11 @@ public:
 /**
  * Holds the data needed for beveling modifications.
  */
-class RS_BevelData {
-public:
-        double length1;
-        double length2;
-        bool trim;
+struct RS_BevelData
+{
+    double length1 = 0.;
+    double length2 = 0.;
+    bool trim = false;
 };
 
 
@@ -152,19 +145,17 @@ public:
 /**
  * Holds the data needed for rounding modifications.
  */
-class RS_RoundData {
-public:
-        double radius;
-        bool trim;
+struct RS_RoundData {
+    double radius = 0.;
+    bool trim = false;
 };
 
 
 /**
  * Holds the data needed for moving reference points.
  */
-class RS_MoveRefData {
-public:
-        RS_Vector ref;
+struct RS_MoveRefData {
+    RS_Vector ref;
     RS_Vector offset;
 };
 
@@ -173,23 +164,21 @@ public:
 /**
  * Holds the data needed for changing attributes.
  */
-class RS_AttributesData {
-public:
+struct RS_AttributesData {
         QString layer;
         RS_Pen pen;
-        bool changeLayer;
-        bool changeColor;
-        bool changeLineType;
-        bool changeWidth;
-        bool applyBlockDeep;
+        bool changeLayer = false;
+        bool changeColor = false;
+        bool changeLineType = false;
+        bool changeWidth = false;
+        bool applyBlockDeep = false;
 };
 
 
 /**
  * Holds the data needed for pasting.
  */
-class RS_PasteData {
-public:
+struct RS_PasteData {
         RS_PasteData(RS_Vector insertionPoint,
                 double factor,
                 double angle,
@@ -199,11 +188,11 @@ public:
         //! Insertion point.
         RS_Vector insertionPoint;
         //! Scale factor.
-        double factor;
+        double factor = 1.;
         //! Rotation angle.
-        double angle;
+        double angle = 0.;
         //! Paste as an insert rather than individual entities.
-        bool asInsert;
+        bool asInsert = false;
         //! Name of the block to create or an empty string to assign a new auto name.
         QString blockName;
 };
@@ -223,9 +212,8 @@ public:
  */
 class RS_Modification {
 public:
-	RS_Modification()=delete;
     RS_Modification(RS_EntityContainer& entityContainer,
-                    RS_GraphicView* graphicView=NULL,
+                    RS_GraphicView* graphicView=nullptr,
                                         bool handleUndo=true);
 
 	void remove();
@@ -233,16 +221,10 @@ public:
 	bool changeAttributes(RS_AttributesData& data);
     bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
 
-        void copy(const RS_Vector& ref, const bool cut);
-private:
-        void copyEntity(RS_Entity* e, const RS_Vector& ref, const bool cut);
-        void copyLayers(RS_Entity* e);
-        void copyBlocks(RS_Entity* e);
-        bool pasteLayers(RS_Graphic* source);
-        bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
-        bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
+    void copy(const RS_Vector& ref, const bool cut);
+
 public:
-        void paste(const RS_PasteData& data, RS_Graphic* source=NULL);
+    void paste(const RS_PasteData& data, RS_Graphic* source=nullptr);
 
     bool move(RS_MoveData& data);
     bool rotate(RS_RotateData& data);
@@ -272,38 +254,44 @@ public:
                RS_AtomicEntity* entity2,
                            RS_RoundData& data);
 
-        bool explode(const bool remove = true);
-		bool explodeTextIntoLetters();
-        bool moveRef(RS_MoveRefData& data);
+    bool explode(const bool remove = true);
+    bool explodeTextIntoLetters();
+    bool moveRef(RS_MoveRefData& data);
 
     bool splitPolyline(RS_Polyline& polyline,
                        RS_Entity& e1, RS_Vector v1,
                        RS_Entity& e2, RS_Vector v2,
                        RS_Polyline** polyline1,
                        RS_Polyline** polyline2) const;
-        RS_Polyline* addPolylineNode(RS_Polyline& polyline,
-                     const RS_AtomicEntity& segment,
-                                 const RS_Vector& node);
-        RS_Polyline* deletePolylineNode(RS_Polyline& polyline,
-                                const RS_Vector& node);
-        RS_Polyline* deletePolylineNodesBetween(RS_Polyline& polyline, RS_AtomicEntity& segment,
-                                const RS_Vector& node1, const RS_Vector& node2);
-        RS_Polyline* polylineTrim(RS_Polyline& polyline,
-                                RS_AtomicEntity& segment1,
-                                RS_AtomicEntity& segment2);
+    RS_Polyline* addPolylineNode(RS_Polyline& polyline,
+                 const RS_AtomicEntity& segment,
+                             const RS_Vector& node);
+    RS_Polyline* deletePolylineNode(RS_Polyline& polyline,
+                            const RS_Vector& node);
+    RS_Polyline* deletePolylineNodesBetween(RS_Polyline& polyline, RS_AtomicEntity& segment,
+                            const RS_Vector& node1, const RS_Vector& node2);
+    RS_Polyline* polylineTrim(RS_Polyline& polyline,
+                            RS_AtomicEntity& segment1,
+                            RS_AtomicEntity& segment2);
 
 private:
+    void copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut);
+    void copyLayers(RS_Entity* e);
+    void copyBlocks(RS_Entity* e);
+    bool pasteLayers(RS_Graphic* source);
+    bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
+    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
     void deselectOriginals(bool remove);
 	void addNewEntities(std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
 	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
 
 protected:
-    RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_Document* document;
-    RS_GraphicView* graphicView;
-        bool handleUndo;
+    RS_EntityContainer* container =nullptr;
+    RS_Graphic* graphic = nullptr;
+    RS_Document* document = nullptr;
+    RS_GraphicView* graphicView = nullptr;
+    bool handleUndo = false;
 };
 
 #endif

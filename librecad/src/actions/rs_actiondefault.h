@@ -27,6 +27,11 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
+#include <memory>
+
+
+#include <vector>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -75,10 +80,24 @@ public:
 	void updateMouseCursor() override;
 //    void resume() override;
 
+    // clear temporary entities for highlighting
+    void clearHighLighting(RS_Entity* entity);
+    const std::vector<RS_Entity*>& getHighLightingDuplicates() const;
+
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction restrBak;
+
+
+    private:
+
+        size_t nHighLightDuplicates;
+
+        RS_Entity* highlightedEntity = nullptr;
+        std::vector<RS_Entity*> highlightedEntityDuplicates;
+
+        void highlightHoveredEntities(const RS_Vector& currentMousePosition);
 
 };
 

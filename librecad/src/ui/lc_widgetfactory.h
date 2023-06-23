@@ -72,6 +72,7 @@ private:
     QList<QAction*> select_actions;
     QList<QAction*> dimension_actions;
     QList<QAction*> modify_actions;
+    QList<QAction*> order_actions;
     QList<QAction*> info_actions;
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;

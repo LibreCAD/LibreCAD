@@ -116,7 +116,7 @@ QString RS_DimAligned::getMeasuredLabel() {
         int dimzin = getGraphicVariableInt("$DIMZIN", 1);
         RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
 
-        ret = RS_Units::formatLinear(dist, RS2::None, format, dimdec);
+        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
         if (format == RS2::Decimal)
             ret = stripZerosLinear(ret, dimzin);
         //verify if units are decimal and comma separator

@@ -53,7 +53,7 @@ class QG_GraphicView:   public RS_GraphicView,
     Q_OBJECT
 
 public:
-    QG_GraphicView(QWidget* parent = 0, Qt::WindowFlags f = 0, RS_Document* doc = 0);
+    QG_GraphicView(QWidget *parent = nullptr, Qt::WindowFlags f = {}, RS_Document *doc = nullptr);
 	~QG_GraphicView() override;
 
 	int getWidth() const override;
@@ -123,6 +123,7 @@ protected:
 	void resizeEvent(QResizeEvent* e) override;
 
     QList<QAction*> recent_actions;
+    void autoPanStep();
 
 private slots:
     void slotHScrolled(int value);
@@ -130,11 +131,11 @@ private slots:
 
 protected:
     //! Horizontal scrollbar.
-    QG_ScrollBar* hScrollBar;
+    QG_ScrollBar* hScrollBar = nullptr;
     //! Vertical scrollbar.
-    QG_ScrollBar* vScrollBar;
+    QG_ScrollBar* vScrollBar = nullptr;
     //! Layout used to fit in the view and the scrollbars.
-    QGridLayout* layout;
+    QGridLayout* layout = nullptr;
     //! CAD mouse cursor
     std::unique_ptr<QCursor> curCad;
     //! Delete mouse cursor
@@ -159,9 +160,17 @@ protected:
     QMap<QString, QMenu*> menus;
 
 private:
+    void addEditEntityEntry(QMouseEvent* event, QMenu& menu);
     bool antialiasing{false};
     bool scrollbars{false};
     bool cursor_hiding{false};
+
+
+    // For auto panning by the cursor close to the view border
+    void startAutoPanTimer(QMouseEvent *e);
+    bool isAutoPan(QMouseEvent* e) const;
+    struct AutoPanData;
+    std::unique_ptr<AutoPanData> m_panData;
 
 
 signals:

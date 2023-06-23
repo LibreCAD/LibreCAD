@@ -9,7 +9,7 @@
 ;Include version information
   !include /NONFATAL "generated_scmrev.nsh"
 !ifndef SCMREVISION
-    !define SCMREVISION "2.0.x"
+    !define SCMREVISION "2.2.x"
 !endif
 
 ;--------------------------------
@@ -18,7 +18,6 @@
   !include "MUI2.nsh"
   !include "WinVer.nsh"
 
-  !define APPNAME "LibreCAD"
   !define MUI_ICON "..\..\librecad\res\main\librecad.ico"
   !define MUI_UNICON "..\..\librecad\res\main\uninstall.ico"
 
@@ -33,13 +32,13 @@
 
   ;Name and file
   Name "${APPNAME}"
-  OutFile "../../generated/LibreCAD-Installer.exe"
+  OutFile "../../generated/${InstallerName}.exe"
 
   ;Default installation folder
-  InstallDir "$PROGRAMFILES\LibreCAD"
+  InstallDir "${ProgramsFolder}\LibreCAD"
 
   ;Get installation folder from registry if available
-  InstallDirRegKey HKCU "Software\LibreCAD" ""
+  InstallDirRegKey HKCU "Software\${AppKeyName}" ""
 
   ;Request application privileges for Windows Vista
   RequestExecutionLevel admin
@@ -99,13 +98,13 @@ FunctionEnd
 
 ;--- define Qt folders if not already defined in custom-5.3.nsi
 !ifndef Qt_Dir
-    !define Qt_Dir 	"C:\Qt\Qt5.4.0"
+    !define Qt_Dir 	"C:\Qt\Qt5.15.2"
 !endif
 !ifndef Qt_Version
-    !define Qt_Version 	"5.4"
+    !define Qt_Version 	"5.15.2"
 !endif
 !ifndef Mingw_Ver
-    !define Mingw_Ver 	"mingw491_32"
+    !define Mingw_Ver 	"mingw81_64"
 !endif
 ;--- folder contains mingw32-make.exe
 !define MINGW_DIR 	"${Qt_Dir}\Tools\${Mingw_Ver}\bin"
@@ -145,18 +144,19 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
-  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.0"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "Comments" "LibreCAD - Open Source 2D-CAD"
   WriteRegStr HKLM "${UNINSTKEY}" "UninstallString" "$INSTDIR\Uninstall.exe"
-  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "0"
+  WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMinor" "2"
   WriteRegDWORD HKLM "${UNINSTKEY}" "VersionMajor" "2"
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoModify" "1"
   WriteRegDWORD HKLM "${UNINSTKEY}" "NoRepair" "1"
 
   ; Open Donate URL
+  IfSilent +2
   Exec "rundll32 url.dll,FileProtocolHandler http://librecad.org/donate.html"
 
 SectionEnd
@@ -181,7 +181,7 @@ Section "Uninstall"
 
   RMDir "$INSTDIR"
 
-  DeleteRegKey /ifempty HKCU "Software\LibreCAD"
+  DeleteRegKey /ifempty HKCU "Software\${AppKeyName}"
   DeleteRegKey HKLM "${UNINSTKEY}"
 
 SectionEnd

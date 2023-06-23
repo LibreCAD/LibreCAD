@@ -41,7 +41,7 @@ class QG_MoveRotateOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_MoveRotateOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_MoveRotateOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_MoveRotateOptions();
 
 public slots:

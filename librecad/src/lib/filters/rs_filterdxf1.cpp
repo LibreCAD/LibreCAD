@@ -30,16 +30,11 @@
 
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_ellipse.h"
 #include "rs_line.h"
-#include "rs_font.h"
 #include "rs_information.h"
-#include "rs_utility.h"
-#include "rs_system.h"
 #include "rs_dimlinear.h"
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
-#include "rs_dimdiametric.h"
 #include "rs_dimradial.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -1709,10 +1704,10 @@ char* RS_FilterDXF1::getBufLineCh() {
 
 // Copy buffer from a given string:
 //
-void RS_FilterDXF1::copyBufFrom(const char* _buf) {
+void RS_FilterDXF1::copyBufFrom(const char* _buf, int length) {
     if(_buf) {
-        fBuf = new char[strlen(_buf)+16];
-        strcpy(fBuf, _buf);
+        fBuf = new char[strnlen(_buf, length-1)+16];
+        strncpy(fBuf, _buf, length);
     }
 }
 

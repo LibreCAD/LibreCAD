@@ -143,7 +143,7 @@ bool RS_Block::isVisibleInBlockList() const {
  *
  * @param v true: selected, false: deselected
  */
-void RS_Block::selectedInBlockList(bool v) {
+void RS_Block::selectedInBlockList(bool v) const {
     data.selectedInBlockList = v;
 }
 

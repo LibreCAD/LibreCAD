@@ -46,7 +46,7 @@ public:
 	void trigger() override;
 
 protected:
-    RS2::SnapMode snapMode;
+    RS2::SnapMode snapMode = RS2::SnapFree;
 };
 
 #endif

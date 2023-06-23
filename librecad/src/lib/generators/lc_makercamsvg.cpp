@@ -41,6 +41,7 @@
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
+#include "lc_dimarc.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
 #include "rs_insert.h"

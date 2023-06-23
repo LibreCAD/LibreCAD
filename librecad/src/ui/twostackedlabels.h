@@ -16,8 +16,8 @@ public:
     void setBottomLabel(const QString& status);
 
 private:
-    QLabel* top_label;
-    QLabel* bottom_label;
+    QLabel* top_label = nullptr;
+    QLabel* bottom_label = nullptr;
 };
 
 #endif // TWOSTACKEDLABELS_H

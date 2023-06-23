@@ -34,19 +34,19 @@ class LC_XMLWriterQXmlStreamWriter : public LC_XMLWriterInterface {
 public:
 	LC_XMLWriterQXmlStreamWriter();
 
-	~LC_XMLWriterQXmlStreamWriter();
+    ~LC_XMLWriterQXmlStreamWriter() override;
 
-    void createRootElement(const std::string &name, const std::string &namespace_uri = "");
+    void createRootElement(const std::string &name, const std::string &namespace_uri = "") override;
 
-    void addElement(const std::string &name, const std::string &namespace_uri = "");
+    void addElement(const std::string &name, const std::string &namespace_uri = "") override;
 
-    void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "");
+    void addAttribute(const std::string &name, const std::string &value, const std::string &namespace_uri = "") override;
 
-    void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri);
+    void addNamespaceDeclaration(const std::string &prefix, const std::string &namespace_uri) override;
 
-    void closeElement();
+    void closeElement() override;
 
-    std::string documentAsString();
+    std::string documentAsString() override;
 
 private:
 

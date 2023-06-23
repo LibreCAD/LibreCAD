@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircle2p.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
+#include <QAction>
+#include <QMouseEvent>
+
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawCircle2P::Points {
@@ -51,7 +51,7 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
         :RS_PreviewActionInterface("Draw circles",
 						   container, graphicView)
 		, data(new RS_CircleData())
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircle2P;
     reset();
@@ -178,27 +178,6 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     }
 }
-
-
-
-void RS_ActionDrawCircle2P::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
-        return;
-    }
-
-}
-
-
-
-QStringList RS_ActionDrawCircle2P::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 
 void RS_ActionDrawCircle2P::updateMouseButtonHints() {

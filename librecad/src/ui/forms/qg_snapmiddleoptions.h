@@ -39,7 +39,7 @@ class QG_SnapMiddleOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_SnapMiddleOptions(int& i, QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_SnapMiddleOptions(int& i, QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_SnapMiddleOptions();
 
 public slots:

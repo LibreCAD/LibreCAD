@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONINFODIST2_H
 #define RS_ACTIONINFODIST2_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -63,7 +65,7 @@ public:
 	void updateMouseCursor() override;
 
 private:
-	RS_Entity* entity;
+    RS_Entity* entity = nullptr;
 	std::unique_ptr<RS_Vector> point;
 };
 

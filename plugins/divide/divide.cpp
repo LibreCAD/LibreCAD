@@ -12,6 +12,8 @@
 *  along with this program.  If not, see <http://www.gnu.org/licenses/>.    *
 ****************************************************************************/
 
+#include <complex>
+
 #include <QtGui>
 #include <QApplication>
 #include <QDesktopWidget>
@@ -22,12 +24,11 @@
 #include <QGridLayout>
 #include <QMessageBox>
 #include <QLabel>
-#include <complex>
 
 #include "divide.h"
+
 #include "dividedlg.h"
 
-//#include <QDebug>
 
 QString divide::name() const
 {
@@ -398,7 +399,7 @@ void divide::segment( QPointF * centerCircle, double radius,
 
 double divide::findHypLength( double h1, double h2, double v1, double v2 )
 {
-    return ( hypot( h1 - h2, v1 - v2 ) ); //needs (C++11 or later) - hypotenuse
+    return ( std::hypot( h1 - h2, v1 - v2 ) ); //needs (C++14 or later) - hypotenuse
     //see - http://www.cplusplus.com/reference/cmath/hypot/  - C99
 }
 

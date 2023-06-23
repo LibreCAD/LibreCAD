@@ -26,12 +26,15 @@
 #include "qg_dlgoptionsgeneral.h"
 
 #include <QMessageBox>
+#include <qc_applicationwindow.h>
 #include <QColorDialog>
+
+#include "qg_filedialog.h"
+
+#include "rs_debug.h"
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "qg_filedialog.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -54,15 +57,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
-}
-
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgOptionsGeneral::~QG_DlgOptionsGeneral()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
+    connect(cbAutoBackup, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 }
 
 /*
@@ -132,6 +128,9 @@ void QG_DlgOptionsGeneral::init()
 
     int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
     cb_antialiasing->setChecked(checked?true:false);
+
+    checked = RS_SETTINGS->readNumEntry("/Autopanning");
+    cb_autopanning->setChecked(checked?true:false);
 
     checked = RS_SETTINGS->readNumEntry("/ScrollBars");
     scrollbars_check_box->setChecked(checked?true:false);
@@ -210,16 +209,13 @@ void QG_DlgOptionsGeneral::init()
     restartNeeded = false;
 }
 
-void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, QString text) {
+void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, const QString& text) {
 	int idx = cb->findText(text);
 	if( idx < 0) {
 		idx =0;
 		cb->insertItem(idx, text);
 	}
 	cb->setCurrentIndex( idx );
-}
-
-void QG_DlgOptionsGeneral::destroy() {
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
@@ -250,6 +246,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
@@ -425,4 +422,24 @@ void QG_DlgOptionsGeneral::setFontsFolder()
         auto dir = dlg.selectedFiles()[0];
         lePathFonts->setText(QDir::toNativeSeparators(dir));
     }
+}
+
+void QG_DlgOptionsGeneral::setLibraryPath()
+{
+    QG_FileDialog dlg(this);
+    dlg.setFileMode(QFileDialog::Directory);
+
+    if (dlg.exec())
+    {
+        auto dir = dlg.selectedFiles()[0];
+        lePathLibrary->setText(QDir::toNativeSeparators(dir));
+        setRestartNeeded();
+    }
+}
+
+void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
+{
+    bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    appWindow->startAutoSave(allowBackup);
 }

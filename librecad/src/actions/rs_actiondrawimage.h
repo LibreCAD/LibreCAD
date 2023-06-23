@@ -98,7 +98,7 @@ protected:
 	std::unique_ptr<ImageData> pImg;
 	
 	/** Last status before entering option. */
-	Status lastStatus;
+    Status lastStatus = ShowDialog;
 };
 
 #endif

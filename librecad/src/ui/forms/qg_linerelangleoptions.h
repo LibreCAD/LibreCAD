@@ -40,7 +40,7 @@ class QG_LineRelAngleOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LineRelAngleOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LineRelAngleOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LineRelAngleOptions();
 
 public slots:
