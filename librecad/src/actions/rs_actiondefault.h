@@ -29,8 +29,6 @@
 
 #include <memory>
 
-#include <vector>
-
 #include "rs_previewactioninterface.h"
 
 
@@ -91,13 +89,7 @@ protected:
 
     private:
 
-    // Number of temporary entities for glowing effects
-        size_t nHighLightDuplicates = 0;
-
-        RS_Entity* highlightedEntity = nullptr;
-        std::vector<RS_Entity*> highlightedEntityDuplicates;
-
-        void highlightHoveredEntities(const RS_Vector& currentMousePosition);
+    void highlightHoveredEntities(const RS_Vector& currentMousePosition);
 
 };
 
