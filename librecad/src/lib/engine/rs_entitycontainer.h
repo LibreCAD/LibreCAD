@@ -79,6 +79,8 @@ public:
 	bool setSelected(bool select=true) override;
 	bool toggleSelected() override;
 
+    void setHighlighted(bool on) override;
+
 	virtual void selectWindow(RS_Vector v1, RS_Vector v2,
 				bool select=true, bool cross=false);
 
@@ -96,10 +98,10 @@ public:
 	//!
 	void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
 
-    virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
+    virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* entityAt(int index);
 	virtual void setEntityAt(int index,RS_Entity* en);
 //RLZ unused	virtual int entityAt();
@@ -238,7 +240,7 @@ protected:
     QList<RS_Entity *> entities;
 
     /** sub container used only temporarily for iteration. */
-    RS_EntityContainer* subContainer;
+    mutable RS_EntityContainer* subContainer;
 
     /**
      * Automatically update the borders of the container when entities
@@ -252,7 +254,7 @@ private:
 	 * @return true when entity of this container won't be considered for snapping points
 	 */
 	bool ignoredSnap() const;
-    int entIdx;
+    mutable int entIdx;
     bool autoDelete;
 };
 

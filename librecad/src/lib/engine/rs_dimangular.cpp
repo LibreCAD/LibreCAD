@@ -25,19 +25,19 @@
 **
 **********************************************************************/
 
-#include<iostream>
 #include<cmath>
-#include "rs_dimangular.h"
-#include "rs_math.h"
+#include<iostream>
 
-#include "rs_constructionline.h"
 #include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_graphic.h"
-#include "rs_information.h"
-#include "rs_solid.h"
-#include "rs_mtext.h"
+#include "rs_constructionline.h"
 #include "rs_debug.h"
+#include "rs_dimangular.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_mtext.h"
+#include "rs_solid.h"
+#include "rs_units.h"
 
 RS_DimAngularData::RS_DimAngularData():
     definitionPoint1( false),

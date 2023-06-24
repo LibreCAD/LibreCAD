@@ -49,7 +49,7 @@ LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
-        , pPoints(new Points{})
+        , pPoints(std::make_unique<Points>())
         ,number(3)
         ,lastStatus(SetCenter)
 {

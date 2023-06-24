@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircle3p.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
+#include <QAction>
+#include <QMouseEvent>
+
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawCircle3P::Points {
@@ -56,7 +56,7 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
 						   container, graphicView)
-		,pPoints(new Points{})
+        , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircle3P;
 }
@@ -67,8 +67,6 @@ void RS_ActionDrawCircle3P::init(int status) {
     RS_PreviewActionInterface::init(status);
 	pPoints.reset(new Points{});
 }
-
-
 
 void RS_ActionDrawCircle3P::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -110,7 +108,6 @@ void RS_ActionDrawCircle3P::preparePreview() {
         }
     }
 }
-
 
 
 void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent* e) {
@@ -180,25 +177,6 @@ void RS_ActionDrawCircle3P::coordinateEvent(RS_CoordinateEvent* e) {
     default:
         break;
     }
-}
-
-
-
-void RS_ActionDrawCircle3P::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-}
-
-
-
-QStringList RS_ActionDrawCircle3P::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
 }
 
 

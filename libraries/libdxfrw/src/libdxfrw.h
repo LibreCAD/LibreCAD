@@ -28,7 +28,7 @@ class dxfWriter;
 class dxfRW {
 public:
     dxfRW(const char* name);
-    ~dxfRW();
+    virtual ~dxfRW();
     void setDebug(DRW::DebugLevel lvl);
     /// reads the file specified in constructor
     /*!
@@ -136,20 +136,21 @@ private:
     DRW::error error {DRW::BAD_NONE};
     std::string fileName;
     std::string codePage;
-    bool binFile;
-    dxfReader *reader;
-    dxfWriter *writer;
-    DRW_Interface *iface;
+    bool binFile = false;
+    dxfReader *reader = nullptr;
+    dxfWriter *writer = nullptr;
+    DRW_Interface *iface = nullptr;
     DRW_Header header;
 //    int section;
     std::string nextentity;
-    int entCount;
-    bool wlayer0;
-    bool dimstyleStd;
-    bool applyExt;
+    int entCount = 0;
+    bool wlayer0 = false;
+    bool dimstyleStd = false;
+    bool applyExt =false;
     bool writingBlock;
     int elParts;  /*!< parts number when convert ellipse to polyline */
     std::unordered_map<std::string,int> blockMap;
+    std::unordered_map<std::string,int> textStyleMap;
     std::vector<DRW_ImageDef*> imageDef;  /*!< imageDef list */
 
     int currHandle;

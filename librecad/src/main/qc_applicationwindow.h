@@ -29,37 +29,45 @@
 #ifndef QC_APPLICATIONWINDOW_H
 #define QC_APPLICATIONWINDOW_H
 
-#include "mainwindowx.h"
+#include <memory>
 
-#include "rs_pen.h"
-#include "rs_snapper.h"
 #include <QMap>
 
-class QMdiArea;
-class QMdiSubWindow;
-class QC_MDIWindow;
-class QG_LibraryWidget;
-class QG_CadToolBar;
-class QG_SnapToolBar;
+#include "rs.h"
+#include "rs_pen.h"
+#include "rs_snapper.h"
+#include "mainwindowx.h"
+
+
+
+class LC_ActionGroupManager;
+class LC_CustomToolbar;
+class LC_PenWizard;
+class LC_SimpleTests;
 class QC_DialogFactory;
-class QG_LayerWidget;
+class QC_MDIWindow;
+class QC_PluginInterface;
+class QG_ActionHandler;
+class QG_ActiveLayerName;
 class QG_BlockWidget;
+class QG_CadToolBar;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
+class QG_LayerWidget;
+class QG_LibraryWidget;
 class QG_MouseWidget;
-class QG_SelectionWidget;
-class QG_RecentFiles;
 class QG_PenToolBar;
-class QC_PluginInterface;
-class QG_ActiveLayerName;
-class LC_SimpleTests;
-class LC_CustomToolbar;
-class QG_ActionHandler;
-class RS_GraphicView;
+class QG_RecentFiles;
+class QG_SelectionWidget;
+class QG_SnapToolBar;
+class QMdiArea;
+class QMdiSubWindow;
+class RS_Block;
 class RS_Document;
+class RS_GraphicView;
+class RS_Pen;
 class TwoStackedLabels;
-class LC_ActionGroupManager;
-class LC_PenWizard;
+struct RS_SnapMode;
 
 struct DockAreas
 {
@@ -80,7 +88,12 @@ class QC_ApplicationWindow: public MainWindowX
     Q_OBJECT
 
 public:
-    QC_ApplicationWindow();
+
+    enum
+    {
+        DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT = 2000
+    };
+
     ~QC_ApplicationWindow();
 
     void initSettings();
@@ -95,9 +108,6 @@ public:
     bool loadStyleSheet(QString path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
-
-    QMap<QString, QAction*> a_map;
-    LC_ActionGroupManager* ag_manager {nullptr};
 
 public slots:
     void relayAction(QAction* q_action);
@@ -129,7 +139,7 @@ public slots:
     void slotZoomAuto();
 
     void slotPenChanged(RS_Pen p);
-    void slotSnapsChanged(RS_SnapMode s);
+    //void slotSnapsChanged(RS_SnapMode s);
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
@@ -196,7 +206,7 @@ public slots:
     void slotUpdateActiveLayer();
 	void execPlug();
 
-    void invokeLinkList();
+    //void invokeLinkList();
 
     void toggleFullscreen(bool checked);
 
@@ -238,9 +248,7 @@ public:
     /**
      * @return Pointer to application window.
      */
-    static QC_ApplicationWindow* getAppWindow() {
-        return appWindow;
-    }
+    static std::unique_ptr<QC_ApplicationWindow>&  getAppWindow();
 
     /**
      * @return Pointer to MdiArea.
@@ -301,6 +309,13 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    // Highlight the active block in the block widget
+    void showBlockActivated(const RS_Block* block);
+
+    // Auto-save
+    void startAutoSave(bool enabled);
+
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -310,6 +325,7 @@ protected:
     //! \}
 
 private:
+    QC_ApplicationWindow();
 
     QMenu* createPopupMenu() override;
 
@@ -323,7 +339,7 @@ private:
 	void doClose(QC_MDIWindow* w, bool activateNext = true);
 	void doActivate(QMdiSubWindow* w);
 	int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
-	void enableFileActions(QC_MDIWindow* w);
+    void enableFileActions(QC_MDIWindow* w);
 
     /**
      * @brief updateWindowTitle, for draft mode, add "Draft Mode" to window title
@@ -339,9 +355,12 @@ private:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
+    QMap<QString, QAction*> a_map;
+    LC_ActionGroupManager* ag_manager {nullptr};
+
     /** Pointer to the application window (this). */
     static QC_ApplicationWindow* appWindow;
-    QTimer *autosaveTimer {nullptr};
+    std::unique_ptr<QTimer> m_autosaveTimer;
 
     QG_ActionHandler* actionHandler {nullptr};
 

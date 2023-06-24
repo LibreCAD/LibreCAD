@@ -40,7 +40,7 @@ class QG_TrimAmountOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_TrimAmountOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_TrimAmountOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_TrimAmountOptions();
 
 public slots:

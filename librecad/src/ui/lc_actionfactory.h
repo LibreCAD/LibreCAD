@@ -31,20 +31,22 @@
 class QActionGroup;
 class QAction;
 class LC_ActionGroupManager;
+class QC_ApplicationWindow;
+class QG_ActionHandler;
 
 class LC_ActionFactory : public QObject
 {
     Q_OBJECT
 
 public:
-    LC_ActionFactory(QObject* parent, QObject* a_handler);
+    LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
     void fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
     void commonActions(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
     bool using_theme;
 
 private:
-    QObject* main_window;
-    QObject* action_handler;
+    QC_ApplicationWindow* main_window;
+    QG_ActionHandler* action_handler;
 };
 
 #endif

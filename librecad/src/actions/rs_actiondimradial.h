@@ -50,7 +50,6 @@ public:
                               RS_GraphicView& graphicView);
 	~RS_ActionDimRadial() override;
 
-
 	void reset() override;
 	
 	void trigger() override;
@@ -61,7 +60,7 @@ public:
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
+    QStringList getAvailableCommands() override;
 	
 	void hideOptions() override;
 	void showOptions() override;
@@ -71,13 +70,13 @@ public:
 
 private:
     /** Chosen entity (arc / circle) */
-    RS_Entity* entity;
+    RS_Entity* entity = nullptr;
 	/** Chosen position */
 	std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
 	std::unique_ptr<RS_DimRadialData> edata;
 	/** Last status before entering text. */
-	Status lastStatus;
+    Status lastStatus = SetEntity;
 };
 
 #endif

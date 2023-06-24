@@ -38,11 +38,9 @@ struct RS_LineTypePattern {
 	RS_LineTypePattern()=delete;
 	RS_LineTypePattern(std::initializer_list<double> const& pattern);
 
-	~RS_LineTypePattern()=default;
-
 	std::vector<double> pattern;
-    double totalLength;
-	size_t num;
+    double totalLength = 0.;
+    size_t num = 0;
     //define all line patterns in pixels
     static const RS_LineTypePattern patternSolidLine;
 

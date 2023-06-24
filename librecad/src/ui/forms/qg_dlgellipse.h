@@ -35,7 +35,7 @@ class QG_DlgEllipse : public QDialog, public Ui::QG_DlgEllipse
     Q_OBJECT
 
 public:
-    QG_DlgEllipse(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgEllipse(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgEllipse();
 
 public slots:
@@ -46,8 +46,7 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_Ellipse* ellipse;
-
+    RS_Ellipse* ellipse = nullptr;
 };
 
 #endif // QG_DLGELLIPSE_H

@@ -47,7 +47,7 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move and Rotate Entities",
 						   container, graphicView)
-		, pPoints(new Points())
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionModifyMoveRotate;
 }

@@ -50,7 +50,7 @@ public:
     RS_ActionSelectIntersected(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
-	~RS_ActionSelectIntersected() override;
+    ~RS_ActionSelectIntersected() override;
 
 	void init(int status=0) override;
 	
@@ -66,7 +66,7 @@ public:
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    bool select;
+    bool select = false;
 };
 
 #endif

@@ -28,6 +28,7 @@
 #ifndef RS_POLYLINE_H
 #define RS_POLYLINE_H
 
+#include <memory>
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
 
@@ -37,8 +38,7 @@
  * Holds the data that defines a polyline.
  */
 struct RS_PolylineData : public RS_Flags {
-	RS_PolylineData();
-	~RS_PolylineData()=default;
+    RS_PolylineData() = default;
 	RS_PolylineData(const RS_Vector& startpoint,
                     const RS_Vector& endpoint,
 					bool closed);
@@ -142,13 +142,13 @@ public:
     friend std::ostream& operator << (std::ostream& os, const RS_Polyline& l);
 
 protected:
-	RS_Entity* createVertex(const RS_Vector& v,
+    std::unique_ptr<RS_Entity> createVertex(const RS_Vector& v,
                 double bulge=0.0, bool prepend=false);
 
 protected:
     RS_PolylineData data;
-    RS_Entity* closingEntity;
-	double nextBulge;
+    RS_Entity* closingEntity = nullptr;
+    double nextBulge = 0.;
 };
 
 #endif

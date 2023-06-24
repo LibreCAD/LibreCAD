@@ -45,9 +45,10 @@ RS_ActionDimRadial::RS_ActionDimRadial(
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Radial Dimensions",
 					container, graphicView)
-		,entity(nullptr)
-		,pos(new RS_Vector{})
-		,lastStatus(SetEntity)
+        , entity(nullptr)
+        , pos(std::make_unique<RS_Vector>())
+        , edata{ std::make_unique<RS_DimRadialData>()}
+        , lastStatus(SetEntity)
 {
 	actionType=RS2::ActionDimRadial;
     reset();
@@ -58,7 +59,7 @@ RS_ActionDimRadial::~RS_ActionDimRadial() = default;
 void RS_ActionDimRadial::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimRadialData{{}, 0.0});
+    *edata = {};
 	entity = nullptr;
 	*pos = {};
 	lastStatus = SetEntity;
@@ -72,9 +73,7 @@ void RS_ActionDimRadial::trigger() {
 
     preparePreview();
     if (entity) {
-		RS_DimRadial* newEntity = nullptr;
-
-        newEntity = new RS_DimRadial(container,
+        RS_DimRadial* newEntity = new RS_DimRadial(container,
 									 *data,
 									 *edata);
 
@@ -256,7 +255,6 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
 }
 
 
-
 QStringList RS_ActionDimRadial::getAvailableCommands() {
     QStringList cmd;
 
@@ -295,7 +293,6 @@ void RS_ActionDimRadial::updateMouseButtonHints() {
 }
 
 
-
 void RS_ActionDimRadial::showOptions() {
     RS_ActionInterface::showOptions();
 
@@ -304,14 +301,11 @@ void RS_ActionDimRadial::showOptions() {
 }
 
 
-
 void RS_ActionDimRadial::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     //RS_DIALOGFACTORY->requestDimRadialOptions(edata, false);
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
 
 // EOF

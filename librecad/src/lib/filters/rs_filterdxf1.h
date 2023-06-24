@@ -28,6 +28,7 @@
 #ifndef RS_FILTERDXF1_H
 #define RS_FILTERDXF1_H
 
+#include <iosfwd>
 #include <QFile>
 
 #include "rs_filterinterface.h"
@@ -44,18 +45,18 @@ class RS_FilterDXF1 : public RS_FilterInterface {
 public:
 	RS_FilterDXF1();
 
-    virtual bool canImport(const QString& /*fileName*/, RS2::FormatType t) const {
+    bool canImport(const QString& /*fileName*/, RS2::FormatType t) const  override {
 		return (t==RS2::FormatDXF1);
 	}
 	
-    virtual bool canExport(const QString& /*fileName*/, RS2::FormatType /*t*/) const {
+    bool canExport(const QString& /*fileName*/, RS2::FormatType /*t*/) const override {
 		return false;
     }
 
-    virtual bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/);
+    bool fileImport(RS_Graphic& g, const QString& file, RS2::FormatType /*type*/) override;
 
-    virtual bool fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
-		RS2::FormatType /*type*/);
+    bool fileExport(RS_Graphic& /*g*/, const QString& /*file*/,
+        RS2::FormatType /*type*/) override;
 
     bool readFromBuffer();
 
@@ -80,7 +81,7 @@ public:
     void    setFSize(unsigned _s) {
         fSize=_s;
     }
-    void    copyBufFrom(const char* _buf);
+    void    copyBufFrom(const char* _buf, int length);
     bool    gotoBufLine(char* _lstr);
     bool    gotoBufLineString(char* _lstr);
 

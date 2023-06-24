@@ -60,7 +60,6 @@ public:
 
 	//        void coordinateEvent(RS_CoordinateEvent* e) override;
 	//    void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
 	void finish(bool updateTB=true) override;
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
@@ -73,7 +72,7 @@ private:
 	void clearLines(bool checkStatus=false);
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    bool valid;
+    bool valid = false;
 };
 
 #endif

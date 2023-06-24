@@ -11,7 +11,6 @@ class LC_SimpleTests:public QObject
 	Q_OBJECT
 public:
 	LC_SimpleTests(QWidget* parent);
-	~LC_SimpleTests()=default;
 
 public slots:
 	/** dumps entities to file */

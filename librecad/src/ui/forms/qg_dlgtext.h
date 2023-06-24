@@ -34,7 +34,7 @@ class QG_DlgText : public QDialog, public Ui::QG_DlgText
     Q_OBJECT
 
 public:
-    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgText();
 
     virtual int getAlignment();
@@ -68,7 +68,7 @@ public slots:
     virtual void insertSymbol( int );
     virtual void updateUniCharButton( int );
     virtual void insertChar();
-    virtual void reject();
+    void reject() override;
 
 protected slots:
     virtual void languageChange();

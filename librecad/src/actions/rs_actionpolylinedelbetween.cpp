@@ -45,7 +45,7 @@ RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& con
                 RS_GraphicView& graphicView)
                 :RS_PreviewActionInterface("Delete between two nodes",
 												   container, graphicView)
-				, pPoints(new Points{})
+				, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionPolylineDelBetween;
 }
@@ -124,7 +124,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
                         } else {
 							snapPoint(e);
 								delSegment = nullptr;
-                                double dist = graphicView->toGraphDX(snapRange)*0.9;
+                                double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
                                 delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
                                                                         graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
 								if(delSegment == nullptr)

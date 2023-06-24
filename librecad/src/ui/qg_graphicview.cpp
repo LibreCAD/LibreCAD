@@ -24,38 +24,157 @@
 **
 **********************************************************************/
 
-#include "qg_graphicview.h"
+#include <cmath>
+#include <iostream>
 
+#include <QDebug>
 #include <QGridLayout>
 #include <QLabel>
 #include <QMenu>
-#include <QDebug>
 #include <QNativeGestureEvent>
+#include <QPoint>
+#include <QTimer>
 
+#include "qg_graphicview.h"
+
+#include "qg_dialogfactory.h"
+#include "qg_scrollbar.h"
+#include "rs_actiondefault.h"
+#include "rs_actionmodifydelete.h"
+#include "rs_actionmodifyentity.h"
+#include "rs_actionselectsingle.h"
+#include "rs_actionzoomauto.h"
 #include "rs_actionzoomin.h"
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomscroll.h"
-#include "rs_actionzoomauto.h"
-#include "rs_actionmodifydelete.h"
-#include "rs_actionselectsingle.h"
-#include "rs_settings.h"
-#include "rs_painterqt.h"
-#include "rs_dialogfactory.h"
-#include "qg_dialogfactory.h"
-#include "rs_eventhandler.h"
-#include "rs_actiondefault.h"
-
-
-#include "qg_scrollbar.h"
-#include "rs_modification.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_eventhandler.h"
 #include "rs_graphic.h"
+#include "rs_math.h"
+#include "rs_modification.h"
+#include "rs_painterqt.h"
+#include "rs_settings.h"
 
-#ifdef Q_OS_WIN32
-#define CURSOR_SIZE 16
-#else
-#define CURSOR_SIZE 15
+#ifdef EMU_C99
+#include "emu_c99.h"
 #endif
+
+#if (defined (Q_OS_WIN32) || defined (Q_OS_WIN64))
+    #define CURSOR_SIZE 16
+#else
+    #define CURSOR_SIZE 15
+#endif
+
+namespace {
+
+
+/*
+         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
+         *
+         * Benchmarks:
+         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
+         * 1.175 - still a bit choppy
+         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
+         * 1.137 - seems to work well for me
+         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
+         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
+         * 1.000 - goes nowhere. :)
+         */
+constexpr double zoomFactor = 1.137;
+
+
+/**
+ * @brief snapEntity find the closest entity
+ * @param QG_GraphicView& view - the graphic view
+ * @param const QMouseEvent* event - the mouse event
+ * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ *                      returns nullptr, if no entity is found in range
+ */
+RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
+{
+    if (event == nullptr)
+        return nullptr;
+    RS_EntityContainer* container = view.getContainer();
+    if (container==nullptr)
+        return nullptr;
+    const QPointF mapped = event->pos();
+    double distance = RS_MAXDOUBLE;
+    RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
+
+    // Avoid using temporary entities for highlighting
+    while(entity != nullptr && entity->getHighlightedEntityParent() != nullptr)
+        entity = entity->getHighlightedEntityParent();
+
+    return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+}
+
+void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
+{
+    RS_EntityContainer* container = view.getContainer();
+    if (entity == nullptr || container == nullptr)
+        return;
+    auto* action = new RS_ActionModifyEntity(*container, view);
+    if (action == nullptr)
+        return;
+    action->setEntity(entity);
+    view.setCurrentAction(action);
+    action->trigger();
+    action->finish(false);
+
+    //container->removeEntity(entity);
+    auto* doc = dynamic_cast<RS_Document*>(container);
+    if (doc != nullptr)
+        doc->startUndoCycle();
+    // delete any temporary highlighting duplicates of the original
+    auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
+    if (defaultAction != nullptr)
+    {
+        defaultAction->clearHighLighting(entity);
+    }
+    doc->endUndoCycle();
+}
+
+// Show the entity property dialog on the closest entity in range
+void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
+{
+    RS_Entity* entity = snapEntity(view, event);
+
+    // snap to the top selected parent
+    while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
+        entity = entity->getParent();
+
+    launchEditProperty(view, entity);
+}
+}
+
+// Support auto-panning when the cursor is close to the view border
+struct QG_GraphicView::AutoPanData
+{
+    void start(double interval, QG_GraphicView &view)
+    {
+        m_delayCounter = 0;
+        panTimer = std::make_unique<QTimer>(&view);
+        panTimer->start(interval);
+        connect(panTimer.get(), &QTimer::timeout, &view, &QG_GraphicView::autoPanStep);
+    }
+
+    std::unique_ptr<QTimer> panTimer;
+
+    QPoint panOffset;
+
+    unsigned m_delayCounter = 0u;
+    // skip the first events, to avoid unintensional panning
+    const unsigned delayCounterMax = 10u;
+    const double panOffsetMagnitude = 20.0;
+
+    const double panTimerInterval_minimum = 20.0;
+    const double panTimerInterval_maximum = 100.0;
+
+    // the sensitive border of the view
+    const RS_Vector probedAreaOffset = {50 /* pixels */, 50 /* pixels */};
+};
+
 
 /**
  * Constructor.
@@ -70,10 +189,11 @@ QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* 
     ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
+    , m_panData{std::make_unique<AutoPanData>()}
 {
     RS_DEBUG->print("QG_GraphicView::QG_GraphicView()..");
 
-    if (doc)
+    if (doc != nullptr)
     {
         setContainer(doc);
         doc->setGraphicView(this);
@@ -144,9 +264,9 @@ void QG_GraphicView::setBackground(const RS_Color& bg) {
 /**
  * Sets the mouse cursor to the given type.
  */
-void QG_GraphicView::setMouseCursor(RS2::CursorType c) {
+void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 
-    switch (c) {
+    switch (cursorType) {
     default:
     case RS2::ArrowCursor:
         setCursor(Qt::ArrowCursor);
@@ -278,6 +398,9 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
             {
                 killAllActions();
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
+            } else {
+                // double click on an entity to edit entity properties
+                showEntityPropertiesDialog(*this, e);
             }
             break;
     }
@@ -317,12 +440,19 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
             {
                 menus["Right-Click"]->popup(mapToGlobal(event->pos()));
             }
-            else if (!recent_actions.isEmpty())
+            else
             {
                 QMenu* context_menu = new QMenu(this);
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
-                context_menu->addActions(recent_actions);
-                context_menu->exec(mapToGlobal(event->pos()));
+                if (!recent_actions.empty())
+                    context_menu->addActions(recent_actions);
+                // "Edit Entity" entry
+                addEditEntityEntry(event, *context_menu);
+                if (!context_menu->isEmpty())
+                    context_menu->exec(mapToGlobal(event->pos()));
+                else
+                    delete context_menu;
+
             }
         }
         else back();
@@ -340,9 +470,30 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
     RS_DEBUG->print("QG_GraphicView::mouseReleaseEvent: OK");
 }
 
+void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
+{
+    RS_Entity* entity = snapEntity(*this, event);
+    if (entity == nullptr)
+    return;
+    if (container==nullptr)
+        return;
+    auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
+                               tr("Edit Properties"), &contextMenu);
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, entity](){
+        launchEditProperty(*this, entity);
+    });
+}
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
 {
+    if (isAutoPan(event)) {
+        startAutoPanTimer(event);
+        event->accept();
+        return;
+    }
+    m_panData->panTimer.reset();
+    // handle auto-panning
     event->accept();
     eventHandler->mouseMoveEvent(event);
 }
@@ -382,7 +533,11 @@ bool QG_GraphicView::event(QEvent *event)
  */
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        switch (e->deviceType()) {
+#else
         switch (e->device()) {
+#endif
         case QTabletEvent::Eraser:
             if (e->type()==QEvent::TabletRelease) {
                 if (container) {
@@ -415,7 +570,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                 mouseReleaseEvent(&ev);
             } else if (e->type()==QEvent::TabletMove) {
                 QMouseEvent ev(QEvent::MouseMove, e->pos(),
-                               Qt::NoButton, 0, Qt::NoModifier);//RLZ
+                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
                 mouseMoveEvent(&ev);
             }
             break;
@@ -447,10 +602,12 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
 }
 
 void QG_GraphicView::leaveEvent(QEvent* e) {
+    // stop auto-panning
+    m_panData->panTimer.reset();
+
     eventHandler->mouseLeaveEvent();
     QWidget::leaveEvent(e);
 }
-
 
 void QG_GraphicView::enterEvent(QEvent* e) {
     eventHandler->mouseEnterEvent();
@@ -478,11 +635,15 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     //printf("state: %d\n", e->state());
     //printf("ctrl: %d\n", Qt::ControlButton);
 
-    if (container==NULL) {
+    if (container==nullptr) {
         return;
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    RS_Vector mouse = toGraph(e->position());
+#else
     RS_Vector mouse = toGraph(e->x(), e->y());
+#endif
 
     if (device == "Trackpad")
     {
@@ -551,7 +712,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         return;
     }
 
-    if (e->delta() == 0) {
+    if (e->angleDelta().isNull()) {
         // A zero delta event occurs when smooth scrolling is ended. Ignore this
         e->accept();
         return;
@@ -563,26 +724,24 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     // scroll up / down:
     if (e->modifiers()==Qt::ControlModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().y()>0)?RS2::Up : RS2::Down;
         }
     }
 
     // scroll left / right:
     else if	(e->modifiers()==Qt::ShiftModifier) {
         scroll = true;
-        switch(e->orientation()){
-        case Qt::Horizontal:
-            direction=(e->delta()>0)?RS2::Up:RS2::Down;
-            break;
-        default:
-        case Qt::Vertical:
-            direction=(e->delta()>0)?RS2::Left:RS2::Right;
+        if (e->angleDelta().y() == 0){
+        //case Qt::Horizontal:
+            direction=(e->angleDelta().x()>0)?RS2::Up : RS2::Down;
+        } else {
+        //case Qt::Vertical:
+            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
         }
     }
 
@@ -594,16 +753,16 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         bool inv_v = (RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0) == 1);
         RS_SETTINGS->endGroup();
 
-        int delta;
+        int delta = 0;
 
 		switch(direction){
 		case RS2::Left:
 		case RS2::Right:
-            delta = (inv_h) ? -e->delta() : e->delta();
+            delta = (inv_h) ? -e->angleDelta().x() : e->angleDelta().x();
 			hScrollBar->setValue(hScrollBar->value()+delta);
 			break;
 		default:
-            delta = (inv_v) ? -e->delta() : e->delta();
+            delta = (inv_v) ? -e->angleDelta().y() : e->angleDelta().y();
 			vScrollBar->setValue(vScrollBar->value()+delta);
 		}
 
@@ -613,133 +772,91 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     // zoom in / out:
     else if (e->modifiers()==0) {
+        auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
+        bool invZoom = RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1;
 
-        /*
-         * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
-         *
-         * Benchmarks:
-         * 1.250 - the original; fast & usable, but seems a choppy & a bit 'jarring'
-         * 1.175 - still a bit choppy
-         * 1.150 - smoother than the original, but still 'quick' enough for good navigation.
-         * 1.137 - seems to work well for me
-         * 1.125 - about the lowest that would be acceptable and useful, a tad on the slow side for me
-         * 1.100 - a very slow & deliberate zooming, but feels very "cautious", "controlled", "safe", and "precise".
-         * 1.000 - goes nowhere. :)
-         */
-		const double zoomFactor=1.137;
+        RS2::ZoomDirection zoomDirection = ((e->angleDelta().y() > 0) != invZoom) ? RS2::In : RS2::Out;
 
-		RS_Vector mainViewCenter = toGraph(getWidth()/2, getHeight()/2);
+        RS_Vector& zoomCenter = mouse;
 
-		RS_SETTINGS->beginGroup("/Defaults");
-		bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
-		RS_SETTINGS->endGroup();
-
-		if ((e->delta()>0 && !invZoom) || (e->delta()<0 && invZoom)) {
-			const double zoomInOvershoot=1.20;
-
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomInOvershoot);
-				effect+=mainViewCenter;
-			}
-
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::In, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
-		} else {
-			const double zoomOutUndershoot=0.30;
-
-			RS_Vector effect{mouse};
-			{
-				effect-=mainViewCenter;
-				effect.scale(zoomOutUndershoot);
-				effect+=mainViewCenter;
-			}
-
-			setCurrentAction(new RS_ActionZoomIn(*container, *this,
-												 RS2::Out, RS2::Both,
-												 &effect,
-												 zoomFactor
-												));
-		}
+        setCurrentAction(new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter, zoomFactor));
     }
     redraw();
 
-    QMouseEvent* event = new QMouseEvent(QEvent::MouseMove,
-                                         QPoint(e->x(), e->y()),
-                                         Qt::NoButton, Qt::NoButton,
-                                         Qt::NoModifier);
-    eventHandler->mouseMoveEvent(event);
-    delete event;
+    QMouseEvent event
+    {
+        QEvent::MouseMove,
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
+            e->position(),
+#else
+            QPointF{e->x(), e->y},
+#endif
+            Qt::NoButton, Qt::NoButton, Qt::NoModifier
+    };
+    eventHandler->mouseMoveEvent(&event);
 
     e->accept();
 }
 
 
-void QG_GraphicView::keyPressEvent(QKeyEvent* e)
-{
-    if (container==NULL) {
-        return;
+    void QG_GraphicView::keyPressEvent(QKeyEvent * e)
+    {
+        if (container == nullptr) {
+            return;
+        }
+
+        bool scroll = false;
+        RS2::Direction direction = RS2::Up;
+
+        switch (e->key()) {
+        case Qt::Key_Left:
+            scroll = true;
+            direction = RS2::Right;
+            break;
+        case Qt::Key_Right:
+            scroll = true;
+            direction = RS2::Left;
+            break;
+        case Qt::Key_Up:
+            scroll = true;
+            direction = RS2::Up;
+            break;
+        case Qt::Key_Down:
+            scroll = true;
+            direction = RS2::Down;
+            break;
+        default:
+            scroll = false;
+            break;
+        }
+
+        if (scroll) {
+            setCurrentAction(new RS_ActionZoomScroll(direction, *container, *this));
+        }
+        eventHandler->keyPressEvent(e);
     }
 
-    bool scroll = false;
-    RS2::Direction direction = RS2::Up;
-
-    switch (e->key()) {
-    case Qt::Key_Left:
-        scroll = true;
-        direction = RS2::Right;
-        break;
-    case Qt::Key_Right:
-        scroll = true;
-        direction = RS2::Left;
-        break;
-    case Qt::Key_Up:
-        scroll = true;
-        direction = RS2::Up;
-        break;
-    case Qt::Key_Down:
-        scroll = true;
-        direction = RS2::Down;
-        break;
-    default:
-        scroll = false;
-        break;
+    void QG_GraphicView::keyReleaseEvent(QKeyEvent * e)
+    {
+        eventHandler->keyReleaseEvent(e);
     }
 
-    if (scroll) {
-        setCurrentAction(new RS_ActionZoomScroll(direction,
-                         *container, *this));
-    }
-    eventHandler->keyPressEvent(e);
-}
-
-
-void QG_GraphicView::keyReleaseEvent(QKeyEvent* e)
-{
-    eventHandler->keyReleaseEvent(e);
-}
-
-/**
+    /**
  * Called whenever the graphic view has changed.
  * Adjusts the scrollbar ranges / steps.
  */
-void QG_GraphicView::adjustOffsetControls()
-{
-    if (scrollbars)
+    void QG_GraphicView::adjustOffsetControls()
     {
-        static bool running = false;
+        if (scrollbars) {
+            static bool running = false;
 
-        if (running) {
+            if (running) {
                 return;
         }
 
         running = true;
 
-        if (container==NULL || hScrollBar==NULL || vScrollBar==NULL) {
+        if (container==nullptr || hScrollBar==nullptr || vScrollBar==nullptr) {
             return;
         }
 
@@ -958,7 +1075,7 @@ void QG_GraphicView::paintEvent(QPaintEvent *)
     // Draw Layer 1
     if (redrawMethod & RS2::RedrawGrid)
     {
-        PixmapLayer1->fill(background);
+        PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
         drawLayer1((RS_Painter*)&painter1);
         painter1.end();
@@ -1075,4 +1192,130 @@ void QG_GraphicView::setMenu(const QString& activator, QMenu* menu)
 {
     destroyMenu(activator);
     menus[activator] = menu;
+}
+
+void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
+{
+    if (event == nullptr)
+        return;
+    const RS_Vector cadArea_minCoord(0., 0.);
+    const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
+    const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
+                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+
+    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
+
+    const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
+    RS_Vector offset = mouseCoord - cadArea_centerPoint;
+    offset = {std::abs(offset.x) - cadArea_unprobed.width() / 2.,
+              std::abs(offset.y) - cadArea_unprobed.height() / 2.};
+    offset = {std::max(offset.x, 1.), std::max(offset.y, 1.)};
+
+    double panOffset_angle{cadArea_centerPoint.angleTo(mouseCoord)};
+
+    /* It would be better if the below value was calculated in the code that deals with resizing the CAD area. */
+    const double quarterAngle = cadArea_centerPoint.angleTo(cadArea_actual.upperRightCorner());
+
+    double percentageFactor = 1.;
+
+    if (((panOffset_angle > quarterAngle) && (panOffset_angle <= (M_PI - quarterAngle)))
+        || ((panOffset_angle > (quarterAngle + M_PI))
+            && (panOffset_angle <= (M_PI + M_PI - quarterAngle)))) {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).y)
+                            - (cadArea_unprobed.height() / 2.0))
+                           / ((cadArea_actual.height() / 2.0) - (cadArea_unprobed.height() / 2.0));
+    } else {
+        percentageFactor = (std::abs((mouseCoord - cadArea_centerPoint).x)
+                            - (cadArea_unprobed.width() / 2.0))
+                           / ((cadArea_actual.width() / 2.0) - (cadArea_unprobed.width() / 2.0));
+    }
+
+    const double panTimerInterval{
+        m_panData->panTimerInterval_minimum
+        + ((m_panData->panTimerInterval_maximum - m_panData->panTimerInterval_minimum)
+           * (1.0 - percentageFactor))};
+
+    offset = RS_Vector::polar(offset.magnitude(), M_PI - panOffset_angle);
+    m_panData->panOffset = {static_cast<int>(offset.x), static_cast<int>(offset.y)};
+
+    if (m_panData->panTimer != nullptr) {
+        m_panData->panTimer->setInterval(panTimerInterval);
+    } else {
+        m_panData->start(panTimerInterval, *this);
+    }
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
+        std::cout << " CAD area centre point                = " << cadArea_centerPoint << std::endl
+                  << " Actual CAD area quarter angle (deg)  = " << quarterAngle * 180.0 / M_PI
+                  << std::endl
+                  << " Percentage factor                    = " << percentageFactor << std::endl
+                  << " Pan offset angle (radians)           = " << panOffset_angle << std::endl
+                  << " Pan offset angle (degrees)           = " << panOffset_angle * 180.0 / M_PI
+                  << std::endl
+                  << " Pan offset vector                    = " << m_panData->panOffset.x() << ", "
+                  << m_panData->panOffset.y()
+                  << std::endl
+                  //<< " Pan timer interval (ms)              = " << m_panData->panTimer->interfac
+                  << std::endl
+                  << " Mouse (cursor) position (adjusted)   = " << mouseCoord << std::endl
+                  << " Mouse position w.r.t. centre point   = " << mouseCoord - cadArea_centerPoint
+                  << std::endl
+                  << std::endl
+                  << std::endl;
+    }
+}
+
+
+bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
+{
+    if (event == nullptr)
+        return false;
+    RS_SETTINGS->beginGroupGuard("/Appearance");
+    const bool autopanEnabled = (bool) RS_SETTINGS->readNumEntry("/Autopanning", 0);
+
+    if (!autopanEnabled)
+        return false;
+
+    const RS_Vector cadArea_minCoord(0., 0.);
+
+    const RS_Vector cadArea_maxCoord(getWidth(), getHeight());
+
+    const LC_Rect cadArea_actual(cadArea_minCoord, cadArea_maxCoord);
+
+    const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
+                                   cadArea_maxCoord - m_panData->probedAreaOffset);
+    if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)
+        return false;
+
+    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+
+    if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
+        std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/"
+                  << cadArea_unprobed.height() << std::endl
+                  << " Actual   CAD area width and height = " << cadArea_actual.width() << "/"
+                  << cadArea_actual.height() << std::endl
+                  << " Mouse (cursor) position            = " << mouseCoord << std::endl
+                  << std::endl;
+    }
+
+    return cadArea_actual.inArea(mouseCoord) && !cadArea_unprobed.inArea(mouseCoord);
+}
+
+
+/*
+    Auto-pans the CAD area.
+    - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void QG_GraphicView::autoPanStep()
+{
+    // skip first steps to avoid unintensional panning
+    m_panData->m_delayCounter = std::min(++ m_panData->m_delayCounter, m_panData->delayCounterMax);
+    if (m_panData->m_delayCounter < m_panData->delayCounterMax)
+        return;
+
+    RS_DEBUG->print(RS_Debug::D_INFORMATIONAL, "%s(): Timer is ticking!", __func__);
+
+    zoomPan(m_panData->panOffset.x(), m_panData->panOffset.y());
 }

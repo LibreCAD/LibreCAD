@@ -40,7 +40,7 @@ class QG_BevelOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_BevelOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_BevelOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_BevelOptions();
 
 public slots:

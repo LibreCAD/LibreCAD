@@ -50,8 +50,8 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
     RS_GraphicView& graphicView,
     bool select)
         : RS_PreviewActionInterface("Select Intersected",
-							container, graphicView)
-		, pPoints(new Points{})
+                            container, graphicView)
+    , pPoints(std::make_unique<Points>())
 		,select(select)
 {
 	actionType=RS2::ActionSelectIntersected;
@@ -59,9 +59,10 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
 
 RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
 
+
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
-	pPoints.reset(new Points{});
+    pPoints = std::make_unique<Points>();
     snapMode.clear();
     snapMode.restriction = RS2::RestrictNothing;
 }

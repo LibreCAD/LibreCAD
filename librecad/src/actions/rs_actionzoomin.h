@@ -27,6 +27,9 @@
 #ifndef RS_ACTIONZOOMIN_H
 #define RS_ACTIONZOOMIN_H
 
+#include <memory>
+
+#include "rs.h"
 #include "rs_actioninterface.h"
 
 /**
@@ -42,16 +45,16 @@ public:
                     RS2::ZoomDirection direction = RS2::In,
 					RS2::Axis axis = RS2::Both,
 					RS_Vector const* pCenter = nullptr,
-					double factor = 1.25);
+                    double factor = 1.137);
 	~RS_ActionZoomIn() override;
 
 	void init(int status=0) override;
 	void trigger() override;
 
 protected:
-    double zoom_factor;
-    RS2::ZoomDirection direction;
-    RS2::Axis axis;
+    double zoom_factor = 1.;
+    RS2::ZoomDirection direction = RS2::In;
+    RS2::Axis axis = RS2::Both;
 	std::unique_ptr<RS_Vector> center;
 };
 

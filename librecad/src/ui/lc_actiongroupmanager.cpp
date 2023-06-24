@@ -25,6 +25,7 @@
 */
 
 #include "lc_actiongroupmanager.h"
+#include "qc_applicationwindow.h"
 
 #include <QActionGroup>
 
@@ -36,7 +37,7 @@ namespace Sorting
     }
 }
 
-LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
+LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     : QObject(parent)
     , block(new QActionGroup(this))
     , circle(new QActionGroup(this))
@@ -80,20 +81,16 @@ LC_ActionGroupManager::LC_ActionGroupManager(QObject* parent)
     view->setObjectName(QObject::tr("View"));
     widgets->setObjectName(QObject::tr("Widgets"));
 
-    foreach (auto ag, findChildren<QActionGroup*>())
-    {
+    foreach (auto const& ag, findChildren<QActionGroup*>()) {
         ag->setExclusive(false);
-        if (ag->objectName() != QObject::tr("File"))
-        {
-            connect(parent, SIGNAL(windowsChanged(bool)),
-                    ag, SLOT(setEnabled(bool)));
+        if (QObject::tr("File") != ag->objectName()
+                && QObject::tr("Options") != ag->objectName()) {
+            connect( parent, &QC_ApplicationWindow::windowsChanged, ag, &QActionGroup::setEnabled);
         }
     }
 
-    foreach (auto ag, toolGroups())
-    {
-        connect(ag, SIGNAL(triggered(QAction*)),
-                parent, SLOT(relayAction(QAction*)));
+    foreach (auto const& ag, toolGroups()) {
+        connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }
 }
 

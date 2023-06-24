@@ -44,8 +44,8 @@ class lc_Listdlg : public QDialog
     Q_OBJECT
 
 public:
-    explicit lc_Listdlg(QWidget *parent = 0);
-    ~lc_Listdlg();
+    explicit lc_Listdlg(QWidget *parent = nullptr);
+    ~lc_Listdlg() override;
     void setText(QString text);
 
 public slots:

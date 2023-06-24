@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_ScaleData;
 
 /**
  * This action class can handle user events to move entities.

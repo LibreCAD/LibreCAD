@@ -313,7 +313,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent* e) {
 								*targetPoint = snapFree(e);
                                 originalEntity->setHighlighted(true);
                                 graphicView->drawEntity(originalEntity);
-                                double d = graphicView->toGraphDX(snapRange)*0.9;
+                                double d = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
 								RS_Entity* Segment =  ((RS_Polyline*)originalEntity)->getNearestEntity( *targetPoint, &d, RS2::ResolveNone);
                                 if (Segment->rtti() == RS2::EntityLine) {
                                 double ang = ((RS_Line*)Segment)->getAngle1();

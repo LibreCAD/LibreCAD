@@ -28,6 +28,7 @@
 
 #include <QAction>
 #include <QMouseEvent>
+
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -35,9 +36,9 @@
 RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_ActionInterface("Info Inside",
-						container, graphicView)
-	, pt(new RS_Vector{})
-	,contour(new RS_EntityContainer(nullptr, false))
+                        container, graphicView)
+    , pt(std::make_unique<RS_Vector>())
+    ,contour(std::make_unique<RS_EntityContainer>())
 {
 	actionType=RS2::ActionInfoInside;
 	for(auto e: container){

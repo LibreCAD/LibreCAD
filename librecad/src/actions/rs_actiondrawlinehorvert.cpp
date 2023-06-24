@@ -53,7 +53,7 @@ RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw horizontal/vertical lines",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");

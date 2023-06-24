@@ -53,8 +53,8 @@ struct RS_BlockData {
 	RS_Vector basePoint;
 
 	bool frozen {false};              //!< Frozen flag
-	bool visibleInBlockList {true};   //!< Visible in block list
-	bool selectedInBlockList {false}; //!< selected in block list
+    mutable bool visibleInBlockList {true};   //!< Visible in block list
+    mutable bool selectedInBlockList {false}; //!< selected in block list
 };
 
 
@@ -83,12 +83,10 @@ public:
      */
     RS_Block(RS_EntityContainer* parent, const RS_BlockData& d);
 
-	virtual ~RS_Block() = default;
-	
-	virtual RS_Entity* clone() const;
+    RS_Entity* clone() const override;
 
     /** @return RS2::EntityBlock */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const override{
         return RS2::EntityBlock;
     }
 
@@ -106,34 +104,34 @@ public:
         return data.basePoint;
     }
 
-    virtual RS_LayerList* getLayerList();
-    virtual RS_BlockList* getBlockList();
+    RS_LayerList* getLayerList() override;
+    RS_BlockList* getBlockList() override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual void newDoc() {
+    void newDoc() override {
         // do nothing
     }
 
     /**
      * Reimplementation from RS_Document. Saves the parent graphic document.
      */
-    virtual bool save(bool isAutoSave = false);
+    bool save(bool isAutoSave = false) override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual bool saveAs(const QString& filename, RS2::FormatType type, bool force = false);
+    bool saveAs(const QString& filename, RS2::FormatType type, bool force = false) override;
 
     /**
      * Reimplementation from RS_Document. Does nothing.
      */
-    virtual bool open(const QString& , RS2::FormatType) {
+    bool open(const QString& , RS2::FormatType) override {
         // do nothing
         return false;
     }
-    virtual bool loadTemplate(const QString& , RS2::FormatType) {
+    bool loadTemplate(const QString& , RS2::FormatType) override {
         // do nothing
         return false;
     }
@@ -144,8 +142,8 @@ public:
 	 * sets a new name for the block. Only called by blocklist to
 	 * assure that block names stay unique.
 	 */
-    void setName(const QString& n) {
-		data.name = n;
+    void setName(QString newName) {
+        data.name = std::move(newName);
     }
     
 	/**
@@ -201,7 +199,7 @@ public:
      *
      * @param v true: selected, false: deselected
      */
-    void selectedInBlockList(bool v);
+    void selectedInBlockList(bool v) const;
 
     /**
      * Returns selection state of the block in block list

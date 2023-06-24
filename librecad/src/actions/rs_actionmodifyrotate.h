@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_RotateData;
+struct RS_RotateData;
 
 /**
  * This action class can handle user events to move entities.

@@ -40,7 +40,7 @@ class QG_TextOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_TextOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_TextOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_TextOptions();
 
 public slots:
