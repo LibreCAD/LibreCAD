@@ -82,7 +82,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
 	,eventHandler{new RS_EventHandler{this}}
     , m_colorData{std::make_unique<ColorData>()}
-	,grid{new RS_Grid{this}}
+    ,grid{std::make_unique<RS_Grid>{this)}
     ,defaultSnapMode{std::make_unique<RS_SnapMode>()}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)

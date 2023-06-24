@@ -931,9 +931,10 @@ public:
          * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so
          * it always shows up
          */
-        enum OverlayGraphics {
-                ActionPreviewEntity, // Action Entities
-                Snapper // Snapper
+        enum OverlayGraphics: uint8_t {
+                ActionPreviewEntity = 0, // Action Entities
+                Snapper = 1, // Snapper
+                EntityEffects =2 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen

@@ -374,8 +374,8 @@ public:
 
 protected:
 
-    RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
-    RS_EventHandler* eventHandler;
+    RS_EntityContainer* container = nullptr; // Holds a pointer to all the enties
+    RS_EventHandler* eventHandler = nullptr;
 
     /** colors for different usages*/
     struct ColorData;
