@@ -24,7 +24,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_graphicview.h"
 
 #include<climits>
 #include<cmath>
@@ -35,6 +34,7 @@
 #include <QMouseEvent>
 #include <QtAlgorithms>
 
+#include "rs_graphicview.h"
 
 #include "rs_color.h"
 #include "rs_debug.h"
@@ -82,12 +82,11 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
 	,eventHandler{new RS_EventHandler{this}}
     , m_colorData{std::make_unique<ColorData>()}
-	,grid{new RS_Grid{this}}
+    ,grid{std::make_unique<RS_Grid>(this)}
     ,defaultSnapMode{std::make_unique<RS_SnapMode>()}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
-    ,previousViewTime(QDateTime::currentDateTime())
-    ,panning(false)
+    ,previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())}
 {
     RS_SETTINGS->beginGroup("Colors");
     setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
@@ -585,8 +584,8 @@ void RS_GraphicView::saveView() {
 	if(getGraphic()) getGraphic()->setModified(true);
 	QDateTime noUpdateWindow=QDateTime::currentDateTime().addMSecs(-500);
 	//do not update view within 500 milliseconds
-	if(previousViewTime > noUpdateWindow) return;
-	previousViewTime = QDateTime::currentDateTime();
+    if(*previousViewTime > noUpdateWindow) return;
+    *previousViewTime = QDateTime::currentDateTime();
 	savedViews[savedViewIndex]=std::make_tuple(offsetX,offsetY,factor);
 	savedViewIndex = (savedViewIndex+1)%savedViews.size();
 	if(savedViewCount<savedViews.size()) savedViewCount++;

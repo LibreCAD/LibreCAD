@@ -2621,7 +2621,7 @@
                  <rect>
                   <x>10</x>
                   <y>10</y>
-                  <width>147</width>
+                  <width>190</width>
                   <height>23</height>
                  </rect>
                 </property>
@@ -2634,7 +2634,7 @@
                  <rect>
                   <x>10</x>
                   <y>40</y>
-                  <width>141</width>
+                  <width>190</width>
                   <height>23</height>
                  </rect>
                 </property>
@@ -2661,7 +2661,7 @@
               <widget class="QLabel" name="label_11">
                <property name="maximumSize">
                 <size>
-                 <width>180</width>
+                 <width>190</width>
                  <height>16777215</height>
                 </size>
                </property>

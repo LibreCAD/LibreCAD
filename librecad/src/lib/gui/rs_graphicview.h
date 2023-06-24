@@ -28,16 +28,17 @@
 #ifndef RS_GRAPHICVIEW_H
 #define RS_GRAPHICVIEW_H
 
-#include <tuple>
 #include <memory>
+#include <tuple>
+#include <vector>
 
-#include <QAction>
-#include <QDateTime>
 #include <QMap>
+#include <QWidget>
 
 #include "lc_rect.h"
 #include "rs.h"
 
+class QDateTime;
 class QMouseEvent;
 class QKeyEvent;
 
@@ -68,7 +69,7 @@ class RS_GraphicView : public QWidget
     Q_OBJECT
 
 public:
-    RS_GraphicView(QWidget * parent = 0, Qt::WindowFlags f = {});
+    RS_GraphicView(QWidget * parent = nullptr, Qt::WindowFlags f = {});
 	virtual ~RS_GraphicView();
 
     void cleanUp();
@@ -374,8 +375,8 @@ public:
 
 protected:
 
-    RS_EntityContainer* container{nullptr}; // Holds a pointer to all the enties
-    RS_EventHandler* eventHandler;
+    RS_EntityContainer* container = nullptr; // Holds a pointer to all the enties
+    RS_EventHandler* eventHandler = nullptr;
 
     /** colors for different usages*/
     struct ColorData;
@@ -415,8 +416,8 @@ private:
 	//circular buffer for saved views
 	std::vector<std::tuple<int, int, RS_Vector> > savedViews;
 	unsigned short savedViewIndex=0;
-	unsigned short savedViewCount=0;
-	QDateTime previousViewTime;
+    unsigned short savedViewCount=0;
+    std::unique_ptr<QDateTime> previousViewTime;
 
 	int borderLeft=0;
 	int borderTop=0;

@@ -29,9 +29,6 @@
 
 #include <memory>
 
-
-#include <vector>
-
 #include "rs_previewactioninterface.h"
 
 
@@ -87,17 +84,12 @@ public:
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction restrBak;
+    RS2::SnapRestriction snapRestriction;
 
 
     private:
 
-        size_t nHighLightDuplicates;
-
-        RS_Entity* highlightedEntity = nullptr;
-        std::vector<RS_Entity*> highlightedEntityDuplicates;
-
-        void highlightHoveredEntities(const RS_Vector& currentMousePosition);
+    void highlightHoveredEntities(const RS_Vector& currentMousePosition);
 
 };
 
