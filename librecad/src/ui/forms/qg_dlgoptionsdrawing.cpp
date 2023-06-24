@@ -28,9 +28,12 @@
 #include <iostream>
 
 #include <QMessageBox>
+
 #include <QStringList>
 
 #include "qg_dlgoptionsdrawing.h"
+
+#include "qc_applicationwindow.h"
 
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
@@ -147,11 +150,13 @@ void QG_DlgOptionsDrawing::init() {
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
-void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
+void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
+{
     graphic = g;
 
-	if (graphic==nullptr) {
-		std::cout<<" QG_DlgOptionsDrawing::setGraphic(nullptr)\n";
+    if (graphic==nullptr)
+    {
+        RS_DEBUG->print(RS_Debug::D_ERROR, " QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
@@ -538,6 +543,10 @@ void QG_DlgOptionsDrawing::validate() {
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
+
+        emit QC_ApplicationWindow::getAppWindow()->gridChanged(cbGridOn->isChecked());
+
+		    *spacing=RS_Vector{0.0,0.0,0.0};
         graphic->setGridOn(cbGridOn->isChecked());
         *spacing=RS_Vector{0.0, 0.0};
         if (cbXSpacing->currentText()==tr("auto")) {

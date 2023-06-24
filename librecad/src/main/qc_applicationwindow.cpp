@@ -573,7 +573,7 @@ void QC_ApplicationWindow::doActivate(QMdiSubWindow * w)
 	bool maximized = RS_SETTINGS->readNumEntry("/Maximized");
 	RS_SETTINGS->endGroup();
 	if (w) {
-		slotWindowActivated(w);
+		slotWindowActivated(w, true);
 		w->activateWindow();
 		w->raise();
 		w->setFocus();
@@ -993,8 +993,8 @@ void QC_ApplicationWindow::slotWindowActivated(int index){
 /**
  * Called when a document window was activated.
  */
-void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
-
+void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
+{
     RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated begin");
 
     if(w==nullptr) {
@@ -1037,10 +1037,12 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w) {
 
         pen_wiz->setMdiWindow(m);
 
-        // update toggle button status:
-        if (m->getGraphic()) {
-            emit(gridChanged(m->getGraphic()->isGridOn()));
+        if (!forced)
+        {
+            // update toggle button status:
+            if (m->getGraphic()) emit gridChanged(m->getGraphic()->isGridOn());
         }
+
         QG_GraphicView* view = m->getGraphicView();
         if (view)
         {
