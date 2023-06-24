@@ -204,7 +204,6 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     if (duplicatedPen_width < 1.0) duplicatedPen_width = 1.0;
 
                     pPoints->nHighLightDuplicates = 2.0 * zoomFactor;
-                    std::cout<<__func__<<": line "<<__LINE__<<" : nHighLightDuplicates="<<pPoints->nHighLightDuplicates<<std::endl;
 
                     pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
                     pPoints->nHighLightDuplicates = std::min(pPoints->nHighLightDuplicates, maxHighLightDuplicates);
