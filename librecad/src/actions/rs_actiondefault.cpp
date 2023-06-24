@@ -71,7 +71,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
     : RS_PreviewActionInterface("Default",
 								container, graphicView)
 	, pPoints(std::make_unique<Points>())
-	, restrBak(RS2::RestrictNothing)
+    , snapRestriction(RS2::RestrictNothing)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
@@ -102,7 +102,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch(e->key()){
     case Qt::Key_Shift:
-        restrBak = snapMode.restriction;
+        snapRestriction = snapMode.restriction;
         setSnapRestriction(RS2::RestrictOrthogonal);
         e->accept();
         break; //avoid clearing command line at shift key
@@ -122,7 +122,7 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Shift) {
-        setSnapRestriction(restrBak);
+        setSnapRestriction(snapRestriction);
         e->accept();
     }
 }

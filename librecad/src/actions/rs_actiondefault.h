@@ -29,7 +29,6 @@
 
 #include <memory>
 
-
 #include <vector>
 
 #include "rs_previewactioninterface.h"
@@ -87,12 +86,13 @@ public:
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction restrBak;
+    RS2::SnapRestriction snapRestriction;
 
 
     private:
 
-        size_t nHighLightDuplicates;
+    // Number of temporary entities for glowing effects
+        size_t nHighLightDuplicates = 0;
 
         RS_Entity* highlightedEntity = nullptr;
         std::vector<RS_Entity*> highlightedEntityDuplicates;
