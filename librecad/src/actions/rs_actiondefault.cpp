@@ -183,13 +183,11 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                     auto hContainer = graphicView->getOverlayContainer(RS2::EntityEffects);
 
                     if (pPoints->highlightedEntity != nullptr)
-                    {
                         pPoints->highlightedEntity->setHovered(false);
 
-                        for (RS_Entity* duplicate: pPoints->highlightedEntityDuplicates)
-                        {
-                            hContainer->removeEntity(duplicate);
-                        }
+                    for (RS_Entity* duplicate: pPoints->highlightedEntityDuplicates)
+                    {
+                        hContainer->removeEntity(duplicate);
                     }
 
                     pPoints->highlightedEntity = entity;
@@ -246,6 +244,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                         pPoints->highlightedEntityDuplicates [i] = duplicatedEntity;
                     }
+                    std::cout<<"overlay: "<<hContainer->count()<<std::endl;
 
                     graphicView->redraw(RS2::RedrawOverlay);
 
