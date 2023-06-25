@@ -180,6 +180,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                 if (isPointOnEntity)
                 {
                     RS_Color whiteColor{{Qt::white}};
+                    auto hContainer = graphicView->getOverlayContainer(RS2::EntityEffects);
 
                     if (pPoints->highlightedEntity != nullptr)
                     {
@@ -187,7 +188,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                         for (RS_Entity* duplicate: pPoints->highlightedEntityDuplicates)
                         {
-                            container->removeEntity(duplicate);
+                            hContainer->removeEntity(duplicate);
                         }
                     }
 
@@ -198,10 +199,10 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
 
-                    const double zoomFactor { graphicView->getFactor().x };
+                    const double zoomFactor = 200.;
 
                     double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
-                    if (duplicatedPen_width < 1.0) duplicatedPen_width = 1.0;
+                    duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
 
                     pPoints->nHighLightDuplicates = 2.0 * zoomFactor;
 
@@ -226,9 +227,9 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
 
                         duplicatedEntity->setHighlightedEntityParent(pPoints->highlightedEntity);
 
-                        duplicatedEntity->reparent(container);
+                        duplicatedEntity->reparent(hContainer);
                         duplicatedEntity->setHighlighted(true);
-                        container->addEntity(duplicatedEntity);
+                        hContainer->addEntity(duplicatedEntity);
 
                         /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
 
@@ -246,7 +247,7 @@ void RS_ActionDefault::highlightHoveredEntities(const RS_Vector& currentMousePos
                         pPoints->highlightedEntityDuplicates [i] = duplicatedEntity;
                     }
 
-                    graphicView->redraw(RS2::RedrawDrawing);
+                    graphicView->redraw(RS2::RedrawOverlay);
 
                     return;
                 }
@@ -598,14 +599,16 @@ const std::vector<RS_Entity*>& RS_ActionDefault::getHighLightingDuplicates() con
 
 void RS_ActionDefault::clearHighLighting(RS_Entity* entity)
 {
-    if (pPoints->highlightedEntity!=nullptr && pPoints->highlightedEntity->getHighlightedEntityParent() == entity)
-        pPoints->highlightedEntity=nullptr;
+    if (pPoints->highlightedEntity == nullptr
+            || pPoints->highlightedEntity->getHighlightedEntityParent() != entity)
+        return;
+    auto hContainer = graphicView->getOverlayContainer(RS2::EntityEffects);
+    pPoints->highlightedEntity=nullptr;
     for (RS_Entity* duplicate: pPoints->highlightedEntityDuplicates)
     {
-        if (duplicate != nullptr && duplicate->getHighlightedEntityParent() == entity)
-            container->removeEntity(duplicate);
+        hContainer->removeEntity(duplicate);
     }
 
-    graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawOverlay);
 }
 // EOF
