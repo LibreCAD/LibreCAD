@@ -102,10 +102,6 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
     double distance = RS_MAXDOUBLE;
     RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
 
-    // Avoid using temporary entities for highlighting
-    while(entity != nullptr && entity->getHighlightedEntityParent() != nullptr)
-        entity = entity->getHighlightedEntityParent();
-
     return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
 }
 

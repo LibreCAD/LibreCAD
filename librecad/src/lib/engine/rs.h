@@ -934,7 +934,7 @@ public:
         enum OverlayGraphics: short {
                 ActionPreviewEntity = 0, // Action Entities
                 Snapper = 1, // Snapper
-                EntityEffects =2 // special effects, like glowing on hover
+                OverlayEffects =2 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen

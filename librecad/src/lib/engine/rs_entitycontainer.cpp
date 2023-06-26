@@ -516,9 +516,6 @@ unsigned int RS_EntityContainer::countSelected(bool deep, std::initializer_list<
 
     for (RS_Entity* t: entities){
 
-        if (t->getHighlightedEntityParent() != nullptr)
-	      continue;
-
         if (t->isSelected())
 	    if (!types.size() || type.count(t->rtti()))
                 c++;
@@ -1838,18 +1835,11 @@ void RS_EntityContainer::revertDirection() {
  */
 void RS_EntityContainer::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/)
 {
-
     if (painter == nullptr || view == nullptr)
         return;
 
-    bool entityIsHovered = isHovered() && (rtti() != RS2::EntityGraphic);
-
     foreach (auto* e, entities)
-    {
-        if (entityIsHovered)
-            e->setPen(getPen());
         view->drawEntity(painter, e);
-    }
 }
 
 /**

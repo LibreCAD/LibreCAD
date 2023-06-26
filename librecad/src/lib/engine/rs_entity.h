@@ -201,17 +201,7 @@ public:
 	virtual bool isVisible() const;
 	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
-	virtual bool isHighlighted() const;
-
-    virtual void setHovered(bool on)
-    {
-        hovered = on;
-    }
-
-    virtual bool isHovered() const
-    {
-        return hovered;
-    }
+    virtual bool isHighlighted() const;
 
 	bool isLocked() const;
 
@@ -566,17 +556,7 @@ m0 x + m1 y + m2 =0
 	 * @brief isArcLine determine the entity is either Arc, Circle, or Line
 	 * @return true if entity is Arc, Circle, or Line
 	 */
-	virtual bool isArcCircleLine() const;
-
-    void setHighlightedEntityParent(RS_Entity* parent)
-    {
-        highlightedEntityParent = parent;
-    }
-
-    RS_Entity* getHighlightedEntityParent() const
-    {
-        return highlightedEntityParent;
-    }
+    virtual bool isArcCircleLine() const;
 
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.
@@ -598,12 +578,8 @@ protected:
     //! auto updating enabled?
     bool updateEnabled = false;
 
-    bool hovered =false;
-
 private:
     std::map<QString, QString> varList;
-
-    RS_Entity* highlightedEntityParent = nullptr;
 };
 
 #endif

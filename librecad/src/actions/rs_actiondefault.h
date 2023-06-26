@@ -64,6 +64,7 @@ public:
 	void finish(bool /*updateTB*/ = true ) override{}
 
 	void init(int status=0) override;
+    void resume() override;
     void suspend() override;
 
 	void keyPressEvent(QKeyEvent* e) override;
@@ -90,7 +91,7 @@ protected:
 
     private:
 
-    void highlightHoveredEntities(const RS_Vector& currentMousePosition);
+    void highlightHoveredEntities(QMouseEvent* currentMousePosition);
 };
 
 #endif

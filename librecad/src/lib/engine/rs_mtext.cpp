@@ -715,8 +715,6 @@ void RS_MText::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         }
     }
 
-    if ( ! isHovered()) setHovered(getParent()->isHovered());
-
     double patternOffset = 0.0;
 
     for (auto e : ((RS_EntityContainer *) firstEntity())->getEntityList())

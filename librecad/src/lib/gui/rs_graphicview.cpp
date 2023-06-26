@@ -1061,7 +1061,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		}
 
 		// this entity is highlighted:
-		if (e->isHighlighted() || e->isHovered())
+        if (e->isHighlighted())
 			pen.setColor(m_colorData->selectedColor);
 	}
 
@@ -1776,7 +1776,7 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 		return overlayEntities[position];
 	}
     overlayEntities[position]=new RS_EntityContainer(nullptr);
-    if (position == RS2::EntityEffects)
+    if (position == RS2::OverlayEffects)
         overlayEntities[position]->setOwner(true);
 
 	return overlayEntities[position];
