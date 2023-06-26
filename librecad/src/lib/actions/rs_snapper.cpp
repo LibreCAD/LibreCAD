@@ -647,8 +647,6 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
     if (entity != nullptr && entity->getParent()) {
         idx = entity->getParent()->findEntity(entity);
     }
-    while(entity->getHighlightedEntityParent() != nullptr)
-        entity = entity->getHighlightedEntityParent();
 
     if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange, graphicView)) {
         // highlight:
@@ -722,8 +720,6 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
         idx = entity->getParent()->findEntity(entity);
     }
 
-    while(entity != nullptr && entity->getHighlightedEntityParent() != nullptr)
-        entity = entity->getHighlightedEntityParent();
     if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange, graphicView)) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
