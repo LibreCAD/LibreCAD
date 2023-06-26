@@ -143,96 +143,90 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
         return;
-    if (entity->isVisible() && ! entity->isLocked() && !entity->isHovered())
+    if (!entity->isVisible() || entity->isLocked())
+        return;
+
+    const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
+                                        ? hoverToleranceFactor1
+                                        : hoverToleranceFactor2;
+
+    const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+
+    double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
+                                     ? minimumHoverTolerance
+                                     : hoverTolerance;
+
+    double screenTolerance = graphicView->toGraphDX( 0.01*std::min(graphicView->getWidth(), graphicView->getHeight()));
+    hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
+    bool isPointOnEntity = false;
+
+    RS_Vector currentMousePosition = graphicView->toGraph(event->x(), event->y());
+    if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
+            ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
     {
-        const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
-                                            ? hoverToleranceFactor1
-                                            : hoverToleranceFactor2;
+        double nearestDistanceTo_pointOnEntity = 0.;
 
-        const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+        entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
 
-        double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
-                                         ? minimumHoverTolerance
-                                         : hoverTolerance;
+        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
+    }
+    else
+    {
+        isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
+    }
 
-        double screenTolerance = graphicView->toGraphDX( 0.01*std::min(graphicView->getWidth(), graphicView->getHeight()));
-        hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
-        bool isPointOnEntity = false;
+    if (isPointOnEntity)
+    {
+        auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
+        hContainer->clear();
 
-        RS_Vector currentMousePosition = graphicView->toGraph(event->x(), event->y());
-        if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
-                ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
+        pPoints->highlightedEntity = entity;
+
+        RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
+
+        const double zoomFactor = 200.;
+
+        double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
+        duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
+
+        pPoints->nHighLightDuplicates = 2.0 * zoomFactor;
+
+        pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
+        pPoints->nHighLightDuplicates = std::min(pPoints->nHighLightDuplicates, maxHighLightDuplicates);
+
+        if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
         {
-            double nearestDistanceTo_pointOnEntity = 0.;
+            DEBUG_HEADER
 
-            entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
-
-            if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
+                    std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
+                              << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
+                              << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
+                              << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
         }
-        else
+
+        for (unsigned int i = 0; i < pPoints->nHighLightDuplicates; i++)
         {
-            isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
+            RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
+
+            duplicatedEntity->reparent(hContainer);
+            duplicatedEntity->setHighlighted(true);
+            hContainer->addEntity(duplicatedEntity);
+
+            /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
+
+            const double& gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
+
+            duplicatedPen.setScreenWidth(25.0 * duplicatedPen_width * gradientFactor);
+
+            /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
+            const double& exponentialFactor { std::exp(-8.0 * gradientFactor) };
+
+            duplicatedPen.setAlpha(exponentialFactor);
+
+            duplicatedEntity->setPen(duplicatedPen);
         }
 
-        if (isPointOnEntity)
-        {
-            auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
-            hContainer->clear();
-
-            if (pPoints->highlightedEntity != nullptr)
-                pPoints->highlightedEntity->setHovered(false);
-
-            pPoints->highlightedEntity = entity;
-
-            /* This does not work for RS_Insert. */
-            pPoints->highlightedEntity->setHovered(true);
-
-            RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
-
-            const double zoomFactor = 200.;
-
-            double duplicatedPen_width = zoomFactor * duplicatedPen.getWidth() / 100.0;
-            duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
-
-            pPoints->nHighLightDuplicates = 2.0 * zoomFactor;
-
-            pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
-            pPoints->nHighLightDuplicates = std::min(pPoints->nHighLightDuplicates, maxHighLightDuplicates);
-
-            if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
-            {
-                DEBUG_HEADER
-
-                        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
-                                  << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
-                                  << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
-                                  << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
-            }
-
-            for (unsigned int i = 0; i < pPoints->nHighLightDuplicates; i++)
-            {
-                RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
-
-                duplicatedEntity->reparent(hContainer);
-                duplicatedEntity->setHighlighted(true);
-                hContainer->addEntity(duplicatedEntity);
-
-                /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
-
-                const double& gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
-
-                duplicatedPen.setScreenWidth(25.0 * duplicatedPen_width * gradientFactor);
-
-                /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
-                const double& exponentialFactor { std::exp(-8.0 * gradientFactor) };
-
-                duplicatedPen.setAlpha(exponentialFactor);
-
-                duplicatedEntity->setPen(duplicatedPen);
-            }
-
-            graphicView->redraw(RS2::RedrawOverlay);
-        }
+        graphicView->redraw(RS2::RedrawOverlay);
     }
 }
 
@@ -559,8 +553,6 @@ void RS_ActionDefault::clearHighLighting()
     if (hContainer->count()==0)
         return;
     hContainer->clear();
-    if (pPoints->highlightedEntity != nullptr)
-        pPoints->highlightedEntity->setHovered(false);
     pPoints->highlightedEntity=nullptr;
     graphicView->redraw(RS2::RedrawOverlay);
 }
