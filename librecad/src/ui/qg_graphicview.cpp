@@ -130,7 +130,7 @@ void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
     auto* defaultAction = dynamic_cast<RS_ActionDefault*>(view.getEventHandler()->getDefaultAction());
     if (defaultAction != nullptr)
     {
-        defaultAction->clearHighLighting(entity);
+        defaultAction->clearHighLighting();
     }
     doc->endUndoCycle();
 }

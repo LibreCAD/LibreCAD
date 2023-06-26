@@ -39,6 +39,8 @@
  */
 class RS_ActionDefault : public RS_PreviewActionInterface {
     Q_OBJECT
+
+    using BASE_CLASS = RS_PreviewActionInterface;
 public:
     /**
      * Action States.
@@ -62,6 +64,7 @@ public:
 	void finish(bool /*updateTB*/ = true ) override{}
 
 	void init(int status=0) override;
+    void suspend() override;
 
 	void keyPressEvent(QKeyEvent* e) override;
 	void keyReleaseEvent(QKeyEvent* e) override;
@@ -75,11 +78,9 @@ public:
 
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
-//    void resume() override;
 
     // clear temporary entities for highlighting
-    void clearHighLighting(RS_Entity* entity);
-    const std::vector<RS_Entity*>& getHighLightingDuplicates() const;
+    void clearHighLighting();
 
 protected:
 	struct Points;
@@ -90,7 +91,6 @@ protected:
     private:
 
     void highlightHoveredEntities(const RS_Vector& currentMousePosition);
-
 };
 
 #endif

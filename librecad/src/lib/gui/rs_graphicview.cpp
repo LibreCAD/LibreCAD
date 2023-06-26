@@ -1776,6 +1776,8 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
 		return overlayEntities[position];
 	}
     overlayEntities[position]=new RS_EntityContainer(nullptr);
+    if (position == RS2::EntityEffects)
+        overlayEntities[position]->setOwner(true);
 
 	return overlayEntities[position];
 
