@@ -295,8 +295,11 @@ jobs:
         uses: keith-gamble/upload-to-latest-release@master
         with:
           name:  LibreCAD-${{ github.ref }}'.zip'
-          path: assets/LibreCAD*.*
+          automatic_release_tag: "latest"
+          pre-release: true
           token: ${{ secrets.GITHUB_TOKEN }}
-          asset_content_type: application/zip
+          files: |
+            assets/LibreCAD*.*
+            LICENSE
 
 
