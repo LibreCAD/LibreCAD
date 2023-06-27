@@ -291,15 +291,12 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@v3
 
-      - name: Upload latest pre-release
-        uses: actions/upload-artifact@v3
+      - name: Upload to Latest Release
+        uses: keith-gamble/upload-to-latest-release@master
         with:
-          retention-days: 2
-          name: assets
+          name:  LibreCAD-${{ github.ref }}'.zip'
           path: assets/LibreCAD*.*
+          token: ${{ secrets.GITHUB_TOKEN }}
+          asset_content_type: application/zip
 
-      - uses: actions/upload-artifact@v3
-        with:
-          retention-days: 2
-          name: assets
-          path: LICENSE
+
