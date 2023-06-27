@@ -291,13 +291,12 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@v3
 
-      - name: Upload to Latest Release
-        uses: keith-gamble/upload-to-latest-release@master
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
-          name:  LibreCAD-${{ github.ref }}'.zip'
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "latest"
-          pre-release: true
-          token: ${{ secrets.GITHUB_TOKEN }}
+          title: "Continuous Build"
           files: |
             assets/LibreCAD*.*
             LICENSE
