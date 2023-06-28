@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_RoundData;
+struct RS_RoundData;
 
 /**
  * This action class can handle user events to round corners.
@@ -77,13 +77,16 @@ public:
 	bool isTrimOn() const;
 
 private:
+
+    bool removeOldFillet(RS_Entity* e, const bool& isPolyline);
+
 	//RS_Vector coord;
-	RS_Entity* entity1;
-	RS_Entity* entity2;
+    RS_Entity* entity1 = nullptr;
+    RS_Entity* entity2 = nullptr;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
-	Status lastStatus;
+    Status lastStatus = SetEntity1;
 };
 
 #endif

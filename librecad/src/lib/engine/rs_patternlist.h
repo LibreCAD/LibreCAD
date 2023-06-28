@@ -61,7 +61,7 @@ public:
 	void init();
 
 	int countPatterns() const {
-		return patterns.size();
+		return static_cast<int>(patterns.size());
     }
 
 	//! \{ range based loop support

@@ -28,33 +28,33 @@
 
 #include "ui_qg_dlgrotate2.h"
 
-class RS_Rotate2Data;
+struct RS_Rotate2Data;
 
 class QG_DlgRotate2 : public QDialog, public Ui::QG_DlgRotate2
 {
     Q_OBJECT
 
 public:
-    QG_DlgRotate2(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgRotate2();
+    QG_DlgRotate2(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    virtual ~QG_DlgRotate2();
 
 public slots:
     virtual void setData( RS_Rotate2Data * d );
     virtual void updateData();
 
 protected:
-    int newVariable;
+    int newVariable = 0;
 
 protected slots:
     virtual void languageChange();
 
 private:
     QString angle2;
-    bool useCurrentAttributes;
-    bool useCurrentLayer;
-    int numberMode;
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
+    int numberMode = 0;
     QString copies;
-    RS_Rotate2Data* data;
+    RS_Rotate2Data* data = nullptr;
     QString angle1;
 
     void init();

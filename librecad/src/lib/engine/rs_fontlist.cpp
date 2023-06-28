@@ -53,7 +53,7 @@ void RS_FontList::init() {
     QHash<QString, int> added; //used to remember added fonts (avoid duplication)
 
     for (int i = 0; i < list.size(); ++i) {
-        RS_DEBUG->print("font: %s:", list.at(i).toLatin1().data());
+        RS_DEBUG->print(RS_Debug::D_ERROR, "font: %s:", list.at(i).toLatin1().data());
 
         QFileInfo fi( list.at(i) );
         if ( !added.contains(fi.baseName()) ) {
@@ -61,7 +61,7 @@ void RS_FontList::init() {
             added.insert(fi.baseName(), 1);
         }
 
-        RS_DEBUG->print("base: %s", fi.baseName().toLatin1().data());
+        RS_DEBUG->print(RS_Debug::D_ERROR, "base: %s", fi.baseName().toLatin1().data());
     }
 }
 

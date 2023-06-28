@@ -45,14 +45,6 @@ QG_DlgArc::QG_DlgArc(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgArc::~QG_DlgArc()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
@@ -93,7 +85,9 @@ void QG_DlgArc::updateArc() {
     arc->setRadius(RS_Math::eval(leRadius->text()));
     arc->setAngle1(RS_Math::deg2rad(RS_Math::eval(leAngle1->text())));
     arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
-    arc->setReversed(cbReversed->isChecked());
+    if (arc->isReversed() != cbReversed->isChecked())
+        arc->revertDirection();
+
     arc->setPen(wPen->getPen());
 	arc->setLayer(cbLayer->currentText());
     arc->calculateBorders();

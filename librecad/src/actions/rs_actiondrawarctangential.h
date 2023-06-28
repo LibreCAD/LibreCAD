@@ -64,11 +64,9 @@ public:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-    
-	void hideOptions() override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+
+    void hideOptions() override;
 	void showOptions() override;
 
 	void updateMouseButtonHints() override;
@@ -93,11 +91,11 @@ protected:
     /**
      * Base entity.
      */
-    RS_AtomicEntity* baseEntity;
+    RS_AtomicEntity* baseEntity = nullptr;
     /**
   * Start point of base entity clicked?
   */
-    bool isStartPoint;
+    bool isStartPoint = false;
     /**
      * Point that determines end angle.
      */
@@ -107,8 +105,8 @@ protected:
   */
 	std::unique_ptr<RS_ArcData> data;
 private:
-    double angleLength;
-    bool byRadius;
+    double angleLength = 0.;
+    bool byRadius = false;
 };
 
 #endif

@@ -36,8 +36,6 @@
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_graphicview.h"
-#include "rs_dialogfactory.h"
-#include "rs_infoarea.h"
 
 #include "rs_information.h"
 #include "rs_painter.h"
@@ -553,7 +551,6 @@ void RS_Hatch::activateContour(bool on) {
         RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
-//#include<QDebug>
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
@@ -571,9 +568,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
-//    QPolygon jp;   // jump points
 
-    // loops:
     if (needOptimization==true) {
         foreach (auto l, entities){
 
@@ -586,7 +581,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         needOptimization = false;
     }
 
-    // loops:
     foreach (auto l, entities){
         l->setLayer(getLayer());
 
@@ -594,7 +588,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
 
             // edges:
-			for(auto e: *loop){
+            for(auto e: *loop){
 
                 e->setLayer(getLayer());
                 switch (e->rtti()) {
@@ -604,22 +598,14 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     QPoint pt2(RS_Math::round(view->toGuiX(e->getEndpoint().x)),
                                RS_Math::round(view->toGuiY(e->getEndpoint().y)));
 
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-                    if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
-                        pa<<pt1;
-                    pa<<pt2;
+                    if(!pa.size() || (pa.last() - pt1).manhattanLength() >= 1) {
+                        pa << pt1;
+                    }
+                    pa << pt2;
                 }
                     break;
 
                 case RS2::EntityArc: {
-//                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
-//                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-
                     QPolygon pa2;
                     RS_Arc* arc=static_cast<RS_Arc*>(e);
 
@@ -635,22 +621,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
                 case RS2::EntityCircle: {
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
-//                    QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
-//                               RS_Math::round(view->toGuiY(circle->getCenter().y)));
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-
                     RS_Vector c=view->toGui(circle->getCenter());
                     double r=view->toGuiDX(circle->getRadius());
                     path.addEllipse(QPoint(c.x,c.y),r,r);
-//                    QPolygon pa2;
-//                    painter->createArc(pa2, view->toGui(circle->getCenter()),
-//                                       view->toGuiDX(circle->getRadius()),
-//                                       0.0,
-//                                       2*M_PI,
-//                                       false);
-//                    pa<<pa2;
                 }
                     break;
                 case RS2::EntityEllipse:
@@ -665,9 +638,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                                            ellipse->getAngle()
                                            ,ellipse->getAngle1(),ellipse->getAngle2(),ellipse->isReversed()
                                            );
-//                    qDebug()<<"ellipse: "<<ellipse->getCenter().x<<","<<ellipse->getCenter().y;
-//                    qDebug()<<"ellipse: pa2.size()="<<pa2.size();
-//                    qDebug()<<"ellipse: pa2="<<pa2;
+
                     if(pa.size() && pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
                         pa2.remove(0,1);
                     pa<<pa2;
@@ -688,7 +659,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 default:
                     break;
                 }
-//                qDebug()<<"pa="<<pa;
+
                 if( pa.size()>2 && pa.first() == pa.last()) {
                     paClosed<<pa;
                     pa.clear();
@@ -715,8 +686,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     painter->drawPath(path);
     painter->setBrush(brush);
     painter->setPen(pen);
-
-
 }
 
 //must be called after update()

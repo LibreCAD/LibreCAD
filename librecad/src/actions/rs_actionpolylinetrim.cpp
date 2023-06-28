@@ -129,7 +129,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
                                         tr("No Segment found on entity."));
                         }else{
                                 Segment1 = NULL;
-                                        double dist = graphicView->toGraphDX(snapRange)*0.9;
+                                        double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
                                 Segment1 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
                                  graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
                                 if(Segment1 == NULL)
@@ -148,7 +148,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
                                         tr("No Segment found on entity."));
                         }else{
                                 Segment2 = NULL;
-                                        double dist = graphicView->toGraphDX(snapRange)*0.9;
+                                        double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
                                 Segment2 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
                                  graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
                                 if(Segment2 == NULL)

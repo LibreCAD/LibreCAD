@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONDIMDIAMETRIC_H
 #define RS_ACTIONDIMDIAMETRIC_H
 
+#include <memory>
+
 #include "rs_actiondimension.h"
 
 struct RS_DimDiametricData;
@@ -69,13 +71,13 @@ public:
 
 private:
     /** Chosen entity (arc / circle) */
-    RS_Entity* entity;
+    RS_Entity* entity = nullptr;
 	/** Chosen position */
 	std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
 	std::unique_ptr<RS_DimDiametricData> edata;
 	/** Last status before entering text. */
-	Status lastStatus;
+    Status lastStatus = SetEntity;
 };
 
 #endif

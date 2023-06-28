@@ -27,10 +27,13 @@
 #ifndef RS_SELECTION_H
 #define RS_SELECTION_H
 
-#include "rs_entitycontainer.h"
-#include "rs_graphicview.h"
+class QString;
 
-
+class RS_EntityContainer;
+class RS_Graphic;
+class RS_GraphicView;
+class RS_Vector;
+class RS_Entity;
 
 /**
  * API Class for selecting entities. 
@@ -43,7 +46,7 @@
 class RS_Selection {
 public:
     RS_Selection(RS_EntityContainer& entityContainer,
-                 RS_GraphicView* graphicView=NULL);
+                 RS_GraphicView* graphicView=nullptr);
 
     void selectSingle(RS_Entity* e);
     void selectAll(bool select=true);
@@ -70,9 +73,9 @@ public:
 	}
 
 protected:
-    RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_GraphicView* graphicView;
+    RS_EntityContainer* container = nullptr;
+    RS_Graphic* graphic = nullptr;
+    RS_GraphicView* graphicView = nullptr;
 };
 
 #endif

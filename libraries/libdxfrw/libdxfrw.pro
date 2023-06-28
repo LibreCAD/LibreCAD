@@ -19,8 +19,6 @@ TARGET = $$DLL_NAME
 GENERATED_DIR = ../../generated/lib/libdxfrw
 # Use common project definitions.
 include(../../common.pri)
-QMAKE_CXXFLAGS_DEBUG += -std=c++11
-QMAKE_CXXFLAGS += -std=c++11
 
 # svg support
 QT -= svg

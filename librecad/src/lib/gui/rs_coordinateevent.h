@@ -28,6 +28,7 @@
 #ifndef RS_COORDINATEEVENT_H
 #define RS_COORDINATEEVENT_H
 
+#include <rs_vector.h>
 
 /**
  * Coordinate Events.
@@ -43,7 +44,7 @@ public:
     /**
 	 * @return the position of the event in real graphic measures.
 	 */
-    RS_Vector getCoordinate() {
+    RS_Vector getCoordinate() const {
         return pos;
     }
  

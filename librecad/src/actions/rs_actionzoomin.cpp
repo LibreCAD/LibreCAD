@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
+#include <QAction>
+
 #include "rs_actionzoomin.h"
 
-#include <QAction>
 #include "rs_graphicview.h"
 
 /**
@@ -47,6 +48,7 @@ RS_ActionZoomIn::RS_ActionZoomIn(RS_EntityContainer& container,
         ,axis(axis)
 		,center(pCenter?new RS_Vector{*pCenter}:new RS_Vector{})
 {
+    setActionType(RS2::ActionZoomIn);
 }
 
 RS_ActionZoomIn::~RS_ActionZoomIn() = default;
@@ -75,6 +77,10 @@ void RS_ActionZoomIn::trigger() {
         break;
 
     case RS2::Both:
+        if (!center->valid) {
+            *center = graphicView->toGraph(graphicView->getWidth() / 2,
+                                           graphicView->getHeight() / 2);
+        }
         if (direction==RS2::In) {
 			graphicView->zoomIn(zoom_factor, *center);
         } else {

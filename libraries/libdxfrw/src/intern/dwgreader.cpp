@@ -763,7 +763,7 @@ bool dwgReader::readDwgBlocks(DRW_Interface& intfa, dwgBuffer *dbuf){
                 while (nextH != 0){
                     mit = ObjectMap.find(nextH);
                     if (mit==ObjectMap.end()) {
-                        nextH = bkr->lastEH;//end while if entity not foud
+                        nextH = 0;//end while if entity not found
                         DRW_DBG("\nWARNING: Entity of block not found\n");
                         ret = false;
                         continue;
@@ -839,7 +839,7 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
         while (nextH != 0){
             auto mit = ObjectMap.find(nextH);
             if (mit==ObjectMap.end()) {
-                nextH = pline.lastEH;//end while if entity not foud
+                nextH = 0;//end while if entity not found
                 DRW_DBG("\nWARNING: pline vertex not found\n");
                 ret = false;
                 continue;
@@ -911,17 +911,17 @@ bool dwgReader::readPlineVertex(DRW_Polyline& pline, dwgBuffer *dbuf){
 
 bool dwgReader::readDwgEntities(DRW_Interface& intfa, dwgBuffer *dbuf){
     bool ret = true;
-    bool ret2 = true;
 
     DRW_DBG("\nobject map total size= "); DRW_DBG(ObjectMap.size());
     auto itB=ObjectMap.begin();
     auto itE=ObjectMap.end();
-    while (itB != itE){
-        ret2 = readDwgEntity(dbuf, itB->second, intfa);
-        ObjectMap.erase(itB);
-        itB=ObjectMap.begin();
-        if (ret)
-            ret = ret2;
+    while (itB != itE) {
+        if (ret) {
+            // once readDwgEntity() failed, just clear the ObjectMap
+            ret = readDwgEntity( dbuf, itB->second, intfa);
+        }
+        ObjectMap.erase( itB);
+        itB = ObjectMap.begin();
     }
     return ret;
 }
@@ -933,187 +933,207 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
     bool ret = true;
     duint32 bs = 0;
 
-#define ENTRY_PARSE(e) \
-    ret = e.parseDwg(version, &buff, bs); \
-    parseAttribs(&e); \
-    nextEntLink = e.nextEntLink; \
-    prevEntLink = e.prevEntLink;
-
     nextEntLink = prevEntLink = 0;// set to 0 to skip unimplemented entities
-        dbuf->setPosition(obj.loc);
-        //verify if position is ok:
-        if (!dbuf->isGood()){
-            DRW_DBG(" Warning: readDwgEntity, bad location\n");
-            return false;
-        }
-        int size = dbuf->getModularShort();
-        if (version > DRW::AC1021) {//2010+
-            bs = dbuf->getUModularChar();
-        }
-        std::vector<duint8> tmpByteStr(size);
-        dbuf->getBytes(tmpByteStr.data(), size);
-        //verify if getBytes is ok:
-        if (!dbuf->isGood()){
-            DRW_DBG(" Warning: readDwgEntity, bad size\n");
-            return false;
-        }
-        dwgBuffer buff(tmpByteStr.data(), size, &decoder);
-        dint16 oType = buff.getObjType(version);
-        buff.resetPosition();
+    dbuf->setPosition(obj.loc);
+    //verify if position is ok:
+    if (!dbuf->isGood()){
+        DRW_DBG(" Warning: readDwgEntity, bad location\n");
+        return false;
+    }
+    int size = dbuf->getModularShort();
+    if (version > DRW::AC1021) {//2010+
+        bs = dbuf->getUModularChar();
+    }
+    std::vector<duint8> tmpByteStr(size);
+    dbuf->getBytes(tmpByteStr.data(), size);
+    //verify if getBytes is ok:
+    if (!dbuf->isGood()) {
+        DRW_DBG(" Warning: readDwgEntity, bad size\n");
+        return false;
+    }
+    dwgBuffer buff(tmpByteStr.data(), size, &decoder);
+    dint16 oType = buff.getObjType(version);
+    buff.resetPosition();
 
-        if (oType > 499){
-            auto it = classesmap.find(oType);
-            if (it == classesmap.end()){//fail, not found in classes set error
-                DRW_DBG("Class "); DRW_DBG(oType);DRW_DBG("not found, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
-                return false;
-            } else {
-                DRW_Class *cl = it->second;
-                if (cl->dwgType != 0)
-                    oType = cl->dwgType;
-            }
+    if (oType > 499){
+        auto it = classesmap.find(oType);
+        if (it == classesmap.end()){//fail, not found in classes set error
+            DRW_DBG("Class "); DRW_DBG(oType);DRW_DBG("not found, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
+            return false;
+        } else {
+            DRW_Class *cl = it->second;
+            if (cl->dwgType != 0)
+                oType = cl->dwgType;
         }
+    }
 
-        obj.type = oType;
-        switch (oType){
+    obj.type = oType;
+    switch (oType) {
         case 17: {
             DRW_Arc e;
-            ENTRY_PARSE(e)
-            intfa.addArc(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addArc(e);
+            }
             break; }
         case 18: {
             DRW_Circle e;
-            ENTRY_PARSE(e)
-            intfa.addCircle(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addCircle(e);
+            }
             break; }
         case 19:{
             DRW_Line e;
-            ENTRY_PARSE(e)
-            intfa.addLine(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addLine(e);
+            }
             break;}
         case 27: {
             DRW_Point e;
-            ENTRY_PARSE(e)
-            intfa.addPoint(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addPoint(e);
+            }
             break; }
         case 35: {
             DRW_Ellipse e;
-            ENTRY_PARSE(e)
-            intfa.addEllipse(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addEllipse(e);
+            }
             break; }
         case 7:
         case 8: {//minsert = 8
             DRW_Insert e;
-            ENTRY_PARSE(e)
-            e.name = findTableName(DRW::BLOCK_RECORD, e.blockRecH.ref);//RLZ: find as block or blockrecord (ps & ps0)
-            intfa.addInsert(e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.name = findTableName(DRW::BLOCK_RECORD,
+                                       e.blockRecH.ref);//RLZ: find as block or blockrecord (ps & ps0)
+                intfa.addInsert(e);
+            }
             break; }
         case 77: {
             DRW_LWPolyline e;
-            ENTRY_PARSE(e)
-            intfa.addLWPolyline(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addLWPolyline(e);
+            }
             break; }
         case 1: {
             DRW_Text e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::STYLE, e.styleH.ref);
-            intfa.addText(e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::STYLE, e.styleH.ref);
+                intfa.addText(e);
+            }
             break; }
         case 44: {
             DRW_MText e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::STYLE, e.styleH.ref);
-            intfa.addMText(e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::STYLE, e.styleH.ref);
+                intfa.addMText(e);
+            }
             break; }
         case 28: {
             DRW_3Dface e;
-            ENTRY_PARSE(e)
-            intfa.add3dFace(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.add3dFace(e);
+            }
             break; }
         case 20: {
             DRW_DimOrdinate e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimOrdinate(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimOrdinate(&e);
+            }
             break; }
         case 21: {
             DRW_DimLinear e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimLinear(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimLinear(&e);
+            }
             break; }
         case 22: {
             DRW_DimAligned e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimAlign(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAlign(&e);
+            }
             break; }
         case 23: {
             DRW_DimAngular3p e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimAngular3P(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAngular3P(&e);
+            }
             break; }
         case 24: {
             DRW_DimAngular e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimAngular(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimAngular(&e);
+            }
             break; }
         case 25: {
             DRW_DimRadial e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimRadial(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimRadial(&e);
+            }
             break; }
         case 26: {
             DRW_DimDiametric e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addDimDiametric(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addDimDiametric(&e);
+            }
             break; }
         case 45: {
             DRW_Leader e;
-            ENTRY_PARSE(e)
-            e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
-            intfa.addLeader(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                e.style = findTableName(DRW::DIMSTYLE, e.dimStyleH.ref);
+                intfa.addLeader(&e);
+            }
             break; }
         case 31: {
             DRW_Solid e;
-            ENTRY_PARSE(e)
-            intfa.addSolid(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addSolid(e);
+            }
             break; }
         case 78: {
             DRW_Hatch e;
-            ENTRY_PARSE(e)
-            intfa.addHatch(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addHatch(&e);
+            }
             break; }
         case 32: {
             DRW_Trace e;
-            ENTRY_PARSE(e)
-            intfa.addTrace(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addTrace(e);
+            }
             break; }
         case 34: {
             DRW_Viewport e;
-            ENTRY_PARSE(e)
-            intfa.addViewport(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addViewport(e);
+            }
             break; }
         case 36: {
             DRW_Spline e;
-            ENTRY_PARSE(e)
-            intfa.addSpline(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addSpline(&e);
+            }
             break; }
         case 40: {
             DRW_Ray e;
-            ENTRY_PARSE(e)
-            intfa.addRay(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addRay(e);
+            }
             break; }
         case 15:    // pline 2D
         case 16:    // pline 3D
         case 29: {  // pline PFACE
             DRW_Polyline e;
-            ENTRY_PARSE(e)
-            readPlineVertex(e, dbuf);
-            intfa.addPolyline(e);
+            if (entryParse( e, buff, bs, ret)) {
+                readPlineVertex(e, dbuf);
+                intfa.addPolyline(e);
+            }
             break; }
 //        case 30: {
 //            DRW_Polyline e;// MESH (not pline)
@@ -1122,29 +1142,31 @@ bool dwgReader::readDwgEntity(dwgBuffer *dbuf, objHandle& obj, DRW_Interface& in
 //            break; }
         case 41: {
             DRW_Xline e;
-            ENTRY_PARSE(e)
-            intfa.addXline(e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addXline(e);
+            }
             break; }
         case 101: {
             DRW_Image e;
-            ENTRY_PARSE(e)
-            intfa.addImage(&e);
+            if (entryParse( e, buff, bs, ret)) {
+                intfa.addImage(&e);
+            }
             break; }
 
         default:
             //not supported or are object add to remaining map
             objObjectMap[obj.handle]= obj;
             break;
-        }
-        if (!ret){
-            DRW_DBG("Warning: Entity type "); DRW_DBG(oType);DRW_DBG("has failed, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
-        }
+    }
+    if (!ret){
+        DRW_DBG("Warning: Entity type "); DRW_DBG(oType);DRW_DBG("has failed, handle: "); DRW_DBG(obj.handle); DRW_DBG("\n");
+    }
+
     return ret;
 }
 
 bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
     bool ret = true;
-    bool ret2 = true;
 
     duint32 i=0;
     DRW_DBG("\nentities map total size= "); DRW_DBG(ObjectMap.size());
@@ -1152,11 +1174,12 @@ bool dwgReader::readDwgObjects(DRW_Interface& intfa, dwgBuffer *dbuf){
     auto itB=objObjectMap.begin();
     auto itE=objObjectMap.end();
     while (itB != itE){
-        ret2 = readDwgObject(dbuf, itB->second, intfa);
+        if (ret) {
+            // once readDwgObject() failed, just clear the ObjectMap
+            ret = readDwgObject(dbuf, itB->second, intfa);
+        }
         objObjectMap.erase(itB);
         itB=objObjectMap.begin();
-        if (ret)
-            ret = ret2;
     }
     if (DRW_DBGGL == DRW_dbg::Level::Debug) {
         for (auto it=remainingMap.begin(); it != remainingMap.end(); ++it){

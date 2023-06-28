@@ -179,20 +179,27 @@
            </widget>
           </item>
           <item row="3" column="0">
+           <widget class="QCheckBox" name="cb_autopanning">
+            <property name="text">
+             <string>Auto-panning</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
            <widget class="QCheckBox" name="cb_antialiasing">
             <property name="text">
              <string>Anti-aliasing</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="text">
              <string>Scrollbars</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="cbScaleGrid">
             <property name="text">
              <string>A&amp;utomatically scale grid</string>
@@ -860,6 +867,14 @@
        <item row="3" column="2">
         <widget class="QLineEdit" name="lePathLibrary"/>
        </item>
+        <item row="3" column="3">
+        <widget class="QToolButton" name="btPathLibrary">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
        <item row="2" column="2">
         <widget class="QLineEdit" name="lePathFonts"/>
        </item>
@@ -982,7 +997,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Auto save time (in minutes) :  </string>
+               <string>Auto save time (minutes):</string>
               </property>
              </widget>
             </item>
@@ -1262,6 +1277,7 @@
   <tabstop>cbRelativeZeroColor</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
+  <tabstop>btPathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>lePathFonts</tabstop>
   <tabstop>leTemplate</tabstop>
@@ -1336,6 +1352,22 @@
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+   <connection>
+   <sender>btPathLibrary</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgOptionsGeneral</receiver>
+   <slot>setLibraryPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>201</y>
     </hint>
    </hints>
   </connection>

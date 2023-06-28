@@ -27,8 +27,10 @@
 #ifndef RS_ACTIONSETRELATIVEZERO_H
 #define RS_ACTIONSETRELATIVEZERO_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
 
 /**
  * This action class can handle user events to set
@@ -42,7 +44,7 @@ class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
 public:
     RS_ActionSetRelativeZero(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
-	~RS_ActionSetRelativeZero() override;
+    ~RS_ActionSetRelativeZero() override;
 
 	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 

@@ -30,7 +30,7 @@
 #include<memory>
 #include "rs_previewactioninterface.h"
 
-class RS_BevelData;
+struct RS_BevelData;
 
 /**
  * This action class can handle user events to bevel corners.

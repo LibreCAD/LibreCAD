@@ -23,19 +23,21 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
 #include "rs_actionprintpreview.h"
+
+#include<cmath>
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
+
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
-#include "rs_preview.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 struct RS_ActionPrintPreview::Points {
 	RS_Vector v1;
@@ -51,7 +53,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 						container, graphicView)
 	, hasOptions(false)
 	, m_bPaperOffset(false)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
     actionType=RS2::ActionFilePrintPreview;
     RS_SETTINGS->beginGroup("/PrintPreview");

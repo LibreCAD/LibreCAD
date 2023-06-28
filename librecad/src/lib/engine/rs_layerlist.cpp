@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include<iostream>
+
 #include "rs_debug.h"
 #include "rs_layerlist.h"
 #include "rs_layer.h"
@@ -35,7 +36,7 @@
  * Default constructor.
  */
 RS_LayerList::RS_LayerList() {
-    activeLayer = NULL;
+    activeLayer = nullptr;
 	setModified(false);
 }
 
@@ -83,8 +84,8 @@ void RS_LayerList::activate(const QString& name, bool notify) {
 
     activate(find(name), notify);
     /*
-    if (activeLayer==NULL) {
-        RS_DEBUG->print("activeLayer is NULL");
+    if (activeLayer==nullptr) {
+        RS_DEBUG->print("activeLayer is nullptr");
 } else {
         RS_DEBUG->print("activeLayer is %s", activeLayer->getName().latin1());
 }
@@ -107,7 +108,7 @@ void RS_LayerList::activate(RS_Layer* layer, bool notify) {
         RS_DEBUG->print("RS_LayerList::activate: %s",
                         layer->getName().latin1());
 } else {
-        RS_DEBUG->print("RS_LayerList::activate: NULL");
+        RS_DEBUG->print("RS_LayerList::activate: nullptr");
 }*/
 
     activeLayer = layer;
@@ -146,13 +147,13 @@ void RS_LayerList::sort()
 void RS_LayerList::add(RS_Layer* layer) {
     RS_DEBUG->print("RS_LayerList::addLayer()");
 
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
     // check if layer already exists:
     RS_Layer* l = find(layer->getName());
-    if (l==NULL) {
+    if (l==nullptr) {
         layers.append(layer);
         this->sort();
         // notify listeners
@@ -163,12 +164,12 @@ void RS_LayerList::add(RS_Layer* layer) {
 		setModified(true);
 
         // if there was no active layer so far, activate this one.
-        if (activeLayer==NULL) {
+        if (activeLayer==nullptr) {
             activate(layer);
         }
     } else {
         // if there was no active layer so far, activate this one.
-        if (activeLayer==NULL) {
+        if (activeLayer==nullptr) {
             activate(l);
         }
 
@@ -181,7 +182,7 @@ void RS_LayerList::add(RS_Layer* layer) {
         l->setPen(layer->getPen());
 
         delete layer;
-        layer = NULL;
+        layer = nullptr;
     }
 }
 
@@ -194,7 +195,7 @@ void RS_LayerList::add(RS_Layer* layer) {
  */
 void RS_LayerList::remove(RS_Layer* layer) {
     RS_DEBUG->print("RS_LayerList::removeLayer()");
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
@@ -225,7 +226,7 @@ void RS_LayerList::remove(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
@@ -244,12 +245,12 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
 
 /**
  * @return Pointer to the layer with the given name or
- * \p NULL if no such layer was found.
+ * \p nullptr if no such layer was found.
  */
 RS_Layer* RS_LayerList::find(const QString& name) {
     //RS_DEBUG->print("RS_LayerList::find begin");
 
-    RS_Layer* ret = NULL;
+    RS_Layer* ret = nullptr;
 
     for (int i=0; i<layers.size(); ++i) {
         RS_Layer* l = layers.at(i);
@@ -317,7 +318,7 @@ void RS_LayerList::toggle(const QString& name) {
 void RS_LayerList::toggle(RS_Layer* layer) {
 
     if (!layer) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_LayerList::toggle: nullptr layer");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_LayerList::toggle: nullptrptr layer");
         return;
     }
 
@@ -329,7 +330,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
     for (auto *i : layerListListeners) {
 
         if (!i) {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_LayerList::toggle: nullptr layer listener");
+            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_LayerList::toggle: nullptrptr layer listener");
             continue;
         }
 
@@ -345,7 +346,7 @@ void RS_LayerList::toggle(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::toggleLock(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
@@ -366,7 +367,7 @@ void RS_LayerList::toggleLock(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::togglePrint(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
@@ -386,7 +387,7 @@ void RS_LayerList::togglePrint(RS_Layer* layer) {
  * Listeners are notified.
  */
 void RS_LayerList::toggleConstruction(RS_Layer* layer) {
-    if (layer==NULL) {
+    if (layer==nullptr) {
         return;
     }
 
@@ -418,7 +419,7 @@ void RS_LayerList::freezeAll(bool freeze) {
 
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
-        l->layerToggled(NULL);
+        l->layerToggled(nullptr);
     }
 }
 
@@ -440,7 +441,7 @@ void RS_LayerList::lockAll(bool lock) {
 
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
-        l->layerToggled(NULL);
+        l->layerToggled(nullptr);
     }
 }
 

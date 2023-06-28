@@ -23,17 +23,28 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
+#include <cfloat>
+#include <iostream>
+
+#include <QMessageBox>
+
+#include <QStringList>
+
 #include "qg_dlgoptionsdrawing.h"
 
-#include <iostream>
-#include <cfloat>
-#include <QMessageBox>
-#include "rs_filterdxfrw.h"
-#include "rs_graphic.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "rs_font.h"
+#include "qc_applicationwindow.h"
+
 #include "rs_debug.h"
+#include "rs_filterdxfrw.h"
+#include "rs_font.h"
+#include "rs_graphic.h"
+#include "rs_math.h"
+#include "dxf_format.h"
+#include "lc_defaults.h"
+#include "rs_settings.h"
+#include "rs_units.h"
+#include "rs_vector.h"
 
 /*
  *  Constructs a QG_DlgOptionsDrawing as a child of 'parent', with the
@@ -48,9 +59,9 @@ int current_tab = 0;
 
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
     : QDialog(parent, fl)
-	,graphic{nullptr}
-    ,paperScene{new QGraphicsScene()}
-	,spacing{new RS_Vector{}}
+    , listPrec1(std::make_unique<QStringList>())
+    ,paperScene{new QGraphicsScene(parent)}
+    ,spacing{std::make_unique<RS_Vector>()}
 {
     setModal(modal);
     setupUi(this);
@@ -96,7 +107,7 @@ void QG_DlgOptionsDrawing::init() {
 
     // precision list:
 	for (int i=0; i<=8; i++)
-		listPrec1 << QString("%1").arg(0.0,0,'f', i);
+        *listPrec1 << QString("%1").arg(0.0,0,'f', i);
 
     // Main drawing unit:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
@@ -139,11 +150,13 @@ void QG_DlgOptionsDrawing::init() {
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
-void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
+void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
+{
     graphic = g;
 
-	if (graphic==nullptr) {
-		std::cout<<" QG_DlgOptionsDrawing::setGraphic(nullptr)\n";
+    if (graphic==nullptr)
+    {
+        RS_DEBUG->print(RS_Debug::D_ERROR, " QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
@@ -382,6 +395,92 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
     // Number of pages
     sbPagesNumH->setValue(graphic->getPagesNumHoriz());
     sbPagesNumV->setValue(graphic->getPagesNumVert());
+
+	// Points drawing style:
+	int pdmode = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+	double pdsize = graphic->getVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+
+	// Set button checked for the currently selected point style
+	switch(pdmode) {
+	case DXF_FORMAT_PDMode_CentreDot:
+	default:
+		bDot->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_CentreBlank:
+		bBlank->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_CentrePlus:
+		bPlus->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_CentreCross:
+		bCross->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_CentreTick:
+		bTick->setChecked(true);
+		break;
+
+	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot):
+		bDotCircle->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank):
+		bBlankCircle->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus):
+		bPlusCircle->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross):
+		bCrossCircle->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick):
+		bTickCircle->setChecked(true);
+		break;
+
+	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot):
+		bDotSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank):
+		bBlankSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus):
+		bPlusSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross):
+		bCrossSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick):
+		bTickSquare->setChecked(true);
+		break;
+
+	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot):
+		bDotCircleSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank):
+		bBlankCircleSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus):
+		bPlusCircleSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross):
+		bCrossCircleSquare->setChecked(true);
+		break;
+	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick):
+		bTickCircleSquare->setChecked(true);
+		break;
+	}
+
+	// Fill points display size value string, and set button checked for screen-size 
+	// relative vs. absolute drawing units radio buttons. Negative pdsize => value
+	// gives points size as percent of screen size; positive pdsize => value gives
+	// points size in absolute drawing units; pdsize == 0 implies points size to be
+	// 5% relative to screen size.
+	if ( pdsize <= 0.0 )
+		rbRelSize->setChecked(true);
+	else
+		rbAbsSize->setChecked(true);
+	lePointSize->setText(QString::number(pdsize >= 0.0 ? pdsize : - pdsize));
+
+	// Set the appropriate text for the display size value label
+	updateLPtSzUnits();
 }
 
 
@@ -391,7 +490,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g) {
 void QG_DlgOptionsDrawing::validate() {
     RS2::LinearFormat f = (RS2::LinearFormat)cbLengthFormat->currentIndex();
     if (f==RS2::Engineering || f==RS2::Architectural) {
-        if (RS_Units::stringToUnit(cbUnit->currentText())!=RS2::Inch) {
+        if (static_cast<RS2::Unit>(cbUnit->currentIndex()) != RS2::Inch) {
             QMessageBox::warning( this, tr("Options"),
                                   tr("For the length formats 'Engineering' and 'Architectural', the "
                                      "unit must be set to Inch."),
@@ -401,7 +500,7 @@ void QG_DlgOptionsDrawing::validate() {
         }
     }
     if (f==RS2::ArchitecturalMetric) {
-        if (RS_Units::stringToUnit(cbUnit->currentText())!=RS2::Meter) {
+        if (static_cast<RS2::Unit>(cbUnit->currentIndex()) != RS2::Meter) {
             QMessageBox::warning( this, tr("Options"),
                                   tr("For the length format 'Architectural (metric)', the "
                                      "unit must be set to Meter."),
@@ -411,9 +510,9 @@ void QG_DlgOptionsDrawing::validate() {
         }
     }
 
-	if (graphic) {
+    if (graphic != nullptr) {
         // units:
-        RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+        auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
 		graphic->setUnit(unit);
 
         graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
@@ -444,8 +543,12 @@ void QG_DlgOptionsDrawing::validate() {
 
         // grid:
         //graphic->addVariable("$GRIDMODE", (int)cbGridOn->isChecked() , 70);
+
+        emit QC_ApplicationWindow::getAppWindow()->gridChanged(cbGridOn->isChecked());
+
+		    *spacing=RS_Vector{0.0,0.0,0.0};
         graphic->setGridOn(cbGridOn->isChecked());
-		*spacing=RS_Vector{0.0,0.0,0.0};
+        *spacing=RS_Vector{0.0, 0.0};
         if (cbXSpacing->currentText()==tr("auto")) {
 			spacing->x = 0.0;
         } else {
@@ -459,33 +562,33 @@ void QG_DlgOptionsDrawing::validate() {
 		graphic->addVariable("$GRIDUNIT", *spacing, 10);
 
         // dim:
-        bool ok1;
+        bool ok1 = true;
         double oldValue=graphic->getVariableDouble("$DIMTXT",1.);
 		double newValue=RS_Math::eval(cbDimTextHeight->currentText(), &ok1);
         //only update text height if a valid new position is specified, bug#3470605
-		if(ok1 && (fabs(oldValue-newValue)>RS_TOLERANCE)){
+        if(ok1 && (std::abs(oldValue-newValue)>RS_TOLERANCE)){
             graphic->addVariable("$DIMTXT",newValue, 40);
         }
         graphic->addVariable("$DIMEXE",
                              RS_Math::eval(cbDimExe->currentText()), 40);
         graphic->addVariable("$DIMEXO",
                              RS_Math::eval(cbDimExo->currentText()), 40);
-        bool ok2;
+        bool ok2 = true;
         oldValue=graphic->getVariableDouble("$DIMGAP",1);
         newValue=RS_Math::eval(cbDimGap->currentText(),&ok2);
         //only update text position if a valid new position is specified, bug#3470605
-        ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        ok2 &= (std::abs(oldValue-newValue)>RS_TOLERANCE);
         if(ok2){
             graphic->addVariable("$DIMGAP",newValue , 40);
         }
         ok1 = ok1 || ok2;
         oldValue=graphic->getVariableDouble("$DIMLFAC",1);
         newValue=RS_Math::eval(cbDimFactor->currentText(),&ok2);
-		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        ok2 &= (std::abs(oldValue-newValue)>RS_TOLERANCE);
         ok1 = ok1 || ok2;
         oldValue=graphic->getVariableDouble("$DIMSCALE",1);
         newValue=RS_Math::eval(cbDimScale->currentText(),&ok2);
-		ok2 &= (fabs(oldValue-newValue)>RS_TOLERANCE);
+        ok2 &= (std::abs(oldValue-newValue)>RS_TOLERANCE);
         ok1 = ok1 || ok2;
 
         graphic->addVariable("$DIMASZ",
@@ -502,7 +605,7 @@ void QG_DlgOptionsDrawing::validate() {
         }
         //DIMLFAC, general factor for linear dimensions
         double dimFactor = RS_Math::eval(cbDimFactor->currentText());
-        if( RS_TOLERANCE > fabs(dimFactor)) {
+        if( RS_TOLERANCE > std::abs(dimFactor)) {
             dimFactor = 1.0;
         }
         graphic->addVariable("$DIMLFAC", dimFactor, 40);
@@ -545,6 +648,69 @@ void QG_DlgOptionsDrawing::validate() {
         graphic->updateDimensions(ok1);
         graphic->updateSplines();
 
+		// Points drawing style:
+		// Get currently selected point style from which button is checked
+		int pdmode = LC_DEFAULTS_PDMode;
+
+		if (bDot->isChecked())
+			pdmode = DXF_FORMAT_PDMode_CentreDot;
+		else if (bBlank->isChecked())
+			pdmode = DXF_FORMAT_PDMode_CentreBlank;
+		else if (bPlus->isChecked())
+			pdmode = DXF_FORMAT_PDMode_CentrePlus;
+		else if (bCross->isChecked())
+			pdmode = DXF_FORMAT_PDMode_CentreCross;
+		else if (bTick->isChecked())
+			pdmode = DXF_FORMAT_PDMode_CentreTick;
+
+		else if (bDotCircle->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);
+		else if (bBlankCircle->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank);
+		else if (bPlusCircle->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus);
+		else if (bCrossCircle->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross);
+		else if (bTickCircle->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick);
+
+		else if (bDotSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
+		else if (bBlankSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank);
+		else if (bPlusSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus);
+		else if (bCrossSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross);
+		else if (bTickSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick);
+
+		else if (bDotCircleSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot);
+		else if (bBlankCircleSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank);
+		else if (bPlusCircleSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus);
+		else if (bCrossCircleSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross);
+		else if (bTickCircleSquare->isChecked())
+			pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick);
+
+		graphic->addVariable("$PDMODE", pdmode, DXF_FORMAT_GC_PDMode);
+
+		// Get points display size from the value string and the relative vs. absolute
+		// size radio buttons state
+		bool ok;
+		double pdsize = RS_Math::eval(lePointSize->text(), &ok);
+		if (!ok)
+			pdsize = LC_DEFAULTS_PDSize;
+
+		if (pdsize > 0.0 && rbRelSize->isChecked())
+			pdsize = - pdsize;
+
+		graphic->addVariable("$PDSIZE", pdsize, DXF_FORMAT_GC_PDSize);
+
+		// indicate graphic is modified and requires save
         graphic->setModified(true);
     }
     accept();
@@ -587,7 +753,7 @@ void QG_DlgOptionsDrawing::updateCBLengthPrecision(QComboBox* f, QComboBox* p) {
         // decimal
         //   (0, 0.1, 0.01, ...)
     case 1:
-        p->insertItems(0, listPrec1);
+        p->insertItems(0, *listPrec1);
         break;
 
         // architectural:
@@ -629,7 +795,7 @@ void QG_DlgOptionsDrawing::updateCBLengthPrecision(QComboBox* f, QComboBox* p) {
 
         // architectural metric
     case 5:
-        p->insertItems(0, listPrec1);
+        p->insertItems(0, *listPrec1);
         break;
 
     default:
@@ -666,7 +832,7 @@ void QG_DlgOptionsDrawing::updateCBAnglePrecision(QComboBox* u, QComboBox* p) {
     switch (u->currentIndex()) {
     // decimal degrees:
     case 0:
-        p->insertItems(0, listPrec1);
+        p->insertItems(0, *listPrec1);
         break;
 
         // deg/min/sec:
@@ -728,8 +894,7 @@ void QG_DlgOptionsDrawing::updateCBAnglePrecision(QComboBox* u, QComboBox* p) {
  * Updates the preview of unit display.
  */
 void QG_DlgOptionsDrawing::updatePreview() {
-    QString prev;
-    prev = RS_Units::formatLinear(14.43112351,
+    QString prev = RS_Units::formatLinear(14.43112351,
 								  static_cast<RS2::Unit>(cbUnit->currentIndex()),
 								  static_cast<RS2::LinearFormat>(cbLengthFormat->currentIndex()),
                                   cbLengthPrecision->currentIndex());
@@ -764,7 +929,7 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
 					);
 	}
 
-	if (rbLandscape->isChecked() ^ (s.x > s.y)) {
+    if (rbLandscape->isChecked() != (s.x > s.y)) {
 		std::swap(s.x, s.y);
 	}
 	graphic->setPaperSize(s);
@@ -794,14 +959,11 @@ void  QG_DlgOptionsDrawing::updatePaperSize() {
  * Updates all unit labels that depend on the global unit.
  */
 void QG_DlgOptionsDrawing::updateUnitLabels() {
-    RS2::Unit u = (RS2::Unit)cbUnit->currentIndex();
-    QString sign = RS_Units::unitToSign(u);
-    lDimUnit1->setText(sign);
-    lDimUnit2->setText(sign);
-    lDimUnit3->setText(sign);
-    lDimUnit4->setText(sign);
-    lDimUnit5->setText(sign);
-    lDimUnit6->setText(sign);
+    RS2::Unit u = static_cast<RS2::Unit>(cbUnit->currentIndex());
+    QString unitSign = RS_Units::unitToSign(u);
+    auto labels = {lDimUnit1, lDimUnit2, lDimUnit3, lDimUnit4, lDimUnit5, lDimUnit6, lDimUnit7};
+    for(QLabel* unitLabel : labels)
+        unitLabel->setText(unitSign);
     //have to update paper size when unit changes
     updatePaperSize();
 }
@@ -920,11 +1082,7 @@ void QG_DlgOptionsDrawing::on_rbLandscape_toggled(bool /*checked*/)
 
 void QG_DlgOptionsDrawing::on_cbDimFxLon_toggled(bool checked)
 {
-    if (checked > 0){
-        cbDimFxL->setEnabled(true);
-    } else {
-        cbDimFxL->setEnabled(false);
-    }
+    cbDimFxL->setEnabled(checked);
 }
 
 
@@ -932,5 +1090,23 @@ void QG_DlgOptionsDrawing::on_tabWidget_currentChanged(int index)
 {
     current_tab = index;
 }
+
+
+void QG_DlgOptionsDrawing::on_rbRelSize_toggled(bool checked)
+{
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
+	updateLPtSzUnits();
+}
+
+/*	Updates the text string for the point size units label  */
+void QG_DlgOptionsDrawing::updateLPtSzUnits()
+{
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::updateLPtSzUnits, rbRelSize->isChecked() = %d",rbRelSize->isChecked());
+	if ( rbRelSize->isChecked() )
+		lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
+	else
+		lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
+}
+
 
 //EOF

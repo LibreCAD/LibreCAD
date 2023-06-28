@@ -48,6 +48,7 @@
 #include "rs_actiondimleader.h"
 #include "rs_actiondimlinear.h"
 #include "rs_actiondimradial.h"
+#include "lc_actiondimarc.h"
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 #include "rs_actiondrawarctangential.h"
@@ -110,6 +111,8 @@
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "lc_actionlayerstoggleconstruction.h"
+#include "lc_actionlayersexport.h"
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -166,6 +169,7 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 
@@ -603,6 +607,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDimAngular:
         a = new RS_ActionDimAngular(*document, *view);
         break;
+    case RS2::ActionDimArc:
+        a = new LC_ActionDimArc(*document, *view);
+        break;
     case RS2::ActionDimLeader:
         a = new RS_ActionDimLeader(*document, *view);
         break;
@@ -871,6 +878,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersToggleConstruction:
         a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersExportSelected:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+        break;
+    case RS2::ActionLayersExportVisible:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
         break;
         // Block actions:
         //
@@ -1560,6 +1573,10 @@ void QG_ActionHandler::slotDimAngular() {
     setCurrentAction(RS2::ActionDimAngular);
 }
 
+void QG_ActionHandler::slotDimArc() {
+    setCurrentAction(RS2::ActionDimArc);
+}
+
 void QG_ActionHandler::slotDimLeader() {
     setCurrentAction(RS2::ActionDimLeader);
 }
@@ -1857,6 +1874,14 @@ void QG_ActionHandler::slotLayersTogglePrint() {
 
 void QG_ActionHandler::slotLayersToggleConstruction() {
     setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
 }
 
 

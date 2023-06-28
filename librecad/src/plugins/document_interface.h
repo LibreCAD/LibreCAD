@@ -48,8 +48,13 @@ namespace DPI {
         HAlignRight     /*!< Right */
     };
 
+    //! Options for what to do with originals in a modification
+    enum Disposition {
+	DELETE_ORIGINAL,
+	KEEP_ORIGINAL
+    };
 
-   //! Entity's type.
+    //! Entity's type.
     enum ETYPE {
         POINT,
         LINE,
@@ -234,7 +239,7 @@ public:
     //! Update the polyline list of vertex.
     /*!
     * The data is a QList of Plug_VertexData with the coordinates of each vertex to the
-    * polyline the cuurent vertex are removed and replaced for the new list.
+    * polyline the current vertex are removed and replaced for the new list.
     *  \param data pointer to a QList<Plug_VertexData> with the coordinates vertex's.
     */
     virtual void updatePolylineData(QList<Plug_VertexData> *data) = 0;
@@ -242,24 +247,34 @@ public:
     //! Move the entity.
     /*!
     *  \param offset move the entity by the given QPointF.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void move(QPointF offset) = 0;
+    virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL ) = 0;
 
-	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle)=0;
+    //! Move and rotate the entity.
+    /*!
+    *  \param offset move the entity by the given QPointF.
+    *  \param center center of rotation
+    *  \param angle angle to rotate
+    *  \param disp whether to delete the original entity or keep it
+    */
+    virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! rotate the entity.
     /*!
     *  \param center center of rotation.
     *  \param angle angle to rotate.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void rotate(QPointF center, double angle) = 0;
+    virtual void rotate(QPointF center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! Scale the entity.
     /*!
     *  \param center base point for scale.
     *  \param factor scale factor.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void scale(QPointF center, QPointF factor) = 0;
+    virtual void scale(QPointF center, QPointF factor, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! Utility: Get color as string.
     /*!

@@ -97,14 +97,14 @@ class imgLabel : public QLabel
     Q_OBJECT
 
 public:
-    imgLabel(QWidget * parent = 0, Qt::WindowFlags f = 0 );
+    imgLabel(QWidget * parent = nullptr, Qt::WindowFlags f = {} );
     ~imgLabel(){}
 
     void setPos(DPT::txtposition pos = DPT::N);
     DPT::txtposition getPos() { return currPos;}
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     void drawImage();

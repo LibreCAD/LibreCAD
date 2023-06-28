@@ -76,10 +76,10 @@ public:
                  const RS_DimLinearData& ed);
 	virtual ~RS_DimLinear() = default;
 
-	virtual RS_Entity* clone() const;
+    RS_Entity* clone() const override;
 
     /**	@return RS2::EntityDimLinear */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const override {
         return RS2::EntityDimLinear;
     }
 
@@ -91,11 +91,11 @@ public:
         return edata;
     }
 
-	virtual RS_VectorSolutions getRefPoints() const;
+    RS_VectorSolutions getRefPoints() const override;
 
-    virtual QString getMeasuredLabel();
+    QString getMeasuredLabel() override;
 
-    virtual void updateDim(bool autoText=false);
+    void updateDim(bool autoText=false) override;
 
 	RS_Vector getExtensionPoint1() const{
         return edata.extensionPoint1;
@@ -115,16 +115,16 @@ public:
         return edata.oblique;
     }
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    virtual bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2);
-    virtual void stretch(const RS_Vector& firstCorner,
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    bool hasEndpointsWithinWindow(const RS_Vector& v1, const RS_Vector& v2) override;
+    void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
-                         const RS_Vector& offset);
-    virtual void moveRef(const RS_Vector& ref, const RS_Vector& offset);
+                         const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 
     friend std::ostream& operator << (std::ostream& os,
                                       const RS_DimLinear& d);

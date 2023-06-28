@@ -26,19 +26,21 @@
 
 #include <iostream>
 #include <cmath>
+
 #include <QDir>
-//#include <QDebug>
 
 #include "rs_graphic.h"
-#include "rs_dialogfactory.h"
 
-#include "rs_debug.h"
-#include "rs_fileio.h"
-#include "rs_math.h"
-#include "rs_units.h"
-#include "rs_settings.h"
-#include "rs_layer.h"
+#include "dxf_format.h"
+#include "lc_defaults.h"
 #include "rs_block.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_fileio.h"
+#include "rs_layer.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 
 /**
@@ -90,6 +92,10 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
     setPaperScale(getPaperScale());
     setPaperInsertionBase(getPaperInsertionBase());
 
+	//set default values for point style
+	addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_PDMode);
+	addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_PDSize);
+
     setModified(false);
 }
 
@@ -110,7 +116,7 @@ unsigned long int RS_Graphic::countLayerEntities(RS_Layer* layer) {
     int c=0;
 
 	if (layer) {
-		for(auto t: entities){
+        for(RS_Entity* t: entities){
 
 			if (t->getLayer() &&
                     t->getLayer()->getName()==layer->getName()) {
@@ -133,7 +139,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 
 		std::vector<RS_Entity*> toRemove;
 		//find entities on layer
-		for(auto e: entities){
+        for(RS_Entity* e: entities){
 			if (e->getLayer() &&
                     e->getLayer()->getName()==layer->getName()) {
 				toRemove.push_back(e);
@@ -142,7 +148,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 		// remove all entities on that layer:
 		if(toRemove.size()){
 			startUndoCycle();
-			for(auto e: toRemove){
+            for(RS_Entity* e: toRemove){
 				e->setUndoState(true);
 				e->setLayer("0");
 				addUndoable(e);
@@ -163,7 +169,7 @@ void RS_Graphic::removeLayer(RS_Layer* layer) {
 			}
 		}
 
-		for(auto e: toRemove){
+        for(RS_Entity* e: toRemove){
 			e->setUndoState(true);
 			e->setLayer("0");
 		}
@@ -207,7 +213,6 @@ void RS_Graphic::newDoc() {
  * 						false	: Operation failed.
  * 						true	: Operation successful.
  */
-
 bool RS_Graphic::BackupDrawingFile(const QString &filename)
 {
         static const char	*msg_err	=
@@ -232,7 +237,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
 
                 /*	If able to create the objects, process...
                  *	----------------------------------------- */
-                if ((qs_backup_fn != NULL) && (qf_df != NULL))
+                if ((qs_backup_fn != nullptr) && (qf_df != nullptr))
                 {
                         /*	Create backup file only if drawing file already exist.
                          *	------------------------------------------------------ */
@@ -244,7 +249,7 @@ bool RS_Graphic::BackupDrawingFile(const QString &filename)
 
                                 /*	If able to create the object, process...
                                  *	---------------------------------------- */
-                                if (qf_dfb != NULL)
+                                if (qf_dfb != nullptr)
                                 {
                                         /*	If a backup file already exist, remove it!
                                          *	------------------------------------------ */
@@ -347,6 +352,7 @@ bool RS_Graphic::save(bool isAutoSave)
             }
 
 			actualName = filename;
+            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
             if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1)!=0)
                 BackupDrawingFile(filename);
         }
@@ -546,15 +552,56 @@ bool RS_Graphic::open(const QString &filename, RS2::FormatType type) {
 }
 
 
+void RS_Graphic::clearVariables() {
+    variableDict.clear();
+}
+int RS_Graphic::countVariables() {
+    return variableDict.count();
+}
+
+void RS_Graphic::addVariable(const QString& key, const RS_Vector& value, int code) {
+    variableDict.add(key, value, code);
+}
+void RS_Graphic::addVariable(const QString& key, const QString& value, int code) {
+    variableDict.add(key, value, code);
+}
+void RS_Graphic::addVariable(const QString& key, int value, int code) {
+    variableDict.add(key, value, code);
+}
+void RS_Graphic::addVariable(const QString& key, double value, int code) {
+    variableDict.add(key, value, code);
+}
+void RS_Graphic::removeVariable(const QString& key) {
+    variableDict.remove(key);
+}
+
+RS_Vector RS_Graphic::getVariableVector(const QString& key, const RS_Vector& def) const {
+    return variableDict.getVector(key, def);
+}
+
+QString RS_Graphic::getVariableString(const QString& key, const QString& def) const {
+    return variableDict.getString(key, def);
+}
+
+int RS_Graphic::getVariableInt(const QString& key, int def) const {
+    return variableDict.getInt(key, def);
+}
+
+double RS_Graphic::getVariableDouble(const QString& key, double def) const {
+    return variableDict.getDouble(key, def);
+}
+
+QHash<QString, RS_Variable>& RS_Graphic::getVariableDict() {
+    return variableDict.getVariableDict();
+}
 
 /**
  * @return true if the grid is switched on (visible).
  */
-bool RS_Graphic::isGridOn() {
+bool RS_Graphic::isGridOn() const {
         int on = getVariableInt("$GRIDMODE", 1);
-        return on!=0;
+        return on != 0;
 }
-
 
 
 /**
@@ -567,7 +614,7 @@ void RS_Graphic::setGridOn(bool on) {
 /**
  * @return true if the isometric grid is switched on (visible).
  */
-bool RS_Graphic::isIsometricGrid() {
+bool RS_Graphic::isIsometricGrid() const{
     //$ISOMETRICGRID == $SNAPSTYLE
         int on = getVariableInt("$SNAPSTYLE", 0);
         return on!=0;
@@ -587,7 +634,7 @@ void RS_Graphic::setCrosshairType(RS2::CrosshairType chType){
     crosshairType=chType;
 }
 
-RS2::CrosshairType RS_Graphic::getCrosshairType(){
+RS2::CrosshairType RS_Graphic::getCrosshairType() const {
     return crosshairType;
 }
 
@@ -608,9 +655,8 @@ void RS_Graphic::setUnit(RS2::Unit u) {
 /**
  * Gets the unit of this graphic
  */
-RS2::Unit RS_Graphic::getUnit() {
-    return (RS2::Unit)getVariableInt("$INSUNITS", 0);
-    //return unit;
+RS2::Unit RS_Graphic::getUnit() const {
+    return static_cast<RS2::Unit>(getVariableInt("$INSUNITS", 0));
 }
 
 
@@ -819,7 +865,7 @@ RS_Vector RS_Graphic::getPrintAreaSize(bool total) {
  * @return Paper format.
  * This is determined by the variables "$PLIMMIN" and "$PLIMMAX".
  *
- * @param landscape will be set to true for landscape and false for portrait if not NULL.
+ * @param landscape will be set to true for landscape and false for portrait if not nullptr.
  */
 RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
     RS_Vector size = RS_Units::convert(getPaperSize(),
@@ -840,7 +886,7 @@ RS2::PaperFormat RS_Graphic::getPaperFormat(bool* landscape) {
 void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
     RS_Vector size = RS_Units::paperFormatToSize(f);
 
-	if (landscape ^ (size.x > size.y)) {
+    if (landscape != (size.x > size.y)) {
 		std::swap(size.x, size.y);
     }
 
@@ -852,15 +898,13 @@ void RS_Graphic::setPaperFormat(RS2::PaperFormat f, bool landscape) {
 /**
  * @return Paper space scaling (DXF: $PSVPSCALE).
  */
-double RS_Graphic::getPaperScale() {
-    double ret;
+double RS_Graphic::getPaperScale() const {
+    double paperScale = getVariableDouble("$PSVPSCALE", 1.0);
+    if (paperScale < 1.0e-6) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Graphic:: %s(), invalid paper scale %lg\n", __func__, paperScale);
+    }
 
-    ret = getVariableDouble("$PSVPSCALE", 1.0);
-//    if (ret<1.0e-6) {
-//        ret = 1.0;
-//    }
-
-    return ret;
+    return paperScale;
 }
 
 
@@ -883,11 +927,11 @@ void RS_Graphic::centerToPage() {
 	auto s=getSize();
 	auto sMin=getMin();
     /** avoid zero size, bug#3573158 */
-    if(fabs(s.x)<RS_TOLERANCE) {
+    if(std::abs(s.x)<RS_TOLERANCE) {
         s.x=10.;
         sMin.x=-5.;
     }
-    if(fabs(s.y)<RS_TOLERANCE) {
+    if(std::abs(s.y)<RS_TOLERANCE) {
         s.y=10.;
         sMin.y=-5.;
     }
@@ -905,28 +949,27 @@ void RS_Graphic::centerToPage() {
  * Fits drawing on page. Affects DXF variable $PINSBASE.
  */
 bool RS_Graphic::fitToPage() {
-    bool ret(true);
+    bool ret = true;
     RS_Vector ps = getPrintAreaSize();
     RS_Vector s = getSize();
     /** avoid zero size, bug#3573158 */
-    if(fabs(s.x)<RS_TOLERANCE) s.x=10.;
-    if(fabs(s.y)<RS_TOLERANCE) s.y=10.;
+    if(std::abs(s.x)<RS_TOLERANCE) s.x=10.;
+    if(std::abs(s.y)<RS_TOLERANCE) s.y=10.;
     double fx = RS_MAXDOUBLE;
     double fy = RS_MAXDOUBLE;
-    double fxy;
     //ps = RS_Units::convert(ps, getUnit(), RS2::Millimeter);
 
     // tin-pot 2011-12-30: TODO: can s.x < 0.0 (==> fx < 0.0) happen?
-	if (fabs(s.x) > RS_TOLERANCE) {
+    if (std::abs(s.x) > RS_TOLERANCE) {
         fx = ps.x / s.x;
         // ret=false;
     }
-	if (fabs(s.y) > RS_TOLERANCE) {
+    if (std::abs(s.y) > RS_TOLERANCE) {
         fy = ps.y / s.y;
         // ret=false;
     }
 
-    fxy = std::min(fx, fy);
+    double fxy = std::min(fx, fy);
     if (fxy >= RS_MAXDOUBLE || fxy <= 1.0e-10) {
         setPaperSize(
                     RS_Units::convert(RS_Vector(210.,297.)

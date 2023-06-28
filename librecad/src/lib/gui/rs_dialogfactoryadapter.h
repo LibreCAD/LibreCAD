@@ -80,6 +80,7 @@ public:
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
 	void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
+	void displayBlockName(const QString&, const bool&) override {}
 };
 
 #endif
