@@ -41,14 +41,14 @@ struct RS_ImageData {
 	RS_ImageData() = default;
 
     RS_ImageData(int handle,
-                                const RS_Vector& insertionPoint,
-                const RS_Vector& uVector,
-                                const RS_Vector& vVector,
-                                const RS_Vector& size,
-                                const QString& file,
-                                int brightness,
-                                int contrast,
-								int fade);
+                 const RS_Vector& insertionPoint,
+                 const RS_Vector& uVector,
+                 const RS_Vector& vVector,
+                 const RS_Vector& size,
+                 const QString& file,
+                 int brightness,
+                 int contrast,
+                 int fade);
 
 	/** Handle of image definition. */
     int handle = 0;

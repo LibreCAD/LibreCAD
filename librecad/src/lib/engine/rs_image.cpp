@@ -80,12 +80,14 @@ RS_Image::RS_Image(const RS_Image& _image):
 
 RS_Image& RS_Image::operator = (const RS_Image& _image)
 {
-	data=_image.data;
-	if(_image.img.get()){
-		img.reset(new QImage(*_image.img));
-	}else{
-		img.reset();
-	}
+    if (this != & _image) {
+        data=_image.data;
+        if(_image.img != nullptr){
+            img.reset(new QImage(*_image.img));
+        }else{
+            img.reset();
+        }
+    }
 	return *this;
 }
 
@@ -98,8 +100,10 @@ RS_Image::RS_Image(RS_Image&& _image):
 
 RS_Image& RS_Image::operator = (RS_Image&& _image)
 {
-	data=_image.data;
-	img = std::move(_image.img);
+    if (this != &_image) {
+        data=_image.data;
+        img = std::move(_image.img);
+    }
 	return *this;
 }
 
