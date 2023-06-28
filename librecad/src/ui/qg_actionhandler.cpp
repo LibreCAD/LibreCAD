@@ -202,36 +202,36 @@ void QG_ActionHandler::killAllActions() {
 }
 
 /**
- * @return Current action or NULL.
+ * @return Current action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
 
 	if (view) {
         return view->getCurrentAction();
     } else {
-        return NULL;
+        return nullptr;
     }
 }
 
 /**
  * Sets current action.
  *
- * @return Pointer to the created action or NULL.
+ * @return Pointer to the created action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = NULL;
+    RS_ActionInterface* a = nullptr;
 //    view->killAllActions();
 
     RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
             "view = %p, document = %p", view, document);
 
     // only global options are allowed without a document:
-    if (view==NULL || document==NULL) {
+    if (view==nullptr || document==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
-                "document is NULL");
-        return NULL;
+                "document is nullptr");
+        return nullptr;
     }
 
     auto a_layer = document->getLayerList()->getActive();
@@ -338,7 +338,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
             a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
         }else{
-            a=NULL;
+            a=nullptr;
         }
         break;
     case RS2::ActionSelectContour:
@@ -1673,7 +1673,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snap_toolbar->setSnaps(s);
     }else{
-    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is nullptr");
     }
 	if(view) {
         view->setDefaultSnapMode(s);
@@ -1682,7 +1682,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
 }
 
 void QG_ActionHandler::slotSnapFree() {
-//    if ( snapFree == NULL) return;
+//    if ( snapFree == nullptr) return;
 //    disableSnaps();
     RS_SnapMode s=getSnaps();
     s.snapFree = !s.snapFree;
@@ -1690,14 +1690,14 @@ void QG_ActionHandler::slotSnapFree() {
 }
 
 void QG_ActionHandler::slotSnapGrid() {
-//    if(snapGrid==NULL) return;
+//    if(snapGrid==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = !s.snapGrid;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
-//    if(snapEndpoint==NULL) return;
+//    if(snapEndpoint==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = !s.snapEndpoint;
 
@@ -1705,7 +1705,7 @@ void QG_ActionHandler::slotSnapEndpoint() {
 }
 
 void QG_ActionHandler::slotSnapOnEntity() {
-//    if(snapOnEntity==NULL) return;
+//    if(snapOnEntity==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = !s.snapOnEntity;
 
@@ -1714,7 +1714,7 @@ void QG_ActionHandler::slotSnapOnEntity() {
 
 void QG_ActionHandler::slotSnapCenter() {
 //    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
-//    if(snapCenter==NULL) return;
+//    if(snapCenter==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapCenter = !s.snapCenter;
     slotSetSnaps(s);

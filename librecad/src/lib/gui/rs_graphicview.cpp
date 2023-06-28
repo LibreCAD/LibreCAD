@@ -73,6 +73,12 @@ struct RS_GraphicView::ColorData {
     RS_Color handleColor;
     /** End handle color */
     RS_Color endHandleColor;
+
+    /** Relative-zero marker color */
+    RS_Color relativeZeroColor;
+
+    /* Relative-zero hidden state */
+    bool hideRelativeZero = false;
 };
 
 /**
@@ -97,6 +103,12 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle)));
     setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
     setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
+    setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor)));
+
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->writeEntry("/hideRelativeZero", RS_SETTINGS->readNumEntry("/hideRelativeZero", 0));
     RS_SETTINGS->endGroup();
 }
 
@@ -1377,7 +1389,11 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 		return;
 	}
 
-    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
+    RS2::LineType relativeZeroPenType = RS2::SolidLine;
+
+    if (m_colorData->hideRelativeZero) relativeZeroPenType = RS2::NoPen;
+
+    RS_Pen p(m_colorData->relativeZeroColor, RS2::Width00, relativeZeroPenType);
 	p.setScreenWidth(0);
 	painter->setPen(p);
 
@@ -1772,9 +1788,9 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
-	if (overlayEntities[position]) {
-		return overlayEntities[position];
-	}
+    if (overlayEntities[position])
+        return overlayEntities[position];
+
     overlayEntities[position]=new RS_EntityContainer(nullptr);
     if (position == RS2::OverlayEffects)
         overlayEntities[position]->setOwner(true);
@@ -1969,4 +1985,18 @@ bool RS_GraphicView::isPanning() const {
 
 void RS_GraphicView::setPanning(bool state) {
     panning = state;
+}
+
+
+
+/* Sets the color for the relative-zero marker. */
+void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)
+{
+    m_colorData->relativeZeroColor = c;
+}
+
+/* Sets the hidden state for the relative-zero marker. */
+void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
+{
+    m_colorData->hideRelativeZero = isHidden;
 }

@@ -35,7 +35,7 @@ class QG_ImageOptionsDialog : public QDialog, public Ui::QG_ImageOptionsDialog
 
 public:
     QG_ImageOptionsDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-    ~QG_ImageOptionsDialog();
+    virtual ~QG_ImageOptionsDialog() = default;
 
     virtual QSize getSize();
     virtual QSize getBorders();

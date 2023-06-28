@@ -177,6 +177,12 @@ public:
 		 */
     void setEndHandleColor(const RS_Color& c);
 
+	/* Sets the color for the relative-zero marker. */
+    void setRelativeZeroColor(const RS_Color& c);
+
+	/* Sets the hidden state for the relative-zero marker. */
+    void setRelativeZeroHiddenState(bool isHidden);
+
 	/**
 	 * This virtual method can be overwritten to set the mouse
 	 * cursor to the given type.

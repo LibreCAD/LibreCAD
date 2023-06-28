@@ -28,20 +28,19 @@
 #include <iostream>
 
 #include <QMessageBox>
-
 #include <QStringList>
 
 #include "qg_dlgoptionsdrawing.h"
 
 #include "qc_applicationwindow.h"
 
+#include "dxf_format.h"
+#include "lc_defaults.h"
 #include "rs_debug.h"
 #include "rs_filterdxfrw.h"
 #include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
-#include "dxf_format.h"
-#include "lc_defaults.h"
 #include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_vector.h"
@@ -54,7 +53,7 @@
  *  true to construct a modal dialog.
  */
 namespace {
-int current_tab = 0;
+    int current_tab = 0;
 }
 
 QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::WindowFlags fl)
@@ -75,7 +74,7 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
 QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
 {
     // no need to delete child widgets, Qt does it all for us
-    RS_SETTINGS->beginGroup("/Appearance");
+    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
     RS_SETTINGS->writeEntry("/IsometricGrid", rbIsometricGrid->isChecked()?QString("1"):QString("0"));
     RS2::CrosshairType chType(RS2::TopCrosshair);
     if(rbCrosshairLeft->isChecked()) {
@@ -90,7 +89,6 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
 		RS_SETTINGS->writeEntry("/GridSpacingX", spacing->x);
 		RS_SETTINGS->writeEntry("/GridSpacingY", spacing->y);
     }
-    RS_SETTINGS->endGroup();
 }
 
 /*

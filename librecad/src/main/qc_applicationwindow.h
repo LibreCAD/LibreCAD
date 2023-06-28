@@ -243,6 +243,7 @@ signals:
     void draftChanged(bool on);
     void printPreviewChanged(bool on);
     void windowsChanged(bool windowsLeft);
+    void signalEnableRelativeZeroSnaps(const bool);
 
 public:
     /**
