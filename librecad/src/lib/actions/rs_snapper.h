@@ -29,7 +29,7 @@
 #define RS_SNAPPER_H
 
 #include <memory>
-#include <list>
+#include <QList>
 #include "rs.h"
 
 class RS_Entity;
@@ -95,7 +95,7 @@ struct RS_SnapMode {
     static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings
 };
 
-using EntityTypeList = std::list<RS2::EntityType>;
+using EntityTypeList = QList<RS2::EntityType>;
 
 /**
  * This class is used for snapping functions in a graphic view.

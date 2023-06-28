@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONSELECT_H
 #define RS_ACTIONSELECT_H
 
-#include <set>
+#include <QList>
 #include "rs_actioninterface.h"
 #include "qg_actionhandler.h"
 
@@ -45,7 +45,7 @@ public:
                     RS_EntityContainer& container,
                     RS_GraphicView& graphicView,
                     RS2::ActionType nextAction,
-					std::initializer_list<RS2::EntityType> const& entityTypeList=std::initializer_list<RS2::EntityType>());
+                    QList<RS2::EntityType> allowedEntityTypes={});
 
 	void init(int status) override;
 	void resume() override;
@@ -57,9 +57,9 @@ public:
 	void keyPressEvent(QKeyEvent* e) override;
 
 private:
-	std::initializer_list<RS2::EntityType> const entityTypeList;
-    RS2::ActionType nextAction;
     QG_ActionHandler* action_handler;
+    RS2::ActionType nextAction;
+    QList<RS2::EntityType> const entityTypeList;
 };
 
 #endif

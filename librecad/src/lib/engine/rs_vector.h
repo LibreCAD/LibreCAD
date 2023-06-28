@@ -150,7 +150,7 @@ public:
 	RS_VectorSolutions();
     RS_VectorSolutions(std::vector<RS_Vector> vectors);
     RS_VectorSolutions(std::initializer_list<RS_Vector> list);
-	RS_VectorSolutions(int num);
+    RS_VectorSolutions(int num);
 
 	void alloc(size_t num);
     void clear();

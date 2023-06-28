@@ -38,10 +38,9 @@
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* action_select,
-											 std::initializer_list<RS2::EntityType> const& entityTypeList)
+                                             QList<RS2::EntityType> entityTypeList)
     :RS_ActionInterface("Select Entities", container, graphicView)
-    ,entityTypeList(entityTypeList)
-    ,en(nullptr)
+    ,entityTypeList(std::move(entityTypeList))
     ,actionSelect(action_select)
 {
     actionType = RS2::ActionSelectSingle;
@@ -92,7 +91,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
     }
     else
     {
-        en = catchEntity(e, {entityTypeList.cbegin(), entityTypeList.cend()});
+        en = catchEntity(e, entityTypeList);
         trigger();
     }
 }

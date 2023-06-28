@@ -1788,12 +1788,14 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
-    if (overlayEntities[position])
+    if (overlayEntities[position]) {
         return overlayEntities[position];
+    }
 
     overlayEntities[position]=new RS_EntityContainer(nullptr);
-    if (position == RS2::OverlayEffects)
+    if (position == RS2::OverlayEffects) {
         overlayEntities[position]->setOwner(true);
+    }
 
 	return overlayEntities[position];
 

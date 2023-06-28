@@ -129,7 +129,7 @@ RS_Commands* RS_Commands::instance() {
  */
  
 RS_Commands::RS_Commands() {
-    std::initializer_list<LC_CommandItem> commandList={
+    const std::vector<LC_CommandItem> commandList{
 
 //      draw entity command template
 /*        {

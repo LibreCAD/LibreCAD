@@ -203,8 +203,6 @@ void LC_ActionLayersExport::trigger()
         QApplication::restoreOverrideCursor();
     }};
 
-    int currentExportLayerIndex = 0;
-
     for (int currentExportLayerIndex = 0; currentExportLayerIndex < layersToExport.size(); currentExportLayerIndex++)
     {
         auto documentDeepCopy = std::make_unique<RS_Graphic>();

@@ -284,7 +284,7 @@ RS_Vector RS_Arc::getEndpoint() const
 RS_VectorSolutions RS_Arc::getRefPoints() const
 {
 	//order: start, end, center
-	return {getStartpoint(), getEndpoint(), data.center};
+    return {{getStartpoint(), getEndpoint(), data.center}};
 }
 
 double RS_Arc::getDirection1() const {
