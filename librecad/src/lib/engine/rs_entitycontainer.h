@@ -236,6 +236,7 @@ public:
     const QList<RS_Entity*>& getEntityList();
 
 protected:
+    virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
     /** entities in the container */
     QList<RS_Entity *> entities;
@@ -256,7 +257,7 @@ private:
 	 */
 	bool ignoredSnap() const;
     mutable int entIdx;
-    bool autoDelete;
+    bool autoDelete = false;
 };
 
 #endif

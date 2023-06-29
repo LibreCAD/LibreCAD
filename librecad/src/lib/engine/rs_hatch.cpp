@@ -44,6 +44,25 @@
 #include "rs_math.h"
 #include "rs_debug.h"
 
+namespace
+{
+
+struct HatchLoop
+{
+    std::list<std::unique_ptr<RS_EntityContainer>> loops;
+    std::list<HatchLoop> inners;
+    HatchLoop(std::vector<std::unique_ptr<RS_EntityContainer>> loops) {
+        while (!loops.empty()) {
+
+        }
+    }
+};
+
+
+
+
+}
+
 
 RS_HatchData::RS_HatchData(bool _solid,
 						   double _scale,
@@ -690,6 +709,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 //must be called after update()
 double RS_Hatch::getTotalArea() {
+    auto loops = getLoops();
 
     double totalArea=0.;
 
@@ -784,3 +804,5 @@ std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
     os << " Hatch: " << p.getData() << "\n";
     return os;
 }
+
+

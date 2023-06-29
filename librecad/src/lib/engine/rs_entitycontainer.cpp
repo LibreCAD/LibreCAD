@@ -2026,3 +2026,74 @@ const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 {
     return entities;
 }
+
+namespace {
+std::unique_ptr<RS_EntityContainer> findLoop(RS_EntityContainer& container)
+{
+
+    RS_Entity* e = container.firstEntity();
+    container.removeEntity(e);
+    RS_Vector target = e->getStartpoint();
+    auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+    ec->addEntity(e);
+    RS_Vector endPoint = e->getEndpoint();
+    while (endPoint.squaredTo(target) > 1e-8) {
+        double distance=0.;
+        RS_Entity* next=nullptr;
+        RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
+        std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
+        if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
+            std::swap(points[0], points[1]);
+        ec->addEntity(next);
+        container.removeEntity(ec);
+        endPoint=points[1];
+    }
+    return ec;
+}
+}
+
+std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const
+{
+    if (entities.empty())
+        return {};
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    RS_EntityContainer edges(nullptr, false);
+    for(auto* e1: entities){
+        if (e1->isContainer())
+        {
+            auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+            for (auto& subLoop: subLoops)
+                loops.push_back(std::move(subLoop));
+            continue;
+        }
+
+        if (!e1->isEdge())
+            continue;
+
+        //detect circles and whole ellipses
+        switch(e1->rtti()){
+        case RS2::EntityEllipse:
+        if(static_cast<RS_Ellipse*>(e1)->isEllipticArc()) {
+            edges.add(e1);
+            continue;
+        }
+        // fall-through
+        case RS2::EntityCircle:
+        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+        ec->addEntity(e1);
+        loops.push_back(std::move(ec));
+        continue;
+        default:
+        edges.addEntity(e1);
+        continue;
+        }
+    }
+
+    //find loops
+    while (!edges.isEmpty())
+    {
+        loops.push_back(findLoop(edges));
+    }
+    return loops;
+}
