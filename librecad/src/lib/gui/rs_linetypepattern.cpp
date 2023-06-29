@@ -25,8 +25,12 @@
 **********************************************************************/
 
 
-#include<cmath>
+#include <cmath>
+#include <map>
+
 #include "rs_linetypepattern.h"
+
+#include "rs.h"
 
 RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& pattern):
 	pattern(pattern)
@@ -35,6 +39,43 @@ RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& patt
     for(double l: pattern){
         totalLength += std::abs(l);
     }
+}
+
+
+const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType)
+{
+    static std::map<RS2::LineType, const RS_LineTypePattern*> lineTypeToPattern = {
+            {RS2::SolidLine, &patternSolidLine},
+            {RS2::DotLine, &patternDotLine},
+            {RS2::DotLineTiny, &patternDotLineTiny},
+            {RS2::DotLine2, &patternDotLine2},
+            {RS2::DotLineX2, &patternDotLineX2},
+            {RS2::DashLine, &patternDashLine},
+            {RS2::DashLineTiny, &patternDashLineTiny},
+            {RS2::DashLine2, &patternDashLine2},
+            {RS2::DashLineX2, &patternDashLineX2},
+            {RS2::DashDotLine, &patternDashDotLine},
+            {RS2::DashDotLineTiny, &patternDashDotLineTiny},
+            {RS2::DashDotLine2, &patternDashDotLine2},
+            {RS2::DashDotLineX2, &patternDashDotLineX2},
+            {RS2::DivideLine, &patternDivideLine},
+            {RS2::DivideLineTiny, &patternDivideLineTiny},
+            {RS2::DivideLine2, &patternDivideLine2},
+            {RS2::DivideLineX2, &patternDivideLineX2},
+            {RS2::CenterLine, &patternCenterLine},
+            {RS2::CenterLineTiny, &patternCenterLineTiny},
+            {RS2::CenterLine2, &patternCenterLine2},
+            {RS2::CenterLineX2, &patternCenterLineX2},
+            {RS2::BorderLine, &patternBorderLine},
+            {RS2::BorderLineTiny, &patternBorderLineTiny},
+            {RS2::BorderLine2, &patternBorderLine2},
+            {RS2::BorderLineX2, &patternBorderLineX2},
+            {RS2::LineByLayer, &patternBlockLine},
+            {RS2::LineByBlock, &patternBlockLine}
+            };
+    if (lineTypeToPattern.count(lineType) == 0)
+        return nullptr;
+    return lineTypeToPattern[lineType];
 }
 
 //define all line patterns in pixels

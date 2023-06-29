@@ -46,13 +46,12 @@
  *
  * @author Andrew Mustun
  */
-class RS2 {
-public:
+namespace RS2 {
 
     /**
      * Flags.
      */
-    enum Flags {
+    enum Flags : unsigned {
         /** Flag for Undoables. */
         FlagUndone      = 1<<0,
         /** Entity Visibility. */
@@ -127,7 +126,7 @@ public:
               'RS_ActionDefault::highlightHoveredEntities' function at the 
               line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
     */
-    enum EntityType {
+    enum EntityType : unsigned {
         EntityUnknown,      /**< Unknown */
         EntityContainer,    /**< Container */
         EntityBlock,        /**< Block (Group definition) */
@@ -663,7 +662,7 @@ public:
     /**
      * Enum of line styles:
      */
-    enum LineType {
+    enum LineType : short{
         LineByBlock = -2,      /**< Line type defined by block not entity */
         LineByLayer = -1,     /**< Line type defined by layer not entity */
         NoPen = 0,            /**< No line at all. */
@@ -806,7 +805,7 @@ public:
     /**
      * Wrapper for Qt
      */
-	static LineWidth intToLineWidth(int w);
+    LineWidth intToLineWidth(int w);
 
     /**
      * Enum of cursor types.
