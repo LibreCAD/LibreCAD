@@ -1073,8 +1073,13 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 		}
 
 		// this entity is highlighted:
-        if (e->isHighlighted())
-            pen.setColor(m_colorData->highlightedColor);
+        if (e->isHighlighted()) {
+            // Glowing effects on mouse hovering: use the "selected" color
+            if (e->getParent() == overlayEntities[RS2::OverlayEffects])
+                pen.setColor(m_colorData->selectedColor);
+            else
+                pen.setColor(m_colorData->highlightedColor);
+        }
 	}
 
 	// deleting not drawing:

@@ -92,6 +92,7 @@ protected:
     private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
+    void highlightEntity(RS_Entity* entity);
 };
 
 #endif
