@@ -31,22 +31,23 @@
 
 #include "qc_applicationwindow.h"
 
-#include <QStatusBar>
-#include <QMenuBar>
+#include <QByteArray>
 #include <QDockWidget>
 #include <QFileDialog>
-#include <QMessageBox>
-#include <QTimer>
-#include <QSplitter>
-#include <QMdiArea>
-#include <QPluginLoader>
 #include <QImageWriter>
-#include <QtSvg>
-#include <QStyleFactory>
-#include <QPrintDialog>
+#include <QMdiArea>
+#include <QMenuBar>
+#include <QMessageBox>
 #include <QPagedPaintDevice>
+#include <QPluginLoader>
+#include <QPrintDialog>
 #include <QRegExp>
+#include <QSplitter>
+#include <QStatusBar>
+#include <QStyleFactory>
 #include <QSysInfo>
+#include <QTimer>
+#include <QtSvg>
 
 #include <boost/version.hpp>
 
@@ -901,6 +902,8 @@ void QC_ApplicationWindow::storeSettings() {
         RS_SETTINGS->writeEntry("/WindowHeight", height());
         RS_SETTINGS->writeEntry("/WindowX", x());
         RS_SETTINGS->writeEntry("/WindowY", y());
+        QString geometry {saveGeometry().toBase64(QByteArray::Base64Encoding)};
+        RS_SETTINGS->writeEntry("/WindowGeometry", geometry);
         RS_SETTINGS->writeEntry("/StateOfWidgets", QVariant (saveState()));
         RS_SETTINGS->writeEntry("/LeftDockArea", dock_areas.left->isChecked());
         RS_SETTINGS->writeEntry("/RightDockArea", dock_areas.right->isChecked());

@@ -29,8 +29,9 @@
 #include <clocale>
 #include "main.h"
 
-#include <QDebug>
 #include <QApplication>
+#include <QByteArray>
+#include <QDebug>
 #include <QSplashScreen>
 #include <QSettings>
 #include <QMessageBox>
@@ -49,7 +50,10 @@
 #include "console_dxf2pdf.h"
 #include "console_dxf2png.h"
 
-
+namespace
+{
+void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
+}
 /**
  * Main. Creates Application window.
  */
@@ -282,13 +286,6 @@ int main(int argc, char** argv)
 
     RS_DEBUG->print("main: show main window");
 
-    settings.beginGroup("Geometry");
-    int windowWidth = settings.value("WindowWidth", 1024).toInt();
-    int windowHeight = settings.value("WindowHeight", 1024).toInt();
-    int windowX = settings.value("WindowX", 32).toInt();
-    int windowY = settings.value("WindowY", 32).toInt();
-    settings.endGroup();
-
     settings.beginGroup("Defaults");
     if( !settings.contains("UseQtFileOpenDialog")) {
 #ifdef Q_OS_LINUX
@@ -302,9 +299,7 @@ int main(int argc, char** argv)
     settings.endGroup();
 
     if (!first_load)
-        appWin.resize(windowWidth, windowHeight);
-
-    appWin.move(windowX, windowY);
+        restoreWindowGeometry(appWin, settings);
 
     bool maximize = settings.value("Startup/Maximize", 0).toBool();
 
@@ -411,3 +406,24 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean)
     return ret;
 }
 
+namespace {
+void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
+{
+    settings.beginGroup("Geometry");
+    auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
+    auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
+    if (!geometry.isEmpty()) {
+        appWin.restoreGeometry(geometry);
+    } else {
+        // fallback
+        int windowWidth = settings.value("WindowWidth", 1024).toInt();
+        int windowHeight = settings.value("WindowHeight", 1024).toInt();
+        int windowX = settings.value("WindowX", 32).toInt();
+        int windowY = settings.value("WindowY", 32).toInt();
+        appWin.resize(windowWidth, windowHeight);
+        appWin.move(windowX, windowY);
+    }
+
+    settings.endGroup();
+}
+}
