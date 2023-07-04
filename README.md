@@ -53,8 +53,11 @@ $ librecad dxf2png foo.dxf
 
 Requirements:
 
+- this is a modified version, no boost based
+
 - [Qt](https://www.qt.io/download-open-source/) 5.2.1+ (MinGW version on Windows)
-- [Boost](https://www.boost.org/)
+
+- [Eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) replace to boost
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 

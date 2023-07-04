@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 
+#include <iostream>
 #include <cfloat>
 #include <QDebug>
 #include "rs_math.h"
@@ -62,7 +63,7 @@ LC_Quadratic::LC_Quadratic(const LC_Quadratic& lc0):
 LC_Quadratic& LC_Quadratic::operator = (const LC_Quadratic& lc0)
 {
     if(lc0.isQuadratic()){
-        m_mQuad.resize(2,2,false);
+        m_mQuad.resize(2, 2);
         m_mQuad=lc0.getQuad();
     }
     m_vLinear.resize(2);
@@ -235,24 +236,24 @@ bool LC_Quadratic::operator != (bool valid) const
 	return m_bValid != valid;
 }
 
-boost::numeric::ublas::vector<double>& LC_Quadratic::getLinear()
+Vector2d  LC_Quadratic::getLinear()
 {
-	return m_vLinear;
+    return m_vLinear;
 }
 
-const boost::numeric::ublas::vector<double>& LC_Quadratic::getLinear() const
+const Vector2d  LC_Quadratic::getLinear() const
 {
-	return m_vLinear;
+    return m_vLinear;
 }
 
-boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad()
+Matrix2d  LC_Quadratic::getQuad()
 {
-	return m_mQuad;
+    return m_mQuad;
 }
 
-const boost::numeric::ublas::matrix<double>& LC_Quadratic::getQuad() const
+const Matrix2d  LC_Quadratic::getQuad() const
 {
-	return m_mQuad;
+    return m_mQuad;
 }
 
 double const& LC_Quadratic::constTerm()const
@@ -439,13 +440,13 @@ LC_Quadratic LC_Quadratic::move(const RS_Vector& v)
 
 LC_Quadratic LC_Quadratic::rotate(const double& angle)
 {
-    using namespace boost::numeric::ublas;
-	auto m=rotationMatrix(angle);
-	auto t=trans(m);
-    m_vLinear = prod(t, m_vLinear);
-    if(m_bIsQuadratic){
-        m_mQuad=prod(m_mQuad,m);
-        m_mQuad=prod(t, m_mQuad);
+    auto m = rotationMatrix(angle);
+    auto t = m.transpose();
+    m_vLinear = t * m_vLinear;
+    if(m_bIsQuadratic)
+    {
+        m_mQuad = m_mQuad * m;
+        m_mQuad = t * m_mQuad;
     }
     return *this;
 }
@@ -599,13 +600,13 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
    cos x, sin x
    -sin x, cos x
    */
-boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double& angle)
+Matrix2d  LC_Quadratic::rotationMatrix(const double& angle)
 {
-    boost::numeric::ublas::matrix<double> ret(2,2);
-    ret(0,0)=cos(angle);
-    ret(0,1)=sin(angle);
-    ret(1,0)=-ret(0,1);
-    ret(1,1)=ret(0,0);
+    Matrix2d  ret(2, 2);
+    ret(0, 0) = cos(angle);
+    ret(0, 1) = sin(angle);
+    ret(1, 0) = -ret(0, 1);
+    ret(1, 1) = ret(0, 0);
     return ret;
 }
 

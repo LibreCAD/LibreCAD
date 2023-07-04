@@ -111,9 +111,7 @@ namespace RS2 {
         FormatDWG,           /**< DWG format. */
 #endif
         FormatLFF,           /**< LibreCAD Font File format. */
-        FormatCXF,           /**< CAM Expert Font format. */
-        FormatJWW,           /**< JWW Format type */
-        FormatJWC            /**< JWC Format type */
+        FormatCXF           /**< CAM Expert Font format. */
     };
 
     /*

@@ -53,9 +53,6 @@ QStringList filtersStringList = {
     "LFF Font (*.lff)",
     "QCAD Font (*.cxf)"
 
-    #ifdef JWW_WRITE_SUPPORT
-    , "JWW Drawing (*.jww)"
-    #endif
 };
 
 QList<RS2::FormatType> filtersTypeList =
@@ -73,10 +70,6 @@ QList<RS2::FormatType> filtersTypeList =
 
     RS2::FormatLFF,
     RS2::FormatCXF
-
-    #ifdef JWW_WRITE_SUPPORT
-    , RS2::FormatJWW
-    #endif
 };
 
 

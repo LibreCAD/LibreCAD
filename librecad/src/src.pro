@@ -8,7 +8,6 @@ DISABLE_POSTSCRIPT = false
 #DEFINES += LC_DEBUGGING
 
 DEFINES += DWGSUPPORT
-DEFINES -= JWW_WRITE_SUPPORT
 
 LC_VERSION="2.2.0-alpha"
 VERSION=$${LC_VERSION}
@@ -17,7 +16,6 @@ VERSION=$${LC_VERSION}
 GENERATED_DIR = ../../generated/librecad
 # Use common project definitions.
 include(../../common.pri)
-include(./boost.pri)
 include(./muparser.pri)
 
 CONFIG += qt \
@@ -27,18 +25,16 @@ CONFIG += qt \
     depend_includepath
 
 QT += widgets printsupport
-CONFIG += c++14
+CONFIG += c++17
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
 
 GEN_LIB_DIR = ../../generated/lib
 msvc {
-	PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib \
-			$$GEN_LIB_DIR/jwwlib.lib
+        PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib
 } else {
-	PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
-			$$GEN_LIB_DIR/libjwwlib.a
+        PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a
 }
 
 DESTDIR = $${INSTALLDIR}
@@ -86,12 +82,11 @@ DEFINES += LC_VERSION=\"$$LC_VERSION\"
 
 # Additional libraries to load
 LIBS += -L../../generated/lib  \
-    -ldxfrw \
-    -ljwwlib
+    -ldxfrw
 
 INCLUDEPATH += \
     ../../libraries/libdxfrw/src \
-    ../../libraries/jwwlib/src \
+    ../../libraries/eigen \
     cmd \
     lib/actions \
     lib/creation \
@@ -192,7 +187,6 @@ HEADERS += \
     lib/filters/rs_filtercxf.h \
     lib/filters/rs_filterdxfrw.h \
     lib/filters/rs_filterdxf1.h \
-    lib/filters/rs_filterjww.h \
     lib/filters/rs_filterlff.h \
     lib/filters/rs_filterinterface.h \
     lib/gui/rs_commandevent.h \
@@ -286,7 +280,6 @@ SOURCES += \
     lib/filters/rs_filtercxf.cpp \
     lib/filters/rs_filterdxfrw.cpp \
     lib/filters/rs_filterdxf1.cpp \
-    lib/filters/rs_filterjww.cpp \
     lib/filters/rs_filterlff.cpp \
     lib/gui/rs_dialogfactory.cpp \
     lib/gui/rs_eventhandler.cpp \

@@ -68,7 +68,6 @@ private:
     QString fDxf1;
     QString fLff;
     QString fCxf;
-    QString fJww;
     QString name;
 
 };

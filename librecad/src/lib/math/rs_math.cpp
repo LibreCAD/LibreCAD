@@ -23,11 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <boost/numeric/ublas/matrix.hpp>
-#include <boost/numeric/ublas/io.hpp>
-#include <boost/numeric/ublas/lu.hpp>
-#include <boost/math/special_functions/ellint_2.hpp>
-
+#include <iostream>
+#include <iomanip>
+#include <complex>
 #include <cmath>
 #include <muParser.h>
 #include <QString>
@@ -610,21 +608,21 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 
 //        DEBUG_HEADER
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
-	}else{
-		std::complex<double> u(q,0),rt[3];
+    }else{
+        std::complex<double> u(q,0),rt[3];
         u=std::pow(-0.5*u - std::sqrt(0.25*u*u+p*p*p/27), 1./3);
         rt[0]=u-p/(3.*u)-shift;
         std::complex<double> w(-0.5, std::sqrt(3.)/2);
-		rt[1]=u*w-p/(3.*u*w)-shift;
-		rt[2]=u/w-p*w/(3.*u)-shift;
-		//        DEBUG_HEADER
-		//        std::cout<<"Roots:\n";
-		//        std::cout<<rt[0]<<std::endl;
-		//        std::cout<<rt[1]<<std::endl;
-		//        std::cout<<rt[2]<<std::endl;
-		ans.push_back(rt[0].real());
-		ans.push_back(rt[1].real());
-		ans.push_back(rt[2].real());
+        rt[1]=u*w-p/(3.*u*w)-shift;
+        rt[2]=u/w-p*w/(3.*u)-shift;
+        //        DEBUG_HEADER
+        //        std::cout<<"Roots:\n";
+        //        std::cout<<rt[0]<<std::endl;
+        //        std::cout<<rt[1]<<std::endl;
+        //        std::cout<<rt[2]<<std::endl;
+        ans.push_back(rt[0].real());
+        ans.push_back(rt[1].real());
+        ans.push_back(rt[2].real());
 	}
 	// newton-raphson
 	for(double& x0: ans){
@@ -969,9 +967,9 @@ double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
 {
     double a= remainder(phi-M_PI_2,M_PI);
     if(a>0.) {
-        return boost::math::ellint_2<double,double>(k,a);
+        return std::ellint_2(k, a);
     } else {
-        return - boost::math::ellint_2<double,double>(k,std::abs(a));
+        return - std::ellint_2(k, fabs(a));
     }
 }
 
