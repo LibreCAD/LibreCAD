@@ -100,7 +100,7 @@ void LC_ActionDrawSplinePoints::trigger()
 	RS_Vector r = graphicView->getRelativeZero();
 	graphicView->redraw(RS2::RedrawDrawing);
 	graphicView->moveRelativeZero(r);
-	RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %d",
+    RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu",
 		s->getId());
 
 	reset();
