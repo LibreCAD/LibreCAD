@@ -101,7 +101,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
-                    " entity added: %d", circle->getId());
+                    " entity added: %lu", circle->getId());
 }
 
 

@@ -700,25 +700,26 @@ void RS_EntityContainer::updateDimensions(bool autoText) {
  */
 void RS_EntityContainer::updateInserts() {
 
-    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %d/%d", getId(), rtti());
+    std::string idTypeId = std::to_string(getId()) + "/" + std::to_string(rtti());
+    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %s", idTypeId.c_str());
 
     for (RS_Entity* e: entities){
         //// Only update our own inserts and not inserts of inserts
         if (e->rtti()==RS2::EntityInsert  /*&& e->getParent()==this*/) {
             ((RS_Insert*)e)->update();
-            RS_DEBUG->print("RS_EntityContainer::updateInserts: updated ID/type: %d/%d", e->getId(), e->rtti());
+            RS_DEBUG->print("RS_EntityContainer::updateInserts: updated ID/type: %s", idTypeId.c_str());
         } else if (e->isContainer()) {
             if (e->rtti()==RS2::EntityHatch) {
-                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip hatch ID/type: %d/%d", e->getId(), e->rtti());
+                RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip hatch ID/type: %s", idTypeId.c_str());
             } else {
-                RS_DEBUG->print("RS_EntityContainer::updateInserts: update container ID/type: %d/%d", e->getId(), e->rtti());
+                RS_DEBUG->print("RS_EntityContainer::updateInserts: update container ID/type: %s", idTypeId.c_str());
                 ((RS_EntityContainer*)e)->updateInserts();
             }
         } else {
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip entity ID/type: %d/%d", e->getId(), e->rtti());
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_EntityContainer::updateInserts: skip entity ID/type: %s", idTypeId.c_str());
         }
     }
-    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %d/%d OK", getId(), rtti());
+    RS_DEBUG->print("RS_EntityContainer::updateInserts() ID/type: %s", idTypeId.c_str());
 }
 
 

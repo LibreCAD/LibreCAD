@@ -28,14 +28,14 @@
 #include <QMouseEvent>
 #include "rs_actiondimleader.h"
 
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_leader.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;
@@ -96,7 +96,7 @@ void RS_ActionDimLeader::trigger() {
         graphicView->moveRelativeZero(rz);
         //drawSnapper();
 
-        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leader added: %d",
+        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leader added: %lu",
                         leader->getId());
     }
 }

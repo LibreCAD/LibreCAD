@@ -24,7 +24,9 @@
 **
 **********************************************************************/
 #include<cmath>
+
 #include <QSet>
+
 #include "rs_modification.h"
 
 #include "rs_arc.h"
@@ -75,7 +77,7 @@ RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS
         RS2::Unit targetUnit = graphic.getUnit();
         factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %d", factor);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
     // scale factor as vector
     return {factor, factor};
 }
@@ -158,6 +160,16 @@ RS_Arc* trimCircle(RS_Circle* circle, const RS_Vector& trimCoord, const RS_Vecto
     return new RS_Arc(circle->getParent(), arcData);
 }
 
+/**
+ * @brief getIdFlagString create a string by the entity and ID and type ID.
+ * @param entity - entity, could be nullptr
+ * @return std::string - "ID/typeID", or an empty string, if the input entity is nullptr
+ */
+std::string getIdFlagString(RS_Entity* entity)
+{
+    if (entity == nullptr) return {};
+    return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
+}
 }
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
@@ -424,7 +436,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     }
 
     // add entity to clipboard:
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %d/%d", e->getId(), e->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %s", getIdFlagString(e).c_str());
     RS_Entity* c = e->clone();
 
     c->move(-ref);
@@ -453,7 +465,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
 
     if (cut) {
         LC_UndoSection undo( document);
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %s", getIdFlagString(e).c_str());
         e->changeUndoState();
         undo.addUndoable(e);
 
@@ -463,7 +475,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         }
         e->setSelected(false);
     } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %s", getIdFlagString(e).c_str());
         // delete entity in graphic view:
         if (graphicView) {
             graphicView->deleteEntity(e);
@@ -505,7 +517,7 @@ void RS_Modification::copyLayers(RS_Entity* e) {
     // special handling of inserts:
     if (e->rtti()==RS2::EntityInsert) {
         // insert: add layer(s) of subentities:
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyLayers: copy insert entity ID/flag layers: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyLayers: copy insert entity ID/flag layers: %s", getIdFlagString(e).c_str());
         RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
         if (!b) {
             RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copyLayers: could not find block for insert entity");
@@ -543,7 +555,7 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
         return;
     }
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: get insert entity ID/flag block: %d/%d", e->getId(), e->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: get insert entity ID/flag block: %s", getIdFlagString(e).c_str());
     RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
     if (!b) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copyBlocks: could not find block for insert entity");
@@ -559,7 +571,7 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
     for(auto e2: *b) {
         //call copyBlocks only if entity are insert
         if (e2->rtti()==RS2::EntityInsert) {
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %d/%d", e2->getId(), e2->rtti());
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %s", getIdFlagString(e).c_str());
             copyBlocks(e2);
         }
     }
@@ -829,7 +841,7 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
     }
 
     // create entity copy to paste
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity ID/flag: %d/%d", entity->getId(), entity->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity ID/flag: %s", getIdFlagString(entity).c_str());
     RS_Entity* e = entity->clone();
 
     // set the same layer in clone as in source
@@ -2212,7 +2224,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
-        RS_DEBUG->print("RS_Modification::trim: ind: %d", ind);
+        RS_DEBUG->print("RS_Modification::trim: ind: %lu", ind);
         is2 = sol.get(ind==0 ? 1 : 0);
         //RS_Vector is2 = sol.get(ind);
         RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);

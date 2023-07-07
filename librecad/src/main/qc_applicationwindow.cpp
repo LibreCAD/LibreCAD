@@ -1015,7 +1015,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
-                        "document: %u", m->getDocument()->getId());
+                        "document: %lu", m->getDocument()->getId());
 
         bool showByBlock = m->getDocument()->rtti()==RS2::EntityBlock;
 

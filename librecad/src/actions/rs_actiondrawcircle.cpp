@@ -82,7 +82,7 @@ void RS_ActionDrawCircle::trigger() {
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %d",
+    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %lu",
                     circle->getId());
 }
 

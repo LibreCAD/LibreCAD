@@ -690,7 +690,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 					sp, nullptr, RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
     setEntityAttributes(entity, &data);
-    RS_DEBUG->print("  id: %d", entity->getId());
+    RS_DEBUG->print("  id: %lu", entity->getId());
 //    entity->update();
     currentContainer->addEntity(entity);
 }

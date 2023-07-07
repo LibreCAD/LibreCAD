@@ -123,7 +123,7 @@ void RS_ActionDrawLineAngle::trigger() {
 
 	graphicView->moveRelativeZero(pPoints->data.startpoint);
         graphicView->redraw(RS2::RedrawDrawing);
-    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %d",
+    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
                     line->getId());
 }
 

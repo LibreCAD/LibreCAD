@@ -93,7 +93,7 @@ void RS_ActionDrawArc::trigger() {
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %d",
+    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu",
                     arc->getId());
 }
 

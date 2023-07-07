@@ -127,7 +127,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     setStatus(SetCenter);
 
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 

@@ -460,7 +460,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
                                         RS2::NoUpdate);
         RS_Insert* entity = new RS_Insert(currentContainer, d);
         setEntityAttributes(entity, attributes);
-        RS_DEBUG->print("  id: %d", entity->getId());
+        RS_DEBUG->print("  id: %lu", entity->getId());
         //entity->update();
         currentContainer->addEntity(entity);
 }

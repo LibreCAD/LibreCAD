@@ -105,7 +105,7 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     setStatus(SetFocus1);
 
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 

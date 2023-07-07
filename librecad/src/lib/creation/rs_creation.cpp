@@ -1073,7 +1073,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     RS_Graphic g;
     if (!g.open(data.file, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s");
+                        "RS_Creation::createLibraryInsert: Cannot open file: %s", data.file.toStdString().c_str());
 		return nullptr;
     }
 

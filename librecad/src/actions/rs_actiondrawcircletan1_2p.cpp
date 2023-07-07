@@ -118,7 +118,7 @@ void RS_ActionDrawCircleTan1_2P::trigger() {
     setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger():"
-                    " entity added: %d", c->getId());
+                    " entity added: %lu", c->getId());
 }
 
 

@@ -88,7 +88,7 @@ void RS_ActionDimAligned::trigger() {
     graphicView->moveRelativeZero(rz);
 
     RS_DEBUG->print("RS_ActionDimAligned::trigger():"
-                    " dim added: %d", dim->getId());
+                    " dim added: %lu", dim->getId());
 }
 
 

@@ -109,7 +109,7 @@ void RS_ActionPolylineAppend::trigger() {
 	graphicView->drawEntity(pPoints->polyline);
 	graphicView->moveRelativeZero(pPoints->polyline->getEndpoint());
 	drawSnapper();
-	RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %d",
+    RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",
 					pPoints->polyline->getId());
 
 	pPoints->polyline = nullptr;

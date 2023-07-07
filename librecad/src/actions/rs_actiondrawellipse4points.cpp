@@ -82,9 +82,7 @@ void RS_ActionDrawEllipse4Points::trigger() {
     graphicView->moveRelativeZero(rz);
     drawSnapper();
     setStatus(SetPoint1);
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %d", ellipse->getId());
-
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %d", ellipse->getId());
+    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %lu", ellipse->getId());
 }
 
 
