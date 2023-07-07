@@ -62,7 +62,7 @@ void RS_ActionDrawLineFree::trigger() {
 			}
 			graphicView->redraw(RS2::RedrawDrawing);
 			RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
-							" polyline added: %d", ent->getId());
+                            " polyline added: %lu", ent->getId());
 		}
 		polyline.reset();
 	}
@@ -90,7 +90,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
 		*vertex = v;
 
         RS_DEBUG->print("RS_ActionDrawLineFree::%s:"
-                        " line added: %d", __func__, ent->getId());
+                        " line added: %lu", __func__, ent->getId());
     }
 }
 

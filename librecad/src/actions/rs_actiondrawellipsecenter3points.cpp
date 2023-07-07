@@ -91,7 +91,7 @@ void RS_ActionDrawEllipseCenter3Points::trigger() {
     setStatus(SetCenter);
 
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 

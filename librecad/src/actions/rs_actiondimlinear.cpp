@@ -95,7 +95,7 @@ void RS_ActionDimLinear::trigger() {
     graphicView->moveRelativeZero(rz);
 
     RS_DEBUG->print("RS_ActionDimLinear::trigger():"
-                    " dim added: %d", dim->getId());
+                    " dim added: %lu", dim->getId());
 }
 
 

@@ -111,7 +111,7 @@ void RS_ActionDrawSpline::trigger() {
         RS_Vector r = graphicView->getRelativeZero();
         graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(r);
-    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %d",
+    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
 					pPoints->spline->getId());
 
 		pPoints->spline = nullptr;
@@ -149,7 +149,7 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
 				if (getStatus()==SetNextPoint &&
 						pPoints->spline &&
-						pPoints->spline->getNumberOfControlPoints()>=pPoints->spline->getDegree()+1) {
+                        pPoints->spline->getNumberOfControlPoints()>=size_t(pPoints->spline->getDegree())+1) {
                         trigger();
                 }
         deletePreview();

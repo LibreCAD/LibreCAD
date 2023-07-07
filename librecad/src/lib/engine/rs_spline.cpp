@@ -96,14 +96,16 @@ void RS_Spline::calculateBorders() {
 }
 
 
-void RS_Spline::setDegree(size_t deg) {
-	if (deg>=1 && deg<=3) {
-		data.degree = deg;
-	}
+void RS_Spline::setDegree(int degree) {
+    if (degree>=1 && degree<=3) {
+        data.degree = degree;
+    } else {
+        RS_DEBUG->print(RS_Debug::D_CRITICAL, "%s(%d): invalid degree = %d", __func__, degree, degree);
+    }
 }
 
 /** @return Degree of this spline curve (1-3).*/
-size_t RS_Spline::getDegree() const{
+int RS_Spline::getDegree() const{
 	return data.degree;
 }
 

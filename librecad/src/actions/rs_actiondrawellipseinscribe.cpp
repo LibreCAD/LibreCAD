@@ -109,7 +109,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
 	setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 

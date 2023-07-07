@@ -1021,7 +1021,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
         RS_Graphic g;
         if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
-                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s");
+                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s", fullName.toStdString().c_str());
             delete b;
 			return nullptr;
         }

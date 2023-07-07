@@ -44,7 +44,7 @@ struct RS_SplineData {
 
 
 	/** Degree of the spline (1, 2, 3) */
-    size_t degree = 3;
+    int degree = 3;
 	/** Closed flag. */
     bool closed = false;
 	/** Control points of the spline. */
@@ -82,10 +82,10 @@ public:
 	}
 
 	/** Sets the splines degree (1-3). */
-	void setDegree(size_t deg);
+    void setDegree(int degree);
 
 	/** @return Degree of this spline curve (1-3).*/
-	size_t getDegree() const;
+    int getDegree() const;
 
 	/** @return 0. */
 	int getNumberOfKnots() {
