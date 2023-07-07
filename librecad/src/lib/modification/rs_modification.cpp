@@ -2224,7 +2224,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
-        RS_DEBUG->print("RS_Modification::trim: ind: %ul", ind);
+        RS_DEBUG->print("RS_Modification::trim: ind: %lu", ind);
         is2 = sol.get(ind==0 ? 1 : 0);
         //RS_Vector is2 = sol.get(ind);
         RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);

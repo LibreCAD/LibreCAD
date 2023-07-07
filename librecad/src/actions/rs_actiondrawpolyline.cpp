@@ -28,17 +28,17 @@
 #include <QMouseEvent>
 #include "rs_actiondrawpolyline.h"
 
+#include "rs_arc.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-#include "rs_arc.h"
 #include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -135,7 +135,7 @@ void RS_ActionDrawPolyline::trigger() {
 	graphicView->drawEntity(pPoints->polyline);
 	graphicView->moveRelativeZero(pPoints->polyline->getEndpoint());
     drawSnapper();
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %d",
+    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %lu",
 					pPoints->polyline->getId());
 
 	pPoints->polyline = nullptr;
