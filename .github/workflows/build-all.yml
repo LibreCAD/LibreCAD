@@ -1,4 +1,4 @@
-name: Continuous build
+name: 2.2.0 bugfix builds
 on:
   push:
     branches:

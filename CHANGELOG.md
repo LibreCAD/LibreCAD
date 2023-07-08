@@ -1,6 +1,6 @@
 # Change Log
 
-## [2.2.0-01] - unreleased
+## [2.2.0.1] - 2023-07-08
 
 ### Removed
 - importshp plugin, see issue #1481
