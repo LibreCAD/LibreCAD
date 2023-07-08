@@ -122,7 +122,7 @@ void QG_DlgOptionsGeneral::init()
 
     bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
     cbHideRelativeZero->setChecked(hideRelativeZero);
-    bool visualizeHovering = RS_SETTINGS->readNumEntry("/visualizeOnHovering", 0);
+    bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
     cbVisualizeHovering->setChecked(visualizeHovering);
 
     // scale grid:
@@ -243,7 +243,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
         RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int)cbHideRelativeZero->isChecked()));
-        RS_SETTINGS->writeEntry("/visualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
+        RS_SETTINGS->writeEntry("/VisualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));

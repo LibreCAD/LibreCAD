@@ -144,7 +144,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     clearHighLighting();
 
     auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/visualizeHovering", 0) != 0;
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
     if (!showHighlightEntity)
         return;
 
@@ -534,6 +534,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
+    double originalWidth = std::max(duplicatedPen.getScreenWidth(), 1.);
 
     const double zoomFactor = 200.;
 
@@ -567,7 +568,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
 
-        double effectWidth = std::min(10., 25.0 * duplicatedPen_width * gradientFactor);
+        double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
         effectWidth = std::max(2., effectWidth);
 
         duplicatedPen.setScreenWidth(effectWidth);
