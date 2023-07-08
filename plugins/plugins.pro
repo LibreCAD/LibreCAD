@@ -15,7 +15,6 @@ SUBDIRS     = \
         divide \
         list \
         sameprop \
-        importshp \
         sample \
         picfile \
         plotequation \
