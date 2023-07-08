@@ -567,7 +567,8 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
 
-        double effectWidth = 25.0 * duplicatedPen_width * gradientFactor;
+        double effectWidth = std::min(10., 25.0 * duplicatedPen_width * gradientFactor);
+        effectWidth = std::max(2., effectWidth);
 
         duplicatedPen.setScreenWidth(effectWidth);
 
