@@ -41,6 +41,7 @@
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
+#include "rs_settings.h"
 
 
 struct RS_ActionDefault::Points {
@@ -140,6 +141,13 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 */
 void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
 {
+    clearHighLighting();
+
+    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/visualizeHovering", 0) != 0;
+    if (!showHighlightEntity)
+        return;
+
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
         return;

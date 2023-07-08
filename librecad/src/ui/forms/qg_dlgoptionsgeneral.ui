@@ -329,6 +329,19 @@
             </property>
            </widget>
           </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="cbVisualizeHovering">
+            <property name="toolTip">
+             <string>Visualize the entity under the cursor</string>
+            </property>
+            <property name="text">
+             <string>Mouse-over effects</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+Z</string>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </item>
