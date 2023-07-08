@@ -96,10 +96,6 @@ muParser was released under the MIT license.
 
 - <https://beltoforion.de/article.php?a=muparser&hl=en&p=licence>
 
-Shapelib was released under a "MIT Style" license or LGPLv2.
-
-- <https://github.com/LibreCAD/LibreCAD/tree/master/plugins/importshp/shapelib>
-
 The AZOmix fonts were released under the KST32B version 2.0 license.
 
 - <https://github.com/LibreCAD/LibreCAD/blob/master/licenses/KST32B_v2.txt>
