@@ -1,5 +1,17 @@
 # Change Log
 
+## [2.2.1-alpha] - unreleased
+
+### Added
+
+### Removed
+- importshp plugin, see issue #1481
+
+### Changed
+
+### Fixed
+- CVE-2023-30259, OOB reads in importshp plugin (#1481)
+
 ## [2.2.0] - 2022-12-17
 
 ### Added
