@@ -41,6 +41,7 @@
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
+#include "rs_settings.h"
 
 
 struct RS_ActionDefault::Points {
@@ -140,6 +141,13 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
 */
 void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
 {
+    clearHighLighting();
+
+    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
+    if (!showHighlightEntity)
+        return;
+
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
         return;
@@ -526,6 +534,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
+    double originalWidth = std::max(duplicatedPen.getScreenWidth(), 1.);
 
     const double zoomFactor = 200.;
 
@@ -559,7 +568,8 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
 
-        double effectWidth = 25.0 * duplicatedPen_width * gradientFactor;
+        double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
+        effectWidth = std::max(2., effectWidth);
 
         duplicatedPen.setScreenWidth(effectWidth);
 
