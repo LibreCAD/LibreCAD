@@ -2045,7 +2045,7 @@ std::unique_ptr<RS_EntityContainer> findLoop(RS_EntityContainer& container)
         if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
             std::swap(points[0], points[1]);
         ec->addEntity(next);
-        container.removeEntity(ec);
+        container.removeEntity(ec.get());
         endPoint=points[1];
     }
     return ec;
@@ -2075,18 +2075,19 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
         switch(e1->rtti()){
         case RS2::EntityEllipse:
         if(static_cast<RS_Ellipse*>(e1)->isEllipticArc()) {
-            edges.add(e1);
-            continue;
+            edges.addEntity(e1);
+            break;
         }
         // fall-through
         case RS2::EntityCircle:
+        {
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
         ec->addEntity(e1);
         loops.push_back(std::move(ec));
-        continue;
+        }
+        break;
         default:
         edges.addEntity(e1);
-        continue;
         }
     }
 

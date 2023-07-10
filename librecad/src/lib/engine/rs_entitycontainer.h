@@ -28,6 +28,7 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
+#include <memory>
 #include <vector>
 #include <QList>
 #include "rs_entity.h"
