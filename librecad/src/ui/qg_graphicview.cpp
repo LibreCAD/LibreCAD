@@ -82,6 +82,8 @@ namespace {
          * 1.000 - goes nowhere. :)
          */
 constexpr double zoomFactor = 1.137;
+// zooming factor is wheel angle delta divided by this factor
+constexpr double zoomWheelDivisor = 200.;
 
 
 /**
@@ -667,7 +669,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
                 RS_SETTINGS->endGroup();
 
                 // Hold ctrl to zoom. 1 % per pixel
-                double v = (invZoom) ? (numPixels.y() / 100.) : (-numPixels.y() / 100.);
+                double v = (invZoom) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
                 RS2::ZoomDirection direction;
                 double factor;
 
