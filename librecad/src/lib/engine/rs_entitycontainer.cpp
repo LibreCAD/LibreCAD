@@ -72,6 +72,19 @@ bool isReversed(const RS_Entity *entity)
     }
 }
 
+bool isClosedLoop(RS_Entity& entity)
+{
+    switch (entity.rtti()){
+    case RS2::EntityCircle:
+    case RS2::EntityContainer:
+        return true;
+    case RS2::EntityEllipse:
+        return !static_cast<RS_Ellipse*>(&entity)->isArc();
+    default:
+        return false;
+    }
+}
+
 }
 
 /**
@@ -1857,24 +1870,13 @@ double RS_EntityContainer::areaLineIntegral() const
 
     RS_Vector previousPoint;
     for(auto* e: entities){
-        e->setLayer(getLayer());
-        double lineIntegral = 0.;
-        switch (e->rtti()) {
-        default:
-            break;
-        case RS2::EntityLine:
-        case RS2::EntityArc:
-            lineIntegral = e->areaLineIntegral();
-            break;
-        case RS2::EntityCircle:
+        if (isClosedLoop(*e))
+        {
             closedArea += e->areaLineIntegral();
-            break;
-        case RS2::EntityEllipse:
-            if(static_cast<RS_Ellipse*>(e)->isArc())
-                lineIntegral = e->areaLineIntegral();
-            else
-                closedArea += e->areaLineIntegral();
+            continue;
         }
+        e->setLayer(getLayer());
+        double lineIntegral = e->areaLineIntegral();
         RS_Vector startPoint = e->getStartpoint();
         RS_Vector endPoint = e->getEndpoint();
 
@@ -1899,7 +1901,7 @@ double RS_EntityContainer::areaLineIntegral() const
             previousPoint = endPoint;
         }
     }
-    return std::abs(contourArea) + closedArea;
+    return std::abs(contourArea) - closedArea;
 }
 
 bool RS_EntityContainer::ignoredOnModification() const
@@ -2026,27 +2028,32 @@ const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 }
 
 namespace {
-std::unique_ptr<RS_EntityContainer> findLoop(RS_EntityContainer& container)
+std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& container)
 {
 
-    RS_Entity* e = container.firstEntity();
-    container.removeEntity(e);
-    RS_Vector target = e->getStartpoint();
-    auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
-    ec->addEntity(e);
-    RS_Vector endPoint = e->getEndpoint();
-    while (endPoint.squaredTo(target) > 1e-8) {
-        double distance=0.;
-        RS_Entity* next=nullptr;
-        RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
-        std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
-        if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
-            std::swap(points[0], points[1]);
-        ec->addEntity(next);
-        container.removeEntity(ec.get());
-        endPoint=points[1];
+    std::vector<std::unique_ptr<RS_EntityContainer>> ret;
+    while (!container.isEmpty()) {
+        RS_Entity* e = container.firstEntity();
+        container.removeEntity(e);
+        RS_Vector target = e->getStartpoint();
+        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+        ec->addEntity(e);
+        RS_Vector endPoint = e->getEndpoint();
+        while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
+            double distance=0.;
+            RS_Entity* next=nullptr;
+            RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
+            std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
+            if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
+                std::swap(points[0], points[1]);
+            ec->addEntity(next);
+            container.removeEntity(ec.get());
+            endPoint=points[1];
+        }
+        if (endPoint.squaredTo(target) < RS_TOLERANCE)
+            ret.push_back(std::move(ec));
     }
-    return ec;
+    return ret;
 }
 }
 
@@ -2082,8 +2089,8 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
         ec->addEntity(e1);
         loops.push_back(std::move(ec));
-        }
         break;
+        }
         default:
         edges.addEntity(e1);
         }
@@ -2092,7 +2099,9 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     //find loops
     while (!edges.isEmpty())
     {
-        loops.push_back(findLoop(edges));
+        auto subLoops = findLoop(edges);
+        for (auto& loop: subLoops)
+            loops.push_back(std::move(loop));
     }
     return loops;
 }

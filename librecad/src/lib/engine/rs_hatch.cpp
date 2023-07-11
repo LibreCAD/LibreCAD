@@ -26,6 +26,8 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
+#include <set>
+
 #include <QPainterPath>
 #include <QBrush>
 #include <QString>
@@ -47,20 +49,18 @@
 namespace
 {
 
-struct HatchLoop
-{
-    std::list<std::unique_ptr<RS_EntityContainer>> loops;
-    std::list<HatchLoop> inners;
-    HatchLoop(std::vector<std::unique_ptr<RS_EntityContainer>> loops) {
-        while (!loops.empty()) {
-
-        }
+double getSize(const RS_EntityContainer* loop) {
+    return (loop->getMax() - loop->getMin()).squared();
+}
+struct CompareBoxSize{
+    bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
+    {
+        return getSize(lhs) + RS_TOLERANCE < getSize(rhs);
     }
 };
 
 
-
-
+std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, CompareBoxSize> candidates);
 }
 
 
@@ -711,14 +711,16 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 double RS_Hatch::getTotalArea() {
     auto loops = getLoops();
 
+    std::multiset<RS_EntityContainer*, CompareBoxSize> candidates;
+    for (auto& loop: loops)
+        candidates.insert(loop.get());
+    auto sorted = sortLoops(candidates);
+
     double totalArea=0.;
 
     // loops:
-	for(auto l: entities){
-
-        if (l!=hatch && l->rtti()==RS2::EntityContainer) {
-            totalArea += l->areaLineIntegral();
-        }
+    for(auto* loop: sorted){
+        totalArea += loop->areaLineIntegral();
     }
     return totalArea;
 }
@@ -795,6 +797,95 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner,
     RS_EntityContainer::stretch(firstCorner, secondCorner, offset);
     update();
 }
+
+#include <set>
+#include <random>
+namespace {
+// a random angle between 0 and 2
+double getRandomAngle()
+{
+    static std::default_random_engine randomEngine;
+    static std::uniform_real_distribution<double> uniformDistribution(0.0, 2. * M_PI);
+    return uniformDistribution(randomEngine);
+}
+
+struct ComparePoints {
+    bool operator () (const RS_Vector& p0, const RS_Vector& p1) const
+    {
+        if (p0.x + RS_TOLERANCE < p1.x)
+            return true;
+        else if (p0.x > p1.x + RS_TOLERANCE)
+            return false;
+        return p0.y + RS_TOLERANCE < p1.y;
+    }
+};
+
+std::unique_ptr<RS_Line> getRandomLine(RS_EntityContainer* loop)
+{
+    RS_Vector p0 = loop->first()->getStartpoint();
+    double size = std::sqrt(getSize(loop));
+
+    for(short i=0;i<16; i++)
+    {
+        auto line = std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector(getRandomAngle())*size);
+        auto results = RS_Information::getIntersection(line.get(), loop, true);
+        // need even number of intersections
+        if (results.empty() || results.size() % 2 == 1)
+            continue;
+        std::sort(results.begin(), results.end(), ComparePoints{});
+        // find an internal point
+        p0 = (results.at(0) + results.at(1)) * 0.5;
+        // a ray
+        line->setStartpoint(p0);
+        return line;
+    }
+    return {};
+}
+
+std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, CompareBoxSize> candidates)
+{
+    std::vector<RS_EntityContainer*> sorted;
+    while(!candidates.empty()) {
+        RS_EntityContainer* loop = *candidates.begin();
+        candidates.erase(loop);
+        auto ray = getRandomLine(loop);
+        if (ray == nullptr)
+            return {};
+        RS_Vector p0 = ray->getStartpoint();
+        using Intersection = std::pair<RS_Vector, RS_EntityContainer*>;
+        auto closerToInner = [&p0](const Intersection& lhs, const Intersection& rhs) {
+            return (p0.squaredTo(lhs.first) + RS_TOLERANCE < p0.squaredTo(rhs.first));
+        };
+        std::vector<std::pair<RS_Vector, RS_EntityContainer*>> points;
+        for (auto* candidate: candidates) {
+            auto results = RS_Information::getIntersection(ray.get(), candidate, true);
+            // Looking for odd number of intersections.
+            if (results.size() % 2 == 0)
+                continue;
+            // A parent loop, only keep the closest intersection to the inner loop
+            size_t index=0;
+            results.getClosest(p0, nullptr, &index);
+            points.emplace_back(results.at(index), candidate);
+        }
+        if (!points.empty()) {
+            std::sort(points.begin(), points.end(), closerToInner);
+            for (auto& point: points)
+            {
+                RS_EntityContainer* parent = point.second;
+                parent->addEntity(loop);
+                //candidates.erase(loop);
+                loop = parent;
+            }
+        }
+        sorted.push_back(loop);
+    }
+    std::sort(sorted.begin(), sorted.end());
+    sorted.erase(std::unique(sorted.begin(), sorted.end()), sorted.end());
+    return sorted;
+}
+
+}
+
 
 
 /**
