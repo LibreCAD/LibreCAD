@@ -249,7 +249,7 @@ protected:
      * Automatically update the borders of the container when entities
      * are added or removed.
      */
-    static bool autoUpdateBorders;
+    bool autoUpdateBorders = true;
 
 private:
 	/**

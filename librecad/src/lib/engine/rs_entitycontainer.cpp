@@ -47,8 +47,6 @@
 #include "rs_solid.h"
 #include "rs_spline.h"
 
-bool RS_EntityContainer::autoUpdateBorders = true;
-
 namespace {
 
 // the tolerance used to check topology of contours in hatching
