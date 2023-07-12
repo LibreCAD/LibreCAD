@@ -1865,6 +1865,7 @@ double RS_EntityContainer::areaLineIntegral() const
     double contourArea=0.;
     //closed area is always positive
     double closedArea=0.;
+    double subArea = 0.;
 
     // edges:
 
@@ -1872,7 +1873,10 @@ double RS_EntityContainer::areaLineIntegral() const
     for(auto* e: entities){
         if (isClosedLoop(*e))
         {
-            closedArea += e->areaLineIntegral();
+            if (e->isContainer())
+                subArea += e->areaLineIntegral();
+            else
+                closedArea += e->areaLineIntegral();
             continue;
         }
         e->setLayer(getLayer());
@@ -1901,7 +1905,7 @@ double RS_EntityContainer::areaLineIntegral() const
             previousPoint = endPoint;
         }
     }
-    return std::abs(contourArea) - closedArea;
+    return std::abs(contourArea) + closedArea - subArea;
 }
 
 bool RS_EntityContainer::ignoredOnModification() const
@@ -2037,9 +2041,11 @@ std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& co
         container.removeEntity(e);
         RS_Vector target = e->getStartpoint();
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+    std::cout<<__func__<<"(): create edge container: "<<ec->getId()<<std::endl;
         ec->addEntity(e);
         RS_Vector endPoint = e->getEndpoint();
         while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
+            std::cout<<__func__<<"(): "<<container.count()<<std::endl;
             double distance=0.;
             RS_Entity* next=nullptr;
             RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
@@ -2047,12 +2053,13 @@ std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& co
             if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
                 std::swap(points[0], points[1]);
             ec->addEntity(next);
-            container.removeEntity(ec.get());
+            container.removeEntity(next);
             endPoint=points[1];
         }
         if (endPoint.squaredTo(target) < RS_TOLERANCE)
             ret.push_back(std::move(ec));
     }
+    std::cout<<__func__<<"(): create edge container: "<<ret.size()<<std::endl;
     return ret;
 }
 }
@@ -2064,6 +2071,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
+    std::cout<<"create edge container: "<<edges.getId()<<std::endl;
     for(auto* e1: entities){
         if (e1->isContainer())
         {
@@ -2083,14 +2091,16 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
             edges.addEntity(e1);
             break;
         }
-        // fall-through
+        // [[fallthrough]]
         case RS2::EntityCircle:
         {
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
         ec->addEntity(e1);
+        std::cout<<__func__<<"(): add to container: "<<ec->getId()<<", circle: "<<e1->getId()<<std::endl;
         loops.push_back(std::move(ec));
         break;
         }
+        // [[fallthrough]]
         default:
         edges.addEntity(e1);
         }

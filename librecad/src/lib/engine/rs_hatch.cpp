@@ -49,13 +49,13 @@
 namespace
 {
 
-double getSize(const RS_EntityContainer* loop) {
+double getSizeSquared(const RS_EntityContainer* loop) {
     return (loop->getMax() - loop->getMin()).squared();
 }
 struct CompareBoxSize{
     bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
     {
-        return getSize(lhs) + RS_TOLERANCE < getSize(rhs);
+        return getSizeSquared(lhs) + RS_TOLERANCE < getSizeSquared(rhs);
     }
 };
 
@@ -707,9 +707,37 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     painter->setPen(pen);
 }
 
+namespace
+{
+void pr(RS_EntityContainer* loop)
+{
+    if (loop == nullptr)
+    {
+        std::cout<<"-nullptr-;"<<std::endl;
+        return;
+    }
+    std::cout<<"( id="<<loop->getId()<<"| ";
+    for (auto* e: *loop) {
+        if (e&& e->rtti() == RS2::EntityContainer)
+        {
+            pr(static_cast<RS_EntityContainer*>(e));
+        } else if (e) {
+            std::cout<<", "<<e->getId();
+        }
+    }
+    std::cout<<" |"<<loop->getId()<<" )"<<std::endl;
+}
+}
 //must be called after update()
 double RS_Hatch::getTotalArea() {
     auto loops = getLoops();
+    std::cout<<"loops.size()="<<loops.size()<<std::endl;
+    for (auto& l: loops)
+    {
+        std::cout<<l->getId()<<": "<<l->rtti()<<std::endl;
+        pr(l.get());
+    }
+    std::cout<<"loops: done"<<std::endl;
 
     std::multiset<RS_EntityContainer*, CompareBoxSize> candidates;
     for (auto& loop: loops)
@@ -820,15 +848,28 @@ struct ComparePoints {
     }
 };
 
+RS_VectorSolutions getIntersection(RS_AtomicEntity* line, const RS_EntityContainer& loop)
+{
+    RS_VectorSolutions ret;
+    for(RS_Entity* entity: loop) {
+        if (entity && entity->isEdge()) {
+            auto intersections = RS_Information::getIntersection(line, entity, true);
+            ret.push_back(intersections);
+        }
+    }
+    return ret;
+}
+
 std::unique_ptr<RS_Line> getRandomLine(RS_EntityContainer* loop)
 {
-    RS_Vector p0 = loop->first()->getStartpoint();
-    double size = std::sqrt(getSize(loop));
-
+    RS_Vector p0 = loop->firstEntity()->getNearestPointOnEntity(loop->getMin(), true);
+    std::cout<<__func__<<"(): loop:"<<loop->getId()<<": p0="<<p0<<std::endl;
+    double size = std::sqrt(getSizeSquared(loop));
     for(short i=0;i<16; i++)
     {
         auto line = std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector(getRandomAngle())*size);
-        auto results = RS_Information::getIntersection(line.get(), loop, true);
+        line->setStartpoint(line->getStartpoint()*1.1 - line->getEndpoint()*0.1);
+        auto results = getIntersection(line.get(), *loop);
         // need even number of intersections
         if (results.empty() || results.size() % 2 == 1)
             continue;
@@ -858,7 +899,7 @@ std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, Co
         };
         std::vector<std::pair<RS_Vector, RS_EntityContainer*>> points;
         for (auto* candidate: candidates) {
-            auto results = RS_Information::getIntersection(ray.get(), candidate, true);
+            auto results = getIntersection(ray.get(), *candidate);
             // Looking for odd number of intersections.
             if (results.size() % 2 == 0)
                 continue;
