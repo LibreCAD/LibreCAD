@@ -142,6 +142,66 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 	if (dist) *dist = vp.distanceTo(coord);
 	return vp;
 }
+
+/**
+ * @brief The ClosestElliptic class: find the closest point on an ellipse for a given point.
+ * Intended for ellipses with small eccentricities.
+ * Algorithm: Newton-Raphson
+ * Added for issue #1653
+ */
+class ClosestEllipticPoint {
+public:
+    ClosestEllipticPoint(double a, double b, const RS_Vector& point):
+        m_a{a}
+      , m_b{b}
+      , m_point{point}
+      , c2{a*a-b*b}
+      , ax2{2.*a*point.x}
+      , by2{2.*b*point.y}
+    {}
+
+    // The elliptic angle of the closest point on ellipse.
+    double getTheta() const
+    {
+        double theta = std::atan2(m_point.y, m_point.x);
+        // find the zero point of the first order derivative by Newton-Raphson
+        // the conversion should be good: maximum 16 recursions
+        for (short i=0; i<16; ++i) {
+            // The first and second derivatives over theta
+            double d1 = ds2D1(theta);
+            double d2 = ds2D2(theta);
+            if (std::abs(d2) < RS_TOLERANCE || std::abs(d1) < RS_TOLERANCE)
+                break;
+            // Newton-Raphson
+            theta -= d1/d2;
+        }
+        return theta;
+    }
+
+private:
+
+    // The first order derivative of ds2=dx^2+dy^2 over theta
+    double ds2D1(double t) const
+    {
+        using namespace std;
+        return c2*sin(2.*t) + ax2*sin(t) - by2*cos(t);
+    }
+
+    // The second order derivative of ds2=dx^2+dy^2 over theta
+    double ds2D2(double t) const
+    {
+        using namespace std;
+        return 2.*c2*cos(2.*t) + ax2*cos(t) + by2*sin(t);
+    }
+
+    double m_a=0.;
+    double m_b=0.;
+    RS_Vector m_point{};
+    double c2=0.;
+    double ax2=0.;
+    double by2=0.;
+};
+
 }
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
@@ -471,7 +531,6 @@ RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
 *
 * @author Dongxu Li <dongxuli2011@gmail.com>
 */
-
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)const
 {
@@ -494,6 +553,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double x=ret.x,y=ret.y;
     double a=getMajorRadius();
     double b=a*getRatio();
+    // the tangential direction at the nearest
+    RS_Vector perpendicular{-ret.y, ret.x};
     //std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
     //std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
     double twoa2b2=2*(a*a-b*b);
@@ -504,17 +565,20 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     std::vector<double> roots(0,0.);
 
     //need to handle a=b
-    if(a0 > RS_TOLERANCE2 ) { // a != b , ellipse
+    if (a0 > RS_TOLERANCE) {
+        // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
         ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
         ce[2]= - ce[0];
         ce[3]= -twoax*twoax/a0;
         //std::cout<<"1::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
         roots=RS_Math::quarticSolver(ce);
-    } else {//a=b, quadratic equation for circle
-        a0=twoby/twoax;
-        roots.push_back(sqrt(1./(1.+a0*a0)));
-        roots.push_back(-roots[0]);
+    } else {
+        // Issue #1653: approximately a=b, solve the equation of ds^2/d\theta = 0 by Newton-Raphson
+        double theta = ClosestEllipticPoint{a, b, ret}.getTheta();
+        roots.push_back(std::cos(theta));
+        // Just in case, the found solution is for the maximum distance. Then, the minimum is at the opposite
+        roots.push_back(-roots.front());
     }
     if(roots.size()==0) {
         //this should not happen
