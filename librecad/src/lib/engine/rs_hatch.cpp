@@ -55,7 +55,12 @@ double getSizeSquared(const RS_EntityContainer* loop) {
 struct CompareBoxSize{
     bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
     {
-        return getSizeSquared(lhs) + RS_TOLERANCE < getSizeSquared(rhs);
+        const lSize=getSizeSquared(lhs);
+        const rSize=getSizeSquared(rhs);
+        if (lSize + RS_TOLERANCE < rSize)
+            return true;
+        if (lSize - RS_TOLERANCE > rSize)
+            return false;
     }
 };
 
