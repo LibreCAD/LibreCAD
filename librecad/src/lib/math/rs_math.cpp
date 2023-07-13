@@ -597,8 +597,9 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
         ce2[0]=q;
         ce2[1]=-1./27*p*p*p;
 		auto r=quadraticSolver(ce2);
-        if ( r.size()==0 ) { //should not happen
-			std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+        if ( r.empty() ) { //should not happen
+            std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+            return {};
         }
         double u,v;
         u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
@@ -730,6 +731,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     cubic[1]=p*p-4.*r;
     cubic[2]=-q*q;
 	auto r3= cubicSolver(cubic);
+    if (r3.empty())
+        return {};
     //std::cout<<"quartic_solver:: real roots from cubic: "<<ret<<std::endl;
     //for(unsigned int i=0; i<ret; i++)
     //   std::cout<<"cubic["<<i<<"]="<<cubic[i]<<" x= "<<croots[i]<<std::endl;
