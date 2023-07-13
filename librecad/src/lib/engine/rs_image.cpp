@@ -24,15 +24,34 @@
 **
 **********************************************************************/
 #include<iostream>
+#include <QFileInfo>
 #include <QImage>
 
 #include "rs_debug.h"
+#include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_painter.h"
+#include "qc_applicationwindow.h"
 #include "rs_settings.h"
+
+namespace
+{
+QString locateImageFile(const QString& imageFile)
+{
+    QFileInfo fileInfo(imageFile);
+    if (fileInfo.exists())
+        return imageFile;
+    // search the current folder of the dxf
+    auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
+    if (doc == nullptr)
+        return imageFile;
+    QFileInfo dxfFileInfo(doc->getFilename());
+    return dxfFileInfo.canonicalPath() + "/"+fileInfo.fileName();
+}
+}
 
 RS_ImageData::RS_ImageData(int _handle,
 						   const RS_Vector& _insertionPoint,
@@ -131,11 +150,17 @@ void RS_Image::update() {
     RS_DEBUG->print("RS_Image::update");
 
     // the whole image:
+    RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file: "<<data.file;
+    data.file = locateImageFile(data.file);
+    RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file: "<<data.file;
+
     //QImage image = QImage(data.file);
 	img.reset(new QImage(data.file));
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.
+    } else {
+        RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file;
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
