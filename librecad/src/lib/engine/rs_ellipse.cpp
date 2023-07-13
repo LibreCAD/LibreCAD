@@ -165,7 +165,7 @@ public:
     {
         double theta = std::atan2(m_point.y, m_point.x);
         // find the zero point of the first order derivative by Newton-Raphson
-        // the conversion should be good: maximum 16 recursions
+        // the convergence should be good: maximum 16 recursions
         for (short i=0; i<16; ++i) {
             // The first and second derivatives over theta
             double d1 = ds2D1(theta);
@@ -564,8 +564,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     std::vector<double> ce(4,0.);
     std::vector<double> roots(0,0.);
 
-    //need to handle a=b
-    if (a0 > RS_TOLERANCE) {
+    //need to handle: a=b (i.e. a0=0); point close to the ellipse origin.
+    if (a0 > RS_TOLERANCE && std::abs(getRatio() - 1.0) > RS_TOLERANCE && ret.squared() > RS_TOLERANCE2 ) {
         // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
         ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
@@ -580,7 +580,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         // Just in case, the found solution is for the maximum distance. Then, the minimum is at the opposite
         roots.push_back(-roots.front());
     }
-    if(roots.size()==0) {
+    if(roots.empty()) {
         //this should not happen
         std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
         std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
@@ -617,7 +617,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
 	if (dist) {
-        *dist = sqrt(dDistance);
+        *dist = std::sqrt(dDistance);
     }
     ret.rotate(getAngle());
     ret.move(getCenter());
