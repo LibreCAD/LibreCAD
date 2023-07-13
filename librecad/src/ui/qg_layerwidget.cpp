@@ -81,7 +81,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
      */
     beginResetModel();
     listLayer.clear();
-    if (ll == NULL) {
+    if (ll == nullptr) {
         endResetModel();
         return;
     }
@@ -353,7 +353,7 @@ void QG_LayerWidget::update() {
     layerModel->setLayerList(layerList); // allow a null layerList; this clears the widget
 
     if (!layerList) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerList");
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
         return;
     }
 
@@ -361,7 +361,7 @@ void QG_LayerWidget::update() {
 
     RS_Layer* activeLayer = layerList->getActive();
     if (!activeLayer) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr activeLayer");
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr activeLayer");
         layerModel->setActiveLayer(nullptr);
         return;
     }
