@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include<iostream>
+#include <QDir>
 #include <QFileInfo>
 #include <QImage>
 
@@ -39,17 +40,26 @@
 
 namespace
 {
-QString locateImageFile(const QString& imageFile)
+// Return the file path name to use relative to the dxf file folder
+QString imageRelativePathName(QString& imageFile)
 {
-    QFileInfo fileInfo(imageFile);
-    if (fileInfo.exists())
-        return imageFile;
-    // search the current folder of the dxf
     auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
     if (doc == nullptr)
         return imageFile;
     QFileInfo dxfFileInfo(doc->getFilename());
-    return dxfFileInfo.canonicalPath() + "/"+fileInfo.fileName();
+    QFileInfo fileInfo(imageFile);
+    // file exists as input file path
+    if (fileInfo.exists()) {
+        QDir dxfDir(dxfFileInfo.canonicalPath());
+        imageFile = dxfDir.relativeFilePath(imageFile);
+        return fileInfo.canonicalFilePath();
+    }
+    // test a relative file path from the dxf file folder
+    fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + fileInfo.canonicalFilePath());
+    if (fileInfo.exists())
+        return fileInfo.canonicalFilePath();
+    // search the current folder of the dxf for the dxf file name
+    return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
 }
 }
 
@@ -150,17 +160,15 @@ void RS_Image::update() {
     RS_DEBUG->print("RS_Image::update");
 
     // the whole image:
-    RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file: "<<data.file;
-    data.file = locateImageFile(data.file);
-    RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file: "<<data.file;
+    QString filePathName = imageRelativePathName(data.file);
 
     //QImage image = QImage(data.file);
-	img.reset(new QImage(data.file));
+    img.reset(new QImage(filePathName));
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.
     } else {
-        RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file;
+        RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file<<"("<<filePathName<<")";
     }
 
     RS_DEBUG->print("RS_Image::update: OK");

@@ -184,7 +184,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     }
 
     // Glowing effect on mouse hovering
-    if (isPointOnEntity)
+    if (isPointOnEntity && entity->rtti() != RS2::EntityImage)
         highlightEntity(entity);
 }
 
