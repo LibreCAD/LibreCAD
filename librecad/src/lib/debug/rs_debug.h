@@ -29,7 +29,7 @@
 #define RS_DEBUG_H
 
 #include <iosfwd>
-#include <sstream>
+#include <QTextStream>
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
@@ -90,13 +90,12 @@ public:
      * Example:
      *      RS_LOG(D_ERROR)<<"Log text";
      */
-    class LogStream : public std::stringstream{
+    class LogStream : public QTextStream {
     public:
-        LogStream(RS_DebugLevel level = D_DEBUGGING):
-            m_debugLevel{level}
-        {}
+        LogStream(RS_DebugLevel level = D_DEBUGGING);
         ~LogStream() override;
     private:
+        QString m_string;
         RS_DebugLevel m_debugLevel;
     };
 

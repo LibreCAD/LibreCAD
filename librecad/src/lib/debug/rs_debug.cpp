@@ -24,16 +24,14 @@
 **
 **********************************************************************/
 
-
-#include "rs_debug.h"
-
-#include <iostream>
-#include <cstdio>
 #include <cstdarg>
-#include <QString>
+#include <cstdio>
+#include <iostream>
 
 #include <QDateTime>
-#include <QDebug>
+#include <QString>
+
+#include "rs_debug.h"
 
 void debugHeader(char const* file, char const* func, int line)
 {
@@ -180,16 +178,23 @@ RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level)
 {
     return {level};
 }
+RS_Debug::LogStream::LogStream(RS_DebugLevel level):
+    m_debugLevel{level}
+{
+    setString(&m_string, QIODevice::WriteOnly);
+}
 
 /**
  * output buffered in stringstream
  */
 RS_Debug::LogStream::~LogStream()
 {
-    if (!good())
-        return;
-    const std::string& buffer = str();
-    if (!buffer.empty())
-        instance()->print(m_debugLevel, "%s", buffer.c_str());
+    try {
+        if (!m_string.isEmpty())
+            instance()->print(m_debugLevel, "%s", m_string.toStdString().c_str());
+    } catch (...)
+    {
+        instance()->print(D_CRITICAL, "RS_Debug::LogStream:: Failed to log");
+    }
 }
 // EOF
