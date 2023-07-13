@@ -35,7 +35,6 @@
 #include <QDateTime>
 #include <QDebug>
 
-RS_Debug* RS_Debug::uniqueInstance = nullptr;
 void debugHeader(char const* file, char const* func, int line)
 {
 	std::cout<<file<<" : "<<func<<" : line "<<line<<std::endl;
@@ -49,7 +48,8 @@ void debugHeader(char const* file, char const* func, int line)
  * singleton class
  */
 RS_Debug* RS_Debug::instance() {
-	if(!uniqueInstance) {
+    static RS_Debug* uniqueInstance = nullptr;
+    if(uniqueInstance == nullptr) {
         QDateTime now = QDateTime::currentDateTime();
         QString nowStr;
 		nowStr = now.toString("yyyyMMdd_hhmmss");
@@ -69,21 +69,15 @@ RS_Debug* RS_Debug::instance() {
 
 
 /**
- * Deletes the one and only RS_Debug instance.
- */
-void
-RS_Debug::deleteInstance() {
-    if (uniqueInstance) {
-        fclose(uniqueInstance->stream);
-        delete uniqueInstance;
-    }
-}
-
-/**
  * Constructor setting the default debug level.
  */
 RS_Debug::RS_Debug() {
     debugLevel = D_DEBUGGING;
+}
+
+RS_Debug::~RS_Debug() {
+    if (stream != nullptr and stream != stderr)
+        fclose(stream);
 }
 
 /**
@@ -176,5 +170,26 @@ void RS_Debug::print(const QString& text) {
     std::cerr<<text.toStdString()<<std::endl;
 }
 
+/**
+ * @brief RS_Debug::Log - returns an instance of stringstream. Anything directed to the stringstream will be redirected
+ * to the RS_Debug stream at the end of lifetime of the stringstream
+ * @param level - debugging level
+ * @return RS_Debug::LogStream - an instance of LogStream
+ */
+RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level)
+{
+    return {level};
+}
 
+/**
+ * output buffered in stringstream
+ */
+RS_Debug::LogStream::~LogStream()
+{
+    if (!good())
+        return;
+    const std::string& buffer = str();
+    if (!buffer.empty())
+        instance()->print(m_debugLevel, "%s", buffer.c_str());
+}
 // EOF
