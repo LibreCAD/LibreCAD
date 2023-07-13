@@ -177,7 +177,7 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.controlPoints.size() < data.degree+1) {
+    if (data.controlPoints.size() < size_t(data.degree)+1) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }
