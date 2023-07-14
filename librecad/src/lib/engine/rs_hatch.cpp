@@ -27,6 +27,8 @@
 #include <cmath>
 #include <memory>
 #include <set>
+#include <map>
+#include <unordered_map>
 
 #include <QPainterPath>
 #include <QBrush>
@@ -55,14 +57,67 @@ double getSizeSquared(const RS_EntityContainer* loop) {
 struct CompareBoxSize{
     bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
     {
-        const lSize=getSizeSquared(lhs);
-        const rSize=getSizeSquared(rhs);
+        const double lSize=getSizeSquared(lhs);
+        const double rSize=getSizeSquared(rhs);
         if (lSize + RS_TOLERANCE < rSize)
             return true;
+        return false;
         if (lSize - RS_TOLERANCE > rSize)
             return false;
     }
 };
+
+std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops )
+{
+    std::unordered_map<const RS_EntityContainer*, double> ret;
+    for(const std::unique_ptr<RS_EntityContainer>& loop: loops)
+        ret.emplace(loop.get(), std::abs(loop->areaLineIntegral()));
+    return ret;
+}
+
+class LoopSorter {
+public:
+    LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
+    struct AreaPredicate {
+        AreaPredicate(const LoopSorter& sorter);
+        bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const;
+        const LoopSorter& m_sorter;
+    };
+
+private:
+    void init();
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
+    std::unordered_map<const RS_EntityContainer*, double> m_area;
+    AreaPredicate m_areaComparison{*this};
+    std::multiset<RS_EntityContainer*, AreaPredicate> m_toProcess{m_areaComparison};
+    std::unordered_map<RS_EntityContainer*, RS_EntityContainer*> m_parents;
+    std::unordered_map<RS_EntityContainer*, std::set<RS_EntityContainer*>> m_children;
+
+
+};
+
+LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops):
+    m_loops{std::move(loops)}
+  , m_area{findAreas(m_loops)}
+{
+    init();
+}
+
+void LoopSorter::init()
+{
+    for(const auto& loop: m_loops)
+        m_toProcess.insert(loop.get());
+}
+
+LoopSorter::AreaPredicate::AreaPredicate(const LoopSorter &sorter):
+    m_sorter{sorter}
+{}
+
+bool LoopSorter::AreaPredicate::operator ()(const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
+{
+    return m_sorter.m_area.at(lhs) + RS_TOLERANCE < m_sorter.m_area.at(rhs);
+}
 
 
 std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, CompareBoxSize> candidates);
