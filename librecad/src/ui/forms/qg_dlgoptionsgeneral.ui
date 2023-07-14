@@ -177,30 +177,6 @@
               <string notr="true">20</string>
              </property>
             </item>
-            <item>
-             <property name="text">
-              <string notr="true">15</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">20</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cursor_hiding_checkbox">
-            <property name="text">
-             <string>Hide cursor when snapping</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="scrollbars_check_box">
-            <property name="text">
-             <string>Scrollbars</string>
-            </property>
            </widget>
           </item>
           <item row="2" column="0">
@@ -353,12 +329,6 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="cbVisualizeHovering">
-            <property name="toolTip">
-             <string>Visualize the entity under the cursor</string>
-            <property name="text">
-             <string>Mouse-over effects</string>
           <item row="9" column="0">
            <widget class="QCheckBox" name="cbVisualizeHovering">
             <property name="toolTip">
