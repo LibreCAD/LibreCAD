@@ -686,7 +686,11 @@ void QC_ApplicationWindow::loadPlugins() {
                         if (atMenu) {
                             atMenu->addAction(actpl);
                         } else {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+                            QStringList treemenu = loc.menuEntryPoint.split('/', Qt::SkipEmptyParts);
+#else
                             QStringList treemenu = loc.menuEntryPoint.split('/', QString::SkipEmptyParts);
+#endif
                             QString currentLevel="";
                             QMenu *parentMenu=0;
                             do {

@@ -507,7 +507,7 @@ void RS_Spline::removeLastControlPoint() {
  */
 bool RS_Spline::hasWrappedControlPoints() const {
     const std::vector<RS_Vector>& controlPoints = data.controlPoints;
-    if (!data.closed || data.degree < 3 || controlPoints.size() < 2 * data.degree + 1)
+    if (!data.closed || data.degree < 3 || controlPoints.size() < size_t(2 * data.degree) + 1)
         return false;
 
     return std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,

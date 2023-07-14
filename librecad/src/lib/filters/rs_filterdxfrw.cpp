@@ -763,7 +763,11 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     if (oldMText) {
         interlin = data.interlin*0.96;
         if (valign == RS_MTextData::VABottom) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QStringList tl = mtext.split('\n', Qt::SkipEmptyParts);
+#else
             QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
+#endif
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
@@ -1356,15 +1360,21 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     oldMText = false;
     isLibDxfRw = false;
     libDxfRwVersion = 0;
-    QStringList commentList = QString::fromStdString( data->getComments()).split('\n',QString::SkipEmptyParts);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    auto option = Qt::SkipEmptyParts;
+#else
+    auto option = QString::SkipEmptyParts;
+#endif
+    QStringList commentList = QString::fromStdString( data->getComments()).split('\n', option);
     for( auto commentLine: commentList) {
-        QStringList commentWords = commentLine.split(' ',QString::SkipEmptyParts);
+
+        QStringList commentWords = commentLine.split(' ', option);
         if( 0 < commentWords.size()) {
             if( "dxflib" == commentWords.at(0)) {
                 oldMText = true;
                 break;
             } else if( "dxfrw" == commentWords.at(0)) {
-                QStringList libVersionList = commentWords.at(1).split('.',QString::SkipEmptyParts);
+                QStringList libVersionList = commentWords.at(1).split('.', option);
                 if( 2 < libVersionList.size()) {
                     isLibDxfRw = true;
                     libDxfRwVersion = LIBDXFRW_VERSION( libVersionList.at(0).toInt(),
@@ -2296,7 +2306,7 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
     if (s==nullptr)
         return;
 
-    if (s->getNumberOfControlPoints() < s->getDegree()+1) {
+    if (s->getNumberOfControlPoints() < size_t(s->getDegree()+1)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
                         "Discarding spline: not enough control points given.");
         return;
@@ -2502,7 +2512,11 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->alignV = DRW_Text::VBaseLine;
         }
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        QStringList txtList = t->getText().split('\n',Qt::KeepEmptyParts);
+#else
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
+#endif
         double dist = t->getLineSpacingFactor()*5*t->getHeight()/3;
         bool setSec = false;
         if (text->alignH != DRW_Text::HLeft || text->alignV != DRW_Text::VBaseLine) {

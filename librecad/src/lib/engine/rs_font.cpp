@@ -160,8 +160,11 @@ void RS_Font::readCXF(QString path) {
 
         // Read font settings:
         if (line.at(0)=='#') {
-            QStringList lst =
-                    ( line.right(line.length()-1) ).split(':', QString::SkipEmptyParts);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QStringList lst = ( line.right(line.length()-1) ).split(':', Qt::SkipEmptyParts);
+#else
+            QStringList lst = ( line.right(line.length()-1) ).split(':', QString::SkipEmptyParts);
+#endif
             QStringList::Iterator it3 = lst.begin();
 
             // RVT_PORT sometimes it happens that the size is < 2
@@ -232,7 +235,11 @@ void RS_Font::readCXF(QString path) {
 
                 coordsStr = line.right(line.length()-2);
                 //                coords = QStringList::split(',', coordsStr);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+                coords = coordsStr.split(',', Qt::SkipEmptyParts);
+#else
                 coords = coordsStr.split(',', QString::SkipEmptyParts);
+#endif
                 it2 = coords.begin();
 
                 // Line:
@@ -293,7 +300,11 @@ void RS_Font::readLFF(QString path) {
 
         // Read font settings:
         if (line.at(0)=='#') {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QStringList lst =line.remove(0,1).split(':', Qt::SkipEmptyParts);
+#else
             QStringList lst =line.remove(0,1).split(':', QString::SkipEmptyParts);
+#endif
             //if size is < 2 is a comentary not parameter
             if (lst.size()<2)
                 continue;
@@ -406,18 +417,26 @@ RS_Block* RS_Font::generateLffFont(const QString& ch){
         }
         //sequence:
         else {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            vertex = line.split(';', Qt::SkipEmptyParts);
+#else
             vertex = line.split(';', QString::SkipEmptyParts);
+#endif
             //at least is required two vertex
             if (vertex.size()<2)
                 continue;
             RS_Polyline* pline = new RS_Polyline(letter, RS_PolylineData());
             pline->setPen(RS_Pen(RS2::FlagInvalid));
 			pline->setLayer(nullptr);
-            for (int i = 0; i < vertex.size(); ++i) {
+            foreach(const QString& point, vertex) {
                 double x1, y1;
                 double bulge = 0;
 
-                coords = vertex.at(i).split(',', QString::SkipEmptyParts);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+                coords = point.split(',', Qt::SkipEmptyParts);
+#else
+                coords = point.split(',', QString::SkipEmptyParts);
+#endif
                 //at least X,Y is required
                 if (coords.size()<2)
                     continue;

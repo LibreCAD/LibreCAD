@@ -105,7 +105,11 @@ void RS_System::initLanguageList() {
     QStringList lst = getFileList("qm", "qm");
 
     RS_SETTINGS->beginGroup("/Paths");
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", Qt::SkipEmptyParts);
+#else
     lst += (RS_SETTINGS->readEntry("/Translations", "")).split(";", QString::SkipEmptyParts);
+#endif
     RS_SETTINGS->endGroup();
 
     for (QStringList::Iterator it = lst.begin();
@@ -389,9 +393,9 @@ void RS_System::initAllLanguagesList() {
  *fixme, need to support command language
  */
 void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/) {
-    static QTranslator* tQt = NULL;
-    static QTranslator* tLibreCAD = NULL;
-    static QTranslator* tPlugIns = NULL;
+    static QTranslator* tQt = nullptr;
+    static QTranslator* tLibreCAD = nullptr;
+    static QTranslator* tPlugIns = nullptr;
 
     //make translation filenames case insensitive, #276
     QString langLower("");
@@ -410,18 +414,22 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
     QStringList lst = getDirectoryList( "qm");
 
     RS_SETTINGS->beginGroup( "/Paths");
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", Qt::SkipEmptyParts);
+#else
     lst += (RS_SETTINGS->readEntry( "/Translations", "")).split( ";", QString::SkipEmptyParts);
+#endif
     RS_SETTINGS->endGroup();
 
-    if( tLibreCAD != NULL) {
+    if( tLibreCAD != nullptr) {
         qApp->removeTranslator( tLibreCAD);
         delete tLibreCAD;
     }
-    if( tPlugIns != NULL) {
+    if( tPlugIns != nullptr) {
         qApp->removeTranslator( tPlugIns);
         delete tPlugIns;
     }
-    if( tQt != NULL) {
+    if( tQt != nullptr) {
         qApp->removeTranslator( tQt);
         delete tQt;
     }
@@ -437,7 +445,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
          ++it) {
 
         // load LibreCAD translations
-        if (NULL == tLibreCAD) {
+        if (nullptr == tLibreCAD) {
             if (t->load( langFileLower, *it) == true
                     || (  ! langUpper.isEmpty()
                           && t->load( langFileUpper, *it) == true)) {
@@ -448,7 +456,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         }
 
         // load PlugIns translations
-        if (NULL == tPlugIns) {
+        if (nullptr == tPlugIns) {
             if (t->load( langPlugInsLower, *it) == true
                     || (  ! langUpper.isEmpty()
                           && t->load( langPlugInsUpper, *it) == true)) {
@@ -459,7 +467,7 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
         }
 
         // load Qt standard dialog translations
-        if (NULL == tQt) {
+        if (nullptr == tQt) {
             if (t->load( langQtLower, *it) == true
                     || (  ! langUpper.isEmpty()
                           && t->load( langQtUpper, *it) == true)) {
@@ -468,11 +476,11 @@ void RS_System::loadTranslation(const QString& lang, const QString& /*langCmd*/)
                 t = new QTranslator(0);
             }
         }
-        if (NULL != tLibreCAD && NULL != tPlugIns && NULL != tQt) {
+        if (nullptr != tLibreCAD && nullptr != tPlugIns && nullptr != tQt) {
             break;
         }
     }
-    if (NULL != t) {
+    if (nullptr != t) {
         delete t;
     }
 }
@@ -635,27 +643,32 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
 
     // Individual directories:
     RS_SETTINGS->beginGroup( "/Paths");
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    auto option = Qt::SkipEmptyParts;
+#else
+    auto option = QString::SkipEmptyParts;
+#endif
     if (subDirectory == "fonts") {
         QString savedFonts = RS_SETTINGS->readEntry( "/Fonts", "");
         RS_DEBUG->print("saved fonts: %s\n", savedFonts.toStdString().c_str());
         dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegExp("[;]"),
-                                                                  QString::SkipEmptyParts);
+                                                                  option);
     }
     else if (subDirectory == "patterns") {
         dirList += (RS_SETTINGS->readEntry( "/Patterns", "")).split( QRegExp("[;]"),
-                                                                     QString::SkipEmptyParts);
+                                                                  option);
     }
     else if (subDirectory.startsWith( "scripts")) {
         dirList += (RS_SETTINGS->readEntry( "/Scripts", "")).split( QRegExp("[;]"),
-                                                                    QString::SkipEmptyParts);
+                                                                  option);
     }
     else if (subDirectory.startsWith( "library")) {
         dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegExp("[;]"),
-                                                                    QString::SkipEmptyParts);
+                                                                  option);
     }
     else if (subDirectory.startsWith( "qm")) {
         dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegExp("[;]"),
-                                                                         QString::SkipEmptyParts);
+                                                                  option);
     }
     RS_SETTINGS->endGroup();
 
