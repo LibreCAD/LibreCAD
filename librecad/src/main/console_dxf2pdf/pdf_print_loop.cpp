@@ -69,7 +69,7 @@ QPageSize toPageSize(QPrinter::PageSize pageSize)
         {QPrinter::ArchE, QPageSize::ArchE}};
     QPageSize::PageSizeId id = lookUp.count(pageSize) == 1 ?
                                    lookUp.at(pageSize) : QPageSize::Custom;
-    return {id};
+    return QPageSize{id};
 }
 }
 
