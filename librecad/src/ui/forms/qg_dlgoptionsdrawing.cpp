@@ -1090,7 +1090,7 @@ void QG_DlgOptionsDrawing::on_tabWidget_currentChanged(int index)
 }
 
 
-void QG_DlgOptionsDrawing::on_rbRelSize_toggled(bool checked)
+void QG_DlgOptionsDrawing::on_rbRelSize_toggled([[maybe_unused]] bool checked)
 {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
 	updateLPtSzUnits();

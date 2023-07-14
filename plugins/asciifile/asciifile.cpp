@@ -216,12 +216,6 @@ textBox::textBox(const QString & title, const QString & label, QWidget * parent)
     setInLayout(loimage);
 }
 
-textBox::~textBox()
-{
-
-}
-
-
 /*****************************/
 dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
 {
@@ -341,14 +335,22 @@ void dibPunto::procesFile(Document_Interface *doc)
     currDoc = doc;
 
 //Warning, can change adding or reordering "formatedit"
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts;
+#else
     QString::SplitBehavior skip = QString::KeepEmptyParts;
+#endif
     switch (formatedit->currentIndex()) {
     case 0:
         sep = " ";
         break;
     case 3:
         sep = " ";
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        skip = Qt::SkipEmptyParts;
+#else
         skip = QString::SkipEmptyParts;
+#endif
         break;
     case 2:
         sep = ",";
@@ -390,7 +392,7 @@ void dibPunto::procesFile(Document_Interface *doc)
     if ( connectPoints->isChecked() )
         drawLine();
 
-    currDoc = NULL;
+    currDoc = nullptr;
 
 }
 
@@ -593,7 +595,12 @@ void dibPunto::procesfileODB(QFile* file, QString sep)
     }
 
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+void dibPunto::procesfileNormal(QFile* file, QString sep, Qt::SplitBehaviorFlags skip)
+#else
 void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip)
+#endif
 {
     //    QString outname, sep;
     QStringList data;

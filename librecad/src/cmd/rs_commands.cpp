@@ -1028,7 +1028,11 @@ void RS_Commands::updateAlias(){
                 line=ts.readLine().trimmed();
                 if (line.isEmpty() || line.at(0)=='#' ) continue;
                 // Read alias
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+                QStringList txtList = line.split(QRegExp(R"(\s)"),Qt::SkipEmptyParts);
+#else
                 QStringList txtList = line.split(QRegExp(R"(\s)"),QString::SkipEmptyParts);
+#endif
                 if (txtList.size()> 1) {
 //                    qDebug()<<"reading: "<<txtList.at(0)<<"\t"<< txtList.at(1);
                     aliasList[txtList.at(0)]=txtList.at(1);

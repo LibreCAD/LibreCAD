@@ -64,7 +64,11 @@ private:
     void readSettings();
     void writeSettings();
     void procesfileODB(QFile* file, QString sep);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    void procesfileNormal(QFile* file, QString sep, Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts);
+#else
     void procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip = QString::KeepEmptyParts);
+#endif
     void drawLine();
     void draw2D();
     void draw3D();
@@ -141,7 +145,6 @@ class textBox : public pointBox
 
 public:
     textBox(const QString & title, const QString & label, QWidget * parent = 0 );
-    ~textBox();
     void setPos(DPT::txtposition p) { img->setPos(p); }
     QString getStyleStr() { return combostyle->currentText();}
     void setStyleIdx(int idx) { combostyle->setCurrentIndex(idx);}
