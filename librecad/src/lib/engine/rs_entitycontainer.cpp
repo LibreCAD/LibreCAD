@@ -72,19 +72,21 @@ bool isReversed(const RS_Entity *entity)
     }
 }
 
+// For validate hatch contours, whether an entity in the contour is a closed
+// loop itself
 bool isClosedLoop(RS_Entity& entity)
 {
     switch (entity.rtti()){
     case RS2::EntityCircle:
+    // Sub containers are always closed
     case RS2::EntityContainer:
-        return true;
+    return true;
     case RS2::EntityEllipse:
-        return !static_cast<RS_Ellipse*>(&entity)->isArc();
+    return !static_cast<RS_Ellipse*>(&entity)->isArc();
     default:
-        return false;
+    return false;
     }
 }
-
 }
 
 /**
@@ -1206,7 +1208,6 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 }
 
 
-
 /**
  * @return The point which is closest to 'coord'
  * (one of the vertices)
@@ -2041,11 +2042,9 @@ std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& co
         container.removeEntity(e);
         RS_Vector target = e->getStartpoint();
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
-    std::cout<<__func__<<"(): create edge container: "<<ec->getId()<<std::endl;
         ec->addEntity(e);
         RS_Vector endPoint = e->getEndpoint();
         while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
-            std::cout<<__func__<<"(): "<<container.count()<<std::endl;
             double distance=0.;
             RS_Entity* next=nullptr;
             RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
@@ -2059,7 +2058,6 @@ std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& co
         if (endPoint.squaredTo(target) < RS_TOLERANCE)
             ret.push_back(std::move(ec));
     }
-    std::cout<<__func__<<"(): create edge container: "<<ret.size()<<std::endl;
     return ret;
 }
 }
@@ -2071,7 +2069,6 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
-    std::cout<<"create edge container: "<<edges.getId()<<std::endl;
     for(auto* e1: entities){
         if (e1->isContainer())
         {
@@ -2096,7 +2093,6 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
         {
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
         ec->addEntity(e1);
-        std::cout<<__func__<<"(): add to container: "<<ec->getId()<<", circle: "<<e1->getId()<<std::endl;
         loops.push_back(std::move(ec));
         break;
         }
