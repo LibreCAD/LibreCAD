@@ -148,7 +148,7 @@ void LoopSorter::init()
 
 void LoopSorter::findAncestors(RS_EntityContainer* loop)
 {
-    if (m_toProcess.count(loop) == 0)
+    if (m_toProcess.erase(loop) == 0)
         return;
 
     // use a random direction to avoid passing tangential directions

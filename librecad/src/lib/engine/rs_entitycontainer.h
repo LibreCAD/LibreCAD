@@ -237,13 +237,19 @@ public:
     const QList<RS_Entity*>& getEntityList();
 
 protected:
+    /**
+     * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
+     * the returned object.
+     * @return std::vector<std::unique_ptr<RS_EntityContainer>> - each container contains edge entities of a single
+     * closed loop. Each loop is assumed to be simply closed, and loops never cross each other.
+     */
     virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
     /** entities in the container */
     QList<RS_Entity *> entities;
 
     /** sub container used only temporarily for iteration. */
-    mutable RS_EntityContainer* subContainer;
+    mutable RS_EntityContainer* subContainer = nullptr;
 
     /**
      * Automatically update the borders of the container when entities
@@ -257,7 +263,7 @@ private:
 	 * @return true when entity of this container won't be considered for snapping points
 	 */
 	bool ignoredSnap() const;
-    mutable int entIdx;
+    mutable int entIdx = 0;
     bool autoDelete = false;
 };
 
