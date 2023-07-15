@@ -28,6 +28,7 @@
 #include <memory>
 #include <set>
 #include <map>
+#include <random>
 #include <unordered_map>
 
 #include <QPainterPath>
@@ -50,6 +51,18 @@
 
 namespace
 {
+
+// a random angle between 0 and 2
+double getRandomAngle();
+
+// find a point inside a given loop
+RS_Vector  getInternalPoint(RS_EntityContainer* loop);
+
+// Create a random ray: starting from an internal point of the loop
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
+
+// Find intersection between a line and a loop
+RS_VectorSolutions getIntersection(RS_AtomicEntity* line, const RS_EntityContainer& loop);
 
 double getSizeSquared(const RS_EntityContainer* loop) {
     return (loop->getMax() - loop->getMin()).squared();
@@ -83,9 +96,18 @@ public:
         bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const;
         const LoopSorter& m_sorter;
     };
+    std::vector<RS_EntityContainer*> getResults() const
+    {
+        std::set<RS_EntityContainer*> roots;
+        for (const auto& loop: m_loops)
+            if (m_parents.count(loop.get()) == 0)
+                roots.insert(loop.get());
+        return {roots.begin(), roots.end()};
+    }
 
 private:
     void init();
+    void findAncestors(RS_EntityContainer* loop);
 
     std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
     std::unordered_map<const RS_EntityContainer*, double> m_area;
@@ -108,7 +130,40 @@ void LoopSorter::init()
 {
     for(const auto& loop: m_loops)
         m_toProcess.insert(loop.get());
+    std::vector<RS_EntityContainer*> loops{m_toProcess.begin(), m_toProcess.end()};
+    for (RS_EntityContainer* loop : loops)
+        findAncestors(loop);
 }
+
+void LoopSorter::findAncestors(RS_EntityContainer* loop)
+{
+    if (m_toProcess.count(loop) == 0)
+        return;
+
+    auto ray = getRandomRay(loop);
+    using namespace std;
+    map<double, RS_EntityContainer*> ancestors;
+    for(RS_EntityContainer* candidate: m_toProcess) {
+        if (candidate == loop) continue;
+        RS_VectorSolutions intersections = getIntersection(ray.get(), *candidate);
+        if (intersections.size()%2 == 0)
+            continue;
+        // odd intersections
+        double distance = intersections.getClosestDistance(ray->getStartpoint());
+        ancestors.emplace(distance, candidate);
+    }
+    RS_EntityContainer* current = loop;
+    for (const auto& entry: ancestors)
+    {
+        RS_EntityContainer* parent = entry.second;
+        m_toProcess.erase(parent);
+        m_parents[current] = parent;
+        parent->addEntity(current);
+        m_children[parent].insert(current);
+        current = parent;
+    }
+}
+
 
 LoopSorter::AreaPredicate::AreaPredicate(const LoopSorter &sorter):
     m_sorter{sorter}
@@ -799,10 +854,8 @@ double RS_Hatch::getTotalArea() {
     }
     std::cout<<"loops: done"<<std::endl;
 
-    std::multiset<RS_EntityContainer*, CompareBoxSize> candidates;
-    for (auto& loop: loops)
-        candidates.insert(loop.get());
-    auto sorted = sortLoops(candidates);
+    LoopSorter loopSorter(std::move(loops));
+    auto sorted = loopSorter.getResults();
 
     double totalArea=0.;
 
@@ -886,8 +939,6 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner,
     update();
 }
 
-#include <set>
-#include <random>
 namespace {
 // a random angle between 0 and 2
 double getRandomAngle()
@@ -920,27 +971,33 @@ RS_VectorSolutions getIntersection(RS_AtomicEntity* line, const RS_EntityContain
     return ret;
 }
 
-std::unique_ptr<RS_Line> getRandomLine(RS_EntityContainer* loop)
+RS_Vector getInternalPoint(RS_EntityContainer* loop)
 {
     RS_Vector p0 = loop->firstEntity()->getNearestPointOnEntity(loop->getMin(), true);
     std::cout<<__func__<<"(): loop:"<<loop->getId()<<": p0="<<p0<<std::endl;
     double size = std::sqrt(getSizeSquared(loop));
     for(short i=0;i<16; i++)
     {
-        auto line = std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector(getRandomAngle())*size);
-        line->setStartpoint(line->getStartpoint()*1.1 - line->getEndpoint()*0.1);
+        RS_Vector offset =  RS_Vector(getRandomAngle())*size;
+        auto line = std::make_unique<RS_Line>(nullptr, p0 - offset, p0 + offset);
         auto results = getIntersection(line.get(), *loop);
         // need even number of intersections
         if (results.empty() || results.size() % 2 == 1)
             continue;
         std::sort(results.begin(), results.end(), ComparePoints{});
         // find an internal point
-        p0 = (results.at(0) + results.at(1)) * 0.5;
-        // a ray
-        line->setStartpoint(p0);
-        return line;
+        return (results.at(0) + results.at(1)) * 0.5;
     }
-    return {};
+    RS_LOG(D_ERROR)<<__func__<<"(): failed to find a line passing the loop: "<<loop->getId();
+    return RS_Vector{false};
+}
+
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop)
+{
+    RS_Vector p0 = getInternalPoint(loop);
+    std::cout<<__func__<<"(): loop:"<<loop->getId()<<": p0="<<p0<<std::endl;
+    double size = std::sqrt(getSizeSquared(loop));
+    return std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector{getRandomAngle()}*size);
 }
 
 std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, CompareBoxSize> candidates)
@@ -949,7 +1006,7 @@ std::vector<RS_EntityContainer*> sortLoops(std::multiset<RS_EntityContainer*, Co
     while(!candidates.empty()) {
         RS_EntityContainer* loop = *candidates.begin();
         candidates.erase(loop);
-        auto ray = getRandomLine(loop);
+        auto ray = getRandomRay(loop);
         if (ray == nullptr)
             return {};
         RS_Vector p0 = ray->getStartpoint();
