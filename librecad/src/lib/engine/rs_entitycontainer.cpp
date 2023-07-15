@@ -47,8 +47,6 @@
 #include "rs_solid.h"
 #include "rs_spline.h"
 
-bool RS_EntityContainer::autoUpdateBorders = true;
-
 namespace {
 
 // the tolerance used to check topology of contours in hatching
@@ -74,6 +72,21 @@ bool isReversed(const RS_Entity *entity)
     }
 }
 
+// For validate hatch contours, whether an entity in the contour is a closed
+// loop itself
+bool isClosedLoop(RS_Entity& entity)
+{
+    switch (entity.rtti()){
+    case RS2::EntityCircle:
+    // Sub containers are always closed
+    case RS2::EntityContainer:
+    return true;
+    case RS2::EntityEllipse:
+    return !static_cast<RS_Ellipse*>(&entity)->isArc();
+    default:
+    return false;
+    }
+}
 }
 
 /**
@@ -1195,7 +1208,6 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
 }
 
 
-
 /**
  * @return The point which is closest to 'coord'
  * (one of the vertices)
@@ -1854,29 +1866,22 @@ double RS_EntityContainer::areaLineIntegral() const
     double contourArea=0.;
     //closed area is always positive
     double closedArea=0.;
+    double subArea = 0.;
 
     // edges:
 
     RS_Vector previousPoint;
     for(auto* e: entities){
-        e->setLayer(getLayer());
-        double lineIntegral = 0.;
-        switch (e->rtti()) {
-        default:
-            break;
-        case RS2::EntityLine:
-        case RS2::EntityArc:
-            lineIntegral = e->areaLineIntegral();
-            break;
-        case RS2::EntityCircle:
-            closedArea += e->areaLineIntegral();
-            break;
-        case RS2::EntityEllipse:
-            if(static_cast<RS_Ellipse*>(e)->isArc())
-                lineIntegral = e->areaLineIntegral();
+        if (isClosedLoop(*e))
+        {
+            if (e->isContainer())
+                subArea += e->areaLineIntegral();
             else
                 closedArea += e->areaLineIntegral();
+            continue;
         }
+        e->setLayer(getLayer());
+        double lineIntegral = e->areaLineIntegral();
         RS_Vector startPoint = e->getStartpoint();
         RS_Vector endPoint = e->getEndpoint();
 
@@ -1901,7 +1906,7 @@ double RS_EntityContainer::areaLineIntegral() const
             previousPoint = endPoint;
         }
     }
-    return std::abs(contourArea) + closedArea;
+    return std::abs(contourArea) + closedArea - subArea;
 }
 
 bool RS_EntityContainer::ignoredOnModification() const
@@ -2025,4 +2030,84 @@ RS_Entity* RS_EntityContainer::last() const
 const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 {
     return entities;
+}
+
+namespace {
+std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& container)
+{
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> ret;
+    while (!container.isEmpty()) {
+        RS_Entity* e = container.firstEntity();
+        container.removeEntity(e);
+        RS_Vector target = e->getStartpoint();
+        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+        ec->addEntity(e);
+        RS_Vector endPoint = e->getEndpoint();
+        while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
+            double distance=0.;
+            RS_Entity* next=nullptr;
+            RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
+            std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
+            if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
+                std::swap(points[0], points[1]);
+            ec->addEntity(next);
+            container.removeEntity(next);
+            endPoint=points[1];
+        }
+        if (endPoint.squaredTo(target) < RS_TOLERANCE)
+            ret.push_back(std::move(ec));
+    }
+    return ret;
+}
+}
+
+std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const
+{
+    if (entities.empty())
+        return {};
+
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    RS_EntityContainer edges(nullptr, false);
+    for(auto* e1: entities){
+        if (e1->isContainer())
+        {
+            auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+            for (auto& subLoop: subLoops)
+                loops.push_back(std::move(subLoop));
+            continue;
+        }
+
+        if (!e1->isEdge())
+            continue;
+
+        //detect circles and whole ellipses
+        switch(e1->rtti()){
+        case RS2::EntityEllipse:
+        if(static_cast<RS_Ellipse*>(e1)->isEllipticArc()) {
+            edges.addEntity(e1);
+            break;
+        }
+        // [[fallthrough]]
+        case RS2::EntityCircle:
+        {
+        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
+        ec->addEntity(e1);
+        loops.push_back(std::move(ec));
+        break;
+        }
+        // [[fallthrough]]
+        default:
+        edges.addEntity(e1);
+        }
+    }
+
+    //find loops
+    while (!edges.isEmpty())
+    {
+        auto subLoops = findLoop(edges);
+        for (auto& loop: subLoops)
+            loops.push_back(std::move(loop));
+    }
+    return loops;
 }

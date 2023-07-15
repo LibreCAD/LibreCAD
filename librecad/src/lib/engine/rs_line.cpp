@@ -99,18 +99,9 @@ RS_Vector RS_Line::getNearestEndpoint(const RS_Vector& coord,
     double dist1((data.startpoint-coord).squared());
     double dist2((data.endpoint-coord).squared());
 
-    if (dist2<dist1) {
-		if (dist) {
-            *dist = sqrt(dist2);
-        }
-        return data.endpoint;
-    } else {
-		if (dist) {
-            *dist = sqrt(dist1);
-        }
-        return data.startpoint;
-    }
-
+    if (dist != nullptr)
+        *dist = std::sqrt(std::min(dist1, dist2));
+    return (dist1 < dist2) ? data.startpoint : data.endpoint;
 }
 
 /**

@@ -28,6 +28,7 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
+#include <memory>
 #include <vector>
 #include <QList>
 #include "rs_entity.h"
@@ -152,9 +153,9 @@ public:
 								RS2::ResolveLevel level=RS2::ResolveAll) const;
 
 	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true,
-						double* dist = nullptr,
-			RS_Entity** entity=nullptr)const override;
+                                      bool onEntity = true,
+                                      double* dist = nullptr,
+                                      RS_Entity** entity=nullptr)const override;
 
 	RS_Vector getNearestCenter(const RS_Vector& coord,
 									   double* dist = nullptr)const override;
@@ -236,6 +237,7 @@ public:
     const QList<RS_Entity*>& getEntityList();
 
 protected:
+    virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
     /** entities in the container */
     QList<RS_Entity *> entities;
@@ -247,7 +249,7 @@ protected:
      * Automatically update the borders of the container when entities
      * are added or removed.
      */
-    static bool autoUpdateBorders;
+    bool autoUpdateBorders = true;
 
 private:
 	/**
@@ -256,7 +258,7 @@ private:
 	 */
 	bool ignoredSnap() const;
     mutable int entIdx;
-    bool autoDelete;
+    bool autoDelete = false;
 };
 
 #endif
