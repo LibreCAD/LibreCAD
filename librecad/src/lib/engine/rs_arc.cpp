@@ -978,7 +978,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     const RS_LineTypePattern* pat;
     if (drawAsSelected)
     {
-        pat = &RS_LineTypePattern::patternSelected;
+        pat = RS_LineTypePattern::getPattern(RS2::LineSelected);
     } else {
         pat = view->getPattern(getPen().getLineType());
     }

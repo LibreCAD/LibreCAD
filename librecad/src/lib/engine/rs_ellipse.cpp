@@ -1852,9 +1852,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
 
     double mAngle=getAngle();
     RS_Vector cp(view->toGui(getCenter()));
-	if (!drawAsSelected && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
+    {
         painter->drawEllipse(cp,
                              ra, rb,
                              mAngle,
@@ -1866,7 +1864,7 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
     // Pattern:
 	const RS_LineTypePattern* pat = nullptr;
 	if (drawAsSelected) {
-		pat = &RS_LineTypePattern::patternSelected;
+        pat = RS_LineTypePattern::getPattern(RS2::LineSelected);
 	}
 	else {
 		pat = view->getPattern(getPen().getLineType());

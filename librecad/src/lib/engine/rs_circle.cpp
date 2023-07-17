@@ -758,15 +758,16 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
-
+#include "rs_arc.h"
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-//    // draw circle as a 2 pi arc
-//    RS_Arc arc(getParent(), RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
-//    arc.setSelected(isSelected());
-//    arc.setPen(getPen());
-//    arc.draw(painter,view,patternOffset);
+    // draw circle as a 2 pi arc
+    RS_Arc arc{nullptr, RS_ArcData{getCenter(), getRadius(), 0., 2.*M_PI, false}};
+    arc.setSelected(isSelected());
+    arc.setPen(getPen());
+    double patternOffset=0.;
+    arc.draw(painter,view,patternOffset);
 
-    painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+    //painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
 }
 
 
