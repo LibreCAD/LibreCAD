@@ -503,20 +503,22 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     {
         // arc
         auto getP = [origin = RS_Vector{center.x(), center.y()}, &radius1, &radius2, &angle](double a) {
-            auto point = origin + RS_Vector{a}.scale({radius1, radius2});
-            point.rotate(origin, angle);
+            auto point = origin + RS_Vector{a}.scale({radius1, -radius2});
+            point.rotate(origin, -angle);
             return point;
         };
-        setClipping(true);
+        const double ellipseSize = 2.*std::max(radius1, radius2)+1.;
         RS_Vector p1 = getP(a1);
         RS_Vector p2 = getP(a2);
         auto dp = p2 - p1;
-        dp *= (radius1+radius2)/dp.magnitude();
+        dp /= dp.magnitude();
+        RS_Vector p3 = getP((a1+a2)*0.5) - p1;
+        p3 -= dp * p3.dotP(dp);
+        p3 *= ellipseSize/p3.magnitude();
+
+        dp *= ellipseSize;
         p1 -= dp;
         p2 += dp;
-        RS_Vector p3 = getP((a1+a2)*0.5) - p1;
-        p3 -= p3 * (p3.dotP(dp/dp.magnitude()));
-        p3 *= (radius1+radius2)/p3.magnitude();
 
         QPainterPath path;
         path.moveTo(p1.x, p1.y);
@@ -524,11 +526,11 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         path.lineTo(p2.x+p3.x, p2.y+p3.y);
         path.lineTo(p2.x, p2.y);
         path.lineTo(p1.x, p1.y);
+        setClipping(true);
         setClipPath(path);
     } else {
 
     }
-    this->rotate(-angle * 180.0/M_PI);
     QTransform t0 = transform();
     QTransform t1;
     t1.translate(center.x(), center.y());
