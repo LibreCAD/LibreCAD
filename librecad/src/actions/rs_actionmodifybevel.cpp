@@ -155,6 +155,7 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
         break;
         }
     } else if (e->button()==Qt::RightButton) {
+        unhighlightEntity();
         deletePreview();
         init(getStatus()-1);
     }
