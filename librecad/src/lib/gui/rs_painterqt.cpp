@@ -497,12 +497,14 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     // shift a2 - a1 to the range of 0 to 2 pi
     a2 = a1+ M_PI + std::remainder(a2 - a1 - M_PI, 2. * M_PI);
 
+    QPointF center = {toScreenX(cp.x), toScreenY(cp.y)};
+
     if (std::abs(std::remainder(a2 - a1, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
     {
         // arc
-        auto getP = [center = RS_Vector{toScreenX(cp.x), toScreenY(cp.y)}, &radius1, &radius2, &angle](double a) {
-            RS_Vector point = center + RS_Vector{a}.scale({radius1, radius2});
-            point.rotate(center, angle);
+        auto getP = [origin = RS_Vector{center.x(), center.y()}, &radius1, &radius2, &angle](double a) {
+            auto point = origin + RS_Vector{a}.scale({radius1, radius2});
+            point.rotate(origin, angle);
             return point;
         };
         setClipping(true);
@@ -523,14 +525,12 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         path.lineTo(p2.x, p2.y);
         path.lineTo(p1.x, p1.y);
         setClipPath(path);
-    setClipping(false);
     } else {
 
     }
     this->rotate(-angle * 180.0/M_PI);
     QTransform t0 = transform();
     QTransform t1;
-    QPointF center = {toScreenX(cp.x), toScreenY(cp.y)};
     t1.translate(center.x(), center.y());
     t1.rotate(-angle*180./M_PI);
     t1.translate(-center.x(), -center.y());
