@@ -171,7 +171,7 @@ void RS_ActionDrawHatch::trigger() {
         }
 		if(m_bShowArea && printArea){
             RS_DIALOGFACTORY->commandMessage(tr("Total hatch area = %1").
-                                             arg(hatch->getTotalArea(),10,'g',8));
+                                             arg(hatch->getTotalArea(),12,'g',10));
         }
 
 		hatch.release();
