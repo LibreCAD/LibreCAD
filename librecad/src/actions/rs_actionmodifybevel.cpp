@@ -24,39 +24,49 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifybevel.h"
+#include <set>
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifybevel.h"
+
+#include "rs_commandevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+
 
 struct RS_ActionModifyBevel::Points {
-	RS_Vector coord1;
-	RS_Vector coord2;
-	RS_BevelData data;
+    RS_Vector coord1;
+    RS_Vector coord2;
+    RS_BevelData data;
+    std::set<RS_Entity*> highlighted;
 };
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Bevel Entities",
-						   container, graphicView)
-		,entity1(nullptr)
-		,entity2(nullptr)
-		, pPoints(std::make_unique<Points>())
-		,lastStatus(SetEntity1)
+                                           RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Bevel Entities",
+                               container, graphicView)
+    ,entity1(nullptr)
+    ,entity2(nullptr)
+    , pPoints(std::make_unique<Points>())
+    ,lastStatus(SetEntity1)
 {
-	actionType=RS2::ActionModifyBevel;
+    setActionType(RS2::ActionModifyBevel);
 }
 
 RS_ActionModifyBevel::~RS_ActionModifyBevel() = default;
 
+void RS_ActionModifyBevel::finish(bool updateTB)
+{
+    unhighlightEntity();
+    RS_PreviewActionInterface::finish(updateTB);
+}
 
 void RS_ActionModifyBevel::init(int status) {
     RS_ActionInterface::init(status);
@@ -71,14 +81,15 @@ void RS_ActionModifyBevel::trigger() {
 
     if (entity1 && entity1->isAtomic() &&
             entity2 && entity2->isAtomic()) {
+        unhighlightEntity();
 
         RS_Modification m(*container, graphicView);
-		m.bevel(pPoints->coord1, (RS_AtomicEntity*)entity1,
-				pPoints->coord2, (RS_AtomicEntity*)entity2,
-				pPoints->data);
+        m.bevel(pPoints->coord1, (RS_AtomicEntity*)entity1,
+                pPoints->coord2, (RS_AtomicEntity*)entity2,
+                pPoints->data);
 
-		pPoints->coord1 = {};
-		pPoints->coord2 = {};
+        pPoints->coord1 = {};
+        pPoints->coord2 = {};
         entity1 = nullptr;
         entity2 = nullptr;
         setStatus(SetEntity1);
@@ -95,19 +106,24 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
 
     switch (getStatus()) {
     case SetEntity1:
-		pPoints->coord1 = mouse;
-        entity1 = se;
-        break;
+    pPoints->coord1 = mouse;
+    entity1 = se;
+    break;
 
     case SetEntity2:
-                if (entity1 && RS_Information::isTrimmable(entity1)) {
-				pPoints->coord2 = mouse;
-                entity2 = se;
-                }
-        break;
+    {
+        if (entity2 != nullptr && entity2 != entity1)
+            highlightEntity(entity2, false);
+        if (RS_Information::isTrimmable(se) && se != entity1 && se->isAtomic()) {
+            pPoints->coord2 = mouse;
+            entity2 = se;
+            highlightEntity(entity2, true);
+        }
+    }
+    break;
 
     default:
-        break;
+    break;
     }
 
     RS_DEBUG->print("RS_ActionModifyBevel::mouseMoveEvent end");
@@ -119,20 +135,24 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
-            if (entity1 && entity1->isAtomic()) {
+        {
+            unhighlightEntity();
+            if (entity1 != nullptr && entity1->isAtomic() && RS_Information::isTrimmable(entity1)) {
+                highlightEntity(entity1, true);
                 setStatus(SetEntity2);
             }
-            break;
+        }
+        break;
 
         case SetEntity2:
-            if (entity2 && entity2->isAtomic() &&
-                            RS_Information::isTrimmable(entity1, entity2)) {
-                trigger();
-            }
-            break;
+        if (entity2 && entity2->isAtomic() &&
+                RS_Information::isTrimmable(entity1, entity2)) {
+            trigger();
+        }
+        break;
 
         default:
-            break;
+        break;
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
@@ -152,74 +172,74 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent* e) {
     switch (getStatus()) {
     case SetEntity1:
     case SetEntity2:
-        if (checkCommand("length1", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetLength1);
-        } else if (checkCommand("length2", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetLength2);
-        } else if (checkCommand("trim", c)) {
-			pPoints->data.trim = !pPoints->data.trim;
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-        }
-        break;
+    if (checkCommand("length1", c)) {
+        deletePreview();
+        lastStatus = (Status)getStatus();
+        setStatus(SetLength1);
+    } else if (checkCommand("length2", c)) {
+        deletePreview();
+        lastStatus = (Status)getStatus();
+        setStatus(SetLength2);
+    } else if (checkCommand("trim", c)) {
+        pPoints->data.trim = !pPoints->data.trim;
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+    }
+    break;
 
     case SetLength1: {
-            bool ok;
-            double l = RS_Math::eval(c, &ok);
-            if (ok) {
-                e->accept();
-				pPoints->data.length1 = l;
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-            setStatus(lastStatus);
+        bool ok;
+        double l = RS_Math::eval(c, &ok);
+        if (ok) {
+            e->accept();
+            pPoints->data.length1 = l;
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
-        break;
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
+    break;
 
     case SetLength2: {
-            bool ok;
-            double l = RS_Math::eval(c, &ok);
-            if (ok) {
-				pPoints->data.length2 = l;
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-            setStatus(lastStatus);
+        bool ok;
+        double l = RS_Math::eval(c, &ok);
+        if (ok) {
+            pPoints->data.length2 = l;
+        } else {
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
-        break;
+        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        setStatus(lastStatus);
+    }
+    break;
 
     default:
-        break;
+    break;
     }
 }
 
 void RS_ActionModifyBevel::setLength1(double l1) {
-	pPoints->data.length1 = l1;
+    pPoints->data.length1 = l1;
 }
 
 double RS_ActionModifyBevel::getLength1() const{
-	return pPoints->data.length1;
+    return pPoints->data.length1;
 }
 
 void RS_ActionModifyBevel::setLength2(double l2) {
-	pPoints->data.length2 = l2;
+    pPoints->data.length2 = l2;
 }
 
 double RS_ActionModifyBevel::getLength2() const{
-	return pPoints->data.length2;
+    return pPoints->data.length2;
 }
 
 void RS_ActionModifyBevel::setTrim(bool t) {
-	pPoints->data.trim = t;
+    pPoints->data.trim = t;
 }
 
 bool RS_ActionModifyBevel::isTrimOn() const{
-	return pPoints->data.trim;
+    return pPoints->data.trim;
 }
 
 QStringList RS_ActionModifyBevel::getAvailableCommands() {
@@ -227,12 +247,12 @@ QStringList RS_ActionModifyBevel::getAvailableCommands() {
     switch (getStatus()) {
     case SetEntity1:
     case SetEntity2:
-        cmd += command("length1");
-        cmd += command("length2");
-        cmd += command("trim");
-        break;
+    cmd += command("length1");
+    cmd += command("length2");
+    cmd += command("trim");
+    break;
     default:
-        break;
+    break;
     }
     return cmd;
 }
@@ -252,24 +272,24 @@ void RS_ActionModifyBevel::hideOptions() {
 void RS_ActionModifyBevel::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetEntity1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select first entity"),
-                                            tr("Cancel"));
-        break;
+    RS_DIALOGFACTORY->updateMouseWidget(tr("Select first entity"),
+                                        tr("Cancel"));
+    break;
     case SetEntity2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select second entity"),
-                                            tr("Back"));
-        break;
+    RS_DIALOGFACTORY->updateMouseWidget(tr("Select second entity"),
+                                        tr("Back"));
+    break;
     case SetLength1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length 1:"),
-                                            tr("Back"));
-        break;
+    RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length 1:"),
+                                        tr("Back"));
+    break;
     case SetLength2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length 2:"),
-                                            tr("Back"));
-        break;
+    RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length 2:"),
+                                        tr("Back"));
+    break;
     default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+    RS_DIALOGFACTORY->updateMouseWidget();
+    break;
     }
 }
 
@@ -277,4 +297,29 @@ void RS_ActionModifyBevel::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
+void RS_ActionModifyBevel::highlightEntity(RS_Entity* entity, bool highlight)
+{
+    if (entity == nullptr)
+        return;
+    if (highlight && pPoints->highlighted.count(entity) == 0) {
+        entity->setHighlighted(true);
+        graphicView->drawEntity(entity);
+        pPoints->highlighted.insert(entity);
+    }
+    if (!highlight && pPoints->highlighted.erase(entity) == 1) {
+        entity->setHighlighted(false);
+        graphicView->drawEntity(entity);
+    }
+}
+
+void RS_ActionModifyBevel::unhighlightEntity()
+{
+    for(RS_Entity* entity: pPoints->highlighted)
+    {
+        if (entity != nullptr) {
+            entity->setHighlighted(false);
+            graphicView->drawEntity(entity);
+        }
+    }
+}
 // EOF
