@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <set>
-
 #include <QAction>
 #include <QMouseEvent>
 
@@ -40,20 +38,16 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 
-
 struct RS_ActionModifyBevel::Points {
     RS_Vector coord1;
     RS_Vector coord2;
     RS_BevelData data;
-    std::set<RS_Entity*> highlighted;
 };
 
 RS_ActionModifyBevel::RS_ActionModifyBevel(RS_EntityContainer& container,
                                            RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Bevel Entities",
                                container, graphicView)
-    ,entity1(nullptr)
-    ,entity2(nullptr)
     , pPoints(std::make_unique<Points>())
     ,lastStatus(SetEntity1)
 {
@@ -113,11 +107,11 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent* e) {
     case SetEntity2:
     {
         if (entity2 != nullptr && entity2 != entity1)
-            highlightEntity(entity2, false);
+            graphicView->drawEntityHighlighted(entity2, false);
         if (RS_Information::isTrimmable(se) && se != entity1 && se->isAtomic()) {
             pPoints->coord2 = mouse;
             entity2 = se;
-            highlightEntity(entity2, true);
+            graphicView->drawEntityHighlighted(entity2, true);
         }
     }
     break;
@@ -138,7 +132,7 @@ void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent* e) {
         {
             unhighlightEntity();
             if (entity1 != nullptr && entity1->isAtomic() && RS_Information::isTrimmable(entity1)) {
-                highlightEntity(entity1, true);
+                graphicView->drawEntityHighlighted(entity1, true);
                 setStatus(SetEntity2);
             }
         }
@@ -298,29 +292,9 @@ void RS_ActionModifyBevel::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
-void RS_ActionModifyBevel::highlightEntity(RS_Entity* entity, bool highlight)
-{
-    if (entity == nullptr)
-        return;
-    if (highlight && pPoints->highlighted.count(entity) == 0) {
-        entity->setHighlighted(true);
-        graphicView->drawEntity(entity);
-        pPoints->highlighted.insert(entity);
-    }
-    if (!highlight && pPoints->highlighted.erase(entity) == 1) {
-        entity->setHighlighted(false);
-        graphicView->drawEntity(entity);
-    }
-}
-
 void RS_ActionModifyBevel::unhighlightEntity()
 {
-    for(RS_Entity* entity: pPoints->highlighted)
-    {
-        if (entity != nullptr) {
-            entity->setHighlighted(false);
-            graphicView->drawEntity(entity);
-        }
-    }
+    graphicView->drawEntityHighlighted(entity1, false);
+    graphicView->drawEntityHighlighted(entity2, false);
 }
 // EOF

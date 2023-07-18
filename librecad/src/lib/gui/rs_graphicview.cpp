@@ -1231,6 +1231,18 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
 	double patternOffset(0.);
 	e->draw(painter, this, patternOffset);
 }
+
+void RS_GraphicView::drawEntityHighlighted(RS_Entity* e, bool highlighted)
+{
+    if (e==nullptr)
+        return;
+    if (e->isHighlighted() != highlighted)
+    {
+        e->setHighlighted(highlighted);
+        drawEntity(e);
+    }
+}
+
 /**
  * Deletes an entity with the background color.
  * Might be recursively called e.g. for polylines.

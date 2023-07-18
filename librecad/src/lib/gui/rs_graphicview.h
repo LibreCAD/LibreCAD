@@ -268,7 +268,8 @@ public:
 	virtual void drawEntity(RS_Entity* e);
 	virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e);
 	virtual void drawEntityPlain(RS_Painter *painter, RS_Entity* e, double& patternOffset);
-	virtual void setPenForEntity(RS_Painter *painter, RS_Entity* e );
+    virtual void setPenForEntity(RS_Painter *painter, RS_Entity* e);
+    virtual void drawEntityHighlighted(RS_Entity* e, bool highlighted = true);
     virtual RS_Vector getMousePosition() const = 0;
 
 	virtual const RS_LineTypePattern* getPattern(RS2::LineType t);

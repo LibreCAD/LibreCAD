@@ -85,8 +85,8 @@ public:
 
 private:
     // update highlight status
-    void highlightEntity(RS_Entity* entity, bool highlight);
     void unhighlightEntity();
+
     RS_Entity* entity1 = nullptr;
     RS_Entity* entity2 = nullptr;
     struct Points;

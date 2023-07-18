@@ -66,15 +66,13 @@ bool atEndPoint(RS_Entity &entity1, RS_Entity &entity2, const RS_Vector &point)
 struct RS_ActionModifyRound::Points {
     RS_Vector coord1;
     RS_Vector coord2;
-    RS_RoundData data;
+    RS_RoundData data{};
 };
 
 RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
                                            RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Round Entities",
                                container, graphicView)
-    ,entity1(nullptr)
-    ,entity2(nullptr)
     , pPoints(std::make_unique<Points>())
     ,lastStatus(SetEntity1)
 {
@@ -95,6 +93,7 @@ void RS_ActionModifyRound::finish(bool updateTB)
     unhighlightEntity();
     RS_PreviewActionInterface::finish(updateTB);
 }
+
 /*
     Removes the old fillet, if it exists.
 
@@ -205,12 +204,12 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
 
     case SetEntity2:
     if (entity1 != entity2 && entity2 != nullptr && entity2->isHighlighted())
-        highlightEntity(entity2, false);
+        graphicView->drawEntityHighlighted(entity2, false);
 
     if (entity1 != se && RS_Information::isTrimmable(se) && se->isAtomic()) {
         entity2 = se;
         pPoints->coord2 = mouse;
-        highlightEntity(entity2, true);
+        graphicView->drawEntityHighlighted(entity2, true);
 
         deletePreview();
         RS_Entity* tmp1 = entity1->clone();
@@ -253,13 +252,13 @@ void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetEntity1:
-        highlightEntity(entity1, false);
+        graphicView->drawEntityHighlighted(entity1, false);
 
         entity1 = se;
         pPoints->coord1 = mouse;
         if (entity1 && entity1->isAtomic() &&
                 RS_Information::isTrimmable(entity1)) {
-            highlightEntity(entity1, true);
+            graphicView->drawEntityHighlighted(entity1, true);
             setStatus(SetEntity2);
         }
         break;
@@ -436,25 +435,9 @@ void RS_ActionModifyRound::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 
-void RS_ActionModifyRound::highlightEntity(RS_Entity* entity, bool highlight)
-{
-    if (entity == nullptr)
-        return;
-    if (highlight && !entity->isHighlighted())
-    {
-        entity->setHighlighted(true);
-        graphicView->drawEntity(entity);
-    }
-    if (!highlight && entity->isHighlighted())
-    {
-        entity->setHighlighted(false);
-        graphicView->drawEntity(entity);
-    }
-}
-
 void RS_ActionModifyRound::unhighlightEntity()
 {
-    for (RS_Entity* entity: {entity1, entity2})
-        highlightEntity(entity, false);
+    graphicView->drawEntityHighlighted(entity1, false);
+    graphicView->drawEntityHighlighted(entity2, false);
 }
 // EOF
