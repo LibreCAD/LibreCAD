@@ -758,11 +758,12 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
-#include "rs_arc.h"
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+    if (!isVisibleInWindow(view))
+        return;
+
     painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
 }
-
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 	if(ref.distanceTo(data.center)<1.0e-4){

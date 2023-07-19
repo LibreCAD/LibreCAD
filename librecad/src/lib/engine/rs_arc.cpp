@@ -943,113 +943,22 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
-	if (!( painter && view)) return;
+    if (painter == nullptr || view == nullptr)
+        return;
     //visible in graphic view
-    if(isVisibleInWindow(view)==false) return;
+    if(!isVisibleInWindow(view))
+        return;
 
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
     double length=getLength()*view->getFactor().x;
-    //double styleFactor = getStyleFactor();
+
     patternOffset -= length;
 
-    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
-
-    // simple style-less lines
-    {
-        painter->drawArc(cp,
-                         ra,
-                         getAngle1(), getAngle2(),
-                         isReversed());
-        return;
-    }
-//    double styleFactor = getStyleFactor(view);
-    //        if (styleFactor<0.0) {
-    //            painter->drawArc(cp,
-    //                             ra,
-    //                             getAngle1(), getAngle2(),
-    //                             isReversed());
-    //            return;
-    //        }
-
-    // Pattern:
-    const RS_LineTypePattern* pat;
-    if (drawAsSelected)
-    {
-        pat = RS_LineTypePattern::getPattern(RS2::LineSelected);
-    } else {
-        pat = view->getPattern(getPen().getLineType());
-    }
-
-	if (!pat || ra<0.5) {//avoid division by zero from small ra
-		RS_DEBUG->print("%s: Invalid line pattern or radius too small, drawing arc using solid line", __func__);
-        painter->drawArc(cp, ra,
-                         getAngle1(),getAngle2(),
-                         isReversed());
-        return;
-    }
-
-//    patternOffset=remainder(patternOffset - length -0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
-
-    if (ra<RS_TOLERANCE_ANGLE){
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-
-
-
-    // create scaled pattern:
-	if(pat->num<=0) { //invalid pattern
-		RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
-		painter->drawArc(cp,
-						 ra,
-						 getAngle1(), getAngle2(),
-						 isReversed());
-		return;
-	}
-	std::vector<double> da(pat->num);
-    double patternSegmentLength(pat->totalLength);
-	double ira=1./ra;
-	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
-	for (size_t i=0; i<pat->num; i++){
-		//        da[j] = pat->pattern[i++] * styleFactor;
-		//fixme, stylefactor needed
-		da[i] =dpmm*(isReversed() ? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
-		if ( fabs(da[i]) < 1.) da[i] = copysign(1., da[i]);
-		da[i] *= ira;
-	}
-
-    //    bool done = false;
-    double total=remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
-
-	double a1{RS_Math::correctAngle(getAngle1())};
-	double a2{RS_Math::correctAngle(getAngle2())};
-
-    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is automatic
-        if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
-        total = a1 - total*ira; //in angle
-    }else{
-        if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-        total = a1 + total*ira; //in angle
-    }
-    double limit(fabs(a1-a2));
-    double t2;
-
-	for(int j=0; fabs(total-a1) < limit; j=(j+1)%pat->num) {
-		t2=total+da[j];
-
-		if(pat->pattern[j] > 0.0 && fabs(t2-a2) < limit) {
-			double a11=(fabs(total-a2) < limit)?total:a1;
-			double a21=(fabs(t2-a1) < limit)?t2:a2;
-			painter->drawArc(cp, ra, a11, a21, isReversed());
-		}
-
-		total=t2;
-	}
+    painter->drawArc(cp,
+                     ra,
+                     getAngle1(), getAngle2(),
+                     isReversed());
 }
 
 

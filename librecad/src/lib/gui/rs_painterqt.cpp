@@ -35,6 +35,8 @@
 #include "rs_painterqt.h"
 
 namespace {
+// Convert fro LibreCAD line style pattern to QPen Dash Pattern.
+// QPen dash pattern by default is in the unit of pixel
 QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth)
 {
     double width = 1./std::max(1., screenWidth);
@@ -85,6 +87,48 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
     case RS2::BorderLineX2:
         return Qt::CustomDashLine;
     }
+}
+
+// For a given elliptic arc, create a QPainterPath to allow clipping the complete QR
+// to the desirable
+QPainterPath createClippingPath(const RS_Vector& origin,
+                                double radius1, double radius2,
+                                double angle, double angle1, double angle2)
+{
+
+    // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
+    // Create a QPainterPath to clip the complete ellipse to draw an arc.
+    // Get a point on ellipse by the elliptic angle
+    auto getP = [&origin, &radius1, &radius2, &angle](double a) {
+        auto point = origin + RS_Vector{a}.scale({radius1, -radius2});
+        point.rotate(origin, -angle);
+        return point;
+    };
+    RS_Vector p1 = getP(angle1);
+    RS_Vector p2 = getP(angle2);
+    // Find a direction vector along the two end points of the arc
+    auto dp = p2 - p1;
+    dp /= dp.magnitude();
+    // Find a point on the arc
+    RS_Vector p3 = getP((angle1+angle2)*0.5) - p1;
+    // Find a direction normal to the line p1-p2
+    p3 -= dp * p3.dotP(dp);
+    // the QPainterPath should
+    double ellipseSize = 2.0 * std::max(radius1, radius2);
+    p3 *= ellipseSize/p3.magnitude();
+
+    // makes the path larger
+    dp *= ellipseSize;
+    p1 -= dp;
+    p2 += dp;
+
+    QPainterPath path;
+    path.moveTo(p1.x, p1.y);
+    path.lineTo(p1.x+p3.x, p1.y+p3.y);
+    path.lineTo(p2.x+p3.x, p2.y+p3.y);
+    path.lineTo(p2.x, p2.y);
+    path.lineTo(p1.x, p1.y);
+    return path;
 }
 }
 
@@ -523,37 +567,19 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
 
     if (std::abs(std::remainder(a2 - a1, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
     {
-        // arc
-        auto getP = [origin = RS_Vector{center.x(), center.y()}, &radius1, &radius2, &angle](double a) {
-            auto point = origin + RS_Vector{a}.scale({radius1, -radius2});
-            point.rotate(origin, -angle);
-            return point;
-        };
-        const double ellipseSize = 2.*std::max(radius1, radius2)+1.;
-        RS_Vector p1 = getP(a1);
-        RS_Vector p2 = getP(a2);
-        auto dp = p2 - p1;
-        dp /= dp.magnitude();
-        RS_Vector p3 = getP((a1+a2)*0.5) - p1;
-        p3 -= dp * p3.dotP(dp);
-        p3 *= ellipseSize/p3.magnitude();
-
-        dp *= ellipseSize;
-        p1 -= dp;
-        p2 += dp;
-
-        QPainterPath path;
-        path.moveTo(p1.x, p1.y);
-        path.lineTo(p1.x+p3.x, p1.y+p3.y);
-        path.lineTo(p2.x+p3.x, p2.y+p3.y);
-        path.lineTo(p2.x, p2.y);
-        path.lineTo(p1.x, p1.y);
+        // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
+        // Create a QPainterPath to clip the complete ellipse to draw an arc.
+        QPainterPath path = createClippingPath({toScreenX(cp.x), toScreenY(cp.y)}
+                                               , radius1, radius2, angle, a1, a2);
         setClipping(true);
         setClipPath(path);
     }
+
     // RAII style: setting and restoring QPen dashPattern
     PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
+    // Save the current transform
     QTransform t0 = transform();
+    // The transform to align the
     QTransform t1;
     t1.translate(center.x(), center.y());
     t1.rotate(-angle*180./M_PI);
@@ -683,7 +709,6 @@ RS_Pen RS_PainterQt::getPen() const{
     //return p;
 }
 
-#include "rs_linetypepattern.h"
 void RS_PainterQt::setPen(const RS_Pen& pen) {
     lpen = pen;
     switch (drawingMode) {

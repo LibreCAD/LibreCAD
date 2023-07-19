@@ -71,7 +71,7 @@ constexpr unsigned minHighLightDuplicates = 4;
 constexpr unsigned maxHighLightDuplicates = 20;
 
 // find pen screen width
-double getScreenWidth(RS_Graphic& graphic, RS_Pen& pen, RS_GraphicView& view)
+double getScreenWidth( RS_Pen& pen, RS_Graphic& graphic, RS_GraphicView& view)
 {
     double w = pen.getWidth();
     double wf = 1.0;
@@ -551,26 +551,24 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
-    double screenWidth = getScreenWidth(*graphic, duplicatedPen, *graphicView);
+    double screenWidth = getScreenWidth(duplicatedPen, *graphic, *graphicView);
     double originalWidth = std::max(screenWidth, 1.);
 
-    const double zoomFactor = 200.;
-
-    double duplicatedPen_width = zoomFactor * screenWidth / 100.0;
-    duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
+    double duplicatedPen_width = 2. * std::max(originalWidth, 1.0);
+    const double zoomFactor = 2.;
+    duplicatedPen_width = zoomFactor * screenWidth;
 
     pPoints->nHighLightDuplicates = int(std::min(2.0 * zoomFactor, double(maxHighLightDuplicates)));
-
     pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
     {
-        DEBUG_HEADER
+        DEBUG_HEADER;
 
-                std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
-                          << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
-                          << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
-                          << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
+        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
+                  << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
+                  << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
+                  << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
     }
 
     const double maxWidth = 2.*std::max(duplicatedPen_width, 1.);
@@ -584,7 +582,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
 
-        const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
+        const double gradientFactor { 1.25 * (double) (i + 1) / pPoints->nHighLightDuplicates };
 
         double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
         effectWidth = std::max(2., effectWidth);
