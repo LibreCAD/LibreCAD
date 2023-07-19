@@ -35,6 +35,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -42,6 +43,7 @@
 #include "rs_preview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 
 struct RS_ActionDefault::Points {
@@ -67,6 +69,21 @@ constexpr double hoverToleranceFactor2 = 10.0;
 
 constexpr unsigned minHighLightDuplicates = 4;
 constexpr unsigned maxHighLightDuplicates = 20;
+
+// find pen screen width
+double getScreenWidth(RS_Graphic& graphic, RS_Pen& pen, RS_GraphicView& view)
+{
+    double w = pen.getWidth();
+    double wf = 1.0;
+    double uf = RS_Units::convert(1.0, RS2::Millimeter, graphic.getUnit());
+
+    if ((view.isPrinting() || view.isPrintPreview()) &&
+            graphic.getPaperScale() > RS_TOLERANCE )
+        wf = graphic.getVariableDouble("$DIMSCALE", 1.0);
+
+    double screenWidth = view.toGuiDX(w / 100.0 * uf * wf);
+    return screenWidth;
+}
 }
 
 /**
@@ -534,11 +551,12 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
-    double originalWidth = std::max(duplicatedPen.getScreenWidth(), 1.);
+    double screenWidth = getScreenWidth(*graphic, duplicatedPen, *graphicView);
+    double originalWidth = std::max(screenWidth, 1.);
 
     const double zoomFactor = 200.;
 
-    double duplicatedPen_width = zoomFactor * duplicatedPen.getScreenWidth() / 100.0;
+    double duplicatedPen_width = zoomFactor * screenWidth / 100.0;
     duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
 
     pPoints->nHighLightDuplicates = int(std::min(2.0 * zoomFactor, double(maxHighLightDuplicates)));
@@ -555,7 +573,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
                           << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
     }
 
-    const double maxWidth = 9.*std::max(duplicatedPen.getScreenWidth(), 1.);
+    const double maxWidth = 2.*std::max(duplicatedPen_width, 1.);
     for (unsigned i = 0; i < pPoints->nHighLightDuplicates; i++)
     {
         RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
