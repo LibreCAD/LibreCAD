@@ -956,9 +956,7 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
 
     // simple style-less lines
-    if ( !drawAsSelected && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
+    {
         painter->drawArc(cp,
                          ra,
                          getAngle1(), getAngle2(),

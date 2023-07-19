@@ -497,7 +497,7 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
     // shift a2 - a1 to the range of 0 to 2 pi
     a2 = a1+ M_PI + std::remainder(a2 - a1 - M_PI, 2. * M_PI);
 
-    QPointF center = {toScreenX(cp.x), toScreenY(cp.y)};
+    QPointF center = {double(toScreenX(cp.x)), double(toScreenY(cp.y))};
 
     if (std::abs(std::remainder(a2 - a1, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
     {
@@ -528,8 +528,6 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         path.lineTo(p1.x, p1.y);
         setClipping(true);
         setClipPath(path);
-    } else {
-
     }
     QTransform t0 = transform();
     QTransform t1;
