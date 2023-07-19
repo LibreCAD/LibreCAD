@@ -1837,88 +1837,26 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 //    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
 //    std::cout<<*this<<std::endl;
-	if (!(painter && view)) return;
+    if (painter == nullptr || view == nullptr)
+        return;
 
     //visible in graphic view
-	if(!isVisibleInWindow(view)) return;
-    double ra(getMajorRadius()*view->getFactor().x);
-    double rb(getRatio()*ra);
+    if(!isVisibleInWindow(view))
+        return;
+
+    double ra = getMajorRadius()*view->getFactor().x;
+    double rb = getRatio()*ra;
 	if(std::min(ra, rb) < RS_TOLERANCE) {//ellipse too small
         painter->drawLine(view->toGui(minV),view->toGui(maxV));
         return;
     }
 
-    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
-
-    double mAngle=getAngle();
-    RS_Vector cp(view->toGui(getCenter()));
-	if (!drawAsSelected && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
-        painter->drawEllipse(cp,
-                             ra, rb,
-                             mAngle,
-                             getAngle1(), getAngle2(),
-                             isReversed());
-        return;
-    }
-
-    // Pattern:
-	const RS_LineTypePattern* pat = nullptr;
-	if (drawAsSelected) {
-		pat = &RS_LineTypePattern::patternSelected;
-	}
-	else {
-		pat = view->getPattern(getPen().getLineType());
-	}
-
-	if (!pat) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern for Ellipse");
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    double a1(RS_Math::correctAngle(getAngle1()));
-    double a2(RS_Math::correctAngle(getAngle2()));
-    if (isReversed()) std::swap(a1,a2);
-	if(a2 <a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-    painter->setPen(pen);
-	if(pat->num <= 0){
-		RS_DEBUG->print(RS_Debug::D_WARNING,"Invalid pattern when drawing ellipse");
-		painter->drawEllipse(cp, ra, rb, mAngle, a1, a2, false);
-		return;
-	}
-
-	std::vector<double> ds(pat->num, 0.);
-
-    double dpmm=painter->getDpmm();
-	for (size_t i = 0; i < pat->num; i++) {
-        ds[i]= dpmm * pat->pattern[i]; //pattern length
-        if(std::abs(ds[i]) < 1.)
-            ds[i] = std::copysign(1., ds[i]);
-	}
-
-    double curA(a1);
-    bool notDone(true);
-
-	//draw patterned ellipse
-	for (size_t i=0; notDone; i = (i + 1) % pat->num) {
-        double nextA = curA + std::abs(ds[i])/
-                                  RS_Vector(ra*std::sin(curA), rb*std::cos(curA)).magnitude();
-		if (nextA > a2){
-			nextA = a2;
-			notDone = false;
-        }
-		if (ds[i] > 0.)
-			painter->drawEllipse(cp, ra, rb, mAngle, curA, nextA, false);
-
-        curA=nextA;
-    }
-
+    painter->drawEllipse(view->toGui(getCenter()),
+                         ra, rb,
+                         getAngle(),
+                         getAngle1(), getAngle2(),
+                         isReversed());
 }
-
 
 
 /**

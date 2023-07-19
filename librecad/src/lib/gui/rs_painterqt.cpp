@@ -27,13 +27,27 @@
 #include<cmath>
 #include<memory>
 
-#include "rs_painterqt.h"
-#include "rs_math.h"
-#include "rs_graphicview.h"
 #include "dxf_format.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
+#include "rs_linetypepattern.h"
+#include "rs_math.h"
+#include "rs_painterqt.h"
 
 namespace {
+// Convert fro LibreCAD line style pattern to QPen Dash Pattern.
+// QPen dash pattern by default is in the unit of pixel
+QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth)
+{
+    double width = 1./std::max(1., screenWidth);
+    const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
+    QVector<qreal> dashPattern;
+    std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern),
+                   [width](double d) {
+        return width * std::abs(d);});
+    return dashPattern;
+}
+
 /**
  * Wrapper for Qt
  * convert RS2::LineType to Qt::PenStyle
@@ -42,45 +56,96 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
 	switch (t) {
 	case RS2::NoPen:
 		return Qt::NoPen;
+    default:
 	case RS2::SolidLine:
+    case RS2::LineByLayer:
+    case RS2::LineByBlock:
 		return Qt::SolidLine;
 	case RS2::DotLine:
 	case RS2::DotLineTiny:
 	case RS2::DotLine2:
 	case RS2::DotLineX2:
-		return Qt::DotLine;
-	case RS2::DashLine:
-	case RS2::DashLineTiny:
-	case RS2::DashLine2:
-	case RS2::DashLineX2:
-		return Qt::DashLine;
-	case RS2::DashDotLine:
-	case RS2::DashDotLineTiny:
-	case RS2::DashDotLine2:
-	case RS2::DashDotLineX2:
-		return Qt::DashDotLine;
-	case RS2::DivideLine:
-	case RS2::DivideLineTiny:
-	case RS2::DivideLine2:
-	case RS2::DivideLineX2:
-		return Qt::DashDotDotLine;
-	case RS2::CenterLine:
-	case RS2::CenterLineTiny:
-	case RS2::CenterLine2:
-	case RS2::CenterLineX2:
-		return Qt::DashDotLine;
-	case RS2::BorderLine:
-	case RS2::BorderLineTiny:
-	case RS2::BorderLine2:
-	case RS2::BorderLineX2:
-		return Qt::DashDotLine;
-	case RS2::LineByLayer:
-	case RS2::LineByBlock:
-	default:
-		return Qt::SolidLine;
-	}
-	return Qt::SolidLine;
+    case RS2::DashLine:
+    case RS2::DashLineTiny:
+    case RS2::DashLine2:
+    case RS2::DashLineX2:
+    case RS2::DashDotLine:
+    case RS2::DashDotLineTiny:
+    case RS2::DashDotLine2:
+    case RS2::DashDotLineX2:
+    case RS2::DivideLine:
+    case RS2::DivideLineTiny:
+    case RS2::DivideLine2:
+    case RS2::DivideLineX2:
+    case RS2::CenterLine:
+    case RS2::CenterLineTiny:
+    case RS2::CenterLine2:
+    case RS2::CenterLineX2:
+    case RS2::BorderLine:
+    case RS2::BorderLineTiny:
+    case RS2::BorderLine2:
+    case RS2::BorderLineX2:
+        return Qt::CustomDashLine;
+    }
 }
+
+// For a given elliptic arc, create a QPainterPath to allow clipping the complete QR
+// to the desirable
+QPainterPath createClippingPath(const RS_Vector& origin,
+                                double radius1, double radius2,
+                                double angle, double angle1, double angle2)
+{
+
+    // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
+    // Create a QPainterPath to clip the complete ellipse to draw an arc.
+    // Get a point on ellipse by the elliptic angle
+    auto getP = [&origin, &radius1, &radius2, &angle](double a) {
+        auto point = origin + RS_Vector{a}.scale({radius1, -radius2});
+        point.rotate(origin, -angle);
+        return point;
+    };
+    RS_Vector p1 = getP(angle1);
+    RS_Vector p2 = getP(angle2);
+    // Find a direction vector along the two end points of the arc
+    auto dp = p2 - p1;
+    dp /= dp.magnitude();
+    // Find a point on the arc
+    RS_Vector p3 = getP((angle1+angle2)*0.5) - p1;
+    // Find a direction normal to the line p1-p2
+    p3 -= dp * p3.dotP(dp);
+    // the QPainterPath should
+    double ellipseSize = 2.0 * std::max(radius1, radius2);
+    p3 *= ellipseSize/p3.magnitude();
+
+    // makes the path larger
+    dp *= ellipseSize;
+    p1 -= dp;
+    p2 += dp;
+
+    QPainterPath path;
+    path.moveTo(p1.x, p1.y);
+    path.lineTo(p1.x+p3.x, p1.y+p3.y);
+    path.lineTo(p2.x+p3.x, p2.y+p3.y);
+    path.lineTo(p2.x, p2.y);
+    path.lineTo(p1.x, p1.y);
+    return path;
+}
+}
+
+RS_PainterQt::PenDashPattern::PenDashPattern(const QPen& pen, RS2::LineType t, double screenWidth) :
+    m_pen{const_cast<QPen&>(pen)}
+    , m_lineType{t}
+{
+m_pen.setDashPattern(rsToQDashPattern(t, std::max(screenWidth, 1.)));
+}
+
+RS_PainterQt::PenDashPattern::~PenDashPattern()
+{
+    try{
+        m_pen.setDashPattern(rsToQDashPattern(m_lineType, 1.));
+    } catch (...) {
+        RS_LOG(D_CRITICAL)<<__func__<<"(): failed in restoring QPen";
+    }
 }
 
 /**
@@ -88,7 +153,7 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
  */
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_PainterQt::RS_PainterQt( QPaintDevice* pd)
-        : QPainter(pd), RS_Painter() {}
+        : QPainter{pd} {}
 
 void RS_PainterQt::moveTo(int x, int y) {
         //RVT_PORT changed from QPainter::moveTo(x,y);
@@ -208,6 +273,7 @@ void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
  */
 void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
 {
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
 }
@@ -354,6 +420,9 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
     }
     else
     {
+        // RAII style: setting and restoring QPen dashPattern
+        PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
+
         if (reversed)
             std::swap(a1, a2);
 
@@ -471,6 +540,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
  */
 void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius)
 {
+    // RAII style: setting and restoring QPen dashPattern
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
     QPainter::drawEllipse(QPointF(cp.x, cp.y), radius, radius);
 }
 
@@ -484,9 +555,40 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
                                double angle,
                                double a1, double a2,
                                bool reversed) {
-    QPolygon pa;
-    createEllipse(pa, cp, radius1, radius2, angle, a1, a2, reversed);
-    drawPolyline(pa);
+
+    if (reversed)
+        std::swap(a1, a2);
+    // shift a1 to the range of 0 to 2 pi, by a difference of multiplier of 2 pi
+    a1 = M_PI + std::remainder(a1 - M_PI, 2. * M_PI);
+    // shift a2 - a1 to the range of 0 to 2 pi
+    a2 = a1+ M_PI + std::remainder(a2 - a1 - M_PI, 2. * M_PI);
+
+    QPointF center = {double(toScreenX(cp.x)), double(toScreenY(cp.y))};
+
+    if (std::abs(std::remainder(a2 - a1, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
+    {
+        // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
+        // Create a QPainterPath to clip the complete ellipse to draw an arc.
+        QPainterPath path = createClippingPath({toScreenX(cp.x), toScreenY(cp.y)}
+                                               , radius1, radius2, angle, a1, a2);
+        setClipping(true);
+        setClipPath(path);
+    }
+
+    // RAII style: setting and restoring QPen dashPattern
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
+    // Save the current transform
+    QTransform t0 = transform();
+    // The transform to align the
+    QTransform t1;
+    t1.translate(center.x(), center.y());
+    t1.rotate(-angle*180./M_PI);
+    t1.translate(-center.x(), -center.y());
+    setTransform(t1, false);
+    QPainter::drawEllipse(center, radius1, radius2);
+    setTransform(t0, false);
+
+    setClipping(false);
 }
 
 
@@ -625,9 +727,13 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
     QColor pColor { lpen.getColor() };
 
     pColor.setAlphaF(pen.getAlpha());
-
     QPen p(pColor, RS_Math::round(lpen.getScreenWidth()),
-		   rsToQtLineType(lpen.getLineType()));
+           rsToQtLineType(lpen.getLineType()));
+    if (p.style() == Qt::CustomDashLine)
+    {
+        auto dashPattern = rsToQDashPattern(lpen.getLineType(), lpen.getScreenWidth());
+        p.setDashPattern(dashPattern);
+    }
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);

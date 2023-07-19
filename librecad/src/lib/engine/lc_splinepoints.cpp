@@ -1902,45 +1902,13 @@ void LC_SplinePoints::drawSimple(RS_Painter* painter, RS_GraphicView* view)
 
 void LC_SplinePoints::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 {
-	if(painter == nullptr || view == nullptr)
-	{
-		return;
-	}
+    if(painter == nullptr || view == nullptr)
+        return;
 
-    RS_Pen penSaved = painter->getPen();
+    update();
+    patternOffset -= getLength();
 
-	// Pattern:
-	const RS_LineTypePattern* pat = nullptr;
-	if(isSelected() && !(view->isPrinting() || view->isPrintPreview()))
-	{
-//		styleFactor=1.;
-        pat = &RS_LineTypePattern::patternSelected;
-	}
-	else
-	{
-		pat = view->getPattern(getPen().getLineType());
-	}
-
-	bool bDrawPattern = false;
-	if(pat) bDrawPattern = pat->num > 0;
-	else
-	{
-		RS_DEBUG->print(RS_Debug::D_WARNING,
-			"RS_Line::draw: Invalid line pattern");
-	}
-
-	update();
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-
-	if(bDrawPattern)
-		drawPattern(painter, view, patternOffset, pat);
-	else drawSimple(painter, view);
-    painter->setPen(penSaved);
-
+    drawSimple(painter, view);
 }
 
 double LC_SplinePoints::getLength() const

@@ -35,6 +35,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -42,6 +43,7 @@
 #include "rs_preview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 
 struct RS_ActionDefault::Points {
@@ -67,6 +69,21 @@ constexpr double hoverToleranceFactor2 = 10.0;
 
 constexpr unsigned minHighLightDuplicates = 4;
 constexpr unsigned maxHighLightDuplicates = 20;
+
+// find pen screen width
+double getScreenWidth( RS_Pen& pen, RS_Graphic& graphic, RS_GraphicView& view)
+{
+    double w = pen.getWidth();
+    double wf = 1.0;
+    double uf = RS_Units::convert(1.0, RS2::Millimeter, graphic.getUnit());
+
+    if ((view.isPrinting() || view.isPrintPreview()) &&
+            graphic.getPaperScale() > RS_TOLERANCE )
+        wf = graphic.getVariableDouble("$DIMSCALE", 1.0);
+
+    double screenWidth = view.toGuiDX(w / 100.0 * uf * wf);
+    return screenWidth;
+}
 }
 
 /**
@@ -534,28 +551,27 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
-    double originalWidth = std::max(duplicatedPen.getScreenWidth(), 1.);
+    double screenWidth = getScreenWidth(duplicatedPen, *graphic, *graphicView);
+    double originalWidth = std::max(screenWidth, 1.);
 
-    const double zoomFactor = 200.;
-
-    double duplicatedPen_width = zoomFactor * duplicatedPen.getScreenWidth() / 100.0;
-    duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
+    double duplicatedPen_width = 2. * std::max(originalWidth, 1.0);
+    const double zoomFactor = 2.;
+    duplicatedPen_width = zoomFactor * screenWidth;
 
     pPoints->nHighLightDuplicates = int(std::min(2.0 * zoomFactor, double(maxHighLightDuplicates)));
-
     pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
     {
-        DEBUG_HEADER
+        DEBUG_HEADER;
 
-                std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
-                          << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
-                          << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
-                          << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
+        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
+                  << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
+                  << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
+                  << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
     }
 
-    const double maxWidth = 9.*std::max(duplicatedPen.getScreenWidth(), 1.);
+    const double maxWidth = 2.*std::max(duplicatedPen_width, 1.);
     for (unsigned i = 0; i < pPoints->nHighLightDuplicates; i++)
     {
         RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
@@ -566,7 +582,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
 
-        const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
+        const double gradientFactor { 1.25 * (double) (i + 1) / pPoints->nHighLightDuplicates };
 
         double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
         effectWidth = std::max(2., effectWidth);
@@ -579,7 +595,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
         duplicatedPen.setAlpha(exponentialFactor);
 
         duplicatedEntity->setPen(duplicatedPen);
-        if (effectWidth > maxWidth)
+        if (effectWidth >= maxWidth)
             break;
     }
 
