@@ -37,7 +37,7 @@
 namespace {
 QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth)
 {
-    double width = std::max(1., screenWidth);
+    double width = 1./std::max(1., screenWidth);
     const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
     QVector<qreal> dashPattern;
     std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern),
@@ -88,12 +88,28 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
 }
 }
 
+RS_PainterQt::PenDashPattern::PenDashPattern(const QPen& pen, RS2::LineType t, double screenWidth) :
+    m_pen{const_cast<QPen&>(pen)}
+    , m_lineType{t}
+{
+m_pen.setDashPattern(rsToQDashPattern(t, std::max(screenWidth, 1.)));
+}
+
+RS_PainterQt::PenDashPattern::~PenDashPattern()
+{
+    try{
+        m_pen.setDashPattern(rsToQDashPattern(m_lineType, 1.));
+    } catch (...) {
+        RS_LOG(D_CRITICAL)<<__func__<<"(): failed in restoring QPen";
+    }
+}
+
 /**
  * Constructor.
  */
 // RVT_PORT changed from RS_PainterQt::RS_PainterQt( const QPaintDevice* pd)
 RS_PainterQt::RS_PainterQt( QPaintDevice* pd)
-        : QPainter(pd), RS_Painter() {}
+        : QPainter{pd} {}
 
 void RS_PainterQt::moveTo(int x, int y) {
         //RVT_PORT changed from QPainter::moveTo(x,y);
@@ -213,6 +229,7 @@ void RS_PainterQt::drawPoint(const RS_Vector& p, int pdmode, int pdsize) {
  */
 void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
 {
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
     QPainter::drawLine(toScreenX(p1.x), toScreenY(p1.y),
                        toScreenX(p2.x), toScreenY(p2.y));
 }
@@ -359,6 +376,9 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
     }
     else
     {
+        // RAII style: setting and restoring QPen dashPattern
+        PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
+
         if (reversed)
             std::swap(a1, a2);
 
@@ -476,6 +496,8 @@ void RS_PainterQt::drawArcMac(const RS_Vector& cp, double radius,
  */
 void RS_PainterQt::drawCircle(const RS_Vector& cp, double radius)
 {
+    // RAII style: setting and restoring QPen dashPattern
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
     QPainter::drawEllipse(QPointF(cp.x, cp.y), radius, radius);
 }
 
@@ -529,6 +551,8 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         setClipping(true);
         setClipPath(path);
     }
+    // RAII style: setting and restoring QPen dashPattern
+    PenDashPattern patternGuard{pen(), lpen.getLineType(), lpen.getScreenWidth()};
     QTransform t0 = transform();
     QTransform t1;
     t1.translate(center.x(), center.y());

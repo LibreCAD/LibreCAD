@@ -446,7 +446,7 @@ bool RS_Line::offset(const RS_Vector& coord, const double& distance) {
 bool RS_Line::isTangent(const RS_CircleData&  circleData) const{
     double d;
 	getNearestPointOnEntity(circleData.center,false,&d);
-	if(fabs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
+    if(std::abs(d-circleData.radius)<20.*RS_TOLERANCE) return true;
     return false;
 }
 
@@ -589,12 +589,12 @@ void RS_Line::stretch(const RS_Vector& firstCorner,
 
 
 void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
-    if(  fabs(data.startpoint.x -ref.x)<1.0e-4 &&
-         fabs(data.startpoint.y -ref.y)<1.0e-4 ) {
+    if(  std::abs(data.startpoint.x -ref.x)<1.0e-4 &&
+         std::abs(data.startpoint.y -ref.y)<1.0e-4 ) {
         moveStartpoint(data.startpoint+offset);
     }
-    if(  fabs(data.endpoint.x -ref.x)<1.0e-4 &&
-         fabs(data.endpoint.y -ref.y)<1.0e-4 ) {
+    if(  std::abs(data.endpoint.x -ref.x)<1.0e-4 &&
+         std::abs(data.endpoint.y -ref.y)<1.0e-4 ) {
         moveEndpoint(data.endpoint+offset);
     }
 }
@@ -743,8 +743,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		//fixme, styleFactor support needed
 
 		ds[i]=dpmm*pat->pattern[i];
-		if (fabs(ds[i]) < 1. ) ds[i] = copysign(1., ds[i]);
-		dp[i] = direction*fabs(ds[i]);
+        if (std::abs(ds[i]) < 1. ) ds[i] = copysign(1., ds[i]);
+        dp[i] = direction*std::abs(ds[i]);
 	}
 	double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
     //    double total= patternOffset-patternSegmentLength;
@@ -753,7 +753,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 	for (int j=0; total<length; j=(j+1)%pat->num) {
 
         // line segment (otherwise space segment)
-		double const t2=total+fabs(ds[j]);
+        double const t2=total+std::abs(ds[j]);
 		RS_Vector const& p3=curP+dp[j];
         if (ds[j]>0.0 && t2 > 0.0) {
             // drop the whole pattern segment line, for ds[i]<0:

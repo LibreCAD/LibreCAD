@@ -556,8 +556,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     }
 
     const double maxWidth = 9.*std::max(duplicatedPen.getScreenWidth(), 1.);
-    //for (unsigned i = 0; i < pPoints->nHighLightDuplicates; i++)
-    unsigned i = 0;
+    for (unsigned i = 0; i < pPoints->nHighLightDuplicates; i++)
     {
         RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
 
@@ -572,7 +571,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
         double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
         effectWidth = std::max(2., effectWidth);
 
-        //duplicatedPen.setScreenWidth(effectWidth);
+        duplicatedPen.setScreenWidth(effectWidth);
 
         /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
         const double exponentialFactor { std::exp(-8.0 * gradientFactor) };
@@ -580,6 +579,8 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
         duplicatedPen.setAlpha(exponentialFactor);
 
         duplicatedEntity->setPen(duplicatedPen);
+        if (effectWidth >= maxWidth)
+            break;
     }
 
     graphicView->redraw(RS2::RedrawOverlay);

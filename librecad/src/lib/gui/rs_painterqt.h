@@ -108,6 +108,15 @@ public:
     void setClipRect(int x, int y, int w, int h) override;
     void resetClipping() override;
 
+    //RAII style QPen dash pattern
+    struct PenDashPattern {
+        PenDashPattern(const QPen& pen, RS2::LineType t, double screenWidth);
+        ~PenDashPattern();
+        QPen& m_pen;
+        RS2::LineType m_lineType;
+    };
+
+
 protected:
     RS_Pen lpen;
     long rememberX = 0; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
