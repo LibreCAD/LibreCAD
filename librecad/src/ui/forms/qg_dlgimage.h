@@ -44,6 +44,7 @@ public slots:
     virtual void changeScale();
     virtual void changeDPI();
     virtual void updateImage();
+    virtual void setImageFile();
 
 
 protected slots:

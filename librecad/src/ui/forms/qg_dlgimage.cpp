@@ -22,8 +22,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include <QFileInfo>
+
 #include "qg_dlgimage.h"
 
+#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_image.h"
 #include "rs_math.h"
@@ -120,9 +123,12 @@ void QG_DlgImage::updateImage() {
     double angle = RS_Math::deg2rad( leAngle->text().toDouble() );
     image->scale(image->getInsertionPoint(), RS_Vector(scale, scale));
     image->rotate(image->getInsertionPoint(), angle - orgAngle);
+    if (QFileInfo(lePath->text()).isFile())
+        image->setFile(lePath->text());
 
     image->update();
 }
 
-
-
+void QG_DlgImage::setImageFile() {
+    lePath->setText(RS_DIALOGFACTORY->requestImageOpenDialog());
+}

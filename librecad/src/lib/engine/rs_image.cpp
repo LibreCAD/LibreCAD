@@ -163,7 +163,7 @@ void RS_Image::update() {
     QString filePathName = imageRelativePathName(data.file);
 
     //QImage image = QImage(data.file);
-    img.reset(new QImage(filePathName));
+    img = std::make_unique<QImage>(filePathName);
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.
