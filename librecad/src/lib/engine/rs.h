@@ -698,7 +698,8 @@ namespace RS2 {
         BorderLine2 = 24,     /**< dash, dash, dot small. */
         BorderLineX2 = 25,    /**< dash, dash, dot large. */
 
-        LineTypeUnchanged=26      /**< Line type defined by block not entity */
+        LineTypeUnchanged=26,      /**< Line type defined by block not entity */
+        LineSelected=27      /**< Line type for selected */
     };
 
     /**

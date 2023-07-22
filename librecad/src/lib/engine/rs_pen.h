@@ -132,6 +132,17 @@ public:
         return !(*this==p);
     }
 
+    // accessor/mutator for dash pattern offset
+    void setDashOffset(double offset)
+    {
+        m_dashOffset = offset;
+    }
+
+    double dashOffset() const
+    {
+        return m_dashOffset;
+    }
+
     friend std::ostream& operator << (std::ostream& os, const RS_Pen& p);
 
 
@@ -141,6 +152,7 @@ protected:
     double screenWidth = 0.;
     RS_Color color{};
     double alpha = 1.;
+    double m_dashOffset = 0.;
 };
 
 #endif

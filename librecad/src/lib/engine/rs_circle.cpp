@@ -758,17 +758,13 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
-
-void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-//    // draw circle as a 2 pi arc
-//    RS_Arc arc(getParent(), RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
-//    arc.setSelected(isSelected());
-//    arc.setPen(getPen());
-//    arc.draw(painter,view,patternOffset);
+void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+    if (!isVisibleInWindow(view))
+        return;
 
     painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
+    patternOffset -= getLength() * view->getFactor().x;
 }
-
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 	if(ref.distanceTo(data.center)<1.0e-4){

@@ -70,6 +70,7 @@ public:
                              double angle,
                              double a1, double a2,
                              bool reversed) override;
+    void drawSplinePoints(const LC_SplinePointsData& splineData) override;
     void drawImg(QImage& img, const RS_Vector& pos,
                                const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
     void drawTextH(int x1, int y1, int x2, int y2,
@@ -107,6 +108,8 @@ public:
 
     void setClipRect(int x, int y, int w, int h) override;
     void resetClipping() override;
+
+    RS_Pen& getRsPen();
 
 protected:
     RS_Pen lpen;

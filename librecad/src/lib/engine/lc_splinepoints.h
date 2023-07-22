@@ -73,6 +73,11 @@ private:
 	void drawPattern(RS_Painter* painter, RS_GraphicView* view,
         double& patternOffset, const RS_LineTypePattern* pat);
 	void drawSimple(RS_Painter* painter, RS_GraphicView* view);
+    /**
+     * @brief mapDataToGui - map Data to Gui space for painter, which is ignorant about the view
+     * @return LC_SplinePointsData - in the Gui coordinates
+     */
+    LC_SplinePointsData mapDataToGui(RS_GraphicView& view) const;
 	void UpdateControlPoints();
 	void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
 	int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;

@@ -996,7 +996,7 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
  *	Returns:			void
  */
 
-void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
+void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& patternOffset)
 {
 	if (draftMode) {
         painter->setPen(RS_Pen(m_colorData->foreground,
@@ -1006,10 +1006,8 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 	// Getting pen from entity (or layer)
 	RS_Pen pen = e->getPen(true);
 
-	int w = pen.getWidth();
-	if (w<0) {
-		w = 0;
-	}
+    // Avoid negative widths
+    int w = std::max(static_cast<int>(pen.getWidth()), 0);
 
 	// - Scale pen width.
 	// - By default pen width is not scaled on print and print preview.
@@ -1064,6 +1062,8 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
         pen.setColor(m_colorData->foreground);
     }
 
+    pen.setDashOffset(patternOffset);
+
 	if (!isPrinting() && !isPrintPreview())
 	{
 		// this entity is selected:
@@ -1076,9 +1076,13 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
         if (e->isHighlighted()) {
             // Glowing effects on mouse hovering: use the "selected" color
             if (e->getParent() == overlayEntities[RS2::OverlayEffects])
+            {
+                // for glowing effects on mouse hovering, draw solid lines
                 pen.setColor(m_colorData->selectedColor);
-            else
+                pen.setLineType(RS2::SolidLine);
+            } else {
                 pen.setColor(m_colorData->highlightedColor);
+            }
         }
 	}
 
@@ -1151,7 +1155,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     }
 
 	// set pen (color):
-	setPenForEntity(painter, e );
+    setPenForEntity(painter, e, patternOffset);
 
 	//RS_DEBUG->print("draw plain");
 	if (isDraftMode()) {
@@ -1541,7 +1545,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter)
     {
         foreach (auto e, ec->getEntityList())
         {
-            setPenForEntity(painter, e);
+            setPenForEntity(painter, e, patternOffset);
             e->draw(painter, this, patternOffset);
         }
     }

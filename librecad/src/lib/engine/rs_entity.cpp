@@ -318,7 +318,7 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
                                 double tolerance) const {
 	double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
-    return (dist<=fabs(tolerance));
+    return dist <= std::abs(tolerance);
 }
 
 double RS_Entity::getDistanceToPoint(const RS_Vector& coord,

@@ -35,6 +35,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -42,6 +43,7 @@
 #include "rs_preview.h"
 #include "rs_selection.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 
 struct RS_ActionDefault::Points {
@@ -60,13 +62,28 @@ namespace {
 constexpr double SnapAngle_Tolerance = 15.;
 
 // Glowing effects on Mouse hover
-constexpr double minimumHoverTolerance =  1.0;
+constexpr double minimumHoverTolerance =  3.0;
 
 constexpr double hoverToleranceFactor1 =  1.0;
 constexpr double hoverToleranceFactor2 = 10.0;
 
 constexpr unsigned minHighLightDuplicates = 4;
 constexpr unsigned maxHighLightDuplicates = 20;
+
+// find pen screen width
+double getScreenWidth( RS_Pen& pen, RS_Graphic& graphic, RS_GraphicView& view)
+{
+    double w = pen.getWidth();
+    double wf = 1.0;
+    double uf = RS_Units::convert(1.0, RS2::Millimeter, graphic.getUnit());
+
+    if ((view.isPrinting() || view.isPrintPreview()) &&
+            graphic.getPaperScale() > RS_TOLERANCE )
+        wf = graphic.getVariableDouble("$DIMSCALE", 1.0);
+
+    double screenWidth = view.toGuiDX(w / 100.0 * uf * wf);
+    return screenWidth;
+}
 }
 
 /**
@@ -534,28 +551,28 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     pPoints->highlightedEntity = entity;
 
     RS_Pen duplicatedPen = pPoints->highlightedEntity->getPen(true);
-    double originalWidth = std::max(duplicatedPen.getScreenWidth(), 1.);
+    const double savedWidth = std::abs(duplicatedPen.getWidth());
+    double screenWidth = getScreenWidth(duplicatedPen, *graphic, *graphicView);
+    double originalWidth = std::max(screenWidth, 1.);
 
-    const double zoomFactor = 200.;
+    const double zoomFactor = 2.;
+    double duplicatedPenWidth = zoomFactor * screenWidth;
 
-    double duplicatedPen_width = zoomFactor * duplicatedPen.getScreenWidth() / 100.0;
-    duplicatedPen_width = std::max(duplicatedPen_width, 1.0);
-
+    // limit number of duplicates for glowing effects
     pPoints->nHighLightDuplicates = int(std::min(2.0 * zoomFactor, double(maxHighLightDuplicates)));
-
     pPoints->nHighLightDuplicates = std::max(pPoints->nHighLightDuplicates, minHighLightDuplicates);
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL)
     {
-        DEBUG_HEADER
+        DEBUG_HEADER;
 
-                std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
-                          << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
-                          << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
-                          << " Duplicated pen adjusted width (mm) = " << duplicatedPen_width << std::endl << std::endl;
+        std::cout << " Graphic view factor                = " << graphicView->getFactor() << std::endl
+                  << " Number of duplicate entities       = " << pPoints->nHighLightDuplicates << std::endl
+                  << " Duplicated pen width (mm)          = " << pPoints->highlightedEntity->getPen(true).getWidth() / 100.0 << std::endl
+                  << " Duplicated pen adjusted width (mm) = " << duplicatedPenWidth << std::endl << std::endl;
     }
 
-    const double maxWidth = 9.*std::max(duplicatedPen.getScreenWidth(), 1.);
+    const double maxWidth = 2.*std::max(duplicatedPenWidth, 1.);
     for (unsigned i = 0; i < pPoints->nHighLightDuplicates; i++)
     {
         RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
@@ -566,12 +583,14 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
         /* Note that the coefficients '1.25', '8.0', and '25.0' have been chosen experimentally. */
 
-        const double gradientFactor { 1.25 * (double) (i + 1) / (double) pPoints->nHighLightDuplicates };
+        const double gradientFactor { 1.25 * (double) (i + 1) / pPoints->nHighLightDuplicates };
 
-        double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPen_width * gradientFactor);
-        effectWidth = std::max(2., effectWidth);
+        double effectWidth = std::min(2.0 * originalWidth, 25.0 * duplicatedPenWidth * gradientFactor);
+        // The factor of line width to use
+        effectWidth =  (savedWidth < RS_TOLERANCE) ? 2. : effectWidth/savedWidth;
+        int lineWidthEum = int(0.5 + 100. * effectWidth*duplicatedPen.getWidth());
 
-        duplicatedPen.setScreenWidth(effectWidth);
+        duplicatedPen.setWidth(static_cast<RS2::LineWidth>(lineWidthEum));
 
         /* The minus sign in the -8.0 value denotes that the function is exponentially 'decreasing'. */
         const double exponentialFactor { std::exp(-8.0 * gradientFactor) };
@@ -579,7 +598,7 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
         duplicatedPen.setAlpha(exponentialFactor);
 
         duplicatedEntity->setPen(duplicatedPen);
-        if (effectWidth > maxWidth)
+        if (effectWidth >= maxWidth)
             break;
     }
 
