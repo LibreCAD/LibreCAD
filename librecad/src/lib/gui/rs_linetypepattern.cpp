@@ -83,6 +83,7 @@ RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& patt
 const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType)
 {
     static std::map<RS2::LineType, const RS_LineTypePattern*> lineTypeToPattern = {
+            {RS2::NoPen, &patternSolidLine},
             {RS2::SolidLine, &patternSolidLine},
             {RS2::DotLine, &patternDotLine},
             {RS2::DotLineTiny, &patternDotLineTiny},

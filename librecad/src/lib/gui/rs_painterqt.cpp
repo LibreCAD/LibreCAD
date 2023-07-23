@@ -145,13 +145,16 @@ public:
         QPen qPen = painter.pen();
         qPen.setStyle(styleToUse);
         qPen.setColor(rsPen.getColor());
-        if (styleToUse != Qt::SolidLine)
+        if (rsPen.getLineType() == RS2::NoPen)
+        {
+            qPen.setCosmetic(true);
+        } else if (styleToUse != Qt::SolidLine)
         {
             double screenWidth = rsPen.getScreenWidth();
             QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(), std::max(screenWidth, 1.));
             qPen.setDashPattern(std::move(dashPattern));
+            qPen.setDashOffset(rsPen.dashOffset());
         }
-        qPen.setDashOffset(rsPen.dashOffset());
         painter.QPainter::setPen(qPen);
     }
 
