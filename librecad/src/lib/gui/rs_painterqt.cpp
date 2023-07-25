@@ -147,8 +147,8 @@ public:
         qPen.setColor(rsPen.getColor());
         if (rsPen.getLineType() == RS2::NoPen)
         {
-            qPen.setCosmetic(true);
-        } else if (styleToUse != Qt::SolidLine)
+            qPen.setStyle(Qt::NoPen);
+        } else if (styleToUse == Qt::CustomDashLine)
         {
             double screenWidth = rsPen.getScreenWidth();
             QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(), std::max(screenWidth, 1.));
