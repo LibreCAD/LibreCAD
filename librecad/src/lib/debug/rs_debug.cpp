@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -74,7 +74,7 @@ RS_Debug::RS_Debug() {
 }
 
 RS_Debug::~RS_Debug() {
-    if (stream != nullptr and stream != stderr)
+    if (stream != nullptr && stream != stderr)
         fclose(stream);
 }
 
