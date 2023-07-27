@@ -113,11 +113,11 @@ class RS_ActionDrawPolyline : public RS_PreviewActionInterface
 
     protected:
 
-        double Radius;
-        double Angle;
-        SegmentMode Mode;
-        int m_Reversed;
-        bool calculatedSegment;
+        double m_radius = 0.;
+        double m_angle = 0.;
+        SegmentMode m_mode{};
+        int m_reversed{};
+        bool m_calculatedSegment = false;
 
         struct Points;
         std::unique_ptr<Points> pPoints;
@@ -125,16 +125,16 @@ class RS_ActionDrawPolyline : public RS_PreviewActionInterface
 
     private:
 
-        mu::Parser *muParserObject;
+        std::unique_ptr<mu::Parser> m_muParserObject;
 
         QString polyEquation;
 
-        bool    shiftX;
-        bool    equationSettingOn;
-        bool    startPointSettingOn;
-        bool    endPointSettingOn;
-        bool    stepSizeSettingOn;
-        double  startPoint;
-        double  endPoint;
+        bool    shiftX = false;
+        bool    equationSettingOn = false;
+        bool    startPointSettingOn = false;
+        bool    endPointSettingOn = false;
+        bool    stepSizeSettingOn = false;
+        double  startPoint = false;
+        double  endPoint = false;
 };
 
