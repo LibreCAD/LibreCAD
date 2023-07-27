@@ -464,11 +464,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             cRef.replace(tr("x"), someRandomNumber);
 
-            m_muParserObject = std::make_unique<mu::Parser>();
-            m_muParserObject->DefineConst(_T("e"),  M_E);
-            m_muParserObject->DefineConst(_T("pi"), M_PI);
-
-            m_muParserObject->SetExpr({cRef.toStdString().c_str()});
+            setParserExpression(cRef);
 
             const double parseTestValue = m_muParserObject->Eval();
 
@@ -502,7 +498,8 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            m_muParserObject->SetExpr({c.remove("@").toStdString().c_str()});
+            setParserExpression(c.remove("@"));
+
             startPoint = m_muParserObject->Eval();
 
             if (isRelative) startPoint += graphicView->getRelativeZero().x;
@@ -533,7 +530,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            m_muParserObject->SetExpr({c.remove("@").toStdString().c_str()});
+            setParserExpression(c.remove("@"));
             endPoint = m_muParserObject->Eval();
 
             if (isRelative) endPoint += graphicView->getRelativeZero().x;
@@ -562,7 +559,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         try
         {
-            m_muParserObject->SetExpr({c.toStdString().c_str()});
+            setParserExpression(c);
             numberOfPolylines = (int) trunc(m_muParserObject->Eval());
 
             if (numberOfPolylines <= 0) throw -1;
@@ -584,8 +581,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         double equation_xTerm = 0.0;
         m_muParserObject->DefineVar(_T("x"), &equation_xTerm);
-
-        m_muParserObject->SetExpr({polyEquation.toStdString().c_str()});
+        setParserExpression(polyEquation);
 
         double plotting_xTerm = startPoint;
 
@@ -780,5 +776,22 @@ void RS_ActionDrawPolyline::undo() {
                "Not enough entities defined yet."));
     }
 }
+
+void RS_ActionDrawPolyline::setParserExpression(QString expression)
+{
+    if (m_muParserObject == nullptr)
+    {
+        m_muParserObject = std::make_unique<mu::Parser>();
+        m_muParserObject->DefineConst(_T("e"),  M_E);
+        m_muParserObject->DefineConst(_T("pi"), M_PI);
+    }
+
+#ifdef _UNICODE
+        m_muParserObject->SetExpr(derationalized.toStdWString());
+#else
+        m_muParserObject->SetExpr(derationalized.toStdString());
+#endi
+}
+
 
 // EOF
