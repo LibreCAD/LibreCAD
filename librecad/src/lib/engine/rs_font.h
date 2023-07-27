@@ -116,7 +116,7 @@ public:
 private:
     void readCXF(QString path);
     void readLFF(QString path);
-    RS_Block* generateLffFont(const QString& ch);
+    RS_Block* generateLffFont(const QString& key);
 
 private:
     //raw lff font file list, not processed into blocks yet
