@@ -460,13 +460,13 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             cRef.replace(tr("x"), someRandomNumber);
 
-            muParserObject = std::make_unique<mu::Parser>();
-            muParserObject->DefineConst(_T("e"),  M_E);
-            muParserObject->DefineConst(_T("pi"), M_PI);
+            m_muParserObject = std::make_unique<mu::Parser>();
+            m_muParserObject->DefineConst(_T("e"),  M_E);
+            m_muParserObject->DefineConst(_T("pi"), M_PI);
 
-            muParserObject->SetExpr(cRef.toStdString());
+            m_muParserObject->SetExpr(cRef.toStdString());
 
-            const double parseTestValue = muParserObject->Eval();
+            const double parseTestValue = m_muParserObject->Eval();
 
             if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
 
@@ -498,8 +498,8 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            muParserObject->SetExpr(c.remove("@").toStdString());
-            startPoint = muParserObject->Eval();
+            m_muParserObject->SetExpr(c.remove("@").toStdString());
+            startPoint = m_muParserObject->Eval();
 
             if (isRelative) startPoint += graphicView->getRelativeZero().x;
 
@@ -529,8 +529,8 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            muParserObject->SetExpr(c.remove("@").toStdString());
-            endPoint = muParserObject->Eval();
+            m_muParserObject->SetExpr(c.remove("@").toStdString());
+            endPoint = m_muParserObject->Eval();
 
             if (isRelative) endPoint += graphicView->getRelativeZero().x;
 
@@ -558,8 +558,8 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         try
         {
-            muParserObject->SetExpr(c.toStdString());
-            numberOfPolylines = (int) trunc(muParserObject->Eval());
+            m_muParserObject->SetExpr(c.toStdString());
+            numberOfPolylines = (int) trunc(m_muParserObject->Eval());
 
             if (numberOfPolylines <= 0) throw -1;
         }
@@ -579,9 +579,9 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
         const int direction = (stepSize < 0) ? -1 : 1;
 
         double equation_xTerm = 0.0;
-        muParserObject->DefineVar(_T("x"), &equation_xTerm);
+        m_muParserObject->DefineVar(_T("x"), &equation_xTerm);
 
-        muParserObject->SetExpr(polyEquation.toStdString());
+        m_muParserObject->SetExpr(polyEquation.toStdString());
 
         double plotting_xTerm = startPoint;
 
@@ -591,7 +591,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         if (getStatus() == SetStartpoint)
         {
-            pPoints->point = RS_Vector(startPoint, muParserObject->Eval());
+            pPoints->point = RS_Vector(startPoint, m_muParserObject->Eval());
             pPoints->history.clear();
             pPoints->history.append(pPoints->point);
             pPoints->bHistory.clear();
@@ -607,7 +607,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
         while (((direction ==  1) && (plotting_xTerm <= endPoint)) 
         ||     ((direction == -1) && (plotting_xTerm >= endPoint)))
         {
-            pPoints->point = RS_Vector(plotting_xTerm, muParserObject->Eval());
+            pPoints->point = RS_Vector(plotting_xTerm, m_muParserObject->Eval());
             pPoints->history.append(pPoints->point);
 
             if (pPoints->polyline == nullptr)
@@ -638,7 +638,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
         plotting_xTerm -= stepSize;
         equation_xTerm -= stepSize;
 
-        graphicView->moveRelativeZero(RS_Vector(plotting_xTerm, muParserObject->Eval()));
+        graphicView->moveRelativeZero(RS_Vector(plotting_xTerm, m_muParserObject->Eval()));
 
         updateMouseButtonHints();
 
