@@ -214,11 +214,11 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
 double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 
     double b(0.);
-    bool suc;
+    bool suc = false;
 	RS_Arc arc{};
 	RS_Line line{};
 	double direction;
-    RS_AtomicEntity* lastentity;
+    RS_AtomicEntity* lastentity = nullptr;
     m_calculatedSegment=false;
 
     switch (Mode){
@@ -235,7 +235,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 			double const direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
 			double const delta=direction2-direction;
             if( std::abs(std::remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
-                b=std::tan(delta/2);
+                b = std::tan(delta/2);
 				suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
                 if (suc)
 					pPoints->arc_data = arc.getData();
@@ -248,7 +248,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //                delta>M_PI-RS_TOLERANCE_ANGLE))
 //                b=0;
 //            else{
-//                b=tan((direction2-direction)/2);
+//                b = std::tan((direction2-direction)/2);
 //                suc = arc.createFrom2PBulge(point,mouse,b);
 //                if (suc)
 //                    arc_data = arc.getData();
@@ -266,7 +266,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
             direction = RS_Math::correctAngle(
                 lastentity->getDirection2()+M_PI);
 			suc = arc.createFrom2PDirectionRadius(pPoints->point, mouse,
-                direction,Radius);
+                direction,m_radius);
             if (suc){
 				pPoints->arc_data = arc.getData();
                 b=arc.getBulge();
@@ -281,13 +281,13 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //          b=0;
         break;
 /*     case TanAng:
-        b = std::tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;
      case TanRadAng:
-        b = std::tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;*/
     case Ang:
-		b = std::tan(m_reversed*Angle*M_PI/720.0);
+		b = std::tan(m_reversed*m_angle*M_PI/720.0);
 		suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
         if (suc)
 			pPoints->arc_data = arc.getData();
@@ -297,10 +297,10 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
     default:
         break;
         /*     case RadAngEndp:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b=tan(Reversed*m_angle*M_PI/720.0);
         break;
      case RadAngCenp:
-        b=tan(Reversed*Angle*M_PI/720.0);*/
+        b=tan(Reversed*m_angle*M_PI/720.0);*/
     }
     return b;
 }
