@@ -221,7 +221,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
     RS_AtomicEntity* lastentity = nullptr;
     m_calculatedSegment=false;
 
-    switch (Mode){
+    switch (m_mode){
 //     case Line:
 //        b=0.0;
 //        break;
@@ -438,7 +438,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
             break;
     }
 
-    if ((Mode == Line) && (checkCommand("equation", c)))
+    if ((m_mode == Line) && (checkCommand("equation", c)))
     {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter an equation, f(x)"));
         equationSettingOn = true;
@@ -734,8 +734,8 @@ void RS_ActionDrawPolyline::close() {
 		//data.endpoint = start;
 		//trigger();
 		if (pPoints->polyline) {
-			if (Mode==TanRad)
-				Mode=Line;
+			if (m_mode==TanRad)
+				m_mode=Line;
 			RS_CoordinateEvent e(pPoints->polyline->getStartpoint());
 			coordinateEvent(&e);
 			pPoints->polyline->setClosed(true);
