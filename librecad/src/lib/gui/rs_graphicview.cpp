@@ -1038,7 +1038,7 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& p
 				}
 
 			}
-		}
+        }
 
         if (pen.getAlpha() == 1.0) pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
 	}
@@ -1478,7 +1478,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	grid->updatePointArray();
     RS_Pen pen(m_colorData->metaGridColor,
 			   RS2::Width00,
-			   RS2::DotLine);
+               RS2::DotLineTiny);
 	painter->setPen(pen);
 
 	RS_Vector dv=grid->getMetaGridWidth().scale(factor);

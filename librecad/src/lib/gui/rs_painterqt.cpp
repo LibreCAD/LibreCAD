@@ -38,14 +38,31 @@
 namespace {
 // Convert fro LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
-QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth)
+QVector<qreal> rsToQDashPattern(RS2::LineType t, RS2::LineWidth lineWidth, double screenWidth, double dpmm)
 {
-    double width = 1./std::max(1., screenWidth);
+    // expected width in mm = wMm
+    // dash size in mm = d
+    // line width in pixels : max(wMm * dpmm, 1)
+    // dash size in pixels: d*dpmm
+    //  dpmm/max(wMm*dpmm, 1), dpmm/screenWidth
+    // Pattern dashes are in units of the line width d*dpmm /( lineWidth in pixels)
+    // the scaling factor is :
+    // dpmm/lineWidthPixels
+    // When lineWidth in pixels is smaller than 1, 1 is used
+    // d * dpmm
+
+    dpmm = std::max(dpmm, 1e-6);
+    double lineWidthMm = 0.01 * std::max(static_cast<int>(lineWidth), 1);
+    double k = std::max(dpmm / std::max(screenWidth, 1.), 1. / lineWidthMm);
+
+    // The minimum scaling for 1-pixel width
+    k = std::min(k, dpmm);
     const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
     QVector<qreal> dashPattern;
-    std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern),
-                   [width](double d) {
-        return width * std::abs(d);});
+    std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](double d) {
+        return std::max(k * std::abs(d), 1.);
+    });
+    dashPattern.resize(dashPattern.size() - dashPattern.size() % 2);
     return dashPattern;
 }
 
@@ -150,10 +167,16 @@ public:
             qPen.setStyle(Qt::NoPen);
         } else if (styleToUse == Qt::CustomDashLine)
         {
-            double screenWidth = rsPen.getScreenWidth();
-            QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(), std::max(screenWidth, 1.));
-            qPen.setDashPattern(std::move(dashPattern));
-            qPen.setDashOffset(rsPen.dashOffset());
+            QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(),
+                                                          rsPen.getWidth(),
+                                                          rsPen.getScreenWidth(),
+                                                          painter.getDpmm());
+            if (!dashPattern.isEmpty()) {
+                qPen.setDashPattern(std::move(dashPattern));
+                qPen.setDashOffset(rsPen.dashOffset());
+            } else {
+                qPen.setStyle(Qt::SolidLine);
+            }
         }
         painter.QPainter::setPen(qPen);
     }
@@ -757,8 +780,14 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
            rsToQtLineType(lpen.getLineType()));
     if (p.style() == Qt::CustomDashLine)
     {
-        auto dashPattern = rsToQDashPattern(lpen.getLineType(), lpen.getScreenWidth());
-        p.setDashPattern(dashPattern);
+        auto dashPattern = rsToQDashPattern(lpen.getLineType(),
+                                            lpen.getWidth(),
+                                            lpen.getScreenWidth(),
+                                            getDpmm());
+        if (!dashPattern.isEmpty())
+            p.setDashPattern(dashPattern);
+        else
+            p.setStyle(Qt::SolidLine);
     }
     p.setJoinStyle(Qt::RoundJoin);
     p.setCapStyle(Qt::RoundCap);
