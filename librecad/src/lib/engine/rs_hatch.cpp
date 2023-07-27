@@ -1004,7 +1004,7 @@ RS_Vector getInternalPoint(RS_EntityContainer* loop)
         // find an internal point
         return (results.at(0) + results.at(1)) * 0.5;
     }
-    RS_LOG(D_ERROR)<<__func__<<"(): failed to find a line passing the loop: "<<loop->getId();
+    LC_LOG(RS_Debug::D_ERROR)<<__func__<<"(): failed to find a line passing the loop: "<<loop->getId();
     return RS_Vector{false};
 }
 

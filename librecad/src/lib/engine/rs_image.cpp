@@ -168,7 +168,7 @@ void RS_Image::update() {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.
     } else {
-        RS_LOG(D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file<<"("<<filePathName<<")";
+        LC_LOG(RS_Debug::D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file<<"("<<filePathName<<")";
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
