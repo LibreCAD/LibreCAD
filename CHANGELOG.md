@@ -6,6 +6,8 @@
 - importshp plugin, see issue #1481
 
 ### Fixed
+- LFF fonts issues
+- fixed segfault when opening malformed LFF files
 - CVE-2023-30259, OOB reads in importshp plugin (#1481)
 
 ## [2.2.0] - 2022-12-17
