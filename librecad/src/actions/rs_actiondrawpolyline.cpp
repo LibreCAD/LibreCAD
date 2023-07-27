@@ -83,7 +83,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
-		,m_Reversed(1)
+		,m_reversed(1)
 		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawPolyline;
@@ -281,13 +281,13 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //          b=0;
         break;
 /*     case TanAng:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*Angle*M_PI/720.0);
         break;
      case TanRadAng:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*Angle*M_PI/720.0);
         break;*/
     case Ang:
-		b=tan(m_Reversed*Angle*M_PI/720.0);
+		b = std::tan(m_reversed*Angle*M_PI/720.0);
 		suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
         if (suc)
 			pPoints->arc_data = arc.getData();
