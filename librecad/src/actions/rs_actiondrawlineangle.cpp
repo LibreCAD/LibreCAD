@@ -71,7 +71,7 @@ RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         bool fixedAngle, RS2::ActionType actionType)
         :RS_PreviewActionInterface("Draw lines with given angle",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 
     this->actionType=actionType;
@@ -123,7 +123,7 @@ void RS_ActionDrawLineAngle::trigger() {
 
 	graphicView->moveRelativeZero(pPoints->data.startpoint);
         graphicView->redraw(RS2::RedrawDrawing);
-    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %d",
+    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
                     line->getId());
 }
 

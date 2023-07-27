@@ -23,30 +23,32 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include "rs_actiondimdiametric.h"
+
 #include<cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimdiametric.h"
-#include "rs_dimdiametric.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "rs_line.h"
+#include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dimdiametric.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 
 RS_ActionDimDiametric::RS_ActionDimDiametric(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_ActionDimension("Draw Diametric Dimensions",
-					container, graphicView)
-		, pos(new RS_Vector{})
+                    container, graphicView)
+        , pos{std::make_unique<RS_Vector>()}
+        , edata{std::make_unique<RS_DimDiametricData>()}
 {
 	actionType=RS2::ActionDimDiametric;
     reset();
@@ -57,9 +59,7 @@ RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 void RS_ActionDimDiametric::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimDiametricData(RS_Vector{false},
-								0.0)
-				);
+    *edata = {{}, 0.0};
 	entity = nullptr;
 	*pos = {};
     RS_DIALOGFACTORY->requestOptions(this, true, true);

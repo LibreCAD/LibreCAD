@@ -41,17 +41,17 @@ struct RS_ImageData {
 	RS_ImageData() = default;
 
     RS_ImageData(int handle,
-                                const RS_Vector& insertionPoint,
-                const RS_Vector& uVector,
-                                const RS_Vector& vVector,
-                                const RS_Vector& size,
-                                const QString& file,
-                                int brightness,
-                                int contrast,
-								int fade);
+                 const RS_Vector& insertionPoint,
+                 const RS_Vector& uVector,
+                 const RS_Vector& vVector,
+                 const RS_Vector& size,
+                 const QString& file,
+                 int brightness,
+                 int contrast,
+                 int fade);
 
 	/** Handle of image definition. */
-	int handle;
+    int handle = 0;
 	/** Insertion point. */
 	RS_Vector insertionPoint;
 	/** u vector. Points along visual bottom of image. */
@@ -63,11 +63,11 @@ struct RS_ImageData {
 	/** Path to image file. */
 	QString file;
 	/** Brightness (0..100, default: 50). */
-	int brightness;
+    int brightness = 0;
 	/** Contrast (0..100, default: 50). */
-	int contrast;
+    int contrast = 0;
 	/** Fade (0..100, default: 0). */
-	int fade;
+    int fade = 0;
 };
 
 
@@ -113,70 +113,70 @@ public:
     /** Update image data ONLY for plugins. */
     void updateData(RS_Vector size, RS_Vector Uv, RS_Vector Vv);
 
-        /** @return File name of the image. */
-        QString getFile() const {
-                return data.file;
-        }
+    /** @return File name of the image. */
+    QString getFile() const {
+            return data.file;
+    }
 
-        /** Sets the file name of the image.  */
-        void setFile(const QString& file) {
-                data.file = file;
-        }
+    /** Sets the file name of the image.  */
+    void setFile(const QString& file) {
+            data.file = file;
+    }
 
-        /** @return u Vector. Points along bottom, 1 pixel long. */
-        RS_Vector getUVector() const {
-                return data.uVector;
-        }
-        /** @return v Vector. Points along left, 1 pixel long. */
-        RS_Vector getVVector() const {
-                return data.vVector;
-        }
-        /** @return Width of image in pixels. */
-        int getWidth() const {
-                return (int)data.size.x;
-        }
-        /** @return Height of image in pixels. */
-        int getHeight() const {
-                return (int)data.size.y;
-        }
-        /** @return Brightness. */
-        int getBrightness() const {
-                return data.brightness;
-        }
-        /** @return Contrast. */
-        int getContrast() const {
-                return data.contrast;
-        }
-        /** @return Fade. */
-        int getFade() const {
-                return data.fade;
-        }
-        /** @return Image definition handle. */
-        int getHandle() const {
-                return data.handle;
-        }
-        /** Sets the image definition handle. */
-        void setHandle(int h) {
-                data.handle = h;
-        }
+    /** @return u Vector. Points along bottom, 1 pixel long. */
+    RS_Vector getUVector() const {
+            return data.uVector;
+    }
+    /** @return v Vector. Points along left, 1 pixel long. */
+    RS_Vector getVVector() const {
+            return data.vVector;
+    }
+    /** @return Width of image in pixels. */
+    int getWidth() const {
+            return (int)data.size.x;
+    }
+    /** @return Height of image in pixels. */
+    int getHeight() const {
+            return (int)data.size.y;
+    }
+    /** @return Brightness. */
+    int getBrightness() const {
+            return data.brightness;
+    }
+    /** @return Contrast. */
+    int getContrast() const {
+            return data.contrast;
+    }
+    /** @return Fade. */
+    int getFade() const {
+            return data.fade;
+    }
+    /** @return Image definition handle. */
+    int getHandle() const {
+            return data.handle;
+    }
+    /** Sets the image definition handle. */
+    void setHandle(int h) {
+            data.handle = h;
+    }
 
 
-        /** @return The four corners. **/
-        RS_VectorSolutions getCorners() const;
+    /** @return The four corners. **/
+    RS_VectorSolutions getCorners() const;
 
-        /**
-         * @return image with in graphic units.
-         */
-        double getImageWidth() {
-                return data.size.x * data.uVector.magnitude();
-        }
+    /**
+     * @return image with in graphic units.
+     */
+    double getImageWidth() {
+            return data.size.x * data.uVector.magnitude();
+    }
 
-        /**
-         * @return image height in graphic units.
-         */
-        double getImageHeight() {
-                return data.size.y * data.vVector.magnitude();
-        }
+    /**
+     * @return image height in graphic units.
+     */
+    double getImageHeight() {
+            return data.size.y * data.vVector.magnitude();
+    }
 
 
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,

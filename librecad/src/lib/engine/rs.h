@@ -46,13 +46,12 @@
  *
  * @author Andrew Mustun
  */
-class RS2 {
-public:
+namespace RS2 {
 
     /**
      * Flags.
      */
-    enum Flags {
+    enum Flags : unsigned {
         /** Flag for Undoables. */
         FlagUndone      = 1<<0,
         /** Entity Visibility. */
@@ -117,10 +116,17 @@ public:
         FormatJWC            /**< JWC Format type */
     };
 
-    /**
-     * Entity types returned by the rtti() method
-     */
-    enum EntityType {
+    /*
+        Entity types returned by the rtti() method.
+
+        NOTE: Dated 2 January, 2022, by Melwyn Francis Carlo:
+              If adding newer 'EntityDim's to the EntityType enumeration, 
+              then make sure that it is added between 'EntityDimAligned' and 
+              'EntityDimLeader'. If you do not wish to do so, then update the 
+              'RS_ActionDefault::highlightHoveredEntities' function at the 
+              line starting 'if ((entity->rtti() >= EntityDimAligned) ...'.
+    */
+    enum EntityType : unsigned {
         EntityUnknown,      /**< Unknown */
         EntityContainer,    /**< Container */
         EntityBlock,        /**< Block (Group definition) */
@@ -144,6 +150,7 @@ public:
         EntityDimRadial,    /**< Radial Dimension */
         EntityDimDiametric, /**< Diametric Dimension */
         EntityDimAngular,   /**< Angular Dimension */
+        EntityDimArc,       /**< Arc Dimension */
         EntityDimLeader,    /**< Leader Dimension */
         EntityHatch,        /**< Hatch */
         EntityImage,        /**< Image */
@@ -295,6 +302,7 @@ public:
         ActionDimRadial,
         ActionDimDiametric,
         ActionDimAngular,
+        ActionDimArc,
         ActionDimLeader,
 
         ActionModifyAttributes,
@@ -366,6 +374,8 @@ public:
         ActionLayersToggleLock,
         ActionLayersTogglePrint,
         ActionLayersToggleConstruction,
+        ActionLayersExportSelected,
+        ActionLayersExportVisible,
 
         ActionBlocksDefreezeAll,
         ActionBlocksFreezeAll,
@@ -608,8 +618,10 @@ public:
     /**
      * Axis specification for zooming actions.
      */
-    enum Axis {
-        OnlyX, OnlyY, Both
+    enum Axis : unsigned short {
+        OnlyX = 0,
+        OnlyY,
+        Both
     };
 
     /**
@@ -650,7 +662,7 @@ public:
     /**
      * Enum of line styles:
      */
-    enum LineType {
+    enum LineType : short{
         LineByBlock = -2,      /**< Line type defined by block not entity */
         LineByLayer = -1,     /**< Line type defined by layer not entity */
         NoPen = 0,            /**< No line at all. */
@@ -686,7 +698,8 @@ public:
         BorderLine2 = 24,     /**< dash, dash, dot small. */
         BorderLineX2 = 25,    /**< dash, dash, dot large. */
 
-        LineTypeUnchanged=26      /**< Line type defined by block not entity */
+        LineTypeUnchanged=26,      /**< Line type defined by block not entity */
+        LineSelected=27      /**< Line type for selected */
     };
 
     /**
@@ -793,7 +806,7 @@ public:
     /**
      * Wrapper for Qt
      */
-	static LineWidth intToLineWidth(int w);
+    LineWidth intToLineWidth(int w);
 
     /**
      * Enum of cursor types.
@@ -918,9 +931,10 @@ public:
          * Items that can be put on a overlay, the items are rendered in this order. Best is to leave snapper as last so
          * it always shows up
          */
-        enum OverlayGraphics {
-                ActionPreviewEntity, // Action Entities
-                Snapper // Snapper
+        enum OverlayGraphics: short {
+                ActionPreviewEntity = 0, // Action Entities
+                Snapper = 1, // Snapper
+                OverlayEffects =2 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen

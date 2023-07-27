@@ -2,6 +2,7 @@
 #define LC_PRINTING_H
 
 #include <QPrinter>
+
 #include "rs.h"
 
 namespace LC_Printing

@@ -36,11 +36,10 @@ class RS_BlockList;
  * Holds the data that defines an insert.
  */
 struct RS_InsertData {
-	/**
-		 * Default constructor.
-		 */
-	RS_InsertData() = default;
-	~RS_InsertData() = default;
+    /**
+     * Default constructor.
+     */
+    RS_InsertData() = default;
 
 	/**
 	 * @param name The name of the block used as an identifier.
@@ -65,17 +64,17 @@ struct RS_InsertData {
 				  RS_Vector scaleFactor,
 				  double angle,
 				  int cols, int rows, RS_Vector spacing,
-				  RS_BlockList* blockSource = NULL,
+                  RS_BlockList* blockSource = nullptr,
 				  RS2::UpdateMode updateMode = RS2::Update);
 
 	QString name;
 	RS_Vector insertionPoint;
 	RS_Vector scaleFactor;
-	double angle;
-	int cols, rows;
+    double angle=0.;
+    int cols=0, rows=0;
 	RS_Vector spacing;
-	RS_BlockList* blockSource;
-	RS2::UpdateMode updateMode;
+    RS_BlockList* blockSource = nullptr;
+    RS2::UpdateMode updateMode{};
 };
 
 std::ostream& operator << (std::ostream& os, const RS_InsertData& d);
@@ -93,40 +92,39 @@ class RS_Insert : public RS_EntityContainer {
 public:
     RS_Insert(RS_EntityContainer* parent,
               const RS_InsertData& d);
-	virtual ~RS_Insert() = default;
 
-	virtual RS_Entity* clone() const;
+    RS_Entity* clone() const override;
 
     /** @return RS2::EntityInsert */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const  override{
         return RS2::EntityInsert;
     }
 
     /** @return Copy of data that defines the insert. **/
-    RS_InsertData getData() const {
+    RS_InsertData getData() const{
         return data;
     }
 
         /**
          * Reimplementation of reparent. Invalidates block cache pointer.
          */
-    virtual void reparent(RS_EntityContainer* parent) {
+    void reparent(RS_EntityContainer* parent)  override{
                 RS_Entity::reparent(parent);
-                block = NULL;
+                block = nullptr;
     }
 
 	RS_Block* getBlockForInsert() const;
 
-    virtual void update();
+    void update() override;
 
     QString getName() const {
         return data.name;
     }
 
-        void setName(const QString& newName) {
-                data.name = newName;
-                update();
-        }
+    void setName(const QString& newName) {
+        data.name = newName;
+        update();
+    }
 
     RS_Vector getInsertionPoint() const {
         return data.insertionPoint;
@@ -139,9 +137,9 @@ public:
         return data.scaleFactor;
     }
 
-        void setScale(const RS_Vector& s) {
-                data.scaleFactor = s;
-        }
+    void setScale(const RS_Vector& s) {
+        data.scaleFactor = s;
+    }
 
     double getAngle() const {
         return data.angle;
@@ -153,44 +151,49 @@ public:
     int getCols() const {
         return data.cols;
     }
-        void setCols(int c) {
-                data.cols = c;
-        }
+
+    void setCols(int c) {
+        data.cols = c;
+    }
 
     int getRows() const {
         return data.rows;
     }
-        void setRows(int r) {
-                data.rows = r;
-        }
+
+    void setRows(int r) {
+        data.rows = r;
+    }
 
     RS_Vector getSpacing() const {
         return data.spacing;
     }
-        void setSpacing(const RS_Vector& s) {
-                data.spacing = s;
-        }
 
-	virtual bool isVisible() const;
-
-	virtual RS_VectorSolutions getRefPoints() const;
-    virtual RS_Vector getMiddlePoint(void) const{
-            return RS_Vector(false);
+    void setSpacing(const RS_Vector& s) {
+        data.spacing = s;
     }
-    virtual RS_Vector getNearestRef(const RS_Vector& coord,
-									 double* dist = nullptr) const;
 
-    virtual void move(const RS_Vector& offset);
-    virtual void rotate(const RS_Vector& center, const double& angle);
-    virtual void rotate(const RS_Vector& center, const RS_Vector& angleVector);
-    virtual void scale(const RS_Vector& center, const RS_Vector& factor);
-    virtual void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    bool isVisible() const override;
+
+    RS_VectorSolutions getRefPoints() const override;
+    RS_Vector getMiddlePoint(void) const  override{
+        return {};
+    }
+    RS_Vector getNearestRef(const RS_Vector& coord,
+                            double* dist = nullptr) const override;
+
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
     friend std::ostream& operator << (std::ostream& os, const RS_Insert& i);
 
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 protected:
-    RS_InsertData data;
-	mutable RS_Block* block;
+    RS_InsertData data{};
+    mutable RS_Block* block = nullptr;
 };
 
 

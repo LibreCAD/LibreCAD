@@ -52,12 +52,12 @@
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Plugin de criação de engrenagens</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Engrenagens</translation>
     </message>
 </context>
 <context>
@@ -252,22 +252,22 @@
     <message>
         <location filename="../list/list.cpp" line="190"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Escala</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="193"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Rotação</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="199"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Colunas/Linhas</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Coluna/Esp. entre linhas</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="210"/>
@@ -751,47 +751,47 @@
     <message>
         <location filename="../gear/gear.cpp" line="66"/>
         <source>Draw a gear</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenhar uma engrenagem</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="71"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Número de dentes</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="79"/>
         <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Passo circular</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="87"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ângulo de pressão (graus)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="95"/>
         <source>Addendum</source>
-        <translation type="unfinished"></translation>
+        <translation>Addendum</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="103"/>
         <source>Dedendum</source>
-        <translation type="unfinished"></translation>
+        <translation>Dedendum</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="111"/>
         <source>Type</source>
-        <translation type="unfinished"></translation>
+        <translation>Tipo</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Spur</source>
-        <translation type="unfinished"></translation>
+        <translation>Espora</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Ring</source>
-        <translation type="unfinished"></translation>
+        <translation>Anel</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
@@ -885,7 +885,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Escala</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
@@ -905,7 +905,7 @@
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
         <source>Scale Factor is empty or invalid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Fator de Escala está vazio ou inválido</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="132"/>
@@ -945,7 +945,7 @@
         <location filename="../plotequation/plot.cpp" line="21"/>
         <location filename="../plotequation/plot.cpp" line="28"/>
         <source>Plot plugin</source>
-        <translation>Plugin gráfico</translation>
+        <translation>Plot. de gráficos</translation>
     </message>
     <message>
         <source>Draw</source>
@@ -957,7 +957,7 @@
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="15"/>
         <source>Plot equation</source>
-        <translation>Equação gráfica</translation>
+        <translation>Plotar equação</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="18"/>
@@ -966,7 +966,7 @@ If you don&apos;t want to use the parametric form, just leave out &quot;Equation
 You can use pi when you need the value of pi (i.e. (3*pi)).
 Use t or x in your equation as a variable/parameter.
 </source>
-        <translation>Este plugin permite plotar equações matemáticas.Se não desejar usar o modo paramétrico, apenas não use &quot;Equação2&quot;.Você pode usar pi quando precisar do valor de pi (i.e.(3*pi)).Use t ou x na sua equação como uma variável/parâmetro.</translation>
+        <translation>Este plugin permite plotar equações matemáticas. Se não desejar usar o modo paramétrico, apenas não use &quot;Equação2&quot;.Você pode usar pi quando precisar do valor de pi (i.e.(3*pi)). Use t ou x na sua equação como uma variável/parâmetro.</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="22"/>
@@ -981,7 +981,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="26"/>
         <source>start value:</source>
-        <translation>valor inicial:</translation>
+        <translation>alor inicial:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="27"/>

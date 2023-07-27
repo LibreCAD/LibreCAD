@@ -521,7 +521,17 @@ cout << "MojiData1:" << m_strFontName << endl;
 			}else
 			{
 				ifstr >> wd;
+
+        jwDWORD skip = 0;
+				if (wd > 511) {
+					skip = wd - 511;
+					wd = 511;
+				}
+
 				ifstr.read(buf,wd);
+
+				if (skip != 0) ifstr.ignore(skip);
+
 				buf[wd] = '\0';
 				m_strFontName = buf;
 #ifdef	DATA_DUMP
@@ -539,7 +549,17 @@ cout << "MojiData3:"  << m_string << endl;
 			}else
 			{
 				ifstr >> wd;
+
+        jwDWORD skip = 0;
+				if (wd > 511) {
+					skip = wd - 511;
+					wd = 511;
+				}
+
 				ifstr.read(buf,wd);
+
+				if (skip != 0) ifstr.ignore(skip);
+
 				buf[wd] = '\0';
 				m_string = buf;
 #ifdef	DATA_DUMP
@@ -793,7 +813,17 @@ cout << "MojiData1:"  << m_strName << endl;
 		}else
 		{
 			ifstr >> wd;
+
+			jwDWORD skip = 0;
+			if (wd > 511) {
+				skip = wd - 511;
+				wd = 511;
+			}
+
 			ifstr.read(buf,wd);
+
+			if (skip != 0) ifstr.ignore(skip);
+
 			buf[wd] = '\0';
 			m_strName = buf;
 #ifdef	DATA_DUMP

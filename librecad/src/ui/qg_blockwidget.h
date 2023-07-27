@@ -50,20 +50,19 @@ public:
         LAST
     };
     QG_BlockModel(QObject * parent = 0);
-	~QG_BlockModel() = default;
-    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const {
+    Qt::ItemFlags flags ( const QModelIndex & /*index*/ ) const override {
             return Qt::ItemIsSelectable|Qt::ItemIsEnabled;}
-    int columnCount(const QModelIndex &/*parent*/) const {return LAST;}
-    int rowCount ( const QModelIndex & parent = QModelIndex() ) const;
-    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const;
-    QModelIndex parent ( const QModelIndex & index ) const;
-    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const;
+    int columnCount(const QModelIndex &/*parent*/) const  override {return LAST;}
+    int rowCount ( const QModelIndex & parent = QModelIndex() ) const override;
+    QVariant data ( const QModelIndex & index, int role = Qt::DisplayRole ) const override;
+    QModelIndex parent ( const QModelIndex & index ) const override;
+    QModelIndex index ( int row, int column, const QModelIndex & parent = QModelIndex() ) const override;
     void setBlockList(RS_BlockList* bl);
     RS_Block *getBlock( int row );
     QModelIndex getIndex (RS_Block * blk);
 
-    RS_Block* getActiveBlock() { return activeBlock; };
-    void setActiveBlock(RS_Block* b) { activeBlock = b; };
+    RS_Block* getActiveBlock() const { return activeBlock; }
+    void setActiveBlock(RS_Block* b) { activeBlock = b; }
 
 private:
     QList<RS_Block*> listBlock;
@@ -82,8 +81,7 @@ class QG_BlockWidget: public QWidget, public RS_BlockListListener {
 
 public:
     QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
-                   const char* name=0, Qt::WindowFlags f = 0);
-    ~QG_BlockWidget();
+                   const char* name=nullptr, Qt::WindowFlags f = {});
 
     void setBlockList(RS_BlockList* blockList) {
         this->blockList = blockList;
@@ -97,20 +95,20 @@ public:
     void update();
     void activateBlock(RS_Block* block);
 
-    virtual void blockAdded(RS_Block*);
+    void blockAdded(RS_Block*) override;
 
-    virtual void blockEdited(RS_Block*) {
+    void blockEdited(RS_Block*) override{
         update();
     }
-    virtual void blockRemoved(RS_Block*) {
+    void blockRemoved(RS_Block*) override{
         update();
     }
-    virtual void blockToggled(RS_Block*) {
-		update();
-	}
+    void blockToggled(RS_Block*) override{
+        update();
+    }
 
 signals:
-	void escape();
+    void escape();
 
 public slots:
     void slotActivated(QModelIndex blockIdx);
@@ -120,17 +118,17 @@ public slots:
     void slotUpdateBlockList();
 
 protected:
-    void contextMenuEvent(QContextMenuEvent *e);
-	virtual void keyPressEvent(QKeyEvent* e);
+    void contextMenuEvent(QContextMenuEvent *e) override;
+    void keyPressEvent(QKeyEvent* e) override;
 
 private:
-    RS_BlockList* blockList;
-    QLineEdit* matchBlockName;
-    QTableView* blockView;
-    QG_BlockModel *blockModel;
-    RS_Block* lastBlock;
+    RS_BlockList* blockList = nullptr;
+    QLineEdit* matchBlockName = nullptr;
+    QTableView* blockView = nullptr;
+    QG_BlockModel *blockModel = nullptr;
+    RS_Block* lastBlock = nullptr;
 
-    QG_ActionHandler* actionHandler;
+    QG_ActionHandler* actionHandler = nullptr;
 
     void restoreSelections();
 };

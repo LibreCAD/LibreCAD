@@ -29,6 +29,7 @@
 #define RS_DEBUG_H
 
 #include <iosfwd>
+#include <QTextStream>
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
@@ -39,6 +40,7 @@ class QString;
 #define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
 void debugHeader(char const* file, char const* func, int line);
 #define RS_DEBUG RS_Debug::instance()
+#define RS_LOG(level) RS_Debug::Log(RS_Debug::level)
 #define RS_DEBUG_VERBOSE DEBUG_HEADER \
 	RS_Debug::instance()
 
@@ -73,19 +75,37 @@ public:
 
 private:
     RS_Debug();
-	RS_Debug(const RS_Debug&)=delete;
+    RS_Debug(const RS_Debug&)=delete;
 	RS_Debug& operator = (const RS_Debug&)=delete;
 	RS_Debug(RS_Debug&&)=delete;
 	RS_Debug& operator = (RS_Debug&&)=delete;
 
 public:
+    ~RS_Debug();
     static RS_Debug* instance();
 
-    static void deleteInstance();
+    /**
+     * @brief The LogStream class: Support for debugging info by the c++ stream style
+     *
+     * Example:
+     *      RS_LOG(D_ERROR)<<"Log text";
+     */
+    class LogStream : public QTextStream {
+    public:
+        LogStream(RS_DebugLevel level = D_DEBUGGING);
+        ~LogStream() override;
+    private:
+        QString m_string;
+        RS_DebugLevel m_debugLevel;
+    };
+
+    static LogStream Log(RS_DebugLevel level = D_DEBUGGING);
+
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
     void print(RS_DebugLevel level, const char* format ...);
     void print(const char* format ...);
+    void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
     void setStream(FILE* s) {
@@ -93,10 +113,8 @@ public:
     }
 
 private:
-    static RS_Debug* uniqueInstance;
-
-    RS_DebugLevel debugLevel;
-    FILE* stream;
+    RS_DebugLevel debugLevel = D_INFORMATIONAL;
+    FILE* stream = nullptr;
 };
 
 #endif

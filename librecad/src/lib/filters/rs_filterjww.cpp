@@ -460,7 +460,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
                                         RS2::NoUpdate);
         RS_Insert* entity = new RS_Insert(currentContainer, d);
         setEntityAttributes(entity, attributes);
-        RS_DEBUG->print("  id: %d", entity->getId());
+        RS_DEBUG->print("  id: %lu", entity->getId());
         //entity->update();
         currentContainer->addEntity(entity);
 }
@@ -1774,7 +1774,7 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
                 return;
         }
 
-        if (s->getNumberOfControlPoints() < s->getDegree()+1) {
+        if (s->getNumberOfControlPoints() < size_t(s->getDegree())+1) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterJWW::writeSpline: "
                                                 "Discarding spline: not enough control points given.");
                 return;
@@ -1786,12 +1786,7 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
         // Number of knots (= number of control points + spline degree + 1)
         int numKnots = numCtrl + s->getDegree() + 1;
 
-        int flags;
-        if (s->isClosed()) {
-                flags = 11;
-        } else {
-                flags = 8;
-        }
+        int flags = s->isClosed() ? 11 : 8;
 
         // write spline header:
         jww.writeSpline(

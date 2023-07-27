@@ -1,0 +1,304 @@
+name: Continuous build
+on:
+  push:
+    branches:
+      - master
+      - ci_dev
+
+jobs:
+  BuildLinux:
+    runs-on: ubuntu-22.04
+    env:
+      platform_version: 22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt and dependencies
+        run: |
+          sudo apt-get -y update
+          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
+          sudo rm -rf /usr/local/lib/android
+
+      - name: Install Clang
+        run: |
+          sudo apt-get -qq install clang-15 clang-tools-15
+
+      - name: Build and analyze
+        run: |
+          export CC=g++
+          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}make release -j$(nproc)
+
+      - name: Create report repository
+        run: |
+          cd out
+          find . -mindepth 2 -type f -print -exec mv {} . \;
+          git config --global user.email "github@librecad.org"
+          git config --global user.name "GHA CI [bot]"
+          git config --global init.defaultBranch gh-pages
+          git init
+          git add .
+          git commit -m "latest analyzer report"
+
+      - name: Push changes
+        if: github.repository_owner == 'LibreCAD'
+        uses: ad-m/github-push-action@master
+        with:
+          repository: ${{ github.repository_owner }}/static-analyzer-reports
+          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
+          branch: gh-pages
+          force: true
+          directory: out
+
+      - name: Create AppImage
+        run: |
+          find unix/
+          ./CI/build-appimg.sh
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: assets
+          path: LibreCAD*.AppImage
+          retention-days: 2
+
+  BuildMacOS:
+    runs-on: macos-11
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install Qt5 and dependencies
+        run: |
+          brew install boost qt5
+          brew link qt5 --force
+
+      - name: Build and packaging
+        run: |
+          scripts/build-osx.sh
+          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: assets
+          path: LibreCAD*.dmg
+          retention-days: 2
+
+  BuildWindows:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Uninstall incorrect mingw
+        run: |
+          choco uninstall mingw --force
+          choco uninstall strawberryperl --force
+
+      - name: Install MinGW8.1 32-bit
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW32
+
+      - name: Install Qt-5.15
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win32_mingw81'
+          dir: '..'
+          install-deps: 'true'
+          cache: 'false'
+          cache-key-prefix: 'install-qt-action'
+          setup-python: 'true'
+          set-env: 'true'
+          tools-only: 'false'
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--external 7z'
+
+      - name: Install boost
+        shell: bash
+        run: |
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          7z x -o. -y boost.7z
+          mv boost_1_75_0 ../boost
+          rm boost.7z
+
+      - name: Debugging
+        if: ${{ always() }}
+        shell: cmd
+        run: |
+          set
+          echo.
+          dir c:\
+          echo.
+          dir d:\
+          echo.
+          dir d:\a
+          echo.
+          dir
+          echo.
+          dir ..
+          echo.
+          dir ..\boost
+          echo.
+          dir ..\Qt
+          echo.
+          dir ..\Qt\5.15.2\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_32\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_32\bin
+
+      - name: Build
+        run: |
+          set PATH=c:\msys64\mingw32\bin;%PATH%
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
+          echo SET:
+          set
+          pushd "${{ github.workspace }}\scripts"
+          build-windows.bat
+        shell: cmd
+
+      - name: Rename installer
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --always`.exe
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: assets
+          path: LibreCAD-Installer*.exe
+          retention-days: 2
+
+  BuildWindows64:
+    runs-on: windows-2019
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Uninstall incorrect mingw
+        run: |
+          choco uninstall mingw --force
+          choco uninstall strawberryperl --force
+
+      - name: Install MinGW8.1 64-bit
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+
+      - name: Install Qt-5.15
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_mingw81'
+          dir: '..'
+          install-deps: 'true'
+          cache: 'false'
+          cache-key-prefix: 'install-qt-action'
+          setup-python: 'true'
+          set-env: 'true'
+          tools-only: 'false'
+          aqtversion: '==3.1.*'
+          py7zrversion: '==0.20.*'
+          extra: '--external 7z'
+
+      - name: Install boost
+        shell: bash
+        run: |
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          7z x -o. -y boost.7z
+          mv boost_1_75_0 ../boost
+          rm boost.7z
+
+      - name: Debugging
+        if: ${{ always() }}
+        shell: cmd
+        run: |
+          set
+          echo.
+          dir c:\
+          echo.
+          dir d:\
+          echo.
+          dir d:\a
+          echo.
+          dir
+          echo.
+          dir ..
+          echo.
+          dir ..\boost
+          echo.
+          dir ..\Qt
+          echo.
+          dir ..\Qt\5.15.2\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\
+          echo.
+          dir ..\Qt\5.15.2\mingw81_64\bin
+
+      - name: Build
+        run: |
+          set PATH=C:\msys64\mingw64\bin;%PATH%
+          copy CI\custom-win.pri custom.pri
+          copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
+          echo SET:
+          set
+          pushd "${{ github.workspace }}\scripts"
+          build-windows.bat
+        shell: cmd
+
+      - name: Rename installer
+        run: |
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+        shell: bash
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: assets
+          path: LibreCAD-Installer*.exe
+          retention-days: 2
+
+  UpdateAssets:
+    if: github.repository_owner == 'LibreCAD'
+    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Fetch artifacts
+        uses: actions/download-artifact@v3
+
+      - name: Upload latest pre-release
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "Continuous Build"
+          files: |
+            assets/LibreCAD*.*
+            LICENSE
+
+

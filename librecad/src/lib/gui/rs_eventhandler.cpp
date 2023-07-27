@@ -32,10 +32,15 @@
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
-#include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_snapper.h"
 #include "rs_debug.h"
+
+namespace {
+    bool notFinished(const RS_ActionInterface* action) {
+        return action != nullptr && !action->isFinished();
+    }
+}
 
 /**
  * Constructor.
@@ -84,7 +89,7 @@ void RS_EventHandler::back() {
  * Go enter pressed event for current action.
  */
 void RS_EventHandler::enter() {
-    QKeyEvent e(QEvent::KeyPress, Qt::Key_Enter, 0);
+    QKeyEvent e(QEvent::KeyPress, Qt::Key_Enter, {});
     keyPressEvent(&e);
 }
 
@@ -393,12 +398,12 @@ void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
  */
 void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction");
-    if (action==NULL) {
+    if (action==nullptr) {
         return;
     }
 
     // Predecessor of the new action or NULL:
-    RS_ActionInterface* predecessor = NULL;
+    RS_ActionInterface* predecessor = nullptr;
 
     // Suspend current action:
     if(hasAction()){
@@ -439,9 +444,9 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
     action->init();
     // ## new:
-    if (action->isFinished()==false) {
+    if (!action->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
-        currentActions.last()->showOptions();
+        action->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
         action->setPredecessor(predecessor);
     }
@@ -527,12 +532,7 @@ bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
  */
 bool RS_EventHandler::hasAction()
 {
-    foreach (RS_ActionInterface* a, currentActions)
-    {
-        if(!a->isFinished())
-            return true;
-    }
-    return false;
+    return std::any_of(currentActions.begin(), currentActions.end(), notFinished);
 }
 
 

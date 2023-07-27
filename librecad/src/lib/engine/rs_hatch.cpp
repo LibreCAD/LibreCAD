@@ -26,6 +26,11 @@
 #include <iostream>
 #include <cmath>
 #include <memory>
+#include <set>
+#include <map>
+#include <random>
+#include <unordered_map>
+
 #include <QPainterPath>
 #include <QBrush>
 #include <QString>
@@ -36,8 +41,6 @@
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_graphicview.h"
-#include "rs_dialogfactory.h"
-#include "rs_infoarea.h"
 
 #include "rs_information.h"
 #include "rs_painter.h"
@@ -45,6 +48,151 @@
 #include "rs_patternlist.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+
+namespace
+{
+
+// a random angle between 0 and 2 pi
+double getRandomAngle();
+
+// find a point inside a given loop
+RS_Vector  getInternalPoint(RS_EntityContainer* loop);
+
+// Create a random ray: starting from an internal point of the loop
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
+
+// Find intersection between a line and a loop
+RS_VectorSolutions getIntersection(RS_AtomicEntity* line, const RS_EntityContainer& loop);
+
+double getSize(const RS_EntityContainer* loop) {
+    return (loop->getMax() - loop->getMin()).magnitude();
+}
+
+std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops )
+{
+    std::unordered_map<const RS_EntityContainer*, double> ret;
+    for(const std::unique_ptr<RS_EntityContainer>& loop: loops)
+        ret.emplace(loop.get(), std::abs(loop->areaLineIntegral()));
+    return ret;
+}
+
+/**
+ * @brief The LoopSorter class - find topologic relations of loops
+ * The input loops must not cross each other; no edge is shared among loops.
+ * Tangential edges are allowed.
+ */
+class LoopSorter {
+public:
+    /**
+     * Each input loop is assumed to be a simple closed loop, and contains only edges.
+     * The input loops should not contain sub-loops
+     * Ownership of the input loops is transferred to this LoopSorter
+     * @param std::vector<std::unique_ptr<RS_EntityContainer>> loops input loops
+     */
+    LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
+    struct AreaPredicate {
+        AreaPredicate(const LoopSorter& sorter);
+        bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const;
+        const LoopSorter& m_sorter;
+    };
+
+    /**
+     * @brief getResults - the sorting results
+     * @return std::vector<RS_EntityContainer*> - the top level loops, i.e. outermost loops, after sorting
+     * each inner loop is added as a child of its immediate parent loop.
+     */
+    std::vector<RS_EntityContainer*> getResults() const
+    {
+        std::set<RS_EntityContainer*> roots;
+        for (const auto& loop: m_loops)
+            if (m_parents.count(loop.get()) == 0)
+                roots.insert(loop.get());
+        return {roots.begin(), roots.end()};
+    }
+
+private:
+    void init();
+    // find all ancestor loops of a given loop
+    void findAncestors(RS_EntityContainer* loop);
+
+    // hold input loops
+    std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
+    // lookup table to find enclosed area of each loop
+    std::unordered_map<const RS_EntityContainer*, double> m_area;
+    // compare loops by their enclosed areas
+    // The area of any ancestor loop is larger than the child loop.
+    // Always find ancestors using the loop with the smallest unprocessed loop.
+    // For each loop, only need to find its parent once.
+    AreaPredicate m_areaComparison{*this};
+    // Candidate loops, sorted by their enclosed areas
+    std::multiset<RS_EntityContainer*, AreaPredicate> m_toProcess{m_areaComparison};
+    // lookup table for parent loops
+    std::unordered_map<RS_EntityContainer*, RS_EntityContainer*> m_parents;
+};
+
+LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops):
+    m_loops{std::move(loops)}
+  , m_area{findAreas(m_loops)}
+{
+    init();
+}
+
+void LoopSorter::init()
+{
+    for(const auto& loop: m_loops)
+        m_toProcess.insert(loop.get());
+    std::vector<RS_EntityContainer*> loops{m_toProcess.begin(), m_toProcess.end()};
+    for (RS_EntityContainer* loop : loops)
+        findAncestors(loop);
+}
+
+void LoopSorter::findAncestors(RS_EntityContainer* loop)
+{
+    if (m_toProcess.erase(loop) == 0)
+        return;
+
+    // use a random direction to avoid passing tangential directions
+    // TODO, to complete avoid tangential
+    auto ray = getRandomRay(loop);
+    using namespace std;
+    // sorting by floating points is okay, the loops shouldn't be close to each other, with exception
+    // of touching points
+    map<double, RS_EntityContainer*> ancestors;
+    for(RS_EntityContainer* candidate: m_toProcess) {
+        if (candidate == loop)
+            continue;
+        RS_VectorSolutions intersections = getIntersection(ray.get(), *candidate);
+        if (intersections.size()%2 == 0)
+            continue;
+        // a parent loop has odd intersections for a ray starting from an inner point
+        double distance = intersections.getClosestDistance(ray->getStartpoint());
+        ancestors.emplace(distance, candidate);
+    }
+    // ancestors found: from innermost to outermost
+    RS_EntityContainer* current = loop;
+    for (const auto& entry: ancestors)
+    {
+        RS_EntityContainer* parent = entry.second;
+        m_toProcess.erase(parent);
+        if (m_parents.count(current) == 1)
+            break;
+        m_parents[current] = parent;
+        parent->addEntity(current);
+        current = parent;
+    }
+}
+
+
+LoopSorter::AreaPredicate::AreaPredicate(const LoopSorter &sorter):
+    m_sorter{sorter}
+{}
+
+bool LoopSorter::AreaPredicate::operator ()(const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
+{
+    return m_sorter.m_area.at(lhs) + RS_TOLERANCE < m_sorter.m_area.at(rhs);
+}
+
+}
 
 
 RS_HatchData::RS_HatchData(bool _solid,
@@ -553,7 +701,6 @@ void RS_Hatch::activateContour(bool on) {
         RS_DEBUG->print("RS_Hatch::activateContour: OK");
 }
 
-//#include<QDebug>
 /**
  * Overrides drawing of subentities. This is only ever called for solid fills.
  */
@@ -571,9 +718,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     QPainterPath path;
     QList<QPolygon> paClosed;
     QPolygon pa;
-//    QPolygon jp;   // jump points
 
-    // loops:
     if (needOptimization==true) {
         foreach (auto l, entities){
 
@@ -586,7 +731,6 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
         needOptimization = false;
     }
 
-    // loops:
     foreach (auto l, entities){
         l->setLayer(getLayer());
 
@@ -594,7 +738,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
 
             // edges:
-			for(auto e: *loop){
+            for(auto e: *loop){
 
                 e->setLayer(getLayer());
                 switch (e->rtti()) {
@@ -604,22 +748,14 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                     QPoint pt2(RS_Math::round(view->toGuiX(e->getEndpoint().x)),
                                RS_Math::round(view->toGuiY(e->getEndpoint().y)));
 
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-                    if(pa.size() && (pa.last()-pt1).manhattanLength()>=1)
-                        pa<<pt1;
-                    pa<<pt2;
+                    if(!pa.size() || (pa.last() - pt1).manhattanLength() >= 1) {
+                        pa << pt1;
+                    }
+                    pa << pt2;
                 }
                     break;
 
                 case RS2::EntityArc: {
-//                    QPoint pt1(RS_Math::round(view->toGuiX(e->getStartpoint().x)),
-//                               RS_Math::round(view->toGuiY(e->getStartpoint().y)));
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-
                     QPolygon pa2;
                     RS_Arc* arc=static_cast<RS_Arc*>(e);
 
@@ -635,22 +771,9 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
                 case RS2::EntityCircle: {
                     RS_Circle* circle = static_cast<RS_Circle*>(e);
-//                    QPoint pt1(RS_Math::round(view->toGuiX(circle->getCenter().x+circle->getRadius())),
-//                               RS_Math::round(view->toGuiY(circle->getCenter().y)));
-//                    if (! (pa.size()>0 && (pa.last() - pt1).manhattanLength()<=2)) {
-//                        jp<<pt1;
-//                    }
-
                     RS_Vector c=view->toGui(circle->getCenter());
                     double r=view->toGuiDX(circle->getRadius());
                     path.addEllipse(QPoint(c.x,c.y),r,r);
-//                    QPolygon pa2;
-//                    painter->createArc(pa2, view->toGui(circle->getCenter()),
-//                                       view->toGuiDX(circle->getRadius()),
-//                                       0.0,
-//                                       2*M_PI,
-//                                       false);
-//                    pa<<pa2;
                 }
                     break;
                 case RS2::EntityEllipse:
@@ -665,9 +788,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                                            ellipse->getAngle()
                                            ,ellipse->getAngle1(),ellipse->getAngle2(),ellipse->isReversed()
                                            );
-//                    qDebug()<<"ellipse: "<<ellipse->getCenter().x<<","<<ellipse->getCenter().y;
-//                    qDebug()<<"ellipse: pa2.size()="<<pa2.size();
-//                    qDebug()<<"ellipse: pa2="<<pa2;
+
                     if(pa.size() && pa2.size()&&(pa.last()-pa2.first()).manhattanLength()<1)
                         pa2.remove(0,1);
                     pa<<pa2;
@@ -688,7 +809,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
                 default:
                     break;
                 }
-//                qDebug()<<"pa="<<pa;
+
                 if( pa.size()>2 && pa.first() == pa.last()) {
                     paClosed<<pa;
                     pa.clear();
@@ -715,21 +836,48 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
     painter->drawPath(path);
     painter->setBrush(brush);
     painter->setPen(pen);
-
-
 }
 
+namespace
+{
+void pr(RS_EntityContainer* loop)
+{
+    if (loop == nullptr)
+    {
+        std::cout<<"-nullptr-;"<<std::endl;
+        return;
+    }
+    std::cout<<"( id="<<loop->getId()<<"| ";
+    for (auto* e: *loop) {
+        if (e&& e->rtti() == RS2::EntityContainer)
+        {
+            pr(static_cast<RS_EntityContainer*>(e));
+        } else if (e) {
+            std::cout<<", "<<e->getId();
+        }
+    }
+    std::cout<<" |"<<loop->getId()<<" )"<<std::endl;
+}
+}
 //must be called after update()
 double RS_Hatch::getTotalArea() {
+    auto loops = getLoops();
+    std::cout<<"loops.size()="<<loops.size()<<std::endl;
+    for (auto& l: loops)
+    {
+        std::cout<<l->getId()<<": "<<l->rtti()<<std::endl;
+        pr(l.get());
+    }
+    std::cout<<"loops: done"<<std::endl;
+
+    LoopSorter loopSorter(std::move(loops));
+    auto sorted = loopSorter.getResults();
 
     double totalArea=0.;
 
     // loops:
-	for(auto l: entities){
-
-        if (l!=hatch && l->rtti()==RS2::EntityContainer) {
-            totalArea += l->areaLineIntegral();
-        }
+    for(auto* loop: sorted){
+        totalArea += loop->areaLineIntegral();
     }
     return totalArea;
 }
@@ -807,6 +955,68 @@ void RS_Hatch::stretch(const RS_Vector& firstCorner,
     update();
 }
 
+namespace {
+
+// a random angle between 0 and 2 pi
+double getRandomAngle()
+{
+    static std::default_random_engine randomEngine;
+    static std::uniform_real_distribution<double> uniformDistribution(0.0, 2. * M_PI);
+    return uniformDistribution(randomEngine);
+}
+
+struct ComparePoints {
+    bool operator () (const RS_Vector& p0, const RS_Vector& p1) const
+    {
+        if (p0.x + RS_TOLERANCE < p1.x)
+            return true;
+        else if (p0.x > p1.x + RS_TOLERANCE)
+            return false;
+        return p0.y + RS_TOLERANCE < p1.y;
+    }
+};
+
+RS_VectorSolutions getIntersection(RS_AtomicEntity* line, const RS_EntityContainer& loop)
+{
+    RS_VectorSolutions ret;
+    for(RS_Entity* entity: loop) {
+        if (entity && entity->isEdge()) {
+            auto intersections = RS_Information::getIntersection(line, entity, true);
+            ret.push_back(intersections);
+        }
+    }
+    return ret;
+}
+
+RS_Vector getInternalPoint(RS_EntityContainer* loop)
+{
+    RS_Vector p0 = loop->firstEntity()->getNearestPointOnEntity(loop->getMin(), true);
+    double size = getSize(loop);
+    for(short i=0;i<16; i++)
+    {
+        RS_Vector offset =  RS_Vector(getRandomAngle())*size;
+        auto line = std::make_unique<RS_Line>(nullptr, p0 - offset, p0 + offset);
+        auto results = getIntersection(line.get(), *loop);
+        // need even number of intersections
+        if (results.empty() || results.size() % 2 == 1)
+            continue;
+        std::sort(results.begin(), results.end(), ComparePoints{});
+        // find an internal point
+        return (results.at(0) + results.at(1)) * 0.5;
+    }
+    RS_LOG(D_ERROR)<<__func__<<"(): failed to find a line passing the loop: "<<loop->getId();
+    return RS_Vector{false};
+}
+
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop)
+{
+    RS_Vector p0 = getInternalPoint(loop);
+    double size = getSize(loop);
+    return std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector{getRandomAngle()}*size);
+}
+}
+
+
 
 /**
  * Dumps the point's data to stdout.
@@ -815,3 +1025,5 @@ std::ostream& operator << (std::ostream& os, const RS_Hatch& p) {
     os << " Hatch: " << p.getData() << "\n";
     return os;
 }
+
+

@@ -26,18 +26,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawEllipse4Points::Points {
 	RS_VectorSolutions points;
 	RS_CircleData cData;
 	RS_EllipseData eData;
-	bool valid,evalid;
+    bool valid = false,evalid =false;
 	bool m_bUniqueEllipse{false}; //a message of non-unique ellipse is shown
 };
 
@@ -49,8 +47,8 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
-							   graphicView)
-	, pPoints(new Points{})
+                               graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawEllipse4Points;
 }
@@ -84,9 +82,7 @@ void RS_ActionDrawEllipse4Points::trigger() {
     graphicView->moveRelativeZero(rz);
     drawSnapper();
     setStatus(SetPoint1);
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %d", ellipse->getId());
-
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %d", ellipse->getId());
+    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::trigger():" " entity added: %lu", ellipse->getId());
 }
 
 

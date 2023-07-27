@@ -25,18 +25,18 @@
 **********************************************************************/
 
 #include <QAction>
+#include <QList>
 #include <QMouseEvent>
 #include "rs_actionpolylinesegment.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_arc.h"
-#include "rs_line.h"
 #include "rs_polyline.h"
 #include "rs_debug.h"
 
 namespace {
-std::initializer_list<RS2::EntityType>
+QList<RS2::EntityType>
 entityType{RS2::EntityLine, RS2::EntityPolyline, RS2::EntityArc};
 }
 

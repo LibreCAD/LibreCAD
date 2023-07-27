@@ -36,15 +36,15 @@
   **/
 class RS_Locale :public QLocale {
 public:
-    RS_Locale();
+    RS_Locale() = default;
     RS_Locale(const QString &_canonical);
 	/* without virtual destructor => warning: deleting object of polymorphic  
 	 * class type 'RS_Locale' which has non-virtual destructor might cause 
 	 * undefined behaviour [-Wdelete-non-virtual-dtor]
 	 * 
 	 * TNick <nicu.tofan@gmail.com>
-	 */
-	virtual ~RS_Locale(){}
+     */
+    virtual ~RS_Locale() = default;
 	
 
     virtual void setCanonical(const QString &_canonical);
@@ -53,15 +53,12 @@ public:
     virtual QString name() const;
     static QString toCanonical(const QString &canonical);
 
-    QString getCanonical();
-    QString getName();
+    QString getCanonical() const;
+    QString getName() const;
 
 protected:
     QString canonical;
     QString localeName;
-    int direction;
+    int direction = RS2::locLeftToRight;
 };
-
-
-
 #endif

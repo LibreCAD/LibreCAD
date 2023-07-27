@@ -55,8 +55,8 @@ class QC_MDIWindow: public QMdiSubWindow,
 public:
     QC_MDIWindow(RS_Document* doc,
                  QWidget* parent,
-                 Qt::WindowFlags wflags=0);
-    ~QC_MDIWindow();
+                 Qt::WindowFlags wflags = {});
+    ~QC_MDIWindow() override;
 
 public slots:
 
@@ -108,32 +108,30 @@ public:
     /**
      * @return The MDI window id.
      */
-	int getId() const;
+    unsigned getId() const;
 
 	friend std::ostream& operator << (std::ostream& os, QC_MDIWindow& w);
 
-    bool has_children();
+    bool has_children() const;
 
 signals:
     void signalClosing(QC_MDIWindow*);
 
 protected:
-    void closeEvent(QCloseEvent*);
+    void closeEvent(QCloseEvent*) override;
 
 private:
     void drawChars();
 
 private:
     /** window ID */
-    int id;
-    /** ID counter */
-    static int idCounter;
+    unsigned id = 0;
     /** Graphic view */
-    QG_GraphicView* graphicView;
+    QG_GraphicView* graphicView = nullptr;
     /** Document */
-    RS_Document* document;
+    RS_Document* document = nullptr;
     /** Does the window own the document? */
-    bool owner;
+    bool m_owner = false;
     /**
      * List of known child windows that show blocks of the same drawing.
      */
@@ -143,9 +141,8 @@ private:
      * is closed or NULL.
      */
     QC_MDIWindow* parentWindow{nullptr};
-    QMdiArea* cadMdiArea;
+    QMdiArea* cadMdiArea = nullptr;
 };
 
 
 #endif
-

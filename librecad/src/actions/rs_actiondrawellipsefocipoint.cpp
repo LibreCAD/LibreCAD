@@ -21,17 +21,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawellipsefocipoint.h"
+
 #include<cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+
 #include "rs_commandevent.h"
-#include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawEllipseFociPoint::Points {
 	// Foci of ellipse
@@ -39,8 +42,8 @@ struct RS_ActionDrawEllipseFociPoint::Points {
 	// A point on ellipse
 	RS_Vector point;
 	RS_Vector center,major;
-	double c; //hold half of distance between foci
-	double d; //hold half of distance
+    double c = 0.; //hold half of distance between foci
+    double d = 0.; //hold half of distance
 };
 
 /**
@@ -51,8 +54,8 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse by foci and a point",
-						   container, graphicView)
-		, pPoints(new Points{})
+                           container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawEllipseFociPoint;
 }
@@ -69,7 +72,7 @@ void RS_ActionDrawEllipseFociPoint::init(int status) {
 
 double RS_ActionDrawEllipseFociPoint::findRatio() const
 {
-	return 	sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
+    return std::sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
 
 }
 
@@ -102,7 +105,7 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     setStatus(SetFocus1);
 
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 
@@ -224,8 +227,7 @@ void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
 
 
 QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+    return {};
 }
 
 

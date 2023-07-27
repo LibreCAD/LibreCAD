@@ -48,6 +48,7 @@
 #include "rs_actiondimleader.h"
 #include "rs_actiondimlinear.h"
 #include "rs_actiondimradial.h"
+#include "lc_actiondimarc.h"
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 #include "rs_actiondrawarctangential.h"
@@ -110,6 +111,8 @@
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "lc_actionlayerstoggleconstruction.h"
+#include "lc_actionlayersexport.h"
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -166,6 +169,7 @@
 
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
 
@@ -198,36 +202,36 @@ void QG_ActionHandler::killAllActions() {
 }
 
 /**
- * @return Current action or NULL.
+ * @return Current action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
 
 	if (view) {
         return view->getCurrentAction();
     } else {
-        return NULL;
+        return nullptr;
     }
 }
 
 /**
  * Sets current action.
  *
- * @return Pointer to the created action or NULL.
+ * @return Pointer to the created action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = NULL;
+    RS_ActionInterface* a = nullptr;
 //    view->killAllActions();
 
     RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
             "view = %p, document = %p", view, document);
 
     // only global options are allowed without a document:
-    if (view==NULL || document==NULL) {
+    if (view==nullptr || document==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
-                "document is NULL");
-        return NULL;
+                "document is nullptr");
+        return nullptr;
     }
 
     auto a_layer = document->getLayerList()->getActive();
@@ -334,7 +338,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
             a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
         }else{
-            a=NULL;
+            a=nullptr;
         }
         break;
     case RS2::ActionSelectContour:
@@ -603,6 +607,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDimAngular:
         a = new RS_ActionDimAngular(*document, *view);
         break;
+    case RS2::ActionDimArc:
+        a = new LC_ActionDimArc(*document, *view);
+        break;
     case RS2::ActionDimLeader:
         a = new RS_ActionDimLeader(*document, *view);
         break;
@@ -721,7 +728,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyOffset:
     {
-		auto allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+        auto allowedOffsetTypes=QList<RS2::EntityType>{RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
         if(!document->countSelected(true, allowedOffsetTypes)){
             a = new RS_ActionSelect(this, *document, *view,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;
@@ -871,6 +878,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionLayersToggleConstruction:
         a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        break;
+    case RS2::ActionLayersExportSelected:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+        break;
+    case RS2::ActionLayersExportVisible:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
         break;
         // Block actions:
         //
@@ -1560,6 +1573,10 @@ void QG_ActionHandler::slotDimAngular() {
     setCurrentAction(RS2::ActionDimAngular);
 }
 
+void QG_ActionHandler::slotDimArc() {
+    setCurrentAction(RS2::ActionDimArc);
+}
+
 void QG_ActionHandler::slotDimLeader() {
     setCurrentAction(RS2::ActionDimLeader);
 }
@@ -1656,7 +1673,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snap_toolbar->setSnaps(s);
     }else{
-    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is nullptr");
     }
 	if(view) {
         view->setDefaultSnapMode(s);
@@ -1665,7 +1682,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
 }
 
 void QG_ActionHandler::slotSnapFree() {
-//    if ( snapFree == NULL) return;
+//    if ( snapFree == nullptr) return;
 //    disableSnaps();
     RS_SnapMode s=getSnaps();
     s.snapFree = !s.snapFree;
@@ -1673,14 +1690,14 @@ void QG_ActionHandler::slotSnapFree() {
 }
 
 void QG_ActionHandler::slotSnapGrid() {
-//    if(snapGrid==NULL) return;
+//    if(snapGrid==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = !s.snapGrid;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
-//    if(snapEndpoint==NULL) return;
+//    if(snapEndpoint==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = !s.snapEndpoint;
 
@@ -1688,7 +1705,7 @@ void QG_ActionHandler::slotSnapEndpoint() {
 }
 
 void QG_ActionHandler::slotSnapOnEntity() {
-//    if(snapOnEntity==NULL) return;
+//    if(snapOnEntity==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = !s.snapOnEntity;
 
@@ -1697,7 +1714,7 @@ void QG_ActionHandler::slotSnapOnEntity() {
 
 void QG_ActionHandler::slotSnapCenter() {
 //    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
-//    if(snapCenter==NULL) return;
+//    if(snapCenter==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapCenter = !s.snapCenter;
     slotSetSnaps(s);
@@ -1857,6 +1874,14 @@ void QG_ActionHandler::slotLayersTogglePrint() {
 
 void QG_ActionHandler::slotLayersToggleConstruction() {
     setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
 }
 
 

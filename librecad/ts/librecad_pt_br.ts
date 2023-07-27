@@ -9,7 +9,7 @@
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Adicionar aos favoritos</translation>
     </message>
     <message>
         <source>...</source>
@@ -543,7 +543,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecionar</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -551,15 +551,15 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
-        <translation type="unfinished"></translation>
+        <translation>Refazer</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Recortar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -671,7 +671,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferências</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
@@ -747,11 +747,11 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished"></translation>
+        <translation >Salvar</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Salvar &amp;como...</translation>
+        <translation>Salvar &amp;como...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
@@ -763,7 +763,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir...</translation>
     </message>
     <message>
         <source>Export as PDF</source>
@@ -771,11 +771,11 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Pré-Visualizar impressão</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished"></translation>
+        <translation>Sair</translation>
     </message>
     <message>
         <source>&amp;Block</source>
@@ -783,7 +783,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>Tela Cheia</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -800,7 +800,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Barra de Status</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
@@ -813,7 +813,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Preferências de Widget</translation>
     </message>
     <message>
         <source>Left</source>
@@ -825,7 +825,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Superior</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -833,7 +833,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Janela</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
@@ -884,7 +884,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <source>Mouse</source>
@@ -892,7 +892,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation >Salvar</translation>
     </message>
 </context>
 <context>
@@ -1550,15 +1550,15 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation >Circunferência</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation >Arco</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arco</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -1582,11 +1582,11 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>Pen</source>
-        <translation type="unfinished">Pena</translation>
+        <translation>Caneta</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Ancorar áreas</translation>
     </message>
     <message>
         <source>Grid Status</source>
@@ -1610,7 +1610,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opções</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
@@ -1618,19 +1618,19 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation>Dimensionar</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation >Ancorar Widgets</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arquivos Recentes</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Compilador: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
@@ -1642,15 +1642,15 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Contribuintes</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Licença</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Sistema</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
@@ -1666,15 +1666,15 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>Ferramentas</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation>Desenhos</translation>
     </message>
     <message>
         <source>Help Links</source>
-        <translation type="unfinished"></translation>
+        <translation>Links de ajuda</translation>
     </message>
     <message>
         <source>Online</source>
@@ -2896,7 +2896,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_CommandHistory</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>Copiar</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
@@ -11562,7 +11562,7 @@ Deseja continuar?</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation >Arco</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -11622,11 +11622,11 @@ Deseja continuar?</translation>
     </message>
     <message>
         <source>User&apos;s Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manual do usuário</translation>
     </message>
     <message>
         <source>Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Comandos</translation>
     </message>
     <message>
         <source>Style Sheets</source>
@@ -11634,7 +11634,7 @@ Deseja continuar?</translation>
     </message>
     <message>
         <source>Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>Fórum</translation>
     </message>
     <message>
         <source>All</source>
@@ -11662,15 +11662,15 @@ Deseja continuar?</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aplicar aos selecionados</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Remover</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>É preciso informar uma distância primeiro.</translation>
     </message>
     <message>
         <source>cal</source>
@@ -17592,7 +17592,7 @@ não são exibidas para melhorar a performance de exibição.</translation>
     </message>
     <message>
         <source>Redo</source>
-        <translation type="unfinished">Refazer</translation>
+        <translation >Refazer</translation>
     </message>
 </context>
 <context>

@@ -46,7 +46,7 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Mirror Entities",
                                    container, graphicView)
-        , pPoints(new Points{})
+        , pPoints(std::make_unique<Points>())
 {
     actionType=RS2::ActionModifyMirror;
 }

@@ -36,7 +36,6 @@
 
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)
-    , mdi_win(nullptr)
     , color_wiz(new ColorWizard(this))
 {
     auto frame = new QFrame(this);
@@ -92,4 +91,9 @@ void LC_PenWizard::setActivePenColor(QColor color)
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
     graphic->setActivePen(pen);
+}
+
+void LC_PenWizard::setMdiWindow(QC_MDIWindow* mdiWindow)
+{
+    mdi_win = mdiWindow;
 }

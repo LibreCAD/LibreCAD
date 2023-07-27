@@ -43,7 +43,7 @@ public:
 
 private slots:
 
-	void mouseReleaseEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event) override;
 	void slotTextChanged();
 
 private:

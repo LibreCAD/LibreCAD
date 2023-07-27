@@ -205,6 +205,7 @@ bool QG_SnapToolBar::lockedRelativeZero() const
 void QG_SnapToolBar::setLockedRelativeZero(bool on)
 {
     bLockRelZero->setChecked(on);
+    bLockRelZero->setToolTip(tr("Relative zero position is %1").arg(on ? tr("locked") : tr("unlocked")));
 }
 
 void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
@@ -227,6 +228,12 @@ void QG_SnapToolBar::slotRestrictOrthogonal(bool checked)
 	if( restrictHorizontal) restrictHorizontal->setChecked(checked);
 	if( restrictNothing) restrictNothing->setChecked(checked);
     actionTriggered();
+}
+
+void QG_SnapToolBar::slotEnableRelativeZeroSnaps(const bool enabled)
+{
+    bRelZero->setEnabled(enabled);
+    bLockRelZero->setEnabled(enabled);
 }
 
 void QG_SnapToolBar::actionTriggered()

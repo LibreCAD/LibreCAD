@@ -31,13 +31,14 @@
 #include <QPolygon>
 #include <QString>
 
-#include "rs_entity.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -45,10 +46,10 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_units.h"
 #include "rs_vector.h"
-#include "rs_information.h"
+
 #include "lc_quadratic.h"
-#include "rs_debug.h"
 
 /**
  * Default constructor.
@@ -56,9 +57,9 @@
  *               E.g. a line might have a graphic entity or
  *               a polyline entity as parent.
  */
-RS_Entity::RS_Entity(RS_EntityContainer* parent) {
-
-    this->parent = parent;
+RS_Entity::RS_Entity(RS_EntityContainer *parent)
+    : parent{parent}
+{
     init();
 }
 
@@ -317,7 +318,7 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
                                 double tolerance) const {
 	double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
-    return (dist<=fabs(tolerance));
+    return dist <= std::abs(tolerance);
 }
 
 double RS_Entity::getDistanceToPoint(const RS_Vector& coord,

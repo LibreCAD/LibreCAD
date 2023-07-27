@@ -20,18 +20,26 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include<vector>
-#include<QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircletan2.h"
 
+#include<vector>
+
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_circle.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
 #include "rs_point.h"
+#include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+
+namespace {
+
+    //list of entity types supported by current action
+const EntityTypeList enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
 
 struct RS_ActionDrawCircleTan2::Points {
 	RS_CircleData cData;
@@ -51,7 +59,7 @@ RS_ActionDrawCircleTan2::RS_ActionDrawCircleTan2(
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw circle inscribed",
 							   container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircleTan2;
 }
@@ -107,7 +115,7 @@ void RS_ActionDrawCircleTan2::trigger() {
     setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan2::trigger():"
-                    " entity added: %d", circle->getId());
+                    " entity added: %lu", circle->getId());
 }
 
 
@@ -137,20 +145,42 @@ void RS_ActionDrawCircleTan2::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircleTan2::mouseMoveEvent end");
 }
 
-void RS_ActionDrawCircleTan2::setRadius(const double& r)
+
+bool RS_ActionDrawCircleTan2::setRadius(const QString& sr)
 {
-	pPoints->cData.radius=r;
-    if(getStatus() == SetCenter){
-		pPoints->centers=RS_Circle::createTan2(pPoints->circles,
-			pPoints->cData.radius);
-    }
+	bool ok;
+	double r;
+
+	r = RS_Math::eval(sr,&ok);
+	if (!ok) {
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid expression '%1' for radius").arg(sr));
+	} else if(r<0) {
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid negative radius '%1'").arg(sr));
+		ok = false;
+	} else if(r<=RS_TOLERANCE) {
+		RS_DIALOGFACTORY->commandMessage(tr("Invalid zero radius '%1'").arg(sr));
+		ok = false;
+	} else {
+		//RS_DIALOGFACTORY->commandMessage(tr("radius=%1 : valid").arg(sr));
+		pPoints->cData.radius=r;
+	    if(getStatus() == SetCenter){
+			pPoints->centers=RS_Circle::createTan2(pPoints->circles, pPoints->cData.radius);
+			if (pPoints->centers.size()<=0)
+				RS_DIALOGFACTORY->commandMessage(tr("No tangent circle possible for radius '%1'").arg(pPoints->cData.radius));
+	    }
+	}
+
+	return ok;
 }
 
+
 bool RS_ActionDrawCircleTan2::getCenters(){
-    if(getStatus() != SetCircle2) return false;
-	pPoints->centers=RS_Circle::createTan2(pPoints->circles,
-				pPoints->cData.radius);
-	pPoints->valid= (pPoints->centers.size()>0);
+    if(getStatus() != SetCircle2)
+      return false;
+	pPoints->centers=RS_Circle::createTan2(pPoints->circles, pPoints->cData.radius);
+	pPoints->valid = ! pPoints->centers.empty();
+	if (!pPoints->valid)
+		RS_DIALOGFACTORY->commandMessage(tr("No common tangential circle for radius '%1'").arg(pPoints->cData.radius));
 	return pPoints->valid;
 }
 
@@ -285,18 +315,11 @@ void RS_ActionDrawCircleTan2::showOptions() {
 }
 
 
-
 void RS_ActionDrawCircleTan2::hideOptions() {
 	RS_ActionInterface::hideOptions();
 
 	RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
-QStringList RS_ActionDrawCircleTan2::getAvailableCommands() {
-	return {};
-}
-
 
 
 void RS_ActionDrawCircleTan2::updateMouseButtonHints() {

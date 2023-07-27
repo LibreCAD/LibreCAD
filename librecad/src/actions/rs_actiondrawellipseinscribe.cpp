@@ -20,23 +20,26 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawellipseinscribe.h"
 
+#include <vector>
+
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_ellipse.h"
+#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawEllipseInscribe::Points {
-std::vector<RS_Line*> lines;
-RS_EllipseData eData;
-bool valid{false};
+    std::vector<RS_Line*> lines;
+    RS_EllipseData eData;
+    bool valid{false};
 };
+
 /**
  * Constructor.
  *
@@ -45,8 +48,8 @@ RS_ActionDrawEllipseInscribe::RS_ActionDrawEllipseInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse inscribed",
-						   container, graphicView)
-		, pPoints(new Points{})
+                           container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawEllipseInscribe;
 }
@@ -106,7 +109,7 @@ void RS_ActionDrawEllipseInscribe::trigger() {
 	setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawEllipse4Line::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 
@@ -265,8 +268,7 @@ void RS_ActionDrawEllipse4Line::commandEvent(RS_CommandEvent* e) {
 
 
 QStringList RS_ActionDrawEllipseInscribe::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
+    return {};
 }
 
 

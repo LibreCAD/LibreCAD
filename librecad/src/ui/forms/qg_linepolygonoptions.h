@@ -40,7 +40,7 @@ class QG_LinePolygonOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LinePolygonOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LinePolygonOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LinePolygonOptions();
 
 public slots:

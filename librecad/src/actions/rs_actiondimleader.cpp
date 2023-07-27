@@ -28,14 +28,14 @@
 #include <QMouseEvent>
 #include "rs_actiondimleader.h"
 
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_leader.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDimLeader::Points {
 std::vector<RS_Vector> points;
@@ -45,7 +45,7 @@ RS_ActionDimLeader::RS_ActionDimLeader(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw leaders",
                            container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
  {
 	actionType=RS2::ActionDimLeader;
     reset();
@@ -96,7 +96,7 @@ void RS_ActionDimLeader::trigger() {
         graphicView->moveRelativeZero(rz);
         //drawSnapper();
 
-        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leader added: %d",
+        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leader added: %lu",
                         leader->getId());
     }
 }
@@ -209,13 +209,6 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
-
-QStringList RS_ActionDimLeader::getAvailableCommands() {
-    QStringList cmd;
-
-    return cmd;
-}
 
 void RS_ActionDimLeader::updateMouseButtonHints() {
 	switch (getStatus()) {

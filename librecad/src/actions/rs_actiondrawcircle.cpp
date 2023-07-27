@@ -24,42 +24,38 @@
 **
 **********************************************************************/
 
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawcircle.h"
 
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_circle.h"
+#include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circles",
-						   container, graphicView)
-		,data(new RS_CircleData())
+                           container, graphicView)
+    , data(std::make_unique<RS_CircleData>())
 {
 	actionType=RS2::ActionDrawCircle;
-    reset();
 }
-
-
 
 RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
-	data.reset(new RS_CircleData{});
+    data = std::make_unique<RS_CircleData>();
 }
-
 
 
 void RS_ActionDrawCircle::init(int status) {
     RS_PreviewActionInterface::init(status);
-
     reset();
 }
 
@@ -80,17 +76,15 @@ void RS_ActionDrawCircle::trigger() {
         document->addUndoable(circle);
         document->endUndoCycle();
     }
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(circle->getCenter());
 
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %d",
+    RS_DEBUG->print("RS_ActionDrawCircle::trigger(): circle added: %lu",
                     circle->getId());
 }
-
-
 
 void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent begin");
@@ -130,7 +124,7 @@ void RS_ActionDrawCircle::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e){
+    if (e == nullptr){
         return;
     }
 
@@ -171,27 +165,19 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
     switch (getStatus()) {
 
     case SetRadius: {
-            bool ok;
+            bool ok = false;
             double r = RS_Math::eval(c, &ok);
-            if (ok) {
-				data->radius = r;
+            if (ok && r > RS_TOLERANCE) {
+                data->radius = r;
                 e->accept();
                 trigger();
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            //setStatus(SetCenter);
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
 
     default:
         break;
     }
-}
-
-
-
-QStringList RS_ActionDrawCircle::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
 }
 
 

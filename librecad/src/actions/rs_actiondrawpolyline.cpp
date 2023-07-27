@@ -30,17 +30,17 @@
 
 #include "rs_actiondrawpolyline.h"
 
+#include "rs_arc.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-#include "rs_arc.h"
 #include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_coordinateevent.h"
 #include "rs_math.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -83,15 +83,8 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
-		, m_Reversed(1)
-		, pPoints(new Points{})
-        , muParserObject(nullptr)
-        , equationSettingOn(false)
-        , startPointSettingOn(false)
-        , endPointSettingOn(false)
-        , stepSizeSettingOn(false)
-        , startPoint(0.0)
-        , endPoint(0.0)
+		,m_Reversed(1)
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawPolyline;
     reset();
@@ -144,7 +137,7 @@ void RS_ActionDrawPolyline::trigger() {
 	graphicView->drawEntity(pPoints->polyline);
 	graphicView->moveRelativeZero(pPoints->polyline->getEndpoint());
     drawSnapper();
-    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %d",
+    RS_DEBUG->print("RS_ActionDrawLinePolyline::trigger(): polyline added: %lu",
 					pPoints->polyline->getId());
 
 	pPoints->polyline = nullptr;
@@ -241,8 +234,8 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
             line.setEndpoint(mouse);
 			double const direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
 			double const delta=direction2-direction;
-            if( fabs(remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
-                b=tan(delta/2);
+            if( std::abs(std::remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
+                b=std::tan(delta/2);
 				suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
                 if (suc)
 					pPoints->arc_data = arc.getData();
@@ -373,35 +366,35 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionDrawPolyline::setMode(SegmentMode m) {
-	Mode=m;
+	m_mode=m;
 }
 
 int RS_ActionDrawPolyline::getMode() const{
-	return Mode;
+	return m_mode;
 }
 
 void RS_ActionDrawPolyline::setRadius(double r) {
-	Radius=r;
+	m_radius=r;
 }
 
 double RS_ActionDrawPolyline::getRadius() const{
-	return Radius;
+	return m_radius;
 }
 
 void RS_ActionDrawPolyline::setAngle(double a) {
-	Angle=a;
+	m_angle=a;
 }
 
 double RS_ActionDrawPolyline::getAngle() const{
-	return Angle;
+	return m_angle;
 }
 
 void RS_ActionDrawPolyline::setReversed( bool c) {
-	m_Reversed=c?-1:1;
+	m_reversed=c?-1:1;
 }
 
 bool RS_ActionDrawPolyline::isReversed() const{
-	return m_Reversed==-1;
+	return m_reversed==-1;
 }
 
 
@@ -467,13 +460,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             cRef.replace(tr("x"), someRandomNumber);
 
-            if (muParserObject != nullptr)
-            {
-                delete muParserObject;
-                muParserObject = nullptr;
-            }
-
-            muParserObject = new mu::Parser;
+            muParserObject = std::make_unique<mu::Parser>();
             muParserObject->DefineConst(_T("e"),  M_E);
             muParserObject->DefineConst(_T("pi"), M_PI);
 

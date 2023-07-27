@@ -30,6 +30,7 @@
 
 #include <QObject>
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_ActionInterface;

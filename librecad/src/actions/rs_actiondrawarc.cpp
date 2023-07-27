@@ -23,10 +23,12 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include "rs_actiondrawarc.h"
+
 #include<cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawarc.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -43,7 +45,7 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw arcs",
 						   container, graphicView)
-		,data(new RS_ArcData())
+        , data(std::make_unique<RS_ArcData>())
 {
 	actionType= RS2::ActionDrawArc;
 
@@ -53,20 +55,12 @@ RS_ActionDrawArc::RS_ActionDrawArc(RS_EntityContainer& container,
 RS_ActionDrawArc::~RS_ActionDrawArc() = default;
 
 void RS_ActionDrawArc::reset() {
-
-	if (data->reversed) {
-		data.reset(new RS_ArcData(RS_Vector(false),
-                          0.0,
-						  2.*M_PI, 0.0,
-						  true));
-    } else {
-		data.reset(new RS_ArcData(RS_Vector(false),
-                          0.0,
-						  0.0, 2.*M_PI,
-						  false));
-    }
+    double angleMin = 0.;
+    double angleMax = 2. * M_PI;
+    if (data->reversed)
+        std::swap(angleMin, angleMax);
+    *data = {{}, 0., angleMin, angleMax, data->reversed};
 }
-
 
 
 void RS_ActionDrawArc::init(int status) {
@@ -99,7 +93,7 @@ void RS_ActionDrawArc::trigger() {
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %d",
+    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu",
                     arc->getId());
 }
 
@@ -269,7 +263,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
         break;
 
     case SetAngle1: {
-            bool ok;
+            bool ok = false;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
 				data->angle1 = RS_Math::deg2rad(a);
@@ -286,7 +280,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
             } else if (RS_COMMANDS->checkCommand("chord length", c)) {
                 setStatus(SetChordLength);
             } else {
-                bool ok;
+                bool ok = false;
                 double a = RS_Math::eval(c, &ok);
                 if (ok) {
 					data->angle2 = RS_Math::deg2rad(a);
@@ -299,7 +293,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
         break;
 
     case SetIncAngle: {
-            bool ok;
+            bool ok = false;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
 				data->angle2 = data->angle1 + RS_Math::deg2rad(a);
@@ -311,7 +305,7 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
         break;
 
     case SetChordLength: {
-            bool ok;
+            bool ok = false;
             double l = RS_Math::eval(c, &ok);
             if (ok) {
 				if (fabs(l/(2*data->radius))<=1.0) {
@@ -331,11 +325,8 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent* e) {
 }
 
 
-
 QStringList RS_ActionDrawArc::getAvailableCommands() {
-    QStringList cmd;
-    cmd += RS_COMMANDS->command("reversed");
-    return cmd;
+    return {{"reversed"}};
 }
 
 

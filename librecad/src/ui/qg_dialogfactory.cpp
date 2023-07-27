@@ -116,6 +116,7 @@
 #include "qg_snapdistoptions.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
+#include "qc_applicationwindow.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -696,6 +697,8 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         return;
     }
 
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestOptions, action %s, on %s, update %s",qPrintable(action->getName()),on?"TRUE":"FALSE",update?"TRUE":"FALSE");
+
     switch (action->rtti()) {
 	case RS2::ActionFilePrintPreview:
         requestPrintPreviewOptions(action, on, update);
@@ -802,6 +805,10 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDimAngular:
+        requestDimensionOptions(action, on, update);
+        break;
+
+    case RS2::ActionDimArc:
         requestDimensionOptions(action, on, update);
         break;
 
@@ -1170,18 +1177,25 @@ void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius
 void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, action %s, on %s, update %s",qPrintable(action->getName()),on?"TRUE":"FALSE",update?"TRUE":"FALSE");
 	if (optionWidget) {
 		static QG_CircleOptions* toolWidget = nullptr;
-		if (toolWidget) {
-            delete toolWidget;
-			toolWidget = nullptr;
-        }
-		if (on) {
+		if (!on) {
+			if (toolWidget) {
+				//RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, delete toolwidget");
+				delete toolWidget;
+				toolWidget = nullptr;
+			}
+		} else if (!toolWidget) {
+			//RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, create toolwidget");
 			toolWidget = new QG_CircleOptions(optionWidget);
-            optionWidget->addWidget(toolWidget);
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
+			optionWidget->addWidget(toolWidget);
+			toolWidget->setAction(action, update);
+			toolWidget->show();
+		} else {
+			//RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, refresh toolwidget");
+			toolWidget->setAction(action, update);
+		}
     }
 }
 
@@ -1761,7 +1775,8 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
     case RS2::EntityDimAligned:
     case RS2::EntityDimAngular:
     case RS2::EntityDimDiametric:
-    case RS2::EntityDimRadial: {
+    case RS2::EntityDimRadial:
+    case RS2::EntityDimArc: {
             QG_DlgDimension dlg(parent);
             dlg.setDim(*((RS_Dimension*)entity));
             if (dlg.exec()) {
@@ -1980,6 +1995,19 @@ void QG_DialogFactory::updateSelectionWidget(int num, double length) {
 	if (selectionWidget) {
         selectionWidget->setNumber(num);
         selectionWidget->setTotalLength(length);
+    }
+}
+
+
+
+void QG_DialogFactory::displayBlockName(const QString& blockName, const bool& display)
+{
+    if (selectionWidget)
+    {
+        selectionWidget->flashAuxData( QString("Block Name"), 
+                                       blockName, 
+                                       QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT, 
+                                       display);
     }
 }
 

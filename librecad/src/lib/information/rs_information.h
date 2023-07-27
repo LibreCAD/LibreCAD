@@ -101,7 +101,7 @@ public:
 									 bool* onContour=nullptr);
 	
 private:
-    RS_EntityContainer* container;
+    RS_EntityContainer* container = nullptr;
 };
 
 

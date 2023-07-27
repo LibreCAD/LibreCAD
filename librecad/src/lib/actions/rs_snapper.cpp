@@ -26,21 +26,49 @@
 
 
 #include<cmath>
+
 #include<QMouseEvent>
+
 #include "rs_snapper.h"
 
-#include "rs_point.h"
 #include "rs_circle.h"
-#include "rs_line.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_grid.h"
-#include "rs_settings.h"
+#include "rs_line.h"
 #include "rs_overlayline.h"
-#include "rs_coordinateevent.h"
-#include "rs_entitycontainer.h"
 #include "rs_pen.h"
-#include "rs_debug.h"
+#include "rs_point.h"
+#include "rs_settings.h"
+
+namespace {
+
+    // whether a floating point is positive by tolerance
+    bool isPositive(double x)
+    {
+        return x > RS_TOLERANCE;
+    }
+
+    // A size vector is valid with a positive size
+    bool isSizeValid(const RS_Vector& sizeVector) {
+        return isPositive(sizeVector.x) || isPositive(sizeVector.x);
+    }
+
+    // The valid size magnitude
+    double getValidSize(const RS_Vector& sizeVector)
+    {
+        return std::hypot(std::max(sizeVector.x, RS_TOLERANCE), std::max(sizeVector.y, RS_TOLERANCE));
+    }
+
+    // get catching entity distance in graph distance
+    double getCatchDistance(double catchDistance, int catchEntityGuiRange, RS_GraphicView* view)
+    {
+        return (view != nullptr) ? std::min(catchDistance, view->toGraphDX(catchEntityGuiRange)) : catchDistance;
+    }
+}
 
 /**
   * Disable all snapping.
@@ -155,11 +183,11 @@ RS_SnapMode RS_SnapMode::fromInt(unsigned int ret)
   */
 struct RS_Snapper::Indicator
 {
-    bool lines_state;
+    bool lines_state = false;
     QString lines_type;
     RS_Pen lines_pen;
 
-    bool shape_state;
+    bool shape_state = false;
     QString shape_type;
     RS_Pen shape_pen;
 };
@@ -175,14 +203,11 @@ RS_Vector snapSpot;
 RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView)
     :container(&container)
     ,graphicView(&graphicView)
-	,pImpData(new ImpData{})
-    ,snap_indicator(new Indicator{})
+    ,pImpData(new ImpData)
+    ,snap_indicator(new Indicator)
 {}
 
-RS_Snapper::~RS_Snapper()
-{
-    delete snap_indicator;
-}
+RS_Snapper::~RS_Snapper() = default;
 
 /**
  * Initialize (called by all constructors)
@@ -209,8 +234,8 @@ void RS_Snapper::init()
 	snap_indicator->lines_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::DashLine2);
 	snap_indicator->shape_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::SolidLine);
 	snap_indicator->shape_pen.setScreenWidth(1);
-
-    snapRange=getSnapRange();
+    auto guard = RS_SETTINGS->beginGroupGuard("/Snapping");
+    catchEntityGuiRange=RS_SETTINGS->readNumEntry("/CatchEntityGuiDistance", 32);
 }
 
 
@@ -339,18 +364,14 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
 	if( !pImpData->snapSpot.valid ) {
 		pImpData->snapSpot=mouseCoord; //default to snapFree
     } else {
-//        std::cout<<"mouseCoord.distanceTo(snapSpot)="<<mouseCoord.distanceTo(snapSpot)<<std::endl;
-        //        std::cout<<"snapRange="<<snapRange<<std::endl;
 
-        //retreat to snapFree when distance is more than half grid
+        //retreat to snapFree when distance is more than quarter grid
+        // issue #1631: snapFree issues: defines getSnapFree as the minimum graph distance to allow SnapFree
         if(snapMode.snapFree){
-			RS_Vector const& ds=mouseCoord - pImpData->snapSpot;
-			RS_Vector const& grid=graphicView->getGrid()->getCellVector()*0.5;
-			if( fabs(ds.x) > fabs(grid.x) ||  fabs(ds.y) > fabs(grid.y) ) pImpData->snapSpot = mouseCoord;
+            // compare the current graph distance to the closest snap point to the minimum snapping free distance
+            if((mouseCoord - pImpData->snapSpot).magnitude() >= getSnapRange())
+                pImpData->snapSpot = mouseCoord;
         }
-
-        //another choice is to keep snapRange in GUI coordinates instead of graph coordinates
-//        if (mouseCoord.distanceTo(snapSpot) > snapRange ) snapSpot = mouseCoord;
     }
     //if (snapSpot.distanceTo(mouseCoord) > snapMode.distance) {
     // handle snap restrictions that can be activated in addition
@@ -402,11 +423,30 @@ RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
 
 double RS_Snapper::getSnapRange() const
 {
-    if (graphicView) {
-        return (graphicView->getGrid()->getCellVector() * 0.5).magnitude();
+    // issue #1631: redefine this method to the minimum graph distance to allow "Snap Free"
+    // When the closest of any other snapping point is beyond this distance, free snapping is used.
+    constexpr double Min_Snap_Factor = 0.25;
+    std::vector<double> distances(3, RS_MAXDOUBLE);
+    double& minGui=distances[0];
+    double& minGrid=distances[1];
+    double& minSize=distances[2];
+    if (graphicView != nullptr) {
+        minGui = graphicView->toGraphDX(32);
+        // if grid is on, less than one quarter of the cell vector
+        if (graphicView->isGridOn())
+            minGrid = graphicView->getGrid()->getCellVector().magnitude() * Min_Snap_Factor;
     }
-
-    return 20.;
+    if (container != nullptr && isSizeValid(container->getSize())) {
+        // The size bounding box
+        minSize = getValidSize(container->getSize());
+    }
+    if (std::min(minGui, minGrid) < 0.99 * RS_MAXDOUBLE)
+        return std::min(minGui, minGrid);
+    if (minSize < 0.99 * RS_MAXDOUBLE)
+        return minSize;
+    // shouldn't happen: no graphicview or a valid size
+    // Allow free snapping by returning the floating point tolerance
+    return RS_TOLERANCE;
 }
 
 /**
@@ -603,12 +643,12 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos,
 
     RS_Entity* entity = container->getNearestEntity(pos, &dist, level);
 
-        int idx = -1;
-		if (entity && entity->getParent()) {
-                idx = entity->getParent()->findEntity(entity);
-        }
+    int idx = -1;
+    if (entity != nullptr && entity->getParent()) {
+        idx = entity->getParent()->findEntity(entity);
+    }
 
-	if (entity && dist<=getSnapRange()) {
+    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange, graphicView)) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -675,12 +715,12 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 
     RS_Entity* entity = ec.getNearestEntity(pos, &dist, RS2::ResolveNone);
 
-        int idx = -1;
-		if (entity && entity->getParent()) {
-                idx = entity->getParent()->findEntity(entity);
-        }
+    int idx = -1;
+    if (entity != nullptr && entity->getParent()) {
+        idx = entity->getParent()->findEntity(entity);
+    }
 
-	if (entity && dist<=getSnapRange()) {
+    if (entity != nullptr && dist <= getCatchDistance(getSnapRange(), catchEntityGuiRange, graphicView)) {
         // highlight:
         RS_DEBUG->print("RS_Snapper::catchEntity: found: %d", idx);
         return entity;
@@ -702,10 +742,11 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
                                    RS2::ResolveLevel level) {
 
-    return catchEntity(
+    RS_Entity* entity = catchEntity(
                RS_Vector(graphicView->toGraphX(e->x()),
                          graphicView->toGraphY(e->y())),
                level);
+    return entity;
 }
 
 
@@ -992,7 +1033,7 @@ RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector
     }
 
     double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
-    angle -= remainder(angle,angularResolution);
+    angle -= std::remainder(angle,angularResolution);
     angle *= M_PI/180.;
     RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
     res += referenceCoord;

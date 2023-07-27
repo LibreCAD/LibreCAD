@@ -40,7 +40,7 @@ class QG_LineParallelOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LineParallelOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LineParallelOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_LineParallelOptions();
 
 public slots:

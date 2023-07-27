@@ -33,7 +33,6 @@
 #include "rs_units.h"
 #include "rs_math.h"
 #include "rs_filterdxfrw.h" //for int <-> rs_color conversion
-#include "rs_debug.h"
 
 RS_DimensionData::RS_DimensionData():
 	definitionPoint(false),

@@ -28,8 +28,10 @@
 #ifndef RS_SETTINGS_H
 #define RS_SETTINGS_H
 
-#include <QString>
 #include <map>
+#include <memory>
+
+#include <QString>
 
 class QVariant;
 
@@ -39,15 +41,16 @@ class QVariant;
 
 namespace Colors
 {
-    const QString snap_indicator   = "#FFC200";
-    const QString background       = "Black";
-    const QString grid             = "Gray";
-    const QString meta_grid        = "#404040";
-    const QString select           = "#A54747";
-    const QString highlight        = "#739373";
-    const QString start_handle     = "Cyan";
-    const QString handle           = "Blue";
-    const QString end_handle       = "Blue";
+    const QString snap_indicator    = "#FFC200";
+    const QString background        = "Black";
+    const QString grid              = "Gray";
+    const QString meta_grid         = "#404040";
+    const QString select            = "#A54747";
+    const QString highlight         = "#739373";
+    const QString start_handle      = "Cyan";
+    const QString handle            = "Blue";
+    const QString end_handle        = "Blue";
+    const QString relativeZeroColor = "Red";
 }
 
 // ---------------------------------------------------------------------------
@@ -65,7 +68,11 @@ namespace Colors
 class RS_Settings {
 
 public:
-	~RS_Settings();
+
+    // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
+    // goes out of scope
+    class GroupGuard{};
+
 	/**
      * @return Instance to the unique settings object.
      */
@@ -79,6 +86,8 @@ public:
      */
     void init(const QString& companyKey, const QString& appKey);
 
+    // RAII style group guard: endGroup() is called automatically at the end of lifetime of the returned object
+    std::unique_ptr<GroupGuard> beginGroupGuard(QString group);
     void beginGroup(const QString& group);
     void endGroup();
 
@@ -105,13 +114,12 @@ private:
 	void addToCache(const QString& key, const QVariant& value);
 
 protected:
-    static RS_Settings* uniqueInstance;
 
 	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;
     QString group;
-    bool initialized;
+    bool initialized = false;
 };
 
 #endif

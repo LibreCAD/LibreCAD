@@ -26,17 +26,18 @@
 #ifndef QG_DLGSCALE_H
 #define QG_DLGSCALE_H
 
+#include <QString>
 #include "ui_qg_dlgscale.h"
 
-class RS_ScaleData;
+struct RS_ScaleData;
 
 class QG_DlgScale : public QDialog, public Ui::QG_DlgScale
 {
     Q_OBJECT
 
 public:
-    QG_DlgScale(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgScale();
+    QG_DlgScale(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    virtual ~QG_DlgScale();
 
 public slots:
     virtual void setData( RS_ScaleData * d );
@@ -55,12 +56,12 @@ private slots:
 private:
     QString scaleFactorX;
     QString scaleFactorY;
-    RS_ScaleData* data;
+    RS_ScaleData* data = nullptr;
     QString copies;
-    bool isotropic;
-    int numberMode;
-    bool useCurrentLayer;
-    bool useCurrentAttributes;
+    bool isotropic = false;
+    int numberMode = 0;
+    bool useCurrentLayer = false;
+    bool useCurrentAttributes = false;
 
     void init();
     void destroy();

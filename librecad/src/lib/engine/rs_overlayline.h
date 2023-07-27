@@ -47,7 +47,6 @@ public:
     RS2::EntityType rtti() const override{
         return RS2::EntityOverlayLine;
     }
-}
-;
+};
 
 #endif

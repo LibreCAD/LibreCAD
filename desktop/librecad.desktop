@@ -54,4 +54,4 @@ TryExec=librecad
 Exec=librecad %F
 Icon=librecad
 Categories=Graphics;Engineering;
-MimeType=image/vnd.dxf
+MimeType=image/vnd.dxf;

@@ -54,6 +54,8 @@
 #include "rs_graphicview.h"
 #include "rs_dialogfactory.h"
 #include "rs_math.h"
+#include "dxf_format.h"
+#include "lc_defaults.h"
 
 #ifdef DWGSUPPORT
 #include "libdwgr.h"
@@ -122,6 +124,8 @@ QString RS_FilterDXFRW::lastError() const
         return (QObject::tr( "error reading DXF/DWG objects", "RS_FilterDXFRW"));
     case DRW::BAD_READ_SECTION:
         return (QObject::tr( "error reading DXF/DWG sections", "RS_FilterDXFRW"));
+    case DRW::BAD_CODE_PARSED:
+        return (QObject::tr( "error reading DXF/DWG code", "RS_FilterDXFRW"));
     default:
         break;
     }
@@ -183,6 +187,9 @@ bool RS_FilterDXFRW::fileImport(RS_Graphic& g, const QString& file, RS2::FormatT
         dxfRW dxfR(QFile::encodeName(file));
 
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file");
+        if (RS_Debug::D_DEBUGGING == RS_DEBUG->getLevel()) {
+            dxfR.setDebug(DRW::DebugLevel::Debug);
+        }
         bool success = dxfR.read(this, true);
         RS_DEBUG->print("RS_FilterDXFRW::fileImport: reading file: OK");
         //graphic->setAutoUpdateBorders(true);
@@ -571,7 +578,7 @@ void RS_FilterDXFRW::addLWPolyline(const DRW_LWPolyline& data) {
     RS_Polyline *polyline = new RS_Polyline(currentContainer, d);
     setEntityAttributes(polyline, &data);
 
-    std::vector< std::pair<RS_Vector, double> > verList;
+    std::vector<std::pair<RS_Vector, double> > verList;
     for (auto const& v: data.vertlist)
         verList.emplace_back(std::make_pair(RS_Vector{v->x, v->y}, v->bulge));
 
@@ -625,19 +632,23 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 		setEntityAttributes(splinePoints, data);
 		currentContainer->addEntity(splinePoints);
 
-		for(auto const& vert: data->controllist) {
-			RS_Vector v(vert->x, vert->y);
-			splinePoints->addControlPoint(v);
+        for(auto const& vert: data->controllist) {
+            splinePoints->addControlPoint({vert->x, vert->y});
 		}
+
 		splinePoints->update();
 		return;
 	}
 
-        RS_Spline* spline;
-        if (data->degree>=1 && data->degree<=3) {
+    RS_Spline* spline = nullptr;
+    if (data->degree >= 1 && data->degree <= 3) {
         RS_SplineData d(data->degree, ((data->flags&0x1)==0x1));
-		if (data->knotslist.size())
-			d.knotslist = data->knotslist;
+        if (data->knotslist.size()) {
+            double tolknot {(0 >= data->tolknot) ? 1e-7 : data->tolknot};
+            for (auto const& k : data->knotslist) {
+                d.knotslist.push_back( RS_Math::round(k, tolknot));
+            }
+        }
         spline = new RS_Spline(currentContainer, d);
         setEntityAttributes(spline, data);
 
@@ -649,13 +660,13 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
         return;
 	}
 	for (auto const& vert: data->controllist)
-		spline->addControlPoint({vert->x, vert->y});
+        spline->addControlPoint({vert->x, vert->y});
 
     if (data->ncontrol== 0 && data->degree != 2){
-		for (auto const& vert: data->fitlist)
-			spline->addControlPoint({vert->x, vert->y});
-
+        for (auto const& vert: data->fitlist)
+            spline->addControlPoint({vert->x, vert->y});
     }
+
     spline->update();
 }
 
@@ -679,7 +690,7 @@ void RS_FilterDXFRW::addInsert(const DRW_Insert& data) {
 					sp, nullptr, RS2::NoUpdate);
     RS_Insert* entity = new RS_Insert(currentContainer, d);
     setEntityAttributes(entity, &data);
-    RS_DEBUG->print("  id: %d", entity->getId());
+    RS_DEBUG->print("  id: %lu", entity->getId());
 //    entity->update();
     currentContainer->addEntity(entity);
 }
@@ -752,7 +763,11 @@ void RS_FilterDXFRW::addMText(const DRW_MText& data) {
     if (oldMText) {
         interlin = data.interlin*0.96;
         if (valign == RS_MTextData::VABottom) {
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+            QStringList tl = mtext.split('\n', Qt::SkipEmptyParts);
+#else
             QStringList tl = mtext.split('\n', QString::SkipEmptyParts);
+#endif
             if (!tl.isEmpty()) {
                 QString txt = tl.at(tl.size()-1);
                 RS_TextData d(RS_Vector(0.,0.,0.), RS_Vector(0.,0.,0.),
@@ -1329,6 +1344,11 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     graphic->getVariableInt("$AUNITS", 0);
     graphic->getVariableInt("$AUPREC", 4);
 
+	//initialize points drawing style vars if not present in dxf file
+	if( graphic->getVariableInt("$PDMODE", -999) < 0)
+		graphic->addVariable("$PDMODE", LC_DEFAULTS_PDMode, DXF_FORMAT_GC_VarName);
+	if( graphic->getVariableDouble("$PDSIZE", -999.9) < -100.0)
+		graphic->addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_VarName);
 
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
     acadver.replace(QRegExp("[a-zA-Z]"), "");
@@ -1340,15 +1360,21 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
     oldMText = false;
     isLibDxfRw = false;
     libDxfRwVersion = 0;
-    QStringList commentList = QString::fromStdString( data->getComments()).split('\n',QString::SkipEmptyParts);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    auto option = Qt::SkipEmptyParts;
+#else
+    auto option = QString::SkipEmptyParts;
+#endif
+    QStringList commentList = QString::fromStdString( data->getComments()).split('\n', option);
     for( auto commentLine: commentList) {
-        QStringList commentWords = commentLine.split(' ',QString::SkipEmptyParts);
+
+        QStringList commentWords = commentLine.split(' ', option);
         if( 0 < commentWords.size()) {
             if( "dxflib" == commentWords.at(0)) {
                 oldMText = true;
                 break;
             } else if( "dxfrw" == commentWords.at(0)) {
-                QStringList libVersionList = commentWords.at(1).split('.',QString::SkipEmptyParts);
+                QStringList libVersionList = commentWords.at(1).split('.', option);
                 if( 2 < libVersionList.size()) {
                     isLibDxfRw = true;
                     libDxfRwVersion = LIBDXFRW_VERSION( libVersionList.at(0).toInt(),
@@ -2273,13 +2299,14 @@ void RS_FilterDXFRW::writePolyline(RS_Polyline* p) {
 }
 
 
-
 /**
  * Writes the given spline entity to the file.
  */
 void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
+    if (s==nullptr)
+        return;
 
-    if (s->getNumberOfControlPoints() < s->getDegree()+1) {
+    if (s->getNumberOfControlPoints() < size_t(s->getDegree()+1)) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterDXF::writeSpline: "
                         "Discarding spline: not enough control points given.");
         return;
@@ -2305,40 +2332,27 @@ void RS_FilterDXFRW::writeSpline(RS_Spline *s) {
         return;
     }
 
-    DRW_Spline sp;
+    DRW_Spline sp{};
 
-    if (s->isClosed())
-        sp.flags = 11;
-    else
-        sp.flags = 8;
-    sp.ncontrol = s->getNumberOfControlPoints();
-    sp.degree = s->getDegree();
-    sp.nknots = sp.ncontrol + sp.degree + 1;
-
-    // write spline knots:
-	if (s->getData().knotslist.size()) {
-		sp.knotslist = s->getData().knotslist;
-	} else {
-		int k = sp.degree+1;
-		for (int i=1; i<=sp.nknots; i++) {
-			if (i<=k) {
-				sp.knotslist.push_back(0.0);
-			} else if (i<=sp.nknots-k) {
-				sp.knotslist.push_back(1.0/(sp.nknots-2*k+1) * (i-k));
-			} else {
-				sp.knotslist.push_back(1.0);
-			}
-		}
-	}
+    // dxf spline group code=70
+    // bit coded: 1: closed; 2: periodic; 4: rational; 8: planar; 16:linear
+    sp.flags = (s->isClosed()) ? 0x1011 : 0x1000;
 
     // write spline control points:
-	auto cp = s->getControlPoints();
-	for (const RS_Vector& v: cp)
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+    for (const RS_Vector& v: s->getControlPoints())
+    {
+        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
+    }
+
+    sp.ncontrol = sp.controllist.size();
+    sp.degree = s->getDegree();
+
+    // knot vector from RS_Spline
+    sp.knotslist = (s->isClosed()) ? s->knotu(sp.ncontrol, sp.degree + 1) : s->knot(sp.ncontrol, sp.degree + 1);
+    sp.nknots = sp.knotslist.size();
 
     getEntityAttributes(&sp, s);
     dxfW->writeSpline(&sp);
-
 }
 
 
@@ -2352,7 +2366,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 
 	if(nCtrls < 3)
 	{
-		if(nCtrls > 1)
+        if(nCtrls > 1)
 		{
 			DRW_Line line;
 			line.basePoint.x = cp.at(0).x;
@@ -2411,7 +2425,7 @@ void RS_FilterDXFRW::writeSplinePoints(LC_SplinePoints *s)
 
 	// write spline control points:
 	for (auto const& v: cp)
-		sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y, 0.));
+        sp.controllist.push_back(std::make_shared<DRW_Coord>(v.x, v.y));
 
 	getEntityAttributes(&sp, s);
 	dxfW->writeSpline(&sp);
@@ -2498,7 +2512,11 @@ void RS_FilterDXFRW::writeMText(RS_MText* t) {
         } else if (t->getVAlign()==RS_MTextData::VABottom) {
             text->alignV = DRW_Text::VBaseLine;
         }
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        QStringList txtList = t->getText().split('\n',Qt::KeepEmptyParts);
+#else
         QStringList txtList = t->getText().split('\n',QString::KeepEmptyParts);
+#endif
         double dist = t->getLineSpacingFactor()*5*t->getHeight()/3;
         bool setSec = false;
         if (text->alignH != DRW_Text::HLeft || text->alignV != DRW_Text::VBaseLine) {

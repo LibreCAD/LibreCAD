@@ -29,11 +29,11 @@
 #ifndef RS_DOCUMENT_H
 #define RS_DOCUMENT_H
 
-#include "rs_layerlist.h"
 #include "rs_entitycontainer.h"
 #include "rs_undo.h"
 
 class RS_BlockList;
+class RS_LayerList;
 
 /**
  * Base class for documents. Documents can be either graphics or
@@ -47,9 +47,8 @@ class RS_Document : public RS_EntityContainer,
     public RS_Undo {
 public:
 	RS_Document(RS_EntityContainer* parent=nullptr);
-	virtual ~RS_Document() = default;
 
-    virtual RS_LayerList* getLayerList() = 0;
+    virtual RS_LayerList* getLayerList()= 0;
     virtual RS_BlockList* getBlockList() = 0;
 
     virtual void newDoc() = 0;
@@ -62,15 +61,15 @@ public:
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
      */
-    virtual bool isDocument() const {
+    bool isDocument() const override {
         return true;
     }
 
     /**
-     * Removes an entity from the entiy container. Implementation
+     * Removes an entity from the entity container. Implementation
      * from RS_Undo.
      */
-    virtual void removeUndoable(RS_Undoable* u) {
+    void removeUndoable(RS_Undoable* u) override {
         if (u && u->undoRtti()==RS2::UndoableEntity && u->isUndone()) {
 			removeEntity(static_cast<RS_Entity*>(u));
         }
@@ -86,7 +85,7 @@ public:
     /**
      * Sets the currently active drawing pen to p.
      */
-    void setActivePen(RS_Pen p) {
+    void setActivePen(const RS_Pen& p) {
         activePen = p;
     }
 
@@ -108,14 +107,14 @@ public:
     /**
      * Sets file name for the document currently loaded.
      */
-    void setFilename(const QString& fn) {
-        filename = fn;
+    void setFilename(QString fn) {
+        filename = std::move(fn);
     }
 
 	/**
 	 * Sets the documents modified status to 'm'.
 	 */
-	virtual void setModified(bool m) {
+    void setModified(bool m) {
 		//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
 		modified = m;
 	}
@@ -124,7 +123,7 @@ public:
 	 * @retval true The document has been modified since it was last saved.
 	 * @retval false The document has not been modified since it was last saved.
 	 */
-    virtual bool isModified() const {
+    bool isModified() const {
         return modified;
     }
 
@@ -138,18 +137,17 @@ public:
 
 protected:
     /** Flag set if the document was modified and not yet saved. */
-    bool modified;
+    bool modified = false;
     /** Active pen. */
     RS_Pen activePen;
     /** File name of the document or empty for a new document. */
     QString filename;
 	/** Auto-save file name of document. */
-        QString autosaveFilename;
+    QString autosaveFilename;
 	/** Format type */
-	RS2::FormatType formatType;
-    RS_GraphicView * gv;//used to read/save current view
+    RS2::FormatType formatType = RS2::FormatUnknown;
+    //used to read/save current view
+    RS_GraphicView * gv = nullptr;
 
 };
-
-
 #endif

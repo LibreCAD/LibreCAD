@@ -23,24 +23,24 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
 #include "rs_actionselectsingle.h"
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_selection.h"
+
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_selection.h"
 
 
 
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* action_select,
-											 std::initializer_list<RS2::EntityType> const& entityTypeList)
+                                             QList<RS2::EntityType> entityTypeList)
     :RS_ActionInterface("Select Entities", container, graphicView)
-    ,entityTypeList(entityTypeList)
-    ,en(nullptr)
+    ,entityTypeList(std::move(entityTypeList))
     ,actionSelect(action_select)
 {
     actionType = RS2::ActionSelectSingle;
@@ -91,11 +91,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
     }
     else
     {
-        if (entityTypeList.size()) {
-            en = catchEntity(e, entityTypeList);
-        }else{
-            en = catchEntity(e);
-        }
+        en = catchEntity(e, entityTypeList);
         trigger();
     }
 }

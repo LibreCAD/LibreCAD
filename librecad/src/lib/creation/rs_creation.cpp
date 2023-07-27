@@ -25,27 +25,30 @@
 **********************************************************************/
 
 #include<cmath>
+
 #include <QString>
 #include <QFileInfo>
-#include "rs_creation.h"
-#include "rs_document.h"
-#include "rs_constructionline.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
+
 #include "rs_arc.h"
 #include "rs_block.h"
-#include "rs_line.h"
+#include "rs_constructionline.h"
 #include "rs_circle.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
+#include "rs_document.h"
 #include "rs_ellipse.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_image.h"
-#include "lc_hyperbola.h"
-#include "lc_splinepoints.h"
-#include "rs_modification.h"
-#include "rs_information.h"
+#include "rs_line.h"
 #include "rs_math.h"
-#include "rs_debug.h"
+#include "rs_modification.h"
+#include "rs_units.h"
+#include "lc_hyperbola.h"
 #include "lc_undosection.h"
+#include "lc_splinepoints.h"
 
 /**
  * Default constructor.
@@ -1070,7 +1073,7 @@ RS_Insert* RS_Creation::createLibraryInsert(RS_LibraryInsertData& data) {
     RS_Graphic g;
     if (!g.open(data.file, RS2::FormatUnknown)) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Creation::createLibraryInsert: Cannot open file: %s");
+                        "RS_Creation::createLibraryInsert: Cannot open file: %s", data.file.toStdString().c_str());
 		return nullptr;
     }
 

@@ -21,19 +21,25 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_actiondrawcircletan3.h"
+
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_circle.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
+#include "rs_information.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "lc_quadratic.h"
-#include "rs_information.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "lc_quadratic.h"
+
+namespace {
+
+    //list of entity types supported by current action
+    const EntityTypeList enTypeList = {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
+}
 
 struct RS_ActionDrawCircleTan3::Points {
 		std::vector<RS_AtomicEntity*> circles;
@@ -45,7 +51,6 @@ struct RS_ActionDrawCircleTan3::Points {
 		RS_VectorSolutions centers;
 };
 
-RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;
 
 
 /**
@@ -56,11 +61,13 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw circle inscribed",
-							   container, graphicView)
-	, pPoints(new Points{})
+                               container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircleTan3;
 }
+
+RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;
 
 void RS_ActionDrawCircleTan3::init(int status) {
 	RS_PreviewActionInterface::init(status);
@@ -111,7 +118,7 @@ void RS_ActionDrawCircleTan3::trigger() {
 	setStatus(SetCircle1);
 
 	RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger():"
-					" entity added: %d", circle->getId());
+					" entity added: %lu", circle->getId());
 }
 
 
@@ -249,12 +256,12 @@ bool RS_ActionDrawCircleTan3::getData(){
 		}
 		}
 
-		double d;
 
 		//line passes circle center, need a second parabola as the image of the line
 		for(int j=1;j<=2;j++){
 			if(pPoints->circles[(i+j)%3]->rtti() == RS2::EntityCircle){
-				pPoints->circles[i]->getNearestPointOnEntity(pPoints->circles[(i+j)%3]->getCenter(),
+                double d = RS_MAXDOUBLE;
+                pPoints->circles[i]->getNearestPointOnEntity(pPoints->circles[(i+j)%3]->getCenter(),
 						false,&d);
 				if(d<RS_TOLERANCE) {
 					LC_Quadratic lc2(pPoints->circles[i],pPoints->circles[(i+j)%3], true);
@@ -272,7 +279,8 @@ bool RS_ActionDrawCircleTan3::getData(){
 		}
 
 		for(auto const& v: sol1){
-			pPoints->circles[i]->getNearestPointOnEntity(v,false,&d);
+            double d = RS_MAXDOUBLE;
+            pPoints->circles[i]->getNearestPointOnEntity(v,false,&d);
 			auto data = std::make_shared<RS_CircleData>(v,d);
 			if(pPoints->circles[(i+1)%3]->isTangent(*data)==false) continue;
 			if(pPoints->circles[(i+2)%3]->isTangent(*data)==false) continue;
@@ -302,7 +310,7 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 	for(size_t i=0;i<pPoints->candidates.size();++i){
 
 		preview->addEntity(new RS_Point(preview.get(), RS_PointData(pPoints->candidates.at(i)->center)));
-		double d;
+        double d = RS_MAXDOUBLE;
 		RS_Circle(nullptr, *pPoints->candidates.at(i)).getNearestPointOnEntity(pPoints->coord,false,&d);
 		double dCenter=pPoints->coord.distanceTo(pPoints->candidates.at(i)->center);
 		d=std::min(d,dCenter);
@@ -437,11 +445,6 @@ void RS_ActionDrawCircleTan3::commandEvent(RS_CommandEvent* e) {
 	}
 }
 */
-
-QStringList RS_ActionDrawCircleTan3::getAvailableCommands() {
-	QStringList cmd;
-	return cmd;
-}
 
 void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
 	switch (getStatus()) {

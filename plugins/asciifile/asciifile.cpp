@@ -10,6 +10,8 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
+#include <cmath>
+
 #include <QtPlugin>
 #include <QPicture>
 #include <QPainter>
@@ -21,11 +23,9 @@
 #include <QPushButton>
 #include <QFileDialog>
 #include <QSettings>
-#include <cmath>
 
 #include <QMessageBox>
 
-#include "document_interface.h"
 #include "asciifile.h"
 
 PluginCapabilities AsciiFile::getCapabilities() const
@@ -38,7 +38,7 @@ PluginCapabilities AsciiFile::getCapabilities() const
 
 QString AsciiFile::name() const
  {
-     return (tr("Read ascii points"));
+     return tr("Read ascii points");
  }
 
 void AsciiFile::execComm(Document_Interface *doc,
@@ -184,10 +184,7 @@ void pointBox::setInLayout(QLayout *lo)
 {
     vbox->addLayout(lo);
 }
-pointBox::~pointBox()
-{
 
-}
 /*****************************/
 textBox::textBox(const QString & title, const QString & label, QWidget * parent) :
     pointBox(title, label, parent)
@@ -215,12 +212,6 @@ textBox::textBox(const QString & title, const QString & label, QWidget * parent)
 
     setInLayout(loimage);
 }
-
-textBox::~textBox()
-{
-
-}
-
 
 /*****************************/
 dibPunto::dibPunto(QWidget *parent) :  QDialog(parent)
@@ -341,14 +332,22 @@ void dibPunto::procesFile(Document_Interface *doc)
     currDoc = doc;
 
 //Warning, can change adding or reordering "formatedit"
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts;
+#else
     QString::SplitBehavior skip = QString::KeepEmptyParts;
+#endif
     switch (formatedit->currentIndex()) {
     case 0:
         sep = " ";
         break;
     case 3:
         sep = " ";
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        skip = Qt::SkipEmptyParts;
+#else
         skip = QString::SkipEmptyParts;
+#endif
         break;
     case 2:
         sep = ",";
@@ -390,7 +389,7 @@ void dibPunto::procesFile(Document_Interface *doc)
     if ( connectPoints->isChecked() )
         drawLine();
 
-    currDoc = NULL;
+    currDoc = nullptr;
 
 }
 
@@ -400,7 +399,7 @@ void dibPunto::drawLine()
     int i;
 
     for (i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty()){
             prevP.setX(pd->x.toDouble());
             prevP.setY(pd->y.toDouble());
@@ -408,7 +407,7 @@ void dibPunto::drawLine()
         }
     }
     for (; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty()){
             nextP.setX(pd->x.toDouble());
             nextP.setY(pd->y.toDouble());
@@ -423,7 +422,7 @@ void dibPunto::draw2D()
     QPointF pt;
     currDoc->setLayer(pt2d->getLayer());
     for (int i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty()){
             pt.setX(pd->x.toDouble());
             pt.setY(pd->y.toDouble());
@@ -436,7 +435,7 @@ void dibPunto::draw3D()
     QPointF pt;
     currDoc->setLayer(pt3d->getLayer());
     for (int i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty()){
             pt.setX(pd->x.toDouble());
             pt.setY(pd->y.toDouble());
@@ -513,7 +512,7 @@ void dibPunto::drawNumber()
     currDoc->setLayer(ptnumber->getLayer());
     QString sty = ptnumber->getStyleStr();
     for (int i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty() && !pd->number.isEmpty()){
             newx = pd->x.toDouble() + incx;
             newy = pd->y.toDouble() + incy;
@@ -535,7 +534,7 @@ void dibPunto::drawElev()
     currDoc->setLayer(ptelev->getLayer());
     QString sty = ptelev->getStyleStr();
     for (int i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty() && !pd->z.isEmpty()){
             newx = pd->x.toDouble() + incx;
             newy = pd->y.toDouble() + incy;
@@ -555,7 +554,7 @@ void dibPunto::drawCode()
     currDoc->setLayer(ptcode->getLayer());
     QString sty = ptcode->getStyleStr();
     for (int i = 0; i < dataList.size(); ++i) {
-        pointData *pd = dataList.at(i);
+        PointData *pd = dataList.at(i);
         if (!pd->x.isEmpty() && !pd->y.isEmpty() && !pd->code.isEmpty()){
             newx = pd->x.toDouble() + incx;
             newy = pd->y.toDouble() + incy;
@@ -568,13 +567,13 @@ void dibPunto::drawCode()
 void dibPunto::procesfileODB(QFile* file, QString sep)
 {
     QStringList data;
-    pointData *pd;
+    PointData *pd;
 
     while (!file->atEnd()) {
         QString line = file->readLine();
         line.remove ( line.size()-2, 1);
         data = line.split(sep);
-        pd = new pointData;
+        pd = new PointData;
         int i = 0;
         int j = data.size();
         if (i<j && data.at(i).compare("4")==0 ){
@@ -593,17 +592,22 @@ void dibPunto::procesfileODB(QFile* file, QString sep)
     }
 
 }
+
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+void dibPunto::procesfileNormal(QFile* file, QString sep, Qt::SplitBehaviorFlags skip)
+#else
 void dibPunto::procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip)
+#endif
 {
     //    QString outname, sep;
     QStringList data;
-    pointData *pd;
+    PointData *pd;
     while (!file->atEnd()) {
         QString line = file->readLine();
 		if(line.isEmpty()) continue;
         line.remove ( line.size()-1, 1);
         data = line.split(sep, skip);
-        pd = new pointData;
+        pd = new PointData;
         int i = 0;
         switch(data.size()){
         case 0:

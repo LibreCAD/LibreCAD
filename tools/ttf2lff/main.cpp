@@ -300,15 +300,15 @@ int main(int argc, char* argv[]) {
     }
 
     for (i=1; i<argc; ++i) {
-        if (!strcmp(argv[i], "-n")) {
+        if (!strncmp(argv[i], "-n", 3)) {
             ++i;
             nodes = atoi(argv[i]);
         }
-        else if (!strcmp(argv[i], "-a")) {
+        else if (!strncmp(argv[i], "-a", 3)) {
             ++i;
             author = argv[i];
         }
-        else if (!strcmp(argv[i], "-l")) {
+        else if (!strncmp(argv[i], "-l", 3)) {
             ++i;
             letterSpacing = atof(argv[i]);
         }
@@ -316,7 +316,7 @@ int main(int argc, char* argv[]) {
             ++i;
             wordSpacing = atof(argv[i]);
         }
-        else if (!strcmp(argv[i], "-d")) {
+        else if (!strncmp(argv[i], "-d", 3)) {
             ++i;
             precision = atoi(argv[i]);
         }
@@ -324,11 +324,11 @@ int main(int argc, char* argv[]) {
             ++i;
             lineSpacingFactor = atof(argv[i]);
         }
-        else if (!strcmp(argv[i], "-h")) {
+        else if (!strncmp(argv[i], "-h", 3)) {
             usage(0);
             /* NOTREACHED */
         }
-        else if (!strcmp(argv[i], "-L")) {
+        else if (!strncmp(argv[i], "-L", 3)) {
             ++i;
             license = argv[i];
         }

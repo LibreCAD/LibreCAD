@@ -44,9 +44,9 @@ struct RS_SplineData {
 
 
 	/** Degree of the spline (1, 2, 3) */
-	size_t degree;
+    int degree = 3;
 	/** Closed flag. */
-	bool closed;
+    bool closed = false;
 	/** Control points of the spline. */
 	std::vector<RS_Vector> controlPoints;
 	std::vector<double> knotslist;
@@ -82,10 +82,10 @@ public:
 	}
 
 	/** Sets the splines degree (1-3). */
-	void setDegree(size_t deg);
+    void setDegree(int degree);
 
 	/** @return Degree of this spline curve (1-3).*/
-	size_t getDegree() const;
+    int getDegree() const;
 
 	/** @return 0. */
 	int getNumberOfKnots() {
@@ -150,6 +150,8 @@ public:
 
 		void calculateBorders() override;
 
+        friend class RS_FilterDXFRW;
+
 private:
 		std::vector<double> knot(size_t num, size_t order) const;
 		void rbspline(size_t npts, size_t k, size_t p1,
@@ -162,6 +164,14 @@ private:
 		              const std::vector<RS_Vector>& b,
 		              const std::vector<double>& h,
 		              std::vector<RS_Vector>& p) const;
+
+        /**
+         * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
+         *          only implemented for cubic splines
+         * @return bool - true, if the control points are already wrapped.
+         *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
+         */
+        bool hasWrappedControlPoints() const;
 
 protected:
 		RS_SplineData data;

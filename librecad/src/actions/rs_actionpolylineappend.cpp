@@ -109,7 +109,7 @@ void RS_ActionPolylineAppend::trigger() {
 	graphicView->drawEntity(pPoints->polyline);
 	graphicView->moveRelativeZero(pPoints->polyline->getEndpoint());
 	drawSnapper();
-	RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %d",
+    RS_DEBUG->print("RS_ActionDrawPolyline::trigger(): polyline added: %lu",
 					pPoints->polyline->getId());
 
 	pPoints->polyline = nullptr;
@@ -136,7 +136,7 @@ void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent* e) {
 				RS_Polyline* op=static_cast<RS_Polyline*>(originalPolyline);
 				RS_Entity* entFirst = op->firstEntity();
 				RS_Entity* entLast = op->lastEntity();
-				double dist = graphicView->toGraphDX(snapRange)*0.9;
+                double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
 				RS_Entity* nearestSegment = originalPolyline->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
 									graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
 				pPoints->polyline = static_cast<RS_Polyline*>(originalPolyline->clone());

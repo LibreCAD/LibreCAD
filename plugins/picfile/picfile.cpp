@@ -233,7 +233,11 @@ void picPunto::processFilePic(QFile* file)
 {
     //    QString outname, sep;
     QString sep = " ";
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts;
+#else
     QString::SplitBehavior skip = QString::KeepEmptyParts;
+#endif
     QStringList data;
     QString cmd;
     pointData *pd;

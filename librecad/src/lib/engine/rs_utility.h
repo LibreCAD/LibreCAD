@@ -35,11 +35,9 @@ class QString;
  *
  * @author Andrew Mustun
  */
-class RS_Utility {
-public:
-    static QString doubleToString(double value, int precision=6);
-};
+namespace RS_Utility {
+    QString doubleToString(double value, int precision=6);
+}
 
 #endif
-
 // EOF

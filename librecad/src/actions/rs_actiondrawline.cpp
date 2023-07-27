@@ -139,7 +139,7 @@ void RS_ActionDrawLine::trigger()
 
     graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
-    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %d",
+    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",
                     line->getId());
 }
 

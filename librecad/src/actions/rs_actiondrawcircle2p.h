@@ -64,8 +64,6 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
 
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;

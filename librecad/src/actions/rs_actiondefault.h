@@ -27,6 +27,8 @@
 #ifndef RS_ACTIONSELECTWINDOW_H
 #define RS_ACTIONSELECTWINDOW_H
 
+#include <memory>
+
 #include "rs_previewactioninterface.h"
 
 
@@ -37,6 +39,8 @@
  */
 class RS_ActionDefault : public RS_PreviewActionInterface {
     Q_OBJECT
+
+    using BASE_CLASS = RS_PreviewActionInterface;
 public:
     /**
      * Action States.
@@ -60,6 +64,8 @@ public:
 	void finish(bool /*updateTB*/ = true ) override{}
 
 	void init(int status=0) override;
+    void resume() override;
+    void suspend() override;
 
 	void keyPressEvent(QKeyEvent* e) override;
 	void keyReleaseEvent(QKeyEvent* e) override;
@@ -73,13 +79,20 @@ public:
 
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
-//    void resume() override;
+
+    // clear temporary entities for highlighting
+    void clearHighLighting();
 
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction restrBak;
+    RS2::SnapRestriction snapRestriction;
 
+
+    private:
+
+    void highlightHoveredEntities(QMouseEvent* currentMousePosition);
+    void highlightEntity(RS_Entity* entity);
 };
 
 #endif

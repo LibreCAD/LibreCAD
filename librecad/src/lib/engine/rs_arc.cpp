@@ -28,7 +28,6 @@
 #include "rs_arc.h"
 
 #include "rs_line.h"
-#include "rs_constructionline.h"
 #include "rs_linetypepattern.h"
 #include "rs_information.h"
 #include "rs_math.h"
@@ -216,27 +215,20 @@ bool RS_Arc::createFrom2PDirectionAngle(const RS_Vector& startPoint,
 bool RS_Arc::createFrom2PBulge(const RS_Vector& startPoint, const RS_Vector& endPoint,
                                double bulge) {
     data.reversed = (bulge<0.0);
-    double alpha = atan(bulge)*4.0;
+    double alpha = std::atan(bulge)*4.0;
 
     RS_Vector middle = (startPoint+endPoint)/2.0;
     double dist = startPoint.distanceTo(endPoint)/2.0;
 
     // alpha can't be 0.0 at this point
-    data.radius = fabs(dist / sin(alpha/2.0));
+    data.radius = std::abs(dist / std::sin(alpha/2.0));
 
-    double wu = fabs(RS_Math::pow(data.radius, 2.0) - RS_Math::pow(dist, 2.0));
-    double h = sqrt(wu);
+    double wu = std::abs(data.radius*data.radius - dist*dist);
     double angle = startPoint.angleTo(endPoint);
+    bool reversed = std::signbit(bulge);
+    angle = reversed ? angle - M_PI_2 : angle + M_PI_2;
 
-    if (bulge>0.0) {
-		angle+=M_PI_2;
-    } else {
-		angle-=M_PI_2;
-    }
-
-    if (fabs(alpha)>M_PI) {
-        h*=-1.0;
-    }
+    double h = (std::abs(alpha)>M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
 
     data.center.setPolar(h, angle);
     data.center+=middle;
@@ -292,7 +284,7 @@ RS_Vector RS_Arc::getEndpoint() const
 RS_VectorSolutions RS_Arc::getRefPoints() const
 {
 	//order: start, end, center
-	return {getStartpoint(), getEndpoint(), data.center};
+    return {{getStartpoint(), getEndpoint(), data.center}};
 }
 
 double RS_Arc::getDirection1() const {
@@ -951,115 +943,21 @@ void RS_Arc::draw(RS_Painter* painter, RS_GraphicView* view,
 void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                   double& patternOffset) {
 
-	if (!( painter && view)) return;
+    if (painter == nullptr || view == nullptr)
+        return;
     //visible in graphic view
-    if(isVisibleInWindow(view)==false) return;
+    if(!isVisibleInWindow(view))
+        return;
 
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
+
+    painter->drawArc(cp,
+                     ra,
+                     getAngle1(), getAngle2(),
+                     isReversed());
     double length=getLength()*view->getFactor().x;
-    //double styleFactor = getStyleFactor();
     patternOffset -= length;
-
-    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
-
-    // simple style-less lines
-    if ( !drawAsSelected && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
-        painter->drawArc(cp,
-                         ra,
-                         getAngle1(), getAngle2(),
-                         isReversed());
-        return;
-    }
-//    double styleFactor = getStyleFactor(view);
-    //        if (styleFactor<0.0) {
-    //            painter->drawArc(cp,
-    //                             ra,
-    //                             getAngle1(), getAngle2(),
-    //                             isReversed());
-    //            return;
-    //        }
-
-    // Pattern:
-    const RS_LineTypePattern* pat;
-    if (drawAsSelected)
-    {
-        pat = &RS_LineTypePattern::patternSelected;
-    } else {
-        pat = view->getPattern(getPen().getLineType());
-    }
-
-	if (!pat || ra<0.5) {//avoid division by zero from small ra
-		RS_DEBUG->print("%s: Invalid line pattern or radius too small, drawing arc using solid line", __func__);
-        painter->drawArc(cp, ra,
-                         getAngle1(),getAngle2(),
-                         isReversed());
-        return;
-    }
-
-//    patternOffset=remainder(patternOffset - length -0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
-
-    if (ra<RS_TOLERANCE_ANGLE){
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    painter->setPen(pen);
-
-
-
-    // create scaled pattern:
-	if(pat->num<=0) { //invalid pattern
-		RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Arc::draw(): invalid line pattern\n");
-		painter->drawArc(cp,
-						 ra,
-						 getAngle1(), getAngle2(),
-						 isReversed());
-		return;
-	}
-	std::vector<double> da(pat->num);
-    double patternSegmentLength(pat->totalLength);
-	double ira=1./ra;
-	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
-	for (size_t i=0; i<pat->num; i++){
-		//        da[j] = pat->pattern[i++] * styleFactor;
-		//fixme, stylefactor needed
-		da[i] =dpmm*(isReversed() ? -fabs(pat->pattern[i]):fabs(pat->pattern[i]));
-		if ( fabs(da[i]) < 1.) da[i] = copysign(1., da[i]);
-		da[i] *= ira;
-	}
-
-    //    bool done = false;
-    double total=remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength)-0.5*patternSegmentLength;
-
-	double a1{RS_Math::correctAngle(getAngle1())};
-	double a2{RS_Math::correctAngle(getAngle2())};
-
-    if(isReversed()) {//always draw from a1 to a2, so, patternOffset is automatic
-        if(a1<a2+RS_TOLERANCE_ANGLE) a2 -= 2.*M_PI;
-        total = a1 - total*ira; //in angle
-    }else{
-        if(a2<a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-        total = a1 + total*ira; //in angle
-    }
-    double limit(fabs(a1-a2));
-    double t2;
-
-	for(int j=0; fabs(total-a1) < limit; j=(j+1)%pat->num) {
-		t2=total+da[j];
-
-		if(pat->pattern[j] > 0.0 && fabs(t2-a2) < limit) {
-			double a11=(fabs(total-a2) < limit)?total:a1;
-			double a21=(fabs(t2-a1) < limit)?t2:a2;
-			painter->drawArc(cp, ra, a11, a21, isReversed());
-		}
-
-		total=t2;
-	}
 }
 
 
@@ -1086,14 +984,13 @@ RS_Vector RS_Arc::getMiddlePoint() const {
  * @return Angle length in rad.
  */
 double RS_Arc::getAngleLength() const {
-    double ret;
     double a=getAngle1();
     double b=getAngle2();
 
     if (isReversed()) std::swap(a,b);
-    ret = RS_Math::correctAngle(b-a);
+    double ret = RS_Math::correctAngle(b-a);
     // full circle:
-    if (fabs(remainder(ret,2.*M_PI))<RS_TOLERANCE_ANGLE) {
+    if (std::abs(std::remainder(ret, 2.*M_PI))<RS_TOLERANCE_ANGLE) {
         ret = 2*M_PI;
     }
 
@@ -1115,7 +1012,7 @@ double RS_Arc::getLength() const {
  * Gets the arc's bulge (tangens of angle length divided by 4).
  */
 double RS_Arc::getBulge() const {
-    double bulge = tan(fabs(getAngleLength())/4.0);
+    double bulge = std::tan(std::abs(getAngleLength())/4.0);
     if (isReversed()) {
         bulge*=-1;
     }

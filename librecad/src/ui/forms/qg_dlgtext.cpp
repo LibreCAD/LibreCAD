@@ -76,6 +76,50 @@ void QG_DlgText::init() {
     leOblique->setDisabled(true);
     updateUniCharComboBox(0);
     updateUniCharButton(0);
+
+    /*
+     * Ensure tabbing order of the widgets is as we would like. Using the Edit Tab
+     * Order tool in Qt Designer omits the "pen" compound widget from the tabbing
+     * list (as the tool is not aware that this user-written widget is a tabbable
+     * thing). The .ui file can be manually edited, but then if Qt Designer is used
+     * again to alter the layout, the pen widget gets dropped out of the order once
+     * more. Seems that the only reliable way of ensuring the order is correct is
+     * to set it programmatically.
+     */
+    QWidget::setTabOrder(cbLayer, wPen); // Layer -> Pen compound widget
+    QWidget::setTabOrder(wPen, cbFont); // Pen compound widget -> Font widget
+    QWidget::setTabOrder(cbFont, leHeight); // etc
+    QWidget::setTabOrder(leHeight, leAngle);
+    QWidget::setTabOrder(leAngle, leOblique);
+    QWidget::setTabOrder(leOblique, leWidthRel);
+    QWidget::setTabOrder(leWidthRel, bTL);
+    QWidget::setTabOrder(bTL, bTC);
+    QWidget::setTabOrder(bTC, bTR);
+    QWidget::setTabOrder(bTR, bML);
+    QWidget::setTabOrder(bML, bMC);
+    QWidget::setTabOrder(bMC, bMR);
+    QWidget::setTabOrder(bMR, bLL);
+    QWidget::setTabOrder(bLL, bLC);
+    QWidget::setTabOrder(bLC, bLR);
+    QWidget::setTabOrder(bLR, bBL);
+    QWidget::setTabOrder(bBL, bBC);
+    QWidget::setTabOrder(bBC, bBR);
+    QWidget::setTabOrder(bBR, rbFit);
+    QWidget::setTabOrder(rbFit, rbAligned);
+    QWidget::setTabOrder(rbAligned, rbMiddle);
+    QWidget::setTabOrder(rbMiddle, cbSymbol);
+    QWidget::setTabOrder(cbSymbol, cbUniPage);
+    QWidget::setTabOrder(cbUniPage, cbUniChar);
+    QWidget::setTabOrder(cbUniChar, bUnicode);
+    QWidget::setTabOrder(bUnicode, buttonBox);
+    QWidget::setTabOrder(buttonBox, bClear);
+    QWidget::setTabOrder(bClear, bLoad);
+    QWidget::setTabOrder(bLoad, bSave);
+    QWidget::setTabOrder(bSave, bCut);
+    QWidget::setTabOrder(bCut, bCopy);
+    QWidget::setTabOrder(bCopy, bPaste);
+    QWidget::setTabOrder(bPaste, teText); // Paste loops back to Text
+    QWidget::setTabOrder(teText, cbLayer); // Text widget -> Layer widget
 }
 
 

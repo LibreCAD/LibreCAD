@@ -81,7 +81,7 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
      */
     beginResetModel();
     listLayer.clear();
-    if (ll == NULL) {
+    if (ll == nullptr) {
         endResetModel();
         return;
     }
@@ -99,19 +99,17 @@ void QG_LayerModel::setLayerList(RS_LayerList* ll) {
 
 
 
-RS_Layer *QG_LayerModel::getLayer( int row ) {
+RS_Layer *QG_LayerModel::getLayer(int row) const {
     if ( row >= listLayer.size() || row < 0)
-        return NULL;
+        return nullptr;
     return listLayer.at(row);
 }
 
-
-
-QModelIndex QG_LayerModel::getIndex (RS_Layer * lay) {
+QModelIndex QG_LayerModel::getIndex (RS_Layer * lay) const {
     int row = listLayer.indexOf(lay);
     if (row<0)
-        return QModelIndex();
-    return createIndex ( row, NAME);
+        return {};
+    return createIndex (row, NAME);
 }
 
 
@@ -302,7 +300,7 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 void QG_LayerWidget::setLayerList(RS_LayerList* layerList, bool showByBlock) {
     this->layerList = layerList;
     this->showByBlock = showByBlock;
-    if (layerList != NULL) {
+    if (layerList != nullptr) {
         this->layerList->setLayerWitget(this);
     }
     update();
@@ -355,7 +353,7 @@ void QG_LayerWidget::update() {
     layerModel->setLayerList(layerList); // allow a null layerList; this clears the widget
 
     if (!layerList) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr layerList");
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr layerList");
         return;
     }
 
@@ -363,14 +361,13 @@ void QG_LayerWidget::update() {
 
     RS_Layer* activeLayer = layerList->getActive();
     if (!activeLayer) {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_LayerWidget::update: nullptr activeLayer");
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr activeLayer");
         layerModel->setActiveLayer(nullptr);
         return;
     }
-    activateLayer(activeLayer);
 
-    if (!lastLayer) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "QG_LayerWidget::update: nullptr lastLayer");
+    if (lastLayer == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "QG_LayerWidget::update: nullptr lastLayer");
         lastLayer = activeLayer;
     }
 
@@ -384,7 +381,7 @@ void QG_LayerWidget::restoreSelections() {
 
     QItemSelectionModel* selectionModel = layerView->selectionModel();
 
-    for (auto layer: *layerList) {
+    for (auto* layer: *layerList) {
         if (!layer) continue;
         if (!layer->isVisibleInLayerList()) continue;
         if (!layer->isSelectedInLayerList()) continue;
@@ -583,6 +580,15 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                  SLOT(slotLayersAdd()), 0);
         contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
                                  SLOT(slotLayersEdit()), 0);
+
+        contextMenu->addSeparator();
+
+        contextMenu->addAction( tr("&Export Selected Layer(s)"), actionHandler,
+                                &QG_ActionHandler::slotLayersExportSelected, 0);
+
+        contextMenu->addAction( tr("Export &Visible Layer(s)"), actionHandler,
+                                &QG_ActionHandler::slotLayersExportVisible,  0);
+
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
     }

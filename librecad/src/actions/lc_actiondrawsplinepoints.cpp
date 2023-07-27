@@ -59,7 +59,7 @@ struct LC_ActionDrawSplinePoints::Points {
 LC_ActionDrawSplinePoints::LC_ActionDrawSplinePoints(RS_EntityContainer& container,
 													 RS_GraphicView& graphicView):
 	RS_ActionDrawSpline( container, graphicView)
-  , pPoints(new Points{})
+  , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawSplinePoints;
 	setName("DrawSplinePoints");
@@ -100,7 +100,7 @@ void LC_ActionDrawSplinePoints::trigger()
 	RS_Vector r = graphicView->getRelativeZero();
 	graphicView->redraw(RS2::RedrawDrawing);
 	graphicView->moveRelativeZero(r);
-	RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %d",
+    RS_DEBUG->print("RS_ActionDrawSplinePoints::trigger(): spline added: %lu",
 		s->getId());
 
 	reset();

@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_MoveRotateData;
+struct RS_MoveRotateData;
 
 /**
  * This action class can handle user events to move and at the same

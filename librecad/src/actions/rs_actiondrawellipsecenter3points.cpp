@@ -19,21 +19,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-
-#include <QAction>
-#include <QMouseEvent>
 #include "rs_actiondrawellipsecenter3points.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
+#include <QAction>
+#include <QDebug>
+#include <QMouseEvent>
+
 #include "rs_circle.h"
-#include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
 #include "rs_preview.h"
 
-#include <QDebug>
-#include "rs_debug.h"
 
 struct RS_ActionDrawEllipseCenter3Points::Points {
 	RS_VectorSolutions points;
@@ -50,8 +49,8 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw ellipse by center and 3 points",
-						   container, graphicView)
-		, pPoints(new Points{})
+                           container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawEllipseCenter3Points;
 }
@@ -92,7 +91,7 @@ void RS_ActionDrawEllipseCenter3Points::trigger() {
     setStatus(SetCenter);
 
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 

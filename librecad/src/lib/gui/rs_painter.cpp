@@ -24,8 +24,10 @@
 **
 **********************************************************************/
 #include<cmath>
+#include<QPainterPath>
 #include<QPolygon>
-#include "rs_pen.h"
+
+#include "lc_splinepoints.h"
 #include "rs_color.h"
 #include "rs_painter.h"
 #include "rs_math.h"
@@ -42,7 +44,7 @@ void RS_Painter::createArc(QPolygon& pa,
         return;
     }
 
-    double aStep=fabs(2.0/radius);         // Angle Step (rad)
+    double aStep=std::abs(2.0/radius);         // Angle Step (rad)
     if(aStep>=0.5) aStep=0.5;
     if(reversed) {
         if(a1<=a2+RS_TOLERANCE) a1+=2.*M_PI;
@@ -65,12 +67,12 @@ void RS_Painter::createArc(QPolygon& pa,
     //QPointArray pa;
     pa.clear();
     //    pa<<QPoint(toScreenX(cp.x+cos(aStart)*radius), toScreenY(cp.y-sin(aStart)*radius));
-    double da=fabs(a2-a1);
-    for(a=a1; fabs(a-a1)<da; a+=aStep) {
-        pa<<QPoint(toScreenX(cp.x+cos(a)*radius), toScreenY(cp.y-sin(a)*radius));
+    double da=std::abs(a2-a1);
+    for(a=a1; std::abs(a-a1)<da; a+=aStep) {
+        pa<<QPoint(toScreenX(cp.x+std::cos(a)*radius), toScreenY(cp.y-std::sin(a)*radius));
     }
 
-    QPoint pt2(toScreenX(cp.x+cos(a2)*radius), toScreenY(cp.y-sin(a2)*radius));
+    QPoint pt2(toScreenX(cp.x+std::cos(a2)*radius), toScreenY(cp.y-std::sin(a2)*radius));
     if(pa.size()>0 && pa.last() != pt2) pa<<pt2;
 }
 
@@ -111,7 +113,7 @@ void RS_Painter::createEllipse(QPolygon& pa,
 //               toScreenY(vp.y));
 //    moveTo(toScreenX(vp.x),
 //           toScreenY(vp.y));
-    const double minDea=fabs(ea2-ea1)/2048.;
+    const double minDea=std::abs(ea2-ea1)/2048.;
     // Arc Counterclockwise:
     do {
 
@@ -119,7 +121,7 @@ void RS_Painter::createEllipse(QPolygon& pa,
         vp=va;
         double r2=va.scale(rvp).squared();
         if( r2<RS_TOLERANCE15) r2=RS_TOLERANCE15;
-        double aStep=ab/(r2*sqrt(r2));
+        double aStep=ab/(r2*std::sqrt(r2));
         if(aStep < minDea) aStep=minDea;
         if(aStep > M_PI/4.) aStep=M_PI/4.;
         ea1 += reversed?-aStep:aStep;
@@ -128,15 +130,106 @@ void RS_Painter::createEllipse(QPolygon& pa,
         vp.move(cp);
         pa<<QPoint(toScreenX(vp.x),
                toScreenY(vp.y));
-    } while(fabs(angle1-ea1)<dA);
+    } while(std::abs(angle1-ea1)<dA);
 
-    vp.set(cos(ea2)*radius1,
-           -sin(ea2)*radius2);
+    vp.set(std::cos(ea2)*radius1,
+           -std::sin(ea2)*radius2);
     vp.rotate(angleVector);
     vp.move(cp);
     pa<<QPoint(toScreenX(vp.x),
            toScreenY(vp.y));
 }
+
+QPainterPath RS_Painter::createSplinePoints(const LC_SplinePointsData& data) const
+{
+    size_t n = data.controlPoints.size();
+    if(n < 2)
+        return {};
+
+    RS_Vector vStart = data.controlPoints.front();
+    RS_Vector vControl(false), vEnd(false);
+
+    QPainterPath qPath(QPointF(vStart.x, vStart.y));
+
+    if(data.closed)
+    {
+        if(n < 3)
+        {
+            vEnd = data.controlPoints.at(1);
+            vControl = vEnd;
+            qPath.lineTo(QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vControl = vStart;
+        qPath.moveTo(QPointF(vControl.x, vControl.y));
+
+        vControl = data.controlPoints.at(0);
+        vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+
+        for(size_t i = 1; i < n - 1; i++)
+        {
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+        }
+
+        vControl = data.controlPoints.at(n - 1);
+        vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+    }
+    else
+    {
+        vEnd = data.controlPoints.at(1);
+        if(n < 3)
+        {
+            vControl = vEnd;
+            qPath.lineTo(QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vControl = vEnd;
+        vEnd = data.controlPoints.at(2);
+        if(n < 4)
+        {
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+
+        for(size_t i = 2; i < n - 2; i++)
+        {
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+        }
+
+        vControl = data.controlPoints.at(n - 2);
+        vEnd = data.controlPoints.at(n - 1);
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+    }
+
+    return qPath;
+}
+
 
 void RS_Painter::drawRect(const RS_Vector& p1, const RS_Vector& p2) {
     drawPolygon(QRect(int(p1.x+0.5), int(p1.y+0.5), int(p2.x - p1.x+0.5), int(p2.y - p1.y+0.5)));

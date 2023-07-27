@@ -1,4 +1,4 @@
-/****************************************************************************
+﻿/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -27,17 +27,18 @@
 
 #include "rs_ellipse.h"
 
+#include  "lc_quadratic.h"
+
 #include "rs_circle.h"
-#include "rs_line.h"
-#include "rs_graphic.h"
+#include "rs_debug.h"
+#include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_information.h"
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include  "lc_quadratic.h"
+#include "rs_painter.h"
 #include "rs_painterqt.h"
-#include "rs_debug.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* C99 math */
@@ -49,7 +50,7 @@
 #include <boost/math/tools/roots.hpp>
 #include <boost/math/special_functions/ellint_2.hpp>
 #if BOOST_VERSION > 104500
-#include <boost/math/tools/tuple.hpp>
+#include <boost/tuple/tuple.hpp>
 #endif
 #endif
 
@@ -58,11 +59,11 @@ namespace{
 class EllipseDistanceFunctor
 {
 public:
-	EllipseDistanceFunctor(RS_Ellipse const* ellipse, double const& target) :
+    EllipseDistanceFunctor(RS_Ellipse const& ellipse, double const& target) :
 		distance{target}
 	  , e{ellipse}
-	  , ra{e->getMajorRadius()}
-	  , k2{1.- e->getRatio()*e->getRatio()}
+      , ra{e.getMajorRadius()}
+      , k2{1. - e.getRatio() * e.getRatio()}
 	  , k2ra{k2 * ra}
 	{
 	}
@@ -70,29 +71,28 @@ public:
 		distance=target;
 	}
 #if BOOST_VERSION > 104500
-	boost::math::tuple<double, double, double> operator()(double const& z) const {
+    boost::tuples::tuple<double, double, double> operator()(double const& z) const {
 #else
 	boost::fusion::tuple<double, double, double> operator()(double const& z) const {
 #endif
-	double const cz=cos(z);
-	double const sz=sin(z);
-		//delta amplitude
-	double const d=sqrt(1-k2*sz*sz);
-		// return f(x), f'(x) and f''(x)
+        double const cz=std::cos(z);
+        double const sz=std::sin(z);
+        //delta amplitude
+        double const d=std::sqrt(1-k2*sz*sz);
+        // return f(x), f'(x) and f''(x)
 #if BOOST_VERSION > 104500
-	return boost::math::make_tuple(
+        return boost::tuples::make_tuple(
 #else
-	return boost::fusion::make_tuple(
+        return boost::fusion::make_tuple(
 #endif
-					e->getEllipseLength(z)-distance,
-					ra*d,
-					k2ra*sz*cz/d
-					);
-	}
+                    e.getEllipseLength(z) - distance,
+                    ra * d,
+                    k2ra * sz * cz / d );
+        }
 
 private:
 	double distance;
-	RS_Ellipse const* const e;
+    RS_Ellipse const& e;
 	const double ra;
 	const double k2;
 	const double k2ra;
@@ -129,7 +129,7 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 		trimmed = trimAmount > 0 ? wholeLength - trimAmount : - trimAmount;
 
 	//solve equation of the distance by second order newton_raphson
-	EllipseDistanceFunctor X(&e, trimmed);
+    EllipseDistanceFunctor X{e, trimmed};
 	using namespace boost::math::tools;
 	double const sol =
 			halley_iterate<EllipseDistanceFunctor,double>(X,
@@ -139,9 +139,70 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 														  digits);
 
 	RS_Vector const vp = e.getEllipsePoint(sol);
-	if (dist) *dist = vp.distanceTo(coord);
-	return vp;
+    if (dist)
+        *dist = vp.distanceTo(coord);
+    return vp;
 }
+
+/**
+ * @brief The ClosestElliptic class: find the closest point on an ellipse for a given point.
+ * Intended for ellipses with small eccentricities.
+ * Algorithm: Newton-Raphson
+ * Added for issue #1653
+ */
+class ClosestEllipticPoint {
+public:
+    ClosestEllipticPoint(double a, double b, const RS_Vector& point):
+        m_a{a}
+      , m_b{b}
+      , m_point{point}
+      , c2{a*a-b*b}
+      , ax2{2.*a*point.x}
+      , by2{2.*b*point.y}
+    {}
+
+    // The elliptic angle of the closest point on ellipse.
+    double getTheta() const
+    {
+        double theta = std::atan2(m_point.y, m_point.x);
+        // find the zero point of the first order derivative by Newton-Raphson
+        // the convergence should be good: maximum 16 recursions
+        for (short i=0; i<16; ++i) {
+            // The first and second derivatives over theta
+            double d1 = ds2D1(theta);
+            double d2 = ds2D2(theta);
+            if (std::abs(d2) < RS_TOLERANCE || std::abs(d1) < RS_TOLERANCE)
+                break;
+            // Newton-Raphson
+            theta -= d1/d2;
+        }
+        return theta;
+    }
+
+private:
+
+    // The first order derivative of ds2=dx^2+dy^2 over theta
+    double ds2D1(double t) const
+    {
+        using namespace std;
+        return c2*sin(2.*t) + ax2*sin(t) - by2*cos(t);
+    }
+
+    // The second order derivative of ds2=dx^2+dy^2 over theta
+    double ds2D2(double t) const
+    {
+        using namespace std;
+        return 2.*c2*cos(2.*t) + ax2*cos(t) + by2*sin(t);
+    }
+
+    double m_a=0.;
+    double m_b=0.;
+    RS_Vector m_point{};
+    double c2=0.;
+    double ax2=0.;
+    double by2=0.;
+};
+
 }
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed) {
@@ -356,8 +417,8 @@ double RS_Ellipse::getEllipseLength(double x1, double x2) const
     } else {
         ret=0.;
     }
-    x1=fmod(x1,M_PI);
-    x2=fmod(x2,M_PI);
+    x1=std::fmod(x1,M_PI);
+    x2=std::fmod(x2,M_PI);
     if( fabs(x2-x1)>RS_TOLERANCE_ANGLE)  {
         ret += RS_Math::ellipticIntegral_2(k,x2)-RS_Math::ellipticIntegral_2(k,x1);
     }
@@ -466,12 +527,11 @@ RS_Vector  RS_Ellipse::getEllipsePoint(const double& a) const {
     return p;
 }
 
-/** \brief implemented using an analytical aglorithm
+/** \brief implemented using an analytical algorithm
 * find nearest point on ellipse to a given point
 *
 * @author Dongxu Li <dongxuli2011@gmail.com>
 */
-
 RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         bool onEntity, double* dist, RS_Entity** entity)const
 {
@@ -494,6 +554,8 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     double x=ret.x,y=ret.y;
     double a=getMajorRadius();
     double b=a*getRatio();
+    // the tangential direction at the nearest
+    RS_Vector perpendicular{-ret.y, ret.x};
     //std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
     //std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
     double twoa2b2=2*(a*a-b*b);
@@ -503,20 +565,23 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
     std::vector<double> ce(4,0.);
     std::vector<double> roots(0,0.);
 
-    //need to handle a=b
-    if(a0 > RS_TOLERANCE2 ) { // a != b , ellipse
+    //need to handle: a=b (i.e. a0=0); point close to the ellipse origin.
+    if (a0 > RS_TOLERANCE && std::abs(getRatio() - 1.0) > RS_TOLERANCE && ret.squared() > RS_TOLERANCE2 ) {
+        // a != b , ellipse
         ce[0]=-2.*twoax/twoa2b2;
         ce[1]= (twoax*twoax+twoby*twoby)/a0-1.;
         ce[2]= - ce[0];
         ce[3]= -twoax*twoax/a0;
         //std::cout<<"1::find cosine, variable c, solve(c^4 +("<<ce[0]<<")*c^3+("<<ce[1]<<")*c^2+("<<ce[2]<<")*c+("<<ce[3]<<")=0,c)\n";
         roots=RS_Math::quarticSolver(ce);
-    } else {//a=b, quadratic equation for circle
-        a0=twoby/twoax;
-        roots.push_back(sqrt(1./(1.+a0*a0)));
-        roots.push_back(-roots[0]);
+    } else {
+        // Issue #1653: approximately a=b, solve the equation of ds^2/d\theta = 0 by Newton-Raphson
+        double theta = ClosestEllipticPoint{a, b, ret}.getTheta();
+        roots.push_back(std::cos(theta));
+        // Just in case, the found solution is for the maximum distance. Then, the minimum is at the opposite
+        roots.push_back(-roots.front());
     }
-    if(roots.size()==0) {
+    if(roots.empty()) {
         //this should not happen
         std::cout<<"(a= "<<a<<" b= "<<b<<" x= "<<x<<" y= "<<y<<" )\n";
         std::cout<<"finding minimum for ("<<x<<"-"<<a<<"*cos(t))^2+("<<y<<"-"<<b<<"*sin(t))^2\n";
@@ -553,7 +618,7 @@ RS_Vector RS_Ellipse::getNearestPointOnEntity(const RS_Vector& coord,
         RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Ellipse::getNearestPointOnEntity() finds no minimum, this should not happen\n");
     }
 	if (dist) {
-        *dist = sqrt(dDistance);
+        *dist = std::sqrt(dDistance);
     }
     ret.rotate(getAngle());
     ret.move(getCenter());
@@ -1050,14 +1115,14 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
     if(isReversed()) {
         std::swap(amin,amax);
     }
-    double da=fmod(amax-amin+2.*M_PI, 2.*M_PI);
+    double da=std::fmod(amax-amin+2.*M_PI, 2.*M_PI);
     if ( da < RS_TOLERANCE ) {
         da = 2.*M_PI; //whole ellipse
     }
     RS_Vector vp(getNearestPointOnEntity(coord,true,dist));
     double a=getCenter().angleTo(vp);
     int counts(middlePoints + 1);
-    int i( static_cast<int>(fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
+    int i( static_cast<int>(std::fmod(a-amin+2.*M_PI,2.*M_PI)/da*counts+0.5));
     if(!i) i++; // remove end points
     if(i==counts) i--;
     a=amin + da*(double(i)/double(counts))-getAngle();
@@ -1182,7 +1247,7 @@ void RS_Ellipse::correctAngles() {
         double *pa1= & data.angle1;
         double *pa2= & data.angle2;
         if (isReversed()) std::swap(pa1,pa2);
-        *pa2 = *pa1 + fmod(*pa2 - *pa1, 2.*M_PI);
+        *pa2 = *pa1 + std::fmod(*pa2 - *pa1, 2.*M_PI);
         if ( fabs(data.angle1 - data.angle2) < RS_TOLERANCE_ANGLE ) *pa2 += 2.*M_PI;
 }
 
@@ -1726,7 +1791,7 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
     for(unsigned short i=0;i<4;i++){
 		RS_Line line{vertex.at(i),vertex.at((i+1)%4)};
 		auto vpIts=RS_Information::getIntersection(
-                    static_cast<RS_Entity*>(this), &line, true);
+                    this, &line, true);
 //    std::cout<<"vpIts.size()="<<vpIts.size()<<std::endl;
         if( vpIts.size()==0) continue;
 		for(const RS_Vector& vp: vpIts){
@@ -1769,91 +1834,33 @@ void RS_Ellipse::draw(RS_Painter* painter, RS_GraphicView* view, double& pattern
 }
 
 /** directly draw the arc, assuming the whole arc is within visible window */
-void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
+void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
 //    std::cout<<"RS_Ellipse::drawVisible(): begin\n";
 //    std::cout<<*this<<std::endl;
-	if (!(painter && view)) return;
+    if (painter == nullptr || view == nullptr)
+        return;
 
     //visible in graphic view
-	if(!isVisibleInWindow(view)) return;
-    double ra(getMajorRadius()*view->getFactor().x);
-    double rb(getRatio()*ra);
+    if(!isVisibleInWindow(view))
+        return;
+
+    double ra = getMajorRadius()*view->getFactor().x;
+    double rb = getRatio()*ra;
 	if(std::min(ra, rb) < RS_TOLERANCE) {//ellipse too small
         painter->drawLine(view->toGui(minV),view->toGui(maxV));
         return;
     }
 
-    bool drawAsSelected = isSelected() && !(view->isPrinting() || view->isPrintPreview());
+    painter->drawEllipse(view->toGui(getCenter()),
+                         ra, rb,
+                         getAngle(),
+                         getAngle1(), getAngle2(),
+                         isReversed());
 
-    double mAngle=getAngle();
-    RS_Vector cp(view->toGui(getCenter()));
-	if (!drawAsSelected && (
-             getPen().getLineType()==RS2::SolidLine ||
-             view->getDrawingMode()==RS2::ModePreview)) {
-        painter->drawEllipse(cp,
-                             ra, rb,
-                             mAngle,
-                             getAngle1(), getAngle2(),
-                             isReversed());
-        return;
-    }
-
-    // Pattern:
-	const RS_LineTypePattern* pat = nullptr;
-	if (drawAsSelected) {
-		pat = &RS_LineTypePattern::patternSelected;
-	}
-	else {
-		pat = view->getPattern(getPen().getLineType());
-	}
-
-	if (!pat) {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "Invalid pattern for Ellipse");
-        return;
-    }
-
-    // Pen to draw pattern is always solid:
-    RS_Pen pen = painter->getPen();
-    pen.setLineType(RS2::SolidLine);
-    double a1(RS_Math::correctAngle(getAngle1()));
-    double a2(RS_Math::correctAngle(getAngle2()));
-    if (isReversed()) std::swap(a1,a2);
-	if(a2 <a1+RS_TOLERANCE_ANGLE) a2 += 2.*M_PI;
-    painter->setPen(pen);
-	if(pat->num <= 0){
-		RS_DEBUG->print(RS_Debug::D_WARNING,"Invalid pattern when drawing ellipse");
-		painter->drawEllipse(cp, ra, rb, mAngle, a1, a2, false);
-		return;
-	}
-
-	std::vector<double> ds(pat->num, 0.);
-
-	double dpmm=static_cast<RS_PainterQt*>(painter)->getDpmm();
-	for (size_t i = 0; i < pat->num; i++) {
-		ds[i]= dpmm * pat->pattern[i]; //pattern length
-		if(fabs(ds[i]) < 1.)
-			ds[i] = copysign(1., ds[i]);
-	}
-
-    double curA(a1);
-    bool notDone(true);
-
-	//draw patterned ellipse
-	for (size_t i=0; notDone; i = (i + 1) % pat->num) {
-		double nextA = curA + std::abs(ds[i])/
-				RS_Vector(ra*sin(curA), rb*cos(curA)).magnitude();
-		if (nextA > a2){
-			nextA = a2;
-			notDone = false;
-        }
-		if (ds[i] > 0.)
-			painter->drawEllipse(cp, ra, rb, mAngle, curA, nextA, false);
-
-        curA=nextA;
-    }
-
+    double length = isReversed() ? getEllipseLength(getAngle2(), getAngle1())
+                                 : getEllipseLength(getAngle1(), getAngle2());
+    patternOffset -= length * view->getFactor().x;
 }
-
 
 
 /**

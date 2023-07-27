@@ -28,6 +28,7 @@
 
 #include "ui_qg_coordinatewidget.h"
 #include "rs.h"
+
 class RS_Graphic;
 class RS_Vector;
 
@@ -36,7 +37,7 @@ class QG_CoordinateWidget : public QWidget, public Ui::QG_CoordinateWidget
     Q_OBJECT
 
 public:
-    QG_CoordinateWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = 0);
+    QG_CoordinateWidget(QWidget *parent = 0, const char *name = 0, Qt::WindowFlags fl = {});
     ~QG_CoordinateWidget();
 
 public slots:
@@ -48,11 +49,11 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_Graphic* graphic;
-    int prec;
-    RS2::LinearFormat format;
-    int aprec;
-    RS2::AngleFormat aformat;
+    RS_Graphic* graphic = nullptr;
+    int prec = 0;
+    RS2::LinearFormat format = RS2::Decimal;
+    int aprec = 0;
+    RS2::AngleFormat aformat = RS2::DegreesDecimal;
 
 };
 

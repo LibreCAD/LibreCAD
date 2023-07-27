@@ -63,7 +63,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw splines",
 							   container, graphicView)
-	,pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawSpline;
 	reset();
@@ -111,7 +111,7 @@ void RS_ActionDrawSpline::trigger() {
         RS_Vector r = graphicView->getRelativeZero();
         graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(r);
-    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %d",
+    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
 					pPoints->spline->getId());
 
 		pPoints->spline = nullptr;
@@ -149,7 +149,7 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
     } else if (e->button()==Qt::RightButton) {
 				if (getStatus()==SetNextPoint &&
 						pPoints->spline &&
-						pPoints->spline->getNumberOfControlPoints()>=pPoints->spline->getDegree()+1) {
+                        pPoints->spline->getNumberOfControlPoints()>=size_t(pPoints->spline->getDegree())+1) {
                         trigger();
                 }
         deletePreview();

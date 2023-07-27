@@ -53,4 +53,3 @@ QString RS_Utility::doubleToString(double value, int precision) {
 }
 
 // EOF
-

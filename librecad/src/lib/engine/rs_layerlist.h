@@ -30,8 +30,8 @@
 #define RS_LAYERLIST_H
 
 #include <QList>
-#include "rs_layer.h"
 
+class RS_Layer;
 class RS_LayerListListener;
 class QG_LayerWidget;
 
@@ -131,11 +131,11 @@ private:
     QList<RS_Layer*> layers;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> layerListListeners;
-    QG_LayerWidget* layerWidget;
+    QG_LayerWidget *layerWidget = nullptr;
     //! Currently active layer
-    RS_Layer* activeLayer;
+    RS_Layer *activeLayer = nullptr;
     /** Flag set if the layer list was modified and not yet saved. */
-    bool modified;
+    bool modified = false;
 };
 
 #endif

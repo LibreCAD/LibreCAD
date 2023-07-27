@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_preview.h"
@@ -47,7 +46,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		, valid(false)
 {
 	actionType=RS2::ActionDrawCircleInscribe;
@@ -102,7 +101,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
-                    " entity added: %d", circle->getId());
+                    " entity added: %lu", circle->getId());
 }
 
 
@@ -262,13 +261,6 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     }
 }
 */
-
-
-QStringList RS_ActionDrawCircleInscribe::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {

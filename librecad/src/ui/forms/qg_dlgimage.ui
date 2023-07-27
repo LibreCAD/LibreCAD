@@ -80,33 +80,10 @@
         <string>Geometry</string>
        </property>
        <layout class="QGridLayout">
-        <item row="2" column="0">
-         <widget class="QLabel" name="lWidth">
+        <item row="5" column="0">
+         <widget class="QLabel" name="lAngle">
           <property name="text">
-           <string>Width:</string>
-          </property>
-         </widget>
-        </item>
-        <item row="6" column="1">
-         <widget class="QLineEdit" name="lePath">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="1">
-         <widget class="QLineEdit" name="leInsertY">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
+           <string>Angle:</string>
           </property>
          </widget>
         </item>
@@ -117,17 +94,83 @@
           </property>
          </widget>
         </item>
-        <item row="0" column="0">
-         <widget class="QLabel" name="lInsertX">
-          <property name="text">
-           <string>insert (x):</string>
+        <item row="2" column="1">
+         <widget class="QLineEdit" name="leWidth">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
           </property>
          </widget>
         </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="lScale">
+        <item row="1" column="0">
+         <widget class="QLabel" name="lInsertY">
           <property name="text">
-           <string>Scale:</string>
+           <string>insert (y):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="1">
+         <widget class="QLineEdit" name="leInsertX">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="8" column="1">
+         <widget class="QLineEdit" name="leDPI"/>
+        </item>
+        <item row="6" column="1">
+         <widget class="QLineEdit" name="lePath">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+          <property name="readOnly">
+           <bool>false</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="1">
+         <widget class="QLineEdit" name="leScale">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="7" column="0">
+         <widget class="QLabel" name="lSize">
+          <property name="text">
+           <string>Size (px):</string>
+          </property>
+         </widget>
+        </item>
+        <item row="5" column="1">
+         <widget class="QLineEdit" name="leAngle">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QLineEdit" name="leInsertY">
+          <property name="minimumSize">
+           <size>
+            <width>70</width>
+            <height>0</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -147,40 +190,17 @@
           </property>
          </spacer>
         </item>
-        <item row="7" column="1">
-         <widget class="QLineEdit" name="leSize">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
-          </property>
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
-         </widget>
-        </item>
-        <item row="7" column="0">
-         <widget class="QLabel" name="lSize">
-          <property name="text">
-           <string>Size (px):</string>
-          </property>
-         </widget>
-        </item>
-        <item row="0" column="1">
-         <widget class="QLineEdit" name="leInsertX">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
         <item row="6" column="0">
          <widget class="QLabel" name="lPath">
           <property name="text">
            <string>path:</string>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="lInsertX">
+          <property name="text">
+           <string>insert (x):</string>
           </property>
          </widget>
         </item>
@@ -200,37 +220,37 @@
           </property>
          </spacer>
         </item>
-        <item row="1" column="0">
-         <widget class="QLabel" name="lInsertY">
+        <item row="4" column="0">
+         <widget class="QLabel" name="lScale">
           <property name="text">
-           <string>insert (y):</string>
+           <string>Scale:</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="leScale">
+        <item row="7" column="1">
+         <widget class="QLineEdit" name="leSize">
           <property name="minimumSize">
            <size>
             <width>70</width>
             <height>0</height>
            </size>
           </property>
-         </widget>
-        </item>
-        <item row="5" column="0">
-         <widget class="QLabel" name="lAngle">
-          <property name="text">
-           <string>Angle:</string>
+          <property name="readOnly">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
-        <item row="2" column="1">
-         <widget class="QLineEdit" name="leWidth">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
+        <item row="8" column="0">
+         <widget class="QLabel" name="lDPI">
+          <property name="text">
+           <string>DPI</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLabel" name="lWidth">
+          <property name="text">
+           <string>Width:</string>
           </property>
          </widget>
         </item>
@@ -244,25 +264,19 @@
           </property>
          </widget>
         </item>
-        <item row="5" column="1">
-         <widget class="QLineEdit" name="leAngle">
-          <property name="minimumSize">
-           <size>
-            <width>70</width>
-            <height>0</height>
-           </size>
+        <item row="6" column="2">
+         <widget class="QPushButton" name="pbFile">
+          <property name="toolTip">
+           <string>Select an image file</string>
           </property>
-         </widget>
-        </item>
-        <item row="8" column="0">
-         <widget class="QLabel" name="lDPI">
           <property name="text">
-           <string>DPI</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset resource="../../../res/main/main.qrc">
+            <normaloff>:/main/fileopen.png</normaloff>:/main/fileopen.png</iconset>
           </property>
          </widget>
-        </item>
-        <item row="8" column="1">
-         <widget class="QLineEdit" name="leDPI"/>
         </item>
        </layout>
       </widget>
@@ -302,7 +316,9 @@
   <tabstop>leSize</tabstop>
   <tabstop>leDPI</tabstop>
  </tabstops>
- <resources/>
+ <resources>
+  <include location="../../../res/main/main.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>buttonBox</sender>
@@ -397,6 +413,22 @@
     <hint type="destinationlabel">
      <x>217</x>
      <y>282</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pbFile</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgImage</receiver>
+   <slot>setImageFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>20</x>
+     <y>20</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>20</x>
+     <y>20</y>
     </hint>
    </hints>
   </connection>
