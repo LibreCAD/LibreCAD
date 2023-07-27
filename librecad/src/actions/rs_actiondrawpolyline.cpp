@@ -787,9 +787,9 @@ void RS_ActionDrawPolyline::setParserExpression(QString expression)
     }
 
 #ifdef _UNICODE
-        m_muParserObject->SetExpr(derationalized.toStdWString());
+        m_muParserObject->SetExpr(expression.toStdWString());
 #else
-        m_muParserObject->SetExpr(derationalized.toStdString());
+        m_muParserObject->SetExpr(expression.toStdString());
 #endif
 }
 
