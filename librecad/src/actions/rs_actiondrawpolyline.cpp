@@ -25,11 +25,14 @@
 **********************************************************************/
 
 #include <cmath>
+
 #include <QAction>
 #include <QMouseEvent>
 
-#include "rs_actiondrawpolyline.h"
+#include <muParser.h>
 
+
+#include "rs_actiondrawpolyline.h"
 #include "rs_arc.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -83,8 +86,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
-		,m_reversed(1)
-		, pPoints(std::make_unique<Points>())
+        , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawPolyline;
     reset();
@@ -95,9 +97,10 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 
 
-void RS_ActionDrawPolyline::reset() {
-		pPoints->polyline = nullptr;
-	pPoints->data = { {}, {}, false};
+void RS_ActionDrawPolyline::reset()
+{
+    pPoints->polyline = nullptr;
+    pPoints->data = {};
 	pPoints->start = {};
 	pPoints->history.clear();
 	pPoints->bHistory.clear();
@@ -211,7 +214,7 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
 }
 
 
-double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
+double RS_ActionDrawPolyline::solveBulge(const RS_Vector& mouse) {
 
     double b(0.);
     bool suc = false;
@@ -401,6 +404,7 @@ bool RS_ActionDrawPolyline::isReversed() const{
 void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 {
     QString c = e->getCommand().toLower().replace(" ", "");
+    QString polyEquation;
 
     switch (getStatus())
     {
@@ -464,7 +468,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
             m_muParserObject->DefineConst(_T("e"),  M_E);
             m_muParserObject->DefineConst(_T("pi"), M_PI);
 
-            m_muParserObject->SetExpr(cRef.toStdString());
+            m_muParserObject->SetExpr({cRef.toStdString().c_str()});
 
             const double parseTestValue = m_muParserObject->Eval();
 
@@ -498,7 +502,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            m_muParserObject->SetExpr(c.remove("@").toStdString());
+            m_muParserObject->SetExpr({c.remove("@").toStdString().c_str()});
             startPoint = m_muParserObject->Eval();
 
             if (isRelative) startPoint += graphicView->getRelativeZero().x;
@@ -529,7 +533,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (c.startsWith("@@")) shiftX = true;
 
-            m_muParserObject->SetExpr(c.remove("@").toStdString());
+            m_muParserObject->SetExpr({c.remove("@").toStdString().c_str()});
             endPoint = m_muParserObject->Eval();
 
             if (isRelative) endPoint += graphicView->getRelativeZero().x;
@@ -558,7 +562,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
         try
         {
-            m_muParserObject->SetExpr(c.toStdString());
+            m_muParserObject->SetExpr({c.toStdString().c_str()});
             numberOfPolylines = (int) trunc(m_muParserObject->Eval());
 
             if (numberOfPolylines <= 0) throw -1;
@@ -581,7 +585,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
         double equation_xTerm = 0.0;
         m_muParserObject->DefineVar(_T("x"), &equation_xTerm);
 
-        m_muParserObject->SetExpr(polyEquation.toStdString());
+        m_muParserObject->SetExpr({polyEquation.toStdString().c_str()});
 
         double plotting_xTerm = startPoint;
 
