@@ -219,7 +219,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 	RS_Line line{};
 	double direction;
     RS_AtomicEntity* lastentity;
-    calculatedSegment=false;
+    m_calculatedSegment=false;
 
     switch (Mode){
 //     case Line:
@@ -271,7 +271,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 				pPoints->arc_data = arc.getData();
                 b=arc.getBulge();
 				pPoints->calculatedEndpoint = arc.getEndpoint();
-                calculatedSegment=true;
+                m_calculatedSegment=true;
 
             }
 //            else
@@ -312,7 +312,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 
     RS_Vector mouse = e->getCoordinate();
     double bulge=solveBulge(mouse);
-    if (calculatedSegment)
+    if (m_calculatedSegment)
 		mouse=pPoints->calculatedEndpoint;
 
     switch (getStatus()) {
