@@ -158,7 +158,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e)
                 //RS_Polyline* p = polyline->clone();
                 //p->reparent(preview);
                 //preview->addEntity(p);
-        if (fabs(bulge)<RS_TOLERANCE || Mode==Line) {
+        if (fabs(bulge)<RS_TOLERANCE || m_mode==Line) {
 			preview->addEntity(new RS_Line{preview.get(), pPoints->point, mouse});
         } else
 			preview->addEntity(new RS_Arc(preview.get(), pPoints->arc_data));
