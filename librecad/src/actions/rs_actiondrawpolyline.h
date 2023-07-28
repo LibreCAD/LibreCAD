@@ -122,15 +122,19 @@ protected:
 private:
     void drawEquation(int numberOfPolylines);
     void setParserExpression(QString expression);
+    bool getPlottingX(QString command, double& x);
     std::unique_ptr<mu::Parser> m_muParserObject;
 
+    double startPointX = 0.;
+    double endPointX = 0.;
+    double startPointY = 0.;
+    double endPointY = 0.;
     bool shiftX = false;
     bool equationSettingOn = false;
     bool startPointSettingOn = false;
     bool endPointSettingOn = false;
     bool stepSizeSettingOn = false;
-    double startPoint = false;
-    double endPoint = false;
+    bool shiftY = false;
 };
 
 #endif
