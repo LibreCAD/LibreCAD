@@ -80,6 +80,7 @@ struct RS_ActionDrawPolyline::Points {
 	 * Bulge history (for undo)
 	 */
 		QList<double> bHistory;
+    QString equation;
 };
 
 RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
@@ -404,7 +405,6 @@ bool RS_ActionDrawPolyline::isReversed() const{
 void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 {
     QString c = e->getCommand().toLower().replace(" ", "");
-    QString polyEquation;
 
     switch (getStatus())
     {
@@ -442,7 +442,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
             break;
     }
 
-    if ((m_mode == Line) && (checkCommand("equation", c)))
+    if ((m_mode == Line) && (checkCommand(tr("equation"), c)))
     {
         RS_DIALOGFACTORY->updateMouseWidget(tr("Enter an equation, f(x)"));
         equationSettingOn = true;
@@ -470,15 +470,15 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
 
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the start point"));
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the start point x"));
 
             startPointSettingOn = true;
 
-            polyEquation = c;
+            pPoints->equation = c;
         }
         catch (...)
         {
-            RS_DIALOGFACTORY->commandMessage(tr("The equation entered is invalid."));
+            RS_DIALOGFACTORY->commandMessage(tr("The entered x is invalid."));
             updateMouseButtonHints();
         }
 
@@ -504,13 +504,13 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
 
             if (isRelative) startPoint += graphicView->getRelativeZero().x;
 
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the end point"));
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the end point x"));
 
             endPointSettingOn = true;
         }
         catch (...)
         {
-            RS_DIALOGFACTORY->commandMessage(tr("The start point entered is invalid."));
+            RS_DIALOGFACTORY->commandMessage(tr("The start point x entered is invalid."));
             updateMouseButtonHints();
         }
 
@@ -543,7 +543,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
         }
         catch (...)
         {
-            RS_DIALOGFACTORY->commandMessage(tr("The end point entered is invalid."));
+            RS_DIALOGFACTORY->commandMessage(tr("The number of polylines entered is invalid."));
             updateMouseButtonHints();
         }
 
@@ -555,7 +555,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
     {
         stepSizeSettingOn = false;
 
-        int numberOfPolylines;
+        int numberOfPolylines = 0;
 
         try
         {
@@ -573,80 +573,77 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
             return;
         }
 
-        deleteSnapper();
-
-        const double stepSize = (endPoint - startPoint) / (double) numberOfPolylines;
-
-        const int direction = (stepSize < 0) ? -1 : 1;
-
-        double equation_xTerm = 0.0;
-        m_muParserObject->DefineVar(_T("x"), &equation_xTerm);
-        setParserExpression(polyEquation);
-
-        double plotting_xTerm = startPoint;
-
-        equation_xTerm = startPoint;
-
-        if (shiftX) equation_xTerm = 0.0;
-
-        if (getStatus() == SetStartpoint)
-        {
-            pPoints->point = RS_Vector(startPoint, m_muParserObject->Eval());
-            pPoints->history.clear();
-            pPoints->history.append(pPoints->point);
-            pPoints->bHistory.clear();
-            pPoints->bHistory.append(0.0);
-            pPoints->start = pPoints->point;
-
-            setStatus(SetNextPoint);
-
-            plotting_xTerm += stepSize;
-            equation_xTerm += stepSize;
-        }
-
-        while (((direction ==  1) && (plotting_xTerm <= endPoint)) 
-        ||     ((direction == -1) && (plotting_xTerm >= endPoint)))
-        {
-            pPoints->point = RS_Vector(plotting_xTerm, m_muParserObject->Eval());
-            pPoints->history.append(pPoints->point);
-
-            if (pPoints->polyline == nullptr)
-            {
-                pPoints->polyline = new RS_Polyline(container, pPoints->data);
-                pPoints->polyline->addVertex(pPoints->start, 0.0);
-            }
-
-            pPoints->polyline->addVertex(pPoints->point, 0.0);
-            pPoints->polyline->setEndpoint(pPoints->point);
-
-            if (pPoints->polyline->count() == 1)
-            {
-                pPoints->polyline->setLayerToActive();
-                pPoints->polyline->setPenToActive();
-                container->addEntity(pPoints->polyline);
-            }
-
-            deletePreview();
-            graphicView->drawEntity(pPoints->polyline);
-
-            plotting_xTerm += stepSize;
-            equation_xTerm += stepSize;
-        }
-
-        drawSnapper();
-
-        plotting_xTerm -= stepSize;
-        equation_xTerm -= stepSize;
-
-        graphicView->moveRelativeZero(RS_Vector(plotting_xTerm, m_muParserObject->Eval()));
+        drawEquation(numberOfPolylines);
 
         updateMouseButtonHints();
 
         e->accept();
-        return;
+        setStatus(SetNextPoint);
     }
 }
 
+void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
+{
+    deleteSnapper();
+    const double stepSize = (endPoint - startPoint) / numberOfPolylines;
+
+    double equationX = startPoint;
+    double plottingX = startPoint;
+    m_muParserObject->DefineVar(_T("x"), &equationX);
+    setParserExpression(pPoints->equation);
+
+    if (shiftX)
+        equationX = 0.0;
+
+    if (getStatus() == SetStartpoint)
+    {
+        pPoints->point = RS_Vector(startPoint, m_muParserObject->Eval());
+        pPoints->history.clear();
+        pPoints->history.append(pPoints->point);
+        pPoints->bHistory.clear();
+        pPoints->bHistory.append(0.0);
+        pPoints->start = pPoints->point;
+
+        setStatus(SetNextPoint);
+
+        plottingX  += stepSize;
+        equationX += stepSize;
+    }
+
+    for(int i=0; i<= numberOfPolylines; ++i)
+    {
+        pPoints->point = RS_Vector(plottingX , m_muParserObject->Eval());
+        pPoints->history.append(pPoints->point);
+
+        if (pPoints->polyline == nullptr)
+        {
+            pPoints->polyline = new RS_Polyline(container, pPoints->data);
+            pPoints->polyline->addVertex(pPoints->start, 0.0);
+        }
+
+        pPoints->polyline->addVertex(pPoints->point, 0.0);
+        pPoints->polyline->setEndpoint(pPoints->point);
+
+        if (pPoints->polyline->count() == 1)
+        {
+            pPoints->polyline->setLayerToActive();
+            pPoints->polyline->setPenToActive();
+            container->addEntity(pPoints->polyline);
+        }
+
+        plottingX += stepSize;
+        equationX += stepSize;
+    }
+    deletePreview();
+    graphicView->drawEntity(pPoints->polyline);
+
+
+    plottingX  -= stepSize;
+    equationX -= stepSize;
+
+    graphicView->moveRelativeZero(RS_Vector(plottingX , m_muParserObject->Eval()));
+    drawSnapper();
+}
 
 
 QStringList RS_ActionDrawPolyline::getAvailableCommands() {

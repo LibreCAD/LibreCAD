@@ -120,6 +120,7 @@ protected:
     std::unique_ptr<Points> pPoints;
 
 private:
+    void drawEquation(int numberOfPolylines);
     void setParserExpression(QString expression);
     std::unique_ptr<mu::Parser> m_muParserObject;
 
