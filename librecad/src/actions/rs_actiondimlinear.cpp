@@ -135,20 +135,20 @@ void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent* e) {
 
     case SetDefPoint:
         if (edata->extensionPoint1.valid && edata->extensionPoint2.valid) {
-            if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) == true &&
-                isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y) == true) {
+            if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) &&
+                isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y)) {
                 //setAngle(0.0);
             }
-            else  if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) == true &&
-                     isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y) == false){
+            else  if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) &&
+                     !isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y)){
                 setAngle(0.0);
             }
-            else if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) == false &&
-                     isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y) == true) {
+            else if (!isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) &&
+                     isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y)) {
                 setAngle(M_PI_2);
             }
-            else if (isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) == false &&
-                     isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y) == false){
+            else if (!isBetween(mouse.x, (edata->extensionPoint1).x, (edata->extensionPoint2).x) &&
+                     !isBetween(mouse.y, (edata->extensionPoint1).y, (edata->extensionPoint2).y)){
                 //setAngle(M_PI_2);
             }
 
@@ -226,15 +226,9 @@ bool RS_ActionDimLinear::hasFixedAngle() const{
 	return fixedAngle;
 }
 
-bool RS_ActionDimLinear::isBetween(double v, double bound1, double bound2){
-    if (v > bound1 && v > bound2){
-        return false;
-    }
-    else if (v < bound1 && v < bound2) {
-        return false;
-    }
-
-    return true;
+bool RS_ActionDimLinear::isBetween(double v, double bound1, double bound2) const {
+    return  v > std::min(bound1, bound2) - RS_TOLERANCE
+           && v < std::max(bound1, bound2) + RS_TOLERANCE;
 }
 
 void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {

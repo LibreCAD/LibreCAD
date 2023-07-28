@@ -91,7 +91,7 @@ public:
 	bool hasFixedAngle() const;
 
 private:
-    bool isBetween(double v, double bound1, double bound2);
+    bool isBetween(double v, double bound1, double bound2) const;
 
 protected:
     /**
