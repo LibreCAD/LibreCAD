@@ -35,11 +35,14 @@
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent)
-		: RS_EntityContainer(parent, true) {
-
-    RS_SETTINGS->beginGroup("/Appearance");
+        : RS_EntityContainer(parent, true)
+{
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Appearance");
     maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
-    RS_SETTINGS->endGroup();
+
+    groupGuard = RS_SETTINGS->beginGroupGuard("/Colors");
+    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight));
+    setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 
 /**
