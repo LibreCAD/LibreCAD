@@ -71,7 +71,13 @@ public:
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope
-    class GroupGuard{};
+    class GroupGuard {
+    public:
+        GroupGuard(QString group);
+        ~GroupGuard();
+    private:
+        QString m_group;
+    };
 
 	/**
      * @return Instance to the unique settings object.
@@ -88,7 +94,7 @@ public:
 
     // RAII style group guard: endGroup() is called automatically at the end of lifetime of the returned object
     std::unique_ptr<GroupGuard> beginGroupGuard(QString group);
-    void beginGroup(const QString& group);
+    void beginGroup(QString group);
     void endGroup();
 
     bool writeEntry(const QString& key, int value);
@@ -118,7 +124,7 @@ protected:
 	std::map<QString, QVariant> cache;
     QString companyKey;
     QString appKey;
-    QString group;
+    QString m_group;
     bool initialized = false;
 };
 
