@@ -40,9 +40,13 @@ class QString;
 #define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
 void debugHeader(char const* file, char const* func, int line);
 #define RS_DEBUG RS_Debug::instance()
-#define RS_LOG(level) RS_Debug::Log(RS_Debug::level)
 #define RS_DEBUG_VERBOSE DEBUG_HEADER \
 	RS_Debug::instance()
+
+// stream style logging
+// Example: LC_LOG<<"logging debugging message"; // default log level: D_DEBUGGING
+//          LC_LOG(D_ERROR)<<"Logging error message"; // specified logging level: D_ERROR
+#define LC_LOG RS_Debug::Log()
 
 /**
  * Debugging facilities.
@@ -88,12 +92,19 @@ public:
      * @brief The LogStream class: Support for debugging info by the c++ stream style
      *
      * Example:
-     *      RS_LOG(D_ERROR)<<"Log text";
+     *      LC_LOG(D_ERROR)<<"Log text";
      */
     class LogStream : public QTextStream {
     public:
         LogStream(RS_DebugLevel level = D_DEBUGGING);
         ~LogStream() override;
+
+        LogStream& operator () (RS_DebugLevel level)
+        {
+            m_debugLevel = level;
+            return *this;
+        }
+
     private:
         QString m_string;
         RS_DebugLevel m_debugLevel;

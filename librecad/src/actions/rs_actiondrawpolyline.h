@@ -27,8 +27,16 @@
 #ifndef RS_ACTIONDRAWPOLYLINE_H
 #define RS_ACTIONDRAWPOLYLINE_H
 
+#include <memory>
 #include "rs_previewactioninterface.h"
 
+namespace mu {
+    class Parser;
+}
+
+class QStringList;
+class RS_EntityContainer;
+class RS_GraphicView;
 
 /**
  * This action class can handle user events to draw 
@@ -37,80 +45,91 @@
  * @author Andrew Mustun
 */
 class RS_ActionDrawPolyline : public RS_PreviewActionInterface {
-	Q_OBJECT
+    Q_OBJECT
+
 public:
-	/**
-     * Action States.
-     */
+    /**
+         * Action States.
+         */
     enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        SetNextPoint      /**< Setting the endpoint. */
+        SetStartpoint, /*  Setting the startpoint.  */
+        SetNextPoint,  /*  Setting the endpoint.    */
     };
 
-	enum SegmentMode {
-    Line=0,
-    Tangential=1,
-    TanRad=2,
-//	TanAng,
-//	TanRadAng,
-    Ang=3,
-//	RadAngEndp,
-//	RadAngCenp
+    enum SegmentMode {
+        Line = 0,
+        Tangential = 1,
+        TanRad = 2,
+        // TanAng,
+        // TanRadAng,
+        Ang = 3,
+        // RadAngEndp,
+        // RadAngCenp
     };
 
-public:
-    RS_ActionDrawPolyline(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-	~RS_ActionDrawPolyline() override;
-	
+    RS_ActionDrawPolyline(RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~RS_ActionDrawPolyline() override;
+
     void reset();
 
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void showOptions() override;
-	void hideOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void init(int status = 0) override;
+    void trigger() override;
 
-	void close();
-	void undo();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
 
-	void setMode(SegmentMode m);
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
 
-	int getMode() const;
+    void showOptions() override;
+    void hideOptions() override;
 
-	void setRadius(double r) ;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
-	double getRadius() const;
+    void close();
+    void undo();
 
-	void setAngle(double a);
+    void setMode(SegmentMode m);
 
-	double getAngle() const;
+    int getMode() const;
 
-	void setReversed( bool c);
+    void setRadius(double r);
 
-	bool isReversed() const;
+    double getRadius() const;
 
-	double solveBulge(RS_Vector mouse);
+    void setAngle(double a);
+
+    double getAngle() const;
+
+    void setReversed(bool c);
+
+    bool isReversed() const;
+
+    double solveBulge(const RS_Vector& mouse);
 
 protected:
-    double Radius;
-    double Angle;
-    SegmentMode Mode;
-	int m_Reversed;
-    bool calculatedSegment;
+    double m_radius = 0.;
+    double m_angle = 0.;
+    SegmentMode m_mode{};
+    int m_reversed = 1;
+    bool m_calculatedSegment = false;
 
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
+private:
+    void setParserExpression(QString expression);
+    std::unique_ptr<mu::Parser> m_muParserObject;
+
+    bool shiftX = false;
+    bool equationSettingOn = false;
+    bool startPointSettingOn = false;
+    bool endPointSettingOn = false;
+    bool stepSizeSettingOn = false;
+    double startPoint = false;
+    double endPoint = false;
 };
 
 #endif

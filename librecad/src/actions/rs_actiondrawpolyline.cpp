@@ -23,11 +23,16 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
+
+#include <cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawpolyline.h"
 
+#include <muParser.h>
+
+
+#include "rs_actiondrawpolyline.h"
 #include "rs_arc.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -81,8 +86,7 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw polylines",
 						   container, graphicView)
-		,m_Reversed(1)
-		, pPoints(std::make_unique<Points>())
+        , pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawPolyline;
     reset();
@@ -93,9 +97,10 @@ RS_ActionDrawPolyline::RS_ActionDrawPolyline(RS_EntityContainer& container,
 RS_ActionDrawPolyline::~RS_ActionDrawPolyline() = default;
 
 
-void RS_ActionDrawPolyline::reset() {
-		pPoints->polyline = nullptr;
-	pPoints->data = { {}, {}, false};
+void RS_ActionDrawPolyline::reset()
+{
+    pPoints->polyline = nullptr;
+    pPoints->data = {};
 	pPoints->start = {};
 	pPoints->history.clear();
 	pPoints->bHistory.clear();
@@ -142,12 +147,13 @@ void RS_ActionDrawPolyline::trigger() {
 }
 
 
-
-void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e)
+{
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     double bulge=solveBulge(mouse);
+
 	if (getStatus()==SetNextPoint && pPoints->point.valid) {
         deletePreview();
         // clearPreview();
@@ -155,7 +161,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
                 //RS_Polyline* p = polyline->clone();
                 //p->reparent(preview);
                 //preview->addEntity(p);
-        if (fabs(bulge)<RS_TOLERANCE || Mode==Line) {
+        if (fabs(bulge)<RS_TOLERANCE || m_mode==Line) {
 			preview->addEntity(new RS_Line{preview.get(), pPoints->point, mouse});
         } else
 			preview->addEntity(new RS_Arc(preview.get(), pPoints->arc_data));
@@ -166,33 +172,59 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent* e) {
 }
 
 
+void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
+{
+    if (e->button() == Qt::LeftButton)
+    {
+        if (equationSettingOn   || stepSizeSettingOn) return;
 
-void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+        if (startPointSettingOn || endPointSettingOn)
+        {
+            QString pointNumberString(QString::number(snapPoint(e).x));
+
+            if (e->modifiers() == Qt::ControlModifier)
+            {
+                pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
+            }
+
+            RS_CommandEvent equationCommandEventObject(pointNumberString);
+            commandEvent(&equationCommandEventObject);
+            return;
+        }
+
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
-                if (getStatus()==SetNextPoint) {
-                        trigger();
-                }
+    }
+    else if (e->button() == Qt::RightButton)
+    {
+        if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn)
+        {
+            equationSettingOn   = false;
+            startPointSettingOn = false;
+            endPointSettingOn   = false;
+            stepSizeSettingOn   = false;
+            return;
+        }
+
+        if (getStatus() == SetNextPoint) trigger();
         deletePreview();
-        // clearPreview();
         deleteSnapper();
         init(getStatus()-1);
     }
 }
 
-double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
+
+double RS_ActionDrawPolyline::solveBulge(const RS_Vector& mouse) {
 
     double b(0.);
-    bool suc;
+    bool suc = false;
 	RS_Arc arc{};
 	RS_Line line{};
 	double direction;
-    RS_AtomicEntity* lastentity;
-    calculatedSegment=false;
+    RS_AtomicEntity* lastentity = nullptr;
+    m_calculatedSegment=false;
 
-    switch (Mode){
+    switch (m_mode){
 //     case Line:
 //        b=0.0;
 //        break;
@@ -206,7 +238,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 			double const direction2=RS_Math::correctAngle(line.getDirection2()+M_PI);
 			double const delta=direction2-direction;
             if( std::abs(std::remainder(delta,M_PI))>RS_TOLERANCE_ANGLE ) {
-                b=std::tan(delta/2);
+                b = std::tan(delta/2);
 				suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
                 if (suc)
 					pPoints->arc_data = arc.getData();
@@ -219,7 +251,7 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //                delta>M_PI-RS_TOLERANCE_ANGLE))
 //                b=0;
 //            else{
-//                b=tan((direction2-direction)/2);
+//                b = std::tan((direction2-direction)/2);
 //                suc = arc.createFrom2PBulge(point,mouse,b);
 //                if (suc)
 //                    arc_data = arc.getData();
@@ -237,12 +269,12 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
             direction = RS_Math::correctAngle(
                 lastentity->getDirection2()+M_PI);
 			suc = arc.createFrom2PDirectionRadius(pPoints->point, mouse,
-                direction,Radius);
+                direction,m_radius);
             if (suc){
 				pPoints->arc_data = arc.getData();
                 b=arc.getBulge();
 				pPoints->calculatedEndpoint = arc.getEndpoint();
-                calculatedSegment=true;
+                m_calculatedSegment=true;
 
             }
 //            else
@@ -252,13 +284,13 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
 //          b=0;
         break;
 /*     case TanAng:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;
      case TanRadAng:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;*/
     case Ang:
-		b=tan(m_Reversed*Angle*M_PI/720.0);
+		b = std::tan(m_reversed*m_angle*M_PI/720.0);
 		suc = arc.createFrom2PBulge(pPoints->point,mouse,b);
         if (suc)
 			pPoints->arc_data = arc.getData();
@@ -268,10 +300,10 @@ double RS_ActionDrawPolyline::solveBulge(RS_Vector mouse) {
     default:
         break;
         /*     case RadAngEndp:
-        b=tan(Reversed*Angle*M_PI/720.0);
+        b=tan(Reversed*m_angle*M_PI/720.0);
         break;
      case RadAngCenp:
-        b=tan(Reversed*Angle*M_PI/720.0);*/
+        b=tan(Reversed*m_angle*M_PI/720.0);*/
     }
     return b;
 }
@@ -283,7 +315,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 
     RS_Vector mouse = e->getCoordinate();
     double bulge=solveBulge(mouse);
-    if (calculatedSegment)
+    if (m_calculatedSegment)
 		mouse=pPoints->calculatedEndpoint;
 
     switch (getStatus()) {
@@ -337,68 +369,281 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
 }
 
 void RS_ActionDrawPolyline::setMode(SegmentMode m) {
-	Mode=m;
+	m_mode=m;
 }
 
 int RS_ActionDrawPolyline::getMode() const{
-	return Mode;
+	return m_mode;
 }
 
 void RS_ActionDrawPolyline::setRadius(double r) {
-	Radius=r;
+	m_radius=r;
 }
 
 double RS_ActionDrawPolyline::getRadius() const{
-	return Radius;
+	return m_radius;
 }
 
 void RS_ActionDrawPolyline::setAngle(double a) {
-	Angle=a;
+	m_angle=a;
 }
 
 double RS_ActionDrawPolyline::getAngle() const{
-	return Angle;
+	return m_angle;
 }
 
 void RS_ActionDrawPolyline::setReversed( bool c) {
-	m_Reversed=c?-1:1;
+	m_reversed=c?-1:1;
 }
 
 bool RS_ActionDrawPolyline::isReversed() const{
-	return m_Reversed==-1;
+	return m_reversed==-1;
 }
 
 
-void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
+void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent* e)
+{
+    QString c = e->getCommand().toLower().replace(" ", "");
+    QString polyEquation;
 
-    switch (getStatus()) {
-    case SetStartpoint:
-        if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-            return;
+    switch (getStatus())
+    {
+        case SetStartpoint:
+            if (checkCommand("help", c))
+            {
+                RS_DIALOGFACTORY->commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
+                return;
+            }
+            if (checkCommand("close", c))
+            {
+                e->accept();
+                close();
+                return;
+            }
+            break;
+
+        case SetNextPoint:
+            if (checkCommand("undo", c))
+            {
+                undo();
+                e->accept();
+                updateMouseButtonHints();
+                return;
+            }
+            if (checkCommand("close", c))
+            {
+                e->accept();
+                close();
+                return;
+            }
+            break;
+
+        default:
+            break;
+    }
+
+    if ((m_mode == Line) && (checkCommand("equation", c)))
+    {
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter an equation, f(x)"));
+        equationSettingOn = true;
+        e->accept();
+        return;
+    }
+
+    if (equationSettingOn)
+    {
+        equationSettingOn = false;
+
+        shiftX = false;
+
+        try
+        {
+            QString cRef = c;
+
+            const QString someRandomNumber = "123.456";
+
+            cRef.replace(tr("x"), someRandomNumber);
+
+            setParserExpression(cRef);
+
+            const double parseTestValue = m_muParserObject->Eval();
+
+            if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
+
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the start point"));
+
+            startPointSettingOn = true;
+
+            polyEquation = c;
         }
-        break;
-
-    case SetNextPoint:
-        if (checkCommand("close", c)) {
-            close();
-            e->accept();
+        catch (...)
+        {
+            RS_DIALOGFACTORY->commandMessage(tr("The equation entered is invalid."));
             updateMouseButtonHints();
-            return;
         }
 
-        if (checkCommand("undo", c)) {
-            undo();
-            e->accept();
+        e->accept();
+        return;
+    }
+
+    if (startPointSettingOn)
+    {
+        startPointSettingOn = false;
+
+        try
+        {
+            bool isRelative = false;
+
+            if (c.startsWith("@")) isRelative = true;
+
+            if (c.startsWith("@@")) shiftX = true;
+
+            setParserExpression(c.remove("@"));
+
+            startPoint = m_muParserObject->Eval();
+
+            if (isRelative) startPoint += graphicView->getRelativeZero().x;
+
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the end point"));
+
+            endPointSettingOn = true;
+        }
+        catch (...)
+        {
+            RS_DIALOGFACTORY->commandMessage(tr("The start point entered is invalid."));
             updateMouseButtonHints();
+        }
+
+        e->accept();
+        return;
+    }
+
+    if (endPointSettingOn)
+    {
+        endPointSettingOn = false;
+
+        try
+        {
+            bool isRelative = false;
+
+            if (c.startsWith("@")) isRelative = true;
+
+            if (c.startsWith("@@")) shiftX = true;
+
+            setParserExpression(c.remove("@"));
+            endPoint = m_muParserObject->Eval();
+
+            if (isRelative) endPoint += graphicView->getRelativeZero().x;
+
+            if (endPoint == startPoint) throw -1;
+
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter the number of polylines"));
+
+            stepSizeSettingOn = true;
+        }
+        catch (...)
+        {
+            RS_DIALOGFACTORY->commandMessage(tr("The end point entered is invalid."));
+            updateMouseButtonHints();
+        }
+
+        e->accept();
+        return;
+    }
+
+    if (stepSizeSettingOn)
+    {
+        stepSizeSettingOn = false;
+
+        int numberOfPolylines;
+
+        try
+        {
+            setParserExpression(c);
+            numberOfPolylines = (int) trunc(m_muParserObject->Eval());
+
+            if (numberOfPolylines <= 0) throw -1;
+        }
+        catch (...)
+        {
+            RS_DIALOGFACTORY->commandMessage(tr("The step size entered is invalid."));
+            updateMouseButtonHints();
+
+            e->accept();
             return;
         }
-        break;
 
-    default:
-        break;
+        deleteSnapper();
+
+        const double stepSize = (endPoint - startPoint) / (double) numberOfPolylines;
+
+        const int direction = (stepSize < 0) ? -1 : 1;
+
+        double equation_xTerm = 0.0;
+        m_muParserObject->DefineVar(_T("x"), &equation_xTerm);
+        setParserExpression(polyEquation);
+
+        double plotting_xTerm = startPoint;
+
+        equation_xTerm = startPoint;
+
+        if (shiftX) equation_xTerm = 0.0;
+
+        if (getStatus() == SetStartpoint)
+        {
+            pPoints->point = RS_Vector(startPoint, m_muParserObject->Eval());
+            pPoints->history.clear();
+            pPoints->history.append(pPoints->point);
+            pPoints->bHistory.clear();
+            pPoints->bHistory.append(0.0);
+            pPoints->start = pPoints->point;
+
+            setStatus(SetNextPoint);
+
+            plotting_xTerm += stepSize;
+            equation_xTerm += stepSize;
+        }
+
+        while (((direction ==  1) && (plotting_xTerm <= endPoint)) 
+        ||     ((direction == -1) && (plotting_xTerm >= endPoint)))
+        {
+            pPoints->point = RS_Vector(plotting_xTerm, m_muParserObject->Eval());
+            pPoints->history.append(pPoints->point);
+
+            if (pPoints->polyline == nullptr)
+            {
+                pPoints->polyline = new RS_Polyline(container, pPoints->data);
+                pPoints->polyline->addVertex(pPoints->start, 0.0);
+            }
+
+            pPoints->polyline->addVertex(pPoints->point, 0.0);
+            pPoints->polyline->setEndpoint(pPoints->point);
+
+            if (pPoints->polyline->count() == 1)
+            {
+                pPoints->polyline->setLayerToActive();
+                pPoints->polyline->setPenToActive();
+                container->addEntity(pPoints->polyline);
+            }
+
+            deletePreview();
+            graphicView->drawEntity(pPoints->polyline);
+
+            plotting_xTerm += stepSize;
+            equation_xTerm += stepSize;
+        }
+
+        drawSnapper();
+
+        plotting_xTerm -= stepSize;
+        equation_xTerm -= stepSize;
+
+        graphicView->moveRelativeZero(RS_Vector(plotting_xTerm, m_muParserObject->Eval()));
+
+        updateMouseButtonHints();
+
+        e->accept();
+        return;
     }
 }
 
@@ -427,7 +672,10 @@ QStringList RS_ActionDrawPolyline::getAvailableCommands() {
 
 
 
-void RS_ActionDrawPolyline::updateMouseButtonHints() {
+void RS_ActionDrawPolyline::updateMouseButtonHints()
+{
+    if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
+
     switch (getStatus()) {
     case SetStartpoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
@@ -486,8 +734,8 @@ void RS_ActionDrawPolyline::close() {
 		//data.endpoint = start;
 		//trigger();
 		if (pPoints->polyline) {
-			if (Mode==TanRad)
-				Mode=Line;
+			if (m_mode==TanRad)
+				m_mode=Line;
 			RS_CoordinateEvent e(pPoints->polyline->getStartpoint());
 			coordinateEvent(&e);
 			pPoints->polyline->setClosed(true);
@@ -528,5 +776,22 @@ void RS_ActionDrawPolyline::undo() {
                "Not enough entities defined yet."));
     }
 }
+
+void RS_ActionDrawPolyline::setParserExpression(QString expression)
+{
+    if (m_muParserObject == nullptr)
+    {
+        m_muParserObject = std::make_unique<mu::Parser>();
+        m_muParserObject->DefineConst(_T("e"),  M_E);
+        m_muParserObject->DefineConst(_T("pi"), M_PI);
+    }
+
+#ifdef _UNICODE
+        m_muParserObject->SetExpr(expression.toStdWString());
+#else
+        m_muParserObject->SetExpr(expression.toStdString());
+#endif
+}
+
 
 // EOF
