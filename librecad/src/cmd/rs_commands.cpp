@@ -484,18 +484,6 @@ RS_Commands::RS_Commands() {
 			{{"dl", QObject::tr("dl", "dimension - linear")}},
             RS2::ActionDimLinear
         },
-        // dimension horizontal
-        {
-            {{"dimhorizontal", QObject::tr("dimhorizontal", "dimension - horizontal")}},
-            {{"dh", QObject::tr("dh", "dimension - horizontal")}},
-            RS2::ActionDimLinearHor
-        },
-        // dimension vertical
-        {
-            {{"dimvertical", QObject::tr("dimvertical", "dimension - vertical")}},
-            {{"dv", QObject::tr("dv", "dimension - vertical")}},
-            RS2::ActionDimLinearVer
-        },
         // dimension radius
         {
             {{"dimradius", QObject::tr("dimradius", "dimension - radial")},

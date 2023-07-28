@@ -297,8 +297,6 @@ namespace RS2 {
 
         ActionDimAligned,
         ActionDimLinear,
-        ActionDimLinearVer,
-        ActionDimLinearHor,
         ActionDimRadial,
         ActionDimDiametric,
         ActionDimAngular,

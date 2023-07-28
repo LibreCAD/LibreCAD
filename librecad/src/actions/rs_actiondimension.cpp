@@ -91,8 +91,6 @@ bool RS_ActionDimension::isDimensionAction(RS2::ActionType type) {
 	switch(type){
 	case RS2::ActionDimAligned:
 	case RS2::ActionDimLinear:
-	case RS2::ActionDimLinearVer:
-	case RS2::ActionDimLinearHor:
 	case RS2::ActionDimAngular:
 	case RS2::ActionDimDiametric:
 	case RS2::ActionDimRadial:

@@ -788,8 +788,6 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         break;
 
     case RS2::ActionDimLinear:
-    case RS2::ActionDimLinearVer:
-    case RS2::ActionDimLinearHor:
         requestDimensionOptions(action, on, update);
 		if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
             requestDimLinearOptions(action, on, update);

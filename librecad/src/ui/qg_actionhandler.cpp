@@ -592,12 +592,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDimLinear:
         a = new RS_ActionDimLinear(*document, *view);
         break;
-    case RS2::ActionDimLinearHor:
-        a = new RS_ActionDimLinear(*document, *view, 0.0, true, RS2::ActionDimLinearHor);
-        break;
-    case RS2::ActionDimLinearVer:
-        a = new RS_ActionDimLinear(*document, *view, M_PI_2, true, RS2::ActionDimLinearVer);
-        break;
     case RS2::ActionDimRadial:
         a = new RS_ActionDimRadial(*document, *view);
         break;
@@ -1551,14 +1545,6 @@ void QG_ActionHandler::slotDimAligned() {
 
 void QG_ActionHandler::slotDimLinear() {
     setCurrentAction(RS2::ActionDimLinear);
-}
-
-void QG_ActionHandler::slotDimLinearHor() {
-    setCurrentAction(RS2::ActionDimLinearHor);
-}
-
-void QG_ActionHandler::slotDimLinearVer() {
-    setCurrentAction(RS2::ActionDimLinearVer);
 }
 
 void QG_ActionHandler::slotDimRadial() {

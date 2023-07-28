@@ -526,20 +526,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DimLinear");
     a_map["DimLinear"] = action;
 
-    action = new QAction(tr("&Horizontal"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_horizontal.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLinearHor()));
-    action->setObjectName("DimLinearHor");
-    a_map["DimLinearHor"] = action;
-
-    action = new QAction(tr("&Vertical"), agm->dimension);
-    action->setIcon(QIcon(":/icons/dim_vertical.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDimLinearVer()));
-    action->setObjectName("DimLinearVer");
-    a_map["DimLinearVer"] = action;
-
     action = new QAction(tr("&Radial"), agm->dimension);
     action->setIcon(QIcon(":/icons/dim_radial.svg"));
     connect(action, SIGNAL(triggered()),

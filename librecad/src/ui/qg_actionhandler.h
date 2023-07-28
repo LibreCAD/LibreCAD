@@ -172,8 +172,6 @@ public slots:
 
 	void slotDimAligned();
 	void slotDimLinear();
-	void slotDimLinearHor();
-	void slotDimLinearVer();
 	void slotDimRadial();
 	void slotDimDiametric();
 	void slotDimAngular();

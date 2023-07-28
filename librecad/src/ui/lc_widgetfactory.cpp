@@ -134,8 +134,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     dimension_actions
             << a_map["DimAligned"]
             << a_map["DimLinear"]
-            << a_map["DimLinearHor"]
-            << a_map["DimLinearVer"]
             << a_map["DimRadial"]
             << a_map["DimDiametric"]
             << a_map["DimAngular"]
