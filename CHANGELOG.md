@@ -6,6 +6,7 @@
 - importshp plugin, see issue #1481
 
 ### Fixed
+- backport fix for equation solver from master (#1653)
 - LFF fonts issues
 - fixed segfault when opening malformed LFF files
 - CVE-2023-30259, OOB reads in importshp plugin (#1481)
