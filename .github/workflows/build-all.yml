@@ -2,7 +2,7 @@ name: 2.2.0 bugfix builds
 on:
   push:
     branches:
-      - 2.2.0-fixes
+      - 2.2
 
 jobs:
   BuildLinux:
@@ -11,7 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
-          ref: '2.2.0-fixes'
+          ref: '2.2'
           fetch-depth: 0
 
       - name: Install Qt and dependencies
