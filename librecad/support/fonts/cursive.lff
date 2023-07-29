@@ -10,9 +10,9 @@
 # Author:            Rallaz <rallazz@gmail.com>
 # License:           GPL v2 or later
 #
-# Notes:	     - This font is based in the file
-# 		       http://commons.wikimedia.org/wiki/File:ISO3098.svg
-# 		       released as public domain.
+# Notes:            - This font is based in the file
+#                     http://commons.wikimedia.org/wiki/File:ISO3098.svg
+#                     released as public domain.
 
 [0021] !
 0,0;0.1341,0.5
@@ -577,9 +577,6 @@ C0079
 [2205] ∅
 0.50173,0;5.9132,9
 2.81333,7.2517;0.42703,5.07963,A0.17773;3.60107,1.74762,A0.7667;5.98712,3.9197,A0.177;2.81333,7.2517,A0.7667
-
-[2205] ∅
-C2205
 
 [fffd] �
 1,0;0,2;1,4;2,2;1,0

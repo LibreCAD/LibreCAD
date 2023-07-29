@@ -1,9 +1,8 @@
-name: Continuous build
+name: 2.2.0 bugfix builds
 on:
   push:
     branches:
-      - master
-      - ci_dev
+      - 2.2.0-fixes
 
 jobs:
   BuildLinux:
@@ -12,6 +11,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
         with:
+          ref: '2.2.0-fixes'
           fetch-depth: 0
 
       - name: Install Qt and dependencies
@@ -32,33 +32,11 @@ jobs:
         run: |
           sudo apt-get -qq install clang-10 clang-tools-10
 
-      - name: Build and analyze
+      - name: Build
         run: |
           export CC=gcc
-          export ANALYZE="scan-build-10 -o out "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
-          ${ANALYZE}make release -j$(nproc)
-
-      - name: Create report repository
-        run: |
-          cd out
-          find . -mindepth 2 -type f -print -exec mv {} . \;
-          git config --global user.email "github@librecad.org"
-          git config --global user.name "GHA CI [bot]"
-          git config --global init.defaultBranch gh-pages
-          git init
-          git add .
-          git commit -m "latest analyzer report"
-
-      - name: Push changes
-        if: github.repository_owner == 'LibreCAD'
-        uses: ad-m/github-push-action@master
-        with:
-          repository: ${{ github.repository_owner }}/static-analyzer-reports
-          github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
-          branch: gh-pages
-          force: true
-          directory: out
+          qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr BOOST_DIR=${{ github.workspace }}/boost/boost
+          make release -j$(nproc)
 
       - name: Create AppImage
         run: |
@@ -132,32 +110,6 @@ jobs:
           mv boost_1_75_0 ../boost
           rm boost.7z
 
-      - name: Debugging
-        if: ${{ always() }}
-        shell: cmd
-        run: |
-          set
-          echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
-          echo.
-          dir ..\boost
-          echo.
-          dir ..\Qt
-          echo.
-          dir ..\Qt\5.12.11\
-          echo.
-          dir ..\Qt\5.12.11\mingw73_32\
-          echo.
-          dir ..\Qt\5.12.11\mingw73_32\bin
-
       - name: Build
         run: |
           set PATH=c:\msys64\mingw32\bin;%PATH%
@@ -198,7 +150,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "2.2.0-latest"
           prerelease: true
           title: "Continuous Build"
           files: |
