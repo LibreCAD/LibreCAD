@@ -1064,15 +1064,16 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& p
 
     pen.setDashOffset(patternOffset);
 
-	if (!isPrinting() && !isPrintPreview())
-	{
-		// this entity is selected:
-		if (e->isSelected()) {
-			pen.setLineType(RS2::DotLine);
-			pen.setColor(m_colorData->selectedColor);
-		}
+    if (!isPrinting() && !isPrintPreview())
+    {
+        // this entity is selected:
+        if (e->isSelected()) {
+            pen.setLineType(RS2::DashLineTiny);
+            pen.setWidth(RS2::Width00);
+            pen.setColor(m_colorData->selectedColor);
+        }
 
-		// this entity is highlighted:
+        // this entity is highlighted:
         if (e->isHighlighted()) {
             // Glowing effects on mouse hovering: use the "selected" color
             if (e->getParent() == overlayEntities[RS2::OverlayEffects])
