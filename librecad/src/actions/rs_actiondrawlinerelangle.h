@@ -50,8 +50,8 @@ private:
 public:
     RS_ActionDrawLineRelAngle(RS_EntityContainer& container,
                               RS_GraphicView& graphicView,
-                              double angle=0.0,
-                              bool fixedAngle=false);
+                              double angle = 0.0,
+                              bool fixedAngle = false);
 	~RS_ActionDrawLineRelAngle() override;
 	
 	RS2::ActionType rtti() const override;
@@ -93,27 +93,22 @@ public:
 	}
 
 private:
-    /** new line */
-    //RS_Line* line;
     /** Chosen entity */
-    RS_Entity* entity;
+    RS_Entity* entity = nullptr;
     /** Chosen position */
 	std::unique_ptr<RS_Vector> pos;
     /**
      * Line angle.
      */
-    double angle;
+    double angle = 0.;
     /**
      * Line length.
      */
-    double length;
+    double length = 10.;
     /**
      * Is the angle fixed?
      */
-    bool fixedAngle;
-
-    //list of entity types supported by current action
-    const EntityTypeList enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle,RS2::EntityEllipse};
+    bool fixedAngle = false;
 
     void unhighlightEntity();
 };
