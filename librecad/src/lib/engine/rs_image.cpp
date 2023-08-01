@@ -100,42 +100,6 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-RS_Image::RS_Image(const RS_Image& _image):
-	RS_AtomicEntity(_image.getParent())
-  ,data(_image.data)
-  ,img(_image.img.get()?new QImage(*_image.img):nullptr)
-{
-}
-
-RS_Image& RS_Image::operator = (const RS_Image& _image)
-{
-    if (this != & _image) {
-        data=_image.data;
-        if(_image.img != nullptr){
-            img.reset(new QImage(*_image.img));
-        }else{
-            img.reset();
-        }
-    }
-	return *this;
-}
-
-RS_Image::RS_Image(RS_Image&& _image):
-	RS_AtomicEntity(_image.getParent())
-  ,data(std::move(_image.data))
-  ,img(std::move(_image.img))
-{
-}
-
-RS_Image& RS_Image::operator = (RS_Image&& _image)
-{
-    if (this != &_image) {
-        data=_image.data;
-        img = std::move(_image.img);
-    }
-	return *this;
-}
-
 
 RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
@@ -163,7 +127,7 @@ void RS_Image::update() {
     QString filePathName = imageRelativePathName(data.file);
 
     //QImage image = QImage(data.file);
-    img = std::make_unique<QImage>(filePathName);
+    img = std::make_shared<QImage>(filePathName);
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.

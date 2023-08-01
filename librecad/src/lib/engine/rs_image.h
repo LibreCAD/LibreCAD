@@ -81,10 +81,6 @@ class RS_Image : public RS_AtomicEntity {
 public:
     RS_Image(RS_EntityContainer* parent,
             const RS_ImageData& d);
-	RS_Image(const RS_Image& _image);
-	RS_Image(RS_Image&& _image);
-	RS_Image& operator = (const RS_Image& _image);
-	RS_Image& operator = (RS_Image&& _image);
 
 	RS_Entity* clone() const override;
 
@@ -220,7 +216,7 @@ protected:
 	// whether the point is within image
 	bool containsPoint(const RS_Vector& coord) const;
 	RS_ImageData data;
-	std::unique_ptr<QImage> img;
+    std::shared_ptr<QImage> img;
         //QImage** img;
         //int nx;
         //int ny;
