@@ -97,7 +97,7 @@ void RS_Entity::init() {
  * Gives this entity a new unique id.
  */
 void RS_Entity::initId() {
-    static unsigned long int idCounter=0;
+    static unsigned long long idCounter=0;
     id = idCounter++;
 }
 

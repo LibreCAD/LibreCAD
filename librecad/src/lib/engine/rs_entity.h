@@ -570,7 +570,7 @@ protected:
     RS_Layer* layer = nullptr;
 
     //! Entity id
-    unsigned long id = 0u;
+    unsigned long long id = 0;
 
     //! pen (attributes) for this entity
     RS_Pen pen;
