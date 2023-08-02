@@ -32,7 +32,9 @@
 #include "rs_vector.h"
 
 class RS_Color;
+class RS_GraphicView;
 class RS_Pen;
+class RS_Spline;
 class QPainterPath;
 class QRectF;
 class QPolygon;
@@ -108,7 +110,6 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed);
-    QPainterPath createSplinePoints(const LC_SplinePointsData& data) const;
     virtual void drawCircle(const RS_Vector& cp, double radius) = 0;
     virtual void drawEllipse(const RS_Vector& cp,
                              double radius1, double radius2,
@@ -116,6 +117,7 @@ public:
                              double angle1, double angle2,
                              bool reversed) = 0;
     virtual void drawSplinePoints(const LC_SplinePointsData& splineData) = 0;
+    virtual void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) = 0;
     virtual void drawImg(QImage& img, const RS_Vector& pos,
                                const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) = 0;
     virtual void drawTextH(int x1, int y1, int x2, int y2,

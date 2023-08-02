@@ -36,6 +36,8 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_linetypepattern.h"
+#include <rs_units.h>
+#include <rs_graphic.h>
 #include "rs_painter.h"
 #include "rs_painterqt.h"
 #include "lc_quadratic.h"
@@ -599,68 +601,15 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
     }
 }
 
-
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
 	if (! (painter && view)) {
         return;
     }
 
-    auto viewportRect = view->getViewRect();
-    RS_VectorSolutions endPoints{{getStartpoint(), getEndpoint()}};
+    // Adjust dash offset
+    updateDashOffset(*painter, *view, patternOffset);
 
-    RS_EntityContainer ec = nullptr;
-    ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
-
-    if ((endPoints[0] - getStartpoint()).squared() >
-            (endPoints[1] - getStartpoint()).squared() )
-    {
-        std::swap(endPoints[0],endPoints[1]);
-    }
-
-	RS_Vector pStart{view->toGui(endPoints.at(0))};
-	RS_Vector pEnd{view->toGui(endPoints.at(1))};
-    //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
-	RS_Vector direction = pEnd-pStart;
-
-	if (isConstruction(true) && direction.squared() > RS_TOLERANCE){
-        //extend line on a construction layer to fill the whole view
-		RS_VectorSolutions vpIts;
-		for(auto p: ec) {
-            auto const sol=RS_Information::getIntersection(this, p, true);
-			for (auto const& vp: sol) {
-				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
-					continue;
-				vpIts.push_back(vp);
-			}
-		}
-
-		//draw construction lines up to viewport border
-		switch (vpIts.size()) {
-		case 2:
-			// no need to sort intersections
-			break;
-		case 3:
-		case 4: {
-			// will use the inner two points
-			size_t i{0};
-			for (size_t j = 0; j < vpIts.size(); ++j)
-				if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
-					std::swap(vpIts[j], vpIts[i++]);
-
-		}
-			break;
-		default:
-			//should not happen
-			return;
-		}
-		pStart=view->toGui(vpIts.get(0));
-		pEnd=view->toGui(vpIts.get(1));
-		direction=pEnd-pStart;
-    }
-
-    patternOffset -= direction.magnitude() * view->getFactor().x;
-
-    painter->drawLine(pStart,pEnd);
+    painter->drawLine(view->toGui(getStartpoint()), view->toGui(getEndpoint()));
 }
 
 /**

@@ -179,6 +179,15 @@ public:
 	virtual void reverse();
 
 	void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
+
+protected:
+    /**
+     * @brief updateDashOffset update dash offset for rendering line styles
+     * @param painter - painter
+     * @param view - graphic view
+     * @param patternOffset - dash pattern offset
+     */
+    virtual void updateDashOffset(RS_Painter& painter, RS_GraphicView& view, double& patternOffset) const;
 };
 
 

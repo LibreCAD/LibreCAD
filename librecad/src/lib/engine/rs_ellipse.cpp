@@ -378,8 +378,8 @@ RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
   */
 double RS_Ellipse::getLength() const
 {
-		RS_Ellipse e(nullptr, data);
-        //switch major/minor axis, because we need the ratio smaller than one
+    RS_Ellipse e(nullptr, data);
+    //switch major/minor axis, because we need the ratio smaller than one
     if(e.getRatio()>1.)  e.switchMajorMinor();
     if(e.isReversed()) {
         e.setReversed(false);
@@ -1851,15 +1851,14 @@ void RS_Ellipse::drawVisible(RS_Painter* painter, RS_GraphicView* view, double& 
         return;
     }
 
+    // Adjust dash offset
+    updateDashOffset(*painter, *view, patternOffset);
+
     painter->drawEllipse(view->toGui(getCenter()),
                          ra, rb,
                          getAngle(),
                          getAngle1(), getAngle2(),
                          isReversed());
-
-    double length = isReversed() ? getEllipseLength(getAngle2(), getAngle1())
-                                 : getEllipseLength(getAngle1(), getAngle2());
-    patternOffset -= length * view->getFactor().x;
 }
 
 

@@ -34,6 +34,9 @@
 #include "rs_painter.h"
 #include "rs_pen.h"
 
+class RS_GraphicView;
+class RS_Spline;
+
 /**
  * The Qt implementation of a painter. It can draw objects such as
  * lines or arcs in a widget. All coordinates are screen coordinates
@@ -71,6 +74,7 @@ public:
                              double a1, double a2,
                              bool reversed) override;
     void drawSplinePoints(const LC_SplinePointsData& splineData) override;
+    void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) override;
     void drawImg(QImage& img, const RS_Vector& pos,
                                const RS_Vector& u, const RS_Vector& v, const RS_Vector& factor) override;
     void drawTextH(int x1, int y1, int x2, int y2,
@@ -112,6 +116,9 @@ public:
     RS_Pen& getRsPen();
 
 protected:
+
+    QPainterPath createSplinePoints(const LC_SplinePointsData& data) const;
+    QPainterPath createSpline(const RS_Spline& spline, const RS_GraphicView& view) const;
     RS_Pen lpen;
     long rememberX = 0; // Used for the moment because QPainter doesn't support moveTo anymore, thus we need to remember ourselves the moveTo positions
     long rememberY = 0;

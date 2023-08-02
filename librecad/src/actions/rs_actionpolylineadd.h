@@ -60,8 +60,8 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* addEntity;
-    RS_Entity* addSegment;
+    RS_Entity* addEntity = nullptr;
+    RS_Entity* addSegment = nullptr;
 	std::unique_ptr<RS_Vector> addCoord;
 };
 

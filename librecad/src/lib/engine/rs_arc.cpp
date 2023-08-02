@@ -949,6 +949,9 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
     if(!isVisibleInWindow(view))
         return;
 
+    // Adjust dash offset
+    updateDashOffset(*painter, *view, patternOffset);
+
     RS_Vector cp=view->toGui(getCenter());
     double ra=getRadius()*view->getFactor().x;
 
@@ -956,8 +959,6 @@ void RS_Arc::drawVisible(RS_Painter* painter, RS_GraphicView* view,
                      ra,
                      getAngle1(), getAngle2(),
                      isReversed());
-    double length=getLength()*view->getFactor().x;
-    patternOffset -= length;
 }
 
 
@@ -1013,10 +1014,7 @@ double RS_Arc::getLength() const {
  */
 double RS_Arc::getBulge() const {
     double bulge = std::tan(std::abs(getAngleLength())/4.0);
-    if (isReversed()) {
-        bulge*=-1;
-    }
-    return bulge;
+    return isReversed() ? - bulge : bulge;
 }
 
 /** return the equation of the entity

@@ -29,34 +29,25 @@
 #include <memory>
 
 #include "dxf_format.h"
+#include "lc_splinepoints.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
 #include "rs_painterqt.h"
+#include "rs_spline.h"
 
 namespace {
 // Convert fro LibreCAD line style pattern to QPen Dash Pattern.
 // QPen dash pattern by default is in the unit of pixel
-QVector<qreal> rsToQDashPattern(RS2::LineType t, RS2::LineWidth lineWidth, double screenWidth, double dpmm)
+QVector<qreal> rsToQDashPattern(RS2::LineType t, double screenWidth, double dpmm)
 {
-    // expected width in mm = wMm
-    // dash size in mm = d
-    // line width in pixels : max(wMm * dpmm, 1)
-    // dash size in pixels: d*dpmm
-    //  dpmm/max(wMm*dpmm, 1), dpmm/screenWidth
-    // Pattern dashes are in units of the line width d*dpmm /( lineWidth in pixels)
-    // the scaling factor is :
-    // dpmm/lineWidthPixels
-    // When lineWidth in pixels is smaller than 1, 1 is used
-    // d * dpmm
-
+    // dash pattern is in mm
+    // d*dpmm/screenWidth, so, the scaling factor k = dpmm/screenWidth
     dpmm = std::max(dpmm, 1e-6);
-    double lineWidthMm = 0.01 * std::max(static_cast<int>(lineWidth), 1);
-    double k = std::max(dpmm / std::max(screenWidth, 1.), 1. / lineWidthMm);
+    double k = dpmm / std::max(screenWidth, 1.);
 
-    // The minimum scaling for 1-pixel width
-    k = std::min(k, dpmm);
     const std::vector<double>& pattern = RS_LineTypePattern::getPattern(t)->pattern;
     QVector<qreal> dashPattern;
     std::transform(pattern.cbegin(), pattern.cend(), std::back_inserter(dashPattern), [k](double d) {
@@ -168,12 +159,14 @@ public:
         } else if (styleToUse == Qt::CustomDashLine)
         {
             QVector<qreal> dashPattern = rsToQDashPattern(rsPen.getLineType(),
-                                                          rsPen.getWidth(),
-                                                          rsPen.getScreenWidth(),
+                                                          qPen.widthF(),
                                                           painter.getDpmm());
             if (!dashPattern.isEmpty()) {
                 qPen.setDashPattern(std::move(dashPattern));
-                qPen.setDashOffset(rsPen.dashOffset());
+
+                double dpmm = std::max(painter.getDpmm(), 1e-6);
+                double k = dpmm / std::max(rsPen.getScreenWidth(), 1.);
+                qPen.setDashOffset(rsPen.dashOffset() * k);
             } else {
                 qPen.setStyle(Qt::SolidLine);
             }
@@ -641,6 +634,15 @@ void RS_PainterQt::drawSplinePoints(const LC_SplinePointsData& splineData)
     drawPath(createSplinePoints(splineData));
 }
 
+void RS_PainterQt::drawSpline(const RS_Spline& spline, const RS_GraphicView& view)
+{
+    // RAII style QPainter state saving/restoring
+    PainterGuard painterGuard{*this};
+
+    drawPath(createSpline(spline, view));
+}
+
+
 void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
                            const RS_Vector& uVector, const RS_Vector& vVector, const RS_Vector& factor) {
     save();
@@ -781,8 +783,7 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
     if (p.style() == Qt::CustomDashLine)
     {
         auto dashPattern = rsToQDashPattern(lpen.getLineType(),
-                                            lpen.getWidth(),
-                                            lpen.getScreenWidth(),
+                                            p.widthF(),
                                             getDpmm());
         if (!dashPattern.isEmpty())
             p.setDashPattern(dashPattern);
@@ -790,7 +791,7 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
             p.setStyle(Qt::SolidLine);
     }
     p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::RoundCap);
+    p.setCapStyle(Qt::FlatCap);
     QPainter::setPen(p);
 }
 
@@ -892,4 +893,115 @@ void RS_PainterQt::fillRect ( const QRectF & rectangle, const QBrush & brush ) {
 RS_Pen& RS_PainterQt::getRsPen()
 {
     return lpen;
+}
+
+
+QPainterPath RS_PainterQt::createSplinePoints(const LC_SplinePointsData& data) const
+{
+    size_t n = data.controlPoints.size();
+    if(n < 2)
+        return {};
+
+    RS_Vector vStart = data.controlPoints.front();
+    RS_Vector vControl(false), vEnd(false);
+
+    QPainterPath qPath(QPointF(vStart.x, vStart.y));
+
+    if(data.closed)
+    {
+        if(n < 3)
+        {
+            vEnd = data.controlPoints.at(1);
+            vControl = vEnd;
+            qPath.lineTo(QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vStart = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vControl = vStart;
+        qPath.moveTo(QPointF(vControl.x, vControl.y));
+
+        vControl = data.controlPoints.at(0);
+        vEnd = (data.controlPoints.at(0) + data.controlPoints.at(1))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+
+        for(size_t i = 1; i < n - 1; i++)
+        {
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+        }
+
+        vControl = data.controlPoints.at(n - 1);
+        vEnd = (data.controlPoints.at(n - 1) + data.controlPoints.at(0))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+    }
+    else
+    {
+        vEnd = data.controlPoints.at(1);
+        if(n < 3)
+        {
+            vControl = vEnd;
+            qPath.lineTo(QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vControl = vEnd;
+        vEnd = data.controlPoints.at(2);
+        if(n < 4)
+        {
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+            return qPath;
+        }
+
+        vEnd = (data.controlPoints.at(1) + data.controlPoints.at(2))/2.0;
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+
+        for(size_t i = 2; i < n - 2; i++)
+        {
+            vControl = data.controlPoints.at(i);
+            vEnd = (data.controlPoints.at(i) + data.controlPoints.at(i + 1))/2.0;
+            vStart = vControl;
+            vControl = vEnd;
+            qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+        }
+
+        vControl = data.controlPoints.at(n - 2);
+        vEnd = data.controlPoints.at(n - 1);
+        vStart = vControl;
+        vControl = vEnd;
+        qPath.quadTo(QPointF(vStart.x, vStart.y), QPointF(vControl.x, vControl.y));
+    }
+
+    return qPath;
+}
+
+QPainterPath RS_PainterQt::createSpline(const RS_Spline& spline, const RS_GraphicView& view) const
+{
+    QPainterPath path;
+    auto toGui = [&view](const RS_Vector& v) -> QPointF {
+        RS_Vector vGui = view.toGui(v);
+        return {vGui.x, vGui.y};
+    };
+
+    RS_Entity* e=spline.firstEntity(RS2::ResolveNone);
+    do {
+        auto line = dynamic_cast<RS_Line*>(e);
+        if (line == nullptr)
+            break;
+        if (path.isEmpty())
+            path.moveTo(toGui(line->getStartpoint()));
+        path.lineTo(toGui(line->getEndpoint()));
+    } while ((e = spline.nextEntity(RS2::ResolveNone)) != nullptr);
+    return path;
 }

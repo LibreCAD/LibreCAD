@@ -367,24 +367,13 @@ void RS_Spline::revertDirection() {
 }
 
 
-void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
+void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
 	if (!(painter && view)) {
         return;
     }
 
-    RS_Entity* e=firstEntity(RS2::ResolveNone);
-	if (e) {
-        RS_Pen p=this->getPen(true);
-        e->setPen(p);
-        view->drawEntity(painter, e, patternOffset);
-
-        e = nextEntity(RS2::ResolveNone);
-		while(e) {
-            view->drawEntityPlain(painter, e, patternOffset);
-            e = nextEntity(RS2::ResolveNone);
-        }
-    }
+    painter->drawSpline(*this, *view);
 }
 
 
