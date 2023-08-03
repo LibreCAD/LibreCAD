@@ -3,6 +3,7 @@
 ## [2.2.1-alpha] - unreleased
 
 ### Added
+- shortcut "." to specify the current point coordinates on command line
 
 ### Removed
 - importshp plugin, see issue #1481

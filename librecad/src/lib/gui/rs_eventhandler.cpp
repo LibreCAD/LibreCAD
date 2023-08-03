@@ -278,6 +278,15 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     }
                 }
 
+                // handle quick shortcut for current point:
+                if (!e->isAccepted()) {
+                    if (cmd == ".") {
+                        RS_CoordinateEvent ce(relative_zero);
+                        currentActions.last()->coordinateEvent(&ce);
+                        e->accept();
+                    }
+                }
+
                 // handle absolute polar coordinate input:
                 if (!e->isAccepted()) {
                     if (cmd.contains('<') && cmd.at(0)!='@') {
