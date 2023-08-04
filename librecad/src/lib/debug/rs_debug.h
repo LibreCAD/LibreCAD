@@ -47,6 +47,7 @@ void debugHeader(char const* file, char const* func, int line);
 // Example: LC_LOG<<"logging debugging message"; // default log level: D_DEBUGGING
 //          LC_LOG(D_ERROR)<<"Logging error message"; // specified logging level: D_ERROR
 #define LC_LOG RS_Debug::Log()
+#define LC_ERR RS_Debug::Log(RS_Debug::D_ERROR)
 
 /**
  * Debugging facilities.
