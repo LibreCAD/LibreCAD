@@ -276,6 +276,7 @@ void RS_EntityContainer::setHighlighted(bool on)
     {
         e->setHighlighted(on);
     }
+    RS_Entity::setHighlighted(on);
 }
 
 
