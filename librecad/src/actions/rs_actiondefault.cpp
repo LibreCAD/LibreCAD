@@ -566,19 +566,17 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     if (!allowMouseOverGlowing(entity))
         return;
 
+    // The container for highlighting effects
     auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
     hContainer->clear();
 
     pPoints->highlightedEntity = entity;
-
-    RS_Pen duplicatedPen = entity->getPen(true);
 
     RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
 
     duplicatedEntity->reparent(hContainer);
     duplicatedEntity->setHighlighted(true);
     hContainer->addEntity(duplicatedEntity);
-    //duplicatedEntity->setPen(duplicatedPen);
 
     graphicView->redraw(RS2::RedrawOverlay);
 }
