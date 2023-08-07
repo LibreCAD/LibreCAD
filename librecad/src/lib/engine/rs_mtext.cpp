@@ -24,10 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_mtext.h"
-
-#include<iostream>
 #include<cmath>
+#include<iostream>
+
+#include "rs_mtext.h"
 
 #include "rs_debug.h"
 #include "rs_font.h"
@@ -242,9 +242,15 @@ void RS_MText::update()
         return;
     }
 
-    RS_Vector letterPos {RS_Vector( 0.0, -9.0)};
-    RS_Vector letterSpace {RS_Vector( font->getLetterSpacing(), 0.0)};
-    RS_Vector space {RS_Vector( font->getWordSpacing(), 0.0)};
+    RS_Vector letterPos {0.0, -9.0};
+    RS_Vector letterSpace {font->getLetterSpacing(), 0.0};
+    RS_Vector space {font->getWordSpacing(), 0.0};
+
+    // Support right-to-left lext layout direction
+    if (data.drawingDirection == RS_MTextData::RightToLeft) {
+        letterSpace.x = - letterSpace.x;
+        space.x = - space.x;
+    }
     int lineCounter {0};
 
     // Every single text line gets stored in this entity container
@@ -408,12 +414,7 @@ void RS_MText::update()
                     lowerWidth = lower->getSize().x;
                 }
 
-                if (upperWidth > lowerWidth) {
-                    letterPos += RS_Vector( upperWidth, 0.0);
-                }
-                else {
-                    letterPos += RS_Vector( lowerWidth, 0.0);
-                }
+                letterPos.x += std::copysign(std::max(upperWidth, lowerWidth), letterSpace.x);
                 letterPos += letterSpace;
                 handled = true;
 
@@ -476,8 +477,10 @@ void RS_MText::addLetter(RS_EntityContainer& oneLine,
         letterText = QChar( 0xfffd);
     }
 
-    RS_DEBUG->print("RS_MText::update: insert a letter at pos: %f/%f", letterPosition.x, letterPosition.y);
+    LC_ERR<<"RS_MText::update: insert a letter at pos:("<< letterPosition.x <<", "<<letterPosition.y<<")";
 
+    if (letterSpace.x < 0)
+        letterPosition.x += letterSpace.x;
     RS_InsertData d( letterText,
                     letterPosition,
                     RS_Vector( 1.0, 1.0),
@@ -494,12 +497,12 @@ void RS_MText::addLetter(RS_EntityContainer& oneLine,
     letterEntity->update();
     letterEntity->forcedCalculateBorders();
 
-    RS_Vector letterWidth = RS_Vector( letterEntity->getMax().x - letterPosition.x, 0.0);
-    if (0 > letterWidth.x) {
-        letterWidth.x = -letterSpace.x;
-    }
+    RS_Vector letterWidth{letterEntity->getMax().x - letterEntity->getMin().x, 0.};
+    letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
 
     oneLine.addEntity( letterEntity);
+    if (letterSpace.x < 0)
+        letterEntity->move({letterWidth.x, 0.});
 
     // next letter position:
     letterPosition += letterWidth;

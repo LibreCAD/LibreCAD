@@ -60,7 +60,8 @@ struct RS_MTextData {
 	 */
 	enum MTextDrawingDirection {
 		LeftToRight,     /**< Left to right */
-		TopToBottom,     /**< Top to bottom */
+        RightToLeft,     /**< Right to left*/
+        TopToBottom,     /**< Top to bottom */
 		ByStyle          /**< Inherited from associated text style */
 	};
 
