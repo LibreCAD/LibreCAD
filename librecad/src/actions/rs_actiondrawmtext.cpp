@@ -40,7 +40,7 @@ RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
 						   container, graphicView)
-		,pos(new RS_Vector{})
+        ,pos(std::make_unique<RS_Vector>())
 		,textChanged(true)
 {
 	actionType=RS2::ActionDrawMText;
@@ -55,7 +55,7 @@ void RS_ActionDrawMText::init(int status) {
 	case ShowDialog: {
 		reset();
 
-		RS_MText tmp(NULL, *data);
+        RS_MText tmp(nullptr, *data);
 		if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)) {
 			data.reset(new RS_MTextData(tmp.getData()));
 			setStatus(SetPos);
@@ -82,19 +82,18 @@ void RS_ActionDrawMText::init(int status) {
 
 
 void RS_ActionDrawMText::reset() {
-	const QString text=data.get()?data->text:"";
-	data.reset(new RS_MTextData(RS_Vector(0.0,0.0),
-                       1.0, 100.0,
-                       RS_MTextData::VATop,
-                       RS_MTextData::HALeft,
-                       RS_MTextData::LeftToRight,
-                       RS_MTextData::Exact,
-                       1.0,
-					   text,
-                       "standard",
-                       0.0,
-					   RS2::Update)
-			   );
+    const QString text= (data != nullptr) ? data->text : "";
+    data = std::make_unique<RS_MTextData>(RS_Vector(0.0,0.0),
+                                          1.0, 100.0,
+                                          RS_MTextData::VATop,
+                                          RS_MTextData::HALeft,
+                                          RS_MTextData::LeftToRight,
+                                          RS_MTextData::Exact,
+                                          1.0,
+                                          text,
+                                          "standard",
+                                          0.0,
+                                          RS2::Update);
 }
 
 
@@ -295,4 +294,4 @@ double RS_ActionDrawMText::getAngle() {
 }
 
 
-// EOF
+// EOFI

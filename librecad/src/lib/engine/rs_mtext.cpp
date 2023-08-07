@@ -24,10 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_mtext.h"
-
-#include<iostream>
 #include<cmath>
+#include<iostream>
+
+#include "rs_mtext.h"
 
 #include "rs_debug.h"
 #include "rs_font.h"
@@ -242,9 +242,15 @@ void RS_MText::update()
         return;
     }
 
-    RS_Vector letterPos {RS_Vector( 0.0, -9.0)};
-    RS_Vector letterSpace {RS_Vector( font->getLetterSpacing(), 0.0)};
-    RS_Vector space {RS_Vector( font->getWordSpacing(), 0.0)};
+    RS_Vector letterPos {0.0, -9.0};
+    RS_Vector letterSpace {font->getLetterSpacing(), 0.0};
+    RS_Vector space {font->getWordSpacing(), 0.0};
+
+    // Support right-to-left lext layout direction
+    if (data.drawingDirection == RS_MTextData::RightToLeft) {
+        letterSpace.x = - letterSpace.x;
+        space.x = - space.x;
+    }
     int lineCounter {0};
 
     // Every single text line gets stored in this entity container
@@ -366,54 +372,21 @@ void RS_MText::update()
                 // add texts:
                 double upperWidth {0.0};
                 if (! upperText.isEmpty()) {
-                    RS_MText* upper { new RS_MText( oneLine,
-                                                    RS_MTextData( letterPos + RS_Vector( 0.0, 9.0),
-                                                                  4.0,
-                                                                  100.0,
-                                                                  RS_MTextData::VATop,
-                                                                  RS_MTextData::HALeft,
-                                                                  RS_MTextData::LeftToRight,
-                                                                  RS_MTextData::Exact,
-                                                                  1.0,
-                                                                  upperText,
-                                                                  data.style,
-                                                                  0.0,
-                                                                  RS2::Update)) };
-                    upper->setLayer( nullptr);
-                    upper->setPen( RS_Pen( RS2::FlagInvalid));
-                    upper->calculateBorders();
+                    RS_MText* upper = createUpperLower(upperText, data, letterPos + RS_Vector{0., 9.});
                     oneLine->addEntity(upper);
+                    upper->reparent(oneLine);
                     upperWidth = upper->getSize().x;
                 }
 
                 double lowerWidth {0.0};
                 if (! lowerText.isEmpty()) {
-                    RS_MText* lower { new RS_MText( oneLine,
-                                                    RS_MTextData( letterPos + RS_Vector( 0.0, 4.0),
-                                                                  4.0,
-                                                                  100.0,
-                                                                  RS_MTextData::VATop,
-                                                                  RS_MTextData::HALeft,
-                                                                  RS_MTextData::LeftToRight,
-                                                                  RS_MTextData::Exact,
-                                                                  1.0,
-                                                                  lowerText,
-                                                                  data.style,
-                                                                  0.0,
-                                                                  RS2::Update)) };
-                    lower->setLayer( nullptr);
-                    lower->setPen( RS_Pen( RS2::FlagInvalid));
-                    lower->calculateBorders();
+                    RS_MText* lower = createUpperLower(lowerText, data, letterPos + RS_Vector{0.0, 4.0});
                     oneLine->addEntity(lower);
+                    lower->reparent(oneLine);
                     lowerWidth = lower->getSize().x;
                 }
 
-                if (upperWidth > lowerWidth) {
-                    letterPos += RS_Vector( upperWidth, 0.0);
-                }
-                else {
-                    letterPos += RS_Vector( lowerWidth, 0.0);
-                }
+                letterPos.x += std::copysign(std::max(upperWidth, lowerWidth), letterSpace.x);
                 letterPos += letterSpace;
                 handled = true;
 
@@ -476,8 +449,10 @@ void RS_MText::addLetter(RS_EntityContainer& oneLine,
         letterText = QChar( 0xfffd);
     }
 
-    RS_DEBUG->print("RS_MText::update: insert a letter at pos: %f/%f", letterPosition.x, letterPosition.y);
+    LC_ERR<<"RS_MText::update: insert a letter at pos:("<< letterPosition.x <<", "<<letterPosition.y<<")";
 
+    if (letterSpace.x < 0)
+        letterPosition.x += letterSpace.x;
     RS_InsertData d( letterText,
                     letterPosition,
                     RS_Vector( 1.0, 1.0),
@@ -494,16 +469,37 @@ void RS_MText::addLetter(RS_EntityContainer& oneLine,
     letterEntity->update();
     letterEntity->forcedCalculateBorders();
 
-    RS_Vector letterWidth = RS_Vector( letterEntity->getMax().x - letterPosition.x, 0.0);
-    if (0 > letterWidth.x) {
-        letterWidth.x = -letterSpace.x;
-    }
+    RS_Vector letterWidth{letterEntity->getMax().x - letterEntity->getMin().x, 0.};
+    letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
 
     oneLine.addEntity( letterEntity);
+    if (letterSpace.x < 0)
+        letterEntity->move({letterWidth.x, 0.});
 
     // next letter position:
     letterPosition += letterWidth;
     letterPosition += letterSpace;
+}
+
+RS_MText* RS_MText::createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position)
+{
+    RS_MText* line = new RS_MText( nullptr,
+                                    {position,
+                                                  4.0,
+                                                  100.0,
+                                                  RS_MTextData::VATop,
+                                                  RS_MTextData::HALeft,
+                                                  data.drawingDirection,
+                                                  RS_MTextData::Exact,
+                                                  1.0,
+                                                  std::move(text),
+                                                  data.style,
+                                                  0.0,
+                                                  RS2::Update});
+    line->setLayer( nullptr);
+    line->setPen({RS2::FlagInvalid});
+    line->calculateBorders();
+    return line;
 }
 
 /**

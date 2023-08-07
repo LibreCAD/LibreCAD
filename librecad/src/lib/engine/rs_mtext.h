@@ -60,7 +60,8 @@ struct RS_MTextData {
 	 */
 	enum MTextDrawingDirection {
 		LeftToRight,     /**< Left to right */
-		TopToBottom,     /**< Top to bottom */
+        RightToLeft,     /**< Right to left*/
+        TopToBottom,     /**< Top to bottom */
 		ByStyle          /**< Inherited from associated text style */
 	};
 
@@ -196,8 +197,11 @@ public:
     void setHAlign(RS_MTextData::HAlign ha) {
         data.halign = ha;
     }
-    RS_MTextData::MTextDrawingDirection getDrawingDirection() {
+    RS_MTextData::MTextDrawingDirection getDrawingDirection() const {
         return data.drawingDirection;
+    }
+    void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
+        data.drawingDirection = direction;
     }
     RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() {
         return data.lineSpacingStyle;
@@ -262,6 +266,7 @@ private:
     void addLetter(RS_EntityContainer& oneLine, QChar letter, RS_Font& font, const RS_Vector& letterSpace, RS_Vector& letterPosition);
 
 protected:
+    static RS_MText* createUpperLower(QString text, const RS_MTextData& data, const RS_Vector& position);
     RS_MTextData data;
 
     /**

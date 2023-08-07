@@ -43,7 +43,7 @@
  *  true to construct a modal dialog.
  */
 QG_DlgMText::QG_DlgMText(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl), saveSettings(true)
+    : QDialog(parent, fl)
 {
     setModal(modal);
     setupUi(this);
@@ -71,8 +71,8 @@ void QG_DlgMText::languageChange()
 
 void QG_DlgMText::init() {
     cbFont->init();
-    font=NULL;
-    text = NULL;
+    font = nullptr;
+    text = nullptr;
     isNew = false;
     updateUniCharComboBox(0);
     updateUniCharButton(0);
@@ -102,7 +102,9 @@ void QG_DlgMText::init() {
     QWidget::setTabOrder(bBL, bBC);
     QWidget::setTabOrder(bBC, bBR);
     QWidget::setTabOrder(bBR, leAngle);
-    QWidget::setTabOrder(leAngle, cbSymbol);
+    QWidget::setTabOrder(leAngle, rbLeftToRight);
+    QWidget::setTabOrder(rbLeftToRight, rbRightToLeft);
+    QWidget::setTabOrder(rbRightToLeft, cbSymbol);
     QWidget::setTabOrder(cbSymbol, cbUniPage);
     QWidget::setTabOrder(cbUniPage, cbUniChar);
     QWidget::setTabOrder(cbUniChar, bUnicode);
@@ -132,8 +134,8 @@ void QG_DlgMText::updateUniCharComboBox(int) {
     QString t = cbUniPage->currentText();
     int i1 = t.indexOf('-');
     int i2 = t.indexOf(']');
-    int min = t.mid(1, i1-1).toInt(NULL, 16);
-    int max = t.mid(i1+1, i2-i1-1).toInt(NULL, 16);
+    int min = t.mid(1, i1-1).toInt(nullptr, 16);
+    int max = t.mid(i1+1, i2-i1-1).toInt(nullptr, 16);
 
     cbUniChar->clear();
     for (int c=min; c<=max; c++) {
@@ -150,7 +152,7 @@ void QG_DlgMText::reject() {
 }
 
 void QG_DlgMText::destroy() {
-    if (isNew&&saveSettings) {
+    if (isNew && saveSettings) {
         RS_SETTINGS->beginGroup("/Draw");
         RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
         RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
@@ -164,6 +166,8 @@ void QG_DlgMText::destroy() {
         //RS_SETTINGS->writeEntry("/TextShape", getShape());
         RS_SETTINGS->writeEntry("/TextAngle", leAngle->text());
         //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
+        const QString leftToRight{rbLeftToRight->isChecked() ? "1" : "0"};
+        RS_SETTINGS->writeEntry("/TextLeftToRight", leftToRight);
         RS_SETTINGS->endGroup();
     }
 }
@@ -186,6 +190,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     QString str;
     //QString shape;
     QString angle;
+    bool leftToRight = true;
 
     if (isNew) {
         wPen->hide();
@@ -217,6 +222,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         //shape = RS_SETTINGS->readEntry("/TextShape", "0");
         angle = RS_SETTINGS->readEntry("/TextAngle", "0");
         //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
+        leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
         RS_SETTINGS->endGroup();
     } else {
         fon = text->getStyle();
@@ -257,13 +263,14 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         if (lay) {
             cbLayer->setLayer(*lay);
         }
+        leftToRight = text->getDrawingDirection() == RS_MTextData::LeftToRight;
     }
 
     cbDefault->setChecked(def=="1");
     setFont(fon);
     leHeight->setText(height);
     setAlignment(alignment.toInt());
-    if (def!="1" || font==NULL) {
+    if (def!="1" || font==nullptr) {
         //leLetterSpacing->setText(letterSpacing);
         //leWordSpacing->setText(wordSpacing);
         leLineSpacingFactor->setText(lineSpacingFactor);
@@ -279,6 +286,8 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     //leRadius->setText(radius);
     teText->setFocus();
     teText->selectAll();
+    text->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+    rbLeftToRight->setChecked(leftToRight);
 }
 
 
@@ -305,6 +314,7 @@ void QG_DlgMText::updateText() {
         text->setLineSpacingFactor(leLineSpacingFactor->text().toDouble());
         text->setAlignment(getAlignment());
         text->setAngle(RS_Math::deg2rad(leAngle->text().toDouble()));
+        text->setDrawingDirection(rbLeftToRight->isChecked() ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
     }
     if (text && !isNew) {
         text->setPen(wPen->getPen());
@@ -505,14 +515,14 @@ void QG_DlgMText::insertSymbol(int) {
 void QG_DlgMText::updateUniCharButton(int) {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
     bUnicode->setText(QString("%1").arg(QChar(c)));
 }
 
 void QG_DlgMText::insertChar() {
     QString t = cbUniChar->currentText();
     int i1 = t.indexOf(']');
-    int c = t.mid(1, i1-1).toInt(NULL, 16);
+    int c = t.mid(1, i1-1).toInt(nullptr, 16);
     teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
 }
 
