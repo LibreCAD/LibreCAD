@@ -69,7 +69,7 @@ protected slots:
 
 private:
     bool isNew = false;
-    bool saveSettings = false;
+    bool saveSettings = true;
     RS_MText* text = nullptr;
     RS_Font* font = nullptr;
 

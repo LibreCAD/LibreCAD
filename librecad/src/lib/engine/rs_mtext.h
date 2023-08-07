@@ -197,8 +197,11 @@ public:
     void setHAlign(RS_MTextData::HAlign ha) {
         data.halign = ha;
     }
-    RS_MTextData::MTextDrawingDirection getDrawingDirection() {
+    RS_MTextData::MTextDrawingDirection getDrawingDirection() const {
         return data.drawingDirection;
+    }
+    void setDrawingDirection(RS_MTextData::MTextDrawingDirection direction) {
+        data.drawingDirection = direction;
     }
     RS_MTextData::MTextLineSpacingStyle getLineSpacingStyle() {
         return data.lineSpacingStyle;
