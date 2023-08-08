@@ -602,14 +602,65 @@ void RS_Line::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 }
 
 void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) {
-	if (! (painter && view)) {
+    if (painter == nullptr && view == nullptr)
+        return;
+    if (isConstruction()) {
+
+        // draw construction lines as infinite lines
+        drawInfinite(*painter, *view);
+    } else {
+
+        // Adjust dash offset
+        updateDashOffset(*painter, *view, patternOffset);
+        painter->drawLine(view->toGui(getStartpoint()), view->toGui(getEndpoint()));
+    }
+}
+
+void RS_Line::drawInfinite(RS_Painter& painter, RS_GraphicView& view)
+{
+    LC_Rect viewportRect = view.getViewRect();
+    RS_VectorSolutions endPoints{{ getStartpoint(), getEndpoint()}};
+
+    RS_EntityContainer borders(nullptr, true);
+    borders.addRectangle(viewportRect.minP(), viewportRect.maxP());
+
+    RS_Vector pStart{view.toGui(endPoints.at(0))};
+    RS_Vector pEnd{view.toGui(endPoints.at(1))};
+    //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
+    RS_Vector direction = pEnd-pStart;
+    if (direction.squared() < RS_TOLERANCE2)
+        return;
+
+    RS_VectorSolutions vpIts;
+    for(RS_Entity* border: borders) {
+        auto const sol=RS_Information::getIntersection(this, border, false);
+        for(const RS_Vector& vp: sol) {
+            if (vpIts.getClosestDistance(vp) > RS_TOLERANCE * 10.)
+                vpIts.push_back(vp);
+        }
+    }
+
+    //draw construction lines up to viewport border
+    switch (vpIts.size()) {
+    case 2:
+        // no need to sort intersections
+        break;
+    case 3:
+    case 4: {
+        // will use the inner two points
+        size_t i{0};
+        for (size_t j = 0; j < vpIts.size(); ++j)
+            if (viewportRect.inArea(vpIts.at(j), RS_TOLERANCE * 10.))
+                std::swap(vpIts[j], vpIts[i++]);
+
+    }
+        break;
+    default:
+        //should not happen
         return;
     }
 
-    // Adjust dash offset
-    updateDashOffset(*painter, *view, patternOffset);
-
-    painter->drawLine(view->toGui(getStartpoint()), view->toGui(getEndpoint()));
+    painter.drawLine(view.toGui(vpIts.get(0)), view.toGui(vpIts.get(1)));
 }
 
 /**

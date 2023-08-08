@@ -228,6 +228,12 @@ public:
     double areaLineIntegral() const override;
 
 protected:
+    /**
+     * @brief drawInfinite draw the line as an infinite line
+     * @param painter - a painter
+     * @param view - the rendering view
+     */
+    void drawInfinite(RS_Painter& painter, RS_GraphicView& view);
     RS_LineData data;
 };
 
