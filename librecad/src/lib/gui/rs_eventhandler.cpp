@@ -241,14 +241,17 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     switch (cmd[0].toLatin1()) {
                         case '0':
                             at.set(0,0);
-                            /* FALL THROUGH */
-                        case '.': case ',': {
+                            /* FALL THROUGH, to be replaced with c++17 [[fallthrough]] */
+                        case '.':
+                        case ',':
+                        {
                             RS_CoordinateEvent ce(at);
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                         }
+                            /* FALL THROUGH */
                         default: /* NO OP */
-                            ;
+                            break;
                     }
                 }
 
