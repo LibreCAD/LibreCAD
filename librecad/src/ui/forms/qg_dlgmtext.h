@@ -52,7 +52,7 @@ public slots:
     virtual void setAlignmentBL();
     virtual void setAlignmentBC();
     virtual void setAlignmentBR();
-    virtual void setAlignment( int a );
+    virtual void setAlignment(QToolButton* button);
     virtual void setFont( const QString & f );
     virtual void defaultChanged( bool );
     virtual void loadText();
@@ -78,6 +78,9 @@ private:
 
 protected:
     bool eventFilter(QObject *obj, QEvent *event) override;
+private:
+    size_t alignmentButtonIdex(QToolButton* button) const;
+    std::vector<QToolButton*> alignmentButtons;
 };
 
 #endif // QG_DLGMTEXT_H

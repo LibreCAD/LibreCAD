@@ -95,7 +95,9 @@ RS_Font* RS_FontList::requestFont(const QString& name) {
     RS_DEBUG->print("RS_FontList::requestFont %s",  name.toLatin1().data());
 
     QString name2 = name.toLower();
-    RS_Font* foundFont = NULL;
+    RS_Font* foundFont = nullptr;
+    if (name.isEmpty())
+        return foundFont;
 
     // QCAD 1 compatibility:
     if (name2.contains('#') && name2.contains('_')) {

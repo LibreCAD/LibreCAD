@@ -325,6 +325,9 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="0">
@@ -352,6 +355,9 @@
                 <normaloff>:/icons/mtext_align_topleft.svg</normaloff>:/icons/mtext_align_topleft.svg</iconset>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
                <bool>true</bool>
               </property>
              </widget>
@@ -383,6 +389,9 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="1" column="1">
@@ -410,6 +419,9 @@
                 <normaloff>:/icons/mtext_align_middlecenter.svg</normaloff>:/icons/mtext_align_middlecenter.svg</iconset>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
                <bool>true</bool>
               </property>
              </widget>
@@ -441,6 +453,9 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="2" column="0">
@@ -468,6 +483,9 @@
                 <normaloff>:/icons/mtext_align_bottomleft.svg</normaloff>:/icons/mtext_align_bottomleft.svg</iconset>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
                <bool>true</bool>
               </property>
              </widget>
@@ -499,6 +517,9 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="2" column="1">
@@ -528,6 +549,9 @@
               <property name="checkable">
                <bool>true</bool>
               </property>
+              <property name="autoExclusive">
+               <bool>true</bool>
+              </property>
              </widget>
             </item>
             <item row="0" column="1">
@@ -555,6 +579,9 @@
                 <normaloff>:/icons/mtext_align_topcenter.svg</normaloff>:/icons/mtext_align_topcenter.svg</iconset>
               </property>
               <property name="checkable">
+               <bool>true</bool>
+              </property>
+              <property name="autoExclusive">
                <bool>true</bool>
               </property>
              </widget>
