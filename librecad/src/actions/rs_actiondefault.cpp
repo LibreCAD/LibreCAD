@@ -70,21 +70,6 @@ constexpr double hoverToleranceFactor2 = 10.0;
 constexpr unsigned minHighLightDuplicates = 4;
 constexpr unsigned maxHighLightDuplicates = 20;
 
-// find pen screen width
-double getScreenWidth( RS_Pen& pen, RS_Graphic& graphic, RS_GraphicView& view)
-{
-    double w = pen.getWidth();
-    double wf = 1.0;
-    double uf = RS_Units::convert(1.0, RS2::Millimeter, graphic.getUnit());
-
-    if ((view.isPrinting() || view.isPrintPreview()) &&
-            graphic.getPaperScale() > RS_TOLERANCE )
-        wf = graphic.getVariableDouble("$DIMSCALE", 1.0);
-
-    double screenWidth = view.toGuiDX(w / 100.0 * uf * wf);
-    return screenWidth;
-}
-
 // whether the entity supports glowing effects on mouse hovering
 bool allowMouseOverGlowing(const RS_Entity* entity)
 {
