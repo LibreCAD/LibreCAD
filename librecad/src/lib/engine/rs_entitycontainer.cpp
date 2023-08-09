@@ -2034,6 +2034,7 @@ const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 }
 
 namespace {
+
 std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& container)
 {
 
