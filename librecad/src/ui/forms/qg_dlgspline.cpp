@@ -48,14 +48,6 @@ QG_DlgSpline::QG_DlgSpline(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgSpline::~QG_DlgSpline()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
@@ -82,6 +74,7 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     cbDegree->setCurrentIndex( cbDegree->findText(s) );
 
     cbClosed->setChecked(spline->isClosed());
+    lId->setText(QString("ID: %1").arg(spline->getId()));
 }
 
 

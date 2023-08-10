@@ -30,6 +30,13 @@
   </property>
   <layout class="QVBoxLayout">
    <item>
+    <widget class="QLabel" name="lId">
+     <property name="text">
+      <string>ID: </string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <layout class="QHBoxLayout">
      <item>
       <layout class="QVBoxLayout">

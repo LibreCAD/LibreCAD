@@ -77,6 +77,7 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     s.setNum(RS_Math::rad2deg(arc->getAngle2()));
     leAngle2->setText(s);
     cbReversed->setChecked(arc->isReversed());
+    lId->setText(QString("ID: %1").arg(arc->getId()));
 }
 
 void QG_DlgArc::updateArc() {

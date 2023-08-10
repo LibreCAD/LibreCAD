@@ -45,14 +45,6 @@ QG_DlgLine::QG_DlgLine(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgLine::~QG_DlgLine()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
@@ -82,6 +74,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
     leEndX->setText(s);
     s.setNum(line->getEndpoint().y);
     leEndY->setText(s);
+    lId->setText(QString("ID: %1").arg(line->getId()));
 }
 
 void QG_DlgLine::updateLine() {

@@ -89,6 +89,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     s.setNum(RS_Math::rad2deg(ellipse->getAngle2()));
     leAngle2->setText(s);
     cbReversed->setChecked(ellipse->isReversed());
+    lId->setText(QString("ID: %1").arg(ellipse->getId()));
 }
 
 void QG_DlgEllipse::updateEllipse() {
