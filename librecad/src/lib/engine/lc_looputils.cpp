@@ -15,17 +15,6 @@ namespace {
 std::default_random_engine randomEngine;
 
 
-double endDistance(const RS_Entity& entity)
-{
-    return entity.getStartpoint().squaredTo(entity.getEndpoint());
-}
-
-// compare entities by start-end distance
-bool compareEndDistance(const RS_Entity* lhs, const RS_Entity* rhs)
-{
-    return endDistance(*lhs) < endDistance(*rhs);
-}
-
 } // namespace
 
 namespace LC_LoopUtils {
@@ -82,13 +71,16 @@ RS_VectorSolutions getIntersection(RS_AtomicEntity *line,
 struct LoopExtractor::LoopData {
     RS_Vector vertex;
     RS_Vector vertexTarget;
+    RS_Vector internalPoint;
     RS_Entity* current = nullptr;
 };
 
 LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
     m_data{std::make_unique<LoopData>()}
     , m_edges{edges}
-{}
+{
+    assert(!edges.isEmpty());
+}
 
 std::vector<RS_Entity*> LoopExtractor::getConnected() const
 {
@@ -130,23 +122,35 @@ RS_Vector LoopExtractor::getInternalPoint() const
 RS_Entity* LoopExtractor::findFirst() const
 {
     RS_Entity* first = nullptr;
-    m_edges.getNearestPointOnEntity(m_edges.getMin(), true, nullptr, &first);
+    RS_Vector p0 = m_edges.getMin();
+    double dist=RS_MAXDOUBLE;
+    for(RS_Entity* edge: m_edges)
+    {
+        double dist2=RS_MAXDOUBLE;
+        edge->getNearestPointOnEntity(p0, true, &dist2);
+        if (dist2 < dist) {
+            first = edge;
+            dist = dist2;
+        }
+    }
+
     m_data->vertex = first->getEndpoint();
     m_data->vertexTarget = first->getStartpoint();
     m_data->current = first;
     m_loop = std::make_unique<RS_EntityContainer>(nullptr, false);
     m_loop->addEntity(m_data->current);
+    m_data->internalPoint = getInternalPoint();
     return first;
 }
 
-bool LoopExtractor::isOutermost(RS_Entity* edge, const RS_Vector& innerPoint) const
+bool LoopExtractor::isOutermost(RS_Entity* edge) const
 {
     assert(edge != nullptr);
     RS_Vector middle = edge->getMiddlePoint();
-    RS_Vector direction = (middle - innerPoint).normalize();
+    RS_Vector direction = (middle - m_data->internalPoint).normalize();
     auto line = std::make_unique<RS_Line>(middle, middle + direction * m_edges.getSize().magnitude());
     auto hasIntersection = [l=line.get(), edge](RS_Entity* e) {
-        return e != edge && !RS_Information::getIntersection(l, e, true).empty();
+        return e != edge && RS_Information::getIntersection(l, e, true).size() % 2 == 0;
     };
     return std::none_of(m_edges.begin(), m_edges.end(), hasIntersection);
 }
@@ -155,22 +159,21 @@ bool LoopExtractor::isOutermost(RS_Entity* edge, const RS_Vector& innerPoint) co
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
     assert(edges.size() >= 2);
-    RS_Vector innerPoint = getInternalPoint();
     for (RS_Entity* edge: edges)
-        if (isOutermost(edge, innerPoint))
+        if (isOutermost(edge))
             return edge;
 
     return edges.front();
 }
 
-void LoopExtractor::findNext() const
+bool LoopExtractor::findNext() const
 {
     std::vector<RS_Entity*> connected = getConnected();
     switch (connected.size()) {
     case 0:
         LC_LOG << __func__
                << "(): disconnected at point: ("<<m_data->vertex.x<<", "<<m_data->vertex.y<<")";
-        return;
+        return false;
     case 1:
         m_data->current = connected.front();
         break;
@@ -181,21 +184,32 @@ void LoopExtractor::findNext() const
     }
     m_data->vertex = (m_data->vertex.squaredTo(m_data->current->getStartpoint()) > RS_TOLERANCE) ? m_data->current->getStartpoint() : m_data->current->getEndpoint();
     m_loop->addEntity(m_data->current);
+    return true;
 }
 
 
 std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    LC_ERR<<__func__<<"(): begin";
 
-    m_loops.clear();
-    while(!m_edges.isEmpty()) {
+    bool success = true;
+    while(success && !m_edges.isEmpty()) {
+        LC_ERR<<"0: size="<<m_edges.count();
         findFirst();
-        while(m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE)
-            findNext();
+        while(m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
+            LC_ERR<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
+                 <<m_data->vertex.squaredTo(m_data->vertexTarget);
+            LC_ERR<<"id = "<<m_data->current->getId();
+            success = findNext();
+        }
         for(RS_Entity* edge: *m_loop)
             m_edges.removeEntity(edge);
+        LC_ERR<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_edges.count();
         loops.push_back(std::move(m_loop));
     }
+    LC_ERR<<__func__<<"(): loops.size() = "<<loops.size();
+    if (loops.size() == 2)
+        loops.pop_back();
     return loops;
 }
 

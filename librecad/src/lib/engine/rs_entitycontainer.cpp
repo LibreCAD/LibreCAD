@@ -30,6 +30,8 @@
 
 #include <QtGlobal>
 
+#include "lc_looputils.h"
+
 #include "qg_dialogfactory.h"
 
 #include "rs_arc.h"
@@ -2107,7 +2109,8 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     //find loops
     while (!edges.isEmpty())
     {
-        auto subLoops = findLoop(edges);
+        LC_LoopUtils::LoopExtractor extractor{edges};
+        auto subLoops = extractor.extract();
         for (auto& loop: subLoops)
             loops.push_back(std::move(loop));
     }

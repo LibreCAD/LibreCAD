@@ -44,9 +44,9 @@ public:
     std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
     RS_Entity* findFirst() const;
-    void findNext() const;
+    bool findNext() const;
     std::vector<RS_Entity*> getConnected() const;
-    bool isOutermost(RS_Entity* edge, const RS_Vector& innerPoint) const;
+    bool isOutermost(RS_Entity* edge) const;
     RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
     mutable std::unique_ptr<RS_EntityContainer> m_loop;
     mutable std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
