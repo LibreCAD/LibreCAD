@@ -2,6 +2,7 @@
 #define LC_LOOPUTILS_H
 
 #include <memory>
+#include <vector>
 
 class RS_Entity;
 class RS_EntityContainer;
@@ -15,7 +16,7 @@ namespace LC_LoopUtils {
 double getRandomAngle();
 
 // find a point inside a given loop
-RS_Vector  getInternalPoint(RS_EntityContainer& loop);
+RS_Vector  getInternalPoint(RS_EntityContainer& loop, RS_Entity* edge);
 
 // Create a random ray: starting from an internal point of the loop
 std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
@@ -38,9 +39,21 @@ double getSize(const RS_EntityContainer& loop);
 class LoopExtractor {
 public:
     LoopExtractor(RS_EntityContainer& edges);
+    ~LoopExtractor();
 
-    std::unique_ptr<RS_EntityContainer> extract();
+    std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
+    RS_Entity* findFirst() const;
+    void findNext() const;
+    std::vector<RS_Entity*> getConnected() const;
+    bool isOutermost(RS_Entity* edge, const RS_Vector& innerPoint) const;
+    RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
+    mutable std::unique_ptr<RS_EntityContainer> m_loop;
+    mutable std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
+    RS_Vector getInternalPoint() const;
+    struct LoopData;
+    std::unique_ptr<LoopData> m_data;
+
     RS_EntityContainer& m_edges;
 };
 
