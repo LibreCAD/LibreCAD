@@ -112,7 +112,8 @@ RS_Vector LoopExtractor::getInternalPoint() const
             continue;
         std::sort(results.begin(), results.end(), CompareDistance{p0});
         // find an internal point
-        return (results.at(0) + results.at(1)) * 0.5;
+        const double mixFactor = 0.1 + 0.8 * getRandom();
+        return results.at(0) * mixFactor + results.at(1) * (1.0 - mixFactor);
     }
     LC_LOG << __func__
            << "(): failed: "<<__func__<<"(): failed";
@@ -190,7 +191,7 @@ bool LoopExtractor::findNext() const
     std::vector<RS_Entity*> connected = getConnected();
     switch (connected.size()) {
     case 0:
-        LC_LOG << __func__
+        LC_ERR << __func__
                << "(): disconnected at point: ("<<m_data->vertex.x<<", "<<m_data->vertex.y<<")";
         return false;
     case 1:
@@ -210,22 +211,22 @@ bool LoopExtractor::findNext() const
 
 std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
-    LC_ERR<<__func__<<"(): begin";
+    LC_LOG<<__func__<<"(): begin";
 
     bool success = true;
     while(success && !m_edges.isEmpty()) {
         LC_ERR<<"0: size="<<m_edges.count();
         findFirst();
         while(m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
-            LC_ERR<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
+            LC_LOG<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
                  <<m_data->vertex.squaredTo(m_data->vertexTarget);
-            LC_ERR<<"id = "<<m_data->current->getId();
+            LC_LOG<<"id = "<<m_data->current->getId();
             success = findNext();
         }
-        LC_ERR<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_edges.count();
+        LC_LOG<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_edges.count();
         loops.push_back(std::move(m_loop));
     }
-    LC_ERR<<__func__<<"(): loops.size() = "<<loops.size();
+    LC_LOG<<__func__<<"(): loops.size() = "<<loops.size();
     //if (loops.size() == 2)
      //   loops.pop_back();
     return loops;
