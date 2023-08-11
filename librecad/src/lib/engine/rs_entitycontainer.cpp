@@ -1873,7 +1873,7 @@ double RS_EntityContainer::areaLineIntegral() const
 
     // edges:
 
-    RS_Vector previousPoint;
+    RS_Vector previousPoint(false);
     for(auto* e: entities){
         if (isClosedLoop(*e))
         {
@@ -1887,11 +1887,10 @@ double RS_EntityContainer::areaLineIntegral() const
         double lineIntegral = e->areaLineIntegral();
         RS_Vector startPoint = e->getStartpoint();
         RS_Vector endPoint = e->getEndpoint();
+        LC_ERR<<e->getId()<<": int = "<<lineIntegral<<": "<<startPoint.x<<" - "<<endPoint.x;
 
         // the line integral is always by the direction: from the start point to the end point
-        if (isReversed(e))
-            std::swap(startPoint, endPoint);
-        RS_Vector nearest;
+        RS_Vector nearest(false);
         if (previousPoint.valid) {
             double distance = RS_MAXDOUBLE;
             nearest = e->getNearestEndpoint(previousPoint, &distance);
@@ -1900,7 +1899,7 @@ double RS_EntityContainer::areaLineIntegral() const
                                 __func__, distance, previousPoint.x, previousPoint.y);
         }
         // assume the contour is a simple connected loop
-        if (previousPoint.valid && endPoint.squaredTo(nearest) <= RS_TOLERANCE15)
+        if (previousPoint.valid && endPoint.squaredTo(previousPoint) <= RS_TOLERANCE15)
         {
             contourArea -= lineIntegral;
             previousPoint = startPoint;

@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "lc_looputils.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
 #include "rs_entity.h"
 #include "rs_entitycontainer.h"
@@ -140,6 +141,7 @@ RS_Entity* LoopExtractor::findFirst() const
     m_loop = std::make_unique<RS_EntityContainer>(nullptr, false);
     m_loop->addEntity(m_data->current);
     m_data->internalPoint = getInternalPoint();
+    m_edges.removeEntity(first);
     return first;
 }
 
@@ -159,11 +161,28 @@ bool LoopExtractor::isOutermost(RS_Entity* edge) const
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
     assert(edges.size() >= 2);
-    for (RS_Entity* edge: edges)
-        if (isOutermost(edge))
-            return edge;
+    double edgeLength = RS_MAXDOUBLE;
+    for(RS_Entity* edge: edges)
+        edgeLength = std::min({edgeLength, edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint())});
 
-    return edges.front();
+    RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.1}};
+    auto getCut = [&circle, p0 = m_data->vertex](RS_Entity* edge){
+        RS_VectorSolutions sol = RS_Information::getIntersection(&circle, edge, true);
+        assert(!sol.empty());
+        return std::make_pair(edge, p0.angleTo(sol.at(0)));
+    };
+    using CutPair = std::pair<RS_Entity*, double>;
+    std::vector<CutPair> cuts{{{nullptr, m_data->vertex.angleTo(m_data->internalPoint)},
+                                                       getCut(m_data->current)}};
+    std::transform(edges.cbegin(), edges.cend(), std::back_inserter(cuts), getCut);
+    std::sort(cuts.begin(), cuts.end(),
+              [](const CutPair& cut0, const CutPair& cut1){
+                return cut0.second < cut1.second;
+    });
+    size_t index = 0;
+    while(index < cuts.size() && cuts[index].first != m_data->current) index++;
+    RS_Entity* e2[2] = {cuts[(index + cuts.size() - 1)%cuts.size()].first, cuts[(index + cuts.size() + 1)%cuts.size()].first};
+    return (e2[0] == nullptr) ? e2[1] : e2[0];
 }
 
 bool LoopExtractor::findNext() const
@@ -184,6 +203,7 @@ bool LoopExtractor::findNext() const
     }
     m_data->vertex = (m_data->vertex.squaredTo(m_data->current->getStartpoint()) > RS_TOLERANCE) ? m_data->current->getStartpoint() : m_data->current->getEndpoint();
     m_loop->addEntity(m_data->current);
+    m_edges.removeEntity(m_data->current);
     return true;
 }
 
@@ -202,14 +222,12 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
             LC_ERR<<"id = "<<m_data->current->getId();
             success = findNext();
         }
-        for(RS_Entity* edge: *m_loop)
-            m_edges.removeEntity(edge);
         LC_ERR<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_edges.count();
         loops.push_back(std::move(m_loop));
     }
     LC_ERR<<__func__<<"(): loops.size() = "<<loops.size();
-    if (loops.size() == 2)
-        loops.pop_back();
+    //if (loops.size() == 2)
+     //   loops.pop_back();
     return loops;
 }
 
