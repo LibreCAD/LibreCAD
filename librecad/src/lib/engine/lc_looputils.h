@@ -49,7 +49,9 @@ double getSize(const RS_EntityContainer& loop);
  * internal point from Step 4.;
  * 8. Sort the angles, find the direction right next to the direction of the current edge;
  * 9. Choose the edge which has an angle right next to the current edge's angle;
- * 10. Repeat steps 2- 19, until the target point set in Step 2.
+ * 10. Repeat steps 2- 19, until the target point set in Step 2 to find a closed loop;
+ * 11. Repeat Steps 1-10, untill all edges are processed.
+ *
  * The algorithm has the following assumptions:
 
  * 1. Contours are closed loops, so each edge has its start/end points connected to other edges;
