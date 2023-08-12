@@ -11,6 +11,12 @@ class RS_Line;
 class RS_Vector;
 class RS_VectorSolutions;
 
+/**
+ * @brief the name space contains utils to analyze contour topology.
+ * The initial motivation is to allow proper calculation of hatched areas. For example, the hatched areas
+ * contain holes(say, denoted as lakes), and the lakes may further contain islands of their own. The hatched
+ * area calculation should find the total area of all land including any islands in lakes.
+ */
 namespace LC_LoopUtils {
 
 /**
@@ -21,8 +27,6 @@ namespace LC_LoopUtils {
  * @return bool - true, an entity
  */
 bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
-
-double getSize(const RS_EntityContainer& loop);
 
 /**
  * @brief The LoopExtractor class, to extract closed loops from edges.
