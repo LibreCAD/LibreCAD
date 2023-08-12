@@ -1051,7 +1051,11 @@ double RS_Arc::areaLineIntegral() const
     const double r2=0.25*r*r;
     const double fStart=data.center.x*r*sin(a0)+r2*sin(a0+a0);
     const double fEnd=data.center.x*r*sin(a1)+r2*sin(a1+a1);
-    return (isReversed()?fStart-fEnd:fEnd-fStart) + 2.*r2*getAngleLength();
+    if (isReversed()) {
+        return fEnd-fStart - 2.*r2*getAngleLength();
+    } else {
+        return fEnd-fStart + 2.*r2*getAngleLength();
+    }
 }
 
 /**

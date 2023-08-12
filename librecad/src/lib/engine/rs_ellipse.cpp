@@ -1678,7 +1678,11 @@ double RS_Ellipse::areaLineIntegral() const
     const double& a1=data.angle2;
     const double fStart=cx*getStartpoint().y+0.25*r2*sin(2.*aE)*cos(a0)*cos(a0)-0.25*ab*(2.*sin(aE)*sin(aE)*sin(2.*a0)-sin(2.*a0));
     const double fEnd=cx*getEndpoint().y+0.25*r2*sin(2.*aE)*cos(a1)*cos(a1)-0.25*ab*(2.*sin(aE)*sin(aE)*sin(2.*a1)-sin(2.*a1));
-    return (isReversed()?fStart-fEnd:fEnd-fStart) + 0.5*ab*getAngleLength();
+    if (isReversed()) {
+        return fEnd-fStart - 0.5 * a * b * getAngleLength();
+    } else {
+        return fEnd-fStart + 0.5 * a * b * getAngleLength();
+    }
 }
 
 bool RS_Ellipse::isReversed() const {

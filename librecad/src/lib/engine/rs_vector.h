@@ -83,6 +83,8 @@ public:
 	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 	double dotP(const RS_Vector& v1) const;
+    RS_Vector normalized() const;
+    RS_Vector& normalize();
 
     RS_Vector operator + (const RS_Vector& v) const;
 	RS_Vector operator + (double d) const;

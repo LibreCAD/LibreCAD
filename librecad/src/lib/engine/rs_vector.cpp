@@ -170,6 +170,28 @@ double RS_Vector::squaredTo(const RS_Vector& v1) const
     return RS_MAXDOUBLE;
 }
 
+
+RS_Vector RS_Vector::normalized() const
+{
+    if (valid) {
+        double length = magnitude();
+        if (length > RS_TOLERANCE)
+            return (*this) * (1. / length);
+    }
+    return *this;
+}
+
+
+RS_Vector& RS_Vector::normalize()
+{
+    if (valid) {
+        double length = magnitude();
+        if (length > RS_TOLERANCE)
+            *this *= 1./length;
+    }
+    return *this;
+}
+
 /**
  *
  */
