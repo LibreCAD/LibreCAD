@@ -1,6 +1,9 @@
 #include <algorithm>
 #include <array>
+#include <map>
 #include <random>
+#include <set>
+#include <unordered_map>
 #include <vector>
 
 #include "lc_looputils.h"
@@ -13,13 +16,32 @@
 #include "rs_vector.h"
 
 namespace {
+
+constexpr double contourGapTolerance = 1E-7;
+
+// a random angle between 0 and 2 pi
+double getRandomAngle();
+
+// a random number in [0, 1]
+double getRandom();
+
+// Create a random ray: starting from an internal point of the loop
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
+
+// Find intersection between a line and a loop
+RS_VectorSolutions getIntersection(const RS_Entity& line, const RS_EntityContainer& loop);
+
+// Build a loop to loop area lookup table
+std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops );
+
+struct ComparePoints {
+  bool operator()(const RS_Vector &p0, const RS_Vector &p1) const;
+};
+
+// randomEngine
 std::default_random_engine randomEngine;
 
-
-} // namespace
-
-namespace LC_LoopUtils {
-
+// ------------------------------------------------------------------------------------- //
 // a random angle between 0 and 2 pi
 double getRandomAngle() {
     static std::uniform_real_distribution<double> uniformDistribution(0.0,
@@ -27,24 +49,70 @@ double getRandomAngle() {
     return uniformDistribution(randomEngine);
 }
 
-
 double getRandom() {
     static std::uniform_real_distribution<double> uniformDistribution(0.0, 1.);
     return uniformDistribution(randomEngine);
 }
 
-struct ComparePoints {
-    bool operator()(const RS_Vector &p0, const RS_Vector &p1) const {
-        if (p0.x + RS_TOLERANCE < p1.x)
-            return true;
-        else if (p0.x > p1.x + RS_TOLERANCE)
-            return false;
-        return p0.y + RS_TOLERANCE < p1.y;
+RS_Vector getInternalPoint(const RS_EntityContainer& loop)
+{
+    RS_Vector p0 = loop.firstEntity()->getNearestPointOnEntity(loop.getMin(), true);
+    double size = loop.getSize().magnitude();
+    for(short i=0; i<16; i++)
+    {
+        RS_Vector offset =  RS_Vector(getRandomAngle())*size;
+        auto line = std::make_unique<RS_Line>(p0 - offset, p0 + offset);
+        RS_VectorSolutions results = getIntersection(*line, loop);
+        // need even number of intersections
+        if (results.empty() || results.size() % 2 == 1)
+            continue;
+        std::sort(results.begin(), results.end(), ComparePoints{});
+        // find an internal point
+        return (results.at(0) + results.at(1)) * 0.5;
     }
-    bool operator()(const std::pair<RS_Vector, RS_Entity*> &p0, const std::pair<RS_Vector, RS_Entity*> &p1) const {
-        return (*this)(p0.first, p1.first);
+    LC_LOG<<__func__<<"(): failed to find a line passing the loop: "<<loop.getId();
+    return RS_Vector{false};
+}
+
+std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop)
+{
+    assert(loop != nullptr);
+    RS_Vector p0 = getInternalPoint(*loop);
+    double size = loop->getSize().magnitude();
+    return std::make_unique<RS_Line>(nullptr, p0, p0 + RS_Vector{getRandomAngle()}*size);
+}
+
+std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops )
+{
+    std::unordered_map<const RS_EntityContainer*, double> ret;
+    for(const std::unique_ptr<RS_EntityContainer>& loop: loops)
+        ret.emplace(loop.get(), std::abs(loop->areaLineIntegral()));
+    return ret;
+}
+
+RS_VectorSolutions getIntersection(const RS_Entity& line,
+                                   const RS_EntityContainer &loop) {
+    RS_VectorSolutions ret;
+    for (RS_Entity *entity : loop) {
+        if (entity != nullptr && entity->isEdge()) {
+            auto intersections = RS_Information::getIntersection(&line, entity, true);
+            ret.push_back(intersections);
+        }
     }
-};
+    return ret;
+}
+
+bool ComparePoints::operator()(const RS_Vector &p0, const RS_Vector &p1) const {
+    if (p0.x + RS_TOLERANCE < p1.x)
+        return true;
+    else if (p0.x > p1.x + RS_TOLERANCE)
+        return false;
+    return p0.y + RS_TOLERANCE < p1.y;
+}
+} // namespace
+
+namespace LC_LoopUtils {
+
 struct CompareDistance {
     CompareDistance(const RS_Vector& point):
         m_point{point}
@@ -57,16 +125,14 @@ struct CompareDistance {
     const RS_Vector& m_point;
 };
 
-RS_VectorSolutions getIntersection(RS_AtomicEntity *line,
-                                   const RS_EntityContainer &loop) {
-    RS_VectorSolutions ret;
-    for (RS_Entity *entity : loop) {
-        if (entity != nullptr && entity->isEdge()) {
-            auto intersections = RS_Information::getIntersection(line, entity, true);
-            ret.push_back(intersections);
-        }
-    }
-    return ret;
+bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity)
+{
+    RS_VectorSolutions intersections = getIntersection(entity, loop);
+    if (!intersections.empty())
+        return false;
+    RS_Line line{nullptr, {getInternalPoint(loop), entity.getMiddlePoint()}};
+    intersections = getIntersection(line, loop);
+    return intersections.size()%2 == 0;
 }
 
 struct LoopExtractor::LoopData {
@@ -83,6 +149,7 @@ LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
     assert(!edges.isEmpty());
 }
 
+//------------------------------------------------------------------------------------//
 std::vector<RS_Entity*> LoopExtractor::getConnected() const
 {
     std::vector<RS_Entity *> connected;
@@ -92,21 +159,23 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const
             return false;
         double dist = RS_MAXDOUBLE;
         e->getNearestEndpoint(vertex, &dist);
-        return dist < 1E-7;
+        return dist < contourGapTolerance;
     });
     return connected;
 }
 
+//------------------------------------------------------------------------------------//
 LoopExtractor::~LoopExtractor() = default;
 
+//------------------------------------------------------------------------------------//
 RS_Vector LoopExtractor::getInternalPoint() const
 {
     RS_Vector p0 =m_data->current->getMiddlePoint();
     for(short i = 0; i < 16; ++i) {
         RS_Vector offset = m_data->current->getTangentDirection(p0).rotate(M_PI/4 +getRandomAngle()/8.);
         offset *= m_edges.getSize().magnitude()/offset.magnitude();
-        auto line = std::make_unique<RS_Line>(nullptr, p0 - offset, p0 + offset);
-        auto results = getIntersection(line.get(), m_edges);
+        auto line = RS_Line{p0 - offset, p0 + offset};
+        auto results = getIntersection(line, m_edges);
         // need even number of intersections
         if (results.empty() || results.size() % 2 == 1)
             continue;
@@ -121,6 +190,7 @@ RS_Vector LoopExtractor::getInternalPoint() const
 }
 
 
+//------------------------------------------------------------------------------------//
 RS_Entity* LoopExtractor::findFirst() const
 {
     RS_Entity* first = nullptr;
@@ -146,6 +216,7 @@ RS_Entity* LoopExtractor::findFirst() const
     return first;
 }
 
+//------------------------------------------------------------------------------------//
 bool LoopExtractor::isOutermost(RS_Entity* edge) const
 {
     assert(edge != nullptr);
@@ -159,6 +230,7 @@ bool LoopExtractor::isOutermost(RS_Entity* edge) const
 }
 
 
+//------------------------------------------------------------------------------------//
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
 {
     assert(edges.size() >= 2);
@@ -186,6 +258,7 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
     return (e2[0] == nullptr) ? e2[1] : e2[0];
 }
 
+//------------------------------------------------------------------------------------//
 bool LoopExtractor::findNext() const
 {
     std::vector<RS_Entity*> connected = getConnected();
@@ -209,6 +282,7 @@ bool LoopExtractor::findNext() const
 }
 
 
+//------------------------------------------------------------------------------------//
 std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     LC_LOG<<__func__<<"(): begin";
@@ -232,4 +306,113 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     return loops;
 }
 
+//------------------------------------------------------------------------------------//
+struct LoopSorter::AreaPredicate {
+    AreaPredicate(const LoopSorter& sorter);
+    bool operator () (const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const;
+    const LoopSorter& m_sorter;
+};
+
+//------------------------------------------------------------------------------------//
+struct LoopSorter::Data {
+    Data(LoopSorter* sorter, std::vector<std::unique_ptr<RS_EntityContainer>> loops):
+        loops{std::move(loops)}
+      , area{findAreas(this->loops)}
+      , areaComparison{*sorter}
+      , toProcess{areaComparison}
+    {}
+
+    // hold input loops
+    std::vector<std::unique_ptr<RS_EntityContainer>> loops;
+    // lookup table to find enclosed area of each loop
+    std::unordered_map<const RS_EntityContainer*, double> area;
+    // compare loops by their enclosed areas
+    // The area of any ancestor loop is larger than the child loop.
+    // Always find ancestors using the loop with the smallest unprocessed loop.
+    // For each loop, only need to find its parent once.
+    LoopSorter::AreaPredicate areaComparison;
+    // Candidate loops, sorted by their enclosed areas
+    std::multiset<RS_EntityContainer*, LoopSorter::AreaPredicate> toProcess;
+    // lookup table for parent loops
+    std::unordered_map<RS_EntityContainer*, RS_EntityContainer*> parents;
+};
+
+//------------------------------------------------------------------------------------//
+LoopSorter::AreaPredicate::AreaPredicate(const LoopSorter &sorter):
+    m_sorter{sorter}
+{}
+
+//------------------------------------------------------------------------------------//
+bool LoopSorter::AreaPredicate::operator ()(const RS_EntityContainer* lhs, const RS_EntityContainer* rhs) const
+{
+    return m_sorter.m_data->area.at(lhs) + RS_TOLERANCE < m_sorter.m_data->area.at(rhs);
+}
+
+//------------------------------------------------------------------------------------//
+LoopSorter::LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops):
+    m_data{std::make_unique<LoopSorter::Data>(this, std::move(loops))}
+{
+    init();
+}
+
+//------------------------------------------------------------------------------------//
+LoopSorter::~LoopSorter() = default;
+
+//------------------------------------------------------------------------------------//
+void LoopSorter::init()
+{
+    for(const auto& loop: m_data->loops)
+        m_data->toProcess.insert(loop.get());
+    std::vector<RS_EntityContainer*> loops{m_data->toProcess.begin(), m_data->toProcess.end()};
+
+    for (RS_EntityContainer* loop : loops)
+        findAncestors(loop);
+}
+
+//------------------------------------------------------------------------------------//
+void LoopSorter::findAncestors(RS_EntityContainer* loop)
+{
+    if (m_data->toProcess.erase(loop) == 0)
+        return;
+
+    // use a random direction to avoid passing tangential directions
+    // TODO, to complete avoid tangential
+    auto ray = getRandomRay(loop);
+    // sorting by floating points is okay, the loops shouldn't be close to each other, with exception
+    // of touching points
+    std::map<double, RS_EntityContainer*> ancestors;
+    for(RS_EntityContainer* candidate: m_data->toProcess) {
+        if (candidate == loop)
+            continue;
+        RS_VectorSolutions intersections = getIntersection(*ray, *candidate);
+        if (intersections.size()%2 == 0)
+            continue;
+        // a parent loop has odd intersections for a ray starting from an inner point
+        double distance = intersections.getClosestDistance(ray->getStartpoint());
+        ancestors.emplace(distance, candidate);
+    }
+    // ancestors found: from innermost to outermost
+    RS_EntityContainer* current = loop;
+    for (const auto& entry: ancestors)
+    {
+        RS_EntityContainer* parent = entry.second;
+        m_data->toProcess.erase(parent);
+        if (m_data->parents.count(current) == 1)
+            break;
+        m_data->parents[current] = parent;
+        parent->addEntity(current);
+        current = parent;
+    }
+}
+
+
+//------------------------------------------------------------------------------------//
+std::vector<RS_EntityContainer*> LoopSorter::getResults() const
+{
+    std::set<RS_EntityContainer*> roots;
+    for (const auto& loop: m_data->loops)
+        if (m_data->parents.count(loop.get()) == 0)
+            roots.insert(loop.get());
+    return {roots.begin(), roots.end()};
+}
 } // namespace LC_LoopUtils

@@ -34,14 +34,16 @@
 #include <QPainterPath>
 #include <QBrush>
 #include <QString>
+
 #include "rs_hatch.h"
+
+#include "lc_looputils.h"
 
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
 #include "rs_line.h"
 #include "rs_graphicview.h"
-
 #include "rs_information.h"
 #include "rs_painter.h"
 #include "rs_pattern.h"
@@ -870,7 +872,7 @@ double RS_Hatch::getTotalArea() {
     }
     std::cout<<"loops: done"<<std::endl;
 
-    LoopSorter loopSorter(std::move(loops));
+    LC_LoopUtils::LoopSorter loopSorter(std::move(loops));
     auto sorted = loopSorter.getResults();
 
     double totalArea=0.;

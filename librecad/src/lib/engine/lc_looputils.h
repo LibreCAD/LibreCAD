@@ -4,6 +4,7 @@
 #include <memory>
 #include <vector>
 
+class RS_AtomicEntity;
 class RS_Entity;
 class RS_EntityContainer;
 class RS_Line;
@@ -12,26 +13,14 @@ class RS_VectorSolutions;
 
 namespace LC_LoopUtils {
 
-// a random angle between 0 and 2 pi
-double getRandomAngle();
-
-// find a point inside a given loop
-RS_Vector  getInternalPoint(RS_EntityContainer& loop, RS_Entity* edge);
-
-// Create a random ray: starting from an internal point of the loop
-std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
-
-// Find intersection between a line and a loop
-RS_VectorSolutions getIntersection(RS_Entity* line, const RS_EntityContainer& loop);
-
 /**
  * @brief isEnclosed - whether the entity is enclosed in the loop. It's assumed the entity shouldn't intersect
  * with the loop.
  * @param loop - a simple closed contour
- * @param entity - an entity
+ * @param RS_AtomicEntity& entity - an entity
  * @return bool - true, an entity
  */
-bool isEnclosed(RS_EntityContainer& loop, RS_Entity& entity);
+bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
 
 double getSize(const RS_EntityContainer& loop);
 
@@ -87,6 +76,40 @@ private:
     RS_EntityContainer& m_edges;
 };
 
+
+/**
+ * @brief The LoopSorter class - find topologic relations of loops
+ * The input loops must not cross each other; no edge is shared among loops.
+ * Tangential edges are allowed.
+ */
+class LoopSorter {
+public:
+    /**
+     * Each input loop is assumed to be a simple closed loop, and contains only edges.
+     * The input loops should not contain sub-loops
+     * Ownership of the input loops is transferred to this LoopSorter
+     * @param std::vector<std::unique_ptr<RS_EntityContainer>> loops input loops
+     */
+    LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
+    ~LoopSorter();
+
+    struct AreaPredicate;
+
+    /**
+     * @brief getResults - the sorting results
+     * @return std::vector<RS_EntityContainer*> - the top level loops, i.e. outermost loops, after sorting
+     * each inner loop is added as a child of its immediate parent loop.
+     */
+    std::vector<RS_EntityContainer*> getResults() const;
+
+private:
+    void init();
+    // find all ancestor loops of a given loop
+    void findAncestors(RS_EntityContainer* loop);
+
+    struct Data;
+    std::unique_ptr<Data> m_data;
+};
 
 }
 
