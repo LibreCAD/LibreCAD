@@ -166,7 +166,7 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
     for(RS_Entity* edge: edges)
         edgeLength = std::min({edgeLength, edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint())});
 
-    RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.1}};
+    RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.01}};
     auto getCut = [&circle, p0 = m_data->vertex](RS_Entity* edge){
         RS_VectorSolutions sol = RS_Information::getIntersection(&circle, edge, true);
         assert(!sol.empty());

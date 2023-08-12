@@ -35,12 +35,40 @@ bool isEnclosed(RS_EntityContainer& loop, RS_Entity& entity);
 
 double getSize(const RS_EntityContainer& loop);
 
+/**
+ * @brief The LoopExtractor class, to extract closed loops from edges.
+ * The algorithm：
+ * 0. Move label all edges as unprocessed
+ * 1. Find an edge closest to the bounding box of all edges;
+ * 2. Set the start point of the edge as the target point;
+ * 3. Label the edge as processed;
+ * 4. Find internal point of the edge;
+ * 5. From the end point of the current edge, find all unprocessed edges connected to this point;
+ * 6. From the end point draw a small circle, find intersections between the circle and edges(the current, and connected);
+ * 7. Find the direction angle from the circle center to the intersections. Add another angle from the end point to the
+ * internal point from Step 4.;
+ * 8. Sort the angles, find the direction right next to the direction of the current edge;
+ * 9. Choose the edge which has an angle right next to the current edge's angle;
+ * 10. Repeat steps 2- 19, until the target point set in Step 2.
+ * The algorithm has the following assumptions:
 
+ * 1. Contours are closed loops, so each edge has its start/end points connected to other edges;
+ * 2. Each loop is simply closed with number of edges equals the number of vertices (Shared endpoints),
+ * i.e. Euler characteristic 0;
+ * 3. Full circles/ellipses are accepted as individual closed contours;
+ * 4. No self-intersection among contours; i.e. no edge crosses another edge;
+ * 5. Multiple edges are allowed to be connected at a single point;
+ * 6. Closed contours may share edge endpoints, but no edge is shared by more than one contours.
+ */
 class LoopExtractor {
 public:
     LoopExtractor(RS_EntityContainer& edges);
     ~LoopExtractor();
 
+    /**
+     * @brief extract - extract loops from connected edges
+     * @return std::vector<std::unique_ptr<RS_EntityContainer>> - loops. each element is simply closed
+     */
     std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
     RS_Entity* findFirst() const;
