@@ -235,9 +235,28 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
         if (!e->isAccepted()) {
 
             if(hasAction()){
-                // handle absolute cartesian coordinate input:
-                if (cmd.contains(',') && cmd.at(0)!='@') {
+                // handle quick shortcuts for absolute/current origins:
+                if (cmd.length() == 1) {
+                    RS_Vector at = relative_zero;
+                    switch (cmd[0].toLatin1()) {
+                        case '0':
+                            at.set(0,0);
+                            /* FALL THROUGH, to be replaced with c++17 [[fallthrough]] */
+                        case '.':
+                        case ',':
+                        {
+                            RS_CoordinateEvent ce(at);
+                            currentActions.last()->coordinateEvent(&ce);
+                            e->accept();
+                        }
+                            /* FALL THROUGH */
+                        default: /* NO OP */
+                            break;
+                    }
+                }
 
+                // handle absolute cartesian coordinate input:
+                if (!e->isAccepted() && cmd.contains(',') && cmd.at(0)!='@') {
                     int commaPos = cmd.indexOf(',');
                     RS_DEBUG->print("RS_EventHandler::commandEvent: 001");
                     bool ok1, ok2;
@@ -275,15 +294,6 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
 							RS_DIALOGFACTORY->commandMessage(
 										"Expression Syntax Error");
 						e->accept();
-                    }
-                }
-
-                // handle quick shortcut for current point:
-                if (!e->isAccepted()) {
-                    if (cmd == ".") {
-                        RS_CoordinateEvent ce(relative_zero);
-                        currentActions.last()->coordinateEvent(&ce);
-                        e->accept();
                     }
                 }
 

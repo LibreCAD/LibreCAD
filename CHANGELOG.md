@@ -3,7 +3,8 @@
 ## [2.2.1-alpha] - unreleased
 
 ### Added
-- shortcut "." to specify the current point coordinates on command line
+- shortcut "0" to specify coordinates "0,0" on command line
+- shortcut "." or "," to specify the current point coordinates on command line
 
 ### Removed
 - importshp plugin, see issue #1481
