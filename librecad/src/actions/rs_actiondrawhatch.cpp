@@ -28,6 +28,7 @@
 #include <QMouseEvent>
 #include "rs_actiondrawhatch.h"
 #include "rs_dialogfactory.h"
+#include "rs_eventhandler.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_hatch.h"
@@ -55,12 +56,9 @@ void RS_ActionDrawHatch::init(int status) {
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
 		*data = tmp.getData();
         trigger();
-        finish(false);
         graphicView->redraw(RS2::RedrawDrawing); 
-
-    } else {
-        finish(false);
     }
+    finish(false);
 }
 
 void RS_ActionDrawHatch::trigger() {
