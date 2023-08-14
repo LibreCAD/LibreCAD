@@ -204,11 +204,14 @@ RS_Vector LoopExtractor::getInternalPoint() const
 // To find the next connected edge, keep going by left turning or right turning only.
 RS_Entity* LoopExtractor::findFirst() const
 {
+
     // draw a line crossing the first edge
     RS_Entity* first = m_edges.firstEntity();
     RS_Vector p0 = m_edges.firstEntity()->getMiddlePoint();
-    RS_Vector t0 = first->getTangentDirection(p0);
-    RS_Vector dP0 = t0.rotate((getRandomAngle() - M_PI)*0.06)*m_edges.getSize().magnitude();
+    RS_Vector t0 = first->getTangentDirection(p0).normalize();
+
+    RS_Vector dP0 = t0.rotate(M_PI/2 + getRandomAngle()*0.06)* m_size * 1.1;
+
     std::array<RS_Vector, 2> linePoints = {{p0 - dP0, p0 + dP0}};
     std::sort(std::begin(linePoints), std::end(linePoints), ComparePoints{});
     RS_Line line0{linePoints.front(), linePoints.back()};
