@@ -364,15 +364,9 @@ RS_VectorSolutions RS_Arc::getTangentPoint(const RS_Vector& point) const {
     return ret;
 }
 
-RS_Vector RS_Arc::getTangentDirection(const RS_Vector& point) const {
-    RS_Vector vp(point-getCenter());
-//    double c2(vp.squared());
-//    if(c2<r2-getRadius()*2.*RS_TOLERANCE) {
-//        //inside point, no tangential point
-//        return RS_Vector(false);
-//    }
-    return RS_Vector(-vp.y,vp.x);
-
+RS_Vector RS_Arc::getTangentDirection(const RS_Vector &point) const {
+    RS_Vector vp = isReversed() ? getCenter() - point : point - getCenter();
+    return {-vp.y, vp.x};
 }
 
 RS_Vector RS_Arc::getNearestPointOnEntity(const RS_Vector& coord,

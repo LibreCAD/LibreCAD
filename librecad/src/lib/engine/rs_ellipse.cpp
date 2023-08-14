@@ -356,19 +356,20 @@ RS_VectorSolutions RS_Ellipse::getTangentPoint(const RS_Vector& point) const {
     return sol;
 }
 
-RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector& point) const {
-    RS_Vector vp(point-getCenter());
-    RS_Vector aV(-getAngle());
+RS_Vector RS_Ellipse::getTangentDirection(const RS_Vector &point) const {
+    RS_Vector vp = point - getCenter();
+    RS_Vector aV{-getAngle()};
     vp.rotate(aV);
-	vp.y /= getRatio();
-    double a=getMajorRadius();
-    if(a<RS_TOLERANCE || getRatio()<RS_TOLERANCE) return RS_Vector(false);
-	RS_Circle c(nullptr, RS_CircleData(RS_Vector(0.,0.),a));
-    RS_Vector direction=c.getTangentDirection(vp);
+    vp.y /= getRatio();
+    double a = getMajorRadius();
+    if (a < RS_TOLERANCE || getRatio() < RS_TOLERANCE)
+        return {};
+    RS_Circle c(nullptr, RS_CircleData(RS_Vector(0., 0.), a));
+    RS_Vector direction = c.getTangentDirection(vp);
     direction.y *= getRatio();
     aV.y *= -1.;
     direction.rotate(aV);
-    return direction;
+    return isReversed() ? -direction : direction;
 }
 
 /**
