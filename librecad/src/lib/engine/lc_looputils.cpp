@@ -36,7 +36,10 @@ RS_VectorSolutions getIntersection(const RS_Entity& line, const RS_EntityContain
 std::unordered_map<const RS_EntityContainer*, double> findAreas(const std::vector<std::unique_ptr<RS_EntityContainer>>& loops );
 
 struct ComparePoints {
+    ComparePoints() = default;
+    ComparePoints(const RS_Vector& ref) : m_ref{ref}{}
   bool operator()(const RS_Vector &p0, const RS_Vector &p1) const;
+  RS_Vector m_ref{false};
 };
 
 // randomEngine
@@ -104,6 +107,8 @@ RS_VectorSolutions getIntersection(const RS_Entity& line,
 }
 
 bool ComparePoints::operator()(const RS_Vector &p0, const RS_Vector &p1) const {
+    if (m_ref.valid)
+        return m_ref.squaredTo(p0) < m_ref.squaredTo(p1);
     if (p0.x + RS_TOLERANCE < p1.x)
         return true;
     else if (p0.x > p1.x + RS_TOLERANCE)
@@ -147,6 +152,8 @@ LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
     m_data{std::make_unique<LoopData>()}
     , m_edges{edges}
 {
+    m_edges.setAutoUpdateBorders(true);
+    m_size = m_edges.getSize().magnitude();
     assert(!edges.isEmpty());
 }
 
@@ -190,7 +197,6 @@ RS_Vector LoopExtractor::getInternalPoint() const
     return RS_Vector{false};
 }
 
-
 //------------------------------------------------------------------------------------//
 // The algorithm:
 // Keep finding outermost loops from unprocessed edges and remove the loops from unprocess edges.
@@ -198,11 +204,14 @@ RS_Vector LoopExtractor::getInternalPoint() const
 // To find the next connected edge, keep going by left turning or right turning only.
 RS_Entity* LoopExtractor::findFirst() const
 {
+
     // draw a line crossing the first edge
     RS_Entity* first = m_edges.firstEntity();
     RS_Vector p0 = m_edges.firstEntity()->getMiddlePoint();
-    RS_Vector t0 = first->getTangentDirection(p0);
-    RS_Vector dP0 = t0.rotate((getRandomAngle() - M_PI)*0.06)*m_edges.getSize().magnitude();
+    RS_Vector t0 = first->getTangentDirection(p0).normalize();
+
+    RS_Vector dP0 = t0.rotate(M_PI/2 + getRandomAngle()*0.06)* m_size * 1.1;
+
     std::array<RS_Vector, 2> linePoints = {{p0 - dP0, p0 + dP0}};
     std::sort(std::begin(linePoints), std::end(linePoints), ComparePoints{});
     RS_Line line0{linePoints.front(), linePoints.back()};
@@ -228,7 +237,7 @@ RS_Entity* LoopExtractor::findFirst() const
 
     // Always search the next loop edge in the counter-clock direction
     // getTangentDirection() always along the curve, the direction is from the curve start point to the end point
-    RS_Vector cross = RS_Vector::crossP(linePoints.front() - p0, t0);
+    RS_Vector cross = RS_Vector::crossP(linePoints.front() - p0, first->getTangentDirection(p0));
     bool reversed = std::signbit(cross.z);
 
     m_data->vertex = reversed ? first->getStartpoint() : first->getEndpoint();
@@ -240,20 +249,6 @@ RS_Entity* LoopExtractor::findFirst() const
     m_edges.removeEntity(first);
     return first;
 }
-
-//------------------------------------------------------------------------------------//
-bool LoopExtractor::isOutermost(RS_Entity* edge) const
-{
-    assert(edge != nullptr);
-    RS_Vector middle = edge->getMiddlePoint();
-    RS_Vector direction = (middle - m_data->internalPoint).normalize();
-    auto line = std::make_unique<RS_Line>(middle, middle + direction * m_edges.getSize().magnitude());
-    auto hasIntersection = [l=line.get(), edge](RS_Entity* e) {
-        return e != edge && RS_Information::getIntersection(l, e, true).size() % 2 == 0;
-    };
-    return std::none_of(m_edges.begin(), m_edges.end(), hasIntersection);
-}
-
 
 //------------------------------------------------------------------------------------//
 RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const

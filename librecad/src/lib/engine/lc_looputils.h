@@ -69,7 +69,6 @@ private:
     RS_Entity* findFirst() const;
     bool findNext() const;
     std::vector<RS_Entity*> getConnected() const;
-    bool isOutermost(RS_Entity* edge) const;
     RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
     mutable std::unique_ptr<RS_EntityContainer> m_loop;
     mutable std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
@@ -78,6 +77,7 @@ private:
     std::unique_ptr<LoopData> m_data;
 
     RS_EntityContainer& m_edges;
+    double m_size;
 };
 
 
