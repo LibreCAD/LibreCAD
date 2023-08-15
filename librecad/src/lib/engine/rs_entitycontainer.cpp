@@ -54,26 +54,6 @@ namespace {
 // the tolerance used to check topology of contours in hatching
 constexpr double contourTolerance = 1e-8;
 
-/**
- * Whether an entity is reversed: currently only allowed for arc/elliptic arc.
- *
- *     @param[in]       const RS_Entity *entity - An entity.
- *     @returns         bool - true, if the entity is a reversed arc or elliptic arc.
- */
-bool isReversed(const RS_Entity *entity)
-{
-    if (nullptr == entity) return false;
-
-    switch (entity->rtti()) {
-    default:
-        return false;
-    case RS2::EntityArc:
-        return static_cast<const RS_Arc*>(entity)->isReversed();
-    case RS2::EntityEllipse:
-        return static_cast<const RS_Ellipse*>(entity)->isReversed();
-    }
-}
-
 // For validate hatch contours, whether an entity in the contour is a closed
 // loop itself
 bool isClosedLoop(RS_Entity& entity)
@@ -1882,7 +1862,7 @@ double RS_EntityContainer::areaLineIntegral() const
     // edges:
 
     RS_Vector previousPoint(false);
-    for(unsigned i=0; i<count(); ++i) {
+    for(unsigned i=0; i < count(); ++i) {
         RS_Entity* e = entities.at(i);
         if (isClosedLoop(*e))
         {
@@ -2044,37 +2024,6 @@ RS_Entity* RS_EntityContainer::last() const
 const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 {
     return entities;
-}
-
-namespace {
-
-std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& container)
-{
-
-    std::vector<std::unique_ptr<RS_EntityContainer>> ret;
-    while (!container.isEmpty()) {
-        RS_Entity* e = container.firstEntity();
-        container.removeEntity(e);
-        RS_Vector target = e->getStartpoint();
-        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
-        ec->addEntity(e);
-        RS_Vector endPoint = e->getEndpoint();
-        while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
-            double distance=0.;
-            RS_Entity* next=nullptr;
-            RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
-            std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
-            if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
-                std::swap(points[0], points[1]);
-            ec->addEntity(next);
-            container.removeEntity(next);
-            endPoint=points[1];
-        }
-        if (endPoint.squaredTo(target) < RS_TOLERANCE)
-            ret.push_back(std::move(ec));
-    }
-    return ret;
-}
 }
 
 std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const

@@ -23,9 +23,6 @@ constexpr double contourGapTolerance = 1E-7;
 // a random angle between 0 and 2 pi
 double getRandomAngle();
 
-// a random number in [0, 1]
-double getRandom();
-
 // Create a random ray: starting from an internal point of the loop
 std::unique_ptr<RS_Line> getRandomRay(RS_EntityContainer* loop);
 
@@ -292,7 +289,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     bool success = true;
     while(success && !m_data->edges.isEmpty()) {
         findFirst();
-        while(m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
+        while(success && m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
             LC_LOG<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
                  <<m_data->vertex.squaredTo(m_data->vertexTarget);
             LC_LOG<<"id = "<<m_data->current->getId();
