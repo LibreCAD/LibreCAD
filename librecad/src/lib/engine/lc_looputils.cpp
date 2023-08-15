@@ -142,18 +142,21 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity)
 }
 
 struct LoopExtractor::LoopData {
+    LoopData(RS_EntityContainer &edges):
+        size{edges.getSize().magnitude()}
+    , edges{edges}
+    {}
+    const double size = 0.;
     RS_Vector vertex;
     RS_Vector vertexTarget;
-    RS_Vector internalPoint;
     RS_Entity* current = nullptr;
+    RS_EntityContainer& edges;
 };
 
 LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
-    m_data{std::make_unique<LoopData>()}
-    , m_edges{edges}
+    m_data{std::make_unique<LoopData>(edges)}
 {
-    m_edges.setAutoUpdateBorders(true);
-    m_size = m_edges.getSize().magnitude();
+    assert(m_data->size > RS_TOLERANCE);
     assert(!edges.isEmpty());
 }
 
@@ -161,7 +164,7 @@ LoopExtractor::LoopExtractor(RS_EntityContainer &edges) :
 std::vector<RS_Entity*> LoopExtractor::getConnected() const
 {
     std::vector<RS_Entity *> connected;
-    std::copy_if(m_edges.begin(), m_edges.end(), std::back_inserter(connected),
+    std::copy_if(m_data->edges.begin(), m_data->edges.end(), std::back_inserter(connected),
                  [vertex = m_data->vertex, current = m_data->current](const RS_Entity *e) {
         if (e == current)
             return false;
@@ -175,50 +178,32 @@ std::vector<RS_Entity*> LoopExtractor::getConnected() const
 //------------------------------------------------------------------------------------//
 LoopExtractor::~LoopExtractor() = default;
 
-//------------------------------------------------------------------------------------//
-RS_Vector LoopExtractor::getInternalPoint() const
-{
-    RS_Vector p0 =m_data->current->getMiddlePoint();
-    for(short i = 0; i < 16; ++i) {
-        RS_Vector offset = m_data->current->getTangentDirection(p0).rotate(M_PI/4 +getRandomAngle()/8.);
-        offset *= 1.1 * m_edges.getSize().magnitude()/offset.magnitude();
-        auto line = RS_Line{p0 - offset, p0 + offset};
-        auto results = getIntersection(line, m_edges);
-        // need even number of intersections
-        if (results.empty() || results.size() % 2 == 1)
-            continue;
-        std::sort(results.begin(), results.end(), CompareDistance{p0});
-        // find an internal point
-        const double mixFactor = 0.01 + 0.01 * getRandom();
-        return results.at(1) * mixFactor + results.at(0) * (1.0 - mixFactor);
-    }
-    LC_LOG << __func__
-           << "(): failed: "<<__func__<<"(): failed";
-    return RS_Vector{false};
-}
 
 //------------------------------------------------------------------------------------//
 // The algorithm:
 // Keep finding outermost loops from unprocessed edges and remove the loops from unprocess edges.
-// To find the first edge on the outermost, find an edge closest to the bounding box.
-// To find the next connected edge, keep going by left turning or right turning only.
+// To find the first edge on the outermost, draw a line acrossing one middle point, sort the intersections
+// with all edges by coordinates, the first and last intersections are on the outermost loop
+// To find the next connected edge, search the along the counterclockwise direction, the next outermost edge
+// requires the smallest left turning angles.
 RS_Entity* LoopExtractor::findFirst() const
 {
 
     // draw a line crossing the first edge
-    RS_Entity* first = m_edges.firstEntity();
-    RS_Vector p0 = m_edges.firstEntity()->getMiddlePoint();
+    RS_Entity* first = m_data->edges.firstEntity();
+    RS_Vector p0 = first->getMiddlePoint();
     RS_Vector t0 = first->getTangentDirection(p0).normalize();
+    // The dP0 direction is off the normal direction by a random angle smaller than 0.06*Pi
+    RS_Vector dP0 = t0.rotate(M_PI/2 + (getRandomAngle() - M_PI) * 0.06) * m_data->size * 1.1;
 
-    RS_Vector dP0 = t0.rotate(M_PI/2 + getRandomAngle()*0.06)* m_size * 1.1;
-
+    // draw a line
     std::array<RS_Vector, 2> linePoints = {{p0 - dP0, p0 + dP0}};
     std::sort(std::begin(linePoints), std::end(linePoints), ComparePoints{});
     RS_Line line0{linePoints.front(), linePoints.back()};
 
     // Find intersections: only keep the intersection of minimum xy-coordinates
     double dist=RS_MAXDOUBLE * RS_MAXDOUBLE;
-    for(RS_Entity* edge: m_edges)
+    for(RS_Entity* edge: m_data->edges)
     {
         RS_VectorSolutions sol0 = RS_Information::getIntersection(&line0, edge, true);
         if (!sol0.empty()) {
@@ -237,6 +222,7 @@ RS_Entity* LoopExtractor::findFirst() const
 
     // Always search the next loop edge in the counter-clock direction
     // getTangentDirection() always along the curve, the direction is from the curve start point to the end point
+    // if cross.z is positive, the tangential direction is counterclockwise.
     RS_Vector cross = RS_Vector::crossP(linePoints.front() - p0, first->getTangentDirection(p0));
     bool reversed = std::signbit(cross.z);
 
@@ -245,8 +231,7 @@ RS_Entity* LoopExtractor::findFirst() const
     m_data->current = first;
     m_loop = std::make_unique<RS_EntityContainer>(nullptr, false);
     m_loop->addEntity(m_data->current);
-    m_data->internalPoint = getInternalPoint();
-    m_edges.removeEntity(first);
+    m_data->edges.removeEntity(first);
     return first;
 }
 
@@ -258,6 +243,7 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
     for(RS_Entity* edge: edges)
         edgeLength = std::min({edgeLength, edge->getLength(), edge->getStartpoint().distanceTo(edge->getEndpoint())});
 
+    // draw a small circle around the current end point
     RS_Circle circle{nullptr, {m_data->vertex, edgeLength * 0.01}};
     auto getCut = [&circle, p0 = m_data->vertex](RS_Entity* edge){
         RS_VectorSolutions sol = RS_Information::getIntersection(&circle, edge, true);
@@ -265,18 +251,18 @@ RS_Entity* LoopExtractor::findOutermost(std::vector<RS_Entity*> edges) const
         return std::make_pair(edge, p0.angleTo(sol.at(0)));
     };
     using CutPair = std::pair<RS_Entity*, double>;
-    std::vector<CutPair> cuts{{getCut(m_data->current)}};
+    // find the angle for the current edge
+    CutPair current = getCut(m_data->current);
+    std::vector<CutPair> cuts;
     std::transform(edges.cbegin(), edges.cend(), std::back_inserter(cuts), getCut);
-    for(auto& cut: cuts)
-        if (cut.first != cuts.front().first)
-            cut.second = RS_Math::getAngleDifference(cuts.front().second, cut.second);
 
-    // find the minimum turning angle to get the next outermost edge
-    std::sort(cuts.begin() + 1, cuts.end(),
-              [](const CutPair& cut0, const CutPair& cut1){
-                return cut0.second < cut1.second;
+    // find the minimum left turning angle to get the next outermost edge
+    std::sort(cuts.begin(), cuts.end(),
+              [a0=current.second](const CutPair& cut0, const CutPair& cut1){
+                using namespace RS_Math;
+                return getAngleDifference(a0, cut0.second) < getAngleDifference(a0, cut1.second);
     });
-    return cuts[1].first;
+    return cuts.front().first;
 }
 
 //------------------------------------------------------------------------------------//
@@ -298,7 +284,7 @@ bool LoopExtractor::findNext() const
     }
     m_data->vertex = (m_data->vertex.squaredTo(m_data->current->getStartpoint()) > RS_TOLERANCE) ? m_data->current->getStartpoint() : m_data->current->getEndpoint();
     m_loop->addEntity(m_data->current);
-    m_edges.removeEntity(m_data->current);
+    m_data->edges.removeEntity(m_data->current);
     return true;
 }
 
@@ -309,8 +295,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
     LC_LOG<<__func__<<"(): begin";
 
     bool success = true;
-    while(success && !m_edges.isEmpty()) {
-        LC_ERR<<"0: size="<<m_edges.count();
+    while(success && !m_data->edges.isEmpty()) {
         findFirst();
         while(m_data->vertex.squaredTo(m_data->vertexTarget) > RS_TOLERANCE) {
             LC_LOG<<m_data->vertex.x<<", "<< m_data->vertex.y<<" : "<<" : ds2 = "
@@ -318,12 +303,10 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
             LC_LOG<<"id = "<<m_data->current->getId();
             success = findNext();
         }
-        LC_LOG<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_edges.count();
+        LC_LOG<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_data->edges.count();
         loops.push_back(std::move(m_loop));
     }
     LC_LOG<<__func__<<"(): loops.size() = "<<loops.size();
-    //if (loops.size() == 2)
-     //   loops.pop_back();
     return loops;
 }
 
