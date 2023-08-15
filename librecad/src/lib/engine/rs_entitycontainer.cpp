@@ -89,6 +89,14 @@ bool isClosedLoop(RS_Entity& entity)
     return false;
     }
 }
+
+// Find the nearest distance between the endpoints of an entity to a given point
+double endPointDistance(const RS_Vector& point, const RS_Entity& entity)
+{
+    double distance=RS_MAXDOUBLE;
+    entity.getNearestEndpoint(point, &distance);
+    return distance;
+}
 }
 
 /**
@@ -1874,7 +1882,8 @@ double RS_EntityContainer::areaLineIntegral() const
     // edges:
 
     RS_Vector previousPoint(false);
-    for(auto* e: entities){
+    for(unsigned i=0; i<count(); ++i) {
+        RS_Entity* e = entities.at(i);
         if (isClosedLoop(*e))
         {
             if (e->isContainer())
@@ -1890,10 +1899,8 @@ double RS_EntityContainer::areaLineIntegral() const
         LC_ERR<<e->getId()<<": int = "<<lineIntegral<<": "<<startPoint.x<<" - "<<endPoint.x;
 
         // the line integral is always by the direction: from the start point to the end point
-        RS_Vector nearest(false);
         if (previousPoint.valid) {
-            double distance = RS_MAXDOUBLE;
-            nearest = e->getNearestEndpoint(previousPoint, &distance);
+            double distance = endPointDistance(previousPoint, *e);
             if (distance > contourTolerance)
                 RS_DEBUG->print(RS_Debug::D_ERROR, "%s(): contour area calculation maybe incorrect: gap of %lg found at (%lg, %lg)",
                                 __func__, distance, previousPoint.x, previousPoint.y);
@@ -1904,8 +1911,13 @@ double RS_EntityContainer::areaLineIntegral() const
             contourArea -= lineIntegral;
             previousPoint = startPoint;
         } else {
-            contourArea += lineIntegral;
-            previousPoint = endPoint;
+            bool useEndPoint = true;
+            if (!previousPoint.valid && i + 1 < count()) {
+                useEndPoint = endPointDistance(endPoint, *entities.at(i+1))
+                        < endPointDistance(startPoint, *entities.at(i+1));
+            }
+            contourArea += useEndPoint ? lineIntegral : - lineIntegral;
+            previousPoint = useEndPoint ? endPoint : startPoint;
         }
     }
     return std::abs(contourArea) + closedArea - subArea;
