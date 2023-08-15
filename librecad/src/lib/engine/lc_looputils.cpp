@@ -53,11 +53,6 @@ double getRandomAngle() {
     return uniformDistribution(randomEngine);
 }
 
-double getRandom() {
-    static std::uniform_real_distribution<double> uniformDistribution(0.0, 1.);
-    return uniformDistribution(randomEngine);
-}
-
 RS_Vector getInternalPoint(const RS_EntityContainer& loop)
 {
     RS_Vector p0 = loop.firstEntity()->getNearestPointOnEntity(loop.getMin(), true);
