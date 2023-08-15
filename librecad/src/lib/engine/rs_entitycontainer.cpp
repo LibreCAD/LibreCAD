@@ -54,26 +54,6 @@ namespace {
 // the tolerance used to check topology of contours in hatching
 constexpr double contourTolerance = 1e-8;
 
-/**
- * Whether an entity is reversed: currently only allowed for arc/elliptic arc.
- *
- *     @param[in]       const RS_Entity *entity - An entity.
- *     @returns         bool - true, if the entity is a reversed arc or elliptic arc.
- */
-bool isReversed(const RS_Entity *entity)
-{
-    if (nullptr == entity) return false;
-
-    switch (entity->rtti()) {
-    default:
-        return false;
-    case RS2::EntityArc:
-        return static_cast<const RS_Arc*>(entity)->isReversed();
-    case RS2::EntityEllipse:
-        return static_cast<const RS_Ellipse*>(entity)->isReversed();
-    }
-}
-
 // For validate hatch contours, whether an entity in the contour is a closed
 // loop itself
 bool isClosedLoop(RS_Entity& entity)
@@ -88,6 +68,14 @@ bool isClosedLoop(RS_Entity& entity)
     default:
     return false;
     }
+}
+
+// Find the nearest distance between the endpoints of an entity to a given point
+double endPointDistance(const RS_Vector& point, const RS_Entity& entity)
+{
+    double distance=RS_MAXDOUBLE;
+    entity.getNearestEndpoint(point, &distance);
+    return distance;
 }
 }
 
@@ -1874,7 +1862,8 @@ double RS_EntityContainer::areaLineIntegral() const
     // edges:
 
     RS_Vector previousPoint(false);
-    for(auto* e: entities){
+    for(unsigned i=0; i < count(); ++i) {
+        RS_Entity* e = entities.at(i);
         if (isClosedLoop(*e))
         {
             if (e->isContainer())
@@ -1890,10 +1879,8 @@ double RS_EntityContainer::areaLineIntegral() const
         LC_ERR<<e->getId()<<": int = "<<lineIntegral<<": "<<startPoint.x<<" - "<<endPoint.x;
 
         // the line integral is always by the direction: from the start point to the end point
-        RS_Vector nearest(false);
         if (previousPoint.valid) {
-            double distance = RS_MAXDOUBLE;
-            nearest = e->getNearestEndpoint(previousPoint, &distance);
+            double distance = endPointDistance(previousPoint, *e);
             if (distance > contourTolerance)
                 RS_DEBUG->print(RS_Debug::D_ERROR, "%s(): contour area calculation maybe incorrect: gap of %lg found at (%lg, %lg)",
                                 __func__, distance, previousPoint.x, previousPoint.y);
@@ -1904,8 +1891,13 @@ double RS_EntityContainer::areaLineIntegral() const
             contourArea -= lineIntegral;
             previousPoint = startPoint;
         } else {
-            contourArea += lineIntegral;
-            previousPoint = endPoint;
+            bool useEndPoint = true;
+            if (!previousPoint.valid && i + 1 < count()) {
+                useEndPoint = endPointDistance(endPoint, *entities.at(i+1))
+                        < endPointDistance(startPoint, *entities.at(i+1));
+            }
+            contourArea += useEndPoint ? lineIntegral : - lineIntegral;
+            previousPoint = useEndPoint ? endPoint : startPoint;
         }
     }
     return std::abs(contourArea) + closedArea - subArea;
@@ -2032,37 +2024,6 @@ RS_Entity* RS_EntityContainer::last() const
 const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
 {
     return entities;
-}
-
-namespace {
-
-std::vector<std::unique_ptr<RS_EntityContainer>> findLoop(RS_EntityContainer& container)
-{
-
-    std::vector<std::unique_ptr<RS_EntityContainer>> ret;
-    while (!container.isEmpty()) {
-        RS_Entity* e = container.firstEntity();
-        container.removeEntity(e);
-        RS_Vector target = e->getStartpoint();
-        auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
-        ec->addEntity(e);
-        RS_Vector endPoint = e->getEndpoint();
-        while (endPoint.squaredTo(target) > RS_TOLERANCE && !container.isEmpty()) {
-            double distance=0.;
-            RS_Entity* next=nullptr;
-            RS_Vector startPoint = container.getNearestEndpoint(endPoint, &distance, &next);
-            std::array<RS_Vector, 2> points{next->getStartpoint(), next->getEndpoint()};
-            if (startPoint.squaredTo(points[1])<RS_TOLERANCE15)
-                std::swap(points[0], points[1]);
-            ec->addEntity(next);
-            container.removeEntity(next);
-            endPoint=points[1];
-        }
-        if (endPoint.squaredTo(target) < RS_TOLERANCE)
-            ret.push_back(std::move(ec));
-    }
-    return ret;
-}
 }
 
 std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const
