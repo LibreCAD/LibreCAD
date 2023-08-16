@@ -39,6 +39,12 @@ struct ComparePoints {
   RS_Vector m_ref{false};
 };
 
+// the closest distance from a point to the end points of an entity
+double getEndPointDistance(const RS_Vector& point, const RS_Entity& entity);
+
+// Whether two entities are connected by an end point
+bool isConnected( const RS_Entity& entity1, const RS_Entity& entity2);
+
 // randomEngine
 std::default_random_engine randomEngine;
 
@@ -48,6 +54,29 @@ double getRandomAngle() {
     static std::uniform_real_distribution<double> uniformDistribution(0.0,
                                                                       2. * M_PI);
     return uniformDistribution(randomEngine);
+}
+
+// the closest distance from a point to the end points of an entity
+double getEndPointDistance(const RS_Vector& point, const RS_Entity& entity)
+{
+    double distance = RS_MAXDOUBLE;
+    entity.getNearestEndpoint(point, &distance);
+    return distance;
+}
+
+// Whether two entities are connected by an end point
+bool isConnected( const RS_Entity& entity1, const RS_Entity& entity2)
+{
+    const double distance = std::min(getEndPointDistance(entity1.getStartpoint(), entity2),
+                                     getEndPointDistance(entity1.getEndpoint(), entity2));
+    if (distance > contourGapTolerance)
+    {
+        LC_ERR<<"loop gap of "<<distance<<" between "<<entity1.getId()<<", "<<entity2.getId();
+        LC_ERR<<"("<<entity1.getStartpoint().x<<", "<<entity1.getEndpoint().y<<") - "
+        "("<<entity2.getStartpoint().x<<", "<<entity2.getEndpoint().y<<")";
+        return false;
+    }
+    return true;
 }
 
 RS_Vector getInternalPoint(const RS_EntityContainer& loop)
@@ -295,11 +324,31 @@ std::vector<std::unique_ptr<RS_EntityContainer>> LoopExtractor::extract() {
             LC_LOG<<"id = "<<m_data->current->getId();
             success = findNext();
         }
-        LC_LOG<<"1: loop.size() = "<<m_loop->count()<<": size="<<m_data->edges.count();
+        if (!validate())
+            LC_ERR << __func__<<"(): invalid loop of size = "<<m_loop->count();
         loops.push_back(std::move(m_loop));
     }
     LC_LOG<<__func__<<"(): loops.size() = "<<loops.size();
     return loops;
+}
+
+//------------------------------------------------------------------------------------//
+bool LoopExtractor::validate() const
+{
+    if (m_loop == nullptr || m_loop->isEmpty())
+        return false;
+    auto testEdge = [it = m_loop->begin()](const RS_Entity* entity) mutable {
+        return entity != nullptr && isConnected(*entity, **it++);
+    };
+    switch (m_loop->count())
+    {
+    case 0:
+    case 1:
+        // single edge loop is not expected
+        return false;
+    default:
+        return std::all_of(m_loop->begin() + 1, m_loop->end(), testEdge);
+    }
 }
 
 //------------------------------------------------------------------------------------//

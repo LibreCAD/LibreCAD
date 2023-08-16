@@ -66,6 +66,8 @@ public:
      */
     std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
+    // validate the loop m_loop
+    bool validate() const;
     RS_Entity* findFirst() const;
     bool findNext() const;
     std::vector<RS_Entity*> getConnected() const;
