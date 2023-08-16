@@ -478,7 +478,7 @@ double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
 
   case RS_MTextData::HARight:
       if (data.drawingDirection != RS_MTextData::RightToLeft)
-          textLine->move(RS_Vector(-textSize.x, 0.0));
+          textLine->move(RS_Vector(textSize.x, 0.0));
     break;
 
   default:
