@@ -477,7 +477,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     debugActions();
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
     if (q_action)
-        q_action->setChecked(true);
+        q_action->setChecked(hasAction());
 }
 
 
