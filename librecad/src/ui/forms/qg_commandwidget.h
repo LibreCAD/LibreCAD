@@ -28,6 +28,7 @@
 
 #include "ui_qg_commandwidget.h"
 class QG_ActionHandler;
+class QAction;
 
 class QG_CommandWidget : public QWidget, public Ui::QG_CommandWidget
 {
@@ -38,6 +39,9 @@ public:
     ~QG_CommandWidget();
 
     bool eventFilter(QObject *obj, QEvent *event) override;
+    QAction* getDockingAction() const {
+        return m_docking;
+    }
 
 public slots:
     virtual void setFocus();
@@ -57,8 +61,12 @@ protected slots:
     virtual void languageChange();
     virtual void chooseCommandFile();
 
+private slots:
+    virtual void dockingButtonTriggered(bool);
+
 private:
     QG_ActionHandler* actionHandler = nullptr;
+    QAction* m_docking = nullptr;
 };
 
 #endif // QG_COMMANDWIDGET_H

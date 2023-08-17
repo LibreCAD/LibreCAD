@@ -22,6 +22,12 @@
 **********************************************************************************
 */
 
+#include <QMenu>
+#include <QFile>
+#include <QMenuBar>
+#include <QActionGroup>
+#include <QDesktopServices>
+
 #include "qc_applicationwindow.h"
 #include "lc_widgetfactory.h"
 #include "lc_actionfactory.h"
@@ -39,11 +45,7 @@
 #include "qg_mousewidget.h"
 #include "qg_pentoolbar.h"
 
-#include <QMenu>
-#include <QFile>
-#include <QMenuBar>
-#include <QActionGroup>
-#include <QDesktopServices>
+#include "rs_debug.h"
 
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
                                    QMap<QString, QAction*>& action_map,
@@ -324,7 +326,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
 
-    QDockWidget* dock_command = new QDockWidget(QC_ApplicationWindow::tr("Command line"), main_window);
+    QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
     dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
@@ -336,10 +338,14 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     connect(dock_command, SIGNAL(dockLocationChanged(Qt::DockWidgetArea)),
             main_window, SLOT(modifyCommandTitleBar(Qt::DockWidgetArea)));
 
+    main_window->setDockOptions(QMainWindow::AnimatedDocks
+                                | QMainWindow::AllowTabbedDocks );
+
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
+    command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }
 
 void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)

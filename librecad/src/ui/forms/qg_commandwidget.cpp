@@ -28,13 +28,17 @@
 #include <algorithm>
 
 #include <QAction>
+#include <QDockWidget>
 #include <QKeyEvent>
 #include <QFileDialog>
 #include <QSettings>
 
+#include "lc_application.h"
+#include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
-#include "rs_commands.h"
 #include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_debug.h"
 #include "rs_system.h"
 #include "rs_utility.h"
 
@@ -79,6 +83,15 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     options_button->addAction(a3);
 
     options_button->setStyleSheet("QToolButton::menu-indicator { image: none; }");
+
+    // For convenience of re-docking a floating command widget. Without this button,
+    // the title bar may not have a "dock" button.
+    // The m_docking button allows user to re-dock the command widget
+    m_docking = new QAction(tr("Dock"), this);
+    addAction(m_docking);
+    connect(m_docking, &QAction::triggered, this, &QG_CommandWidget::dockingButtonTriggered);
+
+    options_button->addAction(m_docking);
 }
 
 /*
@@ -296,4 +309,13 @@ void QG_CommandWidget::handleKeycode(QString code)
 void QG_CommandWidget::setKeycodeMode(bool state)
 {
     leCommand->keycode_mode = state;
+}
+
+void QG_CommandWidget::dockingButtonTriggered(bool /*docked*/)
+{
+    QDockWidget* cmd_dockwidget =
+            QC_ApplicationWindow::getAppWindow()->findChild<QDockWidget*>("command_dockwidget");
+    cmd_dockwidget->setFloating(!cmd_dockwidget->isFloating());
+    m_docking->setText(cmd_dockwidget->isFloating() ? tr("Dock") : tr("Float"));
+    setWindowTitle(cmd_dockwidget->isFloating() ? tr("Command line") : tr("Cmd"));
 }

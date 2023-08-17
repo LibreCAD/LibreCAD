@@ -3257,23 +3257,20 @@ void QC_ApplicationWindow::modifyCommandTitleBar(Qt::DockWidgetArea area)
 {
     // author: ravas
 
-    QDockWidget* cmd_dockwidget = findChild<QDockWidget*>("command_dockwidget");
+    auto* cmdDockWidget = findChild<QDockWidget*>("command_dockwidget");
 
-    if (area == Qt::BottomDockWidgetArea || area == Qt::TopDockWidgetArea)
-    {
-        cmd_dockwidget->setWindowTitle("Cmd");
-        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
-                                   |QDockWidget::DockWidgetMovable
-                                   |QDockWidget::DockWidgetFloatable
-                                   |QDockWidget::DockWidgetVerticalTitleBar);
-    }
-    else
-    {
-        cmd_dockwidget->setWindowTitle(tr("Command line"));
-        cmd_dockwidget->setFeatures(QDockWidget::DockWidgetClosable
-                                   |QDockWidget::DockWidgetMovable
-                                   |QDockWidget::DockWidgetFloatable);
-    }
+    auto* commandWidget = static_cast<QG_CommandWidget*>(cmdDockWidget->widget());
+    QAction* dockingAction = commandWidget->getDockingAction();
+    bool docked = area & Qt::AllDockWidgetAreas;
+    cmdDockWidget->setWindowTitle(docked ? tr("Cmd") : tr("Command line"));
+    dockingAction->setText(docked ? tr("Float") : tr("Dock", "Dock the command widget to the main window"));
+    QDockWidget::DockWidgetFeatures features =
+            QDockWidget::DockWidgetClosable
+            | QDockWidget::DockWidgetMovable
+            | QDockWidget::DockWidgetFloatable;
+
+    if (docked) features |= QDockWidget::DockWidgetVerticalTitleBar;
+    cmdDockWidget->setFeatures(features);
 }
 
 bool QC_ApplicationWindow::loadStyleSheet(QString path)
