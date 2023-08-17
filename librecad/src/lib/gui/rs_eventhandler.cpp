@@ -476,6 +476,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: debugging actions");
     debugActions();
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
+    // For some actions: action->init() may call finish() within init()
+    // If so, the q_action shouldn't be checked
     if (q_action)
         q_action->setChecked(hasAction());
 }
