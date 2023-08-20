@@ -81,23 +81,55 @@ bool isEnclosed(RS_EntityContainer& loop, RS_AtomicEntity& entity);
  */
 class LoopExtractor {
 public:
+    /**
+     * @brief LoopExtractor: - LoopExtractor constructor
+     * @param edges - edges to process
+     */
     LoopExtractor(RS_EntityContainer& edges);
     ~LoopExtractor();
 
     /**
-     * @brief extract - extract loops from connected edges
-     * @return std::vector<std::unique_ptr<RS_EntityContainer>> - loops. each element is simply closed
+     * @brief       extract - extract loops from connected edges
+     * @return      std::vector<std::unique_ptr<RS_EntityContainer>> - loops. each element is simply closed
      */
     std::vector<std::unique_ptr<RS_EntityContainer>> extract();
 private:
     // validate the loop m_loop
     bool validate() const;
+
+    /**
+     * @brief:      Find the first edge on an outermost contour of all unprocessed edges; use the edge as the current
+     * @returns:    <RS_Entity*> - an edge on an outermost contour
+     */
     RS_Entity* findFirst() const;
+
+
+    /**
+     * @brief:      Find another edge connected to be used as the current edge
+     * @returns:     bool - true if the edge found closes the contour with the edge from findFirst().
+     */
     bool findNext() const;
+
+    /**
+     * @brief:      Find all other edges connected to the current end point
+     * @returns:    std::vector<RS_Entity*> - all other edges connected to the current end point of the current edge
+     */
     std::vector<RS_Entity*> getConnected() const;
+
+    /**
+     * @brief findOutermost: From the input edges, find the edge on an outermost contour of all
+     *  unprocessed edges.
+     * @param edges:         std::vector<RS_Entity*> edges - edges connected to the current end point
+     * @returns RS_Entity* - the outermost edge of input edges
+     */
     RS_Entity* findOutermost(std::vector<RS_Entity*> edges) const;
+    // the edges found for the current loop to form
     mutable std::unique_ptr<RS_EntityContainer> m_loop;
+
+    // all loops found
     mutable std::vector<std::unique_ptr<RS_EntityContainer>> m_loops;
+
+    // The internal data
     struct LoopData;
     std::unique_ptr<LoopData> m_data;
 };
@@ -114,7 +146,7 @@ public:
      * Each input loop is assumed to be a simple closed loop, and contains only edges.
      * The input loops should not contain sub-loops
      * Ownership of the input loops is transferred to this LoopSorter
-     * @param std::vector<std::unique_ptr<RS_EntityContainer>> loops input loops
+     * @param std::vector<std::unique_ptr<RS_EntityContainer>> - loops input loops
      */
     LoopSorter(std::vector<std::unique_ptr<RS_EntityContainer>> loops);
     ~LoopSorter();
@@ -129,7 +161,9 @@ public:
     std::vector<RS_EntityContainer*> getResults() const;
 
 private:
+
     void init();
+
     // find all ancestor loops of a given loop
     void findAncestors(RS_EntityContainer* loop);
 
