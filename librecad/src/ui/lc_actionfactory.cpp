@@ -1206,6 +1206,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ReloadStyleSheet");
     a_map["ReloadStyleSheet"] = action;
 
+    action = new QAction(tr("Re-dock Widgets"), agm->widgets);
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotRedockWidgets()));
+    action->setObjectName("RedockWidgets");
+    a_map["RedockWidgets"] = action;
+
     action = new QAction(tr("Menu Creator"), agm->widgets);
     action->setIcon(QIcon(":/icons/create_menu.svg"));
     connect(action, SIGNAL(triggered()),

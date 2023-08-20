@@ -262,6 +262,7 @@ public slots:
     void toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
+    void slotRedockWidgets();
 private:
 
 	// Type of draw order selected command

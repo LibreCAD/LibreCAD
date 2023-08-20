@@ -26,7 +26,12 @@
 **********************************************************************/
 
 #include<cmath>
+
+#include <QDockWidget>
+
 #include "qg_actionhandler.h"
+
+#include "qc_applicationwindow.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
@@ -1969,5 +1974,12 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
     view->setCurrentAction(a);
 }
 
+void QG_ActionHandler::slotRedockWidgets()
+{
+    QList<QDockWidget*> dockwidgets =
+            QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget*>();
+    for(auto* dockwidget: dockwidgets)
+        dockwidget->setFloating(false);
+}
 // EOF
 

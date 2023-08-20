@@ -906,6 +906,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
         if (main_window->dockWidgetArea(dw) == Qt::RightDockWidgetArea)
             dockwidgets_menu->addAction(dw->toggleViewAction());
     }
+    dockwidgets_menu->addAction(a_map["RedockWidgets"]);
 
     dockwidgets_menu->addSeparator();
 
