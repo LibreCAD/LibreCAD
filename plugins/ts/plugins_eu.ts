@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="eu">
+<TS version="2.1" language="eu">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -8,14 +8,6 @@
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
         <translation>Ascii puntuak irakurri</translation>
-    </message>
-</context>
-<context>
-    <name>ImportShp</name>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="40"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>ESRI Shapefile Inportatu</translation>
     </message>
 </context>
 <context>
@@ -120,7 +112,8 @@
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
-        <location filename="../list/list.cpp" line="218"/>
+        <location filename="../list/list.cpp" line="180"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
         <translation>puntuan</translation>
     </message>
@@ -170,7 +163,7 @@
     <message>
         <location filename="../list/list.cpp" line="125"/>
         <location filename="../list/list.cpp" line="139"/>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="226"/>
         <source>radius</source>
         <translation>erradioa</translation>
     </message>
@@ -235,117 +228,122 @@
         <translation>TESTUA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="183"/>
+        <source>TEXTCONTENT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
         <translation>SARTU</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="185"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
         <translation>Izena</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="187"/>
+        <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
         <translation>Txertatze puntua</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="193"/>
+        <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="199"/>
+        <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="210"/>
+        <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
         <translation>POLILINEA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="211"/>
+        <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
         <translation>Itxia</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
         <translation>Ez</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
         <translation>Bai</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
         <translation>Erpinak</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="227"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
         <translation>IRUDIA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="230"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
         <translation>SPLINE</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="233"/>
+        <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
         <translation>SPLINE PUNTUAK</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="236"/>
+        <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
         <translation>GERIZA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="239"/>
+        <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
         <translation>DIMGIDA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="242"/>
+        <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
         <translation>DIMLERROKETA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="245"/>
+        <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
         <translation>DIMLERROKATUA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
         <translation>DIMERRADIALA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="251"/>
+        <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
         <translation>DIMDIAMETROA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="254"/>
+        <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
         <translation>DIMANGULARRA</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="257"/>
+        <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
         <translation>EZEZAGUNA</translation>
     </message>
@@ -570,220 +568,375 @@
     </message>
 </context>
 <context>
-    <name>dibSHP</name>
+    <name>divide</name>
     <message>
-        <location filename="../importshp/importshp.cpp" line="59"/>
-        <source>File...</source>
-        <translation>Fitxategia...</translation>
+        <location filename="../divide/divide.cpp" line="34"/>
+        <location filename="../divide/divide.cpp" line="41"/>
+        <source>Divide</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="67"/>
-        <source>File type:</source>
-        <translation>Fitxategi mota:</translation>
+        <location filename="../divide/divide.cpp" line="55"/>
+        <source>Select a line, circle or arc and press return</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="75"/>
+        <location filename="../divide/divide.cpp" line="66"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="103"/>
+        <source>n</source>
+        <translation type="unfinished">n</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="443"/>
+        <source>Empty Entity</source>
+        <translation type="unfinished">Entitatea hutsik</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="451"/>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="451"/>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="459"/>
         <source>Layer</source>
-        <translation>Geruza</translation>
+        <translation type="unfinished">Geruza</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="56"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>ESRI Shapefile fitxategia inportatu</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="68"/>
-        <location filename="../importshp/importshp.cpp" line="266"/>
-        <source>Unknown</source>
-        <translation>Ezezaguna</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="76"/>
-        <location filename="../importshp/importshp.cpp" line="89"/>
-        <location filename="../importshp/importshp.cpp" line="102"/>
-        <location filename="../importshp/importshp.cpp" line="115"/>
-        <source>Current</source>
-        <translation>Unekoa</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="77"/>
-        <location filename="../importshp/importshp.cpp" line="90"/>
-        <location filename="../importshp/importshp.cpp" line="103"/>
-        <location filename="../importshp/importshp.cpp" line="116"/>
-        <source>From data:</source>
-        <translation>Datuetatik:</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="88"/>
+        <location filename="../divide/divide.cpp" line="461"/>
         <source>Color</source>
-        <translation>Kolorea</translation>
+        <translation type="unfinished">Kolorea</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="101"/>
+        <location filename="../divide/divide.cpp" line="462"/>
         <source>Line type</source>
-        <translation>Marra mota</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="114"/>
-        <source>Width</source>
-        <translation>Zabalera</translation>
+        <location filename="../divide/divide.cpp" line="464"/>
+        <source>Line thickness</source>
+        <translation type="unfinished">Marra zabalera</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="127"/>
-        <location filename="../importshp/importshp.cpp" line="213"/>
-        <source>Point</source>
-        <translation>Puntua</translation>
+        <location filename="../divide/divide.cpp" line="466"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="128"/>
-        <source>as Point</source>
-        <translation>Puntu gisa</translation>
+        <location filename="../divide/divide.cpp" line="473"/>
+        <source>LINE</source>
+        <translation type="unfinished">MARRA</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="129"/>
-        <source>as Label:</source>
-        <translation>Etiketa gisa:</translation>
+        <location filename="../divide/divide.cpp" line="478"/>
+        <source>from point</source>
+        <translation type="unfinished">puntutik</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="141"/>
-        <source>Accept</source>
-        <translation>Onartu</translation>
+        <location filename="../divide/divide.cpp" line="481"/>
+        <source>to point</source>
+        <translation type="unfinished">puntura</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="142"/>
+        <location filename="../divide/divide.cpp" line="486"/>
+        <location filename="../divide/divide.cpp" line="513"/>
+        <source>length</source>
+        <translation type="unfinished">luzera</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="491"/>
+        <source>Angle in XY plane</source>
+        <translation type="unfinished">Angelua XY planoan</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="493"/>
+        <source>Inc.</source>
+        <translation type="unfinished">Inc.</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="498"/>
+        <source>ARC</source>
+        <translation type="unfinished">Arkua</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="499"/>
+        <location filename="../divide/divide.cpp" line="518"/>
+        <source>center point</source>
+        <translation type="unfinished">erdiguneko puntua</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="505"/>
+        <location filename="../divide/divide.cpp" line="522"/>
+        <location filename="../divide/divide.cpp" line="544"/>
+        <source>radius</source>
+        <translation type="unfinished">erradioa</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="506"/>
+        <source>initial angle</source>
+        <translation type="unfinished">hasierako angelua</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="508"/>
+        <source>final angle</source>
+        <translation type="unfinished">bukaerako angelua</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="517"/>
+        <source>CIRCLE</source>
+        <translation type="unfinished">ZIRKULUA</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="523"/>
+        <source>circumference</source>
+        <translation type="unfinished">zirkunferentzia</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="525"/>
+        <source>area</source>
+        <translation type="unfinished">azalera</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="529"/>
+        <source>POLYLINE</source>
+        <translation type="unfinished">POLILINEA</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="530"/>
+        <source>Closed</source>
+        <translation type="unfinished">Itxia</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="532"/>
+        <source>No</source>
+        <translation type="unfinished">Ez</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="532"/>
+        <source>Yes</source>
+        <translation type="unfinished">Bai</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="533"/>
+        <source>Vertices</source>
+        <translation type="unfinished">Erpinak</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="538"/>
+        <source>in point</source>
+        <translation type="unfinished">puntuan</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="554"/>
+        <source>MUST be a line, circle or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dividedlg</name>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="48"/>
+        <source>Divide - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="69"/>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="75"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation>Utzi</translation>
+        <translation type="unfinished">Utzi</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="167"/>
-        <source>Select file</source>
-        <translation>Fitxategia aukeratu</translation>
+        <location filename="../divide/dividedlg.cpp" line="85"/>
+        <source>Divide at</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="217"/>
-        <source>Point+Measure</source>
-        <translation>Puntua+Neurria</translation>
+        <location filename="../divide/dividedlg.cpp" line="92"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="221"/>
-        <source>3D Point</source>
-        <translation>3D Puntua</translation>
+        <location filename="../divide/dividedlg.cpp" line="115"/>
+        <source>places</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="225"/>
-        <source>Multi Point</source>
-        <translation>Puntu anitzak</translation>
+        <location filename="../divide/dividedlg.cpp" line="126"/>
+        <source>Ticks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="229"/>
-        <source>Multi Point+Measure</source>
-        <translation>Puntu anitzak+Neurria</translation>
+        <location filename="../divide/dividedlg.cpp" line="134"/>
+        <source>Breaks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="233"/>
-        <source>3D Multi Point</source>
-        <translation>3D Puntu Anitza</translation>
+        <location filename="../divide/dividedlg.cpp" line="179"/>
+        <source>&lt;i&gt;New&lt;/i&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="237"/>
-        <source>Arc</source>
-        <translation>Arkua</translation>
+        <location filename="../divide/dividedlg.cpp" line="210"/>
+        <source>Enter start
+angle, in
+decimal degrees
+0° at 3 o&apos;clock
+goes
+anti-clockwise.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="241"/>
-        <source>Arc+Measure</source>
-        <translation>Arkua+Neurria</translation>
+        <location filename="../divide/dividedlg.cpp" line="246"/>
+        <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="245"/>
-        <source>3D Arc</source>
-        <translation>3d Arkua</translation>
+        <location filename="../divide/dividedlg.cpp" line="252"/>
+        <source>Ticks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Polygon</source>
-        <translation>Poligonoa</translation>
+        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <source>Above</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Polygon+Measure</source>
-        <translation>Poligonoa+Neurria</translation>
+        <location filename="../divide/dividedlg.cpp" line="259"/>
+        <source>Below</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Polygon</source>
-        <translation>3D Poligonoa</translation>
+        <location filename="../divide/dividedlg.cpp" line="263"/>
+        <source>Outside</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="261"/>
-        <source>Multipatch</source>
-        <translation>Poligonoanitza</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="281"/>
-        <source>The file %1 not have extension .shp</source>
-        <translation>%1 fitxategiak ez du hedapenik</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="286"/>
-        <source>The file %1 not exist</source>
-        <translation>%1 fitxategirik ez dago</translation>
+        <location filename="../divide/dividedlg.cpp" line="264"/>
+        <source>Inside</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>lc_Geardlg</name>
     <message>
-        <location filename="../gear/gear.cpp" line="66"/>
-        <source>Draw a gear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="71"/>
+        <location filename="../gear/gear.cpp" line="122"/>
         <source>Number of teeth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="79"/>
-        <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="87"/>
+        <location filename="../gear/gear.cpp" line="124"/>
         <source>Pressure angle (deg)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="95"/>
-        <source>Addendum</source>
+        <location filename="../gear/gear.cpp" line="121"/>
+        <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="103"/>
-        <source>Dedendum</source>
+        <location filename="../gear/gear.cpp" line="123"/>
+        <source>Modulus</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="111"/>
-        <source>Type</source>
+        <location filename="../gear/gear.cpp" line="125"/>
+        <source>Addendum (rel. to modulus)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="114"/>
-        <source>Spur</source>
+        <location filename="../gear/gear.cpp" line="126"/>
+        <source>Dedendum (rel. to modulus)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="115"/>
-        <source>Ring</source>
+        <location filename="../gear/gear.cpp" line="127"/>
+        <source>Number of segments to draw (dedendum)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="119"/>
+        <location filename="../gear/gear.cpp" line="128"/>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="129"/>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="130"/>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="132"/>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="133"/>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="134"/>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="135"/>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="136"/>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="137"/>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="138"/>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="140"/>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="141"/>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="143"/>
         <source>Accept</source>
         <translation type="unfinished">Onartu</translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="124"/>
+        <location filename="../gear/gear.cpp" line="144"/>
         <source>Cancel</source>
         <translation type="unfinished">Utzi</translation>
     </message>
@@ -791,7 +944,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="274"/>
+        <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
         <translation>Entitate zerrenda</translation>
     </message>
@@ -926,14 +1079,10 @@
 <context>
     <name>plot</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="21"/>
-        <location filename="../plotequation/plot.cpp" line="28"/>
+        <location filename="../plotequation/plot.cpp" line="30"/>
+        <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
         <translation>Trazatu plugina</translation>
-    </message>
-    <message>
-        <source>plugins_menu</source>
-        <translation type="obsolete">plugins_menu</translation>
     </message>
 </context>
 <context>
