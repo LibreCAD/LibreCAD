@@ -1,21 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="tr">
-<context>
-    <name>@default</name>
-    <message>
-        <source>Loading..</source>
-        <translation type="obsolete">Yükleniyor..</translation>
-    </message>
-    <message>
-        <source>Loading Library Paths..</source>
-        <translation type="obsolete">Kütüphaneler aranıyor..</translation>
-    </message>
-    <message>
-        <source>Loading File %1..</source>
-        <translation type="obsolete">%1 dosyası yükleniyor..</translation>
-    </message>
-</context>
+<TS version="2.1" language="tr">
 <context>
     <name>ColorWizard</name>
     <message>
@@ -78,6 +63,21 @@
     </message>
 </context>
 <context>
+    <name>LC_ActionDimArc</name>
+    <message>
+        <source>Select arc entity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">İptal</translation>
+    </message>
+    <message>
+        <source>Specify dimension arc location</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LC_ActionDrawCircle2PR</name>
     <message>
         <source>radius=%1 is too small for points selected
@@ -107,6 +107,29 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Select circle center</source>
         <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionDrawLinePolygonCenTan</name>
+    <message>
+        <source>Specify center</source>
+        <translation type="unfinished">Merkezi belirtin</translation>
+    </message>
+    <message>
+        <source>Specify a tangent</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Not a valid number. Try 1..9999</source>
+        <translation type="unfinished">Köşe sayısı 1..99 arasında olmalı</translation>
+    </message>
+    <message>
+        <source>Not a valid expression</source>
+        <translation type="unfinished">Geçerli bir ifade değil</translation>
     </message>
 </context>
 <context>
@@ -340,10 +363,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">&amp;Yamuk</translation>
     </message>
     <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">Yamuk çizer</translation>
-    </message>
-    <message>
         <source>&amp;Add node</source>
         <translation type="unfinished"></translation>
     </message>
@@ -452,10 +471,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">&amp;Yansıla</translation>
     </message>
     <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Taşı ve Dönd&amp;ür</translation>
-    </message>
-    <message>
         <source>Rotate T&amp;wo</source>
         <translation type="unfinished">İki&amp;li Döndür</translation>
     </message>
@@ -466,10 +481,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>&amp;Trim</source>
         <translation type="unfinished">&amp;Kırp</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">İk&amp;ili Kırp</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -560,14 +571,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Show all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Hide all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>&amp;Add Layer</source>
         <translation type="unfinished">Katman &amp;Ekle</translation>
     </message>
@@ -632,24 +635,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Tercihler</translation>
-    </message>
-    <message>
         <source>&amp;Application Preferences</source>
         <translation type="unfinished">&amp;Uygulama Tercihleri</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
         <translation type="unfinished">&amp;Bu Çizimle İlgili Tercihler</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">IDE Aç</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Betik Çalıştır..</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -670,14 +661,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Invert Selection</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Export as &amp;MakerCAM SVG...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Ölçülendirme Öğelerini Yeniden Üret</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -834,11 +817,74 @@ distance between points=%2 is larger than diameter=%3</source>
         <comment>Toggle Draft Mode</comment>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Pol&amp;ygon (Cen,Tan)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Arc</source>
+        <translation type="unfinished">&amp;Yay</translation>
+    </message>
+    <message>
+        <source>&amp;Show all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Hide all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Unlock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Export Selected Layer(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export &amp;Visible Layer(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Show all blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Hide all blocks</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export as CA&amp;M/plain SVG...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close All</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Re-dock Widgets</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Save A&amp;ll...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_ActionLayersExport</name>
+    <message>
+        <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -853,10 +899,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Mouse</source>
-        <translation type="obsolete">Fare</translation>
-    </message>
-    <message>
         <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
@@ -869,6 +911,61 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Insert Image</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LC_WidgetFactory</name>
+    <message>
+        <source>Library Browser</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation type="unfinished">Komut</translation>
+    </message>
+    <message>
+        <source>Dock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Float</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lines</source>
+        <translation type="unfinished">Çizgiler</translation>
+    </message>
+    <message>
+        <source>Circles</source>
+        <translation type="unfinished">Çemberler</translation>
+    </message>
+    <message>
+        <source>Freehand</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ellipses</source>
+        <translation type="unfinished">Elipsler</translation>
+    </message>
+    <message>
+        <source>PolyLines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select</source>
+        <translation type="unfinished">Seç</translation>
+    </message>
+    <message>
+        <source>Dimensions</source>
+        <translation type="unfinished">Boyutlar</translation>
+    </message>
+    <message>
+        <source>Modify</source>
+        <translation type="unfinished">Değiştir</translation>
+    </message>
+    <message>
+        <source>Measure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1013,22 +1110,6 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation type="unfinished">Düzenle</translation>
     </message>
     <message>
-        <source>Vie&amp;ws</source>
-        <translation type="obsolete">&amp;Görünümler</translation>
-    </message>
-    <message>
-        <source>Tool&amp;bars</source>
-        <translation type="obsolete">Çu&amp;buklar</translation>
-    </message>
-    <message>
-        <source>Focus on Command Line</source>
-        <translation type="obsolete">Komut Satırına Geç</translation>
-    </message>
-    <message>
-        <source>Focus on &amp;Command Line</source>
-        <translation type="obsolete">&amp;Komut Satırına Geç</translation>
-    </message>
-    <message>
         <source>&amp;View</source>
         <translation>Gö&amp;rüntüle</translation>
     </message>
@@ -1041,16 +1122,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Seçim</translation>
     </message>
     <message>
-        <source>&amp;Point</source>
-        <translation type="obsolete">&amp;Nokta</translation>
-    </message>
-    <message>
         <source>&amp;Line</source>
         <translation>Çi&amp;zgi</translation>
-    </message>
-    <message>
-        <source>&amp;Arc</source>
-        <translation type="obsolete">&amp;Yay</translation>
     </message>
     <message>
         <source>&amp;Circle</source>
@@ -1061,32 +1134,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>&amp;Elips</translation>
     </message>
     <message>
-        <source>&amp;Draw</source>
-        <translation type="obsolete">&amp;Çiz</translation>
-    </message>
-    <message>
-        <source>&amp;Dimension</source>
-        <translation type="obsolete">&amp;Boyutlar</translation>
-    </message>
-    <message>
         <source>&amp;Modify</source>
         <translation>Değişi&amp;klik</translation>
     </message>
     <message>
-        <source>&amp;Snap</source>
-        <translation type="obsolete">&amp;Yakala</translation>
-    </message>
-    <message>
         <source>&amp;Info</source>
         <translation>&amp;Bilgi</translation>
-    </message>
-    <message>
-        <source>&amp;Layer</source>
-        <translation type="obsolete">&amp;Katman</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Blok</translation>
     </message>
     <message>
         <source>Pen</source>
@@ -1101,24 +1154,8 @@ distance between points=%2 is larger than diameter=%3</source>
         <translation>Hakkında</translation>
     </message>
     <message>
-        <source>About the application</source>
-        <translation type="obsolete">Uygulama hakkında</translation>
-    </message>
-    <message>
-        <source>&amp;Scripts</source>
-        <translation type="obsolete">&amp;Betikler</translation>
-    </message>
-    <message>
-        <source>&amp;Windows</source>
-        <translation type="obsolete">&amp;Pencere</translation>
-    </message>
-    <message>
         <source>&amp;Help</source>
         <translation>&amp;Yardım</translation>
-    </message>
-    <message>
-        <source>De&amp;bugging</source>
-        <translation type="obsolete">&amp;Hata Ayıklama</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -1127,10 +1164,6 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Block List</source>
         <translation>Blok listesi</translation>
-    </message>
-    <message>
-        <source>Library Browser</source>
-        <translation>Kütüphane Tarayıcı</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1193,18 +1226,6 @@ Lütfen dosya izinlerine bakın.</translation>
         <translation>Kaydedilen çizim: %1</translation>
     </message>
     <message>
-        <source>Cannot save the file
-%1
-Please check the permissions.</source>
-        <translation>%1
-dosyası kaydedilemedi.
-Lütfen dosya izinlerine bakın.</translation>
-    </message>
-    <message>
-        <source>Saving drawing under new filename...</source>
-        <translation>Çizim yeni dosyaya kaydediliyor...</translation>
-    </message>
-    <message>
         <source>Exporting drawing...</source>
         <translation>Çizim dışa aktarılıyor...</translation>
     </message>
@@ -1239,63 +1260,6 @@ Lütfen dosya izinlerine bakın.</translation>
     <message>
         <source>Exiting application...</source>
         <translation>Uygulamadan çıkılıyor...</translation>
-    </message>
-    <message>
-        <source>About...</source>
-        <translation type="obsolete">Hakkında...</translation>
-    </message>
-    <message>
-        <source>Launch the online manual</source>
-        <translation type="obsolete">Kılavuzu gösterir</translation>
-    </message>
-    <message>
-        <source>Manual</source>
-        <translation type="obsolete">Kılavuz</translation>
-    </message>
-    <message>
-        <source>&amp;Manual</source>
-        <translation type="obsolete">&amp;Kılavuz</translation>
-    </message>
-    <message>
-        <source>&amp;CAM</source>
-        <translation type="obsolete">&amp;CAM</translation>
-    </message>
-    <message>
-        <source>Simulation Controls</source>
-        <translation type="obsolete">Benzetim Denetimleri</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Yok</translation>
-    </message>
-    <message>
-        <source>Version: %1 %2</source>
-        <translation type="obsolete">Sürüm: %1 %2</translation>
-    </message>
-    <message>
-        <source>Modules: %1</source>
-        <translation type="obsolete">Modüller: %1</translation>
-    </message>
-    <message>
-        <source>&amp;About %1</source>
-        <translation type="obsolete">%1 &amp;hakkında</translation>
-    </message>
-    <message>
-        <source>Date: %1</source>
-        <translation type="obsolete">Tarih: %1</translation>
-    </message>
-    <message>
-        <source>This is a %1 version which terminates
-automatically after 10min. This software is
-not intended for production use. Please buy
-a full version of the application from
-%2.
-You can save your work now.</source>
-        <translation type="obsolete">Bu %1 sürümü, 10 dak. sonra sonlandırılacaktır
-Bu yazılım üretim amaçlı kullanılamaz. Lütfen
-uygulamanın tam bir sürümünü
-%2
-adresinden temin edin. Şimdi çalışmanızı kaydedin.</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1345,10 +1309,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Su&amp;b-Window mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Tile &amp;Vertically</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1373,10 +1333,6 @@ Auto-save disabled.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD Araçları</translation>
-    </message>
-    <message>
         <source>Export as</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1399,10 +1355,6 @@ Auto-save disabled.</source>
     <message>
         <source>Export as PDF</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="obsolete">&amp;Yazı</translation>
     </message>
     <message>
         <source>Export</source>
@@ -1559,295 +1511,142 @@ Please check its existence and permissions.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Help Links</source>
+        <source>Saving drawing: %1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Online</source>
+        <source>Save cancelled</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QC_MDIWindow</name>
-    <message>
-        <source>Do you really want to close the drawing?</source>
-        <translation>Çizimi gerçekten kapatmak istiyor musunuz?</translation>
-    </message>
-    <message>
-        <source>Do you really want to close the file
-%1?</source>
-        <translation>%1 dosyasını gerçekten kapatmak istiyor musunuz?</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Çizim kapatılıyor</translation>
+        <translation type="unfinished">Çizim kapatılıyor</translation>
     </message>
-</context>
-<context>
-    <name>QG_ActionFactory</name>
     <message>
-        <source>Export Drawing</source>
-        <translation type="obsolete">Çizimi Farklı Biçimde Kaydet</translation>
+        <source>Save changes to the following item?
+%1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Exports the current drawing as bitmap</source>
-        <translation type="obsolete">Çzimi biteşlem olarak kaydeder</translation>
+        <source>&amp;Save</source>
+        <translation type="unfinished">&amp;Kaydet</translation>
     </message>
     <message>
-        <source>Close Drawing</source>
-        <translation type="obsolete">Çizimi Kapat</translation>
+        <source>Save &amp;as...</source>
+        <translation type="unfinished">&amp;Farklı Kaydet...</translation>
     </message>
     <message>
-        <source>&amp;Close</source>
-        <translation type="obsolete">Kapa&amp;t</translation>
+        <source>&amp;Save %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Closes the current drawing</source>
-        <translation type="obsolete">Çizimi kapatır</translation>
+        <source>Save %1 &amp;as...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Print Drawing</source>
-        <translation type="obsolete">Çizimi Yazdır</translation>
+        <source>&amp;Window mode</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Prints out the current drawing</source>
-        <translation type="obsolete">Çizimi yazıcıda çıktılar</translation>
+        <source>&amp;Layout</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Quits the application</source>
-        <translation type="obsolete">Uygulamadan çıkar</translation>
+        <source>Rounded</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Grid</source>
-        <translation type="obsolete">Izgara</translation>
+        <source>Triangular</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Grid</source>
-        <translation type="obsolete">I&amp;zgara</translation>
+        <source>North</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enables/disables the grid</source>
-        <translation type="obsolete">Izgarayı açar/kapar</translation>
+        <source>South</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Statusbar</source>
-        <translation type="obsolete">Durum Çubuğu</translation>
+        <source>East</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Statusbar</source>
-        <translation type="obsolete">&amp;Durum Çubuğu</translation>
+        <source>West</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Enables/disables the statusbar</source>
-        <translation type="obsolete">Durum çubuğunu açar/kapar</translation>
+        <source>&amp;Arrange</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Free</source>
-        <translation type="obsolete">Serbest</translation>
+        <source>&amp;Maximized</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Free</source>
-        <translation type="obsolete">&amp;Serbest</translation>
+        <source>Save All cancelled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Serbest konumlama</translation>
+        <source>Close All cancelled</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Grid positioning</source>
-        <translation type="obsolete">Izgara konumlama</translation>
+        <source>The Code</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Endpoints</source>
-        <translation type="obsolete">Uçlar</translation>
+        <source>Cmd</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Endpoints</source>
-        <translation type="obsolete">&amp;Uçlar</translation>
+        <source>Float</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap to endpoints</source>
-        <translation type="obsolete">Uçları yakalar</translation>
+        <source>Dock</source>
+        <comment>Dock the command widget to the main window</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>On Entity</source>
-        <translation type="obsolete">Öğe Üstünde</translation>
+        <source>&amp;Wiki</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;On Entity</source>
-        <translation type="obsolete">&amp;Öğe Üstünde</translation>
+        <source>User&apos;s &amp;Manual</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap to nearest point on entity</source>
-        <translation type="obsolete">Öğe üzerindeki en yakın noktayı yakalar</translation>
+        <source>&amp;Commands</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Center</source>
-        <translation type="obsolete">Merkez</translation>
+        <source>&amp;Style Sheets</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Center</source>
-        <translation type="obsolete">&amp;Merkez</translation>
+        <source>Wid&amp;gets</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap to centers</source>
-        <translation type="obsolete">Merkezleri yakalar</translation>
+        <source>&amp;Forum</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Middle</source>
-        <translation type="obsolete">Orta</translation>
+        <source>Zulip &amp;Chat</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Middle</source>
-        <translation type="obsolete">&amp;Orta</translation>
+        <source>&amp;Release Information</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Orta noktaları yakalar</translation>
+        <source>On&amp;line</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Distance from Endpoint</source>
-        <translation type="obsolete">Uçtan Mesafeli</translation>
-    </message>
-    <message>
-        <source>&amp;Distance from Endpoint</source>
-        <translation type="obsolete">&amp;Uçtan Mesafeli</translation>
-    </message>
-    <message>
-        <source>Snap to points with a given distance to an endpoint</source>
-        <translation type="obsolete">Bir uçtan belirli uzaklıktaki bir noktayı yakalar</translation>
-    </message>
-    <message>
-        <source>Intersection</source>
-        <translation type="obsolete">Kesişim</translation>
-    </message>
-    <message>
-        <source>&amp;Intersection</source>
-        <translation type="obsolete">&amp;Kesişim</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points</source>
-        <translation type="obsolete">Kesişim noktalarını yakalar</translation>
-    </message>
-    <message>
-        <source>Restrict Nothing</source>
-        <translation type="obsolete">Hiçbir şeyle Sınırlama</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Nothing</source>
-        <translation type="obsolete">&amp;Hiçbir şeyle Sınırlama</translation>
-    </message>
-    <message>
-        <source>No snap restriction</source>
-        <translation type="obsolete">Bir yakalama türü yok</translation>
-    </message>
-    <message>
-        <source>Restrict Orthogonally</source>
-        <translation type="obsolete">Dikeylikle Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Orthogonally</source>
-        <translation type="obsolete">&amp;Dikeylikle Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict snapping orthogonally</source>
-        <translation type="obsolete">Yakalamayı dikeylikle sınırlar</translation>
-    </message>
-    <message>
-        <source>Restrict Horizontally</source>
-        <translation type="obsolete">Yatayla Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Horizontally</source>
-        <translation type="obsolete">&amp;Yatayla Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict snapping horizontally</source>
-        <translation type="obsolete">Yakalamayı yatayla sınırlar</translation>
-    </message>
-    <message>
-        <source>Restrict Vertically</source>
-        <translation type="obsolete">Düşeyle Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict &amp;Vertically</source>
-        <translation type="obsolete">D&amp;üşeyle Sınırla</translation>
-    </message>
-    <message>
-        <source>Restrict snapping vertically</source>
-        <translation type="obsolete">Yakalamayı düşeyle sınırlar</translation>
-    </message>
-    <message>
-        <source>Application</source>
-        <translation type="obsolete">Uygulama</translation>
-    </message>
-    <message>
-        <source>&amp;Application Preferences</source>
-        <translation type="obsolete">&amp;Uygulama Tercihleri</translation>
-    </message>
-    <message>
-        <source>General Application Preferences</source>
-        <translation type="obsolete">Genel Uygulama Tercihleri</translation>
-    </message>
-    <message>
-        <source>Draft</source>
-        <translation type="obsolete">Taslak</translation>
-    </message>
-    <message>
-        <source>&amp;Draft</source>
-        <translation type="obsolete">&amp;Taslak</translation>
-    </message>
-    <message>
-        <source>Enables/disables the draft mode</source>
-        <translation type="obsolete">Taslak kipini açar/kapar</translation>
-    </message>
-    <message>
-        <source>Open IDE</source>
-        <translation type="obsolete">IDE Aç</translation>
-    </message>
-    <message>
-        <source>&amp;Open IDE</source>
-        <translation type="obsolete">IDE &amp;Aç</translation>
-    </message>
-    <message>
-        <source>Opens the integrated development environment for scripting</source>
-        <translation type="obsolete">Betikler için bütünleşik geliştirme ortamını açar</translation>
-    </message>
-    <message>
-        <source>Run Script..</source>
-        <translation type="obsolete">Betik Çalıştır..</translation>
-    </message>
-    <message>
-        <source>&amp;Run Script..</source>
-        <translation type="obsolete">&amp;Betik Çalıştır..</translation>
-    </message>
-    <message>
-        <source>Runs a script</source>
-        <translation type="obsolete">Bir betiği çalıştırır</translation>
-    </message>
-    <message>
-        <source>&amp;Preferences</source>
-        <translation type="obsolete">&amp;Tercihler</translation>
-    </message>
-    <message>
-        <source>&amp;Export...</source>
-        <translation type="obsolete">&amp;Dışa Aktar...</translation>
-    </message>
-    <message>
-        <source>&amp;Print...</source>
-        <translation type="obsolete">&amp;Yazdır...</translation>
-    </message>
-    <message>
-        <source>Quit</source>
-        <translation type="obsolete">Çık</translation>
-    </message>
-    <message>
-        <source>&amp;Quit</source>
-        <translation type="obsolete">&amp;Çık</translation>
-    </message>
-    <message>
-        <source>&amp;Block</source>
-        <translation type="obsolete">&amp;Blok</translation>
+        <source>&amp;Donate</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1882,56 +1681,6 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_ArcOptions</name>
-    <message>
-        <source>Arc Options</source>
-        <translation type="obsolete">Yay Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">Akrep Yönü</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="obsolete">Akrep Yönünün Tersi</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ArcTangentialOptions</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Yarıçap:</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <extracomment>Draw Tangential Arc by the given radius</extracomment>
-        <translation type="obsolete">Açı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_BevelOptions</name>
-    <message>
-        <source>Bevel Options</source>
-        <translation type="obsolete">Yuvarlatma Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Kırp</translation>
-    </message>
-    <message>
-        <source>Check to trim both entities to the bevel</source>
-        <translation type="obsolete">Yuvarlama uygulanacak öğelerin kırpılmasını denetler</translation>
-    </message>
-    <message>
-        <source>Length 1:</source>
-        <translation type="obsolete">1. Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Length 2:</source>
-        <translation type="obsolete">2. Uzunluk:</translation>
-    </message>
-</context>
-<context>
     <name>QG_BlockDialog</name>
     <message>
         <source>Block Settings</source>
@@ -1940,22 +1689,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Block Name:</source>
         <translation>Blok İsmi:</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Renaming Block</source>
@@ -1975,14 +1708,6 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Hide all blocks</source>
         <translation>Tüm blokları gizle</translation>
-    </message>
-    <message>
-        <source>Add a block</source>
-        <translation type="obsolete">Bir blok ekle</translation>
-    </message>
-    <message>
-        <source>Remove the active block</source>
-        <translation>Bloğu Sil</translation>
     </message>
     <message>
         <source>Rename the active block</source>
@@ -2051,581 +1776,17 @@ için açar</translation>
         <source>save the active block to a file</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_CadToolBar</name>
     <message>
-        <source>CAD Tools</source>
-        <translation type="obsolete">CAD Araçları</translation>
+        <source>Remove block</source>
+        <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_CadToolBarArcs</name>
     <message>
-        <source>Arcs</source>
-        <translation type="obsolete">Yaylar</translation>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Arc with three points</source>
-        <translation type="obsolete">Üç noktasıyla yay</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Arc with Center, Point, Angles</source>
-        <translation type="obsolete">Merkez, Nokta ve Açı ile Yay</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarCircles</name>
-    <message>
-        <source>Circles</source>
-        <translation type="obsolete">Çemberler</translation>
-    </message>
-    <message>
-        <source>Circle with two opposite points</source>
-        <translation type="obsolete">İki zıt noktasıyla çember</translation>
-    </message>
-    <message>
-        <source>Circle with center and radius</source>
-        <translation type="obsolete">Merkezi ve yarıçapıyla çember</translation>
-    </message>
-    <message>
-        <source>Circle with center and point</source>
-        <translation type="obsolete">Merkezi ve bir noktası ile çember</translation>
-    </message>
-    <message>
-        <source>Circle with three points</source>
-        <translation type="obsolete">Üç noktasıyla çember</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarDim</name>
-    <message>
-        <source>Dimensions</source>
-        <translation type="obsolete">Boyutlar</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Hizalı Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Doğrusal Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Yatay Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Düşey Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Yarıçap</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Çap</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Açısal Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Leader</source>
-        <translation type="obsolete">Uzakta Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarEllipses</name>
-    <message>
-        <source>Ellipses</source>
-        <translation type="obsolete">Elipsler</translation>
-    </message>
-    <message>
-        <source>Ellipse arc with center, two points and angles</source>
-        <translation type="obsolete">Merkezi, iki noktası ve açısıyla elips yayı</translation>
-    </message>
-    <message>
-        <source>Ellipse with Center and two points</source>
-        <translation type="obsolete">Merkezi ve iki noktasıyla elips</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarInfo</name>
-    <message>
-        <source>Info</source>
-        <translation type="obsolete">Bilgi</translation>
-    </message>
-    <message>
-        <source>Distance (Point, Point)</source>
-        <translation type="obsolete">Mesafe (Nokta, Nokta)</translation>
-    </message>
-    <message>
-        <source>Distance (Entity, Point)</source>
-        <translation type="obsolete">Mesafe (Öğe, Nokta)</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Açı</translation>
-    </message>
-    <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">Seçili öğelerin toplam uzunluğu</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarLines</name>
-    <message>
-        <source>Lines</source>
-        <translation type="obsolete">Çizgiler</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Line with two points</source>
-        <translation type="obsolete">İki noktasıyla çizgiler</translation>
-    </message>
-    <message>
-        <source>Line with given angle</source>
-        <translation type="obsolete">Açısı belirtilen çizgiler</translation>
-    </message>
-    <message>
-        <source>Horizontal lines</source>
-        <translation type="obsolete">Yatay çizgiler</translation>
-    </message>
-    <message>
-        <source>Vertical lines</source>
-        <translation type="obsolete">Düşey Çizgiler</translation>
-    </message>
-    <message>
-        <source>Rectangles</source>
-        <translation type="obsolete">Dikdörtgenler</translation>
-    </message>
-    <message>
-        <source>Bisectors</source>
-        <translation type="obsolete">Açıortaylar</translation>
-    </message>
-    <message>
-        <source>Parallels with distance</source>
-        <translation type="obsolete">Mesafeyle paralel çizgiler</translation>
-    </message>
-    <message>
-        <source>Tangents from point to circle</source>
-        <translation type="obsolete">Noktadan çembere teğet</translation>
-    </message>
-    <message>
-        <source>Tangents from circle to circle</source>
-        <translation type="obsolete">Çemberlerin ortak teğeti</translation>
-    </message>
-    <message>
-        <source>Orthogonal lines</source>
-        <translation type="obsolete">Kesişen çizgiler</translation>
-    </message>
-    <message>
-        <source>Lines with relative angles</source>
-        <translation type="obsolete">Eğik çizgiler</translation>
-    </message>
-    <message>
-        <source>Polygons with Center and Corner</source>
-        <translation type="obsolete">Merkezi ve Köşesiyle çokgenler</translation>
-    </message>
-    <message>
-        <source>Polygons with two Corners</source>
-        <translation type="obsolete">İki Köşesi ile çokgenler</translation>
-    </message>
-    <message>
-        <source>Freehand lines</source>
-        <translation type="obsolete">Karalama çizgileri</translation>
-    </message>
-    <message>
-        <source>Parallels through point</source>
-        <translation type="obsolete">Noktada paralel çizgiler</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarMain</name>
-    <message>
-        <source>Main</source>
-        <translation type="obsolete">Ana</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Lines&quot;</source>
-        <translation type="obsolete">&quot;Çizgiler&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Arcs&quot;</source>
-        <translation type="obsolete">&quot;Yaylar&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Circles&quot;</source>
-        <translation type="obsolete">&quot;Çemberler&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Points&quot;</source>
-        <translation type="obsolete">&quot;Noktalar&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Ellipses&quot;</source>
-        <translation type="obsolete">&quot;Elipsler&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Edit&quot;</source>
-        <translation type="obsolete">&quot;Düzenleme&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Texts</source>
-        <translation type="obsolete">Yazılar</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Select&quot;</source>
-        <translation type="obsolete">&quot;Seçim&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Blok Oluştur</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Dimensions&quot;</source>
-        <translation type="obsolete">&quot;Boyutlar&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Hatches / Solid Fills</source>
-        <translation type="obsolete">Taramalar/Renkli dolgular</translation>
-    </message>
-    <message>
-        <source>Raster Image</source>
-        <translation type="obsolete">Tarama İmgesi</translation>
-    </message>
-    <message>
-        <source>Show menu &quot;Measure&quot;</source>
-        <translation type="obsolete">&quot;Ölçme&quot; menüsünü göster</translation>
-    </message>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Noktalar</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">Nokta çizer</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarModify</name>
-    <message>
-        <source>Modify</source>
-        <translation type="obsolete">Değiştir</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Uzat</translation>
-    </message>
-    <message>
-        <source>Round</source>
-        <translation type="obsolete">Yuvarla</translation>
-    </message>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Kır</translation>
-    </message>
-    <message>
-        <source>Trim by amount</source>
-        <translation type="obsolete">Uçtan kırp</translation>
-    </message>
-    <message>
-        <source>Trim / Extend</source>
-        <translation type="obsolete">Kırp</translation>
-    </message>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Patlat</translation>
-    </message>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Sil</translation>
-    </message>
-    <message>
-        <source>Edit Entity Attributes</source>
-        <translation type="obsolete">Öğe Özniteliklerini Düzenle</translation>
-    </message>
-    <message>
-        <source>Edit Entity Geometry</source>
-        <translation type="obsolete">Öğe Geometrisini Düzenle</translation>
-    </message>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">Yansıla</translation>
-    </message>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Oranla</translation>
-    </message>
-    <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Döndür</translation>
-    </message>
-    <message>
-        <source>Move</source>
-        <translation type="obsolete">Taşı</translation>
-    </message>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Taşı ve Döndür</translation>
-    </message>
-    <message>
-        <source>Rotate around two centers</source>
-        <translation type="obsolete">İki merkezle döndür</translation>
-    </message>
-    <message>
-        <source>Trim / Extend two</source>
-        <translation type="obsolete">İkili kırp</translation>
-    </message>
-    <message>
-        <source>Divide</source>
-        <translation type="obsolete">Böl</translation>
-    </message>
-    <message>
-        <source>Explode Text into Letters</source>
-        <translation type="obsolete">Metni Harflerine Ayır</translation>
-    </message>
-    <message>
-        <source>Edit Text</source>
-        <translation type="obsolete">Metni Düzenle</translation>
-    </message>
-    <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">Taşı / Kopyala</translation>
-    </message>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="obsolete">İkili Döndür</translation>
-    </message>
-    <message>
-        <source>Lengthen</source>
-        <translation type="obsolete">Kısalt</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPoints</name>
-    <message>
-        <source>Points</source>
-        <translation type="obsolete">Noktalar</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Single points</source>
-        <translation type="obsolete">Tek nokta</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarPolylines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSelect</name>
-    <message>
-        <source>Select</source>
-        <translation type="obsolete">Seç</translation>
-    </message>
-    <message>
-        <source>Select all</source>
-        <translation type="obsolete">Tümünü seç</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Select intersected entities</source>
-        <translation type="obsolete">Kesişen öğeleri seç</translation>
-    </message>
-    <message>
-        <source>Deselect intersected entities</source>
-        <translation type="obsolete">Kesişen öğeleri bırak</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Tümünü bırak</translation>
-    </message>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Seçimi tersle</translation>
-    </message>
-    <message>
-        <source>Select layer</source>
-        <translation type="obsolete">Katmanı seç</translation>
-    </message>
-    <message>
-        <source>(De-)Select contour</source>
-        <translation type="obsolete">Sınırları Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>(De-)Select entity</source>
-        <translation type="obsolete">Öğeyi Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Pencere içindekileri bırak</translation>
-    </message>
-    <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Pencere Seç</translation>
-    </message>
-    <message>
-        <source>Continue action</source>
-        <translation type="obsolete">İşleme devam et</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSnap</name>
-    <message>
-        <source>Snap</source>
-        <translation type="obsolete">Yakala</translation>
-    </message>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-    <message>
-        <source>Snap to grid</source>
-        <translation type="obsolete">Izgarayla yakala</translation>
-    </message>
-    <message>
-        <source>Free positioning</source>
-        <translation type="obsolete">Serbest konumlama</translation>
-    </message>
-    <message>
-        <source>Snap to Endpoints</source>
-        <translation type="obsolete">Uçları yakala</translation>
-    </message>
-    <message>
-        <source>Snap to closest point on entity</source>
-        <translation type="obsolete">En yakın noktayı yakala</translation>
-    </message>
-    <message>
-        <source>Snap to center points</source>
-        <translation type="obsolete">Merkezleri yakala</translation>
-    </message>
-    <message>
-        <source>Snap to middle points</source>
-        <translation type="obsolete">Orta noktaları yakala</translation>
-    </message>
-    <message>
-        <source>Snap to point with given distance to endpoint</source>
-        <translation type="obsolete">Uçlardan belli mesafedeki noktaları yakala</translation>
-    </message>
-    <message>
-        <source>Snap to intersections automatically</source>
-        <translation type="obsolete">Kesişimleri yakala</translation>
-    </message>
-    <message>
-        <source>No Restriction</source>
-        <translation type="obsolete">Sınırlamasız</translation>
-    </message>
-    <message>
-        <source>Orthogonal Restriction</source>
-        <translation type="obsolete">Dikeylikle Sinırla</translation>
-    </message>
-    <message>
-        <source>Horizontal Restriction</source>
-        <translation type="obsolete">Yatayla Sınırla</translation>
-    </message>
-    <message>
-        <source>Vertical Restriction</source>
-        <translation type="obsolete">Düşeyle Sınırlama</translation>
-    </message>
-    <message>
-        <source>Move relative Zero</source>
-        <translation type="obsolete">Göreli Sıfırı Taşı</translation>
-    </message>
-    <message>
-        <source>Lock relative Zero</source>
-        <translation type="obsolete">Göreli Sıfırı Kilitle</translation>
-    </message>
-    <message>
-        <source>Snap to intersections manually</source>
-        <translation type="obsolete">Seçilen kesişimleri yakala</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CadToolBarSplines</name>
-    <message>
-        <source>Back to main menu</source>
-        <translation type="obsolete">Ana menüye dön</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleOptions</name>
-    <message>
-        <source>Circle Options</source>
-        <translation type="obsolete">Çember Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Yarıçap:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_CircleTan2Options</name>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Yarıçap:</translation>
+        <source>Looking for matching block names</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2679,10 +1840,6 @@ için açar</translation>
         <translation>Açık Gri</translation>
     </message>
     <message>
-        <source>Others..</source>
-        <translation type="obsolete">Diğerleri..</translation>
-    </message>
-    <message>
         <source>Dark Red</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2712,6 +1869,14 @@ için açar</translation>
     </message>
     <message>
         <source>Custom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/ColorBox</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Picked</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2756,10 +1921,6 @@ için açar</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kopyala</translation>
-    </message>
-    <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
         <translation type="unfinished"></translation>
@@ -2768,58 +1929,28 @@ için açar</translation>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dock</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Float</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Command line</source>
+        <translation type="unfinished">Komut</translation>
+    </message>
+    <message>
+        <source>Cmd</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_CoordinateWidget</name>
     <message>
         <source>Coordinates</source>
         <translation>Koordinatlar</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimLinearOptions</name>
-    <message>
-        <source>Linear Dimension Options</source>
-        <translation type="obsolete">Doğrusal Ölçülendirme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_DimOptions</name>
-    <message>
-        <source>Dimension Options</source>
-        <translation type="obsolete">Ölçülendirme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Label:</source>
-        <translation type="obsolete">Etiket:</translation>
-    </message>
-    <message utf8="true">
-        <source>ø</source>
-        <translation type="obsolete">ø</translation>
-    </message>
-    <message utf8="true">
-        <source>°</source>
-        <translation type="obsolete">°</translation>
-    </message>
-    <message utf8="true">
-        <source>±</source>
-        <translation type="obsolete">±</translation>
-    </message>
-    <message utf8="true">
-        <source>¶</source>
-        <translation type="obsolete">¶</translation>
-    </message>
-    <message utf8="true">
-        <source>×</source>
-        <translation type="obsolete">×</translation>
-    </message>
-    <message utf8="true">
-        <source>÷</source>
-        <translation type="obsolete">÷</translation>
     </message>
 </context>
 <context>
@@ -2840,35 +1971,27 @@ için açar</translation>
         <source>Insert:</source>
         <translation>Yerleştir:</translation>
     </message>
-    <message utf8="true">
-        <source>ø (Diameter)</source>
-        <translation type="obsolete">ø (Çap)</translation>
-    </message>
-    <message utf8="true">
+    <message>
         <source>° (Degree)</source>
         <translation>° (Derece)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>± (Plus / Minus)</source>
         <translation>± (Artı - Eksi)</translation>
     </message>
-    <message utf8="true">
-        <source>¶ (Pi)</source>
-        <translation type="obsolete">¶ (Pi)</translation>
-    </message>
-    <message utf8="true">
+    <message>
         <source>× (Times)</source>
         <translation>× (Çarpı)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷ (Division)</source>
         <translation>÷ (Bölü)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀ (Diameter)</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π (Pi)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2911,22 +2034,6 @@ için açar</translation>
         <source>Reversed</source>
         <translation>Yedek</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgAttributes</name>
@@ -2939,20 +2046,13 @@ için açar</translation>
         <translation>Katman:</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
+        <source>Apply attributes also to all sub-entities of selected INSERT.
+This recursively modifies all entities of the Block itself.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
+        <source>Apply attributes Block-deep</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2981,22 +2081,6 @@ için açar</translation>
         <source>Center (x):</source>
         <translation>Merkez (x):</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgDimLinear</name>
@@ -3016,48 +2100,12 @@ için açar</translation>
         <source>Angle:</source>
         <translation>Açı:</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
     <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Hizalı Ölçülendirme</translation>
-    </message>
-    <message>
         <source>Layer:</source>
         <translation>Katman:</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -3110,22 +2158,6 @@ için açar</translation>
         <source>Reversed</source>
         <translation>Yedek</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgHatch</name>
@@ -3156,18 +2188,6 @@ için açar</translation>
     <message>
         <source>Enable Preview</source>
         <translation>Önizlemeyi Etkinleştir</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
     </message>
 </context>
 <context>
@@ -3217,23 +2237,11 @@ için açar</translation>
         <translation type="unfinished">Açı:</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>DPI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Select an image file</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3242,18 +2250,6 @@ için açar</translation>
     <message>
         <source>Welcome</source>
         <translation>Hoşgeldiniz</translation>
-    </message>
-    <message>
-        <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to QCad&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
-You can changes these settings later in the Options Dialog of QCad.</source>
-        <translation type="obsolete">&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;QCad&apos;e Hoşgeldiniz&lt;/b&gt;
-&lt;/font&gt;
-&lt;br&gt;
-Lütfen, yeni çizimde kullanmak istediğiniz birimi ve tercih ettiğiniz dili seçiniz.&lt;br&gt;
-Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</translation>
     </message>
     <message>
         <source>Default Unit:</source>
@@ -3266,14 +2262,6 @@ Bu ayarları daha sonra Qcad Seçenekleri penceresinden değiştirebilirsiniz.</
     <message>
         <source>Command Language:</source>
         <translation>Komut Dili:</translation>
-    </message>
-    <message>
-        <source>OK</source>
-        <translation type="obsolete">Tamam</translation>
-    </message>
-    <message>
-        <source>Enter</source>
-        <translation type="obsolete">Enter</translation>
     </message>
     <message>
         <source>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Welcome to LibreCAD&lt;/b&gt;
@@ -3307,10 +2295,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Yerleştirme noktası (y):</translation>
     </message>
     <message>
-        <source>Scale:</source>
-        <translation type="obsolete">Oran:</translation>
-    </message>
-    <message>
         <source>Angle:</source>
         <translation>Açı:</translation>
     </message>
@@ -3329,18 +2313,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Column Spacing:</source>
         <translation>Sütun Boşluğu:</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Scale X:</source>
@@ -3382,16 +2354,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Başlangıç noktası (x):</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
+        <source>ID: </source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -3405,16 +2369,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished">Katman:</translation>
     </message>
     <message>
-        <source>Font</source>
-        <translation type="unfinished">Yazıtipi</translation>
-    </message>
-    <message>
         <source>&amp;Height:</source>
         <translation type="unfinished">&amp;Yükseklik:</translation>
-    </message>
-    <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Satır &amp;boşluğu:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -3500,15 +2456,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Insert Symbol</source>
         <translation type="unfinished">Sembolü Yerleştir</translation>
     </message>
-    <message utf8="true">
-        <source>Diameter (ø)</source>
-        <translation type="obsolete">Çap (ø)</translation>
-    </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation type="unfinished">Derece (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation type="unfinished">Artı - Eksi (±)</translation>
     </message>
@@ -3524,35 +2476,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Dollar ($)</source>
         <translation type="unfinished">Dolar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation type="unfinished">Telif Hakkı (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation type="unfinished">Tescilli (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation type="unfinished">Paragraf (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation type="unfinished">Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation type="unfinished">Sterlin (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation type="unfinished">Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation type="unfinished">Çarpı (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation type="unfinished">Bölü (÷)</translation>
     </message>
@@ -4000,12 +2952,32 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>[100000-10FFFD] Supplementary Private Use Area-B</source>
         <translation type="unfinished">[100000-10FFFD] Bütünleyici Özel Kullanım Alan-B</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Font:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Text Direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Left to right</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Right to left</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4036,28 +3008,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Şimdiki &amp;katmanı kullan</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMove</name>
-    <message>
-        <source>Moving Options</source>
-        <translation type="obsolete">Taşıma Seçenekleri</translation>
-    </message>
     <message>
         <source>Number of copies</source>
         <translation>Kopya sayısı</translation>
@@ -4083,22 +3039,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Şimdiki &amp;katmanı kullan</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -4116,18 +3056,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Move/Rotate Options</source>
         <translation>Taşı/Döndür Seçenekleri</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -4177,24 +3105,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Kağıt</translation>
     </message>
     <message>
-        <source>Paper Format</source>
-        <translation>Kağıt Biçimi</translation>
-    </message>
-    <message>
         <source>&amp;Landscape</source>
         <translation>&amp;Enine</translation>
     </message>
     <message>
         <source>P&amp;ortrait</source>
         <translation>&amp;Boyuna</translation>
-    </message>
-    <message>
-        <source>Paper &amp;Height:</source>
-        <translation>Kağıt &amp;Yüksekliği:</translation>
-    </message>
-    <message>
-        <source>Paper &amp;Width:</source>
-        <translation>Kağıt &amp;Genişliği:</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -4273,48 +3189,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>birimler</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
-    </message>
-    <message>
-        <source>Extension line extension:</source>
-        <translation type="obsolete">Ölçülendirme kenar çizgisi uzunluğu:</translation>
-    </message>
-    <message>
         <source>Arrow size:</source>
         <translation>Ok boyutu:</translation>
     </message>
     <message>
         <source>Dimension line gap:</source>
         <translation>Ölçülendirme çizgisi boşluğu:</translation>
-    </message>
-    <message>
-        <source>Extension line offset:</source>
-        <translation type="obsolete">Ölçülendirme kenar çizgisi başlangıcı:</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Scientific</source>
@@ -4373,44 +3253,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>I&amp;zgara</translation>
     </message>
     <message>
-        <source>Splines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Number of line segments per spline patch:</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="obsolete">8</translation>
-    </message>
-    <message>
-        <source>16</source>
-        <translation type="obsolete">16</translation>
-    </message>
-    <message>
-        <source>32</source>
-        <translation type="obsolete">32</translation>
-    </message>
-    <message>
-        <source>64</source>
-        <translation type="obsolete">64</translation>
-    </message>
-    <message>
-        <source>0.01</source>
-        <translation type="obsolete">0.01</translation>
-    </message>
-    <message>
-        <source>0.1</source>
-        <translation type="obsolete">0.1</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="obsolete">10</translation>
     </message>
     <message>
         <source>Crosshair</source>
@@ -4465,10 +3309,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
         <source>Horizontal</source>
         <translation type="unfinished">Yatay</translation>
     </message>
@@ -4479,50 +3319,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension values.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>0.5</source>
-        <translation type="obsolete">0.5</translation>
-    </message>
-    <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
-    </message>
-    <message>
-        <source>2.0</source>
-        <translation type="obsolete">2.0</translation>
-    </message>
-    <message>
-        <source>5.0</source>
-        <translation type="obsolete">5.0</translation>
-    </message>
-    <message>
-        <source>0.2</source>
-        <translation type="obsolete">0.2</translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="obsolete">20</translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="obsolete">50</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="obsolete">100</translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="obsolete">200</translation>
-    </message>
-    <message>
-        <source>500</source>
-        <translation type="obsolete">500</translation>
-    </message>
-    <message>
-        <source>1000</source>
-        <translation type="obsolete">1000</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Scale to multiply all dimension geometries.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
@@ -4637,7 +3433,91 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>fixed extension line legth</source>
+        <source>Format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Height:</source>
+        <translation type="unfinished">&amp;Yükseklik:</translation>
+    </message>
+    <message>
+        <source>&amp;Width:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Orientation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Margins</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bottom</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of pages</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Horizontally:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Vertically:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fixed extension line length</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Splines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Points</source>
+        <translation type="unfinished">&amp;Nokta</translation>
+    </message>
+    <message>
+        <source>Point Style</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Point Size</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dwg Units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size relative to screen</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Size in drawing units</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>(0 =&gt; 5% relative to screen size)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Architectural (metric)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Screen %</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4664,10 +3544,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Komut Dili:</translation>
     </message>
     <message>
-        <source>Colors</source>
-        <translation type="obsolete">Renkler</translation>
-    </message>
-    <message>
         <source>Backgr&amp;ound:</source>
         <translation>&amp;Artalan:</translation>
     </message>
@@ -4676,120 +3552,24 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>I&amp;zgara Rengi:</translation>
     </message>
     <message>
-        <source>#000000</source>
-        <translation type="obsolete">#000000</translation>
-    </message>
-    <message>
-        <source>#ffffff</source>
-        <translation type="obsolete">#ffffff</translation>
-    </message>
-    <message>
-        <source>#c0c0c0</source>
-        <translation type="obsolete">#c0c0c0</translation>
-    </message>
-    <message>
-        <source>#808080</source>
-        <translation type="obsolete">#808080</translation>
-    </message>
-    <message>
         <source>&amp;Meta Grid Color:</source>
         <translation>&amp;Meta Izgara Rengi:</translation>
-    </message>
-    <message>
-        <source>#404040</source>
-        <translation type="obsolete">#404040</translation>
     </message>
     <message>
         <source>S&amp;elected Color:</source>
         <translation>S&amp;eçili Renk:</translation>
     </message>
     <message>
-        <source>#a54747</source>
-        <translation type="obsolete">#a54747</translation>
-    </message>
-    <message>
-        <source>#739373</source>
-        <translation type="obsolete">#739373</translation>
-    </message>
-    <message>
         <source>&amp;Highlighted Color:</source>
         <translation>&amp;Vurgu Rengi:</translation>
-    </message>
-    <message>
-        <source>Fontsize</source>
-        <translation type="obsolete">Yazıtipi boyu</translation>
-    </message>
-    <message>
-        <source>Statusbar:</source>
-        <translation type="obsolete">Durum çubuğu:</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
-    </message>
-    <message>
-        <source>6</source>
-        <translation type="obsolete">6</translation>
-    </message>
-    <message>
-        <source>7</source>
-        <translation type="obsolete">7</translation>
-    </message>
-    <message>
-        <source>8</source>
-        <translation type="obsolete">8</translation>
-    </message>
-    <message>
-        <source>9</source>
-        <translation type="obsolete">9</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="obsolete">10</translation>
-    </message>
-    <message>
-        <source>11</source>
-        <translation type="obsolete">11</translation>
-    </message>
-    <message>
-        <source>12</source>
-        <translation type="obsolete">12</translation>
-    </message>
-    <message>
-        <source>14</source>
-        <translation type="obsolete">14</translation>
     </message>
     <message>
         <source>Graphic View</source>
         <translation>Grafik Görünüm</translation>
     </message>
     <message>
-        <source>&amp;Show large crosshairs</source>
-        <translation type="obsolete">Büyük &amp;haç göster</translation>
-    </message>
-    <message>
         <source>A&amp;utomatically scale grid</source>
         <translation>Izgarayı &amp;özdevinimli oranla</translation>
-    </message>
-    <message>
-        <source>Number of p&amp;review entities:</source>
-        <translation type="obsolete">&amp;Önizleme öğelerinin sayısı:</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="obsolete">50</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="obsolete">100</translation>
-    </message>
-    <message>
-        <source>200</source>
-        <translation type="obsolete">200</translation>
     </message>
     <message>
         <source>&amp;Paths</source>
@@ -4808,10 +3588,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Yazıtipleri:</translation>
     </message>
     <message>
-        <source>Scripts:</source>
-        <translation type="obsolete">Betikler:</translation>
-    </message>
-    <message>
         <source>Part Libraries:</source>
         <translation>Parça Kütüphaneleri:</translation>
     </message>
@@ -4828,40 +3604,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>&amp;Birim:</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>Preferences</source>
         <translation>Tercihler</translation>
-    </message>
-    <message>
-        <source>Minimal Grid Spacing:</source>
-        <translation type="obsolete">En küçük Grid Boşluğu:</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="obsolete">15</translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="obsolete">20</translation>
     </message>
     <message>
         <source>Please restart the application to apply all changes.</source>
@@ -4878,18 +3622,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Program Defaults</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Auto save time:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>400</source>
-        <translation type="obsolete">400</translation>
-    </message>
-    <message>
-        <source>800</source>
-        <translation type="obsolete">800</translation>
     </message>
     <message>
         <source>Drawing unit.</source>
@@ -4926,14 +3658,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Graphic Colors</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Gray</source>
-        <translation type="obsolete">Gri</translation>
-    </message>
-    <message>
-        <source>White</source>
-        <translation type="obsolete">Beyaz</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
@@ -4978,14 +3702,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Snap indicator shape</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Circle</source>
-        <translation type="obsolete">Çember</translation>
-    </message>
-    <message>
-        <source>Point</source>
-        <translation type="obsolete">Nokta</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
@@ -5047,19 +3763,87 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Don&apos;t use native OS file open dialog</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Auto-panning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide the relative-&amp;zero marker</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Alt+Z</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Visualize the entity under the cursor</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mouse-over effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Relative-Zero Marker Color:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto save time (minutes):</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert horizontal scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert vertical scrolling direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Inverts zoom direction when using mouse wheel.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invert zoom direction</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keyboard Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Evaluate commands when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle free snap mode when SPACE BAR is pressed</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAD Preferences</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automatically zoom drawing when opening</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
-        <source>Export as MakerCAM SVG</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>MakerCAM as of November 2014 does not hide SVG content that has been set invisibe (&quot;display: none;&quot; or &quot;visibility: hidden;&quot;).</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5075,10 +3859,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MakerCAM as of November 2014 cannot correctly deal with blocks, because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Convert blocks to safe inline SVG content</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5087,31 +3867,72 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, when they are created using the &lt;ellipse&gt; tag  with a rotation in the &quot;transform&quot; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message utf8="true">
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_DlgOptionsVariables</name>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
+        <source>Export as CAM/plain SVG</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
+        <source>Default width of elements, mm</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
+        <source>Images</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
+        <source>Raster Image export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dash/Dot Lines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of the pattern, mm</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Bake dash/dot lines to SVG path</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 does not hide SVG content 
+that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
+because it does not take into account the reference point in the &lt;use&gt;.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
+when they are created using the &lt;ellipse&gt; tag  with a rotation in 
+the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exported images can be useful in SVG editors (Inkscape, etc), 
+but avoided in some CAM&apos;s.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
+which can be useful in lasercut of plywood or for papercraft. </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
+but ignored by other</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Length of line pattern related to zoom, 
+so default step value required for baking</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -5136,18 +3957,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Position (x):</source>
         <translation>Konum (x):</translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgPolyline</name>
@@ -5167,40 +3976,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgRotate</name>
     <message>
         <source>Rotation Options</source>
         <translation>Döndürme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">İp&amp;tal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -5240,14 +4021,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Rotate Two Options</source>
         <translation>İki Seçenekle Döndür</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -5293,22 +4066,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Oranlama Seçenekleri</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">İp&amp;tal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
-        <source>&amp;Factor (f):</source>
-        <translation type="obsolete">&amp;Çarpan (ç):</translation>
-    </message>
-    <message>
         <source>Use current &amp;attributes</source>
         <translation>Şimdiki &amp;öznitelikleri kullan</translation>
     </message>
@@ -5349,10 +4106,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>1.0</source>
-        <translation type="obsolete">1.0</translation>
-    </message>
-    <message>
         <source>Y</source>
         <translation type="unfinished"></translation>
     </message>
@@ -5379,34 +4132,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Closed</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
 </context>
 <context>
     <name>QG_DlgText</name>
@@ -5415,20 +4140,8 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Metin</translation>
     </message>
     <message>
-        <source>Font</source>
-        <translation type="obsolete">Yazıtipi</translation>
-    </message>
-    <message>
         <source>&amp;Height:</source>
         <translation>&amp;Yükseklik:</translation>
-    </message>
-    <message>
-        <source>Line &amp;spacing:</source>
-        <translation type="obsolete">Satır &amp;boşluğu:</translation>
-    </message>
-    <message>
-        <source>&amp;Default line spacing</source>
-        <translation type="obsolete">&amp;Öntanımlı satır boşluğu</translation>
     </message>
     <message>
         <source>Alignment</source>
@@ -5471,10 +4184,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Üst Merkez</translation>
     </message>
     <message>
-        <source>Angle</source>
-        <translation type="obsolete">Açı</translation>
-    </message>
-    <message>
         <source>Text:</source>
         <translation>Metin:</translation>
     </message>
@@ -5506,15 +4215,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Insert Symbol</source>
         <translation>Sembolü Yerleştir</translation>
     </message>
-    <message utf8="true">
-        <source>Diameter (ø)</source>
-        <translation type="obsolete">Çap (ø)</translation>
-    </message>
-    <message utf8="true">
+    <message>
         <source>Degree (°)</source>
         <translation>Derece (°)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Plus / Minus (±)</source>
         <translation>Artı - Eksi (±)</translation>
     </message>
@@ -5530,35 +4235,35 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <source>Dollar ($)</source>
         <translation>Dolar ($)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Copyright (©)</source>
         <translation>Telif Hakkı (©)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Registered (®)</source>
         <translation>Tescilli (®)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Paragraph (§)</source>
         <translation>Paragraf (§)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pi (π)</source>
         <translation>Pi (π)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Pound (£)</source>
         <translation>Sterlin (£)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Yen (¥)</source>
         <translation>Yen (¥)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Times (×)</source>
         <translation>Çarpı (×)</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>Division (÷)</source>
         <translation>Bölü (÷)</translation>
     </message>
@@ -6007,22 +4712,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>[100000-10FFFD] Bütünleyici Özel Kullanım Alan-B</translation>
     </message>
     <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>Layer:</source>
         <translation type="unfinished">Katman:</translation>
     </message>
@@ -6067,14 +4756,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Aligned</source>
-        <translation type="obsolete">Hizalı</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Orta</translation>
-    </message>
-    <message utf8="true">
         <source>Diameter (⌀)</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6094,40 +4775,16 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>QCad</translation>
     </message>
     <message>
-        <source>No Text supplied.</source>
-        <translation type="obsolete">Bir metin girilmedi.</translation>
-    </message>
-    <message>
-        <source>C&amp;lose</source>
-        <translation type="obsolete">Kapa&amp;t</translation>
-    </message>
-    <message>
-        <source>Alt+L</source>
-        <translation type="obsolete">Alt+L</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Kaydet</translation>
-    </message>
-    <message>
-        <source>Save &amp;As..</source>
-        <translation type="obsolete">&amp;Farklı kaydet..</translation>
-    </message>
-    <message>
-        <source>&amp;Cancel</source>
-        <translation type="obsolete">İp&amp;tal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
-    </message>
-    <message>
         <source>again Still No Text supplied.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save As...</source>
+        <source>Close All</source>
         <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Close</source>
+        <translation type="unfinished">Kapat</translation>
     </message>
 </context>
 <context>
@@ -6159,10 +4816,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>QCad 1.x file %1</source>
         <translation type="unfinished">QCad 1.x dosyası %1</translation>
-    </message>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="obsolete">Çizimi Farklı Kaydet</translation>
     </message>
     <message>
         <source>Drawing Exchange DXF 2007 %1</source>
@@ -6204,26 +4857,10 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
 </context>
 <context>
-    <name>QG_ImageOptions</name>
+    <name>QG_GraphicView</name>
     <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Yerleştirme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Döndürme Açısı</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Çarpan:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Oranlama Çarpanı</translation>
+        <source>Edit Properties</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6245,14 +4882,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>Yükseklik:</translation>
     </message>
     <message>
-        <source>480</source>
-        <translation type="obsolete">480</translation>
-    </message>
-    <message>
-        <source>640</source>
-        <translation type="obsolete">640</translation>
-    </message>
-    <message>
         <source>Resolution:</source>
         <translation>Çözünürlük:</translation>
     </message>
@@ -6261,96 +4890,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
         <translation>özdevinimli</translation>
     </message>
     <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
-    </message>
-    <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
-    </message>
-    <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>4</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>5</source>
-        <translation type="obsolete">5</translation>
-    </message>
-    <message>
-        <source>10</source>
-        <translation type="obsolete">10</translation>
-    </message>
-    <message>
-        <source>15</source>
-        <translation type="obsolete">15</translation>
-    </message>
-    <message>
-        <source>20</source>
-        <translation type="obsolete">20</translation>
-    </message>
-    <message>
-        <source>25</source>
-        <translation type="obsolete">25</translation>
-    </message>
-    <message>
-        <source>50</source>
-        <translation type="obsolete">50</translation>
-    </message>
-    <message>
-        <source>75</source>
-        <translation type="obsolete">75</translation>
-    </message>
-    <message>
-        <source>100</source>
-        <translation type="obsolete">100</translation>
-    </message>
-    <message>
-        <source>150</source>
-        <translation type="obsolete">150</translation>
-    </message>
-    <message>
-        <source>300</source>
-        <translation type="obsolete">300</translation>
-    </message>
-    <message>
-        <source>600</source>
-        <translation type="obsolete">600</translation>
-    </message>
-    <message>
-        <source>1200</source>
-        <translation type="obsolete">1200</translation>
-    </message>
-    <message>
         <source>Background</source>
         <translation>Artalan</translation>
     </message>
     <message>
         <source>White</source>
         <translation>Beyaz</translation>
-    </message>
-    <message>
-        <source>Black</source>
-        <translation type="obsolete">Siyah</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Colouring</source>
@@ -6386,53 +4931,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
 </context>
 <context>
-    <name>QG_InsertOptions</name>
-    <message>
-        <source>Insert Options</source>
-        <translation type="obsolete">Yerleştirme Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-    <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Döndürme Açısı</translation>
-    </message>
-    <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Çarpan:</translation>
-    </message>
-    <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Oranlama Çarpanı</translation>
-    </message>
-    <message>
-        <source>Array:</source>
-        <translation type="obsolete">Dizi:</translation>
-    </message>
-    <message>
-        <source>Number of Columns</source>
-        <translation type="obsolete">Sütun Sayısı</translation>
-    </message>
-    <message>
-        <source>Number of Rows</source>
-        <translation type="obsolete">Satır Sayısı</translation>
-    </message>
-    <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Boşluk:</translation>
-    </message>
-    <message>
-        <source>Column Spacing</source>
-        <translation type="obsolete">Sütun Boşluğu</translation>
-    </message>
-    <message>
-        <source>Row Spacing</source>
-        <translation type="obsolete">Satır Boşluğu</translation>
-    </message>
-</context>
-<context>
     <name>QG_LayerBox</name>
     <message>
         <source>- Unchanged -</source>
@@ -6448,22 +4946,6 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <source>Layer Name:</source>
         <translation>Katman İsmi:</translation>
-    </message>
-    <message>
-        <source>&amp;OK</source>
-        <translation type="obsolete">&amp;Tamam</translation>
-    </message>
-    <message>
-        <source>Alt+O</source>
-        <translation type="obsolete">Alt+T</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Esc</source>
-        <translation type="obsolete">Esc</translation>
     </message>
     <message>
         <source>Default Pen</source>
@@ -6494,10 +4976,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Bir Katman Ekle</translation>
     </message>
     <message>
-        <source>Remove the current layer</source>
-        <translation>Şimdiki katmanı sil</translation>
-    </message>
-    <message>
         <source>Modify layer attributes / rename</source>
         <translation>Katman öznitelikleri</translation>
     </message>
@@ -6522,14 +5000,6 @@ The contents of a Construction Layer should not appear in printout.</source>
         <translation>Katmanı &amp;Sil</translation>
     </message>
     <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">Katmanı &amp;Düzenle</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Visibility</source>
-        <translation type="obsolete">&amp;Gizle/Göster</translation>
-    </message>
-    <message>
         <source>Looking for matching layer names</source>
         <translation type="unfinished"></translation>
     </message>
@@ -6549,36 +5019,45 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Toggle &amp;Construction Layer</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_LibraryInsertOptions</name>
     <message>
-        <source>Library Insert Options</source>
-        <translation type="obsolete">Kütüphane Yerleştirme Seçenekleri</translation>
+        <source>Unlock all layers</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
+        <source>Lock all layers</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rotation Angle</source>
-        <translation type="obsolete">Döndürme Açısı</translation>
+        <source>Remove layer</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Factor:</source>
-        <translation type="obsolete">Çarpan:</translation>
+        <source>Filter</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Scale Factor</source>
-        <translation type="obsolete">Oranlama Çarpanı</translation>
+        <source>&amp;Unlock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Lock all Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Toggle Layer Loc&amp;k</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&amp;Export Selected Layer(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export &amp;Visible Layer(s)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_LibraryWidget</name>
-    <message>
-        <source>Library Browser</source>
-        <translation type="obsolete">Kütüphane Tarayıcısı</translation>
-    </message>
     <message>
         <source>Directories</source>
         <translation>Dizinler</translation>
@@ -6587,177 +5066,13 @@ The contents of a Construction Layer should not appear in printout.</source>
         <source>Insert</source>
         <translation>Yerleştir</translation>
     </message>
-</context>
-<context>
-    <name>QG_LineAngleOptions</name>
     <message>
-        <source>Line Angle Options</source>
-        <translation type="obsolete">Çizgi Açısı Seçenekleri</translation>
+        <source>Refresh</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Çizgi açısı</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Çizgi uzunluğu</translation>
-    </message>
-    <message>
-        <source>Snap Point:</source>
-        <translation type="obsolete">Yakalama Noktası:</translation>
-    </message>
-    <message>
-        <source>Start</source>
-        <translation type="obsolete">Başlangıç</translation>
-    </message>
-    <message>
-        <source>Middle</source>
-        <translation type="obsolete">Orta</translation>
-    </message>
-    <message>
-        <source>End</source>
-        <translation type="obsolete">Bitiş</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineBisectorOptions</name>
-    <message>
-        <source>Line Bisector Options</source>
-        <translation type="obsolete">Açıortay Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Length of bisector</source>
-        <translation type="obsolete">Açıortay uzunluğu</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Sayısı:</translation>
-    </message>
-    <message>
-        <source>Number of bisectors to create</source>
-        <translation type="obsolete">Oluşturulacak açıortayların sayısı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineOptions</name>
-    <message>
-        <source>Line Options</source>
-        <translation type="obsolete">Çizgi Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Kapat</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Geri al</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Yinele</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelOptions</name>
-    <message>
-        <source>Line Parallel Options</source>
-        <translation type="obsolete">Paralel Çizgi Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Mesafe:</translation>
-    </message>
-    <message>
-        <source>Distance to original entity</source>
-        <translation type="obsolete">Özgün öğeye uzaklık</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Sayısı:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Oluşturulacak paralellerin sayısı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineParallelThroughOptions</name>
-    <message>
-        <source>Line Parallel Through Options</source>
-        <translation type="obsolete">Paralel Çizgiler Arası Seçenekler</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Sayısı:</translation>
-    </message>
-    <message>
-        <source>Number of parallels to create</source>
-        <translation type="obsolete">Oluşturulacak paralellerin sayısı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygon2Options</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Yamuk Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Sayısı:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Kenar sayısı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LinePolygonOptions</name>
-    <message>
-        <source>Polygon Options</source>
-        <translation type="obsolete">Çokgen Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Sayısı:</translation>
-    </message>
-    <message>
-        <source>Number of edges</source>
-        <translation type="obsolete">Köşe sayısı</translation>
-    </message>
-</context>
-<context>
-    <name>QG_LineRelAngleOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Çizgilerin Göreli Açı Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-    <message>
-        <source>Line angle</source>
-        <translation type="obsolete">Çizgi açısı</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Length of line</source>
-        <translation type="obsolete">Çizgi uzunluğu</translation>
+        <source>Rebuild</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -6880,28 +5195,6 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
 </context>
 <context>
-    <name>QG_MTextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Metin Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Metin:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_ModifyOffsetOptions</name>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Mesafe:</translation>
-    </message>
-</context>
-<context>
     <name>QG_MouseWidget</name>
     <message>
         <source>Mouse</source>
@@ -6925,79 +5218,25 @@ p, li { white-space: pre-wrap; }
     </message>
 </context>
 <context>
-    <name>QG_MoveRotateOptions</name>
+    <name>QG_PenToolBar</name>
     <message>
-        <source>Move Rotate Options</source>
-        <translation type="obsolete">Döndürerek Taşıma Seçenekleri</translation>
+        <source>Line color</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_PolylineEquidistantOptions</name>
-    <message>
-        <source>Line Relative Angle Options</source>
-        <translation type="obsolete">Çizgilerin Göreli Açı Seçenekleri</translation>
+        <source>Line width</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Spacing:</source>
-        <translation type="obsolete">Boşluk:</translation>
+        <source>Line type</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>QG_PolylineOptions</name>
     <message>
-        <source>Polyline Options</source>
-        <translation type="obsolete">Yamuk Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Close</source>
-        <translation type="obsolete">Kapat</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Geri al</translation>
-    </message>
-    <message>
-        <source>Arc</source>
-        <translation type="obsolete">Yay</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Yarıçap:</translation>
-    </message>
-    <message>
-        <source>Line</source>
-        <translation type="obsolete">Çizgi</translation>
-    </message>
-    <message>
-        <source>Angle</source>
-        <translation type="obsolete">Açı</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-    <message>
-        <source>Clockwise</source>
-        <translation type="obsolete">Akrep Yönü</translation>
-    </message>
-    <message>
-        <source>Counter Clockwise</source>
-        <translation type="obsolete">Akrep Yönünün Tersi</translation>
-    </message>
-    <message>
         <source>wrong action type</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_PrintPreviewOptions</name>
-    <message>
-        <source>Print Preview Options</source>
-        <translation type="obsolete">Yazdırma Önzileme Seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -7006,43 +5245,12 @@ p, li { white-space: pre-wrap; }
         <source>&amp;%1 %2</source>
         <translation type="unfinished"></translation>
     </message>
-    <message>
-        <source>Opening recent file...</source>
-        <translation type="obsolete">Son kullanılan dosya açılıyor...</translation>
-    </message>
-</context>
-<context>
-    <name>QG_RoundOptions</name>
-    <message>
-        <source>Round Options</source>
-        <translation type="obsolete">Yuvarlatma Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Trim</source>
-        <translation type="obsolete">Kırp</translation>
-    </message>
-    <message>
-        <source>Check to trim both edges to the rounding</source>
-        <translation type="obsolete">Yuvarlatılacak köşenin kenarlarının kırpılmasını denetler</translation>
-    </message>
-    <message>
-        <source>Radius:</source>
-        <translation type="obsolete">Yarıçap:</translation>
-    </message>
 </context>
 <context>
     <name>QG_SelectionWidget</name>
     <message>
         <source>Selection</source>
         <translation>Seçim</translation>
-    </message>
-    <message>
-        <source>Selected Entities:</source>
-        <translation type="obsolete">Seçili Öğeler:</translation>
-    </message>
-    <message>
-        <source>0</source>
-        <translation type="obsolete">0</translation>
     </message>
     <message>
         <source>Selected</source>
@@ -7067,24 +5275,6 @@ p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Total length of selected entities&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapDistOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Yakalama Mesafesi Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Distance:</source>
-        <translation type="obsolete">Mesafe:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_SnapMiddleOptions</name>
-    <message>
-        <source>Snap Distance Options</source>
-        <translation type="obsolete">Yakalama Mesafesi Seçenekleri</translation>
     </message>
 </context>
 <context>
@@ -7201,58 +5391,17 @@ p, li { white-space: pre-wrap; }
         <source>Exclusive Snap Mode</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>QG_SplineOptions</name>
     <message>
-        <source>1</source>
-        <translation type="obsolete">1</translation>
+        <source>Relative zero position is %1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>2</source>
-        <translation type="obsolete">2</translation>
+        <source>locked</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>3</source>
-        <translation type="obsolete">3</translation>
-    </message>
-    <message>
-        <source>Undo</source>
-        <translation type="obsolete">Geri al</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TextOptions</name>
-    <message>
-        <source>Text Options</source>
-        <translation type="obsolete">Metin Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Text:</source>
-        <translation type="obsolete">Metin:</translation>
-    </message>
-    <message>
-        <source>Angle:</source>
-        <translation type="obsolete">Açı:</translation>
-    </message>
-</context>
-<context>
-    <name>QG_TrimAmountOptions</name>
-    <message>
-        <source>Trim Amount Options</source>
-        <translation type="obsolete">Kırpma Uzunluğu Seçenekleri</translation>
-    </message>
-    <message>
-        <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="obsolete">Mesafe. Negatif değerler kısaltır, pozitif değerler uzatır.</translation>
-    </message>
-    <message>
-        <source>Amount:</source>
-        <translation type="obsolete">Uzunluk:</translation>
-    </message>
-    <message>
-        <source>Length:</source>
-        <translation type="obsolete">Uzunluk:</translation>
+        <source>unlocked</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -7408,10 +5557,6 @@ p, li { white-space: pre-wrap; }
         <translation>Katmanı Sil</translation>
     </message>
     <message>
-        <source>Layer &quot;%1&quot; and all entities on it will be removed.</source>
-        <translation type="obsolete">&quot;%1&quot; katmanı ve içerdiği tüm öğeler silinecek.</translation>
-    </message>
-    <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
         <translation>&quot;%1&quot; katmanı silinemez.</translation>
     </message>
@@ -7430,6 +5575,46 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layer &quot;0&quot; can never be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Remove %n layer(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Listed layers and all entities on them will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: this action can NOT be undone!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning: layer &quot;0&quot; can never be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Layers for removal:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message numerus="yes">
+        <source>Remove %n block(s)</source>
+        <translation type="unfinished">
+            <numerusform></numerusform>
+        </translation>
+    </message>
+    <message>
+        <source>Listed blocks and all their entities will be removed.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Blocks for removal:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -7497,18 +5682,6 @@ Do you want to replace it?</source>
         <translation>%1 zaten var. Üzerine yazılsın mı?</translation>
     </message>
     <message>
-        <source>Yes</source>
-        <translation type="obsolete">Evet</translation>
-    </message>
-    <message>
-        <source>No</source>
-        <translation type="obsolete">Hayır</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
         <source>Drawing Exchange %1</source>
         <translation>Çizim Değişimi %1</translation>
     </message>
@@ -7523,10 +5696,6 @@ Do you want to replace it?</source>
     <message>
         <source>Open Drawing</source>
         <translation>Çizimi Aç</translation>
-    </message>
-    <message>
-        <source>None</source>
-        <translation type="obsolete">Yok</translation>
     </message>
     <message>
         <source>Inch</source>
@@ -7609,16 +5778,8 @@ Do you want to replace it?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Export Image</source>
-        <translation type="obsolete">İmgeyi Dışa Aktar</translation>
-    </message>
-    <message>
         <source>Loading..</source>
         <translation type="unfinished">Yükleniyor..</translation>
-    </message>
-    <message>
-        <source>Loading Library Paths..</source>
-        <translation type="obsolete">Kütüphaneler aranıyor..</translation>
     </message>
     <message>
         <source>Loading File %1..</source>
@@ -7761,11 +5922,6 @@ Do you want to replace it?</source>
         <translation type="unfinished">Uyarı</translation>
     </message>
     <message>
-        <source>experimental, save your work first.
-Continue?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>error reading blocks in dwg file</source>
         <translation type="unfinished"></translation>
     </message>
@@ -7843,32 +5999,7 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>offset</source>
-        <comment>create offset</comment>
-        <translation type="unfinished">başl</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <comment>create offset</comment>
-        <translation type="unfinished">paralel</translation>
-    </message>
-    <message>
-        <source>o</source>
-        <comment>create offset</comment>
-        <translation type="unfinished">b</translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <comment>create offset</comment>
-        <translation type="unfinished">gez</translation>
-    </message>
-    <message>
         <source>ptp</source>
-        <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>pp</source>
         <comment>parallel through point</comment>
         <translation type="unfinished"></translation>
     </message>
@@ -7883,18 +6014,8 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>tangentpc</source>
-        <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>perp</source>
-        <comment>perpendicular line</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7903,44 +6024,9 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>vertical</source>
-        <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ver</source>
-        <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>horizontal</source>
-        <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>hor</source>
-        <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rectangle</source>
-        <comment>draw rectangle</comment>
-        <translation type="unfinished">dikdörtgen</translation>
-    </message>
-    <message>
-        <source>rectang</source>
-        <comment>draw rectangle</comment>
-        <translation type="unfinished">dik4gen</translation>
-    </message>
-    <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>rec</source>
-        <comment>draw rectangle</comment>
-        <translation type="unfinished">dikd</translation>
     </message>
     <message>
         <source>polygon2v</source>
@@ -7950,16 +6036,6 @@ Continue?</source>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <comment>draw arc</comment>
-        <translation type="unfinished">yay</translation>
-    </message>
-    <message>
-        <source>a</source>
-        <comment>draw arc</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -7973,34 +6049,14 @@ Continue?</source>
         <translation type="unfinished">çe</translation>
     </message>
     <message>
-        <source>circle2</source>
-        <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
         <translation type="unfinished">ç2</translation>
     </message>
     <message>
-        <source>circle3</source>
-        <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
         <translation type="unfinished">ç3</translation>
-    </message>
-    <message>
-        <source>circlecr</source>
-        <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>cc</source>
-        <comment>circle with center and radius</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>tan3</source>
@@ -8153,11 +6209,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>da</source>
-        <comment>dimension - aligned</comment>
-        <translation type="unfinished">öh</translation>
-    </message>
-    <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
         <translation type="unfinished"></translation>
@@ -8188,11 +6239,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>dr</source>
-        <comment>dimension - linear</comment>
-        <translation type="unfinished">ödoğ</translation>
-    </message>
-    <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
         <translation type="unfinished"></translation>
@@ -8205,11 +6251,6 @@ Continue?</source>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>dimradius</source>
-        <comment>dimension - radius</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8283,19 +6324,9 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>move</source>
-        <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
         <translation type="unfinished">dt</translation>
-    </message>
-    <message>
-        <source>bevel</source>
-        <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>bev</source>
@@ -8308,18 +6339,8 @@ Continue?</source>
         <translation type="unfinished">kır</translation>
     </message>
     <message>
-        <source>fillet</source>
-        <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>divide</source>
-        <comment>modify - divide (cut)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8333,19 +6354,9 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>mirror</source>
-        <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
         <translation type="unfinished">yans</translation>
-    </message>
-    <message>
-        <source>revert</source>
-        <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>rev</source>
@@ -8353,19 +6364,9 @@ Continue?</source>
         <translation type="unfinished">tersaç</translation>
     </message>
     <message>
-        <source>rotate</source>
-        <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
         <translation type="unfinished">dd</translation>
-    </message>
-    <message>
-        <source>scale</source>
-        <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>sz</source>
@@ -8373,18 +6374,8 @@ Continue?</source>
         <translation type="unfinished">do</translation>
     </message>
     <message>
-        <source>trim</source>
-        <comment>modify - trim (extend)</comment>
-        <translation type="unfinished">kırp</translation>
-    </message>
-    <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>trim2</source>
-        <comment>modify - multi trim (extend)</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8393,29 +6384,14 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>lengthen</source>
-        <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>stretch</source>
-        <comment>modify - stretch</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
         <translation type="unfinished">du</translation>
-    </message>
-    <message>
-        <source>delete</source>
-        <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>er</source>
@@ -8425,11 +6401,6 @@ Continue?</source>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>explode</source>
-        <comment>explode block/polyline into entities</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8446,11 +6417,6 @@ Continue?</source>
         <source>os</source>
         <comment>snap - free</comment>
         <translation type="unfinished">yh</translation>
-    </message>
-    <message>
-        <source>sf</source>
-        <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>snapcenter</source>
@@ -8558,11 +6524,6 @@ Continue?</source>
         <translation type="unfinished">bh</translation>
     </message>
     <message>
-        <source>modifyattr</source>
-        <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>attr</source>
         <comment>modify attribute</comment>
         <translation type="unfinished"></translation>
@@ -8573,18 +6534,8 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>properties</source>
-        <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>distance</source>
-        <comment>distance point to point</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -8598,24 +6549,9 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>angle</source>
-        <comment>measure angle</comment>
-        <translation type="unfinished">açı</translation>
-    </message>
-    <message>
         <source>ang</source>
         <comment>measure angle</comment>
         <translation type="unfinished">aç</translation>
-    </message>
-    <message>
-        <source>area</source>
-        <comment>measure area</comment>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ar</source>
-        <comment>measure area</comment>
-        <translation type="unfinished">ya</translation>
     </message>
     <message>
         <source>angle</source>
@@ -8647,16 +6583,6 @@ Continue?</source>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>bevel/fillet lenght1</comment>
-        <translation type="unfinished">uzunluk1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>bevel/fillet lenght2</comment>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9055,26 +6981,6 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Wiki</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>User&apos;s Manual</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Style Sheets</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Forum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>All</source>
         <translation type="unfinished"></translation>
     </message>
@@ -9084,14 +6990,6 @@ Continue?</source>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Release Information</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Load Command File</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -9123,54 +7021,1123 @@ Continue?</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Keycode Mode</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Paste Multiple Commands</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>License</source>
         <translation type="unfinished"></translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAdd</name>
     <message>
-        <source>Add Block</source>
-        <translation type="obsolete">Bir blok ekler</translation>
+        <source>No %1 layers found</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Add Block</source>
-        <translation type="obsolete">Blok &amp;Ekle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksAttributes</name>
-    <message>
-        <source>Rename Block</source>
-        <translation type="obsolete">Bloğun ismini değiştirir</translation>
+        <source>line2p</source>
+        <comment>draw line</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Rename Block</source>
-        <translation type="obsolete">&amp;Yeniden Adlandır</translation>
+        <source>lineang</source>
+        <comment>angled line</comment>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Rename Block and all Inserts</source>
-        <translation type="obsolete">Bloğun ismini değitirir ve hepsini yeniden yerleştirir</translation>
+        <source>la</source>
+        <comment>angled line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linehor</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lh</source>
+        <comment>horizontal line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linever</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lv</source>
+        <comment>vertical line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linerec</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>re</source>
+        <comment>draw rectangle</comment>
+        <translation type="unfinished">4</translation>
+    </message>
+    <message>
+        <source>linepar</source>
+        <comment>create parallel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lineoff</source>
+        <comment>create parallel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pa</source>
+        <comment>create parallel</comment>
+        <translation type="unfinished">gez</translation>
+    </message>
+    <message>
+        <source>ll</source>
+        <comment>create parallel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lineparthro</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lp</source>
+        <comment>parallel through point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linebisect</source>
+        <comment>angle bisector</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linetancp</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lt</source>
+        <comment>tangent point and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linetan2c</source>
+        <comment>tangent two circles</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lc</source>
+        <comment>tangent two circles</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linetancper</source>
+        <comment>tangent line and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>or</source>
+        <comment>tangent line and circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lineperp</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lo</source>
+        <comment>perpendicular line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>linerelang</source>
+        <comment>relative line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>lr</source>
+        <comment>relative line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polygoncencor</source>
+        <comment>polygon centre point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pp</source>
+        <comment>polygon centre point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polycp</source>
+        <comment>polygon centre point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pcp</source>
+        <comment>polygon centre point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polygoncentan</source>
+        <comment>polygon centre vertex</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pv</source>
+        <comment>polygon centre vertex</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>polyct</source>
+        <comment>polygon centre vertex</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>p2</source>
+        <comment>polygon by 2 vertices</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c</source>
+        <comment>draw circle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circle2p</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c2p</source>
+        <comment>circle 2 points</comment>
+        <translation type="unfinished">ç2p</translation>
+    </message>
+    <message>
+        <source>circle2pr</source>
+        <comment>circle 2 points radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cc</source>
+        <comment>circle 2 points radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circle3p</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>c3p</source>
+        <comment>circle 3 points</comment>
+        <translation type="unfinished">ç3p</translation>
+    </message>
+    <message>
+        <source>circlecr</source>
+        <comment>circle point radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>cr</source>
+        <comment>circle point radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ccr</source>
+        <comment>circle point radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circletan2cp</source>
+        <comment>circle 2 tangent point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tr</source>
+        <comment>circle 2 tangent point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circletan2p</source>
+        <comment>circle tangent 2 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>td</source>
+        <comment>circle tangent 2 points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circletan2cr</source>
+        <comment>circle 2 tangent radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tc</source>
+        <comment>circle 2 tangent radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>circletan3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>t3</source>
+        <comment>circle tangent to 3</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arc</source>
+        <comment>arc point radius</comment>
+        <translation type="unfinished">yay</translation>
+    </message>
+    <message>
+        <source>ar</source>
+        <comment>arc point radius</comment>
+        <translation type="unfinished">ya</translation>
+    </message>
+    <message>
+        <source>a</source>
+        <comment>arc point radius</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arc3p</source>
+        <comment>draw 3pt arc</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a3</source>
+        <comment>draw 3pt arc</comment>
+        <translation type="unfinished">y3</translation>
+    </message>
+    <message>
+        <source>arctan</source>
+        <comment>arc tangent</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>at</source>
+        <comment>arc tangent</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sf</source>
+        <comment>draw spline</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sp</source>
+        <comment>spline through points</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arcellc2ax</source>
+        <comment>arc ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ae</source>
+        <comment>arc ellipse</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>fh</source>
+        <comment>draw freehand line</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsec2p</source>
+        <comment>ellipse axis</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ea</source>
+        <comment>ellipse axis</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipse3p</source>
+        <comment>ellipse foci</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ef</source>
+        <comment>ellipse foci</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipse4p</source>
+        <comment>ellipse 4 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>e4</source>
+        <comment>ellipse 4 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ellipsec3p</source>
+        <comment>ellipse center 3 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>e3</source>
+        <comment>ellipse center 3 point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plineadd</source>
+        <comment>pl add node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pi</source>
+        <comment>pl add node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plineapp</source>
+        <comment>pl append node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pn</source>
+        <comment>pl append node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plinedel</source>
+        <comment>pl delete node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pd</source>
+        <comment>pl delete node</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plinedeltwn</source>
+        <comment>pl del between nodes</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pr</source>
+        <comment>pl del between nodes</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plinetrm</source>
+        <comment>pl trim segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pt</source>
+        <comment>pl trim segments</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plinepar</source>
+        <comment>pl equidistant</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pe</source>
+        <comment>pl equidistant</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>plinejoin</source>
+        <comment>pl join</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>pj</source>
+        <comment>pl join</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>sx</source>
+        <comment>deselect all entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>invertselect</source>
+        <comment>invert select</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>is</source>
+        <comment>invert select</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ds</source>
+        <comment>dimension - aligned</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dimradius</source>
+        <comment>dimension - radial</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dr</source>
+        <comment>dimension - radial</comment>
+        <translation type="unfinished">ödoğ</translation>
+    </message>
+    <message>
+        <source>da</source>
+        <comment>dimension - angular</comment>
+        <translation type="unfinished">öh</translation>
+    </message>
+    <message>
+        <source>dg</source>
+        <comment>dimension - regenerate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modmove</source>
+        <comment>modify - move (copy)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modrotate</source>
+        <comment>modify - rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modscale</source>
+        <comment>modify - scale</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modmirror</source>
+        <comment>modify -  mirror</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modmovrot</source>
+        <comment>modify - move rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mr</source>
+        <comment>modify - move rotate</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mod2rot</source>
+        <comment>modify - rotate2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>r2</source>
+        <comment>modify - rotate2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modrevert</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>md</source>
+        <comment>modify -  revert direction</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modtrim</source>
+        <comment>modify - trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modtrim2</source>
+        <comment>modify - multi trim (extend)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modlengthen</source>
+        <comment>modify - lengthen</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modoffset</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mo</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>moff</source>
+        <comment>modify - offset</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modbevel</source>
+        <comment>modify - bevel</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modfillet</source>
+        <comment>modify - fillet</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>moddivide</source>
+        <comment>modify - divide (cut)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modstretch</source>
+        <comment>modify - stretch</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modproperties</source>
+        <comment>modify properties</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modattr</source>
+        <comment>modify attribute</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>modexpltext</source>
+        <comment>explode text strings</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>xt</source>
+        <comment>explode text strings</comment>
+        <translation type="unfinished">dt2</translation>
+    </message>
+    <message>
+        <source>modexplode</source>
+        <comment>explode block/polyline into entities</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>moddelete</source>
+        <comment>modify - delete (erase)</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>infodistance</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>id</source>
+        <comment>distance point to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>infodistep</source>
+        <comment>distance entity to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ii</source>
+        <comment>distance entity to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dep</source>
+        <comment>distance entity to point</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>infoangle</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ia</source>
+        <comment>measure angle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>infoarea</source>
+        <comment>measure area</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>aa</source>
+        <comment>measure area</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>mt</source>
+        <comment>draw mtext</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tx</source>
+        <comment>draw text</comment>
+        <translation type="unfinished">yazı</translation>
+    </message>
+    <message>
+        <source>so</source>
+        <comment>snap - free</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ki</source>
+        <comment>kill all actions</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>un</source>
+        <comment>undo cycle</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>rd</source>
+        <comment>redo cycle</comment>
+        <translation type="unfinished">yçiz</translation>
+    </message>
+    <message>
+        <source>drawpref</source>
+        <comment>drawing preferences</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>dp</source>
+        <comment>drawing preferences</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>length1</source>
+        <comment>bevel/fillet length1</comment>
+        <translation type="unfinished">uzunluk1</translation>
+    </message>
+    <message>
+        <source>length2</source>
+        <comment>bevel/fillet length2</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eqn</source>
+        <comment>equation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>eq</source>
+        <comment>equation</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A0</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A1</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A2</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A3</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A4</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Letter / ANSI A</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Legal</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tabloid / ANSI B</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ANSI C</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ANSI D</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ANSI E</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch A</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch B</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch C</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch D</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Arch E</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>custom</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>a0</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished">y0</translation>
+    </message>
+    <message>
+        <source>a1</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished">y1</translation>
+    </message>
+    <message>
+        <source>a2</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished">y2</translation>
+    </message>
+    <message>
+        <source>a3</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished">y3</translation>
+    </message>
+    <message>
+        <source>a4</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished">y4</translation>
+    </message>
+    <message>
+        <source>letter</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>legal</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>tabloid</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ansi c</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ansi d</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ansi e</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arch a</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arch b</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arch c</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arch d</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>arch e</source>
+        <comment>Paper format</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>DWG support is not complete!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If this file fails to open try an older DWG format</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>or try to find a converter to make it a DXF file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Error</source>
+        <comment>fileImport</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Import error:</source>
+        <comment>fileImport</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Anyhow, there are some entities identified.</source>
+        <comment>dwgImport</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>If you open the file now, the drawing may be not complete or unusable.</source>
+        <comment>dwgImport</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Ignore error and open the file?</source>
+        <comment>dwgImport</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>no DXF/DWG error</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error opening DXF/DWG file</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>unsupported DXF/DWG file version</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG meta data</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG file header</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG header dara</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG object map</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG classes</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG tables</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG blocks</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG entities</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG objects</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG sections</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>error reading DXF/DWG code</source>
+        <comment>RS_FilterDXFRW</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>undefined error</source>
+        <comment>RS_FilterInterface</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>usage: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> [options] &lt;dxf_files&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> *.dxf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- print all dxf files to pdf files with the same names.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source> -o some.pdf *.dxf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto fit and center drawing to page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Auto center drawing on page.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print grayscale.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print monochrome (black/white).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper size (Width x Height) in mm.</source>
+        <comment>WxH</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output resolution (DPI).</source>
+        <comment>integer</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paper margins in mm (integer or float).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Print on multiple pages (Horiz. x Vert.).</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Output PDF file.</source>
+        <comment>file</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Target output directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;dxf_files&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Input DXF file(s)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Keycode mode</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load command file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Paste multiple commands</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Combine all layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>/CustomColor%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Custom Picked</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>noname</source>
+        <comment>default layer name</comment>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksCreate</name>
-    <message>
-        <source>Create Block</source>
-        <translation type="obsolete">Yeni bir blok oluşturur</translation>
-    </message>
-    <message>
-        <source>&amp;Create Block</source>
-        <translation type="obsolete">Blok &amp;Oluştur</translation>
-    </message>
     <message>
         <source>Specify reference point</source>
         <translation>Başlangıç noktası belirtilir</translation>
@@ -9181,68 +8148,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionBlocksEdit</name>
-    <message>
-        <source>Edit Block</source>
-        <translation type="obsolete">Seçilen blokta değişiklik gerekirse</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Block</source>
-        <translation type="obsolete">Bloğu &amp;Düzenle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksExplode</name>
-    <message>
-        <source>Explode</source>
-        <translation type="obsolete">Bloğu öğelerine ayırır</translation>
-    </message>
-    <message>
-        <source>&amp;Explode</source>
-        <translation type="obsolete">&amp;Patlat</translation>
-    </message>
-    <message>
-        <source>Explode Blocks and other Entity Groups</source>
-        <translation type="obsolete">Blokları ve öğe gruplarını öğelerine ayırır</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksFreezeAll</name>
-    <message>
-        <source>Freeze all</source>
-        <translation type="obsolete">Tümünü Dondur</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">Tümünü &amp;Dondur</translation>
-    </message>
-    <message>
-        <source>Freeze all blocks</source>
-        <translation type="obsolete">Bütün blokları dondurur</translation>
-    </message>
-    <message>
-        <source>Defreeze all</source>
-        <translation type="obsolete">Tümünü Çöz</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">Tümünü &amp;Çöz</translation>
-    </message>
-    <message>
-        <source>Defreeze all blocks</source>
-        <translation type="obsolete">Bütün blokları çözer</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionBlocksInsert</name>
-    <message>
-        <source>Insert Block</source>
-        <translation type="obsolete">Bloğu yerleştir</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Block</source>
-        <translation type="obsolete">Blok &amp;Yerleştir</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -9279,16 +8185,19 @@ Continue?</source>
         <source>Enter row spacing:</source>
         <translation>Satır yüksekliği:</translation>
     </message>
-</context>
-<context>
-    <name>RS_ActionBlocksRemove</name>
     <message>
-        <source>Remove Block</source>
-        <translation type="obsolete">Bloğu Sil</translation>
+        <source>Block cannot contain an insert of itself.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Remove Block</source>
-        <translation type="obsolete">Bloğu &amp;Sil</translation>
+        <source> has nested insert of current block in:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>
+This block cannot be inserted.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -9296,21 +8205,6 @@ Continue?</source>
     <message>
         <source>No block activated to save</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionBlocksToggleView</name>
-    <message>
-        <source>Toggle Block Visibility</source>
-        <translation type="obsolete">Gizle/Göster</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Block</source>
-        <translation type="obsolete">Blok &amp;Değiştir</translation>
-    </message>
-    <message>
-        <source>Toggle Block</source>
-        <translation type="obsolete">Bir bloktan diğerine geçer</translation>
     </message>
 </context>
 <context>
@@ -9326,18 +8220,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDimAligned</name>
-    <message>
-        <source>Aligned</source>
-        <translation type="obsolete">Hizalı</translation>
-    </message>
-    <message>
-        <source>&amp;Aligned</source>
-        <translation type="obsolete">&amp;Hizalı</translation>
-    </message>
-    <message>
-        <source>Aligned Dimension</source>
-        <translation type="obsolete">Hizalayarak ölçülendirme</translation>
-    </message>
     <message>
         <source>Specify first extension line origin</source>
         <translation>İlk ölçüm noktasını belirtin</translation>
@@ -9366,18 +8248,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDimAngular</name>
     <message>
-        <source>Angular</source>
-        <translation type="obsolete">Açısal</translation>
-    </message>
-    <message>
-        <source>&amp;Angular</source>
-        <translation type="obsolete">&amp;Açısal</translation>
-    </message>
-    <message>
-        <source>Angular Dimension</source>
-        <translation type="obsolete">Açısal Ölçülendirme</translation>
-    </message>
-    <message>
         <source>Select first line</source>
         <translation>İlk kenarı seçin</translation>
     </message>
@@ -9400,18 +8270,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDimDiametric</name>
-    <message>
-        <source>Diametric</source>
-        <translation type="obsolete">Çapsal</translation>
-    </message>
-    <message>
-        <source>&amp;Diametric</source>
-        <translation type="obsolete">&amp;Çap</translation>
-    </message>
-    <message>
-        <source>Diametric Dimension</source>
-        <translation type="obsolete">Çap Ölçülendirme</translation>
-    </message>
     <message>
         <source>Not a circle or arc entity</source>
         <translation>Bir çember ya da yay değil</translation>
@@ -9440,18 +8298,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDimLeader</name>
     <message>
-        <source>Leader</source>
-        <translation type="obsolete">Uzakta Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>&amp;Leader</source>
-        <translation type="obsolete">&amp;Uzaktan</translation>
-    </message>
-    <message>
-        <source>Leader Dimension</source>
-        <translation type="obsolete">Uzaktan ölçülendirme</translation>
-    </message>
-    <message>
         <source>Specify target point</source>
         <translation>Hedefi belirtin</translation>
     </message>
@@ -9470,42 +8316,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDimLinear</name>
-    <message>
-        <source>Linear</source>
-        <translation type="obsolete">Doğrusal</translation>
-    </message>
-    <message>
-        <source>&amp;Linear</source>
-        <translation type="obsolete">&amp;Doğrusal</translation>
-    </message>
-    <message>
-        <source>Linear Dimension</source>
-        <translation type="obsolete">Doğrusal Ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Horizontal</source>
-        <translation type="obsolete">Yatay</translation>
-    </message>
-    <message>
-        <source>&amp;Horizontal</source>
-        <translation type="obsolete">&amp;Yatay</translation>
-    </message>
-    <message>
-        <source>Horizontal Dimension</source>
-        <translation type="obsolete">Yatay ölçülendirme</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Düşey</translation>
-    </message>
-    <message>
-        <source>&amp;Vertical</source>
-        <translation type="obsolete">D&amp;üşey</translation>
-    </message>
-    <message>
-        <source>Vertical Dimension</source>
-        <translation type="obsolete">Düşey Ölçülendirme</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -9542,18 +8352,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDimRadial</name>
     <message>
-        <source>Radial</source>
-        <translation type="obsolete">Yarıçap</translation>
-    </message>
-    <message>
-        <source>&amp;Radial</source>
-        <translation type="obsolete">&amp;Yarıçap</translation>
-    </message>
-    <message>
-        <source>Radial Dimension</source>
-        <translation type="obsolete">Yarıçap Ölçülendirme</translation>
-    </message>
-    <message>
         <source>Not a circle or arc entity</source>
         <translation>Bir çember ya da yay değil</translation>
     </message>
@@ -9580,18 +8378,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawArc</name>
-    <message>
-        <source>Arc: Center, Point, Angles</source>
-        <translation type="obsolete">Yay: Merkez, Nokta, Açı</translation>
-    </message>
-    <message>
-        <source>&amp;Center, Point, Angles</source>
-        <translation type="obsolete">&amp;Merkez, Nokta, Açılar</translation>
-    </message>
-    <message>
-        <source>Draw arcs</source>
-        <translation type="obsolete">Yay çizer</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -9621,10 +8407,6 @@ Continue?</source>
         <translation>Başlangıç açısı:</translation>
     </message>
     <message>
-        <source>Specify end angle or [Angle/chord Length]</source>
-        <translation type="obsolete">Bitiş açısını veya [Açı/kiriş uzunluğu]nu belirtin</translation>
-    </message>
-    <message>
         <source>Specify included angle:</source>
         <translation>İç açı:</translation>
     </message>
@@ -9640,24 +8422,8 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawArc3P</name>
     <message>
-        <source>Arc: 3 Points</source>
-        <translation type="obsolete">Yay: 3 nokta</translation>
-    </message>
-    <message>
-        <source>&amp;3 Points</source>
-        <translation type="obsolete">&amp;3 nokta</translation>
-    </message>
-    <message>
-        <source>Draw arcs with 3 points</source>
-        <translation type="obsolete">3 noktası belirtilen yayı çizer</translation>
-    </message>
-    <message>
         <source>Invalid arc data.</source>
         <translation>Veriler geçersiz.</translation>
-    </message>
-    <message>
-        <source>Specify startpoint or [Center]</source>
-        <translation type="obsolete">Başlangıç noktasını ya da [Merkez]i belirtin</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9706,18 +8472,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawCircle</name>
     <message>
-        <source>Circle: Center, Point</source>
-        <translation type="obsolete">Çember: Merkez, Nokta</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Point</source>
-        <translation type="obsolete">Merkez, &amp;Nokta</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and point</source>
-        <translation type="obsolete">Merkezi ve bir noktası (yarıçapı) belirtilen çemberi çizer</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -9730,28 +8484,16 @@ Continue?</source>
         <translation>İptal</translation>
     </message>
     <message>
-        <source>Specify radius</source>
-        <translation>Yarıçapı belirtin</translation>
-    </message>
-    <message>
         <source>Back</source>
         <translation>Geri</translation>
+    </message>
+    <message>
+        <source>Specify point on circle</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawCircle2P</name>
-    <message>
-        <source>Circle: 2 Points</source>
-        <translation type="obsolete">Çember: 2 nokta</translation>
-    </message>
-    <message>
-        <source>2 Points</source>
-        <translation type="obsolete">2 Nokta</translation>
-    </message>
-    <message>
-        <source>Draw circles with 2 points</source>
-        <translation type="obsolete">İki noktası (çapı) belirtilen çemberi çizer</translation>
-    </message>
     <message>
         <source>Invalid Circle data.</source>
         <translation>Veriler geçersiz.</translation>
@@ -9775,18 +8517,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawCircle3P</name>
-    <message>
-        <source>Circle: 3 Points</source>
-        <translation type="obsolete">Çember: 3 Nokta</translation>
-    </message>
-    <message>
-        <source>3 Points</source>
-        <translation type="obsolete">3 Nokta</translation>
-    </message>
-    <message>
-        <source>Draw circles with 3 points</source>
-        <translation type="obsolete">3 noktası belirtilen çemberi çizer</translation>
-    </message>
     <message>
         <source>Invalid circle data.</source>
         <translation>Veriler geçersiz.</translation>
@@ -9815,18 +8545,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawCircleCR</name>
     <message>
-        <source>Circle: Center, Radius</source>
-        <translation type="obsolete">Çember: Merkez, Yarıçap</translation>
-    </message>
-    <message>
-        <source>Center, &amp;Radius</source>
-        <translation type="obsolete">Merkez, &amp;Yarıçap</translation>
-    </message>
-    <message>
-        <source>Draw circles with center and radius</source>
-        <translation type="obsolete">Merkezi ve yarıçapı belirtilen çemberi çizer</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -9847,7 +8565,15 @@ Continue?</source>
         <translation>Geri</translation>
     </message>
     <message>
-        <source>radius=%1 is invalid</source>
+        <source>radius=%1 is invalid (expression)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radius=%1 is invalid (negative)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>radius=%1 is invalid (zero)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -9921,6 +8647,26 @@ Continue?</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid expression &apos;%1&apos; for radius</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid negative radius &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid zero radius &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No tangent circle possible for radius &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No common tangential circle for radius &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -10011,30 +8757,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawEllipseAxis</name>
-    <message>
-        <source>Ellipse Arc with Axis</source>
-        <translation type="obsolete">Eksenli Elips Yayı</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse Arc (Axis)</source>
-        <translation type="obsolete">Elips &amp;Yayı (Eksen)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipse Arcs</source>
-        <translation type="obsolete">Elips yayları çizer</translation>
-    </message>
-    <message>
-        <source>Ellipse with Axis</source>
-        <translation type="obsolete">Eksenli Elips</translation>
-    </message>
-    <message>
-        <source>&amp;Ellipse (Axis)</source>
-        <translation type="obsolete">&amp;Elips (Eksen)</translation>
-    </message>
-    <message>
-        <source>Draw Ellipses</source>
-        <translation type="obsolete">Elips çizer</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -10164,18 +8886,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawHatch</name>
     <message>
-        <source>Hatch</source>
-        <translation type="obsolete">Tarama</translation>
-    </message>
-    <message>
-        <source>&amp;Hatch</source>
-        <translation type="obsolete">&amp;Tarama</translation>
-    </message>
-    <message>
-        <source>Draw Hatches and Solid Fills</source>
-        <translation type="obsolete">Taramalı ve Renkli Dolguları çizer</translation>
-    </message>
-    <message>
         <source>Hatch created successfully.</source>
         <translation type="unfinished"></translation>
     </message>
@@ -10211,18 +8921,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
-        <source>Image</source>
-        <translation type="obsolete">Biteşlem</translation>
-    </message>
-    <message>
-        <source>&amp;Image</source>
-        <translation type="obsolete">&amp;Biteşlem</translation>
-    </message>
-    <message>
-        <source>Insert Image (Bitmap)</source>
-        <translation type="obsolete">Bir biteşlemi yerleştirir</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -10250,18 +8948,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLine</name>
     <message>
-        <source>Line: 2 Points</source>
-        <translation type="obsolete">Çizgi: 2 Nokta</translation>
-    </message>
-    <message>
-        <source>&amp;2 Points</source>
-        <translation type="obsolete">&amp;2 Nokta</translation>
-    </message>
-    <message>
-        <source>Draw lines</source>
-        <translation type="obsolete">Çizgi çizer</translation>
-    </message>
-    <message>
         <source>Specify first point</source>
         <translation>İlk noktayı belirtin</translation>
     </message>
@@ -10282,36 +8968,20 @@ Continue?</source>
         <translation>Sonraki noktayı belirtin</translation>
     </message>
     <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Çizgi dizisi kapatılamıyor: Henüz yeterli öğe yok.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Geri alınamıyor: Henüz yeterli öğe yok.</translation>
-    </message>
-    <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cannot redo: Not previous line segment defined.</source>
+        <source>Cannot undo: Begin of history reached</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot redo: End of history reached</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawLineAngle</name>
-    <message>
-        <source>Line: Angle</source>
-        <translation type="obsolete">Çizgi: Açı</translation>
-    </message>
-    <message>
-        <source>&amp;Angle</source>
-        <translation type="obsolete">&amp;Açı</translation>
-    </message>
-    <message>
-        <source>Draw lines with a given angle</source>
-        <translation type="obsolete">Uzunluğu ve açısı belirtilen çizgiyi çizer</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -10336,49 +9006,9 @@ Continue?</source>
         <source>Enter length:</source>
         <translation>Uzunluğu girin:</translation>
     </message>
-    <message>
-        <source>Line: Horizontal</source>
-        <translation type="obsolete">Çizgi: Yatay</translation>
-    </message>
-    <message>
-        <source>&amp;Horizontal</source>
-        <translation type="obsolete">&amp;Yatay</translation>
-    </message>
-    <message>
-        <source>Draw horizontal lines</source>
-        <translation type="obsolete">Yatay çizgi çizer</translation>
-    </message>
-    <message>
-        <source>hor./vert. line</source>
-        <translation type="obsolete">yatay/düşey çizgi</translation>
-    </message>
-    <message>
-        <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">Yatay/&amp;Düşey</translation>
-    </message>
-    <message>
-        <source>Draw horizontal/vertical lines</source>
-        <translation type="obsolete">Yatay/Düşey çizgi çizer</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Düşey</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineBisector</name>
-    <message>
-        <source>Bisector</source>
-        <translation type="obsolete">Açıortay</translation>
-    </message>
-    <message>
-        <source>&amp;Bisector</source>
-        <translation type="obsolete">Açıo&amp;rtay</translation>
-    </message>
-    <message>
-        <source>Draw bisectors</source>
-        <translation type="obsolete">Açıortay çizer</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -10416,18 +9046,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLineFree</name>
     <message>
-        <source>Line: Freehand</source>
-        <translation type="obsolete">Çizgi: Karalama</translation>
-    </message>
-    <message>
-        <source>&amp;Freehand Line</source>
-        <translation type="obsolete">&amp;Karalama</translation>
-    </message>
-    <message>
-        <source>Draw freehand lines</source>
-        <translation type="obsolete">Karalama çizer</translation>
-    </message>
-    <message>
         <source>Click and drag to draw a line</source>
         <translation>Çizgiyi çizmek için tıklayın ve fareyi sürükleyin</translation>
     </message>
@@ -10438,18 +9056,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawLineHorVert</name>
-    <message>
-        <source>hor./vert. line</source>
-        <translation type="obsolete">yatay/düşey çizgi</translation>
-    </message>
-    <message>
-        <source>H&amp;orizontal / Vertical</source>
-        <translation type="obsolete">&amp;Yatay/Düşey</translation>
-    </message>
-    <message>
-        <source>Draw horizontal/vertical lines</source>
-        <translation type="obsolete">Yatay ve düşey çizgi çizer</translation>
-    </message>
     <message>
         <source>Specify first point</source>
         <translation>İlk noktayı belirtin</translation>
@@ -10465,10 +9071,6 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>Geri</translation>
-    </message>
-    <message>
-        <source>Vertical</source>
-        <translation type="obsolete">Düşey</translation>
     </message>
 </context>
 <context>
@@ -10493,18 +9095,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLineParallel</name>
     <message>
-        <source>Parallel</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-    <message>
-        <source>Para&amp;llel</source>
-        <translation type="obsolete">&amp;Paralel</translation>
-    </message>
-    <message>
-        <source>Draw parallels to existing lines, arcs, circles</source>
-        <translation type="obsolete">Bir çizgi, yay veya çembere paralelini çizer</translation>
-    </message>
-    <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
         <translation>Mesafe &lt;%1&gt; veya öğe ya da [%2] belirtin</translation>
     </message>
@@ -10524,29 +9114,9 @@ Continue?</source>
         <source>Not a valid number. Try 1..99</source>
         <translation>Paralel sayısı geçersiz: 1..99 arasında olmalı</translation>
     </message>
-    <message>
-        <source>Concentric</source>
-        <translation type="obsolete">Paralel</translation>
-    </message>
-    <message>
-        <source>&amp;Concentric</source>
-        <translation type="obsolete">&amp;Paralel</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineParallelThrough</name>
-    <message>
-        <source>Parallel through point</source>
-        <translation type="obsolete">Noktada paralel</translation>
-    </message>
-    <message>
-        <source>Par&amp;allel through point</source>
-        <translation type="obsolete">&amp;Noktada Paralel</translation>
-    </message>
-    <message>
-        <source>Draw parallel through a given point</source>
-        <translation type="obsolete">Belirtilen noktada paralel çizer</translation>
-    </message>
     <message>
         <source>Select entity</source>
         <translation>Öğe seçin</translation>
@@ -10577,89 +9147,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLinePolygon</name>
-    <message>
-        <source>Polygon</source>
-        <translation type="obsolete">Çokgen</translation>
-    </message>
-    <message>
-        <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Ç&amp;okgen (Merkez,Köşe)</translation>
-    </message>
-    <message>
-        <source>Draw polygon with center and corner</source>
-        <translation type="obsolete">Merkezi ve köşe sayısı belirtilen çokgeni çizer</translation>
-    </message>
-    <message>
-        <source>Specify center</source>
-        <translation type="obsolete">Merkezi belirtin</translation>
-    </message>
-    <message>
-        <source>Specify a corner</source>
-        <translation type="obsolete">Köşenin birini belirtin</translation>
-    </message>
-    <message>
-        <source>Enter number:</source>
-        <translation type="obsolete">Köşe sayısı:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Köşe sayısı 1..99 arasında olmalı</translation>
-    </message>
-    <message>
-        <source>Not a valid expression</source>
-        <translation type="obsolete">Geçerli bir ifade değil</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionDrawLinePolygon2</name>
-    <message>
-        <source>Polygon</source>
-        <translation type="obsolete">Çokgen</translation>
-    </message>
-    <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Çokg&amp;en (Köşe,Köşe)</translation>
-    </message>
-    <message>
-        <source>Draw polygon with two corners</source>
-        <translation type="obsolete">Herhangi iki köşesi belirtilen çokgeni çizer</translation>
-    </message>
-    <message>
-        <source>Specify first corner</source>
-        <translation type="obsolete">İlk köşeyi belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Specify second corner</source>
-        <translation type="obsolete">İkinci köşeyi belirtin</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Geri</translation>
-    </message>
-    <message>
-        <source>Number:</source>
-        <translation type="obsolete">Köşe sayısı:</translation>
-    </message>
-    <message>
-        <source>Not a valid number. Try 1..9999</source>
-        <translation type="obsolete">Köşe sayısı 1..99 arasında olmalı</translation>
-    </message>
-    <message>
-        <source>Not a valid expression.</source>
-        <translation type="obsolete">Geçerli bir ifade değil.</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLinePolygonCenCor</name>
-    <message>
-        <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="obsolete">Ç&amp;okgen (Merkez,Köşe)</translation>
-    </message>
     <message>
         <source>Specify center</source>
         <translation type="unfinished">Merkezi belirtin</translation>
@@ -10683,10 +9171,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawLinePolygonCorCor</name>
-    <message>
-        <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="obsolete">Çokg&amp;en (Köşe,Köşe)</translation>
-    </message>
     <message>
         <source>Specify first corner</source>
         <translation type="unfinished">İlk köşeyi belirtin</translation>
@@ -10717,62 +9201,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionDrawLinePolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Yamuk</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Yamuk</translation>
-    </message>
-    <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">Yamuk çizer</translation>
-    </message>
-    <message>
-        <source>Specify first point</source>
-        <translation type="obsolete">İlk noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="obsolete">İptal</translation>
-    </message>
-    <message>
-        <source>Specify next point or [%1]</source>
-        <translation type="obsolete">Sonraki noktayı belirtin ya da [%1]</translation>
-    </message>
-    <message>
-        <source>Back</source>
-        <translation type="obsolete">Geri</translation>
-    </message>
-    <message>
-        <source>Specify next point</source>
-        <translation type="obsolete">Sonraki noktayı belirtin</translation>
-    </message>
-    <message>
-        <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation type="obsolete">Çizgi dizisi kapatılamıyor: Henüz yeterli sayıda öğe yok.</translation>
-    </message>
-    <message>
-        <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="obsolete">Geri alınamıyor: Henüz yeterli sayıda öğe yok.</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionDrawLineRectangle</name>
-    <message>
-        <source>Rectangle</source>
-        <translation type="obsolete">Dikdörtgen</translation>
-    </message>
-    <message>
-        <source>&amp;Rectangle</source>
-        <translation type="obsolete">D&amp;ikdörtgen</translation>
-    </message>
-    <message>
-        <source>Draw rectangles</source>
-        <translation type="obsolete">Dikdörtgen çizer</translation>
-    </message>
     <message>
         <source>Specify first corner</source>
         <translation>İlk köşeyi belirtin</translation>
@@ -10793,18 +9222,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLineRelAngle</name>
     <message>
-        <source>Relative angle</source>
-        <translation type="obsolete">Kesişim açısı</translation>
-    </message>
-    <message>
-        <source>R&amp;elative angle</source>
-        <translation type="obsolete">Açılı Kesişi&amp;m</translation>
-    </message>
-    <message>
-        <source>Draw line with relative angle</source>
-        <translation type="obsolete">Belirtilen açıyla kesişen çizgi çizer</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
     </message>
@@ -10824,33 +9241,9 @@ Continue?</source>
         <source>Back</source>
         <translation>Geri</translation>
     </message>
-    <message>
-        <source>Orthogonal</source>
-        <translation type="obsolete">Dikey Kesişim</translation>
-    </message>
-    <message>
-        <source>&amp;Orthogonal</source>
-        <translation type="obsolete">Dikey Ke&amp;sişim</translation>
-    </message>
-    <message>
-        <source>Draw orthogonal line</source>
-        <translation type="obsolete">Kesişen çizgi çizer</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionDrawLineTangent1</name>
-    <message>
-        <source>Tangent (P,C)</source>
-        <translation type="obsolete">Teğet (Nokta,Çember)</translation>
-    </message>
-    <message>
-        <source>&amp;Tangent (P,C)</source>
-        <translation type="obsolete">&amp;Teğet (Nokta,Çember)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (point, circle)</source>
-        <translation type="obsolete">Bir noktadan çembere teğet çizer</translation>
-    </message>
     <message>
         <source>Specify point</source>
         <translation>Noktayı belirtin</translation>
@@ -10871,28 +9264,8 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawLineTangent2</name>
     <message>
-        <source>Tangent (C,C)</source>
-        <translation type="obsolete">Teğet (Çember,Çember)</translation>
-    </message>
-    <message>
-        <source>Tan&amp;gent (C,C)</source>
-        <translation type="obsolete">Teğet (&amp;Çember,Çember)</translation>
-    </message>
-    <message>
-        <source>Draw tangent (circle, circle)</source>
-        <translation type="obsolete">İki çemberin ortak teğetini çizer</translation>
-    </message>
-    <message>
-        <source>Select first circle or arc</source>
-        <translation type="obsolete">İlk çemberi veya yayı seçin</translation>
-    </message>
-    <message>
         <source>Cancel</source>
         <translation>İptal</translation>
-    </message>
-    <message>
-        <source>Select second circle or arc</source>
-        <translation type="obsolete">İkinci çemberi veya yayı seçin</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10929,18 +9302,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawPoint</name>
     <message>
-        <source>Points</source>
-        <translation type="obsolete">Nokta</translation>
-    </message>
-    <message>
-        <source>&amp;Points</source>
-        <translation type="obsolete">&amp;Nokta</translation>
-    </message>
-    <message>
-        <source>Draw Points</source>
-        <translation type="obsolete">Nokta çizer</translation>
-    </message>
-    <message>
         <source>Specify location</source>
         <translation>Yerini belirtin</translation>
     </message>
@@ -10951,18 +9312,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionDrawPolyline</name>
-    <message>
-        <source>Polyline</source>
-        <translation type="obsolete">Yamuk</translation>
-    </message>
-    <message>
-        <source>&amp;Polyline</source>
-        <translation type="obsolete">&amp;Yamuk</translation>
-    </message>
-    <message>
-        <source>Draw polylines</source>
-        <translation type="obsolete">Yamuk çizer</translation>
-    </message>
     <message>
         <source>Specify first point</source>
         <translation type="unfinished">İlk noktayı belirtin</translation>
@@ -10989,6 +9338,42 @@ Continue?</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the end point x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter number of polylines</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter an equation, f(x)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Enter the start point x</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The entered x is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The step size entered is invalid.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The value x entered is invalid.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -11022,18 +9407,6 @@ Continue?</source>
 <context>
     <name>RS_ActionDrawText</name>
     <message>
-        <source>Text</source>
-        <translation type="obsolete">Yazı</translation>
-    </message>
-    <message>
-        <source>&amp;Text</source>
-        <translation type="obsolete">&amp;Yazı</translation>
-    </message>
-    <message>
-        <source>Draw Text Entities</source>
-        <translation type="obsolete">Yazı öğelerini çizer</translation>
-    </message>
-    <message>
         <source>Specify insertion point</source>
         <translation>Yerleştirileceği noktayı belirtin</translation>
     </message>
@@ -11057,30 +9430,6 @@ Continue?</source>
 <context>
     <name>RS_ActionEditCopy</name>
     <message>
-        <source>Copy</source>
-        <translation type="obsolete">Kopyala</translation>
-    </message>
-    <message>
-        <source>&amp;Copy</source>
-        <translation type="obsolete">&amp;Kopyala</translation>
-    </message>
-    <message>
-        <source>Copies entities to the clipboard</source>
-        <translation type="obsolete">Öğeleri panoya kopyalar</translation>
-    </message>
-    <message>
-        <source>Cut</source>
-        <translation type="obsolete">Kes</translation>
-    </message>
-    <message>
-        <source>Cu&amp;t</source>
-        <translation type="obsolete">Ke&amp;s</translation>
-    </message>
-    <message>
-        <source>Cuts entities  to the clipboard</source>
-        <translation type="obsolete">Öğeleri panoya kopyalar ve siler</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
         <translation>Başlangıç noktasını belirtin</translation>
     </message>
@@ -11091,18 +9440,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionEditPaste</name>
-    <message>
-        <source>Paste</source>
-        <translation type="obsolete">Yapıştır</translation>
-    </message>
-    <message>
-        <source>&amp;Paste</source>
-        <translation type="obsolete">&amp;Yapıştır</translation>
-    </message>
-    <message>
-        <source>Pastes the clipboard contents</source>
-        <translation type="obsolete">Pano içeriğini yapıştırır</translation>
-    </message>
     <message>
         <source>Set reference point</source>
         <translation>Başlangıç noktasını belirtin</translation>
@@ -11115,30 +9452,6 @@ Continue?</source>
 <context>
     <name>RS_ActionEditUndo</name>
     <message>
-        <source>Undo</source>
-        <translation type="obsolete">Geri Al</translation>
-    </message>
-    <message>
-        <source>&amp;Undo</source>
-        <translation type="obsolete">&amp;Geri Al</translation>
-    </message>
-    <message>
-        <source>Undoes last action</source>
-        <translation type="obsolete">Son işlemi geri alır</translation>
-    </message>
-    <message>
-        <source>Redo</source>
-        <translation type="obsolete">Yinele</translation>
-    </message>
-    <message>
-        <source>&amp;Redo</source>
-        <translation type="obsolete">Y&amp;inele</translation>
-    </message>
-    <message>
-        <source>Redoes last action</source>
-        <translation type="obsolete">Son işlemi yineler</translation>
-    </message>
-    <message>
         <source>Nothing to undo!</source>
         <translation type="unfinished"></translation>
     </message>
@@ -11148,83 +9461,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionFileNew</name>
-    <message>
-        <source>New Drawing</source>
-        <translation type="obsolete">Yeni Çizim</translation>
-    </message>
-    <message>
-        <source>&amp;New</source>
-        <translation type="obsolete">&amp;Yeni</translation>
-    </message>
-    <message>
-        <source>Creates a new drawing</source>
-        <translation type="obsolete">Yeni bir çizim başlatır</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileOpen</name>
-    <message>
-        <source>Open Drawing</source>
-        <translation type="obsolete">Çizim Aç</translation>
-    </message>
-    <message>
-        <source>&amp;Open...</source>
-        <translation type="obsolete">&amp;Aç...</translation>
-    </message>
-    <message>
-        <source>Opens an existing drawing</source>
-        <translation type="obsolete">Mevcut bir çizimi açar</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSave</name>
-    <message>
-        <source>Save Drawing</source>
-        <translation type="obsolete">Çizimi Kaydet</translation>
-    </message>
-    <message>
-        <source>&amp;Save</source>
-        <translation type="obsolete">&amp;Kaydet</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing</source>
-        <translation type="obsolete">Çalışılan çizimi kaydeder</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionFileSaveAs</name>
-    <message>
-        <source>Save Drawing As</source>
-        <translation type="obsolete">Çizimi Farklı Kaydet</translation>
-    </message>
-    <message>
-        <source>Save &amp;as...</source>
-        <translation type="obsolete">&amp;Farklı Kaydet...</translation>
-    </message>
-    <message>
-        <source>Saves the current drawing under a new filename</source>
-        <translation type="obsolete">Çalışılan çizimi farklı bir isimle kaydeder</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionInfoAngle</name>
-    <message>
-        <source>Angle between two lines</source>
-        <translation type="obsolete">İki çizgi arasındaki açı</translation>
-    </message>
-    <message>
-        <source>&amp;Angle between two lines</source>
-        <translation type="obsolete">İki çizgi arasındaki &amp;açı</translation>
-    </message>
-    <message>
-        <source>Measures the angle between two lines</source>
-        <translation type="obsolete">İki çizgi arasındaki açıyı ölçer</translation>
-    </message>
-    <message>
-        <source>Angle: %1%2</source>
-        <translation type="obsolete">Açı: %1 %2</translation>
-    </message>
     <message>
         <source>Lines are parallel</source>
         <translation>Çizgiler paralel</translation>
@@ -11284,22 +9521,6 @@ Continue?</source>
 <context>
     <name>RS_ActionInfoDist</name>
     <message>
-        <source>Distance Point to Point</source>
-        <translation type="obsolete">Noktadan noktaya uzaklık</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Point to Point</source>
-        <translation type="obsolete">&amp;Noktadan noktaya uzaklık</translation>
-    </message>
-    <message>
-        <source>Measures the distance between two points</source>
-        <translation type="obsolete">İki nokta arasındaki mesafeyi ölçer</translation>
-    </message>
-    <message>
-        <source>Distance: %1</source>
-        <translation type="obsolete">Mesafe: %1</translation>
-    </message>
-    <message>
         <source>Specify first point of distance</source>
         <translation>İlk noktayı belirtin</translation>
     </message>
@@ -11322,18 +9543,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionInfoDist2</name>
-    <message>
-        <source>Distance Entity to Point</source>
-        <translation type="obsolete">Noktadan Öğeye Uzaklık</translation>
-    </message>
-    <message>
-        <source>&amp;Distance Entity to Point</source>
-        <translation type="obsolete">N&amp;oktadan Öğeye Uzaklık</translation>
-    </message>
-    <message>
-        <source>Measures the distance between an entity and a point</source>
-        <translation type="obsolete">Bir noktanın bir öğeye uzaklığını ölçer</translation>
-    </message>
     <message>
         <source>Distance: %1</source>
         <translation>Mesafe: %1</translation>
@@ -11358,18 +9567,6 @@ Continue?</source>
 <context>
     <name>RS_ActionInfoInside</name>
     <message>
-        <source>Point inside contour</source>
-        <translation type="obsolete">Sınırların içindeki nokta</translation>
-    </message>
-    <message>
-        <source>&amp;Point inside contour</source>
-        <translation type="obsolete">&amp;Sınırların içindeki nokta</translation>
-    </message>
-    <message>
-        <source>Checks if a given point is inside the selected contour</source>
-        <translation type="obsolete">Bir noktanın belirtilen bir sınırın içinde olup olmadığına bakar</translation>
-    </message>
-    <message>
         <source>Point is inside selected contour.</source>
         <translation>Nokta belirtilen sınırın içinde.</translation>
     </message>
@@ -11389,18 +9586,6 @@ Continue?</source>
 <context>
     <name>RS_ActionInfoTotalLength</name>
     <message>
-        <source>Total length of selected entities</source>
-        <translation type="obsolete">Seçili öğelerin toplam uzunluğu</translation>
-    </message>
-    <message>
-        <source>&amp;Total length of selected entities</source>
-        <translation type="obsolete">Seçili öğelerin &amp;toplam uzunluğu</translation>
-    </message>
-    <message>
-        <source>Measures the total length of all selected entities</source>
-        <translation type="obsolete">Seçili tüm öğelerin toplam uzunluğunu ölçer</translation>
-    </message>
-    <message>
         <source>Total Length of selected entities: %1</source>
         <translation>Seçili öğelerin Toplam Uzunluğu: %1</translation>
     </message>
@@ -11410,108 +9595,10 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionLayersAdd</name>
-    <message>
-        <source>Add Layer</source>
-        <translation type="obsolete">Katman Ekle</translation>
-    </message>
-    <message>
-        <source>&amp;Add Layer</source>
-        <translation type="obsolete">Katman &amp;Ekle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersEdit</name>
-    <message>
-        <source>Edit Layer</source>
-        <translation type="obsolete">Katmanı Düzenle</translation>
-    </message>
-    <message>
-        <source>&amp;Edit Layer</source>
-        <translation type="obsolete">Katmanı &amp;Düzenle</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersFreezeAll</name>
-    <message>
-        <source>Freeze all</source>
-        <translation type="obsolete">Tümünü Dondur</translation>
-    </message>
-    <message>
-        <source>&amp;Freeze all</source>
-        <translation type="obsolete">Tümünü &amp;Dondur</translation>
-    </message>
-    <message>
-        <source>Freeze all layers</source>
-        <translation type="obsolete">Tüm katmanları dondur</translation>
-    </message>
-    <message>
-        <source>Defreeze all</source>
-        <translation type="obsolete">Tümünü Çöz</translation>
-    </message>
-    <message>
-        <source>&amp;Defreeze all</source>
-        <translation type="obsolete">Tümünü &amp;Çöz</translation>
-    </message>
-    <message>
-        <source>Defreeze all layers</source>
-        <translation type="obsolete">Tüm katmanları çöz</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersRemove</name>
-    <message>
-        <source>Remove Layer</source>
-        <translation type="obsolete">Katmanı Sil</translation>
-    </message>
-    <message>
-        <source>&amp;Remove Layer</source>
-        <translation type="obsolete">Katmanı &amp;Sil</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleLock</name>
-    <message>
-        <source>Toggle Layer Lock</source>
-        <translation type="obsolete">Kilidi Aç/Kapa</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Lock</source>
-        <translation type="obsolete">&amp;Kilidi Aç/Kapa</translation>
-    </message>
-    <message>
-        <source>Toggle Lock</source>
-        <translation type="obsolete">Kilidi Aç/Kapa</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionLayersToggleView</name>
-    <message>
-        <source>Toggle Layer Visibility</source>
-        <translation type="obsolete">Katmanı Gizle/Göster</translation>
-    </message>
-    <message>
-        <source>&amp;Toggle Layer</source>
-        <translation type="obsolete">Kat&amp;manı Gizle/Göster</translation>
-    </message>
-    <message>
-        <source>Toggle Layer</source>
-        <translation type="obsolete">Katmanı Gizle/Göster</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionLibraryInsert</name>
     <message>
         <source>Insert Library Object</source>
         <translation>Nesne Yerleştir</translation>
-    </message>
-    <message>
-        <source>&amp;Insert Library Object</source>
-        <translation type="obsolete">&amp;Nesne Yerleştir</translation>
-    </message>
-    <message>
-        <source>Inserts an Object from the part library.</source>
-        <translation type="obsolete">Parça kütüphanesinden bir nesneyi yerleştirir.</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -11541,47 +9628,12 @@ Continue?</source>
 <context>
     <name>RS_ActionLockRelativeZero</name>
     <message>
-        <source>(Un-)Lock Relative Zero</source>
-        <translation type="obsolete">Göreli Sıfırı Kilitle/Aç</translation>
-    </message>
-    <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
         <translation>&amp;Göreli Sıfırı Kilitle/Aç</translation>
-    </message>
-    <message>
-        <source>(Un-)Lock relative Zero</source>
-        <translation type="obsolete">Göreli Sıfırı Kilitle/Aç</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyAttributes</name>
-    <message>
-        <source>Attributes</source>
-        <translation type="obsolete">Öznitelikler</translation>
-    </message>
-    <message>
-        <source>&amp;Attributes</source>
-        <translation type="obsolete">&amp;Öznitelikler</translation>
-    </message>
-    <message>
-        <source>Modify Entity Attributes</source>
-        <translation type="obsolete">Öğe özniteliklerini değiştirir</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyBevel</name>
-    <message>
-        <source>Bevel</source>
-        <translation type="obsolete">Köşeyi Kır</translation>
-    </message>
-    <message>
-        <source>&amp;Bevel</source>
-        <translation type="obsolete">&amp;Köşeyi Kır</translation>
-    </message>
-    <message>
-        <source>Bevel Entities</source>
-        <translation type="obsolete">Köşeleri kırar</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -11614,24 +9666,8 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyCut</name>
     <message>
-        <source>Cut</source>
-        <translation type="obsolete">Böl</translation>
-    </message>
-    <message>
-        <source>&amp;Cut</source>
-        <translation type="obsolete">&amp;Böl</translation>
-    </message>
-    <message>
-        <source>Cut Entities</source>
-        <translation type="obsolete">Öğeleri ikiye böler</translation>
-    </message>
-    <message>
         <source>No Entity found.</source>
         <translation>Bir öğe bulunamadı.</translation>
-    </message>
-    <message>
-        <source>Entity must be a line, arc or circle.</source>
-        <translation type="obsolete">Öğe bir çizgi, yay ya da çember olmalı.</translation>
     </message>
     <message>
         <source>Cutting point is invalid.</source>
@@ -11663,30 +9699,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionModifyDelete</name>
-    <message>
-        <source>Delete</source>
-        <translation type="obsolete">Sil</translation>
-    </message>
-    <message>
-        <source>&amp;Delete</source>
-        <translation type="obsolete">&amp;Sil</translation>
-    </message>
-    <message>
-        <source>Delete Entities</source>
-        <translation type="obsolete">Öğeleri siler</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionModifyDeleteFree</name>
-    <message>
-        <source>Delete Freehand</source>
-        <translation type="obsolete">Parça Sil</translation>
-    </message>
-    <message>
-        <source>&amp;Delete Freehand</source>
-        <translation type="obsolete">&amp;Parça Sil</translation>
-    </message>
     <message>
         <source>Specify first break point on a polyline</source>
         <translation>Silinecek parçanın başlangıç noktasını belirtin</translation>
@@ -11739,18 +9752,6 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
-        <source>Delete selected</source>
-        <translation type="obsolete">Seçili Olanı Sil</translation>
-    </message>
-    <message>
-        <source>&amp;Delete selected</source>
-        <translation type="obsolete">Seçili &amp;Olanı Sil</translation>
-    </message>
-    <message>
-        <source>Delete selected entities</source>
-        <translation type="obsolete">Seçili öğeleri siler</translation>
-    </message>
-    <message>
         <source>Pick entity to delete</source>
         <translation>Silinecek öğeyi seçin</translation>
     </message>
@@ -11762,47 +9763,16 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyEntity</name>
     <message>
-        <source>Properties</source>
-        <translation type="obsolete">Özellikler</translation>
+        <source>Click on entity to modify</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&amp;Properties</source>
-        <translation type="obsolete">&amp;Özellikler</translation>
-    </message>
-    <message>
-        <source>Modify Entity Properties</source>
-        <translation type="obsolete">Öğe Özelliklerini Değiştir</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionModifyExplodeText</name>
-    <message>
-        <source>Explode Text</source>
-        <translation type="obsolete">Metni Patlat</translation>
-    </message>
-    <message>
-        <source>&amp;Explode Text into Letters</source>
-        <translation type="obsolete">Metni &amp;Harflerine Ayır</translation>
-    </message>
-    <message>
-        <source>Explodes Text Entities into single Letters</source>
-        <translation type="obsolete">Yazı öğelerini harflerine ayırır</translation>
+        <source>Cancel</source>
+        <translation type="unfinished">İptal</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMirror</name>
-    <message>
-        <source>Mirror</source>
-        <translation type="obsolete">Yansıla</translation>
-    </message>
-    <message>
-        <source>&amp;Mirror</source>
-        <translation type="obsolete">&amp;Yansıla</translation>
-    </message>
-    <message>
-        <source>Mirror Entities</source>
-        <translation type="obsolete">Öğeleri Yansılar</translation>
-    </message>
     <message>
         <source>Specify first point of mirror line</source>
         <translation>Yansılama ekseninin ilk noktasını belirtin</translation>
@@ -11839,36 +9809,12 @@ Continue?</source>
         <translation>Geri</translation>
     </message>
     <message>
-        <source>Move / Copy</source>
-        <translation type="obsolete">Taşı / Kopyala</translation>
-    </message>
-    <message>
-        <source>&amp;Move / Copy</source>
-        <translation type="obsolete">&amp;Taşı / Kopyala</translation>
-    </message>
-    <message>
-        <source>Move or copy entities one or multiple times</source>
-        <translation type="obsolete">Öğeleri taşır ya da bir veya daha çok sayıda kopyalar</translation>
-    </message>
-    <message>
         <source>Invalid number of copies, use %1 </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>RS_ActionModifyMoveRotate</name>
-    <message>
-        <source>Move and Rotate</source>
-        <translation type="obsolete">Taşı ve Döndür</translation>
-    </message>
-    <message>
-        <source>M&amp;ove and Rotate</source>
-        <translation type="obsolete">Taşı ve Dönd&amp;ür</translation>
-    </message>
-    <message>
-        <source>Move and Rotate Entities</source>
-        <translation type="obsolete">Öğeleri taşır ve döndürür</translation>
-    </message>
     <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
@@ -11908,18 +9854,6 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyRotate</name>
     <message>
-        <source>Rotate</source>
-        <translation type="obsolete">Döndür</translation>
-    </message>
-    <message>
-        <source>&amp;Rotate</source>
-        <translation type="obsolete">Dö&amp;ndür</translation>
-    </message>
-    <message>
-        <source>Rotate Entities</source>
-        <translation type="obsolete">Öğeleri Döndürür</translation>
-    </message>
-    <message>
         <source>Specify reference point</source>
         <translation>Döndürme noktasını belirtin</translation>
     </message>
@@ -11938,18 +9872,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionModifyRotate2</name>
-    <message>
-        <source>Rotate Two</source>
-        <translation type="obsolete">İkili Döndür</translation>
-    </message>
-    <message>
-        <source>Rotate T&amp;wo</source>
-        <translation type="obsolete">İki&amp;li Döndür</translation>
-    </message>
-    <message>
-        <source>Rotate Entities around two centers</source>
-        <translation type="obsolete">Öğeleri iki merkezin etrafında döndürür</translation>
-    </message>
     <message>
         <source>Specify absolute reference point</source>
         <translation>Mutlak döndürme noktasını belirtin</translation>
@@ -11970,24 +9892,8 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyRound</name>
     <message>
-        <source>Round</source>
-        <translation type="obsolete">Köşeyi Yuvarla</translation>
-    </message>
-    <message>
-        <source>&amp;Round</source>
-        <translation type="obsolete">Köşeyi &amp;Yuvarla</translation>
-    </message>
-    <message>
-        <source>Round Entities</source>
-        <translation type="obsolete">Köşeleri yuvarlar</translation>
-    </message>
-    <message>
         <source>Not a valid expression</source>
         <translation>Geçerli bir ifade değil</translation>
-    </message>
-    <message>
-        <source>Specify first entity</source>
-        <translation>İlk öğeyi belirtin</translation>
     </message>
     <message>
         <source>Back</source>
@@ -12005,21 +9911,13 @@ Continue?</source>
         <source>Cancel</source>
         <translation>İptal</translation>
     </message>
+    <message>
+        <source>Specify first entity or enter radius &lt;%1&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>RS_ActionModifyScale</name>
-    <message>
-        <source>Scale</source>
-        <translation type="obsolete">Oranla</translation>
-    </message>
-    <message>
-        <source>&amp;Scale</source>
-        <translation type="obsolete">&amp;Oranla</translation>
-    </message>
-    <message>
-        <source>Scale Entities</source>
-        <translation type="obsolete">Öğeleri ölçeklendirir</translation>
-    </message>
     <message>
         <source>Specify reference point</source>
         <translation>Başlangıç noktasını belirtin</translation>
@@ -12031,18 +9929,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionModifyStretch</name>
-    <message>
-        <source>Stretch</source>
-        <translation type="obsolete">Uzat</translation>
-    </message>
-    <message>
-        <source>&amp;Stretch</source>
-        <translation type="obsolete">&amp;Uzat</translation>
-    </message>
-    <message>
-        <source>Stretch Entities</source>
-        <translation type="obsolete">Öğeleri uzatır</translation>
-    </message>
     <message>
         <source>Specify first corner</source>
         <translation>İlk köşeyi belirtin</translation>
@@ -12071,18 +9957,6 @@ Continue?</source>
 <context>
     <name>RS_ActionModifyTrim</name>
     <message>
-        <source>Trim</source>
-        <translation type="obsolete">Kırp</translation>
-    </message>
-    <message>
-        <source>&amp;Trim</source>
-        <translation type="obsolete">&amp;Kırp</translation>
-    </message>
-    <message>
-        <source>Trim Entities</source>
-        <translation type="obsolete">Öğeleri kırpar</translation>
-    </message>
-    <message>
         <source>Select first trim entity</source>
         <translation>İlk kırpıcı öğeyi seçin</translation>
     </message>
@@ -12106,33 +9980,9 @@ Continue?</source>
         <source>Select entity to trim</source>
         <translation>Kırpılacak öğeyi seçin</translation>
     </message>
-    <message>
-        <source>Trim Two</source>
-        <translation type="obsolete">İkili kırp</translation>
-    </message>
-    <message>
-        <source>&amp;Trim Two</source>
-        <translation type="obsolete">İk&amp;ili Kırp</translation>
-    </message>
-    <message>
-        <source>Trim two Entities</source>
-        <translation type="obsolete">İki öğeyi kırpar</translation>
-    </message>
 </context>
 <context>
     <name>RS_ActionModifyTrimAmount</name>
-    <message>
-        <source>Lengthen</source>
-        <translation type="obsolete">Kısalt</translation>
-    </message>
-    <message>
-        <source>&amp;Lengthen</source>
-        <translation type="obsolete">Kı&amp;salt</translation>
-    </message>
-    <message>
-        <source>Lengthen by a given amount</source>
-        <translation type="obsolete">Belli bir miktar kısaltır</translation>
-    </message>
     <message>
         <source>No entity found. </source>
         <translation>Bir öğe bulunamadı.</translation>
@@ -12156,21 +10006,6 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>Geri</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionOptionsDrawing</name>
-    <message>
-        <source>Drawing</source>
-        <translation type="obsolete">Çizim</translation>
-    </message>
-    <message>
-        <source>Current &amp;Drawing Preferences</source>
-        <translation type="obsolete">&amp;Bu Çizimle İlgili Tercihler</translation>
-    </message>
-    <message>
-        <source>Settings for the current Drawing</source>
-        <translation type="obsolete">Bu çizimle ilgili ayarlar</translation>
     </message>
 </context>
 <context>
@@ -12424,18 +10259,6 @@ Continue?</source>
 <context>
     <name>RS_ActionPrintPreview</name>
     <message>
-        <source>Print Preview</source>
-        <translation type="obsolete">Yazıcı Önizleme</translation>
-    </message>
-    <message>
-        <source>Print Pre&amp;view</source>
-        <translation type="obsolete">Yazıcı &amp;Önizleme</translation>
-    </message>
-    <message>
-        <source>Shows a preview of a print</source>
-        <translation type="obsolete">Yazıcı çıktısının görüntüsü</translation>
-    </message>
-    <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
         <translation type="unfinished"></translation>
     </message>
@@ -12473,6 +10296,10 @@ Continue?</source>
     </message>
     <message>
         <source>Printout in color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -12556,46 +10383,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelectAll</name>
-    <message>
-        <source>Select All</source>
-        <translation type="obsolete">Tümünü Seç</translation>
-    </message>
-    <message>
-        <source>Select &amp;All</source>
-        <translation type="obsolete">Tümünü &amp;Seç</translation>
-    </message>
-    <message>
-        <source>Selects all Entities</source>
-        <translation type="obsolete">Tüm öğeleri seçer</translation>
-    </message>
-    <message>
-        <source>Deselect all</source>
-        <translation type="obsolete">Seçilenlerin tümünü bırak</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;all</source>
-        <translation type="obsolete">Seçilenlerin Tümünü &amp;Bırak</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities</source>
-        <translation type="obsolete">Seçili öğeleri seçimden çıkarır</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectContour</name>
-    <message>
-        <source>(De-)Select Contour</source>
-        <translation type="obsolete">Dış Sınırı Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>(De-)Select &amp;Contour</source>
-        <translation type="obsolete">&amp;Dış Sınırı Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>(De-)Selects connected entities</source>
-        <translation type="obsolete">Bağlantılı öğeleri seçer/bırakır</translation>
-    </message>
     <message>
         <source>Entity must be an Atomic Entity.</source>
         <translation>Öğe bir atomik öğe olmalı.</translation>
@@ -12603,30 +10391,6 @@ Continue?</source>
 </context>
 <context>
     <name>RS_ActionSelectIntersected</name>
-    <message>
-        <source>Select Intersected Entities</source>
-        <translation type="obsolete">Kesişen Öğeleri Seç</translation>
-    </message>
-    <message>
-        <source>In&amp;tersected Entities</source>
-        <translation type="obsolete">Ke&amp;sişen Öğeler</translation>
-    </message>
-    <message>
-        <source>Selects all entities intersected by a line</source>
-        <translation type="obsolete">Bir çizgi ile kesişen tüm öğeleri seçer</translation>
-    </message>
-    <message>
-        <source>Deselect Intersected Entities</source>
-        <translation type="obsolete">Kesişen Öğeleri Bırak</translation>
-    </message>
-    <message>
-        <source>Deselect Inte&amp;rsected Entities</source>
-        <translation type="obsolete">Kesişen Öğeleri &amp;Bırak</translation>
-    </message>
-    <message>
-        <source>Deselects all entities intersected by a line</source>
-        <translation type="obsolete">Bir çizgi ile kesişen tüm öğeleri seçimden çıkarır</translation>
-    </message>
     <message>
         <source>Choose first point of intersection line</source>
         <translation>Kesişen çizginin ilk noktasını seçin</translation>
@@ -12645,76 +10409,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionSelectInvert</name>
-    <message>
-        <source>Invert Selection</source>
-        <translation type="obsolete">Seçimi Ters Çevir</translation>
-    </message>
-    <message>
-        <source>&amp;Invert Selection</source>
-        <translation type="obsolete">Seçimi &amp;Ters Çevir</translation>
-    </message>
-    <message>
-        <source>Inverts the current selection</source>
-        <translation type="obsolete">Seçili öğeleri ters çevirir</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectLayer</name>
-    <message>
-        <source>(De-)Select Layer</source>
-        <translation type="obsolete">Katmanı Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>(De-)Selects layers</source>
-        <translation type="obsolete">Katmanı seçer/bırakır</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionSelectSingle</name>
-    <message>
-        <source>Select Entity</source>
-        <translation type="obsolete">Öğeyi Seç</translation>
-    </message>
-    <message>
-        <source>(De-)&amp;Select Entity</source>
-        <translation type="obsolete">&amp;Öğeyi Seç/Bırak</translation>
-    </message>
-    <message>
-        <source>Selects single Entities</source>
-        <translation type="obsolete">Tek bir öğeyi seçer</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionSelectWindow</name>
-    <message>
-        <source>Select Window</source>
-        <translation type="obsolete">Pencere Seç</translation>
-    </message>
-    <message>
-        <source>Select &amp;Window</source>
-        <translation type="obsolete">Pencere &amp;Seç</translation>
-    </message>
-    <message>
-        <source>Selects all Entities in a given Window</source>
-        <translation type="obsolete">Belirtilen bir pencere içindeki tüm öğeleri seçer</translation>
-    </message>
-    <message>
-        <source>Deselect Window</source>
-        <translation type="obsolete">Pencereyi Bırak</translation>
-    </message>
-    <message>
-        <source>Deselect &amp;Window</source>
-        <translation type="obsolete">Pencereyi &amp;Bırak</translation>
-    </message>
-    <message>
-        <source>Deselects all Entities in a given Window</source>
-        <translation type="obsolete">Belirtilen bir pencere içindeki tüm öğeleri seçimden çıkarır</translation>
-    </message>
-    <message>
-        <source>Choose first edge</source>
-        <translation type="obsolete">İlk kenarı seçin</translation>
-    </message>
     <message>
         <source>Cancel</source>
         <translation>İptal</translation>
@@ -12735,18 +10430,6 @@ Continue?</source>
 <context>
     <name>RS_ActionSetRelativeZero</name>
     <message>
-        <source>Set Relative Zero</source>
-        <translation type="obsolete">Göreli Sıfırı Ayarla</translation>
-    </message>
-    <message>
-        <source>&amp;Set Relative Zero</source>
-        <translation type="obsolete">&amp;Göreli Sıfırı Ayarla</translation>
-    </message>
-    <message>
-        <source>Set position of the Relative Zero point</source>
-        <translation type="obsolete">Göreli Sıfır Noktasının yerini ayarlar</translation>
-    </message>
-    <message>
         <source>Set relative Zero</source>
         <translation>Göreli sıfırı ayarla</translation>
     </message>
@@ -12762,16 +10445,8 @@ Continue?</source>
 <context>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
-        <source>Intersection Manually</source>
-        <translation type="obsolete">Elle Kesişim</translation>
-    </message>
-    <message>
         <source>I&amp;ntersection Manually</source>
         <translation>&amp;Elle Kesişim</translation>
-    </message>
-    <message>
-        <source>Snap to intersection points manually</source>
-        <translation type="obsolete">Kesişme noktalarını elle yakalar</translation>
     </message>
     <message>
         <source>Select first entity</source>
@@ -12789,18 +10464,6 @@ Continue?</source>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
-        <source>Regenerate Dimension Entities</source>
-        <translation type="obsolete">Ölçülendirme Öğelerini Yeniden Üret</translation>
-    </message>
-    <message>
-        <source>&amp;Regenerate Dimension Entities</source>
-        <translation type="obsolete">Ölçülendirme Öğelerini &amp;Yeniden Üret</translation>
-    </message>
-    <message>
-        <source>Regenerates all Dimension Entities</source>
-        <translation type="obsolete">Ölçülendirme öğelerini yeniden üretir</translation>
-    </message>
-    <message>
         <source>Regenerated %1 dimension entities</source>
         <translation>%1 ölçülendirme öğesi yeniden üretildi</translation>
     </message>
@@ -12810,61 +10473,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionZoomAuto</name>
-    <message>
-        <source>Auto Zoom</source>
-        <translation type="obsolete">Tüm Çizim</translation>
-    </message>
-    <message>
-        <source>&amp;Auto Zoom</source>
-        <translation type="obsolete">&amp;Tüm Çizim</translation>
-    </message>
-    <message>
-        <source>Zooms automatic</source>
-        <translation type="obsolete">Çizimin tamamını gösterir</translation>
-    </message>
-</context>
-<context>
-    <name>RS_ActionZoomIn</name>
-    <message>
-        <source>Zoom in</source>
-        <translation type="obsolete">Yakınlaş</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;In</source>
-        <translation type="obsolete">&amp;Yakınlaş</translation>
-    </message>
-    <message>
-        <source>Zooms in</source>
-        <translation type="obsolete">Çizimi yakınlaştırır</translation>
-    </message>
-    <message>
-        <source>Zoom out</source>
-        <translation type="obsolete">Uzaklaş</translation>
-    </message>
-    <message>
-        <source>Zoom &amp;Out</source>
-        <translation type="obsolete">&amp;Uzaklaş</translation>
-    </message>
-    <message>
-        <source>Zooms out</source>
-        <translation type="obsolete">Çizimi uzaklaştırır</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionZoomPan</name>
-    <message>
-        <source>Pan Zoom</source>
-        <translation type="obsolete">Çizimi Kaydır</translation>
-    </message>
-    <message>
-        <source>&amp;Pan Zoom</source>
-        <translation type="obsolete">&amp;Çizimi Kaydır</translation>
-    </message>
-    <message>
-        <source>Realtime Panning</source>
-        <translation type="obsolete">Çizimi sürükler</translation>
-    </message>
     <message>
         <source>Click and drag to pan zoom</source>
         <translation type="unfinished"></translation>
@@ -12879,30 +10488,7 @@ Continue?</source>
     </message>
 </context>
 <context>
-    <name>RS_ActionZoomRedraw</name>
-    <message>
-        <source>Redraw</source>
-        <translation type="obsolete">Yeniden Çiz</translation>
-    </message>
-    <message>
-        <source>&amp;Redraw</source>
-        <translation type="obsolete">&amp;Yeniden Çiz</translation>
-    </message>
-</context>
-<context>
     <name>RS_ActionZoomWindow</name>
-    <message>
-        <source>Window Zoom</source>
-        <translation type="obsolete">Pencereyi Yakınlaştır</translation>
-    </message>
-    <message>
-        <source>&amp;Window Zoom</source>
-        <translation type="obsolete">&amp;Pencereyi Yakınlaştır</translation>
-    </message>
-    <message>
-        <source>Zooms in a window</source>
-        <translation type="obsolete">Bir pencerenin içini yakınlaştırır</translation>
-    </message>
     <message>
         <source>Specify first edge</source>
         <translation>İlk kenarı belirtin</translation>
@@ -12918,812 +10504,6 @@ Continue?</source>
     <message>
         <source>Back</source>
         <translation>Geri</translation>
-    </message>
-</context>
-<context>
-    <name>RS_Commands</name>
-    <message>
-        <source>point</source>
-        <translation type="obsolete">nokta</translation>
-    </message>
-    <message>
-        <source>po</source>
-        <comment>point</comment>
-        <translation type="obsolete">nok</translation>
-    </message>
-    <message>
-        <source>line</source>
-        <translation type="obsolete">çizgi</translation>
-    </message>
-    <message>
-        <source>ln</source>
-        <comment>line</comment>
-        <translation type="obsolete">çz</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>line</comment>
-        <translation type="obsolete">çi</translation>
-    </message>
-    <message>
-        <source>offset</source>
-        <translation type="obsolete">başl</translation>
-    </message>
-    <message>
-        <source>o</source>
-        <comment>offset</comment>
-        <translation type="obsolete">b</translation>
-    </message>
-    <message>
-        <source>parallel</source>
-        <translation type="obsolete">paralel</translation>
-    </message>
-    <message>
-        <source>par</source>
-        <comment>parallel</comment>
-        <translation type="obsolete">par</translation>
-    </message>
-    <message>
-        <source>arc</source>
-        <translation type="obsolete">yay</translation>
-    </message>
-    <message>
-        <source>a</source>
-        <comment>arc</comment>
-        <translation type="obsolete">y</translation>
-    </message>
-    <message>
-        <source>circle</source>
-        <translation type="obsolete">çember</translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <comment>circle</comment>
-        <translation type="obsolete">çe</translation>
-    </message>
-    <message>
-        <source>rectangle</source>
-        <translation type="obsolete">dikdörtgen</translation>
-    </message>
-    <message>
-        <source>rec</source>
-        <comment>rectangle</comment>
-        <translation type="obsolete">dikd</translation>
-    </message>
-    <message>
-        <source>rectang</source>
-        <comment>rectangle</comment>
-        <translation type="obsolete">dik4gen</translation>
-    </message>
-    <message>
-        <source>text</source>
-        <translation type="obsolete">metin</translation>
-    </message>
-    <message>
-        <source>regen</source>
-        <translation type="obsolete">yeçiz</translation>
-    </message>
-    <message>
-        <source>rg</source>
-        <comment>redraw</comment>
-        <translation type="obsolete">yeçi</translation>
-    </message>
-    <message>
-        <source>zr</source>
-        <comment>redraw</comment>
-        <translation type="obsolete">yeniden</translation>
-    </message>
-    <message>
-        <source>zw</source>
-        <comment>zoom - window</comment>
-        <translation type="obsolete">penyakın</translation>
-    </message>
-    <message>
-        <source>zoom - window</source>
-        <translation type="obsolete">seçyak</translation>
-    </message>
-    <message>
-        <source>za</source>
-        <comment>zoom - auto</comment>
-        <translation type="obsolete">tam</translation>
-    </message>
-    <message>
-        <source>zoom - auto</source>
-        <translation type="obsolete">tümünü-göster</translation>
-    </message>
-    <message>
-        <source>zp</source>
-        <comment>zoom - pan</comment>
-        <translation type="obsolete">kaydır</translation>
-    </message>
-    <message>
-        <source>zoom - pan</source>
-        <translation type="obsolete">kay</translation>
-    </message>
-    <message>
-        <source>undo</source>
-        <translation type="obsolete">geri</translation>
-    </message>
-    <message>
-        <source>u</source>
-        <comment>undo</comment>
-        <translation type="obsolete">ga</translation>
-    </message>
-    <message>
-        <source>redo</source>
-        <translation type="obsolete">yinele</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>redo</comment>
-        <translation type="obsolete">yine</translation>
-    </message>
-    <message>
-        <source>dimregen</source>
-        <translation type="obsolete">öy</translation>
-    </message>
-    <message>
-        <source>Command: %1</source>
-        <translation type="obsolete">Komut: %1</translation>
-    </message>
-    <message>
-        <source>li</source>
-        <comment>line</comment>
-        <translation type="obsolete">çizg</translation>
-    </message>
-    <message>
-        <source>re</source>
-        <comment>rectangle</comment>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>rp</source>
-        <comment>regular polygon</comment>
-        <translation type="obsolete">ny</translation>
-    </message>
-    <message>
-        <source>c2</source>
-        <comment>2 point circle</comment>
-        <translation type="obsolete">ç2</translation>
-    </message>
-    <message>
-        <source>c3</source>
-        <comment>3 point circle</comment>
-        <translation type="obsolete">ç3</translation>
-    </message>
-    <message>
-        <source>ar</source>
-        <comment>arc</comment>
-        <translation type="obsolete">ya</translation>
-    </message>
-    <message>
-        <source>a3</source>
-        <comment>3 point arc</comment>
-        <translation type="obsolete">y3</translation>
-    </message>
-    <message>
-        <source>ep</source>
-        <comment>ellipse</comment>
-        <translation type="obsolete">el</translation>
-    </message>
-    <message>
-        <source>tx</source>
-        <comment>text</comment>
-        <translation type="obsolete">yazı</translation>
-    </message>
-    <message>
-        <source>mt</source>
-        <comment>text</comment>
-        <translation type="obsolete">met</translation>
-    </message>
-    <message>
-        <source>da</source>
-        <comment>dimension - aligned</comment>
-        <translation type="obsolete">öh</translation>
-    </message>
-    <message>
-        <source>dh</source>
-        <comment>dimension - horizontal</comment>
-        <translation type="obsolete">öy</translation>
-    </message>
-    <message>
-        <source>dv</source>
-        <comment>dimension - vertical</comment>
-        <translation type="obsolete">öd</translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <comment>dimension - linear</comment>
-        <translation type="obsolete">ödoğ</translation>
-    </message>
-    <message>
-        <source>ld</source>
-        <comment>dimension - leader</comment>
-        <translation type="obsolete">öç</translation>
-    </message>
-    <message>
-        <source>rd</source>
-        <comment>redraw</comment>
-        <translation type="obsolete">yçiz</translation>
-    </message>
-    <message>
-        <source>zi</source>
-        <comment>zoom - in</comment>
-        <translation type="obsolete">yakın</translation>
-    </message>
-    <message>
-        <source>zo</source>
-        <comment>zoom - out</comment>
-        <translation type="obsolete">uzak</translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <comment>zoom - pan</comment>
-        <translation type="obsolete">gez</translation>
-    </message>
-    <message>
-        <source>os</source>
-        <comment>snap - none</comment>
-        <translation type="obsolete">yh</translation>
-    </message>
-    <message>
-        <source>sg</source>
-        <comment>snap - grid</comment>
-        <translation type="obsolete">yg</translation>
-    </message>
-    <message>
-        <source>se</source>
-        <comment>snap - end</comment>
-        <translation type="obsolete">yu</translation>
-    </message>
-    <message>
-        <source>si</source>
-        <comment>snap - intersection</comment>
-        <translation type="obsolete">yk</translation>
-    </message>
-    <message>
-        <source>sn</source>
-        <comment>snap - center</comment>
-        <translation type="obsolete">yn</translation>
-    </message>
-    <message>
-        <source>sm</source>
-        <comment>snap - middle</comment>
-        <translation type="obsolete">yo</translation>
-    </message>
-    <message>
-        <source>sn</source>
-        <comment>snap - nearest</comment>
-        <translation type="obsolete">yy</translation>
-    </message>
-    <message>
-        <source>np</source>
-        <comment>snap - nearest point</comment>
-        <translation type="obsolete">yey</translation>
-    </message>
-    <message>
-        <source>fr*</source>
-        <comment>layers - freeze all</comment>
-        <translation type="obsolete">don</translation>
-    </message>
-    <message>
-        <source>th*</source>
-        <comment>layers - defreeze all</comment>
-        <translation type="obsolete">kd*</translation>
-    </message>
-    <message>
-        <source>tn</source>
-        <comment>Deselect all</comment>
-        <translation type="obsolete">bh</translation>
-    </message>
-    <message>
-        <source>ch</source>
-        <comment>modify - bevel (chamfer)</comment>
-        <translation type="obsolete">kır</translation>
-    </message>
-    <message>
-        <source>mt</source>
-        <comment>modify - multi trim (extend)</comment>
-        <translation type="obsolete">dt2</translation>
-    </message>
-    <message>
-        <source>xt</source>
-        <comment>modify - trim (extend)</comment>
-        <translation type="obsolete">dt2</translation>
-    </message>
-    <message>
-        <source>rm</source>
-        <comment>modify - trim</comment>
-        <translation type="obsolete">dk</translation>
-    </message>
-    <message>
-        <source>mv</source>
-        <comment>modify - move</comment>
-        <translation type="obsolete">dt</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <comment>modify - mirror</comment>
-        <translation type="obsolete">yans</translation>
-    </message>
-    <message>
-        <source>ro</source>
-        <comment>modify - rotate</comment>
-        <translation type="obsolete">dd</translation>
-    </message>
-    <message>
-        <source>sz</source>
-        <comment>modify - scale</comment>
-        <translation type="obsolete">do</translation>
-    </message>
-    <message>
-        <source>ss</source>
-        <comment>modify - stretch</comment>
-        <translation type="obsolete">du</translation>
-    </message>
-    <message>
-        <source>er</source>
-        <comment>modify - delete (erase)</comment>
-        <translation type="obsolete">ds</translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <comment>modify - undo (oops)</comment>
-        <translation type="obsolete">dga</translation>
-    </message>
-    <message>
-        <source>uu</source>
-        <comment>modify - redo</comment>
-        <translation type="obsolete">dy</translation>
-    </message>
-    <message>
-        <source>xp</source>
-        <comment>modify - explode</comment>
-        <translation type="obsolete">dp</translation>
-    </message>
-    <message>
-        <source>ex</source>
-        <comment>modify - explode</comment>
-        <translation type="obsolete">dp</translation>
-    </message>
-    <message>
-        <source>angle</source>
-        <translation type="obsolete">açı</translation>
-    </message>
-    <message>
-        <source>close</source>
-        <translation type="obsolete">kapat</translation>
-    </message>
-    <message>
-        <source>chord length</source>
-        <translation type="obsolete">kırma mesafesi</translation>
-    </message>
-    <message>
-        <source>columns</source>
-        <translation type="obsolete">sütsay</translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <translation type="obsolete">sütungenişliği</translation>
-    </message>
-    <message>
-        <source>factor</source>
-        <translation type="obsolete">çarpan</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <translation type="obsolete">uzunluk</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <translation type="obsolete">uzun1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <translation type="obsolete">uzun2</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <translation type="obsolete">sayı</translation>
-    </message>
-    <message>
-        <source>radius</source>
-        <translation type="obsolete">yçap</translation>
-    </message>
-    <message>
-        <source>rows</source>
-        <translation type="obsolete">satsay</translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <translation type="obsolete">satyüks</translation>
-    </message>
-    <message>
-        <source>through</source>
-        <translation type="obsolete">ile</translation>
-    </message>
-    <message>
-        <source>trim</source>
-        <translation type="obsolete">kırp</translation>
-    </message>
-    <message>
-        <source>ang</source>
-        <comment>angle</comment>
-        <translation type="obsolete">aç</translation>
-    </message>
-    <message>
-        <source>a</source>
-        <comment>angle</comment>
-        <translation type="obsolete">a</translation>
-    </message>
-    <message>
-        <source>center</source>
-        <translation type="obsolete">merkez</translation>
-    </message>
-    <message>
-        <source>cen</source>
-        <comment>center</comment>
-        <translation type="obsolete">mrk</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>center</comment>
-        <translation type="obsolete">m</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">uzun</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>chord length</comment>
-        <translation type="obsolete">kırpuz</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>close</comment>
-        <translation type="obsolete">k</translation>
-    </message>
-    <message>
-        <source>cols</source>
-        <comment>columns</comment>
-        <translation type="obsolete">süt</translation>
-    </message>
-    <message>
-        <source>c</source>
-        <comment>columns</comment>
-        <translation type="obsolete">s</translation>
-    </message>
-    <message>
-        <source>columnspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">sütungen</translation>
-    </message>
-    <message>
-        <source>colspacing</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">sütgen</translation>
-    </message>
-    <message>
-        <source>cs</source>
-        <comment>columnspacing for inserts</comment>
-        <translation type="obsolete">sg</translation>
-    </message>
-    <message>
-        <source>fact</source>
-        <comment>factor</comment>
-        <translation type="obsolete">çarp</translation>
-    </message>
-    <message>
-        <source>f</source>
-        <comment>factor</comment>
-        <translation type="obsolete">çarp</translation>
-    </message>
-    <message>
-        <source>help</source>
-        <translation type="obsolete">yardım</translation>
-    </message>
-    <message>
-        <source>?</source>
-        <comment>help</comment>
-        <translation type="obsolete">?</translation>
-    </message>
-    <message>
-        <source>length</source>
-        <comment>length</comment>
-        <translation type="obsolete">uzunl</translation>
-    </message>
-    <message>
-        <source>len</source>
-        <comment>length</comment>
-        <translation type="obsolete">uz</translation>
-    </message>
-    <message>
-        <source>l</source>
-        <comment>length</comment>
-        <translation type="obsolete">u</translation>
-    </message>
-    <message>
-        <source>length1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">uzunluk1</translation>
-    </message>
-    <message>
-        <source>len1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">uz1</translation>
-    </message>
-    <message>
-        <source>l1</source>
-        <comment>length1</comment>
-        <translation type="obsolete">u1</translation>
-    </message>
-    <message>
-        <source>length2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">uzunluk2</translation>
-    </message>
-    <message>
-        <source>len2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">uz2</translation>
-    </message>
-    <message>
-        <source>l2</source>
-        <comment>length2</comment>
-        <translation type="obsolete">u2</translation>
-    </message>
-    <message>
-        <source>num</source>
-        <comment>number</comment>
-        <translation type="obsolete">sayı</translation>
-    </message>
-    <message>
-        <source>n</source>
-        <comment>number</comment>
-        <translation type="obsolete">s</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>radius</comment>
-        <translation type="obsolete">yç</translation>
-    </message>
-    <message>
-        <source>reversed</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">tersaçı</translation>
-    </message>
-    <message>
-        <source>rev</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">tersaç</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>reversed arc</comment>
-        <translation type="obsolete">taçı</translation>
-    </message>
-    <message>
-        <source>r</source>
-        <comment>rows</comment>
-        <translation type="obsolete">sat</translation>
-    </message>
-    <message>
-        <source>rowspacing</source>
-        <comment>rowspacing for inserts</comment>
-        <translation type="obsolete">satıryüksekliği</translation>
-    </message>
-    <message>
-        <source>rs</source>
-        <comment>rowspacing for inserts</comment>
-        <translation type="obsolete">satıryüks</translation>
-    </message>
-    <message>
-        <source>t</source>
-        <comment>text</comment>
-        <translation type="obsolete">mtn</translation>
-    </message>
-    <message>
-        <source>t</source>
-        <comment>through</comment>
-        <translation type="obsolete">ile</translation>
-    </message>
-    <message>
-        <source>Available commands:</source>
-        <translation type="obsolete">Mevcut Komutlar:</translation>
-    </message>
-    <message>
-        <source>po</source>
-        <translation type="obsolete">nok</translation>
-    </message>
-    <message>
-        <source>ln</source>
-        <translation type="obsolete">çz</translation>
-    </message>
-    <message>
-        <source>ci</source>
-        <translation type="obsolete">çe</translation>
-    </message>
-    <message>
-        <source>rec</source>
-        <translation type="obsolete">dikd</translation>
-    </message>
-    <message>
-        <source>rectang</source>
-        <translation type="obsolete">dik4gen</translation>
-    </message>
-    <message>
-        <source>rg</source>
-        <comment>zoom - redraw</comment>
-        <translation type="obsolete">yeçi</translation>
-    </message>
-    <message>
-        <source>zr</source>
-        <comment>zoom - redraw</comment>
-        <translation type="obsolete">yeniden</translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <comment>parallel</comment>
-        <translation type="obsolete">gez</translation>
-    </message>
-    <message>
-        <source>da</source>
-        <translation type="obsolete">öh</translation>
-    </message>
-    <message>
-        <source>dh</source>
-        <translation type="obsolete">öy</translation>
-    </message>
-    <message>
-        <source>dr</source>
-        <translation type="obsolete">ödoğ</translation>
-    </message>
-    <message>
-        <source>dv</source>
-        <translation type="obsolete">öd</translation>
-    </message>
-    <message>
-        <source>ld</source>
-        <translation type="obsolete">öç</translation>
-    </message>
-    <message>
-        <source>xt</source>
-        <translation type="obsolete">dt2</translation>
-    </message>
-    <message>
-        <source>rm</source>
-        <translation type="obsolete">dk</translation>
-    </message>
-    <message>
-        <source>mv</source>
-        <translation type="obsolete">dt</translation>
-    </message>
-    <message>
-        <source>ch</source>
-        <translation type="obsolete">kır</translation>
-    </message>
-    <message>
-        <source>mi</source>
-        <translation type="obsolete">yans</translation>
-    </message>
-    <message>
-        <source>ro</source>
-        <translation type="obsolete">dd</translation>
-    </message>
-    <message>
-        <source>sz</source>
-        <translation type="obsolete">do</translation>
-    </message>
-    <message>
-        <source>ss</source>
-        <translation type="obsolete">du</translation>
-    </message>
-    <message>
-        <source>er</source>
-        <translation type="obsolete">ds</translation>
-    </message>
-    <message>
-        <source>oo</source>
-        <translation type="obsolete">dga</translation>
-    </message>
-    <message>
-        <source>uu</source>
-        <translation type="obsolete">dy</translation>
-    </message>
-    <message>
-        <source>xp</source>
-        <translation type="obsolete">dp</translation>
-    </message>
-    <message>
-        <source>os</source>
-        <translation type="obsolete">yh</translation>
-    </message>
-    <message>
-        <source>sg</source>
-        <translation type="obsolete">yg</translation>
-    </message>
-    <message>
-        <source>se</source>
-        <translation type="obsolete">yu</translation>
-    </message>
-    <message>
-        <source>si</source>
-        <translation type="obsolete">yk</translation>
-    </message>
-    <message>
-        <source>sm</source>
-        <translation type="obsolete">yo</translation>
-    </message>
-    <message>
-        <source>np</source>
-        <translation type="obsolete">yey</translation>
-    </message>
-    <message>
-        <source>tn</source>
-        <translation type="obsolete">bh</translation>
-    </message>
-    <message>
-        <source>li</source>
-        <translation type="obsolete">çizg</translation>
-    </message>
-    <message>
-        <source>pa</source>
-        <translation type="obsolete">gez</translation>
-    </message>
-    <message>
-        <source>ar</source>
-        <translation type="obsolete">ya</translation>
-    </message>
-    <message>
-        <source>zr</source>
-        <translation type="obsolete">yeniden</translation>
-    </message>
-    <message>
-        <source>zw</source>
-        <translation type="obsolete">penyakın</translation>
-    </message>
-    <message>
-        <source>za</source>
-        <translation type="obsolete">tam</translation>
-    </message>
-    <message>
-        <source>zp</source>
-        <translation type="obsolete">kaydır</translation>
-    </message>
-    <message>
-        <source>u</source>
-        <translation type="obsolete">ga</translation>
-    </message>
-    <message>
-        <source>os</source>
-        <comment>snap - free</comment>
-        <translation type="obsolete">yh</translation>
-    </message>
-    <message>
-        <source>number</source>
-        <comment>number</comment>
-        <translation type="obsolete">sayı</translation>
-    </message>
-    <message>
-        <source>reversed</source>
-        <comment>reversed</comment>
-        <translation type="obsolete">tersaçı</translation>
-    </message>
-    <message>
-        <source>rev</source>
-        <comment>reversed</comment>
-        <translation type="obsolete">tersaç</translation>
-    </message>
-    <message>
-        <source>re</source>
-        <translation type="obsolete">4</translation>
-    </message>
-    <message>
-        <source>re</source>
-        <comment>modify - revert direction</comment>
-        <translation type="obsolete">4</translation>
     </message>
 </context>
 <context>
@@ -13847,27 +10627,27 @@ Continue?</source>
         <source>Label:</source>
         <translation type="unfinished">Etiket:</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>⌀</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>°</source>
         <translation type="unfinished">°</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>±</source>
         <translation type="unfinished">±</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>π</source>
         <translation type="unfinished"></translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>×</source>
         <translation type="unfinished">×</translation>
     </message>
-    <message utf8="true">
+    <message>
         <source>÷</source>
         <translation type="unfinished">÷</translation>
     </message>
@@ -14273,6 +11053,14 @@ Continue?</source>
     </message>
     <message>
         <source>Fit to page</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Apply Print Scale to line width</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Calculate number of pages needed to contain the drawing</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

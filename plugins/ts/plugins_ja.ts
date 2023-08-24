@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="ja">
+<TS version="2.1" language="ja">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -11,38 +11,67 @@
     </message>
 </context>
 <context>
-    <name>ImportShp</name>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="40"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>ESRI Shapeのファイルをインポート</translation>
-    </message>
-</context>
-<context>
     <name>LC_Align</name>
     <message>
-        <location filename="../align/align.cpp" line="20"/>
-        <location filename="../align/align.cpp" line="27"/>
+        <location filename="../align/align.cpp" line="24"/>
+        <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
         <translation>整列</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="40"/>
+        <location filename="../align/align.cpp" line="32"/>
+        <source>Align settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="49"/>
+        <source>Keep original objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="50"/>
+        <source>Specify base points first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="54"/>
+        <source>Align Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="57"/>
+        <source>Click on options to set/unset,
+Ok to accept and start alignment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="60"/>
+        <source>If &apos;Keep original objects&apos; is checked,
+Align will copy rather than move the selected objects.
+
+If &apos;Specify base points first&apos; is checked,
+Align will prompt for the alignment points in the order
+first base, second base, first target, second target.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>最初の基準点:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="42"/>
+        <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
         <translation>最初の目標点:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="44"/>
+        <location filename="../align/align.cpp" line="84"/>
+        <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
         <translation>次の基準点:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="46"/>
+        <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
         <translation>次の目標点:</translation>
     </message>
@@ -120,7 +149,8 @@
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
-        <location filename="../list/list.cpp" line="218"/>
+        <location filename="../list/list.cpp" line="180"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
         <translation>頂点</translation>
     </message>
@@ -170,7 +200,7 @@
     <message>
         <location filename="../list/list.cpp" line="125"/>
         <location filename="../list/list.cpp" line="139"/>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="226"/>
         <source>radius</source>
         <translation>半径</translation>
     </message>
@@ -235,117 +265,122 @@
         <translation>テキスト</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="183"/>
+        <source>TEXTCONTENT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
         <translation>挿入</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="185"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
         <translation>名前</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="187"/>
+        <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
         <translation>挿入位置</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
         <translation>縮尺</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="193"/>
+        <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
         <translation>回転</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="199"/>
+        <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
         <translation>列/行</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
         <translation>列/行の間隔</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="210"/>
+        <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
         <translation>ポリライン</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="211"/>
+        <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
         <translation>閉じている</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
         <translation>いいえ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
         <translation>はい</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
         <translation>頂点</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="227"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
         <translation>画像</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="230"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
         <translation>スプライン</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="233"/>
+        <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
         <translation>スプライン・ポイント</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="236"/>
+        <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
         <translation>ハッチング</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="239"/>
+        <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
         <translation>寸法線（引き出し線）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="242"/>
+        <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
         <translation>寸法線（２点間距離）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="245"/>
+        <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
         <translation>寸法線（水平、垂直距離）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
         <translation>寸法線（半径）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="251"/>
+        <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
         <translation>寸法線（直径）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="254"/>
+        <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
         <translation>寸法線（角度）</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="257"/>
+        <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
         <translation>未知</translation>
     </message>
@@ -394,396 +429,551 @@
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="229"/>
+        <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
         <translation>ascii ポイントを読む</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
         <translation>ファイル...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="242"/>
+        <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
         <translation>書式:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
         <translation>空白で分割</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
         <translation>タブで分割</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
         <translation>カンマで分割</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
         <translation>空白行</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
         <translation>Psion 2 の *.odb</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
         <translation>ポイントを接続</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
         <translation>2D ポイント</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
         <translation>2D ポイントを書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
         <translation>3D ポイント</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
         <translation>３D ポイントを書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
         <translation>ポイントの番号</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
         <translation>ポイント番号を書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
         <translation>ポイントの上付き文字</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
         <translation>ポイントの上付き文字を書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
         <translation>ポイント名</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
         <translation>ポイント名を書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
         <translation>書く</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <location filename="../asciifile/asciifile.cpp" line="268"/>
         <source>Cancel</source>
         <translation>中止</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
         <translation>ファイルの選択</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="314"/>
+        <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
         <translation>２D ポイントのレイヤー指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
         <translation>3D ポイントのレイヤー指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
+        <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
         <translation>ポイントの上付きのレイヤー指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
+        <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
         <translation>ポイントの上付きの文字の高さ指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
         <translation>ポイントの上付きの隙間の指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="325"/>
+        <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
         <translation>ポイント番号のレイヤー指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="326"/>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
         <translation>ポイント番号の文字の高さ指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="327"/>
+        <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
         <translation>ポイント番号の隙間の指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="330"/>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
         <translation>ポイント名のレイヤー指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="331"/>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
         <translation>ポイント名の文字の高さ指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="332"/>
+        <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
         <translation>ポイント名の隙間の指定が未入力です</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <location filename="../asciifile/asciifile.cpp" line="359"/>
         <source>The file %1 not exist</source>
         <translation>ファイル %1 は存在しない</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <location filename="../asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
         <translation>ファイル %1 は開くことができない</translation>
     </message>
 </context>
 <context>
-    <name>dibSHP</name>
+    <name>divide</name>
     <message>
-        <location filename="../importshp/importshp.cpp" line="59"/>
-        <source>File...</source>
-        <translation>ファイル...</translation>
+        <location filename="../divide/divide.cpp" line="35"/>
+        <location filename="../divide/divide.cpp" line="42"/>
+        <source>Divide</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="67"/>
-        <source>File type:</source>
-        <translation>ファイルの種類:</translation>
+        <location filename="../divide/divide.cpp" line="56"/>
+        <source>Select a line, circle or arc and press return</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="75"/>
+        <location filename="../divide/divide.cpp" line="67"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="104"/>
+        <source>n</source>
+        <translation type="unfinished">n</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="444"/>
+        <source>Empty Entity</source>
+        <translation type="unfinished">要素はない</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="452"/>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="452"/>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>レイヤー</translation>
+        <translation type="unfinished">レイヤー</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="56"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>ESRI Shapeのファイルをインポート</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="68"/>
-        <location filename="../importshp/importshp.cpp" line="266"/>
-        <source>Unknown</source>
-        <translation>未知</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="76"/>
-        <location filename="../importshp/importshp.cpp" line="89"/>
-        <location filename="../importshp/importshp.cpp" line="102"/>
-        <location filename="../importshp/importshp.cpp" line="115"/>
-        <source>Current</source>
-        <translation>現在のもので</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="77"/>
-        <location filename="../importshp/importshp.cpp" line="90"/>
-        <location filename="../importshp/importshp.cpp" line="103"/>
-        <location filename="../importshp/importshp.cpp" line="116"/>
-        <source>From data:</source>
-        <translation>データーから:</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="88"/>
+        <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation>色</translation>
+        <translation type="unfinished">色</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="101"/>
+        <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>線の種類</translation>
+        <translation type="unfinished">線の種類</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="114"/>
-        <source>Width</source>
-        <translation>幅</translation>
+        <location filename="../divide/divide.cpp" line="465"/>
+        <source>Line thickness</source>
+        <translation type="unfinished">線の太さ</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="127"/>
-        <location filename="../importshp/importshp.cpp" line="213"/>
-        <source>Point</source>
-        <translation>ポイント</translation>
+        <location filename="../divide/divide.cpp" line="467"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="128"/>
-        <source>as Point</source>
-        <translation>現在のポイント</translation>
+        <location filename="../divide/divide.cpp" line="474"/>
+        <source>LINE</source>
+        <translation type="unfinished">直線</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="129"/>
-        <source>as Label:</source>
-        <translation>ラベルによる:</translation>
+        <location filename="../divide/divide.cpp" line="479"/>
+        <source>from point</source>
+        <translation type="unfinished">始点</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="141"/>
-        <source>Accept</source>
-        <translation>読み込む</translation>
+        <location filename="../divide/divide.cpp" line="482"/>
+        <source>to point</source>
+        <translation type="unfinished">終点</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="142"/>
+        <location filename="../divide/divide.cpp" line="487"/>
+        <location filename="../divide/divide.cpp" line="514"/>
+        <source>length</source>
+        <translation type="unfinished">長さ</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="492"/>
+        <source>Angle in XY plane</source>
+        <translation type="unfinished">傾きの角度</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="494"/>
+        <source>Inc.</source>
+        <translation type="unfinished">始点、終点の距離</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="499"/>
+        <source>ARC</source>
+        <translation type="unfinished">弧</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="500"/>
+        <location filename="../divide/divide.cpp" line="519"/>
+        <source>center point</source>
+        <translation type="unfinished">中心点</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="506"/>
+        <location filename="../divide/divide.cpp" line="523"/>
+        <location filename="../divide/divide.cpp" line="545"/>
+        <source>radius</source>
+        <translation type="unfinished">半径</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="507"/>
+        <source>initial angle</source>
+        <translation type="unfinished">始まりの角度</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="509"/>
+        <source>final angle</source>
+        <translation type="unfinished">終わりの角度</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="518"/>
+        <source>CIRCLE</source>
+        <translation type="unfinished">円</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="524"/>
+        <source>circumference</source>
+        <translation type="unfinished">円周</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="526"/>
+        <source>area</source>
+        <translation type="unfinished">面積</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="530"/>
+        <source>POLYLINE</source>
+        <translation type="unfinished">ポリライン</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="531"/>
+        <source>Closed</source>
+        <translation type="unfinished">閉じている</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="533"/>
+        <source>No</source>
+        <translation type="unfinished">いいえ</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="533"/>
+        <source>Yes</source>
+        <translation type="unfinished">はい</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="534"/>
+        <source>Vertices</source>
+        <translation type="unfinished">頂点</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="539"/>
+        <source>in point</source>
+        <translation type="unfinished">頂点</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="555"/>
+        <source>MUST be a line, circle or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dividedlg</name>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="48"/>
+        <source>Divide - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="69"/>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="75"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation>中止</translation>
+        <translation type="unfinished">中止</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="167"/>
-        <source>Select file</source>
-        <translation>ファイル選択</translation>
+        <location filename="../divide/dividedlg.cpp" line="85"/>
+        <source>Divide at</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="217"/>
-        <source>Point+Measure</source>
-        <translation>ポイント＋巻尺</translation>
+        <location filename="../divide/dividedlg.cpp" line="92"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="221"/>
-        <source>3D Point</source>
-        <translation>３D ポイント</translation>
+        <location filename="../divide/dividedlg.cpp" line="115"/>
+        <source>places</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="225"/>
-        <source>Multi Point</source>
-        <translation>マルチ・ポイント</translation>
+        <location filename="../divide/dividedlg.cpp" line="126"/>
+        <source>Ticks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="229"/>
-        <source>Multi Point+Measure</source>
-        <translation>マルチ・ポイント＋巻尺</translation>
+        <location filename="../divide/dividedlg.cpp" line="134"/>
+        <source>Breaks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="233"/>
-        <source>3D Multi Point</source>
-        <translation>３D マルチ・ポイント</translation>
+        <location filename="../divide/dividedlg.cpp" line="179"/>
+        <source>&lt;i&gt;New&lt;/i&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="237"/>
-        <source>Arc</source>
-        <translation>弧</translation>
+        <location filename="../divide/dividedlg.cpp" line="210"/>
+        <source>Enter start
+angle, in
+decimal degrees
+0° at 3 o&apos;clock
+goes
+anti-clockwise.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="241"/>
-        <source>Arc+Measure</source>
-        <translation>弧＋巻尺</translation>
+        <location filename="../divide/dividedlg.cpp" line="246"/>
+        <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="245"/>
-        <source>3D Arc</source>
-        <translation>弧</translation>
+        <location filename="../divide/dividedlg.cpp" line="252"/>
+        <source>Ticks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Polygon</source>
-        <translation>ポリゴン</translation>
+        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <source>Above</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Polygon+Measure</source>
-        <translation>ポリゴン＋巻尺</translation>
+        <location filename="../divide/dividedlg.cpp" line="259"/>
+        <source>Below</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Polygon</source>
-        <translation>３D ポリゴン</translation>
+        <location filename="../divide/dividedlg.cpp" line="263"/>
+        <source>Outside</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="261"/>
-        <source>Multipatch</source>
-        <translation>マルチ・パッチ</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="281"/>
-        <source>The file %1 not have extension .shp</source>
-        <translation>ファイル %1 は拡張子 .shp を持っていない</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="286"/>
-        <source>The file %1 not exist</source>
-        <translation>ファイル %1 は存在しない</translation>
+        <location filename="../divide/dividedlg.cpp" line="264"/>
+        <source>Inside</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>lc_Geardlg</name>
     <message>
-        <location filename="../gear/gear.cpp" line="66"/>
-        <source>Draw a gear</source>
-        <translation>歯車を描く</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="71"/>
+        <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
         <translation>歯数</translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="79"/>
-        <source>Circular pitch</source>
-        <translation>円形ピッチ</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="87"/>
+        <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
         <translation>圧力角（度）</translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="95"/>
-        <source>Addendum</source>
-        <translation>補遺</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="103"/>
-        <source>Dedendum</source>
-        <translation>歯元</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="111"/>
-        <source>Type</source>
-        <translation>タイプ</translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="114"/>
-        <source>Spur</source>
-        <translation>平歯車</translation>
+        <location filename="../gear/gear.cpp" line="113"/>
+        <source>Rotation angle</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
-        <source>Ring</source>
-        <translation>リング</translation>
+        <source>Modulus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="117"/>
+        <source>Addendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="118"/>
+        <source>Dedendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="120"/>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="121"/>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="122"/>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="124"/>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="125"/>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="126"/>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="127"/>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="128"/>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="129"/>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="130"/>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="132"/>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="133"/>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
         <translation>受け入れる</translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="124"/>
+        <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
         <translation>中止</translation>
     </message>
@@ -791,7 +981,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="274"/>
+        <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
         <translation>要素一覧</translation>
     </message>
@@ -917,8 +1107,8 @@
         <translation>picPunto 線を引く: 次のポイントが未記入 %1</translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="258"/>
-        <location filename="../picfile/picfile.cpp" line="267"/>
+        <location filename="../picfile/picfile.cpp" line="262"/>
+        <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
         <translation>%1 で書式エラー</translation>
     </message>
@@ -926,14 +1116,10 @@
 <context>
     <name>plot</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="21"/>
-        <location filename="../plotequation/plot.cpp" line="28"/>
+        <location filename="../plotequation/plot.cpp" line="30"/>
+        <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
         <translation>式を入力して書くためのプラグイン</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="obsolete">書く</translation>
     </message>
 </context>
 <context>
@@ -1020,17 +1206,17 @@ Use t or x in your equation as a variable/parameter.
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="207"/>
+        <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
         <translation>スタイル:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="208"/>
+        <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
         <translation>文字の高さ:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="209"/>
+        <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
         <translation>隙間の大きさ</translation>
     </message>

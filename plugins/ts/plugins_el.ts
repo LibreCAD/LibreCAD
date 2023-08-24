@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0" language="el">
+<TS version="2.1" language="el">
 <context>
     <name>AsciiFile</name>
     <message>
@@ -11,38 +11,67 @@
     </message>
 </context>
 <context>
-    <name>ImportShp</name>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="40"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>Εισαγωγή ESRI Shapefile</translation>
-    </message>
-</context>
-<context>
     <name>LC_Align</name>
     <message>
-        <location filename="../align/align.cpp" line="20"/>
-        <location filename="../align/align.cpp" line="27"/>
+        <location filename="../align/align.cpp" line="24"/>
+        <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
         <translation>Στοίχιση</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="40"/>
+        <location filename="../align/align.cpp" line="32"/>
+        <source>Align settings...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="49"/>
+        <source>Keep original objects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="50"/>
+        <source>Specify base points first</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="54"/>
+        <source>Align Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="57"/>
+        <source>Click on options to set/unset,
+Ok to accept and start alignment.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="60"/>
+        <source>If &apos;Keep original objects&apos; is checked,
+Align will copy rather than move the selected objects.
+
+If &apos;Specify base points first&apos; is checked,
+Align will prompt for the alignment points in the order
+first base, second base, first target, second target.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
         <translation>πρώτο σημείο βάσης:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="42"/>
+        <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
         <translation>πρώτο σημείο προορισμού:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="44"/>
+        <location filename="../align/align.cpp" line="84"/>
+        <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
         <translation>δεύτερο σημείο βάσης:</translation>
     </message>
     <message>
-        <location filename="../align/align.cpp" line="46"/>
+        <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
         <translation>δεύτερο σημείο προορισμού:</translation>
     </message>
@@ -121,7 +150,8 @@
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
-        <location filename="../list/list.cpp" line="218"/>
+        <location filename="../list/list.cpp" line="180"/>
+        <location filename="../list/list.cpp" line="222"/>
         <source>in point</source>
         <translation>σε σημείο</translation>
     </message>
@@ -172,7 +202,7 @@
     <message>
         <location filename="../list/list.cpp" line="125"/>
         <location filename="../list/list.cpp" line="139"/>
-        <location filename="../list/list.cpp" line="222"/>
+        <location filename="../list/list.cpp" line="226"/>
         <source>radius</source>
         <translation>ακτίνα</translation>
     </message>
@@ -238,123 +268,123 @@
         <translation>ΚΕΙΜΕΝΟ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="182"/>
+        <location filename="../list/list.cpp" line="183"/>
+        <source>TEXTCONTENT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
         <translation>ΕΙΣΑΓΩΓΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="185"/>
+        <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
         <translation>Όνομα</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="187"/>
+        <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
         <translation>Σημείο εισαγωγής</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="190"/>
+        <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="193"/>
+        <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="199"/>
+        <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="203"/>
+        <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="210"/>
+        <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
         <translation>ΠΟΛΥΓΡΑΜΜΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="211"/>
+        <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
         <translation>Κλειστή</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
         <translation>Όχι</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="212"/>
+        <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
         <translation>Ναι</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="213"/>
+        <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
         <translation>Κορυφές</translation>
     </message>
     <message>
-        <source>curvature</source>
-        <translatorcomment>CHECKME</translatorcomment>
-        <translation type="obsolete">καμπυλότητα</translation>
-    </message>
-    <message>
-        <location filename="../list/list.cpp" line="227"/>
+        <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
         <translation>ΕΙΚΟΝΑ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="230"/>
+        <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
         <translation>SPLINE</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="233"/>
+        <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="236"/>
+        <location filename="../list/list.cpp" line="240"/>
         <source>HATCH</source>
         <translation>ΔΙΑΓΡΑΜΜΙΣΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="239"/>
+        <location filename="../list/list.cpp" line="243"/>
         <source>DIMLEADER</source>
         <translation>ΔΙΑΣΤΑΣΗΟΔΗΓΟΣ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="242"/>
+        <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
         <translatorcomment>CHECKME ΣΤΟΙΧΙΣΜΕΝΗ &apos;Η ΕΥΘΥΓΡΑΜΜΙΣΜΕΝΗ ΚΑΙ ΓΙΑΤΙ ΚΑΙ ΠΡΟΣΟΧΗ ΣΤΑ ΑΛΛΑ</translatorcomment>
         <translation>ΔΙΑΣΤΑΣΗΣΤΟΙΧΙΣΜΕΝΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="245"/>
+        <location filename="../list/list.cpp" line="249"/>
         <source>DIMLINEAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΡΑΜΜΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="248"/>
+        <location filename="../list/list.cpp" line="252"/>
         <source>DIMRADIAL</source>
         <translation>ΔΙΑΣΤΑΣΗΑΚΤΙΝΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="251"/>
+        <location filename="../list/list.cpp" line="255"/>
         <source>DIMDIAMETRIC</source>
         <translation>ΔΙΑΣΤΑΣΗΔΙΑΜΕΤΡΙΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="254"/>
+        <location filename="../list/list.cpp" line="258"/>
         <source>DIMANGULAR</source>
         <translation>ΔΙΑΣΤΑΣΗΓΩΝΙΑΚΗ</translation>
     </message>
     <message>
-        <location filename="../list/list.cpp" line="257"/>
+        <location filename="../list/list.cpp" line="261"/>
         <source>UNKNOWN</source>
         <translation>ΑΓΝΩΣΤΟ</translation>
     </message>
@@ -403,411 +433,552 @@
 <context>
     <name>dibPunto</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="229"/>
+        <location filename="../asciifile/asciifile.cpp" line="220"/>
         <source>Read ascii points</source>
         <translation>Ανάγνωση σημείων ascii</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="235"/>
+        <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
         <translation>Αρχείο...</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="242"/>
+        <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
         <translation>Τύπος:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
         <translation>Διάστημα διαχωριστικό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Tab Separator</source>
         <translation>Στηλοθέτης διαχωριστικό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Comma Separator</source>
         <translation>Κόμμα διαχωριστικό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
         <translation>Διάστημα σε στήλες</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="244"/>
+        <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
         <translation>*.odb for Psion 2</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="246"/>
+        <location filename="../asciifile/asciifile.cpp" line="237"/>
         <source>Connect points</source>
         <translation>Σύνδεση σημείων</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>2D Point</source>
         <translation>Σημείο 2Δ</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="254"/>
+        <location filename="../asciifile/asciifile.cpp" line="245"/>
         <source>Draw 2D Point</source>
         <translation>Σχεδίαση σημείου 2Δ</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>3D Point</source>
         <translation>Σημείο 3Δ</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="255"/>
+        <location filename="../asciifile/asciifile.cpp" line="246"/>
         <source>Draw 3D Point</source>
         <translation>Σχεδίαση σημείου 3Δ</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
         <translation>Αριθμός σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="256"/>
+        <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
         <translation>Σχεδίαση αριθμού σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
         <translation>Ανύψωση σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="257"/>
+        <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
         <translation>Σχεδίαση ανύψωσης σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
         <translation>Κωδικός σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="258"/>
+        <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
         <translation>Σχεδίαση κωδικού σημείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="272"/>
+        <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
         <translation>Αποδοχή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="277"/>
+        <location filename="../asciifile/asciifile.cpp" line="268"/>
         <source>Cancel</source>
         <translation>Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="307"/>
+        <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
         <translation>Επιλογή αρχείου</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="314"/>
+        <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
         <translatorcomment>CHECKME ALL TRANSLATIONS BELOW SOS μπορεί να είναι &quot;κωδικών σημείων&quot;, &quot;αριθμών (των) σημείων&quot;</translatorcomment>
         <translation>Η στρώση 2Δ του σημείου είναι κενή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="317"/>
+        <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
         <translation>Η στρώση 3Δ του σημείου είναι κενή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="320"/>
+        <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
         <translation>Η στρώση ανύψωσης του σημείου είναι κενή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="321"/>
+        <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
         <translation>Το ύψος ανύψωσης του σημείου είναι κενό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="322"/>
+        <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
         <translation>Ο διαχωρισμός ανύψωσης του σημείου είναι κενός</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="325"/>
+        <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
         <translation>Η στρώση αριθμού του σημείου είναι κενή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="326"/>
+        <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
         <translation>Το ύψος αριθμού του σημείου είναι κενό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="327"/>
+        <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
         <translation>Ο διαχωρισμός αριθμού του σημείου είναι κενός</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="330"/>
+        <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
         <translation>Η στρώση κωδικού του σημείου είναι κενή</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="331"/>
+        <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
         <translation>Το ύψος κωδικού του σημείου είναι κενό</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="332"/>
+        <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
         <translation>Ο διαχωρισμός κωδικού του σημείου είναι κενός</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="360"/>
+        <location filename="../asciifile/asciifile.cpp" line="359"/>
         <source>The file %1 not exist</source>
         <translation>Το αρχείο %1 δεν υπάρχει</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="365"/>
+        <location filename="../asciifile/asciifile.cpp" line="364"/>
         <source>Can&apos;t open the file %1</source>
         <translation>Δεν είναι δυνατό το άνοιγμα του αρχείου %1</translation>
     </message>
 </context>
 <context>
-    <name>dibSHP</name>
+    <name>divide</name>
     <message>
-        <location filename="../importshp/importshp.cpp" line="59"/>
-        <source>File...</source>
-        <translation>Αρχείο...</translation>
+        <location filename="../divide/divide.cpp" line="35"/>
+        <location filename="../divide/divide.cpp" line="42"/>
+        <source>Divide</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="67"/>
-        <source>File type:</source>
-        <translation>Τύπος αρχείου:</translation>
+        <location filename="../divide/divide.cpp" line="56"/>
+        <source>Select a line, circle or arc and press return</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="75"/>
+        <location filename="../divide/divide.cpp" line="67"/>
+        <source>Error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="104"/>
+        <source>n</source>
+        <translation type="unfinished">n</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="444"/>
+        <source>Empty Entity</source>
+        <translation type="unfinished">Κενή οντότητα</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="452"/>
+        <source>X</source>
+        <translation type="unfinished">X</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="452"/>
+        <source>Y</source>
+        <translation type="unfinished">Y</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation>Στρώση</translation>
+        <translation type="unfinished">Στρώση</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="56"/>
-        <source>Import ESRI Shapefile</source>
-        <translation>Εισαγωγή ESRI Shapefile</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="68"/>
-        <location filename="../importshp/importshp.cpp" line="266"/>
-        <source>Unknown</source>
-        <translation>Άγνωστο</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="76"/>
-        <location filename="../importshp/importshp.cpp" line="89"/>
-        <location filename="../importshp/importshp.cpp" line="102"/>
-        <location filename="../importshp/importshp.cpp" line="115"/>
-        <source>Current</source>
-        <translation>Τρέχον</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="77"/>
-        <location filename="../importshp/importshp.cpp" line="90"/>
-        <location filename="../importshp/importshp.cpp" line="103"/>
-        <location filename="../importshp/importshp.cpp" line="116"/>
-        <source>From data:</source>
-        <translation>Από δεδομένα:</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="88"/>
+        <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation>Χρώμα</translation>
+        <translation type="unfinished">Χρώμα</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="101"/>
+        <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation>Τύπος γραμμής</translation>
+        <translation type="unfinished">Τύπος γραμμής</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="114"/>
-        <source>Width</source>
-        <translation>Πλάτος</translation>
+        <location filename="../divide/divide.cpp" line="465"/>
+        <source>Line thickness</source>
+        <translation type="unfinished">Πάχος γραμμής</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="127"/>
-        <location filename="../importshp/importshp.cpp" line="213"/>
-        <source>Point</source>
-        <translation>Σημείο</translation>
+        <location filename="../divide/divide.cpp" line="467"/>
+        <source>ID</source>
+        <translation type="unfinished">ID</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="128"/>
-        <source>as Point</source>
-        <translation>ως Σημείο</translation>
+        <location filename="../divide/divide.cpp" line="474"/>
+        <source>LINE</source>
+        <translation type="unfinished">ΓΡΑΜΜΗ</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="129"/>
-        <source>as Label:</source>
-        <translation>ως Ετικέτα:</translation>
+        <location filename="../divide/divide.cpp" line="479"/>
+        <source>from point</source>
+        <translation type="unfinished">από σημείο</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="141"/>
-        <source>Accept</source>
-        <translation>Αποδοχή</translation>
+        <location filename="../divide/divide.cpp" line="482"/>
+        <source>to point</source>
+        <translation type="unfinished">προς σημείο</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="142"/>
+        <location filename="../divide/divide.cpp" line="487"/>
+        <location filename="../divide/divide.cpp" line="514"/>
+        <source>length</source>
+        <translation type="unfinished">μήκος</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="492"/>
+        <source>Angle in XY plane</source>
+        <translation type="unfinished">Γωνία στο επίπεδο XY</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="494"/>
+        <source>Inc.</source>
+        <translation type="unfinished">Κλίση.</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="499"/>
+        <source>ARC</source>
+        <translation type="unfinished">ΤΟΞΟ</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="500"/>
+        <location filename="../divide/divide.cpp" line="519"/>
+        <source>center point</source>
+        <translation type="unfinished">κέντρο</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="506"/>
+        <location filename="../divide/divide.cpp" line="523"/>
+        <location filename="../divide/divide.cpp" line="545"/>
+        <source>radius</source>
+        <translation type="unfinished">ακτίνα</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="507"/>
+        <source>initial angle</source>
+        <translation type="unfinished">αρχική γωνία</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="509"/>
+        <source>final angle</source>
+        <translation type="unfinished">τελική γωνία</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="518"/>
+        <source>CIRCLE</source>
+        <translation type="unfinished">ΚΥΚΛΟΣ</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="524"/>
+        <source>circumference</source>
+        <translation type="unfinished">περιφέρεια</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="526"/>
+        <source>area</source>
+        <translation type="unfinished">εμβαδό</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="530"/>
+        <source>POLYLINE</source>
+        <translation type="unfinished">ΠΟΛΥΓΡΑΜΜΗ</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="531"/>
+        <source>Closed</source>
+        <translation type="unfinished">Κλειστή</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="533"/>
+        <source>No</source>
+        <translation type="unfinished">Όχι</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="533"/>
+        <source>Yes</source>
+        <translation type="unfinished">Ναι</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="534"/>
+        <source>Vertices</source>
+        <translation type="unfinished">Κορυφές</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="539"/>
+        <source>in point</source>
+        <translation type="unfinished">σε σημείο</translation>
+    </message>
+    <message>
+        <location filename="../divide/divide.cpp" line="555"/>
+        <source>MUST be a line, circle or arc</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>dividedlg</name>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="48"/>
+        <source>Divide - </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="69"/>
+        <source>Layers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="75"/>
+        <source>OK</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation>Ακύρωση</translation>
+        <translation type="unfinished">Ακύρωση</translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="167"/>
-        <source>Select file</source>
-        <translation>Επιλογή αρχείου</translation>
+        <location filename="../divide/dividedlg.cpp" line="85"/>
+        <source>Divide at</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="217"/>
-        <source>Point+Measure</source>
-        <translatorcomment>CHECKME και τα παρακάτω</translatorcomment>
-        <translation>Σημείο+Μέτρο</translation>
+        <location filename="../divide/dividedlg.cpp" line="92"/>
+        <source>Size</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="221"/>
-        <source>3D Point</source>
-        <translation>Σημείο 3Δ</translation>
+        <location filename="../divide/dividedlg.cpp" line="115"/>
+        <source>places</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="225"/>
-        <source>Multi Point</source>
-        <translation>Πολλαπλά σημεία</translation>
+        <location filename="../divide/dividedlg.cpp" line="126"/>
+        <source>Ticks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="229"/>
-        <source>Multi Point+Measure</source>
-        <translation>Πολλαπλά σημεία+Μέτρο</translation>
+        <location filename="../divide/dividedlg.cpp" line="134"/>
+        <source>Breaks - Off</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="233"/>
-        <source>3D Multi Point</source>
-        <translation>Πολλαπλά σημεία 3Δ</translation>
+        <location filename="../divide/dividedlg.cpp" line="179"/>
+        <source>&lt;i&gt;New&lt;/i&gt;</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="237"/>
-        <source>Arc</source>
-        <translation>Τόξο</translation>
+        <location filename="../divide/dividedlg.cpp" line="210"/>
+        <source>Enter start
+angle, in
+decimal degrees
+0° at 3 o&apos;clock
+goes
+anti-clockwise.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="241"/>
-        <source>Arc+Measure</source>
-        <translation>Τόξο+Μέτρο</translation>
+        <location filename="../divide/dividedlg.cpp" line="246"/>
+        <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="245"/>
-        <source>3D Arc</source>
-        <translation>Τόξο 3Δ</translation>
+        <location filename="../divide/dividedlg.cpp" line="252"/>
+        <source>Ticks</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="249"/>
-        <source>Polygon</source>
-        <translation>Πολύγωνο</translation>
+        <location filename="../divide/dividedlg.cpp" line="258"/>
+        <source>Above</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="253"/>
-        <source>Polygon+Measure</source>
-        <translation>Πολύγωνο+Μέτρο</translation>
+        <location filename="../divide/dividedlg.cpp" line="259"/>
+        <source>Below</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../importshp/importshp.cpp" line="257"/>
-        <source>3D Polygon</source>
-        <translation>Πολύγωνο 3Δ</translation>
+        <location filename="../divide/dividedlg.cpp" line="263"/>
+        <source>Outside</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Poligon</source>
-        <translation type="obsolete">Πολύγωνο</translation>
-    </message>
-    <message>
-        <source>Poligon+Measure</source>
-        <translation type="obsolete">Πολύγωνο+Μέτρο</translation>
-    </message>
-    <message>
-        <source>3D Poligon</source>
-        <translation type="obsolete">Πολύγωνο 3Δ</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="261"/>
-        <source>Multipatch</source>
-        <translatorcomment>CHECKME από spline patch; θα είναι λάθος και αλλού. να δω το patch πώς θα μεταφραστεί.</translatorcomment>
-        <translation>Πολυκαμπύλη</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="281"/>
-        <source>The file %1 not have extension .shp</source>
-        <translation>Το αρχείο %1 δεν έχει επέκταση .shp</translation>
-    </message>
-    <message>
-        <location filename="../importshp/importshp.cpp" line="286"/>
-        <source>The file %1 not exist</source>
-        <translation>Το αρχείο %1 δεν υπάρχει</translation>
+        <location filename="../divide/dividedlg.cpp" line="264"/>
+        <source>Inside</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>lc_Geardlg</name>
     <message>
-        <location filename="../gear/gear.cpp" line="66"/>
-        <source>Draw a gear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="71"/>
+        <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="79"/>
-        <source>Circular pitch</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="87"/>
+        <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="95"/>
-        <source>Addendum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="103"/>
-        <source>Dedendum</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="111"/>
-        <source>Type</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <location filename="../gear/gear.cpp" line="114"/>
-        <source>Spur</source>
+        <location filename="../gear/gear.cpp" line="113"/>
+        <source>Rotation angle</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
-        <source>Ring</source>
+        <source>Modulus</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="117"/>
+        <source>Addendum (rel. to modulus)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="118"/>
+        <source>Dedendum (rel. to modulus)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
+        <source>Number of segments to draw (dedendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="120"/>
+        <source>Number of segments to draw (addendum)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="121"/>
+        <source>Draw all teeth?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="122"/>
+        <source>Draw symmetric face?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="124"/>
+        <source>Use layers?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="125"/>
+        <source>Draw addendum circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="126"/>
+        <source>Draw pitch circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="127"/>
+        <source>Draw base circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="128"/>
+        <source>Draw root circle?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="129"/>
+        <source>Draw pressure line?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="130"/>
+        <source>Draw pressure limits?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="132"/>
+        <source>Calculate interference?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="133"/>
+        <source>Number of segments to draw (interference)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
         <translation type="unfinished">Αποδοχή</translation>
     </message>
     <message>
-        <location filename="../gear/gear.cpp" line="124"/>
+        <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
         <translation type="unfinished">Ακύρωση</translation>
     </message>
@@ -815,7 +986,7 @@
 <context>
     <name>lc_Listdlg</name>
     <message>
-        <location filename="../list/list.cpp" line="274"/>
+        <location filename="../list/list.cpp" line="278"/>
         <source>List entities</source>
         <translation>Απαρίθμηση οντοτήτων</translation>
     </message>
@@ -941,8 +1112,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../picfile/picfile.cpp" line="258"/>
-        <location filename="../picfile/picfile.cpp" line="267"/>
+        <location filename="../picfile/picfile.cpp" line="262"/>
+        <location filename="../picfile/picfile.cpp" line="271"/>
         <source>format error in %1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -950,14 +1121,10 @@
 <context>
     <name>plot</name>
     <message>
-        <location filename="../plotequation/plot.cpp" line="21"/>
-        <location filename="../plotequation/plot.cpp" line="28"/>
+        <location filename="../plotequation/plot.cpp" line="30"/>
+        <location filename="../plotequation/plot.cpp" line="37"/>
         <source>Plot plugin</source>
         <translation>Πρόσθετο σχεδιογράφησης</translation>
-    </message>
-    <message>
-        <source>Draw</source>
-        <translation type="obsolete">Σχεδίαση</translation>
     </message>
 </context>
 <context>
@@ -1044,21 +1211,17 @@ Use t or x in your equation as a variable/parameter.
 <context>
     <name>textBox</name>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="207"/>
+        <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
         <translation>Στιλ:</translation>
     </message>
     <message>
-        <location filename="../asciifile/asciifile.cpp" line="208"/>
+        <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
         <translation>Ύψος:</translation>
     </message>
     <message>
-        <source>Heigth:</source>
-        <translation type="obsolete">Ύψος:</translation>
-    </message>
-    <message>
-        <location filename="../asciifile/asciifile.cpp" line="209"/>
+        <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
         <translation>Διαχωρισμός</translation>
     </message>
