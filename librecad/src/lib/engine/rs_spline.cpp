@@ -177,7 +177,8 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.controlPoints.size() < size_t(data.degree)+1) {
+    // Issue #1689: allow closed splines by 3 control points
+    if ( (!data.closed && data.controlPoints.size() < size_t(data.degree)+1) || data.controlPoints.size() < 3) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }

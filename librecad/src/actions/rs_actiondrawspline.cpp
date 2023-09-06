@@ -147,9 +147,11 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-				if (getStatus()==SetNextPoint &&
-						pPoints->spline &&
-                        pPoints->spline->getNumberOfControlPoints()>=size_t(pPoints->spline->getDegree())+1) {
+                if (getStatus()==SetNextPoint && pPoints->spline ) {
+                    const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
+                    bool isClosed = pPoints->spline->isClosed();
+                    // Issue #1689: allow closed splines by 3 control points
+                    if (nPoints > size_t(pPoints->spline->getDegree()) || (isClosed && nPoints == 3 ))
                         trigger();
                 }
         deletePreview();
