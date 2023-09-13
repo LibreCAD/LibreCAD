@@ -797,9 +797,9 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 
 	double const a1 = angle + entity->getTangentDirection(vp).angle();
 
-    RS_Vector const v1 = RS_Vector::polar(0.5 * length, a1);
+    RS_Vector const v1 = RS_Vector::polar(length, a1);
 
-    RS_Line* ret = new RS_Line{container, coord-v1, coord+v1};
+    RS_Line* ret = new RS_Line{container, coord, coord+v1};
     setEntity(ret);
 
     return ret;
