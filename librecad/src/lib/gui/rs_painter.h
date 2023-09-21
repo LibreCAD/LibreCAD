@@ -34,6 +34,7 @@
 class RS_Color;
 class RS_GraphicView;
 class RS_Pen;
+class RS_Polyline;
 class RS_Spline;
 class QPainterPath;
 class QRectF;
@@ -116,6 +117,7 @@ public:
                              double angle,
                              double angle1, double angle2,
                              bool reversed) = 0;
+    virtual void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) = 0;
     virtual void drawSplinePoints(const LC_SplinePointsData& splineData) = 0;
     virtual void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) = 0;
     virtual void drawImg(QImage& img, const RS_Vector& pos,

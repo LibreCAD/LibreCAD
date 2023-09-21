@@ -73,6 +73,7 @@ public:
                              double angle,
                              double a1, double a2,
                              bool reversed) override;
+    void drawPolyline(const RS_Polyline& polyline, const RS_GraphicView& view) override;
     void drawSplinePoints(const LC_SplinePointsData& splineData) override;
     void drawSpline(const RS_Spline& spline, const RS_GraphicView& view) override;
     void drawImg(QImage& img, const RS_Vector& pos,

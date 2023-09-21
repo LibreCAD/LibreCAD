@@ -23,17 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<iostream>
-#include<cmath>
 #include<cassert>
+#include<cmath>
+#include<iostream>
+
 #include "rs_polyline.h"
 
-#include "rs_debug.h"
-#include "rs_line.h"
 #include "rs_arc.h"
+#include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
 
 RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
 				const RS_Vector& _endpoint,
@@ -691,25 +693,9 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
  */
 void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
 
-	if (!view) return;
+    if (painter == nullptr || view == nullptr) return;
 
-    // draw first entity and set correct pen:
-    RS_Entity* e = firstEntity(RS2::ResolveNone);
-    // We get the pen from the entitycontainer and apply it to the
-    // first line so that subsequent line are draw in the right color
-    //prevent segfault if polyline is empty
-	if (e) {
-        RS_Pen p=this->getPen(true);
-        e->setPen(p);
-        double patternOffset=0.;
-        view->drawEntity(painter, e, patternOffset);
-
-        e = nextEntity(RS2::ResolveNone);
-		while(e) {
-            view->drawEntityPlain(painter, e, patternOffset);
-            e = nextEntity(RS2::ResolveNone);
-        }
-    }
+    painter->drawPolyline(*this, *view);
 }
 
 
