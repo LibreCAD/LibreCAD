@@ -189,27 +189,44 @@ private:
     QPainter& m_painter;
 };
 
-void drawArc(QPainterPath& path, const RS_Arc& arc, const std::function<QPointF(const RS_Vector&)>& mapping)
+void drawArc(QPainterPath& path, const RS_Arc& arc, const LC_Rect& viewRect, const std::function<QPointF(const RS_Vector&)>& mapping)
 {
- if (arc.isReversed()) {
-    double a0 = arc.getAngle1();
-    double a1 = arc.isReversed() ? a0 - arc.getAngleLength() : a0 + arc.getAngleLength();
-    int steps = int(arc.getAngleLength()/(M_PI/36.)) + 2;
-    double dA = (a1-a0)/steps;
-    for (int i=0; i<= steps; ++i) {
-        double a = a0 + dA * i;
-        path.lineTo(mapping(arc.getCenter() + RS_Vector{a} * arc.getRadius()));
+    auto mapingRs=[&mapping](const RS_Vector& vp) -> RS_Vector {
+        QPointF point = mapping(vp);
+        return {point.x(), point.y()};
+    };
+    LC_Rect arcRect{mapingRs(arc.getMin()), mapingRs(arc.getMax())};
+    if (arcRect.inArea(viewRect) && arc.isReversed()) {
+        // QPainterPath::arcTo() can only draw along the increasing angle direction.
+        // Approximate a reversed arc by line segments. Maximum step about 5 degrees
+        double a0 = arc.getAngle1();
+        double a1 = arc.isReversed() ? a0 - arc.getAngleLength() : a0 + arc.getAngleLength();
+        int steps = int(arc.getAngleLength()/(M_PI/36.)) + 2;
+        double dA = (a1-a0)/steps;
+        for (int i=0; i<= steps; ++i) {
+            double a = a0 + dA * i;
+            path.lineTo(mapping(arc.getCenter() + RS_Vector{a} * arc.getRadius()));
+        }
+    } else {
+        double a0 = arc.getAngle1();
+        QPointF center = mapping(arc.getCenter());
+        QPointF rightMost = mapping(arc.getCenter() + RS_Vector{arc.getRadius(), 0.});
+        double r = std::hypot(center.x() - rightMost.x(), center.y() - rightMost.y());
+        if (arc.isReversed()) {
+            // if the arc is not enclosed in the viewport, we don't care about DashPattern offsets
+            // draw the arc along the positive angular direction; ignore reversed drawing
+            a0 -= arc.getAngleLength();
+            path.moveTo(mapping(arc.getEndpoint()));
+        }
+        path.arcTo(center.x() - r, center.y() - r, r + r, r + r, a0 * 180./M_PI, arc.getAngleLength() * 180./M_PI);
+        if (arc.isReversed()) {
+            // cropped arc, still move the current position to the arc end point
+            path.moveTo(mapping(arc.getEndpoint()));
+        }
     }
- } else {
-     double a0 = arc.getAngle1();
-     QPointF center = mapping(arc.getCenter());
-     QPointF rightMost = mapping(arc.getCenter() + RS_Vector{arc.getRadius(), 0.});
-     double r = std::hypot(center.x() - rightMost.x(), center.y() - rightMost.y());
-     path.arcTo(center.x() - r, center.y() - r, r + r, r + r, a0 * 180./M_PI, arc.getAngleLength() * 180./M_PI);
- }
 }
 
-void drawPolylineSegment(QPainterPath& path, RS_Entity* entity, const std::function<QPointF(const RS_Vector&)>& mapping)
+void drawPolylineSegment(QPainterPath& path, RS_Entity* entity, const LC_Rect& viewRect, const std::function<QPointF(const RS_Vector&)>& mapping)
 {
     if (entity == nullptr)
         return;
@@ -218,7 +235,7 @@ void drawPolylineSegment(QPainterPath& path, RS_Entity* entity, const std::funct
         path.lineTo(mapping(entity->getEndpoint()));
         break;
     case RS2::EntityArc:
-        drawArc(path, *static_cast<RS_Arc*>(entity), mapping);
+        drawArc(path, *static_cast<RS_Arc*>(entity), viewRect, mapping);
         break;
     default:
         LC_ERR<<"Polyline may contain lines/arcs only: found rtti() ="<<entity->rtti();
@@ -234,10 +251,15 @@ QPainterPath createPolyline(const RS_Polyline& polyline, const RS_GraphicView& v
         RS_Vector vGui = view.toGui(v);
         return {vGui.x, vGui.y};
     };
+    auto mapingRs=[&toGui](const RS_Vector& vp) -> RS_Vector {
+        QPointF point = toGui(vp);
+        return {point.x(), point.y()};
+    };
+    LC_Rect viewRect{mapingRs(view.getViewRect().minP()), mapingRs(view.getViewRect().maxP())};
     path.moveTo(toGui(static_cast<RS_AtomicEntity*>(*polyline.begin())->getStartpoint()));
 
     for(RS_Entity* entity: polyline)
-        drawPolylineSegment(path, entity, toGui);
+        drawPolylineSegment(path, entity, viewRect, toGui);
 
     return path;
 }
