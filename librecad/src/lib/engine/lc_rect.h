@@ -144,11 +144,11 @@ public:
 	Area merge(const Coordinate& other) const;
 
 	/**
-		 * @brief merge
-		 * two area's and expand if required to largest containing area
+         * @brief intersection
+         * the intersection area of two rectangular areas
 		 * @param other
 		 * @param tolerance, tolerance to detect zero size intersection
-		 * @return
+         * @return the rectangular intersection of two areas
 		 */
 	Area intersection(const Area& other, double tolerance = 0.) const;
 

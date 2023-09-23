@@ -364,7 +364,7 @@ public:
 
 	virtual RS_EntityContainer* getOverlayContainer(RS2::OverlayGraphics position);
 
-    const LC_Rect& getViewRect() {
+    const LC_Rect& getViewRect() const {
         return view_rect;
     }
 
@@ -375,7 +375,7 @@ public:
         scaleLineWidth = state;
     }
 
-    bool getLineWidthScaling(){
+    bool getLineWidthScaling() const {
         return scaleLineWidth;
     }
 
