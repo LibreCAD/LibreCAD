@@ -134,9 +134,9 @@ void launchEditProperty(QG_GraphicView& view, RS_Entity* entity)
 }
 
 // Show the entity property dialog on the closest entity in range
-void showEntityPropertiesDialog(QG_GraphicView& view, const QMouseEvent* event)
+void showEntityPropertiesDialog(QG_GraphicView& view, RS_Entity* entity)
 {
-    RS_Entity* entity = snapEntity(view, event);
+    if (entity == nullptr) return;
 
     // snap to the top selected parent
     while (entity != nullptr && entity->getParent() != nullptr && entity->getParent()->isSelected())
@@ -398,7 +398,7 @@ void QG_GraphicView::mouseDoubleClickEvent(QMouseEvent* e)
                 menus["Double-Click"]->popup(mapToGlobal(e->pos()));
             } else {
                 // double click on an entity to edit entity properties
-                showEntityPropertiesDialog(*this, e);
+                showEntityPropertiesDialog(*this, getDefaultAction()->catchEntity(e));
             }
             break;
     }

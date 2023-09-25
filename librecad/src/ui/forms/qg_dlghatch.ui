@@ -66,16 +66,37 @@
        <property name="title">
         <string>Preview</string>
        </property>
-       <layout class="QVBoxLayout">
-        <item>
+       <layout class="QFormLayout" name="formLayout">
+        <item row="0" column="0">
          <widget class="QCheckBox" name="cbEnablePreview">
           <property name="text">
            <string>Enable Preview</string>
           </property>
          </widget>
         </item>
-        <item>
+        <item row="6" column="0">
          <widget class="QG_GraphicView" name="gvPreview" native="true"/>
+        </item>
+        <item row="5" column="0" colspan="2">
+         <widget class="QLineEdit" name="leHatchArea">
+          <property name="readOnly">
+           <bool>true</bool>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="0">
+         <widget class="QLabel" name="lArea">
+          <property name="text">
+           <string>Area</string>
+          </property>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -305,4 +326,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updatePreview()</slot>
+ </slots>
 </ui>

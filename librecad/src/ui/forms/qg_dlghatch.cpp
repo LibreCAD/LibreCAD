@@ -111,6 +111,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         setPattern(pat);
         leScale->setText(scale);
         leAngle->setText(angle);
+        leHatchArea->setText("0.0");
     }
     // initialize dialog based on given hatch:
     else {
@@ -121,6 +122,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         leScale->setText(s);
         s.setNum(RS_Math::rad2deg(hatch->getAngle()));
         leAngle->setText(s);
+        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
     }
 }
 
@@ -130,6 +132,7 @@ void QG_DlgHatch::updateHatch() {
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
     }
 }
 
