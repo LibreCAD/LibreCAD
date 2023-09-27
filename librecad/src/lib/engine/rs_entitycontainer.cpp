@@ -1488,7 +1488,7 @@ double RS_EntityContainer::getDistanceToPoint(const RS_Vector& coord,
 
     for(auto e: entities){
 
-        if (e->isVisible()) {
+        if (e->isVisible() && (e->getLayer()==nullptr || !e->getLayer()->isLocked())) {
             RS_DEBUG->print("entity: getDistanceToPoint");
             RS_DEBUG->print("entity: %d", e->rtti());
             // bug#426, need to ignore Images to find nearest intersections
