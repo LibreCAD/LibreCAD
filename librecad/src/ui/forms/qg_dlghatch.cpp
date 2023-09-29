@@ -111,7 +111,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         setPattern(pat);
         leScale->setText(scale);
         leAngle->setText(angle);
-        leHatchArea->setText("0.0");
+        leHatchArea->setText("");
     }
     // initialize dialog based on given hatch:
     else {
@@ -132,7 +132,8 @@ void QG_DlgHatch::updateHatch() {
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
-        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
+        if (!isNew)
+            leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
     }
 }
 
@@ -193,12 +194,11 @@ void QG_DlgHatch::saveSettings()
 {
     if (isNew)
     {
-        RS_SETTINGS->beginGroup("/Draw");
+        RS_SETTINGS->beginGroupGuard("/Draw");
         RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
         RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
         RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
         RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
         RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
-        RS_SETTINGS->endGroup();
     }
 }
