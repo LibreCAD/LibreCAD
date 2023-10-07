@@ -560,9 +560,16 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	actionHandler->set_view(nullptr);
 	actionHandler->set_document(nullptr);
 
-	if (activateNext && window_list.count() > 0)
-		doActivate(window_list.front());
-	RS_DEBUG->print("QC_ApplicationWindow::doClose end");
+    if (activateNext && window_list.count() > 0) {
+        if (nullptr != parentWindow) {
+            doActivate(parentWindow);
+        }
+        else {
+            doActivate(window_list.front());
+        }
+    }
+
+    RS_DEBUG->print("QC_ApplicationWindow::doClose end");
 }
 
 /**
