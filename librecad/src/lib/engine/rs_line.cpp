@@ -613,43 +613,46 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         return;
     }
 
-    LC_Rect viewportRect { view->toGui(view->getViewRect().minP()), view->toGui(view->getViewRect().maxP()) };
-    RS_VectorSolutions endPoints;
+    auto viewportRect = view->getViewRect();
+    RS_VectorSolutions endPoints(0);
+    endPoints.push_back(getStartpoint());
+    endPoints.push_back(getEndpoint());
 
     RS_EntityContainer ec(nullptr);
     ec.addRectangle(viewportRect.minP(), viewportRect.maxP());
-    RS_Line guiLine{view->toGui(getStartpoint()), view->toGui(getEndpoint())};
 
-    for(const RS_Vector& endpoint: {guiLine.getStartpoint(), guiLine.getEndpoint()})
-        if (viewportRect.inArea(endpoint, RS_TOLERANCE))
-            endPoints.push_back(endpoint);
+//    if (viewportRect.inArea(getStartpoint(), RS_TOLERANCE))
+//         endPoints.push_back(getStartpoint());
+//    if (viewportRect.inArea(getEndpoint(), RS_TOLERANCE))
+//         endPoints.push_back(getEndpoint());
 
-    if (endPoints.size() < 2){
-        RS_VectorSolutions vpIts;
-        for(auto p: ec) {
-            auto const sol=RS_Information::getIntersection(&guiLine, p, true);
-            for (auto const& vp: sol) {
-                if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
-                    continue;
-                vpIts.push_back(vp);
-            }
-        }
-        for (auto const& vp: vpIts) {
-            if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
-                continue;
-            endPoints.push_back(vp);
-        }
+//    if (endPoints.size() < 2){
+//        RS_VectorSolutions vpIts;
+//        for(auto p: ec) {
+//            auto const sol=RS_Information::getIntersection(this, p, true);
+//            for (auto const& vp: sol) {
+//                if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+//                    continue;
+//                vpIts.push_back(vp);
+//            }
+//        }
+//        for (auto const& vp: vpIts) {
+//            if (endPoints.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
+//                continue;
+//            endPoints.push_back(vp);
+//        }
+//    }
+
+//    if (endPoints.size()<2) return;
+
+    if ((endPoints[0] - getStartpoint()).squared() >
+            (endPoints[1] - getStartpoint()).squared() )
+    {
+        std::swap(endPoints[0],endPoints[1]);
     }
 
-    if (endPoints.size()<2)
-        return;
-
-    if ((endPoints[0] - view->toGui(getStartpoint())).squared() > (endPoints[1] - view->toGui(getStartpoint())).squared()) {
-        std::swap(endPoints[0], endPoints[1]);
-    }
-
-    RS_Vector pStart = endPoints[0];
-    RS_Vector pEnd = endPoints[1];
+	RS_Vector pStart{view->toGui(endPoints.at(0))};
+	RS_Vector pEnd{view->toGui(endPoints.at(1))};
     //    std::cout<<"draw line: "<<pStart<<" to "<<pEnd<<std::endl;
 	RS_Vector direction = pEnd-pStart;
 
@@ -657,7 +660,7 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
         //extend line on a construction layer to fill the whole view
 		RS_VectorSolutions vpIts;
 		for(auto p: ec) {
-            auto const sol=RS_Information::getIntersection(&guiLine, p, true);
+            auto const sol=RS_Information::getIntersection(this, p, true);
 			for (auto const& vp: sol) {
 				if (vpIts.getClosestDistance(vp) <= RS_TOLERANCE * 10.)
 					continue;
@@ -716,17 +719,15 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 //        patternOffset -= length;
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Line::draw: Invalid line pattern");
-        painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
+        painter->drawLine(pStart,pEnd);
         return;
     }
 //    patternOffset = remainder(patternOffset - length-0.5*pat->totalLength,pat->totalLength)+0.5*pat->totalLength;
     if(length<=RS_TOLERANCE){
-        painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
+        painter->drawLine(pStart,pEnd);
         return; //avoid division by zero
     }
-    direction/=direction.magnitude();
+    direction/=length; //cos(angle), sin(angle)
     // Pen to draw pattern is always solid:
     RS_Pen pen = painter->getPen();
 
@@ -735,8 +736,8 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 
 	if (pat->num <= 0) {
 		RS_DEBUG->print(RS_Debug::D_WARNING,"invalid line pattern for line, draw solid line instead");
-        painter->drawLine(view->toGui(getStartpoint()),
-                          view->toGui(getEndpoint()));
+		painter->drawLine(view->toGui(getStartpoint()),
+						  view->toGui(getEndpoint()));
 		return;
 	}
 
@@ -752,29 +753,27 @@ void RS_Line::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOff
 		//fixme, styleFactor support needed
 
 		ds[i]=dpmm*pat->pattern[i];
-        if (std::abs(ds[i]) < 1. ) ds[i] = std::copysign(1., ds[i]);
-        dp[i] = direction * std::abs(ds[i]);
+		if (fabs(ds[i]) < 1. ) ds[i] = copysign(1., ds[i]);
+		dp[i] = direction*fabs(ds[i]);
 	}
-
+	double total= remainder(patternOffset-0.5*patternSegmentLength,patternSegmentLength) -0.5*patternSegmentLength;
     //    double total= patternOffset-patternSegmentLength;
-    double total= std::remainder(patternOffset - 0.5*patternSegmentLength,patternSegmentLength) + 0.5*patternSegmentLength;
-    length += total + 0.25;
 
-    RS_Vector curP = pStart;
-    size_t j=0;
-    double nextTotal = 0.;
-    for(; j < pat->num && nextTotal < total; j = (j+1)%pat->num, nextTotal += std::abs(ds[j]));
-    for (; nextTotal<=length; j=(j+1)%pat->num, nextTotal += std::abs(ds[j])) {
+	RS_Vector curP{pStart+direction*total};
+	for (int j=0; total<length; j=(j+1)%pat->num) {
 
         // line segment (otherwise space segment)
-        RS_Vector const nextP=pStart + direction * nextTotal;
-        if (ds[j]>0.0) {
+		double const t2=total+fabs(ds[j]);
+		RS_Vector const& p3=curP+dp[j];
+        if (ds[j]>0.0 && t2 > 0.0) {
             // drop the whole pattern segment line, for ds[i]<0:
             // trim end points of pattern segment line to line
-            painter->drawLine(curP, nextP);
+			RS_Vector const& p1 =(total > -0.5)?curP:pStart;
+			RS_Vector const& p2 =(t2 < length+0.5)?p3:pEnd;
+            painter->drawLine(p1,p2);
         }
-        total = nextTotal;
-        curP=nextP;
+        total=t2;
+        curP=p3;
 	}
 
 }
