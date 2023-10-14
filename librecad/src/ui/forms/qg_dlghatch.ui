@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>319</height>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,36 +66,35 @@
        <property name="title">
         <string>Preview</string>
        </property>
-       <layout class="QFormLayout" name="formLayout">
-        <item row="0" column="0">
+       <layout class="QVBoxLayout" name="verticalLayout">
+        <item>
          <widget class="QCheckBox" name="cbEnablePreview">
           <property name="text">
            <string>Enable Preview</string>
           </property>
          </widget>
         </item>
-        <item row="6" column="0">
-         <widget class="QG_GraphicView" name="gvPreview" native="true"/>
-        </item>
-        <item row="4" column="0">
-         <widget class="QLabel" name="lArea">
-          <property name="text">
-           <string>Area</string>
-          </property>
-         </widget>
-        </item>
-        <item row="3" column="0">
-         <widget class="Line" name="line">
-          <property name="orientation">
-           <enum>Qt::Horizontal</enum>
-          </property>
-         </widget>
-        </item>
-        <item row="4" column="1">
-         <widget class="QLineEdit" name="leHatchArea">
-          <property name="readOnly">
-           <bool>true</bool>
-          </property>
+        <item>
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QG_GraphicView" name="gvPreview" native="true"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="lArea">
+             <property name="text">
+              <string>Area</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="leHatchArea">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
          </widget>
         </item>
        </layout>
