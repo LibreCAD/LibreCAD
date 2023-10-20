@@ -1727,7 +1727,7 @@ void RS_EntityContainer::move(const RS_Vector& offset) {
 
 
 void RS_EntityContainer::rotate(const RS_Vector& center, const double& angle) {
-    rotate(center, RS_Vector{angle});
+    RS_EntityContainer::rotate(center, RS_Vector{angle});
 }
 
 
