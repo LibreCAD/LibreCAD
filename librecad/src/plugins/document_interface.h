@@ -215,6 +215,8 @@ class Plug_Entity
 public:
     virtual ~Plug_Entity() {}
 
+    virtual int getEntityType();
+
     //! Obtain the entity data.
     /*!
     * The data is a QHash with the EDATA keys relevant to the type of entity

@@ -226,6 +226,10 @@ Plugin_Entity::~Plugin_Entity() {
         delete entity;
 }
 
+int Plugin_Entity::getEntityType(){
+    return entity->rtti();
+}
+
 void Plugin_Entity::getData(QHash<int, QVariant> *data){
 	if (!entity) return;
     RS2::EntityType et = entity->rtti();
