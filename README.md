@@ -20,10 +20,11 @@ The 2.1 branch will be the last to support Qt4.
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
 ## DXF Converter
-LibreCAD can be used as dxf to a pdf/png converter. For example, to convert a foo.dxf to foo.pdf or foo.png:
+LibreCAD can be used as dxf to a pdf, png or svg converter. For example, to convert a foo.dxf to foo.pdf, foo.png or foo.svg:
 ```bash
 $ librecad dxf2pdf foo.dxf
 $ librecad dxf2png foo.dxf
+$ librecad dxf2svg foo.dxf
 ```
 ## Releases and Milestones
 
