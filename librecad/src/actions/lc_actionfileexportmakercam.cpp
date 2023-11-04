@@ -24,20 +24,41 @@
 
 #include "lc_actionfileexportmakercam.h"
 
-#include <fstream>
-
 #include <QAction>
+#include <QFile>
 
-#include "rs_dialogfactory.h"
-#include "rs_graphic.h"
 #include "lc_makercamsvg.h"
-#include "rs_settings.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_settings.h"
+
+namespace {
+
+// create an SVG generator
+std::unique_ptr<LC_MakerCamSVG> getGenerator()
+{
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
+
+    return std::make_unique<LC_MakerCamSVG>(std::make_unique<LC_XMLWriterQXmlStreamWriter>(),
+                                            (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
+                                            (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
+                                            (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
+                                            (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"),
+                                            (bool)RS_SETTINGS->readNumEntry("/ExportImages"),
+                                            (bool)RS_SETTINGS->readNumEntry("/BakeDashDotLines"),
+                                            RS_SETTINGS->readEntry("/DefaultElementWidth", "1.0").toDouble(),
+                                            RS_SETTINGS->readEntry("/DefaultDashLinePatternLength").toDouble());
+}
+}
 
 LC_ActionFileExportMakerCam::LC_ActionFileExportMakerCam(RS_EntityContainer& container,
                                                          RS_GraphicView& graphicView)
-    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView) {}
+    : RS_ActionInterface("Export as CAM/plain SVG...", container, graphicView)
+{
+    setActionType(RS2::ActionFileExportMakerCam);
+}
 
 
 void LC_ActionFileExportMakerCam::init(int status) {
@@ -46,11 +67,33 @@ void LC_ActionFileExportMakerCam::init(int status) {
     trigger();
 }
 
+bool LC_ActionFileExportMakerCam::writeSvg(const QString& fileName, RS_Graphic& graphic)
+{
+    if (fileName.isEmpty()) {
+        LC_ERR<<__func__<<"(): empty file name, no SVG is generated";
+        return false;
+    }
+
+    auto generator = getGenerator();
+    if (generator->generate(&graphic)) {
+        QFile file{fileName};
+        if (!file.open(QIODevice::WriteOnly | QIODevice::Text)) {
+            LC_ERR<<__func__<<"(): failed in creating file "<<fileName<<", no SVG is generated";
+            return false;
+        }
+
+        QTextStream out(&file);
+        out << QString::fromStdString(generator->resultAsString());
+    }
+    return true;
+}
+
+
 void LC_ActionFileExportMakerCam::trigger() {
 
 	RS_DEBUG->print("LC_ActionFileExportMakerCam::trigger()");
 
-    if (graphic != NULL) {
+    if (graphic != nullptr) {
 
         bool accepted = RS_DIALOGFACTORY->requestOptionsMakerCamDialog();
 
@@ -59,32 +102,7 @@ void LC_ActionFileExportMakerCam::trigger() {
             QString filename = RS_DIALOGFACTORY->requestFileSaveAsDialog(tr("Export as"),
                                                                          "",
                                                                          "Scalable Vector Graphics (*.svg)");
-
-			if (!filename.isEmpty()) {
-
-                RS_SETTINGS->beginGroup("/ExportMakerCam");
-
-				std::unique_ptr<LC_MakerCamSVG> generator(new LC_MakerCamSVG(new LC_XMLWriterQXmlStreamWriter(),
-                                                               (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/ConvertEllipsesToBeziers"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/ExportImages"),
-                                                               (bool)RS_SETTINGS->readNumEntry("/BakeDashDotLines"),
-                                                               (double)RS_SETTINGS->readEntry("/DefaultElementWidth").toDouble(),
-                                                               (double)RS_SETTINGS->readEntry("/DefaultDashLinePatternLength").toDouble())
-														  );
-
-                RS_SETTINGS->endGroup();
-
-                if (generator->generate(graphic)) {
-
-                    std::ofstream file;
-                    file.open(filename.toStdString());
-                    file << generator->resultAsString();
-                    file.close();
-                }
-            }
+            writeSvg(filename, *graphic);
         }
     }
 

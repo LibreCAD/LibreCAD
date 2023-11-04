@@ -23,6 +23,7 @@
 ******************************************************************************/
 
 #include <memory>
+#include <set>
 
 #include <QApplication>
 #include <QCoreApplication>
@@ -32,13 +33,13 @@
 
 #include "console_dxf2pdf.h"
 
-#include "lc_printing.h"
-
 #include "main.h"
 
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
+#include "lc_actionfileexportmakercam.h"
+#include "lc_printing.h"
 #include "rs.h"
 #include "rs_debug.h"
 #include "rs_document.h"
@@ -71,6 +72,21 @@ bool slotFileExport(RS_Graphic* graphic,
                     bool black,
                     bool bw=true);
 
+namespace {
+// find the image format from the file extension; default to png
+QString getFormatFromFile(const QString& fileName)
+{
+    QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
+    supportedImageFormats.push_back("svg"); // add svg
+
+    for (QString format: supportedImageFormats) {
+        format = format.toLower();
+        if (fileName.endsWith(format, Qt::CaseInsensitive))
+            return format;
+    }
+    return "png";
+}
+}
 
 /////////
 /// \brief console_dxf2png is called if librecad
@@ -98,12 +114,14 @@ int console_dxf2png(int argc, char* argv[])
 
     QString appDesc;
     QString librecad;
-    if (prgInfo.baseName() != "dxf2png") {
+    std::set<QString> allowed = {"dxf2png", "dxf2svg"};
+    if (allowed.count(prgInfo.baseName()) == 0) {
         librecad = prgInfo.filePath();
-        appDesc = "\ndxf2png usage: " + prgInfo.filePath()
-            + " dxf2png [options] <dxf_files>\n";
+        for (const auto& prog: allowed)
+            appDesc += "\n" + prog + " usage: " + prgInfo.filePath()
+            + " " + prog +" [options] <dxf_files>\n";
     }
-    appDesc += "\nPrint a DXF file to a PNG file.";
+    appDesc += "\nPrint a DXF file to a PNG/SVG file.";
     appDesc += "\n\n";
     appDesc += "Examples:\n\n";
     appDesc += "  " + librecad + " dxf2png *.dxf";
@@ -127,9 +145,8 @@ int console_dxf2png(int argc, char* argv[])
 
     const QStringList args = parser.positionalArguments();
 
-    if (args.isEmpty() || (args.size() == 1 && args[0] == "dxf2png"))
+    if (args.isEmpty() || (args.size() == 1 && (args[0] == "dxf2png" || args[0] == "dxf2svg")))
         parser.showHelp(EXIT_FAILURE);
-
     // Set PNG size from user input
     QSize pngSize = parsePngSizeArg(parser.value(pngSizeOpt)); // If nothing, use default values.
 
@@ -157,7 +174,7 @@ int console_dxf2png(int argc, char* argv[])
     // Set output filename from user input if present
     QString outFile = parser.value(outFileOpt);
     if (outFile.isEmpty()) {
-        outFile = dxfFileInfo.path() + "/" + fn + ".png";
+        outFile = dxfFileInfo.path() + "/" + fn + "." + args[0].mid(args[0].size()-3);
     } else {
         outFile = dxfFileInfo.path() + "/" + outFile;
     }
@@ -170,62 +187,36 @@ int console_dxf2png(int argc, char* argv[])
         return 1;
     RS_Graphic *graphic = doc->getGraphic();
 
-    qDebug() << "Printing" << dxfFile << "to" << outFile << ">>>>";
+    LC_LOG << "Printing" << dxfFile << "to" << outFile << ">>>>";
 
     touchGraphic(graphic);
 
     // Start of the actual conversion
 
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileExport()");
+    LC_LOG<< "QC_ApplicationWindow::slotFileExport()";
 
     // read default settings:
-    RS_SETTINGS->beginGroup("/Export");
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Export");
     QString defDir = dxfFileInfo.path();
 
-    RS_SETTINGS->endGroup();
-
-    QStringList filters;
-    QList<QByteArray> supportedImageFormats = QImageWriter::supportedImageFormats();
-    supportedImageFormats.push_back("svg"); // add svg
-
-    for (QString format: supportedImageFormats) {
-        format = format.toLower();
-        QString st;
-        if (format == "jpeg" || format == "tiff") {
-            // Don't add the aliases
-        } else {
-            st = QString("%1 (%2)(*.%2)")
-                    .arg(QG_DialogFactory::extToFormat(format))
-                    .arg(format);
-        }
-        if (st.length() > 0)
-            filters.push_back(st);
-    }
-    // revise list of filters
-    filters.removeDuplicates();
-    filters.sort();
-
     // find out extension:
-    QString filter = "Portable Network Graphic (png)(*.png)";
-    QString format = "";
-    int i = filter.indexOf("(*.");
-    if (i!=-1) {
-        int i2 = filter.indexOf(QRegExp("[) ]"), i);
-        format = filter.mid(i + 3, i2 - (i + 3));
-        format = format.toUpper();
-    }
+    QString format = getFormatFromFile(outFile).toUpper();
 
     // append extension to file:
     if (!QFileInfo(fn).fileName().contains(".")) {
         fn.push_back("." + format.toLower());
     }
 
-    QSize borders = QSize(5, 5);
-    bool black = false;
-    bool bw = false;
-
-    bool ret = slotFileExport(graphic, outFile, format, pngSize, borders,
-                black, bw);
+    bool ret = false;
+    if (format.compare("SVG", Qt::CaseInsensitive) == 0) {
+        ret = LC_ActionFileExportMakerCam::writeSvg(outFile, *graphic);
+    } else {
+        QSize borders = QSize(5, 5);
+        bool black = false;
+        bool bw = false;
+        ret = slotFileExport(graphic, outFile, format, pngSize, borders,
+                       black, bw);
+    }
 
     qDebug() << "Printing" << dxfFile << "to" << outFile << (ret ? "Done" : "Failed");
     return 0;

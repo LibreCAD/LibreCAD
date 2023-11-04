@@ -79,7 +79,7 @@ int main(int argc, char** argv)
         if (arg.compare("dxf2pdf") == 0) {
             return console_dxf2pdf(argc, argv);
         }
-        if (arg.compare("dxf2png") == 0) {
+        if (arg.compare("dxf2png") == 0 || arg == "dxf2svg") {
             return console_dxf2png(argc, argv);
         }
     }

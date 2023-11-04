@@ -26,37 +26,37 @@
 
 #include "lc_xmlwriterinterface.h"
 
+#include "lc_dimarc.h"
+#include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
-#include "rs_ellipse.h"
-#include "rs_hatch.h"
-#include "rs_image.h"
-#include "rs_insert.h"
-#include "rs_layer.h"
-#include "rs_leader.h"
-#include "rs_line.h"
+#include "rs_debug.h"
 #include "rs_dimaligned.h"
 #include "rs_dimangular.h"
 #include "rs_dimdiametric.h"
 #include "rs_dimlinear.h"
 #include "rs_dimradial.h"
-#include "lc_dimarc.h"
+#include "rs_ellipse.h"
+#include "rs_graphic.h"
+#include "rs_hatch.h"
 #include "rs_hatch.h"
 #include "rs_image.h"
+#include "rs_image.h"
 #include "rs_insert.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_leader.h"
+#include "rs_line.h"
+#include "rs_math.h"
 #include "rs_mtext.h"
-#include "rs_polyline.h"
 #include "rs_point.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
-#include "lc_splinepoints.h"
-#include "rs_graphic.h"
 #include "rs_system.h"
 #include "rs_text.h"
 #include "rs_units.h"
 #include "rs_utility.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 
 namespace {
 const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
@@ -64,16 +64,16 @@ const std::string NAMESPACE_URI_LC = "https://librecad.org";
 const std::string NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
 }
 
-LC_MakerCamSVG::LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
+LC_MakerCamSVG::LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter,
                                bool writeInvisibleLayers,
                                bool writeConstructionLayers,
-							   bool writeBlocksInline,
+                               bool writeBlocksInline,
                                bool convertEllipsesToBeziers,
                                bool exportImages,
                                bool convertLineTypes,
                                double defaultElementWidth,
                                double defaultDashLinePatternLength):
-  xmlWriter(xmlWriter)
+  xmlWriter(std::move(xmlWriter))
   ,writeInvisibleLayers(writeInvisibleLayers)
   ,writeConstructionLayers(writeConstructionLayers)
   ,writeBlocksInline(writeBlocksInline)

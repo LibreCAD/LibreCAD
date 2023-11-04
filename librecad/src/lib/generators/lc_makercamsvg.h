@@ -57,7 +57,7 @@ class RS_Graphic;
 
 class LC_MakerCamSVG {
 public:
-	LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
+    LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter,
                    bool writeInvisibleLayers = true,
                    bool writeConstructionLayers = true,
                    bool writeBlocksInline = false,
