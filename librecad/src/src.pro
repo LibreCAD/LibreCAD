@@ -27,7 +27,7 @@ CONFIG += qt \
     depend_includepath
 
 QT += widgets printsupport
-CONFIG += c++14
+CONFIG += c++17
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
