@@ -20,12 +20,16 @@
 
 SCRIPTPATH="$(dirname "$0")"
 
-for i in /opt/local/libexec /usr/local/opt /usr/local
+for i in /opt/local/libexec /usr/local/opt /usr/local $(dirname `which qmake`)
 do
     if [ -x "$i/qt5/bin/qmake" ]
     then
         QT_PATH=$i/qt5/bin/
         break
+    fi
+    if [ -x "$i/qmake" ]; then
+    	QT_PATH="$i"
+	break
     fi
 done
 if [ -z "$QT_PATH" ]
