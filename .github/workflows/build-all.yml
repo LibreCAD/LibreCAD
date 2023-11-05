@@ -68,17 +68,22 @@ jobs:
           retention-days: 2
 
   BuildMacOS:
-    runs-on: macos-11
+    runs-on: macos-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
+      - name: Install Qt5
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.2'
+          modules: 'qtscript'
+
       - name: Install Qt5 and dependencies
         run: |
-          brew install boost qt5
-          brew link qt5 --force
+          brew install boost
 
       - name: Build and packaging
         run: |

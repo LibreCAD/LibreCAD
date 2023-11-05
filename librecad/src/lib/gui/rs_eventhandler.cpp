@@ -40,6 +40,12 @@ namespace {
     bool notFinished(const RS_ActionInterface* action) {
         return action != nullptr && !action->isFinished();
     }
+
+    // support length evaluation with fraction
+    double evalFractionLength(QString input) {
+        QRegExp rx(R"([\d\.]+\s+[\d]+/[\d]+)");
+        return 0.;
+    }
 }
 
 /**
