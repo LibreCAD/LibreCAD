@@ -64,11 +64,12 @@ namespace {
     */
     QString updateForFraction(QString input) {
         LC_ERR<<"Input: "<<input;
-        for(auto [rx, index] : std::initializer_list<std::pair<QRegExp, int>>{
-        {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))", 5},
-        {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))", 5},
-        {R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)", 3}
-    })
+        std::vector<std::pair<QRegExp, int>> regexps{
+                {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))", 5},
+                {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))", 5},
+                {R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)", 3}
+            };
+        for(auto& [rx, index] : regexps)
             input = evaluateFraction(input, rx, index);
         LC_ERR<<"replaced: "<<input;
         return input;
