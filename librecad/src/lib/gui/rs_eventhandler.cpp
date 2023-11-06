@@ -41,10 +41,37 @@ namespace {
         return action != nullptr && !action->isFinished();
     }
 
-    // support length evaluation with fraction
-    double evalFractionLength(QString input) {
-        QRegExp rx(R"([\d\.]+\s+[\d]+/[\d]+)");
-        return 0.;
+    QString evaluateFraction(QString input, QRegExp rx, int index)
+    {
+        QString copy = input;
+        QString tail = (index == 3) ? R"(\5)" : R"(\3)";
+
+        int pos = 0;
+        if ((pos = rx.indexIn(copy, pos)) != -1) {
+            QString formula = rx.cap(2) + "+" + rx.cap(index) + "/" + rx.cap(index + 1);
+            QString value = QString{}.setNum(RS_Math::eval(formula));
+            return input.left(pos)
+                    + input.mid(pos, rx.matchedLength()).replace(rx, R"(\1)" + value + tail)
+                    + evaluateFraction(input.right(input.size() - pos), rx, index);
+        }
+        return input;
+    }
+
+    /**
+     * @{description}       Update a length string to support fraction
+     *                      (1 1/2") to (1+1/2")
+     *                      (1"1/2) to (1+1/2")
+    */
+    QString updateForFraction(QString input) {
+        LC_ERR<<"Input: "<<input;
+        for(auto [rx, index] : std::initializer_list<std::pair<QRegExp, int>>{
+        {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))", 5},
+        {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))", 5},
+        {R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)", 3}
+    })
+            input = evaluateFraction(input, rx, index);
+        LC_ERR<<"replaced: "<<input;
+        return input;
     }
 }
 
@@ -267,9 +294,9 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     RS_DEBUG->print("RS_EventHandler::commandEvent: 001");
                     bool ok1, ok2;
                     RS_DEBUG->print("RS_EventHandler::commandEvent: 002");
-                    double x = RS_Math::eval(cmd.left(commaPos), &ok1);
+                    double x = RS_Math::eval(updateForFraction(cmd.left(commaPos)), &ok1);
                     RS_DEBUG->print("RS_EventHandler::commandEvent: 003a");
-                    double y = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
+                    double y = RS_Math::eval(updateForFraction(cmd.mid(commaPos+1)), &ok2);
                     RS_DEBUG->print("RS_EventHandler::commandEvent: 004");
 
                     if (ok1 && ok2) {
@@ -288,8 +315,8 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     if (cmd.contains(',') && cmd.at(0)=='@') {
                         int commaPos = cmd.indexOf(',');
                         bool ok1, ok2;
-                        double x = RS_Math::eval(cmd.mid(1, commaPos-1), &ok1);
-                        double y = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
+                        double x = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos-1)), &ok1);
+                        double y = RS_Math::eval(updateForFraction(cmd.mid(commaPos+1)), &ok2);
 
                         if (ok1 && ok2) {
                             RS_CoordinateEvent ce(RS_Vector(x,y) + relative_zero);
@@ -308,7 +335,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     if (cmd.contains('<') && cmd.at(0)!='@') {
                         int commaPos = cmd.indexOf('<');
                         bool ok1, ok2;
-                        double r = RS_Math::eval(cmd.left(commaPos), &ok1);
+                        double r = RS_Math::eval(updateForFraction(cmd.left(commaPos)), &ok1);
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
@@ -328,7 +355,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     if (cmd.contains('<') && cmd.at(0)=='@') {
                         int commaPos = cmd.indexOf('<');
                         bool ok1, ok2;
-                        double r = RS_Math::eval(cmd.mid(1, commaPos-1), &ok1);
+                        double r = RS_Math::eval(updateForFraction(cmd.mid(1, commaPos-1)), &ok1);
                         double a = RS_Math::eval(cmd.mid(commaPos+1), &ok2);
 
                         if (ok1 && ok2) {
