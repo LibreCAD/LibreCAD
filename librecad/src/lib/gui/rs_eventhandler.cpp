@@ -37,7 +37,7 @@
 #include "rs_debug.h"
 
 namespace {
-    bool notFinished(const RS_ActionInterface* action) {
+    bool notFinished(const std::shared_ptr<RS_ActionInterface>& action) {
         return action != nullptr && !action->isFinished();
     }
 
@@ -48,11 +48,12 @@ namespace {
 
         int pos = 0;
         if ((pos = rx.indexIn(copy, pos)) != -1) {
+            LC_ERR<<"pos="<<pos<<", rx.matchedLength()="<<rx.matchedLength();
             QString formula = rx.cap(2) + "+" + rx.cap(index) + "/" + rx.cap(index + 1);
             QString value = QString{}.setNum(RS_Math::eval(formula));
             return input.left(pos)
                     + input.mid(pos, rx.matchedLength()).replace(rx, R"(\1)" + value + tail)
-                    + evaluateFraction(input.right(input.size() - pos), rx, index);
+                    + evaluateFraction(input.right(input.size() - pos - rx.matchedLength()), rx, index);
         }
         return input;
     }
@@ -63,15 +64,15 @@ namespace {
      *                      (1"1/2) to (1+1/2")
     */
     QString updateForFraction(QString input) {
-        LC_ERR<<"Input: "<<input;
-        std::vector<std::pair<QRegExp, int>> regexps{
-                {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))", 5},
-                {R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))", 5},
-                {R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)", 3}
-            };
+        std::vector<std::pair<QRegExp, int>> regexps{{
+                {QRegExp{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))"}, 3},
+                {QRegExp{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))"}, 3},
+                {QRegExp{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"}, 4}
+            }};
+        LC_ERR<<"input="<<input;
         for(auto& [rx, index] : regexps)
             input = evaluateFraction(input, rx, index);
-        LC_ERR<<"replaced: "<<input;
+        LC_ERR<<"eval: "<<input;
         return input;
     }
 }
@@ -90,13 +91,9 @@ RS_EventHandler::RS_EventHandler(QObject* parent) : QObject(parent)
  */
 RS_EventHandler::~RS_EventHandler() {
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler");
-	delete defaultAction;
-	defaultAction = nullptr;
+    defaultAction.reset();
 
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..");
-    for(auto a: currentActions){
-        delete a;
-    }
     currentActions.clear();
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: Deleting all actions..: OK");
     RS_DEBUG->print("RS_EventHandler::~RS_EventHandler: OK");
@@ -283,7 +280,7 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
                         }
-                            /* FALL THROUGH */
+                        [[fallthrough]]
                         default: /* NO OP */
                             break;
                     }
@@ -414,9 +411,9 @@ void RS_EventHandler::disableCoordinateInput() {
  */
 RS_ActionInterface* RS_EventHandler::getCurrentAction(){
     if(hasAction()){
-        return currentActions.last();
+        return currentActions.last().get();
     } else {
-        return defaultAction;
+        return defaultAction.get();
     }
 }
 
@@ -426,7 +423,8 @@ RS_ActionInterface* RS_EventHandler::getCurrentAction(){
  * @return The current default action.
  */
 RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
-    return defaultAction;
+
+    return defaultAction.get();
 }
 
 
@@ -437,11 +435,10 @@ RS_ActionInterface* RS_EventHandler::getDefaultAction() const{
 void RS_EventHandler::setDefaultAction(RS_ActionInterface* action) {
     if (defaultAction) {
         defaultAction->finish();
-        delete defaultAction;
         //        defaultAction = NULL;
     }
 
-    defaultAction = action;
+    defaultAction.reset(action);
 }
 
 
@@ -456,21 +453,10 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     }
 
     // Predecessor of the new action or NULL:
-    RS_ActionInterface* predecessor = nullptr;
-
+    auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
     // Suspend current action:
-    if(hasAction()){
-        predecessor = currentActions.last();
-        predecessor->suspend();
-        predecessor->hideOptions();
-    }
-    else {
-        if (defaultAction) {
-            predecessor = defaultAction;
-            predecessor->suspend();
-            predecessor->hideOptions();
-        }
-    }
+    predecessor->suspend();
+    predecessor->hideOptions();
 
     //    // Forget about the oldest action and make space for the new action:
     //    if (actionIndex==RS_MAXACTIONS-1) {
@@ -489,7 +475,8 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    }
 
     // Set current action:
-    currentActions.push_back(action);
+
+    currentActions.push_back(std::shared_ptr<RS_ActionInterface>(action));
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s",
                     currentActions.last()->getName().toLatin1().data());
 
@@ -501,7 +488,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");
         action->showOptions();
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: set predecessor");
-        action->setPredecessor(predecessor);
+        action->setPredecessor(predecessor.get());
     }
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: cleaning up..");
@@ -533,7 +520,6 @@ void RS_EventHandler::killSelectActions() {
             if( ! (*it)->isFinished()){
                 (*it)->finish();
             }
-            delete *it;
             it= currentActions.erase(it);
         }else{
             it++;
@@ -556,13 +542,14 @@ void RS_EventHandler::killAllActions()
         q_action = nullptr;
     }
 
-	for(auto p: currentActions)
+    for(auto& p: currentActions)
     {
 		if (!p->isFinished())
         {
 			p->finish();
 		}
 	}
+    currentActions.clear();
 
     if (!defaultAction->isFinished())
     {
@@ -579,7 +566,9 @@ void RS_EventHandler::killAllActions()
  * @return true if the action is within currentActions
  */
 bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
-    return currentActions.indexOf(action) >= 0;
+    return action != nullptr && std::any_of(currentActions.cbegin(), currentActions.cend(),
+                       [action](const std::shared_ptr<RS_ActionInterface>& entry){
+        return entry.get() == action;});
 }
 
 /**
@@ -600,9 +589,8 @@ void RS_EventHandler::cleanUp() {
 
     for (auto it=currentActions.begin(); it != currentActions.end();)
     {
-        if( (*it)->isFinished())
+        if(*it == nullptr)
         {
-            delete *it;
             it= currentActions.erase(it);
         }else{
             ++it;
@@ -626,8 +614,8 @@ void RS_EventHandler::cleanUp() {
  * Sets the snap mode for all currently active actions.
  */
 void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
-    for(auto a: currentActions){
-        if( ! a->isFinished()){
+    for(auto& a: currentActions){
+        if( !a->isFinished()){
             a->setSnapMode(sm);
         }
     }
@@ -642,8 +630,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
  * Sets the snap restriction for all currently active actions.
  */
 void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
-
-    for(auto a: currentActions){
+    for(auto& a: currentActions){
         if( ! a->isFinished()){
             a->setSnapRestriction(sr);
         }
