@@ -280,16 +280,16 @@ void RS_EventHandler::commandEvent(RS_CommandEvent* e) {
                     RS_Vector at = relative_zero;
                     switch (cmd[0].toLatin1()) {
                         case '0':
-                            at.set(0,0);
-                            /* FALL THROUGH, to be replaced with c++17 [[fallthrough]] */
+                        at.set(0,0);
+                        [[fallthrough]];
                         case '.':
                         case ',':
                         {
                             RS_CoordinateEvent ce(at);
                             currentActions.last()->coordinateEvent(&ce);
                             e->accept();
+                            break;
                         }
-                        [[fallthrough]]
                         default: /* NO OP */
                             break;
                     }

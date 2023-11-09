@@ -2052,7 +2052,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
             edges.addEntity(e1);
             break;
         }
-        // [[fallthrough]]
+        [[fallthrough]];
         case RS2::EntityCircle:
         {
         auto ec = std::make_unique<RS_EntityContainer>(nullptr, false);
@@ -2060,7 +2060,6 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
         loops.push_back(std::move(ec));
         break;
         }
-        // [[fallthrough]]
         default:
         edges.addEntity(e1);
         }
