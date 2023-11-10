@@ -1148,7 +1148,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("Focus on &Command Line"), agm->view);
     action->setIcon(QIcon(":/main/editclear.png"));
     QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+    commandLineShortcuts<<QKeySequence(Qt::CTRL | Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
     action->setShortcuts(commandLineShortcuts);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFocusCommandLine()));
     action->setObjectName("FocusCommand");
@@ -1417,7 +1417,7 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
 
 	action = new QAction(tr("Save A&ll..."), agm->file);
 	action->setIcon(QIcon(":/icons/save_all.svg"));
-	QKeySequence shortcut = QKeySequence(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+	QKeySequence shortcut = QKeySequence::SaveAs; //(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
 	// only define this shortcut for platforms not already using it for save as
 	if (shortcut != QKeySequence::SaveAs)
 		action->setShortcut(shortcut);

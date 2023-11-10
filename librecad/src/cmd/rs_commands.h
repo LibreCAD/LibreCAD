@@ -33,7 +33,6 @@
 #include "rs.h"
 
 class QString;
-class QStringList;
 
 #define RS_COMMANDS RS_Commands::instance()
 

@@ -28,6 +28,7 @@
 #include<vector>
 
 #include <QObject>
+#include <QRegularExpression>
 #include <QTextStream>
 
 #include "rs_commands.h"
@@ -1034,9 +1035,9 @@ void RS_Commands::updateAlias(){
                 if (line.isEmpty() || line.at(0)=='#' ) continue;
                 // Read alias
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-                QStringList txtList = line.split(QRegExp(R"(\s)"),Qt::SkipEmptyParts);
+                QStringList txtList = line.split(QRegularExpression(R"(\s)"),Qt::SkipEmptyParts);
 #else
-                QStringList txtList = line.split(QRegExp(R"(\s)"),QString::SkipEmptyParts);
+                QStringList txtList = line.split(QRegularExpression(R"(\s)"),QString::SkipEmptyParts);
 #endif
                 if (txtList.size()> 1) {
 //                    qDebug()<<"reading: "<<txtList.at(0)<<"\t"<< txtList.at(1);
@@ -1138,7 +1139,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
     if(!(code.startsWith(FnPrefix) ||
          code.startsWith(AltPrefix) ||
          code.startsWith(MetaPrefix))) {
-    	if(code.size() < 1 || code.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive)) == false )
+    	if(code.size() < 1 || code.contains(QRegularExpression("^[a-zA-Z].*")) == false )
 			 return RS2::ActionNone;
 	    c = code.toLower();
 	} else {
@@ -1146,7 +1147,7 @@ RS2::ActionType RS_Commands::keycodeToAction(const QString& code) const {
 	}
 
 
-//    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegExp("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
+//    std::cout<<"regex: "<<qPrintable(c)<<" matches: "<< c.contains(QRegularExpression("^[a-z].*",Qt::CaseInsensitive))<<std::endl;
 //    std::cout<<"RS2::ActionType RS_Commands::keycodeToAction("<<qPrintable(c)<<")"<<std::endl;
 
     auto it = shortCommands.find(c);
@@ -1226,17 +1227,17 @@ QString RS_Commands::filterCliCal(const QString& cmd)
 {
 
     QString str=cmd.trimmed();
-    const QRegExp calCmd(R"(^(cal|calculate))");
+    const QRegularExpression calCmd(R"(^(cal|calculate))");
     if(!(str.contains(calCmd)
          || str.startsWith(QObject::tr("cal","command to trigger cli calculator"), Qt::CaseInsensitive)
          || str.startsWith(QObject::tr("calculate","command to trigger cli calculator"), Qt::CaseInsensitive)
                            )) {
         return QString();
     }
-    int index=str.indexOf(QRegExp(R"(\s)"));
+    int index=str.indexOf(QRegularExpression(R"(\s)"));
     bool spaceFound=(index>=0);
     str=str.mid(index);
-    index=str.indexOf(QRegExp(R"(\S)"));
+    index=str.indexOf(QRegularExpression(R"(\S)"));
     if(!(spaceFound && index>=0)) return QString();
     str=str.mid(index);
     return str;

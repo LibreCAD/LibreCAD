@@ -26,11 +26,12 @@
 **********************************************************************/
 
 #include <iostream>
-#include <QMap>
 #include <QApplication>
-#include <QTextCodec>
-#include <QTranslator>
 #include <QFileInfo>
+#include <QMap>
+#include <QRegularExpression>
+#include <QStringConverter>
+#include <QTranslator>
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs.h"
@@ -523,7 +524,7 @@ bool RS_System::createPaths(const QString& directory) {
  */
 QString RS_System::getAppDataDir() {
     QString appData =
-            QStandardPaths::writableLocation( QStandardPaths::DataLocation);
+            QStandardPaths::writableLocation( QStandardPaths::AppDataLocation);
     QDir dir( appData);
     if (!dir.exists()) {
         if (!dir.mkpath( appData))
@@ -651,23 +652,23 @@ QStringList RS_System::getDirectoryList(const QString& _subDirectory) {
     if (subDirectory == "fonts") {
         QString savedFonts = RS_SETTINGS->readEntry( "/Fonts", "");
         RS_DEBUG->print("saved fonts: %s\n", savedFonts.toStdString().c_str());
-        dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegExp("[;]"),
+        dirList += (RS_SETTINGS->readEntry( "/Fonts", "")).split( QRegularExpression("[;]"),
                                                                   option);
     }
     else if (subDirectory == "patterns") {
-        dirList += (RS_SETTINGS->readEntry( "/Patterns", "")).split( QRegExp("[;]"),
+        dirList += (RS_SETTINGS->readEntry( "/Patterns", "")).split( QRegularExpression("[;]"),
                                                                   option);
     }
     else if (subDirectory.startsWith( "scripts")) {
-        dirList += (RS_SETTINGS->readEntry( "/Scripts", "")).split( QRegExp("[;]"),
+        dirList += (RS_SETTINGS->readEntry( "/Scripts", "")).split( QRegularExpression("[;]"),
                                                                   option);
     }
     else if (subDirectory.startsWith( "library")) {
-        dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegExp("[;]"),
+        dirList += (RS_SETTINGS->readEntry( "/Library", "")).split( QRegularExpression("[;]"),
                                                                   option);
     }
     else if (subDirectory.startsWith( "qm")) {
-        dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegExp("[;]"),
+        dirList += (RS_SETTINGS->readEntry( "/Translations", "")).split( QRegularExpression("[;]"),
                                                                   option);
     }
     RS_SETTINGS->endGroup();
@@ -725,7 +726,7 @@ QString RS_System::languageToSymbol(const QString& lang) {
 QString RS_System::symbolToLanguage(const QString& symb) {
     RS_Locale loc( symb);
     QString ret;
-    if (symb.contains( QRegExp( "^en"))) {
+    if (symb.contains( QRegularExpression( "^en"))) {
         ret = RS_Locale::languageToString( loc.language());
         if( symb.contains('_') ) {
             ret += " (" + RS_Locale::countryToString( loc.country()) + ')';
