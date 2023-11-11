@@ -522,10 +522,9 @@ void QG_LayerWidget::slotSelectionChanged(
 void QG_LayerWidget::slotUpdateLayerList() {
     QRegularExpression rx = QRegularExpression::fromWildcard(matchLayerName->text());
 
-    for (unsigned int i=0; i<layerList->count() ; i++) {
+    for (unsigned i=0; i<layerList->count() ; i++) {
         QString s=layerModel->getLayer(i)->getName();
-        QRegularExpressionMatch match = rx.match(s);
-        if (match.hasMatch()) {
+        if (s.indexOf(rx) == 0) {
             layerView->showRow(i);
             layerModel->getLayer(i)->visibleInLayerList(true);
         } else {
@@ -543,8 +542,8 @@ void QG_LayerWidget::slotUpdateLayerList() {
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     if (actionHandler) {
-        QMenu* contextMenu = new QMenu(this);
-        QLabel* caption = new QLabel(tr("Layer Menu"), this);
+        auto contextMenu = std::make_unique<QMenu>(this);
+        auto caption = std::make_unique<QLabel>(tr("Layer Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
         palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
@@ -588,7 +587,6 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
                                 &QG_ActionHandler::slotLayersExportVisible,  0);
 
         contextMenu->exec(QCursor::pos());
-        delete contextMenu;
     }
 
     e->accept();

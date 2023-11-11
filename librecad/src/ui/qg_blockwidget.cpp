@@ -460,8 +460,7 @@ void QG_BlockWidget::slotUpdateBlockList() {
     for (int i = 0; i < blockList->count(); i++) {
         RS_Block* block = blockModel->getBlock(i);
         if (!block) continue;
-        QRegularExpressionMatch match = rx.match(block->getName());
-        if (! match.hasMatch()) {
+        if (block->getName().indexOf(rx) == 0) {
             blockView->showRow(i);
             blockModel->getBlock(i)->visibleInBlockList(true);
         } else {

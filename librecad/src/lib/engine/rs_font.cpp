@@ -28,7 +28,7 @@
 
 #include <iostream>
 #include <QRegularExpression>
-#include <QStringEncoder>
+#include <QStringConverter>
 #include <QTextStream>
 
 #include "rs_font.h"

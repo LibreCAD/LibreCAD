@@ -124,7 +124,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
             RS_Entity *en {catchEntity( e, RS2::ResolveAll)};
             if (en && RS2::EntityLine == en->rtti()) {
                 line1 = *dynamic_cast<RS_Line*>(en);
-                click1 = line1.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                click1 = line1.getNearestPointOnEntity( graphicView->toGraph(e->position()));
                 setStatus(SetLine2);
             }
             break; }
@@ -133,7 +133,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
             RS_Entity *en{catchEntity(e, RS2::ResolveAll)};
             if (en && en->rtti()==RS2::EntityLine) {
                 line2 = *dynamic_cast<RS_Line*>(en);
-                click2 = line2.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                click2 = line2.getNearestPointOnEntity( graphicView->toGraph(e->position()));
                 if( setData( click2, true)) {
                     graphicView->moveRelativeZero( center);
                     setStatus(SetPos);

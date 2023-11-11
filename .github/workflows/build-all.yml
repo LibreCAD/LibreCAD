@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - qt6
 
 jobs:
   BuildLinux:
@@ -15,10 +16,16 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v3
+        with:
+        version: '6.5.*'
+        modules: 'qtscript'
+
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev qmake6 qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
@@ -30,7 +37,7 @@ jobs:
         run: |
           export CC=g++
           export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository
@@ -74,13 +81,13 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Install Qt5
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.5.*'
           modules: 'qtscript'
 
-      - name: Install Qt5 and dependencies
+      - name: Install boost dependencies
         run: |
           brew install boost
 
@@ -114,10 +121,10 @@ jobs:
         with:
           msystem: MINGW32
 
-      - name: Install Qt-5.15
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.5.*'
           host: 'windows'
           target: 'desktop'
           arch: 'win32_mingw81'

@@ -115,7 +115,7 @@ RS_EventHandler::~RS_EventHandler() {
  */
 void RS_EventHandler::back() {
     QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0),
-                  Qt::RightButton, Qt::RightButton,Qt::NoModifier);
+                  Qt::RightButton, Qt::RightButton, Qt::NoModifier);
     mouseReleaseEvent(&e);
     if (!hasAction() && q_action)
     {
