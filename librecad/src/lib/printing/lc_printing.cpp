@@ -29,36 +29,36 @@
 namespace {
 
 // supported paper formats should be added here
-const std::map<RS2::PaperFormat, QPrinter::PageSize> paperToPage = {
+const std::map<RS2::PaperFormat, QPageSize::PageSizeId> paperToPage = {
     {
-            {RS2::A0, QPrinter::A0},
-            {RS2::A1, QPrinter::A1},
-            {RS2::A2, QPrinter::A2},
-            {RS2::A3, QPrinter::A3},
-            {RS2::A4, QPrinter::A4},
+            {RS2::A0, QPageSize::A0},
+            {RS2::A1, QPageSize::A1},
+            {RS2::A2, QPageSize::A2},
+            {RS2::A3, QPageSize::A3},
+            {RS2::A4, QPageSize::A4},
 
                 /* Removed ISO "B" and "C" series,  C5E,  Comm10E,  DLE,  (envelope sizes) */
 
-            {RS2::Letter, QPrinter::Letter},
-            {RS2::Legal,  QPrinter::Legal},
-            {RS2::Tabloid, QPrinter::Tabloid},
+            {RS2::Letter, QPageSize::Letter},
+            {RS2::Legal,  QPageSize::Legal},
+            {RS2::Tabloid, QPageSize::Tabloid},
 
-                //case RS2::Ansi_A, QPrinter::AnsiA},
-                //case RS2::Ansi_B, QPrinter::AnsiB},
-            {RS2::Ansi_C, QPrinter::AnsiC},
-            {RS2::Ansi_D, QPrinter::AnsiD},
-            {RS2::Ansi_E, QPrinter::AnsiE},
+                //case RS2::Ansi_A, QPageSize::AnsiA},
+                //case RS2::Ansi_B, QPageSize::AnsiB},
+            {RS2::Ansi_C, QPageSize::AnsiC},
+            {RS2::Ansi_D, QPageSize::AnsiD},
+            {RS2::Ansi_E, QPageSize::AnsiE},
 
-            {RS2::Arch_A, QPrinter::ArchA},
-            {RS2::Arch_B, QPrinter::ArchB},
-            {RS2::Arch_C, QPrinter::ArchC},
-            {RS2::Arch_D, QPrinter::ArchD},
-            {RS2::Arch_E, QPrinter::ArchE},
+            {RS2::Arch_A, QPageSize::ArchA},
+            {RS2::Arch_B, QPageSize::ArchB},
+            {RS2::Arch_C, QPageSize::ArchC},
+            {RS2::Arch_D, QPageSize::ArchD},
+            {RS2::Arch_E, QPageSize::ArchE},
     }
 };
 }
 
-QPrinter::PageSize LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
+QPageSize::PageSizeId LC_Printing::rsToQtPaperFormat(RS2::PaperFormat paper)
 {
-    return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPrinter::Custom;
+    return (paperToPage.count(paper) == 1) ? paperToPage.at(paper) : QPageSize::Custom;
 }

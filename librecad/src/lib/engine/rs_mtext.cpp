@@ -220,11 +220,11 @@ void RS_MText::update() {
   // For every letter:
   for (decltype(data.text.length()) i = 0; i < data.text.length(); ++i) {
     // Handle \F not followed by {<codePage>}
-    if (data.text.midRef(i).startsWith(R"(\F)") &&
-        data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
+    if (data.text.mid(i).startsWith(R"(\F)") &&
+        data.text.mid(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
       addLetter(*oneLine, data.text.at(i), *font, letterSpace, letterPos);
       continue;
-    } else if (data.text.midRef(i).startsWith(R"(\\)")) {
+    } else if (data.text.mid(i).startsWith(R"(\\)")) {
       // Allow escape '\', needed to support "\S" and "\P" in string
       // "\S" is used for super/subscripts
       // "\P" is used to start a new line

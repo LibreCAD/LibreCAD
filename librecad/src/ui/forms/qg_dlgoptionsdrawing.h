@@ -30,7 +30,6 @@
 #include <QGraphicsScene>
 #include "ui_qg_dlgoptionsdrawing.h"
 
-class QStringList;
 
 class RS_Graphic;
 class RS_Vector;

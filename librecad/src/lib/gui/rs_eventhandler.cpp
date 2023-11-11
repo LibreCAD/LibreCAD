@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_eventhandler.h"
@@ -41,22 +41,22 @@ namespace {
         return action != nullptr && !action->isFinished();
     }
 
-    QString evaluateFraction(QString input, QRegExp rx, int index, int tailI)
+    QString evaluateFraction(QString input, QRegularExpression rx, int index, int tailI)
     {
         QString copy = input;
         QString tail =QString{R"(\)"} + QString::number(tailI);
+	QRegularExpressionMatch match = rx.match(copy);
 
-        int pos = 0;
-        if ((pos = rx.indexIn(copy, pos)) != -1) {
+        if (match.hasMatch()) {
+            qsizetype pos = match.capturedStart();
             LC_ERR<<"Evaluate: "<<copy;
-            LC_ERR<<"pos="<<pos<<", rx.matchedLength()="<<rx.matchedLength();
-            QString formula = ((index != 2) ? rx.cap(2) + "+" : QString{}) + rx.cap(index) + "/" + rx.cap(index + 1);
+            QString formula = ((index != 2) ? match.captured(2) + "+" : QString{}) + match.captured(index) + "/" + match.captured(index + 1);
             LC_ERR<<"formula="<<formula;
             QString value = QString{}.setNum(RS_Math::eval(formula));
             LC_ERR<<"formula="<<formula<<": value="<<value;
             return input.left(pos)
-                    + input.mid(pos, rx.matchedLength()).replace(rx, R"( \1)" + value + tail)
-                    + evaluateFraction(input.right(input.size() - pos - rx.matchedLength()), rx, index, tailI);
+                    + input.mid(pos, match.capturedLength()).replace(rx, R"( \1)" + value + tail)
+                    + evaluateFraction(input.right(input.size() - pos - match.capturedLength()), rx, index, tailI);
         }
         return input;
     }
@@ -68,19 +68,20 @@ namespace {
     */
     QString updateForFraction(QString input) {
         // support fraction at the end: (1'1/2) => (1 1/2')
-        QRegExp rx{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"};
-        int pos = 0;
-        if ((pos = rx.indexIn(input, pos)) != -1) {
-            input = input.left(pos) + rx.cap(1) + rx.cap(2) + " " + rx.cap(4) + "/" + rx.cap(5) + rx.cap(3);
+        QRegularExpression rx{R"((\D*)([\d]+)\s*(['"])([\d]+)/([\d]+)\s*$)"};
+        QRegularExpressionMatch match = rx.match(input);
+        if (match.hasMatch()) {
+	    qsizetype pos = match.capturedStart();
+            input = input.left(pos) + match.captured(1) + match.captured(2) + " " + match.captured(4) + "/" + match.captured(5) + match.captured(3);
         }
-        std::vector<std::tuple<QRegExp, int, int>> regexps{{
-                {QRegExp{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))"}, 3, 5},
-                {QRegExp{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))"}, 3, 5},
-                {QRegExp{R"((\D*)\s*([\d]+)/([\d]+)\s*([\D$]))"}, 2, 4},
+        std::vector<std::tuple<QRegularExpression, int, int>> regexps{{
+                {QRegularExpression{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*([\D$]))"}, 3, 5},
+                {QRegularExpression{R"((\D*)([\d]+)\s+([\d]+)/([\d]+)\s*(['"]))"}, 3, 5},
+                {QRegularExpression{R"((\D*)\s*([\d]+)/([\d]+)\s*([\D$]))"}, 2, 4},
             }};
         LC_LOG<<"input="<<input;
         for(auto& [rx, index, tailI] : regexps)
-            input = evaluateFraction(input, rx, index, tailI).replace(QRegExp(R"(\s+)"), QString{});
+            input = evaluateFraction(input, rx, index, tailI).replace(QRegularExpression(R"(\s+)"), QString{});
         LC_LOG<<"eval: "<<input;
         return input;
     }

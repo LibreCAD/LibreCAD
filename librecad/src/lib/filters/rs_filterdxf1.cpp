@@ -25,6 +25,8 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include<QRegularExpression>
+
 #include "rs_filterdxfrw.h"
 #include "rs_filterdxf1.h"
 
@@ -612,11 +614,11 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     //}
                                     break;
                                 case 10:  // X1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vx1 = dxfLine.toDouble();
                                     break;
                                 case 20:  // Y1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vy1 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
@@ -664,19 +666,19 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     //}
                                     break;
                                 case 10:  // X1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vx1 = dxfLine.toDouble();
                                     break;
                                 case 20:  // Y1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vy1 = dxfLine.toDouble();
                                     break;
                                 case 11:  // X2
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vx2 = dxfLine.toDouble();
                                     break;
                                 case 21:  // Y2
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vy2 = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
@@ -726,23 +728,23 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     //}
                                     break;
                                 case 10:  // Centre X
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcx = dxfLine.toDouble();
                                     break;
                                 case 20:  // Centre Y
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcy = dxfLine.toDouble();
                                     break;
                                 case 40:  // Radius
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcr = dxfLine.toDouble();
                                     break;
                                 case 50:  // Start Angle
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     va1 = RS_Math::correctAngle(dxfLine.toDouble()/ARAD);
                                     break;
                                 case 51:  // End Angle
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     va2 = RS_Math::correctAngle(dxfLine.toDouble()/ARAD);
                                     break;
                                 case 39:  // Thickness
@@ -791,15 +793,15 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     //}
                                     break;
                                 case 10:  // Centre X
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcx = dxfLine.toDouble();
                                     break;
                                 case 20:  // Centre Y
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcy = dxfLine.toDouble();
                                     break;
                                 case 40:  // Radius
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vcr = dxfLine.toDouble();
                                     break;
                                 case 39:  // Thickness
@@ -1000,15 +1002,15 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     break;
 
                                 case 10:  // X1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vx1 = dxfLine.toDouble();
                                     break;
                                 case 20:  // Y1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vy1 = dxfLine.toDouble();
                                     break;
                                 case 40:  // height
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vheight = dxfLine.toDouble();
                                     /*if(!codeSeven) {
                                         vletterspace = vheight*0.2;
@@ -1016,7 +1018,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                 }*/
                                     break;
                                 case 50:  // angle
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     vtextAng = dxfLine.toDouble() / ARAD;
                                     break;
                                 case 72:  {// alignment
@@ -1094,7 +1096,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     if(dimText==" " || dimText==";;")
                                         dimText="";
 
-                                    //else dimText.replace(QRegExp("%%c"), "¯");
+                                    //else dimText.replace(QRegularExpression("%%c"), "¯");
                                     else
                                         strDecodeDxfString(dimText);
                                     break;
@@ -1111,51 +1113,51 @@ bool RS_FilterDXF1::readFromBuffer() {
                                     //}
                                     break;
                                 case 10:  // line position x
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v10 = dxfLine.toDouble();
                                     break;
                                 case 20:  // line position y
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v20 = dxfLine.toDouble();
                                     break;
                                 case 13:  // X1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v13 = dxfLine.toDouble();
                                     break;
                                 case 23:  // Y1
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v23 = dxfLine.toDouble();
                                     break;
                                 case 14:  // X2
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v14 = dxfLine.toDouble();
                                     break;
                                 case 24:  // Y2
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v24 = dxfLine.toDouble();
                                     break;
                                 case 15:  // X3
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v15 = dxfLine.toDouble();
                                     break;
                                 case 25:  // Y3
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v25 = dxfLine.toDouble();
                                     break;
                                 case 16:  // X4
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v16 = dxfLine.toDouble();
                                     break;
                                 case 26:  // Y4
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v26 = dxfLine.toDouble();
                                     break;
                                 case 40:
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v40 = dxfLine.toDouble();
                                     break;
                                 case 50:
-                                    dxfLine.replace( QRegExp(","), "." );
+                                    dxfLine.replace( QRegularExpression(","), "." );
                                     v50 = dxfLine.toDouble();
                                     break;
                                 case 70:  // Typ
@@ -1442,19 +1444,19 @@ bool RS_FilterDXF1::readFromBuffer() {
                                   //}
                                   break;
                                 case 10:  // Start point/center of boundary line/arc
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v10=dxfLine.toDouble();
                                   break;
                                 case 20:  // Start point/center of boundary line/arc
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v20=dxfLine.toDouble();
                                   break;
                                 case 11:  // End point of boundary line
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v11=dxfLine.toDouble();
                                   break;
                                 case 21:  // End point of boundary line
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v21=dxfLine.toDouble();
                                   if(nextObjectTyp==T_LINE) {
                                     int elnu=graphic->addLine(v10, v20, v11, v21, currentLayerNum, add);
@@ -1462,15 +1464,15 @@ bool RS_FilterDXF1::readFromBuffer() {
                                   }
                                   break;
                                 case 40:  // Radius of boundary entity
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v40=dxfLine.toDouble();
                                   break;
                                 case 50:  // Start angle
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v50=dxfLine.toDouble();
                                   break;
                                 case 51:  // End angle
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   v51=dxfLine.toDouble();
                                   break;
                                 case 73:  // Counterclockwise?
@@ -1489,7 +1491,7 @@ bool RS_FilterDXF1::readFromBuffer() {
                                   }
                                   break;
                                 case 41:  // Scale
-                                  dxfLine.replace( QRegExp(","), "." );
+                                  dxfLine.replace( QRegularExpression(","), "." );
                                   patternScale=dxfLine.toDouble();
                                   break;
                                 case 52:  // Angle
@@ -1856,10 +1858,10 @@ bool RS_FilterDXF1::readFileInBuffer(int _bNum) {
 void RS_FilterDXF1::strDecodeDxfString(QString& str) {
     if (str.isEmpty())
         return;
-    str.replace(QRegExp("%%c"), QChar(0xF8)); // Diameter
-    str.replace(QRegExp("%%d"), QChar(0xB0)); // Degree
-    str.replace(QRegExp("%%p"), QChar(0xB1)); // Plus/minus
-    str.replace(QRegExp("\\\\[pP]"), QChar('\n'));
+    str.replace(QRegularExpression("%%c"), QChar(0xF8)); // Diameter
+    str.replace(QRegularExpression("%%d"), QChar(0xB0)); // Degree
+    str.replace(QRegularExpression("%%p"), QChar(0xB1)); // Plus/minus
+    str.replace(QRegularExpression("\\\\[pP]"), QChar('\n'));
 }
 
 

@@ -39,40 +39,6 @@ static void touchGraphic(RS_Graphic*, PdfPrintParams&);
 static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
 
-namespace {
-// Convert QPrinter::PageSize to QPageSize
-QPageSize toPageSize(QPrinter::PageSize pageSize)
-{
-    static std::map<QPrinter::PageSize, QPageSize::PageSizeId> lookUp = {
-        {QPrinter::A0, QPageSize::A0},
-        {QPrinter::A1, QPageSize::A1},
-        {QPrinter::A2, QPageSize::A2},
-        {QPrinter::A3, QPageSize::A3},
-        {QPrinter::A4, QPageSize::A4},
-
-        /* Removed ISO "B" and "C" series,  C5E,  Comm10E,  DLE,  (envelope sizes) */
-
-        {QPrinter::Letter, QPageSize::Letter},
-        {QPrinter::Legal, QPageSize::Legal},
-        {QPrinter::Tabloid, QPageSize::Tabloid},
-
-        //case RS2::Ansi_A, {QPrinter::AnsiA, QPageSize::AnsiA},
-        //case RS2::Ansi_B, {QPrinter::AnsiB, QPageSize::AnsiB},
-        {QPrinter::AnsiC, QPageSize::AnsiC},
-        {QPrinter::AnsiD, QPageSize::AnsiD},
-        {QPrinter::AnsiE, QPageSize::AnsiE},
-
-        {QPrinter::ArchA, QPageSize::ArchA},
-        {QPrinter::ArchB, QPageSize::ArchB},
-        {QPrinter::ArchC, QPageSize::ArchC},
-        {QPrinter::ArchD, QPageSize::ArchD},
-        {QPrinter::ArchE, QPageSize::ArchE}};
-    QPageSize::PageSizeId id = lookUp.count(pageSize) == 1 ?
-                                   lookUp.at(pageSize) : QPageSize::Custom;
-    return QPageSize{id};
-}
-}
-
 void PdfPrintLoop::run()
 {
     if (params.outFile.isEmpty()) {
@@ -133,7 +99,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
         RS_Document* doc;
         RS_Graphic* graphic;
         QString dxfFile;
-        QPrinter::PageSize paperSize;
+        QPageSize::PageSizeId paperSize;
     };
 
     if (!params.outDir.isEmpty()) {
@@ -251,9 +217,9 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
     bool landscape = false;
 
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
-    QPrinter::PageSize paperSize = LC_Printing::rsToQtPaperFormat(pf);
+    QPageSize::PageSizeId paperSize = LC_Printing::rsToQtPaperFormat(pf);
 
-    if (paperSize == QPrinter::Custom){
+    if (paperSize == QPageSize::Custom){
         RS_Vector r = graphic->getPaperSize();
         RS_Vector s = RS_Units::convert(r, graphic->getUnit(),
             RS2::Millimeter);
@@ -265,11 +231,7 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
         printer.setPaperSize(QSizeF{s.x,s.y}, QPrinter::Millimeter);
 #endif
     } else {
-#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
-        printer.setPageSize(toPageSize(paperSize));
-#else
-        printer.setPaperSize(paperSize);
-#endif
+        printer.setPageSize(paperSize);
     }
 
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)

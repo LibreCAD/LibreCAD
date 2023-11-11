@@ -39,7 +39,6 @@ class RS_Document;
 class QAction;
 class QKeyEvent;
 class QString;
-class QStringList;
 
 /**
  * This is the interface that must be implemented for all

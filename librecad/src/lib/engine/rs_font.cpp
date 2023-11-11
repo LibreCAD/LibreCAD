@@ -27,8 +27,9 @@
 
 
 #include <iostream>
+#include <QRegularExpression>
+#include <QStringEncoder>
 #include <QTextStream>
-#include <QTextCodec>
 
 #include "rs_font.h"
 #include "rs_arc.h"
@@ -186,7 +187,7 @@ void RS_Font::readCXF(QString path) {
             } else if (identifier.toLower()=="name") {
                 names.append(value);
             } else if (identifier.toLower()=="encoding") {
-                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
+                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
                 encoding = value;
             }
         }
@@ -198,11 +199,11 @@ void RS_Font::readCXF(QString path) {
             QChar ch;
 
             // read unicode:
-            QRegExp regexp("[0-9A-Fa-f]{4,4}");
-            regexp.indexIn(line);
-            QString cap = regexp.cap();
-            if (!cap.isNull()) {
-				int uCode = cap.toInt(nullptr, 16);
+            QRegularExpression regexp("[0-9A-Fa-f]{4,4}");
+            QRegularExpressionMatch match=regexp.match(line);
+            if (match.hasMatch()) {
+	        QString cap = match.captured(0);
+		int uCode = cap.toInt(nullptr, 16);
                 ch = QChar(uCode);
             }
 
@@ -325,7 +326,7 @@ void RS_Font::readLFF(QString path) {
             } else if (identifier.toLower()=="license") {
                 fileLicense = value;
             } else if (identifier.toLower()=="encoding") {
-                ts.setCodec(QTextCodec::codecForName(value.toLatin1()));
+                ts.setEncoding(QStringConverter::encodingForName(value.toLatin1()).value());
                 encoding = value;
             } else if (identifier.toLower()=="created") {
                 fileCreate = value;
@@ -339,11 +340,11 @@ void RS_Font::readLFF(QString path) {
             QChar ch;
 
             // read unicode:
-            QRegExp regexp("[0-9A-Fa-f]{1,5}");
-            regexp.indexIn(line);
-            QString cap = regexp.cap();
-            if (!cap.isNull()) {
-				int uCode = cap.toInt(nullptr, 16);
+            QRegularExpression regexp("[0-9A-Fa-f]{1,5}");
+	    QRegularExpressionMatch match=regexp.match(line);
+            if (match.hasMatch()) {
+	        QString cap = match.captured(0);
+		int uCode = cap.toInt(nullptr, 16);
                 ch = QChar(uCode);
             }
             // only unicode allowed

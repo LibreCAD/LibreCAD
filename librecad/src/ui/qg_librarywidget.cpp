@@ -34,6 +34,7 @@
 #include <QMouseEvent>
 #include <QPushButton>
 #include <QStandardItemModel>
+#include <QStandardPaths>
 #include <QTreeView>
 #include <QVBoxLayout>
 
@@ -388,7 +389,7 @@ QString QG_LibraryWidget::getPathToPixmap(const QString& dir,
         const QString& dxfPath) {
 
     // the thumbnail must be created in the user's home.
-    QString iconCacheLocation=QStandardPaths::writableLocation(QStandardPaths::DataLocation) + QDir::separator() + "iconCache" + QDir::separator();
+    QString iconCacheLocation=QStandardPaths::writableLocation(QStandardPaths::AppDataLocation) + QDir::separator() + "iconCache" + QDir::separator();
 
     RS_DEBUG->print("QG_LibraryWidget::getPathToPixmap: "
                     "dir: '%s' dxfFile: '%s' dxfPath: '%s'",

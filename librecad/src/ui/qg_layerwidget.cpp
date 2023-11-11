@@ -159,7 +159,11 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
         }
         break;
 
+#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
+    case Qt::BackgroundRole:
+#else
     case Qt::BackgroundColorRole:
+#endif
         if( COLOR_SAMPLE == col) {
             return layer->getPen().getColor().toQColor();
         }
@@ -516,18 +520,12 @@ void QG_LayerWidget::slotSelectionChanged(
  * Called when reg-expresion matchLayerName->text changed
  */
 void QG_LayerWidget::slotUpdateLayerList() {
-    QRegExp rx("");
-    int pos=0;
-    QString  s, n;
-
-    n=matchLayerName->text();
-    rx.setPattern(n);
-    rx.setPatternSyntax(QRegExp::WildcardUnix);
+    QRegularExpression rx = QRegularExpression::fromWildcard(matchLayerName->text());
 
     for (unsigned int i=0; i<layerList->count() ; i++) {
-        s=layerModel->getLayer(i)->getName();
-        int f=rx.indexIn(s, pos);
-        if ( !f ) {
+        QString s=layerModel->getLayer(i)->getName();
+        QRegularExpressionMatch match = rx.match(s);
+        if (match.hasMatch()) {
             layerView->showRow(i);
             layerModel->getLayer(i)->visibleInLayerList(true);
         } else {

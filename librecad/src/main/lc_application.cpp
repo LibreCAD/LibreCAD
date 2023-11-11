@@ -24,9 +24,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QStringList>
 #include <QFileOpenEvent>
-
 #include "lc_application.h"
 
 LC_Application::LC_Application(int &argc, char **argv)

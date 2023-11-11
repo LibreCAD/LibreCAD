@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include <vector>
-#include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
 #include <QPalette>
