@@ -391,29 +391,29 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     caption->setPalette(palette);
     caption->setAlignment( Qt::AlignCenter );
     // Actions for all blocks:
-    contextMenu->addAction( tr("&Defreeze all Blocks"), actionHandler,
-                             SLOT(slotBlocksDefreezeAll()), 0);
-    contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
-                             SLOT(slotBlocksFreezeAll()), 0);
+    contextMenu->addAction( tr("&Defreeze all Blocks"), 0, actionHandler,
+                             SLOT(slotBlocksDefreezeAll()));
+    contextMenu->addAction( tr("&Freeze all Blocks"), 0, actionHandler,
+                             SLOT(slotBlocksFreezeAll()));
     contextMenu->addSeparator();
     // Actions for selected blocks or,
     // if nothing is selected, for active block:
-    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
-                             SLOT(slotBlocksToggleView()), 0);
-    contextMenu->addAction( tr("&Remove Block"), actionHandler,
-                             SLOT(slotBlocksRemove()), 0);
+    contextMenu->addAction( tr("&Toggle Visibility"), 0, actionHandler,
+                             SLOT(slotBlocksToggleView()));
+    contextMenu->addAction( tr("&Remove Block"), 0, actionHandler,
+                             SLOT(slotBlocksRemove()));
     contextMenu->addSeparator();
     // Single block actions:
-    contextMenu->addAction( tr("&Add Block"), actionHandler,
-                             SLOT(slotBlocksAdd()), 0);
-    contextMenu->addAction( tr("&Rename Block"), actionHandler,
-                             SLOT(slotBlocksAttributes()), 0);
-    contextMenu->addAction( tr("&Edit Block"), actionHandler,
-                             SLOT(slotBlocksEdit()), 0);
-    contextMenu->addAction( tr("&Insert Block"), actionHandler,
-                             SLOT(slotBlocksInsert()), 0);
-    contextMenu->addAction( tr("&Create New Block"), actionHandler,
-                             SLOT(slotBlocksCreate()), 0);
+    contextMenu->addAction( tr("&Add Block"), 0, actionHandler,
+                             SLOT(slotBlocksAdd()));
+    contextMenu->addAction( tr("&Rename Block"), 0, actionHandler,
+                             SLOT(slotBlocksAttributes()));
+    contextMenu->addAction( tr("&Edit Block"), 0, actionHandler,
+                             SLOT(slotBlocksEdit()));
+    contextMenu->addAction( tr("&Insert Block"), 0, actionHandler,
+                             SLOT(slotBlocksInsert()));
+    contextMenu->addAction( tr("&Create New Block"), 0, actionHandler,
+                             SLOT(slotBlocksCreate()));
     contextMenu->exec(QCursor::pos());
     delete contextMenu;
 
@@ -455,20 +455,13 @@ void QG_BlockWidget::slotUpdateBlockList() {
         return;
     }
 
-    QRegExp rx("");
-    int pos = 0;
-    QString s, n;
-
-    n = matchBlockName->text();
-    rx.setPattern(n);
-    rx.setPatternSyntax(QRegExp::WildcardUnix);
+    QRegularExpression rx{ QRegularExpression::wildcardToRegularExpression(matchBlockName->text())};
 
     for (int i = 0; i < blockList->count(); i++) {
         RS_Block* block = blockModel->getBlock(i);
         if (!block) continue;
-        s = block->getName();
-        int f = rx.indexIn(s, pos);
-        if (!f) {
+        QRegularExpressionMatch match = rx.match(block->getName());
+        if (! match.hasMatch()) {
             blockView->showRow(i);
             blockModel->getBlock(i)->visibleInBlockList(true);
         } else {

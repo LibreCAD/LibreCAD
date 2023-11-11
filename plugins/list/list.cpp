@@ -12,7 +12,6 @@
 
 
 #include <QTextEdit>
-//#include <QColor>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
 #include <cmath>
