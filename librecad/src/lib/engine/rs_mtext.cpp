@@ -274,7 +274,7 @@ void RS_MText::update() {
           continue;
         }
 
-        int j{data.text.indexOf('}', i)};
+        qsizetype j{data.text.indexOf('}', i)};
         if (j > i) {
           QString fontName = data.text.mid(i + 1, j - i - 1);
 
