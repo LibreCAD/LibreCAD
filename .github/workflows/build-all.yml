@@ -212,13 +212,12 @@ jobs:
         with:
           msystem: MINGW64
 
-      - name: Install Qt-5.15
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.5.*'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_mingw81'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -226,8 +225,6 @@ jobs:
           setup-python: 'true'
           set-env: 'true'
           tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--external 7z'
 
       - name: Install boost
