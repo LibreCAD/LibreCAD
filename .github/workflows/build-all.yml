@@ -122,7 +122,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.5.*'
+          version: '6.5.3'
           host: 'windows'
           target: 'desktop'
           arch: 'win32_mingw'
@@ -163,11 +163,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2\
+          dir ..\Qt\6.5.3\
           echo.
-          dir ..\Qt\5.15.2\mingw81_32\
+          dir ..\Qt\6.5.3\mingw81_32\
           echo.
-          dir ..\Qt\5.15.2\mingw81_32\bin
+          dir ..\Qt\6.5.3\mingw81_32\bin
 
       - name: Build
         run: |
@@ -213,7 +213,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.5.*'
+          version: '6.5.3'
           host: 'windows'
           arch: 'win64_mingw'
           target: 'desktop'
@@ -254,11 +254,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2\
+          dir ..\Qt\6.5.3\
           echo.
-          dir ..\Qt\5.15.2\mingw81_64\
+          dir ..\Qt\6.5.3\mingw81_64\
           echo.
-          dir ..\Qt\5.15.2\mingw81_64\bin
+          dir ..\Qt\6.5.3\mingw81_64\bin
 
       - name: Build
         run: |
