@@ -125,6 +125,7 @@ jobs:
           version: '6.5.*'
           host: 'windows'
           target: 'desktop'
+          arch: 'win32_mingw'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -214,6 +215,7 @@ jobs:
         with:
           version: '6.5.*'
           host: 'windows'
+          arch: 'win64_mingw'
           target: 'desktop'
           dir: '..'
           install-deps: 'true'
