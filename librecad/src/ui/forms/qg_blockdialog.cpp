@@ -41,8 +41,6 @@ QG_BlockDialog::QG_BlockDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
 {
     setModal(modal);
     setupUi(this);
-    connect(this, &QDialog::accepted, this, &QG_BlockDialog::validate);
-    connect(this, &QDialog::rejected, this, &QG_BlockDialog::cancel);
 }
 
 /*
