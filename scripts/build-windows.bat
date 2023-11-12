@@ -1,7 +1,7 @@
 call set-windows-env.bat
 
 pushd ..
-qmake.exe librecad.pro -r -spec win32-g++
+qmake6.exe librecad.pro -r -spec win32-g++
 if not _%1==_NoClean (
 	mingw32-make.exe clean
 )

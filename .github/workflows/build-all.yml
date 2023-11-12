@@ -125,7 +125,6 @@ jobs:
           version: '6.5.*'
           host: 'windows'
           target: 'desktop'
-          arch: 'win32_mingw81'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -133,8 +132,6 @@ jobs:
           setup-python: 'true'
           set-env: 'true'
           tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--external 7z'
 
       - name: Install boost
