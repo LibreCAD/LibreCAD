@@ -28,6 +28,10 @@ CONFIG += qt \
 
 QT += widgets printsupport
 CONFIG += c++17
+
+# using qt5 connections for UI forms
+QMAKE_UIC_FLAGS += --connections string
+
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }

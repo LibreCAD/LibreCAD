@@ -63,6 +63,7 @@ private slots:
     void slotRestrictNothing(bool checked);
 
 private:
+    QAction* createAction(QString icon, QString tip, QActionGroup* group);
 
 	QG_ActionHandler* actionHandler;
 

@@ -20,14 +20,14 @@
 
 SCRIPTPATH="$(dirname "$0")"
 
-for i in /opt/local/libexec /usr/local/opt /usr/local $(dirname `which qmake`)
+for i in /opt/local/libexec /usr/local/opt /usr/local $(dirname `which qmake6`)
 do
-    if [ -x "$i/qt5/bin/qmake" ]
+    if [ -x "$i/qt6/bin/qmake6" ]
     then
-        QT_PATH=$i/qt5/bin/
+        QT_PATH=$i/qt6/bin/
         break
     fi
-    if [ -x "$i/qmake" ]; then
+    if [ -x "$i/qmake6" ]; then
     	QT_PATH="$i"
 	break
     fi
@@ -69,9 +69,9 @@ esac
 done
 
 #validate QT_PATH
-if [[ ! -f ${QT_PATH}qmake ]]
+if [[ ! -f ${QT_PATH}qmake6 ]]
 then
-	QT_PATH=$(dirname "$(which qmake)")/
+    QT_PATH=$(dirname "$(which qmake6)")/
 	if [[ -z $QT_PATH ]]
 	then
 		echo "can not locate qmake"
@@ -79,7 +79,7 @@ then
 	fi
 fi
 
-QMAKE_CMD=${QT_PATH}qmake
+QMAKE_CMD=${QT_PATH}qmake6
 
 # validate QT_VERSION
 QT_VERSION=$(${QMAKE_CMD} -query QT_VERSION)
@@ -125,7 +125,7 @@ $QMAKE_CMD $QMAKE_OPTS -r
 
 #to make it auto, use "make -j"
 #hardcoded to 4 jobs, because "make -j" crashes our mac building box
-make -j4
+make -j
 
 APP_FILE=LibreCAD
 OUTPUT_DMG=${APP_FILE}.dmg
