@@ -256,9 +256,9 @@ jobs:
           echo.
           dir ..\Qt\6.5.3\
           echo.
-          dir ..\Qt\6.5.3\mingw81_64\
+          dir ..\Qt\6.5.3\mingw_64\
           echo.
-          dir ..\Qt\6.5.3\mingw81_64\bin
+          dir ..\Qt\6.5.3\mingw_64\bin
 
       - name: Build
         run: |
