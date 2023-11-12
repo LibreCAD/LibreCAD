@@ -19,8 +19,8 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-        version: '6.5.*'
-        modules: 'qtscript'
+          version: '6.5.*'
+          modules: 'qtscript'
 
       - name: Install Qt and dependencies
         run: |
