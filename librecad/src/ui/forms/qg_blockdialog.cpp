@@ -77,9 +77,7 @@ void QG_BlockDialog::validate() {
         } else {
             QMessageBox::warning( this, tr("Renaming Block"),
                                   tr("Could not name block. A block named \"%1\" "
-                                     "already exists.").arg(leName->text()),
-                                  QMessageBox::Ok,
-                                  Qt::NoButton);
+                                     "already exists.").arg(leName->text()));
         }
 	}
 }

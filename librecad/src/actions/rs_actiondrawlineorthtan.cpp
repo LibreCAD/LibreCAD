@@ -91,8 +91,7 @@ void RS_ActionDrawLineOrthTan::trigger() {
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent begin");
 	e->accept();
-	RS_Vector mouse(graphicView->toGraphX(e->x()),
-					graphicView->toGraphY(e->y()));
+    RS_Vector mouse{graphicView->toGraph(e->position())};
 
 	switch(getStatus()){
 	case SetLine:

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-
 #include <iostream>
 #include <QRegularExpression>
 #include <QStringConverter>

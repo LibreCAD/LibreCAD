@@ -89,7 +89,6 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         RS_EntityContainer::addEntity(l4);
 
         delete entity;
-        entity = nullptr;
     } else {
         entity->setLayer(nullptr);
         entity->setSelected(false);

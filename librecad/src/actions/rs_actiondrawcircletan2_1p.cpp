@@ -169,7 +169,7 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent* e) {
 		pPoints->point=pPoints->coord;
         break;
     case SetCenter:
-		pPoints->coord=graphicView->toGraph(e->x(),e->y());
+        pPoints->coord=graphicView->toGraph(e->position());
         break;
     default:
         return;
@@ -232,7 +232,7 @@ void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent* e) {
         }
             break;
         case SetCenter:
-			pPoints->coord=graphicView->toGraph(e->x(),e->y());
+            pPoints->coord=graphicView->toGraph(e->position());
             if(preparePreview()) trigger();
             break;
 

@@ -158,7 +158,8 @@ void imgLabel::setPos(DPT::txtposition pos)
 void imgLabel::mouseReleaseEvent(QMouseEvent *event)
  {
     if (event->button() == Qt::LeftButton) {
-        changePos(event->x(), event->y());
+        QPointF pos = event->position().toPoint();
+        changePos(pos.x(), pos.y());
      } else {
          QLabel::mousePressEvent(event);
      }

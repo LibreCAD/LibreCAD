@@ -120,8 +120,7 @@ void RS_ActionDrawLineBisector::trigger() {
 void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
-    RS_Vector mouse = RS_Vector(graphicView->toGraphX(e->x()),
-                                graphicView->toGraphY(e->y()));
+    RS_Vector mouse = graphicView->toGraph(e->position());
 
     switch (getStatus()) {
     case SetLine1:
@@ -176,8 +175,7 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     } else {
 
-        RS_Vector mouse = RS_Vector(graphicView->toGraphX(e->x()),
-                                    graphicView->toGraphY(e->y()));
+        RS_Vector mouse = graphicView->toGraph(e->position());
 
         switch (getStatus()) {
         case SetLine1: {

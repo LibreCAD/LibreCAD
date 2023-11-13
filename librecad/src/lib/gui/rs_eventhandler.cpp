@@ -114,7 +114,7 @@ RS_EventHandler::~RS_EventHandler() {
  * Go back in current action.
  */
 void RS_EventHandler::back() {
-    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0),
+    QMouseEvent e(QEvent::MouseButtonRelease, QPoint(0,0), QPoint{0, 0},
                   Qt::RightButton, Qt::RightButton, Qt::NoModifier);
     mouseReleaseEvent(&e);
     if (!hasAction() && q_action)

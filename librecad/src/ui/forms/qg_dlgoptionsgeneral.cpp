@@ -314,9 +314,7 @@ void QG_DlgOptionsGeneral::ok()
 	
 	if (restartNeeded==true) {
         QMessageBox::warning( this, tr("Preferences"),
-                              tr("Please restart the application to apply all changes."),
-                              QMessageBox::Ok,
-                              Qt::NoButton);
+                              tr("Please restart the application to apply all changes."));
     }
     accept();
 }

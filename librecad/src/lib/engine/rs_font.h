@@ -28,7 +28,6 @@
 #ifndef RS_FONT_H
 #define RS_FONT_H
 
-#include <iosfwd>
 #include <QStringList>
 #include <QMap>
 #include "rs_blocklist.h"
@@ -81,12 +80,12 @@ public:
     }
 
     /** @return Default word spacing for this font */
-    double getWordSpacing() {
+    double getWordSpacing() const {
         return wordSpacing;
     }
 
     /** @return Default line spacing factor for this font */
-    double getLineSpacingFactor() {
+    double getLineSpacingFactor() const {
         return lineSpacingFactor;
     }
 
@@ -102,7 +101,7 @@ public:
     //    RS_Block* findLetter(const QString& name) {
     //		return letterList.find(name);
     //	}
-    unsigned countLetters() {
+    unsigned countLetters() const {
         return letterList.count();
     }
     RS_Block* letterAt(unsigned i) {

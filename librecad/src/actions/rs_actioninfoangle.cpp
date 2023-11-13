@@ -102,8 +102,7 @@ void RS_ActionInfoAngle::trigger() {
 void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-		RS_Vector mouse{graphicView->toGraphX(e->x()),
-						graphicView->toGraphY(e->y())};
+        RS_Vector mouse{graphicView->toGraph(e->position())};
 
         switch (getStatus()) {
         case SetEntity1:

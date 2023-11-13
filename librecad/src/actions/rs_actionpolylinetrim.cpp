@@ -130,8 +130,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
                         }else{
                                 Segment1 = NULL;
                                         double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-                                Segment1 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
-                                 graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
+                                Segment1 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
                                 if(Segment1 == NULL)
                                         break;
                                 setStatus(SetSegment2);
@@ -149,8 +148,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
                         }else{
                                 Segment2 = NULL;
                                         double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-                                Segment2 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
-                                 graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
+                                Segment2 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
                                 if(Segment2 == NULL)
                                         break;
                                 deleteSnapper();

@@ -75,8 +75,8 @@ void RS_ActionZoomPan::finish(bool updateTB) {
 
 void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
     //v2 = snapPoint(e);
-    x2 = e->x();
-    y2 = e->y();
+    x2 = e->position().x();
+    y2 = e->position().y();
     //if (getStatus()==1 && graphicView->toGuiDX((v2-v1).magnitude())>10) {
     if (getStatus()==SetPanning ) {
             if (std::abs(x2-x1)>7 || std::abs(y2-y1)>7) {
@@ -90,8 +90,8 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::MiddleButton ||
             e->button()==Qt::LeftButton) {
         //v1 = snapPoint(e);
-        x1 = e->x();
-        y1 = e->y();
+        x1 = e->position().x();
+        y1 = e->position().y();
         setStatus(SetPanning);
         graphicView->setPanning(true);
     }

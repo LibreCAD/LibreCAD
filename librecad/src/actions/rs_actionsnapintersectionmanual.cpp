@@ -99,7 +99,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent begin");
 
     RS_Entity* se = catchEntity(e);
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
 
     switch (getStatus()) {
     case ChooseEntity1:
@@ -146,7 +146,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+        RS_Vector mouse = graphicView->toGraph(e->position());
         RS_Entity* se = catchEntity(e);
 
         switch (getStatus()) {

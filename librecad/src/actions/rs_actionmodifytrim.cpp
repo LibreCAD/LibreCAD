@@ -101,7 +101,7 @@ void RS_ActionModifyTrim::trigger() {
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
 
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Entity* se = catchEntity(e);
 
     switch (getStatus()) {
@@ -127,7 +127,7 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+        RS_Vector mouse = graphicView->toGraph(e->position());
         RS_Entity* se = catchEntity(e);
 
         switch (getStatus()) {

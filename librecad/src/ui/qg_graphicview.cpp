@@ -688,7 +688,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     RS_Vector mouse = toGraph(e->position());
 #else
-    RS_Vector mouse = toGraph(e->x(), e->y());
+    RS_Vector mouse = toGraph(e->position());
 #endif
 
     if (device == "Trackpad")
@@ -1257,7 +1257,7 @@ void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
     const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
                                    cadArea_maxCoord - m_panData->probedAreaOffset);
 
-    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    RS_Vector mouseCoord{event->position()};
     mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
 
     const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
@@ -1342,7 +1342,7 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
     if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)
         return false;
 
-    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    RS_Vector mouseCoord{event->position()};
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
         std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/"

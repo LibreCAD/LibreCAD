@@ -174,6 +174,8 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     {
         RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
         if(en == nullptr || en==m_pPoints->circle1)
+    RS_Vector mouse(graphicView->toGraphX(e->x()),
+                    graphicView->toGraphY(e->y()));
             return;
         clearHighlighted();
         m_pPoints->circle2=en;
