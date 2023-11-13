@@ -55,7 +55,6 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 
     // only border preview for complex entities:
-    //if ((entity->count() > maxEntities-count()) &&
 
     bool addBorder = false;
 
