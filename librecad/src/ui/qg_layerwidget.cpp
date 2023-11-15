@@ -525,7 +525,7 @@ void QG_LayerWidget::slotUpdateLayerList() {
 
     for (unsigned i=0; i<layerList->count() ; i++) {
         QString s=layerModel->getLayer(i)->getName();
-        if (s.indexOf(rx) == 0) {
+        if (matchLayerName->text().isEmpty() || s.indexOf(rx) == 0) {
             layerView->showRow(i);
             layerModel->getLayer(i)->visibleInLayerList(true);
         } else {
