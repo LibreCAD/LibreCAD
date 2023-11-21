@@ -81,7 +81,7 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
         case SetTargetPoint:
             if (pPoints->referencePoint.valid) {
                 if (e->modifiers() & Qt::ShiftModifier) {
-                    mouse = snapToAngle(mouse, pPoints->referencePoint, 15.);
+                    mouse = snapToAngle(mouse, pPoints->referencePoint);
                 }
 
 				pPoints->targetPoint = mouse;
@@ -114,7 +114,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector snapped = snapPoint(e);
         if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
-            snapped = snapToAngle(snapped, pPoints->referencePoint, 15.);
+            snapped = snapToAngle(snapped, pPoints->referencePoint);
 
         RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
