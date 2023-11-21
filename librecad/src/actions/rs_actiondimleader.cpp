@@ -121,6 +121,11 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
 
 		if (pPoints->points.size() ) {
 			RS_Vector const& p = pPoints->points.back();
+
+			if (e->modifiers() & Qt::ShiftModifier) {
+				mouse = snapToAngle(mouse, p);
+			}
+
 			preview->addEntity(new RS_Line{preview.get(), p, mouse});
         }
         drawPreview();
@@ -133,7 +138,13 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDimLeader::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector snapped = snapPoint(e);
+        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetEndpoint && pPoints->points.size()) {
+            RS_Vector const& p = pPoints->points.back();
+            snapped = snapToAngle(snapped, p);
+        }
+
+        RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         if (getStatus()==SetEndpoint) {
