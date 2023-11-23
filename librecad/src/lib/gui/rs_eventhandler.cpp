@@ -215,6 +215,9 @@ void RS_EventHandler::mouseLeaveEvent() {
 void RS_EventHandler::mouseEnterEvent() {
 
     if(hasAction()){
+        cleanUp();
+        debugActions();
+        LC_ERR<<__func__<<"(): resume: "<<currentActions.last()->getName();
         currentActions.last()->resume();
     } else {
         if (defaultAction) {
@@ -460,11 +463,15 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if (action==nullptr) {
         return;
     }
+LC_ERR<<__LINE__;
 
+    RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", action->getName().toLatin1().data());
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
+LC_ERR<<__LINE__;
     // Suspend current action:
     predecessor->suspend();
+LC_ERR<<__LINE__;
     predecessor->hideOptions();
 
     //    // Forget about the oldest action and make space for the new action:
@@ -484,10 +491,13 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     //    }
 
     // Set current action:
-
+LC_ERR<<__LINE__<<" predecessor: "<<predecessor->getName();
+LC_ERR<<__LINE__<<" new: "<<action->getName();
     currentActions.push_back(std::shared_ptr<RS_ActionInterface>(action));
-    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s",
-                    currentActions.last()->getName().toLatin1().data());
+//    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
+//                    predecessor->getName().toLatin1().data(),
+//                    currentActions.last()->getName().toLatin1().data());
+LC_ERR<<__LINE__;
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
@@ -598,7 +608,7 @@ void RS_EventHandler::cleanUp() {
 
     for (auto it=currentActions.begin(); it != currentActions.end();)
     {
-        if(*it == nullptr)
+        if(*it == nullptr || (*it)->isFinished())
         {
             it= currentActions.erase(it);
         }else{
@@ -667,6 +677,8 @@ void RS_EventHandler::debugActions() const{
 
 void RS_EventHandler::setQAction(QAction* action)
 {
+    LC_ERR<<__func__<<"()";
+    debugActions();
     if (q_action)
     {
         q_action->setChecked(false);
