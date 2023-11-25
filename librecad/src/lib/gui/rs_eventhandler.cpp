@@ -37,7 +37,7 @@
 #include "rs_debug.h"
 
 namespace {
-    bool notFinished(const std::shared_ptr<RS_ActionInterface>& action) {
+    bool isActive(const std::shared_ptr<RS_ActionInterface>& action) {
         return action != nullptr && !action->isFinished();
     }
 
@@ -463,15 +463,12 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     if (action==nullptr) {
         return;
     }
-LC_ERR<<__LINE__;
 
     RS_DEBUG->print("RS_EventHandler::setCurrentAction %s", action->getName().toLatin1().data());
     // Predecessor of the new action or NULL:
     auto& predecessor = hasAction() ? currentActions.last() : defaultAction;
-LC_ERR<<__LINE__;
     // Suspend current action:
     predecessor->suspend();
-LC_ERR<<__LINE__;
     predecessor->hideOptions();
 
     //    // Forget about the oldest action and make space for the new action:
@@ -491,13 +488,10 @@ LC_ERR<<__LINE__;
     //    }
 
     // Set current action:
-LC_ERR<<__LINE__<<" predecessor: "<<predecessor->getName();
-LC_ERR<<__LINE__<<" new: "<<action->getName();
     currentActions.push_back(std::shared_ptr<RS_ActionInterface>(action));
-//    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
-//                    predecessor->getName().toLatin1().data(),
-//                    currentActions.last()->getName().toLatin1().data());
-LC_ERR<<__LINE__;
+    //    RS_DEBUG->print("RS_EventHandler::setCurrentAction: current action is: %s -> %s",
+    //                    predecessor->getName().toLatin1().data(),
+    //                    currentActions.last()->getName().toLatin1().data());
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
@@ -536,7 +530,7 @@ void RS_EventHandler::killSelectActions() {
                 (*it)->rtti()==RS2::ActionSelectWindow ||
                 (*it)->rtti()==RS2::ActionSelectIntersected ||
                 (*it)->rtti()==RS2::ActionSelectLayer) {
-            if( ! (*it)->isFinished()){
+            if (isActive(*it)) {
                 (*it)->finish();
             }
             it= currentActions.erase(it);
@@ -563,7 +557,7 @@ void RS_EventHandler::killAllActions()
 
     for(auto& p: currentActions)
     {
-		if (!p->isFinished())
+        if (isActive(p))
         {
 			p->finish();
 		}
@@ -595,7 +589,7 @@ bool RS_EventHandler::isValid(RS_ActionInterface* action) const{
  */
 bool RS_EventHandler::hasAction()
 {
-    return std::any_of(currentActions.begin(), currentActions.end(), notFinished);
+    return std::any_of(currentActions.begin(), currentActions.end(), isActive);
 }
 
 
@@ -608,11 +602,11 @@ void RS_EventHandler::cleanUp() {
 
     for (auto it=currentActions.begin(); it != currentActions.end();)
     {
-        if(*it == nullptr || (*it)->isFinished())
+        if(isActive(*it))
         {
-            it= currentActions.erase(it);
-        }else{
             ++it;
+        }else{
+            it= currentActions.erase(it);
         }
     }
     if(hasAction()){
@@ -634,7 +628,7 @@ void RS_EventHandler::cleanUp() {
  */
 void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
     for(auto& a: currentActions){
-        if( !a->isFinished()){
+        if(isActive(a)) {
             a->setSnapMode(sm);
         }
     }
@@ -650,7 +644,7 @@ void RS_EventHandler::setSnapMode(RS_SnapMode sm) {
  */
 void RS_EventHandler::setSnapRestriction(RS2::SnapRestriction sr) {
     for(auto& a: currentActions){
-        if( ! a->isFinished()){
+        if(isActive(a)) {
             a->setSnapRestriction(sr);
         }
     }
