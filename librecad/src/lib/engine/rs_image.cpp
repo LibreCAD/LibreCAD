@@ -44,7 +44,7 @@ namespace
 QString imageRelativePathName(QString& imageFile)
 {
     auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
-    if (doc == nullptr)
+    if (doc == nullptr || imageFile.isEmpty())
         return imageFile;
     QFileInfo dxfFileInfo(doc->getFilename());
     QFileInfo fileInfo(imageFile);
@@ -55,7 +55,7 @@ QString imageRelativePathName(QString& imageFile)
         return fileInfo.canonicalFilePath();
     }
     // test a relative file path from the dxf file folder
-    fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + fileInfo.canonicalFilePath());
+    fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
     if (fileInfo.exists())
         return fileInfo.canonicalFilePath();
     // search the current folder of the dxf for the dxf file name
