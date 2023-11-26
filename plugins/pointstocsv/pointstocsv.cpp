@@ -16,6 +16,10 @@
 #include <QTextEdit>
 #include <QDialogButtonBox>
 #include <QVBoxLayout>
+#include <QPushButton>
+#include <QLabel>
+#include <QComboBox>
+#include <QRect>
 #include <cmath>
 #include "iostream"
 #include <string> // for string and to_string()
@@ -23,14 +27,14 @@
 
 QString ExpTo_Csv::name() const
 {
-    return (tr("Export to csv"));
+    return (tr("Export points to csv"));
 }
 
 PluginCapabilities ExpTo_Csv::getCapabilities() const
 {
     PluginCapabilities pluginCapabilities;
     pluginCapabilities.menuEntryPoints << PluginMenuLocation("plugins_menu",
-                                        tr("Export to csv"));
+                                        name());
     return pluginCapabilities;
 }
 
@@ -43,7 +47,7 @@ void ExpTo_Csv::execComm(Document_Interface *doc,
     Q_UNUSED(cmd);
     std::cout << "############# B\n";
     d = doc;
-    std::cout << "############# C\n";
+    /*std::cout << "############# C\n";
     QList<Plug_Entity *> obj;
     std::cout << "############# D\n";
     bool yes  = doc->getSelect(&obj);
@@ -54,6 +58,7 @@ void ExpTo_Csv::execComm(Document_Interface *doc,
     std::cout << "############# G\n";
     //RS_Entity is the basic drawing entity
     //Plug_Entity is a wrapper for access entities from plugins
+    /*
     for (int i = 0; i < obj.size(); ++i) {
         Plug_Entity *mEnt = obj.at(i);
         int entityType = mEnt->getEntityType();
@@ -63,16 +68,16 @@ void ExpTo_Csv::execComm(Document_Interface *doc,
         text.append( getStrData(obj.at(i)));
         text.append( "\n");
     }
-    std::cout << "############# calling lc_Exptocsvdlg\n";
+    std::cout << "############# calling lc_Exptocsvdlg\n";*/
     lc_Exptocsvdlg dlg(parent);
     
-    std::cout << std::string("############# Setting text\n") + text.toStdString() + std::string(" \n");
-    dlg.setText(text);
+    //std::cout << std::string("############# Setting text\n") + text.toStdString() + std::string(" \n");
+    //dlg.setText(text);
     dlg.exec();
-
+    /*
     while (!obj.isEmpty())
         delete obj.takeFirst();
-
+        */
 }
 
 QString ExpTo_Csv::getStrData(Plug_Entity *ent)
@@ -88,27 +93,40 @@ QString ExpTo_Csv::getStrData(Plug_Entity *ent)
 }
 
 /*****************************/
-lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent) :  QDialog(parent)
-{
-    std::cout << "############# lc_Exptocsvdlg::lc_Exptocsvdlg\n";
-    setWindowTitle(tr("List entities"));
-//    QTextEdit *edit= new QTextEdit(this);
-    edit.setReadOnly (true);
-    edit.setAcceptRichText ( false );
-    QDialogButtonBox* bb = new QDialogButtonBox( QDialogButtonBox::Close, Qt::Horizontal, this );
-    QVBoxLayout *mainLayout = new QVBoxLayout;
-    mainLayout->addWidget(&edit);
-    mainLayout->addWidget(bb);
-    this->setLayout(mainLayout);
-    this->resize ( 450, 350 );
+    lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent) :  QDialog(parent)
+    {
+        std::cout << "############# lc_Exptocsvdlg::lc_Exptocsvdlg\n";
+        ExpTo_Csv expToCsvInstance; 
+        setWindowTitle(expToCsvInstance.name());
+        
+        QLabel *label = new QLabel("Entity type:", this);
+        label->setGeometry(10,5,100,30);
+        
+        QComboBox *comboBox = new QComboBox(this);
+        comboBox->addItem("Point");
+        comboBox->addItem("Line");
+        comboBox->addItem("PolyLine");
+        comboBox->setGeometry(120,5,150,30);
+        
+        QPushButton *selectButton = new QPushButton("Select objects", this);
+        selectButton->setGeometry(300,5, 120, 30);
+        
 
-    connect(bb, SIGNAL(rejected()), this, SLOT(accept()));
-}
+        QPushButton *exportButton = new QPushButton("Export", this);
+        exportButton->setGeometry(300,40, 120, 30);
+        
+        QLabel *selectedEntitiesCount = new QLabel("0 entities selected", this);
+        selectedEntitiesCount->setGeometry(10,40,130,30);
+        
+        this->resize ( 450, 80 );
+
+        
+    }
 
 void lc_Exptocsvdlg::setText(QString text)
 {
     std::cout << "############# lc_Exptocsvdlg::setText\n";
-    edit.setText(text);
+    //edit.setText(text);
 }
 lc_Exptocsvdlg::~lc_Exptocsvdlg()
 {
