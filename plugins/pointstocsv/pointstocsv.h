@@ -17,6 +17,8 @@
 #include "qc_plugininterface.h"
 #include "document_interface.h"
 #include <QTextEdit>
+#include <QComboBox>
+
 
 class Plug_Entity;
 
@@ -37,21 +39,26 @@ class ExpTo_Csv : public QObject, QC_PluginInterface
         QString getStrData(Plug_Entity *ent);
         Document_Interface *d;
         int getEntityType(Plug_Entity *ent);
-
+        
     private: 
         QTextEdit edit;
+        
 };
 class lc_Exptocsvdlg : public QDialog
 {
     Q_OBJECT
 
     public:    
-        explicit lc_Exptocsvdlg(QWidget *parent = nullptr);
+        explicit lc_Exptocsvdlg(QWidget *parent = nullptr, Document_Interface *doc = nullptr);
         ~lc_Exptocsvdlg() override;
         void setText(QString text);
+        void setSelectedType(QString typeAsString);
+        void selectEntities(QComboBox *comboBox, Document_Interface *doc = nullptr);
 
     private:
         QTextEdit edit;
+        int selectedType = -1;
+        int selectedCount = 0;
 };
 
 #endif //LIST_H
