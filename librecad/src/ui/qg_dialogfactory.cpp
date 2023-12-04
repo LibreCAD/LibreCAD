@@ -118,6 +118,51 @@
 #include "rs_debug.h"
 #include "qc_applicationwindow.h"
 
+namespace {
+
+template<typename T>
+void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on)
+{
+    LC_LOG<<__func__<<"(): begin";
+    if (toolbar) {
+        static std::unique_ptr<T> option;
+        if (option != nullptr) {
+            option->hide();
+            option->deleteLater();
+            option.release();
+        }
+        if (on) {
+            option = std::make_unique<T>(toolbar);
+            toolbar->addWidget(option.get());
+            option->setAction(action);
+            option->show();
+        }
+    }
+    LC_LOG<<__func__<<"(): end";
+}
+
+template<typename T>
+void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, bool update)
+{
+    LC_LOG<<__func__<<"(): begin";
+    if (toolbar) {
+        static std::unique_ptr<T> option;
+        if (option != nullptr) {
+            option->hide();
+            option->deleteLater();
+            option.release();
+        }
+        if (on) {
+            option = std::make_unique<T>(toolbar);
+            toolbar->addWidget(option.get());
+            option->setAction(action, update);
+            option->show();
+        }
+    }
+    LC_LOG<<__func__<<"(): end";
+}
+}
+
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
 /**
@@ -862,17 +907,9 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
                                           bool on) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LineOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LineOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action);
-            toolWidget->show();
-        }
-    }
+    LC_LOG<<__func__<<"(): begin";
+    addOptionWidget<QG_LineOptions>(optionWidget, action, on);
+    LC_LOG<<__func__<<"(): end";
     RS_DEBUG->print("QG_DialogFactory::requestLineOptions: OK");
 }
 
@@ -882,18 +919,7 @@ void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
                                               bool on, bool update) {
-
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_PolylineOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_PolylineOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_PolylineOptions>(optionWidget, action, on, update);
 }
 
 /**
@@ -931,17 +957,7 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
  */
 void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
                                                   bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LineParallelOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LineParallelOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LineParallelOptions>(optionWidget, action, on, update);
 }
 
 
@@ -952,17 +968,7 @@ void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestLineParallelThroughOptions(
         RS_ActionInterface* action,
         bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LineParallelThroughOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LineParallelThroughOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LineParallelThroughOptions>(optionWidget, action, on, update);
 }
 
 
@@ -995,18 +1001,7 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
                                                   bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LineRelAngleOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LineRelAngleOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LineRelAngleOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1016,19 +1011,7 @@ void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
                                                   bool on, bool update) {
-
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LineBisectorOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LineBisectorOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LineBisectorOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1038,18 +1021,7 @@ void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
                                                  bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_LinePolygonOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LinePolygonOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LinePolygonOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1060,17 +1032,7 @@ void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
                                                   bool on, bool update) {
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_LinePolygon2Options> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LinePolygon2Options>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LinePolygon2Options>(optionWidget, action, on, update);
 }
 
 
@@ -1081,16 +1043,7 @@ void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
 void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
                                          bool on, bool update) {
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_ArcOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_ArcOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_ArcOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1101,20 +1054,7 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
                                                    bool on, bool update) {
 
-
-    if (optionWidget) {
-        if (optionWidget) {
-            static std::unique_ptr<QG_ArcTangentialOptions> toolWidget;
-            toolWidget.reset();
-            if (on) {
-                toolWidget = std::make_unique<QG_ArcTangentialOptions>(nullptr);
-                optionWidget->addWidget(toolWidget.get());
-                toolWidget->setAction(action, update);
-                toolWidget->show();
-            }
-            arcTangentialOptions=toolWidget.get();
-        }
-    }
+    addOptionWidget<QG_ArcTangentialOptions>(optionWidget, action, on, update);
 }
 
 void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius)
@@ -1135,17 +1075,8 @@ void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius
 void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
+    addOptionWidget<QG_CircleOptions>(optionWidget, action, on, update);
     //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, action %s, on %s, update %s",qPrintable(action->getName()),on?"TRUE":"FALSE",update?"TRUE":"FALSE");
-    if (optionWidget) {
-        static std::unique_ptr<QG_CircleOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_CircleOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
 }
 
 
@@ -1154,17 +1085,8 @@ void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
                                                 bool on, bool update) {
+    addOptionWidget<QG_CircleTan2Options>(optionWidget, action, on, update);
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_CircleTan2Options> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_CircleTan2Options>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
 }
 
 
@@ -1174,16 +1096,7 @@ void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
 void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_SplineOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_SplineOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_SplineOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1195,16 +1108,7 @@ void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
                                            bool on, bool update) {
 
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_MTextOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_MTextOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_MTextOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1214,17 +1118,8 @@ void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
                                           bool on, bool update) {
 
+    addOptionWidget<QG_TextOptions>(optionWidget, action, on, update);
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_TextOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_TextOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
 }
 
 
@@ -1234,17 +1129,7 @@ void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestInsertOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_InsertOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_InsertOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_InsertOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1256,16 +1141,7 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
                                            bool on, bool update) {
 
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_ImageOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_ImageOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_ImageOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1275,18 +1151,7 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
                                                bool on, bool update) {
-    //static QLabel* l = nullptr;
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_DimOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_DimOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_DimOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1297,16 +1162,7 @@ void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
                                                bool on, bool update) {
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_DimLinearOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_DimLinearOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_DimLinearOptions>(optionWidget, action, on, update);
 }
 
 /**
@@ -1366,17 +1222,8 @@ void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
  */
 void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
                                                 bool on, bool update) {
+    addOptionWidget<QG_MoveRotateOptions>(optionWidget, action, on, update);
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_MoveRotateOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_MoveRotateOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
 }
 
 
@@ -1386,17 +1233,7 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
                                                 bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_TrimAmountOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_TrimAmountOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_TrimAmountOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1406,17 +1243,8 @@ void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
                                            bool on, bool update) {
+    addOptionWidget<QG_BevelOptions>(optionWidget, action, on, update);
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_BevelOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_BevelOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
 }
 
 
@@ -1426,17 +1254,7 @@ void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
                                            bool on, bool update) {
-
-    if (optionWidget) {
-        static std::unique_ptr<QG_RoundOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_RoundOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_RoundOptions>(optionWidget, action, on, update);
 }
 
 
@@ -1472,16 +1290,7 @@ void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
 void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
                                                    bool on, bool update) {
 
-    if (optionWidget) {
-        static std::unique_ptr<QG_LibraryInsertOptions> toolWidget;
-        toolWidget.reset();
-        if (on) {
-            toolWidget = std::make_unique<QG_LibraryInsertOptions>(nullptr);
-            optionWidget->addWidget(toolWidget.get());
-            toolWidget->setAction(action, update);
-            toolWidget->show();
-        }
-    }
+    addOptionWidget<QG_LibraryInsertOptions>(optionWidget, action, on, update);
 }
 
 
