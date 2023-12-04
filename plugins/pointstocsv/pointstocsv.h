@@ -20,6 +20,7 @@
 #include <QComboBox>
 
 
+
 class Plug_Entity;
 
 class ExpTo_Csv : public QObject, QC_PluginInterface
@@ -34,6 +35,8 @@ class ExpTo_Csv : public QObject, QC_PluginInterface
         virtual void execComm(Document_Interface *doc,
                               QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
 
+        virtual void setIsCollectingElements(bool newValue);
+        virtual void setIsCollectingElementsToFalse();
 
     private: 
         QString getStrData(Plug_Entity *ent);
@@ -42,6 +45,7 @@ class ExpTo_Csv : public QObject, QC_PluginInterface
         
     private: 
         QTextEdit edit;
+        bool isCollectingElements = false;
         
 };
 class lc_Exptocsvdlg : public QDialog
@@ -57,8 +61,11 @@ class lc_Exptocsvdlg : public QDialog
 
     private:
         QTextEdit edit;
-        int selectedType = -1;
+        enum DPI::ETYPE selectedType = DPI::UNKNOWN;
         int selectedCount = 0;
+        const QString strPoint= "Point";
+        const QString strLine = "Line";
+        const QString strPolyline = "Polyline";
 };
 
 #endif //LIST_H

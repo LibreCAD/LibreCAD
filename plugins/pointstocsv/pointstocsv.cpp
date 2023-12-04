@@ -24,6 +24,7 @@
 #include "iostream"
 #include <string> // for string and to_string()
 #include "pointstocsv.h"
+#include <QDebug>
 
 QString ExpTo_Csv::name() const
 {
@@ -47,37 +48,37 @@ void ExpTo_Csv::execComm(Document_Interface *doc,
     Q_UNUSED(cmd);
     std::cout << "############# B\n";
     d = doc;
-    /*std::cout << "############# C\n";
-    QList<Plug_Entity *> obj;
-    std::cout << "############# D\n";
-    bool yes  = doc->getSelect(&obj);
-    std::cout << "############# E\n";
-    if (!yes || obj.isEmpty()) return;
-    std::cout << "############# F\n";
-    QString text;
-    std::cout << "############# G\n";
-    //RS_Entity is the basic drawing entity
-    //Plug_Entity is a wrapper for access entities from plugins
-    /*
-    for (int i = 0; i < obj.size(); ++i) {
-        Plug_Entity *mEnt = obj.at(i);
-        int entityType = mEnt->getEntityType();
-        //int entityType = mEnt->getEntityType();
-        std::cout << "############# entityType " << entityType << " \n";
-        text.append( QString("%1 %2: ").arg(tr("n")).arg(i+1));
-        text.append( getStrData(obj.at(i)));
-        text.append( "\n");
-    }
-    std::cout << "############# calling lc_Exptocsvdlg\n";*/
+    //Deselecting all entities to start a fresh selection.
+    d->unselectEntities();
+    isCollectingElements = true;
     lc_Exptocsvdlg dlg(parent, doc);
-    
-    //std::cout << std::string("############# Setting text\n") + text.toStdString() + std::string(" \n");
+    connect(&dlg, &lc_Exptocsvdlg::rejected, this, &ExpTo_Csv::setIsCollectingElementsToFalse);
+    while(isCollectingElements){
+        qDebug() << "is collectingElements";
+        dlg.exec();
+    }
     //dlg.setText(text);
-    dlg.exec();
+    //dlg.exec();
     /*
     while (!obj.isEmpty())
         delete obj.takeFirst();
         */
+    //dlg.close();
+    qDebug() << "ExpTo_Csv execComm last line";
+}
+
+void ExpTo_Csv::setIsCollectingElements(bool newValue){
+    qDebug() << "setting isCollectingElements: " << newValue;    
+    isCollectingElements = newValue;
+    qDebug() << "isCollectingElements: " << isCollectingElements;    
+}
+
+void ExpTo_Csv::setIsCollectingElementsToFalse(){
+    qDebug() << "setting isCollectingElements as false";    
+    isCollectingElements = false;
+    //Unselect all the elements 
+    d->unselectEntities();
+    qDebug() << "isCollectingElements: " << isCollectingElements;    
 }
 
 QString ExpTo_Csv::getStrData(Plug_Entity *ent)
@@ -104,9 +105,9 @@ lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDia
         
         QComboBox *comboBox = new QComboBox(this);
         comboBox->setParent(this);
-        comboBox->addItem("Point");
-        comboBox->addItem("Line");
-        comboBox->addItem("PolyLine");
+        comboBox->addItem(strPoint);
+        comboBox->addItem(strLine);
+        comboBox->addItem(strPolyline);
         comboBox->setGeometry(120,5,150,30);
         
         QPushButton *selectButton = new QPushButton("Select objects", this);
@@ -148,7 +149,8 @@ void lc_Exptocsvdlg::setText(QString text)
 void lc_Exptocsvdlg::setSelectedType(QString typeAsString){
     std::cout << "Setting selected type based on: " << typeAsString.toStdString() << " \n";
     //If the selected Type is -1 then do nothing
-    if(selectedType!=-1){
+    if(selectedType==DPI::POINT || selectedType==DPI::LINE || selectedType==DPI::POLYLINE){
+        //TODO
         //If there are selected entities compare the selected vs the new
             //If they are different then unselect all the selected entities.
             //Reset the selected count to 0
@@ -158,7 +160,7 @@ void lc_Exptocsvdlg::setSelectedType(QString typeAsString){
 }
 
 void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc){
-    if(selectedType==-1){
+    if(selectedType==DPI::UNKNOWN){
         setSelectedType(comboBox->currentText());
     }
 
@@ -178,13 +180,15 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
     //Once the selection process has ended, count the entities that are selected
     //Set the selectedCount value
     if (!yes || obj.isEmpty()){
-
+        qDebug() << "list is empty";
     } else {
-
+        qDebug() << "list is NOT empty";
     }
     //Show the dialog again.
     this->show();
 }
+
+
 
 
 lc_Exptocsvdlg::~lc_Exptocsvdlg()

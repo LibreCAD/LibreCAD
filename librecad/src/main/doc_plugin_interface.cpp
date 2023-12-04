@@ -1258,6 +1258,13 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 
 }
 
+bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
+    bool status = false;
+    //TODO
+    return status;
+
+}
+
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
@@ -1270,6 +1277,11 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
     }
     status = true;
     return status;
+}
+
+void Doc_plugin_interface::unselectEntities() {
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
+    a->unselectEntities();
 }
 
 bool Doc_plugin_interface::getVariableInt(const QString& key, int *num){

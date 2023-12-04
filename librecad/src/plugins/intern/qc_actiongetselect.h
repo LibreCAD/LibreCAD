@@ -67,6 +67,8 @@ public:
 	bool isCompleted() const{return completed;}
 	void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
 
+    void unselectEntities();
+
 private:
     bool completed = false;
     std::unique_ptr<QString> message;
