@@ -245,27 +245,27 @@ public:
 
 protected:
 	//! Pointer to the widget which can host dialogs
-	QWidget* parent;
+    QWidget* parent = nullptr;
 	//! Pointer to the widget which can host individual tool options
-	QToolBar* optionWidget;
+    QToolBar* optionWidget = nullptr;
 	//! Pointer to the coordinate widget.
-	QG_CoordinateWidget* coordinateWidget;
+    QG_CoordinateWidget* coordinateWidget = nullptr;
 	//! Pointer to the mouse widget.
-	QG_MouseWidget* mouseWidget;
+    QG_MouseWidget* mouseWidget = nullptr;
 	//! Pointer to the selection widget.
-	QG_SelectionWidget* selectionWidget;
+    QG_SelectionWidget* selectionWidget = nullptr;
 	//! Pointer to the command line widget
-	QG_CommandWidget* commandWidget;
+    QG_CommandWidget* commandWidget = nullptr;
 	//! Pointer to arcTangential Option widge
-	QG_ArcTangentialOptions* arcTangentialOptions;
-	QG_PolylineEquidistantOptions* polylineEquidistantOptions;
+    QG_ArcTangentialOptions* arcTangentialOptions = nullptr;
+    QG_PolylineEquidistantOptions* polylineEquidistantOptions = nullptr;
 private:
 	// pointers to snap option widgets
-	QG_SnapMiddleOptions* snapMiddleOptions;
-	QG_SnapDistOptions* snapDistOptions;
-	QG_ModifyOffsetOptions* modifyOffsetOptions;
-	QG_PrintPreviewOptions* printPreviewOptions;
-	QG_LineAngleOptions* m_pLineAngleOptions;
+    QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
+    QG_SnapDistOptions* snapDistOptions = nullptr;
+    QG_ModifyOffsetOptions* modifyOffsetOptions = nullptr;
+    QG_PrintPreviewOptions* printPreviewOptions = nullptr;
+    QG_LineAngleOptions* m_pLineAngleOptions = nullptr;
 };
 
 #endif
