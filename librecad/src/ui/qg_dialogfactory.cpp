@@ -28,25 +28,16 @@
 
 #include "qg_dialogfactory.h"
 
-#include <QMessageBox>
 #include <QFileDialog>
 #include <QImageReader>
+#include <QMessageBox>
 #include <QString>
-#include <QFileDialog>
-#include <QToolBar>
 #include <QRegularExpression>
+#include <QToolBar>
 
-#include "rs_patternlist.h"
-#include "rs_settings.h"
-#include "rs_system.h"
-#include "rs_actioninterface.h"
-#include "rs_document.h"
-#include "rs_hatch.h"
+#include "lc_dlgsplinepoints.h"
 #include "lc_splinepoints.h"
-#include "rs_dimlinear.h"
-
-#include "rs_actiondimlinear.h"
-
+#include "qc_applicationwindow.h"
 #include "qg_arcoptions.h"
 #include "qg_arctangentialoptions.h"
 #include "qg_beveloptions.h"
@@ -80,11 +71,11 @@
 #include "qg_dlgrotate2.h"
 #include "qg_dlgscale.h"
 #include "qg_dlgspline.h"
-#include "lc_dlgsplinepoints.h"
 #include "qg_dlgtext.h"
 #include "qg_imageoptions.h"
 #include "qg_insertoptions.h"
 #include "qg_layerdialog.h"
+#include "qg_layerwidget.h"
 #include "qg_libraryinsertoptions.h"
 #include "qg_lineangleoptions.h"
 #include "qg_linebisectoroptions.h"
@@ -98,25 +89,31 @@
 #include "qg_mousewidget.h"
 #include "qg_moverotateoptions.h"
 #include "qg_mtextoptions.h"
+#include "qg_polylineequidistantoptions.h"
+#include "qg_polylineequidistantoptions.h"
+#include "qg_polylineoptions.h"
 #include "qg_printpreviewoptions.h"
 #include "qg_roundoptions.h"
 #include "qg_selectionwidget.h"
 #include "qg_snapdistoptions.h"
+#include "qg_snapdistoptions.h"
+#include "qg_snapmiddleoptions.h"
 #include "qg_snapmiddleoptions.h"
 #include "qg_splineoptions.h"
 #include "qg_textoptions.h"
 #include "qg_trimamountoptions.h"
-#include "qg_polylineoptions.h"
-#include "qg_polylineequidistantoptions.h"
-#include "qg_layerwidget.h"
+#include "rs_actiondimlinear.h"
+#include "rs_actioninterface.h"
 #include "rs_actionprintpreview.h"
 #include "rs_blocklist.h"
-#include "qg_polylineequidistantoptions.h"
-#include "qg_snapmiddleoptions.h"
-#include "qg_snapdistoptions.h"
-#include "rs_vector.h"
 #include "rs_debug.h"
-#include "qc_applicationwindow.h"
+#include "rs_dimlinear.h"
+#include "rs_document.h"
+#include "rs_hatch.h"
+#include "rs_patternlist.h"
+#include "rs_settings.h"
+#include "rs_system.h"
+#include "rs_vector.h"
 
 namespace {
 
@@ -884,14 +881,15 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
 
     if(!on) {
         if (printPreviewOptions) {
-            delete printPreviewOptions;
-            printPreviewOptions = nullptr;
+            printPreviewOptions->hide();
+            printPreviewOptions->deleteLater();
+            printPreviewOptions=nullptr;
         }
         return;
     }
     if (optionWidget ) {
         if (!printPreviewOptions) {
-            printPreviewOptions = new QG_PrintPreviewOptions();
+            printPreviewOptions = new QG_PrintPreviewOptions(optionWidget);
             printPreviewOptions ->setAction(action, false);
             optionWidget->addWidget(printPreviewOptions);
         }
@@ -930,15 +928,15 @@ void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* act
 
     if(!on) {
         if (polylineEquidistantOptions) {
-            delete polylineEquidistantOptions;
-            polylineEquidistantOptions = nullptr;
+            polylineEquidistantOptions->hide();
+            polylineEquidistantOptions->deleteLater();
+            polylineEquidistantOptions=nullptr;
         }
         return;
     }
     if (optionWidget ) {
         if (!polylineEquidistantOptions) {
-            polylineEquidistantOptions = new QG_PolylineEquidistantOptions();
-
+            polylineEquidistantOptions = new QG_PolylineEquidistantOptions(optionWidget);
             optionWidget->addWidget(polylineEquidistantOptions);
             // settings from action
             polylineEquidistantOptions -> setAction(action, false);
@@ -981,15 +979,16 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
     if (optionWidget) {
         if (on) {
             if(!m_pLineAngleOptions)
-                m_pLineAngleOptions = new QG_LineAngleOptions();
+                m_pLineAngleOptions = new QG_LineAngleOptions(optionWidget);
             optionWidget->addWidget(m_pLineAngleOptions);
             m_pLineAngleOptions->setAction(action, update);
             //toolWidget->setData(&angle, &length, fixedAngle, update);
             m_pLineAngleOptions->show();
         }else{
             if (!m_pLineAngleOptions) return;
-            delete m_pLineAngleOptions;
-            m_pLineAngleOptions = nullptr;
+            m_pLineAngleOptions->hide();
+            m_pLineAngleOptions->deleteLater();
+            m_pLineAngleOptions=nullptr;
         }
     }
 }
@@ -1172,14 +1171,15 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
 
     if(!on) {
         if (snapMiddleOptions) {
-            delete snapMiddleOptions;
+            snapMiddleOptions->hide();
+            snapMiddleOptions->deleteLater();
             snapMiddleOptions = nullptr;
         }
         return;
     }
     if (optionWidget ) {
         if (!snapMiddleOptions) {
-            snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints);
+            snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints, optionWidget);
             optionWidget->addWidget(snapMiddleOptions);
             snapMiddleOptions->setMiddlePoints(middlePoints);
         }else{
@@ -1197,14 +1197,15 @@ void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
 void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
     if(!on) {
         if (snapDistOptions) {
-            delete snapDistOptions;
+            snapDistOptions->hide();
+            snapDistOptions->deleteLater();
             snapDistOptions = nullptr;
         }
         return;
     }
     if (optionWidget ) {
         if (!snapDistOptions) {
-            snapDistOptions = new QG_SnapDistOptions();
+            snapDistOptions = new QG_SnapDistOptions(optionWidget);
             optionWidget->addWidget(snapDistOptions);
             snapDistOptions->setDist(dist);
         }else {
@@ -1264,14 +1265,15 @@ void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
 void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
     if(!on) {
         if (modifyOffsetOptions) {
-            delete modifyOffsetOptions;
+            modifyOffsetOptions->hide();
+            modifyOffsetOptions->deleteLater();
             modifyOffsetOptions = nullptr;
         }
         return;
     }
     if (optionWidget ) {
         if (!modifyOffsetOptions) {
-            modifyOffsetOptions = new QG_ModifyOffsetOptions();
+            modifyOffsetOptions = new QG_ModifyOffsetOptions(optionWidget);
             optionWidget->addWidget(modifyOffsetOptions);
             modifyOffsetOptions->setDist(dist);
         }else {
