@@ -114,11 +114,6 @@ RS_EntityContainer::RS_EntityContainer(const RS_EntityContainer& ec)
  */
 RS_EntityContainer::~RS_EntityContainer() {
     if (autoDelete) {
-        for (auto* entity: entities)
-        {
-            if (entity)
-                LC_ERR<<"entity: "<<entity->getId()<<", type: "<<entity->rtti();
-        }
         while (!entities.isEmpty())
             delete entities.takeFirst();
     } else
