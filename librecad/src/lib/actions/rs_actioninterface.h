@@ -31,6 +31,7 @@
 #include <QObject>
 
 #include "rs_snapper.h"
+#include "document_interface.h"
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;
@@ -91,7 +92,7 @@ public:
                              RS2::ActionType action=RS2::ActionNone);
     QString command(const QString& cmd);
     QString msgAvailableCommands();
-
+    void setTypeToSelect(RS2::EntityType mType);
 private:
     /**
      * Current status of the action. After an action has

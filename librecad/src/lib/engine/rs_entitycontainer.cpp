@@ -29,7 +29,7 @@
 #include <set>
 
 #include <QtGlobal>
-
+#include <QDebug>
 #include "lc_looputils.h"
 
 #include "qg_dialogfactory.h"
@@ -223,7 +223,9 @@ double RS_EntityContainer::getLength() const {
  * Selects this entity.
  */
 bool RS_EntityContainer::setSelected(bool select) {
+    qDebug() << "RS_EntityContainer::setSelected";
     // This entity's select:
+    qDebug() << "rs2EntityType to select: " << rs2EntityType;
     if (RS_Entity::setSelected(select)) {
 
         // All sub-entity's select:
@@ -2075,4 +2077,14 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
             loops.push_back(std::move(loop));
     }
     return loops;
+}
+
+/**
+ * If you set an entity type for seleting entities, please remember to set to 
+ * unknown once your code block is finished. Otherwise the user won't be able to 
+ * select other entities in the next getSelected call.
+*/
+void  RS_EntityContainer::setTypeToSelect(RS2::EntityType mType){
+    qDebug() << "RS_EntityContainer::setTypeToSelect: " << mType;
+    rs2EntityType = mType;
 }

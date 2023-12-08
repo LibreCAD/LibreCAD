@@ -28,7 +28,7 @@
 #include<cmath>
 
 #include<QMouseEvent>
-
+#include <QDebug>
 #include "rs_snapper.h"
 
 #include "rs_circle.h"
@@ -1053,5 +1053,18 @@ RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector
         snapPoint(res, true);
         return res;
     }
+}
+
+/*
+*   This method is to reuse the container y the RS_Snapper object, and not duplicated the reference inside the
+*   rs_actioninterface.h
+*
+*   If you set an entity type for seleting entities, please remember to set to 
+*   unknown once your code block is finished. Otherwise the user won't be able to 
+*   select other entities in the next getSelected call.
+*/
+void RS_Snapper::setEntityTypeToSelect(RS2::EntityType mType){
+    qDebug() << "RS_Snapper::setEntityTypeToSelect: " <<mType;
+    container->setTypeToSelect(mType);
 }
 

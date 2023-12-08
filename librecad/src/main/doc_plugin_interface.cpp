@@ -28,7 +28,7 @@
 #include <QList>
 #include <QInputDialog>
 #include <QFileInfo>
-
+#include <QDebug>
 #include "doc_plugin_interface.h"
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
@@ -1260,9 +1260,30 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 
 bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
     bool status = false;
-    //TODO
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView, type);
+    
+    if (a) {
+        if (!(message.isEmpty()) )
+            a->setMessage(message);
+        gView->killAllActions();
+        gView->setCurrentAction(a);
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction())
+                break;
+        }
+        // qDebug() << "getSelect: passed event loop";
+    }
+//    check if a are cancelled by the user issue #349
+    RS_EventHandler* eh = gView->getEventHandler();
+    if (eh && eh->isValid(a) ) {
+        a->getSelectedByType(sel, this);
+        status = true;
+    }
+    gView->killAllActions();
     return status;
-
 }
 
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){

@@ -154,9 +154,17 @@ void lc_Exptocsvdlg::setSelectedType(QString typeAsString){
         //If there are selected entities compare the selected vs the new
             //If they are different then unselect all the selected entities.
             //Reset the selected count to 0
-    }
+    } 
     //Else, nothing to do. 
-        
+    if(typeAsString==strPoint){
+        selectedType=DPI::POINT;
+    } else if(typeAsString==strLine){
+        selectedType=DPI::LINE;
+    } else if(typeAsString==strPolyline){
+        selectedType=DPI::POLYLINE;
+    } else {
+        qDebug() << "Unhandled case";
+    }
 }
 
 void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc){
@@ -175,14 +183,14 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
     } else {
         std::cout << "############# doc is NOT null";    
     }
-    bool yes  = doc->getSelect(&obj);
+    bool yes  = doc->getSelectByType(&obj, selectedType);
     std::cout << "############# E\n";
     //Once the selection process has ended, count the entities that are selected
     //Set the selectedCount value
     if (!yes || obj.isEmpty()){
         qDebug() << "list is empty";
     } else {
-        qDebug() << "list is NOT empty";
+        qDebug() << "list is NOT empty: "<< obj.size();
     }
     //Show the dialog again.
     this->show();
