@@ -200,9 +200,7 @@ public:
     virtual void showOptions();
 
     void drawSnapper();
-    
-    void setEntityTypeToSelect(RS2::EntityType mType);
-    
+
 protected:
     void deleteSnapper();
     double getSnapRange() const;
@@ -226,8 +224,6 @@ protected:
      */
     int catchEntityGuiRange = 32;
     bool finished{false};
-
-    
 
 private:
 	struct ImpData;

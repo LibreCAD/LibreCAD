@@ -27,7 +27,7 @@
 #include "rs_graphicview.h"
 
 #include <QKeyEvent>
-#include <QDebug>
+
 #include "rs_actioninterface.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
@@ -73,6 +73,8 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
 
     // document pointer will be used for undo / redo
     document = container.getDocument();
+
+    mContainer = &container;
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 }
@@ -323,10 +325,5 @@ QString RS_ActionInterface::command(const QString& cmd) {
  */
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
-}
-
-void  RS_ActionInterface::setTypeToSelect(RS2::EntityType mType){
-    qDebug() << "RS_ActionInterface::setTypeToSelect: "<< mType;
-    RS_Snapper::setEntityTypeToSelect(mType);
 }
 

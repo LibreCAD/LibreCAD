@@ -1259,9 +1259,25 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 }
 
 bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
+    qDebug()<< "Doc_plugin_interface::getSelectByType";
     bool status = false;
-    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView, type);
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    if(type==DPI::LINE){
+        qDebug()<< "DPI::LINE";
+        typeToSelect = RS2::EntityType::EntityLine;
+    } else if(type==DPI::POINT){
+        qDebug()<< "DPI::POINT";
+        typeToSelect = RS2::EntityType::EntityPoint;
+    } else if (type==DPI::POLYLINE){
+        qDebug()<< "DPI::POLYLINE";
+        typeToSelect = RS2::EntityType::EntityPolyline;
+    } else {
+        qDebug()<< "Unhandled case";
+    }
     
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
+    doc->setTypeToSelect(typeToSelect);
+
     if (a) {
         if (!(message.isEmpty()) )
             a->setMessage(message);
@@ -1274,12 +1290,12 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
             if (!gView->getEventHandler()->hasAction())
                 break;
         }
-        // qDebug() << "getSelect: passed event loop";
+        //qDebug() << "getSelect: passed event loop";
     }
-//    check if a are cancelled by the user issue #349
+    //check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();
     if (eh && eh->isValid(a) ) {
-        a->getSelectedByType(sel, this);
+        a->getSelected(sel, this);
         status = true;
     }
     gView->killAllActions();

@@ -44,18 +44,7 @@ QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
     actionType = RS2::ActionGetSelect;
 }
 
-QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView, enum DPI::ETYPE typeToSelect)
-		:RS_ActionInterface("Get Select", container, graphicView)
-        , completed(false)
-        , message(std::make_unique<QString>(tr("Select objects:")))
-{
-    actionType = RS2::ActionGetSelect;
-}
-
-QC_ActionGetSelect::~QC_ActionGetSelect(){
-    container->setTypeToSelect(RS2::EntityType::EntityUnknown);
-};
+QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -113,37 +102,6 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
             se->append(reinterpret_cast<Plug_Entity*>(pe));
         }
     }
-}
-
-void QC_ActionGetSelect::getSelectedByType(QList<Plug_Entity *> *se, Doc_plugin_interface* d,
-                                                    enum DPI::ETYPE typeToSelect) const
-{
-    qDebug()<< "QC_ActionGetSelect::getSelectedByType";
-    qDebug()<< "typeToSelect: " << typeToSelect;
-    RS2::EntityType rs2EntityType = RS2::EntityType::EntityUnknown;
-    qDebug()<< "rs2EntityType: " << rs2EntityType;
-    if(typeToSelect==DPI::ETYPE::LINE){
-        qDebug()<< "Setting as line";
-        rs2EntityType = RS2::EntityType::EntityLine;
-        qDebug()<< "rs2EntityType: " << rs2EntityType;
-    } else if (typeToSelect==DPI::ETYPE::POLYLINE){
-        qDebug()<< "Setting as polyline";
-        rs2EntityType = RS2::EntityType::EntityPolyline;
-        qDebug()<< "rs2EntityType: " << rs2EntityType;
-    } else if (typeToSelect==DPI::ETYPE::POINT){
-        qDebug()<< "Setting as point";
-        rs2EntityType = RS2::EntityType::EntityPoint;
-        qDebug()<< "rs2EntityType: " << rs2EntityType;
-    }
-    container->setTypeToSelect(rs2EntityType);
-	for(auto e: *container){
-        qDebug()<< "rtti "<< e->rtti() <<" vs " << rs2EntityType;
-        if (e->isSelected() && e->rtti()==rs2EntityType) {
-            Plugin_Entity *pe = new Plugin_Entity(e, d);
-            se->append(reinterpret_cast<Plug_Entity*>(pe));
-        }
-    }
-    container->setTypeToSelect(RS2::EntityType::EntityUnknown);
 }
 
 void QC_ActionGetSelect::unselectEntities(){

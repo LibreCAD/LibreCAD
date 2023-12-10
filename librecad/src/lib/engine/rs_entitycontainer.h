@@ -46,6 +46,7 @@ public:
 
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
+	
 	~RS_EntityContainer() override;
 
 	RS_Entity* clone() const override;
@@ -236,7 +237,7 @@ public:
 
     const QList<RS_Entity*>& getEntityList();
 
-	void setTypeToSelect(RS2::EntityType rs2EntityType);
+	void setTypeToSelect(RS2::EntityType typeToSelect);
 
 protected:
     /**
@@ -267,7 +268,7 @@ private:
 	bool ignoredSnap() const;
     mutable int entIdx = 0;
     bool autoDelete = false;
-	RS2::EntityType rs2EntityType = RS2::EntityType::EntityUnknown;
+	enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
 
 #endif

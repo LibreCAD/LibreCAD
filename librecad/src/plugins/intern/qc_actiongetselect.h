@@ -28,7 +28,6 @@
 #define QC_ACTIONGETSELECT_H
 
 #include <memory>
-#include "document_interface.h"
 #include "rs_actioninterface.h"
 
 class Doc_plugin_interface;
@@ -54,10 +53,6 @@ public:
 public:
     QC_ActionGetSelect(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-                        
-    QC_ActionGetSelect(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView,
-                        enum DPI::ETYPE typeToSelect);
     ~QC_ActionGetSelect() override;
 
     virtual void init(int status=0) override;
@@ -71,8 +66,6 @@ public:
     void setMessage(QString msg);
 	bool isCompleted() const{return completed;}
 	void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
-    
-    void getSelectedByType(QList<Plug_Entity *> *se, Doc_plugin_interface* d, enum DPI::ETYPE typeToSelect) const;
 
     void unselectEntities();
 
