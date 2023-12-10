@@ -237,8 +237,6 @@ public:
 
     const QList<RS_Entity*>& getEntityList();
 
-	void setTypeToSelect(RS2::EntityType typeToSelect);
-
 protected:
     /**
      * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
@@ -268,7 +266,6 @@ private:
 	bool ignoredSnap() const;
     mutable int entIdx = 0;
     bool autoDelete = false;
-	enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
 
 #endif

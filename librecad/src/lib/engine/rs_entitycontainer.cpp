@@ -223,18 +223,7 @@ double RS_EntityContainer::getLength() const {
  * Selects this entity.
  */
 bool RS_EntityContainer::setSelected(bool select) {
-    qDebug() << "RS_EntityContainer::setSelected";
     // This entity's select:
-    if(typeToSelect!=RS2::EntityType::EntityUnknown){
-        if(rtti()!=typeToSelect){
-            qDebug() << "Returning false as entity type does not match the type to select";
-            return false;
-        }
-    } else {
-        qDebug() << "typeToSelect: " << typeToSelect;
-        qDebug() << "typeToSelect: " << &typeToSelect;
-    }
-    qDebug() << "Calling setSelected method for entity: " << rtti();
     if (RS_Entity::setSelected(select)) {
 
         // All sub-entity's select:
@@ -2088,8 +2077,3 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     return loops;
 }
 
-void RS_EntityContainer::setTypeToSelect(RS2::EntityType mType){
-    qDebug() << "RS_EntityContainer::setTypeToSelect, setting as mType: " << mType;   
-    typeToSelect = mType;
-    qDebug() << "RS_EntityContainer::setTypeToSelect, typeToSelect: " << &typeToSelect;   
-}

@@ -76,7 +76,7 @@ void ExpTo_Csv::setIsCollectingElements(bool newValue){
 void ExpTo_Csv::setIsCollectingElementsToFalse(){
     qDebug() << "setting isCollectingElements as false";    
     isCollectingElements = false;
-    //Unselect all the elements 
+    //UsetTypeToSelectnselect all the elements 
     d->unselectEntities();
     qDebug() << "isCollectingElements: " << isCollectingElements;    
 }

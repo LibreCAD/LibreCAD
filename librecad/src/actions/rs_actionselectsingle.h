@@ -54,6 +54,8 @@ private:
 
     RS_Entity* en = nullptr;
     RS_ActionInterface* actionSelect = nullptr;
+    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+
 };
 
 #endif

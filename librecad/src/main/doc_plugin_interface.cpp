@@ -1276,7 +1276,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     }
     
     QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
-    doc->setTypeToSelect(typeToSelect);
+    
 
     if (a) {
         if (!(message.isEmpty()) )
