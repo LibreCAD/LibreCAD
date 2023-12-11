@@ -139,7 +139,7 @@ void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on)
 }
 
 template<typename T>
-void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, bool update)
+T* addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, bool update)
 {
     LC_LOG<<__func__<<"(): begin";
     if (toolbar) {
@@ -155,8 +155,10 @@ void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, boo
             option->setAction(action, update);
             option->show();
         }
+        return option.get();
     }
     LC_LOG<<__func__<<"(): end";
+    return nullptr;
 }
 }
 
@@ -1052,17 +1054,17 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
  */
 void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
                                                    bool on, bool update) {
-
-    addOptionWidget<QG_ArcTangentialOptions>(optionWidget, action, on, update);
+    LC_ERR<<__func__<<"(): update from action="<<update;
+    arcTangentialOptions = addOptionWidget<QG_ArcTangentialOptions>(optionWidget, action, on, update);
 }
 
-void QG_DialogFactory::updateArcTangentialOptions(const double& d, bool byRadius)
+void QG_DialogFactory::updateArcTangentialOptions(double d, bool byRadius)
 {
-    if (!arcTangentialOptions) return;
+    if (arcTangentialOptions == nullptr) return;
     if (byRadius){
-        arcTangentialOptions->updateAngle(QString::number(d,'g',5));
-    }else{
         arcTangentialOptions->updateRadius(QString::number(d,'g',5));
+    }else{
+        arcTangentialOptions->updateAngle(QString::number(d,'g',5));
     }
 }
 

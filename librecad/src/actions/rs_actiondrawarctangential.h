@@ -73,19 +73,13 @@ public:
 	void updateMouseCursor() override;
 
 	void setRadius(double r);
+    double getRadius() const;
 
-	double getRadius() const;
-    void setAngle(double r) {
-        angleLength= r;
-    }
+    void setAngle(double r);
+    double getAngle() const;
 
-    double getAngle() const {
-        return angleLength;
-    }
-	void setByRadius(bool status=true);
-	bool getByRadius() const{
-        return byRadius;
-    }
+    void setByRadius(bool status=true);
+    bool getByRadius() const;
 
 protected:
     /**
@@ -105,6 +99,8 @@ protected:
   */
 	std::unique_ptr<RS_ArcData> data;
 private:
+    void readSettings();
+    void saveSettings() const;
     double angleLength = 0.;
     bool byRadius = false;
 };

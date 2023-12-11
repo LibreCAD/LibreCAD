@@ -415,7 +415,7 @@ public:
 	 */
 	virtual void updateMouseWidget(const QString& = QString(),
 								   const QString& = QString())=0;
-    virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
+    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
      * This virtual method must be overwritten if the graphic view has

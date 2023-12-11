@@ -66,8 +66,7 @@ protected slots:
 private slots:
 
 private:
-	std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
-	void saveSettings();
+    std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
 };
 
 #endif // QG_ARCTANGENTIALOPTIONS_H

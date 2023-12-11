@@ -238,7 +238,7 @@ public:
 	void commandMessage(const QString& message) override;
 
 	static QString extToFormat(const QString& ext);
-	void updateArcTangentialOptions(const double& d, bool byRadius) override;
+    void updateArcTangentialOptions(double d, bool byRadius) override;
 
     void displayBlockName(const QString& blockName, const bool& display) override;
 
