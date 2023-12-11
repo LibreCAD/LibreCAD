@@ -1274,8 +1274,8 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
     } else {
         qDebug()<< "Unhandled case";
     }
-    
-    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
+    qDebug()<< "Doc_plugin_interface::getSelectByType; typeToSelect: " << typeToSelect;
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
     
 
     if (a) {

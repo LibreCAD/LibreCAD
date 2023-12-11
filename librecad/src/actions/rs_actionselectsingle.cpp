@@ -27,7 +27,7 @@
 
 #include <QAction>
 #include <QMouseEvent>
-
+#include <QDebug>
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -45,8 +45,19 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 {
     actionType = RS2::ActionSelectSingle;
 }
-
-
+RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
+                                             RS_EntityContainer& container,
+                                             RS_GraphicView& graphicView,
+                                             RS_ActionInterface* action_select,
+                                             QList<RS2::EntityType> entityTypeList)
+    :RS_ActionInterface("Select Entities", container, graphicView)
+    ,entityTypeList(std::move(entityTypeList))
+    ,actionSelect(action_select),
+    typeToSelect(typeToSelect)
+{
+    qDebug() << "typeToSelect: " << typeToSelect;
+    actionType = RS2::ActionSelectSingle;
+}
 void RS_ActionSelectSingle::trigger() {
 	bool typeMatch{true};
 	if (en && entityTypeList.size())
@@ -54,7 +65,19 @@ void RS_ActionSelectSingle::trigger() {
 				!= entityTypeList.end();
 	if (en && typeMatch) {
         RS_Selection s(*container, graphicView);
-        s.selectSingle(en);
+        qDebug() << "TypeToSelect: " << this->getTypeToSelect() << "\n" ;
+        qDebug() << "Entity type: " << en->rtti() << "\n" ;
+        if(this->getTypeToSelect()==RS2::EntityType::EntityUnknown ||
+                (this->getTypeToSelect()!=RS2::EntityType::EntityUnknown && en->rtti()==this->getTypeToSelect())){
+
+            qDebug() << "Selecting because TypeToSelect is Entity Unknown or the entity matches the typeToSelect: " << this->getTypeToSelect() << "\n" ;
+            s.selectSingle(en);
+        } else {
+            qDebug() << "Skipping entity because it does not match the typeToSelect";
+
+            return;
+        }
+
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     } else {
@@ -100,6 +123,10 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
 
 void RS_ActionSelectSingle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
+}
+
+enum RS2::EntityType RS_ActionSelectSingle::getTypeToSelect(){
+    return typeToSelect;
 }
 
 // EOF

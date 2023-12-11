@@ -155,18 +155,19 @@ void lc_Exptocsvdlg::setSelectedType(QString typeAsString){
             //If they are different then unselect all the selected entities.
             //Reset the selected count to 0
     } else {
-        if(typeAsString==strPoint){
-             std::cout << "Setting selected type as point \n" ;
-             selectedType=DPI::POINT;
-        } else if (typeAsString==strLine){
-            std::cout << "Setting selected type as line \n" ;
-            selectedType=DPI::LINE;
-        } else if (typeAsString==strPolyline){
-            std::cout << "Setting selected type as polyline \n" ;
-            selectedType=DPI::POLYLINE;
-        } else {
-            std::cout << "unhandled case \n" ;
-        }
+
+    }
+    if(typeAsString==strPoint){
+         std::cout << "Setting selected type as point \n" ;
+         selectedType=DPI::POINT;
+    } else if (typeAsString==strLine){
+        std::cout << "Setting selected type as line \n" ;
+        selectedType=DPI::LINE;
+    } else if (typeAsString==strPolyline){
+        std::cout << "Setting selected type as polyline \n" ;
+        selectedType=DPI::POLYLINE;
+    } else {
+        std::cout << "unhandled case \n" ;
     }
     //Else, nothing to do. 
         
