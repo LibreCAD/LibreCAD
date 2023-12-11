@@ -40,20 +40,20 @@ class QG_PrintPreviewOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_PrintPreviewOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_PrintPreviewOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_PrintPreviewOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
+    virtual void setAction(RS_ActionInterface* a, bool update);
     virtual void updateData();
     virtual void center();
-    virtual void setLineWidthScaling( bool state );
-    virtual void setBlackWhite( bool on );
+    virtual void setLineWidthScaling(bool state);
+    virtual void setBlackWhite(bool on);
     virtual void fit();
-    virtual void scale( const QString & s );
-    virtual void scale( const double & factor );
+    virtual void scale(const QString& s);
+    virtual void scale(double factor);
     virtual void updateScaleBox();
-    virtual void updateScaleBox(const double& f);
+    virtual void updateScaleBox(double f);
     /** print scale fixed to saved value **/
     virtual void setScaleFixed(bool fixed);
 //    virtual void updateScaleBox(const QString& s);
@@ -68,12 +68,13 @@ protected slots:
 private:
 	void init();
 	void saveSettings();
-	QStringList imperialScales;
+    void updateScaleBox(const QString& text);
+    QStringList imperialScales;
     QStringList metricScales;
     bool updateDisabled{false};
-    bool scaleLineWidth;
-    bool blackWhiteDisabled;
-    int defaultScales;
+    bool scaleLineWidth = false;
+    bool blackWhiteDisabled = true;
+    int defaultScales = 1;
 	std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
 };
 
