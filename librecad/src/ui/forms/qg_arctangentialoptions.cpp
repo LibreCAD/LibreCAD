@@ -66,7 +66,7 @@ void QG_ArcTangentialOptions::languageChange()
     ui->retranslateUi(this);
 }
 
-void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool [[maybe_unused]] update) {
+void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, [[maybe_unused]] bool update) {
     if (a && a->rtti()==RS2::ActionDrawArcTangential) {
         action = static_cast<RS_ActionDrawArcTangential*>(a);
 
@@ -77,8 +77,7 @@ void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool [[maybe_unus
         ui->leAngle->setText(sa);
         updateByRadius(bbr);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_ArcTangentialOptions::setAction: wrong action type");
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_ArcTangentialOptions::setAction: wrong action type");
         action = nullptr;
     }
 }
