@@ -32,7 +32,7 @@
 #include <QMap>
 
 /**
- * A command line edit with some typical console features 
+ * A command line edit with some typical console features
  * (uparrow for the history, tab, ..).
  */
 class QG_CommandEdit: public QLineEdit {
@@ -44,7 +44,7 @@ public:
 
     void readCommandFile(const QString& path);
 
-    bool keycode_mode;
+    bool keycode_mode = false;
 
 protected:
     bool event(QEvent* e) override;
@@ -61,20 +61,26 @@ protected:
     void processVariable(QString input);
 
 signals:
-	void tabPressed();
-	void escape();
-	void focusIn();
-	void focusOut();
+    void tabPressed();
+    void escape();
+    void focusIn();
+    void focusOut();
     void clearCommandsHistory();
     void command(QString cmd);
     void message(QString msg);
     void keycode(QString code);
 
 private:
-	QStringList historyList;
-	QStringList::Iterator it;
-	bool acceptCoordinates;
-    bool calculator_mode;
+    /**
+      * @brief extractCliCal, filter cli calculator math expression
+      * @param cmd, cli string
+      * @return an empty string, if calculation is performed; the input string, otherwise
+      */
+    QString filterCliCal(const QString& cmd);
+    QStringList historyList;
+    QStringList::const_iterator it = historyList.cbegin();
+    bool acceptCoordinates = false;
+    bool calculator_mode = false;
 
 public slots:
     void modifiedPaste();

@@ -69,12 +69,6 @@ public:
     static const char *FnPrefix;
     static const char *AltPrefix;
     static const char *MetaPrefix;
-    /**
-      * @brief extractCliCal, filter cli calculator math expression
-      * @param cmd, cli string
-      * @return math expression for RS_Math:eval();
-      */
-    static QString filterCliCal(const QString& cmd);
 
 private:
     RS_Commands() ;
