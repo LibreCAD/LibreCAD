@@ -43,7 +43,7 @@ struct RS_CircleData {
 	bool isValid() const;
 	bool operator == (RS_CircleData const&) const;
 	RS_Vector center;
-	double radius;
+    double radius = 0.;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_CircleData& ad);

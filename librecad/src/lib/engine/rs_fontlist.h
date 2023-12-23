@@ -28,6 +28,7 @@
 #include <memory>
 #include <vector>
 
+class QString;
 class RS_Font;
 
 #define RS_FONTLIST RS_FontList::instance()
@@ -44,27 +45,27 @@ public:
     /**
      * @return Instance to the unique font list.
      */
-	static RS_FontList* instance();
+    static RS_FontList* instance();
 
-	virtual ~RS_FontList() = default;
+    virtual ~RS_FontList() = default;
 
     void init();
 
     void clearFonts();
-	size_t countFonts() const;
+    size_t countFonts() const;
     RS_Font* requestFont(const QString& name);
-	std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
-	std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
+    std::vector<std::unique_ptr<RS_Font> >::const_iterator begin() const;
+    std::vector<std::unique_ptr<RS_Font> >::const_iterator end() const;
 
     friend std::ostream& operator << (std::ostream& os, RS_FontList& l);
 
 private:
-	RS_FontList()=default;
-	RS_FontList(RS_FontList const&)=delete;
-	RS_FontList& operator = (RS_FontList const&)=delete;
-	static RS_FontList* uniqueInstance;
+    RS_FontList()=default;
+    RS_FontList(RS_FontList const&)=delete;
+    RS_FontList& operator = (RS_FontList const&)=delete;
+    static RS_FontList* uniqueInstance;
     //! fonts in the graphic
-	std::vector<std::unique_ptr<RS_Font>> fonts;
+    std::vector<std::unique_ptr<RS_Font>> fonts;
 };
 
 #endif

@@ -64,10 +64,10 @@ private:
     std::unique_ptr<RS_Line> tangent;
 	std::unique_ptr<RS_LineData> lineData;
 	/** 1st chosen entity */
-    RS_Entity* circle1;
+    RS_Entity* circle1 = nullptr;
     /** 2nd chosen entity */
-    RS_Entity* circle2;
-    bool valid;
+    RS_Entity* circle2 = nullptr;
+    bool valid = false;
 
     //list of entity types supported by current action
     const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};

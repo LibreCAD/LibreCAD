@@ -252,7 +252,7 @@ m0 x + m1 y + m2 =0
 	virtual double areaLineIntegral() const override;
 
 protected:
-	RS_ArcData data;
+    RS_ArcData data{};
 };
 
 #endif

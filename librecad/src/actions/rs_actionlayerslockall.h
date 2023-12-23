@@ -45,7 +45,7 @@ public:
 	void trigger() override;
 
 private:
-    bool lock;
+    bool lock = false;
 };
 
 #endif

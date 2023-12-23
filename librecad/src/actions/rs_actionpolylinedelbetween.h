@@ -63,8 +63,8 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* delEntity;
-	RS_AtomicEntity* delSegment;
+    RS_Entity* delEntity = nullptr;
+    RS_AtomicEntity* delSegment = nullptr;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

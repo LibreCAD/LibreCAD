@@ -73,7 +73,7 @@ public:
 
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-	RS_AtomicEntity* circle;
+    RS_AtomicEntity* circle = nullptr;
 
 private:
 	struct Points;

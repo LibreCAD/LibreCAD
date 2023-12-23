@@ -83,8 +83,8 @@ private:
 	 * Polyline entity we're working on.
 	 */
 //	RS_Polyline* polyline;
-	RS_Polyline* originalPolyline;
-	bool prepend;
+    RS_Polyline* originalPolyline = nullptr;
+    bool prepend = false;
 	/**
 	 * last point.
 	 */

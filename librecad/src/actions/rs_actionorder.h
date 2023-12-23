@@ -59,8 +59,8 @@ public:
 //    void updateToolBar() override;
 
 private:
-    RS_Entity* targetEntity;
-    RS2::ActionType orderType;
+    RS_Entity* targetEntity = nullptr;
+    RS2::ActionType orderType = RS2::ActionNone;
 };
 
 #endif

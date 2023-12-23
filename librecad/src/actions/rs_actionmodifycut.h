@@ -59,7 +59,7 @@ public:
 	void updateMouseCursor() override;
 
 private:
-    RS_Entity* cutEntity;
+    RS_Entity* cutEntity = nullptr;
 	std::unique_ptr<RS_Vector> cutCoord;
 };
 

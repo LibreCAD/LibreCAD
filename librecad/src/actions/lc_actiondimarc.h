@@ -37,19 +37,19 @@ class LC_ActionDimArc : public RS_ActionDimension
 {
     Q_OBJECT
 
-    private:
+private:
 
-        enum Status
-        {
-            SetEntity, 
-            SetPos 
-        };
+    enum Status
+    {
+        SetEntity,
+        SetPos
+    };
 
 
-    public:
+public:
 
     LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
-   ~LC_ActionDimArc() override;
+    ~LC_ActionDimArc() override;
 
     void reset()   override;
     void trigger() override;
@@ -68,12 +68,12 @@ class LC_ActionDimArc : public RS_ActionDimension
     void updateMouseButtonHints() override;
 
 
-    private:
+private:
 
-        RS_Entity* selectedArcEntity;
+    RS_Entity* selectedArcEntity = nullptr;
 
-        LC_DimArcData dimArcData;
+    LC_DimArcData dimArcData;
 
-        void setRadius(const RS_Vector& selectedPosition);
+    void setRadius(const RS_Vector& selectedPosition);
 };
 #endif //LC_ACTIONDIMARC_H

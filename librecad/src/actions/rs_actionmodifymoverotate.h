@@ -79,7 +79,7 @@ private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
-	Status lastStatus;
+    Status lastStatus = SetReferencePoint;
 	/**
 	 * Commands
 	 */

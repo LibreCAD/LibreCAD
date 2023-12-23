@@ -57,8 +57,8 @@ public:
 	void keyPressEvent(QKeyEvent* e) override;
 
 private:
-    QG_ActionHandler* action_handler;
-    RS2::ActionType nextAction;
+    QG_ActionHandler* action_handler = nullptr;
+    RS2::ActionType nextAction = RS2::ActionNone;
     QList<RS2::EntityType> const entityTypeList;
 };
 

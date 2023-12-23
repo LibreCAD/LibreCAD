@@ -49,7 +49,7 @@ public:
     QString getFileName() const {
         return fileName;
     }
-	
+
     /** @return the fileLicense of this font. */
     QString getFileLicense() const {
         return fileLicense;
@@ -64,12 +64,12 @@ public:
     QString getEncoding() const {
         return encoding;
     }
-	
+
     /** @return the alternative names of this font. */
     const QStringList& getNames() const {
         return names;
     }
-	
+
     /** @return the author(s) of this font. */
     const QStringList& getAuthors() const {
         return authors;
@@ -94,20 +94,20 @@ public:
 
     void generateAllFonts();
 
-	// Wrappers for block list (letters) functions
-	RS_BlockList* getLetterList() {
-		return &letterList;
-	}
+    // Wrappers for block list (letters) functions
+    RS_BlockList* getLetterList() {
+        return &letterList;
+    }
     RS_Block* findLetter(const QString& name);
-//    RS_Block* findLetter(const QString& name) {
-//		return letterList.find(name);
-//	}
+    //    RS_Block* findLetter(const QString& name) {
+    //		return letterList.find(name);
+    //	}
     unsigned countLetters() {
         return letterList.count();
     }
     RS_Block* letterAt(unsigned i) {
-		return letterList.at(i);
-	}
+        return letterList.at(i);
+    }
 
     friend std::ostream& operator << (std::ostream& os, const RS_Font& l);
 
@@ -122,12 +122,12 @@ private:
     //raw lff font file list, not processed into blocks yet
     QMap<QString, QStringList> rawLffFontList;
 
-        //! block list (letters)
-        RS_BlockList letterList;
+    //! block list (letters)
+    RS_BlockList letterList;
 
     //! Font file name
     QString fileName;
-	
+
     //! Font file license
     QString fileLicense;
 
@@ -137,23 +137,23 @@ private:
     //! Font encoding (see docu for QTextCodec)
     QString encoding;
 
-	//! Font names
-        QStringList names;
-	
-	//! Authors
-        QStringList authors;
+    //! Font names
+    QStringList names;
+
+    //! Authors
+    QStringList authors;
 
     //! Is this font currently loaded into memory?
-    bool loaded;
+    bool loaded = false;
 
     //! Default letter spacing for this font
-    double letterSpacing;
+    double letterSpacing = 0.;
 
     //! Default word spacing for this font
-    double wordSpacing;
+    double wordSpacing = 0.;
 
     //! Default line spacing factor for this font
-    double lineSpacingFactor;
+    double lineSpacingFactor = 0.;
 };
 
 #endif

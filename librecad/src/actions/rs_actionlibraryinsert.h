@@ -128,7 +128,7 @@ protected:
 	std::unique_ptr<Points> pPoints;
 	
 	/** Last status before entering option. */
-	Status lastStatus;
+    Status lastStatus = SetTargetPoint;
 };
 
 #endif

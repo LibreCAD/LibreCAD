@@ -62,11 +62,11 @@ public:
 
 
 private:
-    RS_Entity* trimEntity;
-	RS_Entity* limitEntity;
+    RS_Entity* trimEntity = nullptr;
+    RS_Entity* limitEntity = nullptr;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
-	bool both;
+    bool both = false;
 
 	void unhighlightLimitingEntity();
 };

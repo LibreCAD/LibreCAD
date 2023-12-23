@@ -54,8 +54,8 @@ class QString;
 struct RS_LibraryInsertData {
     QString file;
     RS_Vector insertionPoint;
-    double factor;
-    double angle;
+    double factor = 0.;
+    double angle = 0.;
 };
 
 
@@ -152,11 +152,11 @@ public:
     RS_Insert* createLibraryInsert(RS_LibraryInsertData& data);
 
 protected:
-    RS_EntityContainer* container;
-    RS_Graphic* graphic;
-    RS_Document* document;
-    RS_GraphicView* graphicView;
-    bool handleUndo;
+    RS_EntityContainer* container = nullptr;
+    RS_Graphic* graphic = nullptr;
+    RS_Document* document = nullptr;
+    RS_GraphicView* graphicView = nullptr;
+    bool handleUndo = false;
 private:
     void setEntity(RS_Entity* en) const;
 };

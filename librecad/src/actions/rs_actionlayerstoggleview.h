@@ -47,7 +47,7 @@ public:
 	void trigger() override;
 
 protected:
-    RS_Layer* a_layer;
+    RS_Layer* a_layer = nullptr;
 
 };
 

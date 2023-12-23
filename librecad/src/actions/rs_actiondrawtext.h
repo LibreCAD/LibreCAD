@@ -85,7 +85,7 @@ private:
 	std::unique_ptr<Points> pPoints;
 	std::unique_ptr<RS_TextData> data;
 	//RS_Text* text;
-	bool textChanged;
+    bool textChanged = false;
 };
 
 #endif

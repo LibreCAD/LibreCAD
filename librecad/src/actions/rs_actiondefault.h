@@ -59,37 +59,37 @@ public:
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-	~RS_ActionDefault() override;
+    ~RS_ActionDefault() override;
 
-	void finish(bool /*updateTB*/ = true ) override{}
+    void finish(bool /*updateTB*/ = true ) override{}
 
-	void init(int status=0) override;
+    void init(int status=0) override;
     void resume() override;
     void suspend() override;
 
-	void keyPressEvent(QKeyEvent* e) override;
-	void keyReleaseEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void keyReleaseEvent(QKeyEvent* e) override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
     // clear temporary entities for highlighting
     void clearHighLighting();
 
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction snapRestriction;
 
 
-    private:
+private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);

@@ -207,8 +207,8 @@ private:
 	friend std::ostream& operator<<(std::ostream& os, const Area& area);
 
 private:
-	Coordinate _minP;
-	Coordinate _maxP;
+    Coordinate _minP{};
+    Coordinate _maxP{};
 };
 }
 }

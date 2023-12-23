@@ -25,67 +25,106 @@
 **********************************************************************/
 
 #include <iostream>
-#include "rs_clipboard.h"
+
 #include "rs_block.h"
-#include "rs_layer.h"
+#include "rs_clipboard.h"
 #include "rs_entity.h"
+#include "rs_graphic.h"
+#include "rs_layer.h"
 
-RS_Clipboard* RS_Clipboard::uniqueInstance = NULL;
 
+RS_Clipboard::RS_Clipboard():
+    m_graphic{std::make_unique<RS_Graphic>()}
+{
+}
 
+RS_Clipboard* RS_Clipboard::instance() {
+    struct RS_ClipboardMaker : public RS_Clipboard {
+        using RS_Clipboard::RS_Clipboard;
+    };
+
+    static std::unique_ptr<RS_Clipboard> uniqueInstance = std::make_unique<RS_ClipboardMaker>();
+    assert(uniqueInstance != nullptr);
+    return uniqueInstance.get();
+}
 
 void RS_Clipboard::clear() {
-	graphic.clear();
-	graphic.clearBlocks();
-	graphic.clearLayers();
-	graphic.clearVariables();
+    m_graphic->clear();
+    m_graphic->clearBlocks();
+    m_graphic->clearLayers();
+    m_graphic->clearVariables();
 }
-
-
-
-
 
 void RS_Clipboard::addBlock(RS_Block* b) {
-	if (b) {
-		graphic.addBlock(b, false);
-	}
+    if (b) {
+        m_graphic->addBlock(b, false);
+    }
 }
-
 
 bool RS_Clipboard::hasBlock(const QString& name) {
-	return (graphic.findBlock(name));
+    return (m_graphic->findBlock(name));
 }
-
 
 void RS_Clipboard::addLayer(RS_Layer* l) {
-	if (l) {
-		//graphic.addLayer(l->clone());
-		graphic.addLayer(l);
-	}
+    if (l) {
+        //m_graphic->addLayer(l->clone());
+        m_graphic->addLayer(l);
+    }
 }
-
-
 
 bool RS_Clipboard::hasLayer(const QString& name) {
-	return (graphic.findLayer(name));
+    return (m_graphic->findLayer(name));
 }
 
-
-
 void RS_Clipboard::addEntity(RS_Entity* e) {
-	if (e) {
-		//graphic.addEntity(e->clone());
-		graphic.addEntity(e);
-		e->reparent(&graphic);
-	}
+    if (e) {
+        //m_graphic->addEntity(e->clone());
+        m_graphic->addEntity(e);
+        e->reparent(m_graphic.get());
+    }
+}
+
+int  RS_Clipboard::countBlocks() {
+    return m_graphic->countBlocks();
+}
+RS_Block* RS_Clipboard::blockAt(int i) {
+    return m_graphic->blockAt(i);
+}
+
+int  RS_Clipboard::countLayers() {
+    return m_graphic->countLayers();
+}
+
+RS_Layer* RS_Clipboard::layerAt(int i) {
+    return m_graphic->layerAt(i);
+}
+
+unsigned RS_Clipboard::count() {
+    return m_graphic->count();
+}
+
+RS_Entity* RS_Clipboard::entityAt(unsigned i) {
+    return m_graphic->entityAt(i);
+}
+
+RS_Entity* RS_Clipboard::firstEntity() {
+    return m_graphic->firstEntity();
+}
+
+RS_Entity* RS_Clipboard::nextEntity() {
+    return m_graphic->nextEntity();
+}
+
+RS_Graphic* RS_Clipboard::getGraphic() {
+    return m_graphic.get();
 }
 
 /**
  * Dumps the clipboard contents to stdout.
  */
 std::ostream& operator << (std::ostream& os, RS_Clipboard& cb) {
-	os << "Clipboard: " << cb.graphic << "\n";
+    os << "Clipboard: " << *cb.m_graphic << "\n";
 
-	return os;
+    return os;
 }
 

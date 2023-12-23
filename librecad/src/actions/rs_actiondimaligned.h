@@ -47,7 +47,7 @@ public:
         SetExtPoint1,    /**< Setting the 1st ext point.  */
         SetExtPoint2,    /**< Setting the 2nd ext point. */
         SetDefPoint,     /**< Setting the common def point */
-                SetText          /**< Setting the text label in command line */
+        SetText          /**< Setting the text label in command line */
     };
 
 public:
@@ -79,8 +79,7 @@ protected:
 		std::unique_ptr<RS_DimAlignedData> edata;
 
 		/** Last status before entering text. */
-		Status lastStatus;
-}
-;
+        Status lastStatus = SetExtPoint1;
+};
 
 #endif
