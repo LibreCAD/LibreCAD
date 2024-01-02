@@ -1275,8 +1275,9 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
         qDebug()<< "Unhandled case";
     }
     qDebug()<< "Doc_plugin_interface::getSelectByType; typeToSelect: " << typeToSelect;
+    gView->setTypeToSelect(typeToSelect);
     QC_ActionGetSelect* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
-    
+
 
     if (a) {
         if (!(message.isEmpty()) )
@@ -1287,8 +1288,10 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
         while (!a->isCompleted())
         {
             ev.processEvents ();
-            if (!gView->getEventHandler()->hasAction())
+            if (!gView->getEventHandler()->hasAction()){
                 break;
+            }
+
         }
         //qDebug() << "getSelect: passed event loop";
     }
@@ -1299,6 +1302,7 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
         status = true;
     }
     gView->killAllActions();
+    gView->setTypeToSelect(RS2::EntityType::EntityUnknown);
     return status;
 }
 

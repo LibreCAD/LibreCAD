@@ -26,7 +26,7 @@
 **********************************************************************/
 
 #include<cmath>
-
+#include <QDebug>
 #include <QDockWidget>
 
 #include "qg_actionhandler.h"
@@ -358,7 +358,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionSelectWindow:
         view->killSelectActions();
-        a = new RS_ActionSelectWindow(*document, *view, true);
+        qDebug() <<"RS2::ActionSelectWindow";
+        a = new RS_ActionSelectWindow(view->getTypeToSelect(),*document, *view, true);
         break;
     case RS2::ActionDeselectWindow:
         view->killSelectActions();

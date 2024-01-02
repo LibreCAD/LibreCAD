@@ -82,17 +82,18 @@ public:
 
     // clear temporary entities for highlighting
     void clearHighLighting();
-
+    enum RS2::EntityType getTypeToSelect();
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction snapRestriction;
 
 
-    private:
+private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
 
 #endif

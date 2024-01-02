@@ -117,8 +117,8 @@ lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDia
         QPushButton *exportButton = new QPushButton("Export", this);
         exportButton->setGeometry(300,40, 120, 30);
         
-        QLabel *selectedEntitiesCount = new QLabel("0 entities selected", this);
-        selectedEntitiesCount->setGeometry(10,40,130,30);
+        QLabel *selectedEntitiesLabel = new QLabel("0 entities selected", this);
+        selectedEntitiesLabel->setGeometry(10,40,130,30);
         
         this->resize ( 450, 80 );
         //A signal is a message sent by the object. 
@@ -126,18 +126,29 @@ lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDia
 
         //The connect function specifies which signal is linked to which slot.
         // Connect signals and slots
-    connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
-        // Handle the combo box selection change here
-        qDebug() << "Selected Index:" << index;
-        qDebug() << "Selected Value:" << comboBox->currentText();
-        qDebug() << "Associated Data:" << comboBox->currentData();
-        setSelectedType(comboBox->currentText());
-    });
+        connect(comboBox, QOverload<int>::of(&QComboBox::currentIndexChanged), [=](int index) {
+            // Handle the combo box selection change here
+            qDebug() << "Selected Index:" << index;
+            qDebug() << "Selected Value:" << comboBox->currentText();
+            qDebug() << "Associated Data:" << comboBox->currentData();
+            setSelectedType(comboBox->currentText());
+        });
 
-    connect(selectButton, &QPushButton::clicked, [=]() {
-        selectEntities(comboBox, doc);
-    });
-    
+        connect(selectButton, &QPushButton::clicked, [=]() {
+            selectEntities(comboBox, doc);
+        });
+
+        connect(exportButton, &QPushButton::clicked, [=](){
+            qDebug() << "Click on export button:";
+            exportToFile();
+        });
+
+}
+
+void lc_Exptocsvdlg::exportToFile()
+{
+    qDebug() << "############# lc_Exptocsvdlg::exportToFile";
+    //edit.setText(text);
 }
 
 void lc_Exptocsvdlg::setText(QString text)
@@ -196,14 +207,23 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
     //Set the selectedCount value
     if (!yes || obj.isEmpty()){
         qDebug() << "list is empty";
+        clearSelectedObj();
     } else {
-        qDebug() << "list is NOT empty";
+        qDebug() << "list is NOT empty, size: " << obj.size();
+        setSelectedObj(&obj);
     }
     //Show the dialog again.
     this->show();
 }
 
+void lc_Exptocsvdlg::setSelectedObj(QList<Plug_Entity *> *obj){
+    std::cout << "lc_Exptocsvdlg::setSelectedObj \n";
+    selectedObj = obj;
+}
 
+void lc_Exptocsvdlg::clearSelectedObj(){
+    selectedObj->clear();
+}
 
 
 lc_Exptocsvdlg::~lc_Exptocsvdlg()

@@ -275,7 +275,7 @@ void RS_EntityContainer::setHighlighted(bool on)
  *
  * @param select True to select, False to deselect the entities.
  */
-void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
+void RS_EntityContainer::selectWindow(enum RS2::EntityType typeToSelect,RS_Vector v1, RS_Vector v2,
                                       bool select, bool cross) {
 
     bool included;
@@ -283,7 +283,8 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
     for(auto e: entities){
 
         included = false;
-
+        qDebug()<< "RS_EntityContainer::selectWindow######Entity is " << e->rtti();
+        qDebug() << "RS_EntityContainer::selectWindow######typeToSelect : " << typeToSelect;
         if (e->isVisible()) {
             if (e->isInWindow(v1, v2)) {
                 //e->setSelected(select);
@@ -327,7 +328,16 @@ void RS_EntityContainer::selectWindow(RS_Vector v1, RS_Vector v2,
         }
 
         if (included) {
-            e->setSelected(select);
+            if(typeToSelect!=RS2::EntityType::EntityUnknown){
+                if(typeToSelect==e->rtti()){
+                    e->setSelected(select);
+                } else {
+                    //Do not select
+                }
+            } else {
+                e->setSelected(select);
+            }
+
         }
     }
 }

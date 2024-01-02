@@ -58,7 +58,7 @@ class lc_Exptocsvdlg : public QDialog
         void setText(QString text);
         void setSelectedType(QString typeAsString);
         void selectEntities(QComboBox *comboBox, Document_Interface *doc = nullptr);
-
+        void exportToFile();
     private:
         QTextEdit edit;
         enum DPI::ETYPE selectedType = DPI::UNKNOWN;
@@ -66,6 +66,9 @@ class lc_Exptocsvdlg : public QDialog
         const QString strPoint= "Point";
         const QString strLine = "Line";
         const QString strPolyline = "Polyline";
+        QList<Plug_Entity *> *selectedObj;
+        void setSelectedObj(QList<Plug_Entity *> *selectedObj);
+        void clearSelectedObj();
 };
 
 #endif //LIST_H

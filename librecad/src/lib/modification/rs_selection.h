@@ -34,6 +34,7 @@ class RS_Graphic;
 class RS_GraphicView;
 class RS_Vector;
 class RS_Entity;
+enum RS2::EntityType;
 
 /**
  * API Class for selecting entities. 
@@ -54,10 +55,10 @@ public:
         selectAll(false);
     }
     void invertSelection();
-    void selectWindow(const RS_Vector& v1, const RS_Vector& v2,
+    void selectWindow(enum RS2::EntityType typeToSelect, const RS_Vector& v1, const RS_Vector& v2,
                       bool select=true, bool cross=false);
-    void deselectWindow(const RS_Vector& v1, const RS_Vector& v2) {
-        selectWindow(v1, v2, false);
+    void deselectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2) {
+        selectWindow(typeToSelect,v1, v2, false);
     }
     void selectIntersected(const RS_Vector& v1, const RS_Vector& v2,
                       bool select=true);

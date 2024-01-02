@@ -156,10 +156,10 @@ void RS_Selection::invertSelection() {
  * @param v2 Second corner of the window to select.
  * @param select true: select, false: deselect
  */
-void RS_Selection::selectWindow(const RS_Vector& v1, const RS_Vector& v2,
+void RS_Selection::selectWindow(enum RS2::EntityType typeToSelect,const RS_Vector& v1, const RS_Vector& v2,
                                 bool select, bool cross) {
 
-    container->selectWindow(v1, v2, select, cross);
+    container->selectWindow(typeToSelect,v1, v2, select, cross);
 
     if (graphicView) {
 		graphicView->redraw();

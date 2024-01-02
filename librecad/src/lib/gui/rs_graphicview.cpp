@@ -33,7 +33,7 @@
 #include <QAction>
 #include <QMouseEvent>
 #include <QtAlgorithms>
-
+#include <QDebug>
 #include "rs_graphicview.h"
 
 #include "rs_color.h"
@@ -282,11 +282,11 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-    RS_DEBUG->print("RS_GraphicView::setCurrentAction");
+    qDebug()<<"RS_GraphicView::setCurrentAction";
 	if (eventHandler) {
 		eventHandler->setCurrentAction(action);
 	}
-	RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
+    qDebug()<<"RS_GraphicView::setCurrentAction: OK";
 }
 
 
@@ -1930,4 +1930,13 @@ void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)
 void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
 {
     m_colorData->hideRelativeZero = isHidden;
+}
+
+RS2::EntityType RS_GraphicView::getTypeToSelect(){
+    return typeToSelect;
+}
+
+void RS_GraphicView::setTypeToSelect(RS2::EntityType mType){
+    qDebug() << "RS_GraphicView::Setting type as: " << mType;
+    typeToSelect = mType;
 }

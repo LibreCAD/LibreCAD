@@ -379,6 +379,9 @@ public:
         return scaleLineWidth;
     }
 
+    RS2::EntityType getTypeToSelect();
+
+    void setTypeToSelect(RS2::EntityType mType);
 
 protected:
 
@@ -446,6 +449,8 @@ private:
     bool panning = false;
 
     bool scaleLineWidth = false;
+
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 
 signals:
     void relative_zero_changed(const RS_Vector&);
