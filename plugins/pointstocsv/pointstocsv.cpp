@@ -20,6 +20,8 @@
 #include <QComboBox>
 #include <QLabel>
 #include <QRect>
+#include <QFileDialog>
+#include <QMessageBox>
 #include <cmath>
 #include "iostream"
 #include <string> // for string and to_string()
@@ -149,6 +151,26 @@ void lc_Exptocsvdlg::exportToFile()
 {
     qDebug() << "############# lc_Exptocsvdlg::exportToFile";
     //edit.setText(text);
+    QString fileName = QFileDialog::getSaveFileName(this, tr("Export to file"), "", tr("CSV (*.csv)"));
+    qDebug() << "Destination file: " << fileName << "\n";
+    if(fileName.isEmpty()){
+        //Open the dialog again
+
+        return;
+    } else {
+        //Open the file in write mode
+        QFile file(fileName);
+        if(!file.open(QIODevice::WriteOnly)){
+            QMessageBox::information(this, tr("Unable to open file"),
+                                     file.errorString());
+            return;
+        }
+        QTextStream out(&file);
+
+        out << "Hello world";
+        file.close();
+
+    }
 }
 
 void lc_Exptocsvdlg::setText(QString text)
