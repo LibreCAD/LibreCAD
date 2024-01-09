@@ -69,6 +69,7 @@ class lc_Exptocsvdlg : public QDialog
         QList<Plug_Entity *> *selectedObj;
         void setSelectedObj(QList<Plug_Entity *> *selectedObj);
         void clearSelectedObj();
+        QString getFormatedText(Plug_Entity* entity);
 };
 
 #endif //LIST_H

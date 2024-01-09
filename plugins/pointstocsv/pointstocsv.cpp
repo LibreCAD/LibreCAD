@@ -173,6 +173,21 @@ void lc_Exptocsvdlg::exportToFile()
     }
 }
 
+QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
+    QString response = "##########";
+    if(entity->getEntityType()==DPI::ETYPE::POINT){
+
+    } else if(entity->getEntityType()==DPI::ETYPE::LINE){
+
+    } else if(entity->getEntityType()==DPI::ETYPE::POLYLINE){
+
+    } else {
+        response = "INVALID";
+    }
+
+    return response;
+}
+
 void lc_Exptocsvdlg::setText(QString text)
 {
     std::cout << "############# lc_Exptocsvdlg::setText\n";
