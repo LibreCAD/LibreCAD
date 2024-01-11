@@ -60,19 +60,20 @@ class lc_Exptocsvdlg : public QDialog
         void selectEntities(QComboBox *comboBox, Document_Interface *doc = nullptr);
         void exportToFile();
     private:
+        QList<Plug_Entity *> selectedObj;
+        Document_Interface *d;
         QTextEdit edit;
         enum DPI::ETYPE selectedType = DPI::UNKNOWN;
         int selectedCount = 0;
         const QString strPoint= "Point";
         const QString strLine = "Line";
         const QString strPolyline = "Polyline";
-        QList<Plug_Entity *> *selectedObj;
         void setSelectedObj(QList<Plug_Entity *> *selectedObj);
         void clearSelectedObj();
         QString getFormatedText(Plug_Entity* entity);
-        QString getPointFormatedText(Plug_Entity* entity);
-        QString getLineFormatedText(Plug_Entity* entity);
-        QString getPolylineFormatedText(Plug_Entity* entity);
+        QString getPointFormatedText(Plug_Entity* entity, QHash<int, QVariant> data);
+        QString getLineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data);
+        QString getPolylineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data);
 };
 
 #endif //LIST_H

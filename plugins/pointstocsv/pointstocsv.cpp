@@ -96,9 +96,10 @@ QString ExpTo_Csv::getStrData(Plug_Entity *ent)
 }
 
 /*****************************/
-lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDialog(parent)
+lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDialog(parent), d(doc)
 {
         std::cout << "############# lc_Exptocsvdlg::lc_Exptocsvdlg\n";
+        d = doc;
         ExpTo_Csv expToCsvInstance; 
         setWindowTitle(expToCsvInstance.name());
         
@@ -168,52 +169,60 @@ void lc_Exptocsvdlg::exportToFile()
         }
         QTextStream out(&file);
         qDebug() << "Starting loop";
-        for (int i = 0; i < selectedObj->size(); ++i) {
-            getFormatedText(selectedObj->at(i));
+        qDebug() << "Collection size is: " << selectedObj.size();
+        for (int i = 0; i < selectedObj.size(); ++i) {
+            out << getFormatedText(selectedObj.at(i));
         }
-        out << "Hello world";
         file.close();
-
+        this->close();
     }
 }
 
 QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
     qDebug() << "lc_Exptocsvdlg::getFormatedText";
-    QString response = "##########";
+    QString response = "##########\n";
     QHash<int, QVariant> data;
     entity->getData(&data);
-    if(entity->getEntityType()==DPI::ETYPE::POINT){
+    qDebug() << "DPI::ETYPE::POINT: " << DPI::ETYPE::POINT;
+    qDebug() << "DPI::ETYPE::LINE: " << DPI::ETYPE::LINE;
+    qDebug() << "DPI::ETYPE::POLYLINE: " << DPI::ETYPE::POLYLINE;
+    int et = data.value(DPI::ETYPE).toInt();
+    qDebug() << "EntityType: " << et;
+    
+    if(et==DPI::ETYPE::POINT){
+        response = "";
         qDebug() << "Type point";
-        //arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
-        //arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
+        response.append(getPointFormatedText(entity, data));
+    } else if(et==DPI::ETYPE::LINE){
 
-        response.append(getPointFormatedText(entity));
-    } else if(entity->getEntityType()==DPI::ETYPE::LINE){
         qDebug() << "Type line";
-        response.append(getLineFormatedText(entity));
-    } else if(entity->getEntityType()==DPI::ETYPE::POLYLINE){
+        response.append(getLineFormatedText(entity, data));
+    } else if(et==DPI::ETYPE::POLYLINE){
         qDebug() << "Type polyline";
-        response.append(getPolylineFormatedText(entity));
+        response.append(getPolylineFormatedText(entity, data));
     } else {
+        qDebug() << "Unhandled case";
         response = "INVALID";
     }
 
     return response;
 }
 
-QString lc_Exptocsvdlg::getPointFormatedText(Plug_Entity* entity){
+QString lc_Exptocsvdlg::getPointFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
     qDebug() << "lc_Exptocsvdlg::getPointFormatedText";
     QString response = "";
+    response.append(d->realToStr(data.value(DPI::STARTX).toDouble())).
+            append(";").append(d->realToStr(data.value(DPI::STARTY).toDouble())).append("\n");
     return response;
 }
 
-QString lc_Exptocsvdlg::getLineFormatedText(Plug_Entity* entity){
+QString lc_Exptocsvdlg::getLineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
     qDebug() << "lc_Exptocsvdlg::getLineFormatedText";
     QString response = "";
     return response;
 }
 
-QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity){
+QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
     qDebug() << "lc_Exptocsvdlg::getPolylineFormatedText";
     QString response = "";
     return response;
@@ -270,7 +279,7 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
     }
     std::cout << "############# calling getSelectByType with selectedType: " << selectedType;    
     bool yes  = doc->getSelectByType(&obj, selectedType);
-    std::cout << "############# E\n";
+    std::cout << " ############# E\n";
     //Once the selection process has ended, count the entities that are selected
     //Set the selectedCount value
     if (!yes || obj.isEmpty()){
@@ -286,14 +295,14 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
 
 void lc_Exptocsvdlg::setSelectedObj(QList<Plug_Entity *> *obj){
     std::cout << "lc_Exptocsvdlg::setSelectedObj \n";
-    selectedObj->clear();
+    selectedObj.clear();
     for (int i = 0; i < obj->size(); ++i) {
-        selectedObj->append(obj->at(i));
+        selectedObj.append(obj->at(i));
     }
 }
 
 void lc_Exptocsvdlg::clearSelectedObj(){
-    selectedObj->clear();
+    selectedObj.clear();
 }
 
 
