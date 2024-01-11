@@ -154,11 +154,12 @@ void lc_Exptocsvdlg::exportToFile()
     QString fileName = QFileDialog::getSaveFileName(this, tr("Export to file"), "", tr("CSV (*.csv)"));
     qDebug() << "Destination file: " << fileName << "\n";
     if(fileName.isEmpty()){
+        qDebug() << "file is empty";
         //Open the dialog again
-
         return;
     } else {
         //Open the file in write mode
+        qDebug() << "file is NOT empty";
         QFile file(fileName);
         if(!file.open(QIODevice::WriteOnly)){
             QMessageBox::information(this, tr("Unable to open file"),
@@ -166,7 +167,10 @@ void lc_Exptocsvdlg::exportToFile()
             return;
         }
         QTextStream out(&file);
-
+        qDebug() << "Starting loop";
+        for (int i = 0; i < selectedObj->size(); ++i) {
+            getFormatedText(selectedObj->at(i));
+        }
         out << "Hello world";
         file.close();
 
@@ -174,17 +178,44 @@ void lc_Exptocsvdlg::exportToFile()
 }
 
 QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
+    qDebug() << "lc_Exptocsvdlg::getFormatedText";
     QString response = "##########";
+    QHash<int, QVariant> data;
+    entity->getData(&data);
     if(entity->getEntityType()==DPI::ETYPE::POINT){
+        qDebug() << "Type point";
+        //arg(d->realToStr(data.value(DPI::STARTX).toDouble())).
+        //arg(d->realToStr(data.value(DPI::STARTY).toDouble())));
 
+        response.append(getPointFormatedText(entity));
     } else if(entity->getEntityType()==DPI::ETYPE::LINE){
-
+        qDebug() << "Type line";
+        response.append(getLineFormatedText(entity));
     } else if(entity->getEntityType()==DPI::ETYPE::POLYLINE){
-
+        qDebug() << "Type polyline";
+        response.append(getPolylineFormatedText(entity));
     } else {
         response = "INVALID";
     }
 
+    return response;
+}
+
+QString lc_Exptocsvdlg::getPointFormatedText(Plug_Entity* entity){
+    qDebug() << "lc_Exptocsvdlg::getPointFormatedText";
+    QString response = "";
+    return response;
+}
+
+QString lc_Exptocsvdlg::getLineFormatedText(Plug_Entity* entity){
+    qDebug() << "lc_Exptocsvdlg::getLineFormatedText";
+    QString response = "";
+    return response;
+}
+
+QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity){
+    qDebug() << "lc_Exptocsvdlg::getPolylineFormatedText";
+    QString response = "";
     return response;
 }
 
@@ -255,7 +286,10 @@ void lc_Exptocsvdlg::selectEntities(QComboBox *comboBox, Document_Interface *doc
 
 void lc_Exptocsvdlg::setSelectedObj(QList<Plug_Entity *> *obj){
     std::cout << "lc_Exptocsvdlg::setSelectedObj \n";
-    selectedObj = obj;
+    selectedObj->clear();
+    for (int i = 0; i < obj->size(); ++i) {
+        selectedObj->append(obj->at(i));
+    }
 }
 
 void lc_Exptocsvdlg::clearSelectedObj(){
