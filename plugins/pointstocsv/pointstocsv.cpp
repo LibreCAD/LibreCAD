@@ -188,18 +188,17 @@ QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
     qDebug() << "DPI::ETYPE::POLYLINE: " << DPI::ETYPE::POLYLINE;
     int et = data.value(DPI::ETYPE).toInt();
     qDebug() << "EntityType: " << et;
-    
+
     if(et==DPI::ETYPE::POINT){
         response = "";
         qDebug() << "Type point";
-        response.append(getPointFormatedText(entity, data));
+        response.append(getPointFormatedText(data));
     } else if(et==DPI::ETYPE::LINE){
-
         qDebug() << "Type line";
-        response.append(getLineFormatedText(entity, data));
+        response.append(getLineFormatedText(data));
     } else if(et==DPI::ETYPE::POLYLINE){
         qDebug() << "Type polyline";
-        response.append(getPolylineFormatedText(entity, data));
+        response.append(getPolylineFormatedText(entity));
     } else {
         qDebug() << "Unhandled case";
         response = "INVALID";
@@ -208,7 +207,7 @@ QString lc_Exptocsvdlg::getFormatedText(Plug_Entity* entity){
     return response;
 }
 
-QString lc_Exptocsvdlg::getPointFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
+QString lc_Exptocsvdlg::getPointFormatedText(QHash<int, QVariant> data){
     qDebug() << "lc_Exptocsvdlg::getPointFormatedText";
     QString response = "";
     response.append(d->realToStr(data.value(DPI::STARTX).toDouble())).
@@ -216,15 +215,34 @@ QString lc_Exptocsvdlg::getPointFormatedText(Plug_Entity* entity, QHash<int, QVa
     return response;
 }
 
-QString lc_Exptocsvdlg::getLineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
+QString lc_Exptocsvdlg::getLineFormatedText(QHash<int, QVariant> data){
     qDebug() << "lc_Exptocsvdlg::getLineFormatedText";
     QString response = "";
+    QPointF ptA, ptB;
+    ptA.setX( data.value(DPI::STARTX).toDouble());
+    ptA.setY( data.value(DPI::STARTY).toDouble());
+    ptB.setX( data.value(DPI::ENDX).toDouble());
+    ptB.setY( data.value(DPI::ENDY).toDouble());
+    qDebug() << "Appending: "<< d->realToStr(ptA.x()) << ";" << d->realToStr(ptA.y());
+    response.append(d->realToStr(ptA.x())).append(";").
+            append(d->realToStr(ptA.y())).append("\n");
+    qDebug() << "Appending: "<< d->realToStr(ptB.x()) << ";" << d->realToStr(ptB.y());
+    response.append(d->realToStr(ptB.x())).append(";")
+            .append(d->realToStr(ptB.y())).append("\n");
+
     return response;
 }
 
-QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity, QHash<int, QVariant> data){
+QString lc_Exptocsvdlg::getPolylineFormatedText(Plug_Entity* entity){
     qDebug() << "lc_Exptocsvdlg::getPolylineFormatedText";
     QString response = "";
+    QList<Plug_VertexData> vl;
+    entity->getPolylineData(&vl);
+    int iVertices = vl.size();
+    qDebug() << "Vertices: " << vl.size() << "\n";
+    for (int i = 0; i < iVertices; ++i) {
+        response.append( d->realToStr(vl.at(i).point.x())).append(";").append(d->realToStr(vl.at(i).point.y())).append("\n");
+    }
     return response;
 }
 
