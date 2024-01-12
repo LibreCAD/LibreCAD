@@ -163,7 +163,7 @@ public:
     RS_Vector snapDist(const RS_Vector& coord);
     RS_Vector snapIntersection(const RS_Vector& coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
-    RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res);
+    RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res = 15.);
 
     RS_Vector restrictOrthogonal(const RS_Vector& coord);
     RS_Vector restrictHorizontal(const RS_Vector& coord);
