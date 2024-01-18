@@ -18,7 +18,7 @@
 #include "document_interface.h"
 #include <QTextEdit>
 #include <QComboBox>
-
+#include <QLabel>
 
 
 class Plug_Entity;
@@ -59,6 +59,7 @@ class lc_Exptocsvdlg : public QDialog
         void setSelectedType(QString typeAsString);
         void selectEntities(QComboBox *comboBox, Document_Interface *doc = nullptr);
         void exportToFile();
+
     private:
         QList<Plug_Entity *> selectedObj;
         Document_Interface *d;
@@ -74,6 +75,8 @@ class lc_Exptocsvdlg : public QDialog
         QString getPointFormatedText(QHash<int, QVariant> data);
         QString getLineFormatedText(QHash<int, QVariant> data);
         QString getPolylineFormatedText(Plug_Entity* entity);
+        QLabel *selectedEntitiesLabel = nullptr;
+
 };
 
 #endif //LIST_H

@@ -120,7 +120,8 @@ lc_Exptocsvdlg::lc_Exptocsvdlg(QWidget *parent, Document_Interface *doc) :  QDia
         QPushButton *exportButton = new QPushButton("Export", this);
         exportButton->setGeometry(300,40, 120, 30);
         
-        QLabel *selectedEntitiesLabel = new QLabel("0 entities selected", this);
+        selectedEntitiesLabel = new QLabel("0 entities selected", this);
+
         selectedEntitiesLabel->setGeometry(10,40,130,30);
         
         this->resize ( 450, 80 );
@@ -317,6 +318,16 @@ void lc_Exptocsvdlg::setSelectedObj(QList<Plug_Entity *> *obj){
     for (int i = 0; i < obj->size(); ++i) {
         selectedObj.append(obj->at(i));
     }
+    if(selectedObj.size()==1){
+        selectedEntitiesLabel->setText(" 1 element selected ");
+    } else if( selectedObj.size()==0 || selectedObj.size() >1 ){
+        QString text = " %1 elements selected ";
+        selectedEntitiesLabel->setText(text.arg(selectedObj.size()) );
+    } else {
+
+        selectedEntitiesLabel->setText("Invalid selection" );
+    }
+
 }
 
 void lc_Exptocsvdlg::clearSelectedObj(){

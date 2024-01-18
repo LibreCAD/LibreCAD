@@ -112,7 +112,14 @@ void RS_Selection::selectAll(bool select) {
         //RS_Entity* e = container->entityAt(i);
 
         if (e && e->isVisible()) {
-            e->setSelected(select);
+            if(graphicView->getTypeToSelect()==RS2::EntityType::EntityUnknown){
+                e->setSelected(select);
+            } else{
+                if(e->rtti()==graphicView->getTypeToSelect()){
+                    e->setSelected(select);
+                }
+            }
+
         }
     }
 
