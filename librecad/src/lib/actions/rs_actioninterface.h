@@ -157,10 +157,6 @@ protected:
     //static QString cmdNo;
     //static QString cmdNo2;
     RS2::ActionType actionType = RS2::ActionNone;
-
-    //Saving a reference to container, for setting the typeToSelect variable 
-    //And not depend on the rs_snapper class.
-    RS_EntityContainer* mContainer;
 };
 
 

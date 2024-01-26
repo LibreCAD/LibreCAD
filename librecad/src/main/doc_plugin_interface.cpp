@@ -28,7 +28,7 @@
 #include <QList>
 #include <QInputDialog>
 #include <QFileInfo>
-#include <QDebug>
+#include <iostream>
 #include "doc_plugin_interface.h"
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"
@@ -1259,22 +1259,18 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 }
 
 bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
-    qDebug()<< "Doc_plugin_interface::getSelectByType";
     bool status = false;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     if(type==DPI::LINE){
-        qDebug()<< "DPI::LINE";
         typeToSelect = RS2::EntityType::EntityLine;
     } else if(type==DPI::POINT){
-        qDebug()<< "DPI::POINT";
         typeToSelect = RS2::EntityType::EntityPoint;
     } else if (type==DPI::POLYLINE){
-        qDebug()<< "DPI::POLYLINE";
         typeToSelect = RS2::EntityType::EntityPolyline;
     } else {
-        qDebug()<< "Unhandled case";
+        //Unhandled case
     }
-    qDebug()<< "Doc_plugin_interface::getSelectByType; typeToSelect: " << typeToSelect;
+    
     gView->setTypeToSelect(typeToSelect);
     QC_ActionGetSelect* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
 
@@ -1293,7 +1289,6 @@ bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::
             }
 
         }
-        //qDebug() << "getSelect: passed event loop";
     }
     //check if a are cancelled by the user issue #349
     RS_EventHandler* eh = gView->getEventHandler();

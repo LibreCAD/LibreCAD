@@ -27,7 +27,6 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include <QDebug>
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -55,7 +54,6 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
     ,actionSelect(action_select),
     typeToSelect(typeToSelect)
 {
-    qDebug() << "typeToSelect: " << typeToSelect;
     actionType = RS2::ActionSelectSingle;
 }
 void RS_ActionSelectSingle::trigger() {
@@ -65,16 +63,12 @@ void RS_ActionSelectSingle::trigger() {
 				!= entityTypeList.end();
 	if (en && typeMatch) {
         RS_Selection s(*container, graphicView);
-        qDebug() << "TypeToSelect: " << this->getTypeToSelect() << "\n" ;
-        qDebug() << "Entity type: " << en->rtti() << "\n" ;
+
         if(this->getTypeToSelect()==RS2::EntityType::EntityUnknown ||
                 (this->getTypeToSelect()!=RS2::EntityType::EntityUnknown && en->rtti()==this->getTypeToSelect())){
 
-            qDebug() << "Selecting because TypeToSelect is Entity Unknown or the entity matches the typeToSelect: " << this->getTypeToSelect() << "\n" ;
             s.selectSingle(en);
         } else {
-            qDebug() << "Skipping entity because it does not match the typeToSelect";
-
             return;
         }
 

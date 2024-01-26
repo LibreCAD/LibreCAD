@@ -33,7 +33,7 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_snapper.h"
-#include <QDebug>
+
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
@@ -115,14 +115,14 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
 }
 
 void QC_ActionGetSelect::unselectEntities(){
-
-    qDebug() << "############# QC_ActionGetSelect::unselectEntities\n";
     for(auto e: *container){
 
         if (e->isSelected()) {
             e->setSelected(false);
         }
     }
+    RS_DIALOGFACTORY->updateSelectionWidget(
+                container->countSelected(),container->totalSelectedLength());
 }
 
 

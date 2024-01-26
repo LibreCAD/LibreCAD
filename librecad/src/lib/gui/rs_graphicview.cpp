@@ -33,7 +33,6 @@
 #include <QAction>
 #include <QMouseEvent>
 #include <QtAlgorithms>
-#include <QDebug>
 #include "rs_graphicview.h"
 
 #include "rs_color.h"
@@ -282,11 +281,9 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-    qDebug()<<"RS_GraphicView::setCurrentAction";
 	if (eventHandler) {
 		eventHandler->setCurrentAction(action);
 	}
-    qDebug()<<"RS_GraphicView::setCurrentAction: OK";
 }
 
 
@@ -1937,6 +1934,5 @@ RS2::EntityType RS_GraphicView::getTypeToSelect(){
 }
 
 void RS_GraphicView::setTypeToSelect(RS2::EntityType mType){
-    qDebug() << "RS_GraphicView::Setting type as: " << mType;
     typeToSelect = mType;
 }

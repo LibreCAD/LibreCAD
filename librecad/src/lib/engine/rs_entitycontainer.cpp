@@ -29,7 +29,6 @@
 #include <set>
 
 #include <QtGlobal>
-#include <QDebug>
 #include "lc_looputils.h"
 
 #include "qg_dialogfactory.h"
@@ -283,8 +282,6 @@ void RS_EntityContainer::selectWindow(enum RS2::EntityType typeToSelect,RS_Vecto
     for(auto e: entities){
 
         included = false;
-        qDebug()<< "RS_EntityContainer::selectWindow######Entity is " << e->rtti();
-        qDebug() << "RS_EntityContainer::selectWindow######typeToSelect : " << typeToSelect;
         if (e->isVisible()) {
             if (e->isInWindow(v1, v2)) {
                 //e->setSelected(select);

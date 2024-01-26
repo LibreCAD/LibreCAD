@@ -74,8 +74,6 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
     // document pointer will be used for undo / redo
     document = container.getDocument();
 
-    mContainer = &container;
-
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 }
 

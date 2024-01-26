@@ -29,8 +29,7 @@
 #include <QPointF>
 #include <QHash>
 #include <QVariant>
-#include <vector>
-
+#include<vector>
 //#include <QColor>
 class QString;
 

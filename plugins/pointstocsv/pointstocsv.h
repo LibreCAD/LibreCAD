@@ -39,7 +39,6 @@ class ExpTo_Csv : public QObject, QC_PluginInterface
         virtual void setIsCollectingElementsToFalse();
 
     private: 
-        QString getStrData(Plug_Entity *ent);
         Document_Interface *d;
         int getEntityType(Plug_Entity *ent);
         
@@ -55,7 +54,6 @@ class lc_Exptocsvdlg : public QDialog
     public:    
         explicit lc_Exptocsvdlg(QWidget *parent = nullptr, Document_Interface *doc = nullptr);
         ~lc_Exptocsvdlg() override;
-        void setText(QString text);
         void setSelectedType(QString typeAsString);
         void selectEntities(QComboBox *comboBox, Document_Interface *doc = nullptr);
         void exportToFile();
@@ -65,12 +63,12 @@ class lc_Exptocsvdlg : public QDialog
         Document_Interface *d;
         QTextEdit edit;
         enum DPI::ETYPE selectedType = DPI::UNKNOWN;
-        int selectedCount = 0;
         const QString strPoint= "Point";
         const QString strLine = "Line";
         const QString strPolyline = "Polyline";
         void setSelectedObj(QList<Plug_Entity *> *selectedObj);
         void clearSelectedObj();
+        void setSelectedLabelCounterText(int count);
         QString getFormatedText(Plug_Entity* entity);
         QString getPointFormatedText(QHash<int, QVariant> data);
         QString getLineFormatedText(QHash<int, QVariant> data);
