@@ -24,8 +24,8 @@
 **
 **********************************************************************/
 
-#ifndef RS_ACTIONSELECTWINDOW_H
-#define RS_ACTIONSELECTWINDOW_H
+#ifndef RS_ACTIONDEFAULT_H
+#define RS_ACTIONDEFAULT_H
 
 #include <memory>
 
