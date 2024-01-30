@@ -34,7 +34,6 @@ class RS_Graphic;
 class RS_GraphicView;
 class RS_Vector;
 class RS_Entity;
-enum RS2::EntityType;
 
 /**
  * API Class for selecting entities. 

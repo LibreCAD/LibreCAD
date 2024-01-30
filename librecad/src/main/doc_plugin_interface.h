@@ -55,7 +55,7 @@ public:
     virtual ~Plugin_Entity();
     bool isValid(){if (entity) return true; else return false;}
     RS_Entity* getEnt() {return entity;}
-    virtual int getEntityType();
+    virtual RS2::EntityType getEntityType();
     virtual void getData(QHash<int, QVariant> *data);
     virtual void updateData(QHash<int, QVariant> *data);
     virtual void getPolylineData(QList<Plug_VertexData> *data);

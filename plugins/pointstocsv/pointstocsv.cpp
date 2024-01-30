@@ -12,6 +12,7 @@
 /*  along with this program.  If not, see <http://www.gnu.org/licenses/>.    */
 /*****************************************************************************/
 
+#include <cmath>
 
 #include <QTextEdit>
 #include <QDialogButtonBox>
@@ -22,11 +23,9 @@
 #include <QRect>
 #include <QFileDialog>
 #include <QMessageBox>
-#include <cmath>
-#include "iostream"
-#include <string> // for string and to_string()
+
 #include "pointstocsv.h"
-#include <iostream>
+
 
 QString ExpTo_Csv::name() const
 {

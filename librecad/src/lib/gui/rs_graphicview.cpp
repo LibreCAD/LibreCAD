@@ -1929,7 +1929,7 @@ void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
     m_colorData->hideRelativeZero = isHidden;
 }
 
-RS2::EntityType RS_GraphicView::getTypeToSelect(){
+RS2::EntityType RS_GraphicView::getTypeToSelect() const{
     return typeToSelect;
 }
 

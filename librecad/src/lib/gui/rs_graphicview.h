@@ -379,7 +379,7 @@ public:
         return scaleLineWidth;
     }
 
-    RS2::EntityType getTypeToSelect();
+    RS2::EntityType getTypeToSelect() const;
 
     void setTypeToSelect(RS2::EntityType mType);
 

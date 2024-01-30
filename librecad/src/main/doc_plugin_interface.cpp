@@ -226,7 +226,7 @@ Plugin_Entity::~Plugin_Entity() {
         delete entity;
 }
 
-int Plugin_Entity::getEntityType(){
+RS2::EntityType Plugin_Entity::getEntityType(){
     return entity->rtti();
 }
 
