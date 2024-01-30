@@ -44,6 +44,16 @@ QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
     actionType = RS2::ActionGetSelect;
 }
 
+QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
+                                 RS_GraphicView& graphicView)
+        :RS_ActionInterface("Get Select", container, graphicView)
+        , completed(false)
+        , message(std::make_unique<QString>(tr("Select objects:"))),
+        typeToSelect(typeToSelect)
+{
+    actionType = RS2::ActionGetSelect;
+}
+
 QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
@@ -69,7 +79,7 @@ void QC_ActionGetSelect::setMessage(QString msg){
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
-                new RS_ActionSelectSingle(*container, *graphicView, this));
+                new RS_ActionSelectSingle(typeToSelect, *container, *graphicView, this));
 }
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
@@ -102,6 +112,17 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
             se->append(reinterpret_cast<Plug_Entity*>(pe));
         }
     }
+}
+
+void QC_ActionGetSelect::unselectEntities(){
+    for(auto e: *container){
+
+        if (e->isSelected()) {
+            e->setSelected(false);
+        }
+    }
+    RS_DIALOGFACTORY->updateSelectionWidget(
+                container->countSelected(),container->totalSelectedLength());
 }
 
 

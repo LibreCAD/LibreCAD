@@ -46,6 +46,7 @@ public:
 
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
+	
 	~RS_EntityContainer() override;
 
 	RS_Entity* clone() const override;
@@ -83,9 +84,10 @@ public:
 
     void setHighlighted(bool on) override;
 
-	virtual void selectWindow(RS_Vector v1, RS_Vector v2,
+	/*virtual void selectWindow(RS_Vector v1, RS_Vector v2,
+				bool select=true, bool cross=false);*/
+	virtual void selectWindow(enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
 				bool select=true, bool cross=false);
-
     virtual void addEntity(RS_Entity* entity);
     virtual void appendEntity(RS_Entity* entity);
     virtual void prependEntity(RS_Entity* entity);

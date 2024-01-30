@@ -215,6 +215,8 @@ class Plug_Entity
 public:
     virtual ~Plug_Entity() {}
 
+    virtual int getEntityType();
+
     //! Obtain the entity data.
     /*!
     * The data is a QHash with the EDATA keys relevant to the type of entity
@@ -481,6 +483,17 @@ public:
     */
     virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& message = "") = 0;
 
+    //! Gets a entities selection based on the provided type.
+    /*! Prompt message or an default message to the user asking for a selection.
+    * You can delete all, the Plug_Entity and the returned QList wen no more needed.
+    * \param sel a QList of pointers to Plug_Entity handled the selected entities.
+    * \param message an optional QString with prompt message.
+    * \param type is the required entity type
+    * \return true if success.
+    * \return false if fail, i.e. user cancel.
+    */
+    virtual bool getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message = "") = 0;
+
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
@@ -489,6 +502,8 @@ public:
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) = 0;
+
+    virtual void unselectEntities() = 0;
 
     virtual bool getVariableInt(const QString& key, int *num) = 0;
     virtual bool getVariableDouble(const QString& key, double *num) = 0;

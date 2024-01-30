@@ -57,6 +57,20 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
 	actionType=RS2::ActionSelectWindow;
 }
 
+RS_ActionSelectWindow::RS_ActionSelectWindow(
+    enum RS2::EntityType typeToSelect,
+    RS_EntityContainer& container,
+        RS_GraphicView& graphicView,
+        bool select)
+        : RS_PreviewActionInterface("Select Window",
+							container, graphicView)
+        , select(select),
+    typeToSelect(typeToSelect)
+    , pPoints(std::make_unique<Points>())
+{
+	actionType=RS2::ActionSelectWindow;
+}
+
 RS_ActionSelectWindow::~RS_ActionSelectWindow() = default;
 
 
@@ -78,7 +92,7 @@ void RS_ActionSelectWindow::trigger() {
 			bool cross = (pPoints->v1.x>pPoints->v2.x);
 
             RS_Selection s(*container, graphicView);
-			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
+			s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 
@@ -179,6 +193,10 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
 
 void RS_ActionSelectWindow::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);
+}
+
+enum RS2::EntityType RS_ActionSelectWindow::getTypeToSelect(){
+    return typeToSelect;
 }
 
 // EOF

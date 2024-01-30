@@ -55,6 +55,7 @@ public:
     virtual ~Plugin_Entity();
     bool isValid(){if (entity) return true; else return false;}
     RS_Entity* getEnt() {return entity;}
+    virtual RS2::EntityType getEntityType();
     virtual void getData(QHash<int, QVariant> *data);
     virtual void updateData(QHash<int, QVariant> *data);
     virtual void getPolylineData(QList<Plug_VertexData> *data);
@@ -112,7 +113,10 @@ public:
     bool getPoint(QPointF *point, const QString& message, QPointF *base) override;
     Plug_Entity *getEnt(const QString& message) override;
     bool getSelect(QList<Plug_Entity *> *sel, const QString& message) override;
+    bool getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message) override;
     bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) override;
+
+    void unselectEntities() override;
 
     bool getVariableInt(const QString& key, int *num) override;
     bool getVariableDouble(const QString& key, double *num) override;

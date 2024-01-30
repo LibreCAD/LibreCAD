@@ -99,6 +99,7 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
     setActionType(RS2::ActionDefault);
+    typeToSelect = graphicView.getTypeToSelect();
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -437,7 +438,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 			bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
             bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
-			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
+			s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
@@ -561,5 +562,9 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
     hContainer->addEntity(duplicatedEntity);
 
     graphicView->redraw(RS2::RedrawOverlay);
+}
+
+RS2::EntityType RS_ActionDefault::getTypeToSelect(){
+    return typeToSelect;
 }
 // EOF
