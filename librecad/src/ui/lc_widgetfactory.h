@@ -16,6 +16,7 @@ class QActionGroup;
 class QG_PenToolBar;
 class QG_SnapToolBar;
 class QG_LayerWidget;
+class LC_LayerTreeWidget;
 class QG_BlockWidget;
 class QG_ActionHandler;
 class QG_LibraryWidget;
@@ -52,6 +53,7 @@ public:
     QToolBar* options_toolbar;
 
     QG_LayerWidget* layer_widget;
+    LC_LayerTreeWidget* layer_tree_widget;
     LC_PenPaletteWidget* pen_palette;
     QG_BlockWidget* block_widget;
     QG_LibraryWidget* library_widget;

@@ -238,6 +238,13 @@ HEADERS += \
     ui/lc_penpaletteoptions.h \
     ui/lc_penpaletteoptionsdialog.h \
     ui/lc_penpalettewidget.h
+    ui/forms/lc_layertreeoptionsdialog.h \
+    ui/lc_layertreeitem.h \
+    ui/lc_layertreemodel.h \
+    ui/lc_layertreemodel_options.h \
+    ui/lc_layertreewidget.h \
+    ui/lc_layertreeview.h\
+    ui/forms/lc_layerdialog_ex.h
 
 SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
@@ -336,12 +343,20 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
-    ui/lc_peninforegistry.cpp \    
+    ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \
     ui/lc_penpaletteoptions.cpp \
     ui/lc_penpaletteoptionsdialog.cpp \
     ui/lc_penpalettewidget.cpp
+    ui/forms/lc_layerdialog_ex.cpp \
+    ui/forms/lc_layertreeoptionsdialog.cpp \
+    ui/lc_layertreeitem.cpp \
+    ui/lc_layertreemodel.cpp \
+    ui/lc_layertreemodel_options.cpp \
+    ui/lc_layertreewidget.cpp \
+    ui/lc_layertreeview.cpp
+
 
 # ################################################################################
 # Command
@@ -883,6 +898,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_imageoptions.ui \
     ui/forms/qg_insertoptions.ui \
     ui/forms/qg_layerdialog.ui \
+    ui/forms/lc_layerdialog_ex.ui \
+    ui/forms/lc_layertreeoptionsdialog.ui \
     ui/forms/qg_libraryinsertoptions.ui \
     ui/forms/qg_lineangleoptions.ui \
     ui/forms/qg_linebisectoroptions.ui \

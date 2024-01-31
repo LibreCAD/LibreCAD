@@ -27,6 +27,7 @@
 #include <QMenuBar>
 #include <QActionGroup>
 #include <QDesktopServices>
+#include <lc_layertreewidget.h>
 
 #include "qc_applicationwindow.h"
 #include "lc_widgetfactory.h"
@@ -315,6 +316,18 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
+
+    QDockWidget* dock_layer_tree = new QDockWidget(main_window);
+    dock_layer_tree->setWindowTitle(QC_ApplicationWindow::tr("Layer Tree"));
+    dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_layer_tree->setObjectName("layer_tree_dockwidget");
+    layer_tree_widget = new LC_LayerTreeWidget(action_handler, dock_layer_tree, "Layer Tree");
+    layer_tree_widget->setFocusPolicy(Qt::NoFocus);
+    connect(layer_tree_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
+    dock_layer_tree->setWidget(layer_tree_widget);
+
+
     QDockWidget* dock_block = new QDockWidget(main_window);
     dock_block->setWindowTitle(QC_ApplicationWindow::tr("Block List"));
     dock_block->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -357,6 +370,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
+    main_window->tabifyDockWidget(dock_layer, dock_layer_tree);
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }

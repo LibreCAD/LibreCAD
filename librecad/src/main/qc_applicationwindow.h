@@ -54,6 +54,7 @@ class QG_CadToolBar;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
 class QG_LayerWidget;
+class LC_LayerTreeWidget;
 class QG_LibraryWidget;
 class QG_MouseWidget;
 class QG_PenToolBar;
@@ -385,6 +386,10 @@ private:
 
     /** Layer list widget */
     QG_LayerWidget* layerWidget {nullptr};
+
+    /** Layer tree widget */
+    LC_LayerTreeWidget* layerTreeWidget {nullptr};
+
     /** Block list widget */
     QG_BlockWidget* blockWidget {nullptr};
     /** Library browser widget */

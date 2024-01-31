@@ -85,7 +85,18 @@ public:
     void freezeAll(bool freeze);
     void lockAll(bool lock);
 
+    void toggleLockMulti(QList<RS_Layer*> layers);
+    void togglePrintMulti(QList<RS_Layer*> layers);
+    void toggleConstructionMulti(QList<RS_Layer*> layers);
+    void toggleFreezeMulti(QList<RS_Layer*> layers);
+    void setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*> layersDisable);
+				void setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock);
+    void setPrintMulti(QList<RS_Layer*> layersNoPrint, QList<RS_Layer*> layersPrint);
+    void setConstructionMulti(QList<RS_Layer*> layersNoConstruction, QList<RS_Layer*> layersConstruction);
+    void fireEdit(RS_Layer* layer);
+
     //! sets the layerWidget pointer in RS_LayerListClass
+    // TODO - This is actually BAD DEPENDENCY, from Model to View - SHOULD be Refactored
     void setLayerWitget(QG_LayerWidget * lw) {
         layerWidget=lw;
     }
@@ -124,10 +135,14 @@ public:
      */
     void sort();
 
+    void slotUpdateLayerList();
+
     friend std::ostream& operator << (std::ostream& os, RS_LayerList& l);
 
 private:
-    //! layers in the graphic
+
+    void fireLayerToggled();
+	//! layers in the graphic
     QList<RS_Layer*> layers;
     //! List of registered LayerListListeners
     QList<RS_LayerListListener*> layerListListeners;
