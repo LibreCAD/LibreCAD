@@ -14,7 +14,7 @@ as published by the Free Software Foundation.
 Please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch represents the latest pre-release code,  
-and now requires Qt 5.2.1 or newer.  
+and now requires Qt 5.15.4 or newer.  
 The 2.2 branch requires Qt 5.2.1 or newer
 The 2.1 branch will be the last to support Qt4.  
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
