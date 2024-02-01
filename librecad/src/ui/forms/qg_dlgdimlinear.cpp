@@ -63,7 +63,7 @@ void QG_DlgDimLinear::languageChange()
 
 void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
     dim = &d;
-    wPen->setPen(dim->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = dim->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -72,6 +72,8 @@ void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(dim->getPen(false),lay, "Pen");
 
     wLabel->setLabel(dim->getLabel(false));
     leAngle->setText(QString("%1").arg(RS_Math::rad2deg(dim->getAngle())));

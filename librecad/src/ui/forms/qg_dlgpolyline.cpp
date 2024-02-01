@@ -64,8 +64,8 @@ void QG_DlgPolyline::languageChange()
 
 void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
     polyline = &e;
-    //pen = spline->getPen();
-    wPen->setPen(polyline->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = polyline->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -74,6 +74,8 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(polyline->getPen(false),lay, "Pen");
 	
     cbClosed->setChecked(polyline->isClosed());
 }

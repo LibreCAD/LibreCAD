@@ -55,16 +55,18 @@ void QG_DlgLine::languageChange()
 
 void QG_DlgLine::setLine(RS_Line& l) {
     line = &l;
-    //pen = line->getPen();
-    wPen->setPen(line->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = line->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = line->getLayer(false);
+    RS_Layer* lay = line->getLayer(true);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(line->getPen(true),lay, "Pen");
     QString s;
     s.setNum(line->getStartpoint().x);
     leStartX->setText(s);

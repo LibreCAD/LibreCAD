@@ -58,8 +58,7 @@ void QG_DlgSpline::languageChange()
 
 void QG_DlgSpline::setSpline(RS_Spline& e) {
     spline = &e;
-    //pen = spline->getPen();
-    wPen->setPen(spline->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = spline->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -68,6 +67,8 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(spline->getPen(false), lay, "Pen");
 	
     QString s;
     s.setNum(spline->getDegree());

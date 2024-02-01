@@ -28,6 +28,7 @@
 
 #include "ui_qg_widgetpen.h"
 #include "rs_pen.h"
+#include "rs_layer.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {
@@ -43,6 +44,8 @@ public:
 
 public slots:
     virtual void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
+    void setPen(RS_Pen pen, RS_Layer* layer, const QString &title);
+    void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
     virtual RS_Pen getPen();
 
 protected slots:

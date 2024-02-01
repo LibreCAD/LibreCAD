@@ -211,7 +211,7 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         alignment = QString("%1").arg(text->getAlignment());
         str = text->getText();
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
-        wPen->setPen(text->getPen(false), true, false, "Pen");
+
         RS_Graphic* graphic = text->getGraphic();
         if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -220,6 +220,8 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         if (lay) {
             cbLayer->setLayer(*lay);
         }
+
+        wPen->setPen(text->getPen(false), lay, "Pen");
     }
 
     setFont(fon);
