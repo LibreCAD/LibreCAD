@@ -62,18 +62,20 @@ private slots:
 signals:
     void colorChanged(const RS_Color& color);
 
+protected:
+    std::unique_ptr<RS_Color> currentColor;
+    int findColor(const RS_Color& color);
 private:
     int addCustomColor(const RS_Color& color);
     // add custom color items from rs_settings
     void readCustomColorSettings();
     void writeCustomColorSettings();
 
-    int findColor(const RS_Color& color);
-    std::unique_ptr<RS_Color> currentColor;
     int colorIndexStart = 0;
     bool showByLayer = true;
     bool showUnchanged = true;
     bool unchanged = true;
+    int addTemporaryCustomColor(const RS_Color &color);
 };
 
 #endif
