@@ -6,6 +6,7 @@
 
 RS2::LineWidth RS2::intToLineWidth(int w) {
 	std::vector<std::pair<int, LineWidth>> const table{
+  {-3,   WidthUnchanged},
 		{-2, WidthDefault}, //for w = -3
 		{-1, WidthByBlock}, //for w = -2
 		{0, WidthByLayer}, //for w = -1
