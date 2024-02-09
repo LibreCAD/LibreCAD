@@ -132,6 +132,7 @@ HEADERS += \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
     lib/engine/lc_looputils.h \
+    lib/engine/lc_parabola.h \
     lib/engine/rs.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
@@ -237,6 +238,7 @@ SOURCES += \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
     lib/engine/lc_looputils.cpp \
+    lib/engine/lc_parabola.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \
