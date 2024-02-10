@@ -197,6 +197,7 @@ void LC_PenPaletteWidget::initPenEditor(){
     cbWidth->init(true, true);
     cbType->init(true, true);
     connect(lePenName, &QLineEdit::textChanged, this, &LC_PenPaletteWidget::onPenEditorChanged);
+    connect(lePenName, &QLineEdit::returnPressed, this, &LC_PenPaletteWidget::createOrUpdatePenItem);
     connect(cbColor, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorColorChanged(int)));
     connect(cbWidth, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorWidthChanged(int)));
     connect(cbType, SIGNAL(currentIndexChanged(int)),this, SLOT(onPenEditorLineTypeChanged(int)));

@@ -12,7 +12,7 @@ Demo for the widget is located on YouTube here:
 The widget is standard dockable widget. UI of it includes several sections:  
 
 1) toolbar with set of actions
-2) pen editor area
+2) pen editor area (pressing Enter in pen's name saves pen)
 3) filter section with regexp expression (that is used for items filtering/or highlighting according to provided regexp)
 4) table view with list of items. 
 
