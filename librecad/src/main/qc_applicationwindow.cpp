@@ -298,6 +298,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     blockWidget = widget_factory.block_widget;
     commandWidget = widget_factory.command_widget;
 
+    penPaletteWidget = widget_factory.pen_palette;
+
     file_menu = widget_factory.file_menu;
     windowsMenu = widget_factory.windows_menu;
 
@@ -553,6 +555,10 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 		blockWidget->setBlockList(nullptr);
 		coordinateWidget->setGraphic(nullptr);
 	}
+
+ if (penPaletteWidget != nullptr){
+     penPaletteWidget->setLayerList(nullptr);
+ }
 
 	openedFiles.removeAll(w->getDocument()->getFilename());
 
@@ -1030,8 +1036,13 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
 
         bool showByBlock = m->getDocument()->rtti()==RS2::EntityBlock;
 
-        layerWidget->setLayerList(m->getDocument()->getLayerList(),
-                                  showByBlock);
+        RS_LayerList *layerList = m->getDocument()->getLayerList();
+
+        layerWidget->setLayerList(layerList,showByBlock);
+
+        if (penPaletteWidget != nullptr){
+            penPaletteWidget->setLayerList(layerList);
+        }
 
         coordinateWidget->setGraphic(m->getGraphic());
 
@@ -1050,6 +1061,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         slotPenChanged(penToolBar->getPen());
 
         pen_wiz->setMdiWindow(m);
+        if (penPaletteWidget != nullptr){
+         penPaletteWidget->setMdiWindow(m);
+        }
 
         if (!forced)
         {
@@ -1541,8 +1555,14 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     RS_DEBUG->print("  adding listeners");
     RS_Graphic* graphic = w->getDocument()->getGraphic();
 
-    if(layerWidget) {
-        layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+    RS_LayerList* layerList = w->getDocument()->getLayerList();
+
+    if (layerWidget != nullptr) {
+        layerWidget->setLayerList(layerList, false);
+    }
+
+    if (penPaletteWidget != nullptr){
+        penPaletteWidget->setLayerList(layerList);
     }
 
     if(blockWidget) {
@@ -1599,7 +1619,12 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     qApp->processEvents(QEventLoop::AllEvents, 1000);
 
     // link the layer widget to the new document:
-    layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+    RS_LayerList *layerList = w->getDocument()->getLayerList();
+    layerWidget->setLayerList(layerList, false);
+
+    if (penPaletteWidget != nullptr){
+        penPaletteWidget->  setLayerList(layerList);
+    }
     // link the block widget to the new document:
     blockWidget->setBlockList(w->getDocument()->getBlockList());
     // link coordinate widget to graphic
@@ -1808,8 +1833,12 @@ void QC_ApplicationWindow::
         qApp->processEvents(QEventLoop::AllEvents, 1000);
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: linking layer list");
+             RS_LayerList *layerList = w->getDocument()->getLayerList();
         // link the layer widget to the new document:
-        layerWidget->setLayerList(w->getDocument()->getLayerList(), false);
+        layerWidget->setLayerList(layerList, false);
+        if (penPaletteWidget != nullptr){
+           penPaletteWidget->setLayerList(layerList);
+        }
         // link the block widget to the new document:
         blockWidget->setBlockList(w->getDocument()->getBlockList());
         // link coordinate widget to graphic

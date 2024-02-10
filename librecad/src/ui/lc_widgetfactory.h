@@ -1,6 +1,8 @@
 #ifndef LC_WIDGETFACTORY_H
 #define LC_WIDGETFACTORY_H
 
+#include "lc_penpalettewidget.h"
+
 #include <QMap>
 #include <QObject>
 #include <QString>
@@ -50,6 +52,7 @@ public:
     QToolBar* options_toolbar;
 
     QG_LayerWidget* layer_widget;
+    LC_PenPaletteWidget* pen_palette;
     QG_BlockWidget* block_widget;
     QG_LibraryWidget* library_widget;
     QG_CommandWidget* command_widget;
