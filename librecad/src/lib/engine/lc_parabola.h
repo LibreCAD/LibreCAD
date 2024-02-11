@@ -25,7 +25,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_Parabola_H
 #define LC_Parabola_H
 
+#include <array>
+#include <vector>
 #include "lc_splinepoints.h"
+
+class RS_Line;
+struct RS_LineData;
 
 /**
  * Holds the data that defines a line.
@@ -45,10 +50,20 @@ struct LC_ParabolaData
     /**
     * Default constructor. Leaves the data object uninitialized.
     */
+    static std::vector<LC_ParabolaData> From4Points(const std::array<RS_Vector, 4>& points);
+    static LC_ParabolaData FromEndPointsTangents(
+            const std::array<RS_Vector, 2>& endPoints,
+            const std::array<RS_Vector, 2>& endTangents);
+    RS_LineData GetAxis() const;
+    RS_LineData GetDirectrix() const;
+    RS_Vector GetFocus() const;
     RS_Vector startPoint;
     RS_Vector endPoint;
     RS_Vector startTangent;
     RS_Vector endTangent;
+
+    //
+    RS_Vector p1;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);

@@ -260,6 +260,8 @@ namespace RS2 {
         ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
 
+        ActionDrawParabola4Points,
+
         ActionDrawHatch,
         ActionDrawHatchNoSelect,
         ActionDrawImage,

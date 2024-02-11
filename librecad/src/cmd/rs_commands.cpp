@@ -359,6 +359,12 @@ RS_Commands::RS_Commands() {
             {{"ae", QObject::tr("ae", "arc ellipse")}},
             RS2::ActionDrawEllipseArcAxis
         },
+        // draw parabola by 4 points - v2.2.1
+        {
+            {{"parabola4p", QObject::tr("parabola4p", "Parabola 4 points")}},
+            {{"pl4", QObject::tr("pl4", "Parabola 4 points")}},
+            RS2::ActionDrawParabola4Points
+        },
         //draw freehand line
         {
             {{"free", QObject::tr("free", "draw freehand line")}},

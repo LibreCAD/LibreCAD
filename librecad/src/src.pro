@@ -125,6 +125,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/lc_actiondrawparabola4points.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -231,6 +232,7 @@ HEADERS += \
     main/lc_application.h
 
 SOURCES += \
+    actions/lc_actiondrawparabola4points.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \

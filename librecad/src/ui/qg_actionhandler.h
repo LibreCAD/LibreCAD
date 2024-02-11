@@ -153,7 +153,8 @@ public slots:
 	void slotDrawEllipseArcAxis();
 	void slotDrawEllipseFociPoint();
 	void slotDrawEllipse4Points();
-	void slotDrawEllipseCenter3Points();
+    void slotDrawParabola4Points();
+    void slotDrawEllipseCenter3Points();
 	void slotDrawEllipseInscribe();
 	void slotDrawSpline();
 	void slotDrawSplinePoints();
