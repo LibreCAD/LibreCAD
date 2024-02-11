@@ -70,7 +70,7 @@ void LC_ActionDrawParabola4Points::trigger() {
     deletePreview();
     if(getStatus()==SetPoint4 && pPoints->evalid){
     for (const auto& d: pPoints->pData) {
-        LC_Parabola* en = new LC_Parabola{container, pPoints->data};
+        LC_Parabola* en = new LC_Parabola{container, d};
         container->addEntity(en);
         if (document) {
             document->startUndoCycle();
@@ -101,9 +101,11 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
             break;
         case SetPoint4:
             pPoints->evalid = false;
-            if(!pPoints->pData.empty()){
+            if(!pPoints->points.empty()){
                 deletePreview();
                 double ds = RS_MAXDOUBLE;
+                auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
+                pPoints->pData = std::vector<LC_ParabolaData>{pData.cbegin(), pData.cend()};
                 for(const auto& pd: pPoints->pData) {
                     RS_Line* l = new RS_Line{preview.get(), pd.GetAxis()};
                     double ds0 = RS_MAXDOUBLE;
@@ -115,9 +117,11 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
                     }
                     preview->addEntity(l);
                 }
-                LC_Parabola* e=new LC_Parabola{preview.get(), pPoints->data};
-                preview->addEntity(e);
-                drawPreview();
+                if (!pPoints->pData.empty()) {
+                    LC_Parabola* e=new LC_Parabola{preview.get(), pPoints->data};
+                    preview->addEntity(e);
+                    drawPreview();
+                }
             }
         default:
             break;

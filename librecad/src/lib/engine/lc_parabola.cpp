@@ -118,8 +118,10 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     };
 }
 
-bool validateConvexPoints(std::array<RS_Vector, 4>& points)
+bool validateConvexPoints(std::vector<RS_Vector>& points)
 {
+    if (points.size() != 4)
+        return false;
     bool valid = std::all_of(points.cbegin(), points.cend(), [](const RS_Vector& point) {
         return point.valid;
     });
@@ -127,7 +129,13 @@ bool validateConvexPoints(std::array<RS_Vector, 4>& points)
         return false;
     // sort points by coordinates
     std::sort(points.begin(), points.end(), [](const RS_Vector& v0, const RS_Vector& v1) {
-        return v0.x + RS_TOLERANCE < v1.x || v0.y + RS_TOLERANCE < v1.y;
+        if (v0.x + RS_TOLERANCE < v1.x)
+            return true;
+        if (v0.x - RS_TOLERANCE > v1.x)
+            return false;
+        if (v0.y + RS_TOLERANCE < v1.y)
+            return true;
+        return (v0.y - RS_TOLERANCE > v1.y);
     });
     // find any coincidence
     for(size_t i=1; i<points.size(); ++i)
@@ -150,13 +158,13 @@ RS_Vector getOppositePoint(const RS_Vector& a, const RS_Vector& b, const RS_Vect
     RS_Line l1{nullptr, {c, c + (c-b).rotate(M_PI/2.)}};
     RS_VectorSolutions sol = RS_Information::getIntersection(&l0, &l1, false);
     if (sol.empty()) {
-        assert(!"Parasolid points cannot be colinear");
+        //assert(!"Parasolid points cannot be colinear");
         return {};
     }
     return sol.at(0);
 }
 
-std::array<RS_Vector, 2> getAxisVectors(std::array<RS_Vector,4> pts)
+std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
 {
     /*
      *
@@ -185,33 +193,49 @@ For the convex case, i.e., when none of the four points A,B,C,D is inside the tr
      */
     // validate also reorder points to convex points
     if (!validateConvexPoints(pts)) {
-        assert(!"Parasolid points must be convex");
+        //assert(!"Parasolid points must be convex");
         return {};
     }
     //pts ABCD
+    for(const auto& pt: pts)
+        LC_ERR<<"pts: "<<pt.x<<", "<<pt.y;
+
     RS_Line ab{nullptr, {pts[0], pts[1]}};
     RS_Line cd{nullptr, {pts[2], pts[3]}};
     RS_Vector pe = cd.getNearestPointOnEntity(pts[0], false);
+    if (!pe.valid)
+        return {};
+    LC_ERR<<"pe: "<<pe.x<<", "<<pe.y;
     //RS_Vector pf = cd.getNearestPointOnEntity(pts[1], false);
     RS_Vector pg = getOppositePoint(pts[0], pts[2], pts[3]);
+    if (!pg.valid)
+        return {};
+    LC_ERR<<"pg: "<<pg.x<<", "<<pg.y;
     RS_Vector ph = getOppositePoint(pts[1], pts[2], pts[3]);
+    if (!ph.valid)
+        return {};
     RS_Vector pi = ph + pts[0] - pg;
+    LC_ERR<<"pi: "<<pi.x<<", "<<pi.y;
     RS_Line ae {nullptr, {pts[0], pe}};
     RS_Vector pj = ae.getNearestPointOnEntity(pts[1], false);
+    LC_ERR<<"pj: "<<pj.x<<", "<<pj.y;
     RS_Line bk {nullptr, {pts[1], (pts[0] - pts[1]).rotate(M_PI/2.)}};
     RS_Vector pk = RS_Information::getIntersection(&bk, &ae, false).at(0);
+    LC_ERR<<"pk: "<<pk.x<<", "<<pk.y;
     RS_Vector pl = pk + pj - pts[0];
+    LC_ERR<<"pl: "<<pl.x<<", "<<pl.y;
     RS_Circle circle{nullptr, {(pi+pl)*0.5, (pl - pi).magnitude()*0.5}};
     RS_Vector po = pl + pts[1] - pj;
+    LC_ERR<<"po: "<<po.x<<", "<<po.y;
     RS_Line km {nullptr, {pk, pk + ae.getTangentDirection({}).rotate(M_PI/2)}};
     RS_VectorSolutions sol = RS_Information::getIntersection(&circle, &km, false);
-    assert(sol.size() == 2);
+    //assert(sol.size() == 2);
     if (sol.size() != 2)
         return {};
     return {sol.at(0) - po, sol.at(1) - po};
 }
 
-LC_ParabolaData fromPointsAxis(const std::array<RS_Vector, 4>& points, const RS_Vector& axis)
+LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Vector& axis)
 {
     // rotate y-axis to axis
     std::array<RS_Vector, 4> rotated;
@@ -272,9 +296,9 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
     return data;
 }
 
-std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::array<RS_Vector, 4>& points)
+std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_Vector>& points)
 {
-    std::array<RS_Vector, 2> axes = getAxisVectors(points);
+    std::vector<RS_Vector> axes = getAxisVectors(points);
 
     std::vector<LC_ParabolaData> ret;
     std::transform(axes.cbegin(), axes.cend(), std::back_inserter(ret), [&points](const RS_Vector& axis) {

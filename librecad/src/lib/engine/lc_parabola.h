@@ -50,7 +50,7 @@ struct LC_ParabolaData
     /**
     * Default constructor. Leaves the data object uninitialized.
     */
-    static std::vector<LC_ParabolaData> From4Points(const std::array<RS_Vector, 4>& points);
+    static std::vector<LC_ParabolaData> From4Points(const std::vector<RS_Vector>& points);
     static LC_ParabolaData FromEndPointsTangents(
             const std::array<RS_Vector, 2>& endPoints,
             const std::array<RS_Vector, 2>& endTangents);
