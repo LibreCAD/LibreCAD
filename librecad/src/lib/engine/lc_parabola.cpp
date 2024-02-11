@@ -53,6 +53,17 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
     return splineData;
 }
 
+RS_Vector getP1(const LC_ParabolaData& data)
+{
+    RS_Line l0{nullptr, {data.startPoint, data.startPoint + data.startTangent}};
+    RS_Line l1{nullptr, {data.endPoint, data.endPoint + data.endTangent}};
+    auto sol = RS_Information::getIntersection(&l0, &l1, false);
+    if (sol.empty())
+    {
+        return {};
+    }
+    return sol.at(0);
+}
 
 // recover the focus and directrix from data
 std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
@@ -61,7 +72,8 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     // After shifting the parabola is: 2 t (1-t) P1 + t^2 P2
     // the tangent at start point: 2 P1
     // the tangent: 2(1-2t) P1 + 2t P2
-    RS_Vector p1 = data.p1 - data.startPoint;
+
+    RS_Vector p1 = getP1(data) - data.startPoint;
     RS_Vector p2 = data.endPoint - data.startPoint;
     // The parabola
     auto f0 = [ct=p1, st=p2](double t) {
@@ -219,7 +231,7 @@ For the convex case, i.e., when none of the four points A,B,C,D is inside the tr
     RS_Line ae {nullptr, {pts[0], pe}};
     RS_Vector pj = ae.getNearestPointOnEntity(pts[1], false);
     LC_ERR<<"pj: "<<pj.x<<", "<<pj.y;
-    RS_Line bk {nullptr, {pts[1], (pts[0] - pts[1]).rotate(M_PI/2.)}};
+    RS_Line bk {nullptr, {pts[1], pts[1] + (pts[0] - pts[1]).rotate(M_PI/2.)}};
     RS_Vector pk = RS_Information::getIntersection(&bk, &ae, false).at(0);
     LC_ERR<<"pk: "<<pk.x<<", "<<pk.y;
     RS_Vector pl = pk + pj - pts[0];
@@ -311,7 +323,8 @@ RS_LineData LC_ParabolaData::GetAxis() const
 {
     const auto [focus, directrix] = getFocusDirectrix(*this);
     RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
-    return {p0, focus};
+    LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
+    return {p0*4.0 - focus*3., focus*4. - p0*3.};
 }
 
 

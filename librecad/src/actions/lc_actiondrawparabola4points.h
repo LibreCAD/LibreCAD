@@ -40,7 +40,8 @@ public:
         SetPoint1,   //  Setting the First Point.  */
         SetPoint2,   //  Setting the Second Point.  */
         SetPoint3,   //  Setting the Third Point.  */
-        SetPoint4   //  Setting the Last Point.  */
+        SetPoint4,   //  Setting the Last Point.  */
+        SetAxis   //  select the axis  */
     };
 
 public:
