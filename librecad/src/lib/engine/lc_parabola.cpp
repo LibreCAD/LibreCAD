@@ -296,14 +296,19 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     {
         LC_ERR<<"xi = "<<xis[i]<<": "<<yis[i] - (a*xis[i] + b);
     }
+    for (size_t i=0; i< 4; i++)
+    {
+        LC_ERR<<"rxi = "<<rotated[i].x<<": "<<rotated[i].y - rotated[i].x * (b + rotated[i].x * a);
+    }
     RS_Vector da{axis.angle() - M_PI/2};
     auto f1 = [&a, &b, &da](double x) {
         return RS_Vector{1., 2.*a*x +b}.rotate(da);
     };
+    std::array<RS_Vector, 2> tangents = {{f1(rotated.front().x), f1(rotated.back().x)}};
 
     return LC_ParabolaData::FromEndPointsTangents(
         {rotated.front().rotate(da), rotated.back().rotate(da)},
-        {f1(rotated.front().x), f1(rotated.back().x)}
+        tangents
     );
 }
 
