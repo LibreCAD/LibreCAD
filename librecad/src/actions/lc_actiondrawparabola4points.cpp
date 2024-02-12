@@ -222,6 +222,9 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
         double ds = RS_MAXDOUBLE;
         for(const auto& pd: pPoints->pData) {
             RS_Line l{nullptr, pd.GetAxis()};
+            LC_ERR<<"Axis: "<<l.getStartpoint().x<<":"<<l.getStartpoint().y<<" | "
+                 <<l.getEndpoint().x<<":"<<l.getEndpoint().y;
+
             double ds0 = RS_MAXDOUBLE;
             l.getNearestPointOnEntity(mouse, false, &ds0);
             if (ds0 < ds) {

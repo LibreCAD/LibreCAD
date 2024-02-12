@@ -45,7 +45,8 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
     RS_Line tangent1{nullptr, {data.endPoint, data.endPoint + data.endTangent}};
     RS_VectorSolutions intersection = RS_Information::getIntersectionLineLine(&tangent0, &tangent1);
     if (intersection.empty()) {
-        assert(!"tangent direction cannot be parallel");
+        //assert(!"tangent direction cannot be parallel");
+        return {};
     }
     RS_Vector pointP1 = (data.startPoint + data.endPoint) * 0.25 + intersection.at(0) * 0.5;
     splineData.splinePoints = {{data.startPoint, pointP1, data.endPoint}};
@@ -327,13 +328,13 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
 
 RS_LineData LC_ParabolaData::GetAxis() const
 {
-    {
+/*    {
          const auto [focus, directrix] = getFocusDirectrix(FromEndPointsTangents(
                                                                {{{0., 1.}, {2.,1}}},
                                                                {{{1., -2.}, {1., 2.}}}));
          RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
          LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
-    }
+    }*/
     const auto [focus, directrix] = getFocusDirectrix(*this);
     RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
     LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
