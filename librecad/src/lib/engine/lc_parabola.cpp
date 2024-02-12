@@ -256,18 +256,17 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
 {
     // rotate y-axis to axis
     std::array<RS_Vector, 4> rotated;
-    std::transform(points.cbegin(), points.cend(), rotated.begin(), [da=RS_Vector{axis.angle() - M_PI/2}](const RS_Vector& p0){
+    std::transform(points.cbegin(), points.cend(), rotated.begin(), [da=RS_Vector{M_PI/2 - axis.angle()}](const RS_Vector& p0){
         RS_Vector p1 = p0;
         return p1.rotate(da);
     });
     std::sort(rotated.begin(), rotated.end(), [](const RS_Vector& p0, const RS_Vector& p1) {
-        if (p0.x + RS_TOLERANCE < p1.x)
-            return true;
-        return (p0.x - RS_TOLERANCE > p1.x);
+        return p0.x + RS_TOLERANCE < p1.x;
     });
     // y = a*x^2 + b*x + c
     // (y(x2) - y(x1))/(x2 - x1) = a*(x2 + x1) + b
     double sxi2=0., sxi=0., sxyi=0., syi=0.;
+    double xis[3],yis[3];
     for (size_t i = 1; i < rotated.size(); ++i) {
         double xi = rotated[i].x + rotated.front().x;
         double yi = (rotated[i].y - rotated.front().y)/(rotated[i].x - rotated.front().x);
@@ -275,6 +274,8 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         sxi += xi;
         sxyi += xi * yi;
         syi += yi;
+        xis[i-1] = xi;
+        yis[i-1] = yi;
     }
     // least-square
     const double d = sxi2*3 - sxi*sxi;
@@ -290,7 +291,12 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         return {};
     }
     const double b = (sxi2*syi - sxi*sxyi)/d;
-    RS_Vector da{M_PI/2. - axis.angle()};
+    LC_ERR <<" axis angle: "<<axis.angle();
+    for (size_t i=0; i< 3; i++)
+    {
+        LC_ERR<<"xi = "<<xis[i]<<": "<<yis[i] - (a*xis[i] + b);
+    }
+    RS_Vector da{axis.angle() - M_PI/2};
     auto f1 = [&a, &b, &da](double x) {
         return RS_Vector{1., 2.*a*x +b}.rotate(da);
     };
