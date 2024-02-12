@@ -73,41 +73,44 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     // the tangent at start point: 2 P1
     // the tangent: 2(1-2t) P1 + 2t P2
 
-    RS_Vector p1 = getP1(data) - data.startPoint;
-    RS_Vector p2 = data.endPoint - data.startPoint;
+    // control points
+    RS_Vector c1 = getP1(data) - data.startPoint;
+    RS_Vector c2 = data.endPoint - data.startPoint;
     // The parabola
-    auto f0 = [ct=p1, st=p2](double t) {
-        return ct*(2. * t * (1. - t)) + st * ( t * t);
+    auto f0 = [&c1, &c2](double t) {
+        return c1*(2. * t * (1. - t)) + c2 * ( t * t);
     };
     // actually half of df0/dt
-    auto f1 = [ct=p1, st=p2](double t) {
-        return ct * (1. - 2. * t) + st * t;
+    auto f1 = [&c1, &c2](double t) {
+        return c1 * (1. - 2. * t) + c2 * t;
     };
 
+    // find parameters t and t0, so tangent lines at these two points are orthogonal
     double t = 0.;
     double t0 = 0.;
-    if (std::abs(2.*p1.squared() - p1.dotP(p2)) < RS_TOLERANCE) {
+    if (std::abs(2.*c1.squared() - c1.dotP(c2)) < RS_TOLERANCE) {
         // won't be able to find an orthogonal at the start point, try the middle point t=0.5
-        // <P2|(1-2t)P1 + t P2>=0
-        if (std::abs(2. * p1.dotP(p2) - p2.squared()) > RS_TOLERANCE) {
-            t = p1.dotP(p2)/(2. * p1.dotP(p2) - p2.squared());
+        // <C2|(1-2t)C1 + t C2>=0
+        if (std::abs(2. * c1.dotP(c2) - c2.squared()) > RS_TOLERANCE) {
+            t = c1.dotP(c2)/(2. * c1.dotP(c2) - c2.squared());
             t0 = 0.5;
         } else {
-            // try the end point, t = 1
-            // < - P1 + P2 | (1-2t)P1 + t P2> = - |P1|^2 + (1-3t)<P1|P2> + t |P2|^2 = 0
-            t = (p1.squared() - p1.dotP(p2)) /(p2.squared() - 3. * p1.dotP(p2));
+            // try the end point, t0 = 1, tangential = C2 - C1
+            // < - C1 + C2 | (1-2t)C1 + t C2> = - |P1|^2 + (1-3t)<P1|P2> + t |P2|^2 = 0
+            t = (c1.squared() - c1.dotP(c2)) /(c2.squared() - 3. * c1.dotP(c2));
             t0 = 1.;
         }
     } else {
         // start point the value of t when the tangent is normal to P1: <P1|(1-2t)P1 + t P2> = 0
-        t = p1.squared()/(2. * p1.squared() - p1.dotP(p2));
+        // t0 = 0., tangential = C1
+        t = c1.squared()/(2. * c1.squared() - c1.dotP(c2));
     }
 
     // The point chosen for the first tangent
-    p1 = f0(t0);
+    RS_Vector p1 = f0(t0);
     RS_Vector v1 = f1(t0).normalized();
     // The point for the orthogonal tangent
-    p2 = f0(t);
+    RS_Vector p2 = f0(t);
     RS_Vector v2 = f1(t).normalized();
 
     // Difference of the two points
@@ -117,9 +120,10 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     // The focus
     RS_Vector pF = p1 + dP * (cs * cs);
     // Reflection of the focus around tangent lines:
-    // p1
-    RS_Vector directrix1 = pF.mirror(p1, p1 + v1);
-    RS_Vector directrix2 = pF.mirror(p2, p2 + v2);
+    RS_Vector directrix1 = pF;
+    directrix1.mirror(p1, p1 + v1);
+    RS_Vector directrix2 = pF;
+    directrix2.mirror(p2, p2 + v2);
 
     return {
         pF + data.startPoint,
@@ -256,7 +260,9 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         return p1.rotate(da);
     });
     std::sort(rotated.begin(), rotated.end(), [](const RS_Vector& p0, const RS_Vector& p1) {
-        return p0.x + RS_TOLERANCE < p1.x;
+        if (p0.x + RS_TOLERANCE < p1.x)
+            return true;
+        return (p0.x - RS_TOLERANCE > p1.x);
     });
     // y = a*x^2 + b*x + c
     // (y(x2) - y(x1))/(x2 - x1) = a*(x2 + x1) + b
@@ -321,6 +327,13 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
 
 RS_LineData LC_ParabolaData::GetAxis() const
 {
+    {
+         const auto [focus, directrix] = getFocusDirectrix(FromEndPointsTangents(
+                                                               {{{0., 1.}, {2.,1}}},
+                                                               {{{1., -2.}, {1., 2.}}}));
+         RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
+         LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
+    }
     const auto [focus, directrix] = getFocusDirectrix(*this);
     RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
     LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
