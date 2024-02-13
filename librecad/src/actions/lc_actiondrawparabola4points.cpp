@@ -99,6 +99,7 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
             break;
         case SetPoint4:
         {
+           // pPoints->points = {{0., 1.}, {0.5, 0.25}, {1.5, 0.25}, {2., 1.}};
             auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
             if (!pData.empty()) {
                 pPoints->pData = std::vector<LC_ParabolaData>{pData.cbegin(), pData.cend()};
