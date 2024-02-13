@@ -45,9 +45,9 @@
 /**
  * Delegate used to paint underline lines for table grid
  */
-class GridDelegate:public QStyledItemDelegate {
+class LC_PenPaletteGridDelegate:public QStyledItemDelegate {
 public:
-    explicit GridDelegate(QTableView *parent = nullptr, LC_PenPaletteOptions* options = nullptr):QStyledItemDelegate(parent){
+    explicit LC_PenPaletteGridDelegate(QTableView *parent = nullptr, LC_PenPaletteOptions* options = nullptr):QStyledItemDelegate(parent){
         this->options = options;
     }
 
@@ -165,7 +165,7 @@ void LC_PenPaletteWidget::initTableView(){
     connect(penPaletteData, &LC_PenPaletteData::modelDataChange, this, &LC_PenPaletteWidget::onPersistentItemsChanged);
 
     tableView->setContextMenuPolicy(Qt::CustomContextMenu);
-    tableView->setItemDelegate(new GridDelegate(tableView, penPaletteModel->getOptions()));
+    tableView->setItemDelegate(new LC_PenPaletteGridDelegate(tableView, penPaletteModel->getOptions()));
 }
 
 /**
