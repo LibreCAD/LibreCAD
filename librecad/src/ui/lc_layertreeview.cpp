@@ -33,7 +33,7 @@ LC_LayerTreeView::LC_LayerTreeView(QWidget *parent):QTreeView(parent){
 
 void LC_LayerTreeView::setup(LC_LayerTreeModel *treeModel){
     setModel(treeModel);
-    auto* delegate = new GridDelegate(this, treeModel);
+    auto* delegate = new LayerTreeGridDelegate(this, treeModel);
     setItemDelegate(delegate);
 }
 

@@ -54,9 +54,9 @@ private:
  * Delegate for painting grid lines within tree view - rect around cells for Name column.
  * @brief The GridDelegate class
  */
-class GridDelegate:public QStyledItemDelegate {
+class LayerTreeGridDelegate:public QStyledItemDelegate {
 public:
-    explicit GridDelegate(LC_LayerTreeView *parent = nullptr, LC_LayerTreeModel* treeModel = nullptr):QStyledItemDelegate(parent){
+    explicit LayerTreeGridDelegate(LC_LayerTreeView *parent = nullptr, LC_LayerTreeModel* treeModel = nullptr):QStyledItemDelegate(parent){
         if (parent){
             this->treeModel = treeModel;
         }
