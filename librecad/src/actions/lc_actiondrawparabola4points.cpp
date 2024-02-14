@@ -188,6 +188,10 @@ void LC_ActionDrawParabola4Points::mouseReleaseEvent(QMouseEvent* e) {
     else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
+        pPoints->points.resize(getStatus()+1);
+        if (!pPoints->points.empty()) {
+            graphicView->moveRelativeZero(pPoints->points.at(getStatus()));
+        }
     }
 }
 
@@ -214,7 +218,10 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
             break;
         auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
         if (!pData.empty()) {
-            pPoints->pData = std::vector<LC_ParabolaData>{pData.cbegin(), pData.cend()};
+            pPoints->pData.clear();
+            std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
+                return (data.startPoint - data.endPoint).magnitude() >= RS_TOLERANCE;
+            });
             setStatus(getStatus()+1);
         }
     }
