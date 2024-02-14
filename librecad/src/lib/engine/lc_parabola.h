@@ -65,6 +65,8 @@ struct LC_ParabolaData
     //
     RS_Vector p1;
     RS_Vector focus;
+    RS_Vector axis;
+    RS_Vector vertex;
     //RS_LineData directrix;
 };
 

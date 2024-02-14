@@ -61,7 +61,7 @@ RS_Vector getP1(const LC_ParabolaData& data)
     auto sol = RS_Information::getIntersection(&l0, &l1, false);
     if (sol.empty())
     {
-        return {};
+        return RS_Vector{false};
     }
     return sol.at(0);
 }
@@ -76,6 +76,8 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
 
     // control points
     RS_Vector controlP1 = getP1(data);
+    if (!controlP1.valid)
+        return {};
     RS_Vector c1 = controlP1 - data.startPoint;
     RS_Vector c2 = data.endPoint - data.startPoint;
     // The parabola
@@ -96,14 +98,15 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     auto vertex = f0(t);
     axis.normalize();
     double dy = (c2 - vertex).dotP(axis);
-    double dx = ((c2 - vertex) - axis * (c2 - vertex).dotP(axis)).magnitude();
+    double dx = (c2 - vertex).dotP({- axis.y, axis.x});
     // dy = dx^2/(4h) , h = dx^2/(4dy)
     const double h = dx*dx/(4.*dy);
     vertex = vertex + data.startPoint;
-    auto focus = vertex + axis*h;
-    auto d0 = axis;
-    d0.rotate(M_PI/2);
-    RS_LineData directrix{vertex - axis*h, vertex - axis*h + d0};
+    axis = axis *h;
+    auto focus = vertex + axis;
+    vertex -= axis;
+    axis.rotate(M_PI/2);
+    RS_LineData directrix{vertex, vertex + axis};
     return {focus, directrix};
 }
 
@@ -270,6 +273,9 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         LC_ERR<<"oxi = ("<<points[i].x<<", "<< points[i].y<<"): ("<<f0(points[i]).x<<", "<<f0(points[i]).y<<"): dr="
              << (points[i] - f0(points[i])).magnitude();
     }
+    // vertex: y=c + bx + ax^2=c-b^2/(4a) + a(x+b/(2a))^2, {-b/(2a), c-b^2/(4a)}
+    // a=1/(4h), h = 0.25/a
+
     auto f1 = [&a, &b, &da](double x) {
         return RS_Vector{1., 2.*a*x +b}.rotate(da);
     };
@@ -279,10 +285,15 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         {rotated.front().rotate(da), rotated.back().rotate(da)},
         tangents
     );
-    auto axisNew = ret.GetAxis();
-    double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
-    double angleOld = axis.angle();
-    double dangle = std::abs(std::remainder(angleOld - angleNew, M_PI));
+    ret.axis = axis.normalized();
+    ret.vertex = RS_Vector{-0.5*b/a, c-0.25*b*b/a}.rotate(da);
+    ret.focus = ret.vertex + ret.axis *(0.25/a);
+    ret.p1 = getP1(ret);
+
+    // auto axisNew = ret.GetAxis();
+    // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
+    // double angleOld = axis.angle();
+    // double dangle = std::abs(std::remainder(angleOld - angleNew, M_PI));
     //assert( dangle < RS_TOLERANCE_ANGLE);
     return ret;
 }
@@ -324,9 +335,7 @@ RS_LineData LC_ParabolaData::GetAxis() const
          RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
          LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
     }*/
-    const auto [focus, directrix] = getFocusDirectrix(*this);
-    RS_Vector project = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
-    return {focus, project};
+    return {focus, vertex*2. - focus};
 }
 
 
