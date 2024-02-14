@@ -76,7 +76,7 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
 
     // control points
     RS_Vector controlP1 = getP1(data);
-    RS_Vector c1 = getP1(data) - data.startPoint;
+    RS_Vector c1 = controlP1 - data.startPoint;
     RS_Vector c2 = data.endPoint - data.startPoint;
     // The parabola
     auto f0 = [&c1, &c2](double t) {
@@ -84,91 +84,27 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     };
     // actually half of df0/dt
     auto f1 = [&c1, &c2](double t) {
-        return c1 * (1. - 2. * t) + c2 * t;
+        return c1 * (2. - 4. * t) + c2 * 2.*t;
     };
 
-    RS_Vector pD = c2 * 0.5;
-    RS_Vector cD = c1 - pD;
-    // <cD|c1 (1-2t) + c2 t>=0, t=<cD|c1>/(2<cD|c1>-<cD|c2>)
-    double t = cD.dotP(c1)/(2.*cD.dotP(c1) - cD.dotP(c2));
-    RS_Vector pV = f0(t);
-
-    // find focus
-    auto axis = cD.normalized();
-    auto project = [&pV, &axis](const RS_Vector& p) {
-        return std::abs((p - pV).dotP(axis));
-    };
-    auto createCircle = [&project](const RS_Vector& p) -> std::unique_ptr<RS_Circle> {
-        return std::make_unique<RS_Circle>(nullptr, RS_CircleData{p, project(p)});
-    };
-    auto cp0 = createCircle(RS_Vector{0.,0.});
-    auto cp1 = createCircle(c2);
-
-    LC_Quadratic q0{cp0.get(), cp1.get(), false};
-    RS_Line axisLine{nullptr, {pV, pV + cD}};
-    auto solF = LC_Quadratic::getIntersection(q0, axisLine.getQuadratic());
-    for (const auto& f0: solF) {
-        double da = f0.magnitude() - (c2 - f0).magnitude();
-        double db = f0.dotP(axis) - (f0 - c2).dotP(axis);
-        if (std::abs(da - db)< RS_TOLERANCE) {
-            auto d0 = pV*2. - f0;
-            auto d1 = d0 + axis.rotate(M_PI/2);
-            const auto& df = data.startPoint;
-            return {f0 + df, {d0 + df, d1 + df}};
-        }
-    }
-
-    return {};
-
-
-
-    // // find parameters t and t0, so tangent lines at these two points are orthogonal
-    // double t = 0.;
-    // double t0 = 0.;
-    // if (std::abs(2.*c1.squared() - c1.dotP(c2)) < RS_TOLERANCE) {
-    //     // won't be able to find an orthogonal at the start point, try the middle point t=0.5
-    //     // <C2|(1-2t)C1 + t C2>=0
-    //     if (std::abs(2. * c1.dotP(c2) - c2.squared()) > RS_TOLERANCE) {
-    //         t = c1.dotP(c2)/(2. * c1.dotP(c2) - c2.squared());
-    //         t0 = 0.5;
-    //     } else {
-    //         // try the end point, t0 = 1, tangential = C2 - C1
-    //         // < - C1 + C2 | (1-2t)C1 + t C2> = - |P1|^2 + (1-3t)<P1|P2> + t |P2|^2 = 0
-    //         t = (c1.squared() - c1.dotP(c2)) /(c2.squared() - 3. * c1.dotP(c2));
-    //         t0 = 1.;
-    //     }
-    // } else {
-    //     // start point the value of t when the tangent is normal to P1: <P1|(1-2t)P1 + t P2> = 0
-    //     // t0 = 0., tangential = C1
-    //     t = c1.squared()/(2. * c1.squared() - c1.dotP(c2));
-    // }
-
-    // // The point chosen for the first tangent
-    // RS_Vector p1 = f0(t0);
-    // RS_Vector v1 = f1(t0).normalized();
-    // // The point for the orthogonal tangent
-    // RS_Vector p2 = f0(t);
-    // RS_Vector v2 = f1(t).normalized();
-
-    // // Difference of the two points
-    // RS_Vector dP = p2 - p1;
-    // double cs = dP.normalized().dotP(v1);
-
-    // // The focus
-    // RS_Vector pF = p1 + dP * (cs * cs);
-    // // Reflection of the focus around tangent lines:
-    // RS_Vector directrix1 = pF;
-    // directrix1.mirror(p1, p1 + v1);
-    // RS_Vector directrix2 = pF;
-    // directrix2.mirror(p2, p2 + v2);
-
-    // return {
-    //     pF + data.startPoint,
-    //     {
-    //         directrix1 + data.startPoint,
-    //         directrix2 + data.startPoint
-    //     }
-    // };
+    auto axis = c2 * 0.5 - c1;
+    // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
+    // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
+    // =-|c2 - 2c1|^2t
+    double t = -0.5*axis.dotP(c1)/axis.squared();
+    LC_ERR<<"vertex = "<<f0(t).x<<f0(t).y<<" : "<<f1(t).dotP(axis);
+    auto vertex = f0(t);
+    axis.normalize();
+    double dy = (c2 - vertex).dotP(axis);
+    double dx = ((c2 - vertex) - axis * (c2 - vertex).dotP(axis)).magnitude();
+    // dy = dx^2/(4h) , h = dx^2/(4dy)
+    const double h = dx*dx/(4.*dy);
+    vertex = vertex + data.startPoint;
+    auto focus = vertex + axis*h;
+    auto d0 = axis;
+    d0.rotate(M_PI/2);
+    RS_LineData directrix{vertex - axis*h, vertex - axis*h + d0};
+    return {focus, directrix};
 }
 
 bool validateConvexPoints(std::vector<RS_Vector>& points)
@@ -219,75 +155,54 @@ std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
 {
     /*
      *
-For the convex case, i.e., when none of the four points A,B,C,D is inside the triangle formed by the other three, we can construct (by Euclidean methods) lines parallel to the axes of symmetry of the two parabolas as follows:
--Let e and f denote the feet of the perpendiculars to CD from A and B respectively.
+- Let O denote the intersection of the lines AB and CD.
 
--Let g denote the intersection of the line through D perpendicular to CD, and the line through A perpendicular to AC.
+- Locate the point E on the line AB such that the segment OE is equal in length to OB and has the same sense as AO.  (If O is between A and B then E is at B.)
 
--Let h denote the intersection of the line Dg and the line through B perpendicular to BC.
+- Locate the point F on the line CD such that the segment OF is equal in length to OC and has the same sense as DO.  (If O is between C and D then F is at C.)
 
--Let i denote the intersection of the line Ae and the line through h parallel to Ag.
+- Let G denote the circle on the diameter AE.
 
--Let j denote the intersection of the line Ae and the line through B parallel to Ae.
+- Let H denote the circle on the diameter DF.
 
--Let k denote the intersection of the line Ae and the line through B parallel to AB.
+- Let I and J denote the intersections of the line through O perpendicular to AB and the circle G.
 
--Locate the point L on Ae such that the segment kL has the same length and direction as the segment Aj.
+- Let K and L denote the intersections of the line through O perpendicular to CD and the circle H.
 
--Draw the circle Q whose diameter is the segment iL.
+- Let M and N denote the points on AB that are a distance OI from O.
 
--Let m and n denote the intersections of the line through k perpendicular to Ae with the circle Q.
+- Let P and Q denote the points on CD that are a distance OK from O.
 
--Let o denote the intersection of the line Bf with the line through L perpendicular to Ae.
-
--The lines mo and no are parallel to the axes of symmetry of the two parabolas through A, B, C, and D.
+- The quadrangle MPNQ is a parallelagram whose sides are parallel to the axes of the two parabolas that pass through the points A, B, C, and D.
      */
     // validate also reorder points to convex points
     if (!validateConvexPoints(pts)) {
         //assert(!"Parasolid points must be convex");
         return {};
     }
-    //pts ABCD
+    //pts ABCD forms a convex hull in order
     for(const auto& pt: pts)
         LC_ERR<<"pts: "<<pt.x<<", "<<pt.y;
 
-    RS_Line ab{nullptr, {pts[3], pts[0]}};
-    RS_Line cd{nullptr, {pts[1], pts[2]}};
-    RS_Vector pe = cd.getNearestPointOnEntity(pts[3], false);
-    if (!pe.valid)
+    const auto& a = pts[0];
+    const auto& b = pts[2];
+    const auto& c = pts[1];
+    const auto& d = pts[3];
+    RS_Line ab{nullptr, {a, b}};
+    RS_Line cd{nullptr, {c, d}};
+    auto sol0 = RS_Information::getIntersection(&ab, &cd, true);
+    if (sol0.empty())
         return {};
-    LC_ERR<<"pe: "<<pe.x<<", "<<pe.y;
-    //RS_Vector pf = cd.getNearestPointOnEntity(pts[1], false);
-    RS_Vector pg = getOppositePoint(pts[3], pts[1], pts[2]);
-    if (!pg.valid)
-        return {};
-    LC_ERR<<"pg: "<<pg.x<<", "<<pg.y;
-    RS_Vector ph = getOppositePoint(pts[0], pts[1], pts[2]);
-    if (!ph.valid)
-        return {};
-    RS_Vector pi = ph + pts[3] - pg;
-    LC_ERR<<"pi: "<<pi.x<<", "<<pi.y;
-    RS_Line ae {nullptr, {pts[3], pe}};
-    RS_Vector pj = ae.getNearestPointOnEntity(pts[0], false);
-    LC_ERR<<"pj: "<<pj.x<<", "<<pj.y;
-    RS_Line bk {nullptr, {pts[0], pts[0] + (pts[0] - pts[3]).rotate(M_PI/2.)}};
-
-    auto sol1 = RS_Information::getIntersection(&bk, &ae, false);
-    if (sol1.empty())
-        return {};
-    RS_Vector pk = sol1.at(0);
-    LC_ERR<<"pk: "<<pk.x<<", "<<pk.y;
-    RS_Vector pl = pk + pj - pts[3];
-    LC_ERR<<"pl: "<<pl.x<<", "<<pl.y;
-    RS_Circle circle{nullptr, {(pi+pl)*0.5, (pl - pi).magnitude()*0.5}};
-    RS_Vector po = pl + pts[0] - pj;
+    auto po = sol0.at(0);
     LC_ERR<<"po: "<<po.x<<", "<<po.y;
-    RS_Line km {nullptr, {pk, pk + ae.getTangentDirection({}).rotate(M_PI/2)}};
-    RS_VectorSolutions sol = RS_Information::getIntersection(&circle, &km, false);
-    //assert(sol.size() == 2);
-    if (sol.size() != 2)
-        return {};
-    return {sol.at(0) - po, sol.at(1) - po};
+    auto findCircleIntersection=[&po, &pts](size_t index)->std::pair<RS_Vector, RS_Vector> {
+        double ds = std::sqrt((pts[index] - po).magnitude()*(pts[index+2] - po).magnitude());
+        RS_Vector dv = (pts[index+2] - pts[index]).normalized();
+        return {po - dv * ds, po + dv *ds};
+    };
+    const auto [pm, pn] = findCircleIntersection(0);
+    const auto [pq, pp] = findCircleIntersection(1);
+    return { (pm - pq).normalized(), (pn - pq).normalized()};
 }
 
 LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Vector& axis)
@@ -360,10 +275,16 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     };
     std::array<RS_Vector, 2> tangents = {{f1(rotated.front().x), f1(rotated.back().x)}};
 
-    return LC_ParabolaData::FromEndPointsTangents(
+    auto ret = LC_ParabolaData::FromEndPointsTangents(
         {rotated.front().rotate(da), rotated.back().rotate(da)},
         tangents
     );
+    auto axisNew = ret.GetAxis();
+    double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
+    double angleOld = axis.angle();
+    double dangle = std::abs(std::remainder(angleOld - angleNew, M_PI));
+    //assert( dangle < RS_TOLERANCE_ANGLE);
+    return ret;
 }
 
 }
@@ -377,6 +298,9 @@ LC_ParabolaData LC_ParabolaData::FromEndPointsTangents(
     data.endPoint = endPoints.back();
     data.startTangent = endTangents.front();
     data.endTangent = endTangents.back();
+    data.p1 = getP1(data);
+    auto axis = data.p1 - (endPoints.front() + endPoints.back())*0.5;
+    // 2(t-1)(p0-p1)+2t(p2-p1)= 2p1 +2t(p0+p2) - 2p0
     return data;
 }
 
@@ -401,9 +325,8 @@ RS_LineData LC_ParabolaData::GetAxis() const
          LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
     }*/
     const auto [focus, directrix] = getFocusDirectrix(*this);
-    RS_Vector p0 = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
-    LC_ERR<<"Axis: angle = "<<(p0 - focus).angle()*180./M_PI;
-    return {p0*4.0 - focus*3., focus*4. - p0*3.};
+    RS_Vector project = RS_Line{nullptr, directrix}.getNearestPointOnEntity(focus, false);
+    return {focus, project};
 }
 
 

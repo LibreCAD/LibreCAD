@@ -64,6 +64,8 @@ struct LC_ParabolaData
 
     //
     RS_Vector p1;
+    RS_Vector focus;
+    //RS_LineData directrix;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);

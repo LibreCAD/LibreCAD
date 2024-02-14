@@ -198,7 +198,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
     }
     RS_Vector mouse = e->getCoordinate();
     pPoints->points.resize(getStatus()+1);
-	pPoints->points.set(getStatus(),mouse);
+    pPoints->points.set(getStatus(),mouse);
 
     switch (getStatus()) {
     case SetPoint1:
@@ -209,6 +209,9 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
         break;
     case SetPoint4:
     {
+        // reject the same point
+        if ((pPoints->points.at(SetPoint4) - pPoints->points.at(SetPoint3)).magnitude() < RS_TOLERANCE)
+            break;
         auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
         if (!pData.empty()) {
             pPoints->pData = std::vector<LC_ParabolaData>{pData.cbegin(), pData.cend()};
@@ -221,6 +224,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
     {
         deletePreview();
         double ds = RS_MAXDOUBLE;
+        int i=0;
         for(const auto& pd: pPoints->pData) {
             RS_Line l{nullptr, pd.GetAxis()};
             // LC_ERR<<"Axis: "<<l.getStartpoint().x<<":"<<l.getStartpoint().y<<" | "
@@ -228,6 +232,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
 
             double ds0 = RS_MAXDOUBLE;
             l.getNearestPointOnEntity(mouse, false, &ds0);
+            LC_ERR<<i++<<": ds0="<<ds0;
             if (ds0 < ds) {
                 pPoints->data = pd;
                 ds = ds0;
