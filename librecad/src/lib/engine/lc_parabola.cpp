@@ -49,6 +49,7 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
         return {};
     }
     RS_Vector pointP1 = (data.startPoint + data.endPoint) * 0.25 + intersection.at(0) * 0.5;
+    splineData.controlPoints = {data.startPoint, intersection.at(0), data.endPoint};
     splineData.splinePoints = {{data.startPoint, pointP1, data.endPoint}};
     splineData.closed = false;
     return splineData;
@@ -268,11 +269,18 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         double y = c + x*(b + a*x);
         return RS_Vector{x, y}.rotate(da);
     };
+
+    // fitting errors
+    double ds2=0.;
     for (size_t i=0; i< 4; i++)
     {
+        double ds= (points[i] - f0(points[i])).squared();
+        ds2 += ds;
         LC_ERR<<"oxi = ("<<points[i].x<<", "<< points[i].y<<"): ("<<f0(points[i]).x<<", "<<f0(points[i]).y<<"): dr="
-             << (points[i] - f0(points[i])).magnitude();
+             << ds<<": "<<ds2;
     }
+    if (ds2 >= RS_TOLERANCE2)
+        return {};
     // vertex: y=c + bx + ax^2=c-b^2/(4a) + a(x+b/(2a))^2, {-b/(2a), c-b^2/(4a)}
     // a=1/(4h), h = 0.25/a
 
@@ -289,12 +297,36 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     ret.vertex = RS_Vector{-0.5*b/a, c-0.25*b*b/a}.rotate(da);
     ret.focus = ret.vertex + ret.axis *(0.25/a);
     ret.p1 = getP1(ret);
+    ret.curve.clear();
+    double x0=rotated.front().x;
+    int counts=20;
+    double dx = (rotated.front().x - rotated.back().x)/counts;
+    for (int i=0; i<=counts; i++)
+    {
+        double x = x0 + i*dx;
+        ret.curve.push_back(RS_Vector{x, c+x*(b+ a*x)}.rotate(da));
+    }
+    dx = 1./counts;
+    x0=0.;
+    {
+        RS_Vector p0 = ret.startPoint;
+        RS_Vector p1 = ret.p1;
+        RS_Vector p2 = ret.endPoint;
+    for (int i=0; i<=counts; i++)
+    {
+        double x = x0 + i*dx;
+        auto px = p0*((1.-x)*(1.-x)) + p1*(2.*x*(1.-x)) + p2*(x*x);
+
+        ret.curve.push_back(px);
+    }
+    }
 
     // auto axisNew = ret.GetAxis();
     // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
     // double angleOld = axis.angle();
     // double dangle = std::abs(std::remainder(angleOld - angleNew, M_PI));
     //assert( dangle < RS_TOLERANCE_ANGLE);
+    ret.valid = true;
     return ret;
 }
 
@@ -323,6 +355,7 @@ std::vector<LC_ParabolaData> LC_ParabolaData::From4Points(const std::vector<RS_V
     std::transform(axes.cbegin(), axes.cend(), std::back_inserter(ret), [&points](const RS_Vector& axis) {
         return fromPointsAxis(points, axis);
     });
+    ret.erase(std::remove_if(ret.begin(), ret.end(), [](const LC_ParabolaData& d){return !d.valid;}), ret.end());
     return ret;
 }
 

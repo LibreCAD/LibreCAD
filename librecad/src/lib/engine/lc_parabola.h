@@ -55,18 +55,24 @@ struct LC_ParabolaData
             const std::array<RS_Vector, 2>& endPoints,
             const std::array<RS_Vector, 2>& endTangents);
     RS_LineData GetAxis() const;
+    const std::vector<RS_Vector>& GetCurve() const
+    {
+        return curve;
+    }
     RS_LineData GetDirectrix() const;
     RS_Vector GetFocus() const;
     RS_Vector startPoint;
     RS_Vector endPoint;
     RS_Vector startTangent;
     RS_Vector endTangent;
+    bool valid = false;
 
     //
     RS_Vector p1;
     RS_Vector focus;
     RS_Vector axis;
     RS_Vector vertex;
+    std::vector<RS_Vector> curve;
     //RS_LineData directrix;
 };
 
