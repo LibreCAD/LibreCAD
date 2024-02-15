@@ -38,18 +38,70 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_linetypepattern.h"
 
 namespace {
+
+// RS_Vector GetThreePointsControl(const RS_Vector& x1, const RS_Vector& x2, const RS_Vector& x3)
+// {
+//     double dl1 = (x2 - x1).magnitude();
+//     double dl2 = (x3 - x2).magnitude();
+//     double dt = dl1/(dl1 + dl2);
+
+//     if (dt < RS_TOLERANCE || dt > 1.0 - RS_TOLERANCE)
+//         return {};
+
+//     RS_Vector vRes = (x2 - x1*(1.0 - dt)*(1.0 - dt) - x3*dt*dt)/dt/(1 - dt)/2.0;
+//     return vRes;
+// }
+
 LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
 {
     LC_SplinePointsData splineData{};
-    RS_Line tangent0{nullptr, {data.startPoint, data.startPoint + data.startTangent}};
-    RS_Line tangent1{nullptr, {data.endPoint, data.endPoint + data.endTangent}};
-    RS_VectorSolutions intersection = RS_Information::getIntersectionLineLine(&tangent0, &tangent1);
-    if (intersection.empty()) {
-        //assert(!"tangent direction cannot be parallel");
-        return {};
-    }
-    RS_Vector pointP1 = (data.startPoint + data.endPoint) * 0.25 + intersection.at(0) * 0.5;
-    splineData.controlPoints = {data.startPoint, intersection.at(0), data.endPoint};
+    // RS_Line tangent0{nullptr, {data.startPoint, data.startPoint + data.startTangent}};
+    // RS_Line tangent1{nullptr, {data.endPoint, data.endPoint + data.endTangent}};
+    // auto f0 = [&data](double t){
+    //     double t1=1.-t;
+    //     RS_Vector px0 = data.startPoint*(t1*t1) + data.p1*(2.*t*t1)+data.endPoint*(t*t);
+    //     RS_Vector px1 = GetThreePointsControl(data.startPoint, px0, data.endPoint);
+    //     return (data.p1 - px1).squared();
+    // };
+
+    // // minimizing
+    // double t = 0.5;
+    // double dt = 0.45;
+    // double y1=f0(t);
+    // while(y1 > RS_TOLERANCE2) {
+    //     double y0 = f0(t-dt);
+    // LC_ERR<<" t="<<t<<": minizing error "<<y1;
+    //     double y2 = f0(t+dt);
+    //     if (y0 > y1 && y1 < y2) {
+    //         // quadratic
+    //         t += ((y0-y1)/(y0+y2-y1*2.) - 0.5)*dt;
+    //         dt *= 0.25;
+    //     } else {
+    //         if (y0 > y1) {
+    //             while(y2<y1) {
+    //                 y1=y2;
+    //                 t += dt;
+    //                 y2=f0(t);
+    //             }
+    //         } else if (y2 > y1) {
+    //             while(y0<y1) {
+    //                 y1=y0;
+    //                 t -= dt;
+    //                 y0=f0(t);
+    //             }
+    //         } else
+    //             break;
+    //         dt *= 0.5;
+
+    //     }
+    //     y1=f0(t);
+    // }
+    // LC_ERR<<" t="<<t<<": controlP1: error "<<f0(t);
+
+    splineData.controlPoints = {{data.startPoint, data.p1, data.endPoint}};
+    double t=0.5;
+    double t1=1.-t;
+    RS_Vector pointP1 = data.startPoint*(t1*t1) + data.p1*(2.*t*t1)+data.endPoint*(t*t);
     splineData.splinePoints = {{data.startPoint, pointP1, data.endPoint}};
     splineData.closed = false;
     return splineData;
@@ -65,50 +117,6 @@ RS_Vector getP1(const LC_ParabolaData& data)
         return RS_Vector{false};
     }
     return sol.at(0);
-}
-
-// recover the focus and directrix from data
-std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
-{
-    // shift data.startPoint to origin
-    // After shifting the parabola is: 2 t (1-t) P1 + t^2 P2
-    // the tangent at start point: 2 P1
-    // the tangent: 2(1-2t) P1 + 2t P2
-
-    // control points
-    RS_Vector controlP1 = getP1(data);
-    if (!controlP1.valid)
-        return {};
-    RS_Vector c1 = controlP1 - data.startPoint;
-    RS_Vector c2 = data.endPoint - data.startPoint;
-    // The parabola
-    auto f0 = [&c1, &c2](double t) {
-        return c1*(2. * t * (1. - t)) + c2 * ( t * t);
-    };
-    // actually half of df0/dt
-    auto f1 = [&c1, &c2](double t) {
-        return c1 * (2. - 4. * t) + c2 * 2.*t;
-    };
-
-    auto axis = c2 * 0.5 - c1;
-    // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
-    // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
-    // =-|c2 - 2c1|^2t
-    double t = -0.5*axis.dotP(c1)/axis.squared();
-    LC_ERR<<"vertex = "<<f0(t).x<<f0(t).y<<" : "<<f1(t).dotP(axis);
-    auto vertex = f0(t);
-    axis.normalize();
-    double dy = (c2 - vertex).dotP(axis);
-    double dx = (c2 - vertex).dotP({- axis.y, axis.x});
-    // dy = dx^2/(4h) , h = dx^2/(4dy)
-    const double h = dx*dx/(4.*dy);
-    vertex = vertex + data.startPoint;
-    axis = axis *h;
-    auto focus = vertex + axis;
-    vertex -= axis;
-    axis.rotate(M_PI/2);
-    RS_LineData directrix{vertex, vertex + axis};
-    return {focus, directrix};
 }
 
 bool validateConvexPoints(std::vector<RS_Vector>& points)
@@ -297,29 +305,29 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     ret.vertex = RS_Vector{-0.5*b/a, c-0.25*b*b/a}.rotate(da);
     ret.focus = ret.vertex + ret.axis *(0.25/a);
     ret.p1 = getP1(ret);
-    ret.curve.clear();
-    double x0=rotated.front().x;
-    int counts=20;
-    double dx = (rotated.front().x - rotated.back().x)/counts;
-    for (int i=0; i<=counts; i++)
-    {
-        double x = x0 + i*dx;
-        ret.curve.push_back(RS_Vector{x, c+x*(b+ a*x)}.rotate(da));
-    }
-    dx = 1./counts;
-    x0=0.;
-    {
-        RS_Vector p0 = ret.startPoint;
-        RS_Vector p1 = ret.p1;
-        RS_Vector p2 = ret.endPoint;
-    for (int i=0; i<=counts; i++)
-    {
-        double x = x0 + i*dx;
-        auto px = p0*((1.-x)*(1.-x)) + p1*(2.*x*(1.-x)) + p2*(x*x);
+    // ret.curve.clear();
+    // double x0=rotated.front().x;
+    // int counts=20;
+    // double dx = (rotated.front().x - rotated.back().x)/counts;
+    // for (int i=0; i<=counts; i++)
+    // {
+    //     double x = x0 + i*dx;
+    //     ret.curve.push_back(RS_Vector{x, c+x*(b+ a*x)}.rotate(da));
+    // }
+    // dx = 1./counts;
+    // x0=0.;
+    // {
+    //     RS_Vector p0 = ret.startPoint;
+    //     RS_Vector p1 = ret.p1;
+    //     RS_Vector p2 = ret.endPoint;
+    // for (int i=0; i<=counts; i++)
+    // {
+    //     double x = x0 + i*dx;
+    //     auto px = p0*((1.-x)*(1.-x)) + p1*(2.*x*(1.-x)) + p2*(x*x);
 
-        ret.curve.push_back(px);
-    }
-    }
+    //     ret.curve.push_back(px);
+    // }
+    // }
 
     // auto axisNew = ret.GetAxis();
     // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
