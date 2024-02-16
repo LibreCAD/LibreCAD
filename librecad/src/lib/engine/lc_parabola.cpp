@@ -51,6 +51,7 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
     RS_Vector pointP1 = (data.startPoint + data.endPoint) * 0.25 + intersection.at(0) * 0.5;
     splineData.controlPoints = {data.startPoint, intersection.at(0), data.endPoint};
     splineData.splinePoints = {{data.startPoint, pointP1, data.endPoint}};
+    splineData.useControlPoints = true;
     splineData.closed = false;
     return splineData;
 }
@@ -247,7 +248,7 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     const double a = (sxyi*xis.size() - syi*sxi)/d;
     if (std::abs(a) < RS_TOLERANCE2)
     {
-        assert(!"quadratic factor is 0 for parabola");
+   //     assert(!"quadratic factor is 0 for parabola");
         return {};
     }
     const double b = (sxi2*syi - sxi*sxyi)/d;
@@ -298,28 +299,6 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     ret.focus = ret.vertex + ret.axis *(0.25/a);
     ret.p1 = getP1(ret);
     ret.curve.clear();
-    double x0=rotated.front().x;
-    int counts=20;
-    double dx = (rotated.front().x - rotated.back().x)/counts;
-    for (int i=0; i<=counts; i++)
-    {
-        double x = x0 + i*dx;
-        ret.curve.push_back(RS_Vector{x, c+x*(b+ a*x)}.rotate(da));
-    }
-    dx = 1./counts;
-    x0=0.;
-    {
-        RS_Vector p0 = ret.startPoint;
-        RS_Vector p1 = ret.p1;
-        RS_Vector p2 = ret.endPoint;
-    for (int i=0; i<=counts; i++)
-    {
-        double x = x0 + i*dx;
-        auto px = p0*((1.-x)*(1.-x)) + p1*(2.*x*(1.-x)) + p2*(x*x);
-
-        ret.curve.push_back(px);
-    }
-    }
 
     // auto axisNew = ret.GetAxis();
     // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();

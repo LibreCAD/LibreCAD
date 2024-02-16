@@ -55,7 +55,9 @@ struct LC_SplinePointsData
 
     bool closed = false;
     bool cut = false;
-	/** points on the spline. */
+    // directly use control points from data, instead of generating control points from splinePoints
+    bool useControlPoints = false;
+    /** points on the spline. */
 	std::vector<RS_Vector> splinePoints;
 	std::vector<RS_Vector> controlPoints;
 };
