@@ -1377,7 +1377,7 @@ void LC_SplinePoints::UpdateControlPoints()
 		return;
 	}
 
-    if(!data.closed && n < 4 && !data.useControl)
+	if(!data.closed && n < 4)
 	{
 		if(n > 0) data.controlPoints.push_back(data.splinePoints.at(0));
 		if(n > 2)

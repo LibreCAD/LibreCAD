@@ -114,10 +114,10 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
                     //preview->addEntity(c0);
                     //auto* c1 = new RS_Circle{preview.get(), {pd.p1, (pd.focus - pd.vertex).magnitude()/2.}};
                     //preview->addEntity(c1);
-                    // for (const auto& p0: pPoints->points) {
-                    //     auto* c0 = new RS_Circle{preview.get(), {p0, (pd.focus - pd.vertex).magnitude()/2.}};
-                    //     preview->addEntity(c0);
-                    // }
+                    for (const auto& p0: pPoints->points) {
+                        auto* c0 = new RS_Circle{preview.get(), {p0, (pd.focus - pd.vertex).magnitude()/2.}};
+                        preview->addEntity(c0);
+                    }
                     if (ds0 < ds) {
                         pPoints->data = pd;
                         ds = ds0;
