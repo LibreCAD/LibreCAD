@@ -345,7 +345,7 @@ void LC_ParabolaData::CalculatePrimitives()
     // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
     // =-|c2 - 2c1|^2t
     double t = -0.5*axis.dotP(c1)/axis.squared();
-    LC_ERR<<"vertex = "<<f0(t).x<<f0(t).y<<" : "<<f1(t).dotP(axis);
+    LC_ERR<<"vertex = ("<<f0(t).x<<", "<<f0(t).y<<") : "<<f1(t).dotP(axis);
     auto localVertex = f0(t);
     axis.normalize();
     double dy = (c2 - localVertex).dotP(axis);
