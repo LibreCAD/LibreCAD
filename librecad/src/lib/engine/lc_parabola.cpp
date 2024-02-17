@@ -77,9 +77,7 @@ std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
     // the tangent: 2(1-2t) P1 + 2t P2
 
     // control points
-    RS_Vector controlP1 = getP1(data);
-    if (!controlP1.valid)
-        return {};
+    RS_Vector controlP1 = data.p1;
     RS_Vector c1 = controlP1 - data.startPoint;
     RS_Vector c2 = data.endPoint - data.startPoint;
     // The parabola
@@ -212,11 +210,13 @@ std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
 
 LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Vector& axis)
 {
-    // rotate y-axis to axis
+    // rotate y-axis to axis around points.front()
+    const auto& rCenter = points.front();
     std::array<RS_Vector, 4> rotated;
-    std::transform(points.cbegin(), points.cend(), rotated.begin(), [da=RS_Vector{M_PI/2 - axis.angle()}](const RS_Vector& p0){
-        RS_Vector p1 = p0;
-        return p1.rotate(da);
+    std::transform(points.cbegin(), points.cend(), rotated.begin(),
+                   [&rCenter, da=RS_Vector{M_PI/2 - axis.angle()}](const RS_Vector& vp){
+        RS_Vector ret = vp;
+        return ret.rotate(rCenter, da);
     });
     std::sort(rotated.begin(), rotated.end(), [](const RS_Vector& p0, const RS_Vector& p1) {
         return p0.x < p1.x;
@@ -265,10 +265,10 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     }
     c /= 4;
     double da = {axis.angle() - M_PI/2};
-    auto f0 = [&a, &b, &c, &da](const RS_Vector& pt) {
-        double x = RS_Vector{pt}.rotate(-da).x;
+    auto f0 = [&a, &b, &c, &rCenter, &da](const RS_Vector& pt) {
+        double x = RS_Vector{pt}.rotate(rCenter, -da).x;
         double y = c + x*(b + a*x);
-        return RS_Vector{x, y}.rotate(da);
+        return RS_Vector{x, y}.rotate(rCenter, da);
     };
 
     // fitting errors
@@ -291,14 +291,13 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     std::array<RS_Vector, 2> tangents = {{f1(rotated.front().x), f1(rotated.back().x)}};
 
     auto ret = LC_ParabolaData::FromEndPointsTangents(
-        {rotated.front().rotate(da), rotated.back().rotate(da)},
+        {rotated.front().rotate(rCenter, da), rotated.back().rotate(rCenter, da)},
         tangents
     );
     ret.axis = axis.normalized();
-    ret.vertex = RS_Vector{-0.5*b/a, c-0.25*b*b/a}.rotate(da);
+    ret.vertex = RS_Vector{-0.5*b/a, c-0.25*b*b/a}.rotate(rCenter, da);
     ret.focus = ret.vertex + ret.axis *(0.25/a);
     ret.p1 = getP1(ret);
-    ret.curve.clear();
 
     // auto axisNew = ret.GetAxis();
     // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
