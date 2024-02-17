@@ -38,12 +38,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_linetypepattern.h"
 
 namespace {
+
 LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
 {
     LC_SplinePointsData splineData{};
     splineData.controlPoints = {data.controlPoints.cbegin(), data.controlPoints.cend()};
-    RS_Vector pointP1 = (data.controlPoints.front() + data.controlPoints.back()) * 0.25 + data.controlPoints.at(1) * 0.5;
-    splineData.splinePoints = {data.controlPoints.front(), pointP1, data.controlPoints.back()};
+    // spline points are probably not used
+    RS_Vector sp1 = (data.controlPoints.front() + data.controlPoints.back())*0.25 + data.controlPoints.at(1)*0.5;
+    splineData.splinePoints = {data.controlPoints.front(), sp1, data.controlPoints.back()};
     splineData.useControlPoints = true;
     splineData.closed = false;
     return splineData;

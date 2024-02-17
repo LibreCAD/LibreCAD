@@ -1366,7 +1366,8 @@ void LC_SplinePoints::UpdateControlPoints()
 {
 	if(data.cut) return; // no update after trim operation
 
-	data.controlPoints.clear();
+    if (!data.useControlPoints)
+        data.controlPoints.clear();
 
 	size_t n = data.splinePoints.size();
 
