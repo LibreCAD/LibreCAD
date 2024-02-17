@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <cmath>
-
 #include "rs_actiondrawcircle2p.h"
 
 #include <QAction>
@@ -35,10 +33,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_preview.h"
-
-#include "lc_parabola.h"
 
 struct RS_ActionDrawCircle2P::Points {
     /**
@@ -121,7 +116,6 @@ void RS_ActionDrawCircle2P::preparePreview() {
     }
 }
 
-
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
@@ -136,13 +130,6 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             RS_Circle* circle = new RS_Circle(preview.get(), *data);
             deletePreview();
             preview->addEntity(circle);
-            auto* p = new LC_Parabola(preview.get(), LC_ParabolaData{
-                                          pPoints->point1,
-                                          pPoints->point2,
-                                          (pPoints->point2 - pPoints->point1).rotate(M_PI/4.),
-                                          (pPoints->point2 - pPoints->point1).rotate(-M_PI/4.)
-                                      });
-            preview->addEntity(p);
             drawPreview();
         }
         break;
@@ -151,8 +138,6 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
         break;
     }
 }
-
-
 
 void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -167,7 +152,7 @@ void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

@@ -243,7 +243,7 @@ RS_Vector RS_Vector::toInteger() {
 /**
  * Moves this vector by the given offset. Equal to the operator +=.
  */
-RS_Vector RS_Vector::move(const RS_Vector& offset) {
+RS_Vector& RS_Vector::move(const RS_Vector& offset) {
     *this+=offset;
     return *this;
 }
@@ -251,7 +251,7 @@ RS_Vector RS_Vector::move(const RS_Vector& offset) {
 /**
  * Rotates this vector around 0/0 by the given angle.
  */
-RS_Vector RS_Vector::rotate(double ang) {
+RS_Vector& RS_Vector::rotate(double ang) {
 	rotate(RS_Vector{ang});
     return *this;
 }
@@ -261,7 +261,7 @@ RS_Vector RS_Vector::rotate(double ang) {
  * if the vector is a unit, then, it's the same as rotating around
  * 0/0 by the angle of the vector
  */
-RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& angleVector) {
 	double x0 = x * angleVector.x - y * angleVector.y;
 	y = x * angleVector.y + y * angleVector.x;
 	x = x0;
@@ -272,11 +272,11 @@ RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
 /**
  * Rotates this vector around the given center by the given angle.
  */
-RS_Vector RS_Vector::rotate(const RS_Vector& center, double ang) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& center, double ang) {
     *this = center + (*this-center).rotate(ang);
     return *this;
 }
-RS_Vector RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     *this = center + (*this-center).rotate(angleVector);
     return *this;
 }
@@ -284,7 +284,7 @@ RS_Vector RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVecto
 /**
  * Scales this vector by the given factors with 0/0 as center.
  */
-RS_Vector RS_Vector::scale(double factor) {
+RS_Vector& RS_Vector::scale(double factor) {
     x *= factor;
     y *= factor;
     return *this;
@@ -293,20 +293,20 @@ RS_Vector RS_Vector::scale(double factor) {
 /**
  * Scales this vector by the given factors with 0/0 as center.
  */
-RS_Vector RS_Vector::scale(const RS_Vector& factor) {
+RS_Vector& RS_Vector::scale(const RS_Vector& factor) {
     x *= factor.x;
     y *= factor.y;
     return *this;
 }
 
 RS_Vector RS_Vector::scale(const RS_Vector& factor) const{
-	return {x*factor.x, y*factor.y};
+    return {x*factor.x, y*factor.y};
 }
 
 /**
  * Scales this vector by the given factors with the given center.
  */
-RS_Vector RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
+RS_Vector& RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
     *this = center + (*this-center).scale(factor);
     return *this;
 }
@@ -316,7 +316,7 @@ RS_Vector RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
 /**
  * Mirrors this vector at the given axis, defined by two points on axis.
  */
-RS_Vector RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+RS_Vector& RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 
     RS_Vector direction(axisPoint2-axisPoint1);
     double a= direction.squared();

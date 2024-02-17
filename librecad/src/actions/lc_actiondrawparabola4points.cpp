@@ -230,7 +230,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
         if (!pData.empty()) {
             pPoints->pData.clear();
             std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
-                return (data.startPoint - data.endPoint).magnitude() >= RS_TOLERANCE;
+                return data.valid;
             });
             setStatus(getStatus()+1);
         }

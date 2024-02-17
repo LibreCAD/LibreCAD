@@ -631,17 +631,14 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
             auto toRs = [](const std::shared_ptr<DRW_Coord>& coord) -> RS_Vector {
                 return coord ? RS_Vector{coord->x, coord->y} : RS_Vector{};
             };
-            LC_ParabolaData d = {};
-            d.startPoint = toRs(data->controllist.front());
-            d.endPoint = toRs(data->controllist.back());
-            d.startTangent = toRs(data->controllist[1])* 2. - d.startPoint;
-            d.endTangent = toRs(data->controllist[1]) * (-2.) + d.endPoint;
+            LC_ParabolaData d{{toRs(data->controllist.at(0)),
+                            toRs(data->controllist.at(1)),
+                             toRs(data->controllist.at(2))}};
             auto* parabola = new LC_Parabola(currentContainer, d);
             setEntityAttributes(parabola, data);
-            currentContainer->addEntity(parabola);
             parabola->update();
+            currentContainer->addEntity(parabola);
             return;
-
         }
 		LC_SplinePoints* splinePoints;
 		LC_SplinePointsData d(((data->flags&0x1)==0x1), true);

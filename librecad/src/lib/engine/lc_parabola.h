@@ -54,21 +54,41 @@ struct LC_ParabolaData
     static LC_ParabolaData FromEndPointsTangents(
             const std::array<RS_Vector, 2>& endPoints,
             const std::array<RS_Vector, 2>& endTangents);
+    LC_ParabolaData() = default;
+    LC_ParabolaData(std::array<RS_Vector, 3> controlPoints);
     RS_LineData GetAxis() const;
     RS_LineData GetDirectrix() const;
     RS_Vector GetFocus() const;
-    RS_Vector startPoint;
-    RS_Vector endPoint;
-    RS_Vector startTangent;
-    RS_Vector endTangent;
-    bool valid = false;
+    LC_ParabolaData& move(const RS_Vector& displacement);
+    LC_ParabolaData& rotate(const RS_Vector& rotation);
+    LC_ParabolaData& rotate(const RS_Vector& center, const RS_Vector& rotation);
+    LC_ParabolaData& rotate(const RS_Vector& center, double angle);
+    LC_ParabolaData& scale(double factor);
+    LC_ParabolaData& scale(const RS_Vector& factor);
+    LC_ParabolaData scaled(const RS_Vector& factor) const;
+    LC_ParabolaData scaled(const RS_Vector& center, const RS_Vector& factor) const;
+    LC_ParabolaData& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    LC_ParabolaData mirrored(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) const;
 
+    /** \brief return the equation of the entity
+    a quadratic contains coefficients for quadratic:
+    m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
+
+    for linear:
+    m0 x + m1 y + m2 =0
+    **/
+    LC_Quadratic getQuadratic() const;
+
+    // The three control points
+    std::array<RS_Vector, 3> controlPoints;
     //
-    RS_Vector p1;
     RS_Vector focus;
+    // a vector from the vertex to focus
     RS_Vector axis;
     RS_Vector vertex;
-    //RS_LineData directrix;
+    bool valid = false;
+private:
+    void CalculatePrimitives();
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
