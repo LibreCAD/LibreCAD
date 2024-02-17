@@ -51,47 +51,6 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
     return splineData;
 }
 
-// recover the focus and directrix from data
-std::pair<RS_Vector, RS_LineData> getFocusDirectrix(const LC_ParabolaData& data)
-{
-    // shift the first control point to origin
-    // After shifting the parabola is: 2 t (1-t) c1 + t^2 c2
-    // the tangent at start point: 2 c1
-    // the tangent: 2(1-2t) c1 + 2t c2
-
-    // control points
-    RS_Vector c1 = data.controlPoints.at(1) - data.controlPoints.at(0);
-    RS_Vector c2 = data.controlPoints.at(2) - data.controlPoints.at(0);
-    // The parabola
-    auto f0 = [&c1, &c2](double t) {
-        return c1*(2. * t * (1. - t)) + c2 * ( t * t);
-    };
-    // actually half of df0/dt
-    auto f1 = [&c1, &c2](double t) {
-        return c1 * (2. - 4. * t) + c2 * 2.*t;
-    };
-
-    auto axis = c2 * 0.5 - c1;
-    // <c2 * 0.5 - c1 | c1 * (2. - 4. * t) + c2 * 2.*t> = 0
-    // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
-    // =-|c2 - 2c1|^2t
-    double t = -0.5*axis.dotP(c1)/axis.squared();
-    LC_ERR<<"vertex = "<<f0(t).x<<f0(t).y<<" : "<<f1(t).dotP(axis);
-    auto vertex = f0(t);
-    axis.normalize();
-    double dy = (c2 - vertex).dotP(axis);
-    double dx = (c2 - vertex).dotP({- axis.y, axis.x});
-    // dy = dx^2/(4h) , h = dx^2/(4dy)
-    const double h = dx*dx/(4.*dy);
-    vertex = vertex + data.controlPoints.front();
-    axis = axis *h;
-    auto focus = vertex + axis;
-    vertex -= axis;
-    axis.rotate(M_PI/2);
-    RS_LineData directrix{vertex, vertex + axis};
-    return {focus, directrix};
-}
-
 bool validateConvexPoints(std::vector<RS_Vector>& points)
 {
     if (points.size() != 4)
@@ -361,7 +320,8 @@ void LC_ParabolaData::CalculatePrimitives()
 
 RS_LineData LC_ParabolaData::GetAxis() const
 {
-    return {vertex, vertex + axis};
+    const auto vp = (controlPoints.front() + controlPoints.back())*0.5 - vertex;
+    return {vertex, vertex + axis*(0.5*vp.dotP(axis)/axis.squared())};
 }
 
 LC_ParabolaData& LC_ParabolaData::move(const RS_Vector& displacement)
@@ -479,5 +439,8 @@ RS2::EntityType LC_Parabola::rtti() const
     return RS2::EntityParabola;
 }
 
-
+LC_Quadratic LC_Parabola::getQuadratic() const
+{
+    return data.getQuadratic();
+}
 

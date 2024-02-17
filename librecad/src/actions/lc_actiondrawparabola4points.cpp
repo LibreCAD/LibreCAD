@@ -106,18 +106,10 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
                 deletePreview();
                 double ds = RS_MAXDOUBLE;
                 for(const auto& pd: pPoints->pData) {
-                    auto* l = new RS_Line{preview.get(), {pd.focus, pd.vertex}};
+                    auto* l = new RS_Line{preview.get(), pd.GetAxis()};
                     double ds0 = RS_MAXDOUBLE;
                     l->getNearestPointOnEntity(mouse, false, &ds0);
                     preview->addEntity(l);
-                    //auto* c0 = new RS_Circle{preview.get(), {pd.vertex, (pd.focus - pd.vertex).magnitude()/2.}};
-                    //preview->addEntity(c0);
-                    //auto* c1 = new RS_Circle{preview.get(), {pd.p1, (pd.focus - pd.vertex).magnitude()/2.}};
-                    //preview->addEntity(c1);
-                    // for (const auto& p0: pPoints->points) {
-                    //     auto* c0 = new RS_Circle{preview.get(), {p0, (pd.focus - pd.vertex).magnitude()/2.}};
-                    //     preview->addEntity(c0);
-                    // }
                     if (ds0 < ds) {
                         pPoints->data = pd;
                         ds = ds0;
