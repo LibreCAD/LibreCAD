@@ -2126,6 +2126,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeSpline((RS_Spline*)e);
         break;
     case RS2::EntitySplinePoints:
+    case RS2::EntityParabola:
         writeSplinePoints((LC_SplinePoints*)e);
         break;
 //    case RS2::EntityVertex:

@@ -123,6 +123,8 @@ public:
     LC_Parabola(RS_EntityContainer* parent, const LC_ParabolaData& d);
     //RS_Entity* clone() const override;
 
+    RS_Entity* clone() const override;
+
     /**	@return RS2::EntitySpline */
     RS2::EntityType rtti() const override;
 
@@ -151,6 +153,8 @@ public:
     **/
     LC_Quadratic getQuadratic() const override;
 
+    double getDirection1() const override;
+    double getDirection2() const override;
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     //find the tangential points seeing from given point
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
@@ -159,6 +163,7 @@ public:
                              const RS_Vector& trimPoint) override;
     RS_Vector prepareTrim(const RS_Vector& trimCoord,
                           const RS_VectorSolutions& trimSol) override;
+
     void moveStartpoint(const RS_Vector& pos) override;
     void moveEndpoint(const RS_Vector& pos) override;
     /** Sets the startpoint */

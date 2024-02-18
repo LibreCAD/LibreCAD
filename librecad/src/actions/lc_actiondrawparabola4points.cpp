@@ -69,7 +69,7 @@ void LC_ActionDrawParabola4Points::trigger() {
 
     // update undo list:
     deletePreview();
-    if(getStatus()==SetAxis && pPoints->evalid){
+    if(getStatus()==SetAxis && pPoints->evalid && pPoints->data.valid){
         LC_Parabola* en = new LC_Parabola{container, pPoints->data};
         container->addEntity(en);
         if (document) {
