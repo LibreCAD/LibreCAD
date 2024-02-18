@@ -444,3 +444,85 @@ LC_Quadratic LC_Parabola::getQuadratic() const
     return data.getQuadratic();
 }
 
+RS_Vector LC_Parabola::getTangentDirection(const RS_Vector& point)const
+{
+    RS_VectorSolutions sol = getTangentPoint(point);
+    if(sol.empty())
+        return {};
+    RS_Vector tangentPoint = getTangentPoint(point).at(0);
+    RS_Vector p0 = rotateToQuadratic(tangentPoint) - data.vertex;
+    return RS_Vector{1., p0.x/(0.5*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2).normalized();
+}
+
+RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
+{
+    RS_Vector p0 = rotateToQuadratic(point) - data.vertex;
+    // y=x^2/(4h)
+    // (x^2/(4h) - py) = x/(2h)(x - px)
+    // x^2/(4h) - px/(2h) x + py = 0
+    // (x - px)^2 = px^2 - 4h py
+    // x = px \pm \sqrt(px^2 - 4h py) ; py <= px^2/(4h)
+    const double h = data.axis.magnitude();
+    if (4.0*h*p0.y >= p0.x * p0.x)
+        return {};
+    auto pf = [this, &h](double x){
+        return RS_Vector{x, x*x/(4.*h)}.rotate(data.axis.angle() - M_PI/2.) + data.vertex;
+    };
+    double dx = std::sqrt(p0.x*p0.x - 4. * h * p0.y);
+    if (dx <= RS_TOLERANCE)
+        return {point};
+    return {pf(p0.x + dx), pf(p0.x - dx)};
+}
+
+RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
+                         const RS_Vector& trimPoint)
+{
+    double xi[] = {rotateToQuadratic(getStartpoint()).x,
+//    rotateToQuadratic(getEndpoint()).x,
+    rotateToQuadratic(trimCoord).x,
+    rotateToQuadratic(trimPoint).x};
+    return (std::signbit(xi[0] - xi[1]) != std::signbit(xi[2] - xi[1])) ?
+                RS2::EndingEnd : RS2::EndingStart;
+}
+
+RS_Vector LC_Parabola::prepareTrim(const RS_Vector& trimCoord,
+                                   const RS_VectorSolutions& trimSol)
+{
+    const double x0 = rotateToQuadratic(trimCoord).x;
+    size_t i=0, minI=0;
+    double ds0 = RS_MAXDOUBLE;
+    for (const auto& vp: trimSol) {
+        double ds = std::abs(x0 - rotateToQuadratic(vp).x);
+        if (ds < ds0) {
+            ds0 = ds;
+            minI = i;
+        }
+        ++i;
+    }
+    return trimSol.at(minI);
+}
+
+RS_Vector LC_Parabola::rotateToQuadratic(RS_Vector vp) const
+{
+    return vp.rotate(data.vertex, M_PI/2 - data.axis.angle());
+}
+
+void LC_Parabola::moveStartpoint(const RS_Vector& pos)
+{
+    RS_Vector p0=getNearestPointOnEntity(pos);
+    RS_Vector t0=getTangentDirection(p0);
+    data = LC_ParabolaData::FromEndPointsTangents(
+                { p0, data.controlPoints.back() },
+                { t0, getTangentDirection(data.controlPoints.back()) }
+                );
+}
+
+void LC_Parabola::moveEndpoint(const RS_Vector& pos)
+{
+    RS_Vector p2=getNearestPointOnEntity(pos);
+    RS_Vector t2=getTangentDirection(p2);
+    data = LC_ParabolaData::FromEndPointsTangents(
+                { data.controlPoints.front(), p2 },
+                { getTangentDirection(data.controlPoints.front()), t2 }
+                );
+}
