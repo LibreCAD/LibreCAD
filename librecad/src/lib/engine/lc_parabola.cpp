@@ -417,8 +417,8 @@ m0 x + m1 y + m2 =0
 **/
 LC_Quadratic LC_ParabolaData::getQuadratic() const
 {
-  //  if (!valid)
-   //     return LC_Quadratic{};
+    if (!valid)
+        return LC_Quadratic{};
     std::vector<double> ce(6, 0.);
     ce[0] = 1.;
     ce[4] = -4. * axis.magnitude();
@@ -459,7 +459,7 @@ RS_Vector LC_Parabola::getTangentDirection(const RS_Vector& point)const
         return {};
     RS_Vector tangentPoint = getTangentPoint(point).at(0);
     RS_Vector p0 = rotateToQuadratic(tangentPoint) - data.vertex;
-    return RS_Vector{1., p0.x/(2.*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2).normalized();
+    return RS_Vector{2.*data.axis.magnitude(), p0.x}.rotate(data.axis.angle() - M_PI/2).normalized();
 }
 
 RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
