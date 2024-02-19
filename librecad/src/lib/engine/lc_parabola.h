@@ -29,21 +29,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <vector>
 #include "lc_splinepoints.h"
 
-class RS_Line;
 struct RS_LineData;
 
 /**
- * Holds the data that defines a line.
- * Few notes about implementation:
- * When drawing, the spline is defined via splinePoints collection.
- * However, since we want to allow trimming/cutting the spline,
- * we cannot guarantee that the shape would stay unchanged after
- * a part of the spline would be cut off. This would espetially be
- * obvious after cutting closed splines. So we introduce the "cut"
- * state. After that, all splinePoints will be deleted except start
- * and end points, and the controlPoints become the reference points
- * of that shape. It will be further possible to modify the spline,
- * but the control points will serve as handles then.
+ * Holds the data that defines a parabola.
+ * @author Dongxu Li
  */
 struct LC_ParabolaData
 {
@@ -63,9 +53,6 @@ struct LC_ParabolaData
     /** \brief return the equation of the entity
     a quadratic contains coefficients for quadratic:
     m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
-
-    for linear:
-    m0 x + m1 y + m2 =0
     **/
     LC_Quadratic getQuadratic() const;
 

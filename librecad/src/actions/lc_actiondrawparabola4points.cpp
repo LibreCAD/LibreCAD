@@ -1,9 +1,7 @@
 /****************************************************************************
 **
- * Draw ellipse by foci and a point on parabola
-
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
-Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 Dongxu Li (dongxuli2011@gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -25,13 +23,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actiondrawparabola4points.h"
 
+#include "lc_parabola.h"
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_circle.h"
 #include "rs_line.h"
-#include "lc_parabola.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
 
 struct LC_ActionDrawParabola4Points::Points {

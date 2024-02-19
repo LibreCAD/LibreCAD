@@ -2,8 +2,8 @@
 **
  * Draw ellipse by foci and a point on ellipse
 
-Copyright (C) 2011 Dongxu Li (dongxuli2011@gmail.com)
-Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 Dongxu Li (dongxuli2011@gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -26,7 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 
 /**
- * Draw a Parabola 4 points on parabola
+ * Draw a Parabola by 4 points on parabola
  *
  * @author Dongxu Li
  */
