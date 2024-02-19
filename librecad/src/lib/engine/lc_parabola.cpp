@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2024 LibreCAD.org
+** Copyright (C) 2024 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2014 Pevel Krejcir (pavel@pamsoft.cz)
 
 This program is free software; you can redistribute it and/or
@@ -533,6 +533,11 @@ double LC_Parabola::getDirection2() const
     return (data.controlPoints.back() - data.controlPoints.at(1)).angle();
 }
 
+void LC_Parabola::update()
+{
+    LC_SplinePoints::getData() = convert2SplineData(data);
+    calculateBorders();
+}
 // void LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 // {
 //     for (size_t i=0; i<2; ++i){

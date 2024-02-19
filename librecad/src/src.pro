@@ -229,7 +229,8 @@ HEADERS += \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
-    main/lc_application.h
+    main/lc_application.h \
+    ui/forms/LC_DlgParabola.h
 
 SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
@@ -325,7 +326,8 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
-    main/lc_application.cpp
+    main/lc_application.cpp \
+    ui/forms/LC_DlgParabola.cpp
 
 # ################################################################################
 # Command
@@ -823,6 +825,7 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_filedialogservice.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
+    ui/forms/LC_DlgParabola.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \

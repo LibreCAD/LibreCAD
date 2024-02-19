@@ -2,8 +2,8 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2014 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2024 LibreCAD.org
+** Copyright (C) 2024 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2014 Pavel Krejcir (pavel@pamsoft.cz)
 
 This program is free software; you can redistribute it and/or
@@ -178,6 +178,9 @@ public:
 
     void moveStartpoint(const RS_Vector& pos) override;
     void moveEndpoint(const RS_Vector& pos) override;
+
+    void update() override;
+
     //RS2::Ending getTrimPoint(const RS_Vector& coord,
     //          const RS_Vector& trimPoint);
     //void reverse() override;
