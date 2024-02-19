@@ -49,12 +49,12 @@ struct LC_ActionDrawParabola4Points::Points {
  */
 LC_ActionDrawParabola4Points::LC_ActionDrawParabola4Points(
 		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
-                               graphicView)
+        RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Draw parabola from 4 points", container,
+                               graphicView,
+                               RS2::ActionDrawParabola4Points)
     , pPoints(std::make_unique<Points>())
 {
-    actionType=RS2::ActionDrawParabola4Points;
 }
 
 LC_ActionDrawParabola4Points::~LC_ActionDrawParabola4Points() = default;

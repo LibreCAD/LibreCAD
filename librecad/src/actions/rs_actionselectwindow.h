@@ -67,10 +67,10 @@ public:
 	void updateMouseCursor() override;
     enum RS2::EntityType getTypeToSelect();
 private:
-    bool select = false;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    bool select = false;
 };
 
 #endif

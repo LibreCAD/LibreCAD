@@ -402,6 +402,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawEllipseInscribe");
     a_map["DrawEllipseInscribe"] = action;
 
+    // Parabola
+    action = new QAction(tr("Para&bola 4 points"), agm->curve);
+    action->setIcon(QIcon(":/icons/parabola_4_points.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDrawParabola4Points()));
+    action->setObjectName("DrawParabola4Points");
+    a_map["DrawParabola4Points"] = action;
+
     // <[~ Spline ~]>
 
     action = new QAction(tr("&Spline"), agm->curve);

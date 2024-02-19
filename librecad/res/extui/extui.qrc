@@ -190,5 +190,6 @@
         <file>circle2pr.png</file>
         <file>splinepoints.png</file>
         <file>menusplinepoints.png</file>
+        <file>parabola_4_points.png</file>
     </qresource>
 </RCC>

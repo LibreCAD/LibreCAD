@@ -99,6 +99,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawArc"]
             << a_map["DrawArc3P"]
             << a_map["DrawArcTangential"]
+            << a_map["DrawParabola4Points"]
             << a_map["DrawSpline"]
             << a_map["DrawSplinePoints"]
             << a_map["DrawEllipseArcAxis"]

@@ -41,7 +41,8 @@ class RS_PreviewActionInterface : public RS_ActionInterface {
 public:
     RS_PreviewActionInterface(const char* name,
                               RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
+                              RS_GraphicView& graphicView,
+                              RS2::ActionType actionType = RS2::ActionNone);
 	~RS_PreviewActionInterface() override;
 
 	void init(int status=0) override;
@@ -59,7 +60,7 @@ protected:
      * Preview that holds the entities to be previewed.
      */
 	std::unique_ptr<RS_Preview> preview;
-    bool hasPreview = false;//whether preview is in use
+    bool hasPreview = true;//whether preview is in use
 //    /**
 //     * Current offset of the preview.
 //     */

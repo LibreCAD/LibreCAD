@@ -1524,16 +1524,15 @@ void QG_ActionHandler::slotDrawEllipseFociPoint() {
 void QG_ActionHandler::slotDrawEllipse4Points() {
     setCurrentAction(RS2::ActionDrawEllipse4Points);
 }
-void QG_ActionHandler::slotDrawParabola4Points() {
-    setCurrentAction(RS2::ActionDrawParabola4Points);
-}
 void QG_ActionHandler::slotDrawEllipseCenter3Points() {
     setCurrentAction(RS2::ActionDrawEllipseCenter3Points);
 }
 void QG_ActionHandler::slotDrawEllipseInscribe() {
     setCurrentAction(RS2::ActionDrawEllipseInscribe);
 }
-
+void QG_ActionHandler::slotDrawParabola4Points() {
+    setCurrentAction(RS2::ActionDrawParabola4Points);
+}
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);
 }
