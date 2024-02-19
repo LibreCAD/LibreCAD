@@ -459,7 +459,7 @@ RS_Vector LC_Parabola::getTangentDirection(const RS_Vector& point)const
         return {};
     RS_Vector tangentPoint = getTangentPoint(point).at(0);
     RS_Vector p0 = rotateToQuadratic(tangentPoint) - data.vertex;
-    return RS_Vector{1., p0.x/(0.5*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2).normalized();
+    return RS_Vector{1., p0.x/(2.*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2).normalized();
 }
 
 RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
@@ -557,15 +557,20 @@ void LC_Parabola::moveEndpoint(const RS_Vector& pos)
 
 double LC_Parabola::getDirection1() const
 {
-    auto p0 = rotateToQuadratic(data.controlPoints.front()) - data.vertex;
-    RS_Vector tangent{2.*data.axis.magnitude(), p0.x};
-    return tangent.rotate(data.axis.angle() - M_PI/2).angle();
+    return (data.controlPoints.at(1) - data.controlPoints.front()).angle();
 }
 
 double LC_Parabola::getDirection2() const
 {
-    auto p0 = rotateToQuadratic(data.controlPoints.back()) - data.vertex;
-    RS_Vector tangent{2.*data.axis.magnitude(), p0.x};
-    return tangent.rotate(data.axis.angle() - M_PI/2).angle();
-
+    return (data.controlPoints.back() - data.controlPoints.at(1)).angle();
 }
+
+void LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
+{
+    for (size_t i=0; i<2; ++i){
+        RS_Line l0{nullptr, {data.controlPoints.at(i), data.controlPoints.at(i+1)}};
+        l0.draw(painter, view, patternOffset);
+    }
+    LC_SplinePoints::draw(painter, view, patternOffset);
+}
+

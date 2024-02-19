@@ -71,6 +71,7 @@ private:
     const EntityTypeList circleType = EntityTypeList{ RS2::EntityArc,
                 RS2::EntityCircle,
                 RS2::EntityEllipse,
+                RS2::EntityParabola,
                 RS2::EntitySplinePoints };
 };
 

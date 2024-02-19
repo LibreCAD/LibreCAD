@@ -153,8 +153,6 @@ public:
     **/
     LC_Quadratic getQuadratic() const override;
 
-    double getDirection1() const override;
-    double getDirection2() const override;
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     //find the tangential points seeing from given point
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
@@ -164,8 +162,6 @@ public:
     RS_Vector prepareTrim(const RS_Vector& trimCoord,
                           const RS_VectorSolutions& trimSol) override;
 
-    void moveStartpoint(const RS_Vector& pos) override;
-    void moveEndpoint(const RS_Vector& pos) override;
     /** Sets the startpoint */
     //void setStartpoint(RS_Vector s) {
     //    data.startpoint = s;
@@ -177,11 +173,11 @@ public:
     //    calculateBorders();
     //}
 
-    // double getDirection1() const override;
-    // double getDirection2() const override;
+    double getDirection1() const override;
+    double getDirection2() const override;
 
-    //void moveStartpoint(const RS_Vector& pos) override;
-    //void moveEndpoint(const RS_Vector& pos) override;
+    void moveStartpoint(const RS_Vector& pos) override;
+    void moveEndpoint(const RS_Vector& pos) override;
     //RS2::Ending getTrimPoint(const RS_Vector& coord,
     //          const RS_Vector& trimPoint);
     //void reverse() override;
@@ -275,6 +271,8 @@ public:
     // //! \return rectangle as a polygon
     // static QPolygonF getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
     //! \}
+    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+
 
 private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the
