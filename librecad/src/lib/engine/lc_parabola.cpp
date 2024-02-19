@@ -478,18 +478,90 @@ RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector LC_Parabola::prepareTrim(const RS_Vector& trimCoord,
                                    const RS_VectorSolutions& trimSol)
 {
-    const double x0 = rotateToQuadratic(trimCoord).x;
-    size_t i=0, minI=0;
-    double ds0 = RS_MAXDOUBLE;
-    for (const auto& vp: trimSol) {
-        double ds = std::abs(x0 - rotateToQuadratic(vp).x);
-        if (ds < ds0) {
-            ds0 = ds;
-            minI = i;
+    //special trimming for ellipse arc
+        LC_LOG<<"LC_Parabola::prepareTrim()";
+        if( ! trimSol.hasValid() ) return (RS_Vector(false));
+        if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
+        auto findX = [this](const RS_Vector& vp) -> double {
+            return rotateToQuadratic(vp).x;
+        };
+        double am=findX(trimCoord);
+        std::vector<double> ias;
+        double ia(0.),ia2(0.);
+        RS_Vector is,is2;
+        using namespace std;
+        for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according rotated x
+            ias.push_back(findX(trimSol.get(ii)));
+            if( !ii ||  abs(ias[ii] - am) < abs(ia -am) ) {
+                ia = ias[ii];
+                is = trimSol.get(ii);
+            }
         }
-        ++i;
-    }
-    return trimSol.at(minI);
+        std::sort(ias.begin(),ias.end());
+        for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find segment to include trimCoord
+            if (abs(ia-ias[ii]) > RS_TOLERANCE) continue;
+            if( signbit(am - ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()]) != signbit(am - ia))  {
+                ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
+            } else {
+                ia2=ias[(ii+1)% trimSol.getNumber()];
+            }
+            break;
+        }
+        for(const RS_Vector& vp: trimSol) { //find segment to include trimCoord
+            if ( abs(ia2-findX(vp)) > RS_TOLERANCE) continue;
+            is2=vp;
+            break;
+        }
+            double dia=abs(ia-am);
+            double dia2=abs(ia2-am);
+            double ai_min=std::min(dia,dia2);
+            double da1=abs(findX(getStartpoint())-am);
+            double da2=abs(findX(getEndpoint())-am);
+            double da_min=std::min(da1,da2);
+            auto isInBetween = [](double a, double b, double c) {
+                return signbit(b-a) != signbit(b-c);
+            };
+            auto x2Point = [this](double x) {
+                RS_Vector p0 {x, x*x/(4.*data.axis.magnitude())};
+                p0.rotate(data.axis.angle() - M_PI/2);
+                return p0 + data.vertex;
+            };
+            if( da_min < ai_min ) {
+                //trimming one end of arc
+                bool irev= std::signbit(am-ia2) != signbit(am - ia);
+                if ( isInBetween(ia,findX(getStartpoint()),findX(getEndpoint())) &&
+                        isInBetween(ia2,findX(getStartpoint()),findX(getEndpoint()) ) ) { //
+                    if(irev) {
+                        moveEndpoint(x2Point(ia));
+                        moveStartpoint(x2Point(ia2));
+                    } else {
+                        moveStartpoint(x2Point(ia));
+                        moveEndpoint(x2Point(ia2));
+                    }
+                    da1=abs(findX(getStartpoint())-am);
+                    da2=abs(findX(getEndpoint())-am);
+                }
+                if( ((da1 < da2) && (isInBetween(ia2,ia,findX(getStartpoint())))) ||
+                        ((da1 > da2) && (isInBetween(ia2,findX(getEndpoint()),ia)))
+                  ) {
+                    std::swap(is,is2);
+                }
+            } else {
+                //choose intersection as new end
+                if( dia > dia2) {
+                    std::swap(is,is2);
+                    std::swap(ia,ia2);
+                }
+                if(isInBetween(ia,findX(getStartpoint()),findX(getEndpoint()))) {
+                    if(isInBetween(am,findX(getStartpoint()),ia)) {
+                        moveEndpoint(x2Point(ia2));
+                    } else {
+                        moveStartpoint(x2Point(ia));
+                    }
+                }
+            }
+//        }
+        return is;
 }
 
 RS_Vector LC_Parabola::rotateToQuadratic(RS_Vector vp) const
@@ -497,7 +569,7 @@ RS_Vector LC_Parabola::rotateToQuadratic(RS_Vector vp) const
     return vp.rotate(data.vertex, M_PI/2 - data.axis.angle());
 }
 
-void LC_Parabola::moveStartpoint(const RS_Vector& pos)
+void LC_Parabola::LC_Parabola::moveStartpoint(const RS_Vector& pos)
 {
     RS_Vector p0=getNearestPointOnEntity(pos);
     RS_Vector t0=getTangentDirection(p0);
@@ -510,7 +582,7 @@ void LC_Parabola::moveStartpoint(const RS_Vector& pos)
     calculateBorders();
 }
 
-void LC_Parabola::moveEndpoint(const RS_Vector& pos)
+void LC_Parabola::LC_Parabola::moveEndpoint(const RS_Vector& pos)
 {
     auto t0 = RS_Vector{getDirection1()};
     RS_Vector p2=getNearestPointOnEntity(pos);
@@ -532,13 +604,60 @@ double LC_Parabola::getDirection2() const
 {
     return (data.controlPoints.back() - data.controlPoints.at(1)).angle();
 }
+RS_VectorSolutions LC_Parabola::getRefPoints() const
+{
+    return {data.controlPoints.front(), data.controlPoints.at(1), data.controlPoints.back()};
+}
 
-void LC_Parabola::update()
+
+void LC_Parabola::move(const RS_Vector& offset)
+{
+    for(auto& point: data.controlPoints)
+        point.move(offset);
+    update();
+}
+void LC_Parabola::rotate(const RS_Vector& center, const double& angle)
+{
+    for(auto& point: data.controlPoints)
+        point.rotate(center, angle);
+    update();
+}
+void LC_Parabola::rotate(const RS_Vector& center, const RS_Vector& angleVector)
+{
+    for(auto& point: data.controlPoints)
+        point.rotate(center, angleVector);
+    update();
+}
+void LC_Parabola::scale(const RS_Vector& center, const RS_Vector& factor)
+{
+    for(auto& point: data.controlPoints)
+        point.scale(center, factor);
+    update();
+}
+void LC_Parabola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
+{
+    for(auto& point: data.controlPoints)
+        point.mirror(axisPoint1, axisPoint2);
+    update();
+}
+
+void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
+{
+    for(auto& point: data.controlPoints)
+        if (point.squaredTo(ref) < RS_TOLERANCE2) {
+            point.move(offset);
+            break;
+        }
+
+    update();
+}
+
+void LC_Parabola::LC_Parabola::update()
 {
     LC_SplinePoints::getData() = convert2SplineData(data);
     calculateBorders();
 }
-// void LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
+// void LC_Parabola::LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 // {
 //     for (size_t i=0; i<2; ++i){
 //         RS_Line l0{nullptr, {data.controlPoints.at(i), data.controlPoints.at(i+1)}};

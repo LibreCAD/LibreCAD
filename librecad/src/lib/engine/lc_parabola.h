@@ -152,6 +152,7 @@ public:
     m0 x + m1 y + m2 =0
     **/
     LC_Quadratic getQuadratic() const override;
+    RS_VectorSolutions getRefPoints() const override;
 
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     //find the tangential points seeing from given point
@@ -236,13 +237,13 @@ public:
     //                           RS_Entity** entity = nullptr, RS2::ResolveLevel level = RS2::ResolveNone,
     //                           double solidDist = RS_MAXDOUBLE) const override;
 
-    // void move(const RS_Vector& offset) override;
-    // void rotate(const RS_Vector& center, const double& angle) override;
-    // void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-    // void scale(const RS_Vector& center, const RS_Vector& factor) override;
-    // void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    void move(const RS_Vector& offset) override;
+    void rotate(const RS_Vector& center, const double& angle) override;
+    void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
+    void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
-    // void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     // void revertDirection() override;
 
     // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
