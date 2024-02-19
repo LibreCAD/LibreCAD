@@ -23,7 +23,7 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>SplinePoints</string>
+   <string>Parabola</string>
   </property>
   <property name="modal">
    <bool>true</bool>

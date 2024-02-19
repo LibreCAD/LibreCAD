@@ -59,16 +59,6 @@ struct LC_ParabolaData
     RS_LineData GetAxis() const;
     RS_LineData GetDirectrix() const;
     RS_Vector GetFocus() const;
-    LC_ParabolaData& move(const RS_Vector& displacement);
-    LC_ParabolaData& rotate(const RS_Vector& rotation);
-    LC_ParabolaData& rotate(const RS_Vector& center, const RS_Vector& rotation);
-    LC_ParabolaData& rotate(const RS_Vector& center, double angle);
-    LC_ParabolaData& scale(double factor);
-    LC_ParabolaData& scale(const RS_Vector& factor);
-    LC_ParabolaData scaled(const RS_Vector& factor) const;
-    LC_ParabolaData scaled(const RS_Vector& center, const RS_Vector& factor) const;
-    LC_ParabolaData& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
-    LC_ParabolaData mirrored(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) const;
 
     /** \brief return the equation of the entity
     a quadratic contains coefficients for quadratic:
@@ -79,16 +69,16 @@ struct LC_ParabolaData
     **/
     LC_Quadratic getQuadratic() const;
 
-    // The three control points
+    // The three control points, and all other properties are calculated from control points
     std::array<RS_Vector, 3> controlPoints;
-    //
+    void CalculatePrimitives();
+    // properties should be calculated from control points
     RS_Vector focus;
     // a vector from the vertex to focus
     RS_Vector axis;
     RS_Vector vertex;
+    // whether valid for a parabola
     bool valid = false;
-private:
-    void CalculatePrimitives();
 };
 
 std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
@@ -101,17 +91,6 @@ std::ostream& operator << (std::ostream& os, const LC_ParabolaData& ld);
 class LC_Parabola : public LC_SplinePoints // RS_EntityContainer
 {
 private:
-    // /**
-    //  * @brief mapDataToGui - map Data to Gui space for painter, which is ignorant about the view
-    //  * @return LC_ParabolaData - in the Gui coordinates
-    //  */
-    // void UpdateControlPoints();
-    // void UpdateQuadExtent(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
-    // int GetNearestQuad(const RS_Vector& coord, double* dist, double* dt) const;
-    // RS_Vector GetSplinePointAtDist(double dDist, int iStartSeg, double dStartT,
-    //                                int *piSeg, double *pdt) const;
-    // int GetQuadPoints(int iSeg, RS_Vector *pvStart, RS_Vector *pvControl,
-    //                   RS_Vector *pvEnd) const;
 
     // bool offsetCut(const RS_Vector& coord, const double& distance);
     // bool offsetSpline(const RS_Vector& coord, const double& distance);
@@ -244,7 +223,7 @@ public:
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
-    // void revertDirection() override;
+    void revertDirection() override;
 
     // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
     // std::vector<RS_Vector> const& getPoints() const;

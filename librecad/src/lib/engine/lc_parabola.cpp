@@ -21,21 +21,19 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QPainterPath>
-#include <QPolygonF>
 #include "lc_parabola.h"
 
+#include "lc_quadratic.h"
 #include "rs_circle.h"
 #include "rs_debug.h"
-#include "rs_line.h"
-#include "rs_graphicview.h"
-#include "rs_painter.h"
 #include "rs_graphic.h"
-#include "rs_painterqt.h"
-#include "lc_quadratic.h"
+#include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_math.h"
+#include "rs_line.h"
 #include "rs_linetypepattern.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+#include "rs_painterqt.h"
 
 namespace {
 
@@ -206,7 +204,7 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     {
         double ds= (points[i] - f0(points[i])).squared();
         ds2 += ds;
-        LC_ERR<<"oxi = ("<<points[i].x<<", "<< points[i].y<<"): ("<<f0(points[i]).x<<", "<<f0(points[i]).y<<"): dr="
+        LC_LOG<<"oxi = ("<<points[i].x<<", "<< points[i].y<<"): ("<<f0(points[i]).x<<", "<<f0(points[i]).y<<"): dr="
              << ds<<": "<<ds2;
     }
     if (ds2 >= RS_TOLERANCE2)
@@ -258,7 +256,6 @@ LC_ParabolaData::LC_ParabolaData(std::array<RS_Vector, 3> controlPoints):
   , valid{true}
 {
     CalculatePrimitives();
-    assert(valid);
 }
 
 void LC_ParabolaData::CalculatePrimitives()
@@ -307,89 +304,6 @@ RS_LineData LC_ParabolaData::GetAxis() const
     return {vertex, vertex + axis*(0.5*vp.dotP(axis)/axis.squared())};
 }
 
-LC_ParabolaData& LC_ParabolaData::move(const RS_Vector& displacement)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.move(displacement);
-    focus += displacement;
-    vertex += displacement;
-    return *this;
-}
-
-LC_ParabolaData& LC_ParabolaData::rotate(const RS_Vector& rotation)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.rotate(rotation);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData& LC_ParabolaData::rotate(const RS_Vector& center, const RS_Vector& rotation)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.rotate(center, rotation);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData& LC_ParabolaData::rotate(const RS_Vector& center, double angle)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.rotate(center, angle);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData& LC_ParabolaData::scale(double factor)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.scale(factor);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData& LC_ParabolaData::scale(const RS_Vector& factor)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.scale(factor);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData LC_ParabolaData::scaled(const RS_Vector& factor) const
-{
-    LC_ParabolaData ret{controlPoints};
-    for(auto& controlPoint: ret.controlPoints)
-        controlPoint.scale(factor);
-    ret.CalculatePrimitives();
-    return ret;
-}
-
-LC_ParabolaData LC_ParabolaData::scaled(const RS_Vector& center, const RS_Vector& factor) const
-{
-    LC_ParabolaData ret{controlPoints};
-    for(auto& controlPoint: ret.controlPoints)
-        controlPoint.scale(center, factor);
-    ret.CalculatePrimitives();
-    return ret;
-}
-
-LC_ParabolaData& LC_ParabolaData::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
-{
-    for(auto& controlPoint: controlPoints)
-        controlPoint.mirror(axisPoint1, axisPoint2);
-    CalculatePrimitives();
-    return *this;
-}
-
-LC_ParabolaData LC_ParabolaData::mirrored(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) const
-{
-    LC_ParabolaData ret{controlPoints};
-    for(auto& controlPoint: ret.controlPoints)
-        controlPoint.scale(axisPoint1, axisPoint2);
-    ret.CalculatePrimitives();
-    return ret;
-}
 
 /** \brief return the equation of the entity
 a quadratic contains coefficients for quadratic:
@@ -652,8 +566,14 @@ void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
     update();
 }
 
+void LC_Parabola::revertDirection()
+{
+    std::swap(data.controlPoints.front(), data.controlPoints.back());
+}
+
 void LC_Parabola::LC_Parabola::update()
 {
+    data.CalculatePrimitives();
     LC_SplinePoints::getData() = convert2SplineData(data);
     calculateBorders();
 }
