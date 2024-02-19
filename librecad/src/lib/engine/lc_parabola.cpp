@@ -39,6 +39,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 namespace {
 
+// convert the parabola data to SplinePoint data
 LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
 {
     LC_SplinePointsData splineData{};
@@ -51,6 +52,7 @@ LC_SplinePointsData convert2SplineData(const LC_ParabolaData& data)
     return splineData;
 }
 
+// valid the 4 points forms a convex quadralateral. non-parallelogram convex 4 points are required to form a parabola
 bool validateConvexPoints(std::vector<RS_Vector>& points)
 {
     if (points.size() != 4)
@@ -81,18 +83,6 @@ bool validateConvexPoints(std::vector<RS_Vector>& points)
     RS_Line l1{nullptr, {points[1], points[3]}};
     RS_VectorSolutions sol = RS_Information::getIntersection(&l0, &l1, true);
     return ! sol.empty();
-}
-
-RS_Vector getOppositePoint(const RS_Vector& a, const RS_Vector& b, const RS_Vector& c)
-{
-    RS_Line l0{nullptr, {a, a + (a-b).rotate(M_PI/2.)}};
-    RS_Line l1{nullptr, {c, c + (c-b).rotate(M_PI/2.)}};
-    RS_VectorSolutions sol = RS_Information::getIntersection(&l0, &l1, false);
-    if (sol.empty()) {
-        //assert(!"Parasolid points cannot be colinear");
-        return {};
-    }
-    return sol.at(0);
 }
 
 std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
@@ -138,7 +128,7 @@ std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
     if (sol0.empty())
         return {};
     auto po = sol0.at(0);
-    LC_ERR<<"po: "<<po.x<<", "<<po.y;
+    //LC_ERR<<"po: "<<po.x<<", "<<po.y;
     auto findCircleIntersection=[&po, &pts](size_t index)->std::pair<RS_Vector, RS_Vector> {
         double ds = std::sqrt((pts[index] - po).magnitude()*(pts[index+2] - po).magnitude());
         RS_Vector dv = (pts[index+2] - pts[index]).normalized();
@@ -189,7 +179,6 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     const double a = (sxyi*xis.size() - syi*sxi)/d;
     if (std::abs(a) < RS_TOLERANCE2)
     {
-   //     assert(!"quadratic factor is 0 for parabola");
         return {};
     }
     const double b = (sxi2*syi - sxi*sxyi)/d;
@@ -202,7 +191,6 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
     for (size_t i=0; i< 4; i++)
     {
         c += rotated[i].y - rotated[i].x * (b + rotated[i].x * a);
-        //LC_ERR<<"rxi = "<<rotated[i].x<<": "<<rotated[i].y - rotated[i].x * (b + rotated[i].x * a);
     }
     c /= 4;
     double da = {axis.angle() - M_PI/2};
@@ -236,11 +224,6 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         tangents
     );
 
-    // auto axisNew = ret.GetAxis();
-    // double angleNew = (axisNew.endpoint - axisNew.startpoint).angle();
-    // double angleOld = axis.angle();
-    // double dangle = std::abs(std::remainder(angleOld - angleNew, M_PI));
-    //assert( dangle < RS_TOLERANCE_ANGLE);
     return ret;
 }
 
@@ -486,7 +469,6 @@ RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
                          const RS_Vector& trimPoint)
 {
     double xi[] = {rotateToQuadratic(getStartpoint()).x,
-//    rotateToQuadratic(getEndpoint()).x,
     rotateToQuadratic(trimCoord).x,
     rotateToQuadratic(trimPoint).x};
     return (std::signbit(xi[0] - xi[1]) != std::signbit(xi[2] - xi[1])) ?
@@ -519,38 +501,24 @@ void LC_Parabola::moveStartpoint(const RS_Vector& pos)
 {
     RS_Vector p0=getNearestPointOnEntity(pos);
     RS_Vector t0=getTangentDirection(p0);
-    LC_ERR<<" p0_old = "<<t0.x<<", "<<t0.y;
     auto t1 = RS_Vector{getDirection2()};
-    LC_ERR<<" p1_old = "<<t1.x<<", "<<t1.y;
     data = LC_ParabolaData::FromEndPointsTangents(
                 { p0, data.controlPoints.back() },
                 { t0, t1}
                 );
     LC_SplinePoints::getData() = convert2SplineData(data);
-    t1 = RS_Vector{getDirection2()};
-    t0 = RS_Vector{getDirection1()};
-    LC_ERR<<" p0_old = "<<t0.x<<", "<<t0.y;
-    LC_ERR<<" p1_new = "<<t1.x<<", "<<t1.y;
-
     calculateBorders();
 }
 
 void LC_Parabola::moveEndpoint(const RS_Vector& pos)
 {
-    auto t1 = RS_Vector{getDirection2()};
     auto t0 = RS_Vector{getDirection1()};
     RS_Vector p2=getNearestPointOnEntity(pos);
     RS_Vector t2=RS_Vector{getTangentDirection(p2)};
-    LC_ERR<<" p0_old = "<<t0.x<<", "<<t0.y;
-    LC_ERR<<" p1_old = "<<t2.x<<", "<<t2.y;
     data = LC_ParabolaData::FromEndPointsTangents(
                 { data.controlPoints.front(), p2 },
                 { t0, t2}
                 );
-    t1 = RS_Vector{getDirection1()};
-    t2 = RS_Vector{getDirection2()};
-    LC_ERR<<" p0_new = "<<t1.x<<", "<<t1.y;
-    LC_ERR<<" p1_new = "<<t2.x<<", "<<t2.y;
     LC_SplinePoints::getData() = convert2SplineData(data);
     calculateBorders();
 }
@@ -565,12 +533,12 @@ double LC_Parabola::getDirection2() const
     return (data.controlPoints.back() - data.controlPoints.at(1)).angle();
 }
 
-void LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
-{
-    for (size_t i=0; i<2; ++i){
-        RS_Line l0{nullptr, {data.controlPoints.at(i), data.controlPoints.at(i+1)}};
-        l0.draw(painter, view, patternOffset);
-    }
-    LC_SplinePoints::draw(painter, view, patternOffset);
-}
+// void LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
+// {
+//     for (size_t i=0; i<2; ++i){
+//         RS_Line l0{nullptr, {data.controlPoints.at(i), data.controlPoints.at(i+1)}};
+//         l0.draw(painter, view, patternOffset);
+//     }
+//     LC_SplinePoints::draw(painter, view, patternOffset);
+// }
 

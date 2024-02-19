@@ -224,7 +224,12 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
             std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
                 return data.valid;
             });
-            setStatus(getStatus()+1);
+            if (pData.size() == 1) {
+                pPoints->data = pPoints->pData.front();
+                trigger();
+            } else {
+                setStatus(getStatus()+1);
+            }
         }
     }
         break;

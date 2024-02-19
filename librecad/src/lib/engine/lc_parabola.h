@@ -253,26 +253,7 @@ public:
 
     // bool offset(const RS_Vector& coord, const double& distance) override;
     // std::vector<RS_Entity*> offsetTwoSides(const double& distance) const override;
-
-    // static RS_VectorSolutions getIntersection(RS_Entity const* e1, RS_Entity const* e2);
-    // RS_VectorSolutions getLineIntersect(const RS_Vector& x1, const RS_Vector& x2);
-    // void addQuadIntersect(RS_VectorSolutions *pVS, const RS_Vector& x1,
-    //                       const RS_Vector& c1, const RS_Vector& x2);
-    // RS_VectorSolutions getSplinePointsIntersect(LC_SplinePoints* l1);
-    // RS_VectorSolutions getQuadraticIntersect(RS_Entity const* e1);
-
-    // // we will not enable trimming, maybe in the future
-    // void trimStartpoint(const RS_Vector& pos) override;
-    // void trimEndpoint(const RS_Vector& pos) override;
-
-    // LC_Parabola* cut(const RS_Vector& pos);
-    // //! \{ getBoundingRect find bounding rectangle for the bezier segment
-    // //! \param x1,c1,x2 first/center/last control points
-    // //! \return rectangle as a polygon
-    // static QPolygonF getBoundingRect(const RS_Vector& x1, const RS_Vector& c1, const RS_Vector& x2);
-    //! \}
-    void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
+    // void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
 private:
     // rotate a point around the parabola vertex so, the parabola is y= ax^2 + bx + c, with a > 0 after the
