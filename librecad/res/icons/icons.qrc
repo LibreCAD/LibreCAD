@@ -226,5 +226,6 @@
         <file>save_all.svg</file>
         <file>scaleLineWidth.svg</file>
         <file>parabola_4_points.svg</file>
+        <file>parabola_focus_directrix.svg</file>
     </qresource>
 </RCC>

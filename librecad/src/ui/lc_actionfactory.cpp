@@ -410,6 +410,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawParabola4Points");
     a_map["DrawParabola4Points"] = action;
 
+    action = new QAction(tr("Parabola &Focus Directrix"), agm->curve);
+    action->setIcon(QIcon(":/icons/parabola_focus_directrix.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDrawParabolaFD()));
+    action->setObjectName("DrawParabolaFD");
+    a_map["DrawParabolaFD"] = action;
+
     // <[~ Spline ~]>
 
     action = new QAction(tr("&Spline"), agm->curve);

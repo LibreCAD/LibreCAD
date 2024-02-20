@@ -34,6 +34,7 @@
 #include "qc_applicationwindow.h"
 
 #include "lc_actiondrawparabola4points.h"
+#include "lc_actiondrawparabolaFD.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
@@ -555,6 +556,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawParabola4Points:
         a = new LC_ActionDrawParabola4Points(*document, *view);
+        break;
+    case RS2::ActionDrawParabolaFD:
+        a = new LC_ActionDrawParabolaFD(*document, *view);
         break;
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*document, *view);
@@ -1532,6 +1536,9 @@ void QG_ActionHandler::slotDrawEllipseInscribe() {
 }
 void QG_ActionHandler::slotDrawParabola4Points() {
     setCurrentAction(RS2::ActionDrawParabola4Points);
+}
+void QG_ActionHandler::slotDrawParabolaFD() {
+    setCurrentAction(RS2::ActionDrawParabolaFD);
 }
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);

@@ -148,8 +148,6 @@ public:
 
     void update() override;
 
-    //RS2::Ending getTrimPoint(const RS_Vector& coord,
-    //          const RS_Vector& trimPoint);
     //void reverse() override;
     /** @return the center point of the line. */
     //RS_Vector getMiddlePoint() {

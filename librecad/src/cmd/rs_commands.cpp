@@ -365,6 +365,12 @@ RS_Commands::RS_Commands() {
             {{"pl4", QObject::tr("pl4", "Parabola 4 points")}},
             RS2::ActionDrawParabola4Points
         },
+        // draw parabola by focus directrix - v2.2.1
+        {
+            {{"parabolafd", QObject::tr("parabolafd", "Parabola focus directrix")}},
+            {{"plfd", QObject::tr("plfd", "Parabola focus directrix")}},
+            RS2::ActionDrawParabolaFD
+        },
         //draw freehand line
         {
             {{"free", QObject::tr("free", "draw freehand line")}},

@@ -20,41 +20,40 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#ifndef LC_ActionDrawParabola4Points_H
-#define LC_ActionDrawParabola4Points_H
+#ifndef LC_ActionDrawParabolaFD_H
+#define LC_ActionDrawParabolaFD_H
 
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
 
 /**
- * Draw a Parabola by 4 points on parabola
+ * Draw a Parabola by focus and directrix
  *
  * @author Dongxu Li
  */
-class LC_ActionDrawParabola4Points : public RS_PreviewActionInterface {
+class LC_ActionDrawParabolaFD : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-        SetPoint1 = 0,   //  Setting the First Point.  */
-        SetPoint2,   //  Setting the Second Point.  */
-        SetPoint3,   //  Setting the Third Point.  */
-        SetPoint4,   //  Setting the Last Point.  */
-        SetAxis   //  select the axis/orientation  */
+        SetFocus = 0,   //  Setting the Focus.  */
+        SetDirectrix,   //  Setting the Directrix.  */
+        SetStartPoint,  //  Setting the Start Point.  */
+        SetEndPoint     //  Setting the End Point.  */
     };
 
 public:
-    LC_ActionDrawParabola4Points(RS_EntityContainer& container,
+    LC_ActionDrawParabolaFD(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView);
-    ~LC_ActionDrawParabola4Points() override;
+    ~LC_ActionDrawParabolaFD() override;
 
     void init(int status=0) override;
 
     void trigger() override;
-    bool preparePreview(const RS_Vector& mouse);
+    bool preparePreview();
 
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
