@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "rs_previewactioninterface.h"
 
+class RS_Vector;
+
 /**
  * Draw a Parabola by 4 points on parabola
  *
@@ -52,7 +54,7 @@ public:
 	void init(int status=0) override;
 
 	void trigger() override;
-	bool preparePreview();
+    bool preparePreview(const RS_Vector& mouse);
 
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
