@@ -59,8 +59,8 @@
      units="px"
      inkscape:snap-grids="true"
      inkscape:zoom="3.7226562"
-     inkscape:cx="36.801679"
-     inkscape:cy="111.61385"
+     inkscape:cx="30.891921"
+     inkscape:cy="154.05667"
      inkscape:window-x="0"
      inkscape:window-y="0"
      inkscape:window-maximized="1"
@@ -86,8 +86,8 @@
     <circle
        transform="rotate(-90)"
        r="5.6444449"
-       cy="32.737724"
-       cx="-44.591118"
+       cy="33.30217"
+       cx="-28.222223"
        id="circle5888"
        style="opacity:1;fill:#00ff27;fill-opacity:1;fill-rule:nonzero;stroke:#000000;stroke-width:2.25778;stroke-linecap:square;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:8;stroke-opacity:1" />
     <circle
@@ -104,11 +104,11 @@
        inkscape:label="Voronoi"
        id="g472" />
     <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.61755;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
-       d="M 9.8563241,13.697836 C 15.170683,28.870245 20.4849,44.042251 25.518076,51.61279 c 5.033177,7.570539 9.784949,7.540013 14.98656,-0.397108 5.201612,-7.937121 10.853128,-23.78041 16.50483,-39.624217"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.32665;stroke-linecap:square;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
+       d="m 9.6816393,14.17656 c 5.3537417,11.899296 10.7073297,23.798251 15.7777887,29.735589 5.07046,5.937337 9.857436,5.913397 15.097596,-0.31148 5.240161,-6.224878 10.933547,-18.650301 16.627093,-31.076071"
        id="path617"
        inkscape:path-effect="#path-effect619"
-       inkscape:original-d="M 9.8563241,13.697836 C 15.170856,28.870184 20.485073,44.04219 25.798978,59.213858 c 4.752277,-0.03018 9.504049,-0.06072 14.2556,-0.09158 5.652055,-15.84358 11.303574,-31.686868 16.954888,-47.530813" />
+       inkscape:original-d="m 9.6816393,14.17656 c 5.3539047,11.899223 10.7074927,23.798178 16.0607657,35.696868 4.787484,-0.02367 9.57446,-0.04762 14.361213,-0.07182 5.693928,-12.425651 11.387317,-24.851073 17.080499,-37.27701" />
     <path
        style="fill:#000000;fill-rule:evenodd;stroke:#000000;stroke-width:2.25778;stroke-linecap:butt;stroke-linejoin:miter;stroke-dasharray:none;stroke-opacity:1"
        d="M 1.9290615,66.43683 H 69.62923"
