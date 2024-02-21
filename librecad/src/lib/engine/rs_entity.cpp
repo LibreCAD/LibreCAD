@@ -1017,6 +1017,7 @@ bool RS_Entity::trimmable() const
     case RS2::EntityCircle:
     case RS2::EntityEllipse:
     case RS2::EntityLine:
+    case RS2::EntityParabola:
     case RS2::EntitySplinePoints:
         return true;
     default:

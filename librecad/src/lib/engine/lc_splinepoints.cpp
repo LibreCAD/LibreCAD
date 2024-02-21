@@ -1366,7 +1366,8 @@ void LC_SplinePoints::UpdateControlPoints()
 {
 	if(data.cut) return; // no update after trim operation
 
-	data.controlPoints.clear();
+    if (!data.useControlPoints)
+        data.controlPoints.clear();
 
 	size_t n = data.splinePoints.size();
 
@@ -1379,6 +1380,9 @@ void LC_SplinePoints::UpdateControlPoints()
 
 	if(!data.closed && n < 4)
 	{
+        // use control points directly, reserved for parabola
+        if (data.useControlPoints && data.controlPoints.size() == 3)
+            return;
 		if(n > 0) data.controlPoints.push_back(data.splinePoints.at(0));
 		if(n > 2)
 		{

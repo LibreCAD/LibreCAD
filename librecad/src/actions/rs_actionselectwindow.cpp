@@ -51,8 +51,8 @@ RS_ActionSelectWindow::RS_ActionSelectWindow(RS_EntityContainer& container,
         bool select)
         : RS_PreviewActionInterface("Select Window",
 							container, graphicView)
-        , select(select)
     , pPoints(std::make_unique<Points>())
+    , select(select)
 {
 	actionType=RS2::ActionSelectWindow;
 }

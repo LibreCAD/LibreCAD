@@ -102,6 +102,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 	case SetCircle: {
 		RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
 		if (en && (en->isArc() ||
+                   en->rtti() == RS2::EntityParabola ||
 				   en->rtti()==RS2::EntitySplinePoints)) {
 			if(circle){
 				circle->setHighlighted(false);
@@ -110,7 +111,6 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 			circle = en;
 			circle->setHighlighted(true);
 			graphicView->drawEntity(en);
-
 
 			RS_Creation creation(nullptr, nullptr);
 			tangent.reset(

@@ -52,7 +52,8 @@
  */
 RS_ActionInterface::RS_ActionInterface(const char *name,
                                        RS_EntityContainer &container,
-                                       RS_GraphicView &graphicView)
+                                       RS_GraphicView &graphicView,
+                                       RS2::ActionType actionType)
     :
     RS_Snapper(container, graphicView)
     , status{0}
@@ -60,6 +61,7 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
     , finished{false}
     , graphic{container.getGraphic()}
     , document{container.getDocument()}
+    , actionType{actionType}
 {
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);

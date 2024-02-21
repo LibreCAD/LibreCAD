@@ -156,6 +156,7 @@ namespace RS2 {
         EntityImage,        /**< Image */
         EntitySpline,       /**< Spline */
         EntitySplinePoints,       /**< SplinePoints */
+        EntityParabola,       /**< Parabola */
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview,    /**< Preview Container */
         EntityPattern,
@@ -258,6 +259,9 @@ namespace RS2 {
         ActionDrawEllipse4Points,
         ActionDrawEllipseCenter3Points,
         ActionDrawEllipseInscribe,
+
+        ActionDrawParabola4Points,
+        ActionDrawParabolaFD,
 
         ActionDrawHatch,
         ActionDrawHatchNoSelect,

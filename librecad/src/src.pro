@@ -125,6 +125,8 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/lc_actiondrawparabola4points.h \
+    actions/lc_actiondrawparabolaFD.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -132,6 +134,7 @@ HEADERS += \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
     lib/engine/lc_looputils.h \
+    lib/engine/lc_parabola.h \
     lib/engine/rs.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
@@ -227,9 +230,12 @@ HEADERS += \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
-    main/lc_application.h
+    main/lc_application.h \
+    ui/forms/LC_DlgParabola.h
 
 SOURCES += \
+    actions/lc_actiondrawparabola4points.cpp \
+    actions/lc_actiondrawparabolaFD.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
@@ -237,6 +243,7 @@ SOURCES += \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
     lib/engine/lc_looputils.cpp \
+    lib/engine/lc_parabola.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \
@@ -321,7 +328,8 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
-    main/lc_application.cpp
+    main/lc_application.cpp \
+    ui/forms/LC_DlgParabola.cpp
 
 # ################################################################################
 # Command
@@ -819,6 +827,7 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_filedialogservice.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
+    ui/forms/LC_DlgParabola.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \

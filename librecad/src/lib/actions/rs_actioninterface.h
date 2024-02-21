@@ -55,7 +55,8 @@ class RS_ActionInterface : public QObject, public RS_Snapper {
 public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
+                       RS_GraphicView& graphicView,
+                       RS2::ActionType actionType = RS2::ActionNone);
 	virtual ~RS_ActionInterface() = default;
 
     virtual RS2::ActionType rtti() const;

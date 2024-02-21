@@ -79,7 +79,7 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
         int sp;
 
         // settings from action:
-        if (update) {
+        if (update && action->getLength() > RS_TOLERANCE) {
 			if (!action->hasFixedAngle())
                 sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
@@ -112,15 +112,16 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
   class
   need to implement in shared_ptr*/
 void QG_LineAngleOptions::saveSettings() {
-//    if (action) {
-//        RS_SETTINGS->beginGroup("/Draw");
-//        if (!action->hasFixedAngle()) {
-//            RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
-//        }
-//        RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
-//        RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
-//        RS_SETTINGS->endGroup();
-//    }
+   if (action) {
+       RS_SETTINGS->beginGroup("/Draw");
+       if (!action->hasFixedAngle()) {
+           RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
+       }
+       if (action->getLength() > RS_TOLERANCE)
+           RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
+       RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
+       RS_SETTINGS->endGroup();
+   }
 }
 
 void QG_LineAngleOptions::updateAngle(const QString& a) {

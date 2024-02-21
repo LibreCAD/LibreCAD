@@ -505,9 +505,9 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 
     // check given entities:
 	if (!(circle && point.valid)) return nullptr;
-	if (!(circle->isArc() || circle->rtti()==RS2::EntitySplinePoints)){
-		return nullptr;
-	}
+ //    if (!(circle->isArc() || circle->rtti()==RS2::EntitySplinePoints || circle->rtti() == RS2::EntityParabola)){
+    // 	return nullptr;
+    // }
 
     // the two tangent points:
     RS_VectorSolutions sol=circle->getTangentPoint(point);
