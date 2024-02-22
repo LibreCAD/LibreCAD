@@ -474,7 +474,7 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
     // check given entities:
 	if (!(circle && normal))
 		return ret;
-	if (!circle->isArc())
+    if (!(circle->isArc() || circle->rtti() == RS2::EntityParabola))
 		return ret;
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
 	RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);

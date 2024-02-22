@@ -55,6 +55,7 @@ struct LC_ParabolaData
     m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
     **/
     LC_Quadratic getQuadratic() const;
+    double FindX(const RS_Vector& point) const;
 
     // The three control points, and all other properties are calculated from control points
     std::array<RS_Vector, 3> controlPoints;
@@ -123,6 +124,18 @@ public:
     RS_Vector getTangentDirection(const RS_Vector& point)const override;
     //find the tangential points seeing from given point
     RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;
+
+    /**
+      * get the tangential point of a tangential line orthogonal to a given line
+      *@ normal, the given line
+      *@ onEntity, should the tangential be required to on entity of the elliptic arc
+      *@ coord, current cursor position
+      *
+      *@author: Dongxu Li
+      */
+    RS_Vector getNearestOrthTan(const RS_Vector& coord,
+                                            const RS_Line& normal,
+                                            bool onEntity ) const override;
 
     RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
                              const RS_Vector& trimPoint) override;

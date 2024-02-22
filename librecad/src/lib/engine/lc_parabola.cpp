@@ -304,6 +304,12 @@ RS_LineData LC_ParabolaData::GetAxis() const
     return {vertex, vertex + axis*(0.5*vp.dotP(axis)/axis.squared())};
 }
 
+double LC_ParabolaData::FindX(const RS_Vector& point) const
+{
+    // in regular coordinates (4hy=x^2)
+    const auto vp = RS_Vector{point}.rotate(M_PI/2 - axis.angle()) - vertex;
+    return vp.x;
+}
 
 /** \brief return the equation of the entity
 a quadratic contains coefficients for quadratic:
@@ -577,6 +583,26 @@ void LC_Parabola::LC_Parabola::update()
     LC_SplinePoints::getData() = convert2SplineData(data);
     calculateBorders();
 }
+
+RS_Vector LC_Parabola::getNearestOrthTan([[maybe_unused]] const RS_Vector& coord,
+                                        const RS_Line& normal,
+                                        bool onEntity ) const
+{
+    // transform to regular form: 4hy=x^2
+    auto line = RS_Vector{ normal.getDirection1() }.rotate(M_PI/2 - data.axis.angle());
+    // parabola tangent: <{2.*h, x}|line>=0, x=line.y/(2h line.x)>
+    if (onEntity) {
+        const double x0 = data.FindX(getStartpoint());
+        const double x1 = data.FindX(getEndpoint());
+        if (std::signbit(line.x - x0) == std::signbit(line.x - x1))
+            return RS_Vector{false};
+    }
+    if (std::abs(line.y) < RS_TOLERANCE)
+        return RS_Vector{false};
+    const double x = -2.*data.axis.magnitude()*line.x/line.y;
+    return RS_Vector{x, x*x/(4.*data.axis.magnitude())}.rotate(data.axis.angle() - M_PI/2) + data.vertex;
+}
+
 // void LC_Parabola::LC_Parabola::draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset)
 // {
 //     for (size_t i=0; i<2; ++i){
