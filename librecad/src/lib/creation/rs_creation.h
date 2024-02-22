@@ -28,6 +28,7 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
+#include <memory>
 #include "rs_vector.h"
 
 class RS_Document;
@@ -114,7 +115,7 @@ public:
     RS_Line* createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
                                RS_Entity* circle);
-    RS_Line* createTangent2(const RS_Vector& coord,
+    std::unique_ptr<RS_Line> createTangent2(const RS_Vector& coord,
                             RS_Entity* circle1,
                             RS_Entity* circle2);
     /**

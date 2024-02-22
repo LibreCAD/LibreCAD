@@ -108,9 +108,9 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
 	RS_Creation creation(nullptr, nullptr);
     RS_Vector mouse(graphicView->toGraphX(e->x()),
                     graphicView->toGraphY(e->y()));
-    tangent.reset(creation.createTangent2(mouse,
+    tangent = creation.createTangent2(mouse,
                                           circle1,
-                                          circle2));
+                                          circle2);
 	if(!tangent.get()){
         valid=false;
         return;

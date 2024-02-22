@@ -541,10 +541,10 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 * @param circle1 1st circle or arc entity.
 * @param circle2 2nd circle or arc entity.
 */
-RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
+std::unique_ptr<RS_Line> RS_Creation::createTangent2(const RS_Vector& coord,
                                      RS_Entity* circle1,
                                      RS_Entity* circle2) {
-	RS_Line* ret = nullptr;
+    std::unique_ptr<RS_Line> ret;
     RS_Vector circleCenter1;
     RS_Vector circleCenter2;
     double circleRadius1 = 0.0;
@@ -552,14 +552,11 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 
     // check given entities:
 	if(! (circle1 && circle2))
-		return nullptr;
+        return {};
 	if( !(circle1->isArc() && circle2->isArc()))
-		return nullptr;
+        return {};
 
-	std::vector<RS_Line*> poss;
-    //        for (int i=0; i<4; ++i) {
-	//            poss[i] = nullptr;
-    //        }
+    std::vector<std::unique_ptr<RS_Line>> poss;
     RS_LineData d;
     if( circle1->rtti() == RS2::EntityEllipse) {
         std::swap(circle1,circle2);//move Ellipse to the second place
@@ -586,15 +583,14 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 				RS_Vector offs1 = RS_Vector::polar(circleRadius1, angt1);
 				RS_Vector offs2 = RS_Vector::polar(circleRadius2, angt1);
 
-				poss.push_back( new RS_Line{circleCenter1 + offs1,
-													  circleCenter2 + offs2});
-
+                poss.emplace_back(std::make_unique<RS_Line>(circleCenter1 + offs1,
+                                                      circleCenter2 + offs2));
 
                 offs1.setPolar(circleRadius1, angt2);
                 offs2.setPolar(circleRadius2, angt2);
 
-				poss.push_back( new RS_Line{circleCenter1 + offs1,
-													  circleCenter2 + offs2});
+                poss.emplace_back(std::make_unique<RS_Line>(circleCenter1 + offs1,
+                                                      circleCenter2 + offs2));
             }
 
             // inner tangents:
@@ -608,16 +604,15 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 
                 offs1.setPolar(circleRadius1, angt3);
                 offs2.setPolar(circleRadius2, angt3);
-
-				poss.push_back( new RS_Line{circleCenter1 - offs1,
-													  circleCenter2 + offs2});
+                poss.emplace_back(std::make_unique<RS_Line>(circleCenter1 - offs1,
+                                                      circleCenter2 + offs2));
 
 
                 offs1.setPolar(circleRadius1, angt4);
                 offs2.setPolar(circleRadius2, angt4);
 
-				poss.push_back( new RS_Line{circleCenter1 - offs1,
-													  circleCenter2 + offs2});
+                poss.emplace_back(std::make_unique<RS_Line>(circleCenter1 - offs1,
+                                                      circleCenter2 + offs2));
             }
 
         }
@@ -678,12 +673,12 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
             vpec.x *= -1.;//direction vector of tangent
             RS_Vector vpe1(vpe2 - vpec*(RS_Vector::dotP(vpec,vpe2)/vpec.squared()));
 //            std::cout<<"vpe1.squared()="<<vpe1.squared()<<std::endl;
-			RS_Line *l=new RS_Line{vpe1, vpe2};
+            auto l=std::make_unique<RS_Line>(vpe1, vpe2);
             l->rotate(a2);
             l->scale(factor1);
             l->rotate(a0);
             l->move(m0);
-            poss.push_back(l);
+            poss.push_back(std::move(l));
 
         }
         //debugging
@@ -707,16 +702,12 @@ RS_Line* RS_Creation::createTangent2(const RS_Vector& coord,
 //idx=static_cast<int>(poss.size()*(random()/(double(1.0)+RAND_MAX)));
     if (idx!=-1) {
         RS_LineData d = poss[idx]->getData();
-		for(auto p: poss){
-			if(p)
-				delete p;
-		}
 
         LC_UndoSection undo( document, handleUndo);
-        ret = new RS_Line{container, d};
-		setEntity(ret);
+        ret = std::make_unique<RS_Line>(container, d);
+        setEntity(ret.get());
     } else {
-		ret = nullptr;
+        ret.reset();
     }
 
     return ret;
