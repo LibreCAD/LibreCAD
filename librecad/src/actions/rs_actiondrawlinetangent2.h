@@ -63,9 +63,7 @@ private:
     void preparePreivew(QMouseEvent* e);
 	void clearHighlighted();
     /** Closest tangent. */
-    std::unique_ptr<RS_Line> tangent;
     std::vector<std::unique_ptr<RS_Line>> m_tangents;
-    std::unique_ptr<RS_LineData> lineData;
 	/** 1st chosen entity */
     RS_Entity* circle1 = nullptr;
     /** 2nd chosen entity */
