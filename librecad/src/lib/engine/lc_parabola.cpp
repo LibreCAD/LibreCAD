@@ -311,6 +311,13 @@ double LC_ParabolaData::FindX(const RS_Vector& point) const
     return vp.x;
 }
 
+RS_Vector LC_ParabolaData::FromX(double x) const
+{
+    // in regular coordinates (4hy=x^2)
+    auto vp = RS_Vector{x, x*x/(4.*axis.magnitude())}.rotate(axis.angle() - M_PI/2) + vertex;
+    return vp;
+}
+
 /** \brief return the equation of the entity
 a quadratic contains coefficients for quadratic:
 m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
@@ -384,6 +391,20 @@ RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
         return {point};
     return {pf(p0.x + dx), pf(p0.x - dx)};
 }
+
+RS_Vector LC_Parabola::dualLineTangentPoint(const RS_Vector& line) const
+{
+    // rotate to regular form
+    // coordinates: dual
+    // rotate(-a) : rotate(a)
+    auto uv = RS_Vector{line}.rotate(data.axis.angle() - M_PI/2.);
+    // slope = {2h, x} <(2h,x)|uv> = 0
+    // x=-2h uv.x/(uv.y)
+    if (std::abs(uv.y) < RS_TOLERANCE)
+        return RS_Vector{false};
+    return data.FromX(-2.*data.axis.magnitude()*uv.x/uv.y);
+}
+
 
 RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
                          const RS_Vector& trimPoint)

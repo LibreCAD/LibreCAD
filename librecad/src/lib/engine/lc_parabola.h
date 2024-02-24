@@ -57,6 +57,7 @@ struct LC_ParabolaData
     **/
     LC_Quadratic getQuadratic() const;
     double FindX(const RS_Vector& point) const;
+    RS_Vector FromX(double x) const;
 
     // The three control points, and all other properties are calculated from control points
     std::array<RS_Vector, 3> controlPoints;
@@ -138,6 +139,7 @@ public:
                                             const RS_Line& normal,
                                             bool onEntity ) const override;
 
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
     RS2::Ending getTrimPoint(const RS_Vector& trimCoord,
                              const RS_Vector& trimPoint) override;
     RS_Vector prepareTrim(const RS_Vector& trimCoord,

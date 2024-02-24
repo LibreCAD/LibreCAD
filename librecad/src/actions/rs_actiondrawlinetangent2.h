@@ -57,7 +57,7 @@ public:
 	void updateMouseButtonHints() override;
 	void finish(bool updateTB) override;
 
-    void updateMouseCursor();
+    void updateMouseCursor() override;
 
 private:
     void preparePreivew(QMouseEvent* e);

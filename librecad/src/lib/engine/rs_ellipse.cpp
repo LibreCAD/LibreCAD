@@ -1204,6 +1204,27 @@ RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
 }
 
 
+RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const
+{
+    // u x + v y = 1
+    // coordinates : dual
+    // rotate (-a) : rotate(a)
+    RS_Vector uv = RS_Vector{line}.rotate(data.majorP.angle());
+    // slope = -b c/ a s ( a s, - b c)
+    // x a s - b c y =0 -> s/c = b y / a x
+    // elliptical angle
+    double t = std::atan2(data.ratio * uv.y, uv.x);
+    RS_Vector vp{data.majorP.magnitude()*std::cos(t), data.majorP.magnitude()*data.ratio*std::sin(t)};
+    vp.rotate(data.majorP.angle());
+
+    RS_Vector vp0 = data.center + vp;
+    RS_Vector vp1 = data.center - vp;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
+
 void RS_Ellipse::move(const RS_Vector& offset) {
     data.center.move(offset);
     //calculateEndpoints();

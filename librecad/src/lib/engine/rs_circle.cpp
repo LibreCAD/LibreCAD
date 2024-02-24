@@ -674,6 +674,17 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
         }
 }
 
+RS_Vector RS_Circle::dualLineTangentPoint(const RS_Vector& line) const
+{
+    RS_Vector dr = line.normalized() * data.radius;
+    RS_Vector vp0 = data.center + dr;
+    RS_Vector vp1 = data.center - dr;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
+
 void RS_Circle::move(const RS_Vector& offset) {
 	data.center.move(offset);
     moveBorders(offset);

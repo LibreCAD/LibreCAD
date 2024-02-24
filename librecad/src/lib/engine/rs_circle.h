@@ -144,6 +144,8 @@ with Cx the center of the common tangent circle, Rx the radius. Ci and Ri are th
                                         const RS_Line& normal,
 										bool onEntity = false) const override;
 
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
+
 	bool offset(const RS_Vector& coord, const double& distance) override;
 	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
 	RS_Vector getTangentDirection(const RS_Vector& point)const override;

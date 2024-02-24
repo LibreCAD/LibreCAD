@@ -373,6 +373,16 @@ public:
     }
 
     /**
+     * @brief dualLineTangentPoint find the tangent point for a line in line coordinates
+     * @param line a tangent line in line coordinates
+     * @return the tangent point for the line
+     */
+    virtual RS_Vector dualLineTangentPoint([[maybe_unused]] const RS_Vector& line) const
+    {
+        return RS_Vector{false};
+    }
+
+    /**
      * Must be overwritten to get the nearest reference point for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)

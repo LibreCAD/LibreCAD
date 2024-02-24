@@ -549,6 +549,17 @@ RS_Vector RS_Arc::getNearestOrthTan(const RS_Vector& coord,
         return getCenter()+vp;
 }
 
+RS_Vector RS_Arc::dualLineTangentPoint(const RS_Vector& line) const
+{
+    RS_Vector dr = line.normalized() * data.radius;
+    RS_Vector vp0 = data.center + dr;
+    RS_Vector vp1 = data.center - dr;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
+
 void RS_Arc::moveStartpoint(const RS_Vector& pos) {
     // polyline arcs: move point not angle:
 	//if (parent && parent->rtti()==RS2::EntityPolyline) {
