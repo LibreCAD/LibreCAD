@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_splinepoints.h"
 
 struct RS_LineData;
+class RS_Line;
 
 /**
  * Holds the data that defines a parabola.

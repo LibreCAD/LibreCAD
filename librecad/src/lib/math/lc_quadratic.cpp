@@ -516,7 +516,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
             return ret;
         }
         std::vector<std::vector<double> >  ce(0);
-		if(fabs(p2->m_vLinear(1))<RS_TOLERANCE){
+        if(std::abs(p2->m_vLinear(1))<RS_TOLERANCE){
             const double angle=0.25*M_PI;
             LC_Quadratic p11(*p1);
             LC_Quadratic p22(*p2);
@@ -539,11 +539,11 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 //        }
         return ret;
     }
-    if( fabs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
+    if( std::abs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
             &&
-            fabs(p2->m_mQuad(0,0))<RS_TOLERANCE && fabs(p2->m_mQuad(0,1))<RS_TOLERANCE
+            std::abs(p2->m_mQuad(0,0))<RS_TOLERANCE && fabs(p2->m_mQuad(0,1))<RS_TOLERANCE
             ){
-        if(fabs(p1->m_mQuad(1,1))<RS_TOLERANCE && fabs(p2->m_mQuad(1,1))<RS_TOLERANCE){
+        if(std::abs(p1->m_mQuad(1,1))<RS_TOLERANCE && fabs(p2->m_mQuad(1,1))<RS_TOLERANCE){
             //linear
             std::vector<double> ce(0);
             ce.push_back(p1->m_vLinear(0));
@@ -599,7 +599,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
    cos x, sin x
    -sin x, cos x
    */
-boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double& angle)
+boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(const double& angle)
 {
     boost::numeric::ublas::matrix<double> ret(2,2);
     ret(0,0)=cos(angle);
@@ -608,6 +608,25 @@ boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double
     ret(1,1)=ret(0,0);
     return ret;
 }
+
+LC_Quadratic LC_Quadratic::getDualCurve() const
+{
+    if (!isQuadratic())
+        return LC_Quadratic{};
+    auto getCes = [this]() -> std::array<double, 6>{
+        std::vector<double> cev = getCoefficients();
+        return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
+    };
+    const auto& [a,b,c,d,e,f] = getCes();
+
+    std::vector<double> dce = {{
+                                   e*e - 4.*c*f, 4.*b*f - 2.*d*e, d*d - 4.*a*f,
+                                   4.*c*d-2.*b*e, 4.*a*e-2.*b*d,
+                                   b*b-4.*a*c
+                               }};
+    return {dce};
+}
+
 
 
 /**
