@@ -1209,7 +1209,7 @@ RS_Vector RS_Ellipse::dualLineTangentPoint(const RS_Vector& line) const
     // u x + v y = 1
     // coordinates : dual
     // rotate (-a) : rotate(a)
-    RS_Vector uv = RS_Vector{line}.rotate(data.majorP.angle());
+    RS_Vector uv = RS_Vector{line}.rotate(-data.majorP.angle());
     // slope = -b c/ a s ( a s, - b c)
     // x a s - b c y =0 -> s/c = b y / a x
     // elliptical angle
