@@ -58,9 +58,14 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2()
 {
     init(SetCircle1);
-    clearHighlighted();
+    for (RS_Entity* circle: {circle1, circle2})
+    {
+        if (circle != nullptr) {
+            circle->setHighlighted(false);
+            graphicView->drawEntity(circle);
+        }
+    }
 }
-
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
     clearHighlighted();
@@ -114,7 +119,6 @@ void RS_ActionDrawLineTangent2::clearHighlighted()
 
 void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
-    e->accept();
     deleteSnapper();
     deletePreview();
 
@@ -145,8 +149,9 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
-
+void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
+{
+    deleteSnapper();
     if (e->button()==Qt::RightButton) {
         deletePreview();
         if (getStatus() != SetCircle1)
