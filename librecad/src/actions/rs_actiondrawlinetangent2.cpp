@@ -193,9 +193,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
                 circle1 = nullptr;
             }
         }
-        else {
-            init(getStatus() - 1);
-        }
+        init(getStatus() - 1);
         clearHighlighted();
         return;
     }
