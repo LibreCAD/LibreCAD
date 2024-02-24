@@ -63,8 +63,8 @@ void RS_ActionDrawLineTangent2::finish(bool updateTB){
         graphicView->drawEntity(circle1);
     }
     if(circle2){
-        circle1->setHighlighted(false);
-        graphicView->drawEntity(circle1);
+        circle2->setHighlighted(false);
+        graphicView->drawEntity(circle2);
     }
     RS_PreviewActionInterface::finish(updateTB);
 }
