@@ -28,6 +28,7 @@
 #ifndef RS_CREATION_H
 #define RS_CREATION_H
 
+#include <memory>
 #include "rs_vector.h"
 
 class RS_Document;
@@ -114,15 +115,9 @@ public:
     RS_Line* createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
                                RS_Entity* circle);
-    RS_Line* createTangent2(const RS_Vector& coord,
+    std::vector<std::unique_ptr<RS_Line>> createTangent2(
                             RS_Entity* circle1,
                             RS_Entity* circle2);
-    /**
-      * create the path of centers of common tangent circles of the two given circles
-      *@ return nullptr, if failed
-      *@ at success return either an ellipse or hyperbola
-      */
-    std::vector<RS_Entity*> createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2);
 
     RS_Line* createLineRelAngle(const RS_Vector& coord,
                                 RS_Entity* entity,

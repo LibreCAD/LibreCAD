@@ -93,12 +93,12 @@ public:
         return data.endpoint;
     }
     /** Sets the startpoint */
-    void setStartpoint(RS_Vector s) {
+    void setStartpoint(const RS_Vector& s) {
         data.startpoint = s;
         calculateBorders();
     }
     /** Sets the endpoint */
-    void setEndpoint(RS_Vector e) {
+    void setEndpoint(const RS_Vector& e) {
         data.endpoint = e;
         calculateBorders();
     }

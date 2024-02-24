@@ -75,6 +75,7 @@ void LC_ActionDrawParabola4Points::trigger() {
         }
     }
     RS_Vector rz = graphicView->getRelativeZero();
+       // graphicView->SignVerbor(container) : graphicView->
     graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
     drawSnapper();

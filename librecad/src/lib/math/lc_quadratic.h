@@ -94,6 +94,14 @@ public:
 
     /** switch x,y coordinates */
     LC_Quadratic flipXY(void) const;
+
+    /**
+     * @brief getDualCurve: the dual curve of the current conic section
+     * @return the quadratic of the dual curve, if the current curve is a conic section;
+     *         returns an invalid object, if the current curve is not quadratic
+     */
+    LC_Quadratic getDualCurve() const;
+
     /** the matrix of rotation by angle **/
     static boost::numeric::ublas::matrix<double> rotationMatrix(const double& angle);
 

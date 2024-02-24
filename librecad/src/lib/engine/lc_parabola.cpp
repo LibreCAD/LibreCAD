@@ -307,8 +307,15 @@ RS_LineData LC_ParabolaData::GetAxis() const
 double LC_ParabolaData::FindX(const RS_Vector& point) const
 {
     // in regular coordinates (4hy=x^2)
-    const auto vp = RS_Vector{point}.rotate(M_PI/2 - axis.angle()) - vertex;
+    const auto vp = RS_Vector{point}.rotate(vertex, M_PI/2 - axis.angle()) - vertex;
     return vp.x;
+}
+
+RS_Vector LC_ParabolaData::FromX(double x) const
+{
+    // in regular coordinates (4hy=x^2)
+    auto vp = RS_Vector{x, x*x/(4.*axis.magnitude())}.rotate(axis.angle() - M_PI/2) + vertex;
+    return vp;
 }
 
 /** \brief return the equation of the entity
@@ -384,6 +391,18 @@ RS_VectorSolutions LC_Parabola::getTangentPoint(const RS_Vector& point) const
         return {point};
     return {pf(p0.x + dx), pf(p0.x - dx)};
 }
+
+RS_Vector LC_Parabola::dualLineTangentPoint(const RS_Vector& line) const
+{
+    // rotate to regular form
+    auto uv = RS_Vector{line}.rotate(M_PI/2. - data.axis.angle());
+    // slope = {2h, x} <(2h,x)|uv> = 0
+    // x=-2h uv.x/(uv.y)
+    if (std::abs(uv.y) < RS_TOLERANCE)
+        return RS_Vector{false};
+    return data.FromX(-2.*data.axis.magnitude()*uv.x/uv.y);
+}
+
 
 RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
                          const RS_Vector& trimPoint)

@@ -42,7 +42,8 @@ class RS_ActionDrawLineTangent2 : public RS_PreviewActionInterface {
 private:
     enum Status {
         SetCircle1,     /**< Choose the startpoint. */
-        SetCircle2      /**< Choose the circle / arc. */
+        SetCircle2,     /**< Choose the circle / arc. */
+        SelectLine      /**<Choose the tangent*/
     };
 
 public:
@@ -51,18 +52,18 @@ public:
 	~RS_ActionDrawLineTangent2() override;
 
 	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
 	void finish(bool updateTB) override;
 
-	void updateMouseCursor() override;
+    void updateMouseCursor() override;
 
 private:
+    void preparePreivew(QMouseEvent* e);
 	void clearHighlighted();
     /** Closest tangent. */
-    std::unique_ptr<RS_Line> tangent;
-	std::unique_ptr<RS_LineData> lineData;
+    std::vector<std::unique_ptr<RS_Line>> m_tangents;
 	/** 1st chosen entity */
     RS_Entity* circle1 = nullptr;
     /** 2nd chosen entity */
@@ -70,7 +71,7 @@ private:
     bool valid = false;
 
     //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse};
+    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
 };
 
 #endif
