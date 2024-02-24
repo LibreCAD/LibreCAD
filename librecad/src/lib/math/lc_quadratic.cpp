@@ -24,7 +24,9 @@
 **
 **********************************************************************/
 
+#include <algorithm>
 #include <cfloat>
+#include <numeric>
 #include <QDebug>
 #include "rs_math.h"
 #include "rs_information.h"
@@ -507,7 +509,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p2->isQuadratic()==false){
         //one line, one quadratic
         //avoid division by zero
-        if(fabs(p2->m_vLinear(0))+DBL_EPSILON<fabs(p2->m_vLinear(1))){
+        if(std::abs(p2->m_vLinear(0))+DBL_EPSILON<fabs(p2->m_vLinear(1))){
             ret=getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
 //            for(size_t j=0;j<ret.size();j++){
 //                DEBUG_HEADER
@@ -539,11 +541,11 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 //        }
         return ret;
     }
-    if( std::abs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
+    if( std::abs(p1->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p1->m_mQuad(0,1))<RS_TOLERANCE
             &&
-            std::abs(p2->m_mQuad(0,0))<RS_TOLERANCE && fabs(p2->m_mQuad(0,1))<RS_TOLERANCE
+            std::abs(p2->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p2->m_mQuad(0,1))<RS_TOLERANCE
             ){
-        if(std::abs(p1->m_mQuad(1,1))<RS_TOLERANCE && fabs(p2->m_mQuad(1,1))<RS_TOLERANCE){
+        if(std::abs(p1->m_mQuad(1,1))<RS_TOLERANCE && std::abs(p2->m_mQuad(1,1))<RS_TOLERANCE){
             //linear
             std::vector<double> ce(0);
             ce.push_back(p1->m_vLinear(0));
@@ -559,9 +561,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         }
         return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
     }
-    std::vector<std::vector<double> >  ce(0);
-    ce.push_back(p1->getCoefficients());
-    ce.push_back(p2->getCoefficients());
+    std::vector<std::vector<double> >  ce = { p1->getCoefficients(),
+                                              p2->getCoefficients()};
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER
         std::cout<<*p1<<std::endl;
@@ -570,10 +571,15 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 	auto sol= RS_Math::simultaneousQuadraticSolverFull(ce);
     bool valid= sol.size()>0;
 	for(auto & v: sol){
-		if(v.magnitude()>=RS_MAXDOUBLE){
+        if(v.magnitude()>=RS_MAXDOUBLE){
             valid=false;
             break;
         }
+        const std::vector<double> xyi = {v.x * v.x, v.x * v.y, v.y * v.y, v.x, v.y, 1.};
+        const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.);
+        const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.);
+        LC_ERR<<__func__<<"(): "<<v.x<<","<<v.y<<": equ0: "<<e0;
+        LC_ERR<<__func__<<"(): "<<v.x<<","<<v.y<<": equ1: "<<e1;
     }
     if(valid) return sol;
     ce.clear();

@@ -580,7 +580,7 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
 * @param circle1 1st circle or arc entity.
 * @param circle2 2nd circle or arc entity.
 */
-std::unique_ptr<RS_Line> RS_Creation::createTangent2(const RS_Vector& coord,
+std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
                                                      RS_Entity* circle1,
                                                      RS_Entity* circle2) {
     // check given entities:
@@ -596,6 +596,17 @@ std::unique_ptr<RS_Line> RS_Creation::createTangent2(const RS_Vector& coord,
                                              circle2->getQuadratic().getDualCurve());
     if (sol.empty())
         return {};
+    RS_VectorSolutions sol1;
+    for (const auto& vp: sol)
+    {
+        if (!vp.valid)
+            continue;
+        if (sol1.empty())
+            sol1.push_back(vp);
+        else if (sol1.getClosestDistance(vp) > RS_TOLERANCE_ANGLE)
+                sol1.push_back(vp);
+    }
+
     // find the tangent point for a line in line coordinates
     auto getTangentPoint = [](const RS_Entity& circle, const RS_Vector& line) -> RS_Vector {
         auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
@@ -614,7 +625,7 @@ std::unique_ptr<RS_Line> RS_Creation::createTangent2(const RS_Vector& coord,
     };
     // verify the tangent lines
     std::vector<std::unique_ptr<RS_Line>> tangents;
-    std::transform(sol.begin(), sol.end(), std::back_inserter(tangents),
+    std::transform(sol1.begin(), sol1.end(), std::back_inserter(tangents),
                    [&getTangentPoint, circle1, circle2](const RS_Vector& line) -> std::unique_ptr<RS_Line> {
         RS_Vector tangentP = getTangentPoint(*circle1, line);
         if (!tangentP.valid)
@@ -633,57 +644,9 @@ std::unique_ptr<RS_Line> RS_Creation::createTangent2(const RS_Vector& coord,
     }), tangents.end());
     if (tangents.empty())
         return {};
-    // the nearest to the mouse cursor
-    auto& nearest = *std::min_element(tangents.begin(),
-                                          tangents.end(), [&coord](const std::unique_ptr<RS_Line>& lhs, const std::unique_ptr<RS_Line>& rhs) {
-        double dist0 = coord.distanceTo(lhs->getNearestPointOnEntity(coord));
-        double dist1 = coord.distanceTo(rhs->getNearestPointOnEntity(coord));
-        return dist0 < dist1;
-    });
-    return std::move(nearest);
+    return tangents;
 }
 
-/**
-  * create the path of centers of common tangent circles of the two given circles
-  *@ return nullptr, if failed
-  *@ at success return either an ellipse or hyperbola
-  */
-std::vector<RS_Entity*> RS_Creation::createCircleTangent2( RS_Entity* circle1,RS_Entity* circle2)
-{
-    std::vector<RS_Entity*> ret(0, nullptr);
-    if (!(circle1 && circle2)) return ret;
-    RS_Entity* e1=circle1;
-    RS_Entity* e2=circle2;
-
-    if (e1->getRadius() < e2->getRadius()) std::swap(e1,e2);
-
-    RS_Vector center1=e1->getCenter();
-    RS_Vector center2=e2->getCenter();
-    RS_Vector cp=(center1+center2)*0.5;
-    double dist=center1.distanceTo(center2);
-    if(dist<RS_TOLERANCE) return ret;
-    RS_Vector vp= center1 - cp;
-    double c=dist/(e1->getRadius()+e2->getRadius());
-    if( c < 1. - RS_TOLERANCE) {
-        //two circles intersection or one circle in the other, there's an ellipse path
-        ret.push_back(
-                    new RS_Ellipse(nullptr,
-                                   {cp, vp, sqrt(1. - c*c), 0., 0., false}
-                                   ));
-    }
-    if( dist + e2 ->getRadius() < e1->getRadius() +RS_TOLERANCE ) {
-        //one circle inside of another, the path is an ellipse
-        return ret;
-    }
-    if(c > 1. + RS_TOLERANCE) {
-        //not circle in circle, there's a hyperbola path
-        c= (e1->getRadius()  - e2->getRadius())/dist;
-        ret.push_back(new LC_Hyperbola(nullptr, LC_HyperbolaData(cp,vp*c,sqrt(1. - c*c),0.,0.,false)));
-        return ret;
-    }
-    ret.push_back(new RS_Line{cp, {cp.x - vp.y, cp.y+vp.x}});
-    return ret;
-}
 
 /**
      * Creates a line with a relative angle to the given entity.
