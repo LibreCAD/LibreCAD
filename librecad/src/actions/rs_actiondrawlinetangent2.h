@@ -55,6 +55,7 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
+    void init(int status) override;
 	void finish(bool updateTB) override;
 
     void updateMouseCursor() override;

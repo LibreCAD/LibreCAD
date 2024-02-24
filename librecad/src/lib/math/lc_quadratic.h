@@ -3,7 +3,8 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 
-Copyright (C) 2012-2015 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2015-2024 LibreCAD.org
+** Copyright (C) 2015-2024 Dongxu Li (dongxuli2011@gmail.com)
 
 This program is free software; you can redistribute it and/or
 modify it under the terms of the GNU General Public License
@@ -18,7 +19,6 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-
 **********************************************************************/
 
 
@@ -99,6 +99,8 @@ public:
      * @brief getDualCurve: the dual curve of the current conic section
      * @return the quadratic of the dual curve, if the current curve is a conic section;
      *         returns an invalid object, if the current curve is not quadratic
+     *
+     * @author Dongxu Li
      */
     LC_Quadratic getDualCurve() const;
 

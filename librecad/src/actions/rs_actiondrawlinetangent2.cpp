@@ -66,6 +66,29 @@ RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2()
         }
     }
 }
+void RS_ActionDrawLineTangent2::init(int status)
+{
+    setStatus(status);
+    switch (status) {
+    case SetCircle1:
+        if (circle1 != nullptr) {
+            circle1->setHighlighted(false);
+            graphicView->drawEntity(circle1);
+            circle1 = nullptr;
+        }
+        [[fallthrough]];
+    case SetCircle2:
+    case SelectLine:
+        if (circle2 != nullptr) {
+            circle2->setHighlighted(false);
+            graphicView->drawEntity(circle2);
+            circle2 = nullptr;
+        }
+        break;
+    }
+    RS_PreviewActionInterface::init(status);
+}
+
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
     clearHighlighted();
@@ -91,7 +114,15 @@ void RS_ActionDrawLineTangent2::trigger() {
             document->endUndoCycle();
         }
         init(SetCircle1);
-        clearHighlighted();
+        for (RS_Entity* circle: {circle1, circle2})
+        {
+            if (circle != nullptr) {
+                circle->setHighlighted(false);
+                graphicView->drawEntity(circle);
+            }
+        }
+        circle1 = nullptr;
+        circle2 = nullptr;
     }
 }
 
@@ -109,6 +140,7 @@ void RS_ActionDrawLineTangent2::clearHighlighted()
         if (circle2 == nullptr)
             clearHighlight(&circle1);
         [[fallthrough]];
+    case SelectLine:
     case SetCircle2:
         clearHighlight(&circle2);
         break;
@@ -154,8 +186,16 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
     deleteSnapper();
     if (e->button()==Qt::RightButton) {
         deletePreview();
-        if (getStatus() != SetCircle1)
-            init(getStatus()-1);
+        if (getStatus() == SetCircle1) {
+            if (circle1 != nullptr) {
+                circle1->setHighlighted(true);
+                graphicView->drawEntity(circle1);
+                circle1 = nullptr;
+            }
+        }
+        else {
+            init(getStatus() - 1);
+        }
         clearHighlighted();
         return;
     }
@@ -166,7 +206,7 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
         if(!circle1) return;
         circle1->setHighlighted(true);
         graphicView->drawEntity(circle1);
-        setStatus(getStatus()+1);
+        init(getStatus()+1);
     }
         break;
 
