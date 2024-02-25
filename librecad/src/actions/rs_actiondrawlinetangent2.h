@@ -29,8 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_Line;
-struct RS_LineData;
 /**
  * This action class can handle user events to draw tangents from circle to
  * circle.
@@ -63,16 +61,9 @@ public:
 private:
     void preparePreivew(QMouseEvent* e);
 	void clearHighlighted();
-    /** Closest tangent. */
-    std::vector<std::unique_ptr<RS_Line>> m_tangents;
-	/** 1st chosen entity */
-    RS_Entity* circle1 = nullptr;
-    /** 2nd chosen entity */
-    RS_Entity* circle2 = nullptr;
-    bool valid = false;
 
-    //list of entity types supported by current action
-    const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
+    struct Points;
+    std::unique_ptr<Points> m_pPoints;
 };
 
 #endif
