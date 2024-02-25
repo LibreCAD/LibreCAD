@@ -417,90 +417,32 @@ RS2::Ending LC_Parabola::getTrimPoint(const RS_Vector& trimCoord,
 RS_Vector LC_Parabola::prepareTrim(const RS_Vector& trimCoord,
                                    const RS_VectorSolutions& trimSol)
 {
-    //special trimming for ellipse arc
-        LC_LOG<<"LC_Parabola::prepareTrim()";
-        if( ! trimSol.hasValid() ) return (RS_Vector(false));
-        if( trimSol.getNumber() == 1 ) return (trimSol.get(0));
-        auto findX = [this](const RS_Vector& vp) -> double {
-            return rotateToQuadratic(vp).x;
-        };
-        double am=findX(trimCoord);
-        std::vector<double> ias;
-        double ia(0.),ia2(0.);
-        RS_Vector is,is2;
-        using namespace std;
-        for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find closest according rotated x
-            ias.push_back(findX(trimSol.get(ii)));
-            if( !ii ||  abs(ias[ii] - am) < abs(ia -am) ) {
-                ia = ias[ii];
-                is = trimSol.get(ii);
-            }
-        }
-        std::sort(ias.begin(),ias.end());
-        for(size_t ii=0; ii<trimSol.getNumber(); ++ii) { //find segment to include trimCoord
-            if (abs(ia-ias[ii]) > RS_TOLERANCE) continue;
-            if( signbit(am - ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()]) != signbit(am - ia))  {
-                ia2=ias[(ii+trimSol.getNumber()-1)% trimSol.getNumber()];
-            } else {
-                ia2=ias[(ii+1)% trimSol.getNumber()];
-            }
-            break;
-        }
-        for(const RS_Vector& vp: trimSol) { //find segment to include trimCoord
-            if ( abs(ia2-findX(vp)) > RS_TOLERANCE) continue;
-            is2=vp;
-            break;
-        }
-            double dia=abs(ia-am);
-            double dia2=abs(ia2-am);
-            double ai_min=std::min(dia,dia2);
-            double da1=abs(findX(getStartpoint())-am);
-            double da2=abs(findX(getEndpoint())-am);
-            double da_min=std::min(da1,da2);
-            auto isInBetween = [](double a, double b, double c) {
-                return signbit(b-a) != signbit(b-c);
-            };
-            auto x2Point = [this](double x) {
-                RS_Vector p0 {x, x*x/(4.*data.axis.magnitude())};
-                p0.rotate(data.axis.angle() - M_PI/2);
-                return p0 + data.vertex;
-            };
-            if( da_min < ai_min ) {
-                //trimming one end of arc
-                bool irev= std::signbit(am-ia2) != signbit(am - ia);
-                if ( isInBetween(ia,findX(getStartpoint()),findX(getEndpoint())) &&
-                        isInBetween(ia2,findX(getStartpoint()),findX(getEndpoint()) ) ) { //
-                    if(irev) {
-                        moveEndpoint(x2Point(ia));
-                        moveStartpoint(x2Point(ia2));
-                    } else {
-                        moveStartpoint(x2Point(ia));
-                        moveEndpoint(x2Point(ia2));
-                    }
-                    da1=abs(findX(getStartpoint())-am);
-                    da2=abs(findX(getEndpoint())-am);
-                }
-                if( ((da1 < da2) && (isInBetween(ia2,ia,findX(getStartpoint())))) ||
-                        ((da1 > da2) && (isInBetween(ia2,findX(getEndpoint()),ia)))
-                  ) {
-                    std::swap(is,is2);
-                }
-            } else {
-                //choose intersection as new end
-                if( dia > dia2) {
-                    std::swap(is,is2);
-                    std::swap(ia,ia2);
-                }
-                if(isInBetween(ia,findX(getStartpoint()),findX(getEndpoint()))) {
-                    if(isInBetween(am,findX(getStartpoint()),ia)) {
-                        moveEndpoint(x2Point(ia2));
-                    } else {
-                        moveStartpoint(x2Point(ia));
-                    }
-                }
-            }
-//        }
-        return is;
+    //prepare trimming for multiple intersections
+    if ( ! trimSol.hasValid()) return(RS_Vector(false));
+    if ( trimSol.getNumber() == 1 ) return(trimSol.get(0));
+    auto vp0=trimSol.getClosest(trimCoord, nullptr, 0);
+
+    double dr2=trimCoord.squaredTo(vp0);
+    //the trim point found is closer to mouse location (trimCoord) than both end points, return this trim point
+    if(dr2 < trimCoord.squaredTo(getStartpoint()) && dr2 < trimCoord.squaredTo(getEndpoint()))
+        return vp0;
+    //the closer endpoint to trimCoord
+    RS_Vector vp1=(trimCoord.squaredTo(getStartpoint()) <= trimCoord.squaredTo(getEndpoint()))?getStartpoint():getEndpoint();
+
+    //searching for intersection in the direction of the closer end point
+    auto dvp1=vp1 - trimCoord;
+    RS_VectorSolutions sol1;
+    for(size_t i=0; i<trimSol.size(); i++){
+        auto dvp2=trimSol.at(i) - trimCoord;
+        if( RS_Vector::dotP(dvp1, dvp2) > RS_TOLERANCE)
+            sol1.push_back(trimSol.at(i));
+    }
+    //if found intersection in direction, return the closest to trimCoord from it
+    if(sol1.size())
+        return sol1.getClosest(trimCoord, nullptr, 0);
+
+    //no intersection by direction, return previously found closest intersection
+    return vp0;
 }
 
 RS_Vector LC_Parabola::rotateToQuadratic(RS_Vector vp) const
