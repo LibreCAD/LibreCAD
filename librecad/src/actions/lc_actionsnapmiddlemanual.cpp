@@ -27,14 +27,14 @@
 
 #include "lc_actionsnapmiddlemanual.h"
 
-#include "rs_line.h"
-#include "rs_debug.h"
-#include "rs_preview.h"
-#include "rs_graphicview.h"
 #include "rs_commandevent.h"
-#include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 constexpr double g_defaultRatio = 0.5;
 
