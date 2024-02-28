@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2021 Melwyn Francis Carlo
+** Copyright (C) 2024 Dongxu Li <dongxuli2011@gmail.com>
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -25,18 +26,18 @@
 
 #pragma once
 
+#include <memory>
 
-#include "rs_pen.h"
-#include "rs_vector.h"
 #include "rs_previewactioninterface.h"
 
+class RS_Pen;
 
 /*
     This action class can snap (set) the relative-zero marker
     in the middle between two points chosen by the user.
 
     The middle point, by default, rests at a poistion 50% relative 
-    to the position of the first point chosen, that is, 
+    to the position of the first point chosen, that is,
     at the center of the imaginary line connecting the 
     two user-defined points.
 
@@ -65,7 +66,7 @@ class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface
 
        ~LC_ActionSnapMiddleManual() override;
 
-        void init(int status = 0)   override;
+        void init(int status = SetPercentage)   override;
 
         void mouseMoveEvent    (QMouseEvent* e) override;
         void mouseReleaseEvent (QMouseEvent* e) override;
@@ -82,12 +83,7 @@ class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface
         void signalUnsetSnapMiddleManual();
 
     private:
-
-        double percentage;
-
-        RS_Vector startPoint;
-        RS_Vector endPoint;
-
-        RS_Pen currentAppPen;
+        struct Points;
+        std::unique_ptr<Points> m_pPoints;
 };
 

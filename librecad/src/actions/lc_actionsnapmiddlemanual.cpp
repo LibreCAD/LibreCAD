@@ -3,6 +3,7 @@
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
 ** Copyright (C) 2021 Melwyn Francis Carlo
+** Copyright (C) 2024 Dongxu Li <dongxuli2011@gmail.com>
 **
 ** This file may be distributed and/or modified under the terms of the
 ** GNU General Public License version 2 as published by the Free Software
@@ -24,6 +25,8 @@
 
 #include <QMouseEvent>
 
+#include "lc_actionsnapmiddlemanual.h"
+
 #include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_preview.h"
@@ -31,9 +34,22 @@
 #include "rs_commandevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
+#include "rs_math.h"
 
-#include "lc_actionsnapmiddlemanual.h"
+constexpr double g_defaultRatio = 0.5;
 
+struct LC_ActionSnapMiddleManual::Points {
+    Points(const RS_Pen& currentAppPen):
+        currentAppPen{currentAppPen}
+    {}
+
+    double percentage = g_defaultRatio;
+
+    RS_Vector startPoint{false};
+    RS_Vector endPoint{false};
+
+    RS_Pen currentAppPen{};
+};
 
 /*
     This action class can snap (set) the relative-zero marker
@@ -53,12 +69,10 @@
 LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual( RS_EntityContainer& container, 
                                                       RS_GraphicView& graphicView, RS_Pen input_currentAppPen) 
                                                       :
-                                                      RS_PreviewActionInterface("Snap Middle Manual", container, graphicView), 
-                                                      currentAppPen(input_currentAppPen)
+                                                      RS_PreviewActionInterface("Snap Middle Manual", container, graphicView, RS2::ActionSnapMiddleManual),
+                                                      m_pPoints{std::make_unique<Points>(input_currentAppPen)}
 {
     RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");
-
-    actionType = RS2::ActionSnapMiddleManual;
 }
 
 
@@ -69,11 +83,11 @@ void LC_ActionSnapMiddleManual::init(int status)
 {
     RS_DEBUG->print("LC_ActionSnapMiddleManual::init");
 
-    document->setActivePen(currentAppPen);
+    document->setActivePen(m_pPoints->currentAppPen);
 
     RS_PreviewActionInterface::init(status);
 
-    percentage = 50.0;
+    m_pPoints->percentage = g_defaultRatio;
 
     drawSnapper();
 }
@@ -88,12 +102,12 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
         /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
         if (e->modifiers() & Qt::ShiftModifier)
         {
-            mouse = snapToAngle(mouse, startPoint, 15.0);
+            mouse = snapToAngle(mouse, m_pPoints->startPoint, 15.0);
         }
 
         deletePreview();
 
-        RS_Line *line = new RS_Line(startPoint, mouse);
+        RS_Line *line = new RS_Line(preview.get(), m_pPoints->startPoint, mouse);
 
         preview->addEntity(line);
         line->setLayerToActive();
@@ -103,7 +117,7 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent* e)
     }
     else if (getStatus() == SetPercentage)
     {
-        if (predecessor != NULL)
+        if (predecessor != nullptr)
         {
             if (predecessor->getName().compare("Snap Middle Manual") == 0)
             {
@@ -124,7 +138,7 @@ void LC_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent* e)
         /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
         if ((e->modifiers() & Qt::ShiftModifier) && (getStatus() == SetEndPoint))
         {
-            snapped = snapToAngle(snapped, startPoint, 15.0);
+            snapped = snapToAngle(snapped, m_pPoints->startPoint, 15.0);
         }
 
         RS_CoordinateEvent ce(snapped);
@@ -167,7 +181,7 @@ void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
     {
         case SetPercentage:
         case SetStartPoint:
-            startPoint = mouse;
+            m_pPoints->startPoint = mouse;
             setStatus(SetEndPoint);
             graphicView->moveRelativeZero(mouse);
             updateMouseButtonHints();
@@ -175,20 +189,20 @@ void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent* e)
 
         case SetEndPoint:
             /* Refuse zero length lines. */
-            if ((mouse - startPoint).squared() > RS_TOLERANCE2)
+            if ((mouse - m_pPoints->startPoint).squared() > RS_TOLERANCE2)
             {
-                endPoint = mouse;
+                m_pPoints->endPoint = mouse;
 
-                const RS_Vector middleManualPoint = startPoint + ((endPoint - startPoint) * (percentage / 100.0));
+                const RS_Vector middleManualPoint = m_pPoints->startPoint + (m_pPoints->endPoint - m_pPoints->startPoint) * m_pPoints->percentage;
 
                 graphicView->moveRelativeZero(middleManualPoint);
 
-                if (predecessor != NULL)
+                if (predecessor != nullptr)
                 {
                     if (predecessor->getName().compare("Default") != 0)
                     {
                         signalUnsetSnapMiddleManual();
-                        document->setActivePen(currentAppPen);
+                        document->setActivePen(m_pPoints->currentAppPen);
                         RS_CoordinateEvent new_e (middleManualPoint);
                         predecessor->coordinateEvent(&new_e);
                         init(-1);
@@ -216,8 +230,8 @@ void LC_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
     {
         case SetPercentage:
             {
-                bool ok;
-                percentage = inputCommand.QString::toDouble(&ok);
+                bool ok = false;
+                m_pPoints->percentage = RS_Math::eval(inputCommand, &ok)/100.;
                 if (ok)
                 {
                     setStatus(SetStartPoint);
@@ -226,7 +240,7 @@ void LC_ActionSnapMiddleManual::commandEvent(RS_CommandEvent* inputCommandEvent)
                 }
                 else
                 {
-                    percentage = 50.0;
+                    m_pPoints->percentage = g_defaultRatio;
                 }
             }
             break;
