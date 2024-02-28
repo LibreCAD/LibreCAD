@@ -790,6 +790,17 @@ RS_Commands::RS_Commands() {
                 {"np", QObject::tr("np", "snap - on entity")}},
             RS2::ActionSnapOnEntity
         },
+
+        /* Snap Middle Manual */
+        {
+            //list all <full command, translation> pairs
+            {{"snapmiddlemanual", QObject::tr("snapmiddlemanual", "snap middle manual")}}, 
+            {{"snapmanual", QObject::tr("snapmanual", "snap middle manual")}, 
+             {"smm", QObject::tr("smm", "snap middle manual")}}, 
+
+            RS2::ActionSnapMiddleManual
+        },
+
         // set relative zero
         {
             {{"setrelativezero", QObject::tr("setrelativezero", "set relative zero position")}},

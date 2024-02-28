@@ -154,6 +154,7 @@
 #include "rs_actionselectwindow.h"
 #include "rs_actionsetrelativezero.h"
 #include "rs_actionsetsnapmode.h"
+#include "lc_actionsnapmiddlemanual.h"
 #include "rs_actionsetsnaprestriction.h"
 #include "rs_actionsnapintersectionmanual.h"
 #include "rs_actiontoolregeneratedimensions.h"
@@ -1769,6 +1770,22 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
+}
+
+void QG_ActionHandler::slotSnapMiddleManual()
+{
+    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)
+    {
+        getCurrentAction()->init(-1);
+        return;
+    }
+
+    const RS_Pen currentAppPen { document->getActivePen() };
+    const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
+    document->setActivePen(snapMiddleManual_pen);
+    auto a = new LC_ActionSnapMiddleManual(*document, *view, currentAppPen);
+    connect(a, &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
+    view->setCurrentAction(a);
 }
 
 void QG_ActionHandler::disableSnaps() {
