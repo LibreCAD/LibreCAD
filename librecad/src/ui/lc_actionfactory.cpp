@@ -36,9 +36,8 @@
 #include <QAction>
 #include <QActionGroup>
 
-LC_ActionFactory::LC_ActionFactory(QObject* parent, QObject* a_handler)
+LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
-    , using_theme(false)
     , main_window(parent)
     , action_handler(a_handler)
 {

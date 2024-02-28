@@ -1364,10 +1364,12 @@ std::vector<double> GetMatrix(size_t iCount, bool bClosed, const std::vector<dou
 
 void LC_SplinePoints::UpdateControlPoints()
 {
-	if(data.cut) return; // no update after trim operation
+    if(data.cut)
+        return; // no update after trim operation
 
-    if (!data.useControlPoints)
+    if (!data.useControlPoints){
         data.controlPoints.clear();
+    }
 
 	size_t n = data.splinePoints.size();
 

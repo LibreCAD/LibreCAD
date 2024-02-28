@@ -39,14 +39,14 @@ class LC_ActionFactory : public QObject
     Q_OBJECT
 
 public:
-    LC_ActionFactory(QObject* parent, QObject* a_handler);
+    LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
     void fillActionContainer(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
     void commonActions(QMap<QString, QAction*>& a_map, LC_ActionGroupManager* agm);
-    bool using_theme;
+    bool using_theme = false;
 
 private:
-    QC_ApplicationWindow* main_window;
-    QObject* action_handler;
+    QC_ApplicationWindow* main_window = nullptr;
+    QG_ActionHandler* action_handler = nullptr;
 };
 
 #endif

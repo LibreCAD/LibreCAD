@@ -22,6 +22,7 @@
 **
 **********************************************************************/
 
+#include <QMouseEvent>
 
 #include "rs_line.h"
 #include "rs_debug.h"
