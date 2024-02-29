@@ -65,13 +65,13 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     connect(action, SIGNAL(toggled(bool)), agm, SLOT(toggleExclusiveSnapMode(bool)));
     action->setObjectName("ExclusiveSnapMode");
 
-    snapMiddleManual = new QAction(QIcon(":/icons/snap_middle_manual.svg"), tr("Snap Middle Manual"), agm->snap);
+    snapMiddleManual = createAction(":/icons/snap_middle_manual.svg", tr("Snap Middle Manual"), agm->snap);
     snapMiddleManual->setObjectName("SnapMiddleManual");
     snapMiddleManual->setCheckable(true);
     connect(snapMiddleManual, &QAction::triggered, actionHandler, &QG_ActionHandler::slotSnapMiddleManual);
     this->addAction(snapMiddleManual);
 
-    snapFree = new QAction(QIcon(":/icons/snap_free.svg"), tr("Free Snap"), agm->snap_extras);
+    snapFree = createAction(":/icons/snap_free.svg", tr("Free Snap"), agm->snap_extras);
     snapFree->setObjectName("SnapFree");
 
     snapGrid = createAction(":/icons/snap_grid.svg", tr("Snap on grid"), agm->snap);

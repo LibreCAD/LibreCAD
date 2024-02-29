@@ -729,13 +729,13 @@ QString RS_System::symbolToLanguage(const QString& symb) {
     if (symb.contains( QRegularExpression( "^en"))) {
         ret = RS_Locale::languageToString( loc.language());
         if( symb.contains('_') ) {
-            ret += " (" + RS_Locale::countryToString( loc.country()) + ')';
+            ret += " (" + RS_Locale::countryToString( loc.territory()) + ')';
         }
     }
     else {
         ret = RS_Locale::languageToString( loc.language()) + ' ' + loc.nativeLanguageName();
         if( symb.contains( '_') ) {
-            ret += " (" + RS_Locale::countryToString( loc.country()) + ' ' + loc.nativeCountryName() + ')';
+            ret += " (" + RS_Locale::countryToString( loc.territory()) + ' ' + loc.nativeTerritoryName() + ')';
         }
     }
 

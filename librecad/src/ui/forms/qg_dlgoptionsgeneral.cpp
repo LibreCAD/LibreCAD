@@ -327,8 +327,7 @@ void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
 
 void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+    QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
 	dlg.setCustomColor(0, custom.rgb());
