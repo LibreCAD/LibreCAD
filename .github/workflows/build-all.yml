@@ -1,5 +1,10 @@
 name: Continuous build
 on:
+  workflow_dispatch:
+    workflows: [Build]
+      types: [requested]
+      branches: [qt6]
+
   push:
     branches:
       - master
