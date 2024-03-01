@@ -120,9 +120,9 @@ void RS_ActionDrawArcTangential::preparePreview() {
         if (suc) {
             data.reset(new RS_ArcData(arc.getData()));
             if (byRadius)
-                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getRadius(),false);
+                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getRadius(), true);
             else
-                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI,true);
+                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI, false);
         }
     }
 }
@@ -254,6 +254,7 @@ void RS_ActionDrawArcTangential::setRadius(double r){
 
     auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
     RS_SETTINGS->writeEntry("/ArcTangentialRadius", QString{"%1"}.arg(data->radius, 0, 'g', 12));
+    RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
 }
 
 double RS_ActionDrawArcTangential::getRadius() const {
@@ -280,6 +281,7 @@ void RS_ActionDrawArcTangential::setAngle(double angle) {
 
     auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
     RS_SETTINGS->writeEntry("/ArcTangentialAngle", QString{"%1"}.arg(angle, 0, 'g', 12));
+    RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
 }
 
 void RS_ActionDrawArcTangential::readSettings()

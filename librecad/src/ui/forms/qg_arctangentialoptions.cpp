@@ -48,14 +48,13 @@ QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlag
     , ui(new Ui::Ui_ArcTangentialOptions{})
 {
     ui->setupUi(this);
-    connect(ui->rbRadius, SIGNAL(clicked()), this, SLOT(on_rbRadius_clicked));
-    connect(ui->rbAngle, SIGNAL(clicked()), this, SLOT(on_rbAngle_clicked));
+    connect(ui->rbRadius, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbRadius_clicked);
+    connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbAngle_clicked);
     connect(ui->leRadius, SIGNAL(editingFinished()), this, SLOT(on_leRadius_editingFinished));
     connect(ui->leAngle, SIGNAL(editingFinished()), this, SLOT(on_leAngle_editingFinished));
 }
 
 QG_ArcTangentialOptions::~QG_ArcTangentialOptions() = default;
-
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -82,23 +81,6 @@ void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, [[maybe_unused]] 
     }
 }
 
-
-/*void QG_ArcTangentialOptions::init() {
-    data = nullptr;
-    RS_SETTINGS->beginGroup("/Draw");
-    bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
-    RS_SETTINGS->endGroup();
-
-    rbNeg->setChecked(reversed);
-}*/
-
-
-
-/*void QG_ArcTangentialOptions::setData(RS_ArcData* d) {
-    data = d;
-    updateDirection(false);
-}*/
-
 void QG_ArcTangentialOptions::updateRadius(const QString& s) {
     ui->leRadius->setText(s);
 }
@@ -106,9 +88,11 @@ void QG_ArcTangentialOptions::updateRadius(const QString& s) {
 void QG_ArcTangentialOptions::updateAngle(const QString& s) {
     ui->leAngle->setText(s);
 }
-void QG_ArcTangentialOptions::updateByRadius(const bool br) {
+
+void QG_ArcTangentialOptions::updateByRadius(bool br) {
     ui->rbRadius->setChecked(br);
     ui->rbAngle->setChecked(!br);
+    action->setByRadius(br);AAAAAAAAAAAAAAAAAA
     ui->leRadius->setDisabled(!br);
     ui->leAngle->setDisabled(br);
 }
@@ -116,11 +100,10 @@ void QG_ArcTangentialOptions::updateByRadius(const bool br) {
 void QG_ArcTangentialOptions::on_leRadius_editingFinished()
 {
     if(ui->rbRadius->isChecked()) {
-        bool ok;
+        bool ok = false;
         double d=std::abs(RS_Math::eval(ui->leRadius->text(), &ok));
         if(!ok) return;
         if (d<RS_TOLERANCE) d=1.0;
-        //updateRadius(QString::number(d,'g',5));
         action->setRadius(d);
         ui->leRadius->setText(QString::number(d,'g', 6));
     }
@@ -132,7 +115,8 @@ void QG_ArcTangentialOptions::on_leAngle_editingFinished()
         bool ok = false;
         double d=RS_Math::correctAngle(RS_Math::eval(ui->leAngle->text(), &ok)*M_PI/180.);
         if(!ok) return;
-        if(d<RS_TOLERANCE_ANGLE || d + RS_TOLERANCE_ANGLE > 2. * M_PI) d=M_PI; // can not do full circle
+        if(d<RS_TOLERANCE_ANGLE || d + RS_TOLERANCE_ANGLE > 2. * M_PI)
+            d=M_PI; // can not do full circle
         action->setAngle(d);
         //updateAngle(QString::number(d*180./M_PI,'g',5));
         ui->leAngle->setText(QString::number(RS_Math::rad2deg( d),'g',6));
@@ -141,12 +125,12 @@ void QG_ArcTangentialOptions::on_leAngle_editingFinished()
 
 void QG_ArcTangentialOptions::on_rbRadius_clicked(bool /*checked*/)
 {
-    action->setRadius(ui->leRadius->text().toDouble());
+    //action->setRadius(ui->leRadius->text().toDouble());
     updateByRadius(true);
 }
 
 void QG_ArcTangentialOptions::on_rbAngle_clicked(bool /*checked*/)
 {
-    action->setAngle(ui->leAngle->text().toDouble()*M_PI/180.);
+    //action->setAngle(ui->leAngle->text().toDouble()*M_PI/180.);
     updateByRadius(false);
 }

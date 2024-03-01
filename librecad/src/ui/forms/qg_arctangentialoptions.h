@@ -48,13 +48,13 @@ public slots:
     virtual void updateRadius(const QString& s  );
     virtual void updateAngle(const QString& s  );
     virtual void updateByRadius(const bool br);
-    void on_leRadius_editingFinished();
+    virtual void on_leRadius_editingFinished();
 
-    void on_leAngle_editingFinished();
+    virtual void on_leAngle_editingFinished();
 
-    void on_rbRadius_clicked(bool checked);
+    virtual void on_rbRadius_clicked(bool checked);
 
-    void on_rbAngle_clicked(bool checked);
+    virtual void on_rbAngle_clicked(bool checked);
 
 
 protected:
