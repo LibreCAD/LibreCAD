@@ -92,7 +92,7 @@ void QG_ArcTangentialOptions::updateAngle(const QString& s) {
 void QG_ArcTangentialOptions::updateByRadius(bool br) {
     ui->rbRadius->setChecked(br);
     ui->rbAngle->setChecked(!br);
-    action->setByRadius(br);AAAAAAAAAAAAAAAAAA
+    action->setByRadius(br);
     ui->leRadius->setDisabled(!br);
     ui->leAngle->setDisabled(br);
 }
