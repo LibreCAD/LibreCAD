@@ -852,6 +852,8 @@ add_executable(LibreCAD
         librecad/src/ui/generic/colorwizard.h
         librecad/src/ui/generic/comboboxoption.cpp
         librecad/src/ui/generic/comboboxoption.h
+        librecad/src/ui/forms/LC_DlgParabola.h
+        librecad/src/ui/forms/LC_DlgParabola.cpp
 #        librecad/src/ui/generic/customtoolbarcreator.cpp
 #        librecad/src/ui/generic/customtoolbarcreator.h
 #        librecad/src/ui/generic/customwidgetcreator.cpp
@@ -965,6 +967,9 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawslicedivide.cpp
         librecad/src/actions/lc_actiondrawlinerectanglefixed.cpp
         librecad/src/ui/forms/lc_linerectanglefixedoptions.cpp
+        librecad/src/lib/engine/lc_parabola.cpp
+        librecad/src/actions/lc_actiondrawparabola4points.cpp
+        librecad/src/actions/lc_actiondrawparabolaFD.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
