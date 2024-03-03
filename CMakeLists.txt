@@ -22,6 +22,7 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 
+
 find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
 
@@ -948,6 +949,22 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/actions/lc_actiondrawlinerectanglerel.cpp
+        librecad/src/actions/lc_actiondrawlinerectanglerel.h
+        librecad/src/actions/lc_actiondrawcross.cpp
+        librecad/src/actions/lc_actiondrawcross.h
+        librecad/src/ui/forms/lc_crossoptions.cpp
+        librecad/src/actions/lc_actiondrawlinerel.h
+        librecad/src/actions/lc_actiondrawlinerel.h
+        librecad/src/actions/lc_actiondrawlinerel.cpp
+        librecad/src/ui/forms/lc_lineoptions.cpp
+        librecad/src/actions/lc_actiondrawlineanglerel.h
+        librecad/src/actions/lc_actiondrawlineanglerel.cpp
+        librecad/src/ui/forms/lc_lineanglereloptions.cpp
+        librecad/src/ui/forms/lc_slicedivideoptions.cpp
+        librecad/src/actions/lc_actiondrawslicedivide.cpp
+        librecad/src/actions/lc_actiondrawlinerectanglefixed.cpp
+        librecad/src/ui/forms/lc_linerectanglefixedoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
