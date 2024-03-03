@@ -129,6 +129,10 @@ HEADERS += \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
+    actions/lc_actiondrawlineanglerel.h \
+    actions/lc_actiondrawlinerectanglefixed.h \
+    actions/lc_actiondrawlinerel.h \
+    actions/lc_actiondrawslicedivide.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -246,9 +250,18 @@ HEADERS += \
     ui/lc_layertreemodel_options.h \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
-    ui/forms/lc_layerdialog_ex.h
+    ui/forms/lc_layerdialog_ex.h\
+    ui/forms/lc_crossoptions.h \
+    ui/forms/lc_lineanglereloptions.h \
+    ui/forms/lc_lineoptions.h \
+    ui/forms/lc_linerectanglefixedoptions.h \
+    ui/forms/lc_slicedivideoptions.h
 
 SOURCES += \
+    actions/lc_actiondrawlineanglerel.cpp \
+    actions/lc_actiondrawlinerectanglefixed.cpp \
+    actions/lc_actiondrawlinerel.cpp \
+    actions/lc_actiondrawslicedivide.cpp \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actionpenapply.cpp \
@@ -359,8 +372,12 @@ SOURCES += \
     ui/lc_layertreemodel.cpp \
     ui/lc_layertreemodel_options.cpp \
     ui/lc_layertreewidget.cpp \
-    ui/lc_layertreeview.cpp
-
+    ui/lc_layertreeview.cpp\
+    ui/forms/lc_crossoptions.cpp \
+    ui/forms/lc_lineanglereloptions.cpp \
+    ui/forms/lc_lineoptions.cpp \
+    ui/forms/lc_linerectanglefixedoptions.cpp \
+    ui/forms/lc_slicedivideoptions.cpp
 
 # ################################################################################
 # Command
@@ -418,6 +435,8 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawlinepolygon.h \
     actions/rs_actiondrawlinepolygon2.h \
     actions/rs_actiondrawlinerectangle.h \
+    actions/lc_actiondrawlinerectanglerel.h \
+    actions/lc_actiondrawcross.h\
     actions/rs_actiondrawlinerelangle.h \
     actions/rs_actiondrawlinetangent1.h \
     actions/rs_actiondrawlinetangent2.h \
@@ -556,6 +575,8 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawlinepolygon.cpp \
     actions/rs_actiondrawlinepolygon2.cpp \
     actions/rs_actiondrawlinerectangle.cpp \
+    actions/lc_actiondrawlinerectanglerel.cpp \
+    actions/lc_actiondrawcross.cpp \
     actions/rs_actiondrawlinerelangle.cpp \
     actions/rs_actiondrawlinetangent1.cpp \
     actions/rs_actiondrawlinetangent2.cpp \
@@ -862,6 +883,10 @@ SOURCES += ui/lc_actionfactory.cpp \
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/LC_DlgParabola.ui \
+    ui/forms/lc_crossoptions.ui \
+    ui/forms/lc_lineanglereloptions.ui \
+    ui/forms/lc_linerectanglefixedoptions.ui \
+    ui/forms/lc_slicedivideoptions.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \
@@ -908,6 +933,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_lineangleoptions.ui \
     ui/forms/qg_linebisectoroptions.ui \
     ui/forms/qg_lineoptions.ui \
+    ui/forms/lc_lineoptions.ui \
     ui/forms/qg_lineparalleloptions.ui \
     ui/forms/qg_lineparallelthroughoptions.ui \
     ui/forms/qg_linepolygon2options.ui \
