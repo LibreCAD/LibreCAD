@@ -158,6 +158,19 @@ protected:
 	void requestArcOptions(RS_ActionInterface* action,
 								   bool on, bool update);
 
+ void requestCrossOptions(RS_ActionInterface* action,
+								   bool on, bool update);
+
+ void requestLineAngleRelOptions(RS_ActionInterface* action,
+                                 bool on, bool update);
+
+ void requestLineRelOptions(RS_ActionInterface* action,
+                            bool on, bool update);
+
+void requestSliceDivideOptions(RS_ActionInterface *action, bool on, bool update);
+
+void requestLineRectangleFixedOptions(RS_ActionInterface *action, bool on, bool update);
+
 	void requestArcTangentialOptions(RS_ActionInterface* action,
 											 bool on, bool update);
 

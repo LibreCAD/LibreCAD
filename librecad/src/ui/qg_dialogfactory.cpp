@@ -116,6 +116,11 @@
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_vector.h"
+#include "lc_crossoptions.h"
+#include "lc_lineoptions.h"
+#include "lc_lineanglereloptions.h"
+#include "lc_slicedivideoptions.h"
+#include "lc_linerectanglefixedoptions.h"
 
 namespace {
 
@@ -133,6 +138,8 @@ void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on)
         if (on) {
             option = std::make_unique<T>(toolbar);
             toolbar->addWidget(option.get());
+// looks like it's a bug - why action is set twice?
+//            option->setAction(action);
             option->setAction(action);
             option->show();
         }
@@ -869,6 +876,28 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestPolylineEquidistantOptions(action, on, update);
         break;
 
+    case RS2::ActionDrawCross:
+        requestCrossOptions(action, on, update);
+        break;
+
+     case RS2::ActionDrawLineAngleRel:
+     case RS2::ActionDrawLineOrthogonalRel:
+         requestLineAngleRelOptions(action, on, update);
+         break;
+
+     case RS2::ActionDrawLineRectangleFixed:
+         requestLineRectangleFixedOptions(action, on, update);
+        break;
+
+     case RS2::ActionDrawLineRel:
+        requestLineRelOptions(action, on, update);
+        break;
+
+     case RS2::ActionDrawSliceDivide:
+         requestSliceDivideOptions(action, on, update);
+         break;
+
+
     default:
         break;
     }
@@ -1049,6 +1078,31 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
     addOptionWidget<QG_ArcOptions>(optionWidget, action, on, update);
 }
 
+
+void QG_DialogFactory::requestCrossOptions(RS_ActionInterface* action,
+                                           bool on, bool update){
+    addOptionWidget<LC_CrossOptions>(optionWidget, action, on, update);
+}
+
+void QG_DialogFactory::requestLineAngleRelOptions(RS_ActionInterface* action,
+                                                  bool on, bool update){
+    addOptionWidget<LC_LineAngleRelOptions>(optionWidget, action, on, update);
+}
+
+void QG_DialogFactory::requestLineRectangleFixedOptions(RS_ActionInterface* action,
+                                                        bool on, bool update){
+    addOptionWidget<LC_LineRectangleFixedOptions>(optionWidget, action, on, update);
+}
+
+void QG_DialogFactory::requestLineRelOptions(RS_ActionInterface* action,
+                                           bool on, bool update){
+    addOptionWidget<LC_LineOptions>(optionWidget, action, on, update);
+}
+
+void QG_DialogFactory::requestSliceDivideOptions(RS_ActionInterface* action,
+                                           bool on, bool update){
+    addOptionWidget<LC_SliceDivideOptions>(optionWidget, action, on, update);
+}
 
 
 /**
