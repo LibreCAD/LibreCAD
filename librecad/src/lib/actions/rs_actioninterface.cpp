@@ -27,12 +27,14 @@
 #include "rs_graphicview.h"
 
 #include <QKeyEvent>
+#include <QToolBar>
 
 #include "rs_actioninterface.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_entitycontainer.h"
+#include "rs_dialogfactory.h"
 
 /**
  * Constructor.
@@ -79,6 +81,13 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 }
 
+RS_ActionInterface::~RS_ActionInterface(){
+    if (m_optionWidget != nullptr){
+        m_optionWidget->deleteLater();
+        m_optionWidget.release();
+    }
+}
+
 /**
  * Must be implemented to return the ID of this action.
 *
@@ -119,7 +128,6 @@ void RS_ActionInterface::init(int status)
 
     }
 }
-
 
 
 /**
@@ -292,6 +300,15 @@ void RS_ActionInterface::resume() {
  */
 void RS_ActionInterface::hideOptions() {
     RS_Snapper::hideOptions();
+    if (m_optionWidget != nullptr){
+        m_optionWidget->hideOptions();
+    }
+}
+
+void RS_ActionInterface::updateOptions(){
+    if (m_optionWidget != nullptr){
+        m_optionWidget->setAction(this, true);
+    }
 }
 
 /**
@@ -299,6 +316,23 @@ void RS_ActionInterface::hideOptions() {
  */
 void RS_ActionInterface::showOptions() {
     RS_Snapper::showOptions();
+    if (m_optionWidget == nullptr){
+        createOptionsWidget();
+    }
+    if (m_optionWidget != nullptr){
+        if (!m_optionWidget->isVisible()){
+            if (m_optionWidget->parent() == nullptr){ // first time created
+               RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
+               m_optionWidget->setAction(this);
+            }
+            else{
+              m_optionWidget->show();
+            }
+        }
+    }
+}
+
+void RS_ActionInterface::createOptionsWidget(){
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){
@@ -326,4 +360,6 @@ QString RS_ActionInterface::command(const QString& cmd) {
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
 }
+
+
 

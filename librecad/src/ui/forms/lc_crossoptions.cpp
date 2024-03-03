@@ -5,7 +5,7 @@
 #include "rs_math.h"
 
 LC_CrossOptions::LC_CrossOptions(QWidget *parent) :
-    QWidget(parent),
+    LC_ActionOptionsWidget(parent),
     ui(new Ui::LC_CrossOptions)
 {
     ui->setupUi(this);
@@ -20,35 +20,38 @@ LC_CrossOptions::~LC_CrossOptions(){
     delete ui;
 }
 
-void LC_CrossOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawCross) {
-        action = static_cast<LC_ActionDrawCross*>(a);
+void LC_CrossOptions::clearAction(){
+    action = nullptr;
+}
 
-        QString x;
-        QString y;
-        QString angle;
-        int mode;
-        if (update) {
-            x = QString::number(action->getLenX(), 'g', 6);
-            y = QString::number(action->getLenY(), 'g', 6);
-            angle = QString::number(action->getCrossAngle(), 'g', 6);
-            mode = action->getCrossMode();
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            x = RS_SETTINGS->readEntry("/CrossX", "1.0");
-            y = RS_SETTINGS->readEntry("/CrossY", "1.0");
-            angle = RS_SETTINGS->readEntry("/CrossAngle", "0.0");
-            mode = RS_SETTINGS->readNumEntry("/CrossMode", 1);
-            RS_SETTINGS->endGroup();
-        }
-        setXToActionAndView(x);
-        setYToActionAndView(y);
-        setAngleToActionAndView(angle);
-        setModeToActionAndView(mode);
+bool LC_CrossOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType ==RS2::ActionDrawCross;
+}
+
+void LC_CrossOptions::doSetAction(RS_ActionInterface *a, bool update){
+    action = static_cast<LC_ActionDrawCross *>(a);
+
+    QString x;
+    QString y;
+    QString angle;
+    int mode;
+    if (update){
+        x = QString::number(action->getLenX(), 'g', 6);
+        y = QString::number(action->getLenY(), 'g', 6);
+        angle = QString::number(action->getCrossAngle(), 'g', 6);
+        mode = action->getCrossMode();
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "LC_CrossOptions::setAction: wrong action type");
-        action = nullptr;
+        RS_SETTINGS->beginGroup("/Draw");
+        x = RS_SETTINGS->readEntry("/CrossX", "1.0");
+        y = RS_SETTINGS->readEntry("/CrossY", "1.0");
+        angle = RS_SETTINGS->readEntry("/CrossAngle", "0.0");
+        mode = RS_SETTINGS->readNumEntry("/CrossMode", 1);
+        RS_SETTINGS->endGroup();
     }
+    setXToActionAndView(x);
+    setYToActionAndView(y);
+    setAngleToActionAndView(angle);
+    setModeToActionAndView(mode);
 }
 
 
@@ -64,24 +67,20 @@ void LC_CrossOptions::saveSettings(){
 void LC_CrossOptions::onXEditingFinished(){
     const QString &expr = ui->leX->text();
     setXToActionAndView(expr);
-    saveSettings();
 }
 
 void LC_CrossOptions::onYEditingFinished(){
     const QString &expr = ui->leY->text();
     setYToActionAndView(expr);
-    saveSettings();
 }
 
 void LC_CrossOptions::onAngleEditingFinished(){
     const QString &expr = ui->leAngle->text();
     setAngleToActionAndView(expr);
-    saveSettings();
 }
 
 void LC_CrossOptions::onModeIndexChanged(int index){
     setModeToActionAndView(index);
-    saveSettings();
 }
 
 void LC_CrossOptions::setXToActionAndView(const QString &strValue){

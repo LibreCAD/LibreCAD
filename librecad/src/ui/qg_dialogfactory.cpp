@@ -203,6 +203,10 @@ void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
     RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
 }
 
+void QG_DialogFactory::addOptionsWidget(QWidget * options){
+    optionWidget->addWidget(options);
+}
+
 
 /**
  * Shows a message dialog.

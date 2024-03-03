@@ -14,6 +14,7 @@
 #include "rs_ellipse.h"
 #include "rs_dialogfactory.h"
 #include "rs_math.h"
+#include "lc_crossoptions.h"
 
 LC_ActionDrawCross::LC_ActionDrawCross(
     RS_EntityContainer &container,
@@ -68,13 +69,15 @@ void LC_ActionDrawCross::trigger(){
 
 void LC_ActionDrawCross::showOptions(){
     RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestOptions (this, true);
 }
-
-void LC_ActionDrawCross::hideOptions(){
-    RS_ActionInterface::hideOptions();
-    RS_DIALOGFACTORY->requestOptions (this, false);
-}
+//    RS_ActionInterface::showOptions();
+//    RS_DIALOGFACTORY->requestOptions (this, true);
+//}
+//
+//void LC_ActionDrawCross::hideOptions(){
+//    RS_ActionInterface::hideOptions();
+//    RS_DIALOGFACTORY->requestOptions (this, false);
+//}
 
 LC_CrossData LC_ActionDrawCross::createCrossData(){
     double lengthX, lengthY;
@@ -272,4 +275,8 @@ void LC_ActionDrawCross::updateMouseCursor(){
         default:
             graphicView->setMouseCursor(RS2::CadCursor);
     }
+}
+
+void LC_ActionDrawCross::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_CrossOptions>(nullptr);
 }

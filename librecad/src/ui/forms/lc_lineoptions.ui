@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>550</width>
-    <height>32</height>
+    <width>603</width>
+    <height>35</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,10 +33,10 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="topMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <property name="bottomMargin">
-    <number>0</number>
+    <number>1</number>
    </property>
    <item row="0" column="5">
     <widget class="QLineEdit" name="leAngle">
@@ -48,7 +48,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>40</width>
        <height>0</height>
       </size>
      </property>

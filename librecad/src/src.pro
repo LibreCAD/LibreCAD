@@ -251,6 +251,7 @@ HEADERS += \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
     ui/forms/lc_layerdialog_ex.h\
+    ui/forms/lc_actionoptionswidget.h \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_lineoptions.h \
@@ -373,6 +374,7 @@ SOURCES += \
     ui/lc_layertreemodel_options.cpp \
     ui/lc_layertreewidget.cpp \
     ui/lc_layertreeview.cpp\
+    ui/forms/lc_actionoptionswidget.cpp \
     ui/forms/lc_crossoptions.cpp \
     ui/forms/lc_lineanglereloptions.cpp \
     ui/forms/lc_lineoptions.cpp \

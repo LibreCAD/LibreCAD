@@ -57,7 +57,7 @@ public:
     void updateMouseCursor() override;
 
     void showOptions() override;
-    void hideOptions() override;
+    /*void hideOptions() override;*/
 
     double getLenX() {return lenX;};
     double getLenY() {return lenY;};
@@ -68,6 +68,10 @@ public:
     void setYLength(double d);
     void setCrossAngle(double d);
     void setCrossMode(int i);
+
+protected:
+
+    void createOptionsWidget() override;
 
 private:
     /** Chosen startpoint */

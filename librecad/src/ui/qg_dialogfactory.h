@@ -132,6 +132,7 @@ public:
 	void requestOptions(RS_ActionInterface* action,
 								bool on, bool update = false) override;
 
+ void addOptionsWidget(QWidget * options);
 protected:
 	void requestPrintPreviewOptions(RS_ActionInterface* action,
 											bool on, bool update);
@@ -251,10 +252,9 @@ public:
 	void commandMessage(const QString& message) override;
 
 	static QString extToFormat(const QString& ext);
-    void updateArcTangentialOptions(double d, bool byRadius) override;
+ void updateArcTangentialOptions(double d, bool byRadius) override;
 
-    void displayBlockName(const QString& blockName, const bool& display) override;
-
+ void displayBlockName(const QString& blockName, const bool& display) override;
 
 protected:
 	//! Pointer to the widget which can host dialogs

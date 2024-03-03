@@ -970,6 +970,8 @@ add_executable(LibreCAD
         librecad/src/lib/engine/lc_parabola.cpp
         librecad/src/actions/lc_actiondrawparabola4points.cpp
         librecad/src/actions/lc_actiondrawparabolaFD.cpp
+        librecad/src/ui/forms/lc_actionoptionswidget.h
+        librecad/src/ui/forms/lc_actionoptionswidget.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
