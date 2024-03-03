@@ -291,6 +291,16 @@ namespace RS2 {
         ActionDrawPolyline,
         ActionDrawText,
 
+        ActionDrawLineRectangleRel,
+        ActionDrawLineRectangleFixed,
+        ActionDrawLineRel,
+        ActionDrawLineRelX,
+        ActionDrawLineRelY,
+        ActionDrawCross,
+        ActionDrawLineAngleRel,
+        ActionDrawLineOrthogonalRel,
+        ActionDrawSliceDivide,
+
         ActionPolylineAdd,
         ActionPolylineAppend,
         ActionPolylineDel,
