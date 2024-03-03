@@ -81,7 +81,16 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawLinePolygonCenCor"]
             << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
             << a_map["DrawLinePolygonCorCor"]
-            << a_map["DrawPoint"];
+            << a_map["DrawPoint"]
+            << a_map["DrawLineRectangleRel"]
+            << a_map["DrawLineRectangleFix"]
+            << a_map["DrawCross"]
+            << a_map["DrawLineRel"]
+            << a_map["DrawLineRelX"]
+            << a_map["DrawLineRelY"]
+            << a_map["DrawLineAngleRel"]
+            << a_map["DrawLineOrthogonalRel"]
+            << a_map["DrawSliceDivide"];
 
     circle_actions
             << a_map["DrawCircle"]
