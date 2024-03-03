@@ -252,6 +252,60 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawCircle");
     a_map["DrawCircle"] = action;
 
+    action = new QAction(tr("Cross"), agm->circle);
+    action->setIcon(QIcon(":/icons/cross_circle1.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircleCross()));
+    action->setObjectName("DrawCross");
+    a_map["DrawCross"] = action;
+
+    action = new QAction(tr("Relative"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRel()));
+    action->setObjectName("DrawLineRel");
+    a_map["DrawLineRel"] = action;
+
+    action = new QAction(tr("Relative (X)"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_rel_x.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRelX()));
+    action->setObjectName("DrawLineRelX");
+    a_map["DrawLineRelX"] = action;
+
+    action = new QAction(tr("Rectangle (Relative)"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_rectangle_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleRel()));
+    action->setObjectName("DrawLineRectangleRel");
+    a_map["DrawLineRectangleRel"] = action;
+
+    action = new QAction(tr("Rectangle (Fixed)"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_rectangle_fix.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleFixed()));
+    action->setObjectName("DrawLineRectangleFix");
+    a_map["DrawLineRectangleFix"] = action;
+
+    action = new QAction(tr("Relative (Y)"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_rel_y.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRelY()));
+    action->setObjectName("DrawLineRelY");
+    a_map["DrawLineRelY"] = action;
+
+    action = new QAction(tr("Angle To Line Relative"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_angle_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineAngleRel()));
+    action->setObjectName("DrawLineAngleRel");
+    a_map["DrawLineAngleRel"] = action;
+
+    action = new QAction(tr("Orthogonal To Line Relative"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_ortho_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalRel()));
+    action->setObjectName("DrawLineOrthogonalRel");
+    a_map["DrawLineOrthogonalRel"] = action;
+
+    action = new QAction(tr("Slice"), agm->circle);
+    action->setIcon(QIcon(":/icons/slice_divide.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivide()));
+    action->setObjectName("DrawSliceDivide");
+    a_map["DrawSliceDivide"] = action;
+
     action = new QAction(tr("Center, &Radius"), agm->circle);
     action->setIcon(QIcon(":/icons/circle_center_radius.svg"));
     connect(action, SIGNAL(triggered()),
