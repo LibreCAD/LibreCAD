@@ -230,5 +230,15 @@
         <file>parabola_focus_directrix.svg</file>
         <file>pen_apply.svg</file>
         <file>pen_copy.svg</file>
+        <file>cross_circle.svg</file>
+        <file>cross_circle1.svg</file>
+        <file>line_rel.svg</file>
+        <file>line_rel_x.svg</file>
+        <file>line_rel_y.svg</file>
+        <file>line_rectangle_rel.svg</file>
+        <file>line_angle_rel.svg</file>
+        <file>line_ortho_rel.svg</file>
+        <file>slice_divide.svg</file>
+        <file>line_rectangle_fix.svg</file>
     </qresource>
 </RCC>
