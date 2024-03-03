@@ -52,6 +52,10 @@ public:
     RS_ActionPolylineSegment(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
 
+    RS_ActionPolylineSegment(RS_EntityContainer& container,
+                             RS_GraphicView& graphicView,
+                             RS_Entity* targetEntity);
+
     void init(int status=0) override;
 
     void trigger() override;
@@ -68,6 +72,8 @@ private:
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
 
     RS_Entity* targetEntity = nullptr;
+
+    bool initWithTarget {false};
 };
 
 #endif
