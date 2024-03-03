@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_SliceDivideOptions</class>
+ <widget class="QWidget" name="LC_SliceDivideOptions">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>938</width>
+    <height>65</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="6">
+    <widget class="QLineEdit" name="leTickAngle">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QCheckBox" name="cbRelAngle">
+     <property name="text">
+      <string>Rel</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QLineEdit" name="leCircleStartAngle">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="leTickLengh">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QComboBox" name="cbEdgeTick">
+     <item>
+      <property name="text">
+       <string>None</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Both</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>End</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="16">
+    <widget class="QCheckBox" name="cbDivide">
+     <property name="text">
+      <string>Divide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leCount">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Offset:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Tick Length:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QLineEdit" name="leTickOffset">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="14">
+    <widget class="QLabel" name="lblCircleStartAngle">
+     <property name="text">
+      <string>Start Circle Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QLabel" name="label_5">
+     <property name="text">
+      <string>Tick snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="11">
+    <widget class="QComboBox" name="cbTickSnap">
+     <item>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Middle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>End</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QLabel" name="lblEdgetTick">
+     <property name="text">
+      <string>Edge Tick:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Count:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="17">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
