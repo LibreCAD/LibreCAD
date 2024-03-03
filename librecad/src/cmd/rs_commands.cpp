@@ -153,6 +153,24 @@ RS_Commands::RS_Commands() {
                 {"l", QObject::tr("l", "draw line")}},
             RS2::ActionDrawLine
         },
+        {
+            {{"rline", QObject::tr("rline", "draw line relative")}},
+            {{"rli", QObject::tr("rli", "draw line relative")},
+              {"rl", QObject::tr("rl", "draw line")}},
+            RS2::ActionDrawLineRel
+        },
+        {
+            {{"rlinex", QObject::tr("rlinex", "draw line relative")}},
+            {{"rlix", QObject::tr("rlix", "draw line relative")},
+                {"rlx", QObject::tr("rlx", "draw line")}},
+            RS2::ActionDrawLineRelX
+        },
+        {
+            {{"rliney", QObject::tr("rliney", "draw line relative")}},
+            {{"rliy", QObject::tr("rliy", "draw line relative")},
+                {"rly", QObject::tr("rly", "draw line")}},
+            RS2::ActionDrawLineRelY
+        },
         // draw line at angle - v2.2.0r2
         {
             {{"lineang", QObject::tr("lineang", "angled line")}},
@@ -177,6 +195,24 @@ RS_Commands::RS_Commands() {
             {{"re", QObject::tr("re", "draw rectangle")},
                 {"rect", QObject::tr("rect", "draw rectangle")}},
             RS2::ActionDrawLineRectangle
+        },
+        // draw relative rectangle
+        {
+            {{"rrect", QObject::tr("rrect", "draw relative rectangle")}},
+            {{"rre", QObject::tr("rre", "draw relative rectangle")}},
+            RS2::ActionDrawLineRectangleRel
+        },
+        // draw relative rectangle
+        {
+            {{"frect", QObject::tr("frect", "draw fixed rectangle")}},
+            {{"fre", QObject::tr("fre", "draw fixed rectangle")}},
+            RS2::ActionDrawLineRectangleFixed
+        },
+        // draw relative rectangle
+        {
+            {{"cross", QObject::tr("cross", "draw cross for circle")}},
+            {{"cx", QObject::tr("cx", "draw cross for circle")}},
+            RS2::ActionDrawCross
         },
         // draw parallel line
         {
@@ -419,6 +455,19 @@ RS_Commands::RS_Commands() {
             {{"pl", QObject::tr("pl", "draw polyline")}},
             RS2::ActionDrawPolyline
         },
+        // draw polyline
+        {
+            {{"rangle", QObject::tr("rangle", "draw relative angle")}},
+            {{"rang", QObject::tr("rang", "draw relative angle")}},
+            RS2::ActionDrawLineAngleRel
+        },
+        // draw polyline
+        {
+            {{"rortoline", QObject::tr("rortoline", "draw relative angle")}},
+            {{"rort", QObject::tr("rort", "draw relative angle")}},
+            RS2::ActionDrawLineOrthogonalRel
+        },
+
         // polyline add node - v2.2.0r2
         {
             {{"plineadd", QObject::tr("plineadd", "pl add node")}},
@@ -937,6 +986,43 @@ RS_Commands::RS_Commands() {
         {"through",QObject::tr("through")},
         {"trim",QObject::tr("trim")},
 
+        // commands for relative line drawing actions
+        {"x",QObject::tr("x")},
+        {"y",QObject::tr("y")},
+        {"p",QObject::tr("p")},
+        {"anglerel",QObject::tr("anglerel")},
+        {"start",QObject::tr("start")},
+
+        // commands for line angle rel action
+        {"offset",QObject::tr("offset")},
+        {"linesnap",QObject::tr("linesnap")},
+        {"ticksnap",QObject::tr("ticksnap")},
+
+        // rectangle one point
+        {"width",QObject::tr("width")},
+        {"height",QObject::tr("height")},
+        {"point",QObject::tr("point")},
+        {"size",QObject::tr("size")},
+        {"bevels",QObject::tr("bevels")},
+        {"nopoly",QObject::tr("nopoly")},
+        {"usepoly",QObject::tr("usepoly")},
+        {"corners",QObject::tr("corners")},
+        {"str",QObject::tr("str")},
+        {"round",QObject::tr("round")},
+        {"bevels",QObject::tr("bevels")},
+        {"refpoint",QObject::tr("refpoint")},
+        {"topl",QObject::tr("topl")},
+        {"top",QObject::tr("top")},
+        {"topr",QObject::tr("topr")},
+        {"left",QObject::tr("left")},
+        {"middle",QObject::tr("middle")},
+        {"right",QObject::tr("right")},
+        {"bottoml",QObject::tr("bottoml")},
+        {"bottom",QObject::tr("bottom")},
+        {"bottomr",QObject::tr("bottomr")},
+
+        // commands
+
         /** following are reversed translation,i.e.,from translated to english **/
         //not used as command keywords
         // used in function,checkCommand()
@@ -1022,6 +1108,8 @@ RS_Commands::RS_Commands() {
         {QObject::tr("color"), "color"},
         {QObject::tr("paperoffset"),"paperoffset"},
         {QObject::tr("graphoffset"),"graphoffset"}
+
+        // fixme - add reversive translation for added commands
     };
     for(auto const& p: transList){
         cmdTranslation[p.first] = p.second;
