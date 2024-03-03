@@ -125,6 +125,8 @@ public slots:
 	void slotDrawLineParallel();
 	void slotDrawLineParallelThrough();
 	void slotDrawLineRectangle();
+	void slotDrawLineRectangleRel();
+ void slotDrawLineRectangleFixed();
 	void slotDrawLineBisector();
 	void slotDrawLineTangent1();
 	void slotDrawLineTangent2();
@@ -135,6 +137,13 @@ public slots:
 	void slotDrawLinePolygon2();
     void slotDrawLinePolygon3();//added by txmy
 	void slotDrawCircle();
+ void slotDrawCircleCross();
+ void slotDrawLineRel();
+ void slotDrawLineRelX();
+ void slotDrawLineRelY();
+ void slotDrawLineOrthogonalRel();
+ void slotDrawLineAngleRel();
+ void slotDrawSliceDivide();
 	void slotDrawCircleCR();
 	void slotDrawCircle2P();
 	void slotDrawCircle2PR();

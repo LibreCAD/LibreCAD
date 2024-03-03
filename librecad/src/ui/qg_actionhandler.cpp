@@ -165,6 +165,11 @@
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
 
+#include "lc_actiondrawlinerectanglerel.h"
+
+#include "lc_actiondrawcross.h"
+#include "lc_actiondrawlinerel.h"
+
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
@@ -184,6 +189,10 @@
 #include "lc_actionpenpick.h"
 #include "lc_actionpenapply.h"
 
+#include "lc_actiondrawlineanglerel.h"
+#include "rs_math.h"
+#include "lc_actiondrawslicedivide.h"
+#include "lc_actiondrawlinerectanglefixed.h"
 
 /**
  * Constructor
@@ -452,6 +461,27 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineRectangle:
         a = new RS_ActionDrawLineRectangle(*document, *view);
         break;
+     case RS2::ActionDrawLineRectangleRel:
+        a = new LC_ActionDrawLineRectangleRel(*document, *view);
+        break;
+     case RS2::ActionDrawLineRectangleFixed:
+            a = new LC_ActionDrawLineRectangleFixed(*document, *view);
+            break;
+     case RS2::ActionDrawCross:
+         a = new LC_ActionDrawCross(*document, *view);
+         break;
+     case RS2::ActionDrawLineRel:
+         a = new LC_ActionDrawLineRel(*document, *view, LC_ActionDrawLineRel::DIRECTION_NONE);
+         break;
+     case RS2::ActionDrawLineRelX:
+         a = new LC_ActionDrawLineRel(*document, *view, LC_ActionDrawLineRel::DIRECTION_X);
+         break;
+      case RS2::ActionDrawLineRelY:
+            a = new LC_ActionDrawLineRel(*document, *view, LC_ActionDrawLineRel::DIRECTION_Y);
+            break;
+        case RS2::ActionDrawSliceDivide:
+            a = new LC_ActionDrawSliceDivide(*document, *view);
+            break;
     case RS2::ActionDrawLineBisector:
         a = new RS_ActionDrawLineBisector(*document, *view);
         break;
@@ -473,6 +503,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*document, *view);
         break;
+    case RS2::ActionDrawLineOrthogonalRel:
+        a = new LC_ActionDrawLineAngleRel(*document, *view, 90.0, true);
+        break;
+    case RS2::ActionDrawLineAngleRel:
+         a = new LC_ActionDrawLineAngleRel(*document, *view, 0.0, false);
+         break;
     case RS2::ActionPolylineAdd:
         a = new RS_ActionPolylineAdd(*document, *view);
         break;
@@ -1408,6 +1444,39 @@ void QG_ActionHandler::slotDrawLineRectangle() {
     setCurrentAction(RS2::ActionDrawLineRectangle);
 }
 
+void QG_ActionHandler::slotDrawLineRectangleRel() {
+    setCurrentAction(RS2::ActionDrawLineRectangleRel);
+}
+
+void QG_ActionHandler::slotDrawLineRectangleFixed() {
+    setCurrentAction(RS2::ActionDrawLineRectangleFixed);
+}
+
+void QG_ActionHandler::slotDrawLineRel() {
+    setCurrentAction(RS2::ActionDrawLineRel);
+}
+
+void QG_ActionHandler::slotDrawLineRelX() {
+    setCurrentAction(RS2::ActionDrawLineRelX);
+}
+
+void QG_ActionHandler::slotDrawLineRelY() {
+    setCurrentAction(RS2::ActionDrawLineRelY);
+}
+
+void QG_ActionHandler::slotDrawLineAngleRel(){
+    setCurrentAction(RS2::ActionDrawLineAngleRel);
+}
+
+void QG_ActionHandler::slotDrawLineOrthogonalRel(){
+    setCurrentAction(RS2::ActionDrawLineOrthogonalRel);
+}
+
+void QG_ActionHandler::slotDrawSliceDivide(){
+    setCurrentAction(RS2::ActionDrawSliceDivide);
+}
+
+
 void QG_ActionHandler::slotDrawLineBisector() {
     setCurrentAction(RS2::ActionDrawLineBisector);
 }
@@ -1435,6 +1504,7 @@ void QG_ActionHandler::slotDrawLineRelAngle() {
 void QG_ActionHandler::slotDrawPolyline() {
     setCurrentAction(RS2::ActionDrawPolyline);
 }
+
 
 void QG_ActionHandler::slotPolylineAdd() {
     setCurrentAction(RS2::ActionPolylineAdd);
@@ -1477,6 +1547,10 @@ void QG_ActionHandler::slotDrawLinePolygon2() {
 
 void QG_ActionHandler::slotDrawCircle() {
     setCurrentAction(RS2::ActionDrawCircle);
+}
+
+void QG_ActionHandler::slotDrawCircleCross(){
+    setCurrentAction(RS2::ActionDrawCross);
 }
 
 void QG_ActionHandler::slotDrawCircleCR() {
