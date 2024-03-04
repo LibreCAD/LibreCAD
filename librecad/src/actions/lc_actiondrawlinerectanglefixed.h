@@ -6,6 +6,8 @@
 
 class LC_ActionDrawLineRectangleFixed :public RS_PreviewActionInterface {
     Q_OBJECT
+
+
 public:
     /**
         * Action States.
@@ -59,10 +61,6 @@ public:
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
 
-    void showOptions() override;
-    void hideOptions() override;
-
-
     bool isUsePolyline(){return usePolyline;};
 
     void setCornersMode(int value);
@@ -71,7 +69,8 @@ public:
     void setSnapPointMode(int value);
     int getSnapPointMode(){return snapMode;};
     void setUsePolyline(bool value){usePolyline = value;};
-
+    void setSnapToCornerArcCenter(bool b);
+    bool isSnapToCornerArcCenter() {return snapToCornerArcCenter;};
 
     void setAngle(double angle);
     double getAngle(){return angle;}
@@ -94,6 +93,7 @@ protected:
     bool usePolyline;
     int snapMode;
     int cornersDrawMode;
+    bool snapToCornerArcCenter;
     double width;
     double radius;
     double bevelX;
@@ -101,10 +101,12 @@ protected:
     double height;
     double angle;
 
+    void createOptionsWidget() override;
+
     RS_Polyline *createPolyline(RS_Vector &snapPoint) const;
     RS_Polyline *resultingPolyline;
 
-    void updateOptions();
+
     RS_Vector lastSnapPoint;
     void drawPreviewForPoint(RS_Vector &lastSnapPoint);
     void drawPreviewForLastPoint();

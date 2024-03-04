@@ -8,6 +8,7 @@
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "lc_linerectanglefixedoptions.h"
 
 LC_ActionDrawLineRectangleFixed::LC_ActionDrawLineRectangleFixed(
     RS_EntityContainer &container,
@@ -105,7 +106,6 @@ RS_Polyline *LC_ActionDrawLineRectangleFixed::createPolyline(RS_Vector &snapPoin
     }
 
     if (drawComplex){ // we'll draw complex shape
-
         // vector used for corner size
         RS_Vector radiusShiftX = RS_Vector(radiusX,0);
         RS_Vector radiusShiftY = RS_Vector(0,radiusY);
@@ -174,6 +174,13 @@ RS_Polyline *LC_ActionDrawLineRectangleFixed::createPolyline(RS_Vector &snapPoin
 
     // prepare vector we'll use for moving shape
     RS_Vector moveVector = reference * halfRect;
+
+    // additional move if corners are round and snap to center is needed
+    if (drawBulge){
+        if (snapToCornerArcCenter){
+            moveVector = moveVector + reference*radius;
+        }
+    }
 
     // move shape so it's reference point will correspond to provided snap point
     polyline->move(moveVector);
@@ -486,6 +493,18 @@ void LC_ActionDrawLineRectangleFixed::commandEvent(RS_CommandEvent *e){
             setStatus(SetPosition);
         }
     }
+    else if (checkCommand("snapcorner",c)){
+            e->accept();
+            snapToCornerArcCenter = false;
+            updateOptions();
+            setStatus(SetPosition);
+    }
+    else if (checkCommand("snapshift",c)){
+        e->accept();
+        snapToCornerArcCenter = true;
+        updateOptions();
+        setStatus(SetPosition);
+    }
     else{
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
@@ -584,6 +603,8 @@ QStringList LC_ActionDrawLineRectangleFixed::getAvailableCommands() {
             cmd += command("radius");
             cmd += command("usepoly");
             cmd += command("nopoly");
+            cmd += command("snapcorner");
+            cmd += command("snapshift");
             break;
         default:
             break;
@@ -636,19 +657,6 @@ void LC_ActionDrawLineRectangleFixed::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionDrawLineRectangleFixed::showOptions(){
-    RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestOptions (this, true);
-}
-
-void LC_ActionDrawLineRectangleFixed::hideOptions(){
-    RS_ActionInterface::hideOptions();
-    RS_DIALOGFACTORY->requestOptions (this, false);
-}
-
-void LC_ActionDrawLineRectangleFixed::updateOptions(){
-    RS_DIALOGFACTORY->requestOptions (this,true, true);
-};
 
 
 void LC_ActionDrawLineRectangleFixed::setSnapPointMode(int value){
@@ -690,5 +698,12 @@ void LC_ActionDrawLineRectangleFixed::setLengthY(double value){
     drawPreviewForLastPoint();
 }
 
+void LC_ActionDrawLineRectangleFixed::setSnapToCornerArcCenter(bool value){
+    snapToCornerArcCenter = value;
+    drawPreviewForLastPoint();
+}
 
+void LC_ActionDrawLineRectangleFixed::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_LineRectangleFixedOptions>(nullptr);
+}
 

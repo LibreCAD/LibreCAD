@@ -255,6 +255,7 @@ HEADERS += \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_lineoptions.h \
+    ui/forms/lc_linerectangereloptions.h \
     ui/forms/lc_linerectanglefixedoptions.h \
     ui/forms/lc_slicedivideoptions.h
 
@@ -378,6 +379,7 @@ SOURCES += \
     ui/forms/lc_crossoptions.cpp \
     ui/forms/lc_lineanglereloptions.cpp \
     ui/forms/lc_lineoptions.cpp \
+    ui/forms/lc_linerectangereloptions.cpp \
     ui/forms/lc_linerectanglefixedoptions.cpp \
     ui/forms/lc_slicedivideoptions.cpp
 
@@ -887,6 +889,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/LC_DlgParabola.ui \
     ui/forms/lc_crossoptions.ui \
     ui/forms/lc_lineanglereloptions.ui \
+    ui/forms/lc_linerectangereloptions.ui \
     ui/forms/lc_linerectanglefixedoptions.ui \
     ui/forms/lc_slicedivideoptions.ui \
     ui/forms/qg_arcoptions.ui \

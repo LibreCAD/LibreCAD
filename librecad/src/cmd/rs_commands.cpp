@@ -1020,6 +1020,8 @@ RS_Commands::RS_Commands() {
         {"bottoml",QObject::tr("bottoml")},
         {"bottom",QObject::tr("bottom")},
         {"bottomr",QObject::tr("bottomr")},
+        {"snapcorner",QObject::tr("snapcorner")},
+        {"snapshift",QObject::tr("snapshift")},
 
         // commands
 

@@ -7,7 +7,7 @@
 #include "rs_debug.h"
 
 LC_LineRectangleFixedOptions::LC_LineRectangleFixedOptions(QWidget *parent) :
-    QWidget(parent),
+    LC_ActionOptionsWidget(parent),
     ui(new Ui::LC_LineRectangleFixedOptions)
 {
     ui->setupUi(this);
@@ -23,13 +23,19 @@ LC_LineRectangleFixedOptions::LC_LineRectangleFixedOptions(QWidget *parent) :
     connect(ui->cbSnapPoint, SIGNAL(currentIndexChanged(int)), SLOT(onSnapPointIndexChanged(int)));
 
     connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
+    connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
 }
 
-LC_LineRectangleFixedOptions::~LC_LineRectangleFixedOptions()
-{
-    LC_ERR<<"In Destructor: ";
-    saveSettings();
+LC_LineRectangleFixedOptions::~LC_LineRectangleFixedOptions(){
     delete ui;
+}
+
+
+void LC_LineRectangleFixedOptions::clearAction(){
+    action = nullptr;
+}
+bool LC_LineRectangleFixedOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType ==RS2::ActionDrawLineRectangleFixed;
 }
 
 void LC_LineRectangleFixedOptions::saveSettings(){
@@ -43,6 +49,7 @@ void LC_LineRectangleFixedOptions::saveSettings(){
     RS_SETTINGS->writeEntry("/RectangleFixLengthX", ui->leX->text());
     RS_SETTINGS->writeEntry("/RectangleFixLengthY", ui->leLenY->text());
     RS_SETTINGS->writeEntry("/RectangleFixPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
+    RS_SETTINGS->writeEntry("/RectangleFixRadiusSnap", ui->cbPolyline->isChecked()  ? 1 : 0);
     RS_SETTINGS->endGroup();
 }
 
@@ -51,8 +58,8 @@ void LC_LineRectangleFixedOptions::languageChange()
     ui->retranslateUi(this);
 }
 
-void LC_LineRectangleFixedOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLineRectangleFixed){
+
+void LC_LineRectangleFixedOptions::doSetAction( RS_ActionInterface * a, bool update){
         action = static_cast<LC_ActionDrawLineRectangleFixed *>(a);
 
         QString width;
@@ -65,6 +72,7 @@ void LC_LineRectangleFixedOptions::setAction(RS_ActionInterface* a, bool update)
         int cornersMode;
         int snapMode;
         bool usePolyline;
+        bool snapRadiusCenter;
 
         if (update){
             cornersMode = action->getCornersMode();
@@ -84,9 +92,10 @@ void LC_LineRectangleFixedOptions::setAction(RS_ActionInterface* a, bool update)
             radius = QString::number(r, 'g', 6);
             lenX = QString::number(lX, 'g', 6);
             lenY = QString::number(lY, 'g', 6);
+            snapRadiusCenter = action->isSnapToCornerArcCenter();
         }
         else{
-            LC_ERR<<"In Set Action READ: ";
+            RS_SETTINGS->beginGroup("/Draw");
             width = RS_SETTINGS->readEntry("/RectangleFixWidth", "10");
             height = RS_SETTINGS->readEntry("/RectangleFixHeight", "10");
             angle = RS_SETTINGS->readEntry("/RectangleFixAngle", "0");
@@ -96,6 +105,8 @@ void LC_LineRectangleFixedOptions::setAction(RS_ActionInterface* a, bool update)
             lenX = RS_SETTINGS->readEntry("/RectangleFixLengthX", "5");
             lenY = RS_SETTINGS->readEntry("/RectangleFixLengthY", "5");
             usePolyline = RS_SETTINGS->readNumEntry("/RectangleFixPolyline", 1) == 1;
+            snapRadiusCenter = RS_SETTINGS->readNumEntry("/RectangleFixRadiusSnap", 1) == 1;
+            RS_SETTINGS->endGroup();
         }
 
         setWidthToActionAnView(width);
@@ -107,7 +118,7 @@ void LC_LineRectangleFixedOptions::setAction(RS_ActionInterface* a, bool update)
         setCornersModeToActionAndView(cornersMode);
         setSnapPointModeToActionAndView(snapMode);
         setUsePolylineToActionAndView(usePolyline);
-    }
+        setSnapToCornerArcCenter(snapRadiusCenter);
 }
 
 void LC_LineRectangleFixedOptions::onCornersIndexChanged(int index){
@@ -123,11 +134,13 @@ void LC_LineRectangleFixedOptions::setCornersModeToActionAndView(int index){
 
     ui->lblRadius->setVisible(round);
     ui->leRadius->setVisible(round);
+    ui->cbSnapRadiusCenter->setVisible(round);
 
     ui->lblLenY->setVisible(bevel);
     ui->lblX->setVisible(bevel);
     ui->leLenY->setVisible(bevel);
     ui->leX->setVisible(bevel);
+
 
     ui->cbCorners->setCurrentIndex(index);
 }
@@ -136,7 +149,6 @@ void LC_LineRectangleFixedOptions::onLenYEditingFinished(){
      if (action != nullptr){
          QString value = ui->leLenY->text();
          setLenYToActionAnView(value);
-         saveSettings();
      }
 }
 
@@ -144,7 +156,6 @@ void LC_LineRectangleFixedOptions::onLenXEditingFinished(){
     if (action != nullptr){
         QString value = ui->leX->text();
         setLenXToActionAnView(value);
-        saveSettings();
     }
 }
 
@@ -153,7 +164,6 @@ void LC_LineRectangleFixedOptions::onRadiusEditingFinished(){
     if (action != nullptr){
         QString value = ui->leRadius->text();
         setRadiusToActionAnView(value);
-        saveSettings();
     }
 }
 
@@ -161,7 +171,6 @@ void LC_LineRectangleFixedOptions::onHeightEditingFinished(){
     if (action != nullptr){
         QString value = ui->leHeight->text();
         setHeightToActionAnView(value);
-        saveSettings();
     }
 }
 
@@ -169,27 +178,23 @@ void LC_LineRectangleFixedOptions::onWidthEditingFinished(){
     if (action != nullptr){
         QString value = ui->leWidth->text();
         setWidthToActionAnView(value);
-        saveSettings();
     }
 }
 
 void LC_LineRectangleFixedOptions::onSnapPointIndexChanged(int index){
   if (action != nullptr){
       setSnapPointModeToActionAndView(index);
-      saveSettings();
   }
 }
 
 void LC_LineRectangleFixedOptions::setSnapPointModeToActionAndView(int index){
     action->setSnapPointMode(index);
     ui->cbSnapPoint->setCurrentIndex(index);
-    saveSettings();
 }
 
 void LC_LineRectangleFixedOptions::onAngleEditingFinished(){
     const QString &expr = ui->leAngle->text();
     setAngleToActionAndView(expr);
-    saveSettings();
 }
 
 void LC_LineRectangleFixedOptions::setAngleToActionAndView(const QString &val){
@@ -249,11 +254,23 @@ void LC_LineRectangleFixedOptions::setWidthToActionAnView(QString value){
 void LC_LineRectangleFixedOptions::onUsePolylineClicked(bool value){
    if (action != nullptr){
        setUsePolylineToActionAndView(value);
-       saveSettings();
    }
+}
+
+void LC_LineRectangleFixedOptions::onSnapToCornerArcCenterClicked(bool value){
+    if (action != nullptr){
+        setSnapToCornerArcCenter(value);
+    }
 }
 
 void LC_LineRectangleFixedOptions::setUsePolylineToActionAndView(bool value){
    action->setUsePolyline(value);
    ui->cbPolyline->setChecked(value);
 }
+
+void LC_LineRectangleFixedOptions::setSnapToCornerArcCenter(bool value){
+   action->setSnapToCornerArcCenter(value);
+   ui->cbSnapRadiusCenter->setChecked(value);
+}
+
+

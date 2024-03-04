@@ -27,61 +27,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Snap:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <widget class="QLineEdit" name="leAngle">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="14">
-    <widget class="QLineEdit" name="leX">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="leWidth">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="9">
     <widget class="QLabel" name="label_3">
      <property name="text">
@@ -108,8 +53,68 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="3">
-    <widget class="QLineEdit" name="leHeight">
+   <item row="0" column="14">
+    <widget class="QLabel" name="lblX">
+     <property name="text">
+      <string>Length X:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QLineEdit" name="leX">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="lblHeight">
+     <property name="text">
+      <string>Height:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leWidth">
      <property name="minimumSize">
       <size>
        <width>40</width>
@@ -125,6 +130,13 @@
     </widget>
    </item>
    <item row="0" column="16">
+    <widget class="QLabel" name="lblLenY">
+     <property name="text">
+      <string>Length Y:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="17">
     <widget class="QLineEdit" name="leLenY">
      <property name="minimumSize">
       <size>
@@ -140,10 +152,26 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="15">
-    <widget class="QLabel" name="lblLenY">
+   <item row="0" column="6">
+    <widget class="QLabel" name="label_2">
      <property name="text">
-      <string>Length Y:</string>
+      <string>Angle:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QLineEdit" name="leRadius">
+     <property name="minimumSize">
+      <size>
+       <width>40</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
      </property>
     </widget>
    </item>
@@ -203,29 +231,8 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="6">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="13">
-    <widget class="QLabel" name="lblX">
-     <property name="text">
-      <string>Length X:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="lblHeight">
-     <property name="text">
-      <string>Height:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="12">
-    <widget class="QLineEdit" name="leRadius">
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="leHeight">
      <property name="minimumSize">
       <size>
        <width>40</width>
@@ -240,10 +247,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="8">
-    <widget class="QCheckBox" name="cbPolyline">
+   <item row="0" column="13">
+    <widget class="QCheckBox" name="cbSnapRadiusCenter">
      <property name="text">
-      <string>Polyline</string>
+      <string>Snap shift</string>
      </property>
     </widget>
    </item>

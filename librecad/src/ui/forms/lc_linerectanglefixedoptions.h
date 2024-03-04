@@ -9,7 +9,7 @@ namespace Ui {
 class LC_LineRectangleFixedOptions;
 }
 
-class LC_LineRectangleFixedOptions : public QWidget
+class LC_LineRectangleFixedOptions : public LC_ActionOptionsWidget
 {
     Q_OBJECT
 
@@ -17,10 +17,9 @@ class LC_LineRectangleFixedOptions : public QWidget
 
 public:
     explicit LC_LineRectangleFixedOptions(QWidget *parent = nullptr);
-    ~LC_LineRectangleFixedOptions();
+    ~LC_LineRectangleFixedOptions() override;
 
-    virtual void setAction( RS_ActionInterface * a , bool update);
-
+    void saveSettings() override;
 public slots:
 
     void onCornersIndexChanged(int index);
@@ -32,12 +31,16 @@ public slots:
     void onHeightEditingFinished();
     void onRadiusEditingFinished();
     void onUsePolylineClicked(bool value);
+    void onSnapToCornerArcCenterClicked(bool value);
 
 protected slots:
-    virtual void languageChange();
+    void languageChange() override;
+    void doSetAction( RS_ActionInterface * a, bool update) override;
+    void clearAction() override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 private:
     Ui::LC_LineRectangleFixedOptions *ui;
-    void saveSettings();
+
 
     LC_ActionDrawLineRectangleFixed *action;
     void setAngleToActionAndView(const QString &val);
@@ -49,6 +52,7 @@ private:
     void setCornersModeToActionAndView(int index);
     void setSnapPointModeToActionAndView(int index);
     void setUsePolylineToActionAndView(bool value);
+    void setSnapToCornerArcCenter(bool value);
 };
 
 #endif // LC_LINERECTANGLEFIXEDOPTIONS_H
