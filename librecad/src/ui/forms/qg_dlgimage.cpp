@@ -58,8 +58,7 @@ void QG_DlgImage::languageChange()
 void QG_DlgImage::setImage(RS_Image& e) {
     image = &e;
     val = std::make_unique<QDoubleValidator>(leScale);
-    //pen = spline->getPen();
-    wPen->setPen(image->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = image->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -68,6 +67,8 @@ void QG_DlgImage::setImage(RS_Image& e) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(image->getPen(false), lay, "Pen");
     leInsertX->setValidator(val.get());
     leInsertY->setValidator(val.get());
     leWidth->setValidator(val.get());

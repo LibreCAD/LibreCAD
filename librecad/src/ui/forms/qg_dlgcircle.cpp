@@ -65,8 +65,7 @@ void QG_DlgCircle::languageChange()
 
 void QG_DlgCircle::setCircle(RS_Circle& c) {
     circle = &c;
-    //pen = circle->getPen();
-    wPen->setPen(circle->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = circle->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -75,6 +74,8 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(circle->getPen(false), lay, "Pen");
     QString s;
     s.setNum(circle->getCenter().x);
     leCenterX->setText(s);

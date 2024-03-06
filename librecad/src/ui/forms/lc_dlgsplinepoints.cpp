@@ -27,8 +27,7 @@ void LC_DlgSplinePoints::languageChange()
 void LC_DlgSplinePoints::setSpline(LC_SplinePoints& b)
 {
 	bezier = &b;
-	//pen = spline->getPen();
-	ui->wPen->setPen(b.getPen(false), true, false, "Pen");
+
 	RS_Graphic* graphic = b.getGraphic();
 	if (graphic) {
 		ui->cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -37,6 +36,8 @@ void LC_DlgSplinePoints::setSpline(LC_SplinePoints& b)
 	if (lay) {
 		ui->cbLayer->setLayer(*lay);
 	}
+
+ ui->wPen->setPen(b.getPen(false),lay, "Pen");
 
 	ui->cbClosed->setChecked(b.isClosed());
 

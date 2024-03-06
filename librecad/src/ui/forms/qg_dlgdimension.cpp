@@ -61,7 +61,7 @@ void QG_DlgDimension::languageChange()
 
 void QG_DlgDimension::setDim(RS_Dimension& d) {
     dim = &d;
-    wPen->setPen(dim->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = dim->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -70,6 +70,8 @@ void QG_DlgDimension::setDim(RS_Dimension& d) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(dim->getPen(false), lay, "Pen");
 
     wLabel->setLabel(dim->getLabel(false));
 }

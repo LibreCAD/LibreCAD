@@ -37,12 +37,12 @@
 #include "rs_pen.h"
 #include "rs_snapper.h"
 #include "mainwindowx.h"
-
-
+#include "lc_penpalettewidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
 class LC_PenWizard;
+class LC_PenPaletteWidget;
 class LC_SimpleTests;
 class QC_DialogFactory;
 class QC_MDIWindow;
@@ -287,6 +287,8 @@ public:
      */
 	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
+ QG_PenToolBar* getPenToolBar() {return penToolBar;};
+
     void redrawAll();
     void updateGrids();
 
@@ -391,6 +393,7 @@ private:
     QG_CommandWidget* commandWidget {nullptr};
 
     LC_PenWizard* pen_wiz {nullptr};
+    LC_PenPaletteWidget* penPaletteWidget {nullptr};
 
     // --- Statusbar ---
     /** Coordinate widget */

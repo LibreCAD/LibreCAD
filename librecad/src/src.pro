@@ -231,7 +231,13 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
-    ui/forms/LC_DlgParabola.h
+    ui/forms/LC_DlgParabola.h \
+    ui/lc_peninforegistry.h \
+    ui/lc_penpalettedata.h \
+    ui/lc_penpalettemodel.h \
+    ui/lc_penpaletteoptions.h \
+    ui/lc_penpaletteoptionsdialog.h \
+    ui/lc_penpalettewidget.h
 
 SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
@@ -329,7 +335,13 @@ SOURCES += \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
-    ui/forms/LC_DlgParabola.cpp
+    ui/forms/LC_DlgParabola.cpp \
+    ui/lc_peninforegistry.cpp \    
+    ui/lc_penpalettedata.cpp \
+    ui/lc_penpalettemodel.cpp \
+    ui/lc_penpaletteoptions.cpp \
+    ui/lc_penpaletteoptionsdialog.cpp \
+    ui/lc_penpalettewidget.cpp
 
 # ################################################################################
 # Command
@@ -826,7 +838,8 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/colorwizard.cpp \
     ui/lc_penwizard.cpp \
     ui/generic/textfileviewer.cpp \
-    ui/lc_filedialogservice.cpp
+    ui/lc_filedialogservice.cpp\
+    ui/lc_penitem.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/LC_DlgParabola.ui \
@@ -902,7 +915,9 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/comboboxoption.ui \
     ui/generic/widgetcreator.ui \
     ui/generic/colorwizard.ui \
-    ui/generic/textfileviewer.ui
+    ui/generic/textfileviewer.ui \
+    ui/lc_penpaletteoptionsdialog.ui \
+    ui/lc_penpalettewidget.ui
 
 # ################################################################################
 # Main

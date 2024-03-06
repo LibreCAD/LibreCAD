@@ -737,7 +737,8 @@ namespace RS2 {
         Width23 = 211,     /**< Width 24. (2.11mm) */
         WidthByLayer = -1, /**< Line width defined by layer not entity. */
         WidthByBlock = -2, /**< Line width defined by block not entity. */
-        WidthDefault = -3  /**< Line width defaults to the predefined line width. */
+        WidthDefault = -3,  /**< Line width defaults to the predefined line width. */
+        WidthUnchanged = -4 /* utility type for not changed line width during editing*/
     };
 
     /**

@@ -240,7 +240,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
 //#endif
         //QString shape = RS_SETTINGS->readEntry("/TextShape", "0");
         angle = QString("%1").arg(RS_Math::rad2deg(text->getAngle()));
-        wPen->setPen(text->getPen(false), true, false, "Pen");
+
         RS_Graphic* graphic = text->getGraphic();
         if (graphic) {
             cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -249,6 +249,9 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         if (lay) {
             cbLayer->setLayer(*lay);
         }
+
+        wPen->setPen(text->getPen(false),lay, "Pen");
+
         leftToRight = text->getDrawingDirection() == RS_MTextData::LeftToRight;
     }
 
