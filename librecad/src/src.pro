@@ -125,6 +125,8 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/lc_actiondrawparabola4points.h \
+    actions/lc_actiondrawparabolaFD.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -132,6 +134,7 @@ HEADERS += \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
     lib/engine/lc_looputils.h \
+    lib/engine/lc_parabola.h \
     lib/engine/rs.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
@@ -228,6 +231,7 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
+    ui/forms/LC_DlgParabola.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -236,6 +240,8 @@ HEADERS += \
     ui/lc_penpalettewidget.h
 
 SOURCES += \
+    actions/lc_actiondrawparabola4points.cpp \
+    actions/lc_actiondrawparabolaFD.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
@@ -243,6 +249,7 @@ SOURCES += \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
     lib/engine/lc_looputils.cpp \
+    lib/engine/lc_parabola.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \
@@ -328,6 +335,7 @@ SOURCES += \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
+    ui/forms/LC_DlgParabola.cpp \
     ui/lc_peninforegistry.cpp \    
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \
@@ -467,6 +475,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionselectlayer.h \
     actions/rs_actionsetrelativezero.h \
     actions/rs_actionsetsnapmode.h \
+    actions/lc_actionsnapmiddlemanual.h \
     actions/rs_actionsetsnaprestriction.h \
     actions/rs_actionsnapintersectionmanual.h \
     actions/rs_actiontoolregeneratedimensions.h \
@@ -604,6 +613,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionselectlayer.cpp \
     actions/rs_actionsetrelativezero.cpp \
     actions/rs_actionsetsnapmode.cpp \
+    actions/lc_actionsnapmiddlemanual.cpp \
     actions/rs_actionsetsnaprestriction.cpp \
     actions/rs_actionsnapintersectionmanual.cpp \
     actions/rs_actiontoolregeneratedimensions.cpp \
@@ -832,6 +842,7 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/lc_penitem.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
+    ui/forms/LC_DlgParabola.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \

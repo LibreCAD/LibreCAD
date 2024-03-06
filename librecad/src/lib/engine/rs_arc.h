@@ -213,6 +213,7 @@ public:
 	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
 					bool onEntity = false) const override;
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
 	RS_Vector getTangentDirection(const RS_Vector& point) const override;
 	void move(const RS_Vector& offset) override;

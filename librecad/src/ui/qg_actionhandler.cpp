@@ -33,6 +33,9 @@
 
 #include "qc_applicationwindow.h"
 
+#include "lc_actiondrawparabola4points.h"
+#include "lc_actiondrawparabolaFD.h"
+
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -151,6 +154,7 @@
 #include "rs_actionselectwindow.h"
 #include "rs_actionsetrelativezero.h"
 #include "rs_actionsetsnapmode.h"
+#include "lc_actionsnapmiddlemanual.h"
 #include "rs_actionsetsnaprestriction.h"
 #include "rs_actionsnapintersectionmanual.h"
 #include "rs_actiontoolregeneratedimensions.h"
@@ -550,6 +554,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawEllipseArcAxis:
         a = new RS_ActionDrawEllipseAxis(*document, *view, true);
         a->setActionType(id);
+        break;
+    case RS2::ActionDrawParabola4Points:
+        a = new LC_ActionDrawParabola4Points(*document, *view);
+        break;
+    case RS2::ActionDrawParabolaFD:
+        a = new LC_ActionDrawParabolaFD(*document, *view);
         break;
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*document, *view);
@@ -1525,7 +1535,12 @@ void QG_ActionHandler::slotDrawEllipseCenter3Points() {
 void QG_ActionHandler::slotDrawEllipseInscribe() {
     setCurrentAction(RS2::ActionDrawEllipseInscribe);
 }
-
+void QG_ActionHandler::slotDrawParabola4Points() {
+    setCurrentAction(RS2::ActionDrawParabola4Points);
+}
+void QG_ActionHandler::slotDrawParabolaFD() {
+    setCurrentAction(RS2::ActionDrawParabolaFD);
+}
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);
 }
@@ -1755,6 +1770,22 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
+}
+
+void QG_ActionHandler::slotSnapMiddleManual()
+{
+    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)
+    {
+        getCurrentAction()->init(-1);
+        return;
+    }
+
+    const RS_Pen currentAppPen { document->getActivePen() };
+    const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
+    document->setActivePen(snapMiddleManual_pen);
+    auto a = new LC_ActionSnapMiddleManual(*document, *view, currentAppPen);
+    connect(a, &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
+    view->setCurrentAction(a);
 }
 
 void QG_ActionHandler::disableSnaps() {

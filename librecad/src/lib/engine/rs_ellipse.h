@@ -192,6 +192,9 @@ public:
 	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                                     const RS_Line& normal,
 									 bool onEntity = false) const override;
+
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
+
     bool switchMajorMinor(void); //switch major minor axes to keep major the longer ellipse radius
 	void correctAngles();//make sure angleLength() is not more than 2*M_PI
 	bool isPointOnEntity(const RS_Vector& coord,

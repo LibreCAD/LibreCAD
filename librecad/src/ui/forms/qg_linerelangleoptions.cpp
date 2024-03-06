@@ -110,7 +110,8 @@ void QG_LineRelAngleOptions::saveSettings() {
             RS_SETTINGS->writeEntry("/LineRelAngleAngle", 
 				RS_Math::rad2deg(action->getAngle()));
         }
-        RS_SETTINGS->writeEntry("/LineRelAngleLength", action->getLength());
+        if (action->getLength() > RS_TOLERANCE)
+            RS_SETTINGS->writeEntry("/LineRelAngleLength", action->getLength());
         RS_SETTINGS->endGroup();
     }
 }
@@ -123,6 +124,9 @@ void QG_LineRelAngleOptions::updateAngle(const QString& a) {
 
 void QG_LineRelAngleOptions::updateLength(const QString& l) {
     if (action) {
-        action->setLength(RS_Math::eval(l));
+        bool okay = false;
+        double length = RS_Math::eval(l, &okay);
+        if (okay && length > RS_TOLERANCE)
+            action->setLength(length);
     }
 }

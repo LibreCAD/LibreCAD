@@ -38,7 +38,6 @@
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
-    , using_theme(false)
     , main_window(parent)
     , action_handler(a_handler)
 {
@@ -401,6 +400,21 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotDrawEllipseInscribe()));
     action->setObjectName("DrawEllipseInscribe");
     a_map["DrawEllipseInscribe"] = action;
+
+    // Parabola
+    action = new QAction(tr("Para&bola 4 points"), agm->curve);
+    action->setIcon(QIcon(":/icons/parabola_4_points.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDrawParabola4Points()));
+    action->setObjectName("DrawParabola4Points");
+    a_map["DrawParabola4Points"] = action;
+
+    action = new QAction(tr("Parabola &Focus Directrix"), agm->curve);
+    action->setIcon(QIcon(":/icons/parabola_focus_directrix.svg"));
+    connect(action, SIGNAL(triggered()),
+    action_handler, SLOT(slotDrawParabolaFD()));
+    action->setObjectName("DrawParabolaFD");
+    a_map["DrawParabolaFD"] = action;
 
     // <[~ Spline ~]>
 

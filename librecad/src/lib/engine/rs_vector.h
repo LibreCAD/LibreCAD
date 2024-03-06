@@ -72,16 +72,16 @@ public:
 
     RS_Vector toInteger();
 
-    RS_Vector move(const RS_Vector& offset);
-	RS_Vector rotate(double ang);
-    RS_Vector rotate(const RS_Vector& angleVector);
-	RS_Vector rotate(const RS_Vector& center, double ang);
-    RS_Vector rotate(const RS_Vector& center, const RS_Vector& angleVector);
-	RS_Vector scale(double factor);
-    RS_Vector scale(const RS_Vector& factor);
-	RS_Vector scale(const RS_Vector& factor) const;
-	RS_Vector scale(const RS_Vector& center, const RS_Vector& factor);
-    RS_Vector mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    RS_Vector& move(const RS_Vector& offset);
+    RS_Vector& rotate(double ang);
+    RS_Vector& rotate(const RS_Vector& angleVector);
+    RS_Vector& rotate(const RS_Vector& center, double ang);
+    RS_Vector& rotate(const RS_Vector& center, const RS_Vector& angleVector);
+    RS_Vector& scale(double factor);
+    RS_Vector& scale(const RS_Vector& factor);
+    RS_Vector scale(const RS_Vector& factor) const;
+    RS_Vector& scale(const RS_Vector& center, const RS_Vector& factor);
+    RS_Vector& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
 	double dotP(const RS_Vector& v1) const;
     RS_Vector normalized() const;
     RS_Vector& normalize();

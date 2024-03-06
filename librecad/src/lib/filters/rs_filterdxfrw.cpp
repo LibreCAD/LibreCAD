@@ -29,6 +29,7 @@
 
 #include "rs_filterdxfrw.h"
 
+#include "lc_parabola.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_dimaligned.h"
@@ -626,6 +627,19 @@ void RS_FilterDXFRW::addSpline(const DRW_Spline* data) {
 
 	if(data->degree == 2)
 	{
+        if (data->controllist.size() == 3) {
+            auto toRs = [](const std::shared_ptr<DRW_Coord>& coord) -> RS_Vector {
+                return coord ? RS_Vector{coord->x, coord->y} : RS_Vector{};
+            };
+            LC_ParabolaData d{{toRs(data->controllist.at(0)),
+                            toRs(data->controllist.at(1)),
+                             toRs(data->controllist.at(2))}};
+            auto* parabola = new LC_Parabola(currentContainer, d);
+            setEntityAttributes(parabola, data);
+            parabola->update();
+            currentContainer->addEntity(parabola);
+            return;
+        }
 		LC_SplinePoints* splinePoints;
 		LC_SplinePointsData d(((data->flags&0x1)==0x1), true);
 		splinePoints = new LC_SplinePoints(currentContainer, d);
@@ -2112,6 +2126,7 @@ void RS_FilterDXFRW::writeEntity(RS_Entity* e){
         writeSpline((RS_Spline*)e);
         break;
     case RS2::EntitySplinePoints:
+    case RS2::EntityParabola:
         writeSplinePoints((LC_SplinePoints*)e);
         break;
 //    case RS2::EntityVertex:

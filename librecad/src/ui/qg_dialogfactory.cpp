@@ -35,7 +35,9 @@
 #include <QRegularExpression>
 #include <QToolBar>
 
+#include "LC_DlgParabola.h"
 #include "lc_dlgsplinepoints.h"
+#include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "qc_applicationwindow.h"
 #include "qg_arcoptions.h"
@@ -1459,6 +1461,16 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
         dlg.setEllipse(*((RS_Ellipse*)entity));
         if (dlg.exec()) {
             dlg.updateEllipse();
+            ret = true;
+        }
+    }
+        break;
+
+    case RS2::EntityParabola: {
+        LC_DlgParabola dlg(nullptr, false);
+        dlg.setParabola(*static_cast<LC_Parabola*>(entity));
+        if (dlg.exec()) {
+            dlg.updateParabola();
             ret = true;
         }
     }

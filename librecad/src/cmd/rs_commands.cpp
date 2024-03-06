@@ -359,6 +359,18 @@ RS_Commands::RS_Commands() {
             {{"ae", QObject::tr("ae", "arc ellipse")}},
             RS2::ActionDrawEllipseArcAxis
         },
+        // draw parabola by 4 points - v2.2.1
+        {
+            {{"parabola4p", QObject::tr("parabola4p", "Parabola 4 points")}},
+            {{"pl4", QObject::tr("pl4", "Parabola 4 points")}},
+            RS2::ActionDrawParabola4Points
+        },
+        // draw parabola by focus directrix - v2.2.1
+        {
+            {{"parabolafd", QObject::tr("parabolafd", "Parabola focus directrix")}},
+            {{"plfd", QObject::tr("plfd", "Parabola focus directrix")}},
+            RS2::ActionDrawParabolaFD
+        },
         //draw freehand line
         {
             {{"free", QObject::tr("free", "draw freehand line")}},
@@ -778,6 +790,17 @@ RS_Commands::RS_Commands() {
                 {"np", QObject::tr("np", "snap - on entity")}},
             RS2::ActionSnapOnEntity
         },
+
+        /* Snap Middle Manual */
+        {
+            //list all <full command, translation> pairs
+            {{"snapmiddlemanual", QObject::tr("snapmiddlemanual", "snap middle manual")}}, 
+            {{"snapmanual", QObject::tr("snapmanual", "snap middle manual")}, 
+             {"smm", QObject::tr("smm", "snap middle manual")}}, 
+
+            RS2::ActionSnapMiddleManual
+        },
+
         // set relative zero
         {
             {{"setrelativezero", QObject::tr("setrelativezero", "set relative zero position")}},

@@ -314,7 +314,7 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
     }
 }
 
-void QG_PrintPreviewOptions::updateScaleBox(const QString& text)
+void QG_PrintPreviewOptions::updateScaleBox([[maybe_unused]] const QString& text)
 {
 
 }
