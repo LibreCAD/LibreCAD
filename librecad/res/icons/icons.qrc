@@ -240,5 +240,6 @@
         <file>line_ortho_rel.svg</file>
         <file>slice_divide.svg</file>
         <file>line_rectangle_fix.svg</file>
+        <file>circle_by_arc.svg</file>
     </qresource>
 </RCC>

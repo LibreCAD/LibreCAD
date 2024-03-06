@@ -252,6 +252,7 @@ namespace RS2 {
         ActionDrawCircleTan1_2P,
         ActionDrawCircleTan2,
         ActionDrawCircleTan3,
+        ActionDrawCircleByArc,
 
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
@@ -292,7 +293,8 @@ namespace RS2 {
         ActionDrawText,
 
         ActionDrawLineRectangleRel,
-        ActionDrawLineRectangleFixed,
+        ActionDrawRectangle1Point,
+        ActionDrawRectangle2Points,
         ActionDrawLineRel,
         ActionDrawLineRelX,
         ActionDrawLineRelY,

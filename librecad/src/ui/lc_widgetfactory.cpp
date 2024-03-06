@@ -83,6 +83,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawLinePolygonCorCor"]
             << a_map["DrawPoint"]
             << a_map["DrawLineRectangleRel"]
+            << a_map["DrawLineRectangle2Points"]
             << a_map["DrawLineRectangleFix"]
             << a_map["DrawCross"]
             << a_map["DrawLineRel"]
@@ -103,7 +104,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawCircleTan2"]
             << a_map["DrawCircleTan3"]
             << a_map["DrawCircleInscribe"]
-            << a_map["DrawCircleParallel"];
+            << a_map["DrawCircleParallel"]
+            << a_map["DrawCircleByArc"];
 
     curve_actions
             << a_map["DrawArc"]

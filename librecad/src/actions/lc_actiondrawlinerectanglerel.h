@@ -29,6 +29,12 @@ public:
         SNAP_CORNER4
     };
 
+    enum{
+        DRAW_STAIGHT,
+        DRAW_RADIUS,
+        DRAW_BEVEL
+    };
+
     LC_ActionDrawLineRectangleRel(RS_EntityContainer& container,
     RS_GraphicView& graphicView);
     ~LC_ActionDrawLineRectangleRel() override;
@@ -49,14 +55,38 @@ public:
     int getEndZeroPointCorner(){return endRelativeZeroPointCorner;};
     void setEndZeroPointCorner(int value){endRelativeZeroPointCorner = value;};
 
+    void setUsePolyline(bool value){usePolyline = value;};
+
+    void setRadius(double radius);
+    double getRadius(){return radius;};
+
+    void setLengthX(double value);
+    double getLengthX(){return bevelX;};
+
+    void setLengthY(double value);
+    double getLengthY(){return bevelY;};
+
+    bool isUsePolyline(){return usePolyline;};
+
+    void setCornersMode(int value);
+    int getCornersMode(){return cornersDrawMode;};
+
+
+
 
 protected:
     struct Points;
+    int endRelativeZeroPointCorner {3};
     std::unique_ptr<Points> pPoints;
     bool widthIsSet{false};
-    int endRelativeZeroPointCorner {3};
-    double angle {45};
-    // fixme - copy for rs_hanlder
+
+    double angle;
+    bool usePolyline;
+    int radius;
+    int cornersDrawMode;
+    double bevelX;
+    double bevelY;
+
     QString evaluateFraction(QString input, QRegExp rx, int index, int tailI);
     QString updateForFraction(QString input);
     void resetPoints();

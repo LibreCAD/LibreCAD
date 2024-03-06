@@ -965,13 +965,21 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_lineanglereloptions.cpp
         librecad/src/ui/forms/lc_slicedivideoptions.cpp
         librecad/src/actions/lc_actiondrawslicedivide.cpp
-        librecad/src/actions/lc_actiondrawlinerectanglefixed.cpp
-        librecad/src/ui/forms/lc_linerectanglefixedoptions.cpp
+        librecad/src/actions/lc_actiondrawrectangle1point.cpp
+        librecad/src/ui/forms/lc_rectangle1pointoptions.cpp
         librecad/src/lib/engine/lc_parabola.cpp
         librecad/src/actions/lc_actiondrawparabola4points.cpp
         librecad/src/actions/lc_actiondrawparabolaFD.cpp
         librecad/src/ui/forms/lc_actionoptionswidget.h
         librecad/src/ui/forms/lc_actionoptionswidget.cpp
+        librecad/src/actions/lc_abstractactiondrawrectangle.h
+        librecad/src/actions/lc_abstractactiondrawrectangle.cpp
+        librecad/src/actions/lc_actiondrawrectangle2points.h
+        librecad/src/actions/lc_actiondrawrectangle2points.cpp
+        librecad/src/ui/forms/lc_rectangle2pointsoptions.h
+        librecad/src/ui/forms/lc_rectangle2pointsoptions.cpp
+        librecad/src/ui/forms/lc_circlebyarcoptions.cpp
+        librecad/src/actions/lc_actiondrawcirclebyarc.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

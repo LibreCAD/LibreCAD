@@ -199,7 +199,7 @@ void LC_ActionDrawSliceDivide::drawLineTicks(RS_Line *pLine){
     if (document){
         document->startUndoCycle();
         doDrawTicks();
-        bool mayDivide = checkShouldDivideEnity(pLine, tr("Line"));
+        bool mayDivide = checkShouldDivideEntity(pLine, tr("Line"));
         if (mayDivide){
            cutLineToSegments(pLine);
         }
@@ -208,14 +208,14 @@ void LC_ActionDrawSliceDivide::drawLineTicks(RS_Line *pLine){
     graphicView->redraw(RS2::RedrawDrawing);
 }
 
-bool LC_ActionDrawSliceDivide::checkShouldDivideEnity(const RS_Entity *entity, const QString &entityName) const{
+bool LC_ActionDrawSliceDivide::checkShouldDivideEntity(const RS_Entity *e, const QString &entityName) const{
     bool mayDivide = false;
     if (doDivideEntity){
-        bool locked = LC_ActionDrawSliceDivide::entity->isLocked();
+        bool locked = e->isLocked();
         if (locked){
             RS_DIALOGFACTORY->commandMessage(entityName + tr(" is not divided as it is locked."));
         } else {
-            RS_EntityContainer *pContainer = LC_ActionDrawSliceDivide::entity->getParent();
+            RS_EntityContainer *pContainer = e->getParent();
             if (pContainer != nullptr){
                 if (pContainer->rtti() == RS2::EntityPolyline){
                     mayDivide = false;
@@ -262,7 +262,7 @@ void LC_ActionDrawSliceDivide::drawArcTicks(RS_Arc *pArc){
     if (document){
         document->startUndoCycle();
         doDrawTicks();
-        bool mayDivide = checkShouldDivideEnity(pArc, tr("Arc"));
+        bool mayDivide = checkShouldDivideEntity(pArc, tr("Arc"));
         if (mayDivide){
             cutArcToSegments(pArc);
         }
@@ -305,7 +305,7 @@ void LC_ActionDrawSliceDivide::drawCircleTicks(RS_Circle *pCircle){
     if (document){
         document->startUndoCycle();
         doDrawTicks();
-        bool mayDivide = checkShouldDivideEnity(pCircle, tr("Circle"));
+        bool mayDivide = checkShouldDivideEntity(pCircle, tr("Circle"));
         if (mayDivide){
             cutCircleToSegments(pCircle);
         }

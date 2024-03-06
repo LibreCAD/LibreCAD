@@ -120,7 +120,7 @@
 #include "lc_lineoptions.h"
 #include "lc_lineanglereloptions.h"
 #include "lc_slicedivideoptions.h"
-#include "lc_linerectanglefixedoptions.h"
+#include "lc_rectangle1pointoptions.h"
 
 namespace {
 
@@ -889,7 +889,7 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
          requestLineAngleRelOptions(action, on, update);
          break;
 
-     case RS2::ActionDrawLineRectangleFixed:
+     case RS2::ActionDrawRectangle1Point:
          requestLineRectangleFixedOptions(action, on, update);
         break;
 
@@ -1095,7 +1095,7 @@ void QG_DialogFactory::requestLineAngleRelOptions(RS_ActionInterface* action,
 
 void QG_DialogFactory::requestLineRectangleFixedOptions(RS_ActionInterface* action,
                                                         bool on, bool update){
-    addOptionWidget<LC_LineRectangleFixedOptions>(optionWidget, action, on, update);
+    addOptionWidget<LC_Rectangle1PointOptions>(optionWidget, action, on, update);
 }
 
 void QG_DialogFactory::requestLineRelOptions(RS_ActionInterface* action,

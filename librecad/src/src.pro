@@ -129,9 +129,12 @@ HEADERS += \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
+    actions/lc_abstractactiondrawrectangle.h \
+    actions/lc_actiondrawcirclebyarc.h \
     actions/lc_actiondrawlineanglerel.h \
-    actions/lc_actiondrawlinerectanglefixed.h \
+    actions/lc_actiondrawrectangle1point.h \
     actions/lc_actiondrawlinerel.h \
+    actions/lc_actiondrawrectangle2points.h \
     actions/lc_actiondrawslicedivide.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
@@ -252,17 +255,26 @@ HEADERS += \
     ui/lc_layertreeview.h\
     ui/forms/lc_layerdialog_ex.h\
     ui/forms/lc_actionoptionswidget.h \
+    ui/forms/lc_circlebyarcoptions.h \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_lineoptions.h \
     ui/forms/lc_linerectangereloptions.h \
     ui/forms/lc_linerectanglefixedoptions.h \
-    ui/forms/lc_slicedivideoptions.h
+    ui/forms/lc_slicedivideoptions.h\
+    ui/forms/lc_rectangle2pointsoptions.h \
+    ui/forms/lc_rectangle1pointoptions.h \
+    ui/forms/lc_rectangle3pointsoptions.h \
+    ui/forms/lc_slicedivideoptions.h\
+    ui/forms/LC_DlgParabola.h
 
 SOURCES += \
+    actions/lc_abstractactiondrawrectangle.cpp \
+    actions/lc_actiondrawcirclebyarc.cpp \
     actions/lc_actiondrawlineanglerel.cpp \
-    actions/lc_actiondrawlinerectanglefixed.cpp \
+    actions/lc_actiondrawrectangle1point.cpp \
     actions/lc_actiondrawlinerel.cpp \
+    actions/lc_actiondrawrectangle2points.cpp \
     actions/lc_actiondrawslicedivide.cpp \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
@@ -376,9 +388,14 @@ SOURCES += \
     ui/lc_layertreewidget.cpp \
     ui/lc_layertreeview.cpp\
     ui/forms/lc_actionoptionswidget.cpp \
+    ui/forms/lc_circlebyarcoptions.cpp \
     ui/forms/lc_crossoptions.cpp \
     ui/forms/lc_lineanglereloptions.cpp \
     ui/forms/lc_lineoptions.cpp \
+    ui/forms/lc_rectangle3pointsoptions.cpp \
+    ui/forms/lc_rectangle1pointoptions.cpp \
+    ui/forms/lc_rectangle2pointsoptions.cpp \
+    ui/forms/lc_slicedivideoptions.cpp \
     ui/forms/lc_linerectangereloptions.cpp \
     ui/forms/lc_linerectanglefixedoptions.cpp \
     ui/forms/lc_slicedivideoptions.cpp
@@ -887,10 +904,12 @@ SOURCES += ui/lc_actionfactory.cpp \
 
 FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/LC_DlgParabola.ui \
+    ui/forms/lc_circlebyarcoptions.ui \
     ui/forms/lc_crossoptions.ui \
     ui/forms/lc_lineanglereloptions.ui \
-    ui/forms/lc_linerectangereloptions.ui \
-    ui/forms/lc_linerectanglefixedoptions.ui \
+    ui/forms/lc_rectangle3pointsoptions.ui \
+    ui/forms/lc_rectangle1pointoptions.ui \
+    ui/forms/lc_rectangle2pointsoptions.ui \
     ui/forms/lc_slicedivideoptions.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \

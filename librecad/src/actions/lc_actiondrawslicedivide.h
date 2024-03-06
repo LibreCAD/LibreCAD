@@ -133,7 +133,7 @@ private:
     void cutCircleToSegments(RS_Circle *pCircle);
     void createArcSegments(RS_Entity *pArc, const RS_Vector &center, double radius, bool reversed);
     void deleteOriginalEntity(RS_Entity *entity);
-    bool checkShouldDivideEnity(const RS_Entity *entity, const QString &entityName) const;
+    bool checkShouldDivideEntity(const RS_Entity *entity, const QString &entityName) const;
 };
 
 #endif // LC_ACTIONDRAWSLICEDIVIDE_H

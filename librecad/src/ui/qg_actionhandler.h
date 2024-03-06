@@ -127,6 +127,7 @@ public slots:
 	void slotDrawLineRectangle();
 	void slotDrawLineRectangleRel();
  void slotDrawLineRectangleFixed();
+ void slotDrawLineRectangle2Points();
 	void slotDrawLineBisector();
 	void slotDrawLineTangent1();
 	void slotDrawLineTangent2();
@@ -154,6 +155,7 @@ public slots:
 	void slotDrawCircleTan3();
 	void slotDrawCircleTan1_2P();
 	void slotDrawCircleTan2_1P();
+ void slotDrawCircleByArc();
 	void slotDrawArc();
 	void slotDrawArc3P();
 	void slotDrawArcParallel();

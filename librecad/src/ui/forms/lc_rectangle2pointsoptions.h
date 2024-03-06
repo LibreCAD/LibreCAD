@@ -1,34 +1,31 @@
-#ifndef LC_LINERECTANGLEFIXEDOPTIONS_H
-#define LC_LINERECTANGLEFIXEDOPTIONS_H
+#ifndef LC_RECTANGLE2POINTSOPTIONS_H
+#define LC_RECTANGLE2POINTSOPTIONS_H
 
 #include <QWidget>
-#include "rs_actioninterface.h"
-#include "lc_actiondrawlinerectanglefixed.h"
+#include "lc_actionoptionswidget.h"
+#include "lc_actiondrawrectangle2points.h"
 
 namespace Ui {
-class LC_LineRectangleFixedOptions;
+class LC_Rectangle2PointsOptions;
 }
 
-class LC_LineRectangleFixedOptions : public LC_ActionOptionsWidget
+class LC_Rectangle2PointsOptions : public LC_ActionOptionsWidget
 {
     Q_OBJECT
 
-
-
 public:
-    explicit LC_LineRectangleFixedOptions(QWidget *parent = nullptr);
-    ~LC_LineRectangleFixedOptions() override;
+    explicit LC_Rectangle2PointsOptions(QWidget *parent = nullptr);
+    ~LC_Rectangle2PointsOptions();
 
     void saveSettings() override;
-public slots:
 
+public slots:
     void onCornersIndexChanged(int index);
-    void onSnapPointIndexChanged(int index);
+    void onInsertionPointSnapIndexChanged(int index);
+    void onSecondPointSnapIndexChanged(int index);
     void onAngleEditingFinished();
     void onLenYEditingFinished();
     void onLenXEditingFinished();
-    void onWidthEditingFinished();
-    void onHeightEditingFinished();
     void onRadiusEditingFinished();
     void onUsePolylineClicked(bool value);
     void onSnapToCornerArcCenterClicked(bool value);
@@ -38,21 +35,21 @@ protected slots:
     void doSetAction( RS_ActionInterface * a, bool update) override;
     void clearAction() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
+
 private:
-    Ui::LC_LineRectangleFixedOptions *ui;
-
-
-    LC_ActionDrawLineRectangleFixed *action;
+    LC_ActionDrawRectangle2Points *action;
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(QString value);
     void setLenXToActionAnView(QString value);
     void setRadiusToActionAnView(QString value);
-    void setHeightToActionAnView(QString height);
-    void setWidthToActionAnView(QString width);
     void setCornersModeToActionAndView(int index);
-    void setSnapPointModeToActionAndView(int index);
+    void setInsertSnapPointModeToActionAndView(int index);
+    void setSecondPointSnapPointModeToActionAndView(int index);
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenter(bool value);
+
+private:
+    Ui::LC_Rectangle2PointsOptions *ui;
 };
 
-#endif // LC_LINERECTANGLEFIXEDOPTIONS_H
+#endif // LC_RECTANGLE2POINTSOPTIONS_H

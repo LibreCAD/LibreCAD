@@ -206,13 +206,19 @@ RS_Commands::RS_Commands() {
         {
             {{"frect", QObject::tr("frect", "draw fixed rectangle")}},
             {{"fre", QObject::tr("fre", "draw fixed rectangle")}},
-            RS2::ActionDrawLineRectangleFixed
+            RS2::ActionDrawRectangle1Point
         },
-        // draw relative rectangle
+        // draw cross
         {
             {{"cross", QObject::tr("cross", "draw cross for circle")}},
             {{"cx", QObject::tr("cx", "draw cross for circle")}},
             RS2::ActionDrawCross
+        },
+        // draw cross
+        {
+            {{"circlebyarc", QObject::tr("criclebyarc", "draw circle by arc")}},
+            {{"cba", QObject::tr("cba", "draw circle by arc")}},
+            RS2::ActionDrawCircleByArc
         },
         // draw parallel line
         {

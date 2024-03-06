@@ -192,7 +192,9 @@
 #include "lc_actiondrawlineanglerel.h"
 #include "rs_math.h"
 #include "lc_actiondrawslicedivide.h"
-#include "lc_actiondrawlinerectanglefixed.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_actiondrawrectangle2points.h"
+#include "lc_actiondrawcirclebyarc.h"
 
 /**
  * Constructor
@@ -464,8 +466,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
      case RS2::ActionDrawLineRectangleRel:
         a = new LC_ActionDrawLineRectangleRel(*document, *view);
         break;
-     case RS2::ActionDrawLineRectangleFixed:
-            a = new LC_ActionDrawLineRectangleFixed(*document, *view);
+     case RS2::ActionDrawRectangle2Points:
+        a = new LC_ActionDrawRectangle2Points(*document, *view);
+        break;
+
+     case RS2::ActionDrawRectangle1Point:
+            a = new LC_ActionDrawRectangle1Point(*document, *view);
             break;
      case RS2::ActionDrawCross:
          a = new LC_ActionDrawCross(*document, *view);
@@ -544,6 +550,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleCR:
         a = new RS_ActionDrawCircleCR(*document, *view);
+        break;
+    case RS2::ActionDrawCircleByArc:
+        a = new LC_ActionDrawCircleByArc(*document, *view);
         break;
     case RS2::ActionDrawCircle2P:
         a = new RS_ActionDrawCircle2P(*document, *view);
@@ -1449,7 +1458,11 @@ void QG_ActionHandler::slotDrawLineRectangleRel() {
 }
 
 void QG_ActionHandler::slotDrawLineRectangleFixed() {
-    setCurrentAction(RS2::ActionDrawLineRectangleFixed);
+    setCurrentAction(RS2::ActionDrawRectangle1Point);
+}
+
+void QG_ActionHandler::slotDrawLineRectangle2Points(){
+    setCurrentAction(RS2::ActionDrawRectangle2Points);
 }
 
 void QG_ActionHandler::slotDrawLineRel() {
@@ -1556,6 +1569,11 @@ void QG_ActionHandler::slotDrawCircleCross(){
 void QG_ActionHandler::slotDrawCircleCR() {
     setCurrentAction(RS2::ActionDrawCircleCR);
 }
+
+void QG_ActionHandler::slotDrawCircleByArc() {
+    setCurrentAction(RS2::ActionDrawCircleByArc);
+}
+
 
 void QG_ActionHandler::slotDrawCircle2P() {
     setCurrentAction(RS2::ActionDrawCircle2P);
