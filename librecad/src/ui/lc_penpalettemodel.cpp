@@ -21,21 +21,27 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+#include <QFile>
+#include <QFont>
+#include <QRegularExpression>
+#include <QStyledItemDelegate>
+#include <QTextStream>
+
 #include "lc_penpalettemodel.h"
 #include "lc_peninforegistry.h"
 
-#include <QFont>
-#include <QStyledItemDelegate>
-#include <QFile>
-#include <QTextStream>
-
 static int COLOR_ICON_SIZE = 24;
 
-LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions *modelOptions, LC_PenPaletteData* data, QObject * parent) :QAbstractTableModel(parent){
+LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions *modelOptions, LC_PenPaletteData* data, QObject * parent) :
+    QAbstractTableModel(parent),
+    m_filteringRegexp{std::make_unique<QRegularExpression>()}
+{
     options = modelOptions;
     penPaletteData = data;
     update(true);
 }
+
+LC_PenPaletteModel::~LC_PenPaletteModel() = default;
 
 int LC_PenPaletteModel::rowCount ( const QModelIndex & parent) const {
     return displayItems.size();
@@ -72,9 +78,8 @@ void LC_PenPaletteModel::update(bool updateNames){
             if (options->ignoreCaseOnMatch){
                 itemName = itemName.toLower();
             }
-            int pos = 0;
-            int matchPosition = filteringRegexp.indexIn(itemName, pos);
-            bool hasRegexpMatch = matchPosition !=-1;
+            QRegularExpressionMatch match = m_filteringRegexp->match(itemName);
+            bool hasRegexpMatch = match.hasMatch();
             item->setMatched(hasRegexpMatch);
 
             if (options->filterIsInHighlightMode){
@@ -114,14 +119,13 @@ void LC_PenPaletteModel::update(bool updateNames){
  * @param regexp
  */
 void LC_PenPaletteModel::setFilteringRegexp(QString &regexp){
-    if (options->ignoreCaseOnMatch){
-        // ensure that we'll use case-insensitive match
-        filteringRegexp.setPattern(regexp.toLower());
-    }
-    else{
-        filteringRegexp.setPattern(regexp);
-    }
-    filteringRegexp.setPatternSyntax(QRegExp::WildcardUnix);
+    QString pattern = QRegularExpression::wildcardToRegularExpression(regexp);
+    m_filteringRegexp->setPattern(pattern);
+    QRegularExpression::PatternOptions option = options->ignoreCaseOnMatch
+                                                    ? QRegularExpression::CaseInsensitiveOption
+                                                    : QRegularExpression::NoPatternOption;
+    // ensure that we'll use case-insensitive match
+    m_filteringRegexp->setPatternOptions(option);
     hasRegexp = !regexp.trimmed().isEmpty();
 }
 

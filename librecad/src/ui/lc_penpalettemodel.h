@@ -24,13 +24,17 @@
 #ifndef LC_PENPALETTEMODEL_H
 #define LC_PENPALETTEMODEL_H
 
+#include <memory>
+
+#include <QAbstractTableModel>
+#include <QIcon>
+
 #include "lc_penitem.h"
 #include "lc_peninforegistry.h"
 #include "lc_penpaletteoptions.h"
 #include "lc_penpalettedata.h"
 
-#include <QAbstractTableModel>
-#include <QIcon>
+class QRegularExpression;
 
 /**
  * Table model for pen palette
@@ -58,7 +62,7 @@ public:
 
     explicit LC_PenPaletteModel(LC_PenPaletteOptions *modelOptions, LC_PenPaletteData * data, QObject * parent = nullptr);
 
-    ~LC_PenPaletteModel() override = default;
+    ~LC_PenPaletteModel() override;
 
     Qt::ItemFlags flags (const QModelIndex & index) const override;
     int columnCount(const QModelIndex &) const  override;
@@ -105,7 +109,7 @@ private:
     /**
      * regexp string that is used for items filtering/highlighting
      */
-    QRegExp filteringRegexp{""};
+    std::unique_ptr<QRegularExpression> m_filteringRegexp;
     /**
      * Flag that indicates regexp presence
      */
