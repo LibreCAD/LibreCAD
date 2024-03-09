@@ -27,6 +27,7 @@
 #include "lc_penitem.h"
 #include "lc_penpaletteoptions.h"
 
+#include <QObject>
 #include <QList>
 
 /**

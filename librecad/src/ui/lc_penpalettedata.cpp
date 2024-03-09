@@ -47,7 +47,7 @@ bool LC_PenPaletteData::saveItems(){
     bool result = false;
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream out(&file);
-        out.setCodec("UTF-8");
+        out.setEncoding(QStringConverter::Utf8);
 
         // just convert each pen to string and store in file
         int count = persistentItems.count();
@@ -71,7 +71,8 @@ bool LC_PenPaletteData::loadItems(){
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     if (file.isOpen()){
         QTextStream in(&file);
-        in.setCodec("UTF-8");
+	in.setEncoding(QStringConverter::Utf8);
+
         while (!in.atEnd())
         {
             QString line = in.readLine();
