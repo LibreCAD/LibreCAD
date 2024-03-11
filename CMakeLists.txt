@@ -941,7 +941,13 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
-#        plugins/align/align.cpp
+        librecad/src/ui/forms/LC_DlgParabola.h
+        librecad/src/ui/forms/LC_DlgParabola.cpp
+        librecad/src/lib/engine/lc_parabola.cpp
+        librecad/src/actions/lc_actiondrawparabola4points.cpp
+        librecad/src/actions/lc_actiondrawparabolaFD.cpp
+        librecad/src/actions/lc_actionsnapmiddlemanual.cpp
+        #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
 #        plugins/asciifile/asciifile.h
