@@ -80,7 +80,6 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(RS_Vector &snapPoint) 
     RS_Vector bottomRightCorner = RS_Vector(x + halfWidth, y - halfHeight);
     RS_Vector topLeftCorner = RS_Vector(x - halfWidth, y + halfHeight);
 
-
     RS_Polyline *polyline = createPolylineByVertexes(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner, drawBulge, drawComplex, radiusX, radiusY);
 
     // shape is built, so now we'll position it
@@ -133,30 +132,30 @@ void LC_ActionDrawRectangle1Point::processCoordinateEvent(RS_CoordinateEvent *pE
             graphicView->moveRelativeZero(coord);
             trigger();
             break;
-        case SetSize: {
+        case SetSize: { // size is set from command widget
             double w = std::abs(coord.x);
-            if (w > RS_TOLERANCE){
-                double h = std::abs(coord.y);
-                if (h > RS_TOLERANCE){
-                    width = w;
-                    height = h;
-                    updateOptions();
-                    setStatus(SetPoint1);
-                } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Zero height is invalid"));
-                    updateMouseButtonHints();
-                }
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Zero width is invalid"));
-                updateMouseButtonHints();
+            if (w < RS_TOLERANCE){
+                w = 0.0;
             }
+            double h = std::abs(coord.y);
+            if (h < RS_TOLERANCE){
+                h = 0;
+            }
+            width = w;
+            height = h;
+            updateOptions();
+            setStatus(SetPoint1);
             break;
         }
         case SetWidth:
-            RS_DIALOGFACTORY->commandMessage(tr("Zero width is invalid"));
+            width = 0.0;
+            updateOptions();
+            setStatus(SetPoint1);
             break;
         case SetHeight:
-            RS_DIALOGFACTORY->commandMessage(tr("Zero height is invalid"));
+            height = 0.0;
+            updateOptions();
+            setStatus(SetPoint1);
             break;
     }
 }
@@ -170,26 +169,18 @@ void LC_ActionDrawRectangle1Point::processCommandValue(double value){
     switch (getStatus()) {
         case SetWidth: {
             double w = std::abs(value);
-            if (w > RS_TOLERANCE){
-                width = w;
-                updateOptions();
-                setStatus(SetPoint1);
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Invalid width, it should be non-zero positive"));
-                updateMouseButtonHints();
+            if (w < RS_TOLERANCE){
+                w = 0.0;
             }
+            width = w;
             break;
         }
         case SetHeight: {
             double h = std::abs(value);
-            if (h > RS_TOLERANCE){
-                height = h;
-                updateOptions();
-                setStatus(SetPoint1);
-            } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Invalid height, it should be non-zero positive"));
-                updateMouseButtonHints();
+            if (h < RS_TOLERANCE){
+                h = 0;
             }
+            height = h;
             break;
         }
     }
@@ -200,7 +191,7 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
-        case SetReferencePoint:{
+        case SetPoint1Snap:{
             cmd += command("topl");
             cmd += command("top");
             cmd += command("topr");
@@ -232,12 +223,14 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
             cmd += command("angle");
             cmd += command("corners");
             cmd += command("bevels");
-            cmd += command("refpoint");
+            cmd += command("snap1");
             cmd += command("radius");
             cmd += command("usepoly");
             cmd += command("nopoly");
             cmd += command("snapcorner");
             cmd += command("snapshift");
+            cmd += command("sizein");
+            cmd += command("sizeout");
             break;
         default:
             break;
@@ -246,12 +239,8 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionDrawRectangle1Point::updateMouseButtonHints() {
+void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints() {
     switch (getStatus()) {
-        case SetPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
-                                                tr("Cancel"));
-            break;
         case SetHeight:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify height"),
                                                 tr("Back"));
@@ -260,27 +249,11 @@ void LC_ActionDrawRectangle1Point::updateMouseButtonHints() {
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify width"),
                                                 tr("Back"));
             break;
-        case SetAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify angle"),
-                                                tr("Back"));
-            break;
         case SetSize:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify size (width, height)"),
                                                 tr("Back"));
             break;
-        case SetCorners:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corners type [str|round|bevels]"),
-                                                tr("Back"));
-            break;
-        case SetBevels:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corner bevel length (x,y)"),
-                                                tr("Back"));
-            break;
-        case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corner radius"),
-                                                tr("Back"));
-            break;
-        case SetReferencePoint:
+        case SetPoint1Snap:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"),
                                                 tr("Back"));
             break;
@@ -295,111 +268,111 @@ void LC_ActionDrawRectangle1Point::createOptionsWidget(){
     m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>(nullptr);
 }
 
-bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, const QString &c, bool &toMainStatus){
     bool result = true;
     if (checkCommand("width",c)){
-      e->accept();
         setStatus(SetWidth);
+        toMainStatus = false;
     }
     else if (checkCommand("height",c)){
-        e->accept();
         setStatus(SetHeight);
+        toMainStatus = false;
     }
     else if (checkCommand("size",c)){
-        e->accept();
         setStatus(SetSize);
+        toMainStatus = false;
     }
     else if (checkCommand("point",c)){
-        e->accept();
         setStatus(SetPoint1);
+        toMainStatus = false;
     }
-    else if (checkCommand("refpoint",c)){
-        e->accept();
-        setStatus(SetReferencePoint);
+    else if (checkCommand("snap1",c)){
+        setStatus(SetPoint1Snap);
+        toMainStatus = false;
     }
     else if (checkCommand("topl",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_LEFT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("top",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("topr",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_RIGHT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("left",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_LEFT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("middle",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_MIDDLE;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("right",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_RIGHT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("bottoml",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_LEFT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("bottom",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("bottomr",c)){
-        if (getStatus() == SetReferencePoint){
-            e->accept();
+        if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_RIGHT;
-            updateOptions();
-            setStatus(SetPoint1);
+        }
+        else {
+            result = false;
         }
     }
     else if (checkCommand("snapcorner",c)){
-        e->accept();
         snapToCornerArcCenter = false;
-        updateOptions();
-        setStatus(SetPoint1);
     }
     else if (checkCommand("snapshift",c)){
-        e->accept();
         snapToCornerArcCenter = true;
-        updateOptions();
-        setStatus(SetPoint1);
+    }
+    else if (checkCommand("sizeout",c)){
+        sizeIsInner = false;
+    }
+    else if (checkCommand("sizein",c)){
+        sizeIsInner = true;
     }
     else{
         result = false;

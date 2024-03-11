@@ -11,6 +11,9 @@ class LC_ActionDrawRectangle1Point :public LC_AbstractActionDrawRectangle {
 
 public:
 
+    /**
+     * points of rectangle to which snap should be performed on rect insertion
+     */
     enum{
         SNAP_TOP_LEFT,
         SNAP_TOP,
@@ -29,7 +32,6 @@ public:
 
     void init(int status) override;
 
-    void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
 
     void setWidth(double value);
@@ -41,10 +43,11 @@ public:
     bool isSizeInner(){return sizeIsInner;};
 
 protected:
-
+    // width of rect
     double width;
+    // height of rect
     double height;
-
+    // flag that indicates that width and rect are applied to external area or excluding corner radius
     bool sizeIsInner;
 
     static const std::vector<RS_Vector> snapPoints;
@@ -55,8 +58,9 @@ protected:
     void proceedMouseLeftButtonReleasedEvent(QMouseEvent *e) override;
     void processCommandValue(double value) override;
     void setMainStatus() override;
-    bool processCustomCommand(RS_CommandEvent *e, const QString &command) override;
+    bool processCustomCommand(RS_CommandEvent *e, const QString &command,bool &toMainStatus) override;
     void processCoordinateEvent(RS_CoordinateEvent *pEvent, RS_Vector vector, bool zero) override;
     void doAfterTrigger() override;
+    void doUpdateMouseButtonHints() override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

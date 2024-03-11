@@ -195,6 +195,7 @@
 #include "lc_actiondrawrectangle1point.h"
 #include "lc_actiondrawrectangle2points.h"
 #include "lc_actiondrawcirclebyarc.h"
+#include "lc_actionmodifylinejoin.h"
 
 /**
  * Constructor
@@ -679,6 +680,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 
         // Modifying actions:
         //
+        case RS2::ActionModifyLineJoin:{
+            a = new LC_ActionModifyLineJoin(*document, *view);
+            break;
+        }
     case RS2::ActionModifyAttributes:
 		if(!document->countSelected()){
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
@@ -1457,7 +1462,7 @@ void QG_ActionHandler::slotDrawLineRectangleRel() {
     setCurrentAction(RS2::ActionDrawLineRectangleRel);
 }
 
-void QG_ActionHandler::slotDrawLineRectangleFixed() {
+void QG_ActionHandler::slotDrawLineRectangle1Point() {
     setCurrentAction(RS2::ActionDrawRectangle1Point);
 }
 
@@ -2075,6 +2080,9 @@ void QG_ActionHandler::slotBlocksExplode() {
     setCurrentAction(RS2::ActionBlocksExplode);
 }
 
+void QG_ActionHandler::slotModifyLineJoin() {
+    setCurrentAction(RS2::ActionModifyLineJoin);
+}
 
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);

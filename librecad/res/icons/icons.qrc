@@ -241,5 +241,6 @@
         <file>slice_divide.svg</file>
         <file>line_rectangle_fix.svg</file>
         <file>circle_by_arc.svg</file>
+        <file>line_join.svg</file>
     </qresource>
 </RCC>

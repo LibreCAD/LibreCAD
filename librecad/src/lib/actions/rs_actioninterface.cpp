@@ -319,7 +319,7 @@ void RS_ActionInterface::showOptions() {
     if (m_optionWidget == nullptr){
         createOptionsWidget();
     }
-    if (m_optionWidget != nullptr){
+        if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
             if (m_optionWidget->parent() == nullptr){ // first time created
                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());

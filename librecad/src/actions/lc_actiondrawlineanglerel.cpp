@@ -336,20 +336,20 @@ void LC_ActionDrawLineAngleRel::coordinateEvent(RS_CoordinateEvent* e) {
     }
 
     RS_Vector coord = e->getCoordinate();
-    RS_Vector relativeZero = RS_Vector(0,0,0);
-    bool isRelativeZero = coord == relativeZero;
+    RS_Vector zero = RS_Vector(0, 0, 0);
+    bool isZero = coord == zero;
 
     switch (getStatus()) {
         // additional handling of zero value - "0" is treated as shortcut for relative zero, and 0 coordinates are passed. So here we just hangle 0 value offset
         case SetTickOffset:
-            if (isRelativeZero){
+            if (isZero){
                 tickOffset = 0;
                 setStatus(SetSnapDistance);
             }
             break;
 
         case SetSnapDistance:
-            if (isRelativeZero){
+            if (isZero){
                 double distance = 0;
                 updateTickSnapPosition(distance);
             }

@@ -136,6 +136,7 @@ HEADERS += \
     actions/lc_actiondrawlinerel.h \
     actions/lc_actiondrawrectangle2points.h \
     actions/lc_actiondrawslicedivide.h \
+    actions/lc_actionmodifylinejoin.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -258,6 +259,7 @@ HEADERS += \
     ui/forms/lc_circlebyarcoptions.h \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
+    ui/forms/lc_linejoinoptions.h \
     ui/forms/lc_lineoptions.h \
     ui/forms/lc_linerectangereloptions.h \
     ui/forms/lc_linerectanglefixedoptions.h \
@@ -280,6 +282,7 @@ SOURCES += \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
+    actions/lc_actionmodifylinejoin.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
@@ -391,6 +394,7 @@ SOURCES += \
     ui/forms/lc_circlebyarcoptions.cpp \
     ui/forms/lc_crossoptions.cpp \
     ui/forms/lc_lineanglereloptions.cpp \
+    ui/forms/lc_linejoinoptions.cpp \
     ui/forms/lc_lineoptions.cpp \
     ui/forms/lc_rectangle3pointsoptions.cpp \
     ui/forms/lc_rectangle1pointoptions.cpp \
@@ -907,6 +911,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_circlebyarcoptions.ui \
     ui/forms/lc_crossoptions.ui \
     ui/forms/lc_lineanglereloptions.ui \
+    ui/forms/lc_linejoinoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \

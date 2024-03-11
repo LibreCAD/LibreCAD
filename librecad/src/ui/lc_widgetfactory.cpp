@@ -56,42 +56,42 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     , a_map(action_map)
     , ag_manager(agm)
 {
-	file_actions
+    file_actions
 		<< a_map["FileNew"]
 		<< a_map["FileNewTemplate"]
 		<< a_map["FileOpen"]
 		<< a_map["FileSave"]
 		<< a_map["FileSaveAs"]
 		<< a_map["FileSaveAll"];
-
     line_actions
-            << a_map["DrawLine"]
-            << a_map["DrawLineAngle"]
-            << a_map["DrawLineHorizontal"]
-            << a_map["DrawLineVertical"]
-            << a_map["DrawLineRectangle"]
-            << a_map["DrawLineParallelThrough"]
-            << a_map["DrawLineParallel"]
-            << a_map["DrawLineBisector"]
-            << a_map["DrawLineTangent1"]
-            << a_map["DrawLineTangent2"]
-            << a_map["DrawLineOrthTan"]
-            << a_map["DrawLineOrthogonal"]
-            << a_map["DrawLineRelAngle"]
-            << a_map["DrawLinePolygonCenCor"]
-            << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
-            << a_map["DrawLinePolygonCorCor"]
-            << a_map["DrawPoint"]
-            << a_map["DrawLineRectangleRel"]
-            << a_map["DrawLineRectangle2Points"]
-            << a_map["DrawLineRectangleFix"]
-            << a_map["DrawCross"]
-            << a_map["DrawLineRel"]
-            << a_map["DrawLineRelX"]
-            << a_map["DrawLineRelY"]
-            << a_map["DrawLineAngleRel"]
-            << a_map["DrawLineOrthogonalRel"]
-            << a_map["DrawSliceDivide"];
+        << a_map["DrawLine"]
+        << a_map["DrawLineAngle"]
+        << a_map["DrawLineHorizontal"]
+        << a_map["DrawLineVertical"]
+        << a_map["DrawLineRectangle"]
+        << a_map["DrawLineParallelThrough"]
+        << a_map["DrawLineParallel"]
+        << a_map["DrawLineBisector"]
+        << a_map["DrawLineTangent1"]
+        << a_map["DrawLineTangent2"]
+        << a_map["DrawLineOrthTan"]
+        << a_map["DrawLineOrthogonal"]
+        << a_map["DrawLineRelAngle"]
+        << a_map["DrawLinePolygonCenCor"]
+        << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
+        << a_map["DrawLinePolygonCorCor"]
+        << a_map["DrawPoint"]
+        << a_map["DrawLineRectangle1Point"]
+        << a_map["DrawLineRectangle2Points"]
+        << a_map["DrawLineRectangle3Points"]
+        << a_map["DrawCross"]
+        << a_map["DrawLineRel"]
+        << a_map["DrawLineRelX"]
+        << a_map["DrawLineRelY"]
+        << a_map["DrawLineAngleRel"]
+        << a_map["DrawLineOrthogonalRel"]
+        << a_map["DrawSliceDivide"];
+
 
     circle_actions
             << a_map["DrawCircle"]
@@ -178,6 +178,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyRound"]
             << a_map["ModifyCut"]
             << a_map["ModifyStretch"]
+            << a_map["ModifyLineJoin"]
             << a_map["ModifyEntity"]
             << a_map["ModifyAttributes"]
             << a_map["ModifyExplodeText"]

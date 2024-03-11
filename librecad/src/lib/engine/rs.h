@@ -351,6 +351,7 @@ namespace RS2 {
         ActionModifyRound,
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
+        ActionModifyLineJoin,
 
         ActionSnapFree,
         ActionSnapGrid,

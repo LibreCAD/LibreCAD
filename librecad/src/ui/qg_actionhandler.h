@@ -126,7 +126,7 @@ public slots:
 	void slotDrawLineParallelThrough();
 	void slotDrawLineRectangle();
 	void slotDrawLineRectangleRel();
- void slotDrawLineRectangleFixed();
+ void slotDrawLineRectangle1Point();
  void slotDrawLineRectangle2Points();
 	void slotDrawLineBisector();
 	void slotDrawLineTangent1();
@@ -254,24 +254,25 @@ public slots:
 	void slotLayersEdit();
 	void slotLayersToggleView();
 	void slotLayersToggleLock();
-	void slotLayersTogglePrint();
-	void slotLayersToggleConstruction();
+    void slotLayersTogglePrint();
+    void slotLayersToggleConstruction();
     void slotLayersExportSelected();
     void slotLayersExportVisible();
 
-	void slotBlocksDefreezeAll();
-	void slotBlocksFreezeAll();
-	void slotBlocksAdd();
-	void slotBlocksRemove();
-	void slotBlocksAttributes();
-	void slotBlocksEdit();
-	void slotBlocksSave();
-	void slotBlocksInsert();
-	void slotBlocksToggleView();
-	void slotBlocksCreate();
-	void slotBlocksExplode();
-	void slotOptionsDrawing();
+    void slotBlocksDefreezeAll();
+    void slotBlocksFreezeAll();
+    void slotBlocksAdd();
+    void slotBlocksRemove();
+    void slotBlocksAttributes();
+    void slotBlocksEdit();
+    void slotBlocksSave();
+    void slotBlocksInsert();
+    void slotBlocksToggleView();
+    void slotBlocksCreate();
+    void slotBlocksExplode();
+    void slotModifyLineJoin();
 
+	void slotOptionsDrawing();
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);
@@ -283,9 +284,9 @@ public slots:
   void slotPenApply();
   void slotPenCopy();
   void slotPenSyncFromLayer();
-private:
 
-	// Type of draw order selected command
+private:
+    // Type of draw order selected command
     RS2::ActionType orderType{RS2::ActionOrderTop};
     QG_SnapToolBar* snap_toolbar{nullptr};
     RS_GraphicView* view{nullptr};

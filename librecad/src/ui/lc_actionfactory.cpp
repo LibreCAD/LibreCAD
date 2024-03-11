@@ -270,21 +270,20 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawLineRelX");
     a_map["DrawLineRelX"] = action;
 
-    action = new QAction(tr("Rectangle (Relative)"), agm->line);
+    action = new QAction(tr("Rectangle (3 Points)"), agm->line);
     action->setIcon(QIcon(":/icons/line_rectangle_rel.svg"));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleRel()));
-    action->setObjectName("DrawLineRectangleRel");
-    a_map["DrawLineRectangleRel"] = action;
+    action->setObjectName("DrawLineRectangle3Points");
+    a_map["DrawLineRectangle3Points"] = action;
 
-    action = new QAction(tr("Rectangle (Fixed)"), agm->line);
+    action = new QAction(tr("Rectangle (1 Point)"), agm->line);
     action->setIcon(QIcon(":/icons/line_rectangle_fix.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleFixed()));
-    action->setObjectName("DrawLineRectangleFix");
-    a_map["DrawLineRectangleFix"] = action;
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle1Point()));
+    action->setObjectName("DrawLineRectangle1Point");
+    a_map["DrawLineRectangle1Point"] = action;
 
     action = new QAction(tr("Rectangle (2 Points)"), agm->line);
     action->setIcon(QIcon(":/icons/line_rectangle.svg"));
-    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle2Points()));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle2Points()));
     action->setObjectName("DrawLineRectangle2Points");
     a_map["DrawLineRectangle2Points"] = action;
@@ -856,6 +855,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("PenCopy");
 
     a_map["PenCopy"] = action;
+
+    action = new QAction(tr("Line Join"), agm->modify);
+    action->setIcon(QIcon(":/icons/line_join.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotModifyLineJoin()));
+    action->setObjectName("ModifyLineJoin");
+    a_map["ModifyLineJoin"] = action;
 
     // <[~ Info ~]>
 

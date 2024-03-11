@@ -980,6 +980,8 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_rectangle2pointsoptions.cpp
         librecad/src/ui/forms/lc_circlebyarcoptions.cpp
         librecad/src/actions/lc_actiondrawcirclebyarc.cpp
+        librecad/src/actions/lc_actionmodifylinejoin.cpp
+        librecad/src/ui/forms/lc_linejoinoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

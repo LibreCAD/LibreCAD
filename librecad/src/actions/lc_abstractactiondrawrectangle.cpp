@@ -1,4 +1,6 @@
 
+#include "lc_rectangle2pointsoptions.h"
+#include "lc_actiondrawrectangle2points.h"
 #include <cmath>
 #include "QMouseEvent"
 #include "lc_abstractactiondrawrectangle.h"
@@ -22,9 +24,12 @@ LC_AbstractActionDrawRectangle::LC_AbstractActionDrawRectangle(
 
 LC_AbstractActionDrawRectangle::~LC_AbstractActionDrawRectangle() = default;
 
+/**
+ * trigger action and insertions of created rect into drawing
+ */
 void LC_AbstractActionDrawRectangle::trigger(){
     RS_PreviewActionInterface::trigger();
-    if (resultingPolyline != nullptr){
+    if (resultingPolyline != nullptr){ // extract and proceed saved polyline
         if (document){
             document->startUndoCycle();
             if (usePolyline){
@@ -52,14 +57,14 @@ void LC_AbstractActionDrawRectangle::trigger(){
             document->endUndoCycle();
         }
         graphicView->redraw(RS2::RedrawDrawing);
-        resultingPolyline = nullptr;
-        doAfterTrigger();
+        resultingPolyline = nullptr; // do cleanup
+        doAfterTrigger(); // inherited actions may do additional processing there
     }
 }
 
 void LC_AbstractActionDrawRectangle::mouseReleaseEvent(QMouseEvent *e){
     if (e->button()==Qt::LeftButton) {
-        proceedMouseLeftButtonReleasedEvent(e);
+        proceedMouseLeftButtonReleasedEvent(e); // delegate actual processing to inherited actions
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1); // fixme - check status for init
@@ -67,14 +72,17 @@ void LC_AbstractActionDrawRectangle::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void LC_AbstractActionDrawRectangle::mouseMoveEvent(QMouseEvent *e){
-    if (mayDrawPreview(e)){
+    if (mayDrawPreview(e)){ // check whether preview may be drawn according to state etc.
         RS_Vector snap = snapPoint(e);
-        processMouseEvent(e);
+        processMouseEvent(e); // delegate processing to inherited actions
         drawPreviewForPoint(snap);
-        lastSnapPoint = snap;
+        lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
     }
 }
-
+/**
+ * redraws preview in it's last point. This is used if the user would like to change some option
+ * via options widget - and thus we'll reflect such change in preview without waiting for the next mouse move event
+ */
 void LC_AbstractActionDrawRectangle::drawPreviewForLastPoint(){
     if (lastSnapPoint.valid){
         if (mayDrawPreview(nullptr)){
@@ -83,6 +91,10 @@ void LC_AbstractActionDrawRectangle::drawPreviewForLastPoint(){
     }
 }
 
+/**
+ * draws preview in provided snap point
+ * @param snapPoint
+ */
 void LC_AbstractActionDrawRectangle::drawPreviewForPoint(RS_Vector &snapPoint){
     RS_Polyline *polyline = createPolyline(snapPoint);
     deletePreview();
@@ -93,13 +105,16 @@ void LC_AbstractActionDrawRectangle::drawPreviewForPoint(RS_Vector &snapPoint){
     graphicView->redraw(RS2::RedrawDrawing);
 }
 
-
-
+/**
+ * process generic coordinates common for various actions and delegates processing to
+ * inherited actions
+ * @param e
+ */
 void LC_AbstractActionDrawRectangle::coordinateEvent(RS_CoordinateEvent *e){
     if (!e) return;
     RS_Vector coord = e->getCoordinate();
-    RS_Vector relativeZero = RS_Vector(0,0,0);
-    bool isRelativeZero = coord == relativeZero; // use it to handle "0" shortcut (it is passed as 0,0 verctor)
+    RS_Vector zero = RS_Vector(0, 0, 0);
+    bool isZero = coord == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
 
     switch (getStatus()) {
         case SetBevels:
@@ -117,7 +132,7 @@ void LC_AbstractActionDrawRectangle::coordinateEvent(RS_CoordinateEvent *e){
             setMainStatus();
             break;
         case SetAngle:
-            if (isRelativeZero){
+            if (isZero){
                 angle = 0.0;
                 updateOptions();
                 setMainStatus();
@@ -127,7 +142,7 @@ void LC_AbstractActionDrawRectangle::coordinateEvent(RS_CoordinateEvent *e){
             }
             break;
         case SetRadius:
-            if (isRelativeZero){
+            if (isZero){
                 radius = 0.0;
                 updateOptions();
                 setMainStatus();
@@ -138,78 +153,64 @@ void LC_AbstractActionDrawRectangle::coordinateEvent(RS_CoordinateEvent *e){
             }
             break;
         default:
-            processCoordinateEvent(e, coord, isRelativeZero);
+            processCoordinateEvent(e, coord, isZero); // do processing of other vars
             break;
     }
 }
 
 void LC_AbstractActionDrawRectangle::commandEvent(RS_CommandEvent *e){
+
+    bool processed = true;
+    bool toMainStatus = true;
     QString const& c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
-        e->accept();
     }
     else if (checkCommand("angle",c)){
-        e->accept();
         setStatus(SetAngle);
+        toMainStatus = false;
     }
     else if (checkCommand("radius",c)){
-        e->accept();
         setStatus(SetRadius);
+        toMainStatus = false;
     }
     else if (checkCommand("bevels",c)){
-        e->accept();
         if (getStatus() == SetCorners){
             cornersDrawMode = DRAW_BEVEL;
-            updateOptions();
-            setMainStatus();
         }
         else {
             setStatus(SetBevels);
+            toMainStatus = false;
         }
     }
     else if (checkCommand("nopoly",c)){
-        e->accept();
         usePolyline = false;
-        updateOptions();
-        setMainStatus();
     }
     else if (checkCommand("usepoly",c)){
-        e->accept();
         usePolyline = true;
-        updateOptions();
-        setMainStatus();
     }
-
     else if (checkCommand("corners",c)){
-        e->accept();
         setStatus(SetCorners);
+        toMainStatus = false;
     }
     else if (checkCommand("str",c)){
         if (getStatus() == SetCorners){
-            e->accept();
             cornersDrawMode = DRAW_STRAIGHT;
-            updateOptions();
-            setMainStatus();
         }
     }
     else if (checkCommand("round",c)){
         if (getStatus() == SetCorners){
-            e->accept();
             cornersDrawMode = DRAW_RADIUS;
-            updateOptions();
-            setMainStatus();
         }
     }
-    else if (processCustomCommand(e,c)){
+    else if (processCustomCommand(e,c, toMainStatus)){ // delegate processing to inherited class
         // intentionally do nothing
     }
-    else{
+    else{ // process entered value
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
-        e->accept();
         if (ok){
             switch (getStatus()) {
                 case SetAngle: {
@@ -218,8 +219,6 @@ void LC_AbstractActionDrawRectangle::commandEvent(RS_CommandEvent *e){
                         a = 0.0;
                     }
                     angle = a;
-                    updateOptions();
-                    setMainStatus();
                     break;
                 }
                 case SetRadius: {
@@ -228,8 +227,6 @@ void LC_AbstractActionDrawRectangle::commandEvent(RS_CommandEvent *e){
                         r = 0.0;
                     }
                     radius = r;
-                    updateOptions();
-                    setMainStatus();
                     break;
                 }
                 default:
@@ -238,11 +235,24 @@ void LC_AbstractActionDrawRectangle::commandEvent(RS_CommandEvent *e){
             }
         }
         else {
+            processed = false;
             RS_DIALOGFACTORY->commandMessage(tr("Invalid value"));
         }
     }
+    if (processed){
+        e->accept();
+        stateUpdated(toMainStatus);
+    }
 }
 
+/**
+ * Check current settings for corners and define whether we should draw simple rect or complex shape, and in later case
+ * prepare corner-related values
+ * @param radiusX  x length of corner's bevel or radius
+ * @param radiusY  y length of corner's bevel or radius
+ * @param drawComplex should it be complex shape or plain rect (if false)
+ * @param drawBulge returns whether rounded corners should be drawn
+ */
 void LC_AbstractActionDrawRectangle::prepareCornersDrawMode(double &radiusX, double &radiusY, bool &drawComplex, bool &drawBulge) const{
     switch (cornersDrawMode){
         case DRAW_STRAIGHT:{
@@ -278,6 +288,59 @@ void LC_AbstractActionDrawRectangle::prepareCornersDrawMode(double &radiusX, dou
     }
 }
 
+void LC_AbstractActionDrawRectangle::updateMouseButtonHints() {
+    switch (getStatus()) {
+        case SetPoint1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
+                                                tr("Cancel"));
+            break;
+        case SetAngle:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify angle"),
+                                                tr("Back"));
+            break;
+        case SetSize:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify size (width, height)"),
+                                                tr("Back"));
+            break;
+        case SetCorners:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corners type [str|round|bevels]"),
+                                                tr("Back"));
+            break;
+        case SetBevels:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corner bevel length (x,y)"),
+                                                tr("Back"));
+            break;
+        case SetRadius:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify corner radius"),
+                                                tr("Back"));
+            break;
+        default:
+            doUpdateMouseButtonHints();
+            break;
+    }
+}
+
+/**
+ * method for custom prompts in inherited actions
+ */
+void LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(){
+    RS_DIALOGFACTORY->updateMouseWidget();
+}
+
+/**
+ * Generic method for drawing rect shape with provided corners coordinates and corner values.
+ * It is expected that shape is not rotated, so it's angle to x is 0
+ *
+ * @param bottomLeftCorner
+ * @param bottomRightCorner
+ * @param topRightCorner
+ * @param topLeftCorner
+ * @param drawBulge
+ * @param drawComplex
+ * @param radiusX
+ * @param radiusY
+ * @return
+ */
 RS_Polyline *LC_AbstractActionDrawRectangle::createPolylineByVertexes(RS_Vector bottomLeftCorner, RS_Vector bottomRightCorner,
                                                                       RS_Vector topRightCorner, RS_Vector topLeftCorner,
                                                                       bool drawBulge, bool drawComplex, double radiusX, double radiusY) const{
@@ -309,8 +372,7 @@ RS_Polyline *LC_AbstractActionDrawRectangle::createPolylineByVertexes(RS_Vector 
         // prepare bulge for 90 degrees curve, actually it might be just a constant
         double bulge = tan(M_PI / 2 / 4); // normal case
 
-
-        // start to build the shape starting from bottom left corner, than go right, up, left and down
+        // start to build the shape starting from bottom left corner, then we go right, up, left and down
 
         polyline->addVertex(bottomLeft);
         polyline->addVertex(bottomRight);
@@ -345,12 +407,22 @@ RS_Polyline *LC_AbstractActionDrawRectangle::createPolylineByVertexes(RS_Vector 
     return polyline;
 }
 
+/**
+ * Method checks provided corners and swap them if needed to ensure that they are properly named - so left corner top corner is indeed left top and so on.
+ *
+ * It is assumed that all corners are for non-rotated rect, so edges between corners are parallel to coordinates axis
+ *
+ * @param bottomLeftCorner
+ * @param bottomRightCorner
+ * @param topRightCorner
+ * @param topLeftCorner
+ */
 void LC_AbstractActionDrawRectangle::normalizeCorners(
     RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner,
     RS_Vector &topLeftCorner) const{
     // normalize rect to ensure that passed corners are in right places in coordinates grid (i.e. - top is over bottom and left is before right)
     RS_Vector tmp;
-    if (bottomLeftCorner.x > bottomRightCorner.x){
+    if (bottomLeftCorner.x > bottomRightCorner.x){ // check whether left and right top corners are correct or should be swapped
         tmp = bottomRightCorner;
         bottomRightCorner = bottomLeftCorner;
         bottomLeftCorner = tmp;
@@ -360,7 +432,7 @@ void LC_AbstractActionDrawRectangle::normalizeCorners(
         topLeftCorner = tmp;
     }
 
-    if (topLeftCorner.y < bottomLeftCorner.y){
+    if (topLeftCorner.y < bottomLeftCorner.y){ // check whether bottom corners are correct
         tmp = topLeftCorner;
         topLeftCorner = bottomLeftCorner;
         bottomLeftCorner = tmp;
@@ -419,5 +491,10 @@ void LC_AbstractActionDrawRectangle::processMouseEvent(QMouseEvent *e){
 
 }
 
-
-
+void LC_AbstractActionDrawRectangle::stateUpdated(bool toMainStatus){
+    updateOptions();
+    if (toMainStatus){
+        setMainStatus();
+    }
+    drawPreviewForLastPoint();
+}

@@ -50,7 +50,7 @@ void LC_Rectangle1PointOptions::saveSettings(){
     RS_SETTINGS->writeEntry("/Rectangle1PointLengthX", ui->leX->text());
     RS_SETTINGS->writeEntry("/Rectangle1PointLengthY", ui->leLenY->text());
     RS_SETTINGS->writeEntry("/Rectangle1PointPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle1PointRadiusSnap", ui->cbPolyline->isChecked()  ? 1 : 0);
+    RS_SETTINGS->writeEntry("/Rectangle1PointRadiusSnap", ui->cbSnapRadiusCenter->isChecked()  ? 1 : 0);
     RS_SETTINGS->writeEntry("/Rectangle1PointSizeInner", ui->cbInnerSize->isChecked()  ? 1 : 0);
     RS_SETTINGS->endGroup();
 }

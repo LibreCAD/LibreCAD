@@ -1016,7 +1016,7 @@ RS_Commands::RS_Commands() {
         {"str",QObject::tr("str")},
         {"round",QObject::tr("round")},
         {"bevels",QObject::tr("bevels")},
-        {"refpoint",QObject::tr("refpoint")},
+        {"snap1",QObject::tr("snap1")},
         {"topl",QObject::tr("topl")},
         {"top",QObject::tr("top")},
         {"topr",QObject::tr("topr")},
@@ -1028,6 +1028,15 @@ RS_Commands::RS_Commands() {
         {"bottomr",QObject::tr("bottomr")},
         {"snapcorner",QObject::tr("snapcorner")},
         {"snapshift",QObject::tr("snapshift")},
+        {"sizein",QObject::tr("sizein")},
+        {"sizeout",QObject::tr("sizeout")},
+
+        // rect 2 points
+        {"snap2",QObject::tr("snap2")},
+        {"corner",QObject::tr("corner")},
+        {"mid-vert",QObject::tr("mid-vert")},
+        {"mid-hor",QObject::tr("mid-hor")},
+
 
         // commands
 
