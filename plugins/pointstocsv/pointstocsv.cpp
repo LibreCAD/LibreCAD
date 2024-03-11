@@ -23,6 +23,7 @@
 #include <QRect>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QTextStream>
 
 #include "pointstocsv.h"
 

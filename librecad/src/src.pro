@@ -237,7 +237,7 @@ HEADERS += \
     ui/lc_penpalettemodel.h \
     ui/lc_penpaletteoptions.h \
     ui/lc_penpaletteoptionsdialog.h \
-    ui/lc_penpalettewidget.h
+    ui/lc_penpalettewidget.h \
     ui/forms/lc_layertreeoptionsdialog.h \
     ui/lc_layertreeitem.h \
     ui/lc_layertreemodel.h \
@@ -348,7 +348,7 @@ SOURCES += \
     ui/lc_penpalettemodel.cpp \
     ui/lc_penpaletteoptions.cpp \
     ui/lc_penpaletteoptionsdialog.cpp \
-    ui/lc_penpalettewidget.cpp
+    ui/lc_penpalettewidget.cpp \
     ui/forms/lc_layerdialog_ex.cpp \
     ui/forms/lc_layertreeoptionsdialog.cpp \
     ui/lc_layertreeitem.cpp \
