@@ -213,6 +213,14 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["BlocksSave"]
             << a_map["BlocksCreate"]
             << a_map["BlocksExplode"];
+
+    pen_actions
+        << a_map["PenSyncFromLayer"]
+        << a_map["PenPick"]
+        << a_map["PenPickResolved"]
+        << a_map["PenApply"]
+        << a_map["PenCopy"];
+
 }
 
 
@@ -432,6 +440,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     pen_toolbar = new QG_PenToolBar(QC_ApplicationWindow::tr("Pen"), main_window);
     pen_toolbar->setSizePolicy(toolBarPolicy);
     pen_toolbar->setObjectName("pen_toolbar");
+    pen_toolbar->addActions(pen_actions);
 
     options_toolbar = new QToolBar(QC_ApplicationWindow::tr("Tool Options"), main_window);
     options_toolbar->setSizePolicy(toolBarPolicy);

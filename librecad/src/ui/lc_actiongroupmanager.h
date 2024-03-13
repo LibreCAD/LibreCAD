@@ -36,6 +36,7 @@ public:
     QActionGroup* snap_extras;
     QActionGroup* view;
     QActionGroup* widgets;
+    QActionGroup* pen;
 
     QList<QActionGroup*> toolGroups();
     QMap<QString, QActionGroup*> allGroups();

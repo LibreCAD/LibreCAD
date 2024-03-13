@@ -83,6 +83,7 @@ public slots:
     void applyEditorPenToActiveLayer();
     void onModelChanged();
     void doDoubleClick();
+    void updatePenToolbarByActiveLayer();
 private:
     // mouse click counter used for handling both single click and double-click on table view
     int clicksCount {0};
@@ -100,7 +101,6 @@ private:
     bool editorChanged;
     void doUpdatePenEditorByPenAttributes(const RS_Color &color, RS2::LineWidth &width, RS2::LineType &lineType);
     void doFillPenEditorByPen(RS_Pen pen);
-    void updatePenToolbarByActiveLayer();
     RS_Pen createPenByEditor(const RS_Pen &originalPen);
     int invokeItemRemovalDialog(QString &penName);
     void doSelectEntitiesThatMatchToPenAttributes(

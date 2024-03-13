@@ -308,6 +308,8 @@ public:
         return snapToolBar;
     }
 
+    LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
+
     /**
      * Find opened window for specified document.
      */

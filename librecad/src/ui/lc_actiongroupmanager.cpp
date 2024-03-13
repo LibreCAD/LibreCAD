@@ -59,6 +59,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     , snap_extras(new QActionGroup(this))
     , view(new QActionGroup(this))
     , widgets(new QActionGroup(this))
+    , pen(new QActionGroup(this))
 {
     block->setObjectName(QObject::tr("Block"));
     circle->setObjectName(QObject::tr("Circle"));
@@ -80,6 +81,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     snap_extras->setObjectName(QObject::tr("Snap Extras"));
     view->setObjectName(QObject::tr("View"));
     widgets->setObjectName(QObject::tr("Widgets"));
+    pen->setObjectName(QObject::tr("PenTB"));
 
     foreach (auto const& ag, findChildren<QActionGroup*>()) {
         ag->setExclusive(false);
@@ -88,6 +90,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
             connect( parent, &QC_ApplicationWindow::windowsChanged, ag, &QActionGroup::setEnabled);
         }
     }
+
 
     foreach (auto const& ag, toolGroups()) {
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
@@ -112,7 +115,8 @@ QList<QActionGroup*> LC_ActionGroupManager::toolGroups()
             << modify
             << other
             << polyline
-            << select;
+            << select
+            << pen;
 
     return ag_list;
 }

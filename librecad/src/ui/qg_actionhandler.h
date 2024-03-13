@@ -266,6 +266,12 @@ public slots:
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
     void slotRedockWidgets();
+
+  void slotPenPick();
+  void slotPenPickResolved();
+  void slotPenApply();
+  void slotPenCopy();
+  void slotPenSyncFromLayer();
 private:
 
 	// Type of draw order selected command

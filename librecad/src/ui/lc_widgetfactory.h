@@ -81,6 +81,7 @@ private:
     QList<QAction*> info_actions;
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;
+    QList<QAction*> pen_actions;
 };
 
 #endif // LC_WIDGETFACTORY_H
