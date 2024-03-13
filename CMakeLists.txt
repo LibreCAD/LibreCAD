@@ -901,6 +901,8 @@ add_executable(LibreCAD
         librecad/src/ui/qg_graphicview.h
         librecad/src/ui/qg_layerbox.cpp
         librecad/src/ui/qg_layerbox.h
+        librecad/src/ui/qg_layerwidget.cpp
+        librecad/src/ui/qg_layerwidget.h
         librecad/src/ui/lc_layertreeitem.cpp
         librecad/src/ui/lc_layertreeitem.h
         librecad/src/ui/lc_layertreemodel.cpp
