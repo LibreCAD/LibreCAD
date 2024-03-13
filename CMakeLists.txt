@@ -791,6 +791,8 @@ add_executable(LibreCAD
         librecad/src/ui/forms/qg_layerdialog.h
 #        librecad/src/ui/forms/lc_layerdialog_ex.cpp
 #        librecad/src/ui/forms/lc_layerdialog_ex.h
+        librecad/src/ui/forms/lc_layerdialog_ex.cpp
+        librecad/src/ui/forms/lc_layerdialog_ex.h
         librecad/src/ui/forms/qg_libraryinsertoptions.cpp
         librecad/src/ui/forms/qg_libraryinsertoptions.h
         librecad/src/ui/forms/qg_lineangleoptions.cpp
@@ -899,16 +901,16 @@ add_executable(LibreCAD
         librecad/src/ui/qg_graphicview.h
         librecad/src/ui/qg_layerbox.cpp
         librecad/src/ui/qg_layerbox.h
-#        librecad/src/ui/lc_layertreeitem.cpp
-#        librecad/src/ui/lc_layertreeitem.h
-#        librecad/src/ui/lc_layertreemodel.cpp
-#        librecad/src/ui/lc_layertreemodel.h
         librecad/src/ui/qg_layerwidget.cpp
         librecad/src/ui/qg_layerwidget.h
-#        librecad/src/ui/lc_layertreewidget.cpp
-#        librecad/src/ui/lc_layertreewidget.h
-#        librecad/src/ui/lc_layertreeview.cpp
-#        librecad/src/ui/lc_layertreeview.h
+        librecad/src/ui/lc_layertreeitem.cpp
+        librecad/src/ui/lc_layertreeitem.h
+        librecad/src/ui/lc_layertreemodel.cpp
+        librecad/src/ui/lc_layertreemodel.h
+        librecad/src/ui/lc_layertreewidget.cpp
+        librecad/src/ui/lc_layertreewidget.h
+        librecad/src/ui/lc_layertreeview.cpp
+        librecad/src/ui/lc_layertreeview.h
         librecad/src/ui/qg_librarywidget.cpp
         librecad/src/ui/qg_librarywidget.h
         librecad/src/ui/qg_linetypebox.cpp
@@ -936,10 +938,16 @@ add_executable(LibreCAD
         librecad/src/ui/lc_penpalettedata.h
         librecad/src/ui/lc_penpalettedata.cpp
         librecad/src/ui/lc_penpaletteoptionsdialog.cpp
-        #        librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
-#        librecad/src/ui/lc_layertreemodel_options.cpp
-#        librecad/src/ui/lc_layertreemodel_options.cpp
-#        plugins/align/align.cpp
+        librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
+        librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/ui/forms/LC_DlgParabola.h
+        librecad/src/ui/forms/LC_DlgParabola.cpp
+        librecad/src/lib/engine/lc_parabola.cpp
+        librecad/src/actions/lc_actiondrawparabola4points.cpp
+        librecad/src/actions/lc_actiondrawparabolaFD.cpp
+        librecad/src/actions/lc_actionsnapmiddlemanual.cpp
+        #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
 #        plugins/asciifile/asciifile.h

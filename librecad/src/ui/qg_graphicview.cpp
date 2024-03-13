@@ -787,7 +787,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
             e->position(),
 #else
-            QPointF{e->x(), e->y},
+            QPointF{static_cast<qreal>(e->x()), static_cast<qreal>(e->y())},
 #endif
             Qt::NoButton, Qt::NoButton, Qt::NoModifier
     };

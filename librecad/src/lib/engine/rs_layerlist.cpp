@@ -232,6 +232,10 @@ void RS_LayerList::edit(RS_Layer* layer, const RS_Layer& source) {
 
     *layer = source;
 
+    fireEdit(layer);
+}
+
+void RS_LayerList::fireEdit(RS_Layer* layer) {
     for (int i=0; i<layerListListeners.size(); ++i) {
         RS_LayerListListener* l = layerListListeners.at(i);
 
@@ -401,7 +405,14 @@ void RS_LayerList::toggleConstruction(RS_Layer* layer) {
     }
 }
 
+void RS_LayerList::fireLayerToggled(){
+    setModified(true);
 
+    for (int i=0; i<layerListListeners.size(); ++i) {
+        RS_LayerListListener* l = layerListListeners.at(i);
+        l->layerToggled(nullptr);
+    }
+}
 
 /**
  * Freezes or defreezes all layers.
@@ -415,12 +426,9 @@ void RS_LayerList::freezeAll(bool freeze) {
              at(l)->freeze(freeze);
          }
     }
-    setModified(true);
 
-    for (int i=0; i<layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = layerListListeners.at(i);
-        l->layerToggled(nullptr);
-    }
+    fireLayerToggled();
+
 }
 
 
@@ -437,14 +445,125 @@ void RS_LayerList::lockAll(bool lock) {
              at(l)->lock(lock);
          }
     }
-    setModified(true);
-
-    for (int i=0; i<layerListListeners.size(); ++i) {
-        RS_LayerListListener* l = layerListListeners.at(i);
-        l->layerToggled(nullptr);
-    }
+    fireLayerToggled();
 }
 
+void RS_LayerList::toggleLockMulti(QList<RS_Layer*> toggleLayers){
+
+    int count = toggleLayers.count();
+    for (int i = 0; i < count; i++){
+        RS_Layer* layer = toggleLayers.at(i);
+        if (layer){
+            layer->toggleLock();
+        }
+    }
+
+    fireLayerToggled();
+}
+void RS_LayerList::togglePrintMulti(QList<RS_Layer*> toggleLayers){
+    int count = toggleLayers.count();
+    for (int i = 0; i < count; i++){
+        RS_Layer* layer = toggleLayers.at(i);
+        if (layer){
+            layer->togglePrint();
+        }
+    }
+    fireLayerToggled();
+}
+
+void RS_LayerList::toggleConstructionMulti(QList<RS_Layer*> toggleLayers){
+    int count = toggleLayers.count();
+    for (int i = 0; i < count; i++){
+        RS_Layer* layer = toggleLayers.at(i);
+        if (layer){
+            layer->toggleConstruction();
+        }
+    }
+    fireLayerToggled();
+}
+
+void RS_LayerList::setFreezeMulti(QList<RS_Layer*> layersEnable, QList<RS_Layer*> layersDisable){
+    int countUnFreeze = layersEnable.count();
+    for (int i = 0; i < countUnFreeze; i++){
+        RS_Layer* layer = layersEnable.at(i);
+        if (layer){
+            layer->freeze(false);
+        }
+    }
+    int countFreeze = layersDisable.count();
+    for (int i = 0; i < countFreeze; i++){
+        RS_Layer* layer = layersDisable.at(i);
+        if (layer){
+            layer->freeze(true);
+        }
+    }
+   fireLayerToggled();
+}
+
+void RS_LayerList::setLockMulti(QList<RS_Layer*> layersToUnlock, QList<RS_Layer*> layersToLock){
+    int countUnFreeze = layersToUnlock.count();
+    for (int i = 0; i < countUnFreeze; i++){
+        RS_Layer* layer = layersToUnlock.at(i);
+        if (layer){
+            layer->lock(false);
+        }
+    }
+    int countFreeze = layersToLock.count();
+    for (int i = 0; i < countFreeze; i++){
+        RS_Layer* layer = layersToLock.at(i);
+        if (layer){
+            layer->lock(true);
+        }
+    }
+    fireLayerToggled();
+}
+
+void RS_LayerList::setPrintMulti(QList<RS_Layer*> layersNoPrint, QList<RS_Layer*> layersPrint){
+    int countUnFreeze = layersNoPrint.count();
+    for (int i = 0; i < countUnFreeze; i++){
+        RS_Layer* layer = layersNoPrint.at(i);
+        if (layer){
+            layer->setPrint(false);
+        }
+    }
+    int countFreeze = layersPrint.count();
+    for (int i = 0; i < countFreeze; i++){
+        RS_Layer* layer = layersPrint.at(i);
+        if (layer){
+            layer->setPrint(true);
+        }
+    }
+    fireLayerToggled();
+}
+
+void RS_LayerList::setConstructionMulti(QList<RS_Layer*> layersNoConstruction, QList<RS_Layer*> layersConstruction){
+    int countUnFreeze = layersNoConstruction.count();
+    for (int i = 0; i < countUnFreeze; i++){
+        RS_Layer* layer = layersNoConstruction.at(i);
+        if (layer){
+            layer->setConstruction(false);
+        }
+    }
+    int countFreeze = layersConstruction.count();
+    for (int i = 0; i < countFreeze; i++){
+        RS_Layer* layer = layersConstruction.at(i);
+        if (layer){
+            layer->setConstruction(true);
+        }
+    }
+    fireLayerToggled();
+}
+
+void RS_LayerList::toggleFreezeMulti(QList<RS_Layer*> toggleLayers){
+    int count = toggleLayers.count();
+    for (int i = 0; i < count; i++){
+        RS_Layer* layer = toggleLayers.at(i);
+        if (layer){
+            layer->toggle();
+        }
+    }
+   fireLayerToggled();
+}
 
 
 /**
@@ -493,5 +612,10 @@ void RS_LayerList::setModified(bool m) {
     for (auto l: layerListListeners) {
         l->layerListModified(m);
     }
+}
+
+// notify that list is updated via listerners
+void RS_LayerList::slotUpdateLayerList(){
+    setModified(true);
 }
 
