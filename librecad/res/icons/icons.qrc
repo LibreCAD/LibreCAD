@@ -228,5 +228,7 @@
         <file>scaleLineWidth.svg</file>
         <file>parabola_4_points.svg</file>
         <file>parabola_focus_directrix.svg</file>
+        <file>pen_apply.svg</file>
+        <file>pen_copy.svg</file>
     </qresource>
 </RCC>

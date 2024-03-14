@@ -181,6 +181,9 @@
 #include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
+#include "lc_actionpenpick.h"
+#include "lc_actionpenapply.h"
+
 
 /**
  * Constructor
@@ -832,7 +835,21 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionLockRelativeZero(*document, *view, false);
         break;
 
-        // Info actions:
+        // pen actions
+
+     case RS2::ActionPenPick:
+         a = new LC_ActionPenPick(*document, *view,  false);
+         break;
+     case RS2::ActionPenPickResolved:
+         a = new LC_ActionPenPick(*document, *view, true);
+         break;
+      case RS2::ActionPenApply:
+           a = new LC_ActionPenApply(*document, *view, false);
+           break;
+      case RS2::ActionPenCopy:
+          a = new LC_ActionPenApply(*document, *view, true);
+        break;
+            // Info actions:
         //
     case RS2::ActionInfoInside:
         a = new RS_ActionInfoInside(*document, *view);
@@ -900,6 +917,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionLayersExportVisible:
         a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
         break;
+
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -1968,6 +1986,28 @@ void QG_ActionHandler::slotBlocksExplode() {
 
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
+}
+
+void QG_ActionHandler::slotPenPick(){
+    setCurrentAction(RS2::ActionPenPick);
+}
+
+
+void QG_ActionHandler::slotPenPickResolved(){
+    setCurrentAction(RS2::ActionPenPickResolved);
+}
+
+void QG_ActionHandler::slotPenApply(){
+    setCurrentAction(RS2::ActionPenApply);
+}
+
+void QG_ActionHandler::slotPenCopy(){
+    setCurrentAction(RS2::ActionPenCopy);
+}
+
+void QG_ActionHandler::slotPenSyncFromLayer(){
+    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
+    penPaletteWidget->updatePenToolbarByActiveLayer();
 }
 
 void QG_ActionHandler::set_view(RS_GraphicView* gview)

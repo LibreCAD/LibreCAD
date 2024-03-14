@@ -410,6 +410,11 @@ namespace RS2 {
         ActionScriptOpenIDE,
         ActionScriptRun,
 
+        ActionPenPick,
+        ActionPenPickResolved,
+        ActionPenApply,
+        ActionPenCopy,
+
         /** Needed to loop through all actions */
         ActionLast
     };

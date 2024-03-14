@@ -166,6 +166,13 @@ void RS_EventHandler::mouseReleaseEvent(QMouseEvent* e) {
 
         currentActions.last()->mouseReleaseEvent(e);
 
+        // action may be completed by click. Check this and if it so, uncheck the action
+        if (currentActions.last()->getStatus() < 0){
+            if (!hasAction() && q_action){
+                q_action->setChecked(false);
+                q_action = nullptr;
+            }
+        }
         // Clean up actions - one might be finished now
         cleanUp();
         e->accept();
@@ -512,8 +519,10 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
     RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
     // For some actions: action->init() may call finish() within init()
     // If so, the q_action shouldn't be checked
-    if (q_action)
-        q_action->setChecked(hasAction());
+    if (q_action){
+        bool hasActionToCheck = hasAction();
+        q_action->setChecked(hasActionToCheck);
+    }
 }
 
 

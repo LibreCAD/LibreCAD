@@ -753,6 +753,42 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("BlocksExplode");
     a_map["BlocksExplode"] = action;
 
+
+    // pen toolbar actions
+
+    action = new QAction(tr("&Pick Pen From Entity"), agm->pen);
+    action->setIcon(QIcon(":/extui/selectsingle.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPenPick()));
+    action->setObjectName("PenPick");
+    action->setCheckable(false);
+    a_map["PenPick"] = action;
+
+    action = new QAction(tr("&Pick Pen From Entity (Resolved)"), agm->pen);
+    action->setIcon(QIcon(":/extui/relzeromove.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPenPickResolved()));
+    action->setCheckable(false);
+    action->setObjectName("PenPickResolved");
+
+    a_map["PenPickResolved"] = action;
+
+    action = new QAction(tr("Apply Pen to Entity"), agm->pen);
+    action->setIcon(QIcon(":/icons/pen_apply.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPenApply()));
+    action->setObjectName("PenApply");
+
+    a_map["PenApply"] = action;
+
+    action = new QAction(tr("Copy Pen"), agm->pen);
+    action->setIcon(QIcon(":/icons/pen_copy.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPenCopy()));
+    action->setObjectName("PenCopy");
+
+    a_map["PenCopy"] = action;
+
     // <[~ Info ~]>
 
     action = new QAction(tr("Point inside contour"), agm->info);
@@ -1470,4 +1506,14 @@ void LC_ActionFactory::commonActions(QMap<QString, QAction*>& a_map, LC_ActionGr
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFileQuit()));
     action->setObjectName("FileQuit");
     a_map["FileQuit"] = action;
+
+
+    action = new QAction(tr("Update Current Pen by Active Layer' Pen"), agm->pen);
+    action->setIcon(QIcon(":/extui/back.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPenSyncFromLayer()));
+    action->setObjectName("PenSyncFromLayer");
+    action->setCheckable(false);
+    a_map["PenSyncFromLayer"] = action;
+
 }
