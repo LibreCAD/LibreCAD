@@ -1475,6 +1475,21 @@ void RS_Ellipse::scale(const RS_Vector& center, const RS_Vector& factor) {
 
 }
 
+/**
+ * @author{Dongxu Li}
+ */
+RS_Entity& RS_Ellipse::shear(double k)
+{
+    RS_Ellipse e1 = *this;
+    e1.createFromQuadratic(e1.getQuadratic().shear(k));
+    if (isArc()) {
+        e1.moveStartpoint(getStartpoint().shear(k));
+        e1.moveEndpoint(getEndpoint().shear(k));
+    }
+    *this = e1;
+    return *this;
+}
+
 
 /**
  * is the Ellipse an Arc

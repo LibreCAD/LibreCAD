@@ -1223,7 +1223,6 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
     //while ( (en = it.current())  ) {
     //    ++it;
 
-    unsigned i0=0;
     for(auto en: entities){
         if (!en->getParent()->ignoredOnModification() ){//no end point for Insert, text, Dim
             //            std::cout<<"find nearest for entity "<<i0<<std::endl;
@@ -1239,7 +1238,6 @@ RS_Vector RS_EntityContainer::getNearestEndpoint(const RS_Vector& coord,
                 }
             }
         }
-        i0++;
     }
 
     //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
@@ -1773,6 +1771,14 @@ void RS_EntityContainer::mirror(const RS_Vector& axisPoint1, const RS_Vector& ax
             adjustBorders(e);
         }
     }
+}
+
+RS_Entity& RS_EntityContainer::shear(double k)
+{
+    for (auto* e: *this)
+        e->shear(k);
+    calculateBorders();
+    return *this;
 }
 
 

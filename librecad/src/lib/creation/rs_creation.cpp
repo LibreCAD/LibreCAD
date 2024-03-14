@@ -603,19 +603,10 @@ std::vector<std::unique_ptr<RS_Line>> RS_Creation::createTangent2(
                 sol1.push_back(vp);
     }
 
-
-    // find the tangent point for a line in line coordinates
-    auto getTangentPoint = [](const RS_Entity& circle, const RS_Vector& line) -> RS_Vector {
-        auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
-        auto s0 = RS_Information::getIntersection(&circle, rsLine.get());
-        if (s0.empty())
-            return {};
-        return s0.at(0);
-    };
     // verify the tangent lines
     std::vector<std::unique_ptr<RS_Line>> tangents;
     std::transform(sol1.begin(), sol1.end(), std::back_inserter(tangents),
-                   [&getTangentPoint, circle1, circle2](const RS_Vector& line) -> std::unique_ptr<RS_Line> {
+                   [circle1, circle2](const RS_Vector& line) -> std::unique_ptr<RS_Line> {
         auto rsLine = std::make_unique<RS_Line>(nullptr, fromLineCoordinate(line));
         rsLine->setStartpoint(circle1->dualLineTangentPoint(line));
         rsLine->setEndpoint(circle2->dualLineTangentPoint(line));

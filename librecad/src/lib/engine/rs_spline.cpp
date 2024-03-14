@@ -341,7 +341,15 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
+RS_Entity& RS_Spline::shear(double k)
+{
+    for (RS_Vector& vp: data.controlPoints) {
+        vp.shear(k);
+    }
 
+    update();
+    return *this;
+}
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 	for (RS_Vector& vp: data.controlPoints) {

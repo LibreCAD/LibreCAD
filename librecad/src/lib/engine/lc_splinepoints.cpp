@@ -1158,6 +1158,18 @@ void LC_SplinePoints::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
 	update();
 }
 
+RS_Entity& LC_SplinePoints::shear(double k)
+{
+    for(auto & v: data.splinePoints){
+        v.shear(k);
+    }
+    for(auto& v: data.controlPoints){
+        v.shear(k);
+    }
+    update();
+    return *this;
+}
+
 void LC_SplinePoints::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
 	for(auto & v: data.splinePoints){

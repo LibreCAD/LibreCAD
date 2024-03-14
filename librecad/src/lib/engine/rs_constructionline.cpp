@@ -268,7 +268,11 @@ void RS_ConstructionLine::mirror(const RS_Vector& axisPoint1, const RS_Vector& a
         data.point2.mirror(axisPoint1, axisPoint2);
 }
 
-
+RS_Entity& RS_ConstructionLine::shear(double k)
+{
+    data.point1.shear(k);
+    data.point2.shear(k);
+}
 
 /**
  * Dumps the point's data to stdout.

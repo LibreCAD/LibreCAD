@@ -430,8 +430,6 @@ void LC_DimArc::scale(const RS_Vector& center, const RS_Vector& factor)
 
 void LC_DimArc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 {
-    const RS_Vector previousDefinitionPoint = data.definitionPoint;
-
     RS_Dimension::mirror (axisPoint1, axisPoint2);
 
     dimArcData.centre.mirror     (axisPoint1, axisPoint2);
