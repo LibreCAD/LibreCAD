@@ -222,6 +222,7 @@ public:
     void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
 
     void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
     void revertDirection() override;

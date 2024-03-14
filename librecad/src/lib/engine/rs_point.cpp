@@ -192,6 +192,12 @@ void RS_Point::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     calculateBorders();
 }
 
+RS_Entity& RS_Point::shear(double k)
+{
+    data.pos.shear(k);
+    calculateBorders();
+}
+
 void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
     if (painter==NULL || view==NULL) {
         return;

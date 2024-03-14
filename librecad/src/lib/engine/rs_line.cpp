@@ -565,6 +565,13 @@ void RS_Line::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     calculateBorders();
 }
 
+RS_Entity& RS_Line::shear(double k)
+{
+    data.startpoint.shear(k);
+    data.endpoint.shear(k);
+    calculateBorders();
+    return *this;
+}
 
 /**
  * Stretches the given range of the entity by the given offset.

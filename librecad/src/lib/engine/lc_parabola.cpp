@@ -522,6 +522,13 @@ void LC_Parabola::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint
     update();
 }
 
+RS_Entity& LC_Parabola::shear(double k)
+{
+    for(auto& point: data.controlPoints)
+        point.shear(k);
+    update();
+}
+
 void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 {
     for(auto& point: data.controlPoints)

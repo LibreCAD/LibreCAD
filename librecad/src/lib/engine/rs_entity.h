@@ -491,6 +491,37 @@ public:
                          const RS_Vector& offset);
 
     /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] double - k the skew/shear parameter
+     */
+    virtual RS_Entity& shear(double k) = 0;
+    /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] const RS_Vector& - origin the point to be used as the origin
+     * @param[in] const RS_Vector& - the x-axis direction
+     * @param[in] double - k the skew/shear parameter
+     */
+    virtual RS_Entity& shear(const RS_Vector &origin, const RS_Vector &xAxis, double k)
+    {
+        rotate(origin, -xAxis.angle());
+        move(-origin);
+        shear(k);
+        move(origin);
+        rotate(origin, xAxis.angle());
+        return *this;
+    }
+
+    /**
          * Implementations must drag the reference point(s) of all
          * (sub-)entities that are very close to ref by offset.
          */

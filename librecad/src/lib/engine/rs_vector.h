@@ -31,6 +31,8 @@
 #include <vector>
 #include <iosfwd>
 
+class QPointF;
+
 /**
  * Represents a 3d vector (x/y/z)
  *
@@ -43,7 +45,8 @@ public:
     explicit RS_Vector(double angle);
     //RS_Vector(double v[]);
     explicit RS_Vector(bool valid);
-	~RS_Vector()=default;
+    explicit RS_Vector(const QPointF& point);
+    ~RS_Vector()=default;
 
 	//!
 	//! \brief operator bool explicit and implicit conversion to bool
@@ -82,6 +85,13 @@ public:
     RS_Vector scale(const RS_Vector& factor) const;
     RS_Vector& scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
+    /**
+     * @brief shear     Shear/Skew transform
+     * @author          Dongxu Li
+     * @param k         the shear parameter: x = x + k y; y=y
+     * @return          the transformed vector
+     */
+    RS_Vector& shear(double k);
 	double dotP(const RS_Vector& v1) const;
     RS_Vector normalized() const;
     RS_Vector& normalize();

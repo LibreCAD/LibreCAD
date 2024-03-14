@@ -65,6 +65,7 @@ public:
     LC_Quadratic move(const RS_Vector& v);
     LC_Quadratic rotate(const double& a);
     LC_Quadratic rotate(const RS_Vector& center, const double& a);
+    LC_Quadratic shear(double k);
 	/** \brief whether it's quadratic or linear
       @return true, if quadratic;
       return false, if linear
