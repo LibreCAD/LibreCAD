@@ -456,10 +456,33 @@ LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, const double& angle)
     return *this;
 }
 
+/**
+ * @author{Dongxu Li}
+ */
+LC_Quadratic LC_Quadratic::shear(double k)
+{
+    if(isQuadratic()){
+        auto getCes = [this]() -> std::array<double, 6>{
+            std::vector<double> cev = getCoefficients();
+            return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
+        };
+        const auto& [a,b,c,d,e,f] = getCes();
+
+        const std::vector<double> sheared = {{
+            a, -2.*k*a + b, k*(k*a - b) + c,
+            d, e - k*d, f
+        }};
+        return {sheared};
+    }
+    LC_Quadratic qf(*this);
+    qf.m_vLinear(1) -= k * qf.m_vLinear(0);
+    return qf;
+}
+
 /** switch x,y coordinates */
 LC_Quadratic LC_Quadratic::flipXY(void) const
 {
-        LC_Quadratic qf(*this);
+    LC_Quadratic qf(*this);
     if(isQuadratic()){
         std::swap(qf.m_mQuad(0,0),qf.m_mQuad(1,1));
         std::swap(qf.m_mQuad(0,1),qf.m_mQuad(1,0));

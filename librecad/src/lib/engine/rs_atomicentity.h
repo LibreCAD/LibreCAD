@@ -179,6 +179,10 @@ public:
 	virtual void reverse();
 
 	void moveSelectedRef(const RS_Vector& ref, const RS_Vector& offset) override;
+    RS_Entity& shear([[maybe_unused]] double k) override
+    {
+        return *this;
+    }
 
 protected:
     /**

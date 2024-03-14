@@ -81,6 +81,8 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
+    bool createFromQuadratic(const LC_Quadratic& q);
+    bool createFromQuadratic(const std::vector<double>& q);
 
 	RS_Entity* clone() const override;
 
@@ -226,6 +228,8 @@ public:
 	void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angle*/)override{}
 	void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/)override{}
 	void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/)override{}
+    RS_Entity& shear(double k) override;
+
 	void moveRef(const RS_Vector& /*ref*/, const RS_Vector& /*offset*/)override{}
 
 	void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/, double& /*patternOffset*/)override{}

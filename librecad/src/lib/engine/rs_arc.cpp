@@ -820,6 +820,21 @@ void RS_Arc::scale(const RS_Vector& center, const RS_Vector& factor) {
 }
 
 
+/**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] double - k the skew/shear parameter
+     */
+RS_Entity& RS_Arc::shear(double k)
+{
+    if (!std::isnormal(k))
+        assert(!"shear(): cannot be called for arc");
+    return *this;
+}
 
 void RS_Arc::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     data.center.mirror(axisPoint1, axisPoint2);
@@ -862,8 +877,6 @@ void RS_Arc::moveRef(const RS_Vector& ref, const RS_Vector& offset)
 
     correctAngles(); // make sure angleLength is no more than 2*M_PI
 }
-
-
 
 void RS_Arc::stretch(const RS_Vector& firstCorner,
                      const RS_Vector& secondCorner,

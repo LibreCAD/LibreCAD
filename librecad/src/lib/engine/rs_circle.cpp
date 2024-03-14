@@ -744,6 +744,13 @@ void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2)
 	data.center.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }
+RS_Entity& RS_Circle::shear(double k)
+{
+    if (!std::isnormal(k))
+        assert(!"shear() should not not be called for circle");
+    return *this;
+}
+
 
 
 /** whether the entity's bounding box intersects with visible portion of graphic view

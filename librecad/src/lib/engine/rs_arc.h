@@ -220,6 +220,16 @@ public:
 	void rotate(const RS_Vector& center, const double& angle) override;
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] double - k the skew/shear parameter
+     */
+    RS_Entity& shear(double k) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 	void stretch(const RS_Vector& firstCorner,

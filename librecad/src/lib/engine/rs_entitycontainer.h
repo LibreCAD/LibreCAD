@@ -192,6 +192,7 @@ public:
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
+    RS_Entity& shear(double k) override;
 
 	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,

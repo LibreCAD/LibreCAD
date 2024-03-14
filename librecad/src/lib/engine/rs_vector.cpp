@@ -27,6 +27,8 @@
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <QPointF>
+
 #include "rs.h"
 #include "rs_math.h"
 #include "lc_rect.h"
@@ -56,6 +58,10 @@ RS_Vector::RS_Vector(double angle):
     ,valid(true)
 {
 }
+
+RS_Vector::RS_Vector(const QPointF &point):
+    RS_Vector{point.x(), point.y()}
+{}
 
 /**
  * Constructor for a point with given valid flag.
@@ -328,6 +334,12 @@ RS_Vector& RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisP
     ret= axisPoint1 + direction* dotP(*this - axisPoint1,direction)/a; //projection point
     *this = ret + ret - *this;
 
+    return *this;
+}
+
+RS_Vector& RS_Vector::shear(double k)
+{
+    x += k * y;
     return *this;
 }
 
