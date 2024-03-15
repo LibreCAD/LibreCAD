@@ -50,7 +50,7 @@ public slots:
     virtual void updateSnapPoint( int sp );
 
 protected:
-    RS_ActionDrawLineAngle* action;
+    RS_ActionDrawLineAngle* action = nullptr;
 
 protected slots:
     virtual void languageChange();
@@ -58,7 +58,8 @@ protected slots:
 private:
 	void saveSettings();
 	std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
-	bool m_bFixedAngle;
+	int m_snapPoint = 0;
+	bool m_bFixedAngle = false;
 };
 
 #endif // QG_LINEANGLEOPTIONS_H
