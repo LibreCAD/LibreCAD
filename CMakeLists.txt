@@ -982,6 +982,18 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawcirclebyarc.cpp
         librecad/src/actions/lc_actionmodifylinejoin.cpp
         librecad/src/ui/forms/lc_linejoinoptions.cpp
+        librecad/src/actions/lc_actiondrawlinepoints.h
+        librecad/src/actions/lc_actiondrawlinepoints.cpp
+        librecad/src/ui/forms/lc_linepointsoptions.h
+        librecad/src/ui/forms/lc_linepointsoptions.cpp
+        librecad/src/lib/math/lc_linemath.h
+        librecad/src/lib/math/lc_linemath.cpp
+        librecad/src/actions/lc_abstract_action_draw_line.cpp
+        librecad/src/actions/lc_abstractactionwithpreview.h
+        librecad/src/actions/lc_abstractactionwithpreview.cpp
+        librecad/src/actions/lc_actionmodifyduplicate.h
+        librecad/src/actions/lc_actionmodifyduplicate.cpp
+        librecad/src/ui/forms/lc_duplicateoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

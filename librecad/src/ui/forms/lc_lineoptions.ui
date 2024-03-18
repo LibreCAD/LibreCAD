@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>603</width>
+    <width>600</width>
     <height>35</height>
    </rect>
   </property>
@@ -228,7 +228,7 @@
    <sender>bClose</sender>
    <signal>clicked()</signal>
    <receiver>Ui_LineOptionsRel</receiver>
-   <slot>close()</slot>
+   <slot>closeLine()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>

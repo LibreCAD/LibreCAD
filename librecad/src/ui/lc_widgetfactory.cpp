@@ -81,6 +81,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
         << a_map["DrawLinePolygonCorCor"]
         << a_map["DrawPoint"]
+        << a_map["DrawLinePoints"]
         << a_map["DrawLineRectangle1Point"]
         << a_map["DrawLineRectangle2Points"]
         << a_map["DrawLineRectangle3Points"]
@@ -164,6 +165,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
     modify_actions
             << a_map["ModifyMove"]
+            << a_map["ModifyDuplicate"]
             << a_map["ModifyRotate"]
             << a_map["ModifyScale"]
             << a_map["ModifyMirror"]

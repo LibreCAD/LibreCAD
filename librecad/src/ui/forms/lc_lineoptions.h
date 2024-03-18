@@ -12,7 +12,7 @@ namespace Ui {
 class Ui_LineOptionsRel;
 }
 
-class LC_LineOptions : public QWidget
+class LC_LineOptions : public LC_ActionOptionsWidget
 {
     Q_OBJECT
 
@@ -21,8 +21,7 @@ public:
     ~LC_LineOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a , bool update);
-    virtual void close();
+    virtual void closeLine();
     virtual void undo();
     virtual void redo();
     virtual void polyline();
@@ -35,10 +34,11 @@ public slots:
     void onAngleRelativeClicked(bool value);
 protected:
     LC_ActionDrawLineRel* action;
-
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void clearAction() override;
 protected slots:
     virtual void languageChange();
-
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 private:
     Ui::Ui_LineOptionsRel* ui;

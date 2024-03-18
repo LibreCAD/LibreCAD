@@ -9,14 +9,13 @@ namespace Ui {
 class LC_SliceDivideOptions;
 }
 
-class LC_SliceDivideOptions : public QWidget
+class LC_SliceDivideOptions : public LC_ActionOptionsWidget
 {
     Q_OBJECT
 
 public:
     explicit LC_SliceDivideOptions(QWidget *parent = nullptr);
     ~LC_SliceDivideOptions();
-    void setAction(RS_ActionInterface *a, bool update);
 
 public slots:
 
@@ -31,11 +30,14 @@ public slots:
     void onDivideClicked(bool checked);
 
 protected slots:
-    virtual void languageChange();
+    virtual void languageChange() override;
+    void clearAction() override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_SliceDivideOptions *ui;
 
-    void saveSettings();
+    void saveSettings() override;
     void setCountToActionAndView(const QString &val);
     void setTickLengthToActionAndView(const QString &qString);
     void setTickAngleToActionAndView(const QString &val);

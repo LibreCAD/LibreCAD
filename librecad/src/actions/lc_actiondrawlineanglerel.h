@@ -3,8 +3,9 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_line.h"
+#include "lc_abstractactionwithpreview.h"
 
-class LC_ActionDrawLineAngleRel :public RS_PreviewActionInterface {
+class LC_ActionDrawLineAngleRel :public LC_AbstractActionWithPreview {
     Q_OBJECT
 
 public:
@@ -37,21 +38,11 @@ public:
 
     void finish(bool updateTB) override;
 
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
-    void hideOptions() override;
-    void showOptions() override;
-
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-
 
     void setLineSnapMode(int mode);
     int getLineSnapMode(){return lineSnapMode;};
@@ -76,8 +67,6 @@ public:
     bool isLengthFree(){return lengthIsFree;};
     void setLengthIsFree(bool value){lengthIsFree = value;};
 
-    static RS_Vector getNearestPointOnLine(RS_Line* line, const RS_Vector &coord, bool infiniteLine);
-    static RS_Vector getNearestPointOnInfiniteLine(const RS_Vector &coord, const RS_Vector &lineStartPoint, const RS_Vector &lineEndPoint);
 
 private:
     int lineSnapMode {SNAP_START};
@@ -108,9 +97,17 @@ private:
 
     void updateTickSnapPosition(double distanceOnLine);
     RS_Vector obtainLineSnapPointForMode() const;
-    int getPointPosition(RS_Vector &startPos, RS_Vector &endPos, RS_Vector &point);
     RS_Vector detectNearestPointOnLine(const RS_Vector &coord, bool infiniteLine);
-
+protected:
+    void createOptionsWidget() override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doAfterTrigger() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
 
 };
 

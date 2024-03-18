@@ -17,6 +17,7 @@
 #include "rs_math.h"
 #include "rs_eventhandler.h"
 #include "lc_actiondrawlineanglerel.h"
+#include "lc_linemath.h"
 
 struct LC_ActionDrawLineRectangleRel::Points {
 /**
@@ -187,7 +188,7 @@ RS_Vector LC_ActionDrawLineRectangleRel::calculatePossibleEndpointForAngle(const
 
     RS_Vector infiniteTickVector = RS_Vector::polar(10.0, angle);
     RS_Vector infiniteTickEndPoint = lineStartPoint + infiniteTickVector;
-    RS_Vector pointOnInfiniteTick = LC_ActionDrawLineAngleRel::getNearestPointOnInfiniteLine(snap, lineStartPoint, infiniteTickEndPoint);
+    RS_Vector pointOnInfiniteTick = LC_LineMath::getNearestPointOnInfiniteLine(snap, lineStartPoint, infiniteTickEndPoint);
 
     possibleEndPoint = pointOnInfiniteTick;
     return possibleEndPoint;
@@ -323,22 +324,19 @@ void LC_ActionDrawLineRectangleRel::calculateCorner4(){
 
 void LC_ActionDrawLineRectangleRel::updateMouseButtonHints() {
     switch (getStatus()) {
-        case SetWidth:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify width"),
-                                                tr("Cancel"));
+        // fixme - restore
+     /*   case SetWidth:
+            updateMouseWidgetTR("Specify width","Cancel");
             break;
         case SetHeight:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify height"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify height","Back");
             break;
         case SetStart:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify start point"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify start point","Back");
             break;
         case SetAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify angle"),
-                                                tr("Back"));
-            break;
+            updateMouseWidgetTR("Specify angle","Back");
+            break;*/
         default:
             RS_DIALOGFACTORY->updateMouseWidget();
             break;

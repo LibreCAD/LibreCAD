@@ -4,27 +4,13 @@
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
 #include "rs_line.h"
+#include "lc_abstract_action_draw_line.h"
 
-class LC_ActionDrawLineRel :public RS_PreviewActionInterface
-{
+class LC_ActionDrawLineRel : public LC_AbstractActionDrawLine {
     Q_OBJECT
 
 
-
 public:
-    enum Status {
-        SetStartPoint,
-        SetDirection,
-        SetDistance,
-        SetPoint,
-        SetAngle
-    };
-
-    enum Direction{
-        DIRECTION_NONE, DIRECTION_X, DIRECTION_Y, DIRECTION_POINT, DIRECTION_ANGLE
-    };
-
-
     /// History Actions
     enum HistoryAction {
         HA_SetStartpoint,   ///< Setting the startpoint
@@ -85,54 +71,42 @@ public:
 
     LC_ActionDrawLineRel(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineRel::DIRECTION_NONE);
     ~LC_ActionDrawLineRel() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-    void commandEvent(RS_CommandEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
 
-    void trigger() override;
     void init(int status) override;
-
-    void showOptions() override;
-    void hideOptions() override;
 
     void close();
     void next();
     void undo();
     void redo();
-    void polyline();
-    void setNewStartPointState();
-    void setSetPointDirectionState();
-    void setSetXDirectionState();
-    void setSetYDirectionState();
-    void setSetAngleDirectionState();
-    int getDirection(){return direction;};
-    double getAngleValue();
-    bool  isAngleRelative();
+    void polyline();;
     bool mayClose();
     bool mayUndo() const;
-    bool mayStart();
+    bool mayStart() override;
     bool mayRedo();
     QStringList getAvailableCommands() override;
-    void setAngleValue(double value);
-    void setAngleIsRelative(bool value);
 
+protected:
+    void createOptionsWidget() override;
+    bool doProceedCommand(RS_CommandEvent *pEvent, const QString &qString) override;
+    bool doProcessCommandValue(RS_CommandEvent *e, const QString &c) override;
+    const RS_Vector& getStartPointForAngleSnap() const override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    bool isStartPointValid() const override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
 private:
     std::unique_ptr<Points> pPoints;
     void resetPoints();
-    int direction {DIRECTION_NONE};
-    bool negativeDirection {false};
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
-    void doTrigger(bool close);
-    void updateOptions();
-    void setSetAngleState(bool relative);
-    bool angleIsRelative {true};
-    double angleValue;
+    void completeLineSegment(bool close);
     void calculateAngleSegment(double distance);
     RS_Vector calculateAngleEndpoint(const RS_Vector &snap);
     double defineActualSegmentAngle(double realAngle);
+    bool isNonZeroLine(const RS_Vector &possiblePoint) const;
+    void createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList);
 };
 
 #endif // LC_ACTIONDRAWLINEREL_H

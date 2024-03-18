@@ -11,37 +11,51 @@
 #include "rs_snapper.h"
 #include "rs_previewactioninterface.h"
 #include "rs_line.h"
+#include "lc_abstractactionwithpreview.h"
 
+/**
+ * Structure that contains information about cross lines
+ */
 struct LC_CrossData {
     LC_CrossData() :
         horizontal(),
-        vertical()
-    {}
-
-    LC_CrossData(const RS_LineData& horLine,
-                const RS_LineData& vertLine) :
-        horizontal( horLine),
-        vertical( vertLine)
+        vertical(),
+        centerPoint()
     {}
 
     LC_CrossData(const RS_Vector& horPoint1,
                  const RS_Vector& horPoint2,
                  const RS_Vector& vertPoint1,
-                 const RS_Vector& vertPoint2) :
+                 const RS_Vector& vertPoint2,
+                 const RS_Vector& center) :
         horizontal( horPoint1, horPoint2),
-        vertical( vertPoint1, vertPoint2)
+        vertical( vertPoint1, vertPoint2),
+        centerPoint(center)
     {}
 
+    // horizontal line
     RS_LineData horizontal;
+    // vertical line
     RS_LineData vertical;
+    // center point
+    RS_Vector centerPoint;
 };
 
-class LC_ActionDrawCross:public RS_PreviewActionInterface {
+/**
+ * Action that draws cross positioned in center of selected circle, arc or ellipse
+ */
+class LC_ActionDrawCross:public LC_AbstractActionWithPreview {
 Q_OBJECT
 
 public:
     enum Status {
-        SetCircle      /**< Choose the circle / arc. */
+        SetEntity      /**< Choose the circle / arc. */
+    };
+
+    enum{
+        CROSS_SIZE_EXTEND, // cross is outside shape for specified length
+        CROSS_SIZE_LENGTH, // absolute length of cross lines
+        CROSS_SIZE_PERCENT // cross length is calculated as percentage of shape radius
     };
 
     LC_ActionDrawCross(
@@ -49,20 +63,13 @@ public:
         RS_GraphicView &graphicView);
     ~LC_ActionDrawCross() override;
 
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-
-    void showOptions() override;
-    /*void hideOptions() override;*/
 
     double getLenX() {return lenX;};
     double getLenY() {return lenY;};
-    double getCrossAngle(){return orientation;};
-    int getCrossMode(){return crossMode;};
+    double getCrossAngle(){return angle;};
+    int getCrossMode(){return crossSizeMode;};
 
     void setXLength(double d);
     void setYLength(double d);
@@ -70,24 +77,40 @@ public:
     void setCrossMode(int i);
 
 protected:
-
     void createOptionsWidget() override;
-
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool doCheckMayTrigger() override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doAfterTrigger() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
-    /** Chosen startpoint */
-    std::unique_ptr<RS_Vector> point;
     /** Chosen entity */
-    RS_Entity *circle = nullptr;
+    RS_Entity *entity = nullptr;
     //list of entity types supported by current action
     const EntityTypeList circleType = EntityTypeList{RS2::EntityArc,
                                                      RS2::EntityCircle,
                                                      RS2::EntityEllipse/*,
                                                      RS2::EntitySplinePoints*/};
 
-    int crossMode;
+    /**
+     * Mode that controls how the circle should be drawn
+     */
+    int crossSizeMode;
+    /*
+     * length value for axis x
+     */
     double lenX;
+    /*
+     * length value for axis x
+     */
     double lenY;
-    double orientation;
+    /**
+     * Angle between axis x and horizontal cross line
+     */
+    double angle;
+
     LC_CrossData createCrossData();
 };
 

@@ -3,8 +3,9 @@
 
 #include "rs_previewactioninterface.h"
 #include "rs_line.h"
+#include "lc_abstractactionwithpreview.h"
 
-class LC_ActionModifyLineJoin :public RS_PreviewActionInterface {
+class LC_ActionModifyLineJoin :public LC_AbstractActionWithPreview {
     Q_OBJECT
 
 
@@ -28,8 +29,7 @@ public:
 
     void trigger() override;
 
-    void mouseReleaseEvent(QMouseEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
+
     void commandEvent(RS_CommandEvent* e) override;
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
@@ -38,7 +38,6 @@ public:
 
     QStringList getAvailableCommands() override;
 
-    void updateMouseCursor() override;
 
     bool isCreatePolyline(){return createPolyline;};
     void setCreatePolyline(bool value);
@@ -57,6 +56,11 @@ public:
 
 protected:
     void createOptionsWidget() override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
 
 private:
     struct LC_PointsDisposition{
@@ -71,7 +75,7 @@ private:
         int dispositionMode;
 
         bool isStartPointClosest;
-        RS_Vector closePoint;
+        RS_Vector closestPoint;
         RS_Vector farPoint;
         RS_Vector startPoint;
         RS_Vector endPoint;
@@ -135,11 +139,11 @@ private:
     LC_LineJoinData* proceedNonParallelLines(
         RS_Vector &snapPoint,  const RS_VectorSolutions &sol, const RS_Vector &line1Start, const RS_Vector &line1End,
         const RS_Vector &line2Start, const RS_Vector &line2End);
-    bool areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End) const;
+
     void applyAttributes(RS_Entity *entity, bool forLine1);
     void deleteOriginalEntity(RS_Entity *entity);
     void doTrigger();
-    void processRightButtonClick();
+
 };
 
 #endif // LC_ACTIONMODIFYLINEJOIN_H

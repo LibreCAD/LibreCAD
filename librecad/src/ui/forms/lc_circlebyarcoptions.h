@@ -19,7 +19,6 @@ public:
     explicit LC_CircleByArcOptions(QWidget *parent = nullptr);
     ~LC_CircleByArcOptions();
 
-
 protected:
     void saveSettings() override;
     void languageChange() override;

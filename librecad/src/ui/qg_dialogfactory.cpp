@@ -880,28 +880,6 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestPolylineEquidistantOptions(action, on, update);
         break;
 
-    case RS2::ActionDrawCross:
-        requestCrossOptions(action, on, update);
-        break;
-
-     case RS2::ActionDrawLineAngleRel:
-     case RS2::ActionDrawLineOrthogonalRel:
-         requestLineAngleRelOptions(action, on, update);
-         break;
-
-     case RS2::ActionDrawRectangle1Point:
-         requestLineRectangleFixedOptions(action, on, update);
-        break;
-
-     case RS2::ActionDrawLineRel:
-        requestLineRelOptions(action, on, update);
-        break;
-
-     case RS2::ActionDrawSliceDivide:
-         requestSliceDivideOptions(action, on, update);
-         break;
-
-
     default:
         break;
     }
@@ -1080,32 +1058,6 @@ void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
                                          bool on, bool update) {
 
     addOptionWidget<QG_ArcOptions>(optionWidget, action, on, update);
-}
-
-
-void QG_DialogFactory::requestCrossOptions(RS_ActionInterface* action,
-                                           bool on, bool update){
-    addOptionWidget<LC_CrossOptions>(optionWidget, action, on, update);
-}
-
-void QG_DialogFactory::requestLineAngleRelOptions(RS_ActionInterface* action,
-                                                  bool on, bool update){
-    addOptionWidget<LC_LineAngleRelOptions>(optionWidget, action, on, update);
-}
-
-void QG_DialogFactory::requestLineRectangleFixedOptions(RS_ActionInterface* action,
-                                                        bool on, bool update){
-    addOptionWidget<LC_Rectangle1PointOptions>(optionWidget, action, on, update);
-}
-
-void QG_DialogFactory::requestLineRelOptions(RS_ActionInterface* action,
-                                           bool on, bool update){
-    addOptionWidget<LC_LineOptions>(optionWidget, action, on, update);
-}
-
-void QG_DialogFactory::requestSliceDivideOptions(RS_ActionInterface* action,
-                                           bool on, bool update){
-    addOptionWidget<LC_SliceDivideOptions>(optionWidget, action, on, update);
 }
 
 

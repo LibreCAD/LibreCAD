@@ -6,158 +6,95 @@
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_preview.h"
-#include "rs_dialogfactory.h"
 #include "lc_circlebyarcoptions.h"
 #include <QMouseEvent>
 
+// fixme - check whether we need to add more options for attributes source
+
 LC_ActionDrawCircleByArc::LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView):
-    RS_PreviewActionInterface("Circle By Arc", container, graphicView)
-{
+    LC_AbstractActionWithPreview("Circle By Arc", container, graphicView){
+    actionType = RS2::ActionDrawCircleByArc;
 }
 
 LC_ActionDrawCircleByArc::~LC_ActionDrawCircleByArc() = default;
 
-void LC_ActionDrawCircleByArc::trigger(){
-    RS_PreviewActionInterface::trigger();
+bool LC_ActionDrawCircleByArc::doCheckMayTrigger(){
+    return arc != nullptr;
+}
 
-    if (arc != nullptr){ // check we have arc selected
-        // prepare data for cycle based on arc
-        RS_CircleData circleData = createCircleData();
+RS_Vector LC_ActionDrawCircleByArc::doGetRelativeZeroAfterTrigger(){
+    return arc->getCenter();
+}
 
-        // setup new circle
-        RS_Entity *circle = new RS_Circle(container, circleData);
+void LC_ActionDrawCircleByArc::doAfterTrigger(){
+    arc = nullptr;
+    setStatus(SetArc);
+}
 
-        arc->setHighlighted(false);
-        graphicView->drawEntity(arc);
+void LC_ActionDrawCircleByArc::doPrepareTriggerEntities(QList<RS_Entity *> &list){
+    // prepare data for cycle based on arc
+    RS_CircleData circleData = createCircleData();
 
-        circle->setLayerToActive();
-        circle->setPenToActive();
-        container->addEntity(circle);
+    // setup new circle
+    RS_Entity *circle = new RS_Circle(container, circleData);
+    list << circle;
+}
 
-        if (document){
-            document->startUndoCycle();
-
-            // check whether we need to delete oridinal arc
-            if (replaceArcByCircle){
-                bool mayDelete = true;
-                bool locked = arc->isLocked();
-                if (locked){
-                    RS_DIALOGFACTORY->commandMessage(tr("Arc is not replaced as it is locked."));
+void LC_ActionDrawCircleByArc::performTriggerDeletions(){
+    // check whether we need to delete original arc
+    if (replaceArcByCircle){
+        bool mayDelete = true;
+        bool locked = arc->isLocked();
+        if (locked){
+            commandMessageTR("Arc is not replaced as it is locked.");
+            mayDelete = false;
+        } else {
+            RS_EntityContainer *pContainer = arc->getParent();
+            if (pContainer != nullptr){
+                // todo - what if arc is part of block?
+                if (pContainer->rtti() == RS2::EntityPolyline){
+                    // don't let deletion of arc which is part of polyline
                     mayDelete = false;
-                } else {
-                    RS_EntityContainer *pContainer = arc->getParent();
-                    if (pContainer != nullptr){
-                        // todo - what if arc is part of block?
-                        if (pContainer->rtti() == RS2::EntityPolyline){
-                            // don't let deletion of arc which is part of polyline
-                            mayDelete = false;
-                            RS_DIALOGFACTORY->commandMessage(tr("Arc is not removed as it is part of polyline. Expand polyline first."));
-                        }
-                    }
-                }
-                if (mayDelete){ // simply delete source arc
-                    deleteOriginalEntity(arc);
+                    commandMessageTR("Arc is not removed as it is part of polyline. Expand polyline first.");
                 }
             }
-
-            document->addUndoable(circle);
-            document->endUndoCycle();
         }
-
-        graphicView->moveRelativeZero(circleData.center);
-
-        graphicView->redraw(RS2::RedrawDrawing);
-
-        setStatus(SetCircle);
-
-        arc = nullptr;
-
-    } else {
-        RS_DEBUG->print("RS_ActionDrawCroww::trigger:"
-                        " Circle is nullptr\n");
+        if (mayDelete){ // simply delete source arc
+            deleteEntityUndoable(arc);
+        }
     }
 }
 
-void LC_ActionDrawCircleByArc::deleteOriginalEntity(RS_Entity *entity){
-    // delete and add this into undo
-    graphicView->deleteEntity(entity);
-    entity->changeUndoState();
-    document->addUndoable(entity);
-}
-
 RS_CircleData LC_ActionDrawCircleByArc::createCircleData(){
-
     RS_Vector center = arc->getCenter();
     double radius = arc->getRadius();
-
     RS_CircleData result = RS_CircleData(center, radius);
     return result;
 }
 
+#define HIGHLIGHT_ORIGINAL_ARC false
 
-void LC_ActionDrawCircleByArc::mouseMoveEvent(QMouseEvent *e){
-    RS_DEBUG->print("LC_ActionDrawCross::mouseMoveEvent begin");
+void LC_ActionDrawCircleByArc::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+    if (status == SetArc){
+        RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+        if (en && (en->isArc() && en->rtti() == RS2::EntityArc)){
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-
-    switch (getStatus()) {
-        case SetCircle: {
-            RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
-            if (en && (en->isArc() && en->rtti() == RS2::EntityArc)) {
-                if(arc != nullptr){
-                    arc->setHighlighted(false);
-                    graphicView->drawEntity(en);
-                }
-                arc = dynamic_cast<RS_Arc *>(en);
-                arc->setHighlighted(true);
-                graphicView->drawEntity(en);
-
-                deletePreview();
-
-                RS_CircleData circleData = createCircleData();
-
-                RS_Entity *circle = new RS_Circle(container, circleData);
-                circle->setPenToActive();
-                circle->setLayerToActive();
-
-                preview->addEntity(circle);
-
-                drawPreview();
+            arc = dynamic_cast<RS_Arc *>(en);
+            if (HIGHLIGHT_ORIGINAL_ARC){
+                highlightEntity(arc);
             }
-            else{
-                deletePreview();
-                if(arc){
-                    arc->setHighlighted(false);
-                    graphicView->drawEntity(en);
-                }
-                graphicView->redraw(RS2::RedrawOverlay);
-                arc = nullptr;
-            }
+            RS_CircleData circleData = createCircleData();
+            RS_Entity *circle = new RS_Circle(container, circleData);
+            list << circle;
+        } else {
+            arc = nullptr;
         }
-        break;
-
-        default:
-            break;
     }
-
-    RS_DEBUG->print("LC_ActionDrawCross::mouseMoveEvent end");
 }
 
-void LC_ActionDrawCircleByArc::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button()==Qt::RightButton) {
-        deletePreview();
-        if(arc){
-            arc->setHighlighted(false);
-            graphicView->drawEntity(arc);
-        }
-        init(getStatus()-1);
-    } else {
-        switch (getStatus()) {
-            case SetCircle:
-                trigger();
-                break;
-        }
+void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+    if (status == SetArc){
+        trigger();
     }
 }
 
@@ -169,23 +106,21 @@ void LC_ActionDrawCircleByArc::coordinateEvent(RS_CoordinateEvent *e){
 
 void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     switch (getStatus()) {
-        case SetCircle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select arc or circle"),
-                                                tr("Back"));
+        case SetArc:
+            updateMouseWidgetTR("Select arc or circle","Back");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-void LC_ActionDrawCircleByArc::updateMouseCursor(){
-    switch (getStatus())    {
-        case SetCircle:
-            graphicView->setMouseCursor(RS2::SelectCursor);
-            break;
+RS2::CursorType LC_ActionDrawCircleByArc::doGetMouseCursor(int status){
+    switch (status)    {
+        case SetArc:
+            return RS2::SelectCursor;
         default:
-            graphicView->setMouseCursor(RS2::CadCursor);
+            return RS2::CadCursor;
     }
 }
 

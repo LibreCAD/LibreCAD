@@ -125,13 +125,16 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/lc_abstractactionwithpreview.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
+    actions/lc_actionmodifyduplicate.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
     actions/lc_abstractactiondrawrectangle.h \
     actions/lc_actiondrawcirclebyarc.h \
     actions/lc_actiondrawlineanglerel.h \
+    actions/lc_actiondrawlinepoints.h \
     actions/lc_actiondrawrectangle1point.h \
     actions/lc_actiondrawlinerel.h \
     actions/lc_actiondrawrectangle2points.h \
@@ -225,6 +228,7 @@ HEADERS += \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
+    lib/math/lc_linemath.h \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
@@ -242,6 +246,8 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/LC_DlgParabola.h \
+    ui/forms/lc_linepointsoptions.h \
+    ui/forms/lc_duplicateoptions.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -260,26 +266,28 @@ HEADERS += \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_linejoinoptions.h \
-    ui/forms/lc_lineoptions.h \
-    ui/forms/lc_linerectangereloptions.h \
-    ui/forms/lc_linerectanglefixedoptions.h \
+    ui/forms/lc_lineoptions.h \        
     ui/forms/lc_slicedivideoptions.h\
     ui/forms/lc_rectangle2pointsoptions.h \
     ui/forms/lc_rectangle1pointoptions.h \
-    ui/forms/lc_rectangle3pointsoptions.h \
-    ui/forms/lc_slicedivideoptions.h\
+    ui/forms/lc_rectangle3pointsoptions.h \    
+    actions/lc_abstract_action_draw_line.h \
     ui/forms/LC_DlgParabola.h
 
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
+    actions/lc_abstractactionwithpreview.cpp \
     actions/lc_actiondrawcirclebyarc.cpp \
     actions/lc_actiondrawlineanglerel.cpp \
+    actions/lc_actiondrawlinepoints.cpp \
     actions/lc_actiondrawrectangle1point.cpp \
     actions/lc_actiondrawlinerel.cpp \
     actions/lc_actiondrawrectangle2points.cpp \
     actions/lc_actiondrawslicedivide.cpp \
+    actions/lc_abstract_action_draw_line.cpp \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
+    actions/lc_actionmodifyduplicate.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
     actions/lc_actionmodifylinejoin.cpp \
@@ -355,6 +363,7 @@ SOURCES += \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
+    lib/math/lc_linemath.cpp \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
@@ -377,6 +386,8 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
+    ui/forms/lc_linepointsoptions.cpp \
+    ui/forms/lc_duplicateoptions.cpp \
     ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \
@@ -398,10 +409,7 @@ SOURCES += \
     ui/forms/lc_lineoptions.cpp \
     ui/forms/lc_rectangle3pointsoptions.cpp \
     ui/forms/lc_rectangle1pointoptions.cpp \
-    ui/forms/lc_rectangle2pointsoptions.cpp \
-    ui/forms/lc_slicedivideoptions.cpp \
-    ui/forms/lc_linerectangereloptions.cpp \
-    ui/forms/lc_linerectanglefixedoptions.cpp \
+    ui/forms/lc_rectangle2pointsoptions.cpp \         
     ui/forms/lc_slicedivideoptions.cpp
 
 # ################################################################################
@@ -912,6 +920,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_crossoptions.ui \
     ui/forms/lc_lineanglereloptions.ui \
     ui/forms/lc_linejoinoptions.ui \
+    ui/forms/lc_linepointsoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \
@@ -992,7 +1001,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/widgetcreator.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
-    ui/lc_penpaletteoptionsdialog.ui \
+    ui/forms/lc_duplicateoptions.ui \
+    ui/lc_penpaletteoptionsdialog.ui \    
     ui/lc_penpalettewidget.ui
 
 # ################################################################################

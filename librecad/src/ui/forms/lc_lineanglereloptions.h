@@ -9,7 +9,7 @@ namespace Ui {
 class LC_LineAngleRelOptions;
 }
 
-class LC_LineAngleRelOptions : public QWidget
+class LC_LineAngleRelOptions : public LC_ActionOptionsWidget
 {
     Q_OBJECT
 
@@ -17,8 +17,9 @@ public:
     explicit LC_LineAngleRelOptions(QWidget *parent = nullptr);
     ~LC_LineAngleRelOptions() override;
 
-public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update);
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+public:
     void onLengthEditingFinished();
     void onOffsetEditingFinished();
     void onAngleEditingFinished();
@@ -27,13 +28,15 @@ public slots:
     void onAngleRelatedClicked(bool clicked);
     void onFreeLengthClicked(bool clicked);
 protected:
-    virtual void languageChange();
+    virtual void languageChange() override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+    void clearAction() override;
 private:
     Ui::LC_LineAngleRelOptions *ui;
     LC_ActionDrawLineAngleRel* action;
     bool fixedAngle {false};
 
-    void saveSettings();
+    void saveSettings() override;
     QString keyName(QString key);
     void setAngleToActionAndView(const QString &expr);
     void setLengthToActionAndView(QString val);

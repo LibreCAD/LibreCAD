@@ -6,7 +6,7 @@
 #include "rs_debug.h"
 
 LC_SliceDivideOptions::LC_SliceDivideOptions(QWidget *parent) :
-    QWidget(parent),
+    LC_ActionOptionsWidget(parent),
     ui(new Ui::LC_SliceDivideOptions)
 {
     ui->setupUi(this);
@@ -27,10 +27,11 @@ LC_SliceDivideOptions::~LC_SliceDivideOptions(){
     delete ui;
 }
 
+bool LC_SliceDivideOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType == RS2::ActionDrawSliceDivide;
+}
 
-
-void LC_SliceDivideOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti() == RS2::ActionDrawSliceDivide){
+void LC_SliceDivideOptions::doSetAction(RS_ActionInterface *a, bool update){
         action = static_cast<LC_ActionDrawSliceDivide *>(a);
 
         QString count;
@@ -42,7 +43,6 @@ void LC_SliceDivideOptions::setAction(RS_ActionInterface* a, bool update) {
         int tickSnapMode;
         bool tickAngleRelative;
         bool divide;
-        LC_ERR<<__func__<<"(): update: "<<update;
         if (update){
             count = QString::number(action->getTickCount(), 'g', 6);
             tickLen = QString::number(action->getTickLength(), 'g', 6);
@@ -75,11 +75,6 @@ void LC_SliceDivideOptions::setAction(RS_ActionInterface* a, bool update) {
         setDrawEdgesTicksModeToActionAndView(drawEdgesMode);
         setTickAngleRelativeToActionAndView(tickAngleRelative);
         setDivideFlagToActionAndView(divide);
-
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDrawSliceDivide::setAction: wrong action type");
-        action = nullptr;
-    }
 }
 
 void LC_SliceDivideOptions::saveSettings(){
@@ -215,5 +210,9 @@ void LC_SliceDivideOptions::setCircleStartAngleToActionAndView(const QString &va
 
 void LC_SliceDivideOptions::languageChange(){
     ui->retranslateUi(this);
+}
+
+void LC_SliceDivideOptions::clearAction(){
+    action = nullptr;
 }
 

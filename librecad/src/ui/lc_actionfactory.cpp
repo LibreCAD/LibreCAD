@@ -252,7 +252,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawCircle");
     a_map["DrawCircle"] = action;
 
-    action = new QAction(tr("Cross"), agm->circle);
+        action = new QAction(tr("Cross"), agm->circle);
     action->setIcon(QIcon(":/icons/cross_circle1.svg"));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircleCross()));
     action->setObjectName("DrawCross");
@@ -311,6 +311,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivide()));
     action->setObjectName("DrawSliceDivide");
     a_map["DrawSliceDivide"] = action;
+
+    action = new QAction(tr("Line of Points"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_points.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLinePoints()));
+    action->setObjectName("DrawLinePoints");
+    a_map["DrawLinePoints"] = action;
 
     action = new QAction(tr("By Arc"), agm->circle);
     action->setIcon(QIcon(":/icons/circle_by_arc.svg"));
@@ -862,6 +868,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
             action_handler, SLOT(slotModifyLineJoin()));
     action->setObjectName("ModifyLineJoin");
     a_map["ModifyLineJoin"] = action;
+
+    action = new QAction(tr("Duplicate"), agm->modify);
+    action->setIcon(QIcon(":/icons/duplicate.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotModifyDuplicate()));
+    action->setObjectName("ModifyDuplicate");
+    a_map["ModifyDuplicate"] = action;
 
     // <[~ Info ~]>
 

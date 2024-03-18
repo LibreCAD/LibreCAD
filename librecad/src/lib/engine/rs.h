@@ -302,6 +302,7 @@ namespace RS2 {
         ActionDrawLineAngleRel,
         ActionDrawLineOrthogonalRel,
         ActionDrawSliceDivide,
+        ActionDrawLinePoints,
 
         ActionPolylineAdd,
         ActionPolylineAppend,
@@ -352,6 +353,7 @@ namespace RS2 {
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
         ActionModifyLineJoin,
+        ActionModifyDuplicate,
 
         ActionSnapFree,
         ActionSnapGrid,

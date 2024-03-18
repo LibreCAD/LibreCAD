@@ -5,13 +5,14 @@
 #include "ui_lc_lineoptions.h"
 #include "rs_debug.h"
 #include "rs_math.h"
+#include "lc_abstract_action_draw_line.h"
 
 /*
  *  Constructs a QG_LineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 LC_LineOptions::LC_LineOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+    : LC_ActionOptionsWidget(parent)
     , ui(new Ui::Ui_LineOptionsRel{})
 {
     ui->setupUi(this);
@@ -37,8 +38,8 @@ void LC_LineOptions::languageChange()
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineOptions::onSetAngle);
 }
 
-void LC_LineOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLineRel) {
+// fixme -  options
+void LC_LineOptions::doSetAction(RS_ActionInterface* a, bool update) {
         action = static_cast<LC_ActionDrawLineRel*>(a);
 
         if (update){
@@ -56,22 +57,19 @@ void LC_LineOptions::setAction(RS_ActionInterface* a, bool update) {
             ui->leAngle->setText( QString::number(action->getAngleValue(), 'g', 6));
             ui->cbRelAngle->setChecked(action->isAngleRelative());
         }
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_LineOptions::setAction: wrong action type");
-        action = nullptr;
-    }
 }
 
 void LC_LineOptions::onAngleClicked(bool value){
     ui->leAngle->setEnabled(value);
     ui->cbRelAngle->setEnabled(value);
     if (action){
-        action->setSetPointDirectionState();
+        if (value){
+            action->setSetAngleDirectionState();
+        }
     }
 }
 
-void LC_LineOptions::close() {
+void LC_LineOptions::closeLine() {
     if (action) {
         action->close();
     }
@@ -128,6 +126,8 @@ void LC_LineOptions::onSetAngle() {
         if(!ok) return;
         if (std::abs(angle) < RS_TOLERANCE_ANGLE) angle=0.0;
         action->setAngleValue(angle);
+        action->setSetAngleDirectionState();
+        ui->rbAngle->setChecked(true);
         ui->leAngle->setText(QString::number(angle, 'g', 6));
     }
 }
@@ -136,5 +136,13 @@ void LC_LineOptions::start() {
     if (action) {
         action->setNewStartPointState();
     }
+}
+
+void LC_LineOptions::clearAction(){
+    action = nullptr;
+}
+
+bool LC_LineOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType == RS2::ActionDrawLineRel;
 }
 

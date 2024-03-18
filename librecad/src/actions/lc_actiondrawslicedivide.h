@@ -3,12 +3,12 @@
 
 #include "rs_line.h"
 #include "rs_previewactioninterface.h"
+#include "lc_abstractactionwithpreview.h"
 
-class LC_ActionDrawSliceDivide :public RS_PreviewActionInterface
-{
+//fixme - draw or modify in name?
+// Fixme - review initial highligth mode?
+class LC_ActionDrawSliceDivide:public LC_AbstractActionWithPreview{
     Q_OBJECT
-
-
 
 public:
     enum{
@@ -59,19 +59,11 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
 
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void commandEvent(RS_CommandEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent* e) override;
 
-    void trigger() override;
     void init(int status) override;
-
-    void showOptions() override;
-    void hideOptions() override;
-
 
     void setTickOffset(double offset);
     void setTickLength(double len);
@@ -94,6 +86,7 @@ public:
     void setDivideEntity(bool value);
 
     double getCircleStartAngle();
+    void finish(bool updateTB) override;
 private:
     double tickCount {2};
     double tickLength {20};
@@ -106,34 +99,39 @@ private:
 
 
     std::vector<TickData> ticksData;
-//    RS_Line* lineEntity {nullptr};
-//    RS_Arc*  arcEntity {nullptr};
-//    RS_Circle* circleEntity {nullptr};
+
     RS_Entity* entity;
     bool doDivideEntity {false};
 
-    void updateOptions();
     void prepareLineTicks(RS_Line *e);
     void prepareArcTicks(RS_Arc *arc);
     void prepareCircleTicks(RS_Circle *circle);
     void prepareTickData(RS_Vector &tickSnapPosition, RS_Entity *entity, RS_LineData &tickLineData);
     void addTick(RS_Vector &tickSnapPoint, RS_LineData &lineData, bool edge, bool visible, double angle);
     void createTickData(RS_Entity *e, RS_Vector tickSnapPoint, double arcAngle, bool edge, bool visible = true);
-    RS_Vector findPointOnCircle(double radius, double arcAngle, RS_Vector centerCircle);
     void prepareStartTick(RS_Entity *entity, const RS_Vector& startPoint, double arcAngle);
     void prepareEndTick(RS_Entity *entity, const RS_Vector& endPoint, double arcAngle);
     void prepareArcSegments(RS_Entity *e, double radius, RS_Vector &center, double startPointAngle, double arcLength);
     void updatePreview();
     void doDrawTicks();
-    void drawLineTicks(RS_Line *pLine);
-    void drawArcTicks(RS_Arc *pArc);
-    void drawCircleTicks(RS_Circle *pCircle);
-    void cutLineToSegments(RS_Line *pLine);
-    void cutArcToSegments(RS_Arc *pArc);
-    void cutCircleToSegments(RS_Circle *pCircle);
-    void createArcSegments(RS_Entity *pArc, const RS_Vector &center, double radius, bool reversed);
-    void deleteOriginalEntity(RS_Entity *entity);
+
+    void createLineSegments(RS_Line *pLine, QList<RS_Entity *> &list);
+    void createArcSegments(RS_Arc *pArc, QList<RS_Entity *> &list);
+    void createCircleSegments(RS_Circle *pCircle, QList<RS_Entity *> &list);
+    void doCreateArcSegments(RS_Entity *pArc, const RS_Vector &center, double radius, bool reversed, QList<RS_Entity *> &list);
+
     bool checkShouldDivideEntity(const RS_Entity *entity, const QString &entityName) const;
+protected:
+    void createOptionsWidget() override;
+    bool doCheckMayTrigger() override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    void doAfterTrigger() override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool isSetActivePenAndLayerOnTrigger() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONDRAWSLICEDIVIDE_H

@@ -5,7 +5,7 @@
 #include "rs_math.h"
 
 LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
-    QWidget(parent),
+    LC_ActionOptionsWidget(parent),
     ui(new Ui::LC_LineAngleRelOptions)
 {
     ui->setupUi(this);
@@ -19,24 +19,22 @@ LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
     connect(ui->cbLineSnapMode, SIGNAL(currentIndexChanged(int)), SLOT(onLineSnapModeIndexChanged(int)));
 }
 
-LC_LineAngleRelOptions::~LC_LineAngleRelOptions()
-{
+LC_LineAngleRelOptions::~LC_LineAngleRelOptions(){
     saveSettings();
     delete ui;
 }
 
-void LC_LineAngleRelOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLineAngleRel) {
-        action = static_cast<LC_ActionDrawLineAngleRel*>(a);
-        fixedAngle = false;
-    } else if (a && a->rtti()==RS2::ActionDrawLineOrthogonalRel){
-        action = static_cast<LC_ActionDrawLineAngleRel*>(a);
-        fixedAngle = true;
-    }
-    else {
-        action = nullptr;
-    }
-    if (action != nullptr){
+bool LC_LineAngleRelOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType == RS2::ActionDrawLineAngleRel || actionType == RS2::ActionDrawLineOrthogonalRel;
+}
+
+void LC_LineAngleRelOptions::clearAction(){
+  action = nullptr;
+}
+
+void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
+    action = static_cast<LC_ActionDrawLineAngleRel*>(a);
+    fixedAngle = a->rtti()==RS2::ActionDrawLineOrthogonalRel;
         QString length;
         QString offset;
         QString angle;
@@ -78,7 +76,7 @@ void LC_LineAngleRelOptions::setAction(RS_ActionInterface* a, bool update) {
         }
         setLineSnapModeToActionAndView(lineSnapMode);
         setTickSnapModeToActionAndView(tickSnapMode);
-    }
+
 }
 
 QString LC_LineAngleRelOptions::keyName(QString key){
@@ -190,6 +188,8 @@ void LC_LineAngleRelOptions::onAngleRelatedClicked(bool clicked){
     setAngleIsRelativeToActionAndView(clicked);
     saveSettings();
 }
+
+
 
 
 

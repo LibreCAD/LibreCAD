@@ -216,6 +216,12 @@ RS_Commands::RS_Commands() {
         },
         // draw cross
         {
+            {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
+            {{"lpoints", QObject::tr("lpoints", "draw line of points")}},
+            RS2::ActionDrawLinePoints
+        },
+        // draw cross
+        {
             {{"circlebyarc", QObject::tr("criclebyarc", "draw circle by arc")}},
             {{"cba", QObject::tr("cba", "draw circle by arc")}},
             RS2::ActionDrawCircleByArc
@@ -1037,7 +1043,15 @@ RS_Commands::RS_Commands() {
         {"mid-vert",QObject::tr("mid-vert")},
         {"mid-hor",QObject::tr("mid-hor")},
 
-
+        // line points
+        {"edges",QObject::tr("edges")},
+        {"edge-none",QObject::tr("edge-none")},
+        {"edge-both",QObject::tr("edge-both")},
+        {"edge-start",QObject::tr("edge-start")},
+        {"edge-end",QObject::tr("edge-end")},
+        {"end",QObject::tr("end")},
+        {"both",QObject::tr("both")},
+        {"none",QObject::tr("none")},
         // commands
 
         /** following are reversed translation,i.e.,from translated to english **/

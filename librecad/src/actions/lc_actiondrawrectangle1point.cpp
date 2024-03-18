@@ -9,6 +9,8 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "lc_rectangle1pointoptions.h"
+#include "lc_abstractactiondrawrectangle.h"
+#include "lc_linemath.h"
 
 LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(
     RS_EntityContainer &container,
@@ -19,10 +21,6 @@ LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(
 }
 
 LC_ActionDrawRectangle1Point::~LC_ActionDrawRectangle1Point() = default;
-
-void LC_ActionDrawRectangle1Point::init(int status){
-    RS_PreviewActionInterface::init(status);
-}
 
 // positions of snap points on the rectangle. Actually, this vector is used for
 // coordinates transformation in createPolyline function
@@ -44,7 +42,7 @@ const std::vector<RS_Vector> LC_ActionDrawRectangle1Point::snapPoints {
  * @param snapPoint primary point used for positioning of shape
  * @return positioned polyline
  */
-RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(RS_Vector &snapPoint) const{
+RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapPoint) const{
 
     double x = snapPoint.x;
     double y = snapPoint.y;
@@ -110,12 +108,10 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(RS_Vector &snapPoint) 
     return polyline;
 }
 
-void LC_ActionDrawRectangle1Point::proceedMouseLeftButtonReleasedEvent(QMouseEvent *e){
-    switch (getStatus()) {
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap){
+    switch (status) {
         case SetPoint1: {
-            RS_Vector snap = snapPoint(e);
-            resultingPolyline = createPolyline(snap);
-            graphicView->moveRelativeZero(snap);
+            createShapeData(snap);
             trigger();
             break;
         }
@@ -124,23 +120,15 @@ void LC_ActionDrawRectangle1Point::proceedMouseLeftButtonReleasedEvent(QMouseEve
     }
 }
 
-
-void LC_ActionDrawRectangle1Point::processCoordinateEvent(RS_CoordinateEvent *pEvent, RS_Vector coord, bool isRelativeZero){
-    switch (getStatus()) {
+void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coord, bool isRelativeZero, int status){
+    switch (status) {
         case SetPoint1:
-            resultingPolyline = createPolyline(coord);
-            graphicView->moveRelativeZero(coord);
+            createShapeData(coord);
             trigger();
             break;
         case SetSize: { // size is set from command widget
-            double w = std::abs(coord.x);
-            if (w < RS_TOLERANCE){
-                w = 0.0;
-            }
-            double h = std::abs(coord.y);
-            if (h < RS_TOLERANCE){
-                h = 0;
-            }
+            double w = LC_LineMath::getMeaningful(coord.x);
+            double h = LC_LineMath::getMeaningful(coord.y);
             width = w;
             height = h;
             updateOptions();
@@ -168,24 +156,15 @@ void LC_ActionDrawRectangle1Point::setMainStatus(){
 void LC_ActionDrawRectangle1Point::processCommandValue(double value){
     switch (getStatus()) {
         case SetWidth: {
-            double w = std::abs(value);
-            if (w < RS_TOLERANCE){
-                w = 0.0;
-            }
-            width = w;
+            width = LC_LineMath::getMeaningful(value);
             break;
         }
         case SetHeight: {
-            double h = std::abs(value);
-            if (h < RS_TOLERANCE){
-                h = 0;
-            }
-            height = h;
+            height = LC_LineMath::getMeaningful(value);
             break;
         }
     }
 }
-
 
 QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
     QStringList cmd;
@@ -239,26 +218,22 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints() {
+void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(){
     switch (getStatus()) {
         case SetHeight:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify height"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify height", "Back");
             break;
         case SetWidth:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify width"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify width", "Back");
             break;
         case SetSize:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify size (width, height)"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify size (width, height)", "Back");
             break;
         case SetPoint1Snap:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"),
-                                                tr("Back"));
+            updateMouseWidgetTR("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]", "Back");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
@@ -380,6 +355,9 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
     return result;
 }
 
+bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview(QMouseEvent *event, int status){
+    return true;
+}
 
 void LC_ActionDrawRectangle1Point::setWidth(double value){
     width = value;
@@ -394,8 +372,4 @@ void LC_ActionDrawRectangle1Point::setHeight(double value){
 void LC_ActionDrawRectangle1Point::setSizeInner(bool value){
     sizeIsInner = value;
     drawPreviewForLastPoint();
-}
-
-void LC_ActionDrawRectangle1Point::doAfterTrigger(){
-
 }

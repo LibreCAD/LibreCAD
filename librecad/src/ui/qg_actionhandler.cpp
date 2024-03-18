@@ -196,6 +196,8 @@
 #include "lc_actiondrawrectangle2points.h"
 #include "lc_actiondrawcirclebyarc.h"
 #include "lc_actionmodifylinejoin.h"
+#include "lc_actiondrawlinepoints.h"
+#include "lc_actionmodifyduplicate.h"
 
 /**
  * Constructor
@@ -489,6 +491,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionDrawSliceDivide:
             a = new LC_ActionDrawSliceDivide(*document, *view);
             break;
+        case RS2::ActionDrawLinePoints:
+            a = new LC_ActionDrawLinePoints(*document, *view);
+            break;
     case RS2::ActionDrawLineBisector:
         a = new RS_ActionDrawLineBisector(*document, *view);
         break;
@@ -679,9 +684,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 
         // Modifying actions:
-        //
-        case RS2::ActionModifyLineJoin:{
+            //
+        case RS2::ActionModifyLineJoin: {
             a = new LC_ActionModifyLineJoin(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyDuplicate: {
+            a = new LC_ActionModifyDuplicate(*document, *view);
             break;
         }
     case RS2::ActionModifyAttributes:
@@ -2084,6 +2093,10 @@ void QG_ActionHandler::slotModifyLineJoin() {
     setCurrentAction(RS2::ActionModifyLineJoin);
 }
 
+void QG_ActionHandler::slotModifyDuplicate() {
+    setCurrentAction(RS2::ActionModifyDuplicate);
+}
+
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
 }
@@ -2151,6 +2164,10 @@ void QG_ActionHandler::slotRedockWidgets()
             QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget*>();
     for(auto* dockwidget: dockwidgets)
         dockwidget->setFloating(false);
+}
+
+void QG_ActionHandler::slotDrawLinePoints(){
+    setCurrentAction(RS2::ActionDrawLinePoints);
 }
 // EOF
 

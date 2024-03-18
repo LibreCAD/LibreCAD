@@ -4,8 +4,9 @@
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
 #include "rs_polyline.h"
+#include "lc_abstractactionwithpreview.h"
 
-class LC_AbstractActionDrawRectangle:public RS_PreviewActionInterface {
+class LC_AbstractActionDrawRectangle:public LC_AbstractActionWithPreview {
 Q_OBJECT
 
 public:
@@ -40,12 +41,7 @@ public:
         LAST_BASE_STATUS
     };
 
-    void trigger() override;
 
-    void mouseReleaseEvent(QMouseEvent* e) override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
 
     bool isUsePolyline(){return usePolyline;};
@@ -101,47 +97,52 @@ protected:
      * angle of rect's rotation
      */
     double angle;
-
     /**
      * flag that controls how to position rect relative to insertion point - may have different meanings in different actions
      */
     int insertionPointSnapMode;
-
     /**
      * flag that indicates that snap should be performed taking into consideration rounded corners (if true, snap is not for, say, corner,
      * but to center of nearest rounded corner arc
      */
     bool snapToCornerArcCenter;
 
-    /**
-     * Last point of snap during mouse move
-     */
-    RS_Vector lastSnapPoint;
-
-    /**
+    struct ShapeData{
+       /**
      * built polyline for shape
      */
-    RS_Polyline *resultingPolyline;
+        RS_Polyline *resultingPolyline;
+        RS_Vector snapPoint;
+    };
 
-    void drawPreviewForPoint(RS_Vector &lastSnapPoint);
-    void drawPreviewForLastPoint();
+    ShapeData* shapeData;
+
     void prepareCornersDrawMode(double &radiusX, double &radiusY, bool &drawComplex, bool &drawBulge) const;
     RS_Polyline* createPolylineByVertexes( RS_Vector bottomLeftCorner, RS_Vector bottomRightCorner,
                                            RS_Vector topRightCorner, RS_Vector topLeftCorner,
                                            bool drawBulge, bool drawComplex,
                                            double radiusX, double radiusY) const;
-    virtual RS_Polyline *createPolyline(RS_Vector &snapPoint) const = 0;
-    virtual void proceedMouseLeftButtonReleasedEvent(QMouseEvent *e) = 0;
+
+    virtual RS_Polyline *createPolyline(const RS_Vector &snapPoint) const = 0;
+
+    void createShapeData(const RS_Vector &snapPoint);
+
     virtual void setMainStatus() = 0;
     virtual void processCommandValue(double value) = 0;
     virtual bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) = 0;
-    virtual void processCoordinateEvent(RS_CoordinateEvent *pEvent, RS_Vector vector, bool zero) = 0;
-    virtual bool mayDrawPreview(QMouseEvent *pEvent);
-    virtual void doAfterTrigger();
-    virtual void processMouseEvent(QMouseEvent *e);
+    virtual void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status);
     virtual void doUpdateMouseButtonHints();
+
+    void onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
+    bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner) const;
     void stateUpdated(bool toMainStatus);
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool doCheckMayTrigger() override;
+    void doAfterTrigger() override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doBack(QMouseEvent *pEvent, int status) override;
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

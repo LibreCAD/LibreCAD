@@ -137,6 +137,7 @@ public slots:
 	void slotDrawLinePolygon();
 	void slotDrawLinePolygon2();
     void slotDrawLinePolygon3();//added by txmy
+ void slotDrawLinePoints();
 	void slotDrawCircle();
  void slotDrawCircleCross();
  void slotDrawLineRel();
@@ -271,6 +272,7 @@ public slots:
     void slotBlocksCreate();
     void slotBlocksExplode();
     void slotModifyLineJoin();
+    void slotModifyDuplicate();
 
 	void slotOptionsDrawing();
     void toggleVisibility(RS_Layer* layer);

@@ -30,8 +30,6 @@ public:
                                  RS_GraphicView& graphicView);
     ~LC_ActionDrawRectangle1Point() override;
 
-    void init(int status) override;
-
     QStringList getAvailableCommands() override;
 
     void setWidth(double value);
@@ -54,13 +52,13 @@ protected:
 
     void createOptionsWidget() override;
 
-    RS_Polyline *createPolyline(RS_Vector &snapPoint) const override;
-    void proceedMouseLeftButtonReleasedEvent(QMouseEvent *e) override;
+    RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void processCommandValue(double value) override;
     void setMainStatus() override;
     bool processCustomCommand(RS_CommandEvent *e, const QString &command,bool &toMainStatus) override;
-    void processCoordinateEvent(RS_CoordinateEvent *pEvent, RS_Vector vector, bool zero) override;
-    void doAfterTrigger() override;
     void doUpdateMouseButtonHints() override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

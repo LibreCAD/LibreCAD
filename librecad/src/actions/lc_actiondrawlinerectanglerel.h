@@ -9,6 +9,7 @@
 #include "rs_vector.h"
 #include "rs_polyline.h"
 
+// fixme - rename to rect3 points
 class LC_ActionDrawLineRectangleRel :public RS_PreviewActionInterface {
     Q_OBJECT
 public:

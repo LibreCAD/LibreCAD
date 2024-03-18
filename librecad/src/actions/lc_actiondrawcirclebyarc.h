@@ -1,14 +1,16 @@
 #ifndef LC_ACTIONDRAWCIRCLEBYARC_H
 #define LC_ACTIONDRAWCIRCLEBYARC_H
 
-#include "lc_abstractactiondrawrectangle.h"
+#include "lc_abstractactionwithpreview.h"
 #include "rs_circle.h"
 
 /**
  * Action draws circle with the same center and radius as selected arc.
  * Based on setting, original arc may remains in drawing (so both arc and circle will be present) or just be replaced by circle
+ *
  */
-class LC_ActionDrawCircleByArc:public RS_PreviewActionInterface {
+ // fixme - add attributes selection
+class LC_ActionDrawCircleByArc:public LC_AbstractActionWithPreview {
     Q_OBJECT
 
 public:
@@ -16,24 +18,28 @@ public:
     ~LC_ActionDrawCircleByArc() override;
 
     enum{
-        SetCircle
+        SetArc
     };
 
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 
     bool isReplaceArcByCircle(){return replaceArcByCircle;};
     void setReplaceArcByCircle(bool value);
 protected:
 
     void createOptionsWidget() override;
+    bool doCheckMayTrigger() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doAfterTrigger() override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    void performTriggerDeletions() override;
 
 private:
-    /** Chosen entity */
+    /** Chosen arc entity */
     RS_Arc *arc = nullptr;
 
     //list of entity types supported by current action
@@ -44,7 +50,6 @@ private:
      * controls whether original arc should be deleted or not
      */
     bool replaceArcByCircle;
-    void deleteOriginalEntity(RS_Entity *entity);
 };
 
 #endif // LC_ACTIONDRAWCIRCLEBYARC_H

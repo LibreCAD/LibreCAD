@@ -9,14 +9,16 @@
 #include "rs_actioneditundo.h"
 #include "rs_commands.h"
 #include "rs_actionpolylinesegment.h"
-#include "lc_actiondrawlineanglerel.h"
+#include "lc_lineoptions.h"
+#include "lc_linemath.h"
+#include "lc_abstract_action_draw_line.h"
 #include <QMouseEvent>
 
 LC_ActionDrawLineRel::LC_ActionDrawLineRel(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView,
     int initialDirection)
-    :RS_PreviewActionInterface("Draw lines rel",
+    :LC_AbstractActionDrawLine("Draw lines rel",
                                container, graphicView)
 //    , pPoints(std::make_unique<Points>())
     , pPoints(new Points{}){
@@ -50,148 +52,104 @@ void LC_ActionDrawLineRel::resetPoints(){
     addHistory(HA_SetStartpoint, zero, zero, pPoints->startOffset);
 }
 
-void LC_ActionDrawLineRel::trigger(){
-    RS_PreviewActionInterface::trigger();
-
+void LC_ActionDrawLineRel::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     RS_Line *line = new RS_Line(container, pPoints->data);
-    line->setLayerToActive();
-    line->setPenToActive();
-    container->addEntity(line);
-
-    // update undo list
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(line);
-        document->endUndoCycle();
-    }
-    graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
-
-    graphicView->redraw(RS2::RedrawOverlay);
-
-    negativeDirection = false;
-    RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",
-                    line->getId());
+    list << line;
 }
 
-void LC_ActionDrawLineRel::mouseMoveEvent(QMouseEvent *e){
-    RS_Vector mouse = snapPoint(e);
-    if (pPoints->data.startpoint.valid){
-        // Snapping to angle(15*) if shift key is pressed
-        if (e->modifiers() & Qt::ShiftModifier){
-            mouse = snapToAngle(mouse, pPoints->data.startpoint);
-        }
+void LC_ActionDrawLineRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+    RS_Vector possibleEndPoint;
 
-        deletePreview();
-
-        if (getStatus() != SetStartPoint){
-
-            RS_Vector possibleEndPoint;
-
-            switch (getStatus()) {
-                case SetDirection:
-                case SetPoint:
-                    possibleEndPoint = mouse;
+    switch (status) {
+        case SetDirection:
+        case SetPoint:
+            possibleEndPoint = snap;
+            break;
+            // fixme -think how to handle preview
+        case SetAngle:
+            possibleEndPoint = snap;
+            break;
+        case SetDistance:
+            switch (direction) {
+                case DIRECTION_X:
+                    possibleEndPoint = RS_Vector(snap);
+                    possibleEndPoint.y = pPoints->data.startpoint.y;
+                    possibleEndPoint.x = snap.x;
                     break;
-                    // fixme -think how to handle preview
-                case SetAngle:
-                    possibleEndPoint = mouse;
+                case DIRECTION_Y:
+                    possibleEndPoint = RS_Vector(snap);
+                    possibleEndPoint.x = pPoints->data.startpoint.x;
+                    possibleEndPoint.y = snap.y;
                     break;
-                case SetDistance:
-                    switch (direction) {
-                        case DIRECTION_X:
-                            possibleEndPoint = RS_Vector(mouse);
-                            possibleEndPoint.y = pPoints->data.startpoint.y;
-                            possibleEndPoint.x = mouse.x;
-                            break;
-                        case DIRECTION_Y:
-                            possibleEndPoint = RS_Vector(mouse);
-                            possibleEndPoint.x = pPoints->data.startpoint.x;
-                            possibleEndPoint.y = mouse.y;
-                            break;
-                        case DIRECTION_POINT:
-                            possibleEndPoint = mouse;
-                            break;
-                        case DIRECTION_ANGLE:
-                             RS_Vector snap = snapPoint(e);
-                             possibleEndPoint = calculateAngleEndpoint(snap);
-                            break;
-                    }
+                case DIRECTION_POINT:
+                    possibleEndPoint = snap;
+                    break;
+                case DIRECTION_ANGLE:
+                    RS_Vector snap = snapPoint(e);
+                    possibleEndPoint = calculateAngleEndpoint(snap);
                     break;
             }
+            break;
+    }
+    createEntities(possibleEndPoint, list);
+}
 
-            RS_Line *line = new RS_Line(pPoints->data.startpoint, possibleEndPoint);
-            preview->addEntity(line);
-            line->setLayerToActive();
-            line->setPenToActive();
-            drawPreview();
-        }
-        graphicView->redraw(RS2::RedrawOverlay);
+RS_Vector LC_ActionDrawLineRel::doGetRelativeZeroAfterTrigger(){
+    return pPoints->history.at(pPoints->index()).currPt;
+}
+
+void LC_ActionDrawLineRel::createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList){
+    RS_Line *line = new RS_Line(pPoints->data.startpoint, potentialEndPoint);
+    entitiesList << line;
+}
+
+bool LC_ActionDrawLineRel::isStartPointValid() const{return pPoints->data.startpoint.valid;}
+
+const RS_Vector &LC_ActionDrawLineRel::getStartPointForAngleSnap() const { return pPoints->data.startpoint;}
+
+void LC_ActionDrawLineRel::doBack(QMouseEvent *e, int status){
+    e->accept();
+    switch (status) {
+        default:
+        case SetDirection:
+            init(getStatus() - 1);
+            break;
+        case SetPoint:
+        case SetDistance:
+            next();
+            break;
     }
 }
 
-
-
-void LC_ActionDrawLineRel::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_Vector snapped = snapPoint(e);
-
-        // Snapping to angle(15*) if shift key is pressed
-        if ((e->modifiers() & Qt::ShiftModifier)){
-            snapped = snapToAngle(snapped, pPoints->data.startpoint);
-        }
-
-        RS_CoordinateEvent ce(snapped);
-        coordinateEvent(&ce);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        switch (getStatus()) {
-            default:
-            case SetDirection:
-                init(getStatus() - 1);
-                break;
-            case SetPoint:
-            case SetDistance:
-                next();
-                break;
-        }
-    }
+bool LC_ActionDrawLineRel::isNonZeroLine(const RS_Vector &possiblePoint) const{
+    return LC_LineMath::isNonZeroLineLength( pPoints->data.startpoint, possiblePoint);
 }
 
-void LC_ActionDrawLineRel::coordinateEvent(RS_CoordinateEvent *e){
-    RS_DEBUG->print("LC_ActionDrawLineRel::coordinateEvent");
-
-    if (nullptr == e){
-        RS_DEBUG->print("LC_ActionDrawLineRel::coordinateEvent: event was nullptr");
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void LC_ActionDrawLineRel::onOnCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
+    switch (status) {
         case SetDistance:
             switch (direction) {
                 case DIRECTION_X: {
                     RS_Vector possiblePoint(mouse.x, pPoints->data.startpoint.y);
-                    if ((possiblePoint - pPoints->data.startpoint).squared() > RS_TOLERANCE2){
+                    if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
-                        doTrigger(false);
+                        completeLineSegment(false);
                     }
                 }
                     break;
                 case DIRECTION_Y: {
                     RS_Vector possiblePoint(pPoints->data.startpoint.x, mouse.y);
-                    if ((possiblePoint - pPoints->data.startpoint).squared() > RS_TOLERANCE2){
+                    if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
-                        doTrigger(false);
+                        completeLineSegment(false);
                     }
                 }
                 break;
                 case DIRECTION_ANGLE:{
                     RS_Vector possiblePoint = calculateAngleEndpoint(mouse);
-                    if ((possiblePoint - pPoints->data.startpoint).squared() > RS_TOLERANCE2){
+                    if (isNonZeroLine(possiblePoint)){
                         pPoints->data.endpoint = possiblePoint;
-                        doTrigger(false);
+                        completeLineSegment(false);
                     }
                 }
                  break;
@@ -201,16 +159,16 @@ void LC_ActionDrawLineRel::coordinateEvent(RS_CoordinateEvent *e){
             break;
         case SetDirection:
         case SetPoint:
-            if ((mouse - pPoints->data.startpoint).squared() > RS_TOLERANCE2){
+            if (isNonZeroLine(mouse)){
                 // refuse zero length lines
                 pPoints->data.endpoint = mouse;
-                doTrigger(false);
+                completeLineSegment(false);
             }
             break;
         case SetStartPoint:{
             pPoints->startOffset = 0;
             pPoints->data.startpoint = mouse;
-            addHistory( HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
+            addHistory(HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
             if (direction == DIRECTION_NONE){
                setStatus(SetDirection);
             }
@@ -224,11 +182,9 @@ void LC_ActionDrawLineRel::coordinateEvent(RS_CoordinateEvent *e){
         default:
             break;
     }
-
-    RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
 }
 
-void LC_ActionDrawLineRel::doTrigger(bool close){
+void LC_ActionDrawLineRel::completeLineSegment(bool close){
     ++pPoints->startOffset;
     if (!close){
         addHistory(HA_SetEndpoint, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
@@ -259,155 +215,77 @@ void LC_ActionDrawLineRel::doTrigger(bool close){
             setStatus(SetDirection);
             break;
     }
-
     updateMouseButtonHints();
-
 }
 
-void LC_ActionDrawLineRel::commandEvent(RS_CommandEvent *e){
-    QString const &c = e->getCommand().toLower().trimmed();
-
-    if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        e->accept();
-        return;
+bool LC_ActionDrawLineRel::doProceedCommand(RS_CommandEvent *e, const QString &c){
+    bool result = true;
+    if (checkCommand("close", c)){
+        close();
+        updateMouseButtonHints();
+    } else if (checkCommand("undo", c)){
+        undo();
+        updateMouseButtonHints();
+    } else if (checkCommand("polyline", c) ||
+               checkCommand("pl", c)){
+        polyline();
+        updateMouseButtonHints();
+    } else if (checkCommand("redo", c)){
+        redo();
+        updateMouseButtonHints();
+    }
+    else if (checkCommand("anglerel", c)){
+        // line to angle related to previous segment
+        setSetAngleState(true);
+    } else if (checkCommand("start", c)){
+        setNewStartPointState();
     } else {
-        if (checkCommand("close", c)){
-            close();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
+        result = false;
+    }
+    return result;
+}
 
-        if (checkCommand("undo", c)){
-            undo();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-
-        // polyline
-        if (checkCommand("polyline", c) ||
-            checkCommand("pl", c)){
-            polyline();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-
-        // redo
-        if (checkCommand("redo", c)){
-            redo();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-        // line by X coordinate
-        if (checkCommand("x", c)){
-            setSetXDirectionState();
-            e->accept();
-            return;
-        }
-            // line by Y coordinate
-        else if (checkCommand("y", c)){
-            setSetYDirectionState();
-            e->accept();
-            return;
-        }
-            // line to arbitrary point
-        else if (checkCommand("p", c)){
-            setSetPointDirectionState();
-            e->accept();
-            return;
-        }
-        // line to angle
-        else if (checkCommand("angle", c)){
-            setSetAngleState(false);
-            e->accept();
-            return;
-        }
-         // line to angle related to previous segment
-        else if (checkCommand("anglerel", c)){
-            setSetAngleState(true);
-            e->accept();
-            return;
-        }
-        else if (checkCommand("start", c)){
-            setNewStartPointState();
-            e->accept();
-            return;
-        }
-
-        switch (getStatus()) {
-            case SetDirection:
-                break;
-            case SetDistance: {
-                bool ok = false;
-                double distance = RS_Math::eval(c, &ok);
-                if (ok){
-                    if (std::abs(distance) > RS_TOLERANCE2){
-                        e->accept();
-                        switch (direction) {
-                            case DIRECTION_X:
-                                pPoints->data.endpoint.x = pPoints->data.startpoint.x + distance;
-                                pPoints->data.endpoint.y = pPoints->data.startpoint.y;
-                                doTrigger(false);
-
-                                break;
-                            case DIRECTION_Y:
-                                pPoints->data.endpoint.x = pPoints->data.startpoint.x;
-                                pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
-                                doTrigger(false);
-                                break;
-                            case DIRECTION_ANGLE:{
-                                calculateAngleSegment(distance);
-                                doTrigger(false);
-                                break;
-                            }
-                            default:
-                                break;
-                        }
+bool LC_ActionDrawLineRel::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
+    bool result = true;
+    switch (getStatus()) {
+        case SetDirection:
+            break;
+        case SetDistance: {
+            bool ok = false;
+            double distance = RS_Math::eval(c, &ok);
+            if (ok && LC_LineMath::isMeaningful(distance)){
+                switch (direction) {
+                    case DIRECTION_X:
+                        pPoints->data.endpoint.x = pPoints->data.startpoint.x + distance;
+                        pPoints->data.endpoint.y = pPoints->data.startpoint.y;
+                        completeLineSegment(false);
+                        break;
+                    case DIRECTION_Y:
+                        pPoints->data.endpoint.x = pPoints->data.startpoint.x;
+                        pPoints->data.endpoint.y = pPoints->data.startpoint.y + distance;
+                        completeLineSegment(false);
+                        break;
+                    case DIRECTION_ANGLE: {
+                        calculateAngleSegment(distance);
+                        completeLineSegment(false);
+                        break;
                     }
+                    default:
+                        break;
                 }
-                break;
+            } else {
+                result = false;
             }
-            case SetAngle: {
-                bool ok = false;
-                double value = RS_Math::eval(c, &ok);
-                if (ok){
-                    e->accept();
-                    setAngleValue(value);
-                    if (std::abs(value) < RS_TOLERANCE_ANGLE){
-                        value = 0;
-                    }
-                    setStatus(SetDistance);
-                }
-                break;
-            }
+            break;
+        }
+        case SetAngle: {
+            result = processAngleValueInput(e, c);
+            break;
         }
     }
+    return result;
 }
 
-void LC_ActionDrawLineRel::showOptions(){
-    RS_DEBUG->print("LC_ActionDrawLineRel::showOptions");
-    RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
-}
-
-void LC_ActionDrawLineRel::hideOptions(){
-    RS_ActionInterface::hideOptions();
-    RS_DIALOGFACTORY->requestOptions(this, false, false);
-}
-
-void LC_ActionDrawLineRel::updateOptions(){
-    RS_DIALOGFACTORY->requestOptions (this, true, true);
-    updateMouseButtonHints();
-}
-
-void LC_ActionDrawLineRel::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
 
 QStringList LC_ActionDrawLineRel::getAvailableCommands(){
     QStringList cmd;
@@ -478,8 +356,7 @@ void LC_ActionDrawLineRel::updateMouseButtonHints(){
             msg += RS_COMMANDS->command("angle");
             msg += "/";
             msg += RS_COMMANDS->command("anglerel");
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify direction (x or y) or [%1]").arg(msg),
-                                                tr("Back"));
+            updateMouseWidget(tr("Specify direction (x or y) or [%1]").arg(msg),tr("Back"));
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
@@ -498,15 +375,13 @@ void LC_ActionDrawLineRel::updateMouseButtonHints(){
             } else if (toY){
                 msg += "/";
                 msg += RS_COMMANDS->command("x");
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg),
-                                                    tr("Back"));
+                updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg),tr("Back"));
             }
             else if (direction == DIRECTION_ANGLE){
                 msg += "/";
                 msg += RS_COMMANDS->command("x");
                 QString angleStr = RS_Math::doubleToString(angleValue, 1);
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),
-                                                    tr("Back"));
+                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"));
             }
             break;
         }
@@ -522,8 +397,7 @@ void LC_ActionDrawLineRel::updateMouseButtonHints(){
             msg += RS_COMMANDS->command("angle");
             msg += "/";
             msg += RS_COMMANDS->command("anglerel");
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify angle or [%2]").arg(msg),
-                                                tr("Back"));
+            updateMouseWidget(tr("Specify angle or [%2]").arg(msg),tr("Back"));
             break;
         }
         case SetPoint: {
@@ -535,8 +409,7 @@ void LC_ActionDrawLineRel::updateMouseButtonHints(){
             msg += RS_COMMANDS->command("angle");
             msg += "/";
             msg += RS_COMMANDS->command("anglerel");
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point or [%1]").arg(msg),
-                                                tr("Back"));
+            updateMouseWidget(tr("Specify point or [%1]").arg(msg),tr("Back"));
 
             break;
         }
@@ -585,8 +458,7 @@ void LC_ActionDrawLineRel::undo(){
         h = pPoints->history.at(pPoints->index());
         pPoints->startOffset = h.startOffset;
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot undo: "
-                                            "Begin of history reached"));
+        commandMessageTR("Cannot undo: Begin of history reached");
     }
 }
 
@@ -623,8 +495,7 @@ void LC_ActionDrawLineRel::redo(){
                 break;
         }
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot redo: "
-                                            "End of history reached"));
+        commandMessageTR("Cannot redo: End of history reached");
     }
 }
 
@@ -641,14 +512,13 @@ void LC_ActionDrawLineRel::addHistory(LC_ActionDrawLineRel::HistoryAction a, con
 void LC_ActionDrawLineRel::close(){
     if (mayClose()){
         History h(pPoints->history.at(pPoints->index(-pPoints->startOffset)));
-        if ((pPoints->data.startpoint - h.currPt).squared() > RS_TOLERANCE2){
+        if (LC_LineMath::isNonZeroLineLength(pPoints->data.startpoint, h.currPt)){
             pPoints->data.endpoint = h.currPt;
             addHistory(HA_Close, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
-            doTrigger(true);
+            completeLineSegment(true);
         }
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot close sequence of lines: "
-                                            "Not enough entities defined yet, or already closed."));
+        commandMessage("Cannot close sequence of lines: Not enough entities defined yet, or already closed.");
     }
 }
 
@@ -664,46 +534,6 @@ void LC_ActionDrawLineRel::polyline(){
     }
 }
 
-void LC_ActionDrawLineRel::setNewStartPointState(){
-    if (mayStart()){
-        setStatus(SetStartPoint);
-    }
-    else{
-        RS_DIALOGFACTORY->commandMessage(tr("Start point may set in distance or point state only"));
-    }
-}
-
-void LC_ActionDrawLineRel::setSetAngleDirectionState(){
-    direction = DIRECTION_ANGLE;
-    setStatus(SetAngle);
-    updateOptions();
-}
-
-void LC_ActionDrawLineRel::setSetPointDirectionState(){
-    direction = DIRECTION_POINT;
-    setStatus(SetPoint);
-    updateOptions();
-}
-
-void LC_ActionDrawLineRel::setSetAngleState(bool relative){
-    direction = DIRECTION_ANGLE;
-    angleIsRelative = relative;
-    setStatus(SetAngle);
-    updateOptions();
-}
-
-void LC_ActionDrawLineRel::setSetXDirectionState(){
-    direction = DIRECTION_X;
-    setStatus(SetDistance);
-    updateOptions();
-}
-
-void LC_ActionDrawLineRel::setSetYDirectionState(){
-    direction = DIRECTION_Y;
-    setStatus(SetDistance);
-    updateOptions();
-}
-
 bool LC_ActionDrawLineRel::mayClose(){
     return 1 < pPoints->startOffset && 0 <= pPoints->historyIndex - pPoints->startOffset;
 }
@@ -714,19 +544,6 @@ bool LC_ActionDrawLineRel::mayRedo(){
 
 bool LC_ActionDrawLineRel::mayStart(){
     return getStatus() == SetDistance || getStatus() == SetPoint;
-}
-
-void LC_ActionDrawLineRel::setAngleValue(double value){
-    angleValue = value;
-    if (getStatus() == SetAngle){
-        setStatus(SetDistance);
-    }
-    updateOptions();
-}
-
-void LC_ActionDrawLineRel::setAngleIsRelative(bool value){
-    angleIsRelative = value;
-    updateOptions();
 }
 
 void LC_ActionDrawLineRel::calculateAngleSegment(double distance){
@@ -766,19 +583,16 @@ RS_Vector LC_ActionDrawLineRel::calculateAngleEndpoint(const RS_Vector &snap){
 
     RS_Vector infiniteTickVector = RS_Vector::polar(10.0, realAngle);
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;
-    RS_Vector pointOnInfiniteTick = LC_ActionDrawLineAngleRel::getNearestPointOnInfiniteLine(snap, infiniteTickStartPoint, infiniteTickEndPoint);
+    RS_Vector pointOnInfiniteTick =  LC_LineMath::getNearestPointOnInfiniteLine(snap, infiniteTickStartPoint, infiniteTickEndPoint);
 
     possibleEndPoint = pointOnInfiniteTick;
     return possibleEndPoint;
 }
 
-double LC_ActionDrawLineRel::getAngleValue(){
-    return angleValue;
-}
 
 
-bool  LC_ActionDrawLineRel::isAngleRelative(){
-    return angleIsRelative;
+void LC_ActionDrawLineRel::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_LineOptions>(nullptr);
 }
 
 
