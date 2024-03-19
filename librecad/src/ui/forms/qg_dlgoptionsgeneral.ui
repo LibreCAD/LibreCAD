@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -1152,6 +1152,13 @@
            </widget>
           </item>
           <item>
+           <widget class="QCheckBox" name="cbOpenLastFiles">
+            <property name="text">
+             <string>Open last opened files</string>
+            </property>
+           </widget>
+          </item>
+          <item>
            <widget class="QCheckBox" name="left_sidebar_checkbox">
             <property name="text">
              <string>Enable CAD dockwidgets</string>
@@ -1302,6 +1309,7 @@
  </tabstops>
  <resources>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
  </resources>

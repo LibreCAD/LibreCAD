@@ -3024,15 +3024,41 @@ void QC_ApplicationWindow::showAboutWindow()
 /**
  * overloaded for Message box on last window exit.
  */
-bool QC_ApplicationWindow::queryExit(bool force) {
+bool QC_ApplicationWindow::queryExit(bool force){
     RS_DEBUG->print("QC_ApplicationWindow::queryExit()");
-	bool succ = true;
-	if (force) for (auto w : window_list)
-		doClose(w);
-	else succ = slotFileCloseAll();
+    bool succ = true;
+    if (force)
+        for (auto w: window_list)
+            doClose(w);
+    else {
 
-    if (succ) {
-        storeSettings();
+        RS_SETTINGS->beginGroup("/Startup");
+        bool saveOpenedFiles = RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 0) == 1;
+        RS_SETTINGS->endGroup();
+
+        QString openedFiles;
+        QString activeFile = "";
+        if (saveOpenedFiles){
+            for (auto w: window_list) {
+                QString fileName = w->getDocument() ->getFilename();
+                if (activedMdiSubWindow != nullptr && activedMdiSubWindow == w){
+                    activeFile = fileName;
+                }
+                openedFiles += fileName;
+                openedFiles +=";";
+            }
+        }
+        succ = slotFileCloseAll();
+
+        if (succ){
+            if (!openedFiles.isEmpty()){
+                RS_SETTINGS->beginGroup("/Startup");
+                RS_SETTINGS->writeEntry("/LastOpenFilesList", openedFiles);
+                RS_SETTINGS->writeEntry("/LastOpenFilesActive", activeFile);
+                RS_SETTINGS->endGroup();
+            }
+            storeSettings();
+        }
     }
 
     RS_DEBUG->print("QC_ApplicationWindow::queryExit(): OK");
@@ -3734,8 +3760,24 @@ QC_MDIWindow* QC_ApplicationWindow::getWindowWithDoc(const RS_Document* doc)
             }
         }
     }
-
     return wwd;
+}
+
+void QC_ApplicationWindow::activateWindowWithFile(QString& fileName)
+{
+    if (!fileName.isEmpty()){
+            foreach (QC_MDIWindow *w, window_list) {
+                if (w != nullptr){}
+                RS_Document *doc = w->getDocument();
+                if (doc != nullptr){
+                    const QString &docFileName = doc->getFilename();
+                    if (fileName == docFileName){
+                        doActivate(w);
+                        break;
+                    }
+                }
+            }
+    }
 }
 
 void QC_ApplicationWindow::showBlockActivated(const RS_Block *block)

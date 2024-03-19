@@ -321,7 +321,8 @@ public:
     // Auto-save
     void startAutoSave(bool enabled);
 
-
+    // activates window with given filename of drawing, if any
+    void activateWindowWithFile(QString &fileName);
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
