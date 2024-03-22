@@ -91,6 +91,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["DrawLineRelY"]
         << a_map["DrawLineAngleRel"]
         << a_map["DrawLineOrthogonalRel"]
+        << a_map["DrawLineFromPointToLine"]
         << a_map["DrawSliceDivide"];
 
 

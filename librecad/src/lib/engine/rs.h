@@ -292,7 +292,7 @@ namespace RS2 {
         ActionDrawPolyline,
         ActionDrawText,
 
-        ActionDrawLineRectangleRel,
+        ActionDrawRectangle3Points,
         ActionDrawRectangle1Point,
         ActionDrawRectangle2Points,
         ActionDrawLineRel,
@@ -301,6 +301,7 @@ namespace RS2 {
         ActionDrawCross,
         ActionDrawLineAngleRel,
         ActionDrawLineOrthogonalRel,
+        ActionDrawLineFromPointToLine,
         ActionDrawSliceDivide,
         ActionDrawLinePoints,
 

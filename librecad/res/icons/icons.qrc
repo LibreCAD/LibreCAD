@@ -244,5 +244,6 @@
         <file>line_join.svg</file>
         <file>line_points.svg</file>
         <file>duplicate.svg</file>
+        <file>line_to_ortho.svg</file>
     </qresource>
 </RCC>

@@ -951,8 +951,8 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
-        librecad/src/actions/lc_actiondrawlinerectanglerel.cpp
-        librecad/src/actions/lc_actiondrawlinerectanglerel.h
+        librecad/src/actions/lc_actiondrawrectangle3points.cpp
+        librecad/src/actions/lc_actiondrawrectangle3points.h
         librecad/src/actions/lc_actiondrawcross.cpp
         librecad/src/actions/lc_actiondrawcross.h
         librecad/src/ui/forms/lc_crossoptions.cpp
@@ -994,6 +994,9 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actionmodifyduplicate.h
         librecad/src/actions/lc_actionmodifyduplicate.cpp
         librecad/src/ui/forms/lc_duplicateoptions.cpp
+        librecad/src/ui/forms/lc_rectangle3pointsoptions.cpp
+        librecad/src/ui/forms/lc_linefrompointtolineoptions.cpp
+        librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

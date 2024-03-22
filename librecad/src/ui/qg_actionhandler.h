@@ -144,6 +144,7 @@ public slots:
  void slotDrawLineRelX();
  void slotDrawLineRelY();
  void slotDrawLineOrthogonalRel();
+ void slotDrawLineOrthogonalTo();
  void slotDrawLineAngleRel();
  void slotDrawSliceDivide();
 	void slotDrawCircleCR();

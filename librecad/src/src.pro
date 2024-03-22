@@ -126,6 +126,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # Library
 HEADERS += \
     actions/lc_abstractactionwithpreview.h \
+    actions/lc_actiondrawlineorthogonaltoline.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actionmodifyduplicate.h \
@@ -246,6 +247,7 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/LC_DlgParabola.h \
+    ui/forms/lc_lineorthogonaltolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
     ui/forms/lc_duplicateoptions.h \
     ui/lc_peninforegistry.h \
@@ -279,6 +281,7 @@ SOURCES += \
     actions/lc_abstractactionwithpreview.cpp \
     actions/lc_actiondrawcirclebyarc.cpp \
     actions/lc_actiondrawlineanglerel.cpp \
+    actions/lc_actiondrawlineorthogonaltoline.cpp \
     actions/lc_actiondrawlinepoints.cpp \
     actions/lc_actiondrawrectangle1point.cpp \
     actions/lc_actiondrawlinerel.cpp \
@@ -386,6 +389,7 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
+    ui/forms/lc_lineorthogonaltolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
     ui/forms/lc_duplicateoptions.cpp \
     ui/lc_peninforegistry.cpp \
@@ -468,7 +472,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawlinepolygon.h \
     actions/rs_actiondrawlinepolygon2.h \
     actions/rs_actiondrawlinerectangle.h \
-    actions/lc_actiondrawlinerectanglerel.h \
+    actions/lc_actiondrawrectangle3points.h \
     actions/lc_actiondrawcross.h\
     actions/rs_actiondrawlinerelangle.h \
     actions/rs_actiondrawlinetangent1.h \
@@ -608,7 +612,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawlinepolygon.cpp \
     actions/rs_actiondrawlinepolygon2.cpp \
     actions/rs_actiondrawlinerectangle.cpp \
-    actions/lc_actiondrawlinerectanglerel.cpp \
+    actions/lc_actiondrawrectangle3points.cpp \
     actions/lc_actiondrawcross.cpp \
     actions/rs_actiondrawlinerelangle.cpp \
     actions/rs_actiondrawlinetangent1.cpp \
@@ -920,6 +924,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_crossoptions.ui \
     ui/forms/lc_lineanglereloptions.ui \
     ui/forms/lc_linejoinoptions.ui \
+    ui/forms/lc_lineorthogonaltolineoptions.ui \
     ui/forms/lc_linepointsoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \

@@ -165,7 +165,7 @@
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
 
-#include "lc_actiondrawlinerectanglerel.h"
+#include "lc_actiondrawrectangle3points.h"
 
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawlinerel.h"
@@ -190,6 +190,7 @@
 #include "lc_actionpenapply.h"
 
 #include "lc_actiondrawlineanglerel.h"
+#include "lc_actiondrawlinefrompointtoline.h"
 #include "rs_math.h"
 #include "lc_actiondrawslicedivide.h"
 #include "lc_actiondrawrectangle1point.h"
@@ -466,8 +467,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineRectangle:
         a = new RS_ActionDrawLineRectangle(*document, *view);
         break;
-     case RS2::ActionDrawLineRectangleRel:
-        a = new LC_ActionDrawLineRectangleRel(*document, *view);
+     case RS2::ActionDrawRectangle3Points:
+        a = new LC_ActionDrawRectangle3Points(*document, *view);
         break;
      case RS2::ActionDrawRectangle2Points:
         a = new LC_ActionDrawRectangle2Points(*document, *view);
@@ -521,6 +522,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineAngleRel:
          a = new LC_ActionDrawLineAngleRel(*document, *view, 0.0, false);
          break;
+    case RS2::ActionDrawLineFromPointToLine:{
+         a = new LC_ActionDrawLineFromPointToLine(*document, *view);
+         break;
+    }
     case RS2::ActionPolylineAdd:
         a = new RS_ActionPolylineAdd(*document, *view);
         break;
@@ -1479,7 +1484,7 @@ void QG_ActionHandler::slotDrawLineRectangle() {
 }
 
 void QG_ActionHandler::slotDrawLineRectangleRel() {
-    setCurrentAction(RS2::ActionDrawLineRectangleRel);
+    setCurrentAction(RS2::ActionDrawRectangle3Points);
 }
 
 void QG_ActionHandler::slotDrawLineRectangle1Point() {
@@ -1509,6 +1514,11 @@ void QG_ActionHandler::slotDrawLineAngleRel(){
 void QG_ActionHandler::slotDrawLineOrthogonalRel(){
     setCurrentAction(RS2::ActionDrawLineOrthogonalRel);
 }
+
+void QG_ActionHandler::slotDrawLineOrthogonalTo(){
+    setCurrentAction(RS2::ActionDrawLineFromPointToLine);
+}
+
 
 void QG_ActionHandler::slotDrawSliceDivide(){
     setCurrentAction(RS2::ActionDrawSliceDivide);
