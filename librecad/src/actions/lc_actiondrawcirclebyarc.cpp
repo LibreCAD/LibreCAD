@@ -92,7 +92,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities(QMouseEvent *e, RS_Vecto
     }
 }
 
-void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
     if (status == SetArc){
         trigger();
     }

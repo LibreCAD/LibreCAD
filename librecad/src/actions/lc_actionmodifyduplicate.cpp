@@ -21,6 +21,7 @@ void LC_ActionModifyDuplicate::init(int status){
         }
 
         if (!selectedEntities.isEmpty()){
+            showOptions(); // use this as simplest way to read settings for the action
             trigger();
             finishAction();
         }
@@ -31,14 +32,46 @@ bool LC_ActionModifyDuplicate::doCheckMayTrigger(){
     return !selectedEntities.isEmpty();
 }
 
+bool LC_ActionModifyDuplicate::isSetActivePenAndLayerOnTrigger(){
+    return duplicateInplace;
+}
+
 void LC_ActionModifyDuplicate::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     for (int i =0; i < selectedEntities.count(); i++){
         RS_Entity* original = selectedEntities.at(i);
         RS_Vector offset = getOffset();
         RS_Entity* clone = original->clone();
         if (clone != nullptr){
+            clone->setHighlighted(false);
             if (offset.valid){
                 clone->move(offset);
+            }
+            if (!duplicateInplace){
+                switch (penMode) {
+                    case PEN_ACTIVE: {
+                        clone->setPenToActive();
+                        break;
+                    }
+                    case PEN_ORIGINAL: {
+                        break;
+                    }
+                    case PEN_ORIGINAL_RESOLVED: {
+                        RS_Pen pen = original->getPen(true);
+                        clone->setPen(pen);
+                        break;
+                    }
+                }
+
+                switch (layerMode) {
+                    case LAYER_ACTIVE: {
+                        clone->setLayerToActive();
+                        break;
+                    }
+                    case LAYER_ORIGINAL:
+                        RS_Layer *layer = original->getLayer(true);
+                        clone->setLayer(layer);
+                        break;
+                }
             }
             list<<clone;
         }
@@ -46,14 +79,16 @@ void LC_ActionModifyDuplicate::doPrepareTriggerEntities(QList<RS_Entity *> &list
 }
 
 RS_Vector LC_ActionModifyDuplicate::getOffset() const{
-    bool moveX = LC_LineMath::isMeaningful(offsetX);
-    bool moveY = LC_LineMath::isMeaningful(offsetY);
     RS_Vector offset(false);
+    if (!duplicateInplace){
+        bool moveX = LC_LineMath::isMeaningful(offsetX);
+        bool moveY = LC_LineMath::isMeaningful(offsetY);
 
-    if (moveX || moveY){
-        double mx = LC_LineMath::getMeaningful(offsetX);
-        double my = LC_LineMath::getMeaningful(offsetY);
-        offset = RS_Vector(mx, my, 0.0);
+        if (moveX || moveY){
+            double mx = LC_LineMath::getMeaningful(offsetX);
+            double my = LC_LineMath::getMeaningful(offsetY);
+            offset = RS_Vector(mx, my, 0.0);
+        }
     }
     return offset;
 }
@@ -72,14 +107,12 @@ void LC_ActionModifyDuplicate::doAfterTrigger(){
     selectedEntities.clear();
 }
 
-void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
     if (status == SelectEntity){
         RS_Entity *en = catchEntity(e, RS2::ResolveNone);
         if (en != nullptr){ // can snap to line
             selectedEntities << en;
             trigger();
-            unHighlightEntity();
-            deletePreview();
         }
     }
 }
@@ -119,6 +152,10 @@ void LC_ActionModifyDuplicate::createOptionsWidget(){
 
 RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor(int status){
     return RS2::SelectCursor;
+}
+
+int LC_ActionModifyDuplicate::getPenMode(){
+    return penMode;
 }
 
 

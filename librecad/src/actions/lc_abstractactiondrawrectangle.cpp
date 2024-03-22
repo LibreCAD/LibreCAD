@@ -33,22 +33,9 @@ void LC_AbstractActionDrawRectangle::createShapeData(const RS_Vector &snapPoint)
 
 void LC_AbstractActionDrawRectangle::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     RS_Polyline *polyline = shapeData->resultingPolyline;
-    if (usePolyline){
-        // just insert created polyline into drawing
-        list << polyline;
-    } else {
         // extract entities from polyline and insert them as result of action
-        for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
-             entity = polyline->nextEntity(RS2::ResolveAll)) {
+    doAddPolylineToListOfEntities(polyline, list, false);
 
-            if (entity){
-                RS_Entity* clone = entity->clone(); // use clone for safe deletion of polyline
-                clone->reparent(container);
-                list << clone;
-            }
-        }
-        delete polyline; //don't need it anymore
-    }
 }
 
 void LC_AbstractActionDrawRectangle::doAfterTrigger(){
@@ -71,7 +58,60 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities(QMouseEvent *e, RS
     RS_Polyline *polyline = createPolyline(snap);
     polyline->setLayerToActive();
     polyline->setPenToActive();
-    list << polyline;
+    doAddPolylineToListOfEntities(polyline, list, true);
+}
+
+void LC_AbstractActionDrawRectangle::doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview){
+
+    bool shouldInspectForNonCompleteShape = edgesDrawMode != EDGES_BOTH && cornersDrawMode == CORNER_STRAIGHT; // here we draw only side edges
+
+    bool addAtOnce = true;
+    if (preview){
+        addAtOnce = !shouldInspectForNonCompleteShape;
+    }
+    else{
+        if (shouldInspectForNonCompleteShape){
+            addAtOnce = false;
+        }
+        else{
+            addAtOnce = usePolyline;
+        }
+    }
+    if (addAtOnce){
+        // just insert created polyline into drawing or preview
+        list<<polyline;
+    }
+    else {
+        int index = -1;
+        for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
+             entity = polyline->nextEntity(RS2::ResolveAll)) {
+            index++;
+            if (entity != nullptr){
+                if (shouldInspectForNonCompleteShape){
+                    bool sideEdgeLine = doCheckPolylineEntityAllowedInTrigger(entity, index);
+                    if (!sideEdgeLine){
+                        continue; // skip this entity and go to next
+                    }
+                }
+
+                RS_Entity *clone = entity->clone(); // use clone for safe deletion of polyline
+                clone->reparent(container);
+                list << clone;
+            }
+        }
+        delete polyline; //don't need it anymore
+    }
+}
+
+
+bool LC_AbstractActionDrawRectangle::doCheckPolylineEntityAllowedInTrigger(RS_Entity *pEntity, int index){
+    if (edgesDrawMode == EDGES_VERT)
+        return (index == 1) || (index == 3);
+    else if (edgesDrawMode == EDGES_HOR){
+        return (index == 0) || (index == 2);
+    }
+    else
+        return true;
 }
 
 /**
@@ -79,7 +119,7 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities(QMouseEvent *e, RS
  * inherited actions
  * @param coordinate event
  */
-void LC_AbstractActionDrawRectangle::onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
+void LC_AbstractActionDrawRectangle::onCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
     switch (status) {
         case SetBevels:
             // actually, we'll allow zero values there - together with drawing as individual lines, that may
@@ -137,7 +177,7 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
     }
     else if (checkCommand("bevels",c)){
         if (getStatus() == SetCorners){
-            cornersDrawMode = DRAW_BEVEL;
+            cornersDrawMode = CORNER_BEVEL;
         }
         else {
             setStatus(SetBevels);
@@ -156,12 +196,12 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
     }
     else if (checkCommand("str",c)){
         if (getStatus() == SetCorners){
-            cornersDrawMode = DRAW_STRAIGHT;
+            cornersDrawMode = CORNER_STRAIGHT;
         }
     }
     else if (checkCommand("round",c)){
         if (getStatus() == SetCorners){
-            cornersDrawMode = DRAW_RADIUS;
+            cornersDrawMode = CORNER_RADIUS;
         }
     }
     else if (processCustomCommand(e,c, toMainStatus)){ // delegate processing to inherited class
@@ -206,11 +246,11 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
  */
 void LC_AbstractActionDrawRectangle::prepareCornersDrawMode(double &radiusX, double &radiusY, bool &drawComplex, bool &drawBulge) const{
     switch (cornersDrawMode){
-        case DRAW_STRAIGHT:{
+        case CORNER_STRAIGHT:{
             drawComplex = false;
             break;
         }
-        case DRAW_BEVEL:
+        case CORNER_BEVEL:
         {
             drawComplex = true;
             radiusX = bevelX;
@@ -225,7 +265,7 @@ void LC_AbstractActionDrawRectangle::prepareCornersDrawMode(double &radiusX, dou
             }
             break;
         }
-        case DRAW_RADIUS:{
+        case CORNER_RADIUS:{
             if (LC_LineMath::isNotMeaningful(radius)){
                 drawComplex = false;
             }
@@ -442,3 +482,6 @@ void LC_AbstractActionDrawRectangle::doBack(QMouseEvent *pEvent, int status){
             break;
     }
 }
+
+
+

@@ -29,6 +29,7 @@ public slots:
     void onUsePolylineClicked(bool value);
     void onSnapToCornerArcCenterClicked(bool value);
     void onInnerSizeClicked(bool value);
+    void onEdgesIndexChanged(int index);
 
 protected slots:
     void languageChange() override;
@@ -49,8 +50,8 @@ private:
     void setSnapPointModeToActionAndView(int index);
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenterToActionAndView(bool value);
-
     void setSizeInnerToActionAndView(bool value);
+    void setEdgesModeToActionAndView(int index);
 };
 
 #endif // LC_RECTANGLE1POINTOPTIONS_H

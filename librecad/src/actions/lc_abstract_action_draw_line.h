@@ -35,6 +35,7 @@ protected:
     double angleValue; // fixed angle for line
     bool angleIsRelative {true}; // is angle relative to previous segment (if any)
     int direction {DIRECTION_NONE}; // current line direction
+    int primaryDirection {DIRECTION_NONE};
 
     void setSetAngleState(bool relative);
     virtual bool processAngleValueInput(RS_CommandEvent *e, const QString &c);
@@ -42,12 +43,15 @@ protected:
     virtual bool doProcessCommandValue(RS_CommandEvent *e, const QString &c);
     virtual const RS_Vector& getStartPointForAngleSnap() const = 0;
     virtual bool isStartPointValid() const;
-    virtual void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped);
+    virtual void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped, bool shiftPressed);
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e, bool shiftPressed) override;
+    virtual void doSetStartPoint(RS_Vector vector) = 0;
+    int doRelZeroInitialSnapState() override;
+    void doRelZeroInitialSnap(RS_Vector vector) override;
 public:
-    LC_AbstractActionDrawLine(const char* name, RS_EntityContainer &container,RS_GraphicView &graphicView);
 
+    LC_AbstractActionDrawLine(const char* name, RS_EntityContainer &container,RS_GraphicView &graphicView);
     ~LC_AbstractActionDrawLine() override;
     int getDirection(){return direction;}
     void setNewStartPointState();

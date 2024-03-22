@@ -27,17 +27,9 @@ public:
     LC_ActionModifyLineJoin(RS_EntityContainer& container,RS_GraphicView& graphicView);
     ~LC_ActionModifyLineJoin() override;
 
-    void trigger() override;
-
-
-    void commandEvent(RS_CommandEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
 
     void init(int status) override;
-
-    QStringList getAvailableCommands() override;
-
 
     bool isCreatePolyline(){return createPolyline;};
     void setCreatePolyline(bool value);
@@ -60,7 +52,12 @@ protected:
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS2::CursorType doGetMouseCursor(int status) override;
 
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
+    void doAfterTrigger() override;
+    void performTriggerDeletions() override;
+    bool doCheckMayTrigger() override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool isSetActivePenAndLayerOnTrigger() override;
 
 private:
     struct LC_PointsDisposition{
@@ -141,8 +138,6 @@ private:
         const RS_Vector &line2Start, const RS_Vector &line2End);
 
     void applyAttributes(RS_Entity *entity, bool forLine1);
-    void deleteOriginalEntity(RS_Entity *entity);
-    void doTrigger();
 
 };
 

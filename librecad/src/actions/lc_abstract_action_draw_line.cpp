@@ -33,10 +33,18 @@ void LC_AbstractActionDrawLine::setNewStartPointState(){
     }
 }
 
-RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(QMouseEvent *e){
+int LC_AbstractActionDrawLine::doRelZeroInitialSnapState(){
+    return SetStartPoint;
+}
+
+void LC_AbstractActionDrawLine::doRelZeroInitialSnap(RS_Vector relZero){
+    doSetStartPoint(relZero);
+}
+
+RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(QMouseEvent *e, bool shiftPressed){
     RS_Vector snapped = snapPoint(e);
     // Snapping to angle(15*) if shift key is pressed
-    if ((e->modifiers() & Qt::ShiftModifier)){
+    if (shiftPressed){
         snapped = snapToAngle(snapped, getStartPointForAngleSnap());
     }
     return snapped;
@@ -176,11 +184,13 @@ bool LC_AbstractActionDrawLine::processAngleValueInput(RS_CommandEvent *e, const
     return ok;
 }
 
-void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped){
-    onOnCoordinateEvent(snapped, false, status);
+void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped, bool shiftPressed){
+    onCoordinateEvent(snapped, false, status);
 }
 
 bool LC_AbstractActionDrawLine::isStartPointValid() const{
     return false;
 }
+
+
 

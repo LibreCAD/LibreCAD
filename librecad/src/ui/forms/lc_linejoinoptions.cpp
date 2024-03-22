@@ -17,6 +17,7 @@ LC_LineJoinOptions::LC_LineJoinOptions(QWidget *parent) :
 }
 
 LC_LineJoinOptions::~LC_LineJoinOptions(){
+    saveSettings();
     delete ui;
 }
 
@@ -90,6 +91,7 @@ void LC_LineJoinOptions::onRemoveOriginalsClicked(bool value){
 }
 
 #define NO_CHANGE_INDEX 2
+#define EXTEND_TRIM_INDEX 0
 
 void LC_LineJoinOptions::onEdgeModelLine1IndexChanged(int index){
     if (action != nullptr){
@@ -101,6 +103,8 @@ void LC_LineJoinOptions::onEdgeModelLine1IndexChanged(int index){
             ui->cbPolyline->setEnabled(ui->cbLine2EdgeMode->currentIndex() != NO_CHANGE_INDEX);
         }
     }
+    bool allowRemoval = index == EXTEND_TRIM_INDEX || ui->cbLine2EdgeMode->currentIndex() == EXTEND_TRIM_INDEX;
+    ui->cbRemoveOriginals->setEnabled(allowRemoval);
 }
 
 void LC_LineJoinOptions::onEdgeModelLine2IndexChanged(int index){
@@ -113,6 +117,8 @@ void LC_LineJoinOptions::onEdgeModelLine2IndexChanged(int index){
             ui->cbPolyline->setEnabled(ui->cbLine1EdgeMode->currentIndex() != NO_CHANGE_INDEX);
         }
     }
+    bool allowRemoval = index == EXTEND_TRIM_INDEX || ui->cbLine1EdgeMode->currentIndex() == EXTEND_TRIM_INDEX;
+    ui->cbRemoveOriginals->setEnabled(allowRemoval);
 }
 
 void LC_LineJoinOptions::onAttributesSourceIndexChanged(int index){

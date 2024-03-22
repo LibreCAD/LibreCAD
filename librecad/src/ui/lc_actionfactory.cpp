@@ -302,11 +302,17 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawLineAngleRel");
     a_map["DrawLineAngleRel"] = action;
 
-    action = new QAction(tr("Orthogonal To Line Relative"), agm->line);
+    action = new QAction(tr("Orthogonal From Line Relative"), agm->line);
     action->setIcon(QIcon(":/icons/line_ortho_rel.svg"));
     connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalRel()));
     action->setObjectName("DrawLineOrthogonalRel");
     a_map["DrawLineOrthogonalRel"] = action;
+
+    action = new QAction(tr("From Point To Line"), agm->line);
+    action->setIcon(QIcon(":/icons/line_to_ortho.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalTo()));
+    action->setObjectName("DrawLineFromPointToLine");
+    a_map["DrawLineFromPointToLine"] = action;
 
     action = new QAction(tr("Slice"), agm->circle);
     action->setIcon(QIcon(":/icons/slice_divide.svg"));

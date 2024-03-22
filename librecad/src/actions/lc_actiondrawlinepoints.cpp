@@ -32,6 +32,12 @@ void LC_ActionDrawLinePoints::init(int status){
     }
 }
 
+void LC_ActionDrawLinePoints::doSetStartPoint(RS_Vector vector){
+    startpoint = vector;
+    point1Set = true;
+    setStatus(SetPoint);
+}
+
 void LC_ActionDrawLinePoints::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     // prepare points data
     createEntities(endpoint, list);
@@ -153,7 +159,7 @@ const RS_Vector& LC_ActionDrawLinePoints::getStartPointForAngleSnap() const {
     return startpoint;
 }
 
-void LC_ActionDrawLinePoints::onOnCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
+void LC_ActionDrawLinePoints::onCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
     switch (status) {
         case SetDistance:
             switch (direction) {

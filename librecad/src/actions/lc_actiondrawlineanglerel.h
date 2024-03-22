@@ -102,7 +102,7 @@ protected:
     void createOptionsWidget() override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doBack(QMouseEvent *pEvent, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doAfterTrigger() override;

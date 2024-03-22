@@ -96,6 +96,7 @@ private:
     int tickSnapMode {SNAP_MIDDLE};
     int tickEdgeDrawMode {DRAW_EDGE_BOTH};
     bool tickAngleIsRelative {true};
+    bool alternateAngle {false};
 
 
     std::vector<TickData> ticksData;
@@ -127,11 +128,13 @@ protected:
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doAfterTrigger() override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     bool isSetActivePenAndLayerOnTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void doMouseMoveEnd(int status, QMouseEvent *e) override;
+    void doMouseMoveStart(int status, QMouseEvent *pEvent, bool shiftPressed) override;
 };
 
 #endif // LC_ACTIONDRAWSLICEDIVIDE_H

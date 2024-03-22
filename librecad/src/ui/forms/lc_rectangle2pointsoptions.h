@@ -23,6 +23,7 @@ public slots:
     void onCornersIndexChanged(int index);
     void onInsertionPointSnapIndexChanged(int index);
     void onSecondPointSnapIndexChanged(int index);
+    void onEdgesIndexChanged(int index);
     void onAngleEditingFinished();
     void onLenYEditingFinished();
     void onLenXEditingFinished();
@@ -50,6 +51,7 @@ private:
 
 private:
     Ui::LC_Rectangle2PointsOptions *ui;
+    void setEdgesModeToActionAndView(int index);
 };
 
 #endif // LC_RECTANGLE2POINTSOPTIONS_H

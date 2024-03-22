@@ -81,7 +81,7 @@ protected:
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;

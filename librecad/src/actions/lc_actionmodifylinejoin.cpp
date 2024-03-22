@@ -20,26 +20,12 @@ LC_ActionModifyLineJoin::LC_ActionModifyLineJoin(RS_EntityContainer &container, 
 }
 LC_ActionModifyLineJoin::~LC_ActionModifyLineJoin() = default;
 
-QStringList LC_ActionModifyLineJoin::getAvailableCommands(){
-    return RS_ActionInterface::getAvailableCommands();
-}
-
 void LC_ActionModifyLineJoin::init(int status){
     RS_PreviewActionInterface::init(status);
     highlightedLine = nullptr;
     line1 = nullptr;
     line2 = nullptr;
 }
-
-void LC_ActionModifyLineJoin::coordinateEvent(RS_CoordinateEvent *e){
-    RS_ActionInterface::coordinateEvent(e);
-}
-
-void LC_ActionModifyLineJoin::commandEvent(RS_CommandEvent *e){
-    RS_ActionInterface::commandEvent(e);
-}
-
-#define LINE1_UPDATE_BY_TRIM_ON_PREVIEW false
 
 void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
 
@@ -49,71 +35,59 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, RS_Vector
         snappedLine = dynamic_cast<RS_Line *>(en);
     }
     switch (status) {
-    case SetLine1: {
-        if (snappedLine != nullptr){ // can snap to line
-            highlightEntity(snappedLine);
+        case SetLine1: {
+            if (snappedLine != nullptr){ // can snap to line
+                highlightEntity(snappedLine);
+            }
+            break;
         }
-        break;
-    }
-    case SetLine2: {
-        if (snappedLine == line1){
-            snappedLine = nullptr;
-        }
-        if (snappedLine != nullptr) {
-            RS_Vector snap =  graphicView->toGraph(e->x(), e->y());
-            LC_LineJoinData* lineJoinData = createLineJoinData(snappedLine, snap);
+        case SetLine2: {
+            if (snappedLine == line1){
+                snappedLine = nullptr;
+            }
+            if (snappedLine != nullptr) {
+                RS_Vector snap =  graphicView->toGraph(e->x(), e->y());
+                LC_LineJoinData* lineJoinData = createLineJoinData(snappedLine, snap);
 
-            RS_Polyline* polyline = lineJoinData->polyline;
-            if (polyline != nullptr){
-                list << polyline;
+                RS_Polyline* polyline = lineJoinData->polyline;
+                if (polyline != nullptr){
+                    list << polyline;
+                }
+                delete lineJoinData;
             }
-            delete lineJoinData;
+            else{
+                highlightEntity(line1);
+            }
+            break;
         }
-        else{
-            highlightEntity(line1);
-        }
-        break;
-    }
-    case ResolveFirstLineTrim:
-        if (snappedLine != line1){
-            snappedLine = nullptr;
-        }
-        if (snappedLine != nullptr) {
-            RS_Vector snap = graphicView->toGraph(e->x(), e->y());
-            updateLine1TrimData(snap);
+        case ResolveFirstLineTrim:
+            if (snappedLine != line1){
+                snappedLine = nullptr;
+            }
+            if (snappedLine != nullptr) {
+                RS_Vector snap = graphicView->toGraph(e->x(), e->y());
+                updateLine1TrimData(snap);
 
-            RS_Polyline* polyline = linesJoinData->polyline;
-            if (polyline != nullptr){
-                list << polyline->clone();
+                RS_Polyline* polyline = linesJoinData->polyline;
+                if (polyline != nullptr){
+                    list << polyline->clone();
+                }
             }
-            // potentially, on preview we can adjust line 1 according to trim point. Yet this affects drawing any may be not safe until trigger
-            if (LINE1_UPDATE_BY_TRIM_ON_PREVIEW){
-                RS_Vector newStart = getTrimStartPoint(linesJoinData->line1Disposition, linesJoinData->intersectPoint);
-                RS_Vector newEnd = getTrimEndPoint(linesJoinData->line1Disposition, linesJoinData->intersectPoint);
-                line1->setStartpoint(newStart);
-                line1->setEndpoint(newEnd);
+            else{
+                highlightEntity(line1);
             }
-        }
-        else{
-            if (LINE1_UPDATE_BY_TRIM_ON_PREVIEW){
-                line1->setStartpoint(linesJoinData->line1Disposition.startPoint);
-                line1->setEndpoint(linesJoinData->line1Disposition.endPoint);
-            }
-            highlightEntity(line1);
-        }
-
-        break;
+            break;
     }
 }
 
-void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
 
-        RS_Entity *en = catchEntity(e, lineType, RS2::ResolveAll);
-        RS_Line* snappedLine = nullptr;
-        if (en && en->rtti() == RS2::EntityLine){
-            snappedLine = dynamic_cast<RS_Line *>(en);
-        }
-        switch (status){
+    RS_Entity *en = catchEntity(e, lineType, RS2::ResolveAll);
+    RS_Line* snappedLine = nullptr;
+    if (en && en->rtti() == RS2::EntityLine){
+        snappedLine = dynamic_cast<RS_Line *>(en);
+    }
+    switch (status){
         case SetLine1:
             if (snappedLine != nullptr){
                 line1 = snappedLine;
@@ -121,8 +95,8 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             }
             else{
                 commandMessageTR("No line selected");
-                break;
             }
+            break;
         case SetLine2:
             if (snappedLine != nullptr){
                 line2 = snappedLine;
@@ -131,7 +105,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                 if (joinData->parallelLines){
                     if (joinData->straightLinesConnection){
                         linesJoinData = joinData;
-                        doTrigger();
+                        trigger();
                     }
                     else{
                         commandMessageTR("Lines are parallel, can't merge");
@@ -149,8 +123,10 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                         linesJoinData = joinData;
                         if (firstLineTrimShouldBeSpecified){
                             setStatus(ResolveFirstLineTrim);
+                            highlightEntity(line1);
+                            graphicView->redraw();
                         } else {
-                            doTrigger();
+                            trigger();
                         }
                     }
                 }
@@ -161,167 +137,137 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             break;
 
         case ResolveFirstLineTrim:
-            // fixme - complete
-            break;
-        }
+           if (snappedLine == line1){
+                RS_Vector snap = graphicView->toGraph(e->x(), e->y());
+                updateLine1TrimData(snap);
+                RS_Polyline* polyline = linesJoinData->polyline;
+                if (polyline != nullptr){
+                    trigger();
+                }
+            }
+            else{
+                highlightEntity(line1);
+            }
+
+           break;
+    }
 }
 
 void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
     LC_AbstractActionWithPreview::doBack(pEvent, status);
     switch (status){
         case SetLine1:
-            if (line1 != nullptr){
-                line1->setHighlighted(false);
-                highlightedLine = nullptr;
-                graphicView->drawEntity(line1);
-                graphicView->redraw(RS2::RedrawOverlay);
-            }
             init(SetLine1 - 1);
             break;
         case SetLine2: {
-            if (line2 != nullptr){
-                line2->setHighlighted(false);
-                graphicView->drawEntity(line2);
-            }
-            if (line1 != nullptr){
-                line1->setHighlighted(false);
-                graphicView->drawEntity(line1);
-            }
-            highlightedLine = nullptr;
-            graphicView->redraw(RS2::RedrawDrawing);
             setStatus(SetLine1);
             break;
         }
         case ResolveFirstLineTrim:{
-            if (LINE1_UPDATE_BY_TRIM_ON_PREVIEW){
-                line1->setStartpoint(linesJoinData->line1Disposition.startPoint);
-                line1->setEndpoint(linesJoinData->line1Disposition.endPoint);
-            }
-            if (line2 != nullptr){
-                line2->setHighlighted(false);
-                graphicView->drawEntity(line2);
-            }
-            highlightedLine = nullptr;
-            graphicView->redraw(RS2::RedrawDrawing);
             setStatus(SetLine2);
             break;
         }
         default:
             init(getStatus() - 1);
-    }}
+    }
+}
 
-
-
-void LC_ActionModifyLineJoin::doTrigger(){
-    deletePreview();
-    line1->setHighlighted(false);
-    graphicView->drawEntity(line1);
-    line2->setHighlighted(false);
-    graphicView->drawEntity(line2);
-    trigger();
-
+void LC_ActionModifyLineJoin::doAfterTrigger(){
+    LC_AbstractActionWithPreview::doAfterTrigger();
     delete linesJoinData;
-
     graphicView->redraw();
     init(SetLine1);
 }
 
-RS2::CursorType LC_ActionModifyLineJoin::doGetMouseCursor(int status){
-    return RS2::SelectCursor;
+void LC_ActionModifyLineJoin::performTriggerDeletions(){
+    if (removeOriginalLines){
+        if (line1EdgeMode == EDGE_EXTEND_TRIM){
+            deleteEntityUndoable(line1);
+        }
+        if (line2EdgeMode == EDGE_EXTEND_TRIM){
+            deleteEntityUndoable(line2);
+        }
+   }
 }
 
-void LC_ActionModifyLineJoin::trigger(){
-    RS_PreviewActionInterface::trigger();
-    if (document){
+bool LC_ActionModifyLineJoin::doCheckMayTrigger(){
+    return linesJoinData != nullptr && document != nullptr;
+}
 
-        document->startUndoCycle();
-        if (linesJoinData->parallelLines && linesJoinData->straightLinesConnection){
-            RS_Line *line = new RS_Line(container, linesJoinData->majorPointLine1, linesJoinData->majorPointLine2);
-            applyAttributes(line, true);
-            container->addEntity(line);
-            document->addUndoable(line);
+bool LC_ActionModifyLineJoin::isSetActivePenAndLayerOnTrigger(){
+    return false;
+}
 
-        } else {
-            RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
-            RS_Vector &major1 = linesJoinData->majorPointLine1;
-            RS_Vector &major2 = linesJoinData->majorPointLine2;
-            RS_Line *l1;
-            RS_Line *l2;
+void LC_ActionModifyLineJoin::doPrepareTriggerEntities(QList<RS_Entity *> &list){
+    if (linesJoinData->parallelLines && linesJoinData->straightLinesConnection){ // process straight lines
+        RS_Line *line = new RS_Line(container, linesJoinData->majorPointLine1, linesJoinData->majorPointLine2);
+        applyAttributes(line, true);
+        list << line;
+    } else { // process intersecting lines
+        RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
+        RS_Vector &major1 = linesJoinData->majorPointLine1;
+        RS_Vector &major2 = linesJoinData->majorPointLine2;
+        RS_Line *l1;
+        RS_Line *l2;
 
-            if (createPolyline && major1.valid && major2.valid){
-                RS_Polyline *poly = new RS_Polyline(container);
-                poly->addVertex(major1);
-                poly->addVertex(intersectionPoint);
-                poly->addVertex(major2);
-                applyAttributes(poly, true);
-                container->addEntity(poly);
-                document->addUndoable(poly);
+        if (createPolyline && major1.valid && major2.valid){ // handle polyline mode
+            RS_Polyline *poly = new RS_Polyline(container);
+            poly->addVertex(major1);
+            poly->addVertex(intersectionPoint);
+            poly->addVertex(major2);
+            applyAttributes(poly, true);
+            list << poly;
 
-            } else {
-                if (major1.valid){
-                    l1 = new RS_Line(container, major1, intersectionPoint);
-                    applyAttributes(l1, true);
-                    container->addEntity(l1);
-                    document->addUndoable(l1);
-                }
-                if (major2.valid){
-                    l2 = new RS_Line(container, intersectionPoint, major2);
-                    applyAttributes(l2, false);
-                    container->addEntity(l2);
-                    document->addUndoable(l2);
-                }
+        } else { // handle individual lines
+            if (major1.valid){
+                l1 = new RS_Line(container, major1, intersectionPoint);
+                applyAttributes(l1, true);
+                list << l1;
+            }
+            if (major2.valid){
+                l2 = new RS_Line(container, intersectionPoint, major2);
+                applyAttributes(l2, false);
+                list << l2;
             }
         }
-        if (removeOriginalLines){
-            deleteOriginalEntity(line1);
-            deleteOriginalEntity(line2);
-        }
-        document->endUndoCycle();
-        graphicView->redraw(RS2::RedrawDrawing);
     }
 }
 
-void LC_ActionModifyLineJoin::deleteOriginalEntity(RS_Entity *entity){
-    // delete and add this into undo
-    graphicView->deleteEntity(entity);
-    entity->changeUndoState();
-    document->addUndoable(entity);
-}
 
 void LC_ActionModifyLineJoin::applyAttributes(RS_Entity *e, bool forLine1){
     RS_Pen pen;
     RS_Layer *layer;
     switch (attributesSource) {
-    case ATTRIBUTES_LINE_1: {
-        pen = line1->getPen(false);
-        e->setPen(pen);
-        layer = line1->getLayer(true);
-        e->setLayer(layer);
-        break;
-    }
-    case ATTRIBUTES_BOTH_LINES:
-        if (forLine1){
+        case ATTRIBUTES_LINE_1: {
             pen = line1->getPen(false);
             e->setPen(pen);
             layer = line1->getLayer(true);
             e->setLayer(layer);
-        } else {
+            break;
+        }
+        case ATTRIBUTES_BOTH_LINES:
+            if (forLine1){
+                pen = line1->getPen(false);
+                e->setPen(pen);
+                layer = line1->getLayer(true);
+                e->setLayer(layer);
+            } else {
+                pen = line2->getPen(false);
+                e->setPen(pen);
+                layer = line2->getLayer(true);
+                e->setLayer(layer);
+            }
+            break;
+        case ATTRIBUTES_LINE_2:
             pen = line2->getPen(false);
             e->setPen(pen);
             layer = line2->getLayer(true);
             e->setLayer(layer);
-        }
-        break;
-    case ATTRIBUTES_LINE_2:
-        pen = line2->getPen(false);
-        e->setPen(pen);
-        layer = line2->getLayer(true);
-        e->setLayer(layer);
-        break;
-    case ATTRIBUTES_ACTIVE_PEN_LAYER:
-        e->setPenToActive();
-        e->setLayerToActive();
-        break;
+            break;
+        case ATTRIBUTES_ACTIVE_PEN_LAYER:
+            e->setPenToActive();
+            e->setLayerToActive();
+            break;
     }
 }
 
@@ -421,64 +367,55 @@ RS_Vector LC_ActionModifyLineJoin::getMajorPointFromLine(const int edgeMode,
     RS_Vector result = RS_Vector(false);
     switch (edgeMode){
 
-    case EDGE_EXTEND_TRIM:
-        switch (lineDisposition.dispositionMode) {
-        case LC_PointsDisposition::BOTH_POINTS_ON_RIGHT:
-        case LC_PointsDisposition::BOTH_POINTS_ON_LEFT: {
-            result= lineDisposition.farPoint;
-            break;
-        }
-        case LC_PointsDisposition::MIDDLE_END_LEFT:{
-            if (lineDisposition.snapSelectionOnLeft){
-                result = lineEnd;
+        case EDGE_EXTEND_TRIM:
+            switch (lineDisposition.dispositionMode) {
+                case LC_PointsDisposition::BOTH_POINTS_ON_RIGHT:
+                case LC_PointsDisposition::BOTH_POINTS_ON_LEFT: {
+                    result = lineDisposition.farPoint;
+                    break;
+                }
+                case LC_PointsDisposition::MIDDLE_END_LEFT: {
+                    if (lineDisposition.snapSelectionOnLeft){
+                        result = lineEnd;
+                    } else {
+                        result = lineStart;
+                    }
+                    break;
+                }
+                case LC_PointsDisposition::MIDDLE_START_LEFT: {
+                    if (lineDisposition.snapSelectionOnLeft){
+                        result = lineStart;
+                    } else {
+                        result = lineEnd;
+                    }
+                    break;
+                }
             }
-            else {
-                result = lineStart;
+            break;
+        case EDGE_ADD_SEGMENT:
+            switch (lineDisposition.dispositionMode) {
+                case LC_PointsDisposition::BOTH_POINTS_ON_RIGHT:
+                case LC_PointsDisposition::BOTH_POINTS_ON_LEFT: {
+                    result = lineDisposition.closestPoint;
+                    break;
+                }
+                case LC_PointsDisposition::MIDDLE_END_LEFT: {
+                    break;
+                }
+                case LC_PointsDisposition::MIDDLE_START_LEFT: {
+                    //                    if (lineDisposition.snapSelectionOnLeft){
+                    //                        result = lineStart;
+                    //                    }
+                    //                    else {
+                    //                        result = lineEnd;
+                    //                    }
+                    break;
+                }
             }
-            break;
-        }
-        case LC_PointsDisposition::MIDDLE_START_LEFT: {
-            if (lineDisposition.snapSelectionOnLeft){
-                result = lineStart;
-            }
-            else {
-                result = lineEnd;
-            }
-            break;
-        }
-        }
-        break;
-    case EDGE_ADD_SEGMENT:
-        switch (lineDisposition.dispositionMode)
-        {
-        case LC_PointsDisposition::BOTH_POINTS_ON_RIGHT:
-        case LC_PointsDisposition::BOTH_POINTS_ON_LEFT: {
-            result = lineDisposition.closestPoint;
-            break;
-        }
-        case LC_PointsDisposition::MIDDLE_END_LEFT:{
-            //                    if (lineDisposition.snapSelectionOnLeft){
-            //                        result = lineEnd;
-            //                    }
-            //                    else {
-            //                        result = lineStart;
-            //                    }
-            break;
-        }
-        case LC_PointsDisposition::MIDDLE_START_LEFT: {
-            //                    if (lineDisposition.snapSelectionOnLeft){
-            //                        result = lineStart;
-            //                    }
-            //                    else {
-            //                        result = lineEnd;
-            //                    }
-            break;
-        }
-        }
 
-        break;
-    case EDGE_NO_MODIFICATION:
-        break;
+            break;
+        case EDGE_NO_MODIFICATION:
+            break;
     }
     return result;
 }
@@ -501,7 +438,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData* LC_ActionModifyLineJoin::proceedParall
         RS_Vector startOnX2 = RS_Vector(line2Start);
         RS_Vector endOnX2 = RS_Vector(line2End);
 
-        // rotate all points around start line 1 do the will be on horizontal line
+        // rotate all points around start line 1 do they will be on horizontal line
         endOnX1.rotate(startOnX1, -angle);
         startOnX2.rotate(startOnX1, -angle);
         endOnX2.rotate(startOnX1, -angle);
@@ -514,7 +451,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData* LC_ActionModifyLineJoin::proceedParall
         // orient all lines in one direction, from left to right
 
         RS_Vector s1 = line1Start;
-        RS_Vector e1 = line2End;
+        RS_Vector e1 = line1End;
         RS_Vector s2 = line2Start;
         RS_Vector e2 = line2End;
 
@@ -729,6 +666,11 @@ void LC_ActionModifyLineJoin::updateMouseButtonHints(){
             break;
     }
 }
+
+RS2::CursorType LC_ActionModifyLineJoin::doGetMouseCursor(int status){
+    return RS2::SelectCursor;
+}
+
 
 void LC_ActionModifyLineJoin::setAttributesSource(int value){
     attributesSource = value;

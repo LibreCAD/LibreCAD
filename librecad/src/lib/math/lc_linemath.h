@@ -40,5 +40,7 @@ namespace LC_LineMath {
     RS_Vector findPointOnCircle(double radius, double arcAngle, RS_Vector centerCircle);
 
     bool areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End);
+
+    RS_Vector getIntersectionLineLine(RS_Vector& s1, RS_Vector& e1, RS_Vector& s2, RS_Vector& e2);
 }
 #endif // LC_LINEMATH_H

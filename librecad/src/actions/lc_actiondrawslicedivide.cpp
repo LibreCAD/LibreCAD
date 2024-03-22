@@ -153,12 +153,13 @@ void LC_ActionDrawSliceDivide::doPrepareTriggerEntities(QList<RS_Entity *> &list
     }
 }
 
-void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntity(e, sliceDivideEntityTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 entity = en;
+                alternateAngle = shiftPressed;
                 trigger();
             }
             break;
@@ -204,7 +205,9 @@ void LC_ActionDrawSliceDivide::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
     entity = nullptr;
     ticksData.clear();
+    alternateAngle = false;
     init(SetEntity);
+
 }
 
 // fixme
@@ -394,7 +397,12 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
 
     double actualTickLength = tickLength;
     auto const vp = ent->getNearestPointOnEntity(tickSnapPosition, false);
-    double tickAngleRad = RS_Math::deg2rad(tickAngle);
+
+    double tickAngleToUse = tickAngle;
+    if (alternateAngle){
+        tickAngleToUse = 180 - tickAngle;
+    }
+    double tickAngleRad = RS_Math::deg2rad(tickAngleToUse);
     double actualTickAngle = tickAngleRad;
     if (tickAngleIsRelative){
         actualTickAngle = actualTickAngle + ent->getTangentDirection(vp).angle();
@@ -423,6 +431,15 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
     tickLineData.endpoint = tickLineData.startpoint + vectorTick;
 }
 
+void LC_ActionDrawSliceDivide::doMouseMoveEnd(int status, QMouseEvent *e){
+    alternateAngle = false;
+}
+
+void LC_ActionDrawSliceDivide::doMouseMoveStart(int status, QMouseEvent *pEvent, bool shiftPressed){
+    if (shiftPressed && status == SetEntity){
+        alternateAngle = true;
+    }
+}
 
 int LC_ActionDrawSliceDivide::getTickSnapMode(){return tickSnapMode;}
 

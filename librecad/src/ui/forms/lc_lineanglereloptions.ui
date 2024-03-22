@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>656</width>
+    <width>880</width>
     <height>24</height>
    </rect>
   </property>
@@ -20,10 +20,10 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="10">
-    <widget class="QLabel" name="label_3">
+   <item row="0" column="3">
+    <widget class="QLabel" name="lblAngle">
      <property name="text">
-      <string>Tick Snap:</string>
+      <string>Angle:</string>
      </property>
     </widget>
    </item>
@@ -34,61 +34,12 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLineEdit" name="leAngle">
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>0</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QLabel" name="lblAngle">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="9">
-    <widget class="QComboBox" name="cbLineSnapMode">
-     <item>
-      <property name="text">
-       <string>Start</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Middle</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>End</string>
-      </property>
-     </item>
-    </widget>
-   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="label">
      <property name="text">
       <string>Length:</string>
      </property>
     </widget>
-   </item>
-   <item row="0" column="12">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
    </item>
    <item row="0" column="7">
     <widget class="QLineEdit" name="leOffset">
@@ -119,11 +70,61 @@
      </item>
     </widget>
    </item>
+   <item row="0" column="13">
+    <widget class="QCheckBox" name="cbDivide">
+     <property name="text">
+      <string>Divide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Tick Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="5">
     <widget class="QCheckBox" name="cbRelativeAngle">
      <property name="text">
       <string>Rel</string>
      </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QCheckBox" name="cbFree">
+     <property name="text">
+      <string>Free</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QComboBox" name="cbLineSnapMode">
+     <item>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Middle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>End</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="0" column="1">
@@ -143,12 +144,18 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QCheckBox" name="cbFree">
-     <property name="text">
-      <string>Free</string>
+   <item row="0" column="14">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

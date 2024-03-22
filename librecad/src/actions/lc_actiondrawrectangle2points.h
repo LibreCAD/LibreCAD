@@ -34,7 +34,7 @@ protected:
     int secondPointSnapMode;
 
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint)override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
     void processCommandValue(double value) override;
     bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) override;
     void createOptionsWidget() override;
@@ -44,6 +44,8 @@ protected:
     RS_Vector createSecondCornerSnapForGivenRectSize(RS_Vector size);
     bool onMouseMove(QMouseEvent *e, RS_Vector snap, int status) override;
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
+    int doRelZeroInitialSnapState() override;
+    void doRelZeroInitialSnap(RS_Vector vector) override;
 };
 
 #endif // LC_ACTIONDRAWRECTANGLE2POINTS_H

@@ -9,12 +9,11 @@
 class LC_AbstractActionWithPreview :public RS_PreviewActionInterface{
    Q_OBJECT
 
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
 public:
-    LC_AbstractActionWithPreview(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
 
+    LC_AbstractActionWithPreview(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
     void commandEvent(RS_CommandEvent *event) override;
     void finish(bool updateTB) override;
     void coordinateEvent(RS_CoordinateEvent *event) override;
@@ -34,18 +33,22 @@ protected:
 
     virtual bool doCheckMayDrawPreview(QMouseEvent *event, int status);
     virtual bool doProcessCommand(RS_CommandEvent *e, const QString &c);
-    virtual void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint);
-    virtual RS_Vector doGetMouseSnapPoint(QMouseEvent *e);
+    virtual void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed);
+    virtual RS_Vector doGetMouseSnapPoint(QMouseEvent *e, bool shiftPressed);
     virtual void doFinish(bool updateTB);
     virtual void doBack(QMouseEvent *pEvent, int status);
     virtual bool onMouseMove(QMouseEvent *e, RS_Vector snap, int status);
     virtual void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
-    virtual void onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
+    virtual void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
     virtual bool doCheckMayTrigger();
     virtual void doAfterTrigger();
     virtual void doPrepareTriggerEntities(QList<RS_Entity *> &list);
     virtual RS2::CursorType doGetMouseCursor(int status);
     virtual RS_Vector doGetRelativeZeroAfterTrigger();
+    virtual int doRelZeroInitialSnapState();
+    virtual void doRelZeroInitialSnap(RS_Vector vector);
+    virtual void doMouseMoveEnd(int status, QMouseEvent *e);
+    virtual void doMouseMoveStart(int status, QMouseEvent *pEvent, bool shiftPressed);
 
     // additional setup methods, that may be overridden if necessary
     virtual bool isSetActivePenAndLayerOnTrigger();
@@ -67,6 +70,8 @@ protected:
                            const QString& = QString());
     void commandMessage(QString msg) const;
     void highlightEntityExplicit(RS_Entity *en, bool highlight);
+    void checkPreSnapToRelativeZero(int status, QMouseEvent *pEvent, bool shiftPressed);
+
 };
 
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

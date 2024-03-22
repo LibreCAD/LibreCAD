@@ -200,7 +200,7 @@ RS_Commands::RS_Commands() {
         {
             {{"rrect", QObject::tr("rrect", "draw relative rectangle")}},
             {{"rre", QObject::tr("rre", "draw relative rectangle")}},
-            RS2::ActionDrawLineRectangleRel
+            RS2::ActionDrawRectangle3Points
         },
         // draw relative rectangle
         {

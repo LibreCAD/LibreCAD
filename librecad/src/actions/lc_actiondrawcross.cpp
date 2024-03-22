@@ -181,7 +181,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &sna
     }
 }
 
-void LC_ActionDrawCross::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawCross::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
     if (status == SetEntity){
         trigger();
     }

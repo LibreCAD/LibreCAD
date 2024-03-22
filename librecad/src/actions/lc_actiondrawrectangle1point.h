@@ -53,7 +53,7 @@ protected:
     void createOptionsWidget() override;
 
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
     void processCommandValue(double value) override;
     void setMainStatus() override;
     bool processCustomCommand(RS_CommandEvent *e, const QString &command,bool &toMainStatus) override;

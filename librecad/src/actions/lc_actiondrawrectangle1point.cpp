@@ -108,7 +108,7 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
     return polyline;
 }
 
-void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap){
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap, bool shiftPressed){
     switch (status) {
         case SetPoint1: {
             createShapeData(snap);

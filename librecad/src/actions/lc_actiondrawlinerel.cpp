@@ -22,7 +22,7 @@ LC_ActionDrawLineRel::LC_ActionDrawLineRel(
                                container, graphicView)
 //    , pPoints(std::make_unique<Points>())
     , pPoints(new Points{}){
-    direction = initialDirection;
+    primaryDirection = initialDirection;
     actionType = RS2::ActionDrawLineRel;
 }
 
@@ -35,10 +35,6 @@ LC_ActionDrawLineRel::~LC_ActionDrawLineRel() = default;
 void LC_ActionDrawLineRel::init(int status){
     if (status >= 0){
         resetPoints();
-        if (direction != DIRECTION_NONE){
-            status = SetDistance;
-        }
-    } else {
         direction = DIRECTION_NONE;
     }
     RS_PreviewActionInterface::init(status);
@@ -46,15 +42,31 @@ void LC_ActionDrawLineRel::init(int status){
 
 void LC_ActionDrawLineRel::resetPoints(){
     pPoints.reset(new Points{});
-    RS_Vector zero = this->graphicView->getRelativeZero();
-    pPoints->data.startpoint = zero;
-    pPoints->startOffset = 0;
-    addHistory(HA_SetStartpoint, zero, zero, pPoints->startOffset);
+//    RS_Vector zero = this->graphicView->getRelativeZero();
+//    pPoints->data.startpoint = zero;
+//    pPoints->startOffset = 0;
+//    addHistory(HA_SetStartpoint, zero, zero, pPoints->startOffset);
 }
 
 void LC_ActionDrawLineRel::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     RS_Line *line = new RS_Line(container, pPoints->data);
     list << line;
+}
+
+void LC_ActionDrawLineRel::doSetStartPoint(RS_Vector start){
+    int newStatus = SetPoint;
+    if (primaryDirection != DIRECTION_NONE){
+        newStatus = SetDistance;
+        direction = primaryDirection;
+    }
+    setStatus(newStatus);
+    pPoints->startOffset = 0;
+    pPoints->data.startpoint = start;
+    addHistory(HA_SetStartpoint, start, start, pPoints->startOffset);
+}
+
+bool LC_ActionDrawLineRel::doCheckMayDrawPreview(QMouseEvent *pEvent, int status){
+    return status != SetStartPoint;
 }
 
 void LC_ActionDrawLineRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
@@ -110,14 +122,17 @@ const RS_Vector &LC_ActionDrawLineRel::getStartPointForAngleSnap() const { retur
 void LC_ActionDrawLineRel::doBack(QMouseEvent *e, int status){
     e->accept();
     switch (status) {
-        default:
-        case SetDirection:
-            init(getStatus() - 1);
+        case SetStartPoint:
+            finishAction();
             break;
         case SetPoint:
         case SetDistance:
-            next();
+        case SetDirection:
+        case SetAngle:
+            setStatus(SetStartPoint);
             break;
+        default:
+            finishAction();
     }
 }
 
@@ -125,7 +140,7 @@ bool LC_ActionDrawLineRel::isNonZeroLine(const RS_Vector &possiblePoint) const{
     return LC_LineMath::isNonZeroLineLength( pPoints->data.startpoint, possiblePoint);
 }
 
-void LC_ActionDrawLineRel::onOnCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
+void LC_ActionDrawLineRel::onCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
     switch (status) {
         case SetDistance:
             switch (direction) {
@@ -169,10 +184,11 @@ void LC_ActionDrawLineRel::onOnCoordinateEvent(const RS_Vector &mouse, bool isZe
             pPoints->startOffset = 0;
             pPoints->data.startpoint = mouse;
             addHistory(HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
-            if (direction == DIRECTION_NONE){
+            if (primaryDirection == DIRECTION_NONE){
                setStatus(SetDirection);
             }
             else{
+               direction = primaryDirection;
                setStatus(SetDistance);
             }
             graphicView->moveRelativeZero(mouse);
@@ -385,8 +401,7 @@ void LC_ActionDrawLineRel::updateMouseButtonHints(){
             }
             break;
         }
-        case SetAngle:
-        {
+        case SetAngle:{
             msg += "/";
             msg += RS_COMMANDS->command("x");
             msg += "/";
@@ -440,7 +455,7 @@ void LC_ActionDrawLineRel::undo(){
                 setStatus(SetDirection);
                 break;
 
-            case HA_Polyline    :
+            case HA_Polyline:
             case HA_SetEndpoint:
             case HA_Close:
                 graphicView->setCurrentAction(new RS_ActionEditUndo(true, *container, *graphicView));
@@ -526,11 +541,12 @@ void LC_ActionDrawLineRel::polyline(){
     // fixme - add support of alternative way of polyline based on selected entities (so only drawn lines will be converted to polyline, without others found
     RS_Entity *en = catchEntity(pPoints->data.endpoint, RS2::EntityLine, RS2::ResolveAllButTextImage);
     if (en != nullptr){
+        finishAction();
+        addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
         // fixme - should the action be deleted??
         RS_ActionPolylineSegment *polylineSegmentAction = new RS_ActionPolylineSegment(*container, *graphicView, en);
         graphicView->setCurrentAction(polylineSegmentAction);
-        addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
-        setStatus(-1);
+
     }
 }
 

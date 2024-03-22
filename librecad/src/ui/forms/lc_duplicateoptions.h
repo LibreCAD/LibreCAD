@@ -22,13 +22,20 @@ public:
     explicit LC_DuplicateOptions(QWidget *parent = nullptr);
     ~LC_DuplicateOptions();
 
+protected slots:
+    void onOffsetXEditingFinished();
+    void onOffsetYEditingFinished();
+    void onInPlaceClicked(bool value);
+    void onPenModeIndexChanged(int mode);
+    void onLayerModeIndexChanged(int mode);
 private:
     Ui::LC_DuplicateOptions *ui;
     LC_ActionModifyDuplicate * action;
-    void onOffsetXEditingFinished();
     void setOffsetXToActionAndView(const QString &val);
     void setOffsetYToActionAndView(const QString &val);
-    void onOffsetYEditingFinished();
+    void setInPlaceDuplicateToActionAndView(bool inplace);
+    void setPenModeToActionAndView(int mode);
+    void setLayerModeToActionAndeView(int mode);
 };
 
 #endif // LC_DUPLICATEOPTIONS_H

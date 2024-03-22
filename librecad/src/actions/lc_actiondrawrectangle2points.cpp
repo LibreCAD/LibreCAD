@@ -27,6 +27,16 @@ void LC_ActionDrawRectangle2Points::init(int status){
     corner1Set = false;
 }
 
+int LC_ActionDrawRectangle2Points::doRelZeroInitialSnapState(){
+    return SetPoint1;
+}
+
+void LC_ActionDrawRectangle2Points::doRelZeroInitialSnap(RS_Vector relZero){
+    corner1 = relZero;
+    corner1Set = true;
+    setStatus(SetPoint2);
+}
+
 RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) const{
 
     RS_Vector c2 = snapPoint;
@@ -83,15 +93,15 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
         }
     }
 
-    bool drawBulge = false;
-    double radiusX;
-    double radiusY;
+        bool drawBulge = false;
+        double radiusX;
+        double radiusY;
 
-    // is it just rectangle or more complex shape
-    bool drawComplex = true;
+        // is it just rectangle or more complex shape
+        bool drawComplex = true;
 
-    // should we draw rounded corner or just lines
-    prepareCornersDrawMode(radiusX, radiusY, drawComplex, drawBulge);
+        // should we draw rounded corner or just lines
+        prepareCornersDrawMode(radiusX, radiusY, drawComplex, drawBulge);
 
     // square - adjust coordinate to draw square
     if (squareDrawRequested) {
@@ -188,18 +198,18 @@ void LC_ActionDrawRectangle2Points::doAfterTrigger(){
     corner1Set = false;
 }
 
-void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap){
+void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
     switch (status){
         case SetPoint1: {
-            graphicView->moveRelativeZero(snap);
-            corner1 = snap;
+            graphicView->moveRelativeZero(snapPoint);
+            corner1 = snapPoint;
             corner1Set = true;
             setStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
             squareDrawRequested = e->modifiers() & Qt::ShiftModifier;
-            createShapeData(snap);
+            createShapeData(snapPoint);
             trigger();
             break;
         }

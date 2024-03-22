@@ -17,9 +17,15 @@ public:
      * defines modes for drawing rect corners
      */
     enum {
-        DRAW_STRAIGHT, // plain rect
-        DRAW_RADIUS,  // rounded corners
-        DRAW_BEVEL // bevels
+        CORNER_STRAIGHT, // plain rect
+        CORNER_RADIUS,  // rounded corners
+        CORNER_BEVEL // bevels
+    };
+
+    enum {
+        EDGES_BOTH,
+        EDGES_VERT,
+        EDGES_HOR
     };
 
     /**
@@ -72,6 +78,9 @@ public:
     void setSnapToCornerArcCenter(bool b);
     bool isSnapToCornerArcCenter() {return snapToCornerArcCenter;};
 
+    void setEdgesDrawMode(int mode){edgesDrawMode = mode;};
+    int getEdgesDrawMode(){return edgesDrawMode;};
+
 protected:
     /**
      * should resulting rect be polyline or not
@@ -107,6 +116,8 @@ protected:
      */
     bool snapToCornerArcCenter;
 
+    int edgesDrawMode ;
+
     struct ShapeData{
        /**
      * built polyline for shape
@@ -132,8 +143,9 @@ protected:
     virtual bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) = 0;
     virtual void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status);
     virtual void doUpdateMouseButtonHints();
+    virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
 
-    void onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
+    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner) const;
@@ -143,6 +155,7 @@ protected:
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doBack(QMouseEvent *pEvent, int status) override;
+    bool doCheckPolylineEntityAllowedInTrigger(RS_Entity *pEntity, int index);
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

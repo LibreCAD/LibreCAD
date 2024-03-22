@@ -4,6 +4,7 @@
 #include "rs_debug.h"
 #include "rs_math.h"
 
+// fixme - add divide option
 LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
     LC_ActionOptionsWidget(parent),
     ui(new Ui::LC_LineAngleRelOptions)
@@ -87,6 +88,7 @@ QString LC_LineAngleRelOptions::keyName(QString key){
 void LC_LineAngleRelOptions::saveSettings(){
     RS_SETTINGS->beginGroup("/Draw");
     RS_SETTINGS->writeEntry(keyName("Length"), ui->leLength->text());
+    // fixme - review this and decide whether different settings for actions shoudl be used
     if (!fixedAngle){
         RS_SETTINGS->writeEntry(keyName("Angle"), ui->leAngle->text());
         RS_SETTINGS->writeEntry(keyName("AngleIsRelative"), ui->cbRelativeAngle->isChecked()  ? 1 : 0);

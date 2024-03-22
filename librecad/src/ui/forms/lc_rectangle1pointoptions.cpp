@@ -26,6 +26,7 @@ LC_Rectangle1PointOptions::LC_Rectangle1PointOptions(QWidget *parent) :
     connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
     connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
     connect(ui->cbInnerSize, SIGNAL(clicked(bool)), this, SLOT(onInnerSizeClicked(bool)));
+    connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
 }
 
 LC_Rectangle1PointOptions::~LC_Rectangle1PointOptions(){
@@ -52,6 +53,7 @@ void LC_Rectangle1PointOptions::saveSettings(){
     RS_SETTINGS->writeEntry("/Rectangle1PointPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
     RS_SETTINGS->writeEntry("/Rectangle1PointRadiusSnap", ui->cbSnapRadiusCenter->isChecked()  ? 1 : 0);
     RS_SETTINGS->writeEntry("/Rectangle1PointSizeInner", ui->cbInnerSize->isChecked()  ? 1 : 0);
+    RS_SETTINGS->writeEntry("/Rectangle1PointEdges", ui->cbEdges->currentIndex());
     RS_SETTINGS->endGroup();
 }
 
@@ -74,11 +76,13 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
         bool usePolyline;
         bool snapRadiusCenter;
         bool sizeIsInner;
+        int edges;
 
         if (update){
             cornersMode = action->getCornersMode();
             snapMode = action->getInsertionPointSnapMode();
             usePolyline = action->isUsePolyline();
+            edges = action->getEdgesDrawMode();
 
             double w = action->getWidth();
             double h = action->getHeight();
@@ -109,6 +113,7 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
             usePolyline = RS_SETTINGS->readNumEntry("/Rectangle1PointPolyline", 1) == 1;
             snapRadiusCenter = RS_SETTINGS->readNumEntry("/Rectangle1PointRadiusSnap", 1) == 1;
             sizeIsInner = RS_SETTINGS->readNumEntry("/Rectangle1PointSizeInner", 1) == 1;
+            edges = RS_SETTINGS->readNumEntry("/Rectangle1PointEdges", 0);
 
             RS_SETTINGS->endGroup();
         }
@@ -124,6 +129,7 @@ void LC_Rectangle1PointOptions::doSetAction(RS_ActionInterface * a, bool update)
         setUsePolylineToActionAndView(usePolyline);
         setSnapToCornerArcCenterToActionAndView(snapRadiusCenter);
         setSizeInnerToActionAndView(sizeIsInner);
+        setEdgesModeToActionAndView(edges);
 }
 
 void LC_Rectangle1PointOptions::onCornersIndexChanged(int index){
@@ -134,8 +140,8 @@ void LC_Rectangle1PointOptions::onCornersIndexChanged(int index){
 
 void LC_Rectangle1PointOptions::setCornersModeToActionAndView(int index){
     action->setCornersMode(index);
-    bool round = index == LC_AbstractActionDrawRectangle::DRAW_RADIUS;
-    bool bevel = index == LC_AbstractActionDrawRectangle::DRAW_BEVEL;
+    bool round = index == LC_AbstractActionDrawRectangle::CORNER_RADIUS;
+    bool bevel = index == LC_AbstractActionDrawRectangle::CORNER_BEVEL;
 
     ui->lblRadius->setVisible(round);
     ui->leRadius->setVisible(round);
@@ -148,6 +154,11 @@ void LC_Rectangle1PointOptions::setCornersModeToActionAndView(int index){
     ui->leX->setVisible(bevel);
 
     ui->cbCorners->setCurrentIndex(index);
+
+    bool straight = index == LC_AbstractActionDrawRectangle::CORNER_STRAIGHT;
+    ui->lblEdges->setVisible(straight);
+    ui->cbEdges->setVisible(straight);
+
 }
 
 void LC_Rectangle1PointOptions::onLenYEditingFinished(){
@@ -291,3 +302,13 @@ void LC_Rectangle1PointOptions::setSizeInnerToActionAndView(bool value){
 }
 
 
+void LC_Rectangle1PointOptions::onEdgesIndexChanged(int index){
+    if (action != nullptr){
+        setEdgesModeToActionAndView(index);
+    }
+}
+
+void LC_Rectangle1PointOptions::setEdgesModeToActionAndView(int index){
+    action->setEdgesDrawMode(index);
+    ui->cbEdges->setCurrentIndex(index);
+}

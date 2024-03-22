@@ -53,11 +53,12 @@ protected:
     void doBack(QMouseEvent *pEvent, int status) override;
     bool isStartPointValid() const override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
+    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doSetStartPoint(RS_Vector vector) override;
 private:
     /**
      * amount of points to create

@@ -19,6 +19,7 @@
 #include "lc_lineanglereloptions.h"
 
 // fixme - take care of specified snap point on line - for preview and positioning of tick
+// fixme - add divide option
 namespace {
 
 //list of entity types supported by current action
@@ -69,7 +70,7 @@ void LC_ActionDrawLineAngleRel::doAfterTrigger(){
     line = nullptr;
 }
 
-void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
 
         switch (status) {
             case SetLine:{

@@ -19,6 +19,7 @@ LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions(QWidget *parent) :
     connect(ui->cbCorners, SIGNAL(currentIndexChanged(int)), SLOT(onCornersIndexChanged(int)));
     connect(ui->cbSnapStart, SIGNAL(currentIndexChanged(int)), SLOT(onInsertionPointSnapIndexChanged(int)));
     connect(ui->cbSnapEnd, SIGNAL(currentIndexChanged(int)), SLOT(onSecondPointSnapIndexChanged(int)));
+    connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
 
     connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
     connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
@@ -55,12 +56,14 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     int secondPointSnapMode;
     bool usePolyline;
     bool snapRadiusCenter;
+    int edges;
 
     if (update){
         cornersMode = action->getCornersMode();
         insertSnapMode = action->getInsertionPointSnapMode();
         secondPointSnapMode = action->getSecondPointSnapMode();
         usePolyline = action->isUsePolyline();
+        edges = action->getEdgesDrawMode();
 
         double an = action->getAngle();
         double r  = action->getRadius();
@@ -85,6 +88,7 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         lenY = RS_SETTINGS->readEntry("/Rectangle2PointsLengthY", "5");
         usePolyline = RS_SETTINGS->readNumEntry("/Rectangle2PointsPolyline", 1) == 1;
         snapRadiusCenter = RS_SETTINGS->readNumEntry("/Rectangle2PointsRadiusSnap", 1) == 1;
+        edges = RS_SETTINGS->readNumEntry("/Rectangle3PointsEdges", 0);
         RS_SETTINGS->endGroup();
     }
 
@@ -97,6 +101,7 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     setSecondPointSnapPointModeToActionAndView(secondPointSnapMode);
     setUsePolylineToActionAndView(usePolyline);
     setSnapToCornerArcCenter(snapRadiusCenter);
+    setEdgesModeToActionAndView(edges);
 }
 
 
@@ -111,6 +116,7 @@ void LC_Rectangle2PointsOptions::saveSettings(){
     RS_SETTINGS->writeEntry("/Rectangle2PointsLengthY", ui->leLenY->text());
     RS_SETTINGS->writeEntry("/Rectangle2PointsPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
     RS_SETTINGS->writeEntry("/Rectangle2PointsRadiusSnap", ui->cbPolyline->isChecked()  ? 1 : 0);
+    RS_SETTINGS->writeEntry("/Rectangle2PointsEdges", ui->cbEdges->currentIndex());
     RS_SETTINGS->endGroup();
 }
 
@@ -122,8 +128,8 @@ void LC_Rectangle2PointsOptions::onCornersIndexChanged(int index){
 
 void LC_Rectangle2PointsOptions::setCornersModeToActionAndView(int index){
     action->setCornersMode(index);
-    bool round = index == LC_AbstractActionDrawRectangle::DRAW_RADIUS;
-    bool bevel = index == LC_AbstractActionDrawRectangle::DRAW_BEVEL;
+    bool round = index == LC_AbstractActionDrawRectangle::CORNER_RADIUS;
+    bool bevel = index == LC_AbstractActionDrawRectangle::CORNER_BEVEL;
 
     ui->lblRadius->setVisible(round);
     ui->leRadius->setVisible(round);
@@ -134,6 +140,9 @@ void LC_Rectangle2PointsOptions::setCornersModeToActionAndView(int index){
     ui->leLenY->setVisible(bevel);
     ui->leX->setVisible(bevel);
 
+    bool straight = index == LC_AbstractActionDrawRectangle::CORNER_STRAIGHT;
+    ui->lblEdges->setVisible(straight);
+    ui->cbEdges->setVisible(straight);
 
     ui->cbCorners->setCurrentIndex(index);
 }
@@ -171,6 +180,17 @@ void LC_Rectangle2PointsOptions::onSecondPointSnapIndexChanged(int index){
     if (action != nullptr){
         setSecondPointSnapPointModeToActionAndView(index);
     }
+}
+
+void LC_Rectangle2PointsOptions::onEdgesIndexChanged(int index){
+    if (action != nullptr){
+        setEdgesModeToActionAndView(index);
+    }
+}
+
+void LC_Rectangle2PointsOptions::setEdgesModeToActionAndView(int index){
+    action->setEdgesDrawMode(index);
+    ui->cbEdges->setCurrentIndex(index);
 }
 
 // fixme - mapping between indexes and mode
@@ -247,4 +267,6 @@ void LC_Rectangle2PointsOptions::setSnapToCornerArcCenter(bool value){
     action->setSnapToCornerArcCenter(value);
     ui->cbSnapRadiusCenter->setChecked(value);
 }
+
+
 

@@ -122,18 +122,12 @@ int LC_LineMath::getPointPosition(RS_Vector &startPos, RS_Vector &endPos, RS_Vec
 
 bool LC_LineMath::areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End){
     double angle1 = line1Start.angleTo(line1End);
-    if (std::abs(angle1 - M_PI) < RS_TOLERANCE_ANGLE){
-        angle1 = angle1 - M_PI;
-    }
     double angle2 = line1Start.angleTo(line2End);
-    if (std::abs(angle2 - M_PI) < RS_TOLERANCE_ANGLE){
-        angle2 = angle2 - M_PI;
-    }
-
     double angle3 = line1Start.angleTo(line2Start);
-    if (std::abs(angle3 - M_PI) < RS_TOLERANCE_ANGLE){
-        angle3 = angle3 - M_PI;
-    }
+
+    angle1 = RS_Math::correctAngleU(angle1);
+    angle2 = RS_Math::correctAngleU(angle2);
+    angle3 = RS_Math::correctAngleU(angle3);
 
     bool sameLine = false;
     if (std::abs(angle1 - angle2) < RS_TOLERANCE_ANGLE && std::abs(angle1 - angle3) < RS_TOLERANCE_ANGLE){
@@ -180,4 +174,31 @@ bool LC_LineMath::isNotMeaningful(double value){
 
 bool LC_LineMath::isMeaningfulAngle(double value){
     return std::abs(value) > RS_TOLERANCE_ANGLE;
+}
+
+
+RS_Vector LC_LineMath::getIntersectionLineLine(RS_Vector& s1, RS_Vector& e1, RS_Vector& s2, RS_Vector& e2) {
+
+    RS_Vector ret;
+
+    double num = ((e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x));
+    double div = ((e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y));
+
+    double angle1 = s1.angleTo(e1);
+    double angle2 = s2.angleTo(e2);
+
+    if (fabs(div)>RS_TOLERANCE &&
+        fabs(remainder(angle1-angle2, M_PI))>=RS_TOLERANCE*10.) {
+        double u = num / div;
+
+        double xs = s1.x + u * (e1.x - s1.x);
+        double ys = s1.y + u * (e1.y - s1.y);
+        ret = RS_Vector(xs, ys);
+    }
+    else {
+        // lines are parallel
+        ret = RS_Vector(false);
+    }
+
+    return ret;
 }

@@ -1,15 +1,7 @@
-#include "lc_abstract_action_draw_line.h"
-#include "lc_actiondrawlinerel.h"
 #include "rs_debug.h"
-#include "rs_actioneditundo.h"
 #include "rs_commands.h"
 #include "rs_actionpolylinesegment.h"
-#include "lc_lineoptions.h"
-#include "lc_linemath.h"
-#include "lc_actiondrawlinepoints.h"
-#include "lc_linepointsoptions.h"
 #include <rs_point.h>
-#include "rs_math.h"
 #include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
 #include "rs_commandevent.h"
@@ -17,12 +9,10 @@
 #include "rs_entitycontainer.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
-#include "rs_polyline.h"
-#include "lc_abstractactiondrawrectangle.h"
+
 #include "QMouseEvent"
 #include <cmath>
-#include "lc_actiondrawrectangle2points.h"
-#include "lc_rectangle2pointsoptions.h"
+
 #include "lc_abstractactionwithpreview.h"
 
 LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(
@@ -88,12 +78,14 @@ bool LC_AbstractActionWithPreview::doProcessCommand(RS_CommandEvent *e, const QS
  * @param e
  */
 void LC_AbstractActionWithPreview::mouseReleaseEvent(QMouseEvent *e){
+    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
     int status = getStatus();
     Qt::MouseButton button = e->button();
     deletePreview();
     if (button == Qt::LeftButton){
-        RS_Vector snapped = doGetMouseSnapPoint(e);
-        doOnLeftMouseButtonRelease(e, status, snapped);
+        RS_Vector snapped = doGetMouseSnapPoint(e, shiftPressed);
+        doOnLeftMouseButtonRelease(e, status, snapped, shiftPressed);
+        unHighlightEntity();
     } else if (button == Qt::RightButton){
         onRightMouseButtonRelease(e, status);
     }
@@ -113,15 +105,19 @@ void LC_AbstractActionWithPreview::updateMouseCursor(){
     }
 }
 
-void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
 
 }
 
 void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
+    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
     int status = getStatus();
+    doMouseMoveStart(status, e, shiftPressed);
+    checkPreSnapToRelativeZero(status, e, shiftPressed);
+    status = getStatus();
     deletePreview();
     if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
-        RS_Vector snap = doGetMouseSnapPoint(e);
+        RS_Vector snap = doGetMouseSnapPoint(e, false);
         bool drawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions
         if (drawPreview){
             unHighlightEntity();
@@ -129,6 +125,18 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
             lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         graphicView->redraw();
+    }
+    doMouseMoveEnd(status, e);
+}
+
+void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, QMouseEvent *e, bool shiftPressed){
+    if (shiftPressed){
+        if (status == doRelZeroInitialSnapState()){
+            RS_Vector relZero = graphicView->getRelativeZero();
+            if (relZero.valid){
+                doRelZeroInitialSnap(relZero);
+            }
+        }
     }
 }
 
@@ -156,7 +164,7 @@ void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
     }
 }
 
-RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(QMouseEvent *e){
+RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(QMouseEvent *e, bool shiftPressed){
     RS_Vector snap = snapPoint(e);
     return snap;
 }
@@ -182,10 +190,10 @@ void LC_AbstractActionWithPreview::coordinateEvent(RS_CoordinateEvent *e){
     RS_Vector zero = RS_Vector(0, 0, 0);
     bool isZero = coord == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
     int status = getStatus();
-    onOnCoordinateEvent(coord, isZero, status);
+    onCoordinateEvent(coord, isZero, status);
 }
 
-void LC_AbstractActionWithPreview::onOnCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
+void LC_AbstractActionWithPreview::onCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
 }
 
 void LC_AbstractActionWithPreview::trigger(){
@@ -282,3 +290,21 @@ void LC_AbstractActionWithPreview::commandMessageTR(const char * msg){
 void LC_AbstractActionWithPreview::commandMessage(QString msg) const{
     RS_DIALOGFACTORY->commandMessage(msg);
 }
+
+int LC_AbstractActionWithPreview::doRelZeroInitialSnapState(){
+    return -1;
+}
+
+void LC_AbstractActionWithPreview::doRelZeroInitialSnap(RS_Vector vector){
+
+}
+
+void LC_AbstractActionWithPreview::doMouseMoveEnd(int status, QMouseEvent *e){
+
+}
+
+void LC_AbstractActionWithPreview::doMouseMoveStart(int status, QMouseEvent *pEvent, bool shiftPressed){
+
+}
+
+
