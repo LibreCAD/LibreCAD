@@ -326,6 +326,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     pen_palette->setFocusPolicy(Qt::NoFocus);
     connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
     connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
+    pen_palette->setVisible(false);
     dock_pen_palette ->setWidget(pen_palette);
 
     QDockWidget* dock_layer = new QDockWidget(main_window);
@@ -336,6 +337,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     layer_widget->setFocusPolicy(Qt::NoFocus);
     connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
     connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
+    layer_widget->setVisible(false);
     dock_layer->setWidget(layer_widget);
 
 

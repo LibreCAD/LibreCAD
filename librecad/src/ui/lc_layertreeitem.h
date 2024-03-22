@@ -36,10 +36,10 @@ class LC_LayerTreeItem;
  * Used for searching/collecting items in the tree
  */
 class LC_LayerTreeItemAcceptor{
-  public:
-    LC_LayerTreeItemAcceptor()= default;
+public:
     virtual ~LC_LayerTreeItemAcceptor()= default;
-    virtual bool acceptLayerTreeItem(LC_LayerTreeItem* item){
+    virtual bool acceptLayerTreeItem([[maybe_unused]] LC_LayerTreeItem* item) const
+    {
         return true;
     }
 };
@@ -80,7 +80,7 @@ public:
     bool isVisible();
     bool isLocked();
     bool isPrint();
-    bool isConstruction();    
+    bool isConstruction();
     QString getName();
     QString getDisplayName() const {return displayName;};
     void setDisplayName(QString &newName){displayName = newName;};
@@ -151,68 +151,60 @@ private:
 
 
 class QG_LayerTreeItemAcceptorByType: public virtual LC_LayerTreeItemAcceptor{
-  public:
-    ~QG_LayerTreeItemAcceptorByType() override = default;
+public:
     explicit QG_LayerTreeItemAcceptorByType(int ltype){
         layerType = ltype;
     }
 
-    bool acceptLayerTreeItem(LC_LayerTreeItem* item) override{
+    bool acceptLayerTreeItem(LC_LayerTreeItem* item) const override{
         int ltype = item -> getLayerType();
         bool result = ltype == layerType;
         return result;
     }
-   private:
+private:
     int layerType;
 };
 
 class QG_LayerTreeItemAcceptorVisible: public virtual LC_LayerTreeItemAcceptor{
-  public:
-    QG_LayerTreeItemAcceptorVisible()= default;
-    ~QG_LayerTreeItemAcceptorVisible() override = default;
-
-    bool acceptLayerTreeItem(LC_LayerTreeItem* item) override{
+public:
+    bool acceptLayerTreeItem(LC_LayerTreeItem* item) const override{
         bool result = !item->getLayer()->isFrozen();
         return result;
     }
 };
 
 class QG_LayerTreeItemAcceptorSameLayerAs: public virtual LC_LayerTreeItemAcceptor{
-  public:
+public:
 
     explicit QG_LayerTreeItemAcceptorSameLayerAs(RS_Layer* l){
         layer = l;
     }
 
-				explicit QG_LayerTreeItemAcceptorSameLayerAs(RS_Layer* l, bool notEqualsMode){
-								layer = l;
-								notOperation = notEqualsMode;
-				}
+    explicit QG_LayerTreeItemAcceptorSameLayerAs(RS_Layer* l, bool notEqualsMode){
+        layer = l;
+        notOperation = notEqualsMode;
+    }
 
-    ~QG_LayerTreeItemAcceptorSameLayerAs() override = default;
-
-    bool acceptLayerTreeItem(LC_LayerTreeItem* item) override{
+    bool acceptLayerTreeItem(LC_LayerTreeItem* item) const override{
         bool result = item->getLayer() == layer;
-								if (notOperation){
-												result = !result;
-								}
+        if (notOperation){
+            result = !result;
+        }
         return result;
     }
-   private:
+private:
     RS_Layer* layer;
-				bool notOperation {false};
+    bool notOperation {false};
 };
 
 class QG_LayerTreeItemAcceptorSecondary: public virtual LC_LayerTreeItemAcceptor{
-  public:
-    QG_LayerTreeItemAcceptorSecondary()= default;
-    ~QG_LayerTreeItemAcceptorSecondary() override = default;
-
+public:
+    QG_LayerTreeItemAcceptorSecondary() = default;
     explicit QG_LayerTreeItemAcceptorSecondary(bool includeItems){
         includeMode = includeItems;
     }
 
-    bool acceptLayerTreeItem(LC_LayerTreeItem* item) override{
+    bool acceptLayerTreeItem(LC_LayerTreeItem* item) const override{
         int ltype = item -> getLayerType();
         bool result = true;
 
@@ -221,12 +213,12 @@ class QG_LayerTreeItemAcceptorSecondary: public virtual LC_LayerTreeItemAcceptor
         }
         else{
             if (item -> getPrimaryItem() != nullptr){
-              result = (ltype != LC_LayerTreeItem::DIMENSIONAL) && (ltype != LC_LayerTreeItem::ALTERNATE_POSITION) && (ltype != LC_LayerTreeItem::INFORMATIONAL);
+                result = (ltype != LC_LayerTreeItem::DIMENSIONAL) && (ltype != LC_LayerTreeItem::ALTERNATE_POSITION) && (ltype != LC_LayerTreeItem::INFORMATIONAL);
             }
         }
         return result;
     }
-   private:
+private:
     bool includeMode {true};
 };
 
