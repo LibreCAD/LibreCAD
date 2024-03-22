@@ -70,7 +70,7 @@ int LC_LayerTreeModel::rowCount ( const QModelIndex & parent ) const {
  * @param parent
  * @return
  */
-int LC_LayerTreeModel::columnCount(const QModelIndex &parent) const{
+int LC_LayerTreeModel::columnCount([[maybe_unused]] const QModelIndex &parent) const{
     int result = LAST;
     if (options->hideLayerTypeIcons){
         result = LAST-1;
@@ -243,7 +243,7 @@ void LC_LayerTreeModel::rebuildModel(QList<RS_Layer*> &listLayer, RS_Layer* acti
             }
         }
         // split by parts using defined separator of layer levels
-        QStringList nameParts = layerFullName.split(options->layerLevelSeparator, QString::KeepEmptyParts);
+        QStringList nameParts = layerFullName.split(options->layerLevelSeparator, Qt::KeepEmptyParts);
         int partsCount = nameParts.count();
 
         LC_LayerTreeItem* virtualRoot = rootItem;
@@ -937,7 +937,7 @@ QVariant LC_LayerTreeModel::data ( const QModelIndex & index, int role ) const {
 Qt::ItemFlags LC_LayerTreeModel::flags(const QModelIndex & index) const{
     if (!index.isValid()){
         if (flatMode){
-            return 0;
+            return {};
         } else {
             // in normal (not flat) mode we'll support of dropping on viewport, and there the index will be invalid
             return Qt::ItemIsDropEnabled;
