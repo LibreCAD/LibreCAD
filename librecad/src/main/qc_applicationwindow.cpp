@@ -231,8 +231,10 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     a_factory.fillActionContainer(a_map, ag_manager);
 
     LC_WidgetFactory widget_factory(this, a_map, ag_manager);
-    if (enable_left_sidebar)
-        widget_factory.createLeftSidebar(5, icon_size);
+    if (enable_left_sidebar){
+        int leftSidebarColumnsCount = settings.value("Widgets/LeftToolbarColumnsCount", 5).toInt();
+        widget_factory.createLeftSidebar(leftSidebarColumnsCount, icon_size);
+    }
     if (enable_cad_toolbars)
         widget_factory.createCADToolbars();
     widget_factory.createRightSidebar(actionHandler);
@@ -3300,6 +3302,9 @@ void QC_ApplicationWindow::widgetOptionsDialog()
     int statusbar_fontsize = settings.value("StatusbarFontSize", 12).toInt();
     dlg.statusbar_fontsize_spinbox->setValue(statusbar_fontsize);
 
+    int leftToolbarColumnsCount = settings.value("LeftToolbarColumnsCount", 5).toInt();
+    dlg.left_toobar_columns_spinbox->setValue(leftToolbarColumnsCount);
+
     if (dlg.exec())
     {
         int allow_style = dlg.style_checkbox->isChecked();
@@ -3347,6 +3352,9 @@ void QC_ApplicationWindow::widgetOptionsDialog()
             settings.setValue("StatusbarHeight", statusbar_height);
             statusBar()->setMinimumHeight(statusbar_height);
         }
+
+        int columnCount = dlg.left_toobar_columns_spinbox->value();
+        settings.setValue("LeftToolbarColumnsCount", columnCount);
     }
     settings.endGroup();
 }
