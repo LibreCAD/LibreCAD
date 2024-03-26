@@ -2376,6 +2376,13 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         return;
     }
 
+    // Avoid printing without print preview
+    if (!w->getGraphicView()->isPrintPreview())
+    {
+        slotFilePrintPreview(true);
+        return;
+    }
+
     RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
