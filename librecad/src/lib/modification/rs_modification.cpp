@@ -170,6 +170,23 @@ std::string getIdFlagString(RS_Entity* entity)
     if (entity == nullptr) return {};
     return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
 }
+
+
+// A quick fix for rounding on circles
+// TODO: support for whole ellipses
+RS_AtomicEntity* trimCircleForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
+{
+    if (entity == nullptr || entity->rtti() != RS2::EntityCircle)
+        return entity;
+    RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
+    RS_Vector middle = arcFillet.getMiddlePoint();
+    // prefer acute angle for fillet
+    RS_Vector trimCoord = entity->getNearestPointOnEntity(arcFillet.getCenter()*2. - middle, true);
+    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+    RS_Arc* arc = trimCircle(static_cast<RS_Circle*>(entity), trimCoord, sol);
+    delete entity;
+    return arc;
+}
 }
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
@@ -2930,6 +2947,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             trimmed1->trimEndpoint(p1);
             break;
         default:
+            trimmed1 = trimCircleForRound(trimmed1, *arc);
             break;
         }
 
@@ -2943,6 +2961,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             trimmed2->trimEndpoint(p2);
             break;
         default:
+            trimmed2 = trimCircleForRound(trimmed2, *arc);
             break;
         }
 
