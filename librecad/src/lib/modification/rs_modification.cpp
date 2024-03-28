@@ -171,17 +171,41 @@ std::string getIdFlagString(RS_Entity* entity)
     return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
 }
 
+// Support fillet trimming for whole ellipses
+RS_AtomicEntity* trimEllipseForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
+{
+    if (entity == nullptr)
+        return entity;
+    if ( entity->rtti() != RS2::EntityEllipse)
+        return entity;
+    auto ellipse = static_cast<RS_Ellipse*>(entity);
+    if (ellipse->isEllipticArc())
+        return entity;
+    RS_Vector tangent = entity->getNearestPointOnEntity(arcFillet.getCenter(), false);
+    RS_Line line{nullptr, {arcFillet.getCenter(), tangent}};
+    RS_Vector middle = arcFillet.getMiddlePoint();
+    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * ellipse->getMinorRadius()*0.01;
+    RS_Vector trimCoord = ellipse->getNearestPointOnEntity(opposite, false);
+    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+    ellipse->prepareTrim(trimCoord, sol);
+    return entity;
+}
 
 // A quick fix for rounding on circles
-// TODO: support for whole ellipses
 RS_AtomicEntity* trimCircleForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
 {
-    if (entity == nullptr || entity->rtti() != RS2::EntityCircle)
+    if (entity == nullptr)
+        return entity;
+    if ( entity->rtti() == RS2::EntityEllipse)
+        return trimEllipseForRound(entity, arcFillet);
+    if ( entity->rtti() != RS2::EntityCircle)
         return entity;
     RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
     RS_Vector middle = arcFillet.getMiddlePoint();
     // prefer acute angle for fillet
-    RS_Vector trimCoord = entity->getNearestPointOnEntity(arcFillet.getCenter()*2. - middle, true);
+    // Use a trimCoord at the opposite side of the arc wrt to the
+    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * entity->getRadius()*0.01;
+    RS_Vector trimCoord = entity->getNearestPointOnEntity(opposite, true);
     RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
     RS_Arc* arc = trimCircle(static_cast<RS_Circle*>(entity), trimCoord, sol);
     delete entity;

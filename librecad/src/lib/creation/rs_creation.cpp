@@ -178,6 +178,7 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
         return createParallelCircle(coord, distance, number, (RS_Circle*)e);
         break;
 
+    case RS2::EntityParabola:
     case RS2::EntitySplinePoints:
         return createParallelSplinePoints(coord, distance, number, (LC_SplinePoints*)e);
         break;
