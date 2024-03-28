@@ -3751,3 +3751,10 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block)
         blockWidget->activateBlock(const_cast<RS_Block*>(block));
     }
 }
+
+QAction* QC_ApplicationWindow::getAction(const QString& actionName) const
+{
+    if (a_map.count(actionName) == 0)
+        return nullptr;
+    return a_map[actionName];
+}

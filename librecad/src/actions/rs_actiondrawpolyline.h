@@ -37,6 +37,8 @@ namespace mu {
 class QStringList;
 class RS_EntityContainer;
 class RS_GraphicView;
+class RS_Polyline;
+struct RS_PolylineData;
 
 /**
  * This action class can handle user events to draw 
@@ -109,17 +111,26 @@ public:
 
     double solveBulge(const RS_Vector& mouse);
 
+
 protected:
+
+    RS_Polyline*& getPolyline() const;
+    QList<RS_Vector>& getHistory() const;
+    QList<double>& getBHistory() const;
+    RS_Vector& getPoint() const;
+    RS_Vector& getStart() const;
+    RS_PolylineData& getData() const;
+
     double m_radius = 0.;
     double m_angle = 0.;
     SegmentMode m_mode{};
     int m_reversed = 1;
     bool m_calculatedSegment = false;
 
+private:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
-private:
     void drawEquation(int numberOfPolylines);
     void setParserExpression(QString expression);
     bool getPlottingX(QString command, double& x);

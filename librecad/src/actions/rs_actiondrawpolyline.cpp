@@ -54,32 +54,32 @@ struct RS_ActionDrawPolyline::Points {
 	/**
 	 * Line data defined so far.
 	 */
-	RS_PolylineData data;
-	RS_ArcData arc_data;
-	/**
+    RS_PolylineData data;
+    RS_ArcData arc_data;
+    /**
 	 * Polyline entity we're working on.
 	 */
-	RS_Polyline* polyline;
+    RS_Polyline* polyline;
 
-	/**
+    /**
 	 * last point.
 	 */
-	RS_Vector point;
-	RS_Vector calculatedEndpoint;
-	/**
+    RS_Vector point;
+    RS_Vector calculatedEndpoint;
+    /**
 	 * Start point of the series of lines. Used for close function.
 	 */
-	RS_Vector start;
+    RS_Vector start;
 
-	/**
+    /**
 	 * Point history (for undo)
 	 */
-		QList<RS_Vector> history;
+    QList<RS_Vector> history;
 
-	/**
+    /**
 	 * Bulge history (for undo)
 	 */
-		QList<double> bHistory;
+    QList<double> bHistory;
     QString equation;
 };
 
@@ -790,5 +790,29 @@ void RS_ActionDrawPolyline::setParserExpression(QString expression)
 #endif
 }
 
+RS_Polyline*& RS_ActionDrawPolyline::getPolyline() const
+{
+    return pPoints->polyline;
+}
+RS_PolylineData& RS_ActionDrawPolyline::getData() const
+{
+    return pPoints->data;
+}
 
+RS_Vector& RS_ActionDrawPolyline::getPoint() const
+{
+    return pPoints->point;
+}
+RS_Vector& RS_ActionDrawPolyline::getStart() const
+{
+    return pPoints->start;
+}
+QList<RS_Vector>& RS_ActionDrawPolyline::getHistory() const
+{
+    return pPoints->history;
+}
+QList<double>& RS_ActionDrawPolyline::getBHistory() const
+{
+    return pPoints->bHistory;
+}
 // EOF

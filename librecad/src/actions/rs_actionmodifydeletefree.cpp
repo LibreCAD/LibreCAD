@@ -74,8 +74,8 @@ void RS_ActionModifyDeleteFree::trigger() {
                     graphicView->deleteEntity((RS_Entity*)polyline);
 
                     // splits up the polyline in the container:
-                    RS_Polyline* pl1;
-                    RS_Polyline* pl2;
+                    RS_Polyline* pl1 = nullptr;
+                    RS_Polyline* pl2 = nullptr;
                     RS_Modification m(*container);
                     m.splitPolyline(*polyline,
 									*e1, pPoints->v1,

@@ -218,7 +218,7 @@ void LC_PenPaletteWidget::initFilteringSection(){
  * Context menu for table view
  * @param pos
  */
-void LC_PenPaletteWidget::onTableViewContextMenuInvoked(const QPoint &pos){
+void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const QPoint &pos){
     int itemsCount = penPaletteModel->rowCount(QModelIndex());
     int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
     if (itemsCount >0 && selectedItemsCount > 0){
@@ -1227,15 +1227,15 @@ void LC_PenPaletteWidget::onPenEditorChanged(){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorColorChanged(int index){
+void LC_PenPaletteWidget::onPenEditorColorChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorWidthChanged(int index){
+void LC_PenPaletteWidget::onPenEditorWidthChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorLineTypeChanged(int index){
+void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 
