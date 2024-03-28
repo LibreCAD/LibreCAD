@@ -47,7 +47,11 @@ bool LC_PenPaletteData::saveItems(){
     bool result = false;
     if (file.open(QIODevice::WriteOnly | QIODevice::Text)){
         QTextStream out(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+        out.setEncoding(QStringConverter::Utf8);
+#else
         out.setCodec("UTF-8");
+#endif
 
         // just convert each pen to string and store in file
         int count = persistentItems.count();
@@ -71,7 +75,11 @@ bool LC_PenPaletteData::loadItems(){
     file.open(QIODevice::ReadOnly | QIODevice::Text);
     if (file.isOpen()){
         QTextStream in(&file);
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+        in.setEncoding(QStringConverter::Utf8);
+#else
         in.setCodec("UTF-8");
+#endif
         while (!in.atEnd())
         {
             QString line = in.readLine();
@@ -208,7 +216,7 @@ void LC_PenPaletteData::addItem(LC_PenItem *item){
  * Simply stores update list in file
  * @param item
  */
-void LC_PenPaletteData::itemEdited(LC_PenItem *item){
+void LC_PenPaletteData::itemEdited([[maybe_unused]] LC_PenItem *item){
     emitDataChange();
 }
 

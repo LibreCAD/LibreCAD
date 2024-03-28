@@ -43,7 +43,7 @@ LC_PenPaletteModel::LC_PenPaletteModel(LC_PenPaletteOptions *modelOptions, LC_Pe
 
 LC_PenPaletteModel::~LC_PenPaletteModel() = default;
 
-int LC_PenPaletteModel::rowCount ( const QModelIndex & parent) const {
+int LC_PenPaletteModel::rowCount ([[maybe_unused]] const QModelIndex & parent) const {
     return displayItems.size();
 }
 
@@ -154,7 +154,7 @@ LC_PenItem *LC_PenPaletteModel::getPen(int row) const {
  * @param index
  * @return
  */
-Qt::ItemFlags LC_PenPaletteModel::flags(const QModelIndex &index) const{
+Qt::ItemFlags LC_PenPaletteModel::flags([[maybe_unused]] const QModelIndex &index) const{
     return Qt::ItemIsSelectable|Qt::ItemIsEnabled;
 }
 /**

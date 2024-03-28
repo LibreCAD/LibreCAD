@@ -21,7 +21,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
+#include <QObject>
 #include "lc_peninforegistry.h"
 
 /**
@@ -118,7 +118,8 @@ QIcon LC_PenInfoRegistry::getColorIcon(const RS_Color &color, int iconSizeW, int
         QPixmap pixmap(iconSizeW, iconSizeH);
         pixmap.fill(color);
         return pixmap;
-    }    
+    }
+    return {};
 }
 
 /**

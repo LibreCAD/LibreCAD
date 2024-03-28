@@ -231,18 +231,18 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
         caption->setAlignment(Qt::AlignCenter);
 
         if (selectedItemsCount == 1){
-            contextMenu->addAction(tr("&Apply Pen To Selection"), this, &LC_PenPaletteWidget::applySelectedPenToSelection, 0);
-            contextMenu->addAction(tr("&Set As Current Pen"), this, &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar, 0);
-            contextMenu->addAction(tr("&Apply Pen To Active Layer"), this, &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer, 0);
-            contextMenu->addAction(tr("&Select Entities With Attributes Pen"), this, &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem, 0);
-            contextMenu->addAction(tr("&Select Entities With Drawing Pen"), this, &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem, 0);
+            contextMenu->addAction(tr("&Apply Pen To Selection"),{} , this, &LC_PenPaletteWidget::applySelectedPenToSelection);
+            contextMenu->addAction(tr("&Set As Current Pen"), {}, this, &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar);
+            contextMenu->addAction(tr("&Apply Pen To Active Layer"), {}, this, &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer);
+            contextMenu->addAction(tr("&Select Entities With Attributes Pen"), {}, this, &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem);
+            contextMenu->addAction(tr("&Select Entities With Drawing Pen"), {}, this, &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem);
 
             contextMenu->addSeparator();
-            contextMenu->addAction(tr("&Edit Pen"), this, &LC_PenPaletteWidget::editSelectedPenItem, 0);
-            contextMenu->addAction(tr("&Remove Pen"), this, &LC_PenPaletteWidget::removeSelectedPenItem, 0);
+            contextMenu->addAction(tr("&Edit Pen"), {}, this, &LC_PenPaletteWidget::editSelectedPenItem);
+            contextMenu->addAction(tr("&Remove Pen"), {}, this, &LC_PenPaletteWidget::removeSelectedPenItem);
         }
         else{ // for multiselect - only rename
-            contextMenu->addAction(tr("&Remove Pens"), this, &LC_PenPaletteWidget::removeSelectedPenItems, 0);
+            contextMenu->addAction(tr("&Remove Pens"), {}, this, &LC_PenPaletteWidget::removeSelectedPenItems);
         }
         contextMenu->exec(QCursor::pos());
         delete contextMenu;
