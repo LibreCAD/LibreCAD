@@ -196,6 +196,7 @@ RS_Entity& RS_Point::shear(double k)
 {
     data.pos.shear(k);
     calculateBorders();
+    return *this;
 }
 
 void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
