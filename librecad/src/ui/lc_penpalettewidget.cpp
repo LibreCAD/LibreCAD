@@ -237,7 +237,7 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
             contextMenu->addAction(item.first, this, item.second);
 #endif
         };
-        auto addActions = [&addAction](std::initializer_list<QString, MemFn> menuEntries){
+        auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
             for (const auto& menuEntry: menuEntries)
                 addAction(menuEntry);
         };
@@ -251,13 +251,12 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
 
             contextMenu->addSeparator();
             addActions({{tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem},
-                        {tr("&Remove Pen"), {}, this, &LC_PenPaletteWidget::removeSelectedPenItem}});
+                        {tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem}});
         }
         else{ // for multiselect - only rename
             addAction({tr("&Remove Pens"), &LC_PenPaletteWidget::removeSelectedPenItems});
         }
         contextMenu->exec(QCursor::pos());
-        delete contextMenu;
     }
 }
 

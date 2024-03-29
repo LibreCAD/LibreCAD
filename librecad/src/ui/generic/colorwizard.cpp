@@ -99,7 +99,11 @@ void ColorWizard::requestSelection()
 void ColorWizard::invokeColorDialog()
 {
     QColor current;
-    current.fromString(ui->combo->currentText());
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+    current = QColor::fromString(ui->combo->currentText());
+#else
+    current.setNamedColor(ui->combo->currentText());
+#endif
 
     QColorDialog dlg;
     dlg.setCustomColor(0, current);
