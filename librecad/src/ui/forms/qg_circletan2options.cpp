@@ -42,12 +42,7 @@ QG_CircleTan2Options::QG_CircleTan2Options(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CircleTan2Options::~QG_CircleTan2Options()
-{
-// don't save settings here, settings are saved on each successful call of updateRadius
-//	saveSettings();
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_CircleTan2Options::~QG_CircleTan2Options() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current

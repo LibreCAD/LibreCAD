@@ -29,11 +29,10 @@
 #ifndef RS_COMMANDS_H
 #define RS_COMMANDS_H
 
+#include <QtCore/qcontainerfwd.h>
+
 #include <map>
 #include "rs.h"
-
-class QString;
-class QStringList;
 
 #define RS_COMMANDS RS_Commands::instance()
 

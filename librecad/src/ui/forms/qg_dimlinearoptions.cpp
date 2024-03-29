@@ -46,10 +46,7 @@ QG_DimLinearOptions::QG_DimLinearOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DimLinearOptions::~QG_DimLinearOptions()
-{
-	saveSettings();
-}
+QG_DimLinearOptions::~QG_DimLinearOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -89,6 +86,7 @@ void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_DimLinearOptions::updateAngle(const QString & a) {
     if (action) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+        saveSettings();
     }
 }
 

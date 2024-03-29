@@ -26,6 +26,8 @@
 #ifndef QG_DLGHATCH_H
 #define QG_DLGHATCH_H
 
+#include <memory>
+
 #include "ui_qg_dlghatch.h"
 
 class RS_Hatch;
@@ -35,8 +37,8 @@ class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
-	~QG_DlgHatch();
+    QG_DlgHatch(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    ~QG_DlgHatch();
 
     void saveSettings();
 
@@ -53,10 +55,10 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_EntityContainer* preview;
-    bool isNew;
-    RS_Pattern* pattern;
-    RS_Hatch* hatch;
+    std::unique_ptr<RS_EntityContainer> preview;
+    bool isNew = false;
+    RS_Pattern* pattern = nullptr;
+    RS_Hatch* hatch = nullptr;
 
     void init();
 
