@@ -231,6 +231,8 @@ void QG_CommandEdit::processInput(QString input)
 
         historyList.append(input);
         it = historyList.end();
+    } else if (input == "") {
+        emit command("");
     }
     clear();
 }
