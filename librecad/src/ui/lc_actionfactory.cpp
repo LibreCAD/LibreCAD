@@ -1200,7 +1200,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("Focus on &Command Line"), agm->view);
     action->setIcon(QIcon(":/main/editclear.png"));
     QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon);
+    commandLineShortcuts<<QKeySequence(Qt::CTRL | Qt::Key_M)<<QKeySequence(Qt::Key_Colon);
     if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
         commandLineShortcuts<<QKeySequence(Qt::Key_Space);
     action->setShortcuts(commandLineShortcuts);
