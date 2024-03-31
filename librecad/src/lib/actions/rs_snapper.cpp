@@ -108,6 +108,10 @@ bool RS_SnapMode::operator ==(RS_SnapMode const& rhs) const
             && snapAngle    == rhs.snapAngle;
 }
 
+bool RS_SnapMode::operator !=(RS_SnapMode const& rhs) const
+{
+    return ! this->operator ==(rhs);
+}
 
 /**
   * snap mode to a flag integer

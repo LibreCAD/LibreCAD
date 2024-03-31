@@ -90,6 +90,7 @@ struct RS_SnapMode {
       */
     RS_SnapMode const & clear(void);
     bool operator == (RS_SnapMode const& rhs) const;
+    bool operator != (RS_SnapMode const& rhs) const;
 
     static unsigned toInt(const RS_SnapMode& s);    //< convert to int, to save settings
     static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings

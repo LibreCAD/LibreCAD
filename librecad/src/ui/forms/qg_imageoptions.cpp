@@ -46,10 +46,7 @@ QG_ImageOptions::QG_ImageOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ImageOptions::~QG_ImageOptions()
-{
-	saveSettings();
-}
+QG_ImageOptions::~QG_ImageOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -96,6 +93,7 @@ void QG_ImageOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_ImageOptions::updateData() {
     if (action) {
 		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
+        saveSettings();
     }
 }
 
@@ -107,6 +105,7 @@ void QG_ImageOptions::updateDPI() {
 		ui->leFactor->setText(QString::number(f));
 		ui->leFactor->blockSignals(false);
         action->setFactor(f);
+        saveSettings();
     }
 }
 
@@ -118,6 +117,7 @@ void QG_ImageOptions::updateFactor() {
 		ui->leDPI->setText(QString::number(dpi));
 		ui->leDPI->blockSignals(false);
         action->setFactor(f);
+        saveSettings();
     }
 }
 

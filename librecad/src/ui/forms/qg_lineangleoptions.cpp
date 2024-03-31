@@ -46,10 +46,7 @@ QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineAngleOptions::~QG_LineAngleOptions()
-{
-	saveSettings();
-}
+QG_LineAngleOptions::~QG_LineAngleOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -130,6 +127,7 @@ void QG_LineAngleOptions::saveSettings() {
 void QG_LineAngleOptions::updateAngle(const QString& a) {
     if (action && !action->hasFixedAngle()) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+        saveSettings();
     }
 }
 
@@ -138,11 +136,13 @@ void QG_LineAngleOptions::updateLength(const QString& l) {
         bool ok(false);
         double length=RS_Math::eval(l,&ok);
         if(ok) action->setLength(length);
+        saveSettings();
     }
 }
 
 void QG_LineAngleOptions::updateSnapPoint(int sp) {
     if (action) {
         action->setSnapPoint(sp);
+        saveSettings();
     }
 }

@@ -172,7 +172,7 @@ void LC_PenPaletteOptionsDialog::validate(){
     bool showNoSelectionMessage = cbShowMessageForNoSelection->isChecked();
     bool ignoreCaseOnMatch = cbFilterCaseInsensitive->isChecked();
 
-    int colorMode;
+    int colorMode = 0;
 
     if (rbRGB->isChecked()){
         colorMode = LC_PenInfoRegistry::ColorNameDisplayMode::RGB;

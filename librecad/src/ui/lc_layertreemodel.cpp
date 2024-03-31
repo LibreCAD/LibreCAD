@@ -225,8 +225,7 @@ void LC_LayerTreeModel::rebuildModel(QList<RS_Layer*> &listLayer, RS_Layer* acti
         bool hasRegexpMatch = false;
         if (hasRegexp){
             int pos = 0;
-            int matchPosition = filteringRegexp.indexIn(layerName, pos);
-            hasRegexpMatch = matchPosition !=-1;
+            hasRegexpMatch =filteringRegexp.match(layerName, pos).hasMatch();
 
             if (regexpHighlightMode){
                 // we'll highlight it later based on the flag
@@ -1006,7 +1005,7 @@ void LC_LayerTreeModel::setFilteringRegexp(QString &regexp, bool highlightMode){
 //   call... ok so far, it should not be called externally other than from widget.
 
     filteringRegexp.setPattern(regexp);
-    filteringRegexp.setPatternSyntax(QRegExp::WildcardUnix);
+    //filteringRegexp.setPatternSyntax(QRegExp::WildcardUnix);
     hasRegexp = !regexp.trimmed().isEmpty();
     regexpHighlightMode = highlightMode;
 }

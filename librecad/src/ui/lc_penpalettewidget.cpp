@@ -218,34 +218,45 @@ void LC_PenPaletteWidget::initFilteringSection(){
  * Context menu for table view
  * @param pos
  */
-void LC_PenPaletteWidget::onTableViewContextMenuInvoked(const QPoint &pos){
+void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const QPoint &pos){
     int itemsCount = penPaletteModel->rowCount(QModelIndex());
     int selectedItemsCount = tableView->selectionModel()->selectedRows().size();
     if (itemsCount >0 && selectedItemsCount > 0){
-        QMenu *contextMenu = new QMenu(this);
+        auto contextMenu = std::make_unique<QMenu>(this);
         QLabel *caption = new QLabel(tr("Pens Menu"), this);
         QPalette palette;
         palette.setColor(caption->backgroundRole(), RS_Color(0, 0, 0));
         palette.setColor(caption->foregroundRole(), RS_Color(255, 255, 255));
         caption->setPalette(palette);
         caption->setAlignment(Qt::AlignCenter);
+        typedef void (LC_PenPaletteWidget::*MemFn)();
+        auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+            contextMenu->addAction(item.first, {}, this, item.second);
+#else
+            contextMenu->addAction(item.first, this, item.second);
+#endif
+        };
+        auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
+            for (const auto& menuEntry: menuEntries)
+                addAction(menuEntry);
+        };
 
         if (selectedItemsCount == 1){
-            contextMenu->addAction(tr("&Apply Pen To Selection"), this, &LC_PenPaletteWidget::applySelectedPenToSelection, 0);
-            contextMenu->addAction(tr("&Set As Current Pen"), this, &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar, 0);
-            contextMenu->addAction(tr("&Apply Pen To Active Layer"), this, &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer, 0);
-            contextMenu->addAction(tr("&Select Entities With Attributes Pen"), this, &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem, 0);
-            contextMenu->addAction(tr("&Select Entities With Drawing Pen"), this, &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem, 0);
+            addActions({ {tr("&Apply Pen To Selection"), &LC_PenPaletteWidget::applySelectedPenToSelection},
+                        {tr("&Set As Current Pen"), &LC_PenPaletteWidget::applySelectedPenItemToPenToolBar},
+                        {tr("&Apply Pen To Active Layer"), &LC_PenPaletteWidget::applySelectedPenItemToActiveLayer},
+                        {tr("&Select Entities With Attributes Pen"), &LC_PenPaletteWidget::selectEntitiesWithAttributesPenBySelectedPenItem},
+                        {tr("&Select Entities With Drawing Pen"), &LC_PenPaletteWidget::selectEntitiesWithDrawingPenBySelectedPenItem}});
 
             contextMenu->addSeparator();
-            contextMenu->addAction(tr("&Edit Pen"), this, &LC_PenPaletteWidget::editSelectedPenItem, 0);
-            contextMenu->addAction(tr("&Remove Pen"), this, &LC_PenPaletteWidget::removeSelectedPenItem, 0);
+            addActions({{tr("&Edit Pen"), &LC_PenPaletteWidget::editSelectedPenItem},
+                        {tr("&Remove Pen"), &LC_PenPaletteWidget::removeSelectedPenItem}});
         }
         else{ // for multiselect - only rename
-            contextMenu->addAction(tr("&Remove Pens"), this, &LC_PenPaletteWidget::removeSelectedPenItems, 0);
+            addAction({tr("&Remove Pens"), &LC_PenPaletteWidget::removeSelectedPenItems});
         }
         contextMenu->exec(QCursor::pos());
-        delete contextMenu;
     }
 }
 
@@ -1227,15 +1238,15 @@ void LC_PenPaletteWidget::onPenEditorChanged(){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorColorChanged(int index){
+void LC_PenPaletteWidget::onPenEditorColorChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorWidthChanged(int index){
+void LC_PenPaletteWidget::onPenEditorWidthChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 
-void LC_PenPaletteWidget::onPenEditorLineTypeChanged(int index){
+void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index){
     markEditingPenChanged(true);
 }
 

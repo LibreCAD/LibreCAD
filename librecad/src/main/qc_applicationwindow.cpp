@@ -2376,6 +2376,13 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         return;
     }
 
+    // Avoid printing without print preview
+    if (!w->getGraphicView()->isPrintPreview())
+    {
+        slotFilePrintPreview(true);
+        return;
+    }
+
     RS_Graphic* graphic = w->getDocument()->getGraphic();
     if (graphic==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -3785,4 +3792,11 @@ void QC_ApplicationWindow::showBlockActivated(const RS_Block *block)
     if (blockWidget != nullptr && block != nullptr) {
         blockWidget->activateBlock(const_cast<RS_Block*>(block));
     }
+}
+
+QAction* QC_ApplicationWindow::getAction(const QString& actionName) const
+{
+    if (a_map.count(actionName) == 0)
+        return nullptr;
+    return a_map[actionName];
 }

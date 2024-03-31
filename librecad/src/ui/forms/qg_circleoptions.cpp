@@ -46,11 +46,7 @@ QG_CircleOptions::QG_CircleOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CircleOptions::~QG_CircleOptions()
-{
-// don't save settings here, settings are saved on each successful call of updateRadius
-//	saveSettings();
-}
+QG_CircleOptions::~QG_CircleOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current

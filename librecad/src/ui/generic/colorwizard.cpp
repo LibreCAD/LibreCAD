@@ -35,7 +35,7 @@
 
 ColorWizard::ColorWizard(QWidget *parent) :
     QFrame(parent),
-    ui(new Ui::ColorWizard)
+    ui(std::make_unique<Ui::ColorWizard>())
 {
     ui->setupUi(this);
 
@@ -80,8 +80,6 @@ ColorWizard::~ColorWizard()
         settings.setValue("Widgets/FavoriteColors", favs);
     else
         settings.remove("Widgets/FavoriteColors");
-    delete ui;
-
 }
 
 void ColorWizard::requestColorChange()
@@ -101,7 +99,11 @@ void ColorWizard::requestSelection()
 void ColorWizard::invokeColorDialog()
 {
     QColor current;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+    current = QColor::fromString(ui->combo->currentText());
+#else
     current.setNamedColor(ui->combo->currentText());
+#endif
 
     QColorDialog dlg;
     dlg.setCustomColor(0, current);

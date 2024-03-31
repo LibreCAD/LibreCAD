@@ -109,6 +109,7 @@ public:
     bool loadStyleSheet(QString path);
 
     bool eventFilter(QObject *obj, QEvent *event) override;
+    QAction* getAction(const QString& name) const;
 
 public slots:
     void relayAction(QAction* q_action);

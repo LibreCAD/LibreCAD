@@ -25,13 +25,14 @@
 #ifndef LC_LAYERTREEMODEL_H
 #define LC_LAYERTREEMODEL_H
 
+#include <QAbstractTableModel>
+#include <QIcon>
+#include <QItemSelection>
+#include <QRegularExpression>
+#include <QWidget>
+
 #include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
-
-#include <QWidget>
-#include <QIcon>
-#include <QAbstractTableModel>
-#include <QItemSelection>
 #include <rs_layer.h>
 #include <rs_layerlist.h>
 
@@ -122,7 +123,7 @@ private:
     int maxIndent{0};
 
     // filtering/highlight regexp value
-    QRegExp filteringRegexp{""};
+    QRegularExpression filteringRegexp{""};
 
     // flat that controls whether regexp should be applied
     bool hasRegexp{false};

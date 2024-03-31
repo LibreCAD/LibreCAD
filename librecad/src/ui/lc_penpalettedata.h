@@ -24,10 +24,12 @@
 #ifndef LC_PENPALETTEDATA_H
 #define LC_PENPALETTEDATA_H
 
+#include <QObject>
+#include <QList>
+
 #include "lc_penitem.h"
 #include "lc_penpaletteoptions.h"
 
-#include <QList>
 
 /**
  * Internal holder of all named pens. Stores the list of them and also offers methods for persistence of pens list in file.

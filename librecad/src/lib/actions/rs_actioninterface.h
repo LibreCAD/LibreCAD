@@ -29,6 +29,7 @@
 #define RS_ACTIONINTERFACE_H
 
 #include <QObject>
+#include <QtCore/QtContainerFwd>
 
 #include "rs_snapper.h"
 #include "lc_actionoptionswidget.h"
@@ -40,7 +41,6 @@ class RS_Document;
 class QAction;
 class QKeyEvent;
 class QString;
-class QStringList;
 
 /**
  * This is the interface that must be implemented for all

@@ -47,10 +47,7 @@ QG_ModifyOffsetOptions::QG_ModifyOffsetOptions(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions()
-{
-	saveSettings();
-}
+QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -87,5 +84,6 @@ void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
 void QG_ModifyOffsetOptions::updateDist(const QString& d) {
     if (dist) {
         *dist=RS_Math::eval(d);
+        saveSettings();
     }
 }

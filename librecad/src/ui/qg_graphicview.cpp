@@ -35,6 +35,8 @@
 #include <QPoint>
 #include <QTimer>
 
+#include "qc_applicationwindow.h"
+
 #include "qg_graphicview.h"
 
 #include "qg_dialogfactory.h"
@@ -444,8 +446,13 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
                 if (!recent_actions.empty())
                     context_menu->addActions(recent_actions);
+
                 // "Edit Entity" entry
                 addEditEntityEntry(event, *context_menu);
+                // Add drawing preferences
+                QAction* OptionsDrawing = QC_ApplicationWindow::getAppWindow()->getAction("OptionsDrawing");
+                if (OptionsDrawing != nullptr)
+                    context_menu->addAction(OptionsDrawing);
                 if (!context_menu->isEmpty())
                     context_menu->exec(mapToGlobal(event->pos()));
                 else

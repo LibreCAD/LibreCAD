@@ -1008,7 +1008,7 @@ void LC_LayerTreeWidget::layerActivated(RS_Layer *layer){
     activateLayer(layer);
 }
 
-void LC_LayerTreeWidget::layerAdded(RS_Layer *layer){
+void LC_LayerTreeWidget::layerAdded([[maybe_unused]] RS_Layer *layer){
     RS_DEBUG->print("QG_LayerWidget::layerAdded() begin");
     update();
 }

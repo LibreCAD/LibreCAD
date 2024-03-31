@@ -81,10 +81,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_PrintPreviewOptions::~QG_PrintPreviewOptions()
-{
-    saveSettings();
-}
+QG_PrintPreviewOptions::~QG_PrintPreviewOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -244,6 +241,7 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
         }
         blackWhiteDisabled = on;
         action->setBlackWhite(on);
+        saveSettings();
     }
 }
 
@@ -321,7 +319,10 @@ void QG_PrintPreviewOptions::updateScaleBox([[maybe_unused]] const QString& text
 
 //update the scalebox to
 void QG_PrintPreviewOptions::updateScaleBox(){
-    updateScaleBox(action->getScale());
+    if (action) {
+        updateScaleBox(action->getScale());
+        saveSettings();
+    }
 }
 
 void QG_PrintPreviewOptions::updateScaleBox(double f){
@@ -385,5 +386,6 @@ void QG_PrintPreviewOptions::updateScaleBox(double f){
 void QG_PrintPreviewOptions::calcPagesNum() {
     if (action) {
         action->calcPagesNum();
+        saveSettings();
     }
 }

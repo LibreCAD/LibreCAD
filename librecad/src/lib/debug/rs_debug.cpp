@@ -29,6 +29,7 @@
 #include <iostream>
 
 #include <QDateTime>
+#include <QIODevice>
 #include <QString>
 
 #include "rs_debug.h"

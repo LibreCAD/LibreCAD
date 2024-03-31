@@ -96,16 +96,16 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
             return;
         }
 
-        bool bAbove = false; // boolean for the case when you are above an item
+        //bool bAbove = false; // boolean for the case when you are above an item
 
-        LC_LayerTreeWidget::DropIndicatorPosition position;
+        LC_LayerTreeWidget::DropIndicatorPosition position{};
         if (!dropIndex.parent().isValid() && dropIndex.row() != -1)
         {
             switch (dropIndicator)
             {
             case QAbstractItemView::AboveItem:
                 // manage a boolean for the case when you are above an item
-                bAbove = true;
+                //bAbove = true;
                 position = LC_LayerTreeWidget::AboveItem;
                 break;
             case QAbstractItemView::BelowItem:

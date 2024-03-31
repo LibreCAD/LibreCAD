@@ -41,6 +41,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
 {
 
     auto action = new QAction(tr("Exclusive Snap Mode"), agm->snap_extras);
+    action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_X));
     action->setIcon(QIcon(":/icons/exclusive.svg"));
     action->setCheckable(true);
     connect(action, SIGNAL(toggled(bool)),

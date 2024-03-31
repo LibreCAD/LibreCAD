@@ -46,9 +46,7 @@ QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ArcOptions::~QG_ArcOptions() {
-	saveSettings();
-}
+QG_ArcOptions::~QG_ArcOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -106,5 +104,6 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_ArcOptions::updateDirection(bool /*pos*/) {
     if (action) {
 		action->setReversed(!(ui->rbPos->isChecked()));
+        saveSettings();
     }
 }
