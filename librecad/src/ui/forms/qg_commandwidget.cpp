@@ -56,6 +56,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
     connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
     connect(leCommand, SIGNAL(focusIn()), this, SLOT(setCommandMode()));
+    connect(leCommand, &QG_CommandEdit::spacePressed, this, &QG_CommandWidget::spacePressed);
     connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
     connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
@@ -192,6 +193,11 @@ void QG_CommandWidget::handleCommand(QString cmd)
     }
 
     leCommand->setText("");
+}
+
+void QG_CommandWidget::spacePressed() {
+    if (actionHandler)
+        actionHandler->command({});
 }
 
 void QG_CommandWidget::tabPressed() {

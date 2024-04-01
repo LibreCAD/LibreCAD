@@ -61,9 +61,17 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
 bool QG_CommandEdit::event(QEvent* e) {
     if (e->type()==QEvent::KeyPress) {
         QKeyEvent* k = (QKeyEvent*)e;
-        if (k->key()==Qt::Key_Tab) {
+        switch(k->key()) {
+        case Qt::Key_Tab:
             emit tabPressed();
             return true;
+        case Qt::Key_Space:
+            if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+                emit spacePressed();
+            }
+            return true;
+        default:
+            break;
         }
     }
 
