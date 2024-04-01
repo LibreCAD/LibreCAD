@@ -47,12 +47,16 @@ public:
     void setMdiWindow(QC_MDIWindow* mdiWindow);
     void setLayerList(RS_LayerList *ll);
 
+signals:
+    void escape();
+
 public slots:
     void onTableClicked(QModelIndex modelIndex);
     void onTableSelectionChanged(
         const QItemSelection &selected,
         const QItemSelection &deselected);
     void onPenEditorChanged();
+    void keyPressEvent(QKeyEvent* e) override;
 
     void fillPenEditorBySelectedEntityAttributesPen();
     void fillPenEditorBySelectedEntityDrawingPen();
@@ -90,15 +94,15 @@ private:
      QC_MDIWindow* mdi_win = nullptr;
      LC_PenPaletteModel* penPaletteModel= nullptr;
     LC_PenPaletteData* penPaletteData = nullptr;
-    RS_LayerList* layerList;
-    bool inEditorControlsSetup;
+    RS_LayerList* layerList = nullptr;
+    bool inEditorControlsSetup = false;
+    bool editorChanged = false;
     void initTableView();
     void initFilteringSection();
     void fillPenEditorByPenItem(LC_PenItem *pen);
     void markEditingPenChanged(bool changed);
     void updateModel();
     void initPenEditor();
-    bool editorChanged;
     void doUpdatePenEditorByPenAttributes(const RS_Color &color, RS2::LineWidth &width, RS2::LineType &lineType);
     void doFillPenEditorByPen(RS_Pen pen);
     RS_Pen createPenByEditor(const RS_Pen &originalPen);

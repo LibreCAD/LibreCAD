@@ -21,26 +21,29 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QLabel>
+
 #include <QCheckBox>
+#include <QKeyEvent>
+#include <QLabel>
+#include <QMenu>
+#include <QMessageBox>
 #include <QPainter>
 #include <QScrollBar>
-#include <QMenu>
-#include <QTimer>
-#include <QStyledItemDelegate>
-#include <QMessageBox>
 #include <QStyleHints>
-#include "lc_penpalettemodel.h"
-#include "lc_penpalettewidget.h"
+#include <QStyledItemDelegate>
+#include <QTimer>
+
 #include "lc_peninforegistry.h"
 #include "lc_penitem.h"
-#include "ui_lc_penpalettewidget.h"
+#include "lc_penpalettemodel.h"
+#include "lc_penpaletteoptionsdialog.h"
+#include "lc_penpalettewidget.h"
 #include "qc_applicationwindow.h"
+#include "qg_graphicview.h"
 #include "qg_pentoolbar.h"
 #include "rs_graphic.h"
-#include "qg_graphicview.h"
 #include "rs_modification.h"
-#include "lc_penpaletteoptionsdialog.h"
+#include "ui_lc_penpalettewidget.h"
 
 /**
  * Delegate used to paint underline lines for table grid
@@ -1256,6 +1259,23 @@ void LC_PenPaletteWidget::onPenEditorLineTypeChanged([[maybe_unused]] int index)
  */
 void LC_PenPaletteWidget::setLayerList(RS_LayerList *ll) {
     layerList = ll;
+}
+
+
+/**
+ * Escape releases focus.
+ */
+void LC_PenPaletteWidget::keyPressEvent(QKeyEvent* e) {
+    switch (e->key()) {
+
+    case Qt::Key_Escape:
+        emit escape();
+        break;
+
+    default:
+        QWidget::keyPressEvent(e);
+        break;
+    }
 }
 
 /**
