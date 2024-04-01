@@ -39,6 +39,7 @@
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_utility.h"
 
@@ -121,16 +122,23 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
         int key {e->key()};
         switch(key) {
-            case Qt::Key_Return:
-            case Qt::Key_Enter:
-                if(!leCommand->text().size())
-                    return false;
-                else
-                    break;
-            case Qt::Key_Escape:
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+            if(!leCommand->text().size())
                 return false;
-            default:
+            else
                 break;
+        case Qt::Key_Escape:
+            return false;
+        case Qt::Key_Space:
+            if (!hasFocus() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+                // do not take focus here
+                spacePressed();
+                return true;
+            }
+            break;
+        default:
+            break;
         }
 
         //detect Ctl- Alt- modifier, but not Shift

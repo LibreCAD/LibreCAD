@@ -65,11 +65,11 @@ bool QG_CommandEdit::event(QEvent* e) {
         case Qt::Key_Tab:
             emit tabPressed();
             return true;
-        case Qt::Key_Space:
-            if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
-                emit spacePressed();
-            }
-            return true;
+            // case Qt::Key_Space:
+            // if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+            //     emit spacePressed();
+            // }
+            // break;
         default:
             break;
         }
@@ -157,8 +157,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
         processInput(text());
         break;
     case Qt::Key_Space:
-        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true) ||
-                (text().isEmpty() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true)))
+        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true))
             processInput(text());
         else if (!text().isEmpty())
             QLineEdit::keyPressEvent(e);
