@@ -36,12 +36,16 @@
 
 namespace {
 
+bool getSetting(QString entry) {
+    return RS_SETTINGS->readNumEntry("/" + entry, 0);
+}
+
 // create an SVG generator
 std::unique_ptr<LC_MakerCamSVG> getGenerator()
 {
     auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
 
-    return std::make_unique<LC_MakerCamSVG>(std::make_unique<LC_XMLWriterQXmlStreamWriter>(),
+    auto generator = std::make_unique<LC_MakerCamSVG>(std::make_unique<LC_XMLWriterQXmlStreamWriter>(),
                                             (bool)RS_SETTINGS->readNumEntry("/ExportInvisibleLayers"),
                                             (bool)RS_SETTINGS->readNumEntry("/ExportConstructionLayers"),
                                             (bool)RS_SETTINGS->readNumEntry("/WriteBlocksInline"),
@@ -50,6 +54,9 @@ std::unique_ptr<LC_MakerCamSVG> getGenerator()
                                             (bool)RS_SETTINGS->readNumEntry("/BakeDashDotLines"),
                                             RS_SETTINGS->readEntry("/DefaultElementWidth", "1.0").toDouble(),
                                             RS_SETTINGS->readEntry("/DefaultDashLinePatternLength").toDouble());
+    bool exportPoints = getSetting("ExportPoints");
+    generator->setExportPoints(exportPoints);
+    return generator;
 }
 }
 

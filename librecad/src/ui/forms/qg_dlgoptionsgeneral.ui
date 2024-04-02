@@ -1238,7 +1238,7 @@
           <item>
            <widget class="QCheckBox" name="cbToggleFreeSnapOnSpace">
             <property name="toolTip">
-             <string>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>Toggle free snap mode when SPACE BAR is pressed</string>

@@ -71,6 +71,9 @@ public:
 
     bool generate(RS_Graphic* graphic);
     std::string resultAsString();
+    void setExportPoints(bool exportPoints) {
+        m_exportPoints = exportPoints;
+    }
 
 private:
     void write(RS_Graphic* graphic);
@@ -130,14 +133,15 @@ private:
 
     std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
 
-    bool writeInvisibleLayers;
-    bool writeConstructionLayers;
-    bool writeBlocksInline;
-    bool convertEllipsesToBeziers;
-    bool exportImages;
-    bool convertLineTypes;
-    double defaultElementWidth;
-    double defaultDashLinePatternLength;
+    bool writeInvisibleLayers = false;
+    bool writeConstructionLayers = false;
+    bool writeBlocksInline = false;
+    bool convertEllipsesToBeziers = false;
+    bool exportImages = false;
+    bool convertLineTypes = false;
+    bool m_exportPoints = false;
+    double defaultElementWidth = 0.;
+    double defaultDashLinePatternLength = 0.;
 
     RS_Vector min;
     RS_Vector max;
@@ -148,7 +152,7 @@ private:
     /**
      * @brief lengthFactor factor from current unit to svg length units
      */
-    double lengthFactor;
+    double lengthFactor = 0.;
 
 };
 

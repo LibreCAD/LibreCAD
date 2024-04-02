@@ -39,6 +39,7 @@
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_utility.h"
 
@@ -56,6 +57,7 @@ QG_CommandWidget::QG_CommandWidget(QWidget* parent, const char* name, Qt::Window
     connect(leCommand, SIGNAL(escape()), this, SLOT(escape()));
     connect(leCommand, SIGNAL(focusOut()), this, SLOT(setNormalMode()));
     connect(leCommand, SIGNAL(focusIn()), this, SLOT(setCommandMode()));
+    connect(leCommand, &QG_CommandEdit::spacePressed, this, &QG_CommandWidget::spacePressed);
     connect(leCommand, SIGNAL(tabPressed()), this, SLOT(tabPressed()));
     connect(leCommand, SIGNAL(clearCommandsHistory()), teHistory, SLOT(clear()));
     connect(leCommand, SIGNAL(message(QString)), this, SLOT(appendHistory(QString)));
@@ -120,16 +122,23 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
         int key {e->key()};
         switch(key) {
-            case Qt::Key_Return:
-            case Qt::Key_Enter:
-                if(!leCommand->text().size())
-                    return false;
-                else
-                    break;
-            case Qt::Key_Escape:
+        case Qt::Key_Return:
+        case Qt::Key_Enter:
+            if(!leCommand->text().size())
                 return false;
-            default:
+            else
                 break;
+        case Qt::Key_Escape:
+            return false;
+        case Qt::Key_Space:
+            if (!hasFocus() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+                // do not take focus here
+                spacePressed();
+                return true;
+            }
+            break;
+        default:
+            break;
         }
 
         //detect Ctl- Alt- modifier, but not Shift
@@ -192,6 +201,11 @@ void QG_CommandWidget::handleCommand(QString cmd)
     }
 
     leCommand->setText("");
+}
+
+void QG_CommandWidget::spacePressed() {
+    if (actionHandler)
+        actionHandler->command({});
 }
 
 void QG_CommandWidget::tabPressed() {

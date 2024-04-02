@@ -40,10 +40,7 @@
 #include "rs_ellipse.h"
 #include "rs_graphic.h"
 #include "rs_hatch.h"
-#include "rs_hatch.h"
 #include "rs_image.h"
-#include "rs_image.h"
-#include "rs_insert.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_leader.h"
@@ -257,7 +254,9 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
             writeInsert((RS_Insert*)entity);
             break;
         case RS2::EntityPoint:
-            writePoint((RS_Point*)entity);
+            if (m_exportPoints) {
+                writePoint((RS_Point*)entity);
+            }
             break;
         case RS2::EntityLine:
             writeLine((RS_Line*)entity);
@@ -296,13 +295,22 @@ void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
 
     RS_Block* block = insert->getBlockForInsert();
 
-    RS_Vector insertionpoint = convertToSvg(insert->getInsertionPoint());
+    RS_Vector insertionpoint = insert->getInsertionPoint();
+    // The conversion from drawing space to the svg space (column major) transform matrix(M):
+    // 1  0  0
+    // 0 -1  max.y
+    // 0  0  1
+    // Or: MV = RV + T, with R the rotation part, T the translation part, T=(0; max.y)
+    // For insertions the transform should be M(V + I), with I as the insertion point offset
+    // M(V+I) = R(V+I) + T = M(V) + RI
+    // Therefore, insertion point offset means RI in SVG offset
+    // (x, y) -> (x, -y)
 
     if (writeBlocksInline) {
 
         RS_DEBUG->print("RS_MakerCamSVG::writeInsert: Writing insert inline ...");
 
-        offset.set(insertionpoint.x, insertionpoint.y - (max.y - min.y));
+        offset.set(insertionpoint.x, - insertionpoint.y);
 
         xmlWriter->addElement("g", NAMESPACE_URI_SVG);
 
@@ -321,7 +329,7 @@ void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
         xmlWriter->addElement("use", NAMESPACE_URI_SVG);
 
         xmlWriter->addAttribute("x", lengthXml(insertionpoint.x));
-        xmlWriter->addAttribute("y", lengthXml(insertionpoint.y - (max.y - min.y)));
+        xmlWriter->addAttribute("y", lengthXml(- insertionpoint.y));
         xmlWriter->addAttribute("href", "#" + std::to_string(block->getId()), NAMESPACE_URI_XLINK);
 
         xmlWriter->closeElement();

@@ -61,6 +61,7 @@ protected:
     void processVariable(QString input);
 
 signals:
+    void spacePressed();
     void tabPressed();
     void escape();
     void focusIn();

@@ -1232,7 +1232,11 @@ bool QG_ActionHandler::command(const QString& cmd)
             RS_SnapMode smFree = {};
             RS_SnapMode smGV = snap_toolbar->getSnaps();
             if (smFree != smGV) {
-                view->setDefaultSnapMode(view->getDefaultSnapMode() == smGV ? smFree : smGV);
+                const bool isSnappingFree = view->getDefaultSnapMode() == smFree;
+                view->setDefaultSnapMode(isSnappingFree ? smGV: smFree);
+                RS_DIALOGFACTORY->commandMessage(isSnappingFree?
+                                                     tr("Spacebar: restored snapping mode to normal")
+                                                   : tr("Spacebar: temporarily set snapping mode to free snapping"));
             }
             RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: OK");
         }

@@ -120,6 +120,7 @@ int main(int argc, char** argv)
             qDebug()<<"";
             qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
             qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
+            qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
             qDebug()<<"";
             qDebug()<<"Options:";
             qDebug()<<"";

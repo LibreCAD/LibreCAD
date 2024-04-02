@@ -49,6 +49,7 @@ public slots:
     virtual void appendHistory( const QString & msg );
     virtual void handleCommand(QString cmd);
     virtual void handleKeycode(QString code);
+    virtual void spacePressed();
     virtual void tabPressed();
     virtual void escape();
     virtual void setActionHandler( QG_ActionHandler * ah );
