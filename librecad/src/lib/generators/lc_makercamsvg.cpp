@@ -254,7 +254,9 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
             writeInsert((RS_Insert*)entity);
             break;
         case RS2::EntityPoint:
-            writePoint((RS_Point*)entity);
+            if (m_exportPoints) {
+                writePoint((RS_Point*)entity);
+            }
             break;
         case RS2::EntityLine:
             writeLine((RS_Line*)entity);

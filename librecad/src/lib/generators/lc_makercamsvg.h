@@ -71,6 +71,9 @@ public:
 
     bool generate(RS_Graphic* graphic);
     std::string resultAsString();
+    void setExportPoints(bool exportPoints) {
+        m_exportPoints = exportPoints;
+    }
 
 private:
     void write(RS_Graphic* graphic);
@@ -136,6 +139,7 @@ private:
     bool convertEllipsesToBeziers = false;
     bool exportImages = false;
     bool convertLineTypes = false;
+    bool m_exportPoints = false;
     double defaultElementWidth = 0.;
     double defaultDashLinePatternLength = 0.;
 

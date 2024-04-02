@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>500</width>
-    <height>522</height>
+    <height>573</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -194,6 +194,26 @@
     </widget>
    </item>
    <item>
+    <widget class="QGroupBox" name="gbPoint">
+     <property name="title">
+      <string>Points</string>
+     </property>
+     <layout class="QHBoxLayout" name="_2">
+      <item>
+       <layout class="QVBoxLayout" name="_3">
+        <item>
+         <widget class="QCheckBox" name="checkPoint">
+          <property name="text">
+           <string>Export Points</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
     <spacer>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -251,4 +271,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>validate()</slot>
+ </slots>
 </ui>
