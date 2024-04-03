@@ -47,6 +47,7 @@ public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateText();
     virtual void updateAngle();
+    virtual void updateHeight();
 
 protected:
     RS_ActionDrawMText* action;
