@@ -10,6 +10,10 @@
     <height>246</height>
    </rect>
   </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+   </sizepolicy>
+  </property>
   <property name="windowTitle">
    <string>Layers Tree Options</string>
   </property>
