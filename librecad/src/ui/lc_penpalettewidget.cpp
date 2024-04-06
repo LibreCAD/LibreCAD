@@ -728,6 +728,8 @@ void LC_PenPaletteWidget::doSelectEntitiesThatMatchToPenAttributes(
  * This method eliminates that and simply sets the pen of active layer to pen toolbar in one click.
  */
 void LC_PenPaletteWidget::updatePenToolbarByActiveLayer(){
+    if (!isVisible())
+        return;
     QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
     if (penToolBar != nullptr){
         if (layerList != nullptr){
