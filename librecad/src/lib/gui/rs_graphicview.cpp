@@ -94,15 +94,15 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     ,previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())}
 {
     RS_SETTINGS->beginGroup("Colors");
-    setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
-    setGridColor(QColor(RS_SETTINGS->readEntry("/grid", Colors::grid)));
-    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid)));
-    setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", Colors::select)));
-    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight)));
-    setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle)));
-    setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
-    setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
-    setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor)));
+    setBackground(QColor(RS_SETTINGS->readEntry("/background", RS_Settings::background)));
+    setGridColor(QColor(RS_SETTINGS->readEntry("/grid", RS_Settings::grid)));
+    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid)));
+    setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", RS_Settings::select)));
+    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight)));
+    setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle)));
+    setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", RS_Settings::handle)));
+    setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle)));
+    setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor)));
 
     RS_SETTINGS->endGroup();
 

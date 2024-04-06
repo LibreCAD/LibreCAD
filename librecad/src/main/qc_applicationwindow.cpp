@@ -2881,15 +2881,15 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
     RS_SETTINGS->beginGroup("Colors");
-    QColor background(RS_SETTINGS->readEntry("/background", Colors::background));
-    QColor gridColor(RS_SETTINGS->readEntry("/grid", Colors::grid));
-    QColor metaGridColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
-    QColor selectedColor(RS_SETTINGS->readEntry("/select", Colors::select));
-    QColor highlightedColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight));
-    QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
-    QColor handleColor(RS_SETTINGS->readEntry("/handle", Colors::handle));
-	QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    QColor relativeZeroColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor));
+    QColor background(RS_SETTINGS->readEntry("/background", RS_Settings::background));
+    QColor gridColor(RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
+    QColor metaGridColor(RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
+    QColor selectedColor(RS_SETTINGS->readEntry("/select", RS_Settings::select));
+    QColor highlightedColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle));
+    QColor handleColor(RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
+    QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
+    QColor relativeZeroColor(RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Appearance");
