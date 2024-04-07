@@ -83,6 +83,7 @@ greaterThan( QT_MAJOR_VERSION, 5) {
     }
 }
 
+DEFINES += MUPARSER_STATIC
 # RVT July 12 2015, I believe we need these here
 #macx{
 #    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8
