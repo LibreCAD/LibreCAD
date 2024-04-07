@@ -374,10 +374,11 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_library->resize(240, 400);
 
     QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
-    dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
+    command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
