@@ -38,9 +38,9 @@ class QG_LineTypeBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_LineTypeBox(QWidget* parent=0);
+    QG_LineTypeBox(QWidget* parent=nullptr);
     QG_LineTypeBox(bool showByLayer, bool showUnchanged, 
-		QWidget* parent=0, const char* name=0);
+        QWidget* parent=nullptr, const char* name=nullptr);
     virtual ~QG_LineTypeBox();
 
     RS2::LineType getLineType() {
@@ -62,10 +62,10 @@ signals:
     void lineTypeChanged(RS2::LineType);
 
 private:
-    RS2::LineType currentLineType;
-    bool showByLayer;
-	bool showUnchanged;
-	bool unchanged;
+    RS2::LineType currentLineType = RS2::SolidLine;
+    bool showByLayer = false;
+    bool showUnchanged = false;
+    bool unchanged = false;
 };
 
 #endif

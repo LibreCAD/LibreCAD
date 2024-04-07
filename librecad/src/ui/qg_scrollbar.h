@@ -38,12 +38,12 @@ class QG_ScrollBar: public QScrollBar {
     Q_OBJECT
 
 public:
-    QG_ScrollBar(QWidget* parent=0)
+    QG_ScrollBar(QWidget* parent=nullptr)
             : QScrollBar(parent) {
         sizeHintCache = QScrollBar::sizeHint();
     }
     QG_ScrollBar(Qt::Orientation orientation,
-                 QWidget* parent=0)
+                 QWidget* parent=nullptr)
             : QScrollBar(orientation, parent) {
         sizeHintCache = QScrollBar::sizeHint();
     }
@@ -66,8 +66,7 @@ public slots:
     }
 
 private:
-    QSize sizeHintCache;
-
+    QSize sizeHintCache{};
 };
 
 #endif

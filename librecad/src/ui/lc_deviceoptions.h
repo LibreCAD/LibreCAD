@@ -19,7 +19,7 @@ public slots:
     void save();
 
 private:
-    Ui::LC_DeviceOptions* ui;
+    Ui::LC_DeviceOptions* ui = nullptr;
 };
 
 #endif // LC_DEVICEOPTIONS_H

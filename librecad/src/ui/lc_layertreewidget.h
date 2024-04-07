@@ -25,18 +25,18 @@
 #ifndef LC_LAYERTREEWIDGET_H
 #define LC_LAYERTREEWIDGET_H
 
-#include <QWidget>
-#include <QIcon>
-#include <QAbstractTableModel>
-#include <QItemSelection>
-#include <QCheckBox>
 #include <QAbstractItemView>
-#include <rs_debug.h>
-#include <rs_graphicview.h>
-#include <rs_document.h>
+#include <QAbstractTableModel>
+#include <QCheckBox>
+#include <QIcon>
+#include <QItemSelection>
+#include <QWidget>
 
-#include "rs_layerlistlistener.h"
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_graphicview.h"
 #include "rs_layerlist.h"
+#include "rs_layerlistlistener.h"
 #include "lc_layertreemodel.h"
 
 class QTreeView;

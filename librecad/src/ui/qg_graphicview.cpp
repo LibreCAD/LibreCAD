@@ -50,7 +50,6 @@
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomscroll.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_math.h"

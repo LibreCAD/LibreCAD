@@ -28,7 +28,6 @@
 #define RS_STATICGRAPHICVIEW_H
 
 #include "rs_graphicview.h"
-//#include "rs_layerlistlistener.h"
 
 /**
  * This is an implementation of a graphic viewer with a fixed size

@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
+#include <QKeyEvent>
 #include "rs_graphicview.h"
 
-#include <QKeyEvent>
 
 #include "rs_actioninterface.h"
 #include "rs_commands.h"

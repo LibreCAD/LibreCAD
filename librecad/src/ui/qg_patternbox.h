@@ -38,7 +38,7 @@ class QG_PatternBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_PatternBox(QWidget* parent=0);
+    QG_PatternBox(QWidget* parent=nullptr);
     virtual ~QG_PatternBox();
 
 	RS_Pattern* getPattern();
@@ -54,7 +54,7 @@ signals:
 	void patternChanged();
 
 private:
-    RS_Pattern* currentPattern;
+    RS_Pattern* currentPattern = nullptr;
 };
 
 #endif

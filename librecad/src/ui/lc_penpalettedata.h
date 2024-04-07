@@ -110,7 +110,7 @@ private:
     /**
      *reference to options
      */
-    LC_PenPaletteOptions *options;
+    LC_PenPaletteOptions *options = nullptr;
     void createDefaultPens();
     LC_PenItem *doCreateNewDefaultPenItem(QString penName, RS2::LineType lineType, RS2::LineWidth lineWidth, RS_Color color);
     void emitDataChange();

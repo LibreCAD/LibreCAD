@@ -29,9 +29,9 @@
 
 #include <QWidget>
 
+#include "rs_blocklistlistener.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
-#include "rs_blocklistlistener.h"
 
 class QGridLayout;
 class QLabel;
