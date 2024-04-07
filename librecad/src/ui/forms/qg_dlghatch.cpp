@@ -49,6 +49,7 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
     init();
 }
 
+QG_DlgHatch::~QG_DlgHatch() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -64,8 +65,8 @@ void QG_DlgHatch::init() {
 	hatch = nullptr;
     isNew = false;
 
-    preview = new RS_EntityContainer();
-    gvPreview->setContainer(preview);
+    preview = std::make_unique<RS_EntityContainer>();
+    gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
     gvPreview->addScrollbars();
 
@@ -83,10 +84,6 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-QG_DlgHatch::~QG_DlgHatch()
-{
-    delete preview;
-}
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
@@ -174,7 +171,7 @@ void QG_DlgHatch::updatePreview() {
 
     preview->clear();
 
-    RS_Hatch* prevHatch = new RS_Hatch(preview,
+    RS_Hatch* prevHatch = new RS_Hatch(preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
     prevHatch->setPen(hatch->getPen());
 

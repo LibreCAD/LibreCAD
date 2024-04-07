@@ -43,10 +43,7 @@ QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_SnapDistOptions::~QG_SnapDistOptions()
-{
-	saveSettings();
-}
+QG_SnapDistOptions::~QG_SnapDistOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -79,7 +76,9 @@ void QG_SnapDistOptions::setDist(double& d, bool initial) {
 
 void QG_SnapDistOptions::updateDist(const QString& d) {
     if (dist) {
-        *dist = RS_Math::eval(d, 1.0);/*
+        *dist = RS_Math::eval(d, 1.0);
+        saveSettings();
+        /*
         //a brutal force
         //todo cleanup distance value for rs_snapper
     RS_SETTINGS->beginGroup("/Snap");

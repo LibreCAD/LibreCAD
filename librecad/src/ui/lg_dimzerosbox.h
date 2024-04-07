@@ -33,7 +33,7 @@ public:
     int getData();
 private:
     QStandardItemModel *model = nullptr;
-    QListView *view;
+    QListView *view = nullptr;
     bool dimLine =false;
     int convertDimZin(int v, bool toIdx);
 };

@@ -52,6 +52,12 @@
    </property>
    <item row="0" column="0">
     <widget class="QLabel" name="lLabel">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>46</width>
@@ -80,6 +86,12 @@
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="lLabelLength">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
        <width>60</width>
@@ -108,6 +120,12 @@
    </item>
    <item row="1" column="0">
     <widget class="QLabel" name="lEntities">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>120</width>
@@ -140,6 +158,12 @@ p, li { white-space: pre-wrap; }
    </item>
    <item row="1" column="1">
     <widget class="QLabel" name="lTotalLength">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>120</width>

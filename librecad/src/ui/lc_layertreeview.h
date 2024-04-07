@@ -25,12 +25,13 @@
 #ifndef LC_LAYERWIDGETTREEVIEW_H
 #define LC_LAYERWIDGETTREEVIEW_H
 
-#include "lc_layertreemodel.h"
-#include "lc_layertreemodel_options.h"
-
 #include <QPainter>
 #include <QTreeView>
 #include <qstyleditemdelegate.h>
+
+#include "lc_layertreemodel.h"
+#include "lc_layertreemodel_options.h"
+
 
 class LC_LayerTreeView:public QTreeView{
 public:

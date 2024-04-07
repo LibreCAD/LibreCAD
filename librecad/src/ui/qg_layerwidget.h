@@ -161,13 +161,13 @@ protected:
     virtual void keyPressEvent(QKeyEvent* e) override;
 
 private:
-    RS_LayerList* layerList;
+    RS_LayerList* layerList = nullptr;
     bool showByBlock = false;
-    QLineEdit* matchLayerName;
-    QTableView* layerView;
-    QG_LayerModel *layerModel;
-    RS_Layer* lastLayer;
-    QG_ActionHandler* actionHandler;
+    QLineEdit* matchLayerName = nullptr;
+    QTableView* layerView = nullptr;
+    QG_LayerModel *layerModel = nullptr;
+    RS_Layer* lastLayer = nullptr;
+    QG_ActionHandler* actionHandler = nullptr;
 
     void restoreSelections();
 };

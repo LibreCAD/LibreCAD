@@ -28,8 +28,8 @@
 #define QG_COMMANDEDIT_H
 
 #include <QLineEdit>
-#include <QString>
 #include <QMap>
+#include <QString>
 
 /**
  * A command line edit with some typical console features
@@ -61,6 +61,7 @@ protected:
     void processVariable(QString input);
 
 signals:
+    void spacePressed();
     void tabPressed();
     void escape();
     void focusIn();

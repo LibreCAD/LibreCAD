@@ -45,11 +45,7 @@ QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_RoundOptions::~QG_RoundOptions()
-{
-	saveSettings();
-}
-
+QG_RoundOptions::~QG_RoundOptions() = default;
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
@@ -95,5 +91,6 @@ void QG_RoundOptions::updateData() {
     if (action) {
 		action->setTrim(ui->cbTrim->isChecked());
 		action->setRadius(RS_Math::eval(ui->leRadius->text()));
+        saveSettings();
     }
 }

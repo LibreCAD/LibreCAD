@@ -28,13 +28,15 @@
 // qg_actionfactory contributors:
 // Andrew Mustun, Claude Sylvain, R. van Twisk, Dongxu Li, Rallaz, Armin Stebich, ravas, korhadris
 
+#include <QAction>
+#include <QActionGroup>
+
 #include "lc_actionfactory.h"
 #include "lc_actiongroupmanager.h"
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
+#include "rs_settings.h"
 
-#include <QAction>
-#include <QActionGroup>
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : QObject(parent)
@@ -1198,7 +1200,9 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("Focus on &Command Line"), agm->view);
     action->setIcon(QIcon(":/main/editclear.png"));
     QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts<<QKeySequence(Qt::CTRL + Qt::Key_M)<<QKeySequence(Qt::Key_Colon)<<QKeySequence(Qt::Key_Space);
+    commandLineShortcuts<<QKeySequence(Qt::CTRL | Qt::Key_M)<<QKeySequence(Qt::Key_Colon);
+    if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
+        commandLineShortcuts<<QKeySequence(Qt::Key_Space);
     action->setShortcuts(commandLineShortcuts);
     connect(action, SIGNAL(triggered()), main_window, SLOT(slotFocusCommandLine()));
     action->setObjectName("FocusCommand");

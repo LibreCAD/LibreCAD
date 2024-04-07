@@ -725,16 +725,26 @@ QString RS_System::languageToSymbol(const QString& lang) {
 QString RS_System::symbolToLanguage(const QString& symb) {
     RS_Locale loc( symb);
     QString ret;
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+    QString territory = RS_Locale::territoryToString(loc.territory());
+#else
+    QString territory = RS_Locale::countryToString(loc.country());
+#endif
+
     if (symb.contains( QRegExp( "^en"))) {
         ret = RS_Locale::languageToString( loc.language());
         if( symb.contains('_') ) {
-            ret += " (" + RS_Locale::countryToString( loc.country()) + ')';
+            ret += " (" + territory + ')';
         }
     }
     else {
         ret = RS_Locale::languageToString( loc.language()) + ' ' + loc.nativeLanguageName();
         if( symb.contains( '_') ) {
-            ret += " (" + RS_Locale::countryToString( loc.country()) + ' ' + loc.nativeCountryName() + ')';
+#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+            ret += " (" + territory + ' ' + loc.nativeTerritoryName() + ')';
+#else
+            ret += " (" + territory + ' ' + loc.nativeCountryName() + ')';
+#endif
         }
     }
 

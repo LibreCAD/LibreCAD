@@ -44,10 +44,7 @@ QG_DimOptions::QG_DimOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DimOptions::~QG_DimOptions()
-{
-	saveSettings();
-}
+QG_DimOptions::~QG_DimOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -110,6 +107,7 @@ void QG_DimOptions::updateLabel() {
 		action->setTol2(ui->leTol2->text());
 
         action->setText(action->getText());
+        saveSettings();
   }
 }
 

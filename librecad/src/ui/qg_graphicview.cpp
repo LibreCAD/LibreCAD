@@ -35,6 +35,8 @@
 #include <QPoint>
 #include <QTimer>
 
+#include "qc_applicationwindow.h"
+
 #include "qg_graphicview.h"
 
 #include "qg_dialogfactory.h"
@@ -48,7 +50,6 @@
 #include "rs_actionzoompan.h"
 #include "rs_actionzoomscroll.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
@@ -345,9 +346,9 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(const QString& text)
+void QG_GraphicView::updateGridStatusWidget(QString text)
 {
-   emit gridStatusChanged(text);
+    emit gridStatusChanged(std::move(text));
 }
 
 
@@ -444,8 +445,13 @@ void QG_GraphicView::mouseReleaseEvent(QMouseEvent* event)
                 context_menu->setAttribute(Qt::WA_DeleteOnClose);
                 if (!recent_actions.empty())
                     context_menu->addActions(recent_actions);
+
                 // "Edit Entity" entry
                 addEditEntityEntry(event, *context_menu);
+                // Add drawing preferences
+                QAction* OptionsDrawing = QC_ApplicationWindow::getAppWindow()->getAction("OptionsDrawing");
+                if (OptionsDrawing != nullptr)
+                    context_menu->addAction(OptionsDrawing);
                 if (!context_menu->isEmpty())
                     context_menu->exec(mapToGlobal(event->pos()));
                 else

@@ -46,10 +46,7 @@ QG_LibraryInsertOptions::QG_LibraryInsertOptions(QWidget* parent, Qt::WindowFlag
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LibraryInsertOptions::~QG_LibraryInsertOptions()
-{
-	saveSettings();
-}
+QG_LibraryInsertOptions::~QG_LibraryInsertOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -95,5 +92,6 @@ void QG_LibraryInsertOptions::updateData() {
     if (action) {
 		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
 		action->setFactor(RS_Math::eval(ui->leFactor->text()));
+        saveSettings();
     }
 }

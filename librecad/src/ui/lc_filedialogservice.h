@@ -30,9 +30,9 @@
 #pragma once
 #endif // _MSC_VER > 1000
 
-#include "rs.h"
+#include <QString>
 
-class QString;
+#include "rs.h"
 
 /*
     This service class centralizes the file I/O user interface.

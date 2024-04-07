@@ -46,10 +46,7 @@ QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineAngleOptions::~QG_LineAngleOptions()
-{
-	saveSettings();
-}
+QG_LineAngleOptions::~QG_LineAngleOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -76,14 +73,13 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 
         QString sa;
         QString sl;
-        int sp;
 
         // settings from action:
         if (update && action->getLength() > RS_TOLERANCE) {
 			if (!action->hasFixedAngle())
                 sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
-			sp = action->getSnapPoint();
+            m_snapPoint = action->getSnapPoint();
         } else {
         // settings from config file:
             RS_SETTINGS->beginGroup("/Draw");
@@ -93,14 +89,14 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
                 sa = QString("%1").arg(action->getAngle());
             }
             sl = RS_SETTINGS->readEntry("/LineAngleLength", "10.0");
-            sp = RS_SETTINGS->readNumEntry("/LineAngleSnapPoint", 0);
+            m_snapPoint = RS_SETTINGS->readNumEntry("/LineAngleSnapPoint", 0);
             RS_SETTINGS->endGroup();
-			action->setSnapPoint(sp);
+            action->setSnapPoint(m_snapPoint);
         }
 
 		ui->leAngle->setText(sa);
 		ui->leLength->setText(sl);
-				ui->cbSnapPoint->setCurrentIndex(sp);
+		ui->cbSnapPoint->setCurrentIndex(m_snapPoint);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, 
 			"QG_LineAngleOptions::setAction: wrong action type");
@@ -114,12 +110,16 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_LineAngleOptions::saveSettings() {
    if (action) {
        RS_SETTINGS->beginGroup("/Draw");
-       if (!action->hasFixedAngle()) {
-           RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
+       bool okay=false;
+       if (!m_bFixedAngle) {
+	       double angle=RS_Math::eval(ui->leAngle->text(), &okay);
+	       if (okay)
+		   RS_SETTINGS->writeEntry("/LineAngleAngle", angle);
        }
-       if (action->getLength() > RS_TOLERANCE)
-           RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
-       RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
+       double length = RS_Math::eval(ui->leLength->text(), &okay);
+       if (okay && length > RS_TOLERANCE)
+           RS_SETTINGS->writeEntry("/LineAngleLength", length);
+       RS_SETTINGS->writeEntry("/LineAngleSnapPoint", m_snapPoint);
        RS_SETTINGS->endGroup();
    }
 }
@@ -127,6 +127,7 @@ void QG_LineAngleOptions::saveSettings() {
 void QG_LineAngleOptions::updateAngle(const QString& a) {
     if (action && !action->hasFixedAngle()) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+        saveSettings();
     }
 }
 
@@ -135,11 +136,13 @@ void QG_LineAngleOptions::updateLength(const QString& l) {
         bool ok(false);
         double length=RS_Math::eval(l,&ok);
         if(ok) action->setLength(length);
+        saveSettings();
     }
 }
 
 void QG_LineAngleOptions::updateSnapPoint(int sp) {
     if (action) {
         action->setSnapPoint(sp);
+        saveSettings();
     }
 }

@@ -549,7 +549,7 @@ dwgHandle dwgBuffer::getOffsetHandle(duint32 href){ //H
         else if (hl.code == 0x06)
             hl.ref = href + 1;
 //all are soft pointer reference change to 7 (without offset)
-            hl.code = 7;
+        hl.code = 7;
     }
     return hl;
 }

@@ -13,8 +13,8 @@ class LC_DockWidget : public QDockWidget
 public:
     LC_DockWidget(QWidget* parent);
 
-    QFrame* frame;
-    QGridLayout* grid;
+    QFrame* frame = nullptr;
+    QGridLayout* grid = nullptr;
 
     void add_actions(const QList<QAction*>& list, int columns, int icon_size);
 };

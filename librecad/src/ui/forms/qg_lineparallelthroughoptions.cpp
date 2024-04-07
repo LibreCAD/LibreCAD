@@ -44,10 +44,7 @@ QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineParallelThroughOptions::~QG_LineParallelThroughOptions()
-{
-	saveSettings();
-}
+QG_LineParallelThroughOptions::~QG_LineParallelThroughOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -88,5 +85,6 @@ void QG_LineParallelThroughOptions::setAction(RS_ActionInterface* a, bool update
 void QG_LineParallelThroughOptions::updateNumber(int n) {
     if (action) {
         action->setNumber(n);
+        saveSettings();
     }
 }

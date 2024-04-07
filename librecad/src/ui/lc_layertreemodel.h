@@ -25,15 +25,16 @@
 #ifndef LC_LAYERTREEMODEL_H
 #define LC_LAYERTREEMODEL_H
 
+#include <QAbstractTableModel>
+#include <QIcon>
+#include <QItemSelection>
+#include <QRegularExpression>
+#include <QWidget>
+
 #include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
-
-#include <QWidget>
-#include <QIcon>
-#include <QAbstractTableModel>
-#include <QItemSelection>
-#include <rs_layer.h>
-#include <rs_layerlist.h>
+#include "rs_layer.h"
+#include "rs_layerlist.h"
 
 /**
  * Model used by layers tree
@@ -47,9 +48,8 @@ public:
         EMPTY, VISIBLE, LOCKED, PRINT, CONSTRUCTION, COLOR_SAMPLE, NAME, LAST
     };
     // the default icon size
-    constexpr static int ICONWIDTH = 24;
+    static constexpr int ICONWIDTH = 24;
     explicit LC_LayerTreeModel(QObject *parent, LC_LayerTreeModelOptions *options);
-    ~LC_LayerTreeModel() override = default;
     Qt::ItemFlags flags(const QModelIndex &index) const override;
     int columnCount(const QModelIndex &parent) const override;
     int rowCount(const QModelIndex &parent) const override;
@@ -122,7 +122,7 @@ private:
     int maxIndent{0};
 
     // filtering/highlight regexp value
-    QRegExp filteringRegexp{""};
+    QRegularExpression filteringRegexp{""};
 
     // flat that controls whether regexp should be applied
     bool hasRegexp{false};
@@ -134,11 +134,11 @@ private:
     LC_LayerTreeItem *currentlyDraggingItem{nullptr};
 
     // root item for layers hierarchy
-    LC_LayerTreeItem *rootItem;
+    LC_LayerTreeItem *rootItem = nullptr;
 
     bool flatMode{false};
 
-    LC_LayerTreeModelOptions* options;
+    LC_LayerTreeModelOptions* options = nullptr;
     void copyChildrenLayers(LC_LayerTreeItem *parent, int newParentLayerType, QHash<RS_Layer *, RS_Layer *> &result);
 };
 

@@ -44,10 +44,7 @@ QG_LinePolygon2Options::QG_LinePolygon2Options(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LinePolygon2Options::~QG_LinePolygon2Options()
-{
-	saveSettings();
-}
+QG_LinePolygon2Options::~QG_LinePolygon2Options() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -88,5 +85,6 @@ void QG_LinePolygon2Options::setAction(RS_ActionInterface* a, bool update) {
 void QG_LinePolygon2Options::updateNumber(int n) {
     if (action) {
         action->setNumber(n);
+        saveSettings();
     }
 }

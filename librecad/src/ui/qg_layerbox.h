@@ -39,7 +39,7 @@ class QG_LayerBox: public QComboBox {
     Q_OBJECT
 
 public:
-    QG_LayerBox(QWidget* parent=0);
+    QG_LayerBox(QWidget* parent=nullptr);
     virtual ~QG_LayerBox();
 
     RS_Layer* getLayer() {
@@ -61,11 +61,11 @@ signals:
     void layerChanged(RS_Layer* layer);
 
 private:
-    RS_LayerList* layerList;
-    RS_Layer* currentLayer;
-    bool showByBlock;
-    bool showUnchanged;
-	bool unchanged;
+    RS_LayerList* layerList = nullptr;
+    RS_Layer* currentLayer = nullptr;
+    bool showByBlock = false;
+    bool showUnchanged = false;
+    bool unchanged = false;
 };
 
 #endif

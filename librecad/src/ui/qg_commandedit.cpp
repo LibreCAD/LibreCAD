@@ -61,9 +61,17 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
 bool QG_CommandEdit::event(QEvent* e) {
     if (e->type()==QEvent::KeyPress) {
         QKeyEvent* k = (QKeyEvent*)e;
-        if (k->key()==Qt::Key_Tab) {
+        switch(k->key()) {
+        case Qt::Key_Tab:
             emit tabPressed();
             return true;
+            // case Qt::Key_Space:
+            // if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+            //     emit spacePressed();
+            // }
+            // break;
+        default:
+            break;
         }
     }
 
@@ -149,8 +157,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
         processInput(text());
         break;
     case Qt::Key_Space:
-        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true) ||
-                (text().isEmpty() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true)))
+        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true))
             processInput(text());
         else if (!text().isEmpty())
             QLineEdit::keyPressEvent(e);
@@ -231,6 +238,8 @@ void QG_CommandEdit::processInput(QString input)
 
         historyList.append(input);
         it = historyList.end();
+    } else if (input == "") {
+        emit command("");
     }
     clear();
 }

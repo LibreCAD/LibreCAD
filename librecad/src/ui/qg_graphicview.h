@@ -29,9 +29,9 @@
 
 #include <QWidget>
 
+#include "rs_blocklistlistener.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
-#include "rs_blocklistlistener.h"
 
 class QGridLayout;
 class QLabel;
@@ -63,7 +63,7 @@ public:
 	void adjustZoomControls() override;
 	void setBackground(const RS_Color& bg) override;
 	void setMouseCursor(RS2::CursorType c) override;
-	void updateGridStatusWidget(const QString& text) override;
+	void updateGridStatusWidget(QString text) override;
 
 	virtual	void getPixmapForView(std::unique_ptr<QPixmap>& pm);
 		
@@ -175,7 +175,7 @@ private:
 
 signals:
     void xbutton1_released();
-    void gridStatusChanged(const QString&);
+    void gridStatusChanged(QString);
 };
 
 #endif

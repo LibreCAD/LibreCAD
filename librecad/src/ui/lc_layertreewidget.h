@@ -25,20 +25,19 @@
 #ifndef LC_LAYERTREEWIDGET_H
 #define LC_LAYERTREEWIDGET_H
 
-#include <QWidget>
-#include <QIcon>
-#include <QAbstractTableModel>
-#include <QItemSelection>
-#include <QCheckBox>
 #include <QAbstractItemView>
-#include <rs_debug.h>
-#include <rs_graphicview.h>
-#include <rs_document.h>
+#include <QAbstractTableModel>
+#include <QCheckBox>
+#include <QIcon>
+#include <QItemSelection>
+#include <QWidget>
 
-#include "rs_layerlistlistener.h"
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_graphicview.h"
 #include "rs_layerlist.h"
+#include "rs_layerlistlistener.h"
 #include "lc_layertreemodel.h"
-#include "lc_layertreemodel_options.h"
 
 class QTreeView;
 class QLayout;
@@ -126,21 +125,21 @@ protected:
     void duplicateSelectionToLayer();
 
 private:
-    RS_LayerList *layerList;
-    QLineEdit *matchLayerName;
-    QCheckBox *matchModeCheckBox;
-    LC_LayerTreeView *layerTreeView;
-    LC_LayerTreeModel *layerTreeModel;
-    RS_GraphicView *view;
-    RS_Document *document;
-    QG_ActionHandler *actionHandler;
+    RS_LayerList *layerList = nullptr;
+    QLineEdit *matchLayerName = nullptr;
+    QCheckBox *matchModeCheckBox = nullptr;
+    LC_LayerTreeView *layerTreeView = nullptr;
+    LC_LayerTreeModel *layerTreeModel = nullptr;
+    RS_GraphicView *view = nullptr;
+    RS_Document *document = nullptr;
+    QG_ActionHandler *actionHandler = nullptr;
     bool flatListMode{false};
-    QToolButton *btnCollapseSecondary;
-    QToolButton *btnCollapseAll;
-    QToolButton *btnExpandAll;
-    QToolButton *btnListMode;
-    QToolButton *btnShowSecondaryLayers;
-    QToolButton *btnAddDimensional;
+    QToolButton *btnCollapseSecondary = nullptr;
+    QToolButton *btnCollapseAll = nullptr;
+    QToolButton *btnExpandAll = nullptr;
+    QToolButton *btnListMode = nullptr;
+    QToolButton *btnShowSecondaryLayers = nullptr;
+    QToolButton *btnAddDimensional = nullptr;
 
     /*
     * layer activation is invoked from the widget, by click on item.

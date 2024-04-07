@@ -1,6 +1,7 @@
 #ifndef COLORWIZARD_H
 #define COLORWIZARD_H
 
+#include <memory>
 #include <QFrame>
 #include <QColor>
 
@@ -22,7 +23,7 @@ public:
     void addFavorite(QString color);
 
 private:
-    Ui::ColorWizard* ui;
+    std::unique_ptr<Ui::ColorWizard> ui;
 
 signals:
     void requestingColorChange(QColor);

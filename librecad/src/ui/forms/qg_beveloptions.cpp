@@ -45,9 +45,7 @@ QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_BevelOptions::~QG_BevelOptions() {
-	saveSettings();
-}
+QG_BevelOptions::~QG_BevelOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -99,5 +97,6 @@ void QG_BevelOptions::updateData() {
 		action->setTrim(ui->cbTrim->isChecked());
 		action->setLength1(RS_Math::eval(ui->leLength1->text()));
 		action->setLength2(RS_Math::eval(ui->leLength2->text()));
+        saveSettings();
     }
 }

@@ -527,6 +527,7 @@ RS_Entity& LC_Parabola::shear(double k)
     for(auto& point: data.controlPoints)
         point.shear(k);
     update();
+    return *this;
 }
 
 void LC_Parabola::moveRef(const RS_Vector& ref, const RS_Vector& offset)

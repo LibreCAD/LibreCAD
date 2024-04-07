@@ -29,6 +29,7 @@
 #include <iostream>
 
 #include <QDateTime>
+#include <QIODevice>
 #include <QString>
 
 #include "rs_debug.h"
@@ -55,8 +56,8 @@ RS_Debug* RS_Debug::instance() {
                 //QString fName = QString("%1/debug_%2.log")
 		//	.arg(RS_SYSTEM->getHomeDir())
 		//	.arg(nowStr);
-                QString fName = QString("debug_%1.log")
-			.arg(nowStr);
+                // QString fName = QString("debug_%1.log")
+            // .arg(nowStr);
 
         uniqueInstance = new RS_Debug;
         //uniqueInstance->stream = fopen(fName.latin1(), "wt");

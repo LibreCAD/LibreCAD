@@ -36,8 +36,8 @@
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_polyline.h"
 #include "rs_painterqt.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {

@@ -45,10 +45,7 @@ QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineBisectorOptions::~QG_LineBisectorOptions()
-{
-	saveSettings();
-}
+QG_LineBisectorOptions::~QG_LineBisectorOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -93,11 +90,13 @@ void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_LineBisectorOptions::updateLength(const QString& l) {
     if (action) {
         action->setLength(RS_Math::eval(l));
+        saveSettings();
     }
 }
 
 void QG_LineBisectorOptions::updateNumber(int n) {
     if (action) {
         action->setNumber(n);
+        saveSettings();
     }
 }

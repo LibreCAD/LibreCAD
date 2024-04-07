@@ -19,7 +19,7 @@ public:
 
 protected:
 
-    QMdiArea* mdi_area;
+    QMdiArea* mdi_area = nullptr;
 };
 
 #endif // LC_CENTRALWIDGET_H

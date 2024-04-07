@@ -25,7 +25,8 @@
 #define LC_PENPALETTEOPTIONSDIALOG_H
 
 #include <QDialog>
-#include <ui_lc_penpaletteoptionsdialog.h>
+
+#include "ui_lc_penpaletteoptionsdialog.h"
 #include "lc_penpaletteoptions.h"
 
 class LC_PenPaletteOptionsDialog : public QDialog, public Ui::LC_PenPaletteOptionsDialog
@@ -44,7 +45,7 @@ private:
     void selectActivePenBGColor();
     void set_color(QComboBox *combo, QColor &custom);
     void initComboBox(QComboBox *cb, const QColor &color);
-    LC_PenPaletteOptions* options;
+    LC_PenPaletteOptions* options = nullptr;
     void selectGridColor();
     void selectMatchedItemColor();
     void setPensFile();

@@ -272,6 +272,7 @@ RS_Entity& RS_ConstructionLine::shear(double k)
 {
     data.point1.shear(k);
     data.point2.shear(k);
+    return *this;
 }
 
 /**

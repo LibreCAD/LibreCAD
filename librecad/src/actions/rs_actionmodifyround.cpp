@@ -52,7 +52,6 @@ EntityTypeList eType = {{RS2::EntityLine,
 bool atEndPoint(RS_Entity &entity, const RS_Vector &point)
 {
     double distance = 1.;
-    RS_Vector endPoint;
     entity.getNearestEndpoint(point, &distance);
     return distance < RS_TOLERANCE;
 }

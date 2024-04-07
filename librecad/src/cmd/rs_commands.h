@@ -30,10 +30,10 @@
 #define RS_COMMANDS_H
 
 #include <map>
-#include "rs.h"
 
-class QString;
-class QStringList;
+#include <QtCore/qcontainerfwd.h>
+
+#include "rs.h"
 
 #define RS_COMMANDS RS_Commands::instance()
 

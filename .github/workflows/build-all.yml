@@ -6,12 +6,10 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-22.04
-    env:
-      platform_version: 22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -70,7 +68,7 @@ jobs:
     runs-on: macos-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -100,7 +98,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -193,7 +191,7 @@ jobs:
     runs-on: windows-2019
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
@@ -285,10 +283,10 @@ jobs:
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
     needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@main
         with:
           fetch-depth: 0
 
