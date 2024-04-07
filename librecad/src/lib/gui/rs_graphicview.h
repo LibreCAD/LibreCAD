@@ -282,7 +282,7 @@ public:
 	virtual void drawOverlay(RS_Painter *painter);
 
 	RS_Grid* getGrid() const;
-    virtual void updateGridStatusWidget(const QString& /*text*/) = 0;
+    virtual void updateGridStatusWidget(QString) = 0;
 
 	void setDefaultSnapMode(RS_SnapMode sm);
 	RS_SnapMode getDefaultSnapMode() const;

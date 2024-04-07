@@ -347,9 +347,9 @@ void QG_GraphicView::setMouseCursor(RS2::CursorType cursorType) {
 /**
  * Sets the text for the grid status widget in the left bottom corner.
  */
-void QG_GraphicView::updateGridStatusWidget(const QString& text)
+void QG_GraphicView::updateGridStatusWidget(QString text)
 {
-   emit gridStatusChanged(text);
+    emit gridStatusChanged(std::move(text));
 }
 
 

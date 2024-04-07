@@ -547,7 +547,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	{
 		RS_DEBUG->print("QC_ApplicationWindow::doClose closing graphic");
 	}
-	for (auto child : w->getChildWindows()) // block editors and print previews; just force these closed
+    foreach (auto&& child, w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
 	mdiAreaCAD->removeSubWindow(w);
@@ -1539,8 +1539,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         view->setMenu(activator, menu);
     }
 
-    connect(view, SIGNAL(gridStatusChanged(const QString&)),
-            this, SLOT(updateGridStatus(const QString&)));
+    connect(view, SIGNAL(gridStatusChanged(QString)),
+            this, SLOT(updateGridStatus(QString)));
 
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());

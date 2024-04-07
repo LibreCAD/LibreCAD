@@ -45,7 +45,7 @@ public:
 	void adjustZoomControls() override{}
 	void setMouseCursor(RS2::CursorType ) override{}
 
-	void updateGridStatusWidget(const QString& ) override{}
+    void updateGridStatusWidget(QString) override{}
 	RS_Vector getMousePosition() const override;
 
     void paint();
