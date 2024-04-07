@@ -72,18 +72,14 @@ bool RS_Font::loadFont() {
     QString path;
 
     // Search for the appropriate font if we have only the name of the font:
-    if (!fileName.toLower().contains(".cxf") &&
-            !fileName.toLower().contains(".lff")) {
+    if (!fileName.contains(".cxf", Qt::CaseInsensitive) &&
+        !fileName.contains(".lff", Qt::CaseInsensitive)) {
         QStringList fonts = RS_SYSTEM->getNewFontList();
         fonts.append(RS_SYSTEM->getFontList());
 
-        QFileInfo file;
-        for (QStringList::Iterator it = fonts.begin();
-             it!=fonts.end();
-             it++) {
-
-            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
-                path = *it;
+        for (const QString& font: fonts) {
+            if (QFileInfo(font).baseName().toLower()==fileName.toLower()) {
+                path = font;
                 break;
             }
         }

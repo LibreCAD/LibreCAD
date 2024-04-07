@@ -75,6 +75,13 @@ public:
     }
 
     /**
+     * @return Users home directory.
+     */
+    QString getTempDir() {
+        return QDir::tempPath();
+    }
+
+    /**
      * @return Current directory.
      */
     QString getCurrentDir() {
