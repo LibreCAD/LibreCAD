@@ -41,9 +41,6 @@
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
 #include "qg_commandwidget.h"
-#include "qg_selectionwidget.h"
-#include "qg_activelayername.h"
-#include "qg_mousewidget.h"
 #include "qg_pentoolbar.h"
 
 #include "rs_debug.h"
@@ -314,7 +311,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
 {
     QDockWidget* dock_pen_palette = nullptr;
     if (usePenPallet()) {
-        QDockWidget* dock_pen_palette = new QDockWidget(main_window);
+        dock_pen_palette = new QDockWidget(main_window);
         dock_pen_palette->setWindowTitle(QC_ApplicationWindow::tr("Pen Palette"));
         dock_pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         dock_pen_palette->setObjectName("pen_palette_dockwidget");
@@ -323,7 +320,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
         connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
-        pen_palette->setVisible(false);
+        //pen_palette->setVisible(false);
         dock_pen_palette ->setWidget(pen_palette);
         //main_window->addDockWidget(Qt::RightDockWidgetArea, dock_pen_palette);
     }
@@ -337,9 +334,9 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
-
+    QDockWidget* dock_layer_tree = nullptr;
     if (usePenPallet()) {
-        QDockWidget* dock_layer_tree = new QDockWidget(main_window);
+        dock_layer_tree = new QDockWidget(main_window);
         dock_layer_tree->setWindowTitle(QC_ApplicationWindow::tr("Layer Tree"));
         dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         dock_layer_tree->setObjectName("layer_tree_dockwidget");
@@ -350,7 +347,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
         layer_tree_widget->setVisible(false);
         dock_layer_tree->setWidget(layer_tree_widget);
-        main_window->tabifyDockWidget(dock_layer, dock_layer_tree);
+        // main_window->tabifyDockWidget(dock_layer, dock_layer_tree);
     }
 
     QDockWidget* dock_block = new QDockWidget(main_window);
@@ -394,6 +391,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
+    main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
+    main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }
