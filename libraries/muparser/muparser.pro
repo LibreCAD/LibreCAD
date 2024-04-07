@@ -46,7 +46,3 @@ SOURCES += \
     src/muParserInt.cpp \
     src/muParser.cpp
 
-win32 {
-    HEADERS += include/muParserDLL.h
-    SOURCES += src/muParserDLL.cpp
-}
