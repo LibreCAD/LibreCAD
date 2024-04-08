@@ -75,5 +75,5 @@ RS2::LineWidth RS2::intToLineWidth(int w) {
     if (w <= 2)
         return Width00;
     auto it = g_int2LineWidth.find(w);
-    return (it != g_int2LineWidth.cend()) ? *it : Width00;
+    return (it != g_int2LineWidth.cend()) ? it->second : Width00;
 }
