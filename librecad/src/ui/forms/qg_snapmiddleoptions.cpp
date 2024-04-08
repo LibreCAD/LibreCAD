@@ -20,9 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QVariant>
 #include "qg_snapmiddleoptions.h"
 
-#include <QVariant>
 #include "ui_qg_snapmiddleoptions.h"
 
 /*

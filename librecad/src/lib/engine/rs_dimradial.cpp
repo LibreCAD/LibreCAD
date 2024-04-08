@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
-#include <iostream>
 #include <cmath>
+#include <iostream>
+
+#include "rs_debug.h"
 #include "rs_dimradial.h"
+#include "rs_graphic.h"
 #include "rs_line.h"
 #include "rs_mtext.h"
 #include "rs_solid.h"
-#include "rs_graphic.h"
-#include "rs_debug.h"
 #include "rs_units.h"
 
 RS_DimRadialData::RS_DimRadialData():

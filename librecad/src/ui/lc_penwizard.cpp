@@ -24,15 +24,16 @@
 **********************************************************************************
 */
 
-#include "lc_penwizard.h"
+#include <QVBoxLayout>
+
 
 #include "colorwizard.h"
+#include "lc_penwizard.h"
 #include "qc_mdiwindow.h"
-#include "rs_graphic.h"
-#include "rs_entity.h"
 #include "qg_graphicview.h"
+#include "rs_entity.h"
+#include "rs_graphic.h"
 
-#include <QVBoxLayout>
 
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)

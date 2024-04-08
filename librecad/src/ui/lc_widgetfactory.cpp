@@ -27,21 +27,22 @@
 #include <QMenuBar>
 #include <QActionGroup>
 #include <QDesktopServices>
-#include <lc_layertreewidget.h>
+
+#include "lc_actionfactory.h"
+#include "lc_actiongroupmanager.h"
+#include "lc_dockwidget.h"
+#include "lc_layertreewidget.h"
+#include "lc_widgetfactory.h"
 
 #include "qc_applicationwindow.h"
-#include "lc_widgetfactory.h"
-#include "lc_actionfactory.h"
-#include "lc_dockwidget.h"
-#include "lc_actiongroupmanager.h"
 
 #include "qg_actionhandler.h"
-#include "qg_snaptoolbar.h"
 #include "qg_blockwidget.h"
+#include "qg_commandwidget.h"
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
-#include "qg_commandwidget.h"
 #include "qg_pentoolbar.h"
+#include "qg_snaptoolbar.h"
 
 #include "rs_debug.h"
 #include "rs_settings.h"

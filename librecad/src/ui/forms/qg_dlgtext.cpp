@@ -30,7 +30,6 @@
 #include <QFileDialog>
 #include "rs_system.h"
 #include "rs_settings.h"
-#include "rs_font.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
 

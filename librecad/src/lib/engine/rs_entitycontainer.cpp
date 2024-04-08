@@ -46,7 +46,6 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_solid.h"
-#include "rs_spline.h"
 
 namespace {
 

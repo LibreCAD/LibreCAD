@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-#include <iostream>
 #include <QMap>
 #include <QApplication>
 #include <QTextCodec>

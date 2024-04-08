@@ -22,11 +22,11 @@
 **
 **********************************************************************/
 
+#include <QDragEnterEvent>
+
 #include "lc_layertreewidget.h"
 #include "lc_layertreeview.h"
-#include <rs_debug.h>
-
-#include <QDragEnterEvent>
+#include "rs_debug.h"
 
 LC_LayerTreeView::LC_LayerTreeView(QWidget *parent):QTreeView(parent){
 }

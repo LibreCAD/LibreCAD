@@ -26,7 +26,6 @@
 #include "qg_splineoptions.h"
 
 #include "rs_actiondrawspline.h"
-#include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
 #include "ui_qg_splineoptions.h"
 #include "rs_debug.h"

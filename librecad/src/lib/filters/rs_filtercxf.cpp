@@ -28,7 +28,6 @@
 #include <QStringList>
 #include "rs_filtercxf.h"
 
-#include <iostream>
 #include <fstream>
 
 #include "rs_arc.h"

@@ -28,7 +28,6 @@
 #include <QList>
 #include <QInputDialog>
 #include <QFileInfo>
-#include <iostream>
 #include "doc_plugin_interface.h"
 #include "rs_graphicview.h"
 #include "rs_actioninterface.h"

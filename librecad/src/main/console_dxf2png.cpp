@@ -31,15 +31,12 @@
 #include <QtCore>
 #include <QtSvg>
 
-#include "console_dxf2pdf.h"
-
 #include "main.h"
 
 #include "qc_applicationwindow.h"
 #include "qg_dialogfactory.h"
 
 #include "lc_actionfileexportmakercam.h"
-#include "lc_printing.h"
 #include "rs.h"
 #include "rs_debug.h"
 #include "rs_document.h"
