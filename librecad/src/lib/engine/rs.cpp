@@ -26,6 +26,7 @@
 **********************************************************************/
 
 #include<climits>
+#include<map>
 #include<vector>
 #include<utility>
 #include "rs.h"
@@ -71,7 +72,7 @@ const std::map<int, RS2::LineWidth> g_int2LineWidth = constructInt2LineWidth();
 
 RS2::LineWidth RS2::intToLineWidth(int w) {
     // for w < 3, return Width00
-    if (w <= 0)
+    if (w <= 2)
         return Width00;
     auto it = g_int2LineWidth.find(w);
     return (it != g_int2LineWidth.cend()) ? *it : Width00;
