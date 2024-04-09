@@ -50,7 +50,8 @@
 namespace {
     // only enable the penpallet by settings
     bool usePenPallet() {
-        return RS_SETTINGS->readNumEntry("/CustomToolbars/UsePenPallet", 0) == 1;
+        auto guard= RS_SETTINGS->beginGroupGuard("/CustomToolbars");
+        return RS_SETTINGS->readNumEntry("/UsePenPallet", 0) == 1;
     }
 } // namespace
 
@@ -393,8 +394,10 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
-    main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
-    main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    if (dock_pen_palette != nullptr && dock_layer_tree != nullptr) {
+        main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
+        main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    }
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }
