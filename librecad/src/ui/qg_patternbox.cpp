@@ -81,7 +81,7 @@ void QG_PatternBox::setPattern(const QString& pName) {
     slotPatternChanged(currentIndex());
 }
 
-RS_Pattern* QG_PatternBox::getPattern() {
+std::shared_ptr<RS_Pattern> QG_PatternBox::getPattern() {
 	if (currentPattern == nullptr || currentPattern->countDeep()==0)
 		currentPattern = RS_PATTERNLIST->requestPattern(currentText());
 	return currentPattern;

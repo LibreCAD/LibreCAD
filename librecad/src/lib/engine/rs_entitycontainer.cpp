@@ -1589,7 +1589,7 @@ bool RS_EntityContainer::optimizeContours() {
 
     /** accept all full circles **/
     QList<RS_Entity*> enList;
-    for(auto e1: entities){
+    foreach(auto e1, entities){
         if (!e1->isEdge() || e1->isContainer() ) {
             enList<<e1;
             continue;
@@ -2038,6 +2038,11 @@ const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
     return entities;
 }
 
+namespace {
+bool isHatch(RS_Entity* ec) {
+    return ec != nullptr && (ec->rtti() == RS2::EntityHatch || isHatch(ec->getParent()));
+}
+}
 std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const
 {
     if (entities.empty())
@@ -2046,11 +2051,13 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
     for(auto* e1: entities){
-        if (e1->isContainer())
+        if (e1 != nullptr && e1->isContainer())
         {
-            auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
-            for (auto& subLoop: subLoops)
-                loops.push_back(std::move(subLoop));
+            if(!isHatch(e1)) {
+                auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+                for (auto& subLoop: subLoops)
+                    loops.push_back(std::move(subLoop));
+            }
             continue;
         }
 

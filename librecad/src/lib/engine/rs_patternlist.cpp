@@ -26,17 +26,16 @@
 
 #include<iostream>
 #include<QString>
-#include "rs_patternlist.h"
 
-#include "rs_system.h"
-#include "rs_pattern.h"
 #include "rs_debug.h"
+#include "rs_pattern.h"
+#include "rs_patternlist.h"
+#include "rs_system.h"
 
 RS_PatternList* RS_PatternList::instance() {
 	static RS_PatternList instance;
 	return &instance;
 }
-
 
 RS_PatternList::~RS_PatternList() = default;
 
@@ -51,14 +50,13 @@ void RS_PatternList::init() {
 
 	patterns.clear();
 
-	for (auto const& s: list) {
-		RS_DEBUG->print("pattern: %s:", s.toLatin1().data());
+    foreach(auto const& s, list) {
+        RS_DEBUG->print("pattern: %s:", s.toLatin1().data());
 
-		QFileInfo fi(s);
-		QString const name = fi.baseName().toLower();
-		patterns[name] = std::unique_ptr<RS_Pattern>{};
+        QString const name = QFileInfo(s).baseName().toLower();
+        patterns.emplace(name, std::unique_ptr<RS_Pattern>{});
 
-		RS_DEBUG->print("base: %s", name.toLatin1().data());
+        RS_DEBUG->print("base: %s", name.toLatin1().data());
     }
 }
 
@@ -68,24 +66,30 @@ void RS_PatternList::init() {
  * \p NULL if no such pattern was found. The pattern will be loaded into
  * memory if it's not already.
  */
-RS_Pattern* RS_PatternList::requestPattern(const QString& name) {
+std::unique_ptr<RS_Pattern> RS_PatternList::requestPattern(const QString& name) {
     RS_DEBUG->print("RS_PatternList::requestPattern %s", name.toLatin1().data());
 
     QString name2 = name.toLower();
+    RS_DEBUG->print("Pattern: name2: %s", name2.toLatin1().data());
+    if (patterns.count(name2) == 0 || patterns.at(name2) == nullptr) {
+        auto p = std::make_unique<RS_Pattern>(name2);
+        if (p!=nullptr) {
+            p->loadPattern();
+            patterns[name2].swap(p);
+        }
+        else {
+            LC_ERR<<"RS_PatternList::"<<__func__<<"(): loading pattern failed: "<<name2;
+            return {};
+        }
+    }
 
-	RS_DEBUG->print("name2: %s", name2.toLatin1().data());
-	if (patterns.count(name2)) {
-		if (!patterns[name2]) {
-			RS_Pattern* p = new RS_Pattern(name2);
-			p->loadPattern();
-			patterns[name2].reset(p);
-		}
-		RS_DEBUG->print("name2: %s, size= %d", name2.toLatin1().data(),
-						patterns[name2]->countDeep());
-		return patterns[name2].get();
+    if (patterns.count(name2) == 1) {
+        RS_DEBUG->print("name2: %s, size= %d", name2.toLatin1().data(),
+                        patterns[name2]->countDeep());
+        return std::unique_ptr<RS_Pattern>{static_cast<RS_Pattern*>(patterns[name2]->clone())};
 	}
 
-	return nullptr;
+    return {};
 
 }
 

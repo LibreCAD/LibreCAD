@@ -142,10 +142,6 @@ public:
     void draw(RS_Painter* painter, RS_GraphicView* view,
                       double& patternOffset) override;
 
-    //	double getLength() {
-    //		return -1.0;
-    //	}
-
     double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity = NULL,
                                       RS2::ResolveLevel level = RS2::ResolveNone,
@@ -163,12 +159,15 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Hatch& p);
 
-protected:
-        RS_HatchData data;
-        RS_EntityContainer* hatch = nullptr;
-        bool updateRunning = false;
-        bool needOptimization = false;
-        int  updateError = 0;
+private:
+    double getTotalAreaImpl();
+    RS_EntityContainer trimPattern(const RS_EntityContainer& patternEntities) const;
+    RS_HatchData data;
+    RS_EntityContainer* hatch = nullptr;
+    int  updateError = 0;
+    bool updateRunning = false;
+    bool needOptimization = false;
+    bool m_updated=false;
 };
 
 #endif

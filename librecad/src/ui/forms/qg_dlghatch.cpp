@@ -26,11 +26,9 @@
 #include "qg_dlghatch.h"
 
 #include "rs_settings.h"
-#include "rs_line.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
 #include "rs_pattern.h"
-#include "rs_math.h"
 #include "rs_math.h"
 
 /*

@@ -41,7 +41,7 @@ public:
     QG_PatternBox(QWidget* parent=nullptr);
     virtual ~QG_PatternBox();
 
-	RS_Pattern* getPattern();
+    std::shared_ptr<RS_Pattern> getPattern();
 
     void setPattern(const QString& pName);
 
@@ -54,7 +54,7 @@ signals:
 	void patternChanged();
 
 private:
-    RS_Pattern* currentPattern = nullptr;
+    std::shared_ptr<RS_Pattern> currentPattern;
 };
 
 #endif

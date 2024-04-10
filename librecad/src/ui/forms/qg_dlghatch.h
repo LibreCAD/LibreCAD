@@ -57,7 +57,7 @@ protected slots:
 private:
     std::unique_ptr<RS_EntityContainer> preview;
     bool isNew = false;
-    RS_Pattern* pattern = nullptr;
+    std::shared_ptr<RS_Pattern> pattern;
     RS_Hatch* hatch = nullptr;
 
     void init();
