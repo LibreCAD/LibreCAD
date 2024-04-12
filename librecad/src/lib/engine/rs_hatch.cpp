@@ -704,7 +704,7 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 //must be called after update()
 double RS_Hatch::getTotalArea() {
-    if (m_area < RS_MAXDOUBLE)
+    if (m_area + RS_Math::ulp(m_area) < RS_MAXDOUBLE)
         return m_area;
     try {
         getTotalAreaImpl();
