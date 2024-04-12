@@ -25,6 +25,7 @@
 **********************************************************************/
 #include <cmath>
 #include <iostream>
+#include <memory>
 
 #include <QPainterPath>
 #include <QBrush>
@@ -115,10 +116,10 @@ RS_Hatch::RS_Hatch(RS_EntityContainer* parent,
  * Validates the hatch.
  */
 bool RS_Hatch::validate() {
-        bool ret = true;
+    bool ret = true;
 
     // loops:
-        foreach(auto* l, entities){
+    foreach(auto* l, entities){
 
         if (l->rtti()==RS2::EntityContainer) {
             RS_EntityContainer* loop = (RS_EntityContainer*)l;
@@ -127,7 +128,10 @@ bool RS_Hatch::validate() {
         }
     }
 
-        return ret;
+    if(ret)
+        getTotalArea();
+
+    return ret;
 }
 
 
@@ -700,21 +704,20 @@ void RS_Hatch::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 //must be called after update()
 double RS_Hatch::getTotalArea() {
-    if (!m_updated)
-        return 0.;
-    double totalArea=0.;
+    if (m_area < RS_MAXDOUBLE)
+        return m_area;
     try {
-        totalArea=getTotalAreaImpl();
+        getTotalAreaImpl();
     } catch(...) {
         LC_ERR<<__func__<<"(): line "<<__LINE__<<": failure in finding hatch area";
     }
 
-    return totalArea;
+    return m_area;
 }
 
 double RS_Hatch::getTotalAreaImpl() {
     auto loops = getLoops();
-    LC_LOG<<"loops.size()="<<loops.size();
+    LC_LOG<<__func__<<"(): loops.size()="<<loops.size();
     for (auto& l: loops)
     {
         LC_LOG<<l->getId()<<": "<<l->rtti();
@@ -725,13 +728,13 @@ double RS_Hatch::getTotalAreaImpl() {
     LC_LoopUtils::LoopSorter loopSorter(std::move(loops));
     auto sorted = loopSorter.getResults();
 
-    double totalArea=0.;
+    m_area=0.;
 
     // loops:
     for(auto* loop: sorted){
-        totalArea += loop->areaLineIntegral();
+        m_area += loop->areaLineIntegral();
     }
-    return totalArea;
+    return m_area;
 }
 
 double RS_Hatch::getDistanceToPoint(

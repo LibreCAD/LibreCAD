@@ -24,6 +24,7 @@
 **
 **********************************************************************/
 #include <iostream>
+#include <set>
 #include <QAction>
 #include <QMouseEvent>
 #include "rs_actiondrawhatch.h"
@@ -33,6 +34,21 @@
 #include "rs_information.h"
 #include "rs_hatch.h"
 #include "rs_debug.h"
+
+namespace {
+
+bool isHatchImpl(const RS_Entity* e, std::set<const RS_Entity*>& visited) {
+    if (e == nullptr || visited.count(e) == 1)
+        return false;
+    visited.insert(e);
+    return e != nullptr && (e->rtti() == RS2::EntityHatch || isHatchImpl(e->getParent(), visited));
+}
+
+bool isHatch(const RS_Entity* e) {
+    std::set<const RS_Entity*> visited;
+    return isHatchImpl(e, visited);
+}
+}
 
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
                                 :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
@@ -72,7 +88,7 @@ void RS_ActionDrawHatch::trigger() {
 	// deselect unhatchable entities:
 	for(auto e: *container){
         if (e->isSelected() && 
-            (e->rtti()==RS2::EntityHatch ||
+            (isHatch(e) ||
             /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
              e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText ||
 			 RS_Information::isDimension(e->rtti()))) {

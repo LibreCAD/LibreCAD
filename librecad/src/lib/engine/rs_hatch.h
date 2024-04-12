@@ -164,6 +164,7 @@ private:
     RS_EntityContainer trimPattern(const RS_EntityContainer& patternEntities) const;
     RS_HatchData data;
     RS_EntityContainer* hatch = nullptr;
+    double m_area = RS_MAXDOUBLE;
     int  updateError = 0;
     bool updateRunning = false;
     bool needOptimization = false;
