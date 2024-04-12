@@ -733,6 +733,7 @@ double RS_Hatch::getTotalAreaImpl() {
     // loops:
     for(auto* loop: sorted){
         m_area += loop->areaLineIntegral();
+        LC_LOG<<__func__<<"(): "<<loop->getId()<<": m_area="<<m_area;
     }
     return m_area;
 }

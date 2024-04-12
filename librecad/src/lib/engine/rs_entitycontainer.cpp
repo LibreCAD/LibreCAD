@@ -2038,11 +2038,6 @@ const QList<RS_Entity*>& RS_EntityContainer::getEntityList()
     return entities;
 }
 
-namespace {
-bool isHatch(RS_Entity* ec) {
-    return ec != nullptr && (ec->rtti() == RS2::EntityHatch || isHatch(ec->getParent()));
-}
-}
 std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() const
 {
     if (entities.empty())
@@ -2053,7 +2048,7 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     for(auto* e1: entities){
         if (e1 != nullptr && e1->isContainer())
         {
-            if(!isHatch(e1)) {
+            if (e1->isContainer()){
                 auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
                 for (auto& subLoop: subLoops)
                     loops.push_back(std::move(subLoop));
