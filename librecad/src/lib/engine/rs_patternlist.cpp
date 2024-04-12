@@ -28,6 +28,7 @@
 #include<QString>
 
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
 #include "rs_pattern.h"
 #include "rs_patternlist.h"
 #include "rs_system.h"
@@ -58,6 +59,8 @@ void RS_PatternList::init() {
 
         RS_DEBUG->print("base: %s", name.toLatin1().data());
     }
+    if (patterns.empty())
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Hatch:: no pattern found. Please set pattern path in application preferences"));
 }
 
 
@@ -79,6 +82,7 @@ std::unique_ptr<RS_Pattern> RS_PatternList::requestPattern(const QString& name) 
         }
         else {
             LC_ERR<<"RS_PatternList::"<<__func__<<"(): loading pattern failed: "<<name2;
+            RS_DIALOGFACTORY->commandMessage(QObject::tr("Hatch:: loading pattern failed: %1").arg(name2));
             return {};
         }
     }
