@@ -158,7 +158,7 @@ public slots:
 
 protected:
     void contextMenuEvent(QContextMenuEvent *e) override;
-    virtual void keyPressEvent(QKeyEvent* e) override;
+     void keyPressEvent(QKeyEvent* e) override;
 
 private:
     RS_LayerList* layerList = nullptr;

@@ -103,7 +103,7 @@ public:
     bool queryExit(bool force);
 
     /** Catch hotkey for giving focus to command line. */
-    virtual void keyPressEvent(QKeyEvent* e) override;
+     void keyPressEvent(QKeyEvent* e) override;
     void setRedoEnable(bool enable);
     void setUndoEnable(bool enable);
     bool loadStyleSheet(QString path);
@@ -326,8 +326,8 @@ public:
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
-    virtual void dropEvent(QDropEvent* e) override;
-    virtual void dragEnterEvent(QDragEnterEvent * event) override;
+     void dropEvent(QDropEvent* e) override;
+     void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
 

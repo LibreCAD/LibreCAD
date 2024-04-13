@@ -239,7 +239,7 @@ public:
         eType = DRW::RAY;
     }
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle xline entity
@@ -266,11 +266,11 @@ public:
         eType = DRW::CIRCLE;
     }
 
-    virtual void applyExtrusion() override;
+     void applyExtrusion() override;
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     double radious;                 /*!< radius, code 40 */
@@ -289,7 +289,7 @@ public:
         isccw = 1;
     }
 
-    virtual void applyExtrusion() override;
+     void applyExtrusion() override;
 
     //! center point in OCS
     const DRW_Coord & center() { return basePoint; }
@@ -308,7 +308,7 @@ protected:
     //! interpret code in dxf reading process or dispatch to inherited class
     bool parseCode(int code, dxfReader *reader) override;
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     double staangle;            /*!< start angle, code 50 in radians*/
@@ -332,13 +332,13 @@ public:
     }
 
     void toPolyline(DRW_Polyline *pol, int parts = 128);
-    virtual void applyExtrusion() override;
+     void applyExtrusion() override;
 
 protected:
     //! interpret code in dxf reading process or dispatch to inherited class
     bool parseCode(int code, dxfReader *reader) override;
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 private:
     void correctAxis();
@@ -364,11 +364,11 @@ public:
         fourPoint.z = 0;
     }
 
-    virtual void applyExtrusion() override;
+     void applyExtrusion() override;
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     DRW_Coord thirdPoint;        /*!< third point, code 12, 22 & 32 */
@@ -389,7 +389,7 @@ public:
 
 protected:
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     //! first corner (2D)
@@ -446,7 +446,7 @@ protected:
     //! interpret code in dxf reading process or dispatch to inherited class
     bool parseCode(int code, dxfReader *reader) override;
     //! interpret dwg data (was already determined to be part of this object)
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     int invisibleflag;       /*!< invisible edge flag, code 70 */
@@ -471,7 +471,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;             /*!< block name, code 2 */
@@ -503,7 +503,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;         /*!< block name, code 2 */
@@ -550,7 +550,7 @@ public:
     }
 	// TODO rule of 5
 
-    virtual void applyExtrusion() override;
+     void applyExtrusion() override;
     void addVertex (DRW_Vertex2D v) {
 		std::shared_ptr<DRW_Vertex2D> vert = std::make_shared<DRW_Vertex2D>(v);
         vertlist.push_back(vert);
@@ -566,7 +566,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version v, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     int vertexnum;            /*!< number of vertex, code 90 */
@@ -616,11 +616,11 @@ public:
         alignV = VBaseLine;
     }
 
-    virtual void applyExtrusion() override {} //RLZ TODO
+     void applyExtrusion() override {} //RLZ TODO
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     double height;             /*!< height text, code 40 */
@@ -667,7 +667,7 @@ public:
 protected:
     bool parseCode(int code, dxfReader *reader) override;
     void updateAngle();    // recalculate angle if 'hasXAxisVec' is true
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     double interlin;     /*!< width factor, code 44 */
@@ -744,7 +744,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     int flags;               /*!< polyline flag, code 70, default 0 */
@@ -867,7 +867,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING name;           /*!< hatch pattern name, code 2 */
@@ -954,7 +954,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     duint32 ref;               /*!< Hard reference to imagedef object, code 340 */
@@ -1019,12 +1019,12 @@ public:
     }
     virtual ~DRW_Dimension() {}
 
-    virtual void applyExtrusion() override {}
+     void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs = 0) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, dwgBuffer *sBuf, duint32 bs = 0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer* buf, duint32 bs=0) override;
 
 public:
     DRW_Coord getDefPoint() const {return defPoint;}      /*!< Definition point, code 10, 20 & 30 */
@@ -1124,7 +1124,7 @@ public:
     void setDef2Point(const DRW_Coord& p) {setPt4(p);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle  linear or rotated dimension entity
@@ -1170,7 +1170,7 @@ public:
     void setLeaderLength(const double d) {setRa40(d);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle radial dimension entity
@@ -1196,7 +1196,7 @@ public:
     void setLeaderLength(const double d) {setRa40(d);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle angular dimension entity
@@ -1226,7 +1226,7 @@ public:
     void setDimPoint(const DRW_Coord& p) {setPt6(p);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 
@@ -1255,7 +1255,7 @@ public:
     void setDimPoint(const DRW_Coord& p) {setDefPoint(p);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 //! Class to handle ordinate dimension entity
@@ -1281,7 +1281,7 @@ public:
     void setSecondLine(const DRW_Coord& p) {setPt4(p);}
 
 protected:
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 };
 
 
@@ -1302,11 +1302,11 @@ public:
         extrusionPoint.z = 1.0;
     }
 
-    virtual void applyExtrusion() override {}
+     void applyExtrusion() override {}
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     UTF8STRING style;          /*!< Dimension style name, code 3 */
@@ -1352,7 +1352,7 @@ public:
 
 protected:
     bool parseCode(int code, dxfReader *reader) override;
-    virtual bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
+     bool parseDwg(DRW::Version version, dwgBuffer *buf, duint32 bs=0) override;
 
 public:
     double pswidth;           /*!< Width in paper space units, code 40 */
