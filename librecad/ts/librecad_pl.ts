@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj do ulubionych</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,7 +20,7 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <source>GroupBox</source>
@@ -51,11 +51,11 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkty Spalajnu</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt kontrolny</translation>
     </message>
     <message>
         <source>Points on Spline</source>
@@ -9368,19 +9368,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Podaj ilość polilinii</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>równanie</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Wpisz równanie funkcji, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
@@ -9392,11 +9392,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Podana wartość kroku jest nieprawidłowa.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Podana wartość x jest nieprawidłowa.</translation>
     </message>
 </context>
 <context>
@@ -11177,7 +11177,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Odległóść. Wartości ujemne dla przycięcia, dodatnie dla przedłużenia.</translation>
+        <translation>Odległóść. Wartości ujemne dla przycięcia, dodatnie dla wydłużania.</translation>
     </message>
     <message>
         <source>Length:</source>
@@ -11185,7 +11185,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished"></translation>
+        <translation>Odległość. Ujemne wartości do docinania, dodatnie do wydłużania. Ujemny znak jest ignorowany przy docinaniu do długości całkowitej.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
