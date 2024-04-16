@@ -919,10 +919,11 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
 		//increase grid point size on for DPI>96
 		int dpiX = qApp->desktop()->logicalDpiX();
+        const bool isHiDpi = dpiX > 96;
 		//        DEBUG_HEADER
 		//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
 		const RS_Pen penSaved=painter->getPen();
-		if(dpiX>96) {
+        if(isHiDpi) {
 			RS_Pen pen=penSaved;
 			pen.setWidth(RS2::Width01);
 			painter->setPen(pen);
@@ -934,10 +935,12 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 		//bug# 3430258
 		drawGrid(painter);
 
-		if(dpiX>96) painter->setPen(penSaved);
+        if(isDraftMode())
+            drawDraftSign(painter);
 
+        if(isHiDpi)
+            painter->setPen(penSaved);
 	}
-
 }
 
 
@@ -1533,6 +1536,19 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	}
 
 
+}
+
+void RS_GraphicView::drawDraftSign(RS_Painter *painter)
+{
+    const QString draftSign = tr("Draft");
+    QRect boundingRect{0, 0, 64, 64};
+    for (int i = 1; i <= 4; ++i) {
+        painter->drawText(boundingRect, draftSign, &boundingRect);
+        QPoint position{
+            (i&1) ? getWidth() - boundingRect.width() : 0,
+            (i&2) ? getHeight() - boundingRect.height() : 0};
+        boundingRect.moveTopLeft(position);
+    }
 }
 
 void RS_GraphicView::drawOverlay(RS_Painter *painter)

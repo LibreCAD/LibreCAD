@@ -609,8 +609,9 @@ void RS_LayerList::setModified(bool m) {
     modified = m;
 
     // Notify listeners
-    for (auto l: layerListListeners) {
-        l->layerListModified(m);
+    for (auto* l: layerListListeners) {
+        if (l != nullptr)
+            l->layerListModified(m);
     }
 }
 

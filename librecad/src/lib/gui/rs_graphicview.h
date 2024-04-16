@@ -280,6 +280,11 @@ public:
 	virtual void drawGrid(RS_Painter *painter);
 	virtual void drawMetaGrid(RS_Painter *painter);
 	virtual void drawOverlay(RS_Painter *painter);
+    /**
+     * @brief drawDraftSign     Display "Draft" at corners if the draft mode is turned on
+     * @param painter           Painter assumed to be non-nullptr
+     */
+    virtual void drawDraftSign(RS_Painter *painter);
 
 	RS_Grid* getGrid() const;
     virtual void updateGridStatusWidget(QString) = 0;

@@ -37,6 +37,7 @@ class RS_Pen;
 class RS_Polyline;
 class RS_Spline;
 class QPainterPath;
+class QRect;
 class QRectF;
 class QPolygon;
 class QPolygonF;
@@ -126,6 +127,7 @@ public:
                            const QString& text) = 0;
     virtual void drawTextV(int x1, int y1, int x2, int y2,
                            const QString& text) = 0;
+    virtual void drawText(const QRect& rect, const QString& text, QRect* boundingBox) = 0;
 
     virtual void fillRect(int x1, int y1, int w, int h, const RS_Color& col) = 0;
     virtual void fillRect ( const QRectF & rectangle, const RS_Color & color ) = 0;
