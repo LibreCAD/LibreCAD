@@ -142,7 +142,8 @@ void QG_PrintPreviewOptions::saveSettings() {
 /** print scale fixed to saved value **/
 void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 {
-    if (action) action->setPaperScaleFixed(fixed);
+    if (action != nullptr)
+        action->setPaperScaleFixed(fixed);
     updateDisabled=fixed;
     ui->cbScale->setDisabled(fixed);
     ui->bFit->setVisible(!fixed);
@@ -306,7 +307,7 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
     //        }
     //        return;
     //    }
-    if(action->setScale(factor, false)){
+    if(action != nullptr && action->setScale(factor, false)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(factor);
     }
@@ -319,7 +320,7 @@ void QG_PrintPreviewOptions::updateScaleBox([[maybe_unused]] const QString& text
 
 //update the scalebox to
 void QG_PrintPreviewOptions::updateScaleBox(){
-    if (action) {
+    if (action != nullptr) {
         updateScaleBox(action->getScale());
         saveSettings();
     }
