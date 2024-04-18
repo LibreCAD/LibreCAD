@@ -1,0 +1,56 @@
+name: librecad
+version: '2.2.1-beta'
+grade: beta
+base: core22
+confinement: devmode
+summary: "librecad: is a 2D open source CAD"
+description: |
+        LibreCAD is a cross-platform 2D CAD program written in C++17. It can read DXF/DWG files and can write DXF/PDF/SVG files. It supports point/line/circle/ellipse/parabola/spline primitives. The user interface is highly customizable, and has dozens of translations.
+environment:
+        LD_LIBRARY_PATH: $SNAP/usr/local/lib/:$SNAP/usr/lib/x86_64-linux-gnu/:$SNAP/usr/lib64/:$LD_LIBRARY_PATH
+
+apps:
+        librecad:
+                command: unix/librecad
+parts:
+        librecad:
+                plugin: qmake
+                qmake-project-file: librecad.pro
+                source: .
+                build-packages:
+                        - qttools5-dev
+                        - qttools5-dev-tools
+                        - librsvg2-bin
+                        - libfreetype6-dev
+                        - libicu-dev
+                        - libqt5opengl5-dev
+                        - git
+                        - g++
+                        - libcairo2-dev
+                        - libpango-1.0-0
+                        - libpango1.0-dev
+                        - libboost-dev
+                        - libboost-log-dev
+                        - libboost-program-options-dev
+                        - libqt5svg5-dev
+                        - libgtest-dev
+                        - libcurl4-gnutls-dev
+                        - libgtk-3-dev
+                        - libglew-dev
+                        - rapidjson-dev
+                        - libbz2-dev
+                        - libglfw3-dev
+                        - libglm-dev
+                stage-packages:
+                        - libboost-dev
+                        - libboost-log-dev
+                        - libboost-program-options-dev
+                #For 18.04
+                #configflags:
+                #        - "-DCMAKE_INSTALL_PREFIX=/usr"
+                #        - "-DBUILD_SHARED_LIBS=On"
+
+                #For 18.04
+                #configflags:
+                #        - "-DBUILD_SHARED_LIBS=On"
+
