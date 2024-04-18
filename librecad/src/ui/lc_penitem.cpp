@@ -22,15 +22,16 @@
 **
 **********************************************************************/
 #include "lc_penitem.h"
-#include "lc_peninforegistry.h"
 
-LC_PenItem::LC_PenItem(QString name, const RS_Pen& pen){
-    this->name = name;
+LC_PenItem::LC_PenItem(QString name, const RS_Pen& pen):
+    name{name}
+{
     setPen(pen);
 }
 
-LC_PenItem::LC_PenItem(QString name){
-    this->name = name;
+LC_PenItem::LC_PenItem(QString name):
+    name{name}
+{
     setPen(RS_Pen());
 }
 

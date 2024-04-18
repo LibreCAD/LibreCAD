@@ -27,21 +27,22 @@
 #include <QMenuBar>
 #include <QActionGroup>
 #include <QDesktopServices>
-#include <lc_layertreewidget.h>
+
+#include "lc_actionfactory.h"
+#include "lc_actiongroupmanager.h"
+#include "lc_dockwidget.h"
+#include "lc_layertreewidget.h"
+#include "lc_widgetfactory.h"
 
 #include "qc_applicationwindow.h"
-#include "lc_widgetfactory.h"
-#include "lc_actionfactory.h"
-#include "lc_dockwidget.h"
-#include "lc_actiongroupmanager.h"
 
 #include "qg_actionhandler.h"
-#include "qg_snaptoolbar.h"
 #include "qg_blockwidget.h"
+#include "qg_commandwidget.h"
 #include "qg_layerwidget.h"
 #include "qg_librarywidget.h"
-#include "qg_commandwidget.h"
 #include "qg_pentoolbar.h"
+#include "qg_snaptoolbar.h"
 
 #include "rs_debug.h"
 #include "rs_settings.h"
@@ -49,7 +50,8 @@
 namespace {
     // only enable the penpallet by settings
     bool usePenPallet() {
-        return RS_SETTINGS->readNumEntry("/CustomToolbars/UsePenPallet", 0) == 1;
+        auto guard= RS_SETTINGS->beginGroupGuard("/CustomToolbars");
+        return RS_SETTINGS->readNumEntry("/UsePenPallet", 0) == 1;
     }
 } // namespace
 
@@ -374,10 +376,11 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_library->resize(240, 400);
 
     QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
-    dock_command->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
+    dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
+    command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
@@ -391,8 +394,10 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
-    main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
-    main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    if (dock_pen_palette != nullptr && dock_layer_tree != nullptr) {
+        main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
+        main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);
+    }
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_command);
     command_widget->getDockingAction()->setText(dock_command->isFloating() ? tr("Dock") : tr("Float"));
 }

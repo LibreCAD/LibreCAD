@@ -23,13 +23,14 @@
 **********************************************************************************
 */
 
-#include "textfileviewer.h"
-#include "ui_textfileviewer.h"
 
 #include <QFile>
 #include <QTextStream>
 #include <QPlainTextEdit>
 #include <QListWidget>
+
+#include "textfileviewer.h"
+#include "ui_textfileviewer.h"
 
 TextFileViewer::TextFileViewer(QWidget* parent) :
     QFrame(parent),

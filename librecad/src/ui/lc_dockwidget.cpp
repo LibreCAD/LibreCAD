@@ -24,11 +24,12 @@
 
 // This file was first published at: github.com/r-a-v-a-s/LibreCAD.git
 
-#include "lc_dockwidget.h"
 
 #include <QToolButton>
 #include <QGridLayout>
 #include <QFrame>
+
+#include "lc_dockwidget.h"
 
 LC_DockWidget::LC_DockWidget(QWidget* parent)
     : QDockWidget(parent)

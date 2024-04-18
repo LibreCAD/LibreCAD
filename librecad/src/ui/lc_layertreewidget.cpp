@@ -29,21 +29,21 @@
 #include <QLabel>
 #include <QLineEdit>
 #include <QContextMenuEvent>
+#include <QMap>
 #include <QTreeView>
 #include <QtWidgets>
-#include <QMap>
 
-#include <rs_graphic.h>
-#include <lc_layertreeoptionsdialog.h>
-#include <lc_layertreeitem.h>
-#include "rs_debug.h"
 #include "lc_layerdialog_ex.h"
-#include "lc_layertreewidget.h"
-#include "qg_actionhandler.h"
-#include "qc_applicationwindow.h"
-#include "lc_layertreeview.h"
+#include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
-#include <rs_dialogfactory.h>
+#include "lc_layertreeoptionsdialog.h"
+#include "lc_layertreeview.h"
+#include "lc_layertreewidget.h"
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 
 /**
  * Constructor.

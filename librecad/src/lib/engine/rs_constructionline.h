@@ -60,7 +60,7 @@ public:
     RS_ConstructionLine(RS_EntityContainer* parent,
                         const RS_ConstructionLineData& d);
 
-    virtual RS_Entity* clone() const override;
+     RS_Entity* clone() const override;
 
 	virtual ~RS_ConstructionLine()=default;
 

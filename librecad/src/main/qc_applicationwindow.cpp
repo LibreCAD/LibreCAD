@@ -557,9 +557,11 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	{
 		layerWidget->setLayerList(nullptr, false);
 
-        layerTreeWidget->setLayerList(nullptr);
-        layerTreeWidget->set_view(nullptr);
-        layerTreeWidget->set_document(nullptr);
+        if (layerTreeWidget != nullptr) {
+            layerTreeWidget->setLayerList(nullptr);
+            layerTreeWidget->set_view(nullptr);
+            layerTreeWidget->set_document(nullptr);
+        }
 
 
 		blockWidget->setBlockList(nullptr);
@@ -1050,13 +1052,16 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
 
         layerWidget->setLayerList(layerList,showByBlock);
 
-        layerTreeWidget->setLayerList(layerList);
-        layerTreeWidget->set_view(m->getGraphicView());
-        layerTreeWidget->set_document(m->getDocument());
+        if (layerTreeWidget != nullptr) {
+            layerTreeWidget->setLayerList(layerList);
+            layerTreeWidget->set_view(m->getGraphicView());
+            layerTreeWidget->set_document(m->getDocument());
+        }
 
         if (penPaletteWidget != nullptr){
             penPaletteWidget->setLayerList(layerList);
         }
+
 
         coordinateWidget->setGraphic(m->getGraphic());
 
@@ -1579,7 +1584,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         penPaletteWidget->setLayerList(layerList);
     }
 
-    if(layerTreeWidget) {
+    if(layerTreeWidget != nullptr) {
         layerTreeWidget->setLayerList(layerList);
         layerTreeWidget->set_view(view);
         layerTreeWidget->set_document(w->getDocument());
@@ -1594,7 +1599,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         // Link the layer list to the layer widget
         graphic->addLayerListListener(layerWidget);
 
-        graphic->addLayerListListener(layerTreeWidget);
+        if (layerTreeWidget != nullptr) {
+            graphic->addLayerListListener(layerTreeWidget);
+        }
 
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
@@ -1643,7 +1650,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     // link the layer widget to the new document:
     RS_LayerList *layerList = w->getDocument()->getLayerList();
     layerWidget->setLayerList(layerList, false);
-    layerTreeWidget->setLayerList(layerList);
+    if (layerTreeWidget != nullptr)
+        layerTreeWidget->setLayerList(layerList);
 
     if (penPaletteWidget != nullptr){
         penPaletteWidget->  setLayerList(layerList);
@@ -1673,8 +1681,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: load Template: OK");
 
     layerWidget->slotUpdateLayerList();
-    layerTreeWidget->slotFilteringMaskChanged();
-
+    if (layerTreeWidget != nullptr)
+        layerTreeWidget->slotFilteringMaskChanged();
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
     // update coordinate widget format:
@@ -1864,7 +1872,8 @@ void QC_ApplicationWindow::
         // link the layer widget to the new document:
 
         layerWidget->setLayerList(layerList, false);
-        layerTreeWidget->setLayerList(layerList);
+        if (layerTreeWidget)
+            layerTreeWidget->setLayerList(layerList);
         if (penPaletteWidget != nullptr){
             penPaletteWidget->setLayerList(layerList);
          }
@@ -1914,7 +1923,8 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.push_back(fileName);
         layerWidget->slotUpdateLayerList();
-        layerTreeWidget->slotFilteringMaskChanged();
+        if (layerTreeWidget != nullptr)
+            layerTreeWidget->slotFilteringMaskChanged();
 
         auto graphic = w->getGraphic();
         if (graphic)

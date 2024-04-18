@@ -27,6 +27,8 @@
 #ifndef RS_MATH_H
 #define RS_MATH_H
 
+#include <cmath>
+#include <limits>
 #include <vector>
 
 class RS_Vector;
@@ -142,6 +144,16 @@ bool simultaneousQuadraticVerify(const std::vector<std::vector<double> > &m, RS_
 	 *@\author: Dongxu Li
      */
 double ellipticIntegral_2(const double &k, const double &phi);
+
+// The ULP (Unit at Last Place) for a floating point
+template<typename FT>
+std::enable_if_t<std::is_floating_point_v<FT>, FT> ulp(FT x)
+{
+    if (std::signbit(x))
+        return x - std::nexttoward(x, -std::numeric_limits<FT>::infinity());
+    else
+        return std::nexttoward(x, std::numeric_limits<FT>::infinity()) - x;
+}
 
 QString doubleToString(double value, double prec);
 QString doubleToString(double value, int prec);

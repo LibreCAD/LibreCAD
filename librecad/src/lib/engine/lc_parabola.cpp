@@ -113,8 +113,6 @@ std::vector<RS_Vector> getAxisVectors(std::vector<RS_Vector> pts)
         return {};
     }
     //pts ABCD forms a convex hull in order
-    for(const auto& pt: pts)
-        LC_ERR<<"pts: "<<pt.x<<", "<<pt.y;
 
     const auto& a = pts[0];
     const auto& b = pts[2];
@@ -180,15 +178,15 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
         return {};
     }
     const double b = (sxi2*syi - sxi*sxyi)/d;
-    LC_ERR <<" axis angle: "<<axis.angle();
+    //LC_ERR <<" axis angle: "<<axis.angle();
     for (size_t i=0; i< xis.size(); i++)
     {
-        LC_ERR<<"xi = "<<xis[i]<<": "<<yis[i] - (a*xis[i] + b);
+        LC_LOG<<__func__<<"(): fitting: xi = "<<xis[i]<<": "<<yis[i] - (a*xis[i] + b);
     }
     double c = 0.;
-    for (size_t i=0; i< 4; i++)
+    for (const auto& point: rotated)
     {
-        c += rotated[i].y - rotated[i].x * (b + rotated[i].x * a);
+        c += point.y - point.x * (b + point.x * a);
     }
     c /= 4;
     double da = {axis.angle() - M_PI/2};
@@ -200,11 +198,11 @@ LC_ParabolaData fromPointsAxis(const std::vector<RS_Vector>& points, const RS_Ve
 
     // fitting errors
     double ds2=0.;
-    for (size_t i=0; i< 4; i++)
+    for (const auto& point: points)
     {
-        double ds= (points[i] - f0(points[i])).squared();
+        double ds= (point - f0(point)).squared();
         ds2 += ds;
-        LC_LOG<<"oxi = ("<<points[i].x<<", "<< points[i].y<<"): ("<<f0(points[i]).x<<", "<<f0(points[i]).y<<"): dr="
+        LC_LOG<<"oxi = ("<<point.x<<", "<< point.y<<"): ("<<f0(point).x<<", "<<f0(point).y<<"): dr="
              << ds<<": "<<ds2;
     }
     if (ds2 >= RS_TOLERANCE2)
@@ -272,10 +270,6 @@ void LC_ParabolaData::CalculatePrimitives()
     auto f0 = [&c1, &c2](double t) {
         return c1*(2. * t * (1. - t)) + c2 * ( t * t);
     };
-    // actually half of df0/dt
-    auto f1 = [&c1, &c2](double t) {
-        return c1 * (2. - 4. * t) + c2 * 2.*t;
-    };
 
     axis = c2 * 0.5 - c1;
     if(axis.squared() < RS_TOLERANCE2) {
@@ -286,7 +280,6 @@ void LC_ParabolaData::CalculatePrimitives()
     // <c1|c2>-2<c1|c1> = (2<c1|c2>-4<c1|c1>-<c2|c2>+2<c1|c2>)t
     // =-|c2 - 2c1|^2t
     double t = -0.5*axis.dotP(c1)/axis.squared();
-    LC_ERR<<"vertex = ("<<f0(t).x<<", "<<f0(t).y<<") : "<<f1(t).dotP(axis);
     auto localVertex = f0(t);
     axis.normalize();
     double dy = (c2 - localVertex).dotP(axis);

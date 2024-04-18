@@ -25,7 +25,6 @@
 #include <QFileDialog>
 #include <QMessageBox>
 #include "lc_penpaletteoptionsdialog.h"
-#include "ui_lc_penpaletteoptionsdialog.h"
 
 LC_PenPaletteOptionsDialog::LC_PenPaletteOptionsDialog(QWidget *parent, LC_PenPaletteOptions* options, bool focusOnFile) :
     QDialog(parent)

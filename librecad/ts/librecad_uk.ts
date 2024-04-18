@@ -5,22 +5,22 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Рамка</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати до обраного</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">…</translation>
+        <translation>…</translation>
     </message>
 </context>
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Рамка</translation>
     </message>
     <message>
         <source>GroupBox</source>
@@ -39,19 +39,19 @@
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished">Геометрія</translation>
+        <translation>Геометрія</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Замкнено</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки сплайну</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -59,7 +59,7 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки на сплайні</translation>
     </message>
 </context>
 <context>
@@ -70,11 +70,11 @@
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Відміна</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть розташування розмірів дуги</translation>
     </message>
 </context>
 <context>
@@ -86,11 +86,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть один з двох можливих центрів кола</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished">Вкажіть першу точку</translation>
+        <translation>Вкажіть першу точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -98,22 +98,22 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Вкажіть другу точку</translation>
+        <translation>Вкажіть другу точку</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть центр кола</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Вкажіть центр</translation>
+        <translation>Вкажіть центр</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
@@ -121,38 +121,38 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Введіть число:</translation>
+        <translation>Введіть число:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Неприпустиме число. Спробуйте 1..9999</translation>
+        <translation>Не коректне число. Спробуйте 1.. 9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Недопустимий вираз</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>Specify first control point</source>
-        <translation type="unfinished">Вкажіть першу контрольну точку</translation>
+        <translation>Вкажіть першу контрольну точку</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation type="unfinished">Вкажіть наступну контрольну точку чи [%1]</translation>
+        <translation>Вкажіть наступну контрольну точку або [%1]</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Назад</translation>
+        <translation>Назад</translation>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation type="unfinished">Вкажіть наступну контрольну точку</translation>
+        <translation>Вкажіть наступну контрольну точку</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -171,19 +171,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished">Вибирання &amp;відображуваної ділянки</translation>
+        <translation>Масштабування &amp;Панорамування</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Вибрати об’єкт</translation>
+        <translation>Виберіть об&apos;єкт</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Вибрати рамкою</translation>
+        <translation>Виберіть вікно</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Скасувати вибір рамкою</translation>
+        <translation>Скасувати вибір вікна</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
@@ -195,59 +195,59 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати вибір пересічних об&apos;єктів</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>(Скасувати)Вибрати шар</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Точки</translation>
+        <translation>&amp;Точки</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished">За &amp;2-ма точками</translation>
+        <translation>За &amp;2-ма точками</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">Під &amp;кутом</translation>
+        <translation>&amp;Кут</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Горизонтальна</translation>
+        <translation>&amp;Горизонтально</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Вертикальний</translation>
+        <translation>Вертикально</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Довільна лінія</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished">Пара&amp;лельно</translation>
+        <translation>&amp;Паралельно</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished">Паралельно через точку</translation>
+        <translation>Паралельно через точку</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Прямокутник</translation>
+        <translation>Прямокутник</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished">Бісектриса</translation>
+        <translation>Бісектриса</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Дотична (Т,К)</translation>
+        <translation>Дотична (К,Т)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">Дотична (К,К)</translation>
+        <translation>Дотична (К,К)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
@@ -255,11 +255,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ортогональний</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished">Відносний кут</translation>
+        <translation>Відносний кут</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
@@ -271,15 +271,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">Центр, &amp;точка</translation>
+        <translation>Центр, &amp;Точка</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">Центр, &amp;радіус</translation>
+        <translation>Центр, &amp;Радіус</translation>
     </message>
     <message>
         <source>2 Points</source>
-        <translation type="unfinished">За 2-ма точками</translation>
+        <translation>За 2-ма точками</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
@@ -287,7 +287,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished">За 3-ма точками</translation>
+        <translation>3 точки</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
@@ -316,11 +316,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished">&amp;Центр, точка, кути</translation>
+        <translation>&amp;Центр, Точка, Кути</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
-        <translation type="unfinished">За &amp;3-ма точками</translation>
+        <translation>За &amp;3-ма точками</translation>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
@@ -328,31 +328,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">&amp;Еліпс (з віссю)</translation>
+        <translation>&amp;Еліпс (за осями)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished">Еліптична &amp;дуга (за осями)</translation>
+        <translation>Еліптична &amp;дуга (за осями)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished">Еліпс за точками &amp;фокусів</translation>
+        <translation>Точка &amp;фокуса еліпса</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished">Еліпс за &amp;4 точками</translation>
+        <translation>Еліпс за &amp;4 точками</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
-        <translation type="unfinished">Еліпс за центром й &amp;3-ма точками</translation>
+        <translation>Еліпс за центром й &amp;3-ма точками</translation>
     </message>
     <message>
         <source>Ellipse &amp;Inscribed</source>
-        <translation type="unfinished">&amp;Вписаний еліпс</translation>
+        <translation>&amp;Вписаний еліпс</translation>
     </message>
     <message>
         <source>&amp;Spline</source>
-        <translation type="unfinished">&amp;Сплайн</translation>
+        <translation>&amp;Сплайн</translation>
     </message>
     <message>
         <source>&amp;Spline through points</source>
@@ -364,7 +364,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Add node</source>
-        <translation type="unfinished">&amp;Додати вузол</translation>
+        <translation>&amp;Додати вузол</translation>
     </message>
     <message>
         <source>A&amp;ppend node</source>
@@ -372,15 +372,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Delete node</source>
-        <translation type="unfinished">&amp;Вилучити вузол</translation>
+        <translation>&amp;Вилучити вузол</translation>
     </message>
     <message>
         <source>Delete &amp;between two nodes</source>
-        <translation type="unfinished">Вилучити &amp;між двома вузлами</translation>
+        <translation>Вилучити &amp;між двома вузлами</translation>
     </message>
     <message>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished">&amp;Усікти відрізки</translation>
+        <translation>&amp;Усікти відрізки</translation>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
@@ -1163,7 +1163,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation>Вкласти кахлями по &amp;горизонталі</translation>
+        <translation type="unfinished">Плиткою &amp;горизонтально</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -1179,7 +1179,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation>Нове креслення створене.</translation>
+        <translation>Новий рисунок створено.</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
@@ -1301,7 +1301,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation>Новий документ із шаблону:</translation>
+        <translation>Новий документ з шаблону: </translation>
     </message>
     <message>
         <source>Select Template aborted</source>
@@ -1764,7 +1764,7 @@ in a separate window</source>
     </message>
     <message>
         <source>&amp;Create New Block</source>
-        <translation>С&amp;творити новий блок</translation>
+        <translation>&amp;Створити новий блок</translation>
     </message>
     <message>
         <source>Create Block</source>

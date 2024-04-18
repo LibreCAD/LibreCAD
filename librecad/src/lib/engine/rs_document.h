@@ -130,7 +130,7 @@ public:
     /**
      * Overwritten to set modified flag when undo cycle finished with undoable(s).
      */
-    virtual void endUndoCycle() override;
+     void endUndoCycle() override;
 
     void setGraphicView(RS_GraphicView * g) {gv = g;}
     RS_GraphicView* getGraphicView() {return gv;}

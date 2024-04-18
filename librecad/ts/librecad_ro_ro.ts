@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadru</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Adăugare la favorite</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,22 +20,22 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Cadru</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Casetă de grup</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Set</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Puncte Spline</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -47,30 +47,30 @@
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished">Inchisa</translation>
+        <translation>Închisă</translation>
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puncte Spline</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Puncte de control</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Puncte pe Spline</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectare entitate arc</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Renuntare</translation>
+        <translation>Abandon</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
@@ -106,7 +106,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Selectare centru cerc</translation>
     </message>
 </context>
 <context>
@@ -183,7 +183,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Deselectare Fereastră</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
@@ -283,7 +283,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Puncte, Rază</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -300,15 +300,15 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>2 Cercuri tangente, Rază</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Cercuri tangente, 1 Punct</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangențial &amp;3 Cercuri</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
@@ -356,7 +356,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline prin puncte</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -392,7 +392,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;MText</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -400,11 +400,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Hatch</source>
-        <translation type="unfinished">&amp;Hasur</translation>
+        <translation>&amp;Hașură</translation>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished">Inserati &amp;Imaginea</translation>
+        <translation>Inserare &amp;Imagine</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
@@ -440,11 +440,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">&amp;Stergere</translation>
+        <translation>&amp;Ștergere</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished">Stergere linii de tip Freehand</translation>
+        <translation>Ștergere linii de tip Freehand</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
@@ -456,7 +456,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -472,19 +472,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Rotire d&amp;ubla</translation>
+        <translation>Rotire d&amp;ublă</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">&amp;Proprietati</translation>
+        <translation>&amp;Proprietăți</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished">&amp;Taiere</translation>
+        <translation>&amp;Tăiere</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished">&amp;Lungime</translation>
+        <translation>&amp;Alungire</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
@@ -496,11 +496,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Tesitura</translation>
+        <translation>&amp;Teșire</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Filetare</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>

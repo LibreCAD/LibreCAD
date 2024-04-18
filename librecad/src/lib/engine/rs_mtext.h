@@ -145,10 +145,10 @@ public:
   RS_MText(RS_EntityContainer *parent, const RS_MTextData &d);
   virtual ~RS_MText() = default;
 
-  virtual RS_Entity *clone() const override;
+   RS_Entity *clone() const override;
 
   /**	@return RS2::EntityText */
-  virtual RS2::EntityType rtti() const override { return RS2::EntityMText; }
+   RS2::EntityType rtti() const override { return RS2::EntityMText; }
 
   /** @return Copy of data that defines the text. */
   RS_MTextData getData() const { return data; }
@@ -196,13 +196,13 @@ public:
    */
   virtual RS_Vector getNearestEndpoint(const RS_Vector &coord,
                                        double *dist = NULL) const override;
-  virtual RS_VectorSolutions getRefPoints() const override;
+   RS_VectorSolutions getRefPoints() const override;
 
-  virtual void move(const RS_Vector &offset) override;
-  virtual void rotate(const RS_Vector &center, const double &angle) override;
+   void move(const RS_Vector &offset) override;
+   void rotate(const RS_Vector &center, const double &angle) override;
   virtual void rotate(const RS_Vector &center,
                       const RS_Vector &angleVector) override;
-  virtual void scale(const RS_Vector &center, const RS_Vector &factor) override;
+   void scale(const RS_Vector &center, const RS_Vector &factor) override;
   virtual void mirror(const RS_Vector &axisPoint1,
                       const RS_Vector &axisPoint2) override;
   virtual bool hasEndpointsWithinWindow(const RS_Vector &v1,

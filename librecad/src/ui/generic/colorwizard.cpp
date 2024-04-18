@@ -24,14 +24,14 @@
 **********************************************************************************
 */
 
-#include "colorwizard.h"
-#include "ui_colorwizard.h"
 
 #include <QAction>
 #include <QColorDialog>
 #include <QLineEdit>
 #include <QListWidget>
 #include <QSettings>
+#include "colorwizard.h"
+#include "ui_colorwizard.h"
 
 ColorWizard::ColorWizard(QWidget *parent) :
     QFrame(parent),

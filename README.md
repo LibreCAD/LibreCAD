@@ -28,7 +28,7 @@ $ librecad dxf2svg foo.dxf
 ```
 ## Releases and Milestones
 
-- [Releases](https://github.com/LibreCAD/LibreCAD/releases)
+- [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
 ## libdxfrw

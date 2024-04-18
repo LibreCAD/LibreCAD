@@ -25,7 +25,6 @@
 **
 **********************************************************************/
 
-#include <iostream>
 #include <QMap>
 #include <QApplication>
 #include <QTextCodec>
@@ -548,19 +547,10 @@ QStringList RS_System::getFileList(const QString& subDirectory,
     RS_DEBUG->print( "RS_System::getFileList: appDirName %s ", appDirName.toLatin1().data());
     RS_DEBUG->print( "RS_System::getFileList: getCurrentDir %s ", getCurrentDir().toLatin1().data());
 
-    QStringList dirList = getDirectoryList( subDirectory);
-
     QStringList fileList;
-    QString path;
-    QDir dir;
 
-    for (QStringList::Iterator it = dirList.begin();
-         it != dirList.end();
-         ++it) {
-
-        //path = QString(*it) + "/" + subDirectory;
-        path = QString( *it);
-        dir = QDir( path);
+    foreach(const QString& path, getDirectoryList( subDirectory)) {
+        QDir dir {path};
 
         if (dir.exists() && dir.isReadable()) {
             QStringList files = dir.entryList( QStringList( "*." + fileExtension));
@@ -570,6 +560,10 @@ QStringList RS_System::getFileList(const QString& subDirectory,
             }
         }
     }
+
+    LC_LOG<<__func__<<"():: fileList:";
+    foreach(const auto& file, fileList)
+        LC_LOG<<file;
 
     return fileList;
 }

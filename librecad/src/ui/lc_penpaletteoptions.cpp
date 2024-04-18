@@ -24,8 +24,6 @@
 #include "lc_penpaletteoptions.h"
 #include "rs_settings.h"
 
-LC_PenPaletteOptions::LC_PenPaletteOptions(){}
-
 /**
  * Straightforwards storing options to settings
  */
