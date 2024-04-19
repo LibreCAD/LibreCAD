@@ -18,6 +18,10 @@ parts:
                 qmake-project-file: librecad.pro
                 QT-VERSION:QT5
                 source: .
+                Install: |
+                        install-d $SNAPCRAFT unix/librecad/resources
+                        INSTALL qtapp $SNAPCRAFT unix/librecad/appdata
+                        INSTALL qtapp $SNAPCRAFT unix/tff2lff
                 build-packages:
                         - qttools5-dev
                         - qttools5-dev-tools
