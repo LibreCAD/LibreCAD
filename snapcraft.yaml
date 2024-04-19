@@ -1,7 +1,7 @@
 name: librecad
 version: '2.2.1-beta'
-grade: beta
-base: core22
+grade: stable
+base: core20
 confinement: devmode
 summary: "librecad: is a 2D open source CAD"
 description: |
@@ -16,6 +16,7 @@ parts:
         librecad:
                 plugin: qmake
                 qmake-project-file: librecad.pro
+                QT-VERSION:QT5
                 source: .
                 build-packages:
                         - qttools5-dev
