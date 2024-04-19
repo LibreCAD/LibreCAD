@@ -15,7 +15,6 @@ apps:
 parts:
         librecad:
                 plugin: qmake
-                qmake-project-file: librecad.pro
                 source: .
                 build-packages:
                         - qttools5-dev
@@ -45,7 +44,7 @@ parts:
                         - libboost-dev
                         - libboost-log-dev
                         - libboost-program-options-dev
-                Install: |
+                install: |
                         install-d $SNAPCRAFT unix/librecad/resources
                         install qtapp $SNAPCRAFT unix/librecad/appdata
                         install qtapp $SNAPCRAFT unix/tff2lff
