@@ -17,10 +17,6 @@ parts:
                 plugin: qmake
                 qmake-project-file: librecad.pro
                 source: .
-                Install: |
-                        install-d $SNAPCRAFT unix/librecad/resources
-                        INSTALL qtapp $SNAPCRAFT unix/librecad/appdata
-                        INSTALL qtapp $SNAPCRAFT unix/tff2lff
                 build-packages:
                         - qttools5-dev
                         - qttools5-dev-tools
@@ -49,6 +45,10 @@ parts:
                         - libboost-dev
                         - libboost-log-dev
                         - libboost-program-options-dev
+                Install: |
+                        install-d $SNAPCRAFT unix/librecad/resources
+                        install qtapp $SNAPCRAFT unix/librecad/appdata
+                        install qtapp $SNAPCRAFT unix/tff2lff
                 #For 18.04
                 #configflags:
                 #        - "-DCMAKE_INSTALL_PREFIX=/usr"
