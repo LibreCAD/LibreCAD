@@ -16,7 +16,6 @@ parts:
         librecad:
                 plugin: qmake
                 qmake-project-file: librecad.pro
-                QT-VERSION:QT5
                 source: .
                 Install: |
                         install-d $SNAPCRAFT unix/librecad/resources
