@@ -11,12 +11,13 @@ environment:
 
 apps:
         librecad:
-                command: unix/librecad
+                command: usr/bin/librecad
 parts:
         librecad:
                 plugin: qmake
                 source: .
                 build-packages:
+                        - qtbase5-dev
                         - qttools5-dev
                         - qttools5-dev-tools
                         - librsvg2-bin
@@ -29,28 +30,43 @@ parts:
                         - libpango-1.0-0
                         - libpango1.0-dev
                         - libboost-dev
-                        - libboost-log-dev
-                        - libboost-program-options-dev
                         - libqt5svg5-dev
                         - libgtest-dev
                         - libcurl4-gnutls-dev
                         - libgtk-3-dev
-                        - libglew-dev
-                        - rapidjson-dev
                         - libbz2-dev
-                        - libglfw3-dev
-                        - libglm-dev
+
                 stage-packages:
-                        - libboost-dev
-                        - libboost-log-dev
-                        - libboost-program-options-dev
-                install: |
-                        install-d $SNAPCRAFT unix/librecad/resources
-                        install qtapp $SNAPCRAFT unix/librecad/appdata
-                        install qtapp $SNAPCRAFT unix/tff2lff
+                        - qtbase5-dev
+                        - qt5-qmake
+                        - libfreetype6
+                        - libcairo2
+                        - librsvg2-bin
+                        - libicu
+                        - libboost
+                override-stage: |
+                        echo "1"
+                        echo $PWD 
+                        find .. -type f -name librecad
+                        export SRC_DIR=../parts/librecad/build/unix
+                        echo "2"
+                        echo $SNAPCRAFT_STAGE
+                        mkdir -p $SNAPCRAFT_STAGE/usr/bin
+                        mkdir -p $SNAPCRAFT_STAGE/usr/share/librecad
+                        mkdir -p usr/bin
+                        mkdir -p usr/share/librecad
+                        cp -a $SRC_DIR/librecad $SNAPCRAFT_STAGE/usr/bin/
+                        cp -a $SRC_DIR/ttf2lff $SNAPCRAFT_STAGE/usr/bin/
+                        cp -a $SRC_DIR/resources/* $SNAPCRAFT_STAGE/usr/share/librecad/
+                        snapcraftctl stage 
+                override-prime: |
+                        echo "1"
+                        echo $PWD
+                        cp -a ../stage/* ./
+                        snapcraftctl prime 
                 #For 18.04
                 #configflags:
-                #        - "-DCMAKE_INSTALL_PREFIX=/usr"
+                #        - "-DCMAKE_STAGE_PREFIX=/usr"
                 #        - "-DBUILD_SHARED_LIBS=On"
 
                 #For 18.04
