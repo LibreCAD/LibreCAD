@@ -71,17 +71,17 @@ jobs:
           name: assets
           path: LibreCAD*.AppImage
           retention-days: 2
-
-      - name: Create snapcraft
-        run: |
-          ./scripts/createSnap.sh
-
-      - name: Uploading snap
-        uses: actions/upload-artifact@v3.1.0
-        with:
-          path: ${{ github.workspace }}/librecad**snap
-          name: LibreCAD.snap
-
+#
+#      - name: Create snapcraft
+#        run: |
+#          ./scripts/createSnap.sh
+#
+#      - name: Uploading snap
+#        uses: actions/upload-artifact@v3.1.0
+#        with:
+#          path: ${{ github.workspace }}/librecad**snap
+#          name: LibreCAD.snap
+#
   BuildMacOS:
     runs-on: macos-latest
     steps:
