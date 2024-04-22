@@ -72,7 +72,8 @@
 #endif
 
 namespace {
-
+// maximum length for displayed block name in context menu
+constexpr int g_MaxBlockNameLength = 40;
 
 /*
          * The zoomFactor effects how quickly the scroll wheel will zoom in & out.
@@ -534,23 +535,18 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     if (container==nullptr)
         return;
     RS_Insert* insert = getParentInsert(entity);
-    if (insert != nullptr)
-    {
-        // For an insert, show the menu to edit the block instead
-        auto* action = new QAction(QIcon(":/ui/blockedit.png"),
-                                   tr("Edit Block"), &contextMenu);
-        contextMenu.addAction(action);
-        connect(action, &QAction::triggered, this, [this, insert](){
-            launchEditProperty(*this, insert);
-        });
-    } else {
-        auto* action = new QAction(QIcon(":/extui/modifyentity.png"),
-                                   tr("Edit Properties"), &contextMenu);
-        contextMenu.addAction(action);
-        connect(action, &QAction::triggered, this, [this, entity](){
-            launchEditProperty(*this, entity);
-        });
-    }
+    QAction* action = (insert != nullptr) ?
+                // For an insert, show the menu entry to edit the block instead
+                new QAction(QIcon(":/ui/blockedit.png"),
+                            QString{"%1: %2"}.arg(tr("Edit Block")).arg(insert->getName().left(g_MaxBlockNameLength)),
+                            &contextMenu) :
+                new QAction(QIcon(":/extui/modifyentity.png"),
+                            tr("Edit Properties"), &contextMenu);
+
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, insert, entity](){
+        launchEditProperty(*this, insert != nullptr ? insert : entity);
+    });
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
