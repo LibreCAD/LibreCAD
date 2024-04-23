@@ -30,6 +30,7 @@
 #include <QAction>
 #include <QMouseEvent>
 
+#include "qg_printpreviewoptions.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
@@ -281,7 +282,8 @@ void RS_ActionPrintPreview::fit() {
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
-        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
+        if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
+            return false;
         graphic->setPaperScale(f);
 //        graphic->centerToPage();
         if(autoZoom) graphicView->zoomPage();
@@ -362,4 +364,13 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
+void RS_ActionPrintPreview::setOption(std::unique_ptr<QG_PrintPreviewOptions> option)
+{
+    m_option = std::move(option);
+}
+
+std::unique_ptr<QG_PrintPreviewOptions>& RS_ActionPrintPreview::getOption()
+{
+    return m_option;
+}
 // EOF

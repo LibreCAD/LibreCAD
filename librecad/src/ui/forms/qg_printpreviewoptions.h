@@ -43,6 +43,7 @@ public:
     QG_PrintPreviewOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_PrintPreviewOptions();
 
+    RS_ActionInterface* getAction() const;
 public slots:
     virtual void setAction(RS_ActionInterface* a, bool update);
     virtual void updateData();
@@ -60,7 +61,7 @@ public slots:
     virtual void calcPagesNum();
 
 protected:
-    RS_ActionPrintPreview* action;
+    RS_ActionPrintPreview* action = nullptr;
 
 protected slots:
     virtual void languageChange();
