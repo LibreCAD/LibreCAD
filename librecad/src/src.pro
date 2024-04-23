@@ -129,6 +129,7 @@ HEADERS += \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
+    actions/lc_actionpensyncactivebylayer.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -253,6 +254,7 @@ SOURCES += \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
+    actions/lc_actionpensyncactivebylayer.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
