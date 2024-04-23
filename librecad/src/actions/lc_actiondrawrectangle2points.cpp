@@ -1,14 +1,31 @@
-#include <cmath>
-#include "lc_actiondrawrectangle2points.h"
+/****************************************************************************
+**
+* Action that creates a rectangle defined by 2 points
+* in one point
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+#include <QMouseEvent>
 #include "rs_math.h"
 #include "lc_linemath.h"
-#include "rs_graphicview.h"
-#include "rs_coordinateevent.h"
 #include "lc_rectangle2pointsoptions.h"
-#include "rs_commandevent.h"
-#include "rs_dialogfactory.h"
+#include "lc_actiondrawrectangle2points.h"
 #include "lc_abstractactiondrawrectangle.h"
-#include <QMouseEvent>
 
 LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     RS_EntityContainer &container,
@@ -18,23 +35,24 @@ LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     actionType = RS2::ActionDrawRectangle2Points;
     angle = 0;
     init(SetPoint1);
+    setMainStatus(SetPoint1);
 }
 
 LC_ActionDrawRectangle2Points::~LC_ActionDrawRectangle2Points() = default;
 
 void LC_ActionDrawRectangle2Points::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_AbstractActionDrawRectangle::init(status);
     corner1Set = false;
 }
 
-int LC_ActionDrawRectangle2Points::doRelZeroInitialSnapState(){
+int LC_ActionDrawRectangle2Points::doGetStatusForInitialSnapToRelativeZero(){
     return SetPoint1;
 }
 
-void LC_ActionDrawRectangle2Points::doRelZeroInitialSnap(RS_Vector relZero){
-    corner1 = relZero;
+void LC_ActionDrawRectangle2Points::doInitialSnapToRelativeZero(RS_Vector zero){
+    corner1 = zero;
     corner1Set = true;
-    setStatus(SetPoint2);
+    setMainStatus(SetPoint2);
 }
 
 RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) const{
@@ -42,14 +60,9 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
     RS_Vector c2 = snapPoint;
     RS_Vector c1 = corner1;
 
-
-    double angleRad = RS_Math::deg2rad(angle);
-
-    bool rotate = false;
-
-    if (LC_LineMath::isMeaningfulAngle(angleRad)){
-        rotate = true;
-    }
+    double angleRad = getActualBaseAngle();
+    // check whether we should do rotation for calculations
+    bool rotate = LC_LineMath::isMeaningfulAngle(angleRad);
 
     if (rotate) {
         // rotate c2 around c1, as first we'll build rectangle parallel to axises
@@ -73,8 +86,6 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
             c1.y = c1.y - size.y;
             break;
     }
-
-//    size = c2-c1;
 
     // do adjustments for second corner based on snap mode of second point
     switch (secondPointSnapMode){
@@ -104,7 +115,9 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
         prepareCornersDrawMode(radiusX, radiusY, drawComplex, drawBulge);
 
     // square - adjust coordinate to draw square
-    if (squareDrawRequested) {
+    //
+    // Draw of square is needed (SHIFT is pressed on second point selection)
+    if (alternativeActionMode) {
         double w = c2.x - c1.x;
         double h = c2.y - c1.y;
         double s = std::max(std::abs(w), std::abs(h));
@@ -124,11 +137,13 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
         }
     }
 
+    // define coordinates of corners
     RS_Vector bottomLeftCorner = RS_Vector(c1.x , c1.y);
     RS_Vector bottomRightCorner = RS_Vector(c2.x, c1.y);
     RS_Vector topRightCorner = RS_Vector(c2.x, c2.y);
     RS_Vector topLeftCorner = RS_Vector(c1.x, c2.y);
 
+    // ensure proper order of corners
     normalizeCorners(bottomLeftCorner, bottomRightCorner, topRightCorner, topLeftCorner);
 
     if (drawBulge && snapToCornerArcCenter){
@@ -159,7 +174,8 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
 RS_Vector LC_ActionDrawRectangle2Points::createSecondCornerSnapForGivenRectSize(RS_Vector size){
     RS_Vector result;
 
-    // take care of adjustment for second point snap accroding to current snap mode of insertion point
+    // take care of adjustment for second point snap according to current snap mode of insertion point
+    // this is necessary if size of rect is specified via command
 
     switch (insertionPointSnapMode){
         case SNAP_CORNER:
@@ -183,10 +199,9 @@ RS_Vector LC_ActionDrawRectangle2Points::createSecondCornerSnapForGivenRectSize(
     }
 
     // here we ignore snap mode for second point in order to satisfy given size
-
-    if (LC_LineMath::isMeaningfulAngle(angle)){
+    double angleRad = getActualBaseAngle();
+    if (LC_LineMath::isMeaningfulAngle(angleRad)){
         // rotate resulting point to given angle
-        double angleRad = RS_Math::deg2rad(angle);
         result = result.rotate(corner1, angleRad);
     }
     return result;
@@ -194,84 +209,88 @@ RS_Vector LC_ActionDrawRectangle2Points::createSecondCornerSnapForGivenRectSize(
 
 void LC_ActionDrawRectangle2Points::doAfterTrigger(){
     LC_AbstractActionDrawRectangle::doAfterTrigger();
-    setStatus(SetPoint1);
+    setMainStatus(SetPoint1);
     corner1Set = false;
 }
 
-void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed){
+void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case SetPoint1: {
-            graphicView->moveRelativeZero(snapPoint);
+            moveRelativeZero(snapPoint);
             corner1 = snapPoint;
             corner1Set = true;
-            setStatus(SetPoint2);
+            setMainStatus(SetPoint2);
             break;
         }
         case SetPoint2: {
-            squareDrawRequested = e->modifiers() & Qt::ShiftModifier;
             createShapeData(snapPoint);
             trigger();
             break;
         }
+        default:
+          break;
     }
 }
 
-void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &coord, bool zero, int status){
+void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &coord, [[maybe_unused]]bool zero, int status){
     switch (status){
         case SetPoint1:
             corner1Set = true;
             corner1 = coord;
-            setStatus(SetPoint2);
+            setMainStatus(SetPoint2);
             stateUpdated(false);
             break;
         case SetPoint2:
             createShapeData(coord);
             trigger();
             break;
-        case SetSize:
+        case SetSize: {
             RS_Vector newSnap = createSecondCornerSnapForGivenRectSize(coord);
             createShapeData(newSnap);
-            graphicView->moveRelativeZero(coord);
+            moveRelativeZero(coord);
             trigger();
+            break;
+        }
+        default:
             break;
     }
 }
 
-void LC_ActionDrawRectangle2Points::doUpdateMouseButtonHints(){
-    switch (getStatus()) {
+void LC_ActionDrawRectangle2Points::doUpdateMouseButtonHints(int status){
+    switch (status) {
         case SetPoint2:
             updateMouseWidgetTR("Specify second point", "Back");
             break;
         case SetPoint1Snap:
-            updateMouseWidgetTR("Specify corner one snap [corner|mid-vert|mid-hor|middle]", "Back");
+            updateMouseWidgetTR("Specify point 1 snap [corner|mid-vert|mid-hor|middle]", "Back");
             break;
         case SetPoint2Snap:
-            updateMouseWidgetTR("Specify corner one snap [corner|mid-vert|mid-hor|middle]", "Back");
+            updateMouseWidgetTR("Specify point 2 snap [corner|mid-vert|mid-hor|middle]", "Back");
             break;
         case SetSize:
             updateMouseWidgetTR("Specify size (width, height)", "Back");
             break;
         default:
-            LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints();
+            LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(status);
             break;
     }
 }
 
-void LC_ActionDrawRectangle2Points::processCommandValue(double value){
+void LC_ActionDrawRectangle2Points::processCommandValue([[maybe_unused]]double value, [[maybe_unused]]bool &toMainStatus){
     // no additional processing there
 }
 
-bool LC_ActionDrawRectangle2Points::processCustomCommand(RS_CommandEvent *e, const QString &c, bool &toMainStatus){
+bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c, bool &toMainStatus){
     bool result = true;
-    if (checkCommand("snap1",c)){
+    if (checkCommand("snap1",c)){ // starts entering of snap mode for point 1
         setStatus(SetPoint1Snap);
         toMainStatus = false;
     }
-    else if (checkCommand("snap2",c)){
+    else if (checkCommand("snap2",c)){ // starts entering of snap mode for corner 2
         setStatus(SetPoint2Snap);
         toMainStatus = false;
     }
-    else if (checkCommand("corner",c)){
+    else if (checkCommand("corner",c)){ // value for corner mode
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_CORNER;
         }else if (getStatus() == SetPoint2Snap){
@@ -281,7 +300,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand(RS_CommandEvent *e, con
             result = false;
         }
     }
-    else if (checkCommand("mid-vert",c)){
+    else if (checkCommand("mid-vert",c)){ // value for corner mode
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_EDGE_VERT;
         }else if (getStatus() == SetPoint2Snap){
@@ -291,7 +310,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand(RS_CommandEvent *e, con
             result = false;
         }
     }
-    else if (checkCommand("mid-hor",c)){
+    else if (checkCommand("mid-hor",c)){ // value for corner mode
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_EDGE_HOR;
         }else if (getStatus() == SetPoint2Snap){
@@ -301,7 +320,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand(RS_CommandEvent *e, con
             result = false;
         }
     }
-    else if (checkCommand("middle",c)){
+    else if (checkCommand("middle",c)){ // value for corner mode
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_MIDDLE;
         }else if (getStatus() == SetPoint2Snap){
@@ -311,20 +330,20 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand(RS_CommandEvent *e, con
             result = false;
         }
     }
-    else if (checkCommand("size",c)){
+    else if (checkCommand("size",c)){ // starts entering size
         if (corner1Set){
             toMainStatus = false;
             setStatus(SetSize);
         }
     }
-    else if (checkCommand("point",c)){
+    else if (checkCommand("pos",c)){  // switches to insertion point state
         toMainStatus = false;
-        setStatus(SetPoint1);
+        setMainStatus(SetPoint1);
     }
-    else if (checkCommand("snapcorner",c)){
+    else if (checkCommand("snapcorner",c)){ // enables snapping to corner
         snapToCornerArcCenter = false;
     }
-    else if (checkCommand("snapshift",c)){
+    else if (checkCommand("snapshift",c)){ // enables snapping to center of rounding arc
         snapToCornerArcCenter = true;
     }
     else{
@@ -378,40 +397,15 @@ QStringList LC_ActionDrawRectangle2Points::getAvailableCommands() {
     return cmd;
 }
 
-bool LC_ActionDrawRectangle2Points::onMouseMove(QMouseEvent *e, RS_Vector snap, int status){
-    squareDrawRequested = e->modifiers() & Qt::ShiftModifier;
-    return true;
-}
-
-void LC_ActionDrawRectangle2Points::setMainStatus(){
-    if (corner1Set){
-        setStatus(SetPoint2);
-    }
-    else {
-        setStatus(SetPoint1);
-    }
-}
-
 void LC_ActionDrawRectangle2Points::createOptionsWidget(){
     m_optionWidget = std::make_unique<LC_Rectangle2PointsOptions>(nullptr);
 }
 
-bool LC_ActionDrawRectangle2Points::doCheckMayDrawPreview(QMouseEvent *pEvent, int status){
+bool LC_ActionDrawRectangle2Points::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *pEvent, [[maybe_unused]]int status){
     return corner1Set;
-}
-
-int LC_ActionDrawRectangle2Points::getSecondPointSnapMode(){
-    return secondPointSnapMode;
 }
 
 void LC_ActionDrawRectangle2Points::setSecondPointSnapMode(int value){
     secondPointSnapMode = value;
     drawPreviewForLastPoint();
 }
-
-
-
-
-
-
-

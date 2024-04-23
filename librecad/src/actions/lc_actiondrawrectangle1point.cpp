@@ -1,16 +1,31 @@
-#include <cmath>
-#include "lc_actiondrawrectangle1point.h"
+/****************************************************************************
+**
+* Action that creates a rectangle defined by fixed width and height and snapped
+* in one point
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+#include <QMouseEvent>
 #include "rs_arc.h"
-#include "rs_preview.h"
-#include "QMouseEvent"
 #include "rs_math.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
-#include "lc_rectangle1pointoptions.h"
-#include "lc_abstractactiondrawrectangle.h"
 #include "lc_linemath.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_rectangle1pointoptions.h"
 
 LC_ActionDrawRectangle1Point::LC_ActionDrawRectangle1Point(
     RS_EntityContainer &container,
@@ -97,18 +112,27 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
             moveVector = moveVector + reference*radius;
         }
     }
-
     // move shape so it's reference point will correspond to provided snap point
     polyline->move(moveVector);
 
-    // now we'll rotate shape on specific angle
-    double angleRad = RS_Math::deg2rad(angle);
-    polyline->rotate(snapPoint, angleRad);
-
+    double actualBaseAngle = getActualBaseAngle();
+    if (LC_LineMath::isMeaningfulAngle(actualBaseAngle)){
+        // now we'll rotate shape on specific angle
+        polyline->rotate(snapPoint, actualBaseAngle);
+    }
     return polyline;
 }
 
-void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap, bool shiftPressed){
+int LC_ActionDrawRectangle1Point::doGetStatusForInitialSnapToRelativeZero(){
+    return SetPoint1;
+}
+
+void LC_ActionDrawRectangle1Point::doInitialSnapToRelativeZero(RS_Vector relZero){
+    createShapeData(relZero);
+    trigger();
+}
+
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap){
     switch (status) {
         case SetPoint1: {
             createShapeData(snap);
@@ -120,7 +144,7 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, in
     }
 }
 
-void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coord, bool isRelativeZero, int status){
+void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coord,[[maybe_unused]] bool isRelativeZero, int status){
     switch (status) {
         case SetPoint1:
             createShapeData(coord);
@@ -132,28 +156,25 @@ void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coo
             width = w;
             height = h;
             updateOptions();
-            setStatus(SetPoint1);
+            setMainStatus(SetPoint1);
             break;
         }
         case SetWidth:
             width = 0.0;
             updateOptions();
-            setStatus(SetPoint1);
+            setMainStatus(SetPoint1);
             break;
         case SetHeight:
             height = 0.0;
             updateOptions();
-            setStatus(SetPoint1);
+            setMainStatus(SetPoint1);
+            break;
+        default:
             break;
     }
 }
 
-
-void LC_ActionDrawRectangle1Point::setMainStatus(){
-    setStatus(SetPoint1);
-}
-
-void LC_ActionDrawRectangle1Point::processCommandValue(double value){
+void LC_ActionDrawRectangle1Point::processCommandValue(double value, [[maybe_unused]]bool &toMainStatus){
     switch (getStatus()) {
         case SetWidth: {
             width = LC_LineMath::getMeaningful(value);
@@ -218,8 +239,8 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(){
-    switch (getStatus()) {
+void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
+    switch (status) {
         case SetHeight:
             updateMouseWidgetTR("Specify height", "Back");
             break;
@@ -238,34 +259,29 @@ void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(){
     }
 }
 
-
-void LC_ActionDrawRectangle1Point::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>(nullptr);
-}
-
-bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, const QString &c, bool &toMainStatus){
+bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c, bool &toMainStatus){
     bool result = true;
-    if (checkCommand("width",c)){
+    if (checkCommand("width",c)){ //initiates entering width
         setStatus(SetWidth);
         toMainStatus = false;
     }
-    else if (checkCommand("height",c)){
+    else if (checkCommand("height",c)){ // initiates entering height
         setStatus(SetHeight);
         toMainStatus = false;
     }
-    else if (checkCommand("size",c)){
+    else if (checkCommand("size",c)){ // initiates entering size of rect
         setStatus(SetSize);
         toMainStatus = false;
     }
-    else if (checkCommand("point",c)){
+    else if (checkCommand("pos",c)){ // switches to entering insertion point state
         setStatus(SetPoint1);
         toMainStatus = false;
     }
-    else if (checkCommand("snap1",c)){
+    else if (checkCommand("snap1",c)){  // initiates entering snap mode for insertion point
         setStatus(SetPoint1Snap);
         toMainStatus = false;
     }
-    else if (checkCommand("topl",c)){
+    else if (checkCommand("topl",c)){  // top-left position of snap
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_LEFT;
         }
@@ -273,7 +289,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("top",c)){
+    else if (checkCommand("top",c)){ // middle of top edge position of snap
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP;
         }
@@ -281,7 +297,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("topr",c)){
+    else if (checkCommand("topr",c)){ // top-right corner snap
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_RIGHT;
         }
@@ -289,7 +305,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("left",c)){
+    else if (checkCommand("left",c)){ // middle of left edge snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_LEFT;
         }
@@ -297,7 +313,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("middle",c)){
+    else if (checkCommand("middle",c)){ // center of rect snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_MIDDLE;
         }
@@ -305,7 +321,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("right",c)){
+    else if (checkCommand("right",c)){ // middle of right edge snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_RIGHT;
         }
@@ -313,7 +329,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("bottoml",c)){
+    else if (checkCommand("bottoml",c)){ // bottom-left corner snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_LEFT;
         }
@@ -321,7 +337,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("bottom",c)){
+    else if (checkCommand("bottom",c)){ // middle of bottom edge snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM;
         }
@@ -329,7 +345,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("bottomr",c)){
+    else if (checkCommand("bottomr",c)){ // bottom-right corner snap position
         if (getStatus() == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_RIGHT;
         }
@@ -337,16 +353,16 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
             result = false;
         }
     }
-    else if (checkCommand("snapcorner",c)){
+    else if (checkCommand("snapcorner",c)){ // switches to snap to corner mode
         snapToCornerArcCenter = false;
     }
-    else if (checkCommand("snapshift",c)){
+    else if (checkCommand("snapshift",c)){ // switches to snap to rounding arc center mode
         snapToCornerArcCenter = true;
     }
-    else if (checkCommand("sizeout",c)){
+    else if (checkCommand("sizeout",c)){ // switches sizes calculation relating to corners
         sizeIsInner = false;
     }
-    else if (checkCommand("sizein",c)){
+    else if (checkCommand("sizein",c)){ // switches sizes calculation relating to centers of rounding arcs
         sizeIsInner = true;
     }
     else{
@@ -355,7 +371,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand(RS_CommandEvent *e, cons
     return result;
 }
 
-bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview(QMouseEvent *event, int status){
+bool LC_ActionDrawRectangle1Point::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
     return true;
 }
 
@@ -372,4 +388,8 @@ void LC_ActionDrawRectangle1Point::setHeight(double value){
 void LC_ActionDrawRectangle1Point::setSizeInner(bool value){
     sizeIsInner = value;
     drawPreviewForLastPoint();
+}
+
+void LC_ActionDrawRectangle1Point::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>(nullptr);
 }

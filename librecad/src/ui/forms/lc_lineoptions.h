@@ -3,7 +3,7 @@
 
 #include<memory>
 #include<QWidget>
-#include <lc_actiondrawlinerel.h>
+#include <lc_actiondrawlinesnake.h>
 
 //class RS_ActionInterface;
 
@@ -26,23 +26,31 @@ public slots:
     virtual void redo();
     virtual void polyline();
     virtual void start();
-    void setPointState();
-    void setYState();
-    void setXState();
+protected:
+    LC_ActionDrawLineSnake* action;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+protected slots:
     void onAngleClicked(bool value);
+    void onXClicked(bool value);
+    void onYClicked(bool value);
+    void onPointClicked(bool value);
     void onSetAngle();
     void onAngleRelativeClicked(bool value);
-protected:
-    LC_ActionDrawLineRel* action;
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    void clearAction() override;
-protected slots:
     virtual void languageChange();
     bool checkActionRttiValid(RS2::ActionType actionType) override;
+    QString getSettingsOptionNamePrefix() override;
+    void doSaveSettings() override;
 
 private:
     Ui::Ui_LineOptionsRel* ui;
-
+    bool inUpdateCycle = false;
+    void setXDirectionToActionAndView(bool value);
+    void setYDirectionToActionAndView(bool value);
+    void setAngleDirectionToActionAndView(bool value);
+    void setPointDirectionToActionAndView(bool value);
+    void setAngleToActionAndView(const QString& val, bool affectState);
+    void setAngleRelativeToActionAndView(bool relative);
+    void setupAngleRelatedUI(bool value);
 };
 
 #endif // LC_LINEOPTIONS_H

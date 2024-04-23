@@ -1,16 +1,35 @@
+/****************************************************************************
+**
+* Options widget for "Rectangle2Points" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #include "lc_rectangle2pointsoptions.h"
 #include "ui_lc_rectangle2pointsoptions.h"
 #include "rs_settings.h"
 #include "rs_math.h"
 
 LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_Rectangle2PointsOptions)
-{
+    LC_ActionOptionsWidget(parent),    
+    action(nullptr),
+    ui(new Ui::LC_Rectangle2PointsOptions){
     ui->setupUi(this);
 
-//    connect(ui->leWidth, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onWidthEditingFinished);
-//    connect(ui->leHeight, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onHeightEditingFinished);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onRadiusEditingFinished);
     connect(ui->leLenY, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onLenYEditingFinished);
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onLenXEditingFinished);
@@ -20,6 +39,7 @@ LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions(QWidget *parent) :
     connect(ui->cbSnapStart, SIGNAL(currentIndexChanged(int)), SLOT(onInsertionPointSnapIndexChanged(int)));
     connect(ui->cbSnapEnd, SIGNAL(currentIndexChanged(int)), SLOT(onSecondPointSnapIndexChanged(int)));
     connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
+    connect(ui->chkFixedBaseAngle, SIGNAL(clicked(bool)), this, SLOT(onBaseAngleFixedClicked(bool)));
 
     connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
     connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
@@ -33,18 +53,16 @@ void LC_Rectangle2PointsOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-
-void LC_Rectangle2PointsOptions::clearAction(){
-    action = nullptr;
-}
-
 bool LC_Rectangle2PointsOptions::checkActionRttiValid(RS2::ActionType actionType){
     return actionType == RS2::ActionDrawRectangle2Points;
 }
 
-void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = static_cast<LC_ActionDrawRectangle2Points *>(a);
+QString LC_Rectangle2PointsOptions::getSettingsOptionNamePrefix(){
+    return "/Rectangle2Points";
+}
 
+void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update){
+    action = dynamic_cast<LC_ActionDrawRectangle2Points *>(a);
 
     QString angle;
     QString radius;
@@ -57,6 +75,7 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     bool usePolyline;
     bool snapRadiusCenter;
     int edges;
+    bool fixedBaseAngle;
 
     if (update){
         cornersMode = action->getCornersMode();
@@ -71,25 +90,25 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         double lY = action->getLengthY();
 
 
-        angle = QString::number(an, 'g', 6);
-        radius = QString::number(r, 'g', 6);
-        lenX = QString::number(lX, 'g', 6);
-        lenY = QString::number(lY, 'g', 6);
+        angle = fromDouble(an);
+        radius = fromDouble(r);
+        lenX = fromDouble(lX);
+        lenY = fromDouble(lY);
         snapRadiusCenter = action->isSnapToCornerArcCenter();
+        fixedBaseAngle = action->isBaseAngleFixed();
     }
     else{
-        RS_SETTINGS->beginGroup("/Draw");
-        angle = RS_SETTINGS->readEntry("/Rectangle2PointsAngle", "0");
-        insertSnapMode = RS_SETTINGS->readNumEntry("/Rectangle2PointsInsertSnapMode", 0);
-        secondPointSnapMode = RS_SETTINGS->readNumEntry("/Rectangle2PointsSecondPointMode", 0);
-        cornersMode = RS_SETTINGS->readNumEntry("/Rectangle2PointsCorners", 0);
-        radius = RS_SETTINGS->readEntry("/Rectangle2PointsRadius", "0.0");
-        lenX = RS_SETTINGS->readEntry("/Rectangle2PointsLengthX", "5");
-        lenY = RS_SETTINGS->readEntry("/Rectangle2PointsLengthY", "5");
-        usePolyline = RS_SETTINGS->readNumEntry("/Rectangle2PointsPolyline", 1) == 1;
-        snapRadiusCenter = RS_SETTINGS->readNumEntry("/Rectangle2PointsRadiusSnap", 1) == 1;
-        edges = RS_SETTINGS->readNumEntry("/Rectangle3PointsEdges", 0);
-        RS_SETTINGS->endGroup();
+        angle = load("Angle", "0");
+        insertSnapMode =loadInt("InsertSnapMode", 0);
+        secondPointSnapMode = loadInt("SecondPointMode", 0);
+        cornersMode = loadInt("Corners", 0);
+        radius = load("Radius", "0.0");
+        lenX = load("LengthX", "5");
+        lenY = load("LengthY", "5");
+        usePolyline = loadBool("Polyline", true);
+        snapRadiusCenter = loadBool("RadiusSnap", true);
+        edges = loadInt("Edges", 0);
+        fixedBaseAngle = loadBool("BaseAngleIsFixed", false);
     }
 
     setAngleToActionAndView(angle);
@@ -102,22 +121,22 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     setUsePolylineToActionAndView(usePolyline);
     setSnapToCornerArcCenter(snapRadiusCenter);
     setEdgesModeToActionAndView(edges);
+    setBaseAngleFixedToActionAndView(fixedBaseAngle);
 }
 
 
-void LC_Rectangle2PointsOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/Rectangle2PointsAngle", ui->leAngle->text());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsInsertSnapMode", ui->cbSnapStart->currentIndex());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsSecondPointMode", ui->cbSnapEnd->currentIndex());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsCorners", ui->cbCorners->currentIndex());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsRadius", ui->leRadius->text());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsLengthX", ui->leX->text());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsLengthY", ui->leLenY->text());
-    RS_SETTINGS->writeEntry("/Rectangle2PointsPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle2PointsRadiusSnap", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle2PointsEdges", ui->cbEdges->currentIndex());
-    RS_SETTINGS->endGroup();
+void LC_Rectangle2PointsOptions::doSaveSettings(){
+    save("Angle", ui->leAngle->text());
+    save("InsertSnapMode", ui->cbSnapStart->currentIndex());
+    save("SecondPointMode", ui->cbSnapEnd->currentIndex());
+    save("Corners", ui->cbCorners->currentIndex());
+    save("Radius", ui->leRadius->text());
+    save("LengthX", ui->leX->text());
+    save("LengthY", ui->leLenY->text());
+    save("Polyline", ui->cbPolyline->isChecked());
+    save("RadiusSnap", ui->cbPolyline->isChecked());
+    save("Edges", ui->cbEdges->currentIndex());
+    save("BaseAngleIsFixed", ui->chkFixedBaseAngle->isChecked());
 }
 
 void LC_Rectangle2PointsOptions::onCornersIndexChanged(int index){
@@ -161,14 +180,12 @@ void LC_Rectangle2PointsOptions::onLenXEditingFinished(){
     }
 }
 
-
 void LC_Rectangle2PointsOptions::onRadiusEditingFinished(){
     if (action != nullptr){
         QString value = ui->leRadius->text();
         setRadiusToActionAnView(value);
     }
 }
-
 
 void LC_Rectangle2PointsOptions::onInsertionPointSnapIndexChanged(int index){
     if (action != nullptr){
@@ -193,7 +210,6 @@ void LC_Rectangle2PointsOptions::setEdgesModeToActionAndView(int index){
     ui->cbEdges->setCurrentIndex(index);
 }
 
-// fixme - mapping between indexes and mode
 void LC_Rectangle2PointsOptions::setInsertSnapPointModeToActionAndView(int index){
     action->setInsertionPointSnapMode(index);
     ui->cbSnapStart->setCurrentIndex(index);
@@ -209,42 +225,50 @@ void LC_Rectangle2PointsOptions::onAngleEditingFinished(){
     setAngleToActionAndView(expr);
 }
 
+
+void LC_Rectangle2PointsOptions::onBaseAngleFixedClicked(bool value){
+    if (action != nullptr){
+        setBaseAngleFixedToActionAndView(value);
+    }
+}
+
+void LC_Rectangle2PointsOptions::setBaseAngleFixedToActionAndView(bool value){
+    ui->chkFixedBaseAngle->setChecked(value);
+    action->setBaseAngleFixed(value);
+    ui->leAngle->setEnabled(value);
+}
+
 void LC_Rectangle2PointsOptions::setAngleToActionAndView(const QString &val){
-    bool ok = false;
-    double angle =RS_Math::eval(val, &ok);
-    if(!ok) return;
-    if (std::abs(angle) < RS_TOLERANCE_ANGLE) angle=0.0;
-    action->setAngle(angle);
-    ui->leAngle->setText(QString::number(angle, 'g', 6));
+    double angle;
+    if (toDoubleAngle(val, angle, 0.0, false)){
+        action->setAngle(angle);
+        ui->leAngle->setText(fromDouble(angle));
+    }
 }
 
-void LC_Rectangle2PointsOptions::setLenYToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setLengthY(y);
-    ui->leLenY->setText(QString::number(y, 'g', 6));
+void LC_Rectangle2PointsOptions::setLenYToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setLengthY(y);
+        ui->leLenY->setText(fromDouble(y));
+    }
 }
 
-void LC_Rectangle2PointsOptions::setLenXToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setLengthX(y);
-    ui->leX->setText(QString::number(y, 'g', 6));
+void LC_Rectangle2PointsOptions::setLenXToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setLengthX(y);
+        ui->leX->setText(fromDouble(y));
+    }
 }
 
-void LC_Rectangle2PointsOptions::setRadiusToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setRadius(y);
-    ui->leRadius->setText(QString::number(y, 'g', 6));
+void LC_Rectangle2PointsOptions::setRadiusToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setRadius(y);
+        ui->leRadius->setText(fromDouble(y));
+    }
 }
-
 
 void LC_Rectangle2PointsOptions::onUsePolylineClicked(bool value){
     if (action != nullptr){

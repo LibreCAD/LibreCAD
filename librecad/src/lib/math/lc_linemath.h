@@ -1,3 +1,24 @@
+/****************************************************************************
+**
+Various utility computation methods
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #ifndef LC_LINEMATH_H
 #define LC_LINEMATH_H
 
@@ -19,7 +40,9 @@ namespace LC_LineMath {
 
     bool isNonZeroLineLength(const RS_Vector &startPoint, const RS_Vector &endPoint);
 
-    RS_Vector calculateAngleSegment(RS_Vector &startPoint, double angleValueDegree, double distance);
+    RS_Vector getEndOfLineSegment(const RS_Vector &startPoint, double angleValueDegree, double distance);
+
+    RS_Vector relativePoint(const RS_Vector &startPoint, double distance, double angleValueRad);
 
     RS_Vector calculateAngleSegment(RS_Vector &startPoint, RS_Vector &previousLineStart, RS_Vector &previousLineEnd,
                                     double angleValueDegree, bool angleRelative, double distance);
@@ -28,9 +51,9 @@ namespace LC_LineMath {
 
     RS_Vector getNearestPointOnInfiniteLine(const RS_Vector &coord, const RS_Vector &lineStartPoint, const RS_Vector &lineEndPoint);
 
-    RS_Vector getNearestPointOnLine(RS_Line* baseLIne, const RS_Vector& coord, bool infiniteLine);
+    RS_Vector getNearestPointOnLine(RS_Line* line, const RS_Vector& coord, bool infiniteLine);
 
-    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree,RS_Vector &fromPoint, const RS_Vector &toSnapPoint);
+    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, RS_Vector &startPoint, const RS_Vector &toSnapPoint);
 
     RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative,RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
                                                  RS_Vector &previousLineStart, RS_Vector &previousLineEnd);
@@ -42,5 +65,9 @@ namespace LC_LineMath {
     bool areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End);
 
     RS_Vector getIntersectionLineLine(RS_Vector& s1, RS_Vector& e1, RS_Vector& s2, RS_Vector& e2);
+
+    RS_LineData createParallel(RS_Vector& start, RS_Vector& end, double distance);
+    bool isMeaningfulDistance(RS_Vector &v1, RS_Vector &v2);
+    bool isNotMeaningfulDistance(RS_Vector &v1, RS_Vector &v2);
 }
 #endif // LC_LINEMATH_H

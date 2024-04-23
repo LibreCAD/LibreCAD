@@ -1,13 +1,32 @@
+/****************************************************************************
+**
+* Action that creates a rectangle defined by 2 points
+* in one point
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #ifndef LC_ACTIONDRAWRECTANGLE2POINTS_H
 #define LC_ACTIONDRAWRECTANGLE2POINTS_H
 
 #include "lc_abstractactiondrawrectangle.h"
-#include "rs_previewactioninterface.h"
 
 class LC_ActionDrawRectangle2Points :public LC_AbstractActionDrawRectangle {
     Q_OBJECT
-
-    void setMainStatus() override;
 
 public:
 
@@ -24,28 +43,36 @@ public:
 
     QStringList getAvailableCommands() override;
     void init(int status) override;
-    int getSecondPointSnapMode();
+    int getSecondPointSnapMode() const{return secondPointSnapMode;};
     void setSecondPointSnapMode(int value);
 
 protected:
-    RS_Vector corner1;
-    bool corner1Set;
-    bool squareDrawRequested;
-    int secondPointSnapMode;
+    /**
+     * position of corner 1
+     */
+    RS_Vector corner1 = RS_Vector(false);
+    /*
+     * flag that indicates that corner 1 is already set
+     */
+    bool corner1Set = false;
+
+    /**
+     * mode that indicates how snap second point
+     */
+    int secondPointSnapMode = SNAP_CORNER;
 
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
-    void processCommandValue(double value) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) override;
     void createOptionsWidget() override;
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
     void doAfterTrigger() override;
-    void doUpdateMouseButtonHints() override;
+    void doUpdateMouseButtonHints(int status) override;
     RS_Vector createSecondCornerSnapForGivenRectSize(RS_Vector size);
-    bool onMouseMove(QMouseEvent *e, RS_Vector snap, int status) override;
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
-    int doRelZeroInitialSnapState() override;
-    void doRelZeroInitialSnap(RS_Vector vector) override;
+    int doGetStatusForInitialSnapToRelativeZero() override;
+    void doInitialSnapToRelativeZero(RS_Vector vector) override;
 };
 
 #endif // LC_ACTIONDRAWRECTANGLE2POINTS_H

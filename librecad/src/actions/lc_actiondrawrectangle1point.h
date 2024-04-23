@@ -1,7 +1,29 @@
+/****************************************************************************
+**
+* Action that creates a rectangle defined by fixed width and height and snapped
+* in one point
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
 #ifndef LC_ACTIONDRAWRECTANGLE1POINT_H
 #define LC_ACTIONDRAWRECTANGLE1POINT_H
 
-#include "rs_previewactioninterface.h"
 #include "rs_polyline.h"
 #include "lc_abstractactiondrawrectangle.h"
 
@@ -15,15 +37,15 @@ public:
      * points of rectangle to which snap should be performed on rect insertion
      */
     enum{
-        SNAP_TOP_LEFT,
-        SNAP_TOP,
-        SNAP_TOP_RIGHT,
-        SNAP_LEFT,
-        SNAP_MIDDLE,
-        SNAP_RIGHT,
-        SNAP_BOTTOM_LEFT,
-        SNAP_BOTTOM,
-        SNAP_BOTTOM_RIGHT
+        SNAP_TOP_LEFT, // top-left corner
+        SNAP_TOP, // middle of top edge
+        SNAP_TOP_RIGHT, // top-right corner
+        SNAP_LEFT, // middle of left edge
+        SNAP_MIDDLE, // center point
+        SNAP_RIGHT, // middle of right edge
+        SNAP_BOTTOM_LEFT, // bottom-left corner
+        SNAP_BOTTOM, // middle of bottom edge
+        SNAP_BOTTOM_RIGHT // bottom-right corner
     };
 
     LC_ActionDrawRectangle1Point(RS_EntityContainer& container,
@@ -42,23 +64,24 @@ public:
 
 protected:
     // width of rect
-    double width;
+    double width = 0.0;
     // height of rect
-    double height;
+    double height = 0.0;
     // flag that indicates that width and rect are applied to external area or excluding corner radius
-    bool sizeIsInner;
+    bool sizeIsInner = false;
 
     static const std::vector<RS_Vector> snapPoints;
 
     void createOptionsWidget() override;
 
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
-    void processCommandValue(double value) override;
-    void setMainStatus() override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(RS_CommandEvent *e, const QString &command,bool &toMainStatus) override;
-    void doUpdateMouseButtonHints() override;
+    void doUpdateMouseButtonHints(int status) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
+    int doGetStatusForInitialSnapToRelativeZero() override;
+    void doInitialSnapToRelativeZero(RS_Vector vector) override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

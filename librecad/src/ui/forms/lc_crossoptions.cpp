@@ -1,4 +1,26 @@
+/****************************************************************************
+**
+* Options widget for "DrawCross" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #include "lc_crossoptions.h"
+
 #include "ui_lc_crossoptions.h"
 #include "rs_settings.h"
 #include "rs_debug.h"
@@ -6,7 +28,8 @@
 
 LC_CrossOptions::LC_CrossOptions(QWidget *parent) :
     LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_CrossOptions)
+    ui(new Ui::LC_CrossOptions),
+    action(nullptr)
 {
     ui->setupUi(this);
 
@@ -18,9 +41,6 @@ LC_CrossOptions::LC_CrossOptions(QWidget *parent) :
 
 LC_CrossOptions::~LC_CrossOptions(){
     delete ui;
-}
-
-void LC_CrossOptions::clearAction(){
     action = nullptr;
 }
 
@@ -29,24 +49,22 @@ bool LC_CrossOptions::checkActionRttiValid(RS2::ActionType actionType){
 }
 
 void LC_CrossOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = static_cast<LC_ActionDrawCross *>(a);
+    action = dynamic_cast<LC_ActionDrawCross *>(a);
 
     QString x;
     QString y;
     QString angle;
     int mode;
     if (update){
-        x = QString::number(action->getLenX(), 'g', 6);
-        y = QString::number(action->getLenY(), 'g', 6);
-        angle = QString::number(action->getCrossAngle(), 'g', 6);
+        x = fromDouble(action->getLenX());
+        y = fromDouble(action->getLenY());
+        angle = fromDouble(action->getCrossAngle());
         mode = action->getCrossMode();
     } else {
-        RS_SETTINGS->beginGroup("/Draw");
-        x = RS_SETTINGS->readEntry("/CrossX", "1.0");
-        y = RS_SETTINGS->readEntry("/CrossY", "1.0");
-        angle = RS_SETTINGS->readEntry("/CrossAngle", "0.0");
-        mode = RS_SETTINGS->readNumEntry("/CrossMode", 1);
-        RS_SETTINGS->endGroup();
+        x = load("X", "1.0");
+        y = load("Y", "1.0");
+        angle = load("Angle", "0.0");
+        mode = loadInt("Mode", 1);
     }
     setXToActionAndView(x);
     setYToActionAndView(y);
@@ -54,14 +72,15 @@ void LC_CrossOptions::doSetAction(RS_ActionInterface *a, bool update){
     setModeToActionAndView(mode);
 }
 
+QString LC_CrossOptions::getSettingsOptionNamePrefix(){
+    return "/Cross";
+}
 
-void LC_CrossOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/CrossX", ui->leX->text());
-    RS_SETTINGS->writeEntry("/CrossY", ui->leY->text());
-    RS_SETTINGS->writeEntry("/CrossAngle", ui->leAngle->text());
-    RS_SETTINGS->writeEntry("/CrossMode", ui->cbMode->currentIndex());
-    RS_SETTINGS->endGroup();
+void LC_CrossOptions::doSaveSettings(){
+    save("X", ui->leX->text());
+    save("Y", ui->leY->text());
+    save("Angle", ui->leAngle->text());
+    save("Mode", ui->cbMode->currentIndex());
 }
 
 void LC_CrossOptions::onXEditingFinished(){
@@ -84,30 +103,27 @@ void LC_CrossOptions::onModeIndexChanged(int index){
 }
 
 void LC_CrossOptions::setXToActionAndView(const QString &strValue){
-    bool ok = false;
-    double x =std::abs(RS_Math::eval(strValue, &ok));
-    if(!ok) return;
-    if (x<RS_TOLERANCE) x=1.0;
-    action->setXLength(x);
-    ui->leX->setText(QString::number(x, 'g', 6));
+    double x;
+    if (toDouble(strValue, x, 1.0, true)){
+        action->setXLength(x);
+        ui->leX->setText(fromDouble(x));
+    }
 }
 
 void LC_CrossOptions::setYToActionAndView(const QString &strValue){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(strValue, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setYLength(y);
-    ui->leY->setText(QString::number(y, 'g', 6));
+    double y;
+    if (toDouble(strValue, y, 1.0, true)){
+        action->setYLength(y);
+        ui->leY->setText(fromDouble(y));
+    }
 }
 
 void LC_CrossOptions::setAngleToActionAndView(const QString &expr){
-    bool ok = false;
-    double angle =std::abs(RS_Math::eval(expr, &ok));
-    if(!ok) return;
-    if (angle < RS_TOLERANCE_ANGLE) angle=0.0;
-    action->setCrossAngle(angle);
-    ui->leAngle->setText(QString::number(angle, 'g', 6));
+    double angle;
+    if (toDoubleAngle(expr, angle, 0.0, false)){
+        action->setCrossAngle(angle);
+        ui->leAngle->setText(fromDouble(angle));
+    }
 }
 
 void LC_CrossOptions::setModeToActionAndView(int mode){

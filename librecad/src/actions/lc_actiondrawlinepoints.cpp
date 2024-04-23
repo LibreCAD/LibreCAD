@@ -1,30 +1,46 @@
-#include "lc_actiondrawlinepoints.h"
-#include "lc_linepointsoptions.h"
-#include "rs_math.h"
-#include "lc_linemath.h"
-#include "lc_abstract_action_draw_line.h"
-#include "rs_commands.h"
+/****************************************************************************
+**
+* Action that creates a set of points located on line
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
 #include <QMouseEvent>
-#include <rs_coordinateevent.h>
-#include <rs_commandevent.h>
-#include <rs_graphicview.h>
-#include <rs_document.h>
-#include <rs_preview.h>
+#include "rs_math.h"
 #include <rs_point.h>
+#include "lc_linemath.h"
+#include "lc_linepointsoptions.h"
+#include "lc_abstractactiondrawline.h"
+#include "lc_actiondrawlinepoints.h"
 
 LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :LC_AbstractActionDrawLine("LineDrawPoints",container, graphicView){
     actionType = RS2::ActionDrawLinePoints;
 }
 
-LC_ActionDrawLinePoints::~LC_ActionDrawLinePoints(){}
+LC_ActionDrawLinePoints::~LC_ActionDrawLinePoints()= default;
 
 /**
  * just cleanup if needed
  * @param status new status
  */
 void LC_ActionDrawLinePoints::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_AbstractActionWithPreview::init(status);
     if (status == 0){
         point1Set = false;
         startpoint = RS_Vector(false);
@@ -33,14 +49,20 @@ void LC_ActionDrawLinePoints::init(int status){
 }
 
 void LC_ActionDrawLinePoints::doSetStartPoint(RS_Vector vector){
+    // pre-snap to relative zero
     startpoint = vector;
     point1Set = true;
-    setStatus(SetPoint);
+    if (direction == DIRECTION_POINT || direction == DIRECTION_NONE){
+        setStatus(SetPoint);
+    }
+    else{
+        setStatus(SetDistance);
+    }
 }
 
 void LC_ActionDrawLinePoints::doPrepareTriggerEntities(QList<RS_Entity *> &list){
     // prepare points data
-    createEntities(endpoint, list);
+    createPoints(endpoint, list);
 }
 
 bool LC_ActionDrawLinePoints::doCheckMayTrigger(){
@@ -54,30 +76,38 @@ RS_Vector LC_ActionDrawLinePoints::doGetRelativeZeroAfterTrigger(){
 
 void LC_ActionDrawLinePoints::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
-    finishAction();
+//    finishAction();
+     if (direction == DIRECTION_X || DIRECTION_Y){
+         direction = DIRECTION_POINT;
+     }
+     init(SetStartPoint);
 }
 
-void LC_ActionDrawLinePoints::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     // determine candidate for possible end point
     RS_Vector possibleEndPoint;
     switch (status) {
         case SetStartPoint:
+        case SetEdge:
+        case SetFixDistance:
+        case SetPointsCount:
             return;
         case SetDirection:
         case SetPoint:
             possibleEndPoint = snap;
             break;
         case SetAngle:
-            possibleEndPoint = snap;
+            // calculate point with given angle from start point to snap
+            possibleEndPoint = getPossibleEndPointForAngle(snap);
             break;
         case SetDistance:
             switch (direction) {
-                case DIRECTION_X:
+                case DIRECTION_X: // use only x coordinate from snap
                     possibleEndPoint = RS_Vector(snap);
                     possibleEndPoint.y = startpoint.y;
                     possibleEndPoint.x = snap.x;
                     break;
-                case DIRECTION_Y:
+                case DIRECTION_Y: // use only y coordinate from snap
                     possibleEndPoint = RS_Vector(snap);
                     possibleEndPoint.x = startpoint.x;
                     possibleEndPoint.y = snap.y;
@@ -86,66 +116,104 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities(QMouseEvent *e, RS_Vector
                     possibleEndPoint = snap;
                     break;
                 case DIRECTION_ANGLE:
-                    RS_Vector snap = snapPoint(e);
-                    possibleEndPoint = LC_LineMath::calculateEndpointForAngleDirection(angleValue, startpoint, snap);
+                    // calculate point with given angle from start point to snap
+                    possibleEndPoint = getPossibleEndPointForAngle(snap);
                     break;
             }
+            break;
+        default:
             break;
     }
     // draw preview if this is non-zero line
     if (isNonZeroLine(possibleEndPoint)){
-        createEntities(possibleEndPoint, list);
+        createPoints(possibleEndPoint, list);
     }
 }
 
+RS_Vector LC_ActionDrawLinePoints::getPossibleEndPointForAngle(const RS_Vector &snap){
+    // if shift is pressed, we'll use alternative mirrored angle for direction
+    double angleToUse = angle;
+    if (alternativeActionMode){
+        angleToUse = 180-angle;
+    }
+    return LC_LineMath::calculateEndpointForAngleDirection(angleToUse,startpoint, snap);
+}
+
 /**
- * Calculate positions of points specified on line betwen start point and given point
+ * Calculate positions of points specified on line between start point and given point
  * @param potentialEndPoint coordinates of end point *
  */
-void LC_ActionDrawLinePoints::createEntities(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList){
+void LC_ActionDrawLinePoints::createPoints(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList){
 
     // determine angle of line
-    double angle = startpoint.angleTo(potentialEndPoint);
+    double segmentAngle = startpoint.angleTo(potentialEndPoint);
 
     // calculate distance of line
     double distanceAll = startpoint.distanceTo(potentialEndPoint);
 
     // calculate length of single segment between points
-    double segmentLength = distanceAll / (pointsCount + 1);
+    double segmentLength;
+
+    int numberOfPoints = pointsCount;
+
+    if (fixedDistanceMode){
+        segmentLength = fixedDistance;
+        if (withinLineMode){
+            // calculate required number of points dynamically based on length of line and distance
+            numberOfPoints = distanceAll / segmentLength;
+        }
+    }
+    else{
+        segmentLength = distanceAll / (pointsCount + 1);
+    }
 
     // handle point for start edge of line
     bool includeStartPoint = edgePointsMode == DRAW_EDGE_START || edgePointsMode == DRAW_EDGE_BOTH;
     if (includeStartPoint){
-        RS_Point* start = createPointEntity(startpoint);
-        entitiesList << start;
+        createPoint(startpoint, entitiesList);
     }
 
+    bool lineExceeds = false;
+
     // proceed with intermediate points
-    for (int i = 1; i <= pointsCount; i++){
+    for (int i = 1; i <= numberOfPoints; i++) {
         // calc distance from start point to intermediate point
         double distanceFromStart = segmentLength * i;
-        // define vector with needed distance and angle of line
-        RS_Vector point = RS_Vector::polar(distanceFromStart, angle);
-        // add that vector to start point
-        point  = point + startpoint;
-        RS_Point* inner = createPointEntity(point);
-        entitiesList << inner;
+
+        if (fixedDistanceMode && withinLineMode){
+            // check whether we are still within line if we in fixed distance mode and should fit points into the line
+            lineExceeds = distanceFromStart > distanceAll;
+            if (lineExceeds){
+                break;
+            }
+        }
+
+        // define point with needed distance and angle of line from start point
+        RS_Vector point = startpoint.relative(distanceFromStart, segmentAngle);
+
+        createPoint(point, entitiesList);
     }
 
     // handle point for end edge of line
-    bool includeEndPoint = edgePointsMode == DRAW_EDGE_END || edgePointsMode == DRAW_EDGE_BOTH;
-    if (includeEndPoint){
-        RS_Point* end = createPointEntity(potentialEndPoint);
-        entitiesList << end;
+    if (!lineExceeds){
+        bool includeEndPoint = edgePointsMode == DRAW_EDGE_END || edgePointsMode == DRAW_EDGE_BOTH;
+        if (includeEndPoint){
+            RS_Vector actualEndPoint;
+            if (fixedDistanceMode){
+                double endDistance = (numberOfPoints + 1) * fixedDistance;
+                actualEndPoint  = startpoint.relative(endDistance, segmentAngle);
+            }
+            else {
+                actualEndPoint = potentialEndPoint;
+            }
+            createPoint(actualEndPoint, entitiesList);
+            // endpoint field will be used for setting related zero after trigger, so
+            // we'll correct it there
+            endpoint = actualEndPoint;
+        }
     }
 }
 
-/**
- * options for the action
- */
-void LC_ActionDrawLinePoints::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LinePointsOptions>(nullptr);
-}
 
 /**
  * check whether start is set (and so it is valid)
@@ -159,7 +227,7 @@ const RS_Vector& LC_ActionDrawLinePoints::getStartPointForAngleSnap() const {
     return startpoint;
 }
 
-void LC_ActionDrawLinePoints::onCoordinateEvent(const RS_Vector &mouse, bool isZero, int status){
+void LC_ActionDrawLinePoints::  onCoordinateEvent(const RS_Vector &mouse, [[maybe_unused]]bool isZero, int status){
     switch (status) {
         case SetDistance:
             switch (direction) {
@@ -180,7 +248,7 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(const RS_Vector &mouse, bool isZ
                     break;
                 }
                 case DIRECTION_ANGLE:{ // calculate end point in given angle direction
-                    RS_Vector possiblePoint = LC_LineMath::calculateEndpointForAngleDirection(angleValue, startpoint, mouse);
+                    RS_Vector possiblePoint = getPossibleEndPointForAngle(mouse);
                     if (isNonZeroLine(possiblePoint)){
                         endpoint = possiblePoint;
                         trigger();
@@ -190,6 +258,14 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(const RS_Vector &mouse, bool isZ
                     break;
             }
             break;
+        case SetAngle: {
+            RS_Vector possiblePoint = getPossibleEndPointForAngle(mouse);
+            if (isNonZeroLine(possiblePoint)){
+                endpoint = possiblePoint;
+                trigger();
+            }
+            break;
+        }
         case SetDirection:
         case SetPoint: // set end to provided point
             if (isNonZeroLine(mouse)){
@@ -201,10 +277,17 @@ void LC_ActionDrawLinePoints::onCoordinateEvent(const RS_Vector &mouse, bool isZ
         case SetStartPoint:{ // setup start point of line
             startpoint = mouse;
             point1Set = true;
-            setStatus(SetPoint);
-            graphicView->moveRelativeZero(mouse);
+            if (direction != DIRECTION_POINT && direction != DIRECTION_NONE){
+                setStatus(SetDistance);
+            }
+            else {
+                setStatus(SetPoint);
+            }
+            moveRelativeZero(mouse);
             break;
         }
+        case SetFixDistance:
+            break;
         default:
             break;
     }
@@ -223,24 +306,24 @@ bool LC_ActionDrawLinePoints::isNonZeroLine(const RS_Vector &possiblePoint) cons
  * Proceed commands from command widget
  * @param e event
  * @param c command
- * @return true if comamnd is processed, false - if adidtional processing is needed
+ * @return true if command is processed, false - if additional processing is needed
  */
-bool LC_ActionDrawLinePoints::doProceedCommand(RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c){
     bool result = true;
     bool edgeStatus = getStatus() == SetEdge;
-    if (checkCommand("edge_none", c)){
+    if (checkCommand("edge_none", c)){        //specifies no points in line edges
         updateEdgePointsMode(DRAW_EDGE_NONE);
     }
-    else if (checkCommand("edge_start", c)){
+    else if (checkCommand("edge_start", c)){  // point will be created in start point edge
         updateEdgePointsMode(DRAW_EDGE_START);
     }
-    else if (checkCommand("edge_end", c)){
+    else if (checkCommand("edge_end", c)){  // point will be created in end point edge
         updateEdgePointsMode(DRAW_EDGE_END);
     }
-    else if (checkCommand("edge_both", c)){
+    else if (checkCommand("edge_both", c)){  // points will be created in start and end points of line
         updateEdgePointsMode(DRAW_EDGE_BOTH);
     }
-    else if (edgeStatus &&checkCommand("start",c)){
+    else if (edgeStatus &&checkCommand("start",c)){ // point will be created in start point edge
         updateEdgePointsMode(DRAW_EDGE_START);
         edgePointsMode = DRAW_EDGE_START;
         setMajorStatus();
@@ -258,11 +341,31 @@ bool LC_ActionDrawLinePoints::doProceedCommand(RS_CommandEvent *e, const QString
         edgePointsMode = DRAW_EDGE_BOTH;
         setMajorStatus();
     }
-    else if (checkCommand("edges",c)){
+    else if (checkCommand("edges",c)){ // initiates edge entering mode
         setStatus(SetEdge);
     }
-    else if (checkCommand("number", c)){
-        setSetNumberOfPointsState(false);
+    else if (checkCommand("number", c)){ // initiates entering of points numbers (edges are not counted!)
+        setStatus(SetPointsCount);
+        updateOptions();
+    }
+    else if (checkCommand("dist_fixed", c)){  // switches to fixed distance mode
+        fixedDistanceMode = true;
+        updateOptions();
+    }
+    else if (checkCommand("dist_flex", c)){ // switches to flexible distance mode
+        fixedDistanceMode = false;
+        updateOptions();
+    }
+    else if (checkCommand("nofit", c)){ // for fixed distance mode, allows creation points outside of line
+        withinLineMode = false;
+        updateOptions();
+    }
+    else if (checkCommand("fit", c)){ //for fixed distance mode, ensures that all point are within the line
+        withinLineMode = true;
+        updateOptions();
+    }
+    else if (checkCommand("distance", c)){ // initiates entering distance between points (for fixed mode)
+        setStatus(SetFixDistance);
     }
     else{
         result = false;
@@ -282,6 +385,19 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
         case SetDirection:
             // processed earlier
             break;
+        case SetFixDistance:{
+            bool ok = false;
+            double distance = RS_Math::eval(c, &ok);
+            if (ok && LC_LineMath::isMeaningful(distance)){ // non-zero distance is provided
+                fixedDistance = distance;
+                fixedDistanceMode = true;
+                setMajorStatus();
+            }
+            else{
+                result = false;
+            }
+            break;
+        }
         case SetDistance: {
             bool ok = false;
             double distance = RS_Math::eval(c, &ok);
@@ -300,7 +416,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                         trigger();
                         break;
                     case DIRECTION_ANGLE: { // calculate endpoint coordinate by previously set angle and distance
-                        endpoint = LC_LineMath::calculateAngleSegment(startpoint, angleValue, distance);
+                        endpoint = LC_LineMath::getEndOfLineSegment(startpoint, angle, distance);
                         endpoint.valid = true;
                         trigger();
                         break;
@@ -309,7 +425,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                         break;
                 }
             } else {
-                result = false;
+                result = false; // invalid value
             }
             break;
         }
@@ -320,7 +436,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
                 updatePointsCount(count);
                 setMajorStatus();
             } else {
-                result = false;
+                result = false; // in valid value
             }
             break;
         }
@@ -347,6 +463,12 @@ QStringList LC_ActionDrawLinePoints::getAvailableCommands(){
             cmd += command("angle");
             cmd += command("number");
             cmd += command("edges");
+            cmd += command("edges");
+            cmd += command("distance");
+            cmd += command("fit");
+            cmd += command("nofit");
+            cmd += command("fix");
+            cmd += command("nofix");
 //            cmd += command("edge_none");
 //            cmd += command("edge_start");
 //            cmd += command("edge_end");
@@ -365,35 +487,38 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTR("Specify First Point","Cancel");
             break;
         case SetPoint:
-            updateMouseWidgetTR("Specify Second Point or [number|x|y|angle|p|edges]","Back");
+            updateMouseWidgetTR("Specify Second Point\nor [number|x|y|angle|p|edges|distance]","Back");
             break;
         case SetDirection:
-            updateMouseWidgetTR("Specify line direction [x|y|angle|p]","Back");
+            updateMouseWidgetTR("Specify line direction\n[x|y|angle|p|distance]","Back");
             break;
         case SetAngle:
-            updateMouseWidgetTR("Specify line direction angle or [x|y|p|number|edges]","Back");
+            updateMouseWidgetTR("Specify line direction angle\nor [x|y|p|number|edges|distance]","Back");
             break;
         case SetEdge:
-            updateMouseWidgetTR("Specify edge points mode [none|start|end|both]","Back");
+            updateMouseWidgetTR("Specify edge points mode\n[none|start|end|both|distance]","Back");
+            break;
+        case SetFixDistance:
+            updateMouseWidgetTR("Specify fixed distance between points\nor[x|y|p|number|edges]","Back");
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
             bool toY = direction == DIRECTION_Y;
-            msg += RS_COMMANDS->command("number")+"|";
-            msg += RS_COMMANDS->command("angle")+"|";
-            msg += RS_COMMANDS->command("p")+"|";
-            msg += RS_COMMANDS->command("edges");
+            msg += getCommand("number")+"|";
+            msg += getCommand("angle")+"|";
+            msg += getCommand("p")+"|";
+            msg += getCommand("edges");
             if (toX){
-                msg += "|" + RS_COMMANDS->command("y");
-                updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("X"), msg),tr("Back"));
+                msg += "|" + getCommand("y");
+                updateMouseWidget(tr("Specify distance (%1)\nor [%2]").arg(tr("X"), msg),tr("Back"));
             } else if (toY){
-                msg += "|" + RS_COMMANDS->command("x");
-                updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg), tr("Back"));
+                msg += "|" + getCommand("x");
+                updateMouseWidget(tr("Specify distance (%1)\nor [%2]").arg(tr("Y"), msg), tr("Back"));
             } else if (direction == DIRECTION_ANGLE){
-                msg += "|" + RS_COMMANDS->command("x");
-                msg += "|" + RS_COMMANDS->command("y");
-                QString angleStr = RS_Math::doubleToString(angleValue, 1);
-                updateMouseWidget(tr("Specify  distance (angle %1 deg) or [%2]").arg(angleStr, msg),tr("Back"));
+                msg += "|" + getCommand("x");
+                msg += "|" + getCommand("y");
+                QString angleStr = RS_Math::doubleToString(angle, 1);
+                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"));
             }
             break;
         }
@@ -401,7 +526,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             updateMouseWidgetTR("Specify points count","Back");
             break;
         default:
-            RS_ActionInterface::updateMouseButtonHints();
+            LC_AbstractActionDrawLine::updateMouseButtonHints();
     }
 }
 
@@ -410,17 +535,13 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
  * @param e original event
  * @param status current status
  */
-void LC_ActionDrawLinePoints::doBack(QMouseEvent *e, int status){
-    switch (status) {
-        case SetStartPoint: { // complete action
-            finishAction();
-            break;
-        }
-        default: { // return to set start point state
-            // restore relative point to start point
-            graphicView->moveRelativeZero(startpoint);
-            init(SetStartPoint);
-        }
+void LC_ActionDrawLinePoints::doBack([[maybe_unused]]QMouseEvent *e, int status){
+    if (status == SetStartPoint){ // complete action
+        finishAction();
+    } else { // return to set start point state
+        // restore relative point to start point
+        moveRelativeZero(startpoint);
+        init(SetStartPoint);
     }
 }
 
@@ -433,22 +554,9 @@ void LC_ActionDrawLinePoints::updateEdgePointsMode(int mode){
     updateOptions();
 }
 
-RS_Point* LC_ActionDrawLinePoints::createPointEntity(const RS_Vector &point) const{
-    RS_PointData pointEntityData(point);
-    RS_Point* pointEntity = new RS_Point(container, pointEntityData);
-    return pointEntity;
-}
-
 void LC_ActionDrawLinePoints::setEdgePointsMode(int value){
    edgePointsMode = value;
 }
-
-
-void LC_ActionDrawLinePoints::setSetNumberOfPointsState(bool b){
-    setStatus(SetPointsCount);
-    updateOptions();
-}
-
 
 void LC_ActionDrawLinePoints::updatePointsCount(int count){
     pointsCount = count;
@@ -465,8 +573,10 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
     }
 }
 
-
-void LC_ActionDrawLinePoints::setPointsCount(int value){
-    pointsCount = value;
+/**
+ * options for the action
+ */
+void LC_ActionDrawLinePoints::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_LinePointsOptions>(nullptr);
 }
 

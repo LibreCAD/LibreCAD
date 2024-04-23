@@ -1,11 +1,32 @@
+/****************************************************************************
+**
+* Options widget for "LineJoin" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #include "lc_linejoinoptions.h"
 #include "ui_lc_linejoinoptions.h"
-#include "rs_settings.h"
+
 
 LC_LineJoinOptions::LC_LineJoinOptions(QWidget *parent) :
     LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_LineJoinOptions)
-{
+    ui(new Ui::LC_LineJoinOptions),
+    action(nullptr){
     ui->setupUi(this);
 
     connect(ui->cbLine1EdgeMode, SIGNAL(currentIndexChanged(int)), SLOT(onEdgeModelLine1IndexChanged(int)));
@@ -16,17 +37,17 @@ LC_LineJoinOptions::LC_LineJoinOptions(QWidget *parent) :
     connect(ui->cbRemoveOriginals, SIGNAL(clicked(bool)), this, SLOT(onRemoveOriginalsClicked(bool)));
 }
 
-LC_LineJoinOptions::~LC_LineJoinOptions(){
-    saveSettings();
+LC_LineJoinOptions::~LC_LineJoinOptions(){    
     delete ui;
-}
-
-void LC_LineJoinOptions::clearAction(){
-  action = nullptr;
+    action = nullptr; 
 }
 
 void LC_LineJoinOptions::languageChange(){
     ui->retranslateUi(this);
+}
+
+QString LC_LineJoinOptions::getSettingsOptionNamePrefix(){
+    return "/LineJoin";
 }
 
 void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -43,15 +64,14 @@ void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
         line2EdgeMode = action->getLine2EdgeMode();
         usePolyline = action->isCreatePolyline();
         removeOriginals = action->isRemoveOriginalLines();
+        attributesSource = action->getAttributesSource();
     }
-    else{
-        RS_SETTINGS->beginGroup("/Draw");
-        usePolyline = RS_SETTINGS->readNumEntry("/LineJoinPolyline", 0) == 1;
-        removeOriginals = RS_SETTINGS->readNumEntry("/LineJoinRemoveOriginals", 0) == 1;
-        attributesSource= RS_SETTINGS->readNumEntry("/LineJoinAttributesSource", 0);
-        line1EdgeMode = RS_SETTINGS->readNumEntry("/LineJoinLine1EdgeMode", 0);
-        line2EdgeMode = RS_SETTINGS->readNumEntry("/LineJoinLine2EdgeMode", 0);
-        RS_SETTINGS->endGroup();
+    else{        
+        usePolyline = loadBool("Polyline", false);
+        removeOriginals = loadBool("RemoveOriginals", false);
+        attributesSource= loadInt("AttributesSource", 0);
+        line1EdgeMode = loadInt("Line1EdgeMode", 0);
+        line2EdgeMode = loadInt("Line2EdgeMode", 0);
     }
 
     setUsePolylineToActionAndView(usePolyline);
@@ -62,16 +82,12 @@ void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
 
 }
 
-void LC_LineJoinOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Draw");
-//    RS_SETTINGS->writeEntry("/LineJoinWidth", ui->leWidth->text());
-//
-    RS_SETTINGS->writeEntry("/LineJoinPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/LineJoinRemoveOriginals", ui->cbRemoveOriginals->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/LineJoinAttributesSource", ui->cbAttributesSource->currentIndex());
-    RS_SETTINGS->writeEntry("/LineJoinLine1EdgeMode", ui->cbLine1EdgeMode->currentIndex());
-    RS_SETTINGS->writeEntry("/LineJoinLine2EdgeMode", ui->cbLine2EdgeMode->currentIndex());
-    RS_SETTINGS->endGroup();
+void LC_LineJoinOptions::doSaveSettings(){    
+    save("Polyline", ui->cbPolyline->isChecked());
+    save("RemoveOriginals", ui->cbRemoveOriginals->isChecked());
+    save("AttributesSource", ui->cbAttributesSource->currentIndex());
+    save("Line1EdgeMode", ui->cbLine1EdgeMode->currentIndex());
+    save("Line2EdgeMode", ui->cbLine2EdgeMode->currentIndex());
 }
 
 bool LC_LineJoinOptions::checkActionRttiValid(RS2::ActionType actionType){

@@ -80,6 +80,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["DrawLinePolygonCenCor"]
         << a_map["DrawLinePolygonCenTan"]   //20161226 added by txmy
         << a_map["DrawLinePolygonCorCor"]
+        << a_map["DrawStar"]
         << a_map["DrawPoint"]
         << a_map["DrawLinePoints"]
         << a_map["DrawLineRectangle1Point"]
@@ -92,7 +93,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["DrawLineAngleRel"]
         << a_map["DrawLineOrthogonalRel"]
         << a_map["DrawLineFromPointToLine"]
-        << a_map["DrawSliceDivide"];
+        << a_map["DrawSliceDivideLine"]
+        << a_map["DrawSliceDivideCircle"];
 
 
     circle_actions
@@ -176,12 +178,14 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyTrim"]
             << a_map["ModifyTrim2"]
             << a_map["ModifyTrimAmount"]
+            << a_map["ModifyLineJoin"]
+            << a_map["ModifyBreakDivide"]
+            << a_map["ModifyLineGap"]
             << a_map["ModifyOffset"]
             << a_map["ModifyBevel"]
             << a_map["ModifyRound"]
             << a_map["ModifyCut"]
             << a_map["ModifyStretch"]
-            << a_map["ModifyLineJoin"]
             << a_map["ModifyEntity"]
             << a_map["ModifyAttributes"]
             << a_map["ModifyExplodeText"]

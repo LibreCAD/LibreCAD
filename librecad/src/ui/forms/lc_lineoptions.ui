@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>35</height>
+    <width>556</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>400</width>
-    <height>32</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -31,192 +31,274 @@
   <property name="windowTitle">
    <string>Line Options</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
+  <layout class="QGridLayout" name="gridLayout_2">
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="5">
-    <widget class="QLineEdit" name="leAngle">
+   <item row="0" column="0" rowspan="2">
+    <widget class="QLabel" name="label">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="11">
-    <widget class="QToolButton" name="bRedo">
-     <property name="toolTip">
-      <string>Redo the last line drawing</string>
-     </property>
-     <property name="text">
-      <string>Redo</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="QRadioButton" name="rbAngle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
+       <width>45</width>
        <height>0</height>
       </size>
      </property>
      <property name="text">
-      <string>Angle</string>
+      <string>Direction:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="9">
-    <widget class="QToolButton" name="bPolyline">
-     <property name="text">
-      <string>Polyline</string>
+   <item row="0" column="16" rowspan="2">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="8">
-    <widget class="QToolButton" name="bClose">
-     <property name="toolTip">
-      <string>Form a closed contour from lines drawn</string>
-     </property>
-     <property name="text">
-      <string>Close</string>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>24</width>
-       <height>22</height>
-      </size>
-     </property>
-     <property name="checkable">
-      <bool>false</bool>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QRadioButton" name="rbX">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>X</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="12">
-    <widget class="QToolButton" name="bUndo">
-     <property name="toolTip">
-      <string>Undo the last line drawing</string>
-     </property>
-     <property name="text">
-      <string>Undo</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QRadioButton" name="rbY">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Y</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QRadioButton" name="rbPoint">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Point</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
-    <widget class="QCheckBox" name="cbRelAngle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="text">
-      <string>Rel</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QToolButton" name="bStart">
-     <property name="text">
-      <string>Start</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="10">
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
+     <property name="sizeHint" stdset="0">
       <size>
        <width>0</width>
-       <height>33</height>
+       <height>20</height>
       </size>
      </property>
+    </spacer>
+   </item>
+   <item row="0" column="1" rowspan="2">
+    <widget class="QFrame" name="frame">
      <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+      <enum>QFrame::NoFrame</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Raised</enum>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <widget class="Line" name="sep2">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>33</height>
-      </size>
-     </property>
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="sizeConstraint">
+       <enum>QLayout::SetMinimumSize</enum>
+      </property>
+      <property name="leftMargin">
+       <number>3</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <property name="horizontalSpacing">
+       <number>3</number>
+      </property>
+      <property name="verticalSpacing">
+       <number>4</number>
+      </property>
+      <item row="0" column="8">
+       <widget class="QToolButton" name="bPolyline">
+        <property name="text">
+         <string>Polyline</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QRadioButton" name="rbY">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Y</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QRadioButton" name="rbAngle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Angle</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="0">
+       <widget class="QRadioButton" name="rbX">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>30</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>X</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="6">
+       <widget class="Line" name="sep2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QCheckBox" name="cbRelAngle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string extracomment="Angle is relative to previous segment"/>
+        </property>
+        <property name="text">
+         <string>Rel</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="9">
+       <widget class="Line" name="sep1">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::VLine</enum>
+        </property>
+        <property name="frameShadow">
+         <enum>QFrame::Sunken</enum>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="11">
+       <widget class="QToolButton" name="bUndo">
+        <property name="toolTip">
+         <string>Undo the last line drawing</string>
+        </property>
+        <property name="text">
+         <string>Undo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="7">
+       <widget class="QToolButton" name="bClose">
+        <property name="toolTip">
+         <string>Form a closed contour from lines drawn</string>
+        </property>
+        <property name="text">
+         <string>Close</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>22</height>
+         </size>
+        </property>
+        <property name="checkable">
+         <bool>false</bool>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="10">
+       <widget class="QToolButton" name="bRedo">
+        <property name="toolTip">
+         <string>Redo the last line drawing</string>
+        </property>
+        <property name="text">
+         <string>Redo</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="4">
+       <widget class="QLineEdit" name="leAngle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>40</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>50</width>
+          <height>16777215</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QRadioButton" name="rbPoint">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>50</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Point</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -277,70 +359,6 @@
    <signal>clicked()</signal>
    <receiver>Ui_LineOptionsRel</receiver>
    <slot>polyline()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>100</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>61</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bStart</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_LineOptionsRel</receiver>
-   <slot>start()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>100</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>61</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbX</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_LineOptionsRel</receiver>
-   <slot>setXState()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>100</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>61</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbY</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_LineOptionsRel</receiver>
-   <slot>setYState()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>100</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>61</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbPoint</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_LineOptionsRel</receiver>
-   <slot>setPointState()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>100</x>

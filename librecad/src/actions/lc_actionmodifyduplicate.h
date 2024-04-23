@@ -1,3 +1,24 @@
+/****************************************************************************
+**
+* Action that duplicates entities
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #ifndef LC_ACTIONMODIFYDUPLICATE_H
 #define LC_ACTIONMODIFYDUPLICATE_H
 
@@ -10,54 +31,64 @@ public:
         SelectEntity
     };
 
-    enum {
-        PEN_ACTIVE,
-        PEN_ORIGINAL,
-        PEN_ORIGINAL_RESOLVED
-    };
-
-    enum {
-        LAYER_ACTIVE,
-        LAYER_ORIGINAL
-    };
-
 
     LC_ActionModifyDuplicate(RS_EntityContainer& container,RS_GraphicView& graphicView);
     ~LC_ActionModifyDuplicate() override;
-    void init(int status) override;
 
-    double getOffsetX() {return offsetX;};
-    double getOffsetY() {return offsetY;};
+    double getOffsetX() const {return offsetX;};
+    double getOffsetY() const {return offsetY;};
 
     void setOffsetX(double value) {offsetX = value;};
     void setOffsetY(double value){offsetY = value;};
 
-    bool isDuplicateInPlace(){return duplicateInplace;};
+    bool isDuplicateInPlace() const{return duplicateInplace;};
     void setDuplicateInPlace(bool value){duplicateInplace = value;};
     void updateMouseButtonHints() override;
-    int getPenMode();
+    int getPenMode() const {return penMode;};
     void setPenMode(int value){penMode = value;};
-    int getLayerMode(){return layerMode;};
+    int getLayerMode() const{return layerMode;};
     void setLayerMode(int value){layerMode = value;};
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
     void createOptionsWidget() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint, bool shiftPressed) override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool isSetActivePenAndLayerOnTrigger() override;
-
+    bool doCheckMayTriggerOnInit(int status) override;
+    bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
 private:
+    /**
+     * entity for which duplicate will be created
+     */
+    RS_Entity * selectedEntity = nullptr;
+    /**
+     * offset for duplicated entity by X axis
+     */
+    double offsetX = 0.0;
+    /*
+     * offset for duplicated entity by Y axis
+     */
+    double offsetY = 0.0;
+    /**
+     * flag that indicates that duplicate should be created without offset on the same position as original. That is useful for creation
+     * entity's copy on different layer.
+     */
+    bool duplicateInplace = false;
+    /**
+     * controls how to apply pen to created duplicate
+     */
+    int penMode = PEN_ACTIVE;
+    /**
+     * controls how to apply layer to created duplicate
+     */
+    int layerMode = LAYER_ACTIVE;
 
-    QList<RS_Entity *> selectedEntities;
-    int offsetX;
-    int offsetY;
-    bool duplicateInplace;
-    RS_Vector getOffset() const;
-    int penMode;
-    int layerMode;
+    RS_Vector determineOffset() const;
 };
 
 #endif // LC_ACTIONMODIFYDUPLICATE_H

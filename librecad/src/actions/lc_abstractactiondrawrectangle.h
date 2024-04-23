@@ -1,9 +1,28 @@
+/****************************************************************************
+**
+* Abstract base class for actions that draws a rectangle
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
 #ifndef LC_ABSTRACTACTIONDRAWRECTANGLE_H
 #define LC_ABSTRACTACTIONDRAWRECTANGLE_H
 
-#include "rs_previewactioninterface.h"
-#include "rs_vector.h"
-#include "rs_polyline.h"
 #include "lc_abstractactionwithpreview.h"
 
 class LC_AbstractActionDrawRectangle:public LC_AbstractActionWithPreview {
@@ -22,10 +41,13 @@ public:
         CORNER_BEVEL // bevels
     };
 
+    /**
+     * Defines how edges should be drawn
+     */
     enum {
-        EDGES_BOTH,
-        EDGES_VERT,
-        EDGES_HOR
+        EDGES_BOTH, // all edges of rectangle are drawn
+        EDGES_VERT, // only vertical edges of rectangle are drawn (2 parallel lines instead of rect)
+        EDGES_HOR // only horizontal edges of rectangle are drawn
     };
 
     /**
@@ -44,89 +66,92 @@ public:
         SetCorners,
         SetBevels,
         SetRadius,
-        LAST_BASE_STATUS
+        SetEdges,
+        SetInnerAngle,
+        LAST_BASE_STATUS [[maybe_unused]]
     };
 
 
     void updateMouseButtonHints() override;
-
-    bool isUsePolyline(){return usePolyline;};
-
+    bool isUsePolyline() const{return usePolyline;};
     void setUsePolyline(bool value){usePolyline = value;};
     void setRadius(double radius);
-
-    double getRadius(){return radius;};
-
+    double getRadius() const{return radius;};
     void setLengthX(double value);
-
-    double getLengthX(){return bevelX;};
-
+    double getLengthX() const{return bevelX;};
     void setLengthY(double value);
-
-    double getLengthY(){return bevelY;};
+    double getLengthY() const{return bevelY;};
     void setAngle(double angle);
-
-    double getAngle(){return angle;}
-
+    double getAngle() const{return angle;}
     void setCornersMode(int value);
-
-    int getCornersMode(){return cornersDrawMode;};
-
+    int getCornersMode() const{return cornersDrawMode;};
     void setInsertionPointSnapMode(int value);
-    int getInsertionPointSnapMode(){return insertionPointSnapMode;};
-
+    int getInsertionPointSnapMode() const{return insertionPointSnapMode;};
     void setSnapToCornerArcCenter(bool b);
-    bool isSnapToCornerArcCenter() {return snapToCornerArcCenter;};
-
+    bool isSnapToCornerArcCenter() const {return snapToCornerArcCenter;};
     void setEdgesDrawMode(int mode){edgesDrawMode = mode;};
-    int getEdgesDrawMode(){return edgesDrawMode;};
+    int getEdgesDrawMode() const{return edgesDrawMode;};
+    void setBaseAngleFixed(bool val) {baseAngleIsFixed = val;};
+    bool isBaseAngleFixed() const {return baseAngleIsFixed;}
 
 protected:
     /**
      * should resulting rect be polyline or not
      */
-    bool usePolyline;
+    bool usePolyline = false;
     /**
      * flag that controls how to draw corners
      */
-    int cornersDrawMode;
+    int cornersDrawMode =CORNER_STRAIGHT;
     /**
      * radius for rounded corners
      */
-    double radius;
+    double radius = 0.0;
     /**
      * x value of bevel
      */
-    double bevelX;
+    double bevelX = 0.0;
     /**
      * y value of bevel
      */
-    double bevelY;
+    double bevelY = 0.0;
     /**
-     * angle of rect's rotation
+     * angle of rectangle's rotation (angle between bottom edge and x axis)
      */
-    double angle;
+    double angle = 0;
     /**
      * flag that controls how to position rect relative to insertion point - may have different meanings in different actions
      */
-    int insertionPointSnapMode;
+    int insertionPointSnapMode = 0;
     /**
      * flag that indicates that snap should be performed taking into consideration rounded corners (if true, snap is not for, say, corner,
      * but to center of nearest rounded corner arc
      */
-    bool snapToCornerArcCenter;
+    bool snapToCornerArcCenter = false;
 
-    int edgesDrawMode ;
-
-    struct ShapeData{
-       /**
-     * built polyline for shape
+    /**
+     * flag that indicates that angle for rect is specified and is fixed
      */
+    bool baseAngleIsFixed = false;
+
+    /**
+     * mode that controls how edges of rect should be drawn
+     */
+    int edgesDrawMode = EDGES_BOTH;
+
+    /**
+     * Stores shape and snap for rectangle shape
+     */
+    struct ShapeData{
+
         RS_Polyline *resultingPolyline;
         RS_Vector snapPoint;
     };
 
-    ShapeData* shapeData;
+    /*
+     * shape data
+     */
+    ShapeData* shapeData {nullptr};
 
     void prepareCornersDrawMode(double &radiusX, double &radiusY, bool &drawComplex, bool &drawBulge) const;
     RS_Polyline* createPolylineByVertexes( RS_Vector bottomLeftCorner, RS_Vector bottomRightCorner,
@@ -137,25 +162,23 @@ protected:
     virtual RS_Polyline *createPolyline(const RS_Vector &snapPoint) const = 0;
 
     void createShapeData(const RS_Vector &snapPoint);
-
-    virtual void setMainStatus() = 0;
-    virtual void processCommandValue(double value) = 0;
+    virtual void processCommandValue(double value, bool &toMainStatus) = 0;
     virtual bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) = 0;
-    virtual void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status);
-    virtual void doUpdateMouseButtonHints();
+    virtual void doProcessCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
+    virtual void doUpdateMouseButtonHints(int status);
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
-
     void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner) const;
+    static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
     void stateUpdated(bool toMainStatus);
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doBack(QMouseEvent *pEvent, int status) override;
-    bool doCheckPolylineEntityAllowedInTrigger(RS_Entity *pEntity, int index);
+    bool doCheckPolylineEntityAllowedInTrigger(int index) const;
+    double getActualBaseAngle() const;
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

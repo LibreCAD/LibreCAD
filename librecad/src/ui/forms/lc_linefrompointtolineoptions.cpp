@@ -1,74 +1,97 @@
+/****************************************************************************
+**
+* Options widget for "LineFromPointToLine" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+#include <cmath>
 #include "lc_linefrompointtolineoptions.h"
 #include "ui_lc_linefrompointtolineoptions.h"
-#include "rs_settings.h"
 #include "rs_math.h"
+
 
 LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions(QWidget *parent) :
     LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_LineFromPointToLineOptions)
-{
+    action(nullptr),
+    ui(new Ui::LC_LineFromPointToLineOptions){
     ui->setupUi(this);
 
     connect(ui->cbOrthogonal, SIGNAL(clicked(bool)), this, SLOT(onOrthogonalClicked(bool)));
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onAngleEditingFinished);
     connect(ui->cbSizeMode, SIGNAL(currentIndexChanged(int)), SLOT(onSizeModeIndexChanged(int)));
     connect(ui->leLength, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onLengthEditingFinished);
+    connect(ui->leOffset, &QLineEdit::editingFinished, this, &LC_LineFromPointToLineOptions::onEndOffsetEditingFinished);
     connect(ui->cbSnap, SIGNAL(currentIndexChanged(int)), SLOT(onSnapModeIndexChanged(int)));
 }
 
 LC_LineFromPointToLineOptions::~LC_LineFromPointToLineOptions(){
-    saveSettings();
     delete ui;
+    action = nullptr;
 }
 
 void LC_LineFromPointToLineOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-void LC_LineFromPointToLineOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("LinePointToLineOrthogonal", ui->cbOrthogonal->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("LinePointToLineAngle", ui->leAngle->text());
-    RS_SETTINGS->writeEntry("LinePointToLineLength", ui->leLength->text());
-    RS_SETTINGS->writeEntry("LinePointToLineSnapMode", ui->cbSnap->currentIndex());
-    RS_SETTINGS->writeEntry("LinePointToLineSizeMode", ui->cbSizeMode->currentIndex());
-    RS_SETTINGS->endGroup();
+QString LC_LineFromPointToLineOptions::getSettingsOptionNamePrefix(){
+    return "/LinePointToLine";
+}
+
+void LC_LineFromPointToLineOptions::doSaveSettings(){
+    save("Orthogonal", ui->cbOrthogonal->isChecked());
+    save("Angle", ui->leAngle->text());
+    save("Length", ui->leLength->text());
+    save("SnapMode", ui->cbSnap->currentIndex());
+    save("SizeMode", ui->cbSizeMode->currentIndex());
+    save("EndOffset", ui->leOffset->text());
 }
 
 void LC_LineFromPointToLineOptions::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<LC_ActionDrawLineFromPointToLine *>(a);
-    bool ortho = false;
-    QString angle = QString();
-    int sizeMode = 0;
-    QString length = QString();
-    int snap = 0;
+    bool orthogonal;
+    QString angle;
+    int sizeMode;
+    QString length;
+    QString offset;
+    int snap;
 
     if (update){
-        ortho = action->getOrthogonal();
+        orthogonal = action->getOrthogonal();
         sizeMode = action->getSizeMode();
         snap = action->getLineSnapMode();
-        angle = QString::number(action->getAngle(), 'g', 6);
-        length = QString::number(action->getLength(), 'g', 6);
+        angle = fromDouble(action->getAngle());
+        length = fromDouble(action->getLength());
+        offset = fromDouble(action->getEndOffset());
     }
     else{
-        RS_SETTINGS->beginGroup("/Draw");
-        ortho = RS_SETTINGS->readNumEntry("LinePointToLineOrthogonal", 1) == 1;
-        angle = RS_SETTINGS->readEntry("LinePointToLineAngle", "90");
-        length = RS_SETTINGS->readEntry("LinePointToLineLength", "100");
-        snap = RS_SETTINGS->readNumEntry("LinePointToLineSnapMode", 0);
-        sizeMode = RS_SETTINGS->readNumEntry("LinePointToLineSizeMode", 0);
-        RS_SETTINGS->endGroup();
+        orthogonal = loadBool("Orthogonal", true) ;
+        angle = load("Angle", "90");
+        length = load("Length", "100");
+        snap = loadInt("SnapMode", 0);
+        sizeMode = loadInt("SizeMode", 0);
+        offset = load("EndOffset", "0.0");
     }
-    setOrthogonalToActionAndView(ortho);
+    setOrthogonalToActionAndView(orthogonal);
     setAngleToActionAndView(angle);
     setSizeModelIndexToActionAndView(sizeMode);
     setLengthToActionAndView(length);
     setSnapModeToActionAndView(snap);
-    
-}
-
-void LC_LineFromPointToLineOptions::clearAction(){
-    action = nullptr;
+    setEndOffsetToActionAndView(offset);
 }
 
 void LC_LineFromPointToLineOptions::onSnapModeIndexChanged(int index){
@@ -89,7 +112,6 @@ void LC_LineFromPointToLineOptions::onOrthogonalClicked(bool value){
     }
 }
 
-
 bool LC_LineFromPointToLineOptions::checkActionRttiValid(RS2::ActionType actionType){
     return actionType == RS2::ActionDrawLineFromPointToLine;
 }
@@ -105,6 +127,11 @@ void LC_LineFromPointToLineOptions::onLengthEditingFinished(){
         setLengthToActionAndView(ui->leLength->text());
     }
 }
+void LC_LineFromPointToLineOptions::onEndOffsetEditingFinished(){
+    if (action != nullptr){
+        setEndOffsetToActionAndView(ui->leOffset->text());
+    }
+}
 
 void LC_LineFromPointToLineOptions::setSnapModeToActionAndView(int index){
     action->setLineSnapMode(index);
@@ -116,30 +143,36 @@ void LC_LineFromPointToLineOptions::setSizeModelIndexToActionAndView(int index){
     ui->cbSizeMode->setCurrentIndex(index);
     bool intersectionMode = index == 0;
     ui->frmLength->setVisible(!intersectionMode);
+    ui->frmOffset->setVisible(intersectionMode);
 }
 
-void LC_LineFromPointToLineOptions::setAngleToActionAndView(QString value){
-    bool ok = false;
-    double angle =RS_Math::eval(value, &ok);
-    if(!ok) return;
-    if (std::abs(angle) < RS_TOLERANCE_ANGLE) angle=0.0;
+void LC_LineFromPointToLineOptions::setAngleToActionAndView(const QString& value){
+    double angle;
+    if (toDoubleAngle(value, angle, 1.0, false)){
+        // ensure angle in 0..180
+        double angleRad = RS_Math::deg2rad(angle);
+        double correctedAngle = std::remainder(angleRad, M_PI);
+        angle = RS_Math::rad2deg(std::abs(correctedAngle));
 
-    // ensure angle in 0..180
-    double angleRad = RS_Math::deg2rad(angle);
-    double correctedAngle = RS_Math::correctAngle3(angleRad);
-    angle = RS_Math::rad2deg(correctedAngle);
-
-    action->setAngle(angle);
-    ui->leAngle->setText(QString::number(angle, 'g', 6));
+        action->setAngle(angle);
+        ui->leAngle->setText(fromDouble(angle));
+    }
 }
 
-void LC_LineFromPointToLineOptions::setLengthToActionAndView(QString value){
-    bool ok = false;
-    double len =RS_Math::eval(value, &ok);
-    if(!ok) return;
-    if (std::abs(len) < RS_TOLERANCE) len=1.0;
-    action->setLength(len);
-    ui->leLength->setText(QString::number(len, 'g', 6));
+void LC_LineFromPointToLineOptions::setLengthToActionAndView(const QString& value){
+    double len;
+    if (toDouble(value, len, 1.0, false)){
+        action->setLength(len);
+        ui->leLength->setText(fromDouble(len));
+    }
+}
+
+void LC_LineFromPointToLineOptions::setEndOffsetToActionAndView(const QString& value){
+    double len;
+    if (toDouble(value, len, 0.0, false)){
+        action->setEndOffset(len);
+        ui->leOffset->setText(fromDouble(len));
+    }
 }
 
 void LC_LineFromPointToLineOptions::setOrthogonalToActionAndView(bool value){

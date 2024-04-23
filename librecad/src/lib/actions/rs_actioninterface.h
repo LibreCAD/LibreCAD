@@ -164,6 +164,7 @@ protected:
 
     virtual void createOptionsWidget();
     void updateOptions();
+    void updateOptionsUI(int mode);
 };
 
 

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1140</width>
+    <width>1228</width>
     <height>24</height>
    </rect>
   </property>
@@ -22,9 +22,15 @@
    </property>
    <item row="1" column="5">
     <widget class="QLineEdit" name="leAngle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="minimumSize">
       <size>
-       <width>40</width>
+       <width>30</width>
        <height>0</height>
       </size>
      </property>
@@ -36,10 +42,57 @@
      </property>
     </widget>
    </item>
+   <item row="1" column="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="10">
+    <widget class="QComboBox" name="cbEdges">
+     <item>
+      <property name="text">
+       <string>Both</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Vertical</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Horizontal</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="9">
+    <widget class="QLabel" name="lblEdges">
+     <property name="text">
+      <string>Edges:</string>
+     </property>
+    </widget>
+   </item>
    <item row="1" column="0">
     <widget class="QCheckBox" name="cbQuadrangle">
      <property name="text">
       <string>Quadrangle</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QCheckBox" name="chkFixedBaseAngle">
+     <property name="text">
+      <string>Fixed Base Angle:</string>
      </property>
     </widget>
    </item>
@@ -65,6 +118,9 @@
       <property name="topMargin">
        <number>0</number>
       </property>
+      <property name="rightMargin">
+       <number>3</number>
+      </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
@@ -77,9 +133,15 @@
       </item>
       <item row="0" column="6">
        <widget class="QLineEdit" name="leX">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>40</width>
+          <width>30</width>
           <height>0</height>
          </size>
         </property>
@@ -133,9 +195,15 @@
       </item>
       <item row="0" column="8">
        <widget class="QLineEdit" name="leLenY">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>40</width>
+          <width>30</width>
           <height>0</height>
          </size>
         </property>
@@ -149,9 +217,15 @@
       </item>
       <item row="0" column="3">
        <widget class="QLineEdit" name="leRadius">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
-          <width>40</width>
+          <width>30</width>
           <height>0</height>
          </size>
         </property>
@@ -173,46 +247,6 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="6">
-    <widget class="QCheckBox" name="cbPolyline">
-     <property name="text">
-      <string>Polyline</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="10">
-    <widget class="QComboBox" name="cbEdges">
-     <item>
-      <property name="text">
-       <string>Both</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Vertical</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Horizontal</string>
-      </property>
-     </item>
-    </widget>
-   </item>
    <item row="1" column="1">
     <widget class="QFrame" name="frmQuad">
      <property name="frameShape">
@@ -223,7 +257,7 @@
      </property>
      <layout class="QGridLayout" name="gridLayout_3">
       <property name="leftMargin">
-       <number>8</number>
+       <number>2</number>
       </property>
       <property name="topMargin">
        <number>0</number>
@@ -237,8 +271,14 @@
       <property name="horizontalSpacing">
        <number>3</number>
       </property>
-      <item row="0" column="4">
+      <item row="0" column="3">
        <widget class="QLineEdit" name="leInnerAngle">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
         <property name="minimumSize">
          <size>
           <width>30</width>
@@ -253,10 +293,10 @@
         </property>
        </widget>
       </item>
-      <item row="0" column="3">
-       <widget class="QLabel" name="lblInnerAngle">
-        <property name="text">
-         <string>Inner Angle:</string>
+      <item row="0" column="1">
+       <widget class="Line" name="line_3">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
         </property>
        </widget>
       </item>
@@ -269,26 +309,28 @@
          </sizepolicy>
         </property>
         <property name="text">
-         <string>Fixed</string>
-        </property>
-       </widget>
-      </item>
-      <item row="0" column="1">
-       <widget class="Line" name="line_3">
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
+         <string>Fixed Inner Angle:</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="1" column="9">
-    <widget class="QLabel" name="lblEdges">
-     <property name="text">
-      <string>Edges:</string>
+   <item row="1" column="11">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-    </widget>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

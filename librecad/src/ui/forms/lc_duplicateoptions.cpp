@@ -1,11 +1,31 @@
+/****************************************************************************
+**
+* Options widget for "Duplicate" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #include "lc_duplicateoptions.h"
 #include "ui_lc_duplicateoptions.h"
-#include "rs_math.h"
-#include "rs_settings.h"
 
 LC_DuplicateOptions::LC_DuplicateOptions(QWidget *parent):
     LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_DuplicateOptions){
+    ui(new Ui::LC_DuplicateOptions),
+    action(nullptr){
     ui->setupUi(this);
     connect(ui->leOffsetX, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetXEditingFinished);
     connect(ui->leOffsetY, &QLineEdit::editingFinished, this, &LC_DuplicateOptions::onOffsetYEditingFinished);
@@ -15,18 +35,24 @@ LC_DuplicateOptions::LC_DuplicateOptions(QWidget *parent):
 }
 
 LC_DuplicateOptions::~LC_DuplicateOptions(){
-    saveSettings();
     delete ui;
+    action = nullptr;
 }
 
-void LC_DuplicateOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/DuplicateOffsetX", ui->leOffsetX->text());
-    RS_SETTINGS->writeEntry("/DuplicateOffsetY", ui->leOffsetY->text());
-    RS_SETTINGS->writeEntry("/DuplicateInPlace", ui->cbInPlace->isChecked() ? 1 : 0);
-    RS_SETTINGS->writeEntry("/DuplicatePenMode", ui->cbPen->currentIndex());
-    RS_SETTINGS->writeEntry("/DuplicateLayerMode", ui->cbLayer->currentIndex());
-    RS_SETTINGS->endGroup();
+QString LC_DuplicateOptions::getSettingsGroupName(){
+    return "/Modify";
+}
+
+QString LC_DuplicateOptions::getSettingsOptionNamePrefix(){
+    return "/Duplicate";
+}
+
+void LC_DuplicateOptions::doSaveSettings(){
+    save("OffsetX", ui->leOffsetX->text());
+    save("OffsetY", ui->leOffsetY->text());
+    save("InPlace", ui->cbInPlace->isChecked());
+    save("PenMode", ui->cbPen->currentIndex());
+    save("LayerMode", ui->cbLayer->currentIndex());
 }
 
 void LC_DuplicateOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -37,20 +63,19 @@ void LC_DuplicateOptions::doSetAction(RS_ActionInterface *a, bool update){
     int penMode;
     int layerMode;
     if (update){
-        ofX = QString::number(action->getOffsetX(), 'g', 6);
-        ofY = QString::number(action->getOffsetY(), 'g', 6);
+        ofX = fromDouble(action->getOffsetX());
+        ofY = fromDouble(action->getOffsetY());
         inplace = action->isDuplicateInPlace();
         penMode = action->getPenMode();
         layerMode = action->getLayerMode();
     }
     else{
-        RS_SETTINGS->beginGroup("/Modify");
-        ofX = RS_SETTINGS->readEntry("/DuplicateOffsetX", "0");
-        ofY = RS_SETTINGS->readEntry("/DuplicateOffsetY", "0");
-        inplace = RS_SETTINGS->readNumEntry("/DuplicateInPlace", 1)  == 1;
-        penMode = RS_SETTINGS->readNumEntry("/DuplicatePenMode", 0);
-        layerMode = RS_SETTINGS->readNumEntry("/DuplicateLayerMode", 0);
-        RS_SETTINGS->endGroup();
+        ofX = load("OffsetX", "0");
+        ofY = load("OffsetY", "0");
+        inplace = loadBool("InPlace", true);
+        penMode = loadInt("PenMode", 0);
+        layerMode = loadInt("LayerMode", 0);
+
     }
     setOffsetXToActionAndView(ofX);
     setOffsetYToActionAndView(ofY);
@@ -89,26 +114,20 @@ void LC_DuplicateOptions::onLayerModeIndexChanged(int mode){
     }
 }
 
-void LC_DuplicateOptions::clearAction(){
-    action = nullptr;
-}
-
 void LC_DuplicateOptions::setOffsetXToActionAndView(const QString &val){
-    bool ok = false;
-    double value = std::abs(RS_Math::eval(val, &ok));
-    if (!ok) return;
-    if (value < RS_TOLERANCE) value = 0;
-    action->setOffsetX(value);
-    ui->leOffsetX->setText(QString::number(value, 'g', 6));
+    double value;
+    if (toDouble(val, value, 0, false)){
+        action->setOffsetX(value);
+        ui->leOffsetX->setText(fromDouble(value));
+    }
 }
 
 void LC_DuplicateOptions::setOffsetYToActionAndView(const QString &val){
-    bool ok = false;
-    double value = std::abs(RS_Math::eval(val, &ok));
-    if (!ok) return;
-    if (value < RS_TOLERANCE) value = 0;
-    action->setOffsetY(value);
-    ui->leOffsetY->setText(QString::number(value, 'g', 6));
+    double value;
+    if (toDouble(val, value, 0, false)){
+        action->setOffsetY(value);
+        ui->leOffsetY->setText(fromDouble(value));
+    }
 }
 
 void LC_DuplicateOptions::setInPlaceDuplicateToActionAndView(bool inplace){

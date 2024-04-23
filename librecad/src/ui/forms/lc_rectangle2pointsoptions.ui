@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1169</width>
+    <width>1240</width>
     <height>24</height>
    </rect>
   </property>
@@ -20,6 +20,110 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
+   <item row="0" column="11">
+    <widget class="QCheckBox" name="cbSnapRadiusCenter">
+     <property name="text">
+      <string>Snap shift</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QLabel" name="lblRadius">
+     <property name="text">
+      <string>Radius:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <widget class="QLineEdit" name="leX">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="16">
+    <widget class="QLabel" name="lblEdges">
+     <property name="text">
+      <string>Edges:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="text">
+      <string>Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>End Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Corners:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="15">
+    <widget class="QLineEdit" name="leLenY">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="12">
+    <widget class="QLabel" name="lblX">
+     <property name="text">
+      <string>Length X:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Start Snap:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="cbSnapStart">
      <item>
@@ -44,34 +148,11 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QLineEdit" name="leAngle">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="10">
     <widget class="QLineEdit" name="leRadius">
      <property name="minimumSize">
       <size>
-       <width>40</width>
+       <width>30</width>
        <height>0</height>
       </size>
      </property>
@@ -83,73 +164,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="6">
-    <widget class="QCheckBox" name="cbPolyline">
+   <item row="0" column="4">
+    <widget class="QCheckBox" name="chkFixedBaseAngle">
      <property name="text">
-      <string>Polyline</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="8">
-    <widget class="QComboBox" name="cbCorners">
-     <item>
-      <property name="text">
-       <string>Straight</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Round</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Bevel</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Start Snap:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="13">
-    <widget class="QLineEdit" name="leX">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="11">
-    <widget class="QCheckBox" name="cbSnapRadiusCenter">
-     <property name="text">
-      <string>Snap shift</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="16">
-    <widget class="QLabel" name="lblEdges">
-     <property name="text">
-      <string>Edges:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Corners:</string>
+      <string>Base Angle:</string>
      </property>
     </widget>
    </item>
@@ -177,47 +195,29 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="15">
-    <widget class="QLineEdit" name="leLenY">
-     <property name="minimumSize">
-      <size>
-       <width>40</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="9">
-    <widget class="QLabel" name="lblRadius">
-     <property name="text">
-      <string>Radius:</string>
-     </property>
+   <item row="0" column="8">
+    <widget class="QComboBox" name="cbCorners">
+     <item>
+      <property name="text">
+       <string>Straight</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Round</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Bevel</string>
+      </property>
+     </item>
     </widget>
    </item>
    <item row="0" column="14">
     <widget class="QLabel" name="lblLenY">
      <property name="text">
       <string>Length Y:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="12">
-    <widget class="QLabel" name="lblX">
-     <property name="text">
-      <string>Length X:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>End Snap:</string>
      </property>
     </widget>
    </item>
@@ -239,6 +239,19 @@
       </property>
      </item>
     </widget>
+   </item>
+   <item row="0" column="18">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
   </layout>
  </widget>

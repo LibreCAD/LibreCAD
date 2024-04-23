@@ -47,7 +47,7 @@
 
 namespace {
     constexpr double m_piX2 = M_PI*2; //2*PI
-    constexpr double m_halfPI = M_PI/2; //2*PI
+    constexpr double m_halfPI = M_PI/2; //PI/2
     const QRegularExpression unitreg(
         R"((?P<sign>^-?))"
         R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS

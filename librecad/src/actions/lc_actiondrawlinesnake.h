@@ -1,19 +1,40 @@
-#ifndef LC_ACTIONDRAWLINEREL_H
-#define LC_ACTIONDRAWLINEREL_H
+/****************************************************************************
+**
+* Action that creates a set of lines, with support of angle and "snake" mode
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+#ifndef LC_ACTIONDRAWLINESNAKE_H
+#define LC_ACTIONDRAWLINESNAKE_H
 
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
 #include "rs_line.h"
-#include "lc_abstract_action_draw_line.h"
+#include "lc_abstractactiondrawline.h"
 
-class LC_ActionDrawLineRel : public LC_AbstractActionDrawLine {
+class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
     Q_OBJECT
 
 
 public:
     /// History Actions
     enum HistoryAction {
-        HA_SetStartpoint,   ///< Setting the startpoint
+        HA_SetStartpoint,   ///< Setting the start point
         HA_SetEndpoint,     ///< Setting the endpoint
         HA_Close,           ///< Close group of lines
         HA_Next,            ///< Start new group of lines
@@ -45,16 +66,16 @@ public:
             return *this;
         }
 
-        HistoryAction    histAct;    ///< action to undo/redo
-        RS_Vector       prevPt;     ///< previous coordinate
-        RS_Vector       currPt;     ///< current coordinate
-        int             startOffset;///< offset to start point for close method
+        HistoryAction    histAct;    // action to undo/redo
+        RS_Vector       prevPt;     // previous coordinate
+        RS_Vector       currPt;     // current coordinate
+        int             startOffset;// offset to start point for close method
     };
 
     struct Points
     {
         /// Line data defined so far
-        RS_LineData data;
+        RS_LineData data = RS_LineData();
         /// Point history (undo/redo pointer)
         int  historyIndex {-1};
         /// start point offset for close method
@@ -69,8 +90,8 @@ public:
     };
 
 
-    LC_ActionDrawLineRel(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineRel::DIRECTION_NONE);
-    ~LC_ActionDrawLineRel() override;
+    LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
+    ~LC_ActionDrawLineSnake() override;
     void updateMouseButtonHints() override;
 
     void init(int status) override;
@@ -100,6 +121,9 @@ protected:
     void doSetStartPoint(RS_Vector vector) override;
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
 private:
+    /**
+     * points data
+     */
     std::unique_ptr<Points> pPoints;
     void resetPoints();
     void addHistory(HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);

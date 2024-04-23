@@ -112,6 +112,15 @@ void RS_Vector::setPolar(double radius, double angle) {
 RS_Vector RS_Vector::polar(double rho, double theta){
     return {rho * std::cos(theta), rho * std::sin(theta), 0.};
 }
+/**
+ * Returns vector that defines point located in specified distance and angle from current
+ * @param distance distance to target point
+ * @param angle angle from target point from this one
+ * @return resulting point
+ */
+RS_Vector RS_Vector::relative(double distance, double angle) const{
+    return {x + distance * std::cos(angle), y +distance * std::sin(angle), 0.};
+}
 
 /**
  * @return The angle from zero to this vector (in rad).

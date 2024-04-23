@@ -140,13 +140,14 @@ public slots:
  void slotDrawLinePoints();
 	void slotDrawCircle();
  void slotDrawCircleCross();
- void slotDrawLineRel();
- void slotDrawLineRelX();
- void slotDrawLineRelY();
+ void slotDrawLineSnake();
+ void slotDrawLineSnakeX();
+ void slotDrawLineSnakeY();
  void slotDrawLineOrthogonalRel();
  void slotDrawLineOrthogonalTo();
  void slotDrawLineAngleRel();
- void slotDrawSliceDivide();
+ void slotDrawSliceDivideLine();
+ void slotDrawSliceDivideCircle();
 	void slotDrawCircleCR();
 	void slotDrawCircle2P();
 	void slotDrawCircle2PR();
@@ -274,6 +275,9 @@ public slots:
     void slotBlocksExplode();
     void slotModifyLineJoin();
     void slotModifyDuplicate();
+    void slotDrawStar();
+    void slotModifyBreakDivide();
+    void slotModifyLineGap();
 
 	void slotOptionsDrawing();
     void toggleVisibility(RS_Layer* layer);

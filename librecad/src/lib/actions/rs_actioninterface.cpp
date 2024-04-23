@@ -307,7 +307,14 @@ void RS_ActionInterface::hideOptions() {
 
 void RS_ActionInterface::updateOptions(){
     if (m_optionWidget != nullptr){
+
         m_optionWidget->setAction(this, true);
+    }
+}
+
+void RS_ActionInterface::updateOptionsUI(int mode){
+    if (m_optionWidget != nullptr){
+        m_optionWidget->updateUI(mode);
     }
 }
 

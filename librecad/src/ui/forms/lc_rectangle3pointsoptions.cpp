@@ -1,14 +1,34 @@
+/****************************************************************************
+**
+* Options widget for "Rectangle3Point" action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
 #include "lc_rectangle3pointsoptions.h"
 #include "ui_lc_rectangle3pointsoptions.h"
 #include "rs_settings.h"
 #include "rs_math.h"
 
 LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_Rectangle3PointsOptions)
-{
+    LC_ActionOptionsWidget(parent),    
+    action(nullptr),
+    ui(new Ui::LC_Rectangle3PointsOptions){
     ui->setupUi(this);
-
 
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onAngleEditingFinished);
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &LC_Rectangle3PointsOptions::onRadiusEditingFinished);
@@ -19,12 +39,13 @@ LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions(QWidget *parent) :
     connect(ui->cbPolyline, SIGNAL(clicked(bool)), this, SLOT(onUsePolylineClicked(bool)));
     connect(ui->cbQuadrangle, SIGNAL(clicked(bool)), this, SLOT(onQuadrangleClicked(bool)));
     connect(ui->cbFixedInnerAngle, SIGNAL(clicked(bool)), this, SLOT(onInnerAngleFixedClicked(bool)));
+    connect(ui->chkFixedBaseAngle, SIGNAL(clicked(bool)), this, SLOT(onBaseAngleFixedClicked(bool)));
     connect(ui->cbSnapRadiusCenter, SIGNAL(clicked(bool)), this, SLOT(onSnapToCornerArcCenterClicked(bool)));
     connect(ui->cbEdges, SIGNAL(currentIndexChanged(int)), SLOT(onEdgesIndexChanged(int)));
 }
 
 LC_Rectangle3PointsOptions::~LC_Rectangle3PointsOptions(){
-    saveSettings();
+    action = nullptr;
     delete ui;
 }
 
@@ -32,18 +53,16 @@ void LC_Rectangle3PointsOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-
-void LC_Rectangle3PointsOptions::clearAction(){
-    action = nullptr;
-}
-
 bool LC_Rectangle3PointsOptions::checkActionRttiValid(RS2::ActionType actionType){
     return actionType == RS2::ActionDrawRectangle3Points;
 }
 
-void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update){
-    action = static_cast<LC_ActionDrawRectangle3Points *>(a);
+QString LC_Rectangle3PointsOptions::getSettingsOptionNamePrefix(){
+    return "/Rectangle3Points";
+}
 
+void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update){
+    action = dynamic_cast<LC_ActionDrawRectangle3Points *>(a);
 
     QString angle;
     QString radius;
@@ -57,10 +76,10 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     bool fixedInnerAngle;
     QString innerAngle;
     int edges;
+    bool fixedBaseAngle;
 
     if (update){
         cornersMode = action->getCornersMode();
-
         usePolyline = action->isUsePolyline();
 
         double an = action->getAngle();
@@ -69,32 +88,31 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         double lY = action->getLengthY();
 
         edges = action->getEdgesDrawMode();
-
-
-        angle = QString::number(an, 'g', 6);
-        radius = QString::number(r, 'g', 6);
-        lenX = QString::number(lX, 'g', 6);
-        lenY = QString::number(lY, 'g', 6);
+        angle = fromDouble(an);
+        radius = fromDouble(r);
+        lenX = fromDouble(lX);
+        lenY = fromDouble(lY);
         snapRadiusCenter = action->isSnapToCornerArcCenter();
-        innerAngle = QString::number(action->getFixedInnerAngle(), 'g', 6);
+        innerAngle = fromDouble(action->getFixedInnerAngle());
         quadrangle = action->isCreateQuadrangle();
         fixedInnerAngle = action->isInnerAngleFixed();
+        fixedBaseAngle = action->isBaseAngleFixed();
     }
     else{
-        RS_SETTINGS->beginGroup("/Draw");
-        angle = RS_SETTINGS->readEntry("/Rectangle3PointsAngle", "0");
-        cornersMode = RS_SETTINGS->readNumEntry("/Rectangle3PointsCorners", 0);
-        radius = RS_SETTINGS->readEntry("/Rectangle3PointsRadius", "0.0");
-        lenX = RS_SETTINGS->readEntry("/Rectangle3PointsLengthX", "5");
-        lenY = RS_SETTINGS->readEntry("/Rectangle3PointsLengthY", "5");
-        usePolyline = RS_SETTINGS->readNumEntry("/Rectangle3PointsPolyline", 1) == 1;
-        snapRadiusCenter = RS_SETTINGS->readNumEntry("/Rectangle3PointsRadiusSnap", 1) == 1;
+  
+        angle =load("Angle", "0");
+        cornersMode = loadInt("Corners", 0);
+        radius =load("Radius", "0.0");
+        lenX =load("LengthX", "5");
+        lenY =load("LengthY", "5");
+        usePolyline = loadBool("Polyline", true);
+        snapRadiusCenter = loadBool("RadiusSnap", true);
 
-        quadrangle = RS_SETTINGS->readNumEntry("/Rectangle3PointsQuadrangle", 0)==1;
-        fixedInnerAngle = RS_SETTINGS->readNumEntry("/Rectangle3PointsQuadrangleAngleIsFixed", 0) == 1;
-        innerAngle = RS_SETTINGS->readEntry("/Rectangle3PointsQuadrangleFixedAngle", "90");
-        edges = RS_SETTINGS->readNumEntry("/Rectangle3PointsEdges", 0);
-        RS_SETTINGS->endGroup();
+        quadrangle = loadBool("Quadrangle", false);
+        fixedInnerAngle = loadBool("QuadrangleAngleIsFixed", false);
+        fixedBaseAngle = loadBool("BaseAngleIsFixed", false);
+        innerAngle =load("QuadrangleFixedAngle", "90");
+        edges = loadInt("Edges", 0);        
     }
 
     setAngleToActionAndView(angle);
@@ -108,24 +126,22 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
     setInnerAngleFixedToActionAndView(fixedInnerAngle);
     setInnerAngleToActionAndView(innerAngle);
     setEdgesModeToActionAndView(edges);
-
+    setBaseAngleFixedToActionAndView(fixedBaseAngle);
 }
 
-
-void LC_Rectangle3PointsOptions::saveSettings(){
-    RS_SETTINGS->beginGroup("/Draw");
-    RS_SETTINGS->writeEntry("/Rectangle3PointsAngle", ui->leAngle->text());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsCorners", ui->cbCorners->currentIndex());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsRadius", ui->leRadius->text());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsLengthX", ui->leX->text());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsLengthY", ui->leLenY->text());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsPolyline", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle3PointsRadiusSnap", ui->cbPolyline->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle3PointsQuadrangle", ui->cbQuadrangle->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle3PointsQuadrangleAngleIsFixed", ui->cbFixedInnerAngle->isChecked()  ? 1 : 0);
-    RS_SETTINGS->writeEntry("/Rectangle3PointsQuadrangleFixedAngle", ui->leInnerAngle->text());
-    RS_SETTINGS->writeEntry("/Rectangle3PointsEdges", ui->cbEdges->currentIndex());
-    RS_SETTINGS->endGroup();
+void LC_Rectangle3PointsOptions::doSaveSettings(){    
+    save("Angle", ui->leAngle->text());
+    save("Corners", ui->cbCorners->currentIndex());
+    save("Radius", ui->leRadius->text());
+    save("LengthX", ui->leX->text());
+    save("LengthY", ui->leLenY->text());
+    save("Polyline", ui->cbPolyline->isChecked() );
+    save("RadiusSnap", ui->cbPolyline->isChecked() );
+    save("Quadrangle", ui->cbQuadrangle->isChecked() );
+    save("QuadrangleAngleIsFixed", ui->cbFixedInnerAngle->isChecked() );
+    save("BaseAngleIsFixed", ui->chkFixedBaseAngle->isChecked() );
+    save("QuadrangleFixedAngle", ui->leInnerAngle->text());
+    save("Edges", ui->cbEdges->currentIndex());
 }
 
 void LC_Rectangle3PointsOptions::onCornersIndexChanged(int index){
@@ -176,7 +192,6 @@ void LC_Rectangle3PointsOptions::onInnerAngleEditingFinished(){
     }
 }
 
-
 void LC_Rectangle3PointsOptions::onRadiusEditingFinished(){
     if (action != nullptr){
         QString value = ui->leRadius->text();
@@ -190,41 +205,36 @@ void LC_Rectangle3PointsOptions::onAngleEditingFinished(){
 }
 
 void LC_Rectangle3PointsOptions::setAngleToActionAndView(const QString &val){
-    bool ok = false;
-    double angle =RS_Math::eval(val, &ok);
-    if(!ok) return;
-    if (std::abs(angle) < RS_TOLERANCE_ANGLE) angle=0.0;
-    action->setAngle(angle);
-    ui->leAngle->setText(QString::number(angle, 'g', 6));
+    double angle;
+    if (toDoubleAngle(val, angle, 0.0, false)){
+        action->setAngle(angle);
+        ui->leAngle->setText(fromDouble(angle));
+    }
 }
 
-void LC_Rectangle3PointsOptions::setLenYToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setLengthY(y);
-    ui->leLenY->setText(QString::number(y, 'g', 6));
+void LC_Rectangle3PointsOptions::setLenYToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setLengthY(y);
+        ui->leLenY->setText(fromDouble(y));
+    }
 }
 
-void LC_Rectangle3PointsOptions::setLenXToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setLengthX(y);
-    ui->leX->setText(QString::number(y, 'g', 6));
+void LC_Rectangle3PointsOptions::setLenXToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setLengthX(y);
+        ui->leX->setText(fromDouble(y));
+    }
 }
 
-void LC_Rectangle3PointsOptions::setRadiusToActionAnView(QString value){
-    bool ok = false;
-    double y =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (y<RS_TOLERANCE) y=1.0;
-    action->setRadius(y);
-    ui->leRadius->setText(QString::number(y, 'g', 6));
+void LC_Rectangle3PointsOptions::setRadiusToActionAnView(const QString& value){
+    double y;
+    if (toDouble(value, y, 1.0, true)){
+        action->setRadius(y);
+        ui->leRadius->setText(fromDouble(y));
+    }
 }
-
 
 void LC_Rectangle3PointsOptions::onUsePolylineClicked(bool value){
     if (action != nullptr){
@@ -246,6 +256,12 @@ void LC_Rectangle3PointsOptions::onQuadrangleClicked(bool value){
 void LC_Rectangle3PointsOptions::onInnerAngleFixedClicked(bool value){
     if (action != nullptr){
         setInnerAngleFixedToActionAndView(value);
+    }
+}
+
+void LC_Rectangle3PointsOptions::onBaseAngleFixedClicked(bool value){
+    if (action != nullptr){
+        setBaseAngleFixedToActionAndView(value);
     }
 }
 
@@ -273,13 +289,18 @@ void LC_Rectangle3PointsOptions::setInnerAngleFixedToActionAndView(bool value){
     ui->leInnerAngle->setEnabled(value);
 }
 
-void LC_Rectangle3PointsOptions::setInnerAngleToActionAndView(QString value){
-    bool ok = false;
-    double val =std::abs(RS_Math::eval(value, &ok));
-    if(!ok) return;
-    if (std::abs(val)<RS_TOLERANCE) val=1.0;
-    action->setFixedInnerAngle(val);
-    ui->leInnerAngle->setText(QString::number(val, 'g', 6));
+void LC_Rectangle3PointsOptions::setBaseAngleFixedToActionAndView(bool value){
+    ui->chkFixedBaseAngle->setChecked(value);
+    action->setBaseAngleFixed(value);
+    ui->leAngle->setEnabled(value);
+}
+
+void LC_Rectangle3PointsOptions::setInnerAngleToActionAndView(const QString& value){
+    double y;
+    if (toDoubleAngle(value, y, 1.0, true)){
+        action->setFixedInnerAngle(y);
+        ui->leInnerAngle->setText(fromDouble(y));
+    }
 }
 
 void LC_Rectangle3PointsOptions::onEdgesIndexChanged(int index){

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>606</width>
+    <width>423</width>
     <height>24</height>
    </rect>
   </property>
@@ -29,10 +29,22 @@
    <item row="0" column="5">
     <widget class="QComboBox" name="cbMode">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
        <horstretch>3</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>110</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>130</width>
+       <height>16777215</height>
+      </size>
      </property>
      <property name="maxVisibleItems">
       <number>3</number>
@@ -73,13 +85,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>30</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>130</width>
+       <width>50</width>
        <height>16777215</height>
       </size>
      </property>
@@ -95,13 +107,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>30</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>130</width>
+       <width>50</width>
        <height>16777215</height>
       </size>
      </property>
@@ -131,13 +143,13 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>30</width>
        <height>0</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>130</width>
+       <width>50</width>
        <height>16777215</height>
       </size>
      </property>
@@ -164,7 +176,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>40</width>
+       <width>0</width>
        <height>20</height>
       </size>
      </property>

@@ -129,7 +129,10 @@ HEADERS += \
     actions/lc_actiondrawlinefrompointtoline.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
+    actions/lc_actiondrawstar.h \
+    actions/lc_actionmodifybreakdivide.h \
     actions/lc_actionmodifyduplicate.h \
+    actions/lc_actionmodifylinegap.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
     actions/lc_abstractactiondrawrectangle.h \
@@ -137,7 +140,7 @@ HEADERS += \
     actions/lc_actiondrawlineanglerel.h \
     actions/lc_actiondrawlinepoints.h \
     actions/lc_actiondrawrectangle1point.h \
-    actions/lc_actiondrawlinerel.h \
+    actions/lc_actiondrawlinesnake.h \
     actions/lc_actiondrawrectangle2points.h \
     actions/lc_actiondrawslicedivide.h \
     actions/lc_actionmodifylinejoin.h \
@@ -250,6 +253,9 @@ HEADERS += \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
     ui/forms/lc_duplicateoptions.h \
+    ui/forms/lc_modifybreakdivideoptions.h \
+    ui/forms/lc_modifygapoptions.h \
+    ui/forms/lc_staroptions.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -273,7 +279,7 @@ HEADERS += \
     ui/forms/lc_rectangle2pointsoptions.h \
     ui/forms/lc_rectangle1pointoptions.h \
     ui/forms/lc_rectangle3pointsoptions.h \    
-    actions/lc_abstract_action_draw_line.h \
+    actions/lc_abstractactiondrawline.h \
     ui/forms/LC_DlgParabola.h
 
 SOURCES += \
@@ -284,13 +290,16 @@ SOURCES += \
     actions/lc_actiondrawlinefrompointtoline.cpp \
     actions/lc_actiondrawlinepoints.cpp \
     actions/lc_actiondrawrectangle1point.cpp \
-    actions/lc_actiondrawlinerel.cpp \
+    actions/lc_actiondrawlinesnake.cpp \
     actions/lc_actiondrawrectangle2points.cpp \
     actions/lc_actiondrawslicedivide.cpp \
-    actions/lc_abstract_action_draw_line.cpp \
+    actions/lc_abstractactiondrawline.cpp \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
+    actions/lc_actiondrawstar.cpp \
+    actions/lc_actionmodifybreakdivide.cpp \
     actions/lc_actionmodifyduplicate.cpp \
+    actions/lc_actionmodifylinegap.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
     actions/lc_actionmodifylinejoin.cpp \
@@ -392,6 +401,9 @@ SOURCES += \
     ui/forms/lc_linefrompointtolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
     ui/forms/lc_duplicateoptions.cpp \
+    ui/forms/lc_modifybreakdivideoptions.cpp \
+    ui/forms/lc_modifygapoptions.cpp \
+    ui/forms/lc_staroptions.cpp \
     ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \
@@ -926,10 +938,13 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_linejoinoptions.ui \
     ui/forms/lc_linefrompointtolineoptions.ui \
     ui/forms/lc_linepointsoptions.ui \
+    ui/forms/lc_modifybreakdivideoptions.ui \
+    ui/forms/lc_modifygapoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \
     ui/forms/lc_slicedivideoptions.ui \
+    ui/forms/lc_staroptions.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \

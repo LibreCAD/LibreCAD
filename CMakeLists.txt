@@ -956,9 +956,9 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawcross.cpp
         librecad/src/actions/lc_actiondrawcross.h
         librecad/src/ui/forms/lc_crossoptions.cpp
-        librecad/src/actions/lc_actiondrawlinerel.h
-        librecad/src/actions/lc_actiondrawlinerel.h
-        librecad/src/actions/lc_actiondrawlinerel.cpp
+        librecad/src/actions/lc_actiondrawlinesnake.h
+        librecad/src/actions/lc_actiondrawlinesnake.h
+        librecad/src/actions/lc_actiondrawlinesnake.cpp
         librecad/src/ui/forms/lc_lineoptions.cpp
         librecad/src/actions/lc_actiondrawlineanglerel.h
         librecad/src/actions/lc_actiondrawlineanglerel.cpp
@@ -988,7 +988,7 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_linepointsoptions.cpp
         librecad/src/lib/math/lc_linemath.h
         librecad/src/lib/math/lc_linemath.cpp
-        librecad/src/actions/lc_abstract_action_draw_line.cpp
+        librecad/src/actions/lc_abstractactiondrawline.cpp
         librecad/src/actions/lc_abstractactionwithpreview.h
         librecad/src/actions/lc_abstractactionwithpreview.cpp
         librecad/src/actions/lc_actionmodifyduplicate.h
@@ -997,6 +997,15 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_rectangle3pointsoptions.cpp
         librecad/src/ui/forms/lc_linefrompointtolineoptions.cpp
         librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
+        librecad/src/actions/lc_actiondrawstar.cpp
+        librecad/src/ui/forms/lc_staroptions.cpp
+        librecad/src/actions/lc_actionmodifybreakdivide.cpp
+        librecad/src/actions/lc_actionmodifybreakdivide.h
+        librecad/src/ui/forms/lc_modifybreakdivideoptions.h
+        librecad/src/ui/forms/lc_modifybreakdivideoptions.cpp
+        librecad/src/actions/lc_actionmodifylinegap.cpp
+        librecad/src/ui/forms/lc_modifygapoptions.h
+        librecad/src/ui/forms/lc_modifygapoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
