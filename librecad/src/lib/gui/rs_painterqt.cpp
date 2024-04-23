@@ -36,8 +36,8 @@
 #include "rs_line.h"
 #include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_polyline.h"
 #include "rs_painterqt.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
 
 namespace {
@@ -766,7 +766,7 @@ void RS_PainterQt::drawImg(QImage& img, const RS_Vector& pos,
 void RS_PainterQt::drawTextH(int x1, int y1,
                              int x2, int y2,
                              const QString& text) {
-    drawText(x1, y1, x2, y2,
+    QPainter::drawText(x1, y1, x2, y2,
              Qt::AlignRight|Qt::AlignVCenter,
              text);
 }
@@ -781,7 +781,7 @@ void RS_PainterQt::drawTextV(int x1, int y1,
     wm.rotate(-90.0);
     setWorldTransform(wm);
 
-    drawText(x1, y1, x2, y2,
+    QPainter::drawText(x1, y1, x2, y2,
              Qt::AlignRight|Qt::AlignVCenter,
              text);
 
@@ -1092,3 +1092,9 @@ QPainterPath RS_PainterQt::createSpline(const RS_Spline& spline, const RS_Graphi
     } while ((e = spline.nextEntity(RS2::ResolveNone)) != nullptr);
     return path;
 }
+
+void RS_PainterQt::drawText(const QRect& rect, const QString& text, QRect* boundingBox)
+{
+    QPainter::drawText(rect, Qt::AlignTop | Qt::AlignLeft | Qt::TextDontClip, text, boundingBox);
+}
+

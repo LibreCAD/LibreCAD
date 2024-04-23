@@ -1065,15 +1065,15 @@ contains(DEFINES, EMU_C99) {
 
 # ################################################################################
 # Translations
-TRANSLATIONS = ../ts/librecad_ar.ts \
+TRANSLATIONS = \
+    ../ts/librecad_ar.ts \
     ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
-    ../ts/librecad_en.ts \
-    ../ts/librecad_en_au.ts \
     ../ts/librecad_da.ts \
     ../ts/librecad_de.ts \
     ../ts/librecad_el.ts \
-    ../ts/librecad_es.ts \
+    ../ts/librecad_en_au.ts \
+    ../ts/librecad_en.ts \
     ../ts/librecad_es_ar.ts \
     ../ts/librecad_es_bo.ts \
     ../ts/librecad_es_cl.ts \
@@ -1090,6 +1090,7 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_es_pr.ts \
     ../ts/librecad_es_py.ts \
     ../ts/librecad_es_sv.ts \
+    ../ts/librecad_es.ts \
     ../ts/librecad_es_us.ts \
     ../ts/librecad_es_uy.ts \
     ../ts/librecad_es_ve.ts \
@@ -1098,11 +1099,13 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
     ../ts/librecad_gl.ts \
+    ../ts/librecad_he.ts \
     ../ts/librecad_hi.ts \
     ../ts/librecad_hu.ts \
     ../ts/librecad_id_ID.ts \
     ../ts/librecad_it.ts \
     ../ts/librecad_ja.ts \
+    ../ts/librecad_ka.ts \
     ../ts/librecad_ko.ts \
     ../ts/librecad_lv.ts \
     ../ts/librecad_mk.ts \
@@ -1117,8 +1120,10 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_sk.ts \
     ../ts/librecad_sl.ts \
     ../ts/librecad_sq_al.ts \
+    ../ts/librecad_sr.ts \
     ../ts/librecad_sv.ts \
     ../ts/librecad_ta.ts \
+    ../ts/librecad_th.ts \
     ../ts/librecad_tr.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \

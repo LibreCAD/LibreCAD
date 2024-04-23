@@ -264,7 +264,6 @@ private:
     QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
     QG_SnapDistOptions* snapDistOptions = nullptr;
     QG_ModifyOffsetOptions* modifyOffsetOptions = nullptr;
-    QG_PrintPreviewOptions* printPreviewOptions = nullptr;
     QG_LineAngleOptions* m_pLineAngleOptions = nullptr;
 };
 

@@ -22,10 +22,10 @@
 **********************************************************************************
 */
 
+#include <QSettings>
 #include "lc_deviceoptions.h"
 #include "ui_lc_deviceoptions.h"
 
-#include <QSettings>
 
 LC_DeviceOptions::LC_DeviceOptions(QWidget* parent) :
     QFrame(parent),

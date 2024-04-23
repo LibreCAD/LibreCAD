@@ -23,9 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_widgetpen.h"
 
 #include <QVariant>
+#include "qg_widgetpen.h"
 #include "qevent.h"
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"

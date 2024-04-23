@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include <algorithm>
+
 #include <QScrollBar>
 #include <QTableView>
 #include <QHeaderView>
@@ -35,11 +37,9 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 
-#include <algorithm>
-
+#include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
-#include "qg_actionhandler.h"
 #include "rs_debug.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {

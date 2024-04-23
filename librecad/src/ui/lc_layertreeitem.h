@@ -52,7 +52,7 @@ class LC_LayerTreeItem
 {
 public:
 
-    static const int NOT_DEFINED_LAYER_TYPE = -1;
+    static constexpr int NOT_DEFINED_LAYER_TYPE = -1;
     // Layer types
     enum {
         VIRTUAL,
@@ -119,7 +119,7 @@ private:
     // children of this item
     QList<LC_LayerTreeItem*> childItems;
     // parent item
-    LC_LayerTreeItem *parentItem;
+    LC_LayerTreeItem *parentItem = nullptr;
     // reference to primary item - used by secondary (informational, dimensional, alternative pos) layers
     LC_LayerTreeItem *primaryItem {nullptr};
     // actual layer, if any
@@ -162,7 +162,7 @@ public:
         return result;
     }
 private:
-    int layerType;
+    int layerType = 0;
 };
 
 class QG_LayerTreeItemAcceptorVisible: public virtual LC_LayerTreeItemAcceptor{
@@ -193,7 +193,7 @@ public:
         return result;
     }
 private:
-    RS_Layer* layer;
+    RS_Layer* layer = nullptr;
     bool notOperation {false};
 };
 

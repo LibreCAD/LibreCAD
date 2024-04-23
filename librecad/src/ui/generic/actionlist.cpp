@@ -24,9 +24,9 @@
 **********************************************************************************
 */
 
+#include <QAction>
 #include "actionlist.h"
 
-#include <QAction>
 
 ActionList::ActionList(QWidget* parent)
     : QListWidget(parent)

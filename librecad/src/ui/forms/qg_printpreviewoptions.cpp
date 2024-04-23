@@ -24,13 +24,13 @@
 **
 **********************************************************************/
 #include<cmath>
-#include "qg_printpreviewoptions.h"
-#include "rs_settings.h"
 
+#include "qg_printpreviewoptions.h"
 #include "rs_actionprintpreview.h"
-#include "rs_math.h"
-#include "ui_qg_printpreviewoptions.h"
 #include "rs_debug.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "ui_qg_printpreviewoptions.h"
 
 namespace {
 const int Max_Custom_ratios = 5;
@@ -51,7 +51,7 @@ QStringList readCustomRatios()
 }
 void updateCustomRatios(const QString& text)
 {
-    LC_ERR<<": : "<<text;
+    LC_LOG<<": : "<<text;
     QStringList ratios = readCustomRatios();
     ratios.push_back(text);
     if (ratios.size() > Max_Custom_ratios)
@@ -124,7 +124,6 @@ void QG_PrintPreviewOptions::init() {
     scaleLineWidth= RS_SETTINGS->readNumEntry("/ScaleLineWidth", 0)!=0;
     blackWhiteDisabled= RS_SETTINGS->readNumEntry("/BlackWhiteSet", 0)!=0;
     RS_SETTINGS->endGroup();
-    action=nullptr;
     //make sure user scale is accepted
     ui->cbScale->setInsertPolicy(QComboBox::InsertAtTop);
 }
@@ -136,13 +135,13 @@ void QG_PrintPreviewOptions::saveSettings() {
     RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
     RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
     RS_SETTINGS->endGroup();
-    action=nullptr;
 }
 
 /** print scale fixed to saved value **/
 void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
 {
-    if (action) action->setPaperScaleFixed(fixed);
+    if (action != nullptr)
+        action->setPaperScaleFixed(fixed);
     updateDisabled=fixed;
     ui->cbScale->setDisabled(fixed);
     ui->bFit->setVisible(!fixed);
@@ -151,7 +150,8 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
     }
     RS_SETTINGS->beginGroup("/PrintPreview");
     RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
-    RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
+    if (fixed)
+        RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
     RS_SETTINGS->endGroup();
 }
 
@@ -246,7 +246,8 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
 }
 
 void QG_PrintPreviewOptions::fit() {
-    if(updateDisabled) return;
+    if(updateDisabled)
+        return;
     if (action) {
         action->fit();
         updateScaleBox();
@@ -255,6 +256,8 @@ void QG_PrintPreviewOptions::fit() {
 
 
 void QG_PrintPreviewOptions::scale(double factor) {
+    if (updateDisabled)
+        return;
     double f=std::abs(factor); // do we need negative factor at all?
     if(action->setScale(f, false)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
@@ -306,7 +309,7 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
     //        }
     //        return;
     //    }
-    if(action->setScale(factor, false)){
+    if(action != nullptr && action->setScale(factor, false)){
         //        std::cout<<"QG_PrintPreviewOptions::scale(const QString& s): line: "<<__LINE__<<" s="<<factor<<std::endl;
         updateScaleBox(factor);
     }
@@ -319,7 +322,7 @@ void QG_PrintPreviewOptions::updateScaleBox([[maybe_unused]] const QString& text
 
 //update the scalebox to
 void QG_PrintPreviewOptions::updateScaleBox(){
-    if (action) {
+    if (action != nullptr) {
         updateScaleBox(action->getScale());
         saveSettings();
     }
@@ -388,4 +391,9 @@ void QG_PrintPreviewOptions::calcPagesNum() {
         action->calcPagesNum();
         saveSettings();
     }
+}
+
+RS_ActionInterface* QG_PrintPreviewOptions::getAction() const
+{
+    return action;
 }

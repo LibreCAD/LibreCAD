@@ -25,9 +25,9 @@
 #define LC_PENINFOREGISTRY_H
 
 #include <QIcon>
-
-#include <rs.h>
 #include <QMap>
+
+#include "rs.h"
 #include "rs_color.h"
 
 /**

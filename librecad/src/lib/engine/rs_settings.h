@@ -35,23 +35,6 @@
 
 class QVariant;
 
-// ---------------------------------------------------------------------------
-// Default Settings
-// ---------------------------------------------------------------------------
-
-namespace Colors
-{
-    const QString snap_indicator    = "#FFC200";
-    const QString background        = "Black";
-    const QString grid              = "Gray";
-    const QString meta_grid         = "#404040";
-    const QString select            = "#A54747";
-    const QString highlight         = "#739373";
-    const QString start_handle      = "Cyan";
-    const QString handle            = "Blue";
-    const QString end_handle        = "Blue";
-    const QString relativeZeroColor = "Red";
-}
 
 // ---------------------------------------------------------------------------
 
@@ -68,6 +51,20 @@ namespace Colors
 class RS_Settings {
 
 public:
+
+    // ---------------------------------------------------------------------------
+    // Default Settings
+    // ---------------------------------------------------------------------------
+    static constexpr char const* snap_indicator    = "#FFC200";
+    static constexpr char const* background        = "Black";
+    static constexpr char const* grid              = "Gray";
+    static constexpr char const* meta_grid         = "#404040";
+    static constexpr char const* select            = "#A54747";
+    static constexpr char const* highlight         = "#739373";
+    static constexpr char const* start_handle      = "Cyan";
+    static constexpr char const* handle            = "Blue";
+    static constexpr char const* end_handle        = "Blue";
+    static constexpr char const* relativeZeroColor = "Red";
 
     // Used to have RAII style GroupGuard: endGroup is called automatically whenever a unique_ptr<GroupGuard>
     // goes out of scope

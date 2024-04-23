@@ -28,7 +28,6 @@
 
 #include "rs_document.h"
 #include "rs_debug.h"
-#include "rs_layerlist.h"
 
 
 /**

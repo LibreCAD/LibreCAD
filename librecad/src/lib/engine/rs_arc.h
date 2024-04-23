@@ -243,7 +243,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 
-	virtual void calculateBorders() override;
+	 void calculateBorders() override;
     /** return the equation of the entity
 for quadratic,
 
@@ -253,14 +253,14 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-	virtual LC_Quadratic getQuadratic() const override;
+	 LC_Quadratic getQuadratic() const override;
     /**
      * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
-	virtual double areaLineIntegral() const override;
+	 double areaLineIntegral() const override;
 
 protected:
     RS_ArcData data{};

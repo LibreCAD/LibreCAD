@@ -1544,7 +1544,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Shrani %1 &amp;kot...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
@@ -1815,15 +1815,15 @@ v ločenem oknu</translation>
     </message>
     <message>
         <source>Cyan</source>
-        <translation type="unfinished"></translation>
+        <translation>Sinja (cijan)</translation>
     </message>
     <message>
         <source>Blue</source>
-        <translation type="unfinished"></translation>
+        <translation>Modra</translation>
     </message>
     <message>
         <source>Magenta</source>
-        <translation type="unfinished"></translation>
+        <translation>Škrlatna (magenta)</translation>
     </message>
     <message>
         <source>Black / White</source>
@@ -1941,7 +1941,7 @@ v ločenem oknu</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Ukazna vrstica</translation>
+        <translation>Ukazna vrstica</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -1952,7 +1952,7 @@ v ločenem oknu</translation>
     <name>QG_CoordinateWidget</name>
     <message>
         <source>Coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation>Koordinate</translation>
     </message>
 </context>
 <context>
@@ -2010,11 +2010,11 @@ v ločenem oknu</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrija</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Polmer:</translation>
     </message>
     <message>
         <source>Center (y):</source>
@@ -2061,7 +2061,7 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgCircle</name>
     <message>
         <source>Circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Krog</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -2069,11 +2069,11 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrija</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Polmer:</translation>
     </message>
     <message>
         <source>Center (y):</source>
@@ -2096,37 +2096,37 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrija</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Kot:</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgDimension</name>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation type="unfinished"></translation>
+        <translation>Mere</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgEllipse</name>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Plast:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrija</translation>
     </message>
     <message>
         <source>Center (y):</source>
@@ -2150,15 +2150,15 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Minor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Mala:</translation>
     </message>
     <message>
         <source>Major:</source>
-        <translation type="unfinished"></translation>
+        <translation>Velika:</translation>
     </message>
     <message>
         <source>Reversed</source>
-        <translation type="unfinished"></translation>
+        <translation>Preobrnjeno</translation>
     </message>
 </context>
 <context>
@@ -2196,23 +2196,23 @@ This recursively modifies all entities of the Block itself.</source>
     <name>QG_DlgImage</name>
     <message>
         <source>Image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Slika</translation>
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Plast:</translation>
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Geometrija</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Debelina:</translation>
     </message>
     <message>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Višina:</translation>
     </message>
     <message>
         <source>insert (x):</source>
@@ -2220,7 +2220,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Merilo:</translation>
     </message>
     <message>
         <source>Size (px):</source>
@@ -2286,7 +2286,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometrija</translation>
     </message>
     <message>
         <source>Insertion point (x):</source>
@@ -2464,7 +2464,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation type="unfinished"></translation>
+        <translation>Plus / minus (±)</translation>
     </message>
     <message>
         <source>At (@)</source>

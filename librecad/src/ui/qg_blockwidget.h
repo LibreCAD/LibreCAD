@@ -27,10 +27,10 @@
 #ifndef QG_BLOCKWIDGET_H
 #define QG_BLOCKWIDGET_H
 
-#include <QWidget>
-#include <QIcon>
 #include <QAbstractTableModel>
+#include <QIcon>
 #include <QItemSelection>
+#include <QWidget>
 
 #include "rs_blocklistlistener.h"
 

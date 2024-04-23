@@ -24,7 +24,6 @@
 #include <QXmlStreamWriter>
 #include "lc_xmlwriterqxmlstreamwriter.h"
 
-#include "lc_xmlwriterinterface.h"
 
 LC_XMLWriterQXmlStreamWriter::LC_XMLWriterQXmlStreamWriter():
 	xmlWriter(new QXmlStreamWriter(&xml))

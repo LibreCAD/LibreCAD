@@ -22,9 +22,9 @@
 **
 **********************************************************************/
 
+#include "lc_layertreeitem.h"
 #include "lc_layertreemodel_options.h"
-#include <rs_settings.h>
-#include <lc_layertreeitem.h>
+#include "rs_settings.h"
 
 /**
  * Returns pen that will be used as default for creation of the layer with given type

@@ -146,17 +146,17 @@ void QG_DlgOptionsGeneral::init()
 
     RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("Colors");
-    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", Colors::background));
-    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", Colors::grid));
-    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
-    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", Colors::select));
-    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", Colors::highlight));
-    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
-    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
-    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor));
-    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
+    RS_SETTINGS->beginGroup("DefaultColors");
+    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", RS_Settings::background));
+    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
+    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
+    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", RS_Settings::select));
+    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle));
+    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
+    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
+    initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
+    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -347,52 +347,52 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color(cbBackgroundColor, QColor(Colors::background));
+    set_color(cbBackgroundColor, QColor(RS_Settings::background));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color(cbGridColor, QColor(Colors::grid));
+    set_color(cbGridColor, QColor(RS_Settings::grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color(cbMetaGridColor, QColor(Colors::meta_grid));
+    set_color(cbMetaGridColor, QColor(RS_Settings::meta_grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color(cbSelectedColor, QColor(Colors::select));
+    set_color(cbSelectedColor, QColor(RS_Settings::select));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color(cbHighlightedColor, QColor(Colors::highlight));
+    set_color(cbHighlightedColor, QColor(RS_Settings::highlight));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color(cbStartHandleColor, QColor(Colors::start_handle));
+    set_color(cbStartHandleColor, QColor(RS_Settings::start_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color(cbHandleColor, QColor(Colors::handle));
+    set_color(cbHandleColor, QColor(RS_Settings::handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color(cbEndHandleColor, QColor(Colors::end_handle));
+    set_color(cbEndHandleColor, QColor(RS_Settings::end_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
 {
-    set_color(cb_snap_color, QColor(Colors::snap_indicator));
+    set_color(cb_snap_color, QColor(RS_Settings::snap_indicator));
 }
 
 void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked()
 {
-    set_color(cbRelativeZeroColor, QColor(Colors::relativeZeroColor));
+    set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()

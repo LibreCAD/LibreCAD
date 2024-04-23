@@ -59,13 +59,13 @@ public:
 
     ~QC_ActionGetSelect() override;
 
-    virtual void init(int status=0) override;
+     void init(int status=0) override;
 	
-    virtual void mouseReleaseEvent(QMouseEvent* e) override;
-    virtual void keyPressEvent(QKeyEvent* e) override;
+     void mouseReleaseEvent(QMouseEvent* e) override;
+     void keyPressEvent(QKeyEvent* e) override;
 	
-    virtual void updateMouseButtonHints() override;
-    virtual void updateMouseCursor() override;
+     void updateMouseButtonHints() override;
+     void updateMouseCursor() override;
 
     void setMessage(QString msg);
 	bool isCompleted() const{return completed;}

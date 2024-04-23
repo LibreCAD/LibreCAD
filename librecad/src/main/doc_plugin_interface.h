@@ -87,9 +87,9 @@ public:
     void addCircle(QPointF *start, qreal radius) override;
     void addArc(QPointF *start, qreal radius, qreal a1, qreal a2) override;
     void addEllipse(QPointF *start, QPointF *end, qreal ratio, qreal a1, qreal a2) override;
-    virtual void addLines(std::vector<QPointF> const& points, bool closed=false) override;
-    virtual void addPolyline(std::vector<Plug_VertexData> const& points, bool closed=false) override;
-    virtual void addSplinePoints(std::vector<QPointF> const& points, bool closed=false) override;
+     void addLines(std::vector<QPointF> const& points, bool closed=false) override;
+     void addPolyline(std::vector<Plug_VertexData> const& points, bool closed=false) override;
+     void addSplinePoints(std::vector<QPointF> const& points, bool closed=false) override;
     void addImage(int handle, QPointF *start, QPointF *uvr, QPointF *vvr,
                   int w, int h, QString name, int br, int con, int fade) override;
     void addInsert(QString name, QPointF ins, QPointF scale, qreal rot) override;

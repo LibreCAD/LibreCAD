@@ -46,7 +46,6 @@
 #include "rs_layer.h"
 #include "rs_line.h"
 #include "rs_solid.h"
-#include "rs_spline.h"
 
 namespace {
 
@@ -1590,7 +1589,7 @@ bool RS_EntityContainer::optimizeContours() {
 
     /** accept all full circles **/
     QList<RS_Entity*> enList;
-    for(auto e1: entities){
+    foreach(auto e1, entities){
         if (!e1->isEdge() || e1->isContainer() ) {
             enList<<e1;
             continue;
@@ -2047,11 +2046,13 @@ std::vector<std::unique_ptr<RS_EntityContainer>> RS_EntityContainer::getLoops() 
     std::vector<std::unique_ptr<RS_EntityContainer>> loops;
     RS_EntityContainer edges(nullptr, false);
     for(auto* e1: entities){
-        if (e1->isContainer())
+        if (e1 != nullptr && e1->isContainer())
         {
-            auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
-            for (auto& subLoop: subLoops)
-                loops.push_back(std::move(subLoop));
+            if (e1->isContainer()){
+                auto subLoops = static_cast<RS_EntityContainer*>(e1)->getLoops();
+                for (auto& subLoop: subLoops)
+                    loops.push_back(std::move(subLoop));
+            }
             continue;
         }
 

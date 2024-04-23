@@ -549,7 +549,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	{
 		RS_DEBUG->print("QC_ApplicationWindow::doClose closing graphic");
 	}
-	for (auto child : w->getChildWindows()) // block editors and print previews; just force these closed
+    foreach (auto&& child, w->getChildWindows()) // block editors and print previews; just force these closed
 		doClose(child, false); // they belong to the document (changes already saved there)
 	w->getChildWindows().clear();
 	mdiAreaCAD->removeSubWindow(w);
@@ -559,9 +559,11 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
 	{
 		layerWidget->setLayerList(nullptr, false);
 
-        layerTreeWidget->setLayerList(nullptr);
-        layerTreeWidget->set_view(nullptr);
-        layerTreeWidget->set_document(nullptr);
+        if (layerTreeWidget != nullptr) {
+            layerTreeWidget->setLayerList(nullptr);
+            layerTreeWidget->set_view(nullptr);
+            layerTreeWidget->set_document(nullptr);
+        }
 
 
 		blockWidget->setBlockList(nullptr);
@@ -1052,13 +1054,16 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
 
         layerWidget->setLayerList(layerList,showByBlock);
 
-        layerTreeWidget->setLayerList(layerList);
-        layerTreeWidget->set_view(m->getGraphicView());
-        layerTreeWidget->set_document(m->getDocument());
+        if (layerTreeWidget != nullptr) {
+            layerTreeWidget->setLayerList(layerList);
+            layerTreeWidget->set_view(m->getGraphicView());
+            layerTreeWidget->set_document(m->getDocument());
+        }
 
         if (penPaletteWidget != nullptr){
             penPaletteWidget->setLayerList(layerList);
         }
+
 
         coordinateWidget->setGraphic(m->getGraphic());
 
@@ -1541,8 +1546,8 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         view->setMenu(activator, menu);
     }
 
-    connect(view, SIGNAL(gridStatusChanged(const QString&)),
-            this, SLOT(updateGridStatus(const QString&)));
+    connect(view, SIGNAL(gridStatusChanged(QString)),
+            this, SLOT(updateGridStatus(QString)));
 
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
@@ -1581,7 +1586,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         penPaletteWidget->setLayerList(layerList);
     }
 
-    if(layerTreeWidget) {
+    if(layerTreeWidget != nullptr) {
         layerTreeWidget->setLayerList(layerList);
         layerTreeWidget->set_view(view);
         layerTreeWidget->set_document(w->getDocument());
@@ -1596,7 +1601,9 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         // Link the layer list to the layer widget
         graphic->addLayerListListener(layerWidget);
 
-        graphic->addLayerListListener(layerTreeWidget);
+        if (layerTreeWidget != nullptr) {
+            graphic->addLayerListListener(layerTreeWidget);
+        }
 
         // Link the block list to the block widget
         graphic->addBlockListListener(blockWidget);
@@ -1645,7 +1652,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     // link the layer widget to the new document:
     RS_LayerList *layerList = w->getDocument()->getLayerList();
     layerWidget->setLayerList(layerList, false);
-    layerTreeWidget->setLayerList(layerList);
+    if (layerTreeWidget != nullptr)
+        layerTreeWidget->setLayerList(layerList);
 
     if (penPaletteWidget != nullptr){
         penPaletteWidget->  setLayerList(layerList);
@@ -1675,8 +1683,8 @@ bool QC_ApplicationWindow::slotFileNewHelper(QString fileName, QC_MDIWindow* w) 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: load Template: OK");
 
     layerWidget->slotUpdateLayerList();
-    layerTreeWidget->slotFilteringMaskChanged();
-
+    if (layerTreeWidget != nullptr)
+        layerTreeWidget->slotFilteringMaskChanged();
 
     RS_DEBUG->print("QC_ApplicationWindow::slotFileNewHelper: update coordinate widget");
     // update coordinate widget format:
@@ -1866,7 +1874,8 @@ void QC_ApplicationWindow::
         // link the layer widget to the new document:
 
         layerWidget->setLayerList(layerList, false);
-        layerTreeWidget->setLayerList(layerList);
+        if (layerTreeWidget)
+            layerTreeWidget->setLayerList(layerList);
         if (penPaletteWidget != nullptr){
             penPaletteWidget->setLayerList(layerList);
          }
@@ -1916,7 +1925,8 @@ void QC_ApplicationWindow::
         recentFiles->add(fileName);
         openedFiles.push_back(fileName);
         layerWidget->slotUpdateLayerList();
-        layerTreeWidget->slotFilteringMaskChanged();
+        if (layerTreeWidget != nullptr)
+            layerTreeWidget->slotFilteringMaskChanged();
 
         auto graphic = w->getGraphic();
         if (graphic)
@@ -2883,15 +2893,15 @@ void QC_ApplicationWindow::slotOptionsGeneral() {
     RS_DIALOGFACTORY->requestOptionsGeneralDialog();
 
     RS_SETTINGS->beginGroup("Colors");
-    QColor background(RS_SETTINGS->readEntry("/background", Colors::background));
-    QColor gridColor(RS_SETTINGS->readEntry("/grid", Colors::grid));
-    QColor metaGridColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
-    QColor selectedColor(RS_SETTINGS->readEntry("/select", Colors::select));
-    QColor highlightedColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight));
-    QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
-    QColor handleColor(RS_SETTINGS->readEntry("/handle", Colors::handle));
-	QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    QColor relativeZeroColor(RS_SETTINGS->readEntry("/relativeZeroColor", Colors::relativeZeroColor));
+    QColor background(RS_SETTINGS->readEntry("/background", RS_Settings::background));
+    QColor gridColor(RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
+    QColor metaGridColor(RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
+    QColor selectedColor(RS_SETTINGS->readEntry("/select", RS_Settings::select));
+    QColor highlightedColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    QColor startHandleColor(RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle));
+    QColor handleColor(RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
+    QColor endHandleColor(RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
+    QColor relativeZeroColor(RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Appearance");

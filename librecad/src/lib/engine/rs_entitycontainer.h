@@ -214,7 +214,7 @@ public:
      * @return line integral \oint x dy along the entity
      * returns absolute value
      */
-    virtual double areaLineIntegral() const override;
+     double areaLineIntegral() const override;
     /**
 	 * @brief ignoreForModification ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles

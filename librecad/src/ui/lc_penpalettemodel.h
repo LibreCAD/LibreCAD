@@ -97,7 +97,7 @@ private:
     /**
      * Underlying pen data holder
      */
-    LC_PenPaletteData *penPaletteData;
+    LC_PenPaletteData *penPaletteData = nullptr;
     /**
      * Pen item that is currently active in table view
      */

@@ -232,7 +232,7 @@ void RS_Snapper::init()
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Colors");
-    QString snap_color = RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator);
+    QString snap_color = RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator);
     RS_SETTINGS->endGroup();
 
 	snap_indicator->lines_pen = RS_Pen(RS_Color(snap_color), RS2::Width00, RS2::DashLine2);

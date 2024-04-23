@@ -23,9 +23,9 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_snapdistoptions.h"
 
 #include <QVariant>
+#include "qg_snapdistoptions.h"
 #include "rs_math.h"
 #include "ui_qg_snapdistoptions.h"
 

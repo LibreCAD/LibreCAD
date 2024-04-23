@@ -24,9 +24,9 @@
 **
 **********************************************************************/
 
+#include <QKeyEvent>
 #include "rs_graphicview.h"
 
-#include <QKeyEvent>
 #include <QToolBar>
 
 #include "rs_actioninterface.h"
@@ -367,6 +367,4 @@ QString RS_ActionInterface::command(const QString& cmd) {
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
 }
-
-
 

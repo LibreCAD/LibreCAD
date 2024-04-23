@@ -1,7 +1,7 @@
-#include "linklist.h"
 
 #include <QDesktopServices>
 #include <QUrl>
+#include "linklist.h"
 
 LinkList::LinkList(QWidget* parent)
     : QListWidget(parent)

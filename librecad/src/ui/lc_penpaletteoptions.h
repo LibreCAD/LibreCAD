@@ -30,8 +30,6 @@
 class LC_PenPaletteOptions
 {
 public:
-    LC_PenPaletteOptions();
-
     enum {
         DOUBLE_CLICK_DOES_NOTHING,
         DOUBLE_CLICK_SELECT_ENTITIES_BY_ATTRIBUTES_PEN,

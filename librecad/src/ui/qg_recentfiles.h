@@ -27,12 +27,12 @@
 #ifndef QG_RECENTFILES_H
 #define QG_RECENTFILES_H
 
-#include <QStringList>
 #include <QObject>
+#include <QtContainerFwd>
 
 class QAction;
-class QWidget;
 class QMenu;
+class QWidget;
 
 /**
  * This class can store recent files in a list.

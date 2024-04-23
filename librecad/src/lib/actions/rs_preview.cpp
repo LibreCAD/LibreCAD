@@ -41,7 +41,7 @@ RS_Preview::RS_Preview(RS_EntityContainer* parent)
     maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
 
     groupGuard = RS_SETTINGS->beginGroupGuard("/Colors");
-    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight));
+    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
     setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 

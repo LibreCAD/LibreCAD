@@ -45,6 +45,7 @@ public:
     RS2::EntityType rtti() const override {
 		return RS2::EntityPattern;
 	}
+    RS_Entity* clone() const override;
 
     virtual bool loadPattern();
 	

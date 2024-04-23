@@ -24,8 +24,9 @@
 
 #include "lc_layertreeitem.h"
 
-LC_LayerTreeItem::LC_LayerTreeItem(LC_LayerTreeItem *parent){
-    parentItem = parent;
+LC_LayerTreeItem::LC_LayerTreeItem(LC_LayerTreeItem *parent):
+    parentItem { parent}
+{
 }
 
 LC_LayerTreeItem::LC_LayerTreeItem(QString &itemName, RS_Layer *actualLayer, LC_LayerTreeItem *parent){

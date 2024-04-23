@@ -25,9 +25,9 @@
 #ifndef LC_LAYERTREEMODEL_OPTIONS_H
 #define LC_LAYERTREEMODEL_OPTIONS_H
 
-#include <rs_pen.h>
 #include <QColor>
 #include <QString>
+#include "rs_pen.h"
 
 
 /**
@@ -36,7 +36,6 @@
 
 struct LC_LayerTreeModelOptions{
 public:
-    LC_LayerTreeModelOptions() = default;
     // naming convention settings
     QString layerLevelSeparator{"-"};
     QString informationalLayerNameSuffix{"_meta"};
