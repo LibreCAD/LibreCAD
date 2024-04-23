@@ -414,6 +414,7 @@ namespace RS2 {
         ActionPenPickResolved,
         ActionPenApply,
         ActionPenCopy,
+        ActionPenSyncFromLayer,
 
         /** Needed to loop through all actions */
         ActionLast

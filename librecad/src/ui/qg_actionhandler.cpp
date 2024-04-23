@@ -179,7 +179,7 @@
 #include "rs_settings.h"
 #include "lc_actionpenpick.h"
 #include "lc_actionpenapply.h"
-
+#include "lc_actionpensyncactivebylayer.h"
 
 /**
  * Constructor
@@ -845,6 +845,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
       case RS2::ActionPenCopy:
           a = new LC_ActionPenApply(*document, *view, true);
         break;
+
+      case RS2::ActionPenSyncFromLayer:
+         a = new LC_ActionPenSyncActiveByLayer(*document, *view);
+       break;
             // Info actions:
         //
     case RS2::ActionInfoInside:
@@ -2013,8 +2017,9 @@ void QG_ActionHandler::slotPenCopy(){
 }
 
 void QG_ActionHandler::slotPenSyncFromLayer(){
-    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
-    penPaletteWidget->updatePenToolbarByActiveLayer();
+    setCurrentAction(RS2::ActionPenSyncFromLayer);
+//    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
+//    penPaletteWidget->updatePenToolbarByActiveLayer();
 }
 
 void QG_ActionHandler::set_view(RS_GraphicView* gview)
