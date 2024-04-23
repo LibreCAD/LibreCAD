@@ -886,15 +886,21 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
     if(!on) {
         if (printPreviewOptions) {
             printPreviewOptions->hide();
-            printPreviewOptions->deleteLater();
-            printPreviewOptions=nullptr;
+            if (printPreviewOptions->getAction() != action) {
+                printPreviewOptions->deleteLater();
+                printPreviewOptions=nullptr;
+            }
         }
         return;
     }
     if (optionWidget ) {
         if (!printPreviewOptions) {
             printPreviewOptions = new QG_PrintPreviewOptions(optionWidget);
+            auto a = static_cast<RS_ActionPrintPreview*>(action);
+            double f = a->getScale();
             printPreviewOptions ->setAction(action, false);
+            if (update)
+                a->setScale(f);
             optionWidget->addWidget(printPreviewOptions);
         }
         if(update) printPreviewOptions ->setAction(action, update);

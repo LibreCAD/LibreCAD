@@ -281,7 +281,8 @@ void RS_ActionPrintPreview::fit() {
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
-        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
+        if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
+            return false;
         graphic->setPaperScale(f);
 //        graphic->centerToPage();
         if(autoZoom) graphicView->zoomPage();
