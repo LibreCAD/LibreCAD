@@ -321,7 +321,7 @@ void LC_ActionDrawRectangle3Points::doInitialSnapToRelativeZero(RS_Vector zero){
     setMainStatus(SetPoint2);
 }
 
-void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
     onCoordinateEvent(snapPoint, false, status);
     if (pPoints->corner2Set){ // adjust relative zero for point 2 (for point 3 it will be set on trigger)
         moveRelativeZero(pPoints->corner2);
@@ -377,24 +377,17 @@ void LC_ActionDrawRectangle3Points::doResetPoints(const RS_Vector &zero){
     pPoints->corner2Set = false;
 }
 
-// fixme - methods from line math
-
 /**
  * Calculates possible endpoint as projection of snap point on infinite vector from given start point in given vector
- * @param snap snap point 
+ * @param snap snap point
  * @param lineStartPoint start of vector
- * @param angle direction of vector
+ * @param angle direction of vector, in radians
  * @return projection of snap to infinite line
  */
 RS_Vector LC_ActionDrawRectangle3Points::calculatePossibleEndpointForAngle(const RS_Vector &snap, const RS_Vector lineStartPoint, double angle) const{
-    RS_Vector possibleEndPoint;
-
-
-    RS_Vector infiniteVector = RS_Vector::polar(10.0, angle);
-    RS_Vector infiniteVectorEndPoint = lineStartPoint + infiniteVector;
+    RS_Vector infiniteVectorEndPoint = lineStartPoint.relative(10.0, angle);
     RS_Vector pointOnInfiniteVector = LC_LineMath::getNearestPointOnInfiniteLine(snap, lineStartPoint, infiniteVectorEndPoint);
-    possibleEndPoint = pointOnInfiniteVector;
-    return possibleEndPoint;
+    return pointOnInfiniteVector;
 }
 
 /**

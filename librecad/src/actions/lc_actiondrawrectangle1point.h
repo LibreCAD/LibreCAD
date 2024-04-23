@@ -55,12 +55,12 @@ public:
     QStringList getAvailableCommands() override;
 
     void setWidth(double value);
-    double getWidth(){return width;};
+    double getWidth()const {return width;};
     void setHeight(double value);
-    double getHeight(){return height;};
+    double getHeight() const{return height;};
 
     void setSizeInner(bool value);
-    bool isSizeInner(){return sizeIsInner;};
+    bool isSizeInner() const{return sizeIsInner;};
 
 protected:
     // width of rect

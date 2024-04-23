@@ -359,6 +359,8 @@ LC_ActionModifyLineGap::GapData *LC_ActionModifyLineGap::prepareGapData(RS_Line 
                 snapCorrectionVector = RS_Vector::polar(-size, angle);
                 break;
             }
+            default:
+                break;
         }
 
         // update start and end point of gap

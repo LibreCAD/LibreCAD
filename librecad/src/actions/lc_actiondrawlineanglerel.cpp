@@ -151,7 +151,7 @@ void LC_ActionDrawLineAngleRel::doAfterTrigger(){
     tickData = nullptr;
 }
 
-void LC_ActionDrawLineAngleRel::doFinish(bool updateTB){
+void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
     if (tickData != nullptr){
         delete tickData;
         tickData = nullptr;

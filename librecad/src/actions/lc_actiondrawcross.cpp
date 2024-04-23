@@ -269,7 +269,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawCross::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     if (status == SetEntity){
         trigger(); // just draw cross on click
     }
