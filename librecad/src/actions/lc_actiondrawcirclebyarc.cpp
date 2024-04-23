@@ -124,8 +124,8 @@ void LC_ActionDrawCircleByArc::performTriggerDeletions(){
 }
 
 void LC_ActionDrawCircleByArc::deleteOriginalArcOrEllipse(RS_Entity *en){
-    if (checkMayExpandEntity(entity,  (entity->rtti() == RS2::EntityArc)?"Arc":"Ellipse")){
-        deleteEntityUndoable(entity);
+    if (checkMayExpandEntity(en,  (en->rtti() == RS2::EntityArc)?"Arc":"Ellipse")){
+        deleteEntityUndoable(en);
     }
 }
 
@@ -202,7 +202,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
     }
 }
 
-void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status,[[maybe_unused]] const RS_Vector &snapPoint){
     // just trigger on entity selection
     if (status == SetArc){
         trigger();

@@ -150,7 +150,7 @@ void LC_ActionModifyBreakDivide::doAfterTrigger(){
     triggerData = nullptr;
 }
 
-void LC_ActionModifyBreakDivide::doFinish(bool updateTB){
+void LC_ActionModifyBreakDivide::doFinish([[maybe_unused]]bool updateTB){
     if (triggerData != nullptr){
         delete triggerData;
         triggerData = nullptr;
@@ -688,7 +688,7 @@ LC_ActionModifyBreakDivide::ArcSegmentData *LC_ActionModifyBreakDivide::findArcS
     double nearestLeft = -M_PI;
     double nearestRight = 3 * M_PI;
 
-    size_t intersectionsCount = intersections.size();
+    int intersectionsCount = intersections.size();
 
     // we'll rotate angle in such way that start angle of arc becomes 0
     double correctedSnapAngle = RS_Math::correctAngle(snapAngle - arcStartAngle);

@@ -102,7 +102,7 @@ void LC_ActionModifyDuplicate::doAfterTrigger(){
     selectedEntity = nullptr;
 }
 
-void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     if (status == SelectEntity){
         RS_Entity *en = catchEntity(e, RS2::ResolveNone);
         if (en != nullptr){

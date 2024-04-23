@@ -102,7 +102,7 @@ void LC_ActionDrawLineFromPointToLine::doInitialSnapToRelativeZero(RS_Vector zer
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case (SetPoint):{
             onCoordinateEvent(snapPoint, false, status);

@@ -213,7 +213,7 @@ void LC_ActionDrawRectangle2Points::doAfterTrigger(){
     corner1Set = false;
 }
 
-void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawRectangle2Points::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case SetPoint1: {
             moveRelativeZero(snapPoint);

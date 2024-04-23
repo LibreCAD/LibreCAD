@@ -79,7 +79,7 @@ void LC_ActionDrawStar::doBack(QMouseEvent *pEvent, int status){
  * @param status
  * @param snapPoint
  */
-void LC_ActionDrawStar::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionDrawStar::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
     onCoordinateEvent(snapPoint, false, status);
 }
 

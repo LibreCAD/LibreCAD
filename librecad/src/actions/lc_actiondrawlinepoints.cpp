@@ -77,7 +77,7 @@ RS_Vector LC_ActionDrawLinePoints::doGetRelativeZeroAfterTrigger(){
 void LC_ActionDrawLinePoints::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
 //    finishAction();
-     if (direction == DIRECTION_X || DIRECTION_Y){
+     if (direction == DIRECTION_X || direction == DIRECTION_Y){
          direction = DIRECTION_POINT;
      }
      init(SetStartPoint);

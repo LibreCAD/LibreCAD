@@ -132,7 +132,7 @@ void LC_ActionDrawRectangle1Point::doInitialSnapToRelativeZero(RS_Vector relZero
     trigger();
 }
 
-void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snap){
+void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snap){
     switch (status) {
         case SetPoint1: {
             createShapeData(snap);

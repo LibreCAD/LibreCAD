@@ -390,7 +390,7 @@ void LC_AbstractActionWithPreview::clearAlternativeActionMode(){
  * support.
  * @param e mouse event
  */
-void LC_AbstractActionWithPreview::checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed){
+void LC_AbstractActionWithPreview::checkAlternativeActionMode([[maybe_unused]]const QMouseEvent *e, [[maybe_unused]]int status, bool shiftPressed){
     alternativeActionMode = shiftPressed;
 }
 
@@ -412,7 +412,7 @@ RS_Vector LC_AbstractActionWithPreview::doGetMouseSnapPoint(QMouseEvent *e){
  * @param status current status of the action
  * @param snapPoint snap point for mouse event (after  doGetMouseSnapPoint method)
  */
-void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){}
+void LC_AbstractActionWithPreview::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]int status, [[maybe_unused]]const RS_Vector &snapPoint){}
 
 
 /**
@@ -523,7 +523,7 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
  * @param status status of the action
  * @param pEvent mouse event
  */
-void LC_AbstractActionWithPreview::doMouseMoveStart(int status, QMouseEvent *pEvent){}
+void LC_AbstractActionWithPreview::doMouseMoveStart([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent){}
 
 /**
  * Extension point for inherited actions. Called at the of mouse move event processing and lets the action to do some cleanup after mouse move event processing.
@@ -564,7 +564,7 @@ void LC_AbstractActionWithPreview::checkPreSnapToRelativeZero(int status, QMouse
  * @param e mouse event
  * @return true if initial pre-snap to relative zero may be triggered by the mouse event
  */
-bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap(QMouseEvent *e){
+bool LC_AbstractActionWithPreview::doCheckMouseEventValidForInitialSnap([[maybe_unused]]QMouseEvent *e){
     return alternativeActionMode;
 }
 

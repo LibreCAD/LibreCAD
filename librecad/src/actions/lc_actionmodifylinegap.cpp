@@ -411,7 +411,7 @@ LC_ActionModifyLineGap::GapData *LC_ActionModifyLineGap::prepareGapData(RS_Line 
     }
  }
 
-void LC_ActionModifyLineGap::doFinish(bool updateTB){
+void LC_ActionModifyLineGap::doFinish([[maybe_unused]]bool updateTB){
     if (gapData != nullptr){
         delete gapData;
         gapData = nullptr;

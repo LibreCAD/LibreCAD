@@ -109,7 +109,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
     }
 }
 
-void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
+void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
     RS_Line *snappedLine = catchLine(e);
     switch (status) {
         case SetLine1:

@@ -254,7 +254,7 @@ bool LC_AbstractActionDrawLine::processAngleValueInput([[maybe_unused]]RS_Comman
     return ok;
 }
 
-void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped){
+void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapped){
     onCoordinateEvent(snapped, false, status);
 }
 
