@@ -30,6 +30,7 @@
 #include <QAction>
 #include <QMouseEvent>
 
+#include "qg_printpreviewoptions.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
@@ -363,4 +364,13 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
+void RS_ActionPrintPreview::setOption(std::unique_ptr<QG_PrintPreviewOptions> option)
+{
+    m_option = std::move(option);
+}
+
+std::unique_ptr<QG_PrintPreviewOptions>& RS_ActionPrintPreview::getOption()
+{
+    return m_option;
+}
 // EOF
