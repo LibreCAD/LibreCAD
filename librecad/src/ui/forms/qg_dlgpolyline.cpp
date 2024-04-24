@@ -75,7 +75,7 @@ void QG_DlgPolyline::setPolyline(RS_Polyline& e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(polyline->getPen(false),lay, "Pen");
+    wPen->setPen(polyline,lay, "Pen");
 	
     cbClosed->setChecked(polyline->isClosed());
 }

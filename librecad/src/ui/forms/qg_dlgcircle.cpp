@@ -75,7 +75,7 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(circle->getPen(false), lay, "Pen");
+    wPen->setPen(circle, lay, "Pen");
     QString s;
     s.setNum(circle->getCenter().x);
     leCenterX->setText(s);

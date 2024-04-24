@@ -73,7 +73,7 @@ void QG_DlgDimLinear::setDim(RS_DimLinear& d) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(dim->getPen(false),lay, "Pen");
+    wPen->setPen(dim,lay, "Pen");
 
     wLabel->setLabel(dim->getLabel(false));
     leAngle->setText(QString("%1").arg(RS_Math::rad2deg(dim->getAngle())));

@@ -66,7 +66,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(line->getPen(true),lay, "Pen");
+    wPen->setPen(line,lay, "Pen");
     QString s;
     s.setNum(line->getStartpoint().x);
     leStartX->setText(s);

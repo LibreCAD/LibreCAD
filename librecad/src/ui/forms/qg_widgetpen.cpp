@@ -31,6 +31,7 @@
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
 #include "rs_debug.h"
+#include "rs_entity.h"
 
 /*
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
@@ -62,6 +63,23 @@ void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer,
         bgPen->setTitle(title);
     }
 }
+
+
+void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &title){
+    RS_Pen entityPen = entity->getPen(false);
+    RS_Pen entityResolvedPen = entity->getPen(true);
+
+    RS_Color originalColor = entityPen.getColor();
+    RS_Color resolvedColor = entityResolvedPen.getColor();
+    resolvedColor.applyFlags(originalColor);
+    entityResolvedPen.setColor(resolvedColor);
+
+    entityResolvedPen.setLineType(entityPen.getLineType());
+    entityResolvedPen.setWidth(entityPen.getWidth());
+
+    setPen(entityResolvedPen, layer, title);
+}
+
 
 void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title){
     setPen(pen, true, showUnchanged, title);

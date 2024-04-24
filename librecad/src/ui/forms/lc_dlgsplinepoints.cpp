@@ -37,7 +37,7 @@ void LC_DlgSplinePoints::setSpline(LC_SplinePoints& b)
 		ui->cbLayer->setLayer(*lay);
 	}
 
- ui->wPen->setPen(b.getPen(false),lay, "Pen");
+ ui->wPen->setPen(&b,lay, "Pen");
 
 	ui->cbClosed->setChecked(b.isClosed());
 

@@ -74,7 +74,7 @@ void QG_DlgPoint::setPoint(RS_Point& p) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(point->getPen(false), lay,"Pen");
+    wPen->setPen(point, lay,"Pen");
 
     QString s;
     s.setNum(point->getPos().x);

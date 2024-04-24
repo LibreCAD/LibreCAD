@@ -74,7 +74,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(ellipse->getPen(false), lay, "Pen");
+    wPen->setPen(ellipse, lay, "Pen");
     QString s;
     s.setNum(ellipse->getCenter().x);
     leCenterX->setText(s);
