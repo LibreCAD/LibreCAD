@@ -28,7 +28,6 @@
 #ifndef RS_DIALOGFACTORYADAPTER_H
 #define RS_DIALOGFACTORYADAPTER_H
 
-#include <QToolBar>
 #include "rs_dialogfactoryinterface.h"
 #include "rs_block.h"
 
@@ -83,7 +82,7 @@ public:
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
 
- void addOptionsWidget([[maybe_unused]]QWidget * options){}
+	void addOptionsWidget([[maybe_unused]]QWidget * options) override {}
 };
 
 #endif
