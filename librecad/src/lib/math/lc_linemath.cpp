@@ -20,11 +20,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
+
 #include "lc_linemath.h"
-#include "rs_vector.h"
-#include "rs_math.h"
 #include "rs.h"
+#include "rs_information.h"
 #include "rs_line.h"
+#include "rs_math.h"
+#include "rs_vector.h"
 
 /**
  * Calculates point located on specified distance and angle from given starting point
@@ -150,15 +152,9 @@ RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegre
  * @return point
  */
 RS_Vector LC_LineMath::getNearestPointOnLine(RS_Line* line, const RS_Vector& coord, bool infiniteLine){
-    if (infiniteLine){
-
-        RS_Vector point1 = line->getStartpoint();
-        RS_Vector point2 = line->getEndpoint();
-        return getNearestPointOnInfiniteLine(coord, point1, point2);
-    }
-    else{
-        return line->getNearestPointOnEntity(coord, true, nullptr);
-    }
+    // For infinite lines, find the nearest point is not limited by start/end points
+    bool onEntity = ! infiniteLine;
+    return line->getNearestPointOnEntity(coord, onEntity, nullptr);
 }
 
 /**
@@ -181,7 +177,7 @@ RS_Vector LC_LineMath::findPointOnCircle(double radius, double arcAngle, RS_Vect
  * @param point  point to check
  * @return point position
  */
-int LC_LineMath::getPointPosition(RS_Vector &startPos, RS_Vector &endPos, RS_Vector &point)
+int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, RS_Vector &point)
 {
     RS_Vector a = endPos - startPos; // 1
     RS_Vector b = point - startPos; // 2
@@ -209,6 +205,11 @@ int LC_LineMath::getPointPosition(RS_Vector &startPos, RS_Vector &endPos, RS_Vec
  * @return
  */
 bool LC_LineMath::areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End){
+    // TODO: create a generic algorithm to find whether points are collinear
+    // Find the rank of the matrix formed by point homogeneous coordinates:
+    // coincidence: rank = 1
+    // collinear:   rank = 2
+    // coplanar:    rank = 3
     double angle1 = line1Start.angleTo(line1End);
     double angle2 = line1Start.angleTo(line2End);
     double angle3 = line1Start.angleTo(line2Start);
@@ -243,20 +244,12 @@ bool LC_LineMath::isNonZeroLineLength(const RS_Vector &startPoint, const RS_Vect
  * @return
  */
 double LC_LineMath::getMeaningful(double candidate, double replacementValue){
-    double result = candidate;
-    if (std::abs(candidate) < RS_TOLERANCE){
-        result = replacementValue;
-    }
-    return result;
+    return (std::abs(candidate) < RS_TOLERANCE) ? replacementValue : candidate;
 }
 
 
 double LC_LineMath::getMeaningfulPositive(double candidate, double replacementValue){
-    double result = candidate;
-    if (candidate < RS_TOLERANCE){
-        result = replacementValue;
-    }
-    return result;
+    return (candidate < RS_TOLERANCE) ? replacementValue : candidate;
 }
 
 /**
@@ -266,11 +259,7 @@ double LC_LineMath::getMeaningfulPositive(double candidate, double replacementVa
  * @return
  */
 double LC_LineMath::getMeaningfulAngle(double candidate, double replacementValue){
-    double result = candidate;
-    if (std::abs(candidate) < RS_TOLERANCE_ANGLE){
-        result = replacementValue;
-    }
-    return result;
+    return (std::abs(candidate) < RS_TOLERANCE_ANGLE) ? replacementValue : candidate;
 }
 
 /**
@@ -334,17 +323,12 @@ bool LC_LineMath::isNotMeaningfulDistance(RS_Vector &v1, RS_Vector &v2){
  * @param distance distance for parallel line
  * @return line data that describes parallel line
  */
-RS_LineData LC_LineMath::createParallel(RS_Vector &start, RS_Vector &end, double distance){
-    double ang = start.angleTo(end) + M_PI_2;
-
+RS_LineData LC_LineMath::createParallel(const RS_Vector &start, const RS_Vector &end, double distance){
+    RS_Line line{nullptr, {start, end}};
+    double ang = line.getDirection1() + M_PI_2;
     // calculate 1st parallel:
-    RS_Vector p1 = RS_Vector::polar(distance, ang);
-    p1 += start;
-    RS_Vector p2 = RS_Vector::polar(distance, ang);
-    p2 += end;
-
-    RS_LineData parallelData(p1, p2);
-    return parallelData;
+    line.move(RS_Vector::polar(distance, ang));
+    return line.getData();
 }
 
 /**
@@ -355,28 +339,9 @@ RS_LineData LC_LineMath::createParallel(RS_Vector &start, RS_Vector &end, double
  * @param e2  end of line 2
  * @return intersection point, invalid vector if no intersection point found
  */
-RS_Vector LC_LineMath::getIntersectionLineLine(RS_Vector& s1, RS_Vector& e1, RS_Vector& s2, RS_Vector& e2) {
-
-    RS_Vector ret;
-
-    double num = ((e2.x - s2.x) * (s1.y - s2.y) - (e2.y - s2.y) * (s1.x - s2.x));
-    double div = ((e2.y - s2.y) * (e1.x - s1.x) - (e2.x - s2.x) * (e1.y - s1.y));
-
-    double angle1 = s1.angleTo(e1);
-    double angle2 = s2.angleTo(e2);
-
-    if (fabs(div)>RS_TOLERANCE &&
-        fabs(remainder(angle1-angle2, M_PI))>=RS_TOLERANCE*10.) {
-        double u = num / div;
-
-        double xs = s1.x + u * (e1.x - s1.x);
-        double ys = s1.y + u * (e1.y - s1.y);
-        ret = RS_Vector(xs, ys);
-    }
-    else {
-        // lines are parallel
-        ret = RS_Vector(false);
-    }
-
-    return ret;
+RS_Vector LC_LineMath::getIntersectionLineLine(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2) {
+    RS_Line line1{nullptr, {s1, e1}};
+    RS_Line line2{nullptr, {s2, e2}};
+    RS_VectorSolutions sol = RS_Information::getIntersectionLineLine(&line1, &line2);
+    return sol.empty() ? RS_Vector{false} : sol.at(0);
 }
