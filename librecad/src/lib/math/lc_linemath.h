@@ -55,7 +55,7 @@ namespace LC_LineMath {
 
     RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, const RS_Vector &startPoint, const RS_Vector &toSnapPoint);
 
-    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative,RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
+    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative, const RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
                                                  const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd);
 
     int getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point);
