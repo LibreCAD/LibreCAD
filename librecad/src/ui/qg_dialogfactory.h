@@ -132,7 +132,7 @@ public:
 	void requestOptions(RS_ActionInterface* action,
 								bool on, bool update = false) override;
 
- void addOptionsWidget(QWidget * options);
+ void addOptionsWidget(QWidget * options) override;
 protected:
 	void requestPrintPreviewOptions(RS_ActionInterface* action,
 											bool on, bool update);
