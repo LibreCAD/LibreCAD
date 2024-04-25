@@ -170,12 +170,12 @@ public:
                 double k = dpmm / std::max(rsPen.getScreenWidth(), 1.);
                 qPen.setDashOffset(rsPen.dashOffset() * k);
                 // Cap style at line end points
-                qPen.setCapStyle(Qt::RoundCap);
                 // Join style
                 qPen.setJoinStyle(Qt::RoundJoin);
             } else {
                 qPen.setStyle(Qt::SolidLine);
             }
+            qPen.setCapStyle(Qt::RoundCap);
         }
         painter.QPainter::setPen(qPen);
     }
