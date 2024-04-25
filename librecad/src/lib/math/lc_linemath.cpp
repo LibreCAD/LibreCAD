@@ -56,7 +56,7 @@ RS_Vector LC_LineMath::relativePoint(const RS_Vector &startPoint, double distanc
     return result;
 }
 
-RS_Vector LC_LineMath::calculateAngleSegment(RS_Vector &startPoint, RS_Vector &previousLineStart, RS_Vector &previousLineEnd, double angleValueDegree, bool angleRelative, double distance){
+RS_Vector LC_LineMath::calculateAngleSegment(const RS_Vector &startPoint, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd, double angleValueDegree, bool angleRelative, double distance){
 
     double angle = RS_Math::deg2rad(angleValueDegree);
     double realAngle = defineActualSegmentAngle(angle, angleRelative, previousLineStart, previousLineEnd);
@@ -73,7 +73,7 @@ RS_Vector LC_LineMath::calculateAngleSegment(RS_Vector &startPoint, RS_Vector &p
  * @param previousLineEnd previous line segment end
  * @return
  */
-double LC_LineMath::defineActualSegmentAngle(double angle, bool angleIsRelative, RS_Vector &previousLineStart, RS_Vector &previousLineEnd){
+double LC_LineMath::defineActualSegmentAngle(double angle, bool angleIsRelative, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd){
     double result = angle;
     if (angleIsRelative){
         RS_Vector line = previousLineEnd - previousLineStart;
@@ -115,7 +115,7 @@ RS_Vector LC_LineMath::getNearestPointOnInfiniteLine(const RS_Vector &coord, con
  * @param toSnapPoint snap point
  * @return end point for the segment
  */
-RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, RS_Vector &startPoint, const RS_Vector &toSnapPoint){
+RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, const RS_Vector &startPoint, const RS_Vector &toSnapPoint){
     RS_Vector possibleEndPoint;
     double angle = RS_Math::deg2rad(angleValueDegree);
     RS_Vector infiniteTickStartPoint = startPoint;
@@ -129,9 +129,8 @@ RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegre
     return possibleEndPoint;
 }
 
-RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative, RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
-                                                          RS_Vector &previousLineStart, RS_Vector &previousLineEnd){
-    RS_Vector possibleEndPoint;
+RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative, const RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
+                                                          const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd){
     double angle = RS_Math::deg2rad(angleValueDegree);
     RS_Vector infiniteTickStartPoint = fromPoint;
     double realAngle = defineActualSegmentAngle(angle, angleIsRelative, previousLineStart, previousLineEnd);
@@ -140,8 +139,7 @@ RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegre
     RS_Vector infiniteTickEndPoint = infiniteTickStartPoint + infiniteTickVector;
     RS_Vector pointOnInfiniteTick = getNearestPointOnInfiniteLine(toSnapPoint, infiniteTickStartPoint, infiniteTickEndPoint);
 
-    possibleEndPoint = pointOnInfiniteTick;
-    return possibleEndPoint;
+    return pointOnInfiniteTick;
 }
 
 /**
@@ -151,10 +149,10 @@ RS_Vector LC_LineMath::calculateEndpointForAngleDirection(double angleValueDegre
  * @param infiniteLine if true, given line is considered to be infinite
  * @return point
  */
-RS_Vector LC_LineMath::getNearestPointOnLine(RS_Line* line, const RS_Vector& coord, bool infiniteLine){
+RS_Vector LC_LineMath::getNearestPointOnLine(const RS_Line* line, const RS_Vector& coord, bool infiniteLine){
     // For infinite lines, find the nearest point is not limited by start/end points
     bool onEntity = ! infiniteLine;
-    return line->getNearestPointOnEntity(coord, onEntity, nullptr);
+    return line != nullptr ? line->getNearestPointOnEntity(coord, onEntity, nullptr) : RS_Vector{false};
 }
 
 /**
@@ -164,7 +162,7 @@ RS_Vector LC_LineMath::getNearestPointOnLine(RS_Line* line, const RS_Vector& coo
  * @param centerCircle center of circle
  * @return point coordinates
  */
-RS_Vector LC_LineMath::findPointOnCircle(double radius, double arcAngle, RS_Vector centerCircle){
+RS_Vector LC_LineMath::findPointOnCircle(double radius, double arcAngle, const RS_Vector& centerCircle){
     RS_Vector radiusVector = RS_Vector::polar(radius, arcAngle);
     RS_Vector pointPos = centerCircle + radiusVector;
     return pointPos;
@@ -177,7 +175,7 @@ RS_Vector LC_LineMath::findPointOnCircle(double radius, double arcAngle, RS_Vect
  * @param point  point to check
  * @return point position
  */
-int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, RS_Vector &point)
+int LC_LineMath::getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point)
 {
     RS_Vector a = endPos - startPos; // 1
     RS_Vector b = point - startPos; // 2
@@ -296,7 +294,7 @@ bool LC_LineMath::isMeaningfulAngle(double value){
  * @param v2 second point
  * @return true if points are different
  */
-bool LC_LineMath::isMeaningfulDistance(RS_Vector &v1, RS_Vector &v2){
+bool LC_LineMath::isMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2){
     double distance = v1.distanceTo(v2);
     bool result = distance > RS_TOLERANCE;
     return result;
@@ -309,7 +307,7 @@ bool LC_LineMath::isMeaningfulDistance(RS_Vector &v1, RS_Vector &v2){
  * @param v2 second point
  * @return true if distance not meaningful, false otherwise
  */
-bool LC_LineMath::isNotMeaningfulDistance(RS_Vector &v1, RS_Vector &v2){
+bool LC_LineMath::isNotMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2){
     double distance = v1.distanceTo(v2);
     bool result = distance < RS_TOLERANCE;
     return result;
