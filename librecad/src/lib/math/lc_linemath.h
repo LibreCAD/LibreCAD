@@ -44,30 +44,30 @@ namespace LC_LineMath {
 
     RS_Vector relativePoint(const RS_Vector &startPoint, double distance, double angleValueRad);
 
-    RS_Vector calculateAngleSegment(RS_Vector &startPoint, RS_Vector &previousLineStart, RS_Vector &previousLineEnd,
+    RS_Vector calculateAngleSegment(const RS_Vector &startPoint, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd,
                                     double angleValueDegree, bool angleRelative, double distance);
 
-    double defineActualSegmentAngle(double angle, bool angleIsRelative, RS_Vector &previousLineStart, RS_Vector &previousLineEnd);
+    double defineActualSegmentAngle(double angle, bool angleIsRelative, const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd);
 
     RS_Vector getNearestPointOnInfiniteLine(const RS_Vector &coord, const RS_Vector &lineStartPoint, const RS_Vector &lineEndPoint);
 
-    RS_Vector getNearestPointOnLine(RS_Line* line, const RS_Vector& coord, bool infiniteLine);
+    RS_Vector getNearestPointOnLine(const RS_Line* line, const RS_Vector& coord, bool infiniteLine);
 
-    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, RS_Vector &startPoint, const RS_Vector &toSnapPoint);
+    RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, const RS_Vector &startPoint, const RS_Vector &toSnapPoint);
 
     RS_Vector calculateEndpointForAngleDirection(double angleValueDegree, bool angleIsRelative,RS_Vector &fromPoint, const RS_Vector &toSnapPoint,
-                                                 RS_Vector &previousLineStart, RS_Vector &previousLineEnd);
+                                                 const RS_Vector &previousLineStart, const RS_Vector &previousLineEnd);
 
-    int getPointPosition(RS_Vector &startPos, RS_Vector &endPos, RS_Vector &point);
+    int getPointPosition(const RS_Vector &startPos, const RS_Vector &endPos, const RS_Vector &point);
 
-    RS_Vector findPointOnCircle(double radius, double arcAngle, RS_Vector centerCircle);
+    RS_Vector findPointOnCircle(double radius, double arcAngle, const RS_Vector& centerCircle);
 
     bool areLinesOnSameRay(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End);
 
-    RS_Vector getIntersectionLineLine(RS_Vector& s1, RS_Vector& e1, RS_Vector& s2, RS_Vector& e2);
+    RS_Vector getIntersectionLineLine(const RS_Vector& s1, const RS_Vector& e1, const RS_Vector& s2, const RS_Vector& e2);
 
-    RS_LineData createParallel(RS_Vector& start, RS_Vector& end, double distance);
-    bool isMeaningfulDistance(RS_Vector &v1, RS_Vector &v2);
-    bool isNotMeaningfulDistance(RS_Vector &v1, RS_Vector &v2);
+    RS_LineData createParallel(const RS_Vector& start, const RS_Vector& end, double distance);
+    bool isMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2);
+    bool isNotMeaningfulDistance(const RS_Vector &v1, const RS_Vector &v2);
 }
 #endif // LC_LINEMATH_H
