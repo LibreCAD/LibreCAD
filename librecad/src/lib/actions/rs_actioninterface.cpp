@@ -25,16 +25,15 @@
 **********************************************************************/
 
 #include <QKeyEvent>
-#include "rs_graphicview.h"
-
 #include <QToolBar>
 
 #include "rs_actioninterface.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
-#include "rs_entitycontainer.h"
 #include "rs_dialogfactory.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphicview.h"
 
 /**
  * Constructor.
