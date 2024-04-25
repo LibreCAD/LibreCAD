@@ -36,7 +36,7 @@ protected slots:
     void onPointClicked(bool value);
     void onSetAngle();
     void onAngleRelativeClicked(bool value);
-    virtual void languageChange();
+    void languageChange() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     QString getSettingsOptionNamePrefix() override;
     void doSaveSettings() override;
