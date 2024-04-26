@@ -175,6 +175,7 @@ public:
             } else {
                 qPen.setStyle(Qt::SolidLine);
             }
+            qPen.setJoinStyle(Qt::RoundJoin);
             qPen.setCapStyle(Qt::RoundCap);
         }
         painter.QPainter::setPen(qPen);
@@ -878,7 +879,7 @@ void RS_PainterQt::setPen(const RS_Pen& pen) {
             p.setStyle(Qt::SolidLine);
     }
     p.setJoinStyle(Qt::RoundJoin);
-    p.setCapStyle(Qt::FlatCap);
+    p.setCapStyle(Qt::RoundCap);
     QPainter::setPen(p);
 }
 
