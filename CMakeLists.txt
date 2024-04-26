@@ -954,6 +954,9 @@ add_executable(LibreCAD
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/actions/lc_actionpensyncactivebylayer.h
         librecad/src/actions/lc_actionpensyncactivebylayer.cpp
+        librecad/src/ui/generic/lc_flexlayout.h
+        librecad/src/ui/generic/lc_flexlayout.cpp
+        librecad/src/ui/generic/lc_flexlayout.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

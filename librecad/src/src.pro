@@ -235,6 +235,7 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/LC_DlgParabola.h \
+    ui/generic/lc_flexlayout.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -349,6 +350,7 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
+    ui/generic/lc_flexlayout.cpp \
     ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \

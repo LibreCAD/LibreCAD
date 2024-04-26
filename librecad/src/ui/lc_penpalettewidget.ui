@@ -6,20 +6,119 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>380</width>
-    <height>589</height>
+    <width>404</width>
+    <height>246</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Pen Palette</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="sizeConstraint">
+    <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
+   <item row="8" column="0" colspan="2">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="layPenColor">
+     <item>
+      <widget class="QLabel" name="lblName">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="text">
+        <string>Pen Name:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lePenName">
+       <property name="enabled">
+        <bool>true</bool>
+       </property>
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+         <horstretch>1</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>60</width>
+         <height>22</height>
+        </size>
+       </property>
+       <property name="maximumSize">
+        <size>
+         <width>16777215</width>
+         <height>16777215</height>
+        </size>
+       </property>
+       <property name="baseSize">
+        <size>
+         <width>130</width>
+         <height>22</height>
+        </size>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="lColor">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Color:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QG_ColorBox" name="cbColor" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
    <item row="12" column="0" colspan="2">
     <widget class="QTableView" name="tableView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
+       <verstretch>1</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
@@ -78,294 +177,8 @@
      </attribute>
     </widget>
    </item>
-   <item row="0" column="0" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <property name="sizeConstraint">
-      <enum>QLayout::SetMaximumSize</enum>
-     </property>
-     <item row="0" column="11">
-      <widget class="QToolButton" name="tbApplyToActiveLayer">
-       <property name="toolTip">
-        <string>Apply Editor Pen to Active Layer Pen</string>
-       </property>
-       <property name="text">
-        <string>Apply To Layer</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/ui/ui.qrc">
-         <normaloff>:/ui/layeredit.png</normaloff>:/ui/layeredit.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="0">
-      <widget class="QToolButton" name="tbEditSave">
-       <property name="enabled">
-        <bool>false</bool>
-       </property>
-       <property name="toolTip">
-        <string>Save</string>
-       </property>
-       <property name="text">
-        <string>Save</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
-         <normaloff>:/actions/filesave.png</normaloff>:/actions/filesave.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QToolButton" name="tbEditSelectEntities">
-       <property name="toolTip">
-        <string>Select Entities By Pen Attributes</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="9">
-      <widget class="QToolButton" name="tbUpdateCurrentPenByActiveLayer">
-       <property name="toolTip">
-        <string>Update Current Pen by Active Layer' Pen</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="8">
-      <widget class="QToolButton" name="tbSetAsCurrent">
-       <property name="toolTip">
-        <string>Apply Editor Pen As Current Pen</string>
-       </property>
-       <property name="text">
-        <string>to current</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
-         <normaloff>:/actions/editundo.png</normaloff>:/actions/editundo.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="2">
-      <widget class="QToolButton" name="tbEditSelectEntitiesByResolvedPen">
-       <property name="toolTip">
-        <string>Select Entities By Drawing Pen</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="14">
-      <widget class="QToolButton" name="tbSettings">
-       <property name="toolTip">
-        <string>Settings</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
-         <normaloff>:/actions/configure.png</normaloff>:/actions/configure.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="12">
-      <widget class="QToolButton" name="tbRemove">
-       <property name="toolTip">
-        <string>Remove Selected Pen</string>
-       </property>
-       <property name="text">
-        <string>Delete Pen</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/icons/icons.qrc">
-         <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="3">
-      <widget class="QToolButton" name="tbEditSelectFromEntity">
-       <property name="toolTip">
-        <string>Fill Pen Editor by Entity Attributes</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="10">
-      <widget class="QToolButton" name="tbPickFromActiveLayer">
-       <property name="toolTip">
-        <string>Fill Pen Editor from Active Layer's Pen</string>
-       </property>
-       <property name="text">
-        <string>Pick from Active Layer</string>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="13">
-      <spacer name="horizontalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="0" column="7">
-      <widget class="QToolButton" name="tbEditApplyFromCurrent">
-       <property name="toolTip">
-        <string>Fill Editor Pen by Current Pen</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/actions/actions.qrc">
-         <normaloff>:/actions/editredo.png</normaloff>:/actions/editredo.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="5">
-      <widget class="QToolButton" name="tbEditApplyToSelection">
-       <property name="toolTip">
-        <string>Apply Pen To Selection</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/selectdoubles.png</normaloff>:/extui/selectdoubles.png</iconset>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="4">
-      <widget class="QToolButton" name="tbEditSelectResolvedFromEntity">
-       <property name="toolTip">
-        <string>Fill Pen Editor by Entity Drawing Pen</string>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="icon">
-        <iconset resource="../../res/extui/extui.qrc">
-         <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
-       </property>
-      </widget>
-     </item>
-    </layout>
-   </item>
-   <item row="7" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout">
-     <item>
-      <widget class="QLabel" name="lType">
-       <property name="text">
-        <string>Type:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QG_LineTypeBox" name="cbType" native="true"/>
-     </item>
-     <item>
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>Width:</string>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <widget class="QG_WidthBox" name="cbWidth" native="true"/>
-     </item>
-     <item>
-      <spacer name="horizontalSpacer_2">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="6" column="0" colspan="2">
-    <layout class="QGridLayout" name="gridLayout_3">
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lePenName"/>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="lblName">
-       <property name="text">
-        <string>Pen Name:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="2">
-      <widget class="QLabel" name="lColor">
-       <property name="text">
-        <string>Color:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="2" column="3">
-      <widget class="QG_ColorBox" name="cbColor" native="true"/>
-     </item>
-     <item row="2" column="4">
-      <spacer name="horizontalSpacer">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>40</width>
-         <height>20</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-    </layout>
-   </item>
-   <item row="8" column="0" colspan="2">
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-    </widget>
-   </item>
    <item row="10" column="0" colspan="2">
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="layFilter">
      <item>
       <widget class="QLineEdit" name="leFilterMask">
        <property name="sizePolicy">
@@ -391,6 +204,259 @@
      </item>
     </layout>
    </item>
+   <item row="7" column="0" colspan="2">
+    <layout class="QHBoxLayout" name="layTypeWidth">
+     <item>
+      <widget class="QLabel" name="lType">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Type:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QG_LineTypeBox" name="cbType" native="true"/>
+     </item>
+     <item>
+      <widget class="QLabel" name="label">
+       <property name="sizePolicy">
+        <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+         <horstretch>0</horstretch>
+         <verstretch>0</verstretch>
+        </sizepolicy>
+       </property>
+       <property name="minimumSize">
+        <size>
+         <width>40</width>
+         <height>0</height>
+        </size>
+       </property>
+       <property name="text">
+        <string>Width:</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QG_WidthBox" name="cbWidth" native="true"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>0</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item row="1" column="1">
+    <widget class="QToolButton" name="tbSettings">
+     <property name="toolTip">
+      <string>Settings</string>
+     </property>
+     <property name="styleSheet">
+      <string notr="true"/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../res/actions/actions.qrc">
+       <normaloff>:/actions/configure.png</normaloff>:/actions/configure.png</iconset>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <layout class="QHBoxLayout" name="layButtons">
+     <item>
+      <widget class="QToolButton" name="tbEditSelectResolvedFromEntity">
+       <property name="toolTip">
+        <string>Fill Pen Editor by Entity Drawing Pen</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/relzeromove.png</normaloff>:/extui/relzeromove.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditSelectFromEntity">
+       <property name="toolTip">
+        <string>Fill Pen Editor by Entity Attributes</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/selectsingle.png</normaloff>:/extui/selectsingle.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditSelectEntitiesByResolvedPen">
+       <property name="toolTip">
+        <string>Select Entities By Drawing Pen</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/selectinvert.png</normaloff>:/extui/selectinvert.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditSelectEntities">
+       <property name="toolTip">
+        <string>Select Entities By Pen Attributes</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/selectinters.png</normaloff>:/extui/selectinters.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditSave">
+       <property name="enabled">
+        <bool>false</bool>
+       </property>
+       <property name="toolTip">
+        <string>Save</string>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/actions/actions.qrc">
+         <normaloff>:/actions/filesave.png</normaloff>:/actions/filesave.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditApplyToSelection">
+       <property name="toolTip">
+        <string>Apply Pen To Selection</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/selectdoubles.png</normaloff>:/extui/selectdoubles.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbEditApplyFromCurrent">
+       <property name="toolTip">
+        <string>Fill Editor Pen by Current Pen</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/actions/actions.qrc">
+         <normaloff>:/actions/editredo.png</normaloff>:/actions/editredo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbSetAsCurrent">
+       <property name="toolTip">
+        <string>Apply Editor Pen As Current Pen</string>
+       </property>
+       <property name="text">
+        <string>to current</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/actions/actions.qrc">
+         <normaloff>:/actions/editundo.png</normaloff>:/actions/editundo.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbUpdateCurrentPenByActiveLayer">
+       <property name="toolTip">
+        <string>Update Current Pen by Active Layer' Pen</string>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/back.png</normaloff>:/extui/back.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbPickFromActiveLayer">
+       <property name="toolTip">
+        <string>Fill Pen Editor from Active Layer's Pen</string>
+       </property>
+       <property name="text">
+        <string>Pick from Active Layer</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/extui/extui.qrc">
+         <normaloff>:/extui/selectlayer.png</normaloff>:/extui/selectlayer.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbApplyToActiveLayer">
+       <property name="toolTip">
+        <string>Apply Editor Pen to Active Layer Pen</string>
+       </property>
+       <property name="text">
+        <string>Apply To Layer</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/ui/ui.qrc">
+         <normaloff>:/ui/layeredit.png</normaloff>:/ui/layeredit.png</iconset>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QToolButton" name="tbRemove">
+       <property name="toolTip">
+        <string>Remove Selected Pen</string>
+       </property>
+       <property name="text">
+        <string>Delete Pen</string>
+       </property>
+       <property name="icon">
+        <iconset resource="../../res/icons/icons.qrc">
+         <normaloff>:/icons/remove.svg</normaloff>:/icons/remove.svg</iconset>
+       </property>
+      </widget>
+     </item>
+    </layout>
+   </item>
   </layout>
  </widget>
  <customwidgets>
@@ -411,11 +477,11 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
   <include location="../../res/extui/extui.qrc"/>
   <include location="../../res/actions/actions.qrc"/>
+  <include location="../../res/icons/icons.qrc"/>
+  <include location="../../res/icons/icons.qrc"/>
+  <include location="../../res/icons/icons.qrc"/>
   <include location="../../res/ui/ui.qrc"/>
  </resources>
  <connections/>

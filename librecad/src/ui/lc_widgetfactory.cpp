@@ -51,7 +51,7 @@ namespace {
     // only enable the penpallet by settings
     bool usePenPallet() {
         auto guard= RS_SETTINGS->beginGroupGuard("/CustomToolbars");
-        return RS_SETTINGS->readNumEntry("/UsePenPallet", 0) == 1;
+        return RS_SETTINGS->readNumEntry("/UsePenPallet", 1) == 1;
     }
 } // namespace
 
@@ -315,10 +315,10 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     if (usePenPallet()) {
         dock_pen_palette = new QDockWidget(main_window);
         dock_pen_palette->setWindowTitle(QC_ApplicationWindow::tr("Pen Palette"));
-        dock_pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+//        dock_pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         dock_pen_palette->setObjectName("pen_palette_dockwidget");
         pen_palette = new LC_PenPaletteWidget("Layer", dock_pen_palette);
-        pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+//        pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
         connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
@@ -340,11 +340,11 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     if (usePenPallet()) {
         dock_layer_tree = new QDockWidget(main_window);
         dock_layer_tree->setWindowTitle(QC_ApplicationWindow::tr("Layer Tree"));
-        dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+//        dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         dock_layer_tree->setObjectName("layer_tree_dockwidget");
         layer_tree_widget = new LC_LayerTreeWidget(action_handler, dock_layer_tree, "Layer Tree");
         layer_tree_widget->setFocusPolicy(Qt::NoFocus);
-        layer_tree_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+//        layer_tree_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
         connect(layer_tree_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
         connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
         layer_tree_widget->setVisible(false);
