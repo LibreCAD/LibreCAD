@@ -113,13 +113,32 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
     return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
 }
 
-RS_Insert* getParentInsert(RS_Entity* entity) {
+// Find an ancestor of the RS_Insert type.
+// Return nullptr, if none is found
+RS_Insert* getAncestorInsert(RS_Entity* entity)
+{
     while(entity != nullptr) {
-        if (entity->rtti() == RS2::EntityInsert)
-            return static_cast<RS_Insert*>(entity);
+        if (entity->rtti() == RS2::EntityInsert) {
+            RS_Insert* parent = getAncestorInsert(entity->getParent());
+            return parent != nullptr ? parent : static_cast<RS_Insert*>(entity);
+        }
         entity = entity->getParent();
     }
     return nullptr;
+}
+
+// whether the current insert is part of Text
+RS_Entity* getParentText(RS_Insert* insert)
+{
+    if (insert == nullptr || insert->getBlock() != nullptr || insert->getParent() == nullptr)
+        return nullptr;
+    switch(insert->getParent()->rtti()) {
+    case RS2::EntityText:
+    case RS2::EntityMText:
+        return insert->getParent();
+    default:
+        return nullptr;
+    }
 }
 
 // Start the edit action:
@@ -534,7 +553,13 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     return;
     if (container==nullptr)
         return;
-    RS_Insert* insert = getParentInsert(entity);
+    RS_Insert* insert = getAncestorInsert(entity);
+    // MText/Text should not be edited as blocks
+    RS_Entity* toEdit = getParentText(insert) != nullptr ? getParentText(insert) : nullptr;
+    if (toEdit != nullptr) {
+        insert = nullptr;
+        entity = toEdit;
+    }
     QAction* action = (insert != nullptr) ?
                 // For an insert, show the menu entry to edit the block instead
                 new QAction(QIcon(":/ui/blockedit.png"),

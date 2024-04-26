@@ -242,7 +242,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         return nullptr;
     }
 
-    auto a_layer = document->getLayerList()->getActive();
+    auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
         //case RS2::ActionFileNew:
@@ -900,16 +900,20 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionLayersEdit(*document, *view);
         break;
     case RS2::ActionLayersToggleView:
-        a = new RS_ActionLayersToggleView(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersToggleView(*document, *view, a_layer);
         break;
     case RS2::ActionLayersToggleLock:
-        a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
         break;
     case RS2::ActionLayersTogglePrint:
-        a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
         break;
     case RS2::ActionLayersToggleConstruction:
-        a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
         break;
     case RS2::ActionLayersExportSelected:
         a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
