@@ -44,6 +44,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
+#include "lc_flexlayout.h"
 
 /**
  * Constructor.
@@ -70,6 +71,9 @@ LC_LayerTreeWidget::LC_LayerTreeWidget(
     lay->setContentsMargins(2, 2, 2, 2);
     lay->addLayout(layFiltering);
     lay->addLayout(layButtons);
+    QSizePolicy policy = layerTreeView->sizePolicy();
+    policy.setVerticalStretch(1);
+    layerTreeView->setSizePolicy(policy);
     lay->addWidget(layerTreeView);
     this->setLayout(lay);
 }
@@ -169,7 +173,8 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
  * Lets eave it for now as it is in order to minify affecting codebase, probably will refactor later
  */
 QLayout *LC_LayerTreeWidget::initButtonsBar(){
-    auto *layButtons = new QHBoxLayout;
+//    auto *layButtons = new QHBoxLayout;
+    auto *layButtons = new LC_FlexLayout(  );
     QToolButton *but;
     const QSize minButSize(28, 28);
 
@@ -208,7 +213,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showActiveLayerOnly);
     layButtons->addWidget(but);
 
-    layButtons->addStretch(1);
+//    layButtons->addStretch(1);
 
     // expand all layers
     but = new QToolButton(this);
@@ -225,7 +230,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     but->setMinimumSize(minButSize);
     but->setToolTip(tr("Collapse All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseAllLayers);
-    layButtons->addWidget(but, 10);
+    layButtons->addWidget(but/*, 10*/);
     btnCollapseAll = but;
 
     // expand all layers
@@ -237,7 +242,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     layButtons->addWidget(but);
     btnCollapseSecondary = but;
 
-    layButtons->addStretch(1);
+//    layButtons->addStretch(1);
 
     // unlock all layers:
     but = new QToolButton(this);
@@ -289,7 +294,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::editActiveLayer);
     layButtons->addWidget(but);
 
-    layButtons->addStretch(10);
+//    layButtons->addStretch(10);
 
     // add separator line
     auto *vFrame = new QFrame;

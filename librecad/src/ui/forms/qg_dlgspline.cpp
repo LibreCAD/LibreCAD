@@ -68,7 +68,7 @@ void QG_DlgSpline::setSpline(RS_Spline& e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(spline->getPen(false), lay, "Pen");
+    wPen->setPen(spline, lay, "Pen");
 	
     QString s;
     s.setNum(spline->getDegree());

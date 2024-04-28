@@ -74,7 +74,7 @@ void QG_DlgInsert::setInsert(RS_Insert& i) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(insert->getPen(false), lay,  "Pen");
+    wPen->setPen(insert, lay,  "Pen");
 
     QString s;
     s.setNum(insert->getInsertionPoint().x);

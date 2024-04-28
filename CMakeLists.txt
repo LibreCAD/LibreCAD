@@ -23,8 +23,6 @@ set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-
-
 find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
 
@@ -956,6 +954,11 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/actions/lc_actionpensyncactivebylayer.h
+        librecad/src/actions/lc_actionpensyncactivebylayer.cpp
+        librecad/src/ui/generic/lc_flexlayout.h
+        librecad/src/ui/generic/lc_flexlayout.cpp
+        librecad/src/ui/generic/lc_flexlayout.cpp
         librecad/src/actions/lc_actiondrawrectangle3points.cpp
         librecad/src/actions/lc_actiondrawrectangle3points.h
         librecad/src/actions/lc_actiondrawcross.cpp

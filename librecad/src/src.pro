@@ -135,6 +135,7 @@ HEADERS += \
     actions/lc_actionmodifylinegap.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
+    actions/lc_actionpensyncactivebylayer.h \
     actions/lc_abstractactiondrawrectangle.h \
     actions/lc_actiondrawcirclebyarc.h \
     actions/lc_actiondrawlineanglerel.h \
@@ -250,6 +251,7 @@ HEADERS += \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
     ui/forms/LC_DlgParabola.h \
+    ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
     ui/forms/lc_duplicateoptions.h \
@@ -302,6 +304,7 @@ SOURCES += \
     actions/lc_actionmodifylinegap.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
+    actions/lc_actionpensyncactivebylayer.cpp \
     actions/lc_actionmodifylinejoin.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
@@ -398,6 +401,7 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
+    ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
     ui/forms/lc_duplicateoptions.cpp \

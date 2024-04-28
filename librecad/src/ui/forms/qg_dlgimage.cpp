@@ -68,7 +68,7 @@ void QG_DlgImage::setImage(RS_Image& e) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(image->getPen(false), lay, "Pen");
+    wPen->setPen(image, lay, "Pen");
     leInsertX->setValidator(val.get());
     leInsertY->setValidator(val.get());
     leWidth->setValidator(val.get());

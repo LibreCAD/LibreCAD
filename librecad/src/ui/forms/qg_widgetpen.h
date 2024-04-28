@@ -29,6 +29,7 @@
 #include "ui_qg_widgetpen.h"
 #include "rs_pen.h"
 #include "rs_layer.h"
+#include "rs_entity.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {
@@ -46,6 +47,7 @@ public slots:
     virtual void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
     void setPen(RS_Pen pen, RS_Layer* layer, const QString &title);
     void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
+    void setPen(RS_Entity *entity, RS_Layer *layer, const QString &title);
     virtual RS_Pen getPen();
 
 protected slots:
@@ -54,6 +56,7 @@ protected slots:
 protected:
     void focusInEvent(QFocusEvent *event) override;
     void focusOutEvent(QFocusEvent *event) override;
+
 };
 
 #endif // QG_WIDGETPEN_H

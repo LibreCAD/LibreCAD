@@ -66,7 +66,7 @@ void QG_DlgArc::setArc(RS_Arc& a) {
         cbLayer->setLayer(*lay);
     }
 
-    wPen->setPen(arc->getPen(false), lay, "Pen");
+    wPen->setPen(arc, lay, "Pen");
 
     QString s;
     s.setNum(arc->getCenter().x);

@@ -74,7 +74,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
     resolvedColor.applyFlags(originalColor);
     lineResolvedPen.setColor(resolvedColor);
 
-    wPen->setPen(lineResolvedPen,lay, "Pen");
+    wPen->setPen(lineResolvedPen, lay, "Pen");
 //    wPen->setPen(linePen,lay, "Pen");
     QString s;
     s.setNum(line->getStartpoint().x);

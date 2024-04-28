@@ -160,12 +160,9 @@
 #include "rs_actionzoomprevious.h"
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
-
 #include "lc_actiondrawrectangle3points.h"
-
 #include "lc_actiondrawcross.h"
 #include "lc_actiondrawlinesnake.h"
-
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
@@ -176,7 +173,6 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
-
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
@@ -184,7 +180,7 @@
 #include "rs_settings.h"
 #include "lc_actionpenpick.h"
 #include "lc_actionpenapply.h"
-
+#include "lc_actionpensyncactivebylayer.h"
 #include "lc_actiondrawlineanglerel.h"
 #include "lc_actiondrawlinefrompointtoline.h"
 #include "rs_math.h"
@@ -928,6 +924,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
       case RS2::ActionPenCopy:
           a = new LC_ActionPenApply(*document, *view, true);
         break;
+
+      case RS2::ActionPenSyncFromLayer:
+         a = new LC_ActionPenSyncActiveByLayer(*document, *view);
+       break;
             // Info actions:
         //
     case RS2::ActionInfoInside:
@@ -2176,8 +2176,9 @@ void QG_ActionHandler::slotPenCopy(){
 }
 
 void QG_ActionHandler::slotPenSyncFromLayer(){
-    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
-    penPaletteWidget->updatePenToolbarByActiveLayer();
+    setCurrentAction(RS2::ActionPenSyncFromLayer);
+//    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
+//    penPaletteWidget->updatePenToolbarByActiveLayer();
 }
 
 void QG_ActionHandler::set_view(RS_GraphicView* gview)
