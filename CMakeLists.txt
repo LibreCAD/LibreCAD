@@ -21,6 +21,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
+add_compile_definitions(MUPARSER_STATIC)
+
+
 
 find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
@@ -148,9 +151,10 @@ add_executable(LibreCAD
         libraries/muparser/include/muParserBytecode.h
         libraries/muparser/include/muParserCallback.h
         libraries/muparser/include/muParserDef.h
+        libraries/muparser/include/muParserDLL.h
         libraries/muparser/include/muParserError.h
         libraries/muparser/include/muParserFixes.h
-        libraries/muparser/include/muParserStack.h
+        libraries/muparser/include/muParserInt.h
         libraries/muparser/include/muParserTemplateMagic.h
         libraries/muparser/include/muParserToken.h
         libraries/muparser/include/muParserTokenReader.h
@@ -158,7 +162,9 @@ add_executable(LibreCAD
         libraries/muparser/src/muParserBase.cpp
         libraries/muparser/src/muParserBytecode.cpp
         libraries/muparser/src/muParserCallback.cpp
+        libraries/muparser/src/muParserDLL.cpp
         libraries/muparser/src/muParserError.cpp
+        libraries/muparser/src/muParserInt.cpp
         libraries/muparser/src/muParserTokenReader.cpp
         librecad/src/actions/lc_actiondimarc.cpp
         librecad/src/actions/lc_actiondimarc.h
@@ -851,6 +857,8 @@ add_executable(LibreCAD
         librecad/src/ui/generic/colorwizard.h
         librecad/src/ui/generic/comboboxoption.cpp
         librecad/src/ui/generic/comboboxoption.h
+        librecad/src/ui/forms/LC_DlgParabola.h
+        librecad/src/ui/forms/LC_DlgParabola.cpp
 #        librecad/src/ui/generic/customtoolbarcreator.cpp
 #        librecad/src/ui/generic/customtoolbarcreator.h
 #        librecad/src/ui/generic/customwidgetcreator.cpp
@@ -948,6 +956,61 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/actions/lc_actiondrawrectangle3points.cpp
+        librecad/src/actions/lc_actiondrawrectangle3points.h
+        librecad/src/actions/lc_actiondrawcross.cpp
+        librecad/src/actions/lc_actiondrawcross.h
+        librecad/src/ui/forms/lc_crossoptions.cpp
+        librecad/src/actions/lc_actiondrawlinesnake.h
+        librecad/src/actions/lc_actiondrawlinesnake.h
+        librecad/src/actions/lc_actiondrawlinesnake.cpp
+        librecad/src/ui/forms/lc_lineoptions.cpp
+        librecad/src/actions/lc_actiondrawlineanglerel.h
+        librecad/src/actions/lc_actiondrawlineanglerel.cpp
+        librecad/src/ui/forms/lc_lineanglereloptions.cpp
+        librecad/src/ui/forms/lc_slicedivideoptions.cpp
+        librecad/src/actions/lc_actiondrawslicedivide.cpp
+        librecad/src/actions/lc_actiondrawrectangle1point.cpp
+        librecad/src/ui/forms/lc_rectangle1pointoptions.cpp
+        librecad/src/lib/engine/lc_parabola.cpp
+        librecad/src/actions/lc_actiondrawparabola4points.cpp
+        librecad/src/actions/lc_actiondrawparabolaFD.cpp
+        librecad/src/ui/forms/lc_actionoptionswidget.h
+        librecad/src/ui/forms/lc_actionoptionswidget.cpp
+        librecad/src/actions/lc_abstractactiondrawrectangle.h
+        librecad/src/actions/lc_abstractactiondrawrectangle.cpp
+        librecad/src/actions/lc_actiondrawrectangle2points.h
+        librecad/src/actions/lc_actiondrawrectangle2points.cpp
+        librecad/src/ui/forms/lc_rectangle2pointsoptions.h
+        librecad/src/ui/forms/lc_rectangle2pointsoptions.cpp
+        librecad/src/ui/forms/lc_circlebyarcoptions.cpp
+        librecad/src/actions/lc_actiondrawcirclebyarc.cpp
+        librecad/src/actions/lc_actionmodifylinejoin.cpp
+        librecad/src/ui/forms/lc_linejoinoptions.cpp
+        librecad/src/actions/lc_actiondrawlinepoints.h
+        librecad/src/actions/lc_actiondrawlinepoints.cpp
+        librecad/src/ui/forms/lc_linepointsoptions.h
+        librecad/src/ui/forms/lc_linepointsoptions.cpp
+        librecad/src/lib/math/lc_linemath.h
+        librecad/src/lib/math/lc_linemath.cpp
+        librecad/src/actions/lc_abstractactiondrawline.cpp
+        librecad/src/actions/lc_abstractactionwithpreview.h
+        librecad/src/actions/lc_abstractactionwithpreview.cpp
+        librecad/src/actions/lc_actionmodifyduplicate.h
+        librecad/src/actions/lc_actionmodifyduplicate.cpp
+        librecad/src/ui/forms/lc_duplicateoptions.cpp
+        librecad/src/ui/forms/lc_rectangle3pointsoptions.cpp
+        librecad/src/ui/forms/lc_linefrompointtolineoptions.cpp
+        librecad/src/actions/lc_actiondrawlinefrompointtoline.cpp
+        librecad/src/actions/lc_actiondrawstar.cpp
+        librecad/src/ui/forms/lc_staroptions.cpp
+        librecad/src/actions/lc_actionmodifybreakdivide.cpp
+        librecad/src/actions/lc_actionmodifybreakdivide.h
+        librecad/src/ui/forms/lc_modifybreakdivideoptions.h
+        librecad/src/ui/forms/lc_modifybreakdivideoptions.cpp
+        librecad/src/actions/lc_actionmodifylinegap.cpp
+        librecad/src/ui/forms/lc_modifygapoptions.h
+        librecad/src/ui/forms/lc_modifygapoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

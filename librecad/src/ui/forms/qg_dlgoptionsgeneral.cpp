@@ -59,6 +59,7 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setFontsFolder);
     connect(cbAutoBackup, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
+
 }
 
 /*
@@ -207,6 +208,7 @@ void QG_DlgOptionsGeneral::init()
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
+    cbOpenLastFiles->setChecked(RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 1));
     RS_SETTINGS->endGroup();
 
 	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
@@ -306,6 +308,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/OpenLastOpenedFiles", cbOpenLastFiles->isChecked() ? 1: 0);
         RS_SETTINGS->endGroup();
 
 		RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);

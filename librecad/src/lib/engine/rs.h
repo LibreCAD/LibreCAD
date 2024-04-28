@@ -252,6 +252,7 @@ namespace RS2 {
         ActionDrawCircleTan1_2P,
         ActionDrawCircleTan2,
         ActionDrawCircleTan3,
+        ActionDrawCircleByArc,
 
         ActionDrawEllipseArcAxis,
         ActionDrawEllipseAxis,
@@ -290,6 +291,21 @@ namespace RS2 {
         ActionDrawSplinePoints, //interpolation spline
         ActionDrawPolyline,
         ActionDrawText,
+
+        ActionDrawRectangle3Points,
+        ActionDrawRectangle1Point,
+        ActionDrawRectangle2Points,
+        ActionDrawSnakeLine,
+        ActionDrawSnakeLineX,
+        ActionDrawSnakeLineY,
+        ActionDrawCross,
+        ActionDrawLineAngleRel,
+        ActionDrawLineOrthogonalRel,
+        ActionDrawLineFromPointToLine,
+        ActionDrawSliceDivideLine,
+        ActionDrawSliceDivideCircle,
+        ActionDrawLinePoints,
+        ActionDrawStar,
 
         ActionPolylineAdd,
         ActionPolylineAppend,
@@ -339,6 +355,10 @@ namespace RS2 {
         ActionModifyRound,
         ActionModifyOffset,
         ActionModifyOffsetNoSelect,
+        ActionModifyLineJoin,
+        ActionModifyDuplicate,
+        ActionModifyBreakDivide,
+        ActionModifyLineGap,
 
         ActionSnapFree,
         ActionSnapGrid,

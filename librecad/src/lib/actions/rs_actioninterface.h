@@ -32,6 +32,7 @@
 #include <QtCore/QtContainerFwd>
 
 #include "rs_snapper.h"
+#include "lc_actionoptionswidget.h"
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;
@@ -57,7 +58,7 @@ public:
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView,
                        RS2::ActionType actionType = RS2::ActionNone);
-	virtual ~RS_ActionInterface() = default;
+	   virtual ~RS_ActionInterface();
 
     virtual RS2::ActionType rtti() const;
 
@@ -158,6 +159,12 @@ protected:
     //static QString cmdNo;
     //static QString cmdNo2;
     RS2::ActionType actionType = RS2::ActionNone;
+
+    std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
+
+    virtual void createOptionsWidget();
+    void updateOptions();
+    void updateOptionsUI(int mode);
 };
 
 

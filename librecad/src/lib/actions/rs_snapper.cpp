@@ -1028,6 +1028,38 @@ void RS_Snapper::drawSnapper()
     }
 }
 
+RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution)
+{
+
+    if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)
+    {
+        return currentCoord;
+    }
+
+    double angle = referenceCoord.angleTo(currentCoord)*180.0/M_PI;
+    angle -= std::remainder(angle,angularResolution);
+    angle *= M_PI/180.;
+    angle = angle + baseAngle; // add base angle, so snap is relative
+    RS_Vector res = RS_Vector::polar(referenceCoord.distanceTo(currentCoord),angle);
+    res += referenceCoord;
+
+    if (snapMode.snapOnEntity)
+    {
+        RS_Vector t(false);
+        //RS_Vector mouseCoord = graphicView->toGraph(currentCoord.x(), currentCoord.y());
+        t = container->getNearestVirtualIntersection(res,angle,nullptr);
+
+        pImpData->snapSpot = t;
+        snapPoint(pImpData->snapSpot, true);
+        return t;
+    }
+    else
+    {
+        snapPoint(res, true);
+        return res;
+    }
+}
+
 RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution)
 {
 

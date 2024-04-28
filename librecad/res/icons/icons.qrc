@@ -230,5 +230,25 @@
         <file>parabola_focus_directrix.svg</file>
         <file>pen_apply.svg</file>
         <file>pen_copy.svg</file>
+        <file>cross_circle.svg</file>
+        <file>cross_circle1.svg</file>
+        <file>line_rel.svg</file>
+        <file>line_rel_x.svg</file>
+        <file>line_rel_y.svg</file>
+        <file>line_angle_rel.svg</file>
+        <file>line_ortho_rel.svg</file>
+        <file>slice_divide.svg</file>
+        <file>circle_by_arc.svg</file>
+        <file>line_join.svg</file>
+        <file>line_points.svg</file>
+        <file>duplicate.svg</file>
+        <file>line_to_ortho.svg</file>
+        <file>rectangle_1_point.svg</file>
+        <file>rectangle_2_points.svg</file>
+        <file>rectangle_3_points.svg</file>
+        <file>line_polygon_star.svg</file>
+        <file>slice_divide_circle.svg</file>
+        <file>break_out_trim.svg</file>
+        <file>line_gap.svg</file>
     </qresource>
 </RCC>

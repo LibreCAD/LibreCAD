@@ -22,6 +22,7 @@
 #include <QLabel>
 #include <QRect>
 #include <QFileDialog>
+#include <QTextStream>
 #include <QMessageBox>
 #include <QTextStream>
 

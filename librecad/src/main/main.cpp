@@ -332,6 +332,32 @@ int main(int argc, char** argv)
     // get the file list from LC_Application
     fileList << app.fileList();
 #endif
+
+    // reopen files that we open during last close of application
+    // we'll reopen them if no explicit files to open are provided in command line
+    RS_SETTINGS->beginGroup("/Startup");
+    bool reopenLastFiles = RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 0) == 1;
+    QString lastFiles = RS_SETTINGS->readEntry("/LastOpenFilesList", "");
+    QString activeFile = RS_SETTINGS->readEntry("/LastOpenFilesActive", "");
+    RS_SETTINGS->endGroup();
+
+    if (reopenLastFiles){
+        if (fileList.isEmpty()){
+            if (!lastFiles.isEmpty()){
+                QStringList filesList = lastFiles.split(";", QString::SplitBehavior::SkipEmptyParts);
+                if (!filesList.isEmpty()){
+                    for (int i = 0; i < filesList.count(); i++) {
+                        QString filename = filesList.at(i);
+                        if (QFileInfo(filename).exists()){
+                            fileList << filename;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
     bool files_loaded = false;
     for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
     {
@@ -344,6 +370,10 @@ int main(int argc, char** argv)
         }
         appWin.slotFileOpen(*it);
         files_loaded = true;
+    }
+
+    if (reopenLastFiles){
+        appWin.activateWindowWithFile(activeFile);
     }
     RS_DEBUG->print("main: loading files: OK");
 

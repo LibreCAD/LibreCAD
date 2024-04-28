@@ -1721,7 +1721,7 @@ void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
  */
 void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 	setRelativeZero(pos);
-	redraw(RS2::RedrawGrid);
+	redraw(RS2::RedrawOverlay);
 }
 
 

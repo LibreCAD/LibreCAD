@@ -56,6 +56,8 @@ bool isAngleBetween(double a, double a1, double a2, bool reversed = false);
 double correctAngle(double a);
 //! \brief correct angle to be within [-PI, +PI)
 double correctAngle2(double a);
+//! \brief correct angle to be within [-PI/2, +PI/2)
+    double correctAngle3(double a);
 //! \brief correct angle to be unsigned [0, +PI)
 double correctAngleU(double a);
 

@@ -47,29 +47,50 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container
 	actionType=RS2::ActionPolylineSegment;
 }
 
-void RS_ActionPolylineSegment::init(int status) {
+RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container,
+                                                   RS_GraphicView& graphicView,
+                                                   RS_Entity* target)
+    :RS_PreviewActionInterface("Create Polyline Existing from Segments",
+                               container, graphicView) {
+    actionType=RS2::ActionPolylineSegment;
+    targetEntity = target;
+    initWithTarget = true;
+}
+
+void RS_ActionPolylineSegment::init(int status){
     RS_ActionInterface::init(status);
-	targetEntity = nullptr;
-	//Experimental feature: trigger action, if already has selected entities
-	if (container->countSelected(true, entityType)) {
-		//find a selected entity
-		//TODO, find a better starting point
-		for (RS_Entity* e : *container) {
-			if (e->isSelected() &&
-					std::count(entityType.begin(), entityType.end(), e->rtti())) {
-				targetEntity = e;
-				break;
-			}
-		}
-		if (targetEntity) {
-			convertPolyline(targetEntity, true);
-			RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
-			graphicView->redraw();
-			RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-			finish(false);
-			return;
-		}
-	}
+    if (initWithTarget){
+        initWithTarget = false;
+        convertPolyline(targetEntity, false);
+        RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+        graphicView->redraw();
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        finish(false);
+        return;
+    }
+    else {
+        targetEntity = nullptr;
+//Experimental feature: trigger action, if already has selected entities
+        if (container->countSelected(true, entityType)){
+//find a selected entity
+//TODO, find a better starting point
+            for (RS_Entity *e: *container) {
+                if (e->isSelected() &&
+                    std::count(entityType.begin(), entityType.end(), e->rtti())){
+                    targetEntity = e;
+                    break;
+                }
+            }
+            if (targetEntity){
+                convertPolyline(targetEntity, true);
+                RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+                graphicView->redraw();
+                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+                finish(false);
+                return;
+            }
+        }
+    }
 }
 
 /**

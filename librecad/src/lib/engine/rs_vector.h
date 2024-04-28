@@ -86,6 +86,13 @@ public:
     RS_Vector& scale(const RS_Vector& center, const RS_Vector& factor);
     RS_Vector& mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2);
     /**
+     * Returns vector that defines point located in specified distance and angle from current
+     * @param distance distance to target point
+     * @param angle angle from target point from this one
+     * @return resulting point
+     */
+    RS_Vector relative(double distance, double angle) const;
+    /**
      * @brief shear     Shear/Skew transform
      * @author          Dongxu Li
      * @param k         the shear parameter: x = x + k y; y=y

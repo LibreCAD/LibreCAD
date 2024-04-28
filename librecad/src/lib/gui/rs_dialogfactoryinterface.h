@@ -31,6 +31,7 @@
 #include "rs.h"
 #include <QString>
 
+class QWidget;
 class QG_CommandWidget;
 class QG_CoordinateWidget;
 class QG_MouseWidget;
@@ -68,6 +69,7 @@ struct RS_Rotate2Data;
 struct RS_RotateData;
 struct RS_RoundData;
 struct RS_ScaleData;
+
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -247,6 +249,8 @@ public:
      */
     virtual void requestOptions(RS_ActionInterface* action,
                 bool on, bool update = false) = 0;
+
+    virtual void addOptionsWidget(QWidget * options) = 0;
 
     /**
      * This virtual method must be overwritten and must present
@@ -444,6 +448,8 @@ public:
 	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
 	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
 	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
+
+
 };
 
 #endif

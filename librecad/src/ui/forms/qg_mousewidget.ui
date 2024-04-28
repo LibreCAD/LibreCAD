@@ -111,7 +111,7 @@
       <set>Qt::AlignRight|Qt::AlignTop|Qt::AlignTrailing</set>
      </property>
      <property name="wordWrap">
-      <bool>false</bool>
+      <bool>true</bool>
      </property>
     </widget>
    </item>
