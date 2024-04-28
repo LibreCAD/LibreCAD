@@ -79,11 +79,6 @@ public:
             return c0;
     }
 
-
-    void applyFlags(RS_Color& source ){
-        setFlags(source.getFlags());
-    }
-
     //These 3 methods are used for plugins
     int toIntColor(void) const;
     void fromIntColor(int co);
