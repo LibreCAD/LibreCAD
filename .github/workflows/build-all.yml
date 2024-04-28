@@ -89,14 +89,14 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: qt6
 
-      - name: Install Qt5
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
-          modules: 'qtscript'
+          version: '6.5.*'
 
-      - name: Install Qt5 and dependencies
+      - name: Install boost dependencies
         run: |
           brew install boost
 
