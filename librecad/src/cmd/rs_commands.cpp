@@ -153,6 +153,27 @@ RS_Commands::RS_Commands() {
                 {"l", QObject::tr("l", "draw line")}},
             RS2::ActionDrawLine
         },
+        // draw Snake line
+        {
+            {{"sline", QObject::tr("sline", "draw snake line")}},
+            {{"sli", QObject::tr("sli", "draw snake line")},
+              {"sl", QObject::tr("sl", "draw snake line")}},
+            RS2::ActionDrawSnakeLine
+        },
+        // draw Snake-X line
+        {
+            {{"slinex", QObject::tr("slinex", "draw snake line (X)")}},
+            {{"slix", QObject::tr("slix", "draw snake line (X)")},
+                {"slx", QObject::tr("rlx", "draw snake line (X)")}},
+            RS2::ActionDrawSnakeLineX
+        },
+        // draw Snake-Y line
+        {
+            {{"sliney", QObject::tr("sliney", "draw snake line (Y)")}},
+            {{"sliy", QObject::tr("sliy", "draw snake line (Y)")},
+                {"sly", QObject::tr("rly", "draw snake line (Y)")}},
+            RS2::ActionDrawSnakeLineY
+        },
         // draw line at angle - v2.2.0r2
         {
             {{"lineang", QObject::tr("lineang", "angled line")}},
@@ -177,6 +198,84 @@ RS_Commands::RS_Commands() {
             {{"re", QObject::tr("re", "draw rectangle")},
                 {"rect", QObject::tr("rect", "draw rectangle")}},
             RS2::ActionDrawLineRectangle
+        },
+        // draw  rectangle 1 Point
+        {
+            {{"rect1", QObject::tr("rect1", "draw rectangle (1 Point)")}},
+            {{"re1", QObject::tr("re1", "draw rectangle (1 Point)")}},
+            RS2::ActionDrawRectangle1Point
+        },
+        // draw  rectangle 2 Points
+        {
+            {{"rect2", QObject::tr("rect2", "draw rectangle (2 Points)")}},
+            {{"re2", QObject::tr("re2", "draw rectangle (2 Points)")}},
+            RS2::ActionDrawRectangle2Points
+        },
+        // draw rectangle 3 Points
+        {
+            {{"rect3", QObject::tr("rect3", "draw rectangle (3 Points)")}},
+            {{"re3", QObject::tr("re3", "draw rectangle (3 Points)")}},
+            RS2::ActionDrawRectangle3Points
+        },
+        // slice/divide line
+        {
+            {{"slicel", QObject::tr("slicel", "slice/divide line")}},
+            {{"sll", QObject::tr("sll", "slice/divide line")}},
+            RS2::ActionDrawSliceDivideLine
+        },
+        // slice/divide circle/arc
+        {
+            {{"slicec", QObject::tr("slicec", "slice/divide circle/arc")}},
+            {{"slc", QObject::tr("slc", "slice/divide circle/arc")}},
+            RS2::ActionDrawSliceDivideCircle
+        },
+        // draw star
+        {
+            {{"star", QObject::tr("star", "draw star")}},
+            {{"st", QObject::tr("st", "draw star")}},
+            RS2::ActionDrawStar
+        },
+        // draw cross
+        {
+            {{"cross", QObject::tr("cross", "draw cross for circle")}},
+            {{"cx", QObject::tr("cx", "draw cross for circle")}},
+            RS2::ActionDrawCross
+        },
+        // draw line of points
+        {
+            {{"linepoints", QObject::tr("linepoints", "draw line of points")}},
+            {{"lpoints", QObject::tr("lpoints", "draw line of points")}},
+            RS2::ActionDrawLinePoints
+        },
+        // draw circle by arc
+        {
+            {{"circlebyarc", QObject::tr("criclebyarc", "draw circle by arc")}},
+            {{"cba", QObject::tr("cba", "draw circle by arc")}},
+            RS2::ActionDrawCircleByArc
+        },
+        // draw circle by arc
+        {
+            {{"duplicate", QObject::tr("duplicate", "duplicate entity")}},
+            {{"dup", QObject::tr("dup", "duplicate entity")}},
+            RS2::ActionModifyDuplicate
+        },
+        // line join
+        {
+            {{"linejoin", QObject::tr("linejoin", "lines join")}},
+            {{"lj", QObject::tr("lj", "lines join")}},
+            RS2::ActionModifyLineJoin
+        },
+        // break/divide
+        {
+            {{"breakdivide", QObject::tr("breakdivide", "break or divide entity")}},
+            {{"bd", QObject::tr("bd", "break or divide entity")}},
+            RS2::ActionModifyBreakDivide
+        },
+        // Line Gap
+        {
+            {{"gapline", QObject::tr("gapline", "line gap")}},
+            {{"gl", QObject::tr("gl", "line gap")}},
+            RS2::ActionModifyBreakDivide
         },
         // draw parallel line
         {
@@ -419,6 +518,25 @@ RS_Commands::RS_Commands() {
             {{"pl", QObject::tr("pl", "draw polyline")}},
             RS2::ActionDrawPolyline
         },
+        // draw angle line from line
+        {
+            {{"angleline", QObject::tr("angleline", "draw angle from line")}},
+            {{"aline", QObject::tr("angleline", "draw angle from line")}},
+            RS2::ActionDrawLineAngleRel
+        },
+        // draw orthogonal line from line
+        {
+            {{"ortline", QObject::tr("rortoline", "draw orthogonal")}},
+            {{"oline", QObject::tr("rort", "draw orthogonal")}},
+            RS2::ActionDrawLineOrthogonalRel
+        },
+        // draw line from point to line
+        {
+            {{"point2line", QObject::tr("point2line", "draw line from point to line")}},
+            {{"p2l", QObject::tr("p2l", "draw line from point to line")}},
+            RS2::ActionDrawLineFromPointToLine
+        },
+
         // polyline add node - v2.2.0r2
         {
             {{"plineadd", QObject::tr("plineadd", "pl add node")}},
@@ -937,6 +1055,78 @@ RS_Commands::RS_Commands() {
         {"through",QObject::tr("through")},
         {"trim",QObject::tr("trim")},
 
+        // commands for relative line drawing actions
+        {"x",QObject::tr("x")},
+        {"y",QObject::tr("y")},
+        {"p",QObject::tr("p")},
+        {"anglerel",QObject::tr("anglerel")},
+        {"start",QObject::tr("start")},
+
+        // commands for line angle rel action
+        {"offset",QObject::tr("offset")},
+        {"linesnap",QObject::tr("linesnap")},
+        {"ticksnap",QObject::tr("ticksnap")},
+
+        // rectangle one point
+        {"width",QObject::tr("width")},
+        {"height",QObject::tr("height")},
+        {"pos",QObject::tr("pos")},
+        {"size",QObject::tr("size")},
+        {"bevels",QObject::tr("bevels")},
+        {"nopoly",QObject::tr("nopoly")},
+        {"usepoly",QObject::tr("usepoly")},
+        {"corners",QObject::tr("corners")},
+        {"str",QObject::tr("str")},
+        {"round",QObject::tr("round")},
+        {"bevels",QObject::tr("bevels")},
+        {"snap1",QObject::tr("snap1")},
+        {"topl",QObject::tr("topl")},
+        {"top",QObject::tr("top")},
+        {"topr",QObject::tr("topr")},
+        {"left",QObject::tr("left")},
+        {"middle",QObject::tr("middle")},
+        {"right",QObject::tr("right")},
+        {"bottoml",QObject::tr("bottoml")},
+        {"bottom",QObject::tr("bottom")},
+        {"bottomr",QObject::tr("bottomr")},
+        {"snapcorner",QObject::tr("snapcorner")},
+        {"snapshift",QObject::tr("snapshift")},
+        {"sizein",QObject::tr("sizein")},
+        {"sizeout",QObject::tr("sizeout")},
+        {"hor",QObject::tr("hor")},
+        {"vert",QObject::tr("vert")},
+
+        // rect 2 points
+        {"snap2",QObject::tr("snap2")},
+        {"corner",QObject::tr("corner")},
+        {"mid-vert",QObject::tr("mid-vert")},
+        {"mid-hor",QObject::tr("mid-hor")},
+        // rect 3 points
+        {"quad",QObject::tr("quad")},
+        {"noquad",QObject::tr("noquad")},
+        {"angle_inner",QObject::tr("angle_inner")},
+
+        // line points
+        {"edges",QObject::tr("edges")},
+        {"edge-none",QObject::tr("edge-none")},
+        {"edge-both",QObject::tr("edge-both")},
+        {"edge-start",QObject::tr("edge-start")},
+        {"edge-end",QObject::tr("edge-end")},
+        {"end",QObject::tr("end")},
+        {"both",QObject::tr("both")},
+        {"none",QObject::tr("none")},
+        {"fit",QObject::tr("fit")},
+        {"nofit",QObject::tr("nofit")},
+        {"dist_fixed",QObject::tr("dist_fixed")},
+        {"dist_flex",QObject::tr("dist_flex")},
+        {"distance",QObject::tr("distance")},
+
+
+        // star
+        {"sym",QObject::tr("sym")},
+        {"nosym",QObject::tr("nosym")},
+        // commands
+
         /** following are reversed translation,i.e.,from translated to english **/
         //not used as command keywords
         // used in function,checkCommand()
@@ -1022,6 +1212,8 @@ RS_Commands::RS_Commands() {
         {QObject::tr("color"), "color"},
         {QObject::tr("paperoffset"),"paperoffset"},
         {QObject::tr("graphoffset"),"graphoffset"}
+
+        // fixme - add reversive translation for added commands
     };
     for(auto const& p: transList){
         cmdTranslation[p.first] = p.second;

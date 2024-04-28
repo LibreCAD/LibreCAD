@@ -105,6 +105,10 @@ public:
         return *this;
     }
 
+    void applyFlags(RS_Color& source ){
+        setFlags(source.getFlags());
+    }
+
     bool operator == (const RS_Color& c) const {
         return (red()==c.red() &&
                 green()==c.green() &&

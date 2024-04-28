@@ -254,6 +254,109 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("DrawCircle");
     a_map["DrawCircle"] = action;
 
+        action = new QAction(tr("Cross"), agm->circle);
+    action->setIcon(QIcon(":/icons/cross_circle1.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawCircleCross()));
+    action->setObjectName("DrawCross");
+    a_map["DrawCross"] = action;
+
+    action = new QAction(tr("Snake"), agm->line);
+    action->setIcon(QIcon(":/icons/line_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnake()));
+    action->setObjectName("DrawLineRel");
+    a_map["DrawLineRel"] = action;
+
+    action = new QAction(tr("Snake (X)"), agm->line);
+    action->setIcon(QIcon(":/icons/line_rel_x.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnakeX()));
+    action->setObjectName("DrawLineRelX");
+    a_map["DrawLineRelX"] = action;
+
+    action = new QAction(tr("Snake (Y)"), agm->line);
+    action->setIcon(QIcon(":/icons/line_rel_y.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineSnakeY()));
+    action->setObjectName("DrawLineRelY");
+    a_map["DrawLineRelY"] = action;
+
+    action = new QAction(tr("Rectangle (1 Point)"), agm->line);
+    action->setIcon(QIcon(":/icons/rectangle_1_point.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle1Point()));
+    action->setObjectName("DrawLineRectangle1Point");
+    a_map["DrawLineRectangle1Point"] = action;
+
+    action = new QAction(tr("Rectangle (2 Points)"), agm->line);
+    action->setIcon(QIcon(":/icons/rectangle_2_points.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangle2Points()));
+    action->setObjectName("DrawLineRectangle2Points");
+    a_map["DrawLineRectangle2Points"] = action;
+
+    action = new QAction(tr("Rectangle (3 Points)"), agm->line);
+    action->setIcon(QIcon(":/icons/rectangle_3_points.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineRectangleRel()));
+    action->setObjectName("DrawLineRectangle3Points");
+    a_map["DrawLineRectangle3Points"] = action;
+
+    action = new QAction(tr("Star"), agm->line);
+    action->setIcon(QIcon(":/icons/line_polygon_star.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawStar()));
+    action->setObjectName("DrawStar");
+    a_map["DrawStar"] = action;
+
+    action = new QAction(tr("Break/Divide"), agm->modify);
+    action->setIcon(QIcon(":/icons/break_out_trim.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyBreakDivide()));
+    action->setObjectName("ModifyBreakDivide");
+    a_map["ModifyBreakDivide"] = action;
+
+    action = new QAction(tr("Line Gap"), agm->modify);
+    action->setIcon(QIcon(":/icons/line_gap.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotModifyLineGap()));
+    action->setObjectName("ModifyLineGap");
+    a_map["ModifyLineGap"] = action;
+
+    action = new QAction(tr("Angle From Line"), agm->line);
+    action->setIcon(QIcon(":/icons/line_angle_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineAngleRel()));
+    action->setObjectName("DrawLineAngleRel");
+    a_map["DrawLineAngleRel"] = action;
+
+    action = new QAction(tr("Orthogonal From Line"), agm->line);
+    action->setIcon(QIcon(":/icons/line_ortho_rel.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalRel()));
+    action->setObjectName("DrawLineOrthogonalRel");
+    a_map["DrawLineOrthogonalRel"] = action;
+
+    action = new QAction(tr("From Point To Line"), agm->line);
+    action->setIcon(QIcon(":/icons/line_to_ortho.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLineOrthogonalTo()));
+    action->setObjectName("DrawLineFromPointToLine");
+    a_map["DrawLineFromPointToLine"] = action;
+
+    action = new QAction(tr("Slice/Divide Line"), agm->circle);
+    action->setIcon(QIcon(":/icons/slice_divide.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivideLine()));
+    action->setObjectName("DrawSliceDivideLine");
+    a_map["DrawSliceDivideLine"] = action;
+
+    action = new QAction(tr("Slice/Divide Circle"), agm->circle);
+    action->setIcon(QIcon(":/icons/slice_divide_circle.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawSliceDivideCircle()));
+    action->setObjectName("DrawSliceDivideCircle");
+    a_map["DrawSliceDivideCircle"] = action;
+
+    action = new QAction(tr("Line of Points"), agm->circle);
+    action->setIcon(QIcon(":/icons/line_points.svg"));
+    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotDrawLinePoints()));
+    action->setObjectName("DrawLinePoints");
+    a_map["DrawLinePoints"] = action;
+
+    action = new QAction(tr("By Arc"), agm->circle);
+    action->setIcon(QIcon(":/icons/circle_by_arc.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotDrawCircleByArc()));
+    action->setObjectName("DrawCircleByArc");
+    a_map["DrawCircleByArc"] = action;
+
     action = new QAction(tr("Center, &Radius"), agm->circle);
     action->setIcon(QIcon(":/icons/circle_center_radius.svg"));
     connect(action, SIGNAL(triggered()),
@@ -790,6 +893,20 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("PenCopy");
 
     a_map["PenCopy"] = action;
+
+    action = new QAction(tr("Line Join"), agm->modify);
+    action->setIcon(QIcon(":/icons/line_join.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotModifyLineJoin()));
+    action->setObjectName("ModifyLineJoin");
+    a_map["ModifyLineJoin"] = action;
+
+    action = new QAction(tr("Duplicate"), agm->modify);
+    action->setIcon(QIcon(":/icons/duplicate.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotModifyDuplicate()));
+    action->setObjectName("ModifyDuplicate");
+    a_map["ModifyDuplicate"] = action;
 
     // <[~ Info ~]>
 

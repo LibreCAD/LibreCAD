@@ -160,7 +160,9 @@
 #include "rs_actionzoomprevious.h"
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
-
+#include "lc_actiondrawrectangle3points.h"
+#include "lc_actiondrawcross.h"
+#include "lc_actiondrawlinesnake.h"
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
@@ -171,7 +173,6 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
-
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
@@ -180,6 +181,19 @@
 #include "lc_actionpenpick.h"
 #include "lc_actionpenapply.h"
 #include "lc_actionpensyncactivebylayer.h"
+#include "lc_actiondrawlineanglerel.h"
+#include "lc_actiondrawlinefrompointtoline.h"
+#include "rs_math.h"
+#include "lc_actiondrawslicedivide.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_actiondrawrectangle2points.h"
+#include "lc_actiondrawcirclebyarc.h"
+#include "lc_actionmodifylinejoin.h"
+#include "lc_actiondrawlinepoints.h"
+#include "lc_actionmodifyduplicate.h"
+#include "lc_actiondrawstar.h"
+#include "lc_actionmodifybreakdivide.h"
+#include "lc_actionmodifylinegap.h"
 
 /**
  * Constructor
@@ -448,6 +462,37 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineRectangle:
         a = new RS_ActionDrawLineRectangle(*document, *view);
         break;
+     case RS2::ActionDrawRectangle3Points:
+        a = new LC_ActionDrawRectangle3Points(*document, *view);
+        break;
+     case RS2::ActionDrawRectangle2Points:
+        a = new LC_ActionDrawRectangle2Points(*document, *view);
+        break;
+
+     case RS2::ActionDrawRectangle1Point:
+            a = new LC_ActionDrawRectangle1Point(*document, *view);
+            break;
+     case RS2::ActionDrawCross:
+         a = new LC_ActionDrawCross(*document, *view);
+         break;
+     case RS2::ActionDrawSnakeLine:
+         a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);
+         break;
+     case RS2::ActionDrawSnakeLineX:
+         a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_X);
+         break;
+      case RS2::ActionDrawSnakeLineY:
+            a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_Y);
+            break;
+        case RS2::ActionDrawSliceDivideLine:
+            a = new LC_ActionDrawSliceDivide(*document, *view, false);
+            break;
+        case RS2::ActionDrawSliceDivideCircle:
+            a = new LC_ActionDrawSliceDivide(*document, *view, true);
+            break;
+        case RS2::ActionDrawLinePoints:
+            a = new LC_ActionDrawLinePoints(*document, *view);
+            break;
     case RS2::ActionDrawLineBisector:
         a = new RS_ActionDrawLineBisector(*document, *view);
         break;
@@ -469,6 +514,20 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*document, *view);
         break;
+    case RS2::ActionDrawLineOrthogonalRel:
+        a = new LC_ActionDrawLineAngleRel(*document, *view, 90.0, true);
+        break;
+    case RS2::ActionDrawLineAngleRel:
+         a = new LC_ActionDrawLineAngleRel(*document, *view, 0.0, false);
+         break;
+    case RS2::ActionDrawLineFromPointToLine:{
+         a = new LC_ActionDrawLineFromPointToLine(this, *document, *view);
+         break;
+    }
+    case RS2::ActionDrawStar:{
+        a = new LC_ActionDrawStar(*document, *view);
+        break;
+    }
     case RS2::ActionPolylineAdd:
         a = new RS_ActionPolylineAdd(*document, *view);
         break;
@@ -504,6 +563,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleCR:
         a = new RS_ActionDrawCircleCR(*document, *view);
+        break;
+    case RS2::ActionDrawCircleByArc:
+        a = new LC_ActionDrawCircleByArc(*document, *view);
         break;
     case RS2::ActionDrawCircle2P:
         a = new RS_ActionDrawCircle2P(*document, *view);
@@ -629,7 +691,24 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
 
         // Modifying actions:
-        //
+            //
+        case RS2::ActionModifyLineJoin: {
+            a = new LC_ActionModifyLineJoin(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyDuplicate: {
+            a = new LC_ActionModifyDuplicate(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyBreakDivide: {
+            a = new LC_ActionModifyBreakDivide(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyLineGap: {
+            a = new LC_ActionModifyLineGap(*document, *view);
+            break;
+        }
+
     case RS2::ActionModifyAttributes:
 		if(!document->countSelected()){
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
@@ -1423,6 +1502,52 @@ void QG_ActionHandler::slotDrawLineRectangle() {
     setCurrentAction(RS2::ActionDrawLineRectangle);
 }
 
+void QG_ActionHandler::slotDrawLineRectangleRel() {
+    setCurrentAction(RS2::ActionDrawRectangle3Points);
+}
+
+void QG_ActionHandler::slotDrawLineRectangle1Point() {
+    setCurrentAction(RS2::ActionDrawRectangle1Point);
+}
+
+void QG_ActionHandler::slotDrawLineRectangle2Points(){
+    setCurrentAction(RS2::ActionDrawRectangle2Points);
+}
+
+void QG_ActionHandler::slotDrawLineSnake() {
+    setCurrentAction(RS2::ActionDrawSnakeLine);
+}
+
+void QG_ActionHandler::slotDrawLineSnakeX() {
+    setCurrentAction(RS2::ActionDrawSnakeLineX);
+}
+
+void QG_ActionHandler::slotDrawLineSnakeY() {
+    setCurrentAction(RS2::ActionDrawSnakeLineY);
+}
+
+void QG_ActionHandler::slotDrawLineAngleRel(){
+    setCurrentAction(RS2::ActionDrawLineAngleRel);
+}
+
+void QG_ActionHandler::slotDrawLineOrthogonalRel(){
+    setCurrentAction(RS2::ActionDrawLineOrthogonalRel);
+}
+
+void QG_ActionHandler::slotDrawLineOrthogonalTo(){
+    setCurrentAction(RS2::ActionDrawLineFromPointToLine);
+}
+
+
+void QG_ActionHandler::slotDrawSliceDivideLine(){
+    setCurrentAction(RS2::ActionDrawSliceDivideLine);
+}
+
+void QG_ActionHandler::slotDrawSliceDivideCircle(){
+    setCurrentAction(RS2::ActionDrawSliceDivideCircle);
+}
+
+
 void QG_ActionHandler::slotDrawLineBisector() {
     setCurrentAction(RS2::ActionDrawLineBisector);
 }
@@ -1450,6 +1575,7 @@ void QG_ActionHandler::slotDrawLineRelAngle() {
 void QG_ActionHandler::slotDrawPolyline() {
     setCurrentAction(RS2::ActionDrawPolyline);
 }
+
 
 void QG_ActionHandler::slotPolylineAdd() {
     setCurrentAction(RS2::ActionPolylineAdd);
@@ -1494,9 +1620,18 @@ void QG_ActionHandler::slotDrawCircle() {
     setCurrentAction(RS2::ActionDrawCircle);
 }
 
+void QG_ActionHandler::slotDrawCircleCross(){
+    setCurrentAction(RS2::ActionDrawCross);
+}
+
 void QG_ActionHandler::slotDrawCircleCR() {
     setCurrentAction(RS2::ActionDrawCircleCR);
 }
+
+void QG_ActionHandler::slotDrawCircleByArc() {
+    setCurrentAction(RS2::ActionDrawCircleByArc);
+}
+
 
 void QG_ActionHandler::slotDrawCircle2P() {
     setCurrentAction(RS2::ActionDrawCircle2P);
@@ -1998,6 +2133,26 @@ void QG_ActionHandler::slotBlocksExplode() {
     setCurrentAction(RS2::ActionBlocksExplode);
 }
 
+void QG_ActionHandler::slotModifyLineJoin() {
+    setCurrentAction(RS2::ActionModifyLineJoin);
+}
+
+void QG_ActionHandler::slotModifyDuplicate() {
+    setCurrentAction(RS2::ActionModifyDuplicate);
+}
+
+void QG_ActionHandler::slotDrawStar() {
+    setCurrentAction(RS2::ActionDrawStar);
+}
+
+void QG_ActionHandler::slotModifyBreakDivide() {
+    setCurrentAction(RS2::ActionModifyBreakDivide);
+}
+
+void QG_ActionHandler::slotModifyLineGap() {
+    setCurrentAction(RS2::ActionModifyLineGap);
+}
+
 
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
@@ -2067,6 +2222,10 @@ void QG_ActionHandler::slotRedockWidgets()
             QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget*>();
     for(auto* dockwidget: dockwidgets)
         dockwidget->setFloating(false);
+}
+
+void QG_ActionHandler::slotDrawLinePoints(){
+    setCurrentAction(RS2::ActionDrawLinePoints);
 }
 // EOF
 

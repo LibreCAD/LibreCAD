@@ -91,8 +91,22 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-    case SetCenter:
-		data->center = mouse;
+    case SetCenter:{
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                RS_Vector relativeZero = graphicView->getRelativeZero();
+                if (relativeZero.valid){
+                    RS_CoordinateEvent ce(relativeZero);
+                    coordinateEvent(&ce);
+                }
+                else{
+                    data->center = mouse;
+                }
+            }
+            else{
+                data->center = mouse;
+            }
+        }
         break;
 
     case SetRadius:
