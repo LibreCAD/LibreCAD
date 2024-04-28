@@ -94,6 +94,8 @@ private:
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    void clearQuickInfoWidget();
+    void showQuickInfoWidget(RS_Entity *pEntity, QMouseEvent *pEvent, RS_Vector vector);
 };
 
 #endif

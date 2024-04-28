@@ -5,6 +5,7 @@
 #include <QObject>
 
 #include "lc_penpalettewidget.h"
+#include "lc_quickinfowidget.h"
 
 class QMenu;
 class QAction;
@@ -16,6 +17,7 @@ class QG_PenToolBar;
 class QG_SnapToolBar;
 class QG_LayerWidget;
 class LC_LayerTreeWidget;
+class LC_QuickInfoWidget;
 class QG_BlockWidget;
 class QG_ActionHandler;
 class QG_LibraryWidget;
@@ -52,6 +54,7 @@ public:
     QToolBar* options_toolbar = nullptr;
 
     QG_LayerWidget* layer_widget = nullptr;
+    LC_QuickInfoWidget* quick_info_widget = nullptr;
     LC_LayerTreeWidget* layer_tree_widget = nullptr;
     LC_PenPaletteWidget* pen_palette = nullptr;
     QG_BlockWidget* block_widget = nullptr;

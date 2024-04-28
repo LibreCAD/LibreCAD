@@ -1014,6 +1014,7 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actionmodifylinegap.cpp
         librecad/src/ui/forms/lc_modifygapoptions.h
         librecad/src/ui/forms/lc_modifygapoptions.cpp
+        librecad/src/ui/lc_quickinfowidget.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

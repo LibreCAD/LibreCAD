@@ -364,6 +364,21 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         dock_layer_tree->setWidget(layer_tree_widget);
     }
 
+    // fixme - move to bottom dock area?
+    QDockWidget* dock_quick_info = nullptr;
+    dock_quick_info = new QDockWidget(main_window);
+    dock_quick_info->setWindowTitle(QC_ApplicationWindow::tr("Entity Info"));
+    dock_quick_info->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+    dock_quick_info->setObjectName("quick_entity_info");
+    quick_info_widget = new LC_QuickInfoWidget(action_handler, dock_quick_info, "EntityInfo");
+    quick_info_widget->setFocusPolicy(Qt::NoFocus);
+    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+    connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
+    connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
+    quick_info_widget->setVisible(false);
+    dock_quick_info->setWidget(quick_info_widget);
+
+
     QDockWidget* dock_block = new QDockWidget(main_window);
     dock_block->setWindowTitle(QC_ApplicationWindow::tr("Block List"));
     dock_block->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
@@ -406,6 +421,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     main_window->addDockWidget(Qt::RightDockWidgetArea, dock_library);
     main_window->tabifyDockWidget(dock_library, dock_block);
     main_window->tabifyDockWidget(dock_block, dock_layer);
+    main_window->tabifyDockWidget(dock_block, dock_quick_info);
     if (dock_pen_palette != nullptr && dock_layer_tree != nullptr) {
         main_window->tabifyDockWidget(dock_layer, dock_pen_palette);
         main_window->tabifyDockWidget(dock_pen_palette, dock_layer_tree);

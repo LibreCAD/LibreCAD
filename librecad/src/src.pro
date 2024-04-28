@@ -270,17 +270,19 @@ HEADERS += \
     ui/lc_layertreemodel_options.h \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
+    ui/forms/lc_layerdialog_ex.h \
+    ui/lc_quickinfowidget.h
     ui/forms/lc_layerdialog_ex.h\
     ui/forms/lc_actionoptionswidget.h \
     ui/forms/lc_circlebyarcoptions.h \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_linejoinoptions.h \
-    ui/forms/lc_lineoptions.h \        
+    ui/forms/lc_lineoptions.h \
     ui/forms/lc_slicedivideoptions.h\
     ui/forms/lc_rectangle2pointsoptions.h \
     ui/forms/lc_rectangle1pointoptions.h \
-    ui/forms/lc_rectangle3pointsoptions.h \    
+    ui/forms/lc_rectangle3pointsoptions.h \
     actions/lc_abstractactiondrawline.h \
     ui/forms/LC_DlgParabola.h
 
@@ -429,8 +431,11 @@ SOURCES += \
     ui/forms/lc_lineoptions.cpp \
     ui/forms/lc_rectangle3pointsoptions.cpp \
     ui/forms/lc_rectangle1pointoptions.cpp \
-    ui/forms/lc_rectangle2pointsoptions.cpp \         
-    ui/forms/lc_slicedivideoptions.cpp
+    ui/forms/lc_rectangle2pointsoptions.cpp \
+    ui/forms/lc_slicedivideoptions.cpp \
+    ui/lc_layertreeview.cpp \
+    ui/lc_quickinfowidget.cpp
+
 
 # ################################################################################
 # Command
@@ -1026,8 +1031,9 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
     ui/forms/lc_duplicateoptions.ui \
-    ui/lc_penpaletteoptionsdialog.ui \    
-    ui/lc_penpalettewidget.ui
+    ui/lc_penpaletteoptionsdialog.ui \
+    ui/lc_penpalettewidget.ui \
+    ui/lc_quickinfowidget.ui
 
 # ################################################################################
 # Main

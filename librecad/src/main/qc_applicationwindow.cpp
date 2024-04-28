@@ -300,6 +300,8 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     layerWidget = widget_factory.layer_widget;
 
     layerTreeWidget = widget_factory.layer_tree_widget;
+
+    quickInfoWidget = widget_factory.quick_info_widget;
     /**/
     blockWidget = widget_factory.block_widget;
     commandWidget = widget_factory.command_widget;
@@ -563,6 +565,11 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
             layerTreeWidget->setLayerList(nullptr);
             layerTreeWidget->set_view(nullptr);
             layerTreeWidget->set_document(nullptr);
+        }
+
+        if (quickInfoWidget != nullptr){
+            quickInfoWidget->set_view(nullptr);
+            quickInfoWidget->set_document(nullptr);
         }
 
 
@@ -1058,6 +1065,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
             layerTreeWidget->setLayerList(layerList);
             layerTreeWidget->set_view(m->getGraphicView());
             layerTreeWidget->set_document(m->getDocument());
+        }
+
+        if (quickInfoWidget != nullptr){
+            quickInfoWidget->set_view(m->getGraphicView());
+            quickInfoWidget->set_document(m->getDocument());
         }
 
         if (penPaletteWidget != nullptr){
@@ -1590,6 +1602,11 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
         layerTreeWidget->setLayerList(layerList);
         layerTreeWidget->set_view(view);
         layerTreeWidget->set_document(w->getDocument());
+    }
+
+    if (quickInfoWidget != nullptr){
+        quickInfoWidget->set_view(view);
+        quickInfoWidget->set_document(w->getDocument());
     }
 
     if(blockWidget) {
