@@ -161,16 +161,20 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
 {
     clearHighLighting();
 
+
+    bool shouldShowQuickInfoWidget = event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);
+
     auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0 || shouldShowQuickInfoWidget;
     if (!showHighlightEntity)
         return;
 
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
         return;
-    if (!entity->isVisible() || entity->isLocked())
+    if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         return;
+    }
 
     const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
                                         ? hoverToleranceFactor1
@@ -202,8 +206,12 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     }
 
     // Glowing effect on mouse hovering
-    if (isPointOnEntity)
+    if (isPointOnEntity){
         highlightEntity(entity);
+        if (shouldShowQuickInfoWidget){
+            showQuickInfoWidget(entity, event, currentMousePosition);
+        }
+    }
 }
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
@@ -531,6 +539,7 @@ void RS_ActionDefault::clearHighLighting()
     hContainer->clear();
     pPoints->highlightedEntity=nullptr;
     graphicView->redraw(RS2::RedrawOverlay);
+    clearQuickInfoWidget();
 }
 
 void RS_ActionDefault::resume()
@@ -566,5 +575,13 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect(){
     return typeToSelect;
+}
+
+void RS_ActionDefault::clearQuickInfoWidget(){
+
+}
+
+void RS_ActionDefault::showQuickInfoWidget(RS_Entity *pEntity, QMouseEvent *pEvent, RS_Vector vector){
+
 }
 // EOF

@@ -246,7 +246,8 @@ HEADERS += \
     ui/lc_layertreemodel_options.h \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
-    ui/forms/lc_layerdialog_ex.h
+    ui/forms/lc_layerdialog_ex.h \
+    ui/lc_quickinfowidget.h
 
 SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
@@ -359,7 +360,8 @@ SOURCES += \
     ui/lc_layertreemodel.cpp \
     ui/lc_layertreemodel_options.cpp \
     ui/lc_layertreewidget.cpp \
-    ui/lc_layertreeview.cpp
+    ui/lc_layertreeview.cpp \
+    ui/lc_quickinfowidget.cpp
 
 
 # ################################################################################
@@ -938,7 +940,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
     ui/lc_penpaletteoptionsdialog.ui \
-    ui/lc_penpalettewidget.ui
+    ui/lc_penpalettewidget.ui \
+    ui/lc_quickinfowidget.ui
 
 # ################################################################################
 # Main

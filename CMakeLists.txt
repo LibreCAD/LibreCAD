@@ -21,6 +21,7 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 add_compile_definitions(DWGSUPPORT)
+add_compile_definitions(MUPARSER_STATIC)
 
 find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
@@ -148,9 +149,10 @@ add_executable(LibreCAD
         libraries/muparser/include/muParserBytecode.h
         libraries/muparser/include/muParserCallback.h
         libraries/muparser/include/muParserDef.h
+        libraries/muparser/include/muParserDLL.h
         libraries/muparser/include/muParserError.h
         libraries/muparser/include/muParserFixes.h
-        libraries/muparser/include/muParserStack.h
+        libraries/muparser/include/muParserInt.h
         libraries/muparser/include/muParserTemplateMagic.h
         libraries/muparser/include/muParserToken.h
         libraries/muparser/include/muParserTokenReader.h
@@ -158,7 +160,9 @@ add_executable(LibreCAD
         libraries/muparser/src/muParserBase.cpp
         libraries/muparser/src/muParserBytecode.cpp
         libraries/muparser/src/muParserCallback.cpp
+        libraries/muparser/src/muParserDLL.cpp
         libraries/muparser/src/muParserError.cpp
+        libraries/muparser/src/muParserInt.cpp
         libraries/muparser/src/muParserTokenReader.cpp
         librecad/src/actions/lc_actiondimarc.cpp
         librecad/src/actions/lc_actiondimarc.h
@@ -948,6 +952,7 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_layertreeoptionsdialog.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
         librecad/src/ui/lc_layertreemodel_options.cpp
+        librecad/src/ui/lc_quickinfowidget.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
