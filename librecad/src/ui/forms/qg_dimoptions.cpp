@@ -62,6 +62,8 @@ void QG_DimOptions::saveSettings() {
 	RS_SETTINGS->writeEntry("/DimTol2", ui->leTol2->text());
     if (action != nullptr && action->rtti() == RS2::ActionDimRadial)
         RS_SETTINGS->writeEntry("/DimRadial", ui->bDiameter->isChecked());
+    if (action != nullptr && action->rtti() == RS2::ActionDimDiametric)
+        RS_SETTINGS->writeEntry("/DimDiameter", ui->bDiameter->isChecked());
     RS_SETTINGS->endGroup();
 }
 
@@ -79,7 +81,9 @@ void QG_DimOptions::setAction(RS_ActionInterface* a, bool update) {
             stol1 = action->getTol1();
             stol2 = action->getTol2();
             diam = action->getDiameter();
-            if (action != nullptr && action->rtti() == RS2::ActionDimRadial) {
+            if (action != nullptr && (
+                        action->rtti() == RS2::ActionDimRadial ||
+                        action->rtti() == RS2::ActionDimDiametric )) {
                 ui->bDiameter->setChecked(action->getDiameter());
             }
         } else {

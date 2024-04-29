@@ -121,11 +121,15 @@ QString RS_ActionDimension::getText() const {
 	}
 
     if (diameter) {
-        if (rtti() == RS2::ActionDimRadial)
+        if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix))
             l = g_radialPrefix + l;
-        else
+        else if (l.at(0) != QChar(0x2205))
             l = QChar(0x2205) + l;
-	}
+    } else if (l.startsWith({QChar(0x2205)})) {
+        l = l.mid(1);
+    } else if (l.startsWith(g_radialPrefix)) {
+        l = l.mid(g_radialPrefix.length());
+    }
 
 	if (!tol1.isEmpty() || !tol2.isEmpty()) {
 		l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
