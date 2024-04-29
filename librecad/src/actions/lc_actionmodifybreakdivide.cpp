@@ -427,6 +427,17 @@ void LC_ActionModifyBreakDivide::createArcEntity(const RS_ArcData &arcData, bool
     list << createdArc;
 
 }
+
+/**
+ * For selection of entities, we'll rely on free snap mode, so point of selection is not affected by intersection points or endpoints.
+ * @param e
+ * @return
+ */
+RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(QMouseEvent *e){
+    RS_Vector result = snapFree(e);
+    return result;
+}
+
 /**
  * determines segment of line selected by the user
  * @param line line

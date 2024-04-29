@@ -105,6 +105,8 @@ protected:
 
     TriggerData* triggerData = nullptr;
 
+
+
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     LineSegmentData *calculateLineSegment(RS_Line *line, RS_Vector &snap);
@@ -129,6 +131,7 @@ protected:
     void createLineEntity(bool preview, const RS_Vector &start, const RS_Vector &end, const RS_Pen &pen, RS_Layer *layer, QList<RS_Entity *> &list) const;
     void doAfterTrigger() override;
     void doFinish(bool updateTB) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
 };
 
 #endif // LC_ACTIONMODIFYBREAKOUTLINE_H
