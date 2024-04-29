@@ -36,7 +36,7 @@
  */
 QG_DimOptions::QG_DimOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_DimOptions{})
+    , ui(std::make_unique<Ui::Ui_DimOptions>())
 {
 	ui->setupUi(this);
 }
@@ -60,6 +60,8 @@ void QG_DimOptions::saveSettings() {
 	RS_SETTINGS->writeEntry("/DimLabel", ui->leLabel->text());
 	RS_SETTINGS->writeEntry("/DimTol1", ui->leTol1->text());
 	RS_SETTINGS->writeEntry("/DimTol2", ui->leTol2->text());
+    if (action != nullptr && action->rtti() == RS2::ActionDimRadial)
+        RS_SETTINGS->writeEntry("/DimRadial", ui->bDiameter->isChecked());
     RS_SETTINGS->endGroup();
 }
 
@@ -70,12 +72,16 @@ void QG_DimOptions::setAction(RS_ActionInterface* a, bool update) {
         QString st;
         QString stol1;
         QString stol2;
-        bool diam;
+        bool diam = false;
+        bool radial = false;
         if (update) {
             st = action->getLabel();
             stol1 = action->getTol1();
             stol2 = action->getTol2();
             diam = action->getDiameter();
+            if (action != nullptr && action->rtti() == RS2::ActionDimRadial) {
+                ui->bDiameter->setChecked(action->getDiameter());
+            }
         } else {
             //st = "";
             RS_SETTINGS->beginGroup("/Draw");
@@ -83,20 +89,26 @@ void QG_DimOptions::setAction(RS_ActionInterface* a, bool update) {
             stol1 = RS_SETTINGS->readEntry("/DimTol1", "");
             stol2 = RS_SETTINGS->readEntry("/DimTol2", "");
             diam = (bool)RS_SETTINGS->readNumEntry("/DimDiameter", 0);
+            radial = (bool)RS_SETTINGS->readNumEntry("/DimRadial", 0);
             RS_SETTINGS->endGroup();
         }
-		ui->leLabel->setText(st);
+        if (action != nullptr && action->rtti() == RS2::ActionDimRadial) {
+            ui->bDiameter->setIcon({});
+            ui->bDiameter->setText(tr("R", "Radial dimension prefix"));
+            ui->bDiameter->setChecked(radial);
+            action->setDiameter(radial);
+        } else {
+            ui->bDiameter->setChecked(diam);
+        }
+        ui->leLabel->setText(st);
 		ui->leTol1->setText(stol1);
 		ui->leTol2->setText(stol2);
-		ui->bDiameter->setChecked(diam);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "QG_DimensionOptions::setAction: wrong action type");
 		action = nullptr;
     }
 }
-
-
 
 void QG_DimOptions::updateLabel() {
     if (action) {

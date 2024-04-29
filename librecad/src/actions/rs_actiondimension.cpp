@@ -30,6 +30,10 @@
 #include "rs_dimension.h"
 #include "rs_graphicview.h"
 
+namespace {
+    const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
+}
+
 
 RS_ActionDimension::RS_ActionDimension(const char* name,
 									   RS_EntityContainer& container,
@@ -116,8 +120,11 @@ QString RS_ActionDimension::getText() const {
 		l = "<>";
 	}
 
-	if (diameter==true) {
-		l = QChar(0x2205) + l;
+    if (diameter) {
+        if (rtti() == RS2::ActionDimRadial)
+            l = g_radialPrefix + l;
+        else
+            l = QChar(0x2205) + l;
 	}
 
 	if (!tol1.isEmpty() || !tol2.isEmpty()) {

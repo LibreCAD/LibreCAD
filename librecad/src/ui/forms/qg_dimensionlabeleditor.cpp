@@ -39,10 +39,7 @@ QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlag
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DimensionLabelEditor::~QG_DimensionLabelEditor()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_DimensionLabelEditor::~QG_DimensionLabelEditor() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
