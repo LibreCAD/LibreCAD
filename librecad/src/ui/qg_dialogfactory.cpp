@@ -998,12 +998,15 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
 
     if (optionWidget) {
         if (on) {
-            if(!m_pLineAngleOptions)
+            if(m_pLineAngleOptions == nullptr) {
                 m_pLineAngleOptions = new QG_LineAngleOptions(optionWidget);
-            optionWidget->addWidget(m_pLineAngleOptions);
-            m_pLineAngleOptions->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            m_pLineAngleOptions->show();
+                optionWidget->addWidget(m_pLineAngleOptions);
+                m_pLineAngleOptions->setAction(action, update);
+            } else if (update) {
+                m_pLineAngleOptions->setAction(action, update);
+            }
+            if (!m_pLineAngleOptions->isVisible())
+                m_pLineAngleOptions->show();
         }else{
             if (!m_pLineAngleOptions) return;
             m_pLineAngleOptions->hide();

@@ -38,7 +38,7 @@ class LC_ActionOptionsWidget:public QWidget
     Q_OBJECT
 
 public:
-    explicit LC_ActionOptionsWidget(QWidget *parent = nullptr);
+    explicit LC_ActionOptionsWidget(QWidget *parent = nullptr, Qt::WindowFlags fl = {});
     ~LC_ActionOptionsWidget();
     void setAction(RS_ActionInterface * a, bool update = false);
     /**

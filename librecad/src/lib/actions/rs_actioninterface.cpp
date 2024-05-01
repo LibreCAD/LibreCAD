@@ -33,6 +33,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_entitycontainer.h"
+#include "rs_graphic.h"
 #include "rs_graphicview.h"
 
 /**
@@ -365,5 +366,10 @@ QString RS_ActionInterface::command(const QString& cmd) {
  */
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
+}
+
+int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
+{
+    return (graphic != nullptr) ? graphic->getGraphicVariableInt(key, def) : def;
 }
 
