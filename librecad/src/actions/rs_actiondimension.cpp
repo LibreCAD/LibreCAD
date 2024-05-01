@@ -44,9 +44,7 @@ RS_ActionDimension::RS_ActionDimension(const char* name,
 	reset();
 }
 
-
 RS_ActionDimension::~RS_ActionDimension() = default;
-
 
 void RS_ActionDimension::reset() {
     RS_PreviewActionInterface::init(0);
