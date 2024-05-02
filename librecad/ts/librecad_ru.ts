@@ -24,18 +24,18 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation>ГрупповойЯщик</translation>
+        <translation>Выпадающий список</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation>Установить</translation>
+        <translation>Установки</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation>СплайнТочки</translation>
+        <translation>Точки сплайна</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation>Сплайн Точки</translation>
+        <translation>Точки сплайна</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation>Выберите арковую единицу</translation>
+        <translation>Выберите объект дуги</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation>Указать местоположение дуги размерности</translation>
+        <translation>Указать положение размерности дуги</translation>
     </message>
 </context>
 <context>
@@ -91,7 +91,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation>Укажите первую точку</translation>
+        <translation>Указать первую точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -99,7 +99,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation>Укажите вторую точку</translation>
+        <translation>Указать вторую точку</translation>
     </message>
     <message>
         <source>Back</source>
@@ -107,7 +107,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation>Укажите центр окружности</translation>
+        <translation>Указать центр окружности</translation>
     </message>
 </context>
 <context>
@@ -118,7 +118,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation>Укажите танген</translation>
+        <translation>Указать касательную</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -137,7 +137,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionDrawSplinePoints</name>
     <message>
         <source>Specify first control point</source>
-        <translation>Укажите первую контрольную точку</translation>
+        <translation>Указать первую контрольную точку</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -145,7 +145,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
-        <translation>Укажите следующую контрольную точку или [%1]</translation>
+        <translation>Указать следующую контрольную точку или [%1]</translation>
     </message>
     <message>
         <source>Back</source>
@@ -153,7 +153,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify next control point</source>
-        <translation>Укажите следующую контрольную точку</translation>
+        <translation>Указать следующую контрольную точку</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
@@ -172,7 +172,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation>Масштабирование ипанорамирование</translation>
+        <translation>Масштабирование &amp;Панорамирование</translation>
     </message>
     <message>
         <source>Select Entity</source>
@@ -180,23 +180,23 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select Window</source>
-        <translation>Выбрать рамкой</translation>
+        <translation>Выделить</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation>Отменить выбор рамкой</translation>
+        <translation>Отменить выделение</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation>(Отменить)Выбрать &amp;Контур</translation>
+        <translation>Выделение &amp;Контура</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation>Выбрать секущей</translation>
+        <translation>Выделить пересекающиеся объекты</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation>Отменить выбор секущей</translation>
+        <translation>Отменить выделение пересекающихся объектов</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
@@ -208,7 +208,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation>&amp;2 балла</translation>
+        <translation>По &amp;2 точкам</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -228,11 +228,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation>&amp;Параллельный</translation>
+        <translation>&amp;Параллельно</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation>Параллельная сквозная точка</translation>
+        <translation>Параллельная через точку</translation>
     </message>
     <message>
         <source>Rectangle</source>
@@ -244,15 +244,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation>Тангенс (P,C)</translation>
+        <translation>Касательная (Т,О)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
-        <translation>Тангенс (C,C)</translation>
+        <translation>Касательная (О,О)</translation>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation>Касательная и ортогональная</translation>
+        <translation>Касательная &amp;ортогональ</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -264,19 +264,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation>Полигон (Цен, Кор)</translation>
+        <translation>Пол&amp;игон (Цен, Уг)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation>Полигониn (Cor,Cor)</translation>
+        <translation>Полигон&amp;он (Уг,Уг)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
-        <translation>Центр, &amp;точка</translation>
+        <translation>Центр, &amp;Точка</translation>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation>Центр, &amp;радиус</translation>
+        <translation>Центр, &amp;Радиус</translation>
     </message>
     <message>
         <source>2 Points</source>
@@ -296,24 +296,24 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation>Круг &amp;Вписанный</translation>
+        <translation>Вписанный &amp;круг</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation>Тангенциальные 2 круга, радиус</translation>
+        <translation>Касательная к 2 окружностям и радиус</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation>Касательно к 2 окружностям, 1 точка</translation>
+        <translation>Касательная к 2 окружностям, 1 точка</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation>Касательно к &amp;3 окружностям</translation>
+        <translation>Касательная к &amp;3 окружностям</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation>Тангенциальный, 2 точки доступа</translation>
+        <translation>Касательная, 2 &amp;точки</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
@@ -325,7 +325,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation>Дуга и тангенциальная</translation>
+        <translation>Касательная к &amp;дуге</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -337,7 +337,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation>Эллипс по точкам &amp;фокусов</translation>
+        <translation>Точка &amp;фокуса эллипса</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
@@ -393,7 +393,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation>&amp;Многострочный текст</translation>
+        <translation>&amp;Текст</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -409,7 +409,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation>&amp;Выровнено</translation>
+        <translation>Вы&amp;ровненный</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
@@ -433,7 +433,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation>&amp;Лидер</translation>
+        <translation>П&amp;олка-выноска</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
@@ -453,7 +453,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation>Вернуть&amp;изменить направление</translation>
+        <translation>Изм&amp;енить направление</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
@@ -469,11 +469,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation>&amp;Зеркало</translation>
+        <translation>Отр&amp;азить</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation>Повернуть два и два</translation>
+        <translation>Вращени&amp;е по двум</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -481,7 +481,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation>&amp;Подрезать</translation>
+        <translation>Подо&amp;гнать</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -489,7 +489,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation>&amp;Разделять</translation>
+        <translation>Разде&amp;лить</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
@@ -501,7 +501,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation>&amp;Филе</translation>
+        <translation>С&amp;кругление</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
@@ -517,7 +517,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
-        <translation>&amp;Расстояние от объекта до точки</translation>
+        <translation>Р&amp;асстояние от объекта до точки</translation>
     </message>
     <message>
         <source>An&amp;gle between two lines</source>
@@ -525,7 +525,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation>&amp;Общая длина выбранных объектов</translation>
+        <translation>Су&amp;ммарная длина выбранных объектов</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
@@ -545,7 +545,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation>&amp;Отрезать</translation>
+        <translation>Вы&amp;резать</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
@@ -585,19 +585,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Переключение слоев иблокировка</translation>
+        <translation>Защита &amp;слоя</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation>&amp;Переключение видимости слоя</translation>
+        <translation>&amp;Видимость слоя</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation>Переключение слоя ипечати</translation>
+        <translation>Пе&amp;чать слоя</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Переключение &amp;Строительный слой</translation>
+        <translation>&amp;Вспомогательный</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -637,7 +637,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation>&amp;Настройки программы</translation>
+        <translation>&amp;Настройки</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
@@ -649,11 +649,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation>&amp;Выбрать все</translation>
+        <translation>&amp;Выделить все</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation>Снять выделение &amp;все</translation>
+        <translation>Отменить &amp;выделение</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -661,7 +661,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Invert Selection</source>
-        <translation>Инвертировать выбор</translation>
+        <translation>Инвертировать выделение</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
@@ -669,11 +669,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation>Увеличить иУменьшить</translation>
+        <translation>Увеличение&amp;Уменьшение</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation>&amp;Автоматическое увеличение</translation>
+        <translation>П&amp;оказать всё</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
@@ -721,7 +721,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation>Предварительный просмотр и печать</translation>
+        <translation>Предпрос&amp;мотр печати</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -733,7 +733,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation>&amp;Полноэкранный</translation>
+        <translation>Полный &amp;экран</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -750,7 +750,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation>&amp;Статусбар</translation>
+        <translation>С&amp;трока состояния</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
@@ -799,7 +799,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation>&amp;Подогнать два</translation>
+        <translation>&amp;Подогнать по двум</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
@@ -820,7 +820,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation>&amp;Полигон (Cen,Tan)</translation>
+        <translation>&amp;Многоугольник (Центр,Касат)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -832,7 +832,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Спрятать все слои</translation>
+        <translation>&amp;Скрыть все слои</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
@@ -860,7 +860,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>Экспортировать в формате CA&amp;M/обычный SVG...</translation>
+        <translation>Экспортировать в CA&amp;M/обычный SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -868,7 +868,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation>Повторно закрепите виджеты</translation>
+        <translation>Повторно закрепить виджеты</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
@@ -886,7 +886,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Сохранение слоя &quot;% 1&quot; как &quot;% 2&quot; </translation>
+        <translation>Сохранить слои &quot;% 1&quot; как &quot;% 2&quot; </translation>
     </message>
 </context>
 <context>
@@ -919,11 +919,11 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation>Библиотека</translation>
+        <translation>Обзор</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Командная линия</translation>
+        <translation>Командная строка</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -931,7 +931,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Float</source>
-        <translation>Плавать</translation>
+        <translation>Плавающее</translation>
     </message>
     <message>
         <source>Lines</source>
@@ -939,15 +939,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Circles</source>
-        <translation>Круги</translation>
+        <translation>Окружности</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation>Отруки</translation>
+        <translation>Произвольно</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation>Эллипс</translation>
+        <translation>Эллипсы</translation>
     </message>
     <message>
         <source>PolyLines</source>
@@ -1018,14 +1018,14 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation>Использовать тематические иконки</translation>
+        <translation>Использовать иконки темы</translation>
     </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation>Выберите:</translation>
+        <translation>выбрать:</translation>
     </message>
     <message>
         <source>remove left</source>
@@ -1037,18 +1037,18 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>remove 0&apos;</source>
-        <translation>Убрать нулевые минуты</translation>
+        <translation>убрать 0&apos;</translation>
     </message>
     <message>
         <source>remove 0&quot;</source>
-        <translation>удалить 0&quot;</translation>
+        <translation>убрать 0&quot;</translation>
     </message>
 </context>
 <context>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation>Параметры относительного угла наклона линии</translation>
+        <translation>Параметры линии относительно угла наклона</translation>
     </message>
     <message>
         <source>Spacing:</source>
@@ -1056,7 +1056,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation>Расстояние от базовой ломаной</translation>
+        <translation>Расстояние от исходной ломаной линии</translation>
     </message>
     <message>
         <source>Copies:</source>
@@ -1067,7 +1067,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation>Выберите объект:</translation>
+        <translation>Выбрать объект:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1085,7 +1085,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation>Выберите объекты:</translation>
+        <translation>Выбрать объекты:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1124,7 +1124,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Modify</source>
-        <translation>&amp;Модификация</translation>
+        <translation>Из&amp;менить</translation>
     </message>
     <message>
         <source>&amp;Info</source>
@@ -1132,7 +1132,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>About</source>
-        <translation>Об</translation>
+        <translation>О программе</translation>
     </message>
     <message>
         <source>&amp;Help</source>
@@ -1140,7 +1140,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Cascade</source>
-        <translation>&amp;Каскад</translation>
+        <translation>&amp;Стопкой</translation>
     </message>
     <message>
         <source>&amp;Tile</source>
@@ -1196,7 +1196,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tool Options</source>
-        <translation>Параметры инструмента</translation>
+        <translation>Инструменты</translation>
     </message>
     <message>
         <source>Layer List</source>
@@ -1442,11 +1442,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation>Стыкуемые интерфейсы</translation>
+        <translation>Стыкуемые диалоги</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation>Параметры устройства</translation>
+        <translation>Устройства</translation>
     </message>
     <message>
         <source>Device</source>
@@ -1518,7 +1518,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation>Экономия чертежа: % 1</translation>
+        <translation>Сохранение чертежа: % 1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
@@ -1544,11 +1544,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation>&amp; Сохранить% 1</translation>
+        <translation>&amp;Сохранить %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation>Сохраните% 1 икак...</translation>
+        <translation>Сохраните %1 &amp;как...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
@@ -1556,15 +1556,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation>&amp;Планировка</translation>
+        <translation>&amp;Расположение</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation>Скругленная</translation>
+        <translation>Скругленное</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation>Треугольный</translation>
+        <translation>Треугольное</translation>
     </message>
     <message>
         <source>North</source>
@@ -1584,11 +1584,11 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation>&amp;Организовать</translation>
+        <translation>&amp;Упорядоченный</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation>&amp;Максимизированный</translation>
+        <translation>&amp;Увеличенный</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
@@ -1608,12 +1608,12 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Float</source>
-        <translation>Плавать</translation>
+        <translation>Плавающее</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation>Док</translation>
+        <translation>Панель</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -1621,15 +1621,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation>Руководство пользователя</translation>
+        <translation>Руководство &amp;пользователя</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation>&amp;Команда</translation>
+        <translation>&amp;Команды</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation>&amp;Таблицы стилей</translation>
+        <translation>&amp;Таблица стилей</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
@@ -1637,15 +1637,15 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation>Форум</translation>
+        <translation>&amp;Форум</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation>Зулип ичат</translation>
+        <translation>Zulip&amp;Чат</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation>Информация о релизе</translation>
+        <translation>&amp;Информация о релизе</translation>
     </message>
     <message>
         <source>On&amp;line</source>
@@ -1707,7 +1707,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Could not name block. A block named &quot;%1&quot; already exists.</source>
-        <translation>Переименование блока невозможно. Блок «%1» уже существует.</translation>
+        <translation>Переименование блока невозможно. Блок &quot;%1&quot; уже существует.</translation>
     </message>
 </context>
 <context>
@@ -1796,7 +1796,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation>Поиск названий блоков</translation>
+        <translation>Поиск совпадений названий блоков</translation>
     </message>
 </context>
 <context>
@@ -1883,11 +1883,11 @@ in a separate window</source>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation>/Цветовая коробка</translation>
+        <translation>/Палитра</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation>Пользовательский выбор</translation>
+        <translation>Выбрать</translation>
     </message>
 </context>
 <context>
@@ -1937,19 +1937,19 @@ in a separate window</source>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation>Док-панель</translation>
+        <translation>Панель</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation>Плавать</translation>
+        <translation>Плавающее</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation>Командная линия</translation>
+        <translation>Командная строка</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -1983,15 +1983,15 @@ in a separate window</source>
     </message>
     <message>
         <source>° (Degree)</source>
-        <translation>° (градус)</translation>
+        <translation>° (Градус)</translation>
     </message>
     <message>
         <source>± (Plus / Minus)</source>
-        <translation>± (плюс/минус)</translation>
+        <translation>± (плюс / минус)</translation>
     </message>
     <message>
         <source>× (Times)</source>
-        <translation>× (раз)</translation>
+        <translation>× (Умножение)</translation>
     </message>
     <message>
         <source>÷ (Division)</source>
@@ -1999,11 +1999,11 @@ in a separate window</source>
     </message>
     <message>
         <source>⌀ (Diameter)</source>
-        <translation>⌀ (диаметр)</translation>
+        <translation>⌀ (Диаметр)</translation>
     </message>
     <message>
         <source>π (Pi)</source>
-        <translation>π («пи»)</translation>
+        <translation>π («Пи»)</translation>
     </message>
 </context>
 <context>
@@ -2058,8 +2058,8 @@ in a separate window</source>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation>Применить атрибуты также ко всем под-структурам выбранного INSERT.
-Это рекурсивно изменяет все сущности самого блока.</translation>
+        <translation>Для применения атрибутов ко всем подобъектам нажмите INSERT.
+Это рекурсивно изменит все объекты самого блока.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
@@ -2225,7 +2225,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>insert (x):</source>
-        <translation>Положение (x):</translation>
+        <translation>положение (x):</translation>
     </message>
     <message>
         <source>Scale:</source>
@@ -2233,15 +2233,15 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Size (px):</source>
-        <translation>Размер (пикселей):</translation>
+        <translation>Размер (px):</translation>
     </message>
     <message>
         <source>path:</source>
-        <translation>Расположение:</translation>
+        <translation>путь:</translation>
     </message>
     <message>
         <source>insert (y):</source>
-        <translation>Положение (y):</translation>
+        <translation>положение (y):</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -2264,7 +2264,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Default Unit:</source>
-        <translation>Единица измерения по умолчанию:</translation>
+        <translation>Единицы измерения по умолчанию:</translation>
     </message>
     <message>
         <source>GUI Language:</source>
@@ -2389,7 +2389,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Default line spacing</source>
-        <translation>&amp;Дополнительный межстрочный интервал</translation>
+        <translation>&amp;Межстрочный интервал</translation>
     </message>
     <message>
         <source>Alt+D</source>
@@ -2445,15 +2445,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Clear Text</source>
-        <translation>Очистить текст</translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Загрузить текст из файла</translation>
+        <translation>Из файла</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation>Сохранить текст в файл</translation>
+        <translation>Сохранить в файл</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -2473,55 +2473,55 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation>° (градус)</translation>
+        <translation>° (Градус)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation>Плюс / Минус (±)</translation>
+        <translation>± (Плюс / Минус)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation>На (@)</translation>
+        <translation>@ (коммерческое at)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation>Хэш (#)</translation>
+        <translation># (Хэш)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation>$ (знак доллара)</translation>
+        <translation>$ (Доллар)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation>© (знак авторского права)</translation>
+        <translation>© (авторское право)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation>® (знак зарегистрированной марки)</translation>
+        <translation>® (зарегистрированная марка)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation>§ (знак параграфа)</translation>
+        <translation>§ (Параграф)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
-        <translation>π («пи»)</translation>
+        <translation>π («Пи»)</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation>£ (знак фунта стерлингов)</translation>
+        <translation>£ (Фунт стерлинг)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation>¥ (знак иены)</translation>
+        <translation>¥ (Иена)</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation>× (знак умножения)</translation>
+        <translation>× (Умножение)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation>Деление (÷)</translation>
+        <translation>÷ (Деление)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
@@ -2665,11 +2665,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation>[13A0-13FF] Письменность чероки</translation>
+        <translation>[13A0-13FF] Письменность Чероки</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation>[1400-167F] Унифицированная слоговая система аборигенов Канады</translation>
+        <translation>[1400-167F] Унифицированная слоговая система Аборигенов Канады</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -2789,7 +2789,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation>[2800-28FF] Шрифт Брайля</translation>
+        <translation>[2800-28FF] Азбука Брайля</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
@@ -2797,7 +2797,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
-        <translation>[2980-29FF] Разнообразные математические символы B</translation>
+        <translation>[2980-29FF] Разнообразные математические символы-B</translation>
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
@@ -2869,15 +2869,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Слоги хангыля</translation>
+        <translation>[AC00-D7AF] Слоги Хангыля</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
-        <translation>[D800-DBFF] Верхняя часть суррогатных пар</translation>
+        <translation>[D800-DBFF] Верхняя часть Суррогатных пар</translation>
     </message>
     <message>
         <source>[DC00-DFFF] Low Surrogate Area</source>
-        <translation>[DC00-DFFF] Нижняя часть суррогатных пар</translation>
+        <translation>[DC00-DFFF] Нижняя часть Суррогатных пар</translation>
     </message>
     <message>
         <source>[E000-F8FF] Private Use Area</source>
@@ -2893,7 +2893,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>[FB50-FDFF] Arabic Presentation Forms-A</source>
-        <translation>[FB50-FDFF] Формы представления арабских букв A</translation>
+        <translation>[FB50-FDFF] Формы представления арабских букв-A</translation>
     </message>
     <message>
         <source>[FE00-FE0F] Variation Selectors</source>
@@ -2969,7 +2969,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation>⌀ (диаметр)</translation>
+        <translation>⌀ (Диаметр)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
@@ -3000,7 +3000,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMirror</name>
     <message>
         <source>Mirroring Options</source>
-        <translation>Параметры отражения</translation>
+        <translation>Зеркальное отображение</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3024,7 +3024,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -3059,7 +3059,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Move/Copy Options</source>
-        <translation>Параметры сдвига и копирования</translation>
+        <translation>Переместить/копировать</translation>
     </message>
     <message>
         <source>Number of copies. Maximum 100</source>
@@ -3070,7 +3070,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <name>QG_DlgMoveRotate</name>
     <message>
         <source>Move/Rotate Options</source>
-        <translation>Параметры сдвига и поворота</translation>
+        <translation>Перемещение/Поворот</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3177,7 +3177,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Gradians</source>
-        <translation>Грады</translation>
+        <translation>Градианы</translation>
     </message>
     <message>
         <source>Surveyor&apos;s units</source>
@@ -3205,7 +3205,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&amp;Paper</source>
-        <translation>&amp;Бумага</translation>
+        <translation>&amp;Бумажный</translation>
     </message>
     <message>
         <source>&amp;Landscape</source>
@@ -3233,7 +3233,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>F&amp;ormat:</source>
-        <translation>&amp;Формат:</translation>
+        <translation>Ф&amp;ормат:</translation>
     </message>
     <message>
         <source>Pre&amp;cision:</source>
@@ -3345,11 +3345,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&apos;.&apos; (Period)</source>
-        <translation>. (точка)</translation>
+        <translation>&apos;.&apos; (Точка)</translation>
     </message>
     <message>
         <source>&apos;,&apos; (Comma)</source>
-        <translation>, (запятая)</translation>
+        <translation>&apos;,&apos; (Запятая)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
@@ -3441,7 +3441,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Extension lines</source>
-        <translation>Линии удлинения</translation>
+        <translation>Линии-выноски</translation>
     </message>
     <message>
         <source>Fixed length:</source>
@@ -3465,7 +3465,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Margins</source>
-        <translation>Прибыль</translation>
+        <translation>Поля</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -3497,11 +3497,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Point Style</source>
-        <translation>Точечный стиль</translation>
+        <translation>Стиль точек</translation>
     </message>
     <message>
         <source>...</source>
-        <translation>…</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Point Size</source>
@@ -3533,7 +3533,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Screen %</source>
-        <translation>Экран%</translation>
+        <translation>Экран %</translation>
     </message>
 </context>
 <context>
@@ -3568,7 +3568,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Application Preferences</source>
-        <translation>Настройки программы</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <source>Defaults for new drawings</source>
@@ -3604,7 +3604,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>G&amp;rid Color:</source>
-        <translation>&amp;Цвет сетки:</translation>
+        <translation>Ц&amp;вет сетки:</translation>
     </message>
     <message>
         <source>&amp;Meta Grid Color:</source>
@@ -3684,7 +3684,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation>Модифицировать слой выбранных сущностей при активации  слоя</translation>
+        <translation>Изменять слой выбранных элементов при переключении слоя</translation>
     </message>
     <message>
         <source>Clear Settings</source>
@@ -3740,11 +3740,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation>Включить стыкуемые интерфейсы</translation>
+        <translation>Включить стыкуемые диалоги САПР</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation>Включить панели</translation>
+        <translation>Включить панели САПР</translation>
     </message>
     <message>
         <source>#1E90FF</source>
@@ -3756,11 +3756,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation>Включая пользовательские меню и панели?</translation>
+        <translation>Включить пользовательские меню и панели?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; При включении, включение слоя изменит все выбранные объекты на этот новый слой. Чтобы изменить слой нескольких сущностей: сначала выберите нужные сущности; активируйте слой в виджете слоя. Это делает все выбранные объекты модифицированными, чтобы принадлежать новому слою.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt; Если этот параметр включен, активация слоя изменит все выбранные объекты на этом новом слое. Для изменения нескольких объектов на слое: сначала выберите необходимые объекты; активируйте слой в виджете слоев. Это приведет к тому, что все выбранные объекты будут изменены и будут принадлежать новому слою.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
@@ -3768,7 +3768,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation>Минимальная решетка (p&amp;x):</translation>
+        <translation>Минимальный размер сетки (p&amp;x):</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
@@ -3784,7 +3784,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Скрыть относительный и нулевой маркер</translation>
+        <translation>Скрыть относительный-&amp;нулевой маркер</translation>
     </message>
     <message>
         <source>Alt+Z</source>
@@ -3792,11 +3792,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation>Визуализируйте сущность под курсором</translation>
+        <translation>Визуализировать объект под курсором</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation>Эффекты наведения курсора мыши</translation>
+        <translation>Мышка-эффекты при наведении</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
@@ -3824,11 +3824,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation>Инвертировать увеличить направление при использовании колеса мыши.</translation>
+        <translation>Инвертирует увеличение направления при использовании колеса мыши.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation>Инвертное направление</translation>
+        <translation>Инвертировать направление масштабирования</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
@@ -3836,19 +3836,19 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Оценить команды, когда SPACE BAR</translation>
+        <translation>Вычисление команд при нажатии ПРОБЕЛ</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation>Режим свободного оснастки при нажатии BAR SPACE и пустом командном окне</translation>
+        <translation>Переключает режим свободной привязки, при нажатии клавиши ПРОБЕЛ и пустом окне команд</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>Режим свободного оснастки при нажатии SPACE BAR</translation>
+        <translation>Переключение режима свободной привязки при нажатии ПРОБЕЛ</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation>CAD Предпочтения</translation>
+        <translation>САПР Предпочтения</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
@@ -3879,7 +3879,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation>Эллипсы и эллиптические дуги</translation>
+        <translation>Эллипсы / Эллиптические дуги</translation>
     </message>
     <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
@@ -3887,7 +3887,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation>Экспорт в формате CAM/обычный SVG</translation>
+        <translation>Экспорт в CAM/обычный SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
@@ -3899,11 +3899,11 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation>Экспорт растровых изображений</translation>
+        <translation>Экспорт растрового изображения</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation>Штриховые/точечные линии</translation>
+        <translation>Штриховые/Точечные линии</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
@@ -3936,26 +3936,26 @@ the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.<
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Экспортированные изображения могут быть полезны в SVG редакторах (Inkscape и т.д.),&#xa0;
-но в некоторых камерах их можно избежать.</translation>
+        <translation>Экспортированные изображения могут быть использованы в SVG редакторах (Inkscape и т.д.),&#xa0;
+но некоторые CAM&apos;ы будут отброшены.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Многие камеры (MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
+        <translation>Многие CAM&apos;ы(MakerCAM, EleskCAM, LaserWeb) игнорируют стиль пунктирной линии,&#xa0;
 который может быть полезен при лазерной резке фанеры или для изготовления поделок из бумаги. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
         <translation>Ширина элементов по умолчанию может влиять на некоторые редакторы CAM/SVG,&#xa0;
-но игнорируется другими</translation>
+но игнорироваться другими</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Длина линии, связанной с увеличением, 
-так значение шага по умолчанию, требуемое для выпечки</translation>
+        <translation>Длина линии рисунка зависит от масштаба, 
+поэтому для соединения требуется значение шага по умолчанию</translation>
     </message>
 </context>
 <context>
@@ -3997,7 +3997,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Closed</source>
-        <translation>Закрыта</translation>
+        <translation>Закрыть</translation>
     </message>
 </context>
 <context>
@@ -4020,7 +4020,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation>&amp;Множество копий:</translation>
+        <translation>&amp;Несколько копий:</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -4168,15 +4168,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Clear Text</source>
-        <translation>Очистить текст</translation>
+        <translation>Очистить</translation>
     </message>
     <message>
         <source>Load Text From File</source>
-        <translation>Загрузить текст из файла</translation>
+        <translation>Загрузить из файла</translation>
     </message>
     <message>
         <source>Save Text To File</source>
-        <translation>Сохранить текст в файл</translation>
+        <translation>Сохранить в файл</translation>
     </message>
     <message>
         <source>Cut</source>
@@ -4236,55 +4236,55 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Degree (°)</source>
-        <translation>Градус (°)</translation>
+        <translation>° (Градус)</translation>
     </message>
     <message>
         <source>Plus / Minus (±)</source>
-        <translation>Плюс / Минус (±)</translation>
+        <translation>± (плюс / минус)</translation>
     </message>
     <message>
         <source>At (@)</source>
-        <translation>Собака (@)</translation>
+        <translation>@ (коммерческое at)</translation>
     </message>
     <message>
         <source>Hash (#)</source>
-        <translation>Хеш-символ (#)</translation>
+        <translation># (Хеш)</translation>
     </message>
     <message>
         <source>Dollar ($)</source>
-        <translation>Знак доллара ($)</translation>
+        <translation>$ (Доллар)</translation>
     </message>
     <message>
         <source>Copyright (©)</source>
-        <translation>Авторское право (©)</translation>
+        <translation>© (авторское право)</translation>
     </message>
     <message>
         <source>Registered (®)</source>
-        <translation>Зарегистрированный (®)</translation>
+        <translation>® (зарегистрированная марка)</translation>
     </message>
     <message>
         <source>Paragraph (§)</source>
-        <translation>Параграф (§)</translation>
+        <translation>§ (Параграф)</translation>
     </message>
     <message>
         <source>Pi (π)</source>
-        <translation>π («пи»)</translation>
+        <translation>π («Пи»)</translation>
     </message>
     <message>
         <source>Pound (£)</source>
-        <translation>£ (фунт стерлингов)</translation>
+        <translation>£ (Фунт стерлингов)</translation>
     </message>
     <message>
         <source>Yen (¥)</source>
-        <translation>¥ (йена)</translation>
+        <translation>¥ (Йена)</translation>
     </message>
     <message>
         <source>Times (×)</source>
-        <translation>Знак умножения (×)</translation>
+        <translation>× (Умножение)</translation>
     </message>
     <message>
         <source>Division (÷)</source>
-        <translation>Знак деления (÷)</translation>
+        <translation>÷ (Деление)</translation>
     </message>
     <message>
         <source>Insert Unicode</source>
@@ -4624,15 +4624,15 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>[A000-A48F] Yi Syllables</source>
-        <translation>[A000-A48F] Слоги и</translation>
+        <translation>[A000-A48F] Слоги И</translation>
     </message>
     <message>
         <source>[A490-A4CF] Yi Radicals</source>
-        <translation>[A490-A4CF] Радикалы и</translation>
+        <translation>[A490-A4CF] Радикалы И</translation>
     </message>
     <message>
         <source>[AC00-D7AF] Hangul Syllables</source>
-        <translation>[AC00-D7AF] Слоги хангыля</translation>
+        <translation>[AC00-D7AF] Слоги Хангыля</translation>
     </message>
     <message>
         <source>[D800-DBFF] High Surrogates</source>
@@ -4784,18 +4784,18 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation>A&amp;выровненный</translation>
+        <translation>В&amp;ыровненный</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation>&amp;Средний</translation>
+        <translation>&amp;Середина</translation>
     </message>
 </context>
 <context>
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation>QСапр</translation>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
@@ -4926,7 +4926,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Black / White</source>
-        <translation>Черно-белый</translation>
+        <translation>Черно-белое</translation>
     </message>
     <message>
         <source>Coloured</source>
@@ -4938,11 +4938,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Top / Bottom - Border:</source>
-        <translation>Верхняя/нижняя граница:</translation>
+        <translation>Верхняя/Нижняя граница:</translation>
     </message>
     <message>
         <source>Left / Right - Border:</source>
-        <translation>Левая/правая граница:</translation>
+        <translation>Левая/Правая граница:</translation>
     </message>
     <message>
         <source>set same size</source>
@@ -4989,19 +4989,19 @@ The contents of a Construction Layer should not appear in printout.</source>
     <name>QG_LayerWidget</name>
     <message>
         <source>Show all layers</source>
-        <translation>Показать все слои</translation>
+        <translation>Показать все</translation>
     </message>
     <message>
         <source>Hide all layers</source>
-        <translation>Скрыть все слои</translation>
+        <translation>Скрыть все</translation>
     </message>
     <message>
         <source>Add a layer</source>
-        <translation>Добавить слой</translation>
+        <translation>Добавить</translation>
     </message>
     <message>
         <source>Modify layer attributes / rename</source>
-        <translation>Изменить атрибуты слоя или переименовать</translation>
+        <translation>Изменение слоя атрибуты / переименование</translation>
     </message>
     <message>
         <source>Layer Menu</source>
@@ -5009,51 +5009,51 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Defreeze all Layers</source>
-        <translation>&amp;Показать все Слои</translation>
+        <translation>&amp;Показать все</translation>
     </message>
     <message>
         <source>&amp;Freeze all Layers</source>
-        <translation>&amp;Скрыть все слои</translation>
+        <translation>&amp;Заморозить все</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Добавить слой</translation>
+        <translation>&amp;Добавить</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation>&amp;Удалить слой</translation>
+        <translation>&amp;Удалить</translation>
     </message>
     <message>
         <source>Looking for matching layer names</source>
-        <translation>Поиск подходящих названий слоёв</translation>
+        <translation>Поиск совпадений названий слоёв</translation>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation>Редактирование слоев и атрибутов</translation>
+        <translation>&amp;Атрибуты</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation>Переключение слоев и видимости</translation>
+        <translation>&amp;Видимость</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation>Переключение слоев и печати</translation>
+        <translation>&amp;Печать</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation>Переключение и строительный слой</translation>
+        <translation>&amp;Вспомогательный</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation>Разблокировать все слои</translation>
+        <translation>Разблокировать все</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation>Заблокируйте все слои</translation>
+        <translation>Заблокировать все</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Удалить слой</translation>
+        <translation>Удалить</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -5061,15 +5061,15 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Разблокировать все слои</translation>
+        <translation>&amp;Разблокировать все</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Заблокировать все слои</translation>
+        <translation>&amp;Заблокировать все</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>&amp;Защита слоя</translation>
+        <translation>&amp;Заблокировать</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -5155,31 +5155,31 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Divide</source>
-        <translation>Делить</translation>
+        <translation>Пунктир 2</translation>
     </message>
     <message>
         <source>Divide (small)</source>
-        <translation>Разделение (небольшое)</translation>
+        <translation>Пунктир 2 (малая)</translation>
     </message>
     <message>
         <source>Divide (large)</source>
-        <translation>Деление (крупное)</translation>
+        <translation>Пунктир 2 (большая)</translation>
     </message>
     <message>
         <source>Center</source>
-        <translation>Центр</translation>
+        <translation>Осевая</translation>
     </message>
     <message>
         <source>Center (small)</source>
-        <translation>Центр (малый)</translation>
+        <translation>Осевая (малая)</translation>
     </message>
     <message>
         <source>Center (large)</source>
-        <translation>Центр (большой)</translation>
+        <translation>Осевая (большая)</translation>
     </message>
     <message>
         <source>Border</source>
-        <translation>Граница</translation>
+        <translation>Граничная</translation>
     </message>
     <message>
         <source>Border (small)</source>
@@ -5207,11 +5207,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation>Разделить (крошечный)</translation>
+        <translation>Пунктир 2 (крошечная)</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
-        <translation>Центр (маленький)</translation>
+        <translation>Осевая (крошечная)</translation>
     </message>
     <message>
         <source>Border (tiny)</source>
@@ -5253,7 +5253,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Line width</source>
-        <translation>Ширина линии</translation>
+        <translation>Толщина линии</translation>
     </message>
     <message>
         <source>Line type</source>
@@ -5321,7 +5321,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to Endpoints</source>
-        <translation>Привязка к вершинам кривых</translation>
+        <translation>К вершинам кривых</translation>
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
@@ -5329,23 +5329,23 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to center points</source>
-        <translation>Привязка к центральным точкам</translation>
+        <translation>К центральным точкам</translation>
     </message>
     <message>
         <source>Snap to intersections automatically</source>
-        <translation>Привязка к точкам пересечения автоматически</translation>
+        <translation>К точкам пересечения автоматически</translation>
     </message>
     <message>
         <source>Snap to closest point on entity</source>
-        <translation>Привязка к ближайшей точке на объекте</translation>
+        <translation>К ближайшей точке на объекте</translation>
     </message>
     <message>
         <source>Snap to point with given distance to endpoint</source>
-        <translation>Привязка на заданном расстоянии от вершины</translation>
+        <translation>На заданном расстоянии от вершины</translation>
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation>Привязка к точкам пересечения вручную</translation>
+        <translation>К точкам пересечения вручную</translation>
     </message>
     <message>
         <source>Snap to grid</source>
@@ -5429,7 +5429,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation>Относительная нулевая позиция% 1</translation>
+        <translation>Положение относительно нуля %1</translation>
     </message>
     <message>
         <source>locked</source>
@@ -5437,7 +5437,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>unlocked</source>
-        <translation>разблокированы</translation>
+        <translation>разблокированный</translation>
     </message>
 </context>
 <context>
@@ -5586,7 +5586,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer &quot;%1&quot; can never be removed.</source>
-        <translation>Слой «%1» никогда нельзя удалить.</translation>
+        <translation>Слой &quot;%1&quot; никогда нельзя удалить.</translation>
     </message>
     <message>
         <source>Layer Dialog</source>
@@ -5598,7 +5598,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Block &quot;%1&quot; and all its entities will be removed.</source>
-        <translation>Блок «%1» и все его объекты будут удалены.</translation>
+        <translation>Блок &quot;%1&quot; и все его объекты будут удалены.</translation>
     </message>
     <message>
         <source>Layer Properties</source>
@@ -5606,17 +5606,17 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Layer with a name &quot;%1&quot; already exists. Please specify a different name.</source>
-        <translation>Слой «%1» уже существует. Укажите другое имя.</translation>
+        <translation>Слой &quot;%1&quot; уже существует. Укажите другое имя.</translation>
     </message>
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation>Слой «%1» и всё его содержимое будет удалено.
+        <translation>Слой &quot;%1&quot; и всё его содержимое будет удалено.
 Это действие будет НЕВОЗМОЖНО отменить.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation>Уровень &quot;0&quot; никогда не может быть удален.</translation>
+        <translation>Слой &quot;0&quot; никогда не может быть удален.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -5628,7 +5628,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation>Перечисленные слои и все сущности на них будут удалены.</translation>
+        <translation>Перечисленные слои и все объекты на них будут удалены.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
@@ -5652,7 +5652,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation>Перечисленные блоки и все их организации будут удалены.</translation>
+        <translation>Перечисленные блоки и все их объекты будут удалены.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
@@ -5713,7 +5713,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation>Карта в X пикселях</translation>
+        <translation>X пиксельная карта</translation>
     </message>
     <message>
         <source>All Image Files (%1)</source>
@@ -5725,7 +5725,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
-        <translation>Биржа рисования %1</translation>
+        <translation>Формат обмена графическими данными %1</translation>
     </message>
     <message>
         <source>QCad 1.x file %1</source>
@@ -5773,7 +5773,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Mil</source>
-        <translation>Мил</translation>
+        <translation>Милл</translation>
     </message>
     <message>
         <source>Yard</source>
@@ -5841,11 +5841,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>enter a number</source>
-        <translation>Введите число</translation>
+        <translation>введите число</translation>
     </message>
     <message>
         <source>enter text</source>
-        <translation>Введите текст</translation>
+        <translation>введите текст</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
@@ -5889,7 +5889,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation>Краска для ПК</translation>
+        <translation>PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
@@ -5973,7 +5973,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation>: повтор команды: «%1» уже занято «%2»</translation>
+        <translation>: повтор команды: %1 уже занято %2</translation>
     </message>
     <message>
         <source>point</source>
@@ -5983,7 +5983,7 @@ Do you want to replace it?</source>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation>тч</translation>
+        <translation>po</translation>
     </message>
     <message>
         <source>line</source>
@@ -5993,12 +5993,12 @@ Do you want to replace it?</source>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation>ли</translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation>л</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
@@ -6008,7 +6008,7 @@ Do you want to replace it?</source>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation>ло</translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
@@ -6018,7 +6018,7 @@ Do you want to replace it?</source>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>произ</translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
@@ -6028,7 +6028,7 @@ Do you want to replace it?</source>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation>спл</translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
@@ -6039,13 +6039,13 @@ Do you want to replace it?</source>
         <source>stp</source>
         <comment>spline through points</comment>
         <translatorcomment>счт -- сплайн через точку</translatorcomment>
-        <translation>счт</translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
         <translatorcomment>пчт -- параллельно через точку</translatorcomment>
-        <translation>пчт</translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
@@ -6055,13 +6055,13 @@ Do you want to replace it?</source>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>би</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
         <translatorcomment>касто -- касательная точка окружность</translatorcomment>
-        <translation>касто</translation>
+        <translation>касатто</translation>
     </message>
     <message>
         <source>ortho</source>
@@ -6076,12 +6076,12 @@ Do you want to replace it?</source>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>многоуг2в</translation>
+        <translation>многоугольник2в</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>мног2</translation>
+        <translation>многоуг2</translation>
     </message>
     <message>
         <source>circle</source>
@@ -6091,27 +6091,27 @@ Do you want to replace it?</source>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation>ок</translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation>о2</translation>
+        <translation>c2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation>о3</translation>
+        <translation>c3</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>кас3</translation>
+        <translation>касат3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation>ок3</translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
@@ -6122,13 +6122,13 @@ Do you want to replace it?</source>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
         <translatorcomment>эв -- эллипс вписанный</translatorcomment>
-        <translation>эв</translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
         <translatorcomment>вэ -- вписанный эллипс</translatorcomment>
-        <translation>вэ</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
@@ -6138,7 +6138,7 @@ Do you want to replace it?</source>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation>шт</translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
@@ -6158,7 +6158,7 @@ Do you want to replace it?</source>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation>тек</translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
@@ -6173,12 +6173,12 @@ Do you want to replace it?</source>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>об</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation>уоб</translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
@@ -6188,7 +6188,7 @@ Do you want to replace it?</source>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation>уо</translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
@@ -6198,12 +6198,12 @@ Do you want to replace it?</source>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation>уа</translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation>масштабирование панорамирование</translation>
+        <translation>масштпанорам</translation>
     </message>
     <message>
         <source>zp</source>
@@ -6218,7 +6218,7 @@ Do you want to replace it?</source>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation>уп</translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
@@ -6228,7 +6228,7 @@ Do you want to replace it?</source>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation>пр</translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
@@ -6238,7 +6238,7 @@ Do you want to replace it?</source>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>о</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
@@ -6248,7 +6248,7 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation>п</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
@@ -6263,7 +6263,7 @@ Do you want to replace it?</source>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>рг</translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -6273,7 +6273,7 @@ Do you want to replace it?</source>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>рв</translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -6283,7 +6283,7 @@ Do you want to replace it?</source>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>рл</translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -6338,7 +6338,7 @@ Do you want to replace it?</source>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>он</translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -6348,7 +6348,7 @@ Do you want to replace it?</source>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>оо</translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -6358,7 +6358,7 @@ Do you want to replace it?</source>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>ог</translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -6368,73 +6368,73 @@ Do you want to replace it?</source>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>ов</translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation>сд</translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation>фас</translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>иф</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
         <translatorcomment>ск -- скруглить</translatorcomment>
-        <translation>ск</translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation>резать</translation>
+        <translation>обрезать</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation>разд</translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>от</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation>обр</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation>по</translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation>ма</translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation>под</translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>под2</translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>тот</translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
@@ -6444,17 +6444,17 @@ Do you want to replace it?</source>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>уд</translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation>удал</translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>ра</translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
@@ -6474,82 +6474,82 @@ Do you want to replace it?</source>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>пц</translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>щелкунчик</translation>
+        <translation>привраст</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>пр</translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>защелкивающийсяконец</translation>
+        <translation>привкон</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>пк</translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>защелкивающаясясетка</translation>
+        <translation>привсет</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>пс</translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>перекресток</translation>
+        <translation>привпресеч</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>пп</translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>защелкивающаясясередина</translation>
+        <translation>привсеред</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>пср</translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>Снабжение</translation>
+        <translation>привобъект</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>по</translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation>пр</translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>установитеотносительныйноль</translation>
+        <translation>отнноль</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation>он</translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
@@ -6560,12 +6560,12 @@ Do you want to replace it?</source>
         <source>sa</source>
         <comment>Select all entities</comment>
         <translatorcomment>вв -- выбрать все</translatorcomment>
-        <translation>вв</translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>отменить выбор</translation>
+        <translation>отмвыбор</translation>
     </message>
     <message>
         <source>tn</source>
@@ -6575,17 +6575,17 @@ Do you want to replace it?</source>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation>атр</translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>иа</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation>свойст</translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
@@ -6596,12 +6596,12 @@ Do you want to replace it?</source>
         <source>dpp</source>
         <comment>distance point to point</comment>
         <translatorcomment>ртт -- расстояние точка точка</translatorcomment>
-        <translation>ртт</translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation>уг</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
@@ -6625,7 +6625,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation>межколоночныйинтервал</translation>
+        <translation>столбинтервал</translation>
     </message>
     <message>
         <source>factor</source>
@@ -6662,12 +6662,12 @@ Do you want to replace it?</source>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation>уго</translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation>уг</translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
@@ -6676,23 +6676,23 @@ Do you want to replace it?</source>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation>цен</translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation>це</translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
         <translatorcomment>дх -- длинна хорды</translatorcomment>
-        <translation>дх</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation>з</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
@@ -6702,7 +6702,7 @@ Do you want to replace it?</source>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation>ст</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
@@ -6712,22 +6712,22 @@ Do you want to replace it?</source>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation>межстрочныйинтервал</translation>
+        <translation>стинтервал</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation>си</translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation>коэф</translation>
+        <translation>коэфф</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation>к</translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
@@ -6746,12 +6746,12 @@ Do you want to replace it?</source>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation>дл</translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation>д</translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
@@ -6761,12 +6761,12 @@ Do you want to replace it?</source>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation>дл1</translation>
+        <translation>len1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation>д1</translation>
+        <translation>l1</translation>
     </message>
     <message>
         <source>length2</source>
@@ -6776,12 +6776,12 @@ Do you want to replace it?</source>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation>дл2</translation>
+        <translation>len2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation>д2</translation>
+        <translation>l2</translation>
     </message>
     <message>
         <source>number</source>
@@ -6791,12 +6791,12 @@ Do you want to replace it?</source>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation>ном</translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation>н</translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
@@ -6811,22 +6811,22 @@ Do you want to replace it?</source>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation>обр</translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation>ряд</translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation>Междурядье</translation>
+        <translation>рядинтервал</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation>ри</translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
@@ -6835,7 +6835,7 @@ Do you want to replace it?</source>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation>т</translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
@@ -6849,7 +6849,7 @@ Do you want to replace it?</source>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>о</translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
@@ -6858,7 +6858,7 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation>п</translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
@@ -6867,15 +6867,15 @@ Do you want to replace it?</source>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation>н</translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation>рассылка</translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation>графический</translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
@@ -6900,7 +6900,7 @@ Do you want to replace it?</source>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation>выч</translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate</source>
@@ -6918,11 +6918,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation>Ошибка калькулятора при вводе: </translation>
+        <translation>Ошибка вычисления в: </translation>
     </message>
     <message>
         <source>bw</source>
-        <translation>чб</translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
@@ -6940,13 +6940,13 @@ Do you want to replace it?</source>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>п2</translation>
+        <translation>t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
         <translatorcomment>ис -- изменить свойства</translatorcomment>
-        <translation>ис</translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
@@ -7042,15 +7042,15 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation>Мастер ручки</translation>
+        <translation>Волшебное перо</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation>Выберите объекты</translation>
+        <translation>Выделить объекты</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation>Применение к выбранным</translation>
+        <translation>Применить к выделенным</translation>
     </message>
     <message>
         <source>Remove</source>
@@ -7058,7 +7058,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation>Сначала нужно ввести дистанцию.</translation>
+        <translation>Сначала введите расстояние.</translation>
     </message>
     <message>
         <source>cal</source>
@@ -7078,7 +7078,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation>Нет% 1 слоев</translation>
+        <translation>%1 слоев не найдены</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7088,52 +7088,52 @@ Do you want to replace it?</source>
     <message>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation>линейныйугол</translation>
+        <translation>изогнутая</translation>
     </message>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation type="unfinished">la</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation>линейный оператор</translation>
+        <translation>линопер</translation>
     </message>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished">lh</translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation>линейный привод</translation>
+        <translation>линприв</translation>
     </message>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation type="unfinished">lv</translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation>линейный процессор</translation>
+        <translation>линпроц</translation>
     </message>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">re</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>линии</translation>
+        <translation>линпаралл</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>линия выключена</translation>
+        <translation>линвыкл</translation>
     </message>
     <message>
         <source>pa</source>
@@ -7143,77 +7143,77 @@ Do you want to replace it?</source>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation type="unfinished">ll</translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation>линейная часть</translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished">lp</translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>линия, разделяющая пополам</translation>
+        <translation>линбисектр</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished">linetancp</translation>
+        <translation>касатот</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished">lt</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>линия загара2c</translation>
+        <translation>касат2о</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished">lc</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished">linetancper</translation>
+        <translation>касатло</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>или</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished">lineperp</translation>
+        <translation>перпендиклин</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished">lo</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>линейный переход</translation>
+        <translation>линперех</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation type="unfinished">lr</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation>многоугольник</translation>
+        <translation>центральная точка многоугольника</translation>
     </message>
     <message>
         <source>pp</source>
@@ -7223,42 +7223,42 @@ Do you want to replace it?</source>
     <message>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished">polycp</translation>
+        <translation>центрмногоуг</translation>
     </message>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished">pcp</translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation>многоугольный центр</translation>
+        <translation>многоугцентр</translation>
     </message>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished">pv</translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished">polyct</translation>
+        <translation>центрвершмногоуг</translation>
     </message>
     <message>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished">p2</translation>
+        <translation>p2</translation>
     </message>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation type="unfinished">c</translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation>круг2p</translation>
+        <translation>круг2т</translation>
     </message>
     <message>
         <source>c2p</source>
@@ -7268,7 +7268,7 @@ Do you want to replace it?</source>
     <message>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation>круг2pr</translation>
+        <translation>круг2тр</translation>
     </message>
     <message>
         <source>cc</source>
@@ -7293,47 +7293,47 @@ Do you want to replace it?</source>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished">cr</translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished">ccr</translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation>циркуляр2cp</translation>
+        <translation>окркасат2от</translation>
     </message>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished">tr</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation>циркуляр2p</translation>
+        <translation>окркасат2т</translation>
     </message>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished">td</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation>циркуляр2cr</translation>
+        <translation>окркасат2ор</translation>
     </message>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished">tc</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation>циркуляр3</translation>
+        <translation>окркасат3</translation>
     </message>
     <message>
         <source>t3</source>
@@ -7348,187 +7348,187 @@ Do you want to replace it?</source>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished">ar</translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished">a</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation>дуга3p</translation>
+        <translation>дуга3т</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished">a3</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation>дуговой загар</translation>
+        <translation>дугакасат</translation>
     </message>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished">at</translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation type="unfinished">sf</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished">sp</translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished">arcellc2ax</translation>
+        <translation>дуга эллипса2ax</translation>
     </message>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished">ae</translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished">fh</translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation>эллипсc2p</translation>
+        <translation>эллипс2т</translation>
     </message>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished">ea</translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation>эллипс3p</translation>
+        <translation>эллипс3т</translation>
     </message>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished">ef</translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation>эллипс4p</translation>
+        <translation>эллипс4т</translation>
     </message>
     <message>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished">e4</translation>
+        <translation>e4</translation>
     </message>
     <message>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation>эллипсc3p</translation>
+        <translation>центрэллипса3т</translation>
     </message>
     <message>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished">e3</translation>
+        <translation>e3</translation>
     </message>
     <message>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation>pдобавить строку</translation>
+        <translation>доблин</translation>
     </message>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation type="unfinished">pi</translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation>полное приложение</translation>
+        <translation>добузел</translation>
     </message>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation type="unfinished">pn</translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished">plinedel</translation>
+        <translation>удаллин</translation>
     </message>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished">pd</translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished">plinedeltwn</translation>
+        <translation>деленмежузл</translation>
     </message>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished">pr</translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation>полный ТРМ</translation>
+        <translation>подгсегм</translation>
     </message>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished">pt</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation>пара линий</translation>
+        <translation>равноудаленная</translation>
     </message>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished">pe</translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>соединение линииp</translation>
+        <translation>соединение</translation>
     </message>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation type="unfinished">pj</translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished">sx</translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>инвертировать выбор</translation>
+        <translation>инвервыдел</translation>
     </message>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation type="unfinished">is</translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished">ds</translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -7543,127 +7543,127 @@ Do you want to replace it?</source>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished">da</translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished">dg</translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>мод переместить</translation>
+        <translation>перемещение</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>мод вращается</translation>
+        <translation>вращение</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>масштаб модов</translation>
+        <translation>масштабирование</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>модзеркало</translation>
+        <translation>зеркалирование</translation>
     </message>
     <message>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished">modmovrot</translation>
+        <translation>поворперемещ</translation>
     </message>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished">mr</translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished">mod2rot</translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished">r2</translation>
+        <translation>r2</translation>
     </message>
     <message>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation>мод вернуть</translation>
+        <translation>измнаправл</translation>
     </message>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished">md</translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>только</translation>
+        <translation>подгонка</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>только2</translation>
+        <translation>подгонка2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>мод удлинить</translation>
+        <translation>удлинение</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>смещение режима</translation>
+        <translation>смещение</translation>
     </message>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished">mo</translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished">moff</translation>
+        <translation>сдвиг</translation>
     </message>
     <message>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation>команда мода</translation>
+        <translation>скос</translation>
     </message>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished">modfillet</translation>
+        <translation>скругление</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>против разделения</translation>
+        <translation>разделение</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>встречное растяжение</translation>
+        <translation>растяжение</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>модсвойства</translation>
+        <translation>измсвойств</translation>
     </message>
     <message>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation>мод атрибут</translation>
+        <translation>атрибут</translation>
     </message>
     <message>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation>текст описания мода</translation>
+        <translation>текстопис</translation>
     </message>
     <message>
         <source>xt</source>
@@ -7673,97 +7673,97 @@ Do you want to replace it?</source>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>режим взрыва</translation>
+        <translation>разбиение</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>модудалить</translation>
+        <translation>удаление</translation>
     </message>
     <message>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>информационная дистанция</translation>
+        <translation>дистанция</translation>
     </message>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished">id</translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation>информационный шаг</translation>
+        <translation>инфшаг</translation>
     </message>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished">ii</translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation>глубина</translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation>информационный угол</translation>
+        <translation>измеругла</translation>
     </message>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation type="unfinished">ia</translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation>информационная область</translation>
+        <translation>измерплощади</translation>
     </message>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation type="unfinished">aa</translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished">mt</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation type="unfinished">tx</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation type="unfinished">so</translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished">ki</translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished">un</translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished">rd</translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>предел прорисовки</translation>
+        <translation>предпрорис</translation>
     </message>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished">dp</translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
@@ -7782,12 +7782,12 @@ Do you want to replace it?</source>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation type="unfinished">eqn</translation>
+        <translation>уравн</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation type="unfinished">eq</translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -7797,37 +7797,37 @@ Do you want to replace it?</source>
     <message>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">A0</translation>
+        <translation>A0</translation>
     </message>
     <message>
         <source>A1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">A1</translation>
+        <translation>A1</translation>
     </message>
     <message>
         <source>A2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">A2</translation>
+        <translation>A2</translation>
     </message>
     <message>
         <source>A3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">A3</translation>
+        <translation>A3</translation>
     </message>
     <message>
         <source>A4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">A4</translation>
+        <translation>A4</translation>
     </message>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation>Письмо / ANSI А</translation>
+        <translation>Letter / ANSI А</translation>
     </message>
     <message>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation>Законный</translation>
+        <translation>Legal</translation>
     </message>
     <message>
         <source>Tabloid / ANSI B</source>
@@ -7837,17 +7837,17 @@ Do you want to replace it?</source>
     <message>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ANSI C</translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ANSI D</translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ANSI E</translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <source>Arch A</source>
@@ -7882,37 +7882,37 @@ Do you want to replace it?</source>
     <message>
         <source>a0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">a0</translation>
+        <translation>a0</translation>
     </message>
     <message>
         <source>a1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">a1</translation>
+        <translation>a1</translation>
     </message>
     <message>
         <source>a2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">a2</translation>
+        <translation>a2</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">a3</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>a4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">a4</translation>
+        <translation>a4</translation>
     </message>
     <message>
         <source>letter</source>
         <comment>Paper format</comment>
-        <translation>письмо</translation>
+        <translation>letter</translation>
     </message>
     <message>
         <source>legal</source>
         <comment>Paper format</comment>
-        <translation>законный</translation>
+        <translation>legal</translation>
     </message>
     <message>
         <source>tabloid</source>
@@ -7922,17 +7922,17 @@ Do you want to replace it?</source>
     <message>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ansi c</translation>
+        <translation>ansi c</translation>
     </message>
     <message>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ansi d</translation>
+        <translation>ansi d</translation>
     </message>
     <message>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">ansi e</translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <source>arch a</source>
@@ -8105,7 +8105,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation>Рисунок с автоцентром на странице.</translation>
+        <translation>Автоцентр на странице.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
@@ -8113,7 +8113,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation>Печать монохрома (черный/белый).</translation>
+        <translation>Печать монохром (черный/белый).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
@@ -8123,7 +8123,7 @@ Do you want to replace it?</source>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation>Разрешение на результат (DPI).</translation>
+        <translation>Выходное разрешение (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
@@ -8131,7 +8131,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation>Бумажные поля в мм (интегратор или поплавок).</translation>
+        <translation>Бумажные поля в мм (целое или плавающее).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
@@ -8140,7 +8140,7 @@ Do you want to replace it?</source>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation>Выход файла PDF.</translation>
+        <translation>Выходной файл PDF.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
@@ -8152,7 +8152,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation>Вход DXF файл(ы)</translation>
+        <translation>Вход DXF файл(ов)</translation>
     </message>
     <message>
         <source>Keycode mode</source>
@@ -8160,7 +8160,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Load command file</source>
-        <translation>Файл команды загрузки</translation>
+        <translation>Загрузить командный файл</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
@@ -8176,7 +8176,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation>/ПользовательскийЦвет%1</translation>
+        <translation>/Пользовательский Цвет%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
@@ -8239,12 +8239,12 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Блок не может содержать вставки себя.</translation>
+        <translation>Блок не может содержать вставки сам по себе.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation> вложена вставка текущего блока в:
+        <translation> вложена вставка из текущего блока в:
 </translation>
     </message>
     <message>
@@ -8265,7 +8265,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionDefault</name>
     <message>
         <source>Choose second edge</source>
-        <translation>Выберите вторую границу</translation>
+        <translation>Выберите вторую грань</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8620,15 +8620,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation>радиус=% 1 недействителен (выражение)</translation>
+        <translation>радиус=%1 недействителен (выражение)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation>радиус=% 1 является недействительным (отрицательным)</translation>
+        <translation>радиус=% 1 недопустим (отрицательный)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation>радиус=% 1 недействителен (ноль)</translation>
+        <translation>радиус=% 1 недопустим (ноль)</translation>
     </message>
 </context>
 <context>
@@ -8662,7 +8662,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the first point on the tangent circle</source>
-        <translation>Укажите первую точку на касательной окружности</translation>
+        <translation>Укажите первую точку касательной к окружности</translation>
     </message>
     <message>
         <source>Back</source>
@@ -8670,11 +8670,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the second point on the tangent circle</source>
-        <translation>Укажите вторую точку на касательной окружности</translation>
+        <translation>Укажите вторую точку касательной к окружности</translation>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Укажите центр касательной окружности</translation>
+        <translation>Укажите центр касательной к окружности</translation>
     </message>
     <message>
         <source>Specify a line/arc/circle</source>
@@ -8701,27 +8701,27 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select the center of the tangent circle</source>
-        <translation>Укажите центр касательной окружности</translation>
+        <translation>Укажите центр касательной к окружности</translation>
     </message>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation>Неверное выражение &quot;% 1&quot; для радиуса</translation>
+        <translation>Недопустимое выражение &apos;%1&apos; для радиуса</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation>Неверный отрицательный радиус &quot;% 1&quot;</translation>
+        <translation>Недопустимый отрицательный радиус &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation>Неверный нулевой радиус &apos;%1&apos;</translation>
+        <translation>Недопустимый нулевой радиус &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation>Касательная окружность для радиуса &apos;%1&apos; невозможна</translation>
+        <translation>Касательная к окружности для радиуса &apos;%1&apos; невозможна</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation>Нет общей касательной окружности для радиуса «%1»</translation>
+        <translation>Нет общей касательной к окружности для радиуса &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -8767,15 +8767,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify the first line/arc/circle</source>
-        <translation>Укажите первую линию/дугу/окружность</translation>
+        <translation>Укажите первую линию, дугу или окружность</translation>
     </message>
     <message>
         <source>Specify the second line/arc/circle</source>
-        <translation>Укажите вторую линию/дугу/окружность</translation>
+        <translation>Укажите вторую линию, дугу или окружность</translation>
     </message>
     <message>
         <source>Specify the third line/arc/circle</source>
-        <translation>Укажите третью линию/дугу/окружность</translation>
+        <translation>Укажите третью линию, дугу или окружность</translation>
     </message>
 </context>
 <context>
@@ -9023,7 +9023,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet, or already closed.</source>
-        <translation>Невозможно закрыть последовательность строк: Еще не определено достаточно сущностей или они уже закрыты.</translation>
+        <translation>Невозможно замкнуть последовательность отрезков — выбрано недостаточно объектов или уже замкнуто.</translation>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
@@ -9031,7 +9031,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation>Не могу переделать: Конец истории</translation>
+        <translation>Невозможно повторить: Достигнут конец истории</translation>
     </message>
 </context>
 <context>
@@ -9162,7 +9162,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Недопустимое число. Попробуйте от 1 до 99</translation>
+        <translation>Недопустимое число. Попробуйте от 1..99</translation>
     </message>
     <message>
         <source>Specify Distance &lt;%1&gt; or select entity or [%2]</source>
@@ -9193,7 +9193,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..99</source>
-        <translation>Недопустимое число. Попробуйте от 1 до 99</translation>
+        <translation>Недопустимое число. Попробуйте от 1..99</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -9216,7 +9216,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Недопустимое число. Попробуйте от 1 до 9999</translation>
+        <translation>Недопустимое число. Попробуйте от 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -9247,7 +9247,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Недопустимое число. Попробуйте от 1 до 9999</translation>
+        <translation>Недопустимое число. Попробуйте от 1...9999</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
@@ -9388,11 +9388,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot close sequence of lines: Not enough entities defined yet.</source>
-        <translation>Невозможно закрыть последовательность строк: Определено недостаточно сущностей.</translation>
+        <translation>Невозможно замкнуть последовательность линий. Указано недостаточно элементов.</translation>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation>Невозможно отменить: Еще не определено достаточное количество сущностей.</translation>
+        <translation>Невозможно отменить. Недостаточно элементов.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
@@ -9412,7 +9412,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished">x</translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
@@ -9420,7 +9420,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation>Введенный x является недействительным.</translation>
+        <translation>Введенное x является недействительным.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
@@ -9683,7 +9683,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionLockRelativeZero</name>
     <message>
         <source>(Un-)&amp;Lock Relative Zero</source>
-        <translation>(Раз-)&amp;Блокировка относительного нуля</translation>
+        <translation>Вкл. / в&amp;ыкл. относительный ноль</translation>
     </message>
 </context>
 <context>
@@ -9780,7 +9780,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>Родитель первой сущности не является полилинией</translation>
+        <translation>Родитель первого объекта — не ломаная</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
@@ -9788,19 +9788,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation>Одной из выбранных сущностей является nullptr</translation>
+        <translation>Одним из выбранных объектов является nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation>Родитель первого образования является nullptr</translation>
+        <translation>Родителем первого объекта является nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation>Первой сущностью является nullptr</translation>
+        <translation>Первый объект nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation>Вторая сущность является nullptr</translation>
+        <translation>Второй объект является nullptr</translation>
     </message>
 </context>
 <context>
@@ -9967,7 +9967,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation>Указать первое образование или войти в радиус &lt;%1&gt;</translation>
+        <translation>Указать первый объект или выбрать радиус &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -10012,7 +10012,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyTrim</name>
     <message>
         <source>Select first trim entity</source>
-        <translation>Выберите первый объект для подгона</translation>
+        <translation>Выберите первый объект для подгонки</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10028,11 +10028,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second trim entity</source>
-        <translation>Выберите второй объект для подгона</translation>
+        <translation>Выберите второй объект для подгонки</translation>
     </message>
     <message>
         <source>Select entity to trim</source>
-        <translation>Выберите объект для подгона</translation>
+        <translation>Выберите объект для подгонки</translation>
     </message>
 </context>
 <context>
@@ -10055,7 +10055,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select entity to trim or enter distance:</source>
-        <translation>Выберите объект для подгона или введите расстояние:</translation>
+        <translation>Выберите объект для подгонки или введите расстояние:</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10299,7 +10299,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify polyline to trim</source>
-        <translation>Укажите ломаную для подгона</translation>
+        <translation>Укажите ломаную для подгонки</translation>
     </message>
     <message>
         <source>Specify first segment</source>
@@ -10338,7 +10338,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation>введите значение смещения вывода на печать в командной строке</translation>
+        <translation>введите отступы при печати из командной строки</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
@@ -10470,7 +10470,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose second edge</source>
-        <translation>Выберите вторую границу</translation>
+        <translation>Выберите вторую грань</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10545,7 +10545,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionZoomWindow</name>
     <message>
         <source>Specify first edge</source>
-        <translation>Укажите первую границу</translation>
+        <translation>Укажите первую грань</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10553,7 +10553,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify second edge</source>
-        <translation>Укажите вторую границу</translation>
+        <translation>Укажите вторую грань</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10586,15 +10586,15 @@ This block cannot be inserted.</source>
     <name>Ui_ArcTangentialOptions</name>
     <message>
         <source>Tangential Arc Options</source>
-        <translation>Параметры касательной дуги</translation>
+        <translation>Параметры касательной к дуге</translation>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation>Радиус касательной дуги</translation>
+        <translation>Радиус касательной к дуге</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
-        <translation>Общий стягивающий угол касательной дуги</translation>
+        <translation>Общий угол наклона касательной к дуге</translation>
     </message>
     <message>
         <source>Radius</source>
@@ -10645,11 +10645,11 @@ This block cannot be inserted.</source>
     <name>Ui_CircleTan2Options</name>
     <message>
         <source>Circle Tangential2 Options</source>
-        <translation>Параметры окружности касательной к двум объектам</translation>
+        <translation>Касательная к окружности 2 варианта</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Radius of the tangential circle to draw&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Радиус новой касательной окружности&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Нарисовать радиус касательной к окружности&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -10657,7 +10657,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius of tangential circle</source>
-        <translation>Радиус касательной окружности</translation>
+        <translation>Радиус касательной к окружности</translation>
     </message>
 </context>
 <context>
@@ -10734,7 +10734,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>DPI</source>
-        <translation type="unfinished">DPI</translation>
+        <translation>DPI</translation>
     </message>
     <message>
         <source>DPI of Image</source>
@@ -10954,7 +10954,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Количество углов</translation>
+        <translation>Количество граней</translation>
     </message>
 </context>
 <context>
@@ -10965,11 +10965,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation>Номер:</translation>
+        <translation>Количество:</translation>
     </message>
     <message>
         <source>Number of edges</source>
-        <translation>Количество углов</translation>
+        <translation>Количество граней</translation>
     </message>
 </context>
 <context>
@@ -11056,7 +11056,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Tangential</source>
-        <translation>Касательно</translation>
+        <translation>Касательная</translation>
     </message>
     <message>
         <source>Tan Radius</source>
@@ -11126,7 +11126,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation>Включите, чтобы подогнать две линии при скруглении</translation>
+        <translation>Включите, чтобы подогнать грани при скруглении</translation>
     </message>
     <message>
         <source>Trim</source>
@@ -11201,7 +11201,7 @@ This block cannot be inserted.</source>
     <name>Ui_TrimAmountOptions</name>
     <message>
         <source>Trim Amount Options</source>
-        <translation>Параметры подгона на величину</translation>
+        <translation>Параметры подгонки на величину</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
