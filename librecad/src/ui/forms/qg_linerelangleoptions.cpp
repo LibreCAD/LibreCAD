@@ -26,10 +26,29 @@
 #include "qg_linerelangleoptions.h"
 
 #include "rs_actiondrawlinerelangle.h"
-#include "rs_settings.h"
-#include "rs_math.h"
-#include "ui_qg_linerelangleoptions.h"
 #include "rs_debug.h"
+#include "rs_dimension.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "ui_qg_linerelangleoptions.h"
+
+namespace {
+constexpr char* g_angleKey = "/LineRelAngleAngle";
+constexpr char* g_lengthKey = "/LineRelAngleLength";
+
+// format a number with specified digits after point
+QString formatNumber(double value, int precision = 8)
+{
+    precision = std::max(precision, 0);
+    precision = std::min(precision, 16);
+    LC_ERR<<"value: "<<value;
+    QString text = QString("%1").arg(value, 0, 'f', precision);
+    LC_ERR<<"value: "<<text;
+    text = RS_Dimension::stripZerosLinear(text, 12);
+    LC_ERR<<"value: "<<text;
+    return text;
+}
+}
 
 /*
  *  Constructs a QG_LineRelAngleOptions as a child of 'parent', with the
@@ -37,9 +56,9 @@
  */
 QG_LineRelAngleOptions::QG_LineRelAngleOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_LineRelAngleOptions{})
+    , ui(std::make_unique<Ui::Ui_LineRelAngleOptions>())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 }
 
 /*
@@ -53,7 +72,7 @@ QG_LineRelAngleOptions::~QG_LineRelAngleOptions() = default;
  */
 void QG_LineRelAngleOptions::languageChange()
 {
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
 void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
@@ -62,13 +81,13 @@ void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
               ||
               a->rtti()==RS2::ActionDrawLineOrthogonal )
             ) {
-		action = static_cast<RS_ActionDrawLineRelAngle*>(a);
+        action = static_cast<RS_ActionDrawLineRelAngle*>(a);
         if (action->hasFixedAngle()) {
-			ui->lAngle->hide();
-			ui->leAngle->hide();
+            ui->lAngle->hide();
+            ui->leAngle->hide();
         }else{
-			ui->lAngle->show();
-			ui->leAngle->show();
+            ui->lAngle->show();
+            ui->leAngle->show();
         }
 
         QString sa;
@@ -76,27 +95,29 @@ void QG_LineRelAngleOptions::setAction(RS_ActionInterface* a, bool update) {
 
         // settings from action:
         if (update) {
-            sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-            sl = QString("%1").arg(action->getLength());
+            sa = formatNumber(RS_Math::rad2deg(action->getAngle()));
+            sl = formatNumber(action->getLength());
         }
         // settings from config file:
         else {
             RS_SETTINGS->beginGroup("/Draw");
             if (!action->hasFixedAngle()) {
-                sa = RS_SETTINGS->readEntry("/LineRelAngleAngle", "30.0");
+                sa = RS_SETTINGS->readEntry(g_angleKey, "30.0");
+                sa = RS_Dimension::stripZerosLinear(sa, 12);
             } else {
-                sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
+                sa = formatNumber(RS_Math::rad2deg(action->getAngle()));
             }
-            sl = RS_SETTINGS->readEntry("/LineRelAngleLength", "10.0");
+            sl = RS_SETTINGS->readEntry(g_lengthKey, "10.0");
+            sl = RS_Dimension::stripZerosLinear(sl, 12);
             RS_SETTINGS->endGroup();
         }
 
-		ui->leAngle->setText(sa);
-		ui->leLength->setText(sl);
+        ui->leAngle->setText(sa);
+        ui->leLength->setText(sl);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LineRelAngleOptions::setAction: wrong action type");
-		action = nullptr;
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_LineRelAngleOptions::setAction: wrong action type");
+        action = nullptr;
     }
 }
 
@@ -104,11 +125,14 @@ void QG_LineRelAngleOptions::saveSettings() {
     if (action) {
         RS_SETTINGS->beginGroup("/Draw");
         if (!action->hasFixedAngle()) {
-            RS_SETTINGS->writeEntry("/LineRelAngleAngle", 
-				RS_Math::rad2deg(action->getAngle()));
+            QString angle = formatNumber(RS_Math::rad2deg(action->getAngle()));
+            RS_SETTINGS->writeEntry(g_angleKey, angle);
+            LC_ERR<<__LINE__<<": sa= "<<angle;
         }
-        if (action->getLength() > RS_TOLERANCE)
-            RS_SETTINGS->writeEntry("/LineRelAngleLength", action->getLength());
+        if (action->getLength() > RS_TOLERANCE) {
+            QString length = formatNumber(action->getLength());
+            RS_SETTINGS->writeEntry(g_lengthKey, length);
+        }
         RS_SETTINGS->endGroup();
     }
 }

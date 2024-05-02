@@ -35,12 +35,12 @@
 
 namespace {
 // format a number with specified digits after point
-QString formatNumber(double value, int precision)
+QString formatNumber(double value, int precision = 8)
 {
     precision = std::max(precision, 0);
     precision = std::min(precision, 16);
     QString text = QString("%1").arg(value, 0, 'f', precision);
-    RS_Dimension::stripZerosAngle(text, 3);
+    RS_Dimension::stripZerosLinear(text, 12);
     return text;
 }
 }
@@ -99,7 +99,7 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
             if (!action->hasFixedAngle()) {
                 sa = RS_SETTINGS->readEntry("/LineAngleAngle", "30.0");
             } else {
-                sa = formatNumber(RS_Math::rad2deg(action->getAngle()), 6);
+                sa = formatNumber(RS_Math::rad2deg(action->getAngle()));
             }
             sl = RS_SETTINGS->readEntry("/LineAngleLength", "10.0");
             m_snapPoint = RS_SETTINGS->readNumEntry("/LineAngleSnapPoint", 0);
@@ -124,11 +124,11 @@ void QG_LineAngleOptions::saveSettings() {
     if (action != nullptr) {
         RS_SETTINGS->beginGroup("/Draw");
         if (!m_bFixedAngle) {
-            QString angle = formatNumber(RS_Math::rad2deg(action->getAngle()), 6);
+            QString angle = formatNumber(RS_Math::rad2deg(action->getAngle()));
             RS_SETTINGS->writeEntry("/LineAngleAngle", angle);
         }
         if (action->getLength() > RS_TOLERANCE) {
-            QString length = formatNumber(action->getLength(), 6);
+            QString length = formatNumber(action->getLength());
             RS_SETTINGS->writeEntry("/LineAngleLength", length);
         }
         RS_SETTINGS->writeEntry("/LineAngleSnapPoint", m_snapPoint);
@@ -145,9 +145,10 @@ void QG_LineAngleOptions::updateAngle(const QString& a) {
 
 void QG_LineAngleOptions::updateLength(const QString& l) {
     if (action != nullptr) {
-        bool ok(false);
+        bool ok = false;
         double length=RS_Math::eval(l,&ok);
-        if(ok) action->setLength(length);
+        if(ok)
+            action->setLength(length);
         saveSettings();
     }
 }
