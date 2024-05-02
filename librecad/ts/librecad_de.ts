@@ -943,7 +943,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Freihand</translation>
     </message>
     <message>
         <source>Ellipses</source>
