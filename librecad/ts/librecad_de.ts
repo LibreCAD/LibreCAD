@@ -130,7 +130,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ungültiger Ausdruck</translation>
+        <translation>Kein gültiger Ausdruck</translation>
     </message>
 </context>
 <context>
@@ -824,7 +824,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished">Kreis&amp;bogen</translation>
+        <translation>Kreis&amp;bogen</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
@@ -923,7 +923,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandozeile</translation>
+        <translation>Befehlszeile</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -935,11 +935,11 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished">Linien</translation>
+        <translation>Linien</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished">Kreise</translation>
+        <translation>Kreise</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -947,7 +947,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished">Ellipsen</translation>
+        <translation>Ellipsen</translation>
     </message>
     <message>
         <source>PolyLines</source>
@@ -955,7 +955,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Auswählen</translation>
+        <translation>Auswählen</translation>
     </message>
     <message>
         <source>Dimensions</source>
@@ -963,7 +963,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Ändern</translation>
+        <translation>Ändern</translation>
     </message>
     <message>
         <source>Measure</source>
@@ -1526,7 +1526,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Zeichnung schließen</translation>
+        <translation>Zeichnung schließen</translation>
     </message>
     <message>
         <source>Save changes to the following item?
@@ -1536,11 +1536,11 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Speichern</translation>
+        <translation>&amp;Speichern</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Speichern &amp;unter...</translation>
+        <translation>Speichern &amp;unter...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
@@ -1556,7 +1556,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anordung</translation>
     </message>
     <message>
         <source>Rounded</source>
@@ -1617,7 +1617,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
@@ -1637,7 +1637,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
@@ -1653,7 +1653,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spenden</translation>
     </message>
 </context>
 <context>
@@ -1792,7 +1792,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
@@ -1883,7 +1883,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/Farbbox</translation>
     </message>
     <message>
         <source>Custom Picked</source>
@@ -1941,7 +1941,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Ablage</translation>
     </message>
     <message>
         <source>Float</source>
@@ -1949,7 +1949,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Kommandozeile</translation>
+        <translation>Befehlszeile</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -2981,7 +2981,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished">Schriftart:</translation>
+        <translation>Schriftart:</translation>
     </message>
     <message>
         <source>Text Direction</source>
@@ -3449,11 +3449,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Höhe:</translation>
+        <translation>&amp;Höhe:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
@@ -3469,7 +3469,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished">Unten</translation>
+        <translation>Unten</translation>
     </message>
     <message>
         <source>Number of pages</source>
@@ -3477,11 +3477,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished">Horizontal</translation>
+        <translation>Horizontal:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikal:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
@@ -3489,11 +3489,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Punkte</translation>
+        <translation>&amp;Punkte</translation>
     </message>
     <message>
         <source>Point Style</source>
