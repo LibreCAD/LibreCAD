@@ -5,7 +5,7 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Enquadramento</translation>
     </message>
     <message>
         <source>Add to favorites</source>
@@ -20,11 +20,11 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Enquadramento</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Caixa de grupo</translation>
     </message>
     <message>
         <source>Set</source>
@@ -35,7 +35,7 @@
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>PontosSpline</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -51,30 +51,30 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontos Spline</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontos de Controle</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Pontos na Spline</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecione uma entidade de arco</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Indique o local da cota do arco</translation>
     </message>
 </context>
 <context>
@@ -114,19 +114,19 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Indique o centro</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifique uma tangente</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Insira o número:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Número inválido. Tente 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -168,39 +168,39 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">&amp;Janela de zoom</translation>
+        <translation>&amp;Janela de Zoom</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished">Zoom com efeito &amp;panorama</translation>
+        <translation>Zoom com efeito &amp;Panorama</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished">Selecionar entidade</translation>
+        <translation>Selecionar Entidade</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Selecionar janela</translation>
+        <translation>Selecionar Janela</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Deselecionar janela</translation>
+        <translation>Deselecionar Janela</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(De-)Selecionar &amp;contorno</translation>
+        <translation>(De-)Selecionar &amp;Contorno</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">Selecionar entidades interseccionadas</translation>
+        <translation>Selecionar Entidades Interseccionadas</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">Deselecionar entidades interseccionadas</translation>
+        <translation>Deselecionar Entidades Interseccionadas</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(De-)Selecionar camada</translation>
+        <translation>(De-)Selecionar Camada</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -1212,7 +1212,7 @@ Favor verificar as permissões.</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Documento carregado:</translation>
+        <translation>Documento carregado: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -1294,7 +1294,7 @@ Salvamento automático desabilitado.</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation>Atenção: Arquivo já aberto:</translation>
+        <translation>Atenção: Arquivo já aberto. </translation>
     </message>
     <message>
         <source>Cannot save the file </source>
@@ -1314,7 +1314,7 @@ Salvamento automático desabilitado.</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation>Novo documento à partir do modelo:</translation>
+        <translation>Novo documento à partir do modelo: </translation>
     </message>
     <message>
         <source>Select Template aborted</source>
@@ -9061,7 +9061,7 @@ This block cannot be inserted.</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Quantidade de linhas fora do intervalo:</translation>
+        <translation>Quantidade de linhas fora do intervalo: </translation>
     </message>
 </context>
 <context>
@@ -11211,15 +11211,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Destruir</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Atribuir</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Atualizar</translation>
     </message>
 </context>
 </TS>
