@@ -21,22 +21,22 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia dorównywania...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Zachowaj oryginalne obiekty</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Określ wpierw punkty bazowe</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Ustawienia dorównywania</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
@@ -52,7 +52,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Jeśli zaznaczono opcję &quot;Zachowaj oryginalne obiekty&quot;
+Polecenie Wyrównanie będzie raczej tworzyć kopie zaznaczonych obiektów, niż je przesuwać .
+
+Jeśli zaznaczono opcję &quot;Określ wpierw punkty bazowe&quot;,
+Polecenie Wyrównanie wyświetli monit o wskazanie punktów wyrównania w kolejności
+pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt docelowy.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -81,12 +86,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Wtyczka kreatora kół zębatych</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Wtyczka do kół zębatych</translation>
     </message>
 </context>
 <context>
@@ -506,7 +511,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Podniesienie Punktu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -526,7 +531,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
-        <translation>OK</translation>
+        <translation>Akceptuj</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="268"/>
@@ -1094,7 +1099,7 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="144"/>
         <source>%1 objects imported</source>
-        <translation type="unfinished"></translation>
+        <translation>importowano %1 obiektów</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
@@ -1165,7 +1170,7 @@ Użyj t lub x w równaniu jako zmienna/parametr.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="28"/>
         <source>step size:</source>
-        <translation type="unfinished"></translation>
+        <translation>krok:</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
