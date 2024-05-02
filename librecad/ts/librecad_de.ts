@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Bogen auswählen</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Position für Bogenmass angeben</translation>
     </message>
 </context>
 <context>
@@ -126,7 +126,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished">Keine gültige Anzahl. Versuchen Sie 1..9999</translation>
+        <translation>Keine gültige Anzahl. Geben sie einen Wert zwischen 1..9999 ein</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -820,7 +820,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygon (Zentrum,Tangente)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -828,51 +828,51 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Layer ein&amp;schalten</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Layer aussc&amp;halten</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle entspe&amp;rren</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>A&amp;lle sperren</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgewählte Layer &amp;exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Sichtbare Layer exp&amp;ortieren</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Blöcke an&amp;zeigen</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Blöcke ver&amp;bergen</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als CA&amp;M/Bereinigtes SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle schliessen</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Widgets neu andocken</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation>Alles speichern...</translation>
+        <translation>A&amp;lle speichern...</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>Speichere Layer &quot;%1&quot; als &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -919,7 +919,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Bibliothek Browser</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -927,11 +927,11 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Dockbereich</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Fliegend</translation>
     </message>
     <message>
         <source>Lines</source>
@@ -951,7 +951,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polylinien</translation>
     </message>
     <message>
         <source>Select</source>
@@ -959,7 +959,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished"></translation>
+        <translation>Bemassungen</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -967,7 +967,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Messen</translation>
     </message>
 </context>
 <context>
@@ -1518,7 +1518,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zeichnung speichern: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
@@ -1531,7 +1531,8 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Änderungen speichern für folgenden Eintrag?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -1559,27 +1560,27 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Abgerundet</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation>Dreieckig</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation>Norden</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation>Süden</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation>Osten</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation>Westen</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
@@ -1595,11 +1596,11 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle schliessen abgebrochen</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Der Code</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -1607,12 +1608,12 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Fiegend</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Angedockt</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -1620,15 +1621,15 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>An&amp;wenderhandbuch</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Befehle</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Stilvorlage</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
@@ -1787,7 +1788,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Block entfernen</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -1795,7 +1796,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Suche nach gleichen Blocknamen</translation>
     </message>
 </context>
 <context>
@@ -1886,7 +1887,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Benutzerwahl</translation>
     </message>
 </context>
 <context>
@@ -1908,7 +1909,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation>Löschen</translation>
+        <translation>Entfernen</translation>
     </message>
 </context>
 <context>
@@ -1932,7 +1933,7 @@ Fenster editieren</translation>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation>escape</translation>
+        <translation>Beenden</translation>
     </message>
     <message>
         <source>...</source>
@@ -2057,11 +2058,12 @@ Fenster editieren</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribute des gewählten Elements, werden auch auf Unterelemente angewendet INSERT.
+Dies verändert alle Elemente des Block rekursiv.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Attribute auf Blöcke anwenden</translation>
     </message>
 </context>
 <context>
@@ -2251,7 +2253,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Bilddatei auswählen</translation>
     </message>
 </context>
 <context>
@@ -2975,7 +2977,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Schrifteinstellung</translation>
     </message>
     <message>
         <source>Font:</source>
@@ -2983,15 +2985,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Textrichtung</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Links nach rechts</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Rechts nach Links</translation>
     </message>
 </context>
 <context>
@@ -3455,15 +3457,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Breite:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausrichtung</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Ränder</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -3471,11 +3473,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Seitenanzahl</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Horizontal</translation>
     </message>
     <message>
         <source>Vertically:</source>
