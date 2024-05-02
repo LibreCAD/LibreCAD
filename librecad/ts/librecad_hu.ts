@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Kedvencekhez adás</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,15 +20,15 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Csoport keret</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Beállít</translation>
     </message>
 </context>
 <context>
@@ -43,7 +43,7 @@
     </message>
     <message>
         <source>Geometry</source>
-        <translation type="unfinished"></translation>
+        <translation>Geometria</translation>
     </message>
     <message>
         <source>Closed</source>
@@ -55,18 +55,18 @@
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Ellenörző pont</translation>
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>Pont a görbén</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassza ki az ív entitást</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Határozza meg az ív helyzetének méretét</translation>
     </message>
 </context>
 <context>
@@ -82,15 +82,16 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>A sugár=%1 túl kicsi a kiválasztott pontokhoz.
+A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Válassz ki egyet a két lehetséges középpontból</translation>
     </message>
     <message>
         <source>Specify first point</source>
-        <translation type="unfinished"></translation>
+        <translation>Add meg az első pontot</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -98,7 +99,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Második pont</translation>
+        <translation>Add meg a második pontot</translation>
     </message>
     <message>
         <source>Back</source>
@@ -106,26 +107,26 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Középpont kiválasztása</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Add meg a középpontot</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Adj meg egy érintőt</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Szám megadása:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem érvényes szám. A számnak 1 és 9999 között kell lennie</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -160,7 +161,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nem lehet visszavonni: Semmi sem hozható vissza.</translation>
     </message>
 </context>
 <context>
@@ -171,7 +172,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Nagyítás &amp;Mozgatás</translation>
     </message>
     <message>
         <source>Select Entity</source>
@@ -183,11 +184,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Kijelölés törlése ablakban</translation>
+        <translation>Ablak kijelölésének törlése</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">&amp;Körvonal kijelölésa</translation>
+        <translation>&amp;Körvonal kijelölése</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
@@ -291,7 +292,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished">K&amp;oncentrikus</translation>
+        <translation>&amp;Koncentrikus</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
@@ -300,11 +301,11 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Érintő 2 Kör, Sugár</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Érintő 2 Kör, 1 Pont</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
@@ -1199,7 +1200,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Betöltve:</translation>
+        <translation>Betöltve: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -1261,8 +1262,9 @@ distance between points=%2 is larger than diameter=%3</source>
         <source>Cannot open the file
 %1
 Please check the permissions.</source>
-        <translation>%1
-nem megnyitható. Ellenőrize a jogokat.</translation>
+        <translation>Nem tudom megnyitni a fájlt:
+%1
+ Ellenőrize a jogokat.</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
@@ -1281,7 +1283,8 @@ nem megnyitható. Ellenőrize a jogokat.</translation>
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation>Nem lehetséges a %1 fájlt menteni.
+        <translation>Nem lehetséges a fájlt menteni:
+%1
 Kérem, ellenőrizze a jogosultságokat.
 Az automatikus mentés kikapcsolva.</translation>
     </message>
@@ -1303,15 +1306,15 @@ Az automatikus mentés kikapcsolva.</translation>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation>Figyelem: Ez a fájl már meg van nyitva:</translation>
+        <translation>Figyelem: Ez a fájl már meg van nyitva: </translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation>Nem lehetséges menteni a fájlt</translation>
+        <translation>Nem lehetséges menteni a fájlt </translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation>, kérem ellenőrizze a fájlnevet, és a jogosultságokat.</translation>
+        <translation> , kérem ellenőrizze a fájlnevet, és a jogosultságokat.</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
@@ -3633,7 +3636,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>When set, LibreCAD will automatically generate a backup of your current drawing.</source>
-        <translation>Ha be van jelölve, akkor a LibreCAD automatikusan mentéseket készít az aktuális rajzról. </translation>
+        <translation>Ha be van jelölve, akkor a LibreCAD automatikusan mentéseket készít az aktuális rajzról.</translation>
     </message>
     <message>
         <source>Auto backup</source>
@@ -4772,11 +4775,11 @@ so default step value required for baking</source>
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation>QCad</translation>
+        <translation>LibreCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation>Újból nem lett megadva szöveg</translation>
+        <translation>Újból nem lett megadva szöveg.</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -4799,7 +4802,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation type="unfinished">LFF Font %1</translation>
+        <translation>LFF Betűtípus %1</translation>
     </message>
     <message>
         <source>QCad Font %1</source>
@@ -5654,7 +5657,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation>Portable Bit Map</translation>
+        <translation>Hodozható Bitkép</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
@@ -5666,7 +5669,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation>Portable Pixel Map</translation>
+        <translation>Horodzható Pixel kép</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
@@ -5674,7 +5677,7 @@ This action can NOT be undone.</source>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation>X Pixel Map</translation>
+        <translation>X Pixel kép</translation>
     </message>
     <message>
         <source>Save Drawing As</source>
@@ -5708,7 +5711,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Inch</source>
-        <translation>Inch</translation>
+        <translation>incs</translation>
     </message>
     <message>
         <source>Foot</source>
@@ -5776,7 +5779,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>Astro</source>
-        <translation>Astro</translation>
+        <translation>Csillagászati egység</translation>
     </message>
     <message>
         <source>Lightyear</source>
@@ -5816,7 +5819,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>LFF Font %1</source>
-        <translation>LFF Font %1</translation>
+        <translation>LFF Betűtípus %1</translation>
     </message>
     <message>
         <source>Jww %1</source>
@@ -8939,7 +8942,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation>Referencia pont</translation>
+        <translation>Referencia pont megadása</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9186,7 +9189,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Érvénytelen szám. Próbálja meg 1...9999 között.</translation>
+        <translation>Érvénytelen szám. Próbálja meg 1...9999 között</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
@@ -9217,7 +9220,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation>Érvénytelen szám. Próbálja meg 1...9999 között.</translation>
+        <translation>Érvénytelen szám. Próbálja meg 1...9999 között</translation>
     </message>
     <message>
         <source>Not a valid expression.</source>
@@ -9466,7 +9469,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionEditPaste</name>
     <message>
         <source>Set reference point</source>
-        <translation>Referencia pont</translation>
+        <translation>Referencia pont megadása</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10013,7 +10016,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation>Nincs elem.</translation>
+        <translation>Nincs elem. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
@@ -10564,7 +10567,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius of the tangential arc</source>
-        <translation type="unfinished">Érintői körív sugara </translation>
+        <translation>Érintői körív sugara</translation>
     </message>
     <message>
         <source>Total subtending angle of the tangential arc</source>
@@ -11089,7 +11092,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Számold ki, hány oldalra van szükség a rajz elhelyezéséhez</translation>
     </message>
 </context>
 <context>
@@ -11104,7 +11107,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Levágni</translation>
     </message>
     <message>
         <source>Radius:</source>
@@ -11153,7 +11156,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Undo</source>
-        <translation type="unfinished"></translation>
+        <translation>Visszavonás</translation>
     </message>
 </context>
 <context>
@@ -11191,42 +11194,42 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését.</translation>
+        <translation>A megadott hosszúság a végső hosszt határozza meg, nem a hosszúság növekedését</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Keret</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Név</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Előállít</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Töröl</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Hozzárendel</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Frissítés</translation>
     </message>
 </context>
 </TS>
