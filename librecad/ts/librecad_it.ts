@@ -927,7 +927,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Riga di comando</translation>
+        <translation>Riga di comando</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -939,11 +939,11 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished">Linee</translation>
+        <translation>Linee</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished">Circonferenze</translation>
+        <translation>Circonferenze</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -951,7 +951,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished">Ellissi</translation>
+        <translation>Ellissi</translation>
     </message>
     <message>
         <source>PolyLines</source>
@@ -1530,7 +1530,7 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Chiusura disegno</translation>
+        <translation>Chiusura disegno</translation>
     </message>
     <message>
         <source>Save changes to the following item?
@@ -1540,7 +1540,7 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Salva</translation>
+        <translation>&amp;Salva</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -1953,7 +1953,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Riga di comando</translation>
+        <translation>Riga di comando</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -2545,15 +2545,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[0080-00FF] Latin-1 Supplementary</source>
-        <translation type="unfinished">[0080-00FF] Latino 1 supplementare</translation>
+        <translation>[0080-00FF] Latino-1 supplementare</translation>
     </message>
     <message>
         <source>[0100-017F] Latin Extended-A</source>
-        <translation type="unfinished">[0100-017F] Latino esteso A</translation>
+        <translation>[0100-017F] Latino esteso-A</translation>
     </message>
     <message>
         <source>[0180-024F] Latin Extended-B</source>
-        <translation type="unfinished">[0180-024F] Latino esteso B</translation>
+        <translation>[0180-024F] Latino esteso-B</translation>
     </message>
     <message>
         <source>[0250-02AF] IPA Extensions</source>
@@ -2561,7 +2561,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[02B0-02FF] Spacing Modifier Letters</source>
-        <translation type="unfinished">[02B0-02FF] Caratteri modificatori di spazio</translation>
+        <translation>[02B0-02FF] Caratteri modificatori di spazio</translation>
     </message>
     <message>
         <source>[0300-036F] Combining Diacritical Marks</source>
@@ -2569,31 +2569,31 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[0370-03FF] Greek and Coptic</source>
-        <translation type="unfinished">[0370-03FF] Greco e copto</translation>
+        <translation>[0370-03FF] Greco e copto</translation>
     </message>
     <message>
         <source>[0400-04FF] Cyrillic</source>
-        <translation type="unfinished">[0400-04FF] Cirillico</translation>
+        <translation>[0400-04FF] Cirillico</translation>
     </message>
     <message>
         <source>[0500-052F] Cyrillic Supplementary</source>
-        <translation type="unfinished">[0500-052F] Cirillico supplementare</translation>
+        <translation>[0500-052F] Cirillico supplementare</translation>
     </message>
     <message>
         <source>[0530-058F] Armenian</source>
-        <translation type="unfinished">[0530-058F] Armeno</translation>
+        <translation>[0530-058F] Armeno</translation>
     </message>
     <message>
         <source>[0590-05FF] Hebrew</source>
-        <translation type="unfinished">[0590-05FF] Ebraico</translation>
+        <translation>[0590-05FF] Ebraico</translation>
     </message>
     <message>
         <source>[0600-06FF] Arabic</source>
-        <translation type="unfinished">[0600-06FF] Arabo</translation>
+        <translation>[0600-06FF] Arabo</translation>
     </message>
     <message>
         <source>[0700-074F] Syriac</source>
-        <translation type="unfinished">[0700-074F] Siriano</translation>
+        <translation>[0700-074F] Siriano</translation>
     </message>
     <message>
         <source>[0780-07BF] Thaana</source>
@@ -2605,7 +2605,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[0980-09FF] Bengali</source>
-        <translation type="unfinished">[0980-09FF] Bengalese</translation>
+        <translation>[0980-09FF] Bengalese</translation>
     </message>
     <message>
         <source>[0A00-0A7F] Gurmukhi</source>
@@ -2621,7 +2621,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[0B80-0BFF] Tamil</source>
-        <translation type="unfinished">[0B80-0BFF] Tamil</translation>
+        <translation>[0B80-0BFF] Tamil</translation>
     </message>
     <message>
         <source>[0C00-0C7F] Telugu</source>
@@ -2641,23 +2641,23 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[0E00-0E7F] Thai</source>
-        <translation type="unfinished">[0E00-0E7F] Thailandese</translation>
+        <translation>[0E00-0E7F] Thailandese</translation>
     </message>
     <message>
         <source>[0E80-0EFF] Lao</source>
-        <translation type="unfinished">[0E80-0EFF] Laotiano</translation>
+        <translation>[0E80-0EFF] Laotiano</translation>
     </message>
     <message>
         <source>[0F00-0FFF] Tibetan</source>
-        <translation type="unfinished">[0F00-0FFF] Tibetano</translation>
+        <translation>[0F00-0FFF] Tibetano</translation>
     </message>
     <message>
         <source>[1000-109F] Myanmar</source>
-        <translation type="unfinished">[1000-109F] Birmano</translation>
+        <translation>[1000-109F] Birmano</translation>
     </message>
     <message>
         <source>[10A0-10FF] Georgian</source>
-        <translation type="unfinished">[10A0-10FF] Georgiano</translation>
+        <translation>[10A0-10FF] Georgiano</translation>
     </message>
     <message>
         <source>[1100-11FF] Hangul Jamo</source>
@@ -2665,15 +2665,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[1200-137F] Ethiopic</source>
-        <translation type="unfinished">[1200-137F] Etiope</translation>
+        <translation>[1200-137F] Etiope</translation>
     </message>
     <message>
         <source>[13A0-13FF] Cherokee</source>
-        <translation type="unfinished">[13A0-13FF] Cherokee</translation>
+        <translation>[13A0-13FF] Cherokee</translation>
     </message>
     <message>
         <source>[1400-167F] Unified Canadian Aboriginal Syllabic</source>
-        <translation type="unfinished">[1400-167F] Sillabe delle lingue autoctone canadesi</translation>
+        <translation>[1400-167F] Lingue autoctone canadesi sillabiche</translation>
     </message>
     <message>
         <source>[1680-169F] Ogham</source>
@@ -2681,11 +2681,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[16A0-16FF] Runic</source>
-        <translation type="unfinished">[16A0-16FF] Runico</translation>
+        <translation>[16A0-16FF] Runico</translation>
     </message>
     <message>
         <source>[1700-171F] Tagalog</source>
-        <translation type="unfinished">[1700-171F] Tagalog</translation>
+        <translation>[1700-171F] Tagalog</translation>
     </message>
     <message>
         <source>[1720-173F] Hanunoo</source>
@@ -2705,27 +2705,27 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[1800-18AF] Mongolian</source>
-        <translation type="unfinished">[1800-18AF] Mongolo</translation>
+        <translation>[1800-18AF] Mongolo</translation>
     </message>
     <message>
         <source>[1E00-1EFF] Latin Extended Additional</source>
-        <translation type="unfinished">[1E00-1EFF] Latino esteso addizionale</translation>
+        <translation>[1E00-1EFF] Latino esteso addizionale</translation>
     </message>
     <message>
         <source>[1F00-1FFF] Greek Extended</source>
-        <translation type="unfinished">[1F00-1FFF] Greco esteso</translation>
+        <translation>[1F00-1FFF] Greco esteso</translation>
     </message>
     <message>
         <source>[2000-206F] General Punctuation</source>
-        <translation type="unfinished">[2000-206F] Punteggiatura generale</translation>
+        <translation>[2000-206F] Punteggiatura generale</translation>
     </message>
     <message>
         <source>[2070-209F] Superscripts and Subscripts</source>
-        <translation type="unfinished">[2070-209F] Apici e pedici</translation>
+        <translation>[2070-209F] Apici e pedici</translation>
     </message>
     <message>
         <source>[20A0-20CF] Currency Symbols</source>
-        <translation type="unfinished">[20A0-20CF] Simboli monetari</translation>
+        <translation>[20A0-20CF] Simboli monetari</translation>
     </message>
     <message>
         <source>[20D0-20FF] Combining Marks for Symbols</source>
@@ -2741,11 +2741,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[2190-21FF] Arrows</source>
-        <translation type="unfinished">[2190-21FF] Frecce</translation>
+        <translation>[2190-21FF] Frecce</translation>
     </message>
     <message>
         <source>[2200-22FF] Mathematical Operators</source>
-        <translation type="unfinished">[2200-22FF] Operatori matematici</translation>
+        <translation>[2200-22FF] Operatori matematici</translation>
     </message>
     <message>
         <source>[2300-23FF] Miscellaneous Technical</source>
@@ -2761,7 +2761,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[2460-24FF] Enclosed Alphanumerics</source>
-        <translation type="unfinished">[2460-24FF] Alfanumerici inclusi</translation>
+        <translation>[2460-24FF] Alfanumerici inclusi</translation>
     </message>
     <message>
         <source>[2500-257F] Box Drawing</source>
@@ -2769,19 +2769,19 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[2580-259F] Block Elements</source>
-        <translation type="unfinished">[2580-259F] Blocchi</translation>
+        <translation>[2580-259F] Blocchi</translation>
     </message>
     <message>
         <source>[25A0-25FF] Geometric Shapes</source>
-        <translation type="unfinished">[25A0-25FF] Forme geometriche</translation>
+        <translation>[25A0-25FF] Forme geometriche</translation>
     </message>
     <message>
         <source>[2600-26FF] Miscellaneous Symbols</source>
-        <translation type="unfinished">[2600-26FF] Simboli vari</translation>
+        <translation>[2600-26FF] Simboli vari</translation>
     </message>
     <message>
         <source>[2700-27BF] Dingbats</source>
-        <translation type="unfinished">[2700-27BF] Dingbats</translation>
+        <translation>[2700-27BF] Dingbats</translation>
     </message>
     <message>
         <source>[27C0-27EF] Miscellaneous Mathematical Symbols-A</source>
@@ -2789,15 +2789,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[27F0-27FF] Supplemental Arrows-A</source>
-        <translation type="unfinished">[27F0-27FF] Frecce supplementri A</translation>
+        <translation>[27F0-27FF] Frecce supplementari A</translation>
     </message>
     <message>
         <source>[2800-28FF] Braille Patterns</source>
-        <translation type="unfinished">[2800-28FF] Simboli Braille</translation>
+        <translation>[2800-28FF] Simboli Braille</translation>
     </message>
     <message>
         <source>[2900-297F] Supplemental Arrows-B</source>
-        <translation type="unfinished">[2900-297F] Frecce supplementati B</translation>
+        <translation>[2900-297F] Frecce supplementari B</translation>
     </message>
     <message>
         <source>[2980-29FF] Miscellaneous Mathematical Symbols-B</source>
@@ -2805,7 +2805,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[2A00-2AFF] Supplemental Mathematical Operators</source>
-        <translation type="unfinished">[2A00-2AFF] Operatori matematici supplementari</translation>
+        <translation>[2A00-2AFF] Operatori matematici supplementari</translation>
     </message>
     <message>
         <source>[2E80-2EFF] CJK Radicals Supplement</source>
@@ -2825,11 +2825,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[3040-309F] Hiragana</source>
-        <translation type="unfinished">[3040-309F] Hiragana</translation>
+        <translation>[3040-309F] Hiragana</translation>
     </message>
     <message>
         <source>[30A0-30FF] Katakana</source>
-        <translation type="unfinished">[30A0-30FF] Katakana</translation>
+        <translation>[30A0-30FF] Katakana</translation>
     </message>
     <message>
         <source>[3100-312F] Bopomofo</source>
@@ -2853,7 +2853,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>[3300-33FF] CJK Compatibility</source>
-        <translation type="unfinished">[3300-33FF] Compatibilità CJK</translation>
+        <translation>[3300-33FF] Compatibilità CJK</translation>
     </message>
     <message>
         <source>[3400-4DBF] CJK Unified Ideographs Extension A</source>
@@ -3792,11 +3792,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra l&apos;oggetto sotto il cursore</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
@@ -3852,7 +3852,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferenze CAD</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
@@ -3895,7 +3895,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza predefinita degli elementi, mm</translation>
     </message>
     <message>
         <source>Images</source>
@@ -3903,19 +3903,19 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Esportazione dell&apos;immagine raster</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Linee tratto/punto</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Lunghezza del motivo, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Trasforma linee tratto/punto in percorsi SVG</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
@@ -4799,7 +4799,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiudi tutto</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4879,7 +4879,7 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Modifica proprietà</translation>
     </message>
 </context>
 <context>
@@ -5041,27 +5041,27 @@ Il contenuto di un livello di costruzione non dovrebbe apparire in stampa.</tran
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Sblocca tutti i livelli</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocca tutti i livelli</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi livello</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtra</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sblocca tutti i livelli</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Blocca tutti i livelli</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
@@ -5069,11 +5069,11 @@ Il contenuto di un livello di costruzione non dovrebbe apparire in stampa.</tran
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Esporta i livelli selezionati</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta i livelli &amp;visibili</translation>
     </message>
 </context>
 <context>
@@ -5425,15 +5425,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>La posizione di zero relativo è %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>bloccato</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>sbloccato</translation>
     </message>
 </context>
 <context>
@@ -5612,7 +5612,7 @@ Questo NON può essere annullato.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Il livello &quot;0&quot; non può mai essere rimosso.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
@@ -5627,30 +5627,31 @@ Questo NON può essere annullato.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenzione: questa azione NON può essere annullata!</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Attenzione: il livello &quot;0&quot; non può mai essere rimosso.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Livelli da rimuovere:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Rimuovi %n blocco</numerusform>
+            <numerusform>Rimuovi %n blocchi</numerusform>
+            <numerusform>Rimuovi %n blocchi</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>I blocchi elencati ed i loro oggetti verranno rimossi.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocchi da rimuovere:</translation>
     </message>
 </context>
 <context>
@@ -5959,11 +5960,11 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura di blocchi nel file dwg</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>errore nella lettura di oggetti in file dwg</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
@@ -6007,7 +6008,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>libero</translation>
     </message>
     <message>
         <source>fhl</source>
@@ -6017,27 +6018,27 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
@@ -6057,7 +6058,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>orto</translation>
     </message>
     <message>
         <source>rect</source>
@@ -6122,7 +6123,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>tratteggio</translation>
     </message>
     <message>
         <source>ha</source>
@@ -6157,7 +6158,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>ridisegna</translation>
     </message>
     <message>
         <source>rg</source>
@@ -7916,7 +7917,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <source>arch a</source>
@@ -7982,7 +7983,7 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ignorare l&apos;errore ed aprire il file?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
@@ -7992,22 +7993,22 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore nell&apos;apertura del file DXF/DWG</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>versione non supportata del file DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura dei meta data DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura dell&apos;intestazione del file DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
@@ -8037,27 +8038,27 @@ Vuoi sovrascrivere?</translation>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura delle entità DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura degli oggetti DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura delle sezioni DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore di lettura del codice DXF/DWG</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>errore non definito</translation>
     </message>
     <message>
         <source>usage: </source>
@@ -8069,7 +8070,7 @@ Vuoi sovrascrivere?</translation>
     </message>
     <message>
         <source> *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> *.dxf</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
@@ -11116,7 +11117,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Calcola il numero di pagine necessarie per contenere il disegno</translation>
     </message>
 </context>
 <context>
