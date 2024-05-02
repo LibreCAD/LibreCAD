@@ -21,28 +21,29 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Выровняйте настройки...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Сохранить оригинальные объекты</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Сначала укажите базовые точки</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Настройки выравнивания</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Нажмите на опции для установки/отключения,
+Хорошо принять и начать выравнивание.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,7 +53,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Если проверяется &quot;Keep original objects&quot;,
+Align будет копировать, а не перемещать выбранные объекты.
+
+Если &quot;указать базовые точки в первую очередь&quot; проверяется,
+Приведение в порядок выравнивания
+первая база, вторая база, первая цель, вторая цель.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -81,12 +87,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../gear/gear.cpp" line="33"/>
         <source>Gear creation plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль создания</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="40"/>
         <source>Gear plugin</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль</translation>
     </message>
 </context>
 <context>
@@ -100,12 +106,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation>№</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
         <source>Empty Entity</source>
-        <translation>Пусто</translation>
+        <translation>Пустая сущность</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
@@ -247,7 +253,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>НАКЛАДНАЯ КОРОБКА</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
@@ -267,7 +273,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>ТЕКСТОВОЕСОДЕРЖАНИЕ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -287,22 +293,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Шкала</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Ротация</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Колонны/рои</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Расстояние между столбцами/строками</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -396,7 +402,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="41"/>
         <source>select original entity:</source>
-        <translation>Выберите исходный объект</translation>
+        <translation>Выберите исходный объект:</translation>
     </message>
     <message>
         <location filename="../sameprop/sameprop.cpp" line="43"/>
@@ -418,7 +424,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="36"/>
         <source>Read PIC file</source>
-        <translation>PIC-файл</translation>
+        <translation>Чтение файла PIC</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="42"/>
@@ -501,7 +507,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation>Нумеровать точки</translation>
+        <translation>Номер точки рисования</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -610,171 +616,171 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Пунктир 2</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Выберите линию, круг или дугу и возврат нажмите</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Ошибка</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished">№</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation type="unfinished">Пусто</translation>
+        <translation>Пусто</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished">Слой</translation>
+        <translation>Слой</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished">Цвет</translation>
+        <translation>Цвет</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation type="unfinished">Тип линии</translation>
+        <translation>Тип линии</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished">Толщина линии</translation>
+        <translation>Толщина линии</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished">Идентификатор</translation>
+        <translation>Идентификатор</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation type="unfinished">ЛИНИЯ</translation>
+        <translation>ЛИНИЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation type="unfinished">от точки</translation>
+        <translation>от точки</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation type="unfinished">до точки</translation>
+        <translation>до точки</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished">длина</translation>
+        <translation>длина</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished">угол в плоскости XY</translation>
+        <translation>угол в плоскости XY</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation type="unfinished">ув.</translation>
+        <translation>ув.</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation type="unfinished">ДУГА</translation>
+        <translation>ДУГА</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">центральная точка</translation>
+        <translation>центральная точка</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation type="unfinished">радиус</translation>
+        <translation>радиус</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation type="unfinished">начальный угол</translation>
+        <translation>начальный угол</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation type="unfinished">конечный угол</translation>
+        <translation>конечный угол</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">ОКРУЖНОСТЬ</translation>
+        <translation>ОКРУЖНОСТЬ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
         <source>circumference</source>
-        <translation type="unfinished">периметр</translation>
+        <translation>периметр</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation type="unfinished">площадь</translation>
+        <translation>площадь</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">ЛОМАНАЯ</translation>
+        <translation>ЛОМАНАЯ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation type="unfinished">Замкнута</translation>
+        <translation>Закрытый</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished">Нет</translation>
+        <translation>Нет</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation type="unfinished">Да</translation>
+        <translation>Да</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished">Вершины</translation>
+        <translation>Вершины</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation type="unfinished">в точке</translation>
+        <translation>в точке</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>Только линия, круг или дуга</translation>
     </message>
 </context>
 <context>
@@ -782,52 +788,52 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Разделить - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Слои</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>ХОРОШО</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Разделить на</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Размер</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>места</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Клещи - выключены</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Разрывы - Выкл</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Новый&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="210"/>
@@ -837,37 +843,42 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Введите начало
+угол, в
+десятичные градусы
+0° в 3 часа
+идет
+против часовой стрелки.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;&quot;Новый&quot;&lt;/i&gt;&lt;br&gt; Название продукта&lt;br&gt; для нового слоя&lt;br&gt;(при необходимости?) на&lt;br&gt;draw клещи.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Клещи</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Выше</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Ниже</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>Снаружи</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Изнутри</translation>
     </message>
 </context>
 <context>
@@ -875,107 +886,107 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество зубов</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол давления (deg)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Угол поворота</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Модуль</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Добавление (относящееся к модулю)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Дополнение (относящееся к модулю)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Число сегментов для рисования (добавление)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество сегментов для рисования (добавление)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать все зубы?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать симметричное лицо?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Использовать слои?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Круг добавлений?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисовать круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисуйте базовый круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Нарисуйте корневой круг?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <translation>Провести линию давления?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Ограничение давления?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Рассчитать помехи?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Количество сегментов для рисования (вмешательство)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Принять</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation type="unfinished">Отмена</translation>
+        <translation>Отмена</translation>
     </message>
 </context>
 <context>
@@ -1193,7 +1204,7 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation>Точки сплайна</translation>
+        <translation>ТочкиСплайна</translation>
     </message>
 </context>
 <context>
@@ -1219,7 +1230,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation>Разделение:</translation>
+        <translation>Разделение</translation>
     </message>
 </context>
 </TS>
