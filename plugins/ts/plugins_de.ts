@@ -26,7 +26,7 @@
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Originalobjekte behalten</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
