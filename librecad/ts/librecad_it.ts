@@ -20,11 +20,11 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation></translation>
+        <translation>Riquadro</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation></translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Set</source>
@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Seleziona un arco</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica posizione quotatura arco</translation>
     </message>
 </context>
 <context>
@@ -114,23 +114,23 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica centro</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica una tangente</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Inserisci numero:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero non valido. Prova 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Espressione non valida</translation>
     </message>
 </context>
 <context>
@@ -473,7 +473,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation>&amp;Specchio</translation>
+        <translation>&amp;Specchia</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
@@ -589,7 +589,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation>Commuta &amp;Blocca Livello</translation>
+        <translation>Commuta &amp;Blocco Livello</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
@@ -669,11 +669,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation variants="yes">
-            <lengthvariant>Zoom &amp;avanti</lengthvariant>
-            <lengthvariant></lengthvariant>
-            <lengthvariant></lengthvariant>
-        </translation>
+        <translation>Zoom avanti</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
@@ -828,7 +824,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Poligono (Cen,Tan)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -836,51 +832,51 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra tutti i livelli</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nascondi tutti i livelli</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>Sblocca tutto</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocca tutto</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta livello(i) selezionato</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta livello(i) visibile</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Mostra tutti i blocchi</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>Nascondi tutti i blocchi</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Esporta CAM/SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiudi tutto</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Ri-aggancia Widget</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva tutto...</translation>
     </message>
 </context>
 <context>
@@ -894,7 +890,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>Salvataggio livello &quot;%1&quot; as &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -927,7 +923,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Ricerca libreria</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -935,11 +931,11 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona aggancio</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Galleggiante</translation>
     </message>
     <message>
         <source>Lines</source>
@@ -951,7 +947,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Mano libera</translation>
     </message>
     <message>
         <source>Ellipses</source>
@@ -959,7 +955,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polilinee</translation>
     </message>
     <message>
         <source>Select</source>
@@ -967,7 +963,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Quote</translation>
+        <translation>Quotature</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -975,7 +971,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Misura</translation>
     </message>
 </context>
 <context>
@@ -1075,7 +1071,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation>Selezionare oggetto:</translation>
+        <translation>Seleziona oggetto:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1093,7 +1089,7 @@ la distanza fra i punti=%2 è maggiore del diametro=%3</translation>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation>Selezionare oggetti:</translation>
+        <translation>Seleziona oggetti:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1410,11 +1406,11 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation>&amp;Curve</translation>
+        <translation>&amp;Curva</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation>Curve</translation>
+        <translation>Curva</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -1426,7 +1422,7 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>Dimension</source>
-        <translation>Quota</translation>
+        <translation>Quotatura</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -1526,11 +1522,11 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvataggio disegno: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Salvataggio annullato</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
@@ -1539,7 +1535,8 @@ Verificare l&apos;esistenza e i permessi.</translation>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva le modifiche agli oggetti seguenti?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
@@ -1547,104 +1544,104 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva con nome...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Salva %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva %1 come...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo finestra</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Disposizione</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrotondato</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation>Triangolare</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation>Nord</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation>Sud</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation>Est</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation>Ovest</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizza</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>Massimizzato</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Salva tutto annullato</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Chiudi tutto annullato</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Il codice</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Comando</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Galleggiante</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>Aggancio</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>Manuale utente</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Comandi</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Fogli &amp;Stile</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Wid&amp;get</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
@@ -1652,15 +1649,15 @@ Verificare l&apos;esistenza e i permessi.</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informazione su &amp;Rilascio</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>On&amp;line</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dona</translation>
     </message>
 </context>
 <context>
@@ -1795,15 +1792,15 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Rimuovi blocco</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtro</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Cerca nomi di blocco</translation>
     </message>
 </context>
 <context>
@@ -1890,11 +1887,11 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/Riquadro colore</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Scelta personalizzata</translation>
     </message>
 </context>
 <context>
@@ -1948,7 +1945,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Zona aggancio</translation>
     </message>
     <message>
         <source>Float</source>
@@ -1960,7 +1957,7 @@ in una finestra separata</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -2065,11 +2062,12 @@ in una finestra separata</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica gli attributi anche a tutte le sotto entità dell&apos;inserimento selezionato.
+Ciò modifica ricorsivamente tutte le istanze del blocco stesso.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Applica attibuti internamente al blocco</translation>
     </message>
 </context>
 <context>
@@ -2259,7 +2257,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleziona un file immagine</translation>
     </message>
 </context>
 <context>
@@ -2376,7 +2374,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -2391,7 +2389,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Altezza:</translation>
+        <translation>Altezza:</translation>
     </message>
     <message>
         <source>&amp;Default line spacing</source>
@@ -2983,7 +2981,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni carattere</translation>
     </message>
     <message>
         <source>Font:</source>
@@ -2991,22 +2989,22 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direzione testo</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Da sinistra a destra</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Da destra a sinistra</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgMirror</name>
     <message>
         <source>Mirroring Options</source>
-        <translation>Opzioni specchioi</translation>
+        <translation>Opzioni specchio</translation>
     </message>
     <message>
         <source>Number of copies</source>
@@ -3014,11 +3012,11 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Cancella originali</translation>
+        <translation>Cancella originali</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Mantieni originali</translation>
+        <translation>Mantieni originali</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3041,15 +3039,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Cancella originali</translation>
+        <translation>Cancella originali</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Mantieni originali</translation>
+        <translation>Mantieni originali</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>Copie in &amp;serie</translation>
+        <translation>Copie in serie</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3096,15 +3094,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Delete Original</source>
-        <translation>&amp;Cancella originali</translation>
+        <translation>Cancella originali</translation>
     </message>
     <message>
         <source>&amp;Keep Original</source>
-        <translation>&amp;Mantieni originali</translation>
+        <translation>Mantieni originali</translation>
     </message>
     <message>
         <source>&amp;Multiple Copies</source>
-        <translation>Copie in &amp;serie</translation>
+        <translation>Copie in serie</translation>
     </message>
     <message>
         <source>...</source>
@@ -3211,15 +3209,15 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Paper</source>
-        <translation>&amp;Carta</translation>
+        <translation>Carta</translation>
     </message>
     <message>
         <source>&amp;Landscape</source>
-        <translation>&amp;Orizzontale</translation>
+        <translation>Orizzontale</translation>
     </message>
     <message>
         <source>P&amp;ortrait</source>
-        <translation>&amp;Verticale</translation>
+        <translation>Verticale</translation>
     </message>
     <message>
         <source>&amp;Units</source>
@@ -3227,7 +3225,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Main drawing unit:</source>
-        <translation>Unità &amp;principali di disegno:</translation>
+        <translation>Unità principale di disegno:</translation>
     </message>
     <message>
         <source>&amp;Format:</source>
@@ -3247,7 +3245,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>&amp;Dimensions</source>
-        <translation>&amp;Quote</translation>
+        <translation>&amp;Quotature</translation>
     </message>
     <message>
         <source>Grid Settings</source>
@@ -3455,23 +3453,23 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Formato</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Altezza:</translation>
+        <translation>Altezza:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Larghezza:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientazione</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Margini</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -3479,23 +3477,23 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Numero di pagine</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Orizzontalmente:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verticalmente:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>lunghezza linea esensione fissa</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Spline</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -3503,7 +3501,7 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Stile punto</translation>
     </message>
     <message>
         <source>...</source>
@@ -3511,35 +3509,35 @@ Potrete cambiare in seguito queste impostazioni accedendo alle preferenze di Lib
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Grandezza punto</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unità disegno</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Grandezza relativa allo zoom</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Grandezza in unità disegno</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 =&gt; 5% relativo alla zoomata)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>Architetturale (metrico)</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Per il formato lunghezza &apos;Architetturale (metrico)&apos; l&apos;unità deve essere impostata a metro.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>Schermo %</translation>
     </message>
 </context>
 <context>
@@ -9679,7 +9677,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot open file &apos;%1&apos;</source>
-        <translation>Non posso aprire il file  &apos;%1&apos;</translation>
+        <translation>Non posso aprire il file &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -9924,7 +9922,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify target point to rotate to</source>
-        <translation>Specificare punto a  cui ruotare</translation>
+        <translation>Specificare punto finale a cui ruotare</translation>
     </message>
 </context>
 <context>

@@ -21,28 +21,29 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni allineamento...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mantieni oggetti originali</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifica prima i punti base</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Impostazioni allineamento</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Clicca su opzioni per impostare,
+Ok per accettare e iniziare allineamento.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,7 +53,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Se è selezionato &apos;Mantieni oggetti originali&apos;,
+Allinea copierà gli oggetti selezionti piuttosto che muoverli.
+
+Se è selezionato &apos;Specifica prima i punti base&apos;,
+Allinea chiederà i punti di allineamento nell&apos;ordine
+primo iniziale, secondo iniziale, primo finale, secondo finale.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
@@ -62,7 +68,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation>primo punto obiettivo:</translation>
+        <translation>primo punto finale:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
@@ -73,7 +79,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation>secondo punto obiettivo:</translation>
+        <translation>secondo punto finale:</translation>
     </message>
 </context>
 <context>
@@ -183,7 +189,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inc.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
