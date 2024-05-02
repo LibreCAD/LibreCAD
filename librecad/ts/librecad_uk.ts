@@ -51,7 +51,7 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки сплайна</translation>
     </message>
     <message>
         <source>Control Points</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation>Вкажіть розташування розмірної дуги</translation>
+        <translation>Вкажіть розташування розмірів дуги</translation>
     </message>
 </context>
 <context>
