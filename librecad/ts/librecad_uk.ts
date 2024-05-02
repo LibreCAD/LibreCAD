@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар:</translation>
     </message>
     <message>
         <source>Geometry</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>Вкажіть розташування розмірної дуги</translation>
     </message>
 </context>
 <context>
@@ -195,55 +195,55 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати вибір пересічних об&apos;єктів</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>(Скасувати)Вибрати шар</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Точки</translation>
+        <translation>&amp;Точки</translation>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished">За &amp;2-ма точками</translation>
+        <translation>За &amp;2-ма точками</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
-        <translation type="unfinished">Під &amp;кутом</translation>
+        <translation>&amp;Кут</translation>
     </message>
     <message>
         <source>&amp;Horizontal</source>
-        <translation type="unfinished">&amp;Горизонтальна</translation>
+        <translation>&amp;Горизонтально</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished">Вертикальний</translation>
+        <translation>Вертикально</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Довільна лінія</translation>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished">Пара&amp;лельно</translation>
+        <translation>&amp;Паралельно</translation>
     </message>
     <message>
         <source>Parallel through point</source>
-        <translation type="unfinished">Паралельно через точку</translation>
+        <translation>Паралельно через точку</translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation type="unfinished">Прямокутник</translation>
+        <translation>Прямокутник</translation>
     </message>
     <message>
         <source>Bisector</source>
-        <translation type="unfinished">Бісектриса</translation>
+        <translation>Бісектриса</translation>
     </message>
     <message>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">Дотична (Т,К)</translation>
+        <translation>Дотична (К,Т)</translation>
     </message>
     <message>
         <source>Tangent (C,C)</source>
@@ -255,11 +255,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Ортогональний</translation>
     </message>
     <message>
         <source>Relative angle</source>
-        <translation type="unfinished">Відносний кут</translation>
+        <translation>Відносний кут</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
@@ -328,7 +328,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
-        <translation type="unfinished">&amp;Еліпс (з віссю)</translation>
+        <translation>&amp;Еліпс (за осями)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
@@ -1163,7 +1163,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation>Вкласти кахлями по &amp;горизонталі</translation>
+        <translation type="unfinished">Плиткою &amp;горизонтально</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -1179,7 +1179,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>New Drawing created.</source>
-        <translation>Нове креслення створене.</translation>
+        <translation>Створено новий рисунок.</translation>
     </message>
     <message>
         <source>Opening recent file...</source>
