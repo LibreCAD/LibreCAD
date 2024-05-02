@@ -893,7 +893,7 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation>Forma</translation>
+        <translation>Formulari</translation>
     </message>
     <message>
         <source>Device</source>
