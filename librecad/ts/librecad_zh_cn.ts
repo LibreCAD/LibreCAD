@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>选择圆弧实体</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>指定圆弧标注位置</translation>
     </message>
 </context>
 <context>
@@ -523,7 +523,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1059"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为CA&amp;M/plain SVG...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1088"/>
@@ -1741,7 +1741,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1145"/>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;最大化</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1468"/>
@@ -10782,7 +10782,7 @@ This block cannot be inserted.</source>
     <message>
         <location filename="../src/actions/rs_actiondrawcircletan1_2p.cpp" line="439"/>
         <source>Select the center of the tangent circle</source>
-        <translation>选择想切圆圆心</translation>
+        <translation>选择相切圆圆心</translation>
     </message>
 </context>
 <context>
