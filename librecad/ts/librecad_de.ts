@@ -1633,7 +1633,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>LibreCAD</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
