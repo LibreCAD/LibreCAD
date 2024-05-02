@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Рамка</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Додати до обраного</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,7 +20,7 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Рамка</translation>
     </message>
     <message>
         <source>GroupBox</source>
@@ -86,7 +86,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть один з двох можливих центрів кола</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -106,7 +106,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть центр кола</translation>
     </message>
 </context>
 <context>
@@ -129,7 +129,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>Недопустимий вираз</translation>
     </message>
 </context>
 <context>
@@ -140,7 +140,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <source>Specify next control point or [%1]</source>
@@ -179,11 +179,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished">Вибрати рамкою</translation>
+        <translation>Виберіть вікно</translation>
     </message>
     <message>
         <source>Deselect Window</source>
-        <translation type="unfinished">Скасувати вибір рамкою</translation>
+        <translation>Скасувати вибір вікна</translation>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>

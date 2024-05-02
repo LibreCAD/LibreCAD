@@ -292,7 +292,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Обертання</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
