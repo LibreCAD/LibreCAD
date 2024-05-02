@@ -152,9 +152,7 @@ RS_Vector getNearestDistHelper(RS_Ellipse const& e,
 class ClosestEllipticPoint {
 public:
     ClosestEllipticPoint(double a, double b, const RS_Vector& point):
-        m_a{a}
-      , m_b{b}
-      , m_point{point}
+        m_point{point}
       , c2{a*a-b*b}
       , ax2{2.*a*point.x}
       , by2{2.*b*point.y}
@@ -194,8 +192,6 @@ private:
         return 2.*c2*cos(2.*t) + ax2*cos(t) + by2*sin(t);
     }
 
-    double m_a=0.;
-    double m_b=0.;
     RS_Vector m_point{};
     double c2=0.;
     double ax2=0.;
