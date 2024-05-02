@@ -832,7 +832,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>Alle Layer aussc&amp;halten</translation>
+        <translation>&amp;Alle Ebenen ausblenden</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
@@ -844,11 +844,11 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation>Ausgewählte Layer &amp;exportieren</translation>
+        <translation>&amp;Ausgewählte Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation>Sichtbare Layer exp&amp;ortieren</translation>
+        <translation>Alle &amp;sichtbaren Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
@@ -864,7 +864,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Close All</source>
-        <translation>Alle schliessen</translation>
+        <translation>Alle schließen</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
@@ -886,7 +886,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Speichere Layer &quot;%1&quot; als &quot;%2&quot; </translation>
+        <translation>Ebene &quot;%1&quot; als &quot;%2&quot; speichern </translation>
     </message>
 </context>
 <context>
@@ -951,7 +951,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>PolyLines</source>
-        <translation>Polylinien</translation>
+        <translation>Polylinie</translation>
     </message>
     <message>
         <source>Select</source>
@@ -959,7 +959,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Dimensions</source>
-        <translation>Bemassungen</translation>
+        <translation>Maße</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -1518,7 +1518,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation>Zeichnung speichern: %1</translation>
+        <translation>Entwurf speichern: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
@@ -1526,12 +1526,12 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation>Zeichnung schließen</translation>
+        <translation>Entwurf schließen</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Änderungen speichern für folgenden Eintrag?
+        <translation>Änderungen bei den folgenden Elemente speichern?
 %1</translation>
     </message>
     <message>
@@ -1560,7 +1560,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation>Abgerundet</translation>
+        <translation>abgerundet</translation>
     </message>
     <message>
         <source>Triangular</source>
@@ -1596,7 +1596,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation>Alle schliessen abgebrochen</translation>
+        <translation>Alle</translation>
     </message>
     <message>
         <source>The Code</source>
@@ -1604,11 +1604,11 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation>Fiegend</translation>
+        <translation>Schwebend</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -1641,15 +1641,15 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Release Information</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>On&amp;line</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
@@ -1945,7 +1945,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Schwebend</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1953,7 +1953,7 @@ Fenster editieren</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -2370,7 +2370,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -2985,11 +2985,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Text Direction</source>
-        <translation>Textrichtung</translation>
+        <translation>Textausrichtung</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation>Links nach rechts</translation>
+        <translation>Von links nach rechts</translation>
     </message>
     <message>
         <source>Right to left</source>
@@ -3485,7 +3485,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>fixe Länge der Linie</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
@@ -3497,43 +3497,43 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktart</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Punktgröße</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Dwg Einheiten</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe relativ zum Bildschirm</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Größe in Zeichnungseinheiten</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation>(0 =&gt; 5% relativ zur Bildschirmgröße)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>Architektonisch (metrisch)</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <translation>Für das Längenformat &quot;Architektonisch (metrisch)&quot; muss die Einheit auf Meter eingestellt werden.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>Bildschirm %</translation>
     </message>
 </context>
 <context>
@@ -3780,11 +3780,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Auto-Panning</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausblenden der Relativ-Null-Markierung</translation>
     </message>
     <message>
         <source>Alt+Z</source>
@@ -3792,15 +3792,15 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualisiere das Objekt unter dem Cursor</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Mouse-over-Effekte</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Relativ-Null Markierungsfarbe:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
@@ -3808,51 +3808,51 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehrt die Bildlaufrichtung um, wenn das Mausrad mit der Umschalttaste verwendet wird.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Umkehrung der horizontalen Bildlaufrichtung</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kehrt die Bildlaufrichtung um, wenn das Mausrad mit der Strg/Ctrl-Taste verwendet wird.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Umkehrung der vertikalen Bildlaufrichtung</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Invertiert die Zoomrichtung bei Verwendung des Mausrads.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomrichtung umkehren</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Tastatur-Einstellungen</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Befehle auswerten, wenn die Leertaste gedrückt wird</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalten des freien Fangmodus, wenn die LEERTASTE gedrückt wird und das Befehlsfenster leer ist</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Umschalten des freien Fangmodus, wenn die Leertaste gedrückt wird</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>CAD-Einstellungen</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisches Zoomen der Zeichnung beim Öffnen</translation>
     </message>
 </context>
 <context>
@@ -3887,11 +3887,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportieren als CAM/SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbreite der Elemente, mm</translation>
     </message>
     <message>
         <source>Images</source>
@@ -3899,55 +3899,56 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Raster Bild Export</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Strichpunktierte Linien</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge des Musters, mm</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Strich-/Punktlinien in SVG-Pfad einbinden</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM versteckt seit November 2014 keine SVG-Inhalte mehr, 
+die unsichtbar (&quot;display: none&quot; oder &quot;visibility: hidden&quot;) gemacht wurden.</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM (Stand November 2014) kann nicht korrekt mit Blöcken umgehen, da es den Referenzpunkt im &lt;use&gt; nicht berücksichtigt.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM kann seit März 2015 Ellipsen und Ellipsenbögen nicht mehr korrekt darstellen, wenn sie mit dem &lt;Ellipse&gt;-Tag mit einer Drehung im &lt;Transform&gt;-Attribut oder als &lt;Pfad&gt; mit elliptischen Bogensegmenten erstellt werden.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportierte Bilder können in SVG-Editoren (Inkscape usw.) nützlich sein, werden aber in einigen CAMs vermieden.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>Viele CAMs (MakerCAM, EleskCAM, LaserWeb) ignorieren gestrichelte/gepunktete Linien, was beim Lasercut von Sperrholz oder beim Papierbasteln nützlich sein kann. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>Standardbreite von Elementen kann einige CAMs/SVG-Editoren beeinflussen, wird aber von anderen ignoriert</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Länge des Linienmusters bezogen auf den Zoom, daher Standardschrittwert für das Backen erforderlich</translation>
     </message>
 </context>
 <context>
@@ -5061,7 +5062,7 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">&amp;Sperre umschalten </translation>
+        <translation type="unfinished">&amp;Sperre umschalten</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -8594,11 +8595,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (Ausdruck)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (negativ)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
@@ -11100,11 +11101,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Druckmaßstab auf Linienbreite anwenden</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Berechnen Sie die Anzahl der Seiten, die für die Zeichnung benötigt werden</translation>
     </message>
 </context>
 <context>
