@@ -3784,7 +3784,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation>Ausblenden der Relativ-Null-Markierung</translation>
+        <translation>Ausblenden der Relativ-&amp;-Null-Markierung</translation>
     </message>
     <message>
         <source>Alt+Z</source>
@@ -3796,7 +3796,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation>Mouse-over-Effekte</translation>
+        <translation>Maus-Over-Effekte</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
@@ -3836,7 +3836,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>Befehle auswerten, wenn die Leertaste gedrückt wird</translation>
+        <translation>Kommandos auswerten, wenn die Leertaste gedrückt wird</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
@@ -3848,7 +3848,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation>CAD-Einstellungen</translation>
+        <translation>CAD-Voreinstellungen</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
@@ -3887,11 +3887,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation>Exportieren als CAM/SVG</translation>
+        <translation>Exportieren als CAM/einfaches SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation>Standardbreite der Elemente, mm</translation>
+        <translation>Voreingestellte Breite der Elemente, mm</translation>
     </message>
     <message>
         <source>Images</source>
@@ -3899,11 +3899,11 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation>Raster Bild Export</translation>
+        <translation>Rasterbild-Export</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation>Strichpunktierte Linien</translation>
+        <translation>Strich/Punkt-Linien</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
@@ -3916,39 +3916,46 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation>MakerCAM versteckt seit November 2014 keine SVG-Inhalte mehr, 
-die unsichtbar (&quot;display: none&quot; oder &quot;visibility: hidden&quot;) gemacht wurden.</translation>
+        <translation>MakerCAM (Stand November 2014) blendet SVG-Inhalte nicht aus 
+die unsichtbar gesetzt wurden (&quot;display: none&quot; oder &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation>MakerCAM (Stand November 2014) kann nicht korrekt mit Blöcken umgehen, da es den Referenzpunkt im &lt;use&gt; nicht berücksichtigt.</translation>
+        <translation>MakerCAM (Stand November 2014) kann nicht korrekt mit Blöcken umgehen,
+weil es den Referenzpunkt im &lt;use&gt; nicht berücksichtigt.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation>MakerCAM kann seit März 2015 Ellipsen und Ellipsenbögen nicht mehr korrekt darstellen, wenn sie mit dem &lt;Ellipse&gt;-Tag mit einer Drehung im &lt;Transform&gt;-Attribut oder als &lt;Pfad&gt; mit elliptischen Bogensegmenten erstellt werden.</translation>
+        <translation>MakerCAM kann ab März 2015 Ellipsen und Ellipsenbögen nicht korrekt darstellen, 
+wenn sie unter Verwendung des &lt;ellipse&gt;-Tags mit einer Rotation im 
+Attribut oder als &lt;Pfad&gt; mit elliptischen Bogensegmenten erstellt werden.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation>Exportierte Bilder können in SVG-Editoren (Inkscape usw.) nützlich sein, werden aber in einigen CAMs vermieden.</translation>
+        <translation>Exportierte Bilder können in SVG-Editoren (Inkscape, etc.) nützlich sein, 
+aber in einigen CAM&apos;s vermieden werden.</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation>Viele CAMs (MakerCAM, EleskCAM, LaserWeb) ignorieren gestrichelte/gepunktete Linien, was beim Lasercut von Sperrholz oder beim Papierbasteln nützlich sein kann. </translation>
+        <translation>Viele CAMs (MakerCAM, EleskCAM, LaserWeb) ignorieren gestrichelte/gepunktete Linien, 
+was beim Lasercut von Sperrholz oder beim Papierbasteln nützlich sein kann. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation>Standardbreite von Elementen kann einige CAMs/SVG-Editoren beeinflussen, wird aber von anderen ignoriert</translation>
+        <translation>Die Standardbreite von Elementen kann einige CAMs/SVG-Editoren beeinflussen, 
+aber von anderen ignoriert</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation>Länge des Linienmusters bezogen auf den Zoom, daher Standardschrittwert für das Backen erforderlich</translation>
+        <translation>Länge des Linienmusters bezogen auf den Zoom, 
+daher Standardschrittwert für das Backen erforderlich</translation>
     </message>
 </context>
 <context>
@@ -4796,7 +4803,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles schließen</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4876,7 +4883,7 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Eigenschaften bearbeiten</translation>
     </message>
 </context>
 <context>
@@ -5038,27 +5045,27 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Ebenen entsperren</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Alle Ebenen sperren</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebene entfernen</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filter</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle Ebenen entsperren</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alle Ebenen sperren</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
@@ -5066,11 +5073,11 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ausgewählte Ebene(n) exportieren</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sichtbare Ebene(n) exportieren</translation>
     </message>
 </context>
 <context>
@@ -5085,11 +5092,11 @@ Der Inhalt von Entwurfsebenen wird nicht ausgedruckt.</translation>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Aktualisieren</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Wiederherstellen</translation>
     </message>
 </context>
 <context>
@@ -5414,15 +5421,15 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Relative Nullposition ist %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>gesperrt</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>entsperrt</translation>
     </message>
 </context>
 <context>
@@ -5601,45 +5608,45 @@ Diese Aktion kann NICHT rückgängig gemacht werden.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Ebene &quot;0&quot; kann niemals entfernt werden.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>%n Ebene entfernen</numerusform>
+            <numerusform>%n Ebenen entfernen</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgelistete Ebenen und alle darauf befindlichen Objekte werden entfernt.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtung: Diese Aktion kann NICHT rückgängig gemacht werden!</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Achtung: Die Ebene &quot;0&quot; kann niemals entfernt werden.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ebenen zum Entfernen:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Entfern %n Block</numerusform>
+            <numerusform>Entfern %n Blöcke</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Aufgelistete Blöcke und alle ihre Entitäten werden entfernt.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blöcke zum Entfernen:</translation>
     </message>
 </context>
 <context>
@@ -7051,7 +7058,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Keine %1 Ebenen gefunden</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7934,119 +7941,119 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>DWG-Unterstützung ist noch nicht vollständig!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn sich diese Datei nicht öffnen lässt, versuchen Sie es mit einem älteren DWG-Format</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>oder versuchen Sie, einen Konverter zu finden, der die Datei in eine DXF-Datei umwandelt.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Informationen</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Importieren:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Jedenfalls wurden einige Einheiten identifiziert.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Wenn Sie die Datei jetzt öffnen, ist die Zeichnung möglicherweise nicht vollständig oder unbrauchbar.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Den Fehler ignorieren und die Datei öffnen?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>kein DXF/DWG-Fehler</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Öffnen einer DXF/DWG-Datei</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>nicht unterstützte DXF/DWG-Dateiversion</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Metadaten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen des DXF/DWG-Dateikopfes</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Kopfdaten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Einlesen der DXF/DWG-Objektkarte</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen der DXF/DWG-Klassen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Tabellen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Blöcken</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Elementen</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF/DWG-Objekten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen von DXF-/DWG-Abschnitten</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fehler beim Lesen des DXF/DWG-Codes</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>undefinierbarer Fehler</translation>
     </message>
     <message>
         <source>usage: </source>
@@ -8062,7 +8069,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
-        <translation type="unfinished"></translation>
+        <translation>-- alle dxf-Dateien in pdf-Dateien mit denselben Namen drucken.</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
@@ -8074,50 +8081,50 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Anpassung und Zentrierung der Zeichnung auf der Seite.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatische Zentrierung der Zeichnung auf der Seite.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Drucken in Graustufen.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished"></translation>
+        <translation>Monochromer Druck (schwarz/weiß).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="unfinished"></translation>
+        <translation>Papierformat (Breite x Höhe) in mm.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ausgabeauflösung (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation type="unfinished"></translation>
+        <translation>Ausgangsmaßstab. Z.B.: 0,01 (für Maßstab 1:100).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation type="unfinished"></translation>
+        <translation>Papierränder in mm (Integer oder Float).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation type="unfinished"></translation>
+        <translation>Druck auf mehreren Seiten (horizontal und vertikal).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>PDF-Datei ausgeben.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Zielverzeichnis für die Ausgabe.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
@@ -8125,7 +8132,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>DXF-Datei(en) einlesen</translation>
     </message>
     <message>
         <source>Keycode mode</source>
@@ -8133,19 +8140,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation>Kommando-Datei laden</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Mehrere Kommandos einfügen</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Kombinieren Sie alle Ebenen</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Die Datei &quot;%1&quot; existiert bereits. Möchten Sie sie ersetzen?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
@@ -8153,7 +8160,7 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Individuell ausgesucht</translation>
     </message>
     <message>
         <source>noname</source>
@@ -8216,17 +8223,19 @@ Wollen Sie die Datei überschreiben?</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Block kann keine Einfügung von sich selbst enthalten.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation> hat verschachtelte Einfügung des aktuellen Blocks in:
+</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Dieser Block kann nicht eingefügt werden.</translation>
     </message>
 </context>
 <context>
@@ -8518,7 +8527,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt auf dem Kreis angeben</translation>
     </message>
 </context>
 <context>
@@ -8603,7 +8612,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 ist ungültig (Null)</translation>
     </message>
 </context>
 <context>
@@ -8680,23 +8689,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Ausdruck &apos;%1&apos; für Radius</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger negativer Radius &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ungültiger Nullradius &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein tangentialer Kreis für Radius &apos;%1&apos; möglich</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Kein gemeinsamer Tangentialkreis für Radius &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -9006,11 +9015,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht rückgängig gemacht werden: Beginn der Chronik erreicht</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Kann nicht rückgängig gemacht werden: Ende der Chronik erreicht</translation>
     </message>
 </context>
 <context>
@@ -9382,19 +9391,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe des Endpunktes x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl der Polylinien eingeben</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>Gleichung</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Geben Sie eine Gleichung ein, f(x)</translation>
     </message>
     <message>
         <source>x</source>
@@ -9402,19 +9411,19 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Eingabe des Startpunktes x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Das eingegebene x ist ungültig.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Die eingegebene Schrittweite ist ungültig.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Der eingegebene Wert x ist ungültig.</translation>
     </message>
 </context>
 <context>
@@ -9808,7 +9817,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf das zu ändernde Objekt</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -9957,7 +9966,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Erste Entität angeben oder Radius &lt;%1&gt; eingeben</translation>
     </message>
 </context>
 <context>
@@ -10344,7 +10353,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): Das Limit der Seiten wurde überschritten.</translation>
     </message>
 </context>
 <context>
@@ -11101,7 +11110,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation>Druckmaßstab auf Linienbreite anwenden</translation>
+        <translation>Druckskalierung auf die Linienbreite anwenden</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
