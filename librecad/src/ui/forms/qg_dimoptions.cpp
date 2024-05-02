@@ -30,14 +30,6 @@
 #include "ui_qg_dimoptions.h"
 #include "rs_actiondimension.h"
 
-namespace {
-bool isRadialDiameteric(RS_ActionInterface* action) {
-    return  action != nullptr && (
-                        action->rtti() == RS2::ActionDimRadial ||
-                        action->rtti() == RS2::ActionDimDiametric );
-}
-}
-
 /*
  *  Constructs a QG_DimOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.

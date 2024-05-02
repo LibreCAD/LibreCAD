@@ -23,9 +23,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <cmath>
 #include <QStandardItemModel>
-#include "rs_dialogfactory.h"
+
 #include "LC_DlgParabola.h"
 #include "lc_parabola.h"
+#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "ui_LC_DlgParabola.h"

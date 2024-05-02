@@ -105,7 +105,7 @@ void LC_ActionDrawCross::doAfterTrigger(){
  */
 LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     RS_Vector cp = ent->getCenter();
-    double lengthX, lengthY;
+    double lengthX=0., lengthY=0.;
     double ellipseangle = 0.0;
     RS2::EntityType rtti = ent->rtti();
     bool arcShape = rtti == RS2::EntityArc;
@@ -114,7 +114,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
     bool isEllipseArcShape = false;
 
     // check whether we are in ellipse arc
-    RS_Ellipse* ellipse;
+    RS_Ellipse* ellipse = nullptr;
     if (isEllipse){
         ellipse = dynamic_cast<RS_Ellipse *>(ent);
         isEllipseArcShape = ellipse->isEllipticArc();
@@ -136,7 +136,7 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
                 lengthY = radius + lenYToUse;
                 ellipseangle = 0.0; // we'll draw for circle, so no ellipse angle there
 
-            } else if (isEllipse || isEllipseArcShape){
+            } else if (ellipse != nullptr) {
                 // for ellipses - we rely on axis radiuses
                 lengthX = ellipse->getMajorRadius() + lenX;
                 lengthY = ellipse->getMinorRadius() + lenYToUse;
