@@ -899,12 +899,13 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
     auto previewAction = static_cast<RS_ActionPrintPreview*>(action);
     std::unique_ptr<QG_PrintPreviewOptions>& printPreviewOptions =  previewAction->getOption();
     if(!on) {
-        if (printPreviewOptions)
+        if (printPreviewOptions != nullptr) {
             printPreviewOptions->hide();
-        return;
-    }
-    if (optionWidget ) {
-        if (!printPreviewOptions) {
+            printPreviewOptions->deleteLater();
+            printPreviewOptions.release();
+        }
+    } else if (optionWidget ) {
+        if (printPreviewOptions == nullptr) {
             printPreviewOptions = std::make_unique<QG_PrintPreviewOptions>(optionWidget);
             double f = previewAction->getScale();
             printPreviewOptions ->setAction(action, false);
