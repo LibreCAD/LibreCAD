@@ -16,7 +16,7 @@
         <location filename="../align/align.cpp" line="24"/>
         <location filename="../align/align.cpp" line="31"/>
         <source>Align</source>
-        <translation type="unfinished"></translation>
+        <translation>სწორება</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="32"/>
@@ -100,7 +100,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="46"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="60"/>
@@ -110,42 +110,42 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="67"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="77"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="79"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>ფერი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="80"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზის ტიპი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="81"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზის სისქე</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="82"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="88"/>
         <source>POINT</source>
-        <translation type="unfinished"></translation>
+        <translation>წერტილი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="89"/>
@@ -157,7 +157,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="94"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="99"/>
@@ -173,7 +173,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="107"/>
         <location filename="../list/list.cpp" line="131"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>ხანგრძლივობა</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="112"/>
@@ -183,12 +183,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="113"/>
         <source>Inc.</source>
-        <translation type="unfinished"></translation>
+        <translation>ზრდ.</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="118"/>
         <source>ARC</source>
-        <translation type="unfinished"></translation>
+        <translation>რკალი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="119"/>
@@ -202,7 +202,7 @@ first base, second base, first target, second target.</source>
         <location filename="../list/list.cpp" line="139"/>
         <location filename="../list/list.cpp" line="226"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>რადიუსი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="126"/>
@@ -217,27 +217,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="134"/>
         <source>CIRCLE</source>
-        <translation type="unfinished"></translation>
+        <translation>წრეწირი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="140"/>
         <source>circumference</source>
-        <translation type="unfinished"></translation>
+        <translation>პერიმეტრი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="141"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>ფართობი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="144"/>
         <source>ELLIPSE</source>
-        <translation type="unfinished"></translation>
+        <translation>ოვალი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="148"/>
         <source>major axis</source>
-        <translation type="unfinished"></translation>
+        <translation>ძირითადი ღერძი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="166"/>
@@ -252,7 +252,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="172"/>
         <source>SOLID</source>
-        <translation type="unfinished"></translation>
+        <translation>მყარი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="176"/>
@@ -262,7 +262,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="179"/>
         <source>TEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>ტექსტი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="183"/>
@@ -272,27 +272,27 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="186"/>
         <source>INSERT</source>
-        <translation type="unfinished"></translation>
+        <translation>INSERT</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="189"/>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>სახელი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="191"/>
         <source>Insertion point</source>
-        <translation type="unfinished"></translation>
+        <translation>ჩასმის წერტილი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>მასშტაბი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>შემობრუნება</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
@@ -307,42 +307,42 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="214"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="215"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>დახურულია</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>არა</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="216"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>დიახ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="217"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>წვეროები</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="231"/>
         <source>IMAGE</source>
-        <translation type="unfinished"></translation>
+        <translation>გამოსახულება</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="234"/>
         <source>SPLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>სპლაინი</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="237"/>
         <source>SPLINEPOINTS</source>
-        <translation type="unfinished"></translation>
+        <translation>სპლაინისწერტილები</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="240"/>
@@ -436,17 +436,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="226"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>ფაილი...</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="233"/>
         <source>Format:</source>
-        <translation type="unfinished"></translation>
+        <translation>ფორმატი:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space Separator</source>
-        <translation type="unfinished"></translation>
+        <translation>გამყოფი, ჰარე</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -526,17 +526,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>დასტური</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="268"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="298"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>აირჩიეთ ფაილი</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
@@ -610,7 +610,7 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>გაყოფა</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
@@ -620,12 +620,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>შეცდომა</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
@@ -635,42 +635,42 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>X</source>
-        <translation type="unfinished"></translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>Y</source>
-        <translation type="unfinished"></translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>ფენა</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished"></translation>
+        <translation>ფერი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზის ტიპი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზის სისქე</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished"></translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation type="unfinished"></translation>
+        <translation>ხაზი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
@@ -686,7 +686,7 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>ხანგრძლივობა</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
@@ -714,7 +714,7 @@ first base, second base, first target, second target.</source>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>რადიუსი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
@@ -739,32 +739,32 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation type="unfinished"></translation>
+        <translation>ფართობი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished"></translation>
+        <translation>პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>დახურულია</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>No</source>
-        <translation type="unfinished"></translation>
+        <translation>არა</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation type="unfinished"></translation>
+        <translation>დიახ</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished"></translation>
+        <translation>წვეროები</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
@@ -787,17 +787,17 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>ფენები</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>დიახ</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
@@ -807,12 +807,12 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>ზომა</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>ადგილები</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
@@ -847,27 +847,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>ტიკები</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>ზემოდან</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation type="unfinished"></translation>
+        <translation>ქვემოდან</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>გარედან</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>შიგნიდან</translation>
     </message>
 </context>
 <context>
@@ -970,12 +970,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>დასტური</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
 </context>
 <context>
@@ -1016,12 +1016,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="86"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>დასტური</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="91"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
@@ -1054,27 +1054,27 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="65"/>
         <source>File...</source>
-        <translation type="unfinished"></translation>
+        <translation>ფაილი...</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="75"/>
         <source>Scale:</source>
-        <translation type="unfinished"></translation>
+        <translation>გაფართოება:</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="79"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>დასტური</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="83"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="111"/>
         <source>Select file</source>
-        <translation type="unfinished"></translation>
+        <translation>აირჩიეთ ფაილი</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="119"/>
@@ -1166,12 +1166,12 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="32"/>
         <source>Draw</source>
-        <translation type="unfinished"></translation>
+        <translation>ხატვა</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="33"/>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>გაუქმება</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
@@ -1183,13 +1183,13 @@ Use t or x in your equation as a variable/parameter.
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
         <source>Polyline</source>
         <comment>Plot Equation to generate RS_Polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>პოლიხაზი</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>სპლაინისწერტილები</translation>
     </message>
 </context>
 <context>
@@ -1197,7 +1197,7 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="175"/>
         <source>Layer:</source>
-        <translation type="unfinished"></translation>
+        <translation>ფენა:</translation>
     </message>
 </context>
 <context>
@@ -1205,17 +1205,17 @@ Use t or x in your equation as a variable/parameter.
     <message>
         <location filename="../asciifile/asciifile.cpp" line="204"/>
         <source>Style:</source>
-        <translation type="unfinished"></translation>
+        <translation>სტილი:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="205"/>
         <source>Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>სიმაღლე:</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="206"/>
         <source>Separation</source>
-        <translation type="unfinished"></translation>
+        <translation>გაცალკევება</translation>
     </message>
 </context>
 </TS>
