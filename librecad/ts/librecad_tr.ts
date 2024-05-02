@@ -8069,7 +8069,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="unfinished"> [options] &lt;dxf_files&gt;</translation>
+        <translation> [seçenekler] &lt;dxf_dosyaları&gt;</translation>
     </message>
     <message>
         <source> *.dxf</source>
