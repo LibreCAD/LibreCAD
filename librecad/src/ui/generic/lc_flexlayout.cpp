@@ -256,8 +256,7 @@ QLayoutItem*LC_FlexLayout::takeAt(int index){
 }
 
 Qt::Orientations LC_FlexLayout::expandingDirections() const{
-    return 0;
-//    return Qt::Vertical;
+    return {};
 }
 
 
