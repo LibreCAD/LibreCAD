@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodaj do ulubionych</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,7 +20,7 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rama</translation>
     </message>
     <message>
         <source>GroupBox</source>
@@ -51,11 +51,11 @@
     </message>
     <message>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkty Spalajnu</translation>
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Punkt kontrolny</translation>
     </message>
     <message>
         <source>Points on Spline</source>
