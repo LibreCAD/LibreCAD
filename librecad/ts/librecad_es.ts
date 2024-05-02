@@ -7868,7 +7868,7 @@ Do you want to replace it?</source>
     <message>
         <source>custom</source>
         <comment>Paper format</comment>
-        <translation>costumbre</translation>
+        <translation>personalizado</translation>
     </message>
     <message>
         <source>a0</source>

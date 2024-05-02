@@ -42,8 +42,8 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation>Hacer clic en opciones para configurar/desconfigurar,
-Ok para aceptar y comenzar la alineación.</translation>
+        <translation>Haga clic en las opciones para ajustar/desajustar,
+de acuerdo para aceptar e iniciar la alineación.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -184,7 +184,7 @@ primera base, segunda base, primer objetivo, segundo objetivo.</translation>
     <message>
         <location filename="../list/list.cpp" line="112"/>
         <source>Angle in XY plane</source>
-        <translation>Ángulo del plano XY</translation>
+        <translation>Ángulo en el plano XY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="113"/>
@@ -308,7 +308,7 @@ primera base, segunda base, primer objetivo, segundo objetivo.</translation>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation>Columnas/Espacio entre Filas</translation>
+        <translation>Espacio entre columnas y filas</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -666,7 +666,7 @@ primera base, segunda base, primer objetivo, segundo objetivo.</translation>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation>Grosor la línea</translation>
+        <translation>Grosor de la línea</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
@@ -852,7 +852,7 @@ en sentido antihorario.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation>&lt;i&gt;&quot;Nuevo&quot;&lt;/i&gt;&lt;br&gt;Entrar el nombre&lt;br&gt;para una nueva capa&lt;br&gt;(¿si es necesario?) para&lt;br&gt;dibujar marcas.</translation>
+        <translation>&lt;i&gt;&quot;Nueva&quot;&lt;/i&gt;&lt;br&gt;Introducir el nombre&lt;br&gt;para una nueva capa&lt;br&gt;(¿si es necesario?) para&lt;br&gt;dibujar marcas.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
