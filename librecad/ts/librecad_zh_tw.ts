@@ -6,12 +6,12 @@
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>框架</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="35"/>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>加入收藏夾</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/colorwizard.ui" line="38"/>
@@ -25,17 +25,17 @@
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="14"/>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>框架</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="26"/>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>分組框</translation>
     </message>
     <message>
         <location filename="../src/ui/generic/comboboxoption.ui" line="41"/>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>設定</translation>
     </message>
 </context>
 <context>
@@ -43,7 +43,7 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="26"/>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>樣條點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="62"/>
@@ -63,18 +63,18 @@
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="110"/>
         <source>Spline Points</source>
-        <translation type="unfinished"></translation>
+        <translation>樣條點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="120"/>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>控制點</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="135"/>
         <location filename="../src/ui/forms/lc_dlgsplinepoints.ui" line="138"/>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation>樣條線上的點</translation>
     </message>
 </context>
 <context>
@@ -82,7 +82,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="267"/>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>選擇圓弧實體</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="268"/>
@@ -93,7 +93,7 @@
     <message>
         <location filename="../src/actions/lc_actiondimarc.cpp" line="272"/>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>指定尺寸圓弧位置</translation>
     </message>
 </context>
 <context>
@@ -102,12 +102,13 @@
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="195"/>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>radius=%1 對於所選點來說太小
+點之間的距離=%2 大於直徑=%3</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="205"/>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>從兩個可能的圓心中選擇</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawcircle2pr.cpp" line="238"/>
@@ -196,12 +197,12 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="334"/>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="359"/>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法撤銷：尚未定義足夠的實體。</translation>
     </message>
     <message>
         <location filename="../src/actions/lc_actiondrawsplinepoints.cpp" line="380"/>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>無法撤銷：沒有可重做的。</translation>
     </message>
 </context>
 <context>
@@ -229,7 +230,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="76"/>
         <source>Deselect Window</source>
-        <translation type="unfinished"></translation>
+        <translation>取消選擇視窗</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="83"/>
@@ -275,7 +276,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="144"/>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>垂直</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="157"/>
@@ -360,7 +361,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="270"/>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 點，半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="277"/>
@@ -382,22 +383,22 @@ distance between points=%2 is larger than diameter=%3</source>
         <location filename="../src/ui/lc_actionfactory.cpp" line="299"/>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>相切 2 個圓，半徑</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="306"/>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>相切兩圓，一點</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="313"/>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>切線&amp;3圓</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="320"/>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>切向，2 點(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="329"/>
@@ -452,7 +453,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="414"/>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation>透過點繪製樣條線(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="423"/>
@@ -467,32 +468,32 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="642"/>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>移動和旋轉(&amp;V)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="672"/>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation>修剪兩個(&amp;I)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="688"/>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation>偏移(&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="831"/>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>顯示所有圖層(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="838"/>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>隱藏所有圖層(&amp;H)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="845"/>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>全部解鎖(&amp;U)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="852"/>

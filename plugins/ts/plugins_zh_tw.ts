@@ -21,28 +21,29 @@
     <message>
         <location filename="../align/align.cpp" line="32"/>
         <source>Align settings...</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊設定...</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="49"/>
         <source>Keep original objects</source>
-        <translation type="unfinished"></translation>
+        <translation>保存原始物體</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>第一組基準點</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
         <source>Align Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>對齊設定</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>點選要設定/取消設定的選項，
+確定接受並開始對齊。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,28 +53,33 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>如果選取“保留原始物件”，
+對齊將複製而不是移動選定的物件。
+
+如果選取“首先指定基點”，
+對齊將提示依序輸入對齊點
+第一個基準點，第二個基準點，第一目標點，第二目標點。</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
         <source>first base point:</source>
-        <translation>第一基點</translation>
+        <translation>第一個基準點：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="86"/>
         <source>first target point:</source>
-        <translation>第一個目標點</translation>
+        <translation>第一個目標點:</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="84"/>
         <location filename="../align/align.cpp" line="89"/>
         <source>second base point:</source>
-        <translation>第二基點</translation>
+        <translation>第二個基點：</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="91"/>
         <source>second target point:</source>
-        <translation>第二個目標點</translation>
+        <translation>第二個目標點:</translation>
     </message>
 </context>
 <context>
@@ -267,7 +273,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>文字內容</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
