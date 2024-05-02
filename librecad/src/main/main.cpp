@@ -341,22 +341,12 @@ int main(int argc, char** argv)
     QString activeFile = RS_SETTINGS->readEntry("/LastOpenFilesActive", "");
     RS_SETTINGS->endGroup();
 
-    if (reopenLastFiles){
-        if (fileList.isEmpty()){
-            if (!lastFiles.isEmpty()){
-                QStringList filesList = lastFiles.split(";", QString::SplitBehavior::SkipEmptyParts);
-                if (!filesList.isEmpty()){
-                    for (int i = 0; i < filesList.count(); i++) {
-                        QString filename = filesList.at(i);
-                        if (QFileInfo(filename).exists()){
-                            fileList << filename;
-                        }
-                    }
-                }
-            }
+    if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()){
+        foreach(const QString& filename, lastFiles.split(";")) {
+            if (!filename.isEmpty() && QFileInfo::exists(filename))
+                fileList << filename;
         }
     }
-
 
     bool files_loaded = false;
     for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
