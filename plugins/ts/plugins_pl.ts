@@ -42,7 +42,8 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Kliknij opcje, aby ustawić/wyłączyć,
+Ok, aby zaakceptować i rozpocząć wyrównywanie.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -252,7 +253,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>NAKŁADKA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
@@ -262,7 +263,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="176"/>
         <source>MTEXT</source>
-        <translation type="unfinished"></translation>
+        <translation>Tekst wielowierszowy</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="179"/>
@@ -272,7 +273,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="183"/>
         <source>TEXTCONTENT</source>
-        <translation type="unfinished"></translation>
+        <translation>TREŚĆ TEKSTOWA</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="186"/>
@@ -292,22 +293,22 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="194"/>
         <source>Scale</source>
-        <translation type="unfinished"></translation>
+        <translation>Skala</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="197"/>
         <source>Rotation</source>
-        <translation type="unfinished"></translation>
+        <translation>Obrót</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="203"/>
         <source>Columns/Rows</source>
-        <translation type="unfinished"></translation>
+        <translation>Kolumny/wiersze</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="207"/>
         <source>Column/Row Spacing</source>
-        <translation type="unfinished"></translation>
+        <translation>Odstępy między kolumnami/wierszami</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="214"/>
@@ -362,7 +363,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../list/list.cpp" line="246"/>
         <source>DIMALIGNED</source>
-        <translation type="unfinished"></translation>
+        <translation>WYMIAROWANY</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="249"/>
@@ -466,12 +467,12 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation type="unfinished">Oddzielenia w kolumnach</translation>
+        <translation>Oddzielenia w kolumnach</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation type="unfinished">*.odb dla Psion 2</translation>
+        <translation>*.odb dla Psion 2</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
@@ -501,12 +502,12 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Point Number</source>
-        <translation type="unfinished">Numer punktu</translation>
+        <translation>Numer punktu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="247"/>
         <source>Draw point number</source>
-        <translation type="unfinished">Wstaw numer punktu</translation>
+        <translation>Wstaw numer punktu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
@@ -516,7 +517,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysuj wysokość punktu</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
@@ -526,7 +527,7 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>Kod punktu rysowania</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -546,57 +547,57 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwa 2D punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwa 3D punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwa wysokości punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Wysokość rzędnej punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Oddzielenie rzędnych punktów jest puste</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwa numeru punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Wysokość numeru punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separacja numerów punktów jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwa kodu punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Wysokość kodu punktu jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Separacja kodów punktowych jest pusta</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
@@ -615,126 +616,126 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Dzielić</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
         <source>Select a line, circle or arc and press return</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz linię, okrąg lub łuk i naciśnij klawisz Return</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="67"/>
         <source>Error</source>
-        <translation type="unfinished"></translation>
+        <translation>Błąd</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="104"/>
         <source>n</source>
-        <translation type="unfinished">n</translation>
+        <translation>n</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="444"/>
         <source>Empty Entity</source>
-        <translation type="unfinished">Pusty element</translation>
+        <translation>Pusty element</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>X</source>
-        <translation type="unfinished">X</translation>
+        <translation>X</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="452"/>
         <source>Y</source>
-        <translation type="unfinished">Y</translation>
+        <translation>Y</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="460"/>
         <source>Layer</source>
-        <translation type="unfinished">Warstwa</translation>
+        <translation>Warstwa</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="462"/>
         <source>Color</source>
-        <translation type="unfinished">Kolor</translation>
+        <translation>Kolor</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="463"/>
         <source>Line type</source>
-        <translation type="unfinished"></translation>
+        <translation>Rodzaj linii</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="465"/>
         <source>Line thickness</source>
-        <translation type="unfinished">Grubość linii</translation>
+        <translation>Grubość linii</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="467"/>
         <source>ID</source>
-        <translation type="unfinished">ID</translation>
+        <translation>ID</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="474"/>
         <source>LINE</source>
-        <translation type="unfinished">LINIA</translation>
+        <translation>LINIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="479"/>
         <source>from point</source>
-        <translation type="unfinished">od punktu</translation>
+        <translation>od punktu</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="482"/>
         <source>to point</source>
-        <translation type="unfinished">do punktu</translation>
+        <translation>do punktu</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="487"/>
         <location filename="../divide/divide.cpp" line="514"/>
         <source>length</source>
-        <translation type="unfinished">długość</translation>
+        <translation>długość</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="492"/>
         <source>Angle in XY plane</source>
-        <translation type="unfinished">Kąt w płaszczyźnie XY</translation>
+        <translation>Kąt w płaszczyźnie XY</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="494"/>
         <source>Inc.</source>
-        <translation type="unfinished">Inc.</translation>
+        <translation>Inc.</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="499"/>
         <source>ARC</source>
-        <translation type="unfinished">ŁUK</translation>
+        <translation>ŁUK</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">środek</translation>
+        <translation>punkt środkowy</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
         <location filename="../divide/divide.cpp" line="523"/>
         <location filename="../divide/divide.cpp" line="545"/>
         <source>radius</source>
-        <translation type="unfinished">promień</translation>
+        <translation>promień</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="507"/>
         <source>initial angle</source>
-        <translation type="unfinished">kąt początkowy</translation>
+        <translation>kąt początkowy</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="509"/>
         <source>final angle</source>
-        <translation type="unfinished">kąt końcowy</translation>
+        <translation>kąt końcowy</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="518"/>
         <source>CIRCLE</source>
-        <translation type="unfinished">OKRĄG</translation>
+        <translation>OKRĄG</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="524"/>
@@ -744,17 +745,17 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="526"/>
         <source>area</source>
-        <translation type="unfinished">pole</translation>
+        <translation>pole</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="530"/>
         <source>POLYLINE</source>
-        <translation type="unfinished">POLILINIA</translation>
+        <translation>POLILINIA</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="531"/>
         <source>Closed</source>
-        <translation type="unfinished">Zamknięta</translation>
+        <translation>Zamknięte</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
@@ -764,22 +765,22 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/divide.cpp" line="533"/>
         <source>Yes</source>
-        <translation type="unfinished">Tak</translation>
+        <translation>Tak</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="534"/>
         <source>Vertices</source>
-        <translation type="unfinished">Wierzchołki</translation>
+        <translation>Wierzchołki</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="539"/>
         <source>in point</source>
-        <translation type="unfinished">w punkcie</translation>
+        <translation>w punkcie</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="555"/>
         <source>MUST be a line, circle or arc</source>
-        <translation type="unfinished"></translation>
+        <translation>MUSI to być linia, okrąg lub łuk</translation>
     </message>
 </context>
 <context>
@@ -787,52 +788,52 @@ pierwszy punkt bazowy, drugi punku bazowy, pierwszy punkt docelowy, drugi punkt 
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Dzielić- </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Warstwy</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished"></translation>
+        <translation>Ok</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Podziel na</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
         <source>Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Rozmiar</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>miejsca</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
         <source>Ticks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Kleszcze – wyłączone</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="134"/>
         <source>Breaks - Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Przerwy - Wyłączone</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="179"/>
         <source>&lt;i&gt;New&lt;/i&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;Nowy&lt;/i&gt;</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="210"/>
@@ -842,37 +843,42 @@ decimal degrees
 0° at 3 o&apos;clock
 goes
 anti-clockwise.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wprowadź kąt początkowy
+kąt, w
+stopniach dziesiętnych
+0° na godzinie 3
+idzie
+przeciwnie do ruchu wskazówek zegara.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="246"/>
         <source>&lt;i&gt;&quot;New&quot;&lt;/i&gt;&lt;br&gt;Enter name&lt;br&gt;for a new layer&lt;br&gt;(if required?) to&lt;br&gt;draw ticks on.</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;i&gt;&quot;Nowy&quot;&lt;/i&gt;&lt;br&gt;Wprowadź nazwę&lt;br&gt;nowej warstwy &lt;br&gt;(jeśli jest wymagana?)&lt;br&gt;do narysowania znaczników.</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="252"/>
         <source>Ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Kleszcze</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="258"/>
         <source>Above</source>
-        <translation type="unfinished"></translation>
+        <translation>Powyżej</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="259"/>
         <source>Below</source>
-        <translation type="unfinished"></translation>
+        <translation>Poniżej</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="263"/>
         <source>Outside</source>
-        <translation type="unfinished"></translation>
+        <translation>Na zewnątrz</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="264"/>
         <source>Inside</source>
-        <translation type="unfinished"></translation>
+        <translation>Wewnątrz</translation>
     </message>
 </context>
 <context>
@@ -880,102 +886,102 @@ anti-clockwise.</source>
     <message>
         <location filename="../gear/gear.cpp" line="114"/>
         <source>Number of teeth</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba zębów</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="116"/>
         <source>Pressure angle (deg)</source>
-        <translation type="unfinished"></translation>
+        <translation>Kąt nacisku (stopień)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="113"/>
         <source>Rotation angle</source>
-        <translation type="unfinished"></translation>
+        <translation>Kąt obrotu</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="115"/>
         <source>Modulus</source>
-        <translation type="unfinished"></translation>
+        <translation>Moduł</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="117"/>
         <source>Addendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dodatek (w odniesieniu do modułu)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="118"/>
         <source>Dedendum (rel. to modulus)</source>
-        <translation type="unfinished"></translation>
+        <translation>Dedendum-odległość promieniowa od koła zębatego(w odniesieniu do modułu)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="119"/>
         <source>Number of segments to draw (dedendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba segmentów do narysowania (dedendum)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="120"/>
         <source>Number of segments to draw (addendum)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba segmentów do narysowania (dodatek)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="121"/>
         <source>Draw all teeth?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować wszystkie zęby?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="122"/>
         <source>Draw symmetric face?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować symetryczną twarz?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="124"/>
         <source>Use layers?</source>
-        <translation type="unfinished"></translation>
+        <translation>Użyć warstw?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="125"/>
         <source>Draw addendum circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować okrąg uzupełniający?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="126"/>
         <source>Draw pitch circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować okrąg podziałowy?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="127"/>
         <source>Draw base circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować okrąg podstawowy?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="128"/>
         <source>Draw root circle?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować okrąg główny?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="129"/>
         <source>Draw pressure line?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować linię nacisku?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="130"/>
         <source>Draw pressure limits?</source>
-        <translation type="unfinished"></translation>
+        <translation>Narysować granicę nacisku?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="132"/>
         <source>Calculate interference?</source>
-        <translation type="unfinished"></translation>
+        <translation>Oblicz zakłócenia?</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="133"/>
         <source>Number of segments to draw (interference)</source>
-        <translation type="unfinished"></translation>
+        <translation>Liczba segmentów do narysowania (interferencja)</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="135"/>
         <source>Accept</source>
-        <translation type="unfinished"></translation>
+        <translation>Akceptuj</translation>
     </message>
     <message>
         <location filename="../gear/gear.cpp" line="136"/>
@@ -1031,22 +1037,22 @@ anti-clockwise.</source>
     <message>
         <location filename="../sample/sample.cpp" line="107"/>
         <source>Start X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Początek X jest pusty</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="108"/>
         <source>Start Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Początek Y jest pusty</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="109"/>
         <source>End X is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec X jest pusty</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="110"/>
         <source>End Y is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Koniec Y jest pusty</translation>
     </message>
     <message>
         <location filename="../sample/sample.cpp" line="132"/>
@@ -1104,12 +1110,12 @@ anti-clockwise.</source>
     <message>
         <location filename="../picfile/picfile.cpp" line="166"/>
         <source>picPunto drawLine: first point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: pierwszy punkt jest pusty %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="179"/>
         <source>picPunto drawLine: next point is empty %1</source>
-        <translation type="unfinished"></translation>
+        <translation>picPunto drawLine: następny punkt jest pusty %1</translation>
     </message>
     <message>
         <location filename="../picfile/picfile.cpp" line="262"/>
@@ -1186,7 +1192,7 @@ Użyj t lub x w równaniu jako zmienna/parametr.
         <location filename="../plotequation/plotdialog.cpp" line="59"/>
         <source>Line Segments</source>
         <comment>Plot Equation to generate RS_Line segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>Segmenty linii</translation>
     </message>
     <message>
         <location filename="../plotequation/plotdialog.cpp" line="60"/>
@@ -1198,7 +1204,7 @@ Użyj t lub x w równaniu jako zmienna/parametr.
         <location filename="../plotequation/plotdialog.cpp" line="61"/>
         <source>SplinePoints</source>
         <comment>Plot Equation to generate 2nd spline by LC_SplinePoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>Punkty splajnu (podział linii)</translation>
     </message>
 </context>
 <context>
