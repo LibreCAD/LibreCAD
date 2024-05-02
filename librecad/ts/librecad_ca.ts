@@ -118,7 +118,7 @@ la distància entre els punts=%2 és més gran que el diàmetre=%3</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Especifiqueu una tangent</translation>
     </message>
     <message>
         <source>Enter number:</source>
