@@ -114,15 +114,15 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Zentrum angeben</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Tangente angeben</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Anzahl angeben:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -872,7 +872,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles speichern...</translation>
     </message>
 </context>
 <context>
@@ -1152,7 +1152,7 @@ Abstand zwischen den Punkten=%2 ist größer als der Durchmesser=%3</translation
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation>&amp;horizontal anordnen</translation>
+        <translation>&amp;Horizontal anordnen</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -1318,7 +1318,7 @@ Automatisches speichern wurde deaktiviert.</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation>&amp;Vertikal</translation>
+        <translation>&amp;Vertikal anordnen</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
@@ -1522,7 +1522,7 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern abbrechen</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
@@ -1543,15 +1543,15 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Speichern %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Speichern %1 &amp;als...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fenster-Modus</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
@@ -1583,15 +1583,15 @@ Bitte Existenz und Zugriffsrechte prüfen.</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Anordnung</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Maximiert</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Alles speichern abbrechen</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
@@ -3802,7 +3802,7 @@ Bitte wählen sie die Einheit für neue Zeichnungen und die bevorzugte Sprache.&
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Automatisches Speichern (Minuten):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
@@ -4797,7 +4797,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished"></translation>
+        <translation>Schließen</translation>
     </message>
 </context>
 <context>
