@@ -114,7 +114,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Indiquer le centre</translation>
+        <translation>Indiquer le centre</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
@@ -126,11 +126,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre invalide. Essayez 1..9999</translation>
     </message>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished">Ce n&apos;est pas une expression valide</translation>
+        <translation>Ce n&apos;est pas une expression valide</translation>
     </message>
 </context>
 <context>
@@ -824,23 +824,23 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
-        <translation type="unfinished">&amp;Arc</translation>
+        <translation>&amp;Arc</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Montrer toutes les couches</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cacher toutes les couches</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tout débloquer</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Tout verrouiller</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -852,11 +852,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Montrer tous les blocs</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Cacher tous les blocs</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
@@ -864,7 +864,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer tout</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
@@ -886,7 +886,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder la couche &quot;%1&quot; en tant que &quot;%2&quot;. </translation>
     </message>
 </context>
 <context>
@@ -919,11 +919,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation>Explorateur de bibliothèque</translation>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Ligne de commande</translation>
+        <translation>Ligne de commande</translation>
     </message>
     <message>
         <source>Dock</source>
@@ -935,11 +935,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished">Lignes</translation>
+        <translation>Lignes</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished">Cercles</translation>
+        <translation>Cercles</translation>
     </message>
     <message>
         <source>Freehand</source>
@@ -947,15 +947,15 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished">Ellipses</translation>
+        <translation>Ellipses</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Polylignes</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner</translation>
     </message>
     <message>
         <source>Dimensions</source>
@@ -963,11 +963,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Modifier</translation>
+        <translation>Modifier</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation>Mesurer</translation>
     </message>
 </context>
 <context>
@@ -1524,40 +1524,41 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder le dessin : %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarde annulée</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Fermeture du dessin</translation>
+        <translation>Fermeture du dessin</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder les changements de l’élément suivant ?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Enregistrer</translation>
+        <translation>&amp;Enregistrer</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder &amp;en tant que...</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Sauvegarder %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Sauvegarder %1 &amp;en tant que...</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mode fenêtré</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
@@ -1565,35 +1566,35 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation>Arrondi</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation>Triangulaire</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation>Nord</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation>Sud</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation>Est</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation>Ouest</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Arranger</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Maximiser</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
@@ -1605,7 +1606,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>Le Code</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -1622,7 +1623,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Wiki</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
@@ -1630,7 +1631,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Commandes</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
@@ -1642,7 +1643,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Forum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
@@ -1953,7 +1954,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Command line</source>
-        <translation type="unfinished">Ligne de commande</translation>
+        <translation>Ligne de commande</translation>
     </message>
     <message>
         <source>Cmd</source>
@@ -2984,7 +2985,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Font:</source>
-        <translation type="unfinished">Police :</translation>
+        <translation>Police :</translation>
     </message>
     <message>
         <source>Text Direction</source>
@@ -3456,7 +3457,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished">&amp;Hauteur :</translation>
+        <translation>&amp;Hauteur :</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
@@ -3472,7 +3473,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished">Bas</translation>
+        <translation>Bas</translation>
     </message>
     <message>
         <source>Number of pages</source>
@@ -3496,7 +3497,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Points</translation>
+        <translation>&amp;Points</translation>
     </message>
     <message>
         <source>Point Style</source>
@@ -3504,7 +3505,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Point Size</source>
@@ -4802,7 +4803,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close</source>
-        <translation type="unfinished">Fermer</translation>
+        <translation>Fermer</translation>
     </message>
 </context>
 <context>
@@ -5063,7 +5064,7 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished">Basculer le &amp;verrouillage du calque</translation>
+        <translation>Basculer le &amp;verrouillage du calque</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
@@ -7105,7 +7106,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished">re</translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
@@ -7200,7 +7201,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished">pp</translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
@@ -7240,12 +7241,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished">cercle2p</translation>
+        <translation>cercle2p</translation>
     </message>
     <message>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished">c2p</translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <source>circle2pr</source>
