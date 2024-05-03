@@ -33,8 +33,8 @@
 #include "ui_qg_linerelangleoptions.h"
 
 namespace {
-constexpr char* g_angleKey = "/LineRelAngleAngle";
-constexpr char* g_lengthKey = "/LineRelAngleLength";
+const char* g_angleKey = "/LineRelAngleAngle";
+const char* g_lengthKey = "/LineRelAngleLength";
 
 // format a number with specified digits after point
 QString formatNumber(double value, int precision = 8)
