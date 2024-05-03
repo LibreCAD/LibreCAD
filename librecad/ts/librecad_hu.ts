@@ -39,7 +39,7 @@
     </message>
     <message>
         <source>Layer:</source>
-        <translation>Réteg:</translation>
+        <translation>Fólia:</translation>
     </message>
     <message>
         <source>Geometry</source>
@@ -200,7 +200,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>(De-)Select Layer</source>
-        <translation>Réteg kiválasztása</translation>
+        <translation>Fólia kiválasztása</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -433,7 +433,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
-        <translation type="unfinished">&amp;Mutató</translation>
+        <translation>&amp;Mutató</translation>
     </message>
     <message>
         <source>&amp;Attributes</source>
@@ -573,7 +573,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation>&amp;Réteg hozzáadása</translation>
+        <translation>&amp;Fólia hozzáadása</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
@@ -832,7 +832,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Az összes réteg elrejtése</translation>
+        <translation>&amp;Az összes fólia elrejtése</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
@@ -1676,7 +1676,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Current Layer</source>
-        <translation>Aktuális réteg</translation>
+        <translation>Aktuális fólia</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1688,7 +1688,7 @@ p, li { white-space: pre-wrap; }
 &lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
-&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A jelenlegi aktív réteg neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;A jelenlegi aktív fólia neve &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5045,15 +5045,15 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation>Az összes réteg feloldása</translation>
+        <translation>Az összes fólia feloldása</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation>Az összes réteg zárása</translation>
+        <translation>Az összes fólia zárása</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation>Réteg eltávolítása</translation>
+        <translation>Fólia eltávolítása</translation>
     </message>
     <message>
         <source>Filter</source>
@@ -5061,11 +5061,11 @@ A tervezési rétegek tartalma nem kerül kinyomtatásra.</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation>&amp;Az összes réteg feloldása</translation>
+        <translation>&amp;Az összes fólia feloldása</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation>&amp;Az összes réteg zárása</translation>
+        <translation>&amp;Az összes fólia zárása</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
@@ -10815,7 +10815,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Scale Factor</source>
-        <translation type="unfinished">Átméretezés</translation>
+        <translation>Átméretezés</translation>
     </message>
 </context>
 <context>
