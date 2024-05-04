@@ -69,6 +69,7 @@ unix {
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
+        DEFINES -=  QT_NO_SHORTCUT
     }
 }
 win32 {
