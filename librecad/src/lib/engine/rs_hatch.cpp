@@ -709,7 +709,7 @@ double RS_Hatch::getTotalArea() {
     try {
         getTotalAreaImpl();
     } catch(...) {
-        LC_ERR<<__func__<<"(): line "<<__LINE__<<": failure in finding hatch area";
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch:: %s() failure in find hatch area", __func__);
     }
 
     return m_area;

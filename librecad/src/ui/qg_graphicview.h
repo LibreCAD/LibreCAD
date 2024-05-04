@@ -36,7 +36,7 @@
 class QGridLayout;
 class QLabel;
 class QMenu;
-
+class QEnterEvent;
 class QG_ScrollBar;
 
 /**
@@ -110,7 +110,7 @@ protected:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void tabletEvent(QTabletEvent* e) override;
 	void leaveEvent(QEvent*) override;
-	void enterEvent(QEvent*) override;
+    void enterEvent(QEnterEvent*) override;
 	void focusInEvent(QFocusEvent*) override;
 	void focusOutEvent(QFocusEvent*) override;
 	void wheelEvent(QWheelEvent* e) override;

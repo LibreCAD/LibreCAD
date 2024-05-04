@@ -40,8 +40,9 @@
 #include <QMessageBox>
 #include <QPagedPaintDevice>
 #include <QPluginLoader>
+#include <QPrinter>
 #include <QPrintDialog>
-#include <QRegExp>
+#include <QRegularExpression>
 #include <QSplitter>
 #include <QStatusBar>
 #include <QStyleFactory>
@@ -2157,7 +2158,7 @@ void QC_ApplicationWindow::slotFileExport() {
             QString format = "";
             int i = filter.indexOf("(*.");
             if (i!=-1) {
-                int i2 = filter.indexOf(QRegExp("[) ]"), i);
+                int i2 = filter.indexOf(QRegularExpression("[) ]"), i);
                 format = filter.mid(i+3, i2-(i+3));
                 format = format.toUpper();
             }
@@ -2408,9 +2409,9 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
     bool landscape = false;
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
-    QPrinter::PageSize paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
+    QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
-    if(paperSizeName==QPrinter::Custom){
+    if(paperSizeName==QPageSize::Custom){
         RS_Vector&& s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
         if(landscape) s=s.flipXY();
         printer.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter});

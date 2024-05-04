@@ -91,8 +91,7 @@ void RS_ActionDrawLineTangent1::trigger() {
 void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
-	RS_Vector mouse(graphicView->toGraphX(e->x()),
-					graphicView->toGraphY(e->y()));
+    RS_Vector mouse{graphicView->toGraph(e->position())};
 
 	switch (getStatus()) {
 	case SetPoint:

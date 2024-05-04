@@ -260,11 +260,13 @@ void LC_PenPaletteWidget::onTableViewContextMenuInvoked([[maybe_unused]] const Q
         caption->setAlignment(Qt::AlignCenter);
         typedef void (LC_PenPaletteWidget::*MemFn)();
         auto addAction = [&contextMenu, this](const std::pair<QString, MemFn>& item) {
-#if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
-            contextMenu->addAction(item.first, {}, this, item.second);
-#else
-            contextMenu->addAction(item.first, this, item.second);
-#endif
+            auto* action = contextMenu->addAction(item.first);
+            connect(action, &QAction::triggered, this, item.second);
+// #if QT_VERSION >= QT_VERSION_CHECK(6, 2, 0)
+//             connect(action, &QAction::triggered, this, time.second);
+// #else
+//             connect(action, SIGNAL(triggered()), this, time.second);
+// #endif
         };
         auto addActions = [&addAction](std::initializer_list<std::pair<QString, MemFn>> menuEntries){
             for (const auto& menuEntry: menuEntries)

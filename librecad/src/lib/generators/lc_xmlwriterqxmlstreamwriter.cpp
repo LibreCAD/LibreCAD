@@ -29,7 +29,7 @@ LC_XMLWriterQXmlStreamWriter::LC_XMLWriterQXmlStreamWriter():
 	xmlWriter(new QXmlStreamWriter(&xml))
 {
 	xmlWriter->setAutoFormatting(true);
-	xmlWriter->setCodec("UTF-8");
+	//xmlWriter->setEncoding("UTF-8");
 }
 
 LC_XMLWriterQXmlStreamWriter::~LC_XMLWriterQXmlStreamWriter() = default;

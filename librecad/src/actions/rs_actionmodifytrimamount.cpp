@@ -87,7 +87,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
-	*trimCoord = graphicView->toGraph(e->x(), e->y());
+	*trimCoord = graphicView->toGraph(e->position());
     trimEntity = catchEntity(e);
 
     if (e->button()==Qt::LeftButton) {

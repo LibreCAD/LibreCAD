@@ -77,8 +77,13 @@ std::unique_ptr<RS_Pattern> RS_PatternList::requestPattern(const QString& name) 
     if (patterns.count(name2) == 0 || patterns.at(name2) == nullptr) {
         auto p = std::make_unique<RS_Pattern>(name2);
         if (p!=nullptr) {
-            p->loadPattern();
-            patterns[name2].swap(p);
+            if (p->loadPattern()) {
+                patterns.emplace(name2,  std::unique_ptr<RS_Pattern>{});
+                patterns[name2].swap(p);
+            }
+            else {
+                patterns.erase(name2);
+            }
         }
         else {
             LC_ERR<<"RS_PatternList::"<<__func__<<"(): loading pattern failed: "<<name2;

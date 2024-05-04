@@ -72,7 +72,7 @@ void QG_ExitDialog::init()
 {
 	setShowSaveAll(false);
 	//set dlg icon
-    QMessageBox mb("","",QMessageBox::Question, QMessageBox::Ok, Qt::NoButton, Qt::NoButton);
+    QMessageBox mb({}, "", "");
 	ui->l_icon->setPixmap( mb.iconPixmap());
 //    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
     // RVT_PORT makeLetterAccell( bLeave );

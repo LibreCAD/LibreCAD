@@ -175,6 +175,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
         RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
         if(en == nullptr || en==m_pPoints->circle1)
             return;
+        RS_Vector mouse=graphicView->toGraph(e->position());
         clearHighlighted();
         m_pPoints->circle2=en;
         m_pPoints->circle2->setHighlighted(true);

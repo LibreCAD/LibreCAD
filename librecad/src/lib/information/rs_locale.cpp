@@ -64,7 +64,7 @@ QString RS_Locale::getName() const {
 }
 
 QString RS_Locale::name() const{
-        return 	languageToString(language())+QString(" (")+countryToString(country())+QString(")");
+        return 	languageToString(language())+QString(" (")+territoryToString(territory())+QString(")");
 }
 
 //EOF

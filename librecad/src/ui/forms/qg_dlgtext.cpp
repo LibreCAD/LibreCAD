@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "qg_dlgtext.h"
 
-#include <QTextCodec>
 #include <QTextStream>
 #include <QFileDialog>
 #include "rs_system.h"

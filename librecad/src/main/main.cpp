@@ -145,14 +145,14 @@ int main(int argc, char** argv)
             // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
             // for a list of debug levels use --debug?
             // if no level follows, the debugging level is set
-            argstr.remove(QRegExp("^"+lpDebugSwitch0));
-            argstr.remove(QRegExp("^"+lpDebugSwitch1));
+            argstr.remove(QRegularExpression("^"+lpDebugSwitch0));
+            argstr.remove(QRegularExpression("^"+lpDebugSwitch1));
             char level;
             if(argstr.size()==0)
             {
                 if(i+1<argc)
                 {
-                    if(QRegExp("\\d*").exactMatch(argv[i+1]))
+                    if(QRegularExpression(R"(\d*)").match(argv[i+1]).hasMatch())
                     {
                         ++i;
                         qDebug()<<"reading "<<argv[i]<<" as debugging level";

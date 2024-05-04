@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.0-alpha"
+LC_VERSION="2.2.2-alpha"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -28,6 +28,10 @@ CONFIG += qt \
 
 QT += widgets printsupport
 CONFIG += c++17
+
+# using qt5 connections for UI forms
+QMAKE_UIC_FLAGS += --connections string
+
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }

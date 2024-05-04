@@ -3,28 +3,26 @@ on:
   push:
     branches:
       - master
+      - 2.2.1
 
 jobs:
   BuildLinux:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        id: snapcraft
         uses: actions/checkout@main
         with:
           fetch-depth: 0
 
-      - name: install snap
-        uses: samuelmeuli/action-snapcraft@v2
+      - name: Install Qt6
+        uses: jurplel/install-qt-action@v3
         with:
-          name: snap
-          path: ${{ steps.snapcraft.outputs.snap }}
+          version: '6.6.*'
 
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtchooser \
-          libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev qmake6 qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
@@ -36,7 +34,7 @@ jobs:
         run: |
           export CC=g++
           export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
-          ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
+          ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
       - name: Create report repository
@@ -65,6 +63,11 @@ jobs:
           find unix/
           ./CI/build-appimg.sh
 
+      - name: List files
+        run: |
+          echo ${{ github.workspace }} && ls ${{ github.workspace }}
+        shell: bash
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
@@ -83,18 +86,17 @@ jobs:
 #          name: LibreCAD.snap
 #
   BuildMacOS:
-    runs-on: macos-latest
+    runs-on: macos-14
     steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: qt6
 
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.5.*'
+          version: '6.6.*'
 
       - name: Install boost dependencies
         run: |
@@ -106,103 +108,10 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: assets
           path: LibreCAD*.dmg
-          retention-days: 2
-
-  BuildWindows:
-    runs-on: windows-2019
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@main
-        with:
-          fetch-depth: 0
-
-      - name: Uninstall incorrect mingw
-        run: |
-          choco uninstall mingw --force
-          choco uninstall strawberryperl --force
-
-      - name: Install MinGW8.1 32-bit
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW32
-
-      - name: Install Qt-5.15
-        uses: jurplel/install-qt-action@v3
-        with:
-          version: '5.15.2'
-          host: 'windows'
-          target: 'desktop'
-          arch: 'win32_mingw81'
-          dir: '..'
-          install-deps: 'true'
-          cache: 'false'
-          cache-key-prefix: 'install-qt-action'
-          setup-python: 'true'
-          set-env: 'true'
-          tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
-          extra: '--external 7z'
-
-      - name: Install boost
-        shell: bash
-        run: |
-          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
-          7z x -o. -y boost.7z
-          mv boost_1_75_0 ../boost
-          rm boost.7z
-
-      - name: Debugging
-        if: ${{ always() }}
-        shell: cmd
-        run: |
-          set
-          echo.
-          dir c:\
-          echo.
-          dir d:\
-          echo.
-          dir d:\a
-          echo.
-          dir
-          echo.
-          dir ..
-          echo.
-          dir ..\boost
-          echo.
-          dir ..\Qt
-          echo.
-          dir ..\Qt\5.15.2\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\bin
-
-      - name: Build
-        run: |
-          set PATH=c:\msys64\mingw32\bin;%PATH%
-          copy CI\custom-win.pri custom.pri
-          copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
-          echo SET:
-          set
-          pushd "${{ github.workspace }}\scripts"
-          build-windows.bat
-        shell: cmd
-
-      - name: Rename installer
-        run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --always`.exe
-        shell: bash
-
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: assets
-          path: LibreCAD-Installer*.exe
           retention-days: 2
 
   BuildWindows64:
@@ -223,13 +132,13 @@ jobs:
         with:
           msystem: MINGW64
 
-      - name: Install Qt-5.15
+      - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '6.6.2'
           host: 'windows'
+          arch: 'win64_mingw'
           target: 'desktop'
-          arch: 'win64_mingw81'
           dir: '..'
           install-deps: 'true'
           cache: 'false'
@@ -237,16 +146,14 @@ jobs:
           setup-python: 'true'
           set-env: 'true'
           tools-only: 'false'
-          aqtversion: '==3.1.*'
-          py7zrversion: '==0.20.*'
           extra: '--external 7z'
 
       - name: Install boost
         shell: bash
         run: |
-          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.75.0/source/boost_1_75_0.7z
+          curl -# -L -o boost.7z https://boostorg.jfrog.io/artifactory/main/release/1.83.0/source/boost_1_83_0.7z
           7z x -o. -y boost.7z
-          mv boost_1_75_0 ../boost
+          mv boost_1_83_0 ../boost
           rm boost.7z
 
       - name: Debugging
@@ -269,11 +176,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2\
+          dir ..\Qt\6.6.2\
           echo.
-          dir ..\Qt\5.15.2\mingw81_64\
+          dir ..\Qt\6.6.2\mingw_64\
           echo.
-          dir ..\Qt\5.15.2\mingw81_64\bin
+          dir ..\Qt\6.6.2\mingw_64\bin
 
       - name: Build
         run: |
@@ -291,16 +198,22 @@ jobs:
           mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
         shell: bash
 
+      - name: List files
+        run: |
+            echo "${{ github.workspace }}"
+            dir "${{ github.workspace }}"
+        shell: cmd
+
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: LibreCAD-Installer*.exe
+          path: LibreCAD*.exe
           retention-days: 2
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
-    needs: [BuildLinux, BuildMacOS, BuildWindows, BuildWindows64]
+    needs: [BuildLinux, BuildMacOS, BuildWindows64]
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -309,7 +222,7 @@ jobs:
           fetch-depth: 0
 
       - name: Fetch artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@main
 
       - name: Upload latest pre-release
         uses: "marvinpinto/action-automatic-releases@latest"

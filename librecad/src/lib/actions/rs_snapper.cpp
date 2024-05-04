@@ -272,10 +272,10 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
 						"RS_Snapper::snapFree: event is nullptr");
         return RS_Vector(false);
     }
-	pImpData->snapSpot=graphicView->toGraph(e->x(), e->y());
-	pImpData->snapCoord=pImpData->snapSpot;
+    pImpData->snapSpot=graphicView->toGraph(e->position());
+    pImpData->snapCoord=pImpData->snapSpot;
     snap_indicator->lines_state=true;
-	return pImpData->snapCoord;
+    return pImpData->snapCoord;
 }
 
 /**
@@ -295,7 +295,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
 		return pImpData->snapSpot;
     }
 
-    RS_Vector mouseCoord = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouseCoord = graphicView->toGraph(e->position());
     double ds2Min=RS_MAXDOUBLE*RS_MAXDOUBLE;
 
     if (snapMode.snapEndpoint) {
@@ -746,10 +746,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
                                    RS2::ResolveLevel level) {
 
-    RS_Entity* entity = catchEntity(
-               RS_Vector(graphicView->toGraphX(e->x()),
-                         graphicView->toGraphY(e->y())),
-               level);
+    RS_Entity* entity = catchEntity(graphicView->toGraph(e->position()), level);
     return entity;
 }
 
@@ -766,7 +763,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
                                    RS2::ResolveLevel level) {
     return catchEntity(
-			   {graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())},
+               graphicView->toGraph(e->position()),
 				enType,
 				level);
 }
@@ -774,7 +771,7 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                                    RS2::ResolveLevel level) {
 	RS_Entity* pten = nullptr;
-	RS_Vector coord{graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};
+    RS_Vector coord = graphicView->toGraph(e->position());
     switch(enTypeList.size()) {
     case 0:
         return catchEntity(coord, level);

@@ -86,7 +86,7 @@ void RS_ActionDrawLineParallel::trigger() {
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
 
-	*coord = {graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};
+    *coord = {graphicView->toGraph(e->position())};
 
     entity = catchEntity(e, RS2::ResolveAll);
 

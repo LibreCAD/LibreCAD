@@ -118,7 +118,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
         }
 		if(en->getParent() && en->getParent()->ignoredOnModification())
 			return;
-		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->position());
 		deletePreview();
 		while(pPoints->lines.size()==3){
 			pPoints->lines.back()->setHighlighted(false);
@@ -172,7 +172,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
 			pPoints->lines.pop_back();
 		}
 		pPoints->lines.push_back(static_cast<RS_Line*>(en));
-		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->position());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:

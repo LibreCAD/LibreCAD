@@ -34,8 +34,8 @@
 #include <QClipboard>
 
 #include "rs_commands.h"
-#include "rs_dialogfactory.h"
 #include "rs_math.h"
+#include "rs_settings.h"
 #include "rs_settings.h"
 
 
@@ -273,7 +273,7 @@ QString QG_CommandEdit::filterCliCal(const QString& cmd)
         bool okay=false;
         double result = RS_Math::eval(str, &okay);
         if (okay) {
-            RS_DIALOGFACTORY->commandMessage(QString("%1 =%2").arg(str).arg(result, 12, 'g'));
+            emit message(QString("%1 =%2").arg(str).arg(result, 12, 'g'));
             return {};
         }
     }

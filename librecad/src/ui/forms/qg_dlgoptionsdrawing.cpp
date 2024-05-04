@@ -491,9 +491,7 @@ void QG_DlgOptionsDrawing::validate() {
         if (static_cast<RS2::Unit>(cbUnit->currentIndex()) != RS2::Inch) {
             QMessageBox::warning( this, tr("Options"),
                                   tr("For the length formats 'Engineering' and 'Architectural', the "
-                                     "unit must be set to Inch."),
-                                  QMessageBox::Ok,
-                                  Qt::NoButton);
+                                     "unit must be set to Inch."));
             return;
         }
     }
@@ -501,9 +499,7 @@ void QG_DlgOptionsDrawing::validate() {
         if (static_cast<RS2::Unit>(cbUnit->currentIndex()) != RS2::Meter) {
             QMessageBox::warning( this, tr("Options"),
                                   tr("For the length format 'Architectural (metric)', the "
-                                     "unit must be set to Meter."),
-                                  QMessageBox::Ok,
-                                  Qt::NoButton);
+                                     "unit must be set to Meter."));
             return;
         }
     }

@@ -148,7 +148,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
 
         // set base entity:
         case SetBaseEntity: {
-            RS_Vector coord = graphicView->toGraph(e->x(), e->y());
+            RS_Vector coord = graphicView->toGraph(e->position());
             RS_Entity* entity = catchEntity(coord, RS2::ResolveAll);
             if (entity) {
                 if (entity->isAtomic()) {
