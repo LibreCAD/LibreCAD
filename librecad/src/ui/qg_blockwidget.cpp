@@ -383,39 +383,34 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
     // slotActivated(blockView->currentIndex());
 
-    QMenu* contextMenu = new QMenu(this);
-    QLabel* caption = new QLabel(tr("Block Menu"), this);
+    auto contextMenu = std::make_unique<QMenu>(this);
+    auto caption = new QLabel(tr("Block Menu"), this);
     QPalette palette;
     palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
     palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
     caption->setPalette(palette);
     caption->setAlignment( Qt::AlignCenter );
+
+    using ActionMemberFunc = void (QG_ActionHandler::*)();
+    const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
+        contextMenu->addAction(name, actionHandler, func);
+    };
     // Actions for all blocks:
-    contextMenu->addAction( tr("&Defreeze all Blocks"), 0, actionHandler,
-                             SLOT(slotBlocksDefreezeAll()));
-    contextMenu->addAction( tr("&Freeze all Blocks"), 0, actionHandler,
-                             SLOT(slotBlocksFreezeAll()));
+    addActionFunc(tr("&Defreeze all Blocks"), &QG_ActionHandler::slotBlocksDefreezeAll);
+    addActionFunc(tr("&Freeze all Blocks"), &QG_ActionHandler::slotBlocksFreezeAll);
     contextMenu->addSeparator();
     // Actions for selected blocks or,
     // if nothing is selected, for active block:
-    contextMenu->addAction( tr("&Toggle Visibility"), 0, actionHandler,
-                             SLOT(slotBlocksToggleView()));
-    contextMenu->addAction( tr("&Remove Block"), 0, actionHandler,
-                             SLOT(slotBlocksRemove()));
+    addActionFunc(tr("&Toggle Visibility"), &QG_ActionHandler::slotBlocksToggleView);
+    addActionFunc(tr("&Remove Block"), &QG_ActionHandler::slotBlocksRemove);
     contextMenu->addSeparator();
     // Single block actions:
-    contextMenu->addAction( tr("&Add Block"), 0, actionHandler,
-                             SLOT(slotBlocksAdd()));
-    contextMenu->addAction( tr("&Rename Block"), 0, actionHandler,
-                             SLOT(slotBlocksAttributes()));
-    contextMenu->addAction( tr("&Edit Block"), 0, actionHandler,
-                             SLOT(slotBlocksEdit()));
-    contextMenu->addAction( tr("&Insert Block"), 0, actionHandler,
-                             SLOT(slotBlocksInsert()));
-    contextMenu->addAction( tr("&Create New Block"), 0, actionHandler,
-                             SLOT(slotBlocksCreate()));
+    addActionFunc(tr("&Add Block"), &QG_ActionHandler::slotBlocksAdd);
+    addActionFunc(tr("&Rename Block"), &QG_ActionHandler::slotBlocksAttributes);
+    addActionFunc(tr("&Edit Block"), &QG_ActionHandler::slotBlocksEdit);
+    addActionFunc(tr("&Insert Block"), &QG_ActionHandler::slotBlocksInsert);
+    addActionFunc(tr("&Create New Block"), &QG_ActionHandler::slotBlocksCreate);
     contextMenu->exec(QCursor::pos());
-    delete contextMenu;
 
     e->accept();
 }
