@@ -22,7 +22,7 @@ jobs:
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev qmake6 qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev libqt6svg6 libqt6svg6-dev qmake6 qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
@@ -33,7 +33,7 @@ jobs:
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-15 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
@@ -115,7 +115,7 @@ jobs:
           retention-days: 2
 
   BuildWindows64:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -135,7 +135,7 @@ jobs:
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.6.2'
+          version: '6.6.*'
           host: 'windows'
           arch: 'win64_mingw'
           target: 'desktop'
@@ -176,11 +176,6 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\6.6.2\
-          echo.
-          dir ..\Qt\6.6.2\mingw_64\
-          echo.
-          dir ..\Qt\6.6.2\mingw_64\bin
 
       - name: Build
         run: |
