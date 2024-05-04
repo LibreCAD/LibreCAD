@@ -9,7 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        id: snapcraft
         uses: actions/checkout@main
         with:
           fetch-depth: 0
@@ -82,23 +81,38 @@ jobs:
 #          path: ${{ github.workspace }}/librecad**snap
 #          name: LibreCAD.snap
 #
+
   BuildMacOS:
-    runs-on: macos-latest
+    runs-on: macos-13
     steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
-          ref: qt6
-
-      - name: Install Qt6
+          
+      - name: qt50
+        run: |
+          pip install -U pip
+          pip install aqtinstall
+          aqt list-qt mac desktop --arch 5.15.2
+          
+      - name: Install Qt5
         uses: jurplel/install-qt-action@v3
         with:
-          version: '6.5.*'
+          version: '5.15.*'
+          host: 'mac'
+          target: 'desktop'
+          arch: 'clang_64'
 
-      - name: Install boost dependencies
+      - name: update Qt5
         run: |
-          brew install boost
+          sed -i'' -e 's:isEmpty(QMAKE_DEFAULT_LIBDIRS)|isEmpty(QMAKE_DEFAULT_INCDIRS):isEmpty("H"):' $Qt5_Dir/mkspecs/features/toolchain.prf
+          sed -i'' -e 's:error("failed to parse default search paths from compiler output"):LIBRECAD_SDK=:' $Qt5_Dir/mkspecs/features/toolchain.prf
+
+      - name: Install dependencies
+        run: |
+          brew uninstall --ignore-dependencies freetype
+          brew install boost freetype
 
       - name: Build and packaging
         run: |
@@ -113,7 +127,7 @@ jobs:
           retention-days: 2
 
   BuildWindows:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -133,7 +147,7 @@ jobs:
       - name: Install Qt-5.15
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '5.15.*'
           host: 'windows'
           target: 'desktop'
           arch: 'win32_mingw81'
@@ -176,11 +190,6 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_32\bin
 
       - name: Build
         run: |
@@ -206,7 +215,7 @@ jobs:
           retention-days: 2
 
   BuildWindows64:
-    runs-on: windows-2019
+    runs-on: windows-2022
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -226,7 +235,7 @@ jobs:
       - name: Install Qt-5.15
         uses: jurplel/install-qt-action@v3
         with:
-          version: '5.15.2'
+          version: '5.15.*'
           host: 'windows'
           target: 'desktop'
           arch: 'win64_mingw81'
@@ -269,11 +278,6 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-          dir ..\Qt\5.15.2\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_64\
-          echo.
-          dir ..\Qt\5.15.2\mingw81_64\bin
 
       - name: Build
         run: |
