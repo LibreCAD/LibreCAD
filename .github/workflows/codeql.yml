@@ -35,6 +35,11 @@ jobs:
       with:
         fetch-depth: 0
 
+    - name: Install Qt6
+      uses: jurplel/install-qt-action@v3
+      with:
+        version: '6.6.*'
+
     - name: Install Qt and dependencies
       run: |
         sudo apt-get -y update
