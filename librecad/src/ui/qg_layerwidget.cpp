@@ -544,48 +544,34 @@ void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     if (actionHandler) {
         auto contextMenu = std::make_unique<QMenu>(this);
-        auto caption = std::make_unique<QLabel>(tr("Layer Menu"), this);
-        QPalette palette;
-        palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
-        palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
-        caption->setPalette(palette);
-        caption->setAlignment( Qt::AlignCenter );
+
+        using ActionMemberFunc = void (QG_ActionHandler::*)();
+        const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
+            contextMenu->addAction(name, actionHandler, func);
+        };
+
         // Actions for all layers:
-        contextMenu->addAction( tr("&Defreeze all Layers"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersDefreezeAll);
-        contextMenu->addAction( tr("&Freeze all Layers"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersFreezeAll);
-        contextMenu->addAction( tr("&Unlock all Layers"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersUnlockAll);
-        contextMenu->addAction( tr("&Lock all Layers"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersLockAll);
+        addActionFunc( tr("&Defreeze all Layers"), &QG_ActionHandler::slotLayersDefreezeAll);
+        addActionFunc( tr("&Freeze all Layers"), &QG_ActionHandler::slotLayersFreezeAll);
+        addActionFunc( tr("&Unlock all Layers"), &QG_ActionHandler::slotLayersUnlockAll);
+        addActionFunc( tr("&Lock all Layers"), &QG_ActionHandler::slotLayersLockAll);
         contextMenu->addSeparator();
         // Actions for selected layers or,
         // if nothing is selected, for active layer:
-        contextMenu->addAction( tr("Toggle Layer &Visibility"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersToggleView);
-        contextMenu->addAction( tr("Toggle Layer Loc&k"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersToggleLock);
-        contextMenu->addAction( tr("Toggle Layer &Printing"), {}, actionHandler,
-                                 &QG_ActionHandler::slotLayersTogglePrint);
-        contextMenu->addAction( tr("Toggle &Construction Layer"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersToggleConstruction);
-        contextMenu->addAction( tr("&Remove Layer"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersRemove);
+        addActionFunc( tr("Toggle Layer &Visibility"), &QG_ActionHandler::slotLayersToggleView);
+        addActionFunc( tr("Toggle Layer Loc&k"), &QG_ActionHandler::slotLayersToggleLock);
+        addActionFunc( tr("Toggle Layer &Printing"), &QG_ActionHandler::slotLayersTogglePrint);
+        addActionFunc( tr("Toggle &Construction Layer"), &QG_ActionHandler::slotLayersToggleConstruction);
+        addActionFunc( tr("&Remove Layer"), &QG_ActionHandler::slotLayersRemove);
         contextMenu->addSeparator();
         // Single layer actions:
-        contextMenu->addAction( tr("&Add Layer"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersAdd);
-        contextMenu->addAction( tr("Edit Layer &Attributes"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersEdit);
+        addActionFunc( tr("&Add Layer"), &QG_ActionHandler::slotLayersAdd);
+        addActionFunc( tr("Edit Layer &Attributes"), &QG_ActionHandler::slotLayersEdit);
 
         contextMenu->addSeparator();
 
-        contextMenu->addAction( tr("&Export Selected Layer(s)"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersExportSelected);
-
-        contextMenu->addAction( tr("Export &Visible Layer(s)"), {}, actionHandler,
-                                &QG_ActionHandler::slotLayersExportVisible);
+        addActionFunc( tr("&Export Selected Layer(s)"), &QG_ActionHandler::slotLayersExportSelected);
+        addActionFunc( tr("Export &Visible Layer(s)"), &QG_ActionHandler::slotLayersExportVisible);
 
         contextMenu->exec(QCursor::pos());
     }

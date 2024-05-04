@@ -384,12 +384,6 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     // slotActivated(blockView->currentIndex());
 
     auto contextMenu = std::make_unique<QMenu>(this);
-    auto caption = new QLabel(tr("Block Menu"), this);
-    QPalette palette;
-    palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
-    palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
-    caption->setPalette(palette);
-    caption->setAlignment( Qt::AlignCenter );
 
     using ActionMemberFunc = void (QG_ActionHandler::*)();
     const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
