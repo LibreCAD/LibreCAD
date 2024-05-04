@@ -250,7 +250,6 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
-    ui/forms/LC_DlgParabola.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
