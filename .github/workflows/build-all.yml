@@ -316,6 +316,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: 2.2.1
 
       - name: Fetch artifacts
         uses: actions/download-artifact@v3
@@ -324,8 +325,8 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          title: "Continuous Build"
+          automatic_release_tag: "2.2.1"
+          title: "Release Candidate Build"
           files: |
             assets/LibreCAD*.*
             LICENSE
