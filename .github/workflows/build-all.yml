@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - master
+      - 2.2.1
 
 jobs:
   BuildLinux:
@@ -12,6 +13,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: 2.2.1
 
       - name: install snap
         uses: samuelmeuli/action-snapcraft@v2
@@ -89,6 +91,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: 2.2.1
           
       - name: qt50
         run: |
@@ -127,12 +130,13 @@ jobs:
           retention-days: 2
 
   BuildWindows:
-    runs-on: windows-2022
+    runs-on: windows-2019
     steps:
       - name: Checkout code
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: 2.2.1
 
       - name: Uninstall incorrect mingw
         run: |
@@ -221,6 +225,7 @@ jobs:
         uses: actions/checkout@main
         with:
           fetch-depth: 0
+          ref: 2.2.1
 
       - name: Uninstall incorrect mingw
         run: |
