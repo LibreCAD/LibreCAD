@@ -62,7 +62,7 @@ jobs:
         run: |
           find unix/
           ./CI/build-appimg.sh
-          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
+          mv LibreCAD*.AppImage LibreCAD-`git describe --tags --always`.AppImage
 
       - name: List files
         run: |
@@ -106,7 +106,7 @@ jobs:
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
+          mv LibreCAD.dmg LibreCAD-`git describe --tags --always`.dmg
 
       - name: Upload artifact
         uses: actions/upload-artifact@main
@@ -191,7 +191,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-win64-`git describe --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-win64-`git describe --tags --always`.exe
         shell: bash
 
       - name: List files
