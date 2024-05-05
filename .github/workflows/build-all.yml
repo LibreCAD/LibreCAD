@@ -73,6 +73,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: assets
+          overwrite: true
           path: LibreCAD*.AppImage
           retention-days: 2
 #
@@ -112,6 +113,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: assets
+          overwrite: true
           path: LibreCAD*.dmg
           retention-days: 2
 
@@ -204,6 +206,7 @@ jobs:
         uses: actions/upload-artifact@main
         with:
           name: assets
+          overwrite: true
           path: LibreCAD*.exe
           retention-days: 2
 
