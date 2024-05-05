@@ -8,6 +8,8 @@ on:
 jobs:
   BuildLinux:
     runs-on: ubuntu-latest
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -70,10 +72,10 @@ jobs:
         shell: bash
 
       - name: Upload artifact
+        id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
-          name: assets
-          overwrite: true
+          name: linuxAssets
           path: LibreCAD*.AppImage
           retention-days: 2
 #
@@ -89,6 +91,8 @@ jobs:
 #
   BuildMacOS:
     runs-on: macos-14
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -110,15 +114,17 @@ jobs:
           mv LibreCAD.dmg LibreCAD-`git describe --tags --always`.dmg
 
       - name: Upload artifact
+        id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
-          name: assets
-          overwrite: true
+          name: macOSAssets
           path: LibreCAD*.dmg
           retention-days: 2
 
   BuildWindows64:
     runs-on: windows-2022
+    outputs:
+      output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -203,10 +209,10 @@ jobs:
         shell: cmd
 
       - name: Upload artifact
+        id: artifact-upload-step
         uses: actions/upload-artifact@main
         with:
-          name: assets
-          overwrite: true
+          name: win64Assets
           path: LibreCAD*.exe
           retention-days: 2
 
@@ -232,7 +238,9 @@ jobs:
           draft: false
           title: "Continuous Build"
           files: |
-            assets/LibreCAD*.*
+            linuxAssets/LibreCAD*.*
+            macOSAssets/LibreCAD*.*
+            win64Assets/LibreCAD*.*
             LICENSE
 
 
