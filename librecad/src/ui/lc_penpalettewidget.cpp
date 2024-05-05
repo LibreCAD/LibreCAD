@@ -411,9 +411,7 @@ void LC_PenPaletteWidget::invokeOptionsDialog(bool focusOnFile){
                 QMessageBox::warning( this, tr("Pen palette"),
                                       tr("Location of pens file is changed, please restart the application so new pens file will be used.\n\n"
                                          "Please note that if you'll save pen via editor without restart, current pens from palette will be saved "
-                                         "in the new file and therefore existing content of it will be overridden."),
-                                      QMessageBox::Ok,
-                                      Qt::NoButton);
+                                         "in the new file and therefore existing content of it will be overridden."));
             }
         }
     }

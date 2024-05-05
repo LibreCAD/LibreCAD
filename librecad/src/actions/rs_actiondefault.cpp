@@ -64,9 +64,6 @@ constexpr double minimumHoverTolerance =  3.0;
 constexpr double hoverToleranceFactor1 =  1.0;
 constexpr double hoverToleranceFactor2 = 10.0;
 
-constexpr unsigned minHighLightDuplicates = 4;
-constexpr unsigned maxHighLightDuplicates = 20;
-
 // whether the entity supports glowing effects on mouse hovering
 bool allowMouseOverGlowing(const RS_Entity* entity)
 {

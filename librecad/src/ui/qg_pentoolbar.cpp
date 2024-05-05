@@ -144,7 +144,8 @@ RS_Pen QG_PenToolBar::getPen() const {
  * Called by the layer list (if this object was previously
  * added as a listener to a layer list).
  */
-void QG_PenToolBar::layerEdited(RS_Layer*) {}
+void QG_PenToolBar::layerEdited(RS_Layer*)
+{}
 
 
 /**

@@ -57,8 +57,8 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
         return;
     }
 
-    QModelIndex dropIndex = indexAt(event->pos());
-    auto* widget = (LC_LayerTreeWidget*)parentWidget();
+    QModelIndex dropIndex = indexAt(event->position().toPoint());
+    auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
     if( !dropIndex.isValid() )
         return;
     widget->onDragEnterEvent(dropIndex);
@@ -74,10 +74,8 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
         }
         event->accept();
 
-        QModelIndex dropIndex = indexAt(event->pos());
-
-        auto* widget = (LC_LayerTreeWidget*)parentWidget();
-
+        QModelIndex dropIndex = indexAt(event->position().toPoint());
+        auto* widget = dynamic_cast<LC_LayerTreeWidget*>(parentWidget());
         if (!widget){
             return;
         }
@@ -130,11 +128,11 @@ void LC_LayerTreeView::dragEnterEvent(QDragEnterEvent *event) {
 QStringList LC_LayerTreeView::saveTreeExpansionState(){
     QStringList treeExpansionState;
     LC_LayerTreeModel *layerTreeModel = getTreeModel();
-        foreach (QModelIndex index, layerTreeModel->getPersistentIndexList()) {
-            if (this->isExpanded(index)){
-                treeExpansionState << index.data(Qt::UserRole).toString();
-            }
+    foreach (QModelIndex index, layerTreeModel->getPersistentIndexList()) {
+        if (this->isExpanded(index)){
+            treeExpansionState << index.data(Qt::UserRole).toString();
         }
+    }
 
     return treeExpansionState;
 }

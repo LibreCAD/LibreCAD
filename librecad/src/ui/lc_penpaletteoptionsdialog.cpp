@@ -126,8 +126,7 @@ void LC_PenPaletteOptionsDialog::selectMatchedItemColor(){
  */
 void LC_PenPaletteOptionsDialog::set_color(QComboBox* combo, QColor &custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+    auto current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog::setCustomColor(0, custom.rgb());
 

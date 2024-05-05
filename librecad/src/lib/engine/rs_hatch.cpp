@@ -240,7 +240,7 @@ void RS_Hatch::update() {
     std::unique_ptr<RS_Pattern> pat = RS_PATTERNLIST->requestPattern(data.pattern);
     if (pat == nullptr) {
         updateRunning = false;
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: requesting pattern: %s not found", data.pattern.toStdString().c_str());
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Hatch::update: requesting pattern: %s not found", data.pattern.toUtf8().constData());
         updateError = HATCH_PATTERN_NOT_FOUND;
         return;
     } else {

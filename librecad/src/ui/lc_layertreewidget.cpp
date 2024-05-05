@@ -669,21 +669,21 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
             contextMenu->setTitle(title);
 
             if (isVirtual){
-                contextMenu->addAction(tr("&Add Child Layer"), this, &LC_LayerTreeWidget::addChildLayerForSelectedItem, 0);
-                contextMenu->addAction(tr("&Rename"), this, &LC_LayerTreeWidget::renameVirtualLayer, 0);
-                contextMenu->addAction(tr("&Remove Layers (Sub-Tree)"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem, 0);
+                contextMenu->addAction(tr("&Add Child Layer"), this, &LC_LayerTreeWidget::addChildLayerForSelectedItem);
+                contextMenu->addAction(tr("&Rename"), this, &LC_LayerTreeWidget::renameVirtualLayer);
+                contextMenu->addAction(tr("&Remove Layers (Sub-Tree)"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem);
                 contextMenu->addSeparator();
-                contextMenu->addAction(tr("&Copy Structure (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerCopy, 0);
-                contextMenu->addAction(tr("&Duplicate Content (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerDuplicate, 0);
+                contextMenu->addAction(tr("&Copy Structure (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerCopy);
+                contextMenu->addAction(tr("&Duplicate Content (Sub-Tree)"), this, &LC_LayerTreeWidget::createLayerDuplicate);
                 // TODO - should we take care of virtual layer's visibility somehow?
-                contextMenu->addAction(tr("&Select Entities (Sub-Tree)"), this, &LC_LayerTreeWidget::selectLayersEntities, 0);
+                contextMenu->addAction(tr("&Select Entities (Sub-Tree)"), this, &LC_LayerTreeWidget::selectLayersEntities);
             } else {
 
                 bool NON_ZERO_LAYER = !layerItem->isZero();
 
-                contextMenu->addAction(tr("&Edit Layer &Attributes"), this, &LC_LayerTreeWidget::editSelectedLayer, 0);
+                contextMenu->addAction(tr("&Edit Layer &Attributes"), this, &LC_LayerTreeWidget::editSelectedLayer);
                 if (NON_ZERO_LAYER){
-                    contextMenu->addAction(tr("&Remove Layer"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem, 0);
+                    contextMenu->addAction(tr("&Remove Layer"), this, &LC_LayerTreeWidget::removeLayersForSelectedItem);
                 }
                 contextMenu->addSeparator();
 
@@ -692,21 +692,21 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                         bool hasItems = false;
 
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::DIMENSIONAL)){
-                            contextMenu->addAction(tr("&Add Dimensions Sub-Layer"), this, &LC_LayerTreeWidget::addDimensionalLayerForSelectedItem, 0);
+                            contextMenu->addAction(tr("&Add Dimensions Sub-Layer"), this, &LC_LayerTreeWidget::addDimensionalLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::INFORMATIONAL)){
-                            contextMenu->addAction(tr("&Add Info Sub-Layer"), this, &LC_LayerTreeWidget::addInformationalLayerForSelectedItem, 0);
+                            contextMenu->addAction(tr("&Add Info Sub-Layer"), this, &LC_LayerTreeWidget::addInformationalLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!layerItem->hasChildOfType(LC_LayerTreeItem::ALTERNATE_POSITION)){
                             contextMenu->addAction(tr("&Add Alternative View Sub-Layer"), this,
-                                                   &LC_LayerTreeWidget::addAddAlternativePositionLayerForSelectedItem, 0);
+                                                   &LC_LayerTreeWidget::addAddAlternativePositionLayerForSelectedItem);
                             hasItems = true;
                         }
                         if (!flatListMode){
                             if (layerItem->childCount() > 0){
-                                contextMenu->addAction(tr("&Remove Sub-layers"), this, &LC_LayerTreeWidget::removeChildLayersForSelected, 0);
+                                contextMenu->addAction(tr("&Remove Sub-layers"), this, &LC_LayerTreeWidget::removeChildLayersForSelected);
                                 hasItems = true;
                             }
                         }
@@ -714,56 +714,55 @@ void LC_LayerTreeWidget::onCustomContextMenu(const QPoint &point){
                             contextMenu->addSeparator();
                         }
                         if (layerItem->childCount() == 0){
-                            contextMenu->addAction(tr("Convert to Dimensional Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToDimensional, 0);
-                            contextMenu->addAction(tr("Convert to Info Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToInformational, 0);
-                            contextMenu->addAction(tr("Convert to Alternative Position Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToAlternativePosition,
-                                                   0);
+                            contextMenu->addAction(tr("Convert to Dimensional Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToDimensional);
+                            contextMenu->addAction(tr("Convert to Info Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToInformational);
+                            contextMenu->addAction(tr("Convert to Alternative Position Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToAlternativePosition);
                             contextMenu->addSeparator();
                         }
 
                     }
                 } else {
-                    contextMenu->addAction(tr("Convert to Normal Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToNormal, 0);
+                    contextMenu->addAction(tr("Convert to Normal Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToNormal);
                     if (layerType != LC_LayerTreeItem::DIMENSIONAL){
-                        contextMenu->addAction(tr("Convert to Dimensional Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToDimensional, 0);
+                        contextMenu->addAction(tr("Convert to Dimensional Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToDimensional);
                     }
                     if (layerType != LC_LayerTreeItem::INFORMATIONAL){
-                        contextMenu->addAction(tr("Convert to Info Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToInformational, 0);
+                        contextMenu->addAction(tr("Convert to Info Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToInformational);
                     }
                     if (layerType != LC_LayerTreeItem::ALTERNATE_POSITION){
-                        contextMenu->addAction(tr("Convert to Alternative Position Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToAlternativePosition, 0);
+                        contextMenu->addAction(tr("Convert to Alternative Position Layer"), this, &LC_LayerTreeWidget::convertLayerTypeToAlternativePosition);
                     }
                     contextMenu->addSeparator();
                 }
 
                 if (layerItem->isVisible() && !layerItem->isLocked()){
-                    contextMenu->addAction(tr("&Select Layer's Entities"), this, &LC_LayerTreeWidget::selectLayersEntities, 0);
+                    contextMenu->addAction(tr("&Select Layer's Entities"), this, &LC_LayerTreeWidget::selectLayersEntities);
                 }
                 contextMenu->addSeparator();
-                contextMenu->addAction(tr("&Create Layer Copy"), this, &LC_LayerTreeWidget::createLayerCopy, 0);
-                contextMenu->addAction(tr("&Duplicate Layer With Content"), this, &LC_LayerTreeWidget::createLayerDuplicate, 0);
+                contextMenu->addAction(tr("&Create Layer Copy"), this, &LC_LayerTreeWidget::createLayerCopy);
+                contextMenu->addAction(tr("&Duplicate Layer With Content"), this, &LC_LayerTreeWidget::createLayerDuplicate);
 
                 contextMenu->addSeparator();
                 if (!layerItem->isLocked()){
-                    contextMenu->addAction(tr("Move Selection to Layer"), this, &LC_LayerTreeWidget::moveSelectionToLayer, 0);
-                    contextMenu->addAction(tr("Duplicate Selection to Layer"), this, &LC_LayerTreeWidget::duplicateSelectionToLayer, 0);
+                    contextMenu->addAction(tr("Move Selection to Layer"), this, &LC_LayerTreeWidget::moveSelectionToLayer);
+                    contextMenu->addAction(tr("Duplicate Selection to Layer"), this, &LC_LayerTreeWidget::duplicateSelectionToLayer);
                     contextMenu->addSeparator();
                 }
             }
             contextMenu->addSeparator();
         } else {
             // click is not on item
-            contextMenu->addAction(tr("&Add Layer"), this, &LC_LayerTreeWidget::addLayer, 0);
+            contextMenu->addAction(tr("&Add Layer"), this, &LC_LayerTreeWidget::addLayer);
         }
-        contextMenu->addAction(tr("&Freeze Others Layers"), this, &LC_LayerTreeWidget::hideOtherThanSelectedLayers, 0);
-        contextMenu->addAction(tr("&Defreeze All Layers"), this, &LC_LayerTreeWidget::showAllLayers, 0);
-        contextMenu->addAction(tr("&Freeze All Layers"), this, &LC_LayerTreeWidget::hideAllLayers, 0);
-        contextMenu->addAction(tr("&Unlock All Layers"), this, &LC_LayerTreeWidget::unlockAllLayers, 0);
-        contextMenu->addAction(tr("&Lock All Layers"), this, &LC_LayerTreeWidget::lockAllLayers, 0);
-        contextMenu->addAction(tr("Enable &Printing All Layers"), this, &LC_LayerTreeWidget::printAllLayers, 0);
-        contextMenu->addAction(tr("&Disable Printing All Layers"), this, &LC_LayerTreeWidget::noPrintAllLayers, 0);
+        contextMenu->addAction(tr("&Freeze Others Layers"), this, &LC_LayerTreeWidget::hideOtherThanSelectedLayers);
+        contextMenu->addAction(tr("&Defreeze All Layers"), this, &LC_LayerTreeWidget::showAllLayers);
+        contextMenu->addAction(tr("&Freeze All Layers"), this, &LC_LayerTreeWidget::hideAllLayers);
+        contextMenu->addAction(tr("&Unlock All Layers"), this, &LC_LayerTreeWidget::unlockAllLayers);
+        contextMenu->addAction(tr("&Lock All Layers"), this, &LC_LayerTreeWidget::lockAllLayers);
+        contextMenu->addAction(tr("Enable &Printing All Layers"), this, &LC_LayerTreeWidget::printAllLayers);
+        contextMenu->addAction(tr("&Disable Printing All Layers"), this, &LC_LayerTreeWidget::noPrintAllLayers);
         contextMenu->addSeparator();
-        contextMenu->addAction(tr("&Find And Remove Empty Layers"), this, &LC_LayerTreeWidget::removeEmptyLayers, 0);
+        contextMenu->addAction(tr("&Find And Remove Empty Layers"), this, &LC_LayerTreeWidget::removeEmptyLayers);
 
         /// TODO - check whether these action is needed. Actually, it is possible to support them,
         // yet it is necessary to refactor these actions for proper selection of layer
