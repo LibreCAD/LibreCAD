@@ -609,12 +609,16 @@ bool QG_GraphicView::event(QEvent *event)
             QPoint g = mapFromGlobal(nge->globalPos());
             RS_Vector mouse = toGraph(g.x(), g.y());
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-												 RS2::Both, &mouse, factor));
+                                                 RS2::Both, &mouse, factor));
         }
 
         return true;
     }
-    return QWidget::event(event);
+    // skip events without a default action
+    // Hatch preview in qg_dlghatch doesn't have its default action
+    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr)
+        return QWidget::event(event);
+    return true;
 }
 
 /**
