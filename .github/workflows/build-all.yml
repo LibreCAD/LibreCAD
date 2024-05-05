@@ -62,6 +62,7 @@ jobs:
         run: |
           find unix/
           ./CI/build-appimg.sh
+          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
 
       - name: List files
         run: |
@@ -190,7 +191,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-win64-`git describe --always`.exe
         shell: bash
 
       - name: List files
