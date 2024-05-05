@@ -70,7 +70,7 @@ jobs:
         shell: bash
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: assets
           path: LibreCAD*.AppImage
@@ -201,7 +201,7 @@ jobs:
         shell: cmd
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@main
         with:
           name: assets
           path: LibreCAD*.exe
