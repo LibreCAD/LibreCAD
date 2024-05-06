@@ -116,7 +116,16 @@ jobs:
         run: |
           brew uninstall --ignore-dependencies freetype
           brew install boost freetype
-
+          
+      # XProtect can cause random failures if it decides that the DMG we create
+      # during the packaging phase is malware.
+      # TODO: Do it in a cleaner way
+      # Inspiration: https://github.com/servo/servo/pull/30779
+      - name: Kill XProtectBehaviorService
+        run: |
+          echo Killing XProtect.
+          sudo pkill -9 XProtect >/dev/null || true
+      
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
