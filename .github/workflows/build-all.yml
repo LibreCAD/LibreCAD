@@ -65,6 +65,7 @@ jobs:
         run: |
           find unix/
           ./CI/build-appimg.sh
+          mv LibreCAD.AppImage LibreCAD-`git describe --tags --always`.AppImage
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -120,13 +121,13 @@ jobs:
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
+          mv LibreCAD. LibreCAD-`git describe --tags --always`.dmg
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: LibreCAD*.dmg
+          path: LibreCAD*.
           retention-days: 2
 
   BuildWindows:
@@ -208,7 +209,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --tags --always`.exe
         shell: bash
 
       - name: Upload artifact
@@ -297,7 +298,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --tags --always`.exe
         shell: bash
 
       - name: Upload artifact
@@ -325,7 +326,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "2.2.1_rc1"
+          #automatic_release_tag: "2.2.1_rc1"
           draft: true
           prerelease: true
           title: "Release Candidate Build"
