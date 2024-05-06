@@ -325,7 +325,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          #automatic_release_tag: "2.2.1_rc1"
+          automatic_release_tag: "2.2.1_rc2"
           draft: true
           prerelease: true
           title: "Release Candidate Build"
