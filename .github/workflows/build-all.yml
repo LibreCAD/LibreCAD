@@ -27,6 +27,8 @@ jobs:
           sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev libqt6svg6 libqt6svg6-dev qmake6 qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
+          echo ${QT_ROOT_DIR}
+          find ${{QT_ROOT_DIR}} -type f -iname "libqt6*.so*"
 
       - name: Install Clang
         run: |
