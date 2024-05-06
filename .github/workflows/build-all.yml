@@ -121,7 +121,7 @@ jobs:
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
-          mv LibreCAD. LibreCAD-`git describe --tags --always`.dmg
+          mv LibreCAD.dmg LibreCAD-`git describe --tags --always`.dmg
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
