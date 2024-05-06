@@ -126,7 +126,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: assets
-          path: LibreCAD*.
+          path: LibreCAD*.dmg
           retention-days: 2
 
   BuildWindows:
@@ -208,7 +208,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-`git describe --tags --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --tags --always`.exe
         shell: bash
 
       - name: Upload artifact
@@ -297,7 +297,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-Installer-x64-`git describe --tags --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --tags --always`-win64.exe
         shell: bash
 
       - name: Upload artifact
