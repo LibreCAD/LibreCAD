@@ -65,7 +65,6 @@ jobs:
         run: |
           find unix/
           ./CI/build-appimg.sh
-          mv LibreCAD.AppImage LibreCAD-`git describe --tags --always`.AppImage
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
