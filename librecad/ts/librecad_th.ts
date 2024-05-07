@@ -1078,18 +1078,18 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetPoint</name>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวัตถุ:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
@@ -4883,7 +4883,7 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>แก้ไขคุณสมบัติ</translation>
     </message>
 </context>
 <context>
@@ -5677,43 +5677,43 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Windows Bitmap</source>
-        <translation type="unfinished"></translation>
+        <translation>บิตแมปของวินโดวส์</translation>
     </message>
     <message>
         <source>Joint Photographic Experts Group</source>
-        <translation type="unfinished"></translation>
+        <translation>Joint Photographic Experts Group</translation>
     </message>
     <message>
         <source>Multiple-image Network Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Multiple-image Network Graphics</translation>
     </message>
     <message>
         <source>Portable Bit Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Bit Map</translation>
     </message>
     <message>
         <source>Portable Grey Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Grey Map</translation>
     </message>
     <message>
         <source>Portable Network Graphic</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Network Graphic</translation>
     </message>
     <message>
         <source>Portable Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>Portable Pixel Map</translation>
     </message>
     <message>
         <source>X Bitmap Format</source>
-        <translation type="unfinished"></translation>
+        <translation>X Bitmap Format</translation>
     </message>
     <message>
         <source>X Pixel Map</source>
-        <translation type="unfinished"></translation>
+        <translation>X Pixel Map</translation>
     </message>
     <message>
         <source>Graphics Interchange Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Graphics Interchange Format</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
@@ -5849,51 +5849,51 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Scalable Vector Graphics</source>
-        <translation type="unfinished"></translation>
+        <translation>Scalable Vector Graphics</translation>
     </message>
     <message>
         <source>SGI Black &amp; White</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI Black &amp; White</translation>
     </message>
     <message>
         <source>Encapsulated PostScript</source>
-        <translation type="unfinished"></translation>
+        <translation>Encapsulated PostScript</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Encapsulated PostScript Format</translation>
     </message>
     <message>
         <source>Encapsulated PostScript Interchange</source>
-        <translation type="unfinished"></translation>
+        <translation>Encapsulated PostScript Interchange</translation>
     </message>
     <message>
         <source>Windows Icon</source>
-        <translation type="unfinished"></translation>
+        <translation>ไอคอนของวินโดวส์</translation>
     </message>
     <message>
         <source>JPEG 2000</source>
-        <translation type="unfinished"></translation>
+        <translation>JPEG 2000</translation>
     </message>
     <message>
         <source>ZSoft Paintbrush</source>
-        <translation type="unfinished"></translation>
+        <translation>ZSoft Paintbrush</translation>
     </message>
     <message>
         <source>PC Paint</source>
-        <translation type="unfinished"></translation>
+        <translation>PC Paint</translation>
     </message>
     <message>
         <source>SGI-Bilddatei</source>
-        <translation type="unfinished"></translation>
+        <translation>SGI-Bilddatei</translation>
     </message>
     <message>
         <source>Targa Image File</source>
-        <translation type="unfinished"></translation>
+        <translation>แฟ้มรูปภาพ Targa</translation>
     </message>
     <message>
         <source>Tagged Image File Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Tagged Image File Format</translation>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
@@ -5969,7 +5969,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>: คำสั่งซ้ำ: %1 ถูกใช้ไปแล้วโดย %2</translation>
     </message>
     <message>
         <source>point</source>
@@ -6905,7 +6905,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องคิดเลขเกิดข้อผิดพลาดต่อข้อมูลขาเข้า: </translation>
     </message>
     <message>
         <source>bw</source>
@@ -8189,19 +8189,19 @@ Do you want to replace it?</source>
     <name>RS_ActionBlocksInsert</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ใช่นิพจน์ที่ถูกต้อง</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุจุดอ้างอิง</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนมุม:</translation>
     </message>
     <message>
         <source></source>
@@ -8209,44 +8209,46 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนอัตราขยาย:</translation>
     </message>
     <message>
         <source>Enter columns:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนจำนวนคอลัมน์:</translation>
     </message>
     <message>
         <source>Enter rows:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนจำนวนแถว:</translation>
     </message>
     <message>
         <source>Enter column spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนช่องไฟระหว่างคอลัมน์:</translation>
     </message>
     <message>
         <source>Enter row spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนช่องไฟระหว่างแถว:</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>บล็อคไม่สามารถแทรกตัวเองซ้อนได้</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation> มีบล็อคปัจจุบันแทรกภายในในลำดับ:
+</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+จึงไม่สามารถแทรกบล็อคนี้ได้</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionBlocksSave</name>
     <message>
         <source>No block activated to save</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่มีบล็อคที่ทำงานอยู่ให้บันทึกได้</translation>
     </message>
 </context>
 <context>
@@ -8929,54 +8931,54 @@ This block cannot be inserted.</source>
     <name>RS_ActionDrawHatch</name>
     <message>
         <source>Invalid hatch area. Please check that the entities chosen form one or more closed contours.</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่เส้นแรไม่ถูกต้อง กรุณาตรวจสอบว่าเส้นวาดถูกเลือกมาจากเส้นรอบรูปที่ปิดตั้งแต่หนึ่งรูปขึ้นไป</translation>
     </message>
     <message>
         <source>Hatch created successfully.</source>
-        <translation type="unfinished"></translation>
+        <translation>สร้างเส้นแรสำเร็จแล้ว</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดของเส้นแร: พบเส้นรอบรูปที่ไม่ถูกต้อง!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดของเส้นแร: ไม่พบลวดลาย!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดของเส้นแร: เส้นรอบรูปหรือลวดลายเล็กเกินไป!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดของเส้นแร: เส้นรอบรูปใหญ่เกินไป!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation type="unfinished"></translation>
+        <translation>ข้อผิดพลาดของเส้นแร: ไม่ทราบสาเหตุ!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>พื้นที่รวมของเส้นแร= %1</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionDrawImage</name>
     <message>
         <source>Not a valid expression</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ใช่นิพจน์ที่ถูกต้อง</translation>
     </message>
     <message>
         <source>Specify reference point</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุจุดอ้างอิง</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Enter angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนมุม:</translation>
     </message>
     <message>
         <source></source>
@@ -8984,11 +8986,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อนอัตราขยาย:</translation>
     </message>
     <message>
         <source>Enter dpi:</source>
-        <translation type="unfinished"></translation>
+        <translation>ป้อน DPI:</translation>
     </message>
 </context>
 <context>
@@ -9621,19 +9623,19 @@ This block cannot be inserted.</source>
     <name>RS_ActionInfoInside</name>
     <message>
         <source>Point is inside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดอยู่ในเส้นรอบรูปที่เลือก</translation>
     </message>
     <message>
         <source>Point is outside selected contour.</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดอยู่นอกเส้นรอบรูปที่เลือก</translation>
     </message>
     <message>
         <source>Specify point</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุจุด</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
@@ -9810,11 +9812,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyDeleteQuick</name>
     <message>
         <source>Pick entity to delete</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกเส้นวาดที่จะลบ</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
