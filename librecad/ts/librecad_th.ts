@@ -5,15 +5,15 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>กรอบ</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่มในรายการโปรด</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
@@ -66,15 +66,15 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกส่วนโค้ง</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุตำแหน่งของส่วนโค้งบอกขนาด</translation>
     </message>
 </context>
 <context>
@@ -509,7 +509,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished"></translation>
+        <translation>จุดอยู่ในเส้นรอบรูป</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
@@ -573,59 +573,59 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Add Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>เพิ่&amp;มชั้นงาน</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>ล&amp;บชั้นงาน</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>แ&amp;ก้ไขชั้นงาน</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดการล็&amp;อคชั้นงาน</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดการ&amp;ปรากฏของชั้นงาน</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดการ&amp;พิมพ์ชั้นงาน</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดการเป็นชั้นงานโ&amp;ครงร่าง</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>เ&amp;พิ่มบล็อค</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ลบบล็อค</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>เ&amp;ปลี่ยนชื่อบล็อค</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation>แ&amp;ก้ไขบล็อค</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;บันทึกบล็อค</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished"></translation>
+        <translation>แ&amp;ทรกบล็อค</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดการ&amp;ปรากฏของบล็อค</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
@@ -759,7 +759,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished"></translation>
+        <translation>โฟกัสที่บรรทัด&amp;คำสั่ง</translation>
     </message>
     <message>
         <source>Widget Options</source>
@@ -828,35 +828,35 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>แ&amp;สดงชั้นงานทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>ซ่อ&amp;นชั้นงานทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation>ปล&amp;ดล็อคทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ล็อคทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;ส่งออกชั้นงานที่เลือก</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>ส่งออกชั้นงานที่&amp;ปรากฏเห็น</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>แ&amp;สดงบล็อคทั้งหมด</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation>ซ่อ&amp;นบล็อคทั้งหมด</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
@@ -868,7 +868,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>เทียบท่าวิดเจ็ตกลับคืน</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
@@ -886,33 +886,33 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>กำลังบันทึกชั้นงาน &quot;%1&quot; เป็น &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>ฟอร์ม</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>อุปกรณ์</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>บันทึก</translation>
     </message>
 </context>
 <context>
     <name>LC_SimpleTests</name>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished"></translation>
+        <translation>การ&amp;ดีบั๊ก</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>แทรกรูปภาพ</translation>
     </message>
 </context>
 <context>
@@ -1067,11 +1067,11 @@ distance between points=%2 is larger than diameter=%3</source>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวัตถุ:</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
 </context>
 <context>
@@ -1506,7 +1506,7 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation>เครื่องมือกำหนดเมนู</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
@@ -3840,7 +3840,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>เปิด/ปิดโหมดไม่ดูดติดเมื่อกดแคร่เว้นวรรคและหน้าต่างคำสั่งว่างเปล่าอยู่</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
@@ -4020,7 +4020,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>&amp;Multiple Copies:</source>
-        <translation type="unfinished">&amp;หลายชุด</translation>
+        <translation>&amp;หลายชุด:</translation>
     </message>
     <message>
         <source>&amp;Angle (a):</source>
@@ -4795,11 +4795,11 @@ so default step value required for baking</source>
     <name>QG_ExitDialog</name>
     <message>
         <source>QCad</source>
-        <translation type="unfinished"></translation>
+        <translation>QCad</translation>
     </message>
     <message>
         <source>again Still No Text supplied.</source>
-        <translation type="unfinished"></translation>
+        <translation>ยังไม่มีการกำหนดข้อความ</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -7044,7 +7044,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>คุณต้องป้อนค่าระยะก่อน</translation>
     </message>
     <message>
         <source>cal</source>
@@ -8154,7 +8154,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>เชื่อมรวมชั้นงานทั้งหมด</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
@@ -8162,11 +8162,11 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation type="unfinished"></translation>
+        <translation>/สีกำหนดเอง%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกเอง</translation>
     </message>
     <message>
         <source>noname</source>
@@ -9328,11 +9328,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select first circle or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวงกลมหรือวงรีวงแรก</translation>
     </message>
     <message>
         <source>Select second circle or ellipse</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกวงกลมหรือวงรีวงที่สอง</translation>
     </message>
 </context>
 <context>
@@ -9761,51 +9761,51 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyDeleteFree</name>
     <message>
         <source>Specify first break point on a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุจุดหั่นจุดแรกบนเส้นหลายขยัก</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>ยกเลิก</translation>
     </message>
     <message>
         <source>Specify second break point on the same polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>ระบุจุดหั่นจุดที่สองบนเส้นหลายขยักเส้นเดิม</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished"></translation>
+        <translation>ย้อนกลับ</translation>
     </message>
     <message>
         <source>Entities not in the same polyline.</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดไม่ได้อยู่ในเส้นหลายขยักเส้นเดียวกัน</translation>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดระดับบนของเส้นวาดที่สองไม่ใช่เส้นหลายขยัก</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดระดับบนของเส้นวาดแรกไม่ใช่เส้นหลายขยัก</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดระดับบนของเส้นวาดที่สองเป็น nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดเส้นใดเส้นหนึ่งที่เลือกเป็น nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดระดับบนของเส้นวาดแรกเป็น nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดแรกเป็น nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>เส้นวาดที่สองเป็น nullptr</translation>
     </message>
 </context>
 <context>
@@ -10509,7 +10509,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select first entity</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกเส้นวาดเส้นแรก</translation>
     </message>
     <message>
         <source>Back</source>
@@ -10517,18 +10517,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select second entity</source>
-        <translation type="unfinished"></translation>
+        <translation>เลือกเส้นวาดเส้นที่สอง</translation>
     </message>
 </context>
 <context>
     <name>RS_ActionToolRegenerateDimensions</name>
     <message>
         <source>Regenerated %1 dimension entities</source>
-        <translation type="unfinished"></translation>
+        <translation>ปรับข้อมูลเส้นบอกขนาด %1 เส้นแล้ว</translation>
     </message>
     <message>
         <source>No dimension entities found</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่พบเส้นบอกขนาด</translation>
     </message>
 </context>
 <context>
