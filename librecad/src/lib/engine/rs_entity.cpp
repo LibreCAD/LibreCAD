@@ -1017,8 +1017,7 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
     if (isHatchMember(this))
         return false;
 
-	if (layer) return layer->isConstruction();
-    return false;
+    return (layer != nullptr) && layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer

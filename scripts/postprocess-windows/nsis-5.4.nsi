@@ -9,7 +9,7 @@
 ;Include version information
   !include /NONFATAL "generated_scmrev.nsh"
 !ifndef SCMREVISION
-    !define SCMREVISION "2.2.x"
+    !define SCMREVISION "2.2.2.x"
 !endif
 
 ;--------------------------------
@@ -107,7 +107,7 @@ FunctionEnd
     !define Mingw_Ver 	"mingw_64"
 !endif
 ;--- folder contains mingw64-make.exe
-!define MINGW_DIR 	"${Qt6_Dir}\Tools\${Mingw_Ver}\bin"
+!define MINGW_DIR 	"C:\mingw64\bin"
 !define QTCREATOR_DIR 	"${Qt6_Dir}\Tools\QtCreator\bin"
 !define QTMINGW_DIR 	"${Qt6_Dir}\${Qt_Version}\${Mingw_Ver}"
 ;--- folder contains qmake.exe
@@ -144,7 +144,7 @@ Section "Install Section" SecInstall
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayIcon" "$INSTDIR\LibreCAD.exe"
   WriteRegStr HKLM "${UNINSTKEY}" "DisplayVersion" "${SCMREVISION}"
   WriteRegStr HKLM "${UNINSTKEY}" "Publisher" "LibreCAD Team"
-  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2"
+  WriteRegStr HKLM "${UNINSTKEY}" "Version" "2.2.2_rc1"
   WriteRegStr HKLM "${UNINSTKEY}" "HelpLink" "https://librecad.org/"
   WriteRegStr HKLM "${UNINSTKEY}" "InstallLocation" "$INSTDIR"
   WriteRegStr HKLM "${UNINSTKEY}" "URLInfoAbout" "http://librecad.org/"
