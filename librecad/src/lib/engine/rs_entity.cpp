@@ -51,6 +51,18 @@
 
 #include "lc_quadratic.h"
 
+namespace {
+
+// Whether the entity is a member of cross hatch filling curves
+bool isHatchMember(const RS_Entity* entity) {
+    if (entity == nullptr || entity->getParent() == nullptr)
+        return false;
+
+    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
+}
+
+}
+
 /**
  * Default constructor.
  * @param parent The parent entity of this entity.
@@ -1000,6 +1012,11 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
             // do not expand entities on construction layers, except lines
             return false;
     }
+
+    // Issue #1773, hatch filling curves are not shown as infinite on construction layers
+    if (isHatchMember(this))
+        return false;
+
 	if (layer) return layer->isConstruction();
     return false;
 }
