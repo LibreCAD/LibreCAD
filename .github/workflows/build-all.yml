@@ -203,6 +203,8 @@ jobs:
           echo.
           dir ..\Qt\6.6.3\mingw_64
           echo.
+          dir ..\Qt\6.6.3\mingw_64\bin
+          echo.
 
       - name: Build
         run: |
@@ -213,6 +215,8 @@ jobs:
           set
           pushd "${{ github.workspace }}\scripts"
           build-windows.bat
+          where mingw32-make.exe
+          where mingw64-make.exe
         shell: cmd
 
       - name: Rename installer
