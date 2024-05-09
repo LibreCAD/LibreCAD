@@ -1894,7 +1894,7 @@ in a separate window</source>
     <name>QG_CommandEdit</name>
     <message>
         <source>clear</source>
-        <translation>ล้าง</translation>
+        <translation>clear</translation>
     </message>
 </context>
 <context>
@@ -5325,7 +5325,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to equidistant points of entity</source>
-        <translation>ดูดติดกับจุดกึ่งกลางของเส้นวาด</translation>
+        <translation>ดูดติดกับจุดแบ่งระยะเท่าของเส้นวาด</translation>
     </message>
     <message>
         <source>Snap to center points</source>
@@ -5345,7 +5345,7 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Snap to intersections manually</source>
-        <translation type="unfinished"></translation>
+        <translation>ดูดติดกับจุดตัดแบบเลือกกำหนด</translation>
     </message>
     <message>
         <source>Snap to grid</source>
@@ -5974,895 +5974,895 @@ Do you want to replace it?</source>
     <message>
         <source>point</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>point</translation>
     </message>
     <message>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished"></translation>
+        <translation>po</translation>
     </message>
     <message>
         <source>line</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>line</translation>
     </message>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>polyline</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>pl</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>free</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fhl</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>spl</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>spline2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>stp</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ptp</translation>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bisect</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ortho</translation>
     </message>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rect</translation>
     </message>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygon2v</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>poly2</translation>
     </message>
     <message>
         <source>circle</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>circle</translation>
     </message>
     <message>
         <source>ci</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>tan3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>ct3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipseinscribed</translation>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ei</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>hatch</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>ha</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtext</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mtxt</translation>
     </message>
     <message>
         <source>text</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>txt</translation>
     </message>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>regen</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>redraw</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>zr</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomwindow</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>zw</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomauto</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>za</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoompan</translation>
     </message>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>zp</translation>
     </message>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zoomprevious</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>zv</translation>
     </message>
     <message>
         <source>kill</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>kill</translation>
     </message>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>k</translation>
     </message>
     <message>
         <source>undo</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimaligned</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimhorizontal</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>dh</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimvertical</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>dv</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimlinear</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>dl</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimangular</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>dan</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradial</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiametric</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimdiameter</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>dd</translation>
     </message>
     <message>
         <source>dimleader</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimleader</translation>
     </message>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation type="unfinished"></translation>
+        <translation>ld</translation>
     </message>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimregen</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>restrictnothing</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>rn</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>restrictorthogonal</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rr</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>restricthorizontal</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>rh</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>restrictvertical</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>rv</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>mv</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>bev</translation>
     </message>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>fi</translation>
     </message>
     <message>
         <source>cut</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>cut</translation>
     </message>
     <message>
         <source>div</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>div</translation>
     </message>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>ro</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>ro</translation>
     </message>
     <message>
         <source>sz</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>sz</translation>
     </message>
     <message>
         <source>tm</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm</translation>
     </message>
     <message>
         <source>tm2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>tm2</translation>
     </message>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>le</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>ss</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>er</translation>
     </message>
     <message>
         <source>del</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>del</translation>
     </message>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>xp</translation>
     </message>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapfree</translation>
     </message>
     <message>
         <source>os</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>os</translation>
     </message>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapcenter</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation type="unfinished"></translation>
+        <translation>sc</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapdist</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation type="unfinished"></translation>
+        <translation>sd</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapend</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation type="unfinished"></translation>
+        <translation>se</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapgrid</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>sg</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapintersection</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation type="unfinished"></translation>
+        <translation>si</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>snapmiddle</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sm</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>snaponentity</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>sn</translation>
     </message>
     <message>
         <source>np</source>
         <comment>snap - on entity</comment>
-        <translation type="unfinished"></translation>
+        <translation>np</translation>
     </message>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>setrelativezero</translation>
     </message>
     <message>
         <source>rz</source>
         <comment>set relative zero position</comment>
-        <translation type="unfinished"></translation>
+        <translation>rz</translation>
     </message>
     <message>
         <source>selectall</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>selectall</translation>
     </message>
     <message>
         <source>sa</source>
         <comment>Select all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>sa</translation>
     </message>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>deselectall</translation>
     </message>
     <message>
         <source>tn</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>tn</translation>
     </message>
     <message>
         <source>attr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>attr</translation>
     </message>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>prop</translation>
     </message>
     <message>
         <source>dist</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dist</translation>
     </message>
     <message>
         <source>dpp</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dpp</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>angle</source>
-        <translation type="unfinished"></translation>
+        <translation>angle</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
-        <translation type="unfinished"></translation>
+        <translation>close</translation>
     </message>
     <message>
         <source>chord length</source>
-        <translation type="unfinished"></translation>
+        <translation>chord length</translation>
     </message>
     <message>
         <source>columns</source>
-        <translation type="unfinished"></translation>
+        <translation>columns</translation>
     </message>
     <message>
         <source>columnspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <source>factor</source>
-        <translation type="unfinished"></translation>
+        <translation>factor</translation>
     </message>
     <message>
         <source>length</source>
-        <translation type="unfinished"></translation>
+        <translation>length</translation>
     </message>
     <message>
         <source>number</source>
-        <translation type="unfinished"></translation>
+        <translation>number</translation>
     </message>
     <message>
         <source>radius</source>
-        <translation type="unfinished"></translation>
+        <translation>radius</translation>
     </message>
     <message>
         <source>rows</source>
-        <translation type="unfinished"></translation>
+        <translation>rows</translation>
     </message>
     <message>
         <source>rowspacing</source>
-        <translation type="unfinished"></translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <source>through</source>
-        <translation type="unfinished"></translation>
+        <translation>through</translation>
     </message>
     <message>
         <source>trim</source>
-        <translation type="unfinished"></translation>
+        <translation>trim</translation>
     </message>
     <message>
         <source>ang</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ang</translation>
     </message>
     <message>
         <source>an</source>
         <comment>angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>an</translation>
     </message>
     <message>
         <source>center</source>
-        <translation type="unfinished"></translation>
+        <translation>center</translation>
     </message>
     <message>
         <source>cen</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>cen</translation>
     </message>
     <message>
         <source>ce</source>
         <comment>center</comment>
-        <translation type="unfinished"></translation>
+        <translation>ce</translation>
     </message>
     <message>
         <source>cl</source>
         <comment>chord length</comment>
-        <translation type="unfinished"></translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>c</source>
         <comment>close</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>cols</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>cols</translation>
     </message>
     <message>
         <source>co</source>
         <comment>columns</comment>
-        <translation type="unfinished"></translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>columnspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>columnspacing</translation>
     </message>
     <message>
         <source>colspacing</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>colspacing</translation>
     </message>
     <message>
         <source>cs</source>
         <comment>columnspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>cs</translation>
     </message>
     <message>
         <source>fact</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>fact</translation>
     </message>
     <message>
         <source>f</source>
         <comment>factor</comment>
-        <translation type="unfinished"></translation>
+        <translation>f</translation>
     </message>
     <message>
         <source>help</source>
-        <translation type="unfinished"></translation>
+        <translation>help</translation>
     </message>
     <message>
         <source>?</source>
         <comment>help</comment>
-        <translation type="unfinished"></translation>
+        <translation>?</translation>
     </message>
     <message>
         <source>length</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>length</translation>
     </message>
     <message>
         <source>len</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>len</translation>
     </message>
     <message>
         <source>l</source>
         <comment>length</comment>
-        <translation type="unfinished"></translation>
+        <translation>l</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>length1</translation>
     </message>
     <message>
         <source>len1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>len1</translation>
     </message>
     <message>
         <source>l1</source>
         <comment>length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>l1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>length2</translation>
     </message>
     <message>
         <source>len2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>len2</translation>
     </message>
     <message>
         <source>l2</source>
         <comment>length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>l2</translation>
     </message>
     <message>
         <source>number</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>number</translation>
     </message>
     <message>
         <source>num</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>num</translation>
     </message>
     <message>
         <source>n</source>
         <comment>number</comment>
-        <translation type="unfinished"></translation>
+        <translation>n</translation>
     </message>
     <message>
         <source>ra</source>
         <comment>radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ra</translation>
     </message>
     <message>
         <source>reversed</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>reversed</translation>
     </message>
     <message>
         <source>rev</source>
         <comment>reversed</comment>
-        <translation type="unfinished"></translation>
+        <translation>rev</translation>
     </message>
     <message>
         <source>row</source>
         <comment>row</comment>
-        <translation type="unfinished"></translation>
+        <translation>row</translation>
     </message>
     <message>
         <source>rowspacing</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>rowspacing</translation>
     </message>
     <message>
         <source>rs</source>
         <comment>rowspacing for inserts</comment>
-        <translation type="unfinished"></translation>
+        <translation>rs</translation>
     </message>
     <message>
         <source>text</source>
-        <translation type="unfinished"></translation>
+        <translation>text</translation>
     </message>
     <message>
         <source>t</source>
         <comment>text</comment>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>t</source>
         <comment>through</comment>
-        <translation type="unfinished"></translation>
+        <translation>t</translation>
     </message>
     <message>
         <source>undo</source>
-        <translation type="unfinished"></translation>
+        <translation>undo</translation>
     </message>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation type="unfinished"></translation>
+        <translation>u</translation>
     </message>
     <message>
         <source>redo</source>
-        <translation type="unfinished"></translation>
+        <translation>redo</translation>
     </message>
     <message>
         <source>r</source>
         <comment>redo</comment>
-        <translation type="unfinished"></translation>
+        <translation>r</translation>
     </message>
     <message>
         <source>back</source>
-        <translation type="unfinished"></translation>
+        <translation>back</translation>
     </message>
     <message>
         <source>b</source>
         <comment>back</comment>
-        <translation type="unfinished"></translation>
+        <translation>b</translation>
     </message>
     <message>
         <source>paperoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>paperoffset</translation>
     </message>
     <message>
         <source>graphoffset</source>
-        <translation type="unfinished"></translation>
+        <translation>graphoffset</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
@@ -6878,7 +6878,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>รหัสคำสั่งสั้นที่ได้รับ: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -6887,12 +6887,12 @@ Do you want to replace it?</source>
     <message>
         <source>cal</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>calculate</source>
         <comment>command to trigger cli calculator</comment>
-        <translation type="unfinished"></translation>
+        <translation>calculate</translation>
     </message>
     <message>
         <source>None</source>
@@ -6909,30 +6909,30 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>bw</source>
-        <translation type="unfinished"></translation>
+        <translation>bw</translation>
     </message>
     <message>
         <source>blackwhite</source>
-        <translation type="unfinished"></translation>
+        <translation>blackwhite</translation>
     </message>
     <message>
         <source>color</source>
-        <translation type="unfinished"></translation>
+        <translation>color</translation>
     </message>
     <message>
         <source>di</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>di</translation>
     </message>
     <message>
         <source>t2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>t2</translation>
     </message>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
@@ -7048,7 +7048,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished"></translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -7069,711 +7069,711 @@ Do you want to replace it?</source>
     <message>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>line2p</translation>
     </message>
     <message>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineang</translation>
     </message>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linehor</translation>
     </message>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linever</translation>
     </message>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerec</translation>
     </message>
     <message>
         <source>re</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>re</translation>
     </message>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>linepar</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineoff</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineparthro</translation>
     </message>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>lp</translation>
     </message>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>linebisect</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancp</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetan2c</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>linetancper</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lineperp</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>linerelang</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncencor</translation>
     </message>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygoncentan</translation>
     </message>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>pv</translation>
     </message>
     <message>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2</translation>
     </message>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>circle2p</translation>
     </message>
     <message>
         <source>c2p</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c2p</translation>
     </message>
     <message>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>circle2pr</translation>
     </message>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>circle3p</translation>
     </message>
     <message>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>circlecr</translation>
     </message>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>circletan2cp</translation>
     </message>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>circletan2p</translation>
     </message>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>circletan2cr</translation>
     </message>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>circletan3</translation>
     </message>
     <message>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>t3</translation>
     </message>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc3p</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>fh</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec2p</translation>
     </message>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse3p</translation>
     </message>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e4</translation>
     </message>
     <message>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec3p</translation>
     </message>
     <message>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e3</translation>
     </message>
     <message>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineadd</translation>
     </message>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plineapp</translation>
     </message>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedel</translation>
     </message>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinedeltwn</translation>
     </message>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinetrm</translation>
     </message>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinepar</translation>
     </message>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>plinejoin</translation>
     </message>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>invertselect</translation>
     </message>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>ds</translation>
     </message>
     <message>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dimradius</translation>
     </message>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>da</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dg</translation>
     </message>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmove</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrotate</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>modscale</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmirror</translation>
     </message>
     <message>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modmovrot</translation>
     </message>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>mr</translation>
     </message>
     <message>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>mod2rot</translation>
     </message>
     <message>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>r2</translation>
     </message>
     <message>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>modrevert</translation>
     </message>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modtrim2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>modlengthen</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>modoffset</translation>
     </message>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>mo</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>moff</translation>
     </message>
     <message>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>modbevel</translation>
     </message>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>modfillet</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddivide</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>modstretch</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>modproperties</translation>
     </message>
     <message>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>modattr</translation>
     </message>
     <message>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexpltext</translation>
     </message>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>modexplode</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>moddelete</translation>
     </message>
     <message>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistance</translation>
     </message>
     <message>
         <source>id</source>
         <comment>distance point to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>id</translation>
     </message>
     <message>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistep</translation>
     </message>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ii</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoangle</translation>
     </message>
     <message>
         <source>ia</source>
         <comment>measure angle</comment>
-        <translation type="unfinished"></translation>
+        <translation>ia</translation>
     </message>
     <message>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoarea</translation>
     </message>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>aa</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>so</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>ki</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>un</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rd</translation>
     </message>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>drawpref</translation>
     </message>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>dp</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>equation</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation type="unfinished"></translation>
+        <translation>length1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation type="unfinished"></translation>
+        <translation>length2</translation>
     </message>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
@@ -8142,7 +8142,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation>โหมดรหัสคำสั่งสั้น</translation>
     </message>
     <message>
         <source>Load command file</source>
@@ -9781,15 +9781,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Parent of second entity is not a polyline</source>
-        <translation>เส้นวาดระดับบนของเส้นวาดที่สองไม่ใช่เส้นหลายขยัก</translation>
+        <translation>เส้นวาดที่บรรจุเส้นวาดที่สองไม่ใช่เส้นหลายขยัก</translation>
     </message>
     <message>
         <source>Parent of first entity is not a polyline</source>
-        <translation>เส้นวาดระดับบนของเส้นวาดแรกไม่ใช่เส้นหลายขยัก</translation>
+        <translation>เส้นวาดที่บรรจุเส้นวาดแรกไม่ใช่เส้นหลายขยัก</translation>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation>เส้นวาดระดับบนของเส้นวาดที่สองเป็น nullptr</translation>
+        <translation>เส้นวาดที่บรรจุเส้นวาดที่สองเป็น nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
@@ -9797,7 +9797,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation>เส้นวาดระดับบนของเส้นวาดแรกเป็น nullptr</translation>
+        <translation>เส้นวาดที่บรรจุเส้นวาดแรกเป็น nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
@@ -10505,7 +10505,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionSnapIntersectionManual</name>
     <message>
         <source>I&amp;ntersection Manually</source>
-        <translation type="unfinished"></translation>
+        <translation>จุด&amp;ตัดแบบเลือกกำหนด</translation>
     </message>
     <message>
         <source>Select first entity</source>
