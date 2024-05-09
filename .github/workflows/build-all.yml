@@ -21,6 +21,11 @@ jobs:
         with:
           version: '6.6.*'
 
+      - name: Qt6 path
+        run: |
+          ls -l ${{github.workspace}}/../Qt
+          find ${{github.workspace}}/../Qt -type f -iname "libqt6*svg*.so"
+
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
@@ -63,8 +68,8 @@ jobs:
 
       - name: Create AppImage
         run: |
-          find unix/
-          ./CI/build-appimg.sh
+          #find unix/
+          QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
           mv LibreCAD*.AppImage LibreCAD-`git describe --tags --always`.AppImage
 
       - name: List files
@@ -193,6 +198,10 @@ jobs:
           dir ..\boost
           echo.
           dir ..\Qt
+          echo.
+          dir ..\Qt\6.6.3
+          echo.
+          dir ..\Qt\6.6.3\mingw_64
           echo.
 
       - name: Build
