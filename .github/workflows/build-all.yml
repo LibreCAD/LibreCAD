@@ -154,6 +154,7 @@ jobs:
         uses: msys2/setup-msys2@v2
         with:
           msystem: MINGW64
+          tools: 'tools_llvm_mingw1706'
 
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
@@ -205,10 +206,10 @@ jobs:
           echo.
           dir ..\Qt\6.6.3\mingw_64\bin
           echo.
+          dir /b /s ..\Qt\Tools
 
       - name: Build
         run: |
-          set PATH=C:\msys64\mingw64\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
@@ -216,7 +217,6 @@ jobs:
           pushd "${{ github.workspace }}\scripts"
           build-windows.bat
           where mingw32-make.exe
-          where mingw64-make.exe
         shell: cmd
 
       - name: Rename installer
