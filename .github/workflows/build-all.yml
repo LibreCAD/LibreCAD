@@ -197,16 +197,11 @@ jobs:
           dir ..
           echo.
           dir ..\boost
-          echo.
-          dir ..\Qt
-          echo.
-          dir ..\Qt\6.6.3
-          echo.
-          dir ..\Qt\6.6.3\mingw_64
-          echo.
           dir ..\Qt\6.6.3\mingw_64\bin
           echo.
-          dir /b /s ..\Qt\Tools
+          which g++
+          which clang++
+          dir /b /s ..\Qt
 
       - name: Build
         run: |
