@@ -331,7 +331,8 @@ jobs:
         uses: actions/download-artifact@v3
 
       - name: Upload latest pre-release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        #uses: "marvinpinto/action-automatic-releases@latest"
+        uses: "softprops/action-gh-release@v2"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           automatic_release_tag: "2.2.1_rc2"
