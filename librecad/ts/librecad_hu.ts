@@ -681,7 +681,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">F&amp;rissítés</translation>
+        <translation>&amp;Újrarajzolás</translation>
     </message>
     <message>
         <source>&amp;New</source>
@@ -1434,7 +1434,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation>Dokkoló területek</translation>
+        <translation>Rögzített területek</translation>
     </message>
     <message>
         <source>Grid Status</source>
@@ -1446,7 +1446,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rögzített alkatrészek</translation>
     </message>
     <message>
         <source>Device Options</source>
@@ -1633,7 +1633,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alkat&amp;részek</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
@@ -4788,7 +4788,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>&amp;Middle</source>
-        <translation type="unfinished">&amp;Felező</translation>
+        <translation>&amp;Középpont</translation>
     </message>
 </context>
 <context>
