@@ -336,6 +336,7 @@ jobs:
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: true
+          draft: false
           name: "Release Candidate"
           tag_name: "2.2.1_rc2"
           title: "Release Candidate Build"
