@@ -85,7 +85,7 @@ void LC_ActionInfoProperties::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e){
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
@@ -122,7 +122,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
 
-    RS_Vector currentMousePosition = graphicView->toGraph(event->x(), event->y());
+    RS_Vector currentMousePosition = graphicView->toGraph(event->position());
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
         ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
     {

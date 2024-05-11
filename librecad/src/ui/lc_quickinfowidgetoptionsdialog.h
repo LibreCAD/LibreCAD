@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_QUICKINFOWIDGETOPTIONSDIALOG_H
 
 #include <QDialog>
-#include "lc_quickinfowidget.h"
 #include "lc_quickinfowidgetoptions.h"
 
 namespace Ui {

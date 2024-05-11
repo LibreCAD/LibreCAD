@@ -25,11 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QWidget>
 #include <QDockWidget>
-#include "qg_actionhandler.h"
 #include "qg_graphicview.h"
 #include "rs_units.h"
-#include "rs_ellipse.h"
-#include "lc_peninforegistry.h"
 #include "lc_quickinfopointsdata.h"
 #include "lc_quickinfoentitydata.h"
 #include "lc_quickinfowidgetoptions.h"

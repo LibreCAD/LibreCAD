@@ -21,8 +21,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <QMouseEvent>
-#include "rs_point.h"
-#include "rs_settings.h"
 #include "qc_applicationwindow.h"
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_quickinfowidget.h"

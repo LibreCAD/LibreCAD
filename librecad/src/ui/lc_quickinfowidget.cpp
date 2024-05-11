@@ -24,14 +24,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QUrl>
 #include <QStandardItemModel>
 #include <QListView>
+#if defined(Q_OS_LINUX)
+#include <QThread>
+#endif
 #include <QMenu>
-#include "rs_line.h"
 #include "rs_point.h"
 #include "rs_math.h"
 
 #include "lc_quickinfowidget.h"
 #include "ui_lc_quickinfowidget.h"
-#include "rs_graphic.h"
 
 #include "lc_flexlayout.h"
 #include "rs_dialogfactory.h"
@@ -310,7 +311,7 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
         }
     }
 
-    contextMenu->addAction(tr("&Copy All"), this, &LC_QuickInfoWidget::onCopyAll, 0);
+    contextMenu->addAction(tr("&Copy All"), this, &LC_QuickInfoWidget::onCopyAll);
     const QString &anchor = ui->pteInfo->anchorAt(pos);
     if (!anchor.isEmpty()){
         // process anchor-specific commands first
@@ -352,19 +353,19 @@ void LC_QuickInfoWidget::onViewContextMenu(QPoint pos){
             }
         }
         else if (anchor.startsWith("/val")){ // value-related actions
-            contextMenu->addAction(tr("&To Cmd"), this, &LC_QuickInfoWidget::onCopyAll, 0);
+            contextMenu->addAction(tr("&To Cmd"), this, &LC_QuickInfoWidget::onCopyAll);
         }
     }
     contextMenu->addSeparator();
     // generic actions
-    contextMenu->addAction(tr("&Clear"), this, &LC_QuickInfoWidget::onClearAll, 0);
-    contextMenu->addAction(tr("&Select Entity"), this, &LC_QuickInfoWidget::onPickEntity, 0);
+    contextMenu->addAction(tr("&Clear"), this, &LC_QuickInfoWidget::onClearAll);
+    contextMenu->addAction(tr("&Select Entity"), this, &LC_QuickInfoWidget::onPickEntity);
     if (widgetMode == MODE_ENTITY_INFO){
         if (entityData.getEntityId() > 0){
-            contextMenu->addAction(tr("&Select in Drawing"), this, &LC_QuickInfoWidget::onSelectEntity, 0);
-            contextMenu->addAction(tr("&Edit Properties"), this, &LC_QuickInfoWidget::onEditEntityProperties, 0);
+            contextMenu->addAction(tr("&Select in Drawing"), this, &LC_QuickInfoWidget::onSelectEntity);
+            contextMenu->addAction(tr("&Edit Properties"), this, &LC_QuickInfoWidget::onEditEntityProperties);
         }
-        contextMenu->addAction(tr("&Collect Coordinates"), this, &LC_QuickInfoWidget::onPickCoordinates, 0);
+        contextMenu->addAction(tr("&Collect Coordinates"), this, &LC_QuickInfoWidget::onPickCoordinates);
     }
 
     contextMenu->popup(ui->pteInfo->viewport()->mapToGlobal(pos));

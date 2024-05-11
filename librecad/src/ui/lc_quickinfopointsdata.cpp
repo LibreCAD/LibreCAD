@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "lc_quickinfopointsdata.h"
-#include "lc_quickinfowidget.h"
 
 LC_QuickInfoPointsData::LC_QuickInfoPointsData():LC_QuickInfoBaseData(){}
 

@@ -38,10 +38,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_dimlinear.h"
 #include "rs_dimaligned.h"
 #include "rs_math.h"
-#include "lc_linemath.h"
 #include "lc_peninforegistry.h"
 #include "lc_quickinfoentitydata.h"
-#include "lc_quickinfowidget.h"
+
+#include <rs_units.h>
 
 LC_QuickInfoEntityData::LC_QuickInfoEntityData():LC_QuickInfoBaseData(){}
 
@@ -750,7 +750,7 @@ void LC_QuickInfoEntityData::collectSplineProperties(RS_Spline *spline){
     for (size_t i = 0; i < size; i++){
         RS_Vector cp = data.controlPoints.at(i);
         if (cp.valid){
-        addVectorProperty("Control Point ", i, cp);
+           addVectorProperty("Control Point ", i, cp);
         }
     }
 }
