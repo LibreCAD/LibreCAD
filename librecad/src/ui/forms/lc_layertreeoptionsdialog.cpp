@@ -152,8 +152,7 @@ void LC_LayerTreeOptionsDialog::validate(){
     if (layerListSeparator.isEmpty()){
         QMessageBox::warning(this, QMessageBox::tr("Error"),
                                        QMessageBox::tr("Layer list separator string is empty. It will not be possible to build layers tree.\n"
-                                                       "Please specify a different value."),
-                                       QMessageBox::Ok);
+                                                       "Please specify a different value."));
         leLayerLevelSeparator -> setFocus();
         doAccept = false;
     }
@@ -230,8 +229,7 @@ void LC_LayerTreeOptionsDialog::initComboBox(QComboBox* cb, const QColor color) 
 
 void LC_LayerTreeOptionsDialog::set_color(QComboBox* combo, QColor custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+    QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
     dlg.setCustomColor(0, custom.rgb());

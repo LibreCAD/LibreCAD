@@ -7,7 +7,7 @@
 TEMPLATE = subdirs
 TARGET = plugins
 
-QT += gui
+QT += widgets
 
 SUBDIRS     = \
         asciifile \

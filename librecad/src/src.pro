@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.0-alpha"
+LC_VERSION="2.2.2-alpha"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -28,6 +28,10 @@ CONFIG += qt \
 
 QT += widgets printsupport
 CONFIG += c++17
+
+# using qt5 connections for UI forms
+QMAKE_UIC_FLAGS += --connections string
+
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
@@ -65,6 +69,7 @@ unix {
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
+        DEFINES -=  QT_NO_SHORTCUT
     }
 }
 win32 {
@@ -252,7 +257,6 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
-    ui/forms/LC_DlgParabola.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \

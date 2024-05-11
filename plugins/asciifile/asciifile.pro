@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += gui
+QT       += gui widgets
 TEMPLATE = lib
 CONFIG += plugin
 VERSION = 1.0.0

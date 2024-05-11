@@ -69,7 +69,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
             }
             if (snappedLine != nullptr){
                 // here we do not relay on snap point, simply get coordinates from even
-                RS_Vector coord = graphicView->toGraph(e->x(), e->y());
+                RS_Vector coord = graphicView->toGraph(e->position());
                 LC_LineJoinData *lineJoinData = createLineJoinData(snappedLine, coord);
                 if (lineJoinData != nullptr){
                     RS_Polyline *polyline = lineJoinData->polyline;
@@ -93,7 +93,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
             if (snappedLine != nullptr){
                 // retrieve current mouse position and recalculate line join data considering that mose position denotes part of line 1 that
                 // will survive trim operation
-                RS_Vector coord = graphicView->toGraph(e->x(), e->y());
+                RS_Vector coord = graphicView->toGraph(e->position());
                 updateLine1TrimData(coord);
 
                 RS_Polyline *polyline = linesJoinData->polyline;
@@ -126,7 +126,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             }
             if (snappedLine != nullptr){
                 line2 = snappedLine;
-                RS_Vector snap = graphicView->toGraph(e->x(), e->y());
+                RS_Vector snap = graphicView->toGraph(e->position());
                 LC_LineJoinData *joinData = createLineJoinData(snappedLine, snap);
                 if (joinData != nullptr){
                     // check whether parallel lines were selected
@@ -173,7 +173,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
 
         case ResolveFirstLineTrim:
             if (snappedLine == line1){ // we need trim hint on the first line
-                RS_Vector snap = graphicView->toGraph(e->x(), e->y());
+                RS_Vector snap = graphicView->toGraph(e->position());
                 // update trim data according to selected part of line 1
                 updateLine1TrimData(snap);
                 // check if polyline is built and if it so - trigger action

@@ -22,7 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_crossoptions.h"
 
 #include "ui_lc_crossoptions.h"
-#include "rs_settings.h"
 #include "rs_debug.h"
 #include "rs_math.h"
 

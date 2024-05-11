@@ -12,7 +12,7 @@
  *  name 'name' and widget flags set to 'f'.
  */
 LC_LineOptions::LC_LineOptions(QWidget* parent, Qt::WindowFlags fl)
-    : LC_ActionOptionsWidget(parent)
+    : LC_ActionOptionsWidget(parent, fl)
     , ui(new Ui::Ui_LineOptionsRel{})
 {
     ui->setupUi(this);

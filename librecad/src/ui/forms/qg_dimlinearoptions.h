@@ -40,7 +40,7 @@ class QG_DimLinearOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_DimLinearOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_DimLinearOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_DimLinearOptions();
 
 public slots:
@@ -50,7 +50,7 @@ public slots:
     virtual void setVer();
 
 protected:
-    RS_ActionDimLinear* action;
+    RS_ActionDimLinear* action = nullptr;
 
 protected slots:
     virtual void languageChange();

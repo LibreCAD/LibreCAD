@@ -1,13 +1,34 @@
+/****************************************************************************
+**
+* Options widget for Angle Line from line action.
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
 #include "lc_lineanglereloptions.h"
-#include "ui_lc_lineanglereloptions.h"
-#include "rs_settings.h"
 #include "rs_debug.h"
 #include "rs_math.h"
+#include "ui_lc_lineanglereloptions.h"
 
 
 LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
     LC_ActionOptionsWidget(parent),
-    ui(new Ui::LC_LineAngleRelOptions)
+    ui(std::make_unique<Ui::LC_LineAngleRelOptions>())
 {
     ui->setupUi(this);
 
@@ -23,7 +44,6 @@ LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
 }
 
 LC_LineAngleRelOptions::~LC_LineAngleRelOptions(){
-    delete ui;
     action = nullptr;
 }
 
@@ -37,11 +57,11 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
         QString length;
         QString offset;
         QString angle;
-        int lineSnapMode;
-        int tickSnapMode;
-        bool angleIsRelative;
-        bool lengthIsFree;
-        bool divide;
+        int lineSnapMode = 0;
+        int tickSnapMode = 0;
+        bool angleIsRelative = false;
+        bool lengthIsFree = false;
+        bool divide = false;
         QString distance;
         if (update) {
             length = fromDouble(action->getTickLength());
@@ -52,7 +72,7 @@ void LC_LineAngleRelOptions::doSetAction(RS_ActionInterface *a, bool update){
             angleIsRelative = action->isAngleRelative();
             lengthIsFree = action->isLengthFree();
             divide = action->isDivideLine();
-            distance = action->getSnapDistance();
+            distance = QString("%1").arg(action->getSnapDistance());
         } else {
             length = load("Length", "1.0");
             offset = load("Offset", "1.0");
@@ -107,7 +127,7 @@ void LC_LineAngleRelOptions::languageChange(){
 }
 
 void LC_LineAngleRelOptions::setAngleToActionAndView(const QString &expr){
-    double angle;
+    double angle = 0.;
     if (toDoubleAngle(expr, angle, 1.0, false)){
         action->setTickAngle(angle);
         ui->leAngle->setText(fromDouble(angle));
@@ -115,7 +135,7 @@ void LC_LineAngleRelOptions::setAngleToActionAndView(const QString &expr){
 }
 
 void LC_LineAngleRelOptions::setLengthToActionAndView(const QString& val){
-    double value;
+    double value = 0.;
     if (toDouble(val, value, 1.0, false)){
         action->setTickLength(value);
         ui->leLength->setText(fromDouble(value));
@@ -123,7 +143,7 @@ void LC_LineAngleRelOptions::setLengthToActionAndView(const QString& val){
 }
 
 void LC_LineAngleRelOptions::setDistanceToActionAndView(const QString& val){
-    double value;
+    double value = 0.;
     if (toDouble(val, value, 0.0, false)){
         action->setSnapDistance(value);
         ui->leDistance->setText(fromDouble(value));
@@ -131,7 +151,7 @@ void LC_LineAngleRelOptions::setDistanceToActionAndView(const QString& val){
 }
 
 void LC_LineAngleRelOptions::setOffsetToActionAndView(const QString& val){
-    double value;
+    double value = 0.;
     if (toDouble(val, value, 0.0, false)){
         action->setTickOffset(value);
         ui->leOffset->setText(fromDouble(value));

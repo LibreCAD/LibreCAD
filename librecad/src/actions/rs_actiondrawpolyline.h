@@ -34,7 +34,6 @@ namespace mu {
     class Parser;
 }
 
-class QStringList;
 class RS_EntityContainer;
 class RS_GraphicView;
 class RS_Polyline;

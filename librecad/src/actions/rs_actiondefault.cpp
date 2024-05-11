@@ -64,9 +64,6 @@ constexpr double minimumHoverTolerance =  3.0;
 constexpr double hoverToleranceFactor1 =  1.0;
 constexpr double hoverToleranceFactor2 = 10.0;
 
-constexpr unsigned minHighLightDuplicates = 4;
-constexpr unsigned maxHighLightDuplicates = 20;
-
 // whether the entity supports glowing effects on mouse hovering
 bool allowMouseOverGlowing(const RS_Entity* entity)
 {
@@ -200,7 +197,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
 
-    RS_Vector currentMousePosition = graphicView->toGraph(event->x(), event->y());
+    RS_Vector currentMousePosition = graphicView->toGraph(event->position());
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
             ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
     {
@@ -226,7 +223,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
@@ -240,7 +237,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         highlightHoveredEntities(e);
         break;
     case Dragging:
-        //v2 = graphicView->toGraph(e->x(), e->y());
+        //v2 = graphicView->toGraph(e->position());
 		pPoints->v2 = mouse;
 
 		if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>10) {
@@ -334,7 +331,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         break;
     case Panning:
     {
-        RS_Vector const vTarget(e->x(), e->y());
+        RS_Vector const vTarget{e->position()};
 		RS_Vector const v01=vTarget - pPoints->v1;
         if(v01.squared()>=64.){
             graphicView->zoomPan((int) v01.x, (int) v01.y);
@@ -357,10 +354,10 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         {
             auto const m=e->modifiers();
             if(m & (Qt::ControlModifier|Qt::MetaModifier)){
-				pPoints->v1 = RS_Vector(e->x(), e->y());
+                pPoints->v1 = RS_Vector{e->position()};
                 setStatus(Panning);
             } else {
-				pPoints->v1 = graphicView->toGraph(e->x(), e->y());
+                pPoints->v1 = graphicView->toGraph(e->position());
                 setStatus(Dragging);
             }
         }
@@ -420,7 +417,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
 
     if (e->button()==Qt::LeftButton) {
-		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+        pPoints->v2 = graphicView->toGraph(e->position());
         switch (getStatus()) {
         case Dragging: {
             // select single entity:
@@ -447,7 +444,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetCorner2: {
             //v2 = snapPoint(e);
-			pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+            pPoints->v2 = graphicView->toGraph(e->position());
 
             // select window:
             //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {

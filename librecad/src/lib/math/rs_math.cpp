@@ -413,8 +413,8 @@ QString RS_Math::doubleToString(double value, int prec) {
 
     if(valStr.contains('.')) {
         // Remove tailing point and zeros:
-//        valStr.replace(QRegExp("0*$"), "");
-//        valStr.replace(QRegExp(R"(\.$)"), "");
+//        valStr.replace(QRegularExpression("0*$"), "");
+//        valStr.replace(QRegularExpression(R"(\.$)"), "");
 //        while (valStr.at(valStr.length()-1)=='0') {
 //            valStr.truncate(valStr.length()-1);
 //        }

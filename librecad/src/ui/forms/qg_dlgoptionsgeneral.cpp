@@ -317,9 +317,7 @@ void QG_DlgOptionsGeneral::ok()
 	
 	if (restartNeeded==true) {
         QMessageBox::warning( this, tr("Preferences"),
-                              tr("Please restart the application to apply all changes."),
-                              QMessageBox::Ok,
-                              Qt::NoButton);
+                              tr("Please restart the application to apply all changes."));
     }
     accept();
 }
@@ -332,8 +330,7 @@ void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
 
 void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+    QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
 	dlg.setCustomColor(0, custom.rgb());

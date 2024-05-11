@@ -22,9 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
 #include "rs_math.h"
-#include "rs_arc.h"
-#include "rs_point.h"
-#include "rs_circle.h"
 #include "lc_linemath.h"
 #include "lc_staroptions.h"
 #include "lc_actiondrawstar.h"
@@ -220,10 +217,8 @@ void LC_ActionDrawStar::addPolylineToEntitiesList(RS_Polyline *polyline, QList<R
                 list << polyline;
             }
             else{
-                int index = -1;
                 for (RS_Entity *entity = polyline->firstEntity(RS2::ResolveAll); entity;
                      entity = polyline->nextEntity(RS2::ResolveAll)) {
-                    index++;
                     if (entity != nullptr){
                         RS_Entity *clone = entity->clone(); // use clone for safe deletion of polyline
                         clone->reparent(container);

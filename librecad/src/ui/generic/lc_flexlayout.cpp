@@ -93,7 +93,7 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
     // do first pass to determine height for each line and overall height
 
     for (int i = 0; i < size; i++) {
-        QLayoutItem *item = qAsConst(items.at(i));
+        QLayoutItem *item = std::as_const(items.at(i));
         const QWidget *wid = item->widget();
         QLayoutItem *itemNext = nullptr;
         bool checkForNextBreak = false;
@@ -154,7 +154,7 @@ int LC_FlexLayout::performLayout(const QRect &rect, bool geometryCheck) const{
         int currentLineHeight;
         // second pass that takes into consideration lines height
         for (int i = 0; i < size; i++) {
-            QLayoutItem *item = qAsConst(items.at(i));
+            QLayoutItem *item = std::as_const(items.at(i));
             const QWidget *wid = item->widget();
             QLayoutItem *itemNext = nullptr;
             bool checkForNextBreak = false;
@@ -256,14 +256,13 @@ QLayoutItem*LC_FlexLayout::takeAt(int index){
 }
 
 Qt::Orientations LC_FlexLayout::expandingDirections() const{
-    return 0;
-//    return Qt::Vertical;
+    return {};
 }
 
 
 QSize LC_FlexLayout::minimumSize() const{
     QSize size;
-    for (const QLayoutItem *item : qAsConst(items))
+    for (const QLayoutItem *item : std::as_const(items))
         size = size.expandedTo(item->minimumSize());
 
     const QMargins margins = contentsMargins();

@@ -899,12 +899,13 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
     auto previewAction = static_cast<RS_ActionPrintPreview*>(action);
     std::unique_ptr<QG_PrintPreviewOptions>& printPreviewOptions =  previewAction->getOption();
     if(!on) {
-        if (printPreviewOptions)
+        if (printPreviewOptions != nullptr) {
             printPreviewOptions->hide();
-        return;
-    }
-    if (optionWidget ) {
-        if (!printPreviewOptions) {
+            printPreviewOptions->deleteLater();
+            printPreviewOptions.release();
+        }
+    } else if (optionWidget ) {
+        if (printPreviewOptions == nullptr) {
             printPreviewOptions = std::make_unique<QG_PrintPreviewOptions>(optionWidget);
             double f = previewAction->getScale();
             printPreviewOptions ->setAction(action, false);
@@ -998,12 +999,15 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
 
     if (optionWidget) {
         if (on) {
-            if(!m_pLineAngleOptions)
+            if(m_pLineAngleOptions == nullptr) {
                 m_pLineAngleOptions = new QG_LineAngleOptions(optionWidget);
-            optionWidget->addWidget(m_pLineAngleOptions);
-            m_pLineAngleOptions->setAction(action, update);
-            //toolWidget->setData(&angle, &length, fixedAngle, update);
-            m_pLineAngleOptions->show();
+                optionWidget->addWidget(m_pLineAngleOptions);
+                m_pLineAngleOptions->setAction(action, update);
+            } else if (update) {
+                m_pLineAngleOptions->setAction(action, update);
+            }
+            if (!m_pLineAngleOptions->isVisible())
+                m_pLineAngleOptions->show();
         }else{
             if (!m_pLineAngleOptions) return;
             m_pLineAngleOptions->hide();

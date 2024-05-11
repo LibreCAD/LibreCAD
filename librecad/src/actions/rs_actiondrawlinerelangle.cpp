@@ -96,9 +96,6 @@ void RS_ActionDrawLineRelAngle::trigger() {
 void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent begin");
 
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-
     switch (getStatus()) {
     case SetEntity:
     entity = catchEntity(e, enTypeList, RS2::ResolveAll);

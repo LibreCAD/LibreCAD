@@ -28,6 +28,7 @@
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
 
+#include <QString>
 #include <QTextStream>
 #ifdef __hpux
 #include <sys/_size_t.h>

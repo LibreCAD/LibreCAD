@@ -22,6 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEANGLERELOPTIONS_H
 #define LC_LINEANGLERELOPTIONS_H
 
+#include <memory>
+
 #include "lc_actiondrawlineanglerel.h"
 
 namespace Ui {
@@ -54,7 +56,7 @@ protected:
     void doSaveSettings() override;
     QString getSettingsOptionNamePrefix() override;
 private:
-    Ui::LC_LineAngleRelOptions *ui;
+    std::unique_ptr<Ui::LC_LineAngleRelOptions> ui;
     LC_ActionDrawLineAngleRel* action {nullptr};
     bool fixedAngle {false};
 

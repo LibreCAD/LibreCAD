@@ -74,7 +74,7 @@ void RS_ActionPrintPreview::init(int status) {
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
-		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+		pPoints->v2 = graphicView->toGraph(e->position());
 		// if Shift is pressed the paper moves only horizontally
 		if (e->modifiers() & Qt::ShiftModifier)
 			pPoints->v2.y = pPoints->v1.y;
@@ -103,7 +103,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-			pPoints->v1 = graphicView->toGraph(e->x(), e->y());
+			pPoints->v1 = graphicView->toGraph(e->position());
             setStatus(Moving);
             break;
 

@@ -43,7 +43,7 @@ LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     auto layout = new QVBoxLayout;
     frame->setLayout(layout);
 
-    layout->setMargin(0);
+    layout->setContentsMargins(QMargins{});
     layout->addWidget(color_wiz);
 
     setWidget(frame);

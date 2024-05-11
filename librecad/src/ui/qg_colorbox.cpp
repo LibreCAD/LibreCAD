@@ -334,7 +334,7 @@ void QG_ColorBox::slotColorChanged(int index) {
         if(index < count() )
         {
             QVariant q0=itemData(index);
-            if(q0 != QVariant::Invalid )
+            if(q0.isValid())
             {
                 *currentColor=itemData(index).value<QColor>();
             }

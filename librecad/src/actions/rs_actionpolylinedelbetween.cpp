@@ -125,8 +125,7 @@ void RS_ActionPolylineDelBetween::mouseReleaseEvent(QMouseEvent* e) {
 							snapPoint(e);
 								delSegment = nullptr;
                                 double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-                                delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( RS_Vector(graphicView->toGraphX(e->x()),
-                                                                        graphicView->toGraphY(e->y())), &dist, RS2::ResolveNone);
+                                delSegment =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
 								if(delSegment == nullptr)
                                         break;
                                 delEntity->setHighlighted(true);

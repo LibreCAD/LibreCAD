@@ -54,9 +54,7 @@ RS_Pattern::RS_Pattern(const QString& fileName)
  */
 RS_Entity* RS_Pattern::clone() const
 {
-    auto* cloned = new RS_Pattern(fileName);
-    *static_cast<RS_EntityContainer*>(cloned) = *static_cast<RS_EntityContainer*>(RS_EntityContainer::clone());
-    cloned->loaded = loaded;
+    auto* cloned = new RS_Pattern(*this);
     return cloned;
 }
 

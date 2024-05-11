@@ -190,7 +190,7 @@ void RS_ActionModifyRound::trigger() {
 void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Entity* se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
 
     switch (getStatus()) {
@@ -245,7 +245,7 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
 
     if (e->button()==Qt::LeftButton) {

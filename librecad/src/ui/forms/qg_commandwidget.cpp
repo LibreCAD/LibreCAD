@@ -150,10 +150,10 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
             return false;
         }
 
-        event->accept();
         this->setFocus();
-        QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+        QKeyEvent * newEvent = static_cast<QKeyEvent*>(event);
         QApplication::postEvent(leCommand, newEvent);
+        event->accept();
 
         return true;
     }

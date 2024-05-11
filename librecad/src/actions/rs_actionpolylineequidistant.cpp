@@ -141,16 +141,14 @@ bool RS_ActionPolylineEquidistant::makeContour() {
 	if (document) {
         document->startUndoCycle();
     }
-    double neg = 1.0;
-    if(bRightSide)
-        neg = -1.0;
+    double neg = bRightSide ? -1.0 : 1.0;
 
     // Create new helper entities
-	RS_Vector const origin{0.,0.};
-	RS_Line line1{origin, origin};//current line
-	RS_Line lineFirst{origin, origin};//previous line
-	RS_Arc arc1(nullptr, RS_ArcData(origin, 0,0,0,false));//current arc
-	RS_Arc arcFirst(nullptr, RS_ArcData(origin, 0,0,0,false));//previous arc
+    RS_Vector const origin{0.,0.};
+    RS_Line line1{origin, origin};//current line
+    RS_Line lineFirst{origin, origin};//previous line
+    RS_Arc arc1(nullptr, RS_ArcData(origin, 0,0,0,false));//current arc
+    RS_Arc arcFirst(nullptr, RS_ArcData(origin, 0,0,0,false));//previous arc
 
     for (int num=1; num<=number || (number==0 && num<=1); num++) {
         RS_Polyline* newPolyline = new RS_Polyline(container);

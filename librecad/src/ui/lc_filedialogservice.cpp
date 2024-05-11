@@ -84,7 +84,7 @@ QList<RS2::FormatType> filtersTypeList =
         Number of values pertaining to the open file dialog mode,
         as defined in one of the relevant lists below.
     */
-const int numberOf_openFileModes = 0;
+[[maybe_unused]] const int numberOf_openFileModes = 0;
 
 const QStringList filterSettingsPaths =
 {

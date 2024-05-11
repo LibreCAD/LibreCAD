@@ -22,11 +22,11 @@
 **
 **********************************************************************/
 
+#include <QColor>
+
 #include "lc_layertreemodel.h"
 #include "rs_debug.h"
 #include "lc_layertreemodel_options.h"
-
-#include <QColor>
 
 LC_LayerTreeModel::LC_LayerTreeModel(QObject * parent, LC_LayerTreeModelOptions *ops) :QAbstractItemModel(parent) {
     layerVisible = QIcon(":/icons/visible.svg");

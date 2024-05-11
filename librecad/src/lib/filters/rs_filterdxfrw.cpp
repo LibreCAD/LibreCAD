@@ -24,8 +24,9 @@
 **********************************************************************/
 
 #include<cstdlib>
+#include <QRegularExpression>
 #include <QStringList>
-#include <QTextCodec>
+#include <QStringConverter>
 
 #include "rs_filterdxfrw.h"
 
@@ -1368,7 +1369,7 @@ void RS_FilterDXFRW::addHeader(const DRW_Header* data){
 		graphic->addVariable("$PDSIZE", LC_DEFAULTS_PDSize, DXF_FORMAT_GC_VarName);
 
     QString acadver = versionStr = graphic->getVariableString("$ACADVER", "");
-    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    acadver.replace(QRegularExpression("[a-zA-Z]"), "");
     bool ok;
     version=acadver.toInt(&ok);
     if (!ok) { version = 1021;}
@@ -3734,11 +3735,11 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
                    ) {
                     //found tag, append parsed part
                     res.append(data.mid(j,i-j));
-                    int pos = data.indexOf(0x7D, i+3);//find '}'
+                    qsizetype pos = data.indexOf(QChar(0x7D), i+3);//find '}'
                     if (pos <0) break; //'}' not found
                     QString tmp = data.mid(i+1, pos-i-1);
                     do {
-                        tmp = tmp.remove(0,tmp.indexOf(0x3B, 0)+1 );//remove to ';'
+                        tmp = tmp.remove(0,tmp.indexOf(QChar{0x3B}, 0)+1 );//remove to ';'
                     } while(tmp.startsWith("\\f") || tmp.startsWith("\\H") || tmp.startsWith("\\C"));
                     res.append(tmp);
                     i = j = pos;
@@ -3750,17 +3751,17 @@ QString RS_FilterDXFRW::toNativeString(const QString& data) {
     res.append(data.mid(j));
 
     // Line feed:
-    res = res.replace(QRegExp("\\\\P"), "\n");
+    res = res.replace(QRegularExpression("\\\\P"), "\n");
     // Space:
-    res = res.replace(QRegExp("\\\\~"), " ");
+    res = res.replace(QRegularExpression("\\\\~"), " ");
     // Tab:
-    res = res.replace(QRegExp("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
+    res = res.replace(QRegularExpression("\\^I"), "    ");//RLZ: change 4 spaces for \t when mtext have support for tab
     // diameter:
-    res = res.replace(QRegExp("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
+    res = res.replace(QRegularExpression("%%[cC]"), QChar(0x2300));//RLZ: Empty_set is 0x2205, diameter is 0x2300 need to add in all fonts
     // degree:
-    res = res.replace(QRegExp("%%[dD]"), QChar(0x00B0));
+    res = res.replace(QRegularExpression("%%[dD]"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(QRegExp("%%[pP]"), QChar(0x00B1));
+    res = res.replace(QRegularExpression("%%[pP]"), QChar(0x00B1));
 
     return res;
 }

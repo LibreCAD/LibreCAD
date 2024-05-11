@@ -93,6 +93,8 @@ public:
                              RS2::ActionType action=RS2::ActionNone);
     QString command(const QString& cmd);
     QString msgAvailableCommands();
+    // Accessor for drawing keys
+    int getGraphicVariableInt(const QString& key, int def) const;
 
 private:
     /**

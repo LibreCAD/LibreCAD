@@ -25,21 +25,22 @@
 **
 **********************************************************************/
 
-#include "qg_layerwidget.h"
-#include "qg_actionhandler.h"
-#include "qc_applicationwindow.h"
 
 #include <QBitmap>
-#include <QScrollBar>
-#include <QTableView>
-#include <QHeaderView>
-#include <QToolButton>
-#include <QMenu>
 #include <QBoxLayout>
+#include <QContextMenuEvent>
+#include <QHeaderView>
+#include <QKeyEvent>
 #include <QLabel>
 #include <QLineEdit>
-#include <QContextMenuEvent>
-#include <QKeyEvent>
+#include <QMenu>
+#include <QScrollBar>
+#include <QTableView>
+#include <QToolButton>
+
+#include "qc_applicationwindow.h"
+#include "qg_actionhandler.h"
+#include "qg_layerwidget.h"
 #include "rs_debug.h"
 
 QG_LayerModel::QG_LayerModel(QObject * parent) : QAbstractTableModel(parent) {
@@ -159,7 +160,11 @@ QVariant QG_LayerModel::data ( const QModelIndex & index, int role ) const {
         }
         break;
 
+#if QT_VERSION > QT_VERSION_CHECK(6,0,0)
     case Qt::BackgroundRole:
+#else
+    case Qt::BackgroundColorRole:
+#endif
         if( COLOR_SAMPLE == col) {
             return layer->getPen().getColor().toQColor();
         }
@@ -516,18 +521,11 @@ void QG_LayerWidget::slotSelectionChanged(
  * Called when reg-expresion matchLayerName->text changed
  */
 void QG_LayerWidget::slotUpdateLayerList() {
-    QRegExp rx("");
-    int pos=0;
-    QString  s, n;
+    QRegularExpression rx = QRegularExpression::fromWildcard(matchLayerName->text());
 
-    n=matchLayerName->text();
-    rx.setPattern(n);
-    rx.setPatternSyntax(QRegExp::WildcardUnix);
-
-    for (unsigned int i=0; i<layerList->count() ; i++) {
-        s=layerModel->getLayer(i)->getName();
-        int f=rx.indexIn(s, pos);
-        if ( !f ) {
+    for (unsigned i=0; i<layerList->count() ; i++) {
+        QString s=layerModel->getLayer(i)->getName();
+        if (matchLayerName->text().isEmpty() || s.indexOf(rx) == 0) {
             layerView->showRow(i);
             layerModel->getLayer(i)->visibleInLayerList(true);
         } else {
@@ -545,52 +543,37 @@ void QG_LayerWidget::slotUpdateLayerList() {
 void QG_LayerWidget::contextMenuEvent(QContextMenuEvent *e) {
 
     if (actionHandler) {
-        QMenu* contextMenu = new QMenu(this);
-        QLabel* caption = new QLabel(tr("Layer Menu"), this);
-        QPalette palette;
-        palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
-        palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
-        caption->setPalette(palette);
-        caption->setAlignment( Qt::AlignCenter );
+        auto contextMenu = std::make_unique<QMenu>(this);
+
+        using ActionMemberFunc = void (QG_ActionHandler::*)();
+        const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
+            contextMenu->addAction(name, actionHandler, func);
+        };
+
         // Actions for all layers:
-        contextMenu->addAction( tr("&Defreeze all Layers"), actionHandler,
-                                 SLOT(slotLayersDefreezeAll()), 0);
-        contextMenu->addAction( tr("&Freeze all Layers"), actionHandler,
-                                 SLOT(slotLayersFreezeAll()), 0);
-        contextMenu->addAction( tr("&Unlock all Layers"), actionHandler,
-                                 SLOT(slotLayersUnlockAll()), 0);
-        contextMenu->addAction( tr("&Lock all Layers"), actionHandler,
-                                 SLOT(slotLayersLockAll()), 0);
+        addActionFunc( tr("&Defreeze all Layers"), &QG_ActionHandler::slotLayersDefreezeAll);
+        addActionFunc( tr("&Freeze all Layers"), &QG_ActionHandler::slotLayersFreezeAll);
+        addActionFunc( tr("&Unlock all Layers"), &QG_ActionHandler::slotLayersUnlockAll);
+        addActionFunc( tr("&Lock all Layers"), &QG_ActionHandler::slotLayersLockAll);
         contextMenu->addSeparator();
         // Actions for selected layers or,
         // if nothing is selected, for active layer:
-        contextMenu->addAction( tr("Toggle Layer &Visibility"), actionHandler,
-                                 SLOT(slotLayersToggleView()), 0);
-        contextMenu->addAction( tr("Toggle Layer Loc&k"), actionHandler,
-                                 SLOT(slotLayersToggleLock()), 0);
-        contextMenu->addAction( tr("Toggle Layer &Printing"), actionHandler,
-                                 SLOT(slotLayersTogglePrint()), 0);
-        contextMenu->addAction( tr("Toggle &Construction Layer"), actionHandler,
-                                 SLOT(slotLayersToggleConstruction()), 0);
-        contextMenu->addAction( tr("&Remove Layer"), actionHandler,
-                                 SLOT(slotLayersRemove()), 0);
+        addActionFunc( tr("Toggle Layer &Visibility"), &QG_ActionHandler::slotLayersToggleView);
+        addActionFunc( tr("Toggle Layer Loc&k"), &QG_ActionHandler::slotLayersToggleLock);
+        addActionFunc( tr("Toggle Layer &Printing"), &QG_ActionHandler::slotLayersTogglePrint);
+        addActionFunc( tr("Toggle &Construction Layer"), &QG_ActionHandler::slotLayersToggleConstruction);
+        addActionFunc( tr("&Remove Layer"), &QG_ActionHandler::slotLayersRemove);
         contextMenu->addSeparator();
         // Single layer actions:
-        contextMenu->addAction( tr("&Add Layer"), actionHandler,
-                                 SLOT(slotLayersAdd()), 0);
-        contextMenu->addAction( tr("Edit Layer &Attributes"), actionHandler,
-                                 SLOT(slotLayersEdit()), 0);
+        addActionFunc( tr("&Add Layer"), &QG_ActionHandler::slotLayersAdd);
+        addActionFunc( tr("Edit Layer &Attributes"), &QG_ActionHandler::slotLayersEdit);
 
         contextMenu->addSeparator();
 
-        contextMenu->addAction( tr("&Export Selected Layer(s)"), actionHandler,
-                                &QG_ActionHandler::slotLayersExportSelected, 0);
-
-        contextMenu->addAction( tr("Export &Visible Layer(s)"), actionHandler,
-                                &QG_ActionHandler::slotLayersExportVisible,  0);
+        addActionFunc( tr("&Export Selected Layer(s)"), &QG_ActionHandler::slotLayersExportSelected);
+        addActionFunc( tr("Export &Visible Layer(s)"), &QG_ActionHandler::slotLayersExportVisible);
 
         contextMenu->exec(QCursor::pos());
-        delete contextMenu;
     }
 
     e->accept();

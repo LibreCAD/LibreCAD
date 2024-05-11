@@ -33,6 +33,7 @@
 #include <QMenu>
 #include <QNativeGestureEvent>
 #include <QPoint>
+#include <QPointingDevice>
 #include <QTimer>
 
 #include "qc_applicationwindow.h"
@@ -606,15 +607,19 @@ bool QG_GraphicView::event(QEvent *event)
             }
 
             // It seems the NativeGestureEvent::pos() incorrectly reports global coordinates
-            QPoint g = mapFromGlobal(nge->globalPos());
+            QPoint g = mapFromGlobal(nge->globalPosition().toPoint());
             RS_Vector mouse = toGraph(g.x(), g.y());
             setCurrentAction(new RS_ActionZoomIn(*container, *this, direction,
-												 RS2::Both, &mouse, factor));
+                                                 RS2::Both, &mouse, factor));
         }
 
         return true;
     }
-    return QWidget::event(event);
+    // skip events without a default action
+    // Hatch preview in qg_dlghatch doesn't have its default action
+    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr)
+        return QWidget::event(event);
+    return true;
 }
 
 /**
@@ -622,6 +627,52 @@ bool QG_GraphicView::event(QEvent *event)
  */
 void QG_GraphicView::tabletEvent(QTabletEvent* e) {
     if (testAttribute(Qt::WA_UnderMouse)) {
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        switch(e->pointerType()) {
+        case QPointingDevice::PointerType::Eraser:
+            if (e->type()==QEvent::TabletRelease) {
+                if (container) {
+
+                    RS_ActionSelectSingle* a =
+                        new RS_ActionSelectSingle(*container, *this);
+                    setCurrentAction(a);
+                    QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
+                                   Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
+                    mouseReleaseEvent(&ev);
+                    a->finish();
+
+                    if (container->countSelected()>0) {
+                        setCurrentAction(
+                            new RS_ActionModifyDelete(*container, *this));
+                    }
+                }
+            }
+            break;
+
+        case QPointingDevice::PointerType::Generic:
+        case QPointingDevice::PointerType::Pen:
+        case QPointingDevice::PointerType::Cursor:
+            if (e->type()==QEvent::TabletPress) {
+                QMouseEvent ev(QEvent::MouseButtonPress, e->position(), e->globalPosition(),
+                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
+                mousePressEvent(&ev);
+            } else if (e->type()==QEvent::TabletRelease) {
+                QMouseEvent ev(QEvent::MouseButtonRelease, e->position(), e->globalPosition(),
+                               Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
+                mouseReleaseEvent(&ev);
+            } else if (e->type()==QEvent::TabletMove) {
+                QMouseEvent ev(QEvent::MouseMove, e->position(), e->globalPosition(),
+                               Qt::NoButton, {}, Qt::NoModifier);//RLZ
+                mouseMoveEvent(&ev);
+            }
+            break;
+        default:
+            break;
+
+
+        }
+
+#else
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
         switch (e->deviceType()) {
 #else
@@ -634,7 +685,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
                     RS_ActionSelectSingle* a =
                         new RS_ActionSelectSingle(*container, *this);
                     setCurrentAction(a);
-                    QMouseEvent ev(QEvent::MouseButtonRelease, e->pos(),
+                    QMouseEvent ev(QEvent::MouseButtonRelease, e->position(),
                                    Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
                     mouseReleaseEvent(&ev);
                     a->finish();
@@ -650,15 +701,15 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         case QTabletEvent::Stylus:
         case QTabletEvent::Puck:
             if (e->type()==QEvent::TabletPress) {
-                QMouseEvent ev(QEvent::MouseButtonPress, e->pos(),
+                QMouseEvent ev(QEvent::MouseButtonPress, e->position(),
                                Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
                 mousePressEvent(&ev);
             } else if (e->type()==QEvent::TabletRelease) {
-                QMouseEvent ev(QEvent::MouseButtonRelease, e->pos(),
+                QMouseEvent ev(QEvent::MouseButtonRelease, e->position(),
                                Qt::LeftButton, Qt::LeftButton, Qt::NoModifier);//RLZ
                 mouseReleaseEvent(&ev);
             } else if (e->type()==QEvent::TabletMove) {
-                QMouseEvent ev(QEvent::MouseMove, e->pos(),
+                QMouseEvent ev(QEvent::MouseMove, e->position(),
                                Qt::NoButton, {}, Qt::NoModifier);//RLZ
                 mouseMoveEvent(&ev);
             }
@@ -667,6 +718,7 @@ void QG_GraphicView::tabletEvent(QTabletEvent* e) {
         default:
             break;
         }
+#endif
     }
 
     // a 'mouse' click:
@@ -698,7 +750,7 @@ void QG_GraphicView::leaveEvent(QEvent* e) {
     QWidget::leaveEvent(e);
 }
 
-void QG_GraphicView::enterEvent(QEvent* e) {
+void QG_GraphicView::enterEvent(QEnterEvent* e) {
     eventHandler->mouseEnterEvent();
     QWidget::enterEvent(e);
 }
@@ -731,7 +783,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 #if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
     RS_Vector mouse = toGraph(e->position());
 #else
-    RS_Vector mouse = toGraph(e->x(), e->y());
+    RS_Vector mouse = toGraph(e->position());
 #endif
 
     if (device == "Trackpad")
@@ -877,6 +929,9 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         QEvent::MouseMove,
 #if (QT_VERSION >= QT_VERSION_CHECK(5, 15, 0))
             e->position(),
+#if (QT_VERSION >= QT_VERSION_CHECK(6, 0, 0))
+            e->globalPosition(),
+#endif
 #else
             QPointF{static_cast<qreal>(e->x()), static_cast<qreal>(e->y())},
 #endif
@@ -1226,7 +1281,11 @@ void QG_GraphicView::addScrollbars()
 
     setOffset(50, 50);
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+    layout->setContentsMargins(QMargins{});
+#else
     layout->setMargin(0);
+#endif
     layout->setSpacing(0);
     layout->setColumnStretch(0, 1);
     layout->setColumnStretch(1, 0);
@@ -1293,7 +1352,7 @@ void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
     const LC_Rect cadArea_unprobed(cadArea_minCoord + m_panData->probedAreaOffset,
                                    cadArea_maxCoord - m_panData->probedAreaOffset);
 
-    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    RS_Vector mouseCoord{event->position()};
     mouseCoord.y = cadArea_actual.height() - mouseCoord.y;
 
     const RS_Vector cadArea_centerPoint((cadArea_minCoord + cadArea_maxCoord) / 2.0);
@@ -1378,7 +1437,7 @@ bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
     if (cadArea_unprobed.width() < 0. || cadArea_unprobed.height() < 0.)
         return false;
 
-    RS_Vector mouseCoord{double(event->x()), double(event->y())};
+    RS_Vector mouseCoord{event->position()};
 
     if (RS_DEBUG->getLevel() >= RS_Debug::D_INFORMATIONAL) {
         std::cout << " Unprobed CAD area width and height = " << cadArea_unprobed.width() << "/"

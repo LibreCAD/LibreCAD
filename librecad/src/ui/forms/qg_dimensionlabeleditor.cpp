@@ -24,7 +24,12 @@
 **
 **********************************************************************/
 #include "qg_dimensionlabeleditor.h"
+#include "rs.h"
+#include "rs_dimension.h"
 
+namespace {
+const QChar g_diametericPrefix{0x2205};
+}
 /*
  *  Constructs a QG_DimensionLabelEditor as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -39,10 +44,7 @@ QG_DimensionLabelEditor::QG_DimensionLabelEditor(QWidget* parent, Qt::WindowFlag
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DimensionLabelEditor::~QG_DimensionLabelEditor()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_DimensionLabelEditor::~QG_DimensionLabelEditor() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -61,8 +63,14 @@ void QG_DimensionLabelEditor::setLabel(const QString& l) {
     label = l;
 
     if ( !label.isEmpty()) {
-        if (label.at(0)==QChar(0x2205) || label.at(0)==QChar(0xF8)) {
+        if (label.at(0)==QChar(g_diametericPrefix) || label.at(0)==QChar(0xF8)) {
             hasDiameter = true;
+            bDiameter->setChecked(true);
+            bDiameter->setText({{QChar(g_diametericPrefix)}});
+        } else if (label.startsWith(tr("R", "Radial dimension prefix"))) {
+            bDiameter->setIcon({});
+            bDiameter->setText(tr("R", "Radial dimesnion prefix"));
+            bDiameter->setCheckable(true);
             bDiameter->setChecked(true);
         }
     }
@@ -91,12 +99,21 @@ QString QG_DimensionLabelEditor::getLabel() {
     QString l = leLabel->text();
 
     // diameter:
-    if (bDiameter->isChecked()) {
-        if (l.isEmpty()) {
-            l = QString("%1<>").arg(QChar(0x2205));
-        }
-        else {
-            l = QChar(0x2205) + l;
+    if (!bDiameter->text().isEmpty()) {
+        if (bDiameter->isChecked()) {
+            if (l.isEmpty()) {
+                l = QString("%1<>").arg(bDiameter->text());
+            }
+            else {
+                if (!l.startsWith(bDiameter->text()))
+                    l = bDiameter->text() + l;
+            }
+        } else {
+            if (l.startsWith(tr("R", "Radial dimension prefix"))) {
+                l = l.mid(tr("R", "Radial dimension prefix").length());
+            } else if (!l.isEmpty() && l.at(0) == QChar(0x2207)) {
+                l = l.mid(1);
+            }
         }
     }
 
@@ -112,3 +129,28 @@ QString QG_DimensionLabelEditor::getLabel() {
 void QG_DimensionLabelEditor::insertSign(const QString& s) {
     leLabel->insert(s.left(1));
 }
+
+void QG_DimensionLabelEditor::setRadialType(const RS_Dimension& dim)
+{
+    switch(dim.rtti()) {
+    case RS2::EntityDimRadial:
+        bDiameter->setIcon({});
+        bDiameter->setText(tr("R", "Radial dimesnion prefix"));
+        bDiameter->setCheckable(true);
+        bDiameter->setVisible(true);
+        break;
+    case RS2::EntityDimDiametric:
+        bDiameter->setIcon({});
+        bDiameter->setText({{QChar(g_diametericPrefix)}});
+        bDiameter->setCheckable(true);
+        bDiameter->setVisible(true);
+        break;
+    default:
+        bDiameter->setIcon({});
+        bDiameter->setText({});
+        bDiameter->setChecked(false);
+        bDiameter->setVisible(false);
+        break;
+    }
+}
+

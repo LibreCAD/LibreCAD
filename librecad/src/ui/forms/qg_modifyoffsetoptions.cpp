@@ -28,10 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qg_modifyoffsetoptions.h"
 
-#include "rs_actionmodifyoffset.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "ui_qg_modifyoffsetoptions.h"
-#include "rs_math.h"
 
 /*
  *  Constructs a QG_ModifyOffsetOptions as a child of 'parent', with the
