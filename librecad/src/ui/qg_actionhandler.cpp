@@ -194,6 +194,8 @@
 #include "lc_actiondrawstar.h"
 #include "lc_actionmodifybreakdivide.h"
 #include "lc_actionmodifylinegap.h"
+#include "lc_actioninfoproperties.h"
+#include "lc_actioninfopickcoordinates.h"
 
 /**
  * Constructor
@@ -951,11 +953,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionInfoTotalLengthNoSelect:
         a = new RS_ActionInfoTotalLength(*document, *view);
         break;
-    case RS2::ActionInfoArea:
-        a = new RS_ActionInfoArea(*document, *view);
-        break;
+        case RS2::ActionInfoArea:
+            a = new RS_ActionInfoArea(*document, *view);
+            break;
+        case RS2::ActionInfoProperties:
+            a = new LC_ActionInfoProperties(*document, *view);
+            break;
+        case RS2::ActionInfoPickCoordinates:
+            a = new LC_ActionInfoPickCoordinates(*document, *view);
+            break;
 
-        // Layer actions:
+
+            // Layer actions:
         //
     case RS2::ActionLayersDefreezeAll:
         a = new RS_ActionLayersFreezeAll(false, *document, *view);
@@ -2034,6 +2043,14 @@ void QG_ActionHandler::slotInfoTotalLength() {
 
 void QG_ActionHandler::slotInfoArea() {
     setCurrentAction(RS2::ActionInfoArea);
+}
+
+void QG_ActionHandler::slotEntityInfo() {
+    setCurrentAction(RS2::ActionInfoProperties);
+}
+
+void QG_ActionHandler::slotPickCoordinates() {
+    setCurrentAction(RS2::ActionInfoPickCoordinates);
 }
 
 void QG_ActionHandler::slotLayersDefreezeAll() {

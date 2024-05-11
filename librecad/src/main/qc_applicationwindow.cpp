@@ -568,8 +568,7 @@ void QC_ApplicationWindow::doClose(QC_MDIWindow * w, bool activateNext)
         }
 
         if (quickInfoWidget != nullptr){
-            quickInfoWidget->set_view(nullptr);
-            quickInfoWidget->set_document(nullptr);
+            quickInfoWidget->setDocumentAndView(nullptr, nullptr);
         }
 
 
@@ -1068,8 +1067,7 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         }
 
         if (quickInfoWidget != nullptr){
-            quickInfoWidget->set_view(m->getGraphicView());
-            quickInfoWidget->set_document(m->getDocument());
+            quickInfoWidget->setDocumentAndView(m->getDocument(), m->getGraphicView());
         }
 
         if (penPaletteWidget != nullptr){
@@ -1605,8 +1603,7 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     }
 
     if (quickInfoWidget != nullptr){
-        quickInfoWidget->set_view(view);
-        quickInfoWidget->set_document(w->getDocument());
+        quickInfoWidget->setDocumentAndView(w->getDocument(),view);
     }
 
     if(blockWidget) {

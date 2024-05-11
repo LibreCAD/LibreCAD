@@ -387,6 +387,8 @@ namespace RS2 {
         ActionInfoTotalLength,
         ActionInfoTotalLengthNoSelect,
         ActionInfoArea,
+        ActionInfoProperties,
+        ActionInfoPickCoordinates,
 
         ActionLayersDefreezeAll,
         ActionLayersFreezeAll,

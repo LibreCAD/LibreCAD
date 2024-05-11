@@ -210,7 +210,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["InfoDist2"]
             << a_map["InfoAngle"]
             << a_map["InfoTotalLength"]
-            << a_map["InfoArea"];
+            << a_map["InfoArea"]
+            << a_map["EntityInfo"];
+
 
     layer_actions
             << a_map["LayersDefreezeAll"]
@@ -364,15 +366,15 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         dock_layer_tree->setWidget(layer_tree_widget);
     }
 
-    // fixme - move to bottom dock area?
+
     QDockWidget* dock_quick_info = nullptr;
     dock_quick_info = new QDockWidget(main_window);
     dock_quick_info->setWindowTitle(QC_ApplicationWindow::tr("Entity Info"));
-    dock_quick_info->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+    dock_quick_info->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     dock_quick_info->setObjectName("quick_entity_info");
-    quick_info_widget = new LC_QuickInfoWidget(action_handler, dock_quick_info, "EntityInfo");
+    quick_info_widget = new LC_QuickInfoWidget(dock_quick_info, a_map);
     quick_info_widget->setFocusPolicy(Qt::NoFocus);
-    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::MinimumExpanding);
+//    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
     connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
     quick_info_widget->setVisible(false);

@@ -31,8 +31,8 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_debug.h"
-
-
+#include "lc_quickinfowidget.h"
+#include "qc_applicationwindow.h"
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -62,6 +62,8 @@ void RS_ActionModifyEntity::trigger() {
         // Always show the entity being edited as "Selected"
         setDisplaySelected(true);
 
+        unsigned long originalEntityId = en->getId();
+
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get())) {
             container->addEntity(clone.get());
 
@@ -80,6 +82,15 @@ void RS_ActionModifyEntity::trigger() {
 
                 document->endUndoCycle();
             }
+
+            unsigned long cloneEntityId = clone->getId();
+
+            // hm... probably there is a better way to notify (signal, broadcasting etc) without direct dependency?
+            LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+            if (entityInfoWidget != nullptr){
+                entityInfoWidget->onEntityPropertiesEdited(originalEntityId, cloneEntityId);
+            }
+
             clone.release();
             RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
         }

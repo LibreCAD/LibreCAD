@@ -1015,6 +1015,16 @@ add_executable(LibreCAD
         librecad/src/ui/forms/lc_modifygapoptions.h
         librecad/src/ui/forms/lc_modifygapoptions.cpp
         librecad/src/ui/lc_quickinfowidget.cpp
+        librecad/src/ui/generic/lc_plaintextedit.h
+        librecad/src/actions/lc_actioninfoproperties.cpp
+        librecad/src/actions/lc_actioninfopickcoordinates.cpp
+        librecad/src/ui/lc_quickinfopointsdata.h
+        librecad/src/ui/lc_quickinfopointsdata.cpp
+        librecad/src/ui/lc_quickinfobasedata.cpp
+        librecad/src/ui/lc_quickinfoentitydata.cpp
+        librecad/src/ui/lc_quickinfowidgetoptionsdialog.cpp
+        librecad/src/ui/lc_quickinfowidgetoptions.h
+        librecad/src/ui/lc_quickinfowidgetoptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

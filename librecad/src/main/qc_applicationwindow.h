@@ -312,6 +312,8 @@ public:
 
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
+    LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
+
     /**
      * Find opened window for specified document.
      */

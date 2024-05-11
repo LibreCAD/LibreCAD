@@ -247,6 +247,8 @@ public slots:
 	void slotInfoAngle();
 	void slotInfoTotalLength();
 	void slotInfoArea();
+ void slotEntityInfo();
+ void slotPickCoordinates();
 
 	void slotLayersDefreezeAll();
 	void slotLayersFreezeAll();

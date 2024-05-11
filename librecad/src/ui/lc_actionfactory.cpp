@@ -951,6 +951,23 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("InfoArea");
     a_map["InfoArea"] = action;
 
+
+    action = new QAction(tr("Entity Properties"), agm->info);
+    action->setIcon(QIcon(":/extui/menuselect.png"));
+    action->setToolTip(tr("Select entity for properties view"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotEntityInfo()));
+    action->setObjectName("EntityInfo");
+    a_map["EntityInfo"] = action;
+
+    action = new QAction(tr("Collect Coordinates"), agm->info);
+    action->setIcon(QIcon(":/extui/menupoint.png"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotPickCoordinates()));
+    action->setObjectName("PickCoordinates");
+    a_map["PickCoordinates"] = action;
+
+
     foreach (QAction* value, a_map)
     {
         value->setCheckable(true);
