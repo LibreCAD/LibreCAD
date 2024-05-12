@@ -63,18 +63,6 @@ bool isHatchMember(const RS_Entity* entity) {
 
 }
 
-namespace {
-
-// Whether the entity is a member of cross hatch filling curves
-bool isHatchMember(const RS_Entity* entity) {
-    if (entity == nullptr || entity->getParent() == nullptr)
-        return false;
-
-    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
-}
-
-}
-
 /**
  * Default constructor.
  * @param parent The parent entity of this entity.
@@ -1034,8 +1022,7 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
 
 //! whether printing is enabled or disabled for the entity's layer
 bool RS_Entity::isPrint(void) const{
-    if (nullptr != layer) return layer->isPrint();
-    return true;
+    return (nullptr != layer) && layer->isPrint();
 }
 
 bool RS_Entity::trimmable() const
