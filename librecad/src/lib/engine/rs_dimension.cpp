@@ -821,15 +821,14 @@ QString RS_Dimension::stripZerosLinear(QString linear, int zeros){
         return linear;
 
     // return at least 1 character in string
-    int ls = linear.size();
-    if (ls <= 1) {
+    if (linear.size() <= 1) {
         return linear;
     }
 
     // if removing of trailing zeroes is needed
     if (zeros & 8 && (linear.contains(QString('.')) || linear.contains(QString(',')))) {
         // search index
-        int i = ls - 1;
+        int i = linear.size() - 1;
         // locate first 0 in row from right
         while (i > 0 && linear[i] == QChar('0')) {
             i--;
@@ -838,13 +837,13 @@ QString RS_Dimension::stripZerosLinear(QString linear, int zeros){
         if ((linear[i] == QChar('.') || linear[i] == QChar(',')) && i > 0)
             i--;
         // strip zeros. Leave at least one character at the beginning
-        linear = linear.remove(i+1, ls-i);
+        linear = linear.remove(i+1, linear.size()-i);
     }
     // if removing of initial zeroes is needed
     if (zeros & 4) {
         int i = 0;
         // locate last 0 in row from left
-        while (i < ls-1 && linear[i] == QChar('0')) {
+        while (i < linear.size() - 1 && linear[i] == QChar('0')) {
             i++;
         }
         linear = linear.remove(0, i);
