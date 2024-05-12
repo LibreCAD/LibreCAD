@@ -44,7 +44,7 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-
+#include "qc_applicationwindow.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;
@@ -105,6 +105,9 @@ RS_ActionDefault::~RS_ActionDefault() = default;
 
 void RS_ActionDefault::init(int status) {
     RS_DEBUG->print("RS_ActionDefault::init");
+    if (status >= 0){
+        checkSupportOfQuickEntityInfo();
+    }
     if(status==Neutral){
         deletePreview();
         deleteSnapper();
@@ -117,6 +120,14 @@ void RS_ActionDefault::init(int status) {
     //        RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
 
     RS_DEBUG->print("RS_ActionDefault::init: OK");
+}
+
+void RS_ActionDefault::checkSupportOfQuickEntityInfo(){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        this->allowEntityQuickInfoAuto = entityInfoWidget->isAutoSelectEntitiesInDefaultAction();
+        this->allowEntityQuickInfoForCTRL = entityInfoWidget->isSelectEntitiesInDefaultActionWithCTRL();
+    }
 }
 
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
@@ -158,16 +169,19 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
 {
     clearHighLighting();
 
+    bool shouldShowQuickInfoWidget = allowEntityQuickInfoAuto || (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier) && allowEntityQuickInfoForCTRL);
+
     auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0 || shouldShowQuickInfoWidget;
     if (!showHighlightEntity)
         return;
 
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
         return;
-    if (!entity->isVisible() || entity->isLocked())
+    if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
         return;
+    }
 
     const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
                                         ? hoverToleranceFactor1
@@ -199,8 +213,12 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
     }
 
     // Glowing effect on mouse hovering
-    if (isPointOnEntity)
+    if (isPointOnEntity){
         highlightEntity(entity);
+        if (shouldShowQuickInfoWidget){
+            updateQuickInfoWidget(entity);
+        }
+    }
 }
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
@@ -528,11 +546,13 @@ void RS_ActionDefault::clearHighLighting()
     hContainer->clear();
     pPoints->highlightedEntity=nullptr;
     graphicView->redraw(RS2::RedrawOverlay);
+    clearQuickInfoWidget();
 }
 
 void RS_ActionDefault::resume()
 {
     clearHighLighting();
+    checkSupportOfQuickEntityInfo();
     BASE_CLASS::resume();
 }
 
@@ -563,5 +583,19 @@ void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect(){
     return typeToSelect;
+}
+
+void RS_ActionDefault::clearQuickInfoWidget(){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+//        entityInfoWidget->processEntity(nullptr);
+    }
+}
+
+void RS_ActionDefault::updateQuickInfoWidget(RS_Entity *pEntity){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        entityInfoWidget->processEntity(pEntity);
+    }
 }
 // EOF

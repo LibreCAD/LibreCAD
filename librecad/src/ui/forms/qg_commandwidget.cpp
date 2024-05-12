@@ -182,6 +182,11 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
     leCommand->setText("");
 }
 
+void QG_CommandWidget::setInput(const QString& cmd) {
+    leCommand->setText(cmd);
+    leCommand->setFocus();
+}
+
 void QG_CommandWidget::appendHistory(const QString& msg) {
     teHistory->append(msg);
 }

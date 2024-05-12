@@ -88,7 +88,11 @@ protected:
     std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction snapRestriction;
 
-
+    bool allowEntityQuickInfoForCTRL = false;
+    bool allowEntityQuickInfoAuto = false;
+    void checkSupportOfQuickEntityInfo();
+    void clearQuickInfoWidget();
+    void updateQuickInfoWidget(RS_Entity *pEntity);
 private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);

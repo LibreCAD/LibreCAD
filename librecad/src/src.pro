@@ -135,6 +135,8 @@ HEADERS += \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actiondrawstar.h \
+    actions/lc_actioninfopickcoordinates.h \
+    actions/lc_actioninfoproperties.h \
     actions/lc_actionmodifybreakdivide.h \
     actions/lc_actionmodifyduplicate.h \
     actions/lc_actionmodifylinegap.h \
@@ -262,6 +264,7 @@ HEADERS += \
     ui/forms/lc_modifybreakdivideoptions.h \
     ui/forms/lc_modifygapoptions.h \
     ui/forms/lc_staroptions.h \
+    ui/generic/lc_plaintextedit.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -274,19 +277,26 @@ HEADERS += \
     ui/lc_layertreemodel_options.h \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
+    ui/forms/lc_layerdialog_ex.h \
+    ui/lc_quickinfobasedata.h \
+    ui/lc_quickinfoentitydata.h \
+    ui/lc_quickinfopointsdata.h \
+    ui/lc_quickinfowidget.h \
     ui/forms/lc_layerdialog_ex.h\
     ui/forms/lc_actionoptionswidget.h \
     ui/forms/lc_circlebyarcoptions.h \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_linejoinoptions.h \
-    ui/forms/lc_lineoptions.h \        
+    ui/forms/lc_lineoptions.h \
     ui/forms/lc_slicedivideoptions.h\
     ui/forms/lc_rectangle2pointsoptions.h \
     ui/forms/lc_rectangle1pointoptions.h \
-    ui/forms/lc_rectangle3pointsoptions.h \    
+    ui/forms/lc_rectangle3pointsoptions.h \
     actions/lc_abstractactiondrawline.h \
-    ui/forms/LC_DlgParabola.h
+    ui/forms/LC_DlgParabola.h \
+    ui/lc_quickinfowidgetoptions.h \
+    ui/lc_quickinfowidgetoptionsdialog.h
 
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
@@ -303,6 +313,8 @@ SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actiondrawstar.cpp \
+    actions/lc_actioninfopickcoordinates.cpp \
+    actions/lc_actioninfoproperties.cpp \
     actions/lc_actionmodifybreakdivide.cpp \
     actions/lc_actionmodifyduplicate.cpp \
     actions/lc_actionmodifylinegap.cpp \
@@ -433,8 +445,15 @@ SOURCES += \
     ui/forms/lc_lineoptions.cpp \
     ui/forms/lc_rectangle3pointsoptions.cpp \
     ui/forms/lc_rectangle1pointoptions.cpp \
-    ui/forms/lc_rectangle2pointsoptions.cpp \         
-    ui/forms/lc_slicedivideoptions.cpp
+    ui/forms/lc_rectangle2pointsoptions.cpp \
+    ui/forms/lc_slicedivideoptions.cpp \
+    ui/lc_quickinfobasedata.cpp \
+    ui/lc_quickinfoentitydata.cpp \
+    ui/lc_quickinfopointsdata.cpp \
+    ui/lc_quickinfowidget.cpp \
+    ui/lc_quickinfowidgetoptions.cpp \
+    ui/lc_quickinfowidgetoptionsdialog.cpp
+
 
 # ################################################################################
 # Command
@@ -1030,8 +1049,10 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
     ui/forms/lc_duplicateoptions.ui \
-    ui/lc_penpaletteoptionsdialog.ui \    
-    ui/lc_penpalettewidget.ui
+    ui/lc_penpaletteoptionsdialog.ui \
+    ui/lc_penpalettewidget.ui \
+    ui/lc_quickinfowidget.ui \
+    ui/lc_quickinfowidgetoptionsdialog.ui
 
 # ################################################################################
 # Main

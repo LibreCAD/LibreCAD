@@ -444,6 +444,8 @@ public:
      * @param message The message for the user.
      */
     virtual void commandMessage(const QString& message) = 0;
+    virtual void command(const QString& message) = 0;
+
 	virtual void setMouseWidget(QG_MouseWidget*) = 0;
 	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
 	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;

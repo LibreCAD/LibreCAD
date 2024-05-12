@@ -76,6 +76,7 @@ public:
 	void updateSelectionWidget(int, double) override {}
     void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
+        void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
 	void setSelectionWidget(QG_SelectionWidget* ) override {}

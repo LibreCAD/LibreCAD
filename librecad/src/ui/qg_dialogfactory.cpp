@@ -1775,6 +1775,14 @@ void QG_DialogFactory::commandMessage(const QString& message) {
         commandWidget->appendHistory(message);
     }
     RS_DEBUG->print("QG_DialogFactory::commandMessage: OK");
+
+}
+void QG_DialogFactory::command(const QString& message) {
+    RS_DEBUG->print("QG_DialogFactory::command");
+    if (commandWidget) {
+        commandWidget->setInput(message);
+    }
+    RS_DEBUG->print("QG_DialogFactory::command: OK");
 }
 
 

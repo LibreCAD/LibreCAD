@@ -38,6 +38,7 @@
 #include "rs_snapper.h"
 #include "mainwindowx.h"
 #include "lc_penpalettewidget.h"
+#include "lc_quickinfowidget.h"
 
 class LC_ActionGroupManager;
 class LC_CustomToolbar;
@@ -311,6 +312,8 @@ public:
 
     LC_PenPaletteWidget* getPenPaletteWidget(void) const{ return penPaletteWidget;};
 
+    LC_QuickInfoWidget* getEntityInfoWidget(void) const {return quickInfoWidget;};
+
     /**
      * Find opened window for specified document.
      */
@@ -393,6 +396,9 @@ private:
 
     /** Layer tree widget */
     LC_LayerTreeWidget* layerTreeWidget {nullptr};
+
+    /** Entity info widget */
+    LC_QuickInfoWidget* quickInfoWidget {nullptr};
 
     /** Block list widget */
     QG_BlockWidget* blockWidget {nullptr};

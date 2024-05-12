@@ -43,6 +43,8 @@ public:
         return m_docking;
     }
 
+    void setInput(const QString &cmd);
+
 public slots:
     virtual void setFocus();
     virtual void setCommand( const QString & cmd );
@@ -68,6 +70,7 @@ private slots:
 private:
     QG_ActionHandler* actionHandler = nullptr;
     QAction* m_docking = nullptr;
+
 };
 
 #endif // QG_COMMANDWIDGET_H
