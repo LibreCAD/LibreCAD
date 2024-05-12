@@ -338,7 +338,7 @@ jobs:
           automatic_release_tag: "2.2.1_rc2"
           prerelease: true
           draft: false
-          title: "Continuous Build"
+          title: "Release Candidate"
           files: |
             assets/LibreCAD*.*
             LICENSE
