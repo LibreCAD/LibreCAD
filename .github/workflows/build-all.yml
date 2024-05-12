@@ -261,5 +261,7 @@ jobs:
           draft: false
           title: "Continuous Build"
           files: |
-            assets/LibreCAD*.*
+            linuxAssets/LibreCAD*.AppImage
+            macOSAssets/LibreCAD*.dmg
+            win64Assets/LibreCAD*.exe
             LICENSE
