@@ -7,7 +7,7 @@
         <location filename="../asciifile/asciifile.cpp" line="35"/>
         <location filename="../asciifile/asciifile.cpp" line="41"/>
         <source>Read ascii points</source>
-        <translation>Ascii noktalarını okuyun</translation>
+        <translation>Ascii noktalarını oku</translation>
     </message>
 </context>
 <context>
