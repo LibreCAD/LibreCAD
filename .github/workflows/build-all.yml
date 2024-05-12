@@ -253,13 +253,13 @@ jobs:
         uses: actions/download-artifact@main
 
       - name: Upload latest pre-release
-        uses: softprops/action-gh-release@v2
+        uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "2.2.2-rc2"
           prerelease: true
           draft: false
-          name: "Latest"
-          title: "Latest Development Build"
+          title: "Continuous Build"
           files: |
             assets/LibreCAD*.*
             LICENSE
