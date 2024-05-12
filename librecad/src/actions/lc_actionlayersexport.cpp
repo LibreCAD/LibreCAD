@@ -174,7 +174,7 @@ void LC_ActionLayersExport::trigger()
     if (layersToUse.empty())
     {
     /* No export layer found. */
-        QString exportModeString = (exportMode == SelectedMode) ? "selected" : "visible";
+        QString exportModeString = (exportMode == SelectedMode) ? tr("selected", "Layers to export"): tr("visible", "Layers to export");
         QC_ApplicationWindow::getAppWindow()->statusBar()->showMessage( QObject::tr("No %1 layers found").arg(exportModeString),
                                                                         QC_ApplicationWindow::DEFAULT_STATUS_BAR_MESSAGE_TIMEOUT);
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionLayersExport::trigger: No %s layers found", exportModeString.toStdString().c_str());
