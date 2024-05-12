@@ -256,7 +256,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "2.2.2-rc2"
+          automatic_release_tag: "2.2.2-alpha2"
           prerelease: true
           draft: false
           title: "Continuous Build"
