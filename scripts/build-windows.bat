@@ -10,6 +10,8 @@ if NOT exist windows\LibreCAD.exe (
 	echo "Building windows\LibreCAD.exe failed!"
 	exit /b /1
 )
-windeployqt6.exe windows\LibreCAD.exe --release --compiler-runtime
+set
+
+windeployqt6.exe windows --release --compiler-runtime
 popd
 call build-win-setup.bat

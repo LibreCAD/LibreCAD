@@ -49,7 +49,7 @@ DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
-    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe)" || echo "$${LC_VERSION}")
+    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags --always)" || echo "$${LC_VERSION}")
 
     macx {
         TARGET = LibreCAD

@@ -150,12 +150,6 @@ jobs:
           choco uninstall mingw --force
           choco uninstall strawberryperl --force
 
-      - name: Install MinGW8.1 64-bit
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          tools: 'tools_llvm_mingw1706'
-
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
@@ -171,6 +165,16 @@ jobs:
           set-env: 'true'
           tools-only: 'false'
           extra: '--external 7z'
+
+      - name: install mingw-1120
+        run: |
+          aqt install-tool windows desktop tools_mingw90
+
+      - name: list folders
+        run: |
+          where qmake6.exe
+          where g++.exe
+          where mingw32-make.exe
 
       - name: Install boost
         shell: bash
@@ -199,19 +203,21 @@ jobs:
           dir ..\boost
           dir ..\Qt\6.6.3\mingw_64\bin
           echo.
-          which g++
-          which clang++
           dir /b /s ..\Qt
+          where qmake6.exe
+          where mingw32-make.exe
+          where make.exe
+          where g++
 
       - name: Build
         run: |
+          set PATH=${{ github.workspace }}\Tools\mingw1120_64\bin;${{ github.workspace }}\Qt\6.6.3\mingw_64\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win-x64.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
           set
           pushd "${{ github.workspace }}\scripts"
           build-windows.bat
-          where mingw32-make.exe
         shell: cmd
 
       - name: Rename installer
@@ -250,14 +256,12 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: latest 
+          automatic_release_tag: "2.2.2-alpha2"
           prerelease: true
           draft: false
           title: "Continuous Build"
           files: |
-            linuxAssets/LibreCAD*.*
-            macOSAssets/LibreCAD*.*
-            win64Assets/LibreCAD*.*
+            linuxAssets/LibreCAD*.AppImage
+            macOSAssets/LibreCAD*.dmg
+            win64Assets/LibreCAD*.exe
             LICENSE
-
-
