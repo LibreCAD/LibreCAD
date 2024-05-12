@@ -117,7 +117,7 @@ void QG_CommandWidget::languageChange()
 
 bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 {
-    if (event->type() == QEvent::KeyPress) {
+    if (event != nullptr && event->type() == QEvent::KeyPress) {
         QKeyEvent* e=static_cast<QKeyEvent*>(event);
 
         int key {e->key()};
@@ -152,7 +152,9 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
 
         event->accept();
         this->setFocus();
-        QKeyEvent * newEvent = new QKeyEvent(*static_cast<QKeyEvent*>(event));
+
+        auto* keyEvent = static_cast<QKeyEvent*>(event);
+        QKeyEvent * newEvent = new QKeyEvent(keyEvent->type(), keyEvent->key(), Qt::ShiftModifier);
         QApplication::postEvent(leCommand, newEvent);
 
         return true;
