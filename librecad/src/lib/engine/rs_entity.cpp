@@ -63,6 +63,18 @@ bool isHatchMember(const RS_Entity* entity) {
 
 }
 
+namespace {
+
+// Whether the entity is a member of cross hatch filling curves
+bool isHatchMember(const RS_Entity* entity) {
+    if (entity == nullptr || entity->getParent() == nullptr)
+        return false;
+
+    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
+}
+
+}
+
 /**
  * Default constructor.
  * @param parent The parent entity of this entity.
