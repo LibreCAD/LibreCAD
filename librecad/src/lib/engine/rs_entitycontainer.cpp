@@ -124,8 +124,14 @@ RS_Entity* RS_EntityContainer::clone() const{
     RS_DEBUG->print("RS_EntityContainer::clone: ori autoDel: %d",
                     autoDelete);
 
-    RS_EntityContainer* ec = new RS_EntityContainer(*this);
-    ec->setOwner(autoDelete);
+    RS_EntityContainer* ec = new RS_EntityContainer(getParent(), isOwner());
+    if (isOwner()) {
+        for (const auto* entity: entities)
+            if (entity != nullptr)
+                ec->entities.push_back(entity->clone());
+    } else {
+        ec->entities = entities;
+    }
 
     RS_DEBUG->print("RS_EntityContainer::clone: clone autoDel: %d",
                     ec->isOwner());
