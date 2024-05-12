@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayersremove.h"
 
 #include <QAction>
+
+#include "qg_layerwidget.h"
+#include "rs_actionlayersremove.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
-#include "qg_layerwidget.h"
-#include "rs_debug.h"
 
 RS_ActionLayersRemove::RS_ActionLayersRemove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

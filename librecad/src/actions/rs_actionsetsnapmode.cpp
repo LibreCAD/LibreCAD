@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionsetsnapmode.h"
-
 #include "rs_graphicview.h"
 
 

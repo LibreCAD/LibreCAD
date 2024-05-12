@@ -24,10 +24,11 @@
 **
 **********************************************************************/
 #include<vector>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimleader.h"
 
+#include "rs_actiondimleader.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"

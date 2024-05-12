@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifycut.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifycut.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_debug.h"
 
 
 RS_ActionModifyCut::RS_ActionModifyCut(RS_EntityContainer& container,

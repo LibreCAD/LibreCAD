@@ -26,17 +26,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionpolylineappend.h"
 
+#include "rs_actionpolylineappend.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
 #include "rs_polyline.h"
-#include "rs_coordinateevent.h"
-#include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionPolylineAppend::RS_ActionPolylineAppend(RS_EntityContainer& container,
 	RS_GraphicView& graphicView)

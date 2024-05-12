@@ -24,11 +24,11 @@
 **
 **********************************************************************/
 
-#include "rs_actioneditpaste.h"
 
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_actioneditpaste.h"
 #include "rs_clipboard.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"

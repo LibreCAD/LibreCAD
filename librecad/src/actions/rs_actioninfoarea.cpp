@@ -26,8 +26,8 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actioninfoarea.h"
 
+#include "rs_actioninfoarea.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

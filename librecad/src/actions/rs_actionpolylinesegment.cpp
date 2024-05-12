@@ -27,13 +27,13 @@
 #include <QAction>
 #include <QList>
 #include <QMouseEvent>
-#include "rs_actionpolylinesegment.h"
 
+#include "rs_actionpolylinesegment.h"
+#include "rs_arc.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_arc.h"
 #include "rs_polyline.h"
-#include "rs_debug.h"
 
 namespace {
 QList<RS2::EntityType>

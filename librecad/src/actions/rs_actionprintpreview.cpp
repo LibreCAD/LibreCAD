@@ -23,7 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_actionprintpreview.h"
 
 #include<cmath>
 
@@ -31,6 +30,7 @@
 #include <QMouseEvent>
 
 #include "qg_printpreviewoptions.h"
+#include "rs_actionprintpreview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"

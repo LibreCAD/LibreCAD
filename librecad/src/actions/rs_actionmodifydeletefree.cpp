@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifydeletefree.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifydeletefree.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_polyline.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
+#include "rs_polyline.h"
 
 struct RS_ActionModifyDeleteFree::Points {
 	RS_Vector v1;

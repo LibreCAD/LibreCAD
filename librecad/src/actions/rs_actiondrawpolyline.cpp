@@ -31,7 +31,6 @@
 
 #include <muParser.h>
 
-
 #include "rs_actiondrawpolyline.h"
 #include "rs_arc.h"
 #include "rs_commandevent.h"

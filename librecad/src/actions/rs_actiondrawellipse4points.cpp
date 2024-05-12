@@ -22,13 +22,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawellipse4points.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondrawellipse4points.h"
 #include "rs_circle.h"
-#include "rs_ellipse.h"
 #include "rs_coordinateevent.h"
+#include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawEllipse4Points::Points {

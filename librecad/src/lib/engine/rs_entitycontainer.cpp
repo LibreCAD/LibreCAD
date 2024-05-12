@@ -33,7 +33,6 @@
 
 #include "qg_dialogfactory.h"
 
-#include "rs_arc.h"
 #include "rs_constructionline.h"
 #include "rs_debug.h"
 #include "rs_dimension.h"

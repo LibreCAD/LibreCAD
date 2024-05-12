@@ -25,17 +25,18 @@
 **********************************************************************/
 
 #include<cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionpolylineequidistant.h"
 
+#include "rs_actionpolylineequidistant.h"
+#include "rs_arc.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_polyline.h"
 #include "rs_information.h"
-#include "rs_arc.h"
 #include "rs_line.h"
-#include "rs_debug.h"
+#include "rs_polyline.h"
 
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
 														   RS_GraphicView& graphicView)

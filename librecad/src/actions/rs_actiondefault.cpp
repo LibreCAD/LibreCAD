@@ -24,18 +24,14 @@
 **
 **********************************************************************/
 #include <algorithm>
-#include <cmath>
-#include <iostream>
 
 #include<QMouseEvent>
 
+#include "qc_applicationwindow.h"
 #include "rs_actiondefault.h"
-
 #include "rs_commandevent.h"
-#include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
@@ -44,7 +40,6 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "qc_applicationwindow.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;

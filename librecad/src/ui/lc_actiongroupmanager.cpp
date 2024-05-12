@@ -25,6 +25,7 @@
 */
 
 #include <QActionGroup>
+
 #include "lc_actiongroupmanager.h"
 #include "qc_applicationwindow.h"
 

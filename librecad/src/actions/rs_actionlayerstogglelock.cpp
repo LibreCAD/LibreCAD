@@ -24,14 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayerstogglelock.h"
 
 #include <QAction>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
-#include "rs_layer.h"
+
+#include "rs_actionlayerstogglelock.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
 
 
 RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(

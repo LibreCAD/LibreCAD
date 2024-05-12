@@ -29,7 +29,6 @@
 #include <QMouseEvent>
 
 #include "rs_actionmodifyround.h"
-
 #include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

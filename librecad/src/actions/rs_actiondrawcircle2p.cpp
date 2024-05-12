@@ -24,11 +24,11 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawcircle2p.h"
 
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_actiondrawcircle2p.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"

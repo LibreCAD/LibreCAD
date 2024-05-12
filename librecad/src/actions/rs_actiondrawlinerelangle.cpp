@@ -24,13 +24,10 @@
 **
 **********************************************************************/
 
-#include <cmath>
-
 #include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinerelangle.h"
-
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"

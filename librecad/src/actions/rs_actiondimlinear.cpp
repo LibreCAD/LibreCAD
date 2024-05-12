@@ -23,21 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimlinear.h"
-#include "rs_dimlinear.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondimlinear.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
-#include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dimlinear.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 /**
  * Constructor.

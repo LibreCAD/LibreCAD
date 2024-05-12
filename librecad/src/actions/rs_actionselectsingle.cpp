@@ -23,10 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "rs_actionselectsingle.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionselectsingle.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"

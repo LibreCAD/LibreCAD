@@ -24,17 +24,18 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawlinepolygon2.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actiondrawlinepolygon2.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_creation.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawLinePolygonCorCor::Points {
 	/** 1st corner */

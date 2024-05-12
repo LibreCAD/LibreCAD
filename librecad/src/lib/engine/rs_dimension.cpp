@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 #include<iostream>
-#include<cmath>
-#include<string>
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_dimension.h"

@@ -24,8 +24,10 @@
 **
 **********************************************************************/
 #include <iostream>
+
 #include <QAction>
 #include <QMouseEvent>
+
 #include "rs_actiondrawhatch.h"
 #include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"

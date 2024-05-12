@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayerslockall.h"
 
 #include <QAction>
-#include "rs_graphic.h"
+
+#include "rs_actionlayerslockall.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 
 RS_ActionLayersLockAll::RS_ActionLayersLockAll(bool lock,
         RS_EntityContainer& container,

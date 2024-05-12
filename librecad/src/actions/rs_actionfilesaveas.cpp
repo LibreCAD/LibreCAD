@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_actionfilesaveas.h"
 
 #include <QAction>
-#include "rs_graphic.h"
+
+#include "rs_actionfilesaveas.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

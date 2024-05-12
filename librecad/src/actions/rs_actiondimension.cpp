@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actiondimension.h"
-
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
 #include "rs_graphicview.h"

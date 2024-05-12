@@ -20,16 +20,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include<vector>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawcircleinscribe.h"
 
+#include "rs_actiondrawcircleinscribe.h"
+#include "rs_circle.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawCircleInscribe::Points {
 	RS_CircleData cData;

@@ -22,15 +22,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlineorthtan.h"
 
+#include "rs_actiondrawlineorthtan.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_creation.h"
-#include "rs_selection.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_selection.h"
 
 namespace{
 auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent

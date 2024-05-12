@@ -26,15 +26,15 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlineparallelthrough.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_creation.h"
+#include "rs_actiondrawlineparallelthrough.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
-#include "rs_preview.h"
+#include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_preview.h"
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,

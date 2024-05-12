@@ -23,13 +23,11 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "rs_actiondimdiametric.h"
-
-#include<cmath>
 
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_actiondimdiametric.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"

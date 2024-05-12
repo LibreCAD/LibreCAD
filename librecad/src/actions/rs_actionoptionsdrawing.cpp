@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionoptionsdrawing.h"
 
 #include <QAction>
+
+#include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 

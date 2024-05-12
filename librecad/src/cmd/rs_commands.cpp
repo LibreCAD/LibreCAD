@@ -32,7 +32,6 @@
 #include <QTextStream>
 
 #include "rs_commands.h"
-
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_math.h"

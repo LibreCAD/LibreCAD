@@ -26,6 +26,7 @@
 #include <cmath>
 #include <iostream>
 
+#include "lc_dimarc.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -33,8 +34,6 @@
 #include "rs_mtext.h"
 #include "rs_solid.h"
 #include "rs_units.h"
-
-#include "lc_dimarc.h"
 
 
 LC_DimArcData::LC_DimArcData(const LC_DimArcData &input_dimArcData)

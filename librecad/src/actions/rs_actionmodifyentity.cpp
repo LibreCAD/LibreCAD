@@ -24,15 +24,16 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifyentity.h"
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_debug.h"
+
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
+#include "rs_actionmodifyentity.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

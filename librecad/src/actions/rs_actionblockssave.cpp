@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_actionblockssave.h"
 
 #include <QAction>
 #include <QApplication>
+
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
-#include "qc_applicationwindow.h"
-#include "rs_graphic.h"
-#include "rs_dialogfactory.h"
-#include "rs_insert.h"
-#include "rs_coordinateevent.h"
-#include "qc_mdiwindow.h"
+#include "rs_actionblockssave.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_insert.h"
 
 
 

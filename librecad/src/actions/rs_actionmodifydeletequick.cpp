@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifydeletequick.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifydeletequick.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_debug.h"
 
 
 

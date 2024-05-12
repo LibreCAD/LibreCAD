@@ -24,11 +24,11 @@
 **
 **********************************************************************/
 
-#include "rs_actioninfodist.h"
 
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_actioninfodist.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"

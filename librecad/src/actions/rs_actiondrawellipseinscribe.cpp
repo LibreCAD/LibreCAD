@@ -20,13 +20,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "rs_actiondrawellipseinscribe.h"
 
 #include <vector>
 
 #include <QAction>
 #include <QMouseEvent>
 
+#include "rs_actiondrawellipseinscribe.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_ellipse.h"

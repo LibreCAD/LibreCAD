@@ -25,11 +25,10 @@
 **********************************************************************/
 
 
-#include "rs_previewactioninterface.h"
-
+#include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * Constructor.

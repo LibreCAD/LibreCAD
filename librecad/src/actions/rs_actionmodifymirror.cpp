@@ -26,15 +26,15 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionmodifymirror.h"
 
+#include "rs_actionmodifymirror.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionModifyMirror::Points {
     RS_MirrorData data;

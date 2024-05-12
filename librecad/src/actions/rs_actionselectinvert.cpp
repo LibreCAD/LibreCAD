@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionselectinvert.h"
 
 #include <QAction>
+
+#include "rs_actionselectinvert.h"
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 

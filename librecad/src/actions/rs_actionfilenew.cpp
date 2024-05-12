@@ -24,10 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionfilenew.h"
 
 #include <QAction>
-#include "rs_debug.h"
+
+#include "rs_actionfilenew.h"
 
 
 RS_ActionFileNew::RS_ActionFileNew(RS_EntityContainer& container,

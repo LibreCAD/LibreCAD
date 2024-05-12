@@ -26,15 +26,15 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawmtext.h"
 
-#include "rs_mtext.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondrawmtext.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
-#include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_mtext.h"
+#include "rs_preview.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)

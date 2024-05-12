@@ -26,15 +26,15 @@
 
 #include<QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlinetangent1.h"
 
+#include "rs_actiondrawlinetangent1.h"
+#include "rs_coordinateevent.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_creation.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,

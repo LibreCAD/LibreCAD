@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionzoomautoy.h"
-
 #include "rs_graphicview.h"
 
 

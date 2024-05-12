@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayersfreezeall.h"
 
 #include <QAction>
-#include "rs_graphic.h"
+
+#include "rs_actionlayersfreezeall.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 
 RS_ActionLayersFreezeAll::RS_ActionLayersFreezeAll(bool freeze,
         RS_EntityContainer& container,

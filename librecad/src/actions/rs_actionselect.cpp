@@ -25,11 +25,11 @@
 **********************************************************************/
 
 #include <QMouseEvent>
-#include "rs_actionselect.h"
 
+#include "rs_actionselect.h"
+#include "rs_actionselectsingle.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_actionselectsingle.h"
 
 
 RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,

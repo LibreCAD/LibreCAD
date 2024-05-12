@@ -26,16 +26,16 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlinebisector.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondrawlinebisector.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawLineBisector::Points {
 	/** Mouse pos when choosing the 1st line */

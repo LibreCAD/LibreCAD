@@ -26,17 +26,17 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawspline.h"
 
-#include "rs_spline.h"
+#include "rs_actiondrawspline.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
 #include "rs_point.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_spline.h"
 
 struct RS_ActionDrawSpline::Points {
 

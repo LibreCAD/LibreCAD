@@ -27,7 +27,6 @@
 #include <QAction>
 
 #include "rs_actionzoomin.h"
-
 #include "rs_graphicview.h"
 
 /**

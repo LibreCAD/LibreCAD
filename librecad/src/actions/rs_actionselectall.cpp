@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionselectall.h"
 
 #include <QAction>
+
+#include "rs_actionselectall.h"
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
 

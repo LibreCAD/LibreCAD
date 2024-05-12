@@ -24,15 +24,13 @@
 **
 **********************************************************************/
 
-#include "rs_actionblockstoggleview.h"
-
 #include <QAction>
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
+
+#include "rs_actionblockstoggleview.h"
 #include "rs_block.h"
 #include "rs_debug.h"
-
-
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 
 RS_ActionBlocksToggleView::RS_ActionBlocksToggleView(
     RS_EntityContainer& container,

@@ -277,7 +277,6 @@ HEADERS += \
     ui/lc_layertreemodel_options.h \
     ui/lc_layertreewidget.h \
     ui/lc_layertreeview.h\
-    ui/forms/lc_layerdialog_ex.h \
     ui/lc_quickinfobasedata.h \
     ui/lc_quickinfoentitydata.h \
     ui/lc_quickinfopointsdata.h \

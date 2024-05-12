@@ -28,7 +28,6 @@
 #include <QMouseEvent>
 
 #include "rs_actionmodifybevel.h"
-
 #include "rs_commandevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -36,7 +35,6 @@
 #include "rs_information.h"
 #include "rs_math.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
 
 struct RS_ActionModifyBevel::Points {
     RS_Vector coord1;

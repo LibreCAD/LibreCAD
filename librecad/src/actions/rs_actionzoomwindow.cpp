@@ -27,12 +27,12 @@
 #include<cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionzoomwindow.h"
 
+#include "rs_actionzoomwindow.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionZoomWindow::Points {
 	RS_Vector v1;

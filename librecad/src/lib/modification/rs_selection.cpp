@@ -32,14 +32,11 @@
 #include "rs_block.h"
 #include "rs_dialogfactory.h"
 #include "rs_entity.h"
-#include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
-#include "rs_polyline.h"
-
 #include "rs_selection.h"
 
 

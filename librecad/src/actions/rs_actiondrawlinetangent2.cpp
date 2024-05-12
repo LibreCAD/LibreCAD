@@ -28,15 +28,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlinetangent2.h"
 
+#include "rs_actiondrawlinetangent2.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawLineTangent2::Points {
     /** Closest tangent. */
@@ -175,7 +174,6 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
         RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
         if(en == nullptr || en==m_pPoints->circle1)
             return;
-        RS_Vector mouse=graphicView->toGraph(e->position());
         clearHighlighted();
         m_pPoints->circle2=en;
         m_pPoints->circle2->setHighlighted(true);

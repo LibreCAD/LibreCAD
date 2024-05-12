@@ -21,12 +21,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include <cmath>
-#include "rs_arc.h"
-#include "rs_polyline.h"
+
+#include "lc_abstractactiondrawrectangle.h"
+#include "lc_linemath.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
-#include "lc_linemath.h"
-#include "lc_abstractactiondrawrectangle.h"
+#include "rs_polyline.h"
 
 
 LC_AbstractActionDrawRectangle::LC_AbstractActionDrawRectangle(

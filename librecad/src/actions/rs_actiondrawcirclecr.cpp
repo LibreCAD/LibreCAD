@@ -30,7 +30,6 @@
 #include <QMouseEvent>
 
 #include "rs_actiondrawcirclecr.h"
-
 #include "rs_circle.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"

@@ -26,18 +26,18 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimradial.h"
 
-#include "rs_dimradial.h"
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_commandevent.h"
+#include "rs_actiondimradial.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
+#include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dimradial.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 
 RS_ActionDimRadial::RS_ActionDimRadial(

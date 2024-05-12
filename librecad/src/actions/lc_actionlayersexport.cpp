@@ -102,7 +102,6 @@ bool isNotFrozen(RS_Layer* layer)
 class ScopedLayerList
 {
 public:
-    ScopedLayerList(RS_LayerList* list) : m_list{list}{}
     void add(RS_Layer* layer)
     {
         if (layer == nullptr)
@@ -128,7 +127,6 @@ public:
     }
 
 private:
-    RS_LayerList* m_list=nullptr;
     std::vector<std::unique_ptr<RS_Layer>> m_layers;
     QHash<QString, RS_Layer*> m_lookUp;
 
@@ -209,7 +207,7 @@ void LC_ActionLayersExport::trigger()
         documentDeepCopy->newDoc();
         documentDeepCopy->setVariableDictObject(document->getGraphic()->getVariableDictObject());
         // RAII style layer to hold duplicated layers: auto clean up at the end of its lifetime
-        ScopedLayerList duplicateLayersList = documentDeepCopy->getLayerList();
+        ScopedLayerList duplicateLayersList;
 
         QString modifiedFilePath;
         QString copiedLayers;

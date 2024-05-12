@@ -26,14 +26,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionpolylinetrim.h"
 
+#include "rs_actionpolylinetrim.h"
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-#include "rs_atomicentity.h"
-#include "rs_debug.h"
 
 
 

@@ -26,15 +26,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionpolylinedelbetween.h"
 
+#include "rs_actionpolylinedelbetween.h"
+#include "rs_atomicentity.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-#include "rs_atomicentity.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionPolylineDelBetween::Points {
 	RS_Vector nodePoint1;

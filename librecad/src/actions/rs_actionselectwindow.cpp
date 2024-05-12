@@ -24,16 +24,17 @@
 **
 **********************************************************************/
 
-#include "rs_actionselectwindow.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionselectwindow.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_selection.h"
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_selection.h"
 
 struct RS_ActionSelectWindow::Points {
     RS_Vector v1;
