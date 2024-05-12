@@ -66,11 +66,8 @@
 #include "emu_c99.h"
 #endif
 
-#if (defined (Q_OS_WIN32) || defined (Q_OS_WIN64))
-    #define CURSOR_SIZE 16
-#else
-    #define CURSOR_SIZE 15
-#endif
+// Issue #1765: set default cursor size: 32x32
+constexpr int g_cursorSize=32;
 
 namespace {
 // maximum length for displayed block name in context menu
@@ -97,7 +94,7 @@ constexpr double zoomWheelDivisor = 200.;
  * @brief snapEntity find the closest entity
  * @param QG_GraphicView& view - the graphic view
  * @param const QMouseEvent* event - the mouse event
- * @return RS_Entity* - the closest entity within the range of CURSOR_SIZE
+ * @return RS_Entity* - the closest entity within the range of g_cursorSize
  *                      returns nullptr, if no entity is found in range
  */
 RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
@@ -111,7 +108,7 @@ RS_Entity* snapEntity(const QG_GraphicView& view, const QMouseEvent* event)
     double distance = RS_MAXDOUBLE;
     RS_Entity* entity = container->getNearestEntity(view.toGraph(mapped), &distance);
 
-    return (view.toGuiDX(distance) <= CURSOR_SIZE) ? entity : nullptr;
+    return (view.toGuiDX(distance) <= g_cursorSize) ? entity : nullptr;
 }
 
 // Find an ancestor of the RS_Insert type.
@@ -161,10 +158,10 @@ void editAction(QG_GraphicView& view, RS_Entity& entity)
         RS_Block* current = insert->getBlockForInsert();
         if (current == active)
             active=nullptr;
-        else
+        else if (blockList != nullptr)
             blockList->activate(current);
         std::shared_ptr<RS_Block*> scoped{&active, [blockList](RS_Block** pointer) {
-                if (pointer && *pointer != nullptr)
+                if (pointer != nullptr && *pointer != nullptr && blockList != nullptr)
                     blockList->activate(*pointer);
             }};
         auto* action = new RS_ActionBlocksEdit(*container, view);
@@ -254,11 +251,11 @@ struct QG_GraphicView::AutoPanData
 QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
     :RS_GraphicView(parent, f)
     ,device("Mouse")
-    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
-    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), CURSOR_SIZE, CURSOR_SIZE))
+    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), g_cursorSize, g_cursorSize))
+    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), g_cursorSize, g_cursorSize))
+    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), g_cursorSize, g_cursorSize))
+    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), g_cursorSize, g_cursorSize))
+    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), g_cursorSize, g_cursorSize))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
     , m_panData{std::make_unique<AutoPanData>()}
