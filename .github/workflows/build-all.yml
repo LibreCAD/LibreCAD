@@ -259,7 +259,7 @@ jobs:
           automatic_release_tag: "latest"
           prerelease: true
           draft: false
-          title: "Continuous Build"
+          title: "Continuous Build: latest development"
           files: |
             linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
