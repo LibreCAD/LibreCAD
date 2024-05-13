@@ -70,7 +70,7 @@ jobs:
         run: |
           #find unix/
           QT_FILE_DIR="${{github.workspace}}/../Qt" ./CI/build-appimg.sh
-          mv LibreCAD*.AppImage LibreCAD-`git describe --tags --always`.AppImage
+          mv LibreCAD*.AppImage LibreCAD-`git describe --always`.AppImage
 
       - name: List files
         run: |
@@ -125,7 +125,7 @@ jobs:
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --tags --always`.dmg
+          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
         id: artifact-upload-step
@@ -222,7 +222,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --tags --always`-win64.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
         shell: bash
 
       - name: List files
@@ -256,7 +256,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
+          automatic_release_tag: "2.2.2_alpha-latest"
           prerelease: true
           draft: false
           title: "Continuous Build: latest development"
