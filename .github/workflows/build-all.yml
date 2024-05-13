@@ -129,7 +129,7 @@ jobs:
       - name: Build and packaging
         run: |
           scripts/build-osx.sh
-          mv LibreCAD.dmg LibreCAD-`git describe --tags --always`.dmg
+          mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
       - name: Upload artifact
         uses: actions/upload-artifact@v3
@@ -217,7 +217,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --tags --always`.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`.exe
         shell: bash
 
       - name: Upload artifact
@@ -307,7 +307,7 @@ jobs:
 
       - name: Rename installer
         run: |
-          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --tags --always`-win64.exe
+          mv generated/LibreCAD-Installer.exe LibreCAD-`git describe --always`-win64.exe
         shell: bash
 
       - name: Upload artifact
@@ -335,7 +335,7 @@ jobs:
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "2.2.1_rc2"
+          automatic_release_tag: "2.2.1_rc-latest"
           prerelease: true
           draft: false
           title: "Release Candidate"
