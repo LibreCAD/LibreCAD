@@ -256,12 +256,10 @@ jobs:
         uses: softprops/action-gh-release@v2
         if: startsWith(github.ref, 'refs/tags/')
         with:
+          name: "Continuous Build: latest development"
           tag_name: "2.2.2_alpha-latest"
           prerelease: true
           draft: false
-          name: "Continuous Build: latest development"
-	  append_body: false
-          make_latest: true
           files: |
             linuxAssets/LibreCAD*.AppImage
             macOSAssets/LibreCAD*.dmg
