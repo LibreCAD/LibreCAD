@@ -235,7 +235,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="83"/>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished">(放弃)选择轮廓(&amp;C)</translation>
+        <translation>(放弃)选择轮廓(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="90"/>
@@ -523,7 +523,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1059"/>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation>导出为CA&amp;M/plain SVG...</translation>
+        <translation>导出为CAM/plain SVG(&amp;M)...</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="1088"/>
@@ -1841,13 +1841,13 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3266"/>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>浮点数</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3266"/>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation>停靠</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3362"/>
@@ -2092,7 +2092,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="65"/>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="74"/>
@@ -2183,12 +2183,12 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="230"/>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>过滤</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="232"/>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>正在查找匹配块名称</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="387"/>
@@ -2218,7 +2218,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="194"/>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>移除块</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_blockwidget.cpp" line="409"/>
@@ -2415,7 +2415,7 @@ in a separate window</source>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="90"/>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="319"/>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>停靠</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="191"/>
@@ -2431,7 +2431,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="319"/>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>浮点数</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="320"/>
@@ -2441,7 +2441,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="320"/>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>命令行</translation>
     </message>
 </context>
 <context>
@@ -4036,7 +4036,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1598"/>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation>固定延长线长度</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.ui" line="1609"/>
@@ -4401,7 +4401,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="122"/>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation>建筑 (公制)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="128"/>
@@ -4447,7 +4447,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsdrawing.cpp" line="1104"/>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation>屏幕 %</translation>
     </message>
 </context>
 <context>
@@ -4858,12 +4858,12 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="20"/>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>导出为CAM/常规SVG</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="48"/>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>元素的默认宽度, 毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="73"/>
@@ -4883,22 +4883,22 @@ Please choose the unit you want to use for new drawings and your preferred langu
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="135"/>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>图像</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="143"/>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>栅格图像导出</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="155"/>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>长划线/点划线</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="165"/>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>图案长度, 毫米</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgoptionsmakercam.ui" line="187"/>
@@ -5007,7 +5007,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="77"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>几何图形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgpolyline.ui" line="115"/>
@@ -5055,12 +5055,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="179"/>
         <source>Use current &amp;attributes</source>
-        <translation>使用当前属性(&amp;a)</translation>
+        <translation>使用当前属性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate.ui" line="186"/>
         <source>Use current &amp;layer</source>
-        <translation>使用当前图层(&amp;l)</translation>
+        <translation>使用当前图层(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -5098,22 +5098,22 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="138"/>
         <source>Angle (&amp;a):</source>
-        <translation>角度(&amp;a):</translation>
+        <translation>角度(&amp;A):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="174"/>
         <source>Angle (&amp;b):</source>
-        <translation>角度(&amp;b):</translation>
+        <translation>角度(&amp;B):</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="208"/>
         <source>Use current &amp;attributes</source>
-        <translation>使用当前属性(&amp;a)</translation>
+        <translation>使用当前属性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgrotate2.ui" line="215"/>
         <source>Use current &amp;layer</source>
-        <translation>使用当前图层(&amp;l)</translation>
+        <translation>使用当前图层(&amp;L)</translation>
     </message>
 </context>
 <context>
@@ -5151,12 +5151,12 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="190"/>
         <source>Use current &amp;attributes</source>
-        <translation>使用当前属性(&amp;a)</translation>
+        <translation>使用当前属性(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="177"/>
         <source>Use current &amp;layer</source>
-        <translation>使用当前图层(&amp;l)</translation>
+        <translation>使用当前图层(&amp;L)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgscale.ui" line="38"/>
@@ -5194,7 +5194,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="84"/>
         <source>Geometry</source>
-        <translation>几何</translation>
+        <translation>几何图形</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgspline.ui" line="122"/>
@@ -6362,12 +6362,12 @@ The contents of a Construction Layer should not appear in printout.</source>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="93"/>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>刷新</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="95"/>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>重新生成</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_librarywidget.cpp" line="201"/>
@@ -7006,7 +7006,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="340"/>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>图层 &quot;0&quot; 永远无法移除。</translation>
     </message>
     <message numerus="yes">
         <location filename="../src/ui/qg_dialogfactory.cpp" line="350"/>
@@ -7033,7 +7033,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="365"/>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>需要排除的图层:</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="420"/>
@@ -7065,7 +7065,7 @@ This action can NOT be undone.</source>
     <message>
         <location filename="../src/ui/qg_dialogfactory.cpp" line="603"/>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>需要排除的块:</translation>
     </message>
 </context>
 <context>
@@ -7236,67 +7236,67 @@ This action can NOT be undone.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="942"/>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>字母 / ANSI A</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="943"/>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>合法</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="944"/>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>扼要 / ANSI B</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="948"/>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI C</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="949"/>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI D</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="950"/>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ANSI E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="952"/>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch A</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="953"/>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch B</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="954"/>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch C</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="955"/>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch D</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="956"/>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Arch E</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="974"/>
