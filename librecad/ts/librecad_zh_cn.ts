@@ -240,17 +240,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="90"/>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished">选择相交实体</translation>
+        <translation>选择相交实体</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="97"/>
         <source>Deselect Intersected Entities</source>
-        <translation type="unfinished">放弃选择相交实体</translation>
+        <translation>放弃选择相交实体</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="104"/>
         <source>(De-)Select Layer</source>
-        <translation type="unfinished">(放弃)选择图层</translation>
+        <translation>(放弃)选择图层</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="113"/>
@@ -291,7 +291,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="171"/>
         <source>Parallel through point</source>
-        <translation type="unfinished">过指定点平行线</translation>
+        <translation>过指定点平行线</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="178"/>
@@ -306,32 +306,32 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="192"/>
         <source>Tangent (P,C)</source>
-        <translation type="unfinished">切线(点,圆)</translation>
+        <translation>切线(点,圆)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="199"/>
         <source>Tangent (C,C)</source>
-        <translation type="unfinished">切线(圆,圆)</translation>
+        <translation>切线(圆,圆)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="206"/>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished">正交切线 (&amp;O)</translation>
+        <translation>正交切线 (&amp;O)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="213"/>
         <source>Orthogonal</source>
-        <translation type="unfinished">正交</translation>
+        <translation>正交</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="220"/>
         <source>Relative angle</source>
-        <translation type="unfinished">相对角度</translation>
+        <translation>相对角度</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="227"/>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished">多边形(中心,角点)(&amp;y)</translation>
+        <translation>多边形(中心,角点)(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
@@ -341,17 +341,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished">多边形(角点,角点)(&amp;n)</translation>
+        <translation>多边形(角点,角点)(&amp;N)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="250"/>
         <source>Center, &amp;Point</source>
-        <translation type="unfinished">中心, 点(&amp;P)</translation>
+        <translation>中心, 点(&amp;P)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="256"/>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished">中心, 半径(&amp;R)</translation>
+        <translation>中心, 半径(&amp;R)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="263"/>
@@ -574,17 +574,17 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="462"/>
         <source>&amp;Trim segments</source>
-        <translation type="unfinished">修剪分段(&amp;T)</translation>
+        <translation>修剪分段(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="470"/>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished">创建等距多段线(&amp;E)</translation>
+        <translation>创建等距多段线(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="477"/>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished">从现有分段创建多段线(&amp;S)</translation>
+        <translation>从现有分段创建多段线(&amp;S)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="486"/>
@@ -729,32 +729,32 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="728"/>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">分解文本为字符(&amp;E)</translation>
+        <translation>分解文本为字符(&amp;E)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="744"/>
         <source>Point inside contour</source>
-        <translation type="unfinished">轮廓内点</translation>
+        <translation>轮廓内点</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="750"/>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">点到点距离(&amp;D)</translation>
+        <translation>点到点距离(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="757"/>
         <source>&amp;Distance Entity to Point</source>
-        <translation type="unfinished">实体到点距离(&amp;D)</translation>
+        <translation>实体到点距离(&amp;D)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="764"/>
         <source>An&amp;gle between two lines</source>
-        <translation type="unfinished">两线夹角 (&amp;g)</translation>
+        <translation>两线夹角 (&amp;G)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="771"/>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">选中实体总长(&amp;T)</translation>
+        <translation>选中实体总长(&amp;T)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="778"/>
@@ -839,12 +839,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="805"/>
         <source>lower after entity</source>
-        <translation type="unfinished">比实体底</translation>
+        <translation>移至实体下</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="813"/>
         <source>raise over entity</source>
-        <translation type="unfinished">提高到实体上</translation>
+        <translation>移至实体上</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="821"/>
@@ -1099,7 +1099,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actionfileexportmakercam.cpp" line="59"/>
         <source>Export as</source>
-        <translation type="unfinished">导出为</translation>
+        <translation>导出为</translation>
     </message>
 </context>
 <context>
@@ -1133,12 +1133,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="34"/>
         <source>De&amp;bugging</source>
-        <translation type="unfinished">调试(&amp;b)</translation>
+        <translation>调试(&amp;B)</translation>
     </message>
     <message>
         <location filename="../src/test/lc_simpletests.cpp" line="78"/>
         <source>Insert Image</source>
-        <translation type="unfinished">插入图像</translation>
+        <translation>插入图像</translation>
     </message>
 </context>
 <context>
@@ -1146,12 +1146,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="317"/>
         <source>Library Browser</source>
-        <translation type="unfinished">库浏览器</translation>
+        <translation>库浏览器</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="329"/>
         <source>Command line</source>
-        <translation type="unfinished">命令行</translation>
+        <translation>命令行</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_widgetfactory.cpp" line="348"/>
@@ -1277,27 +1277,27 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="9"/>
         <source>select:</source>
-        <translation type="unfinished">选择:</translation>
+        <translation>选择:</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="12"/>
         <source>remove left</source>
-        <translation type="unfinished">删除左边</translation>
+        <translation>移除左边</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="16"/>
         <source>remove right</source>
-        <translation type="unfinished">删除右边</translation>
+        <translation>移除右边</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="34"/>
         <source>remove 0&apos;</source>
-        <translation type="unfinished">删除 0&apos;</translation>
+        <translation>移除 0&apos;</translation>
     </message>
     <message>
         <location filename="../src/ui/lg_dimzerosbox.cpp" line="38"/>
         <source>remove 0&quot;</source>
-        <translation type="unfinished">删除 0&quot;</translation>
+        <translation>移除 0&quot;</translation>
     </message>
 </context>
 <context>
@@ -1305,7 +1305,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="32"/>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">相对角度直线选项</translation>
+        <translation>线相对角度选项</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_polylineequidistantoptions.ui" line="59"/>
@@ -1796,7 +1796,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2927"/>
         <source>Copy</source>
-        <translation type="unfinished">复制</translation>
+        <translation>复制</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2938"/>
@@ -1926,7 +1926,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2914"/>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation>编译器： GNU GCC %1.%2.%d</translation>
+        <translation>编译器: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2919"/>
@@ -2087,7 +2087,7 @@ Auto-save disabled.</source>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="32"/>
         <source>Selection</source>
-        <translation type="unfinished">选择</translation>
+        <translation>选择</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_activelayername.ui" line="65"/>
@@ -2375,17 +2375,17 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="38"/>
         <source>&amp;Copy</source>
-        <translation type="unfinished">复制(&amp;C)</translation>
+        <translation>复制(&amp;C)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="45"/>
         <source>Select &amp;All</source>
-        <translation type="unfinished">选择所有(&amp;A)</translation>
+        <translation>选择所有(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/ui/qg_commandhistory.cpp" line="50"/>
         <source>Clear</source>
-        <translation type="unfinished">清理</translation>
+        <translation>清除</translation>
     </message>
 </context>
 <context>
@@ -2409,7 +2409,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.ui" line="116"/>
         <source>...</source>
-        <translation type="unfinished">...</translation>
+        <translation>...</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="90"/>
@@ -2436,7 +2436,7 @@ in a separate window</source>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="320"/>
         <source>Command line</source>
-        <translation type="unfinished">命令行</translation>
+        <translation>命令行</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_commandwidget.cpp" line="320"/>
@@ -5374,7 +5374,7 @@ so default step value required for baking</source>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="794"/>
         <source>&amp;Middle</source>
-        <translation type="unfinished">中点(&amp;M)</translation>
+        <translation>中点(&amp;M)</translation>
     </message>
     <message>
         <location filename="../src/ui/forms/qg_dlgtext.ui" line="838"/>
@@ -7356,49 +7356,49 @@ This action can NOT be undone.</source>
         <location filename="../src/lib/engine/rs_units.cpp" line="1001"/>
         <source>ansi c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1003"/>
         <source>ansi d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1005"/>
         <source>ansi e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>ansi e</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1008"/>
         <source>arch a</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch a</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1010"/>
         <source>arch b</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch b</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1012"/>
         <source>arch c</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch c</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1014"/>
         <source>arch d</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch d</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_units.cpp" line="1016"/>
         <source>arch e</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>arch e</translation>
     </message>
     <message>
         <location filename="../src/main/main.cpp" line="255"/>
@@ -7625,90 +7625,90 @@ Do you want to replace it?</source>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="102"/>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>无DXF/DWG错误</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="104"/>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>打开DXF/DWG文件时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="106"/>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>不支持的DXF/DWG文件版本</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="108"/>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG元数据时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="110"/>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG文件头时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="112"/>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG头数据时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="114"/>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG对象映射时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="116"/>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG类时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="118"/>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG表时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="120"/>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG块时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="122"/>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG实体时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="124"/>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG对象时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="126"/>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG部件时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="128"/>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>读取DXF/DWG代码时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="176"/>
         <source>Opened dwg file version %1.</source>
-        <translation>已打开DWG文件，版本 %1</translation>
+        <translation>已打开dwg文件版本%1。</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4017"/>
@@ -7728,7 +7728,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4029"/>
         <source>error reading file metadata in dwg file</source>
-        <translation type="unfinished">读取dwg文件元数据时出错</translation>
+        <translation>读取dwg文件元数据时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4033"/>
@@ -7758,7 +7758,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4053"/>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished">读取dwg文件图块时出错</translation>
+        <translation>读取dwg文件块时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4057"/>
@@ -7768,7 +7768,7 @@ Do you want to replace it?</source>
     <message>
         <location filename="../src/lib/filters/rs_filterdxfrw.cpp" line="4061"/>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished">读取dwg文件对象时出错</translation>
+        <translation>读取dwg文件对象时出错</translation>
     </message>
     <message>
         <location filename="../src/lib/engine/rs_graphic.cpp" line="350"/>
@@ -7850,25 +7850,25 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="718"/>
         <source>po</source>
         <comment>draw point</comment>
-        <translation type="unfinished">po</translation>
+        <translation>点</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="151"/>
         <source>line</source>
         <comment>draw line</comment>
-        <translation type="unfinished">line</translation>
+        <translation>线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="150"/>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished">li</translation>
+        <translation>线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="152"/>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished">l</translation>
+        <translation>线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="405"/>
@@ -7880,19 +7880,19 @@ Do you want to replace it?</source>
         <location filename="../src/cmd/rs_commands.cpp" line="406"/>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished">pl</translation>
+        <translation>多段线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="363"/>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>手绘线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="365"/>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>手绘线</translation>
     </message>
     <message>
         <location filename="../src/cmd/rs_commands.cpp" line="343"/>
