@@ -336,7 +336,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="234"/>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>多边形 (中心,相切)(&amp;Y)</translation>
     </message>
     <message>
         <location filename="../src/ui/lc_actionfactory.cpp" line="241"/>
@@ -1107,7 +1107,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/actions/lc_actionlayersexport.cpp" line="281"/>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>正在将图层 &quot;%1&quot; 另存为 &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -1736,7 +1736,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1142"/>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>排列(&amp;A)</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1145"/>
@@ -1776,12 +1776,12 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="1953"/>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>全部保存已取消</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2287"/>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>全部关闭已取消</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2916"/>
@@ -1811,7 +1811,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2940"/>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation>代码</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2949"/>
@@ -1836,7 +1836,7 @@ distance between points=%2 is larger than diameter=%3</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3265"/>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>命令行</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="3266"/>
