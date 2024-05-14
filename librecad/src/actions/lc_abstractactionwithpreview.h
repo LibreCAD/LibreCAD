@@ -219,7 +219,8 @@ protected:
     RS_Line* createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     virtual void checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed);
     virtual void clearAlternativeActionMode();
-
+    void updateSnapperAndCoordinateWidget(QMouseEvent *e, int status);
+    void doUpdateCoordinateWidgetByMouse(QMouseEvent *e);
 };
 
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

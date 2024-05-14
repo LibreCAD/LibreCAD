@@ -149,6 +149,23 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
 void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list){}
 
 
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent* e, [[maybe_unused]]int status){
+    // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
+    RS_Vector mouse = snapPoint(e);
+}
+
+/**
+ * Explicitly updates coordinate widget by current mouse position.
+ * Method is useful for actions states that do not call snapPoint() method on mouse move (which, in turn, updates the widget)
+ * @param e
+ */
+void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
+    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector relMouse = mouse - graphicView->getRelativeZero();
+    RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
+}
+
+
 /**
  * Creation of entities on init trigger
  * @param entities selected entities to trigger
@@ -513,6 +530,9 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
             lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         graphicView->redraw();
+    }
+    else{
+        updateSnapperAndCoordinateWidget(e, status);
     }
     doMouseMoveEnd(status, e);
     clearAlternativeActionMode();
