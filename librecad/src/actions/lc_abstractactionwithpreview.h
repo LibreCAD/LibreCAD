@@ -24,10 +24,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ABSTRACTACTIONWITHPREVIEW_H
 
 #include "qg_actionhandler.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_vector.h"
 #include "rs_previewactioninterface.h"
+
+class RS_Line;
+class RS_Polyline;
+class RS_Vector;
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
