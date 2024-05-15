@@ -20,21 +20,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QList>
+#include <QMouseEvent>
+
+#include "lc_abstractactionwithpreview.h"
+#include "lc_actiondrawslicedivide.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "lc_linemath.h"
 #include "rs_point.h"
-#include "QMouseEvent"
-#include <QList>
-#include "rs_circle.h"
-#include "rs_arc.h"
-#include "rs_debug.h"
-#include "rs_commands.h"
-#include "rs_dialogfactory.h"
-#include "rs_coordinateevent.h"
-#include "rs_commandevent.h"
-#include "rs_graphicview.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
-#include "lc_actiondrawslicedivide.h"
-#include "lc_abstractactionwithpreview.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
@@ -147,6 +150,23 @@ bool LC_AbstractActionWithPreview::isAcceptSelectedEntityToTriggerOnInit([[maybe
  * @param list list of entities
  */
 void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigger([[maybe_unused]]QList<RS_Entity *> &list){}
+
+
+void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent* e, [[maybe_unused]]int status){
+    // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
+    RS_Vector mouse = snapPoint(e);
+}
+
+/**
+ * Explicitly updates coordinate widget by current mouse position.
+ * Method is useful for actions states that do not call snapPoint() method on mouse move (which, in turn, updates the widget)
+ * @param e
+ */
+void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
+    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector relMouse = mouse - graphicView->getRelativeZero();
+    RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
+}
 
 
 /**
@@ -513,6 +533,9 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
             lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
         }
         graphicView->redraw();
+    }
+    else{
+        updateSnapperAndCoordinateWidget(e, status);
     }
     doMouseMoveEnd(status, e);
     clearAlternativeActionMode();

@@ -24,10 +24,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define LC_ABSTRACTACTIONWITHPREVIEW_H
 
 #include "qg_actionhandler.h"
-#include "rs_line.h"
-#include "rs_polyline.h"
-#include "rs_vector.h"
 #include "rs_previewactioninterface.h"
+#include "rs_vector.h"
+
+class RS_Line;
+class RS_Point;
+class RS_Polyline;
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
@@ -219,7 +221,8 @@ protected:
     RS_Line* createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     virtual void checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed);
     virtual void clearAlternativeActionMode();
-
+    void updateSnapperAndCoordinateWidget(QMouseEvent *e, int status);
+    void doUpdateCoordinateWidgetByMouse(QMouseEvent *e);
 };
 
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H
