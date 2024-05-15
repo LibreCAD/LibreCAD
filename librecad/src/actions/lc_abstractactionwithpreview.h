@@ -25,11 +25,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qg_actionhandler.h"
 #include "rs_previewactioninterface.h"
+#include "rs_vector.h"
 
 class RS_Line;
 class RS_Point;
 class RS_Polyline;
-class RS_Vector;
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
