@@ -21,11 +21,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <QMouseEvent>
-#include "rs_math.h"
+
+#include "lc_abstractactiondrawrectangle.h"
+#include "lc_actiondrawrectangle2points.h"
 #include "lc_linemath.h"
 #include "lc_rectangle2pointsoptions.h"
-#include "lc_actiondrawrectangle2points.h"
-#include "lc_abstractactiondrawrectangle.h"
+#include "rs_math.h"
+#include "rs_polyline.h"
 
 LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     RS_EntityContainer &container,
@@ -34,7 +36,7 @@ LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
                                     container, graphicView){
     actionType = RS2::ActionDrawRectangle2Points;
     angle = 0;
-    init(SetPoint1);
+    LC_ActionDrawRectangle2Points::init(SetPoint1);
     setMainStatus(SetPoint1);
 }
 

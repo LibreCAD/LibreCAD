@@ -19,13 +19,12 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "lc_rectangle1pointoptions.h"
-#include "ui_lc_rectangle1pointoptions.h"
-#include "rs_actioninterface.h"
 #include "lc_actiondrawrectangle1point.h"
-#include "rs_settings.h"
-#include "rs_math.h"
+#include "lc_rectangle1pointoptions.h"
+#include "rs_actioninterface.h"
 #include "rs_debug.h"
+#include "rs_math.h"
+#include "ui_lc_rectangle1pointoptions.h"
 
 
 LC_Rectangle1PointOptions::LC_Rectangle1PointOptions(QWidget *parent) :
