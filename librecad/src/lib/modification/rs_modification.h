@@ -86,6 +86,7 @@ struct RS_ScaleData {
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
     // Find the factor by a source and a target point
+    bool isotropicScaling = false;
     bool toFindFactor = false;
 };
 

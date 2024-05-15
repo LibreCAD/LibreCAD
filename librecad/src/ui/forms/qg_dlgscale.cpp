@@ -147,6 +147,7 @@ void QG_DlgScale::onFactorByPoints()
 {
     if (data != nullptr) {
         data->toFindFactor = true;
+        data->isotropicScaling = cbIsotropic->isChecked();
         accept();
     }
 }
@@ -189,6 +190,8 @@ void QG_DlgScale::updateData() {
     }
     scaleFactorX=leFactorX->text();
             leFactorY->setDisabled(cbIsotropic->isChecked());
+
+    data->isotropicScaling = cbIsotropic->isChecked();
     if(cbIsotropic->isChecked()) {
             scaleFactorY=scaleFactorX;
             leFactorY->setText(scaleFactorY);

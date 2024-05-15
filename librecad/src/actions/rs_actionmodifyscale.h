@@ -65,6 +65,8 @@ public:
 private:
     void showPreview();
     void findFactor();
+    // set scaling target point to support isotropic or xy-scaling
+    RS_Vector getTargetPoint(QMouseEvent* e);
 
 	struct Points;
 	std::unique_ptr<Points> pPoints;

@@ -33,6 +33,7 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
 
@@ -96,18 +97,17 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
 
     if (getStatus()!=ShowDialog) {
 
-        RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint:
-            pPoints->data.referencePoint = mouse;
+            pPoints->data.referencePoint = snapPoint(e);
             break;
 
         case SetSourcePoint:
-            pPoints->sourcePoint = mouse;
+            pPoints->sourcePoint = snapPoint(e);
             break;
 
         case SetTargetPoint:
-            pPoints->targetPoint = mouse;
+            pPoints->targetPoint = getTargetPoint(e);
             showPreview();
             break;
 
@@ -118,6 +118,20 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
 
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent end");
 }
+
+RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
+{
+    if (!pPoints->data.isotropicScaling)
+        return snapPoint(e);
+    RS_Vector mouse = graphicView->toGraph(e->position());
+    // project mouse to the line (center, source)
+    RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
+    RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
+    snapPoint(projected, true);
+    return projected;
+}
+
+
 
 void RS_ActionModifyScale::showPreview()
 {
@@ -152,6 +166,7 @@ void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
     {
         setStatus(ShowDialog);
         pPoints->data.referencePoint = mouse;
+        graphicView->setRelativeZero(mouse);
         if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
             if (!pPoints->data.toFindFactor) {
                 trigger();
@@ -167,14 +182,18 @@ void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
     break;
 
     case SetSourcePoint:
-        pPoints->sourcePoint = mouse;
-        setStatus(SetTargetPoint);
+        if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
+            pPoints->sourcePoint = mouse;
+            setStatus(SetTargetPoint);
+        }
         break;
 
     case SetTargetPoint:
-        pPoints->targetPoint = mouse;
-        trigger();
-        finish();
+        if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
+            pPoints->targetPoint = mouse;
+            trigger();
+            finish();
+        }
         break;
     default:
         break;
