@@ -23,13 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_dlgscale.h"
-
-#include "rs_settings.h"
-#include "rs_modification.h"
-#include "rs_math.h"
-
 #include <QDoubleValidator>
+
+#include "qg_dlgscale.h"
+#include "rs_math.h"
+#include "rs_modification.h"
+#include "rs_settings.h"
+
 
 /*
  *  Constructs a QG_DlgScale as a child of 'parent', with the
@@ -67,7 +67,7 @@ void QG_DlgScale::languageChange()
 }
 
 
-void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
+void QG_DlgScale::onFactorXChanged(const QString& arg1)
 {
     scaleFactorX=arg1;
     if(cbIsotropic->isChecked()) {
@@ -77,12 +77,12 @@ void QG_DlgScale::on_leFactorX_textChanged(const QString& arg1)
 }
 
 
-void QG_DlgScale::on_leFactorY_textChanged(const QString& arg1)
+void QG_DlgScale::onFactorYChanged(const QString& arg1)
 {
     scaleFactorY=arg1;
 }
 
-void QG_DlgScale::on_cbIsotropic_toggled(bool checked)
+void QG_DlgScale::onIsotropicToggled(bool checked)
 {
     leFactorY->setDisabled(checked);
     leFactorY->setReadOnly(checked);
@@ -108,7 +108,7 @@ void QG_DlgScale::init() {
 
     switch (numberMode) {
     case 0:
-        rbMove->setChecked(true);
+        rbDeleteOrigin->setChecked(true);
         break;
     case 1:
         rbCopy->setChecked(true);
@@ -135,6 +135,20 @@ void QG_DlgScale::init() {
     }
     cbCurrentAttributes->setChecked(useCurrentAttributes);
     cbCurrentLayer->setChecked(useCurrentLayer);
+
+    //
+    connect(cbIsotropic, &QCheckBox::toggled, this, &QG_DlgScale::onIsotropicToggled);
+    connect(leFactorX, &QLineEdit::textEdited, this, &QG_DlgScale::onFactorXChanged);
+    connect(leFactorY, &QLineEdit::textEdited, this, &QG_DlgScale::onFactorYChanged);
+    connect(bFindFactor, &QPushButton::clicked, this, &QG_DlgScale::onFactorByPoints);
+}
+
+void QG_DlgScale::onFactorByPoints()
+{
+    if (data != nullptr) {
+        data->toFindFactor = true;
+        accept();
+    }
 }
 
 void QG_DlgScale::destroy() {
@@ -144,7 +158,7 @@ void QG_DlgScale::destroy() {
     RS_SETTINGS->writeEntry("/ScaleFactorY", leFactorY->text());
     RS_SETTINGS->writeEntry("/ScaleIsotropic",
                             (int)cbIsotropic->isChecked());
-    if (rbMove->isChecked()) {
+    if (rbDeleteOrigin->isChecked()) {
         numberMode = 0;
     } else if (rbCopy->isChecked()) {
         numberMode = 1;
@@ -166,7 +180,7 @@ void QG_DlgScale::setData(RS_ScaleData* d) {
 }
 
 void QG_DlgScale::updateData() {
-    if (rbMove->isChecked()) {
+    if (rbDeleteOrigin->isChecked()) {
         data->number = 0;
     } else if (rbCopy->isChecked()) {
         data->number = 1;
@@ -181,9 +195,9 @@ void QG_DlgScale::updateData() {
     } else {
             scaleFactorY=leFactorY->text();
     }
-    bool okX;
+    bool okX = false;
     double sx=RS_Math::eval(scaleFactorX,&okX);
-    bool okY;
+    bool okY = false;
     double sy=RS_Math::eval(scaleFactorY,&okY);
     if(okX && okY){
         data->factor = RS_Vector(sx,sy);

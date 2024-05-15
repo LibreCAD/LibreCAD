@@ -43,7 +43,9 @@ public:
      */
     enum Status {
         SetReferencePoint,    /**< Setting the reference point. */
-        ShowDialog            /**< Showing the options dialog. */
+        ShowDialog,            /**< Showing the options dialog. */
+        SetSourcePoint,         /**< Set the source point to find scaling factor */
+        SetTargetPoint         /**< Set the target point to scale the source point to */
     };
 
 public:
@@ -61,6 +63,9 @@ public:
 	void updateMouseCursor() override;
 
 private:
+    void showPreview();
+    void findFactor();
+
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

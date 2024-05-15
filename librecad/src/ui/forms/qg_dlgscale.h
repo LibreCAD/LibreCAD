@@ -48,10 +48,11 @@ protected slots:
 
 private slots:
 
-    void on_cbIsotropic_toggled(bool checked);
+    virtual void onIsotropicToggled(bool checked);
 
-    void on_leFactorX_textChanged(const QString &arg1);
-    void on_leFactorY_textChanged(const QString &arg1);
+    virtual void onFactorXChanged(const QString &arg1);
+    virtual void onFactorYChanged(const QString &arg1);
+    virtual void onFactorByPoints();
 
 private:
     QString scaleFactorX;
