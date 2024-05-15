@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 
 class RS_Line;
+class RS_Point;
 class RS_Polyline;
 class RS_Vector;
 
