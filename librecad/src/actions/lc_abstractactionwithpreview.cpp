@@ -154,7 +154,7 @@ void LC_AbstractActionWithPreview::doPerformOriginalEntitiesDeletionOnInitTrigge
 
 void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent* e, [[maybe_unused]]int status){
     // todo - actually, this is a bit ugly to call snap point  - yet as side effect, it will draw snapper and update coordinates widget..
-    RS_Vector mouse = snapPoint(e);
+    snapPoint(e);
 }
 
 /**

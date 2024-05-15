@@ -21,10 +21,12 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
-#include "rs_math.h"
+
+#include "lc_actiondrawstar.h"
 #include "lc_linemath.h"
 #include "lc_staroptions.h"
-#include "lc_actiondrawstar.h"
+#include "rs_math.h"
+#include "rs_polyline.h"
 
 LC_ActionDrawStar::LC_ActionDrawStar(RS_EntityContainer &container, RS_GraphicView &graphicView)
    :LC_AbstractActionWithPreview("Draw Star", container, graphicView){

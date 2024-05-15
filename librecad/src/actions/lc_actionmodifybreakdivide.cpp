@@ -21,14 +21,15 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cfloat>
-#include <cmath>
-#include "rs_math.h"
+
+#include "lc_actionmodifybreakdivide.h"
+#include "lc_linemath.h"
+#include "lc_modifybreakdivideoptions.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
-#include "lc_linemath.h"
-#include "lc_actionmodifybreakdivide.h"
+#include "rs_entitycontainer.h"
 #include "rs_information.h"
-#include "lc_modifybreakdivideoptions.h"
+#include "rs_math.h"
 
 
 namespace {
@@ -497,7 +498,7 @@ QVector<RS_Vector> LC_ActionModifyBreakDivide::collectAllIntersectionsWithEntity
     QVector<RS_Vector> result;
     RS_VectorSolutions sol;
     // iterate over all entities
-    for (auto e: *container) {
+    for (auto* e: *container) {
         // consider only visible entities
         if (e && e->isVisible()){
             // select containers / groups:
