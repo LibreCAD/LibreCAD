@@ -20,21 +20,24 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QList>
+#include <QMouseEvent>
+
+#include "lc_abstractactionwithpreview.h"
+#include "lc_actiondrawslicedivide.h"
+#include "rs_arc.h"
+#include "rs_circle.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "lc_linemath.h"
 #include "rs_point.h"
-#include "QMouseEvent"
-#include <QList>
-#include "rs_circle.h"
-#include "rs_arc.h"
-#include "rs_debug.h"
-#include "rs_commands.h"
-#include "rs_dialogfactory.h"
-#include "rs_coordinateevent.h"
-#include "rs_commandevent.h"
-#include "rs_graphicview.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
-#include "lc_actiondrawslicedivide.h"
-#include "lc_abstractactionwithpreview.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
