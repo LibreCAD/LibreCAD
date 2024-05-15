@@ -160,7 +160,7 @@ void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent*
  * @param e
  */
 void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 }
