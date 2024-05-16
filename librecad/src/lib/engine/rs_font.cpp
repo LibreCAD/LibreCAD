@@ -368,7 +368,7 @@ void RS_Font::readLFF(QString path) {
                 if(line.isEmpty()) break;
                 fontData.push_back(line);
             } while(true);
-            if (0 < fontData.size()                             // valid data
+            if (!fontData.isEmpty()                             // valid data
                 && !rawLffFontList.contains( ch)) {    // ignore duplicates
                 rawLffFontList[ch] = fontData;
             }
@@ -377,12 +377,10 @@ void RS_Font::readLFF(QString path) {
     f.close();
 }
 
-void RS_Font::generateAllFonts(){
-    QMap<QString, QStringList>::const_iterator i = rawLffFontList.constBegin();
-    while (i != rawLffFontList.constEnd()) {
-        generateLffFont(i.key());
-        ++i;
-    }
+void RS_Font::generateAllFonts()
+{
+    for(const QString& key : rawLffFontList.keys())
+        generateLffFont(key);
 }
 
 RS_Block* RS_Font::generateLffFont(const QString& key){
