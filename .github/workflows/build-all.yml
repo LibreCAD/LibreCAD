@@ -249,6 +249,9 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: Delete existing
+        run: gh release delete "2.2.2_alpha-latest" -y
+
       - name: Fetch artifacts
         uses: actions/download-artifact@main
 
