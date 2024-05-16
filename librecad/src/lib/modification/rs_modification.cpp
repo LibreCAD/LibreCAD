@@ -1898,10 +1898,10 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
 	for(auto ec: *container){
         if (ec->isSelected() ) {
-            if ( std::abs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
+            if ( !data.isotropicScaling ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
     //non-isotropic scaling, replacing selected circles with ellipses
-				RS_Circle *c=static_cast<RS_Circle*>(ec);
+                auto* c=static_cast<RS_Circle*>(ec);
 				ec= new RS_Ellipse{container,
 				{c->getCenter(), {c->getRadius(),0.},
 						1.,
