@@ -489,7 +489,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Dividir</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
@@ -549,7 +549,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation>Copiar</translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -860,7 +860,7 @@ distância entre pontos=%2 maior que o diâmetro=%3</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exportar como CA&amp;M/SVG simples...</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -1556,7 +1556,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Layout</translation>
     </message>
     <message>
         <source>Rounded</source>
@@ -1617,7 +1617,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Wiki</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
@@ -1637,7 +1637,7 @@ Favor checar se o arquivo existe e suas permissões.</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Fórum</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
