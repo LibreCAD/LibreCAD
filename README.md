@@ -56,7 +56,7 @@ $ librecad dxf2svg foo.dxf
 Requirements:
 
 - [Qt](https://www.qt.io/download-open-source/) 6.4.0+ (MinGW version on Windows)
-- [Boost](https://www.boost.org/)
+- [Boost](https://www.boost.org/) 1.55.0+
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 
