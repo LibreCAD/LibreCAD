@@ -131,14 +131,21 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
     return projected;
 }
 
-
-
 void RS_ActionModifyScale::showPreview()
 {
     deletePreview();
     preview->addSelectionFrom(*container);
     findFactor();
-    preview->scale(pPoints->data.referencePoint, pPoints->data.factor);
+
+    // RS_Modification only considers selected
+    for(auto* entity: *preview)
+        entity->setSelected(true);
+
+    RS_Modification m(*preview, graphicView);
+    m.scale(pPoints->data);
+
+    for(auto* entity: *preview)
+        entity->setSelected(false);
     drawPreview();
 }
 
