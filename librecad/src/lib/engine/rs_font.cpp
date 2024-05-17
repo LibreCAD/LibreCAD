@@ -41,6 +41,17 @@
 
 namespace {
 
+// Encode a unicode character from its hexdecimal string
+// "0x20" is encoded to the character '0'
+QString charFromHex(const QString& hexCode)
+{
+    bool okay=false;
+    char32_t ucsCode = hexCode.toUInt(&okay, 16);
+    //  REPLACEMENT CHARACTER for unicode
+    constexpr char32_t invalidCode = 0xFFFD;
+    return (okay) ? QString::fromUcs4(&ucsCode, 1) : QString::fromUcs4(&invalidCode, 1);
+}
+
 // Extract the unicode char from LFF font line
 std::pair<QString, bool> extractFontChar(const QString& line)
 {
@@ -215,27 +226,25 @@ void RS_Font::readCXF(QString path) {
         else if (line.at(0)=='[') {
 
             // uniode character:
-            QChar ch;
+            QString ch;
 
             // read unicode:
             QRegularExpression regexp("[0-9A-Fa-f]{4,4}");
             QRegularExpressionMatch match=regexp.match(line);
             if (match.hasMatch()) {
-                QString cap = match.captured(0);
-                int uCode = cap.toInt(nullptr, 16);
-                ch = QChar(uCode);
+                ch = charFromHex(match.captured(0));
             }
 
             // read UTF8 (LibreCAD 1 compatibility)
             else if (line.indexOf(']')>=3) {
                 int i = line.indexOf(']');
                 QString mid = line.mid(1, i-1);
-                ch = QString::fromUtf8(mid.toLatin1()).at(0);
+                ch = QString::fromUtf8(mid.toLatin1()).first(1);
             }
 
             // read normal ascii character:
             else {
-                ch = line.at(1);
+                ch = line.first(1);
             }
 
             // create new letter:
@@ -399,7 +408,7 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
     QStringList fontData = rawLffFontList[key];
     QString line;
 
-    while(fontData.isEmpty() == false) {
+    while(!fontData.isEmpty()) {
         line = fontData.takeFirst();
 
         if (line.isEmpty()) {
@@ -409,9 +418,9 @@ RS_Block* RS_Font::generateLffFont(const QString& key){
         // Defined char:
         if (line.at(0)=='C') {
             line.remove(0,1);
-            int uCode = line.toInt(nullptr, 16);
-            QChar ch = QChar(uCode);
-            if (QString(ch) == key) {   // recursion, a character can't include itself
+            auto uCode = line.toUInt(nullptr, 16);
+            auto ch = charFromHex(line);
+            if (ch == key) {   // recursion, a character can't include itself
                 RS_DEBUG->print( RS_Debug::D_ERROR, "RS_Font::generateLffFont([%04X]) : recursion, ignore this character from %s", uCode, qPrintable(fileName));
                 delete letter;
                 return nullptr;
