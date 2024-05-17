@@ -25,16 +25,13 @@
 **********************************************************************/
 
 #include <QVariant>
-
+#include "qg_widgetpen.h"
 #include "qevent.h"
 #include "qg_colorbox.h"
-#include "qg_linetypebox.h"
-#include "qg_widgetpen.h"
 #include "qg_widthbox.h"
+#include "qg_linetypebox.h"
 #include "rs_debug.h"
 #include "rs_entity.h"
-#include "rs_layer.h"
-#include "rs_pen.h"
 
 /*
  *  Constructs a QG_WidgetPen as a child of 'parent', with the

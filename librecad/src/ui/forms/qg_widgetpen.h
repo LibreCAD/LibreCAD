@@ -27,11 +27,9 @@
 #define QG_WIDGETPEN_H
 
 #include "ui_qg_widgetpen.h"
-
-class RS_Entity;
-class RS_Pen;
-class RS_Layer;
-
+#include "rs_pen.h"
+#include "rs_layer.h"
+#include "rs_entity.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {
