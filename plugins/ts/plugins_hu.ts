@@ -798,7 +798,7 @@ első bázis, második bázis, első cél, második cél.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="75"/>
         <source>OK</source>
-        <translation type="unfinished">OK</translation>
+        <translation>OK</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="76"/>
