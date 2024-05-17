@@ -68,6 +68,7 @@ protected slots:
     virtual void languageChange();
 
 private:
+    void layoutDirectionChanged();
     bool isNew = false;
     bool saveSettings = true;
     RS_MText* text = nullptr;

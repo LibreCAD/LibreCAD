@@ -25,9 +25,11 @@
 **********************************************************************/
 
 #include <vector>
-#include <QTextStream>
+
 #include <QFileDialog>
+#include <QLocale>
 #include <QPalette>
+#include <QTextStream>
 
 #include "qg_dlgmtext.h"
 
@@ -112,6 +114,9 @@ void QG_DlgMText::init() {
     teText->QFrame::setMidLineWidth(0);
     teText->QFrame::setFrameStyle(QFrame::Box|QFrame::Plain);
     teText->installEventFilter(this);
+
+    // events
+    connect(rbLeftToRight, &QRadioButton::toggled, this, &QG_DlgMText::layoutDirectionChanged);
 }
 
 
@@ -175,7 +180,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     QString str;
     //QString shape;
     QString angle;
-    bool leftToRight = true;
+    bool leftToRight = locale().textDirection() == Qt::LeftToRight;
 
     if (isNew) {
         wPen->hide();
@@ -207,7 +212,7 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         //shape = RS_SETTINGS->readEntry("/TextShape", "0");
         angle = RS_SETTINGS->readEntry("/TextAngle", "0");
         //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
-        leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
+        // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
         RS_SETTINGS->endGroup();
     } else {
         fon = text->getStyle();
@@ -275,11 +280,25 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
     //leRadius->setText(radius);
     teText->setFocus();
     teText->selectAll();
-    text->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
     rbLeftToRight->setChecked(leftToRight);
-    rbRightToLeft->setChecked(!leftToRight);
+    layoutDirectionChanged();
 }
 
+void QG_DlgMText::layoutDirectionChanged()
+{
+    bool leftToRight = rbLeftToRight->isChecked();
+    rbRightToLeft->setChecked(!leftToRight);
+    Qt::LayoutDirection direction =  leftToRight ? Qt::LeftToRight : Qt::RightToLeft;
+    teText->setLayoutDirection(direction);
+    text->setDrawingDirection(leftToRight ? RS_MTextData::LeftToRight : RS_MTextData::RightToLeft);
+    QTextDocument* doc = teText->document();
+    if (doc) {
+        QTextOption option = doc->defaultTextOption();
+        option.setTextDirection(direction);
+        doc->setDefaultTextOption(option);
+    }
+    teText->update();
+}
 
 /**
  * Updates the text entity represented by the dialog to fit the choices of the user.
