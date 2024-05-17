@@ -376,6 +376,33 @@ void RS_MText::update() {
   RS_DEBUG->print("RS_MText::update: OK");
 }
 
+void RS_MText::alignVertically()
+{
+    RS_EntityContainer::rotate(data.insertionPoint, - data.angle);
+    forcedCalculateBorders();
+
+    // Vertical Align:
+
+    switch (data.valign) {
+    case RS_MTextData::VATop:
+        RS_EntityContainer::move({0., data.insertionPoint.y - getMax().y});
+      break;
+    case RS_MTextData::VAMiddle:
+        RS_EntityContainer::move({0., data.insertionPoint.y - 0.5 * (getMin().y + getMax().y)});
+      break;
+
+    case RS_MTextData::VABottom:
+        RS_EntityContainer::move({0., data.insertionPoint.y - getMin().y});
+      break;
+
+    default:
+        LC_ERR<<__func__<<"(): line "<<__LINE__<<": invalid Invalid RS_MText::VAlign="<<data.valign;
+      break;
+    }
+    RS_EntityContainer::rotate(data.insertionPoint, data.angle);
+    forcedCalculateBorders();
+}
+
 /**
  * Used internally by update() to add a letter to one line
  *

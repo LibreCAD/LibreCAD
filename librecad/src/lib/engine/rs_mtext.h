@@ -222,6 +222,8 @@ private:
   void addLetter(RS_EntityContainer &oneLine, QChar letter, RS_Font &font,
                  const RS_Vector &letterSpace, RS_Vector &letterPosition);
 
+  void alignVertically();
+
 protected:
   static RS_MText *createUpperLower(QString text, const RS_MTextData &data,
                                     const RS_Vector &position);
