@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QAction>
 #include <QMouseEvent>
 
@@ -35,97 +34,85 @@
 #include "rs_graphicview.h"
 #include "rs_point.h"
 
-RS_ActionDrawPoint::RS_ActionDrawPoint(RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Points",
-						   container, graphicView)
-		, pt(new RS_Vector{})
-{
-	actionType=RS2::ActionDrawPoint;
+    RS_ActionDrawPoint::RS_ActionDrawPoint(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface("Draw Points",
+                               container, graphicView), pt(new RS_Vector{}){
+    actionType = RS2::ActionDrawPoint;
 }
 
 RS_ActionDrawPoint::~RS_ActionDrawPoint() = default;
 
-
-void RS_ActionDrawPoint::trigger() {
-	if (pt->valid) {
-		RS_Point* point = new RS_Point(container, RS_PointData(*pt));
+void RS_ActionDrawPoint::trigger(){
+    if (pt->valid){
+        auto *point = new RS_Point(container, RS_PointData(*pt));
         container->addEntity(point);
 
-        if (document) {
+        if (document){
             document->startUndoCycle();
             document->addUndoable(point);
             document->endUndoCycle();
         }
 
-		graphicView->moveRelativeZero(*pt);
-		graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
+        graphicView->moveRelativeZero(*pt);
+        graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
     }
 }
 
-
-
-void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
     snapPoint(e);
+    trySnapToRelZeroCoordinateEvent(e);
 }
 
 
 
-void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
+    } else if (e->button() == Qt::RightButton){
+        init(getStatus() - 1);
     }
 }
 
-
-
-void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
-	*pt = mouse;
+    *pt = mouse;
     trigger();
 }
 
-
-
-void RS_ActionDrawPoint::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawPoint::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-	if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
-		return;
-	}
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
+        return;
+    }
 }
 
-
-
-QStringList RS_ActionDrawPoint::getAvailableCommands() {
-	return {};
+QStringList RS_ActionDrawPoint::getAvailableCommands(){
+    return {};
 }
 
-
-void RS_ActionDrawPoint::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case 0:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify location"), tr("Cancel"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionDrawPoint::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case 0:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify location"), tr("Cancel"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
-
-
-void RS_ActionDrawPoint::updateMouseCursor() {
+void RS_ActionDrawPoint::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 

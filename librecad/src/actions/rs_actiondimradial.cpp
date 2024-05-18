@@ -66,16 +66,14 @@ void RS_ActionDimRadial::reset() {
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
-
-
-void RS_ActionDimRadial::trigger() {
+void RS_ActionDimRadial::trigger(){
     RS_ActionDimension::trigger();
 
     preparePreview();
-    if (entity) {
-        RS_DimRadial* newEntity = new RS_DimRadial(container,
-									 *data,
-									 *edata);
+    if (entity){
+        RS_DimRadial *newEntity = new RS_DimRadial(container,
+                                                   *data,
+                                                   *edata);
 
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
@@ -83,116 +81,105 @@ void RS_ActionDimRadial::trigger() {
         container->addEntity(newEntity);
 
         // upd. undo list:
-        if (document) {
+        if (document){
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
         }
         RS_Vector rz = graphicView->getRelativeZero();
-		graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
-		RS_Snapper::finish();
+        RS_Snapper::finish();
 
-    }
-    else {
+    } else {
         RS_DEBUG->print("RS_ActionDimRadial::trigger:"
-						" Entity is nullptr\n");
+                        " Entity is nullptr\n");
     }
 }
 
-
-void RS_ActionDimRadial::preparePreview() {
-    if (entity) {
-		double angle = data->definitionPoint.angleTo(*pos);
-        double radius=0.0;
-        if (entity->rtti()==RS2::EntityArc) {
-            radius = ((RS_Arc*)entity)->getRadius();
-        } else if (entity->rtti()==RS2::EntityCircle) {
-            radius = ((RS_Circle*)entity)->getRadius();
+void RS_ActionDimRadial::preparePreview(){
+    if (entity){
+        double angle = data->definitionPoint.angleTo(*pos);
+        double radius = 0.0;
+        if (entity->rtti() == RS2::EntityArc){
+            radius = ((RS_Arc *) entity)->getRadius();
+        } else if (entity->rtti() == RS2::EntityCircle){
+            radius = ((RS_Circle *) entity)->getRadius();
         }
 
-		edata->definitionPoint.setPolar(radius, angle);
-		edata->definitionPoint += data->definitionPoint;
+        edata->definitionPoint.setPolar(radius, angle);
+        edata->definitionPoint += data->definitionPoint;
     }
 }
 
-
-
-void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimRadial::mouseMoveEvent begin");
 
     //RS_Vector mouse(graphicView->toGraphX(e->x()),
     //                graphicView->toGraphY(e->y()));
 
-	switch (getStatus()) {
+    switch (getStatus()) {
 
-    case SetPos:
-        if (entity) {
-			*pos = snapPoint(e);
+        case SetPos:
+            if (entity){
+                *pos = snapPoint(e);
 
-            preparePreview();
+                preparePreview();
 
-			RS_DimRadial* d = new RS_DimRadial(preview.get(), *data, *edata);
+                auto *d = new RS_DimRadial(preview.get(), *data, *edata);
 
-            deletePreview();
-            preview->addEntity(d);
-            d->update();
-            drawPreview();
-        }
-        break;
+                deletePreview();
+                preview->addEntity(d);
+                d->update();
+                drawPreview();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDimRadial::mouseMoveEvent end");
 }
 
+void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent *e){
 
-
-void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent* e) {
-
-    if (e->button()==Qt::LeftButton) {
+    if (e->button() == Qt::LeftButton){
         switch (getStatus()) {
-        case SetEntity: {
-                RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en) {
-                    if (en->rtti()==RS2::EntityArc ||
-                            en->rtti()==RS2::EntityCircle) {
+            case SetEntity: {
+                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+                if (en){
+                    if (en->rtti() == RS2::EntityArc ||
+                        en->rtti() == RS2::EntityCircle){
                         entity = en;
-                        if (entity->rtti()==RS2::EntityArc) {
-							data->definitionPoint =
-								static_cast<RS_Arc*>(entity)->getCenter();
-                        } else if (entity->rtti()==RS2::EntityCircle) {
-							data->definitionPoint =
-								static_cast<RS_Circle*>(entity)->getCenter();
+                        if (entity->rtti() == RS2::EntityArc){
+                            data->definitionPoint = dynamic_cast<RS_Arc *>(entity)->getCenter();
+                        } else if (entity->rtti() == RS2::EntityCircle){
+                            data->definitionPoint = dynamic_cast<RS_Circle *>(entity)->getCenter();
                         }
-						graphicView->moveRelativeZero(data->definitionPoint);
+                        graphicView->moveRelativeZero(data->definitionPoint);
                         setStatus(SetPos);
                     } else {
                         RS_DIALOGFACTORY->commandMessage(tr("Not a circle "
                                                             "or arc entity"));
                     }
                 }
+                break;
             }
-            break;
-
-        case SetPos: {
+            case SetPos: {
                 RS_CoordinateEvent ce(snapPoint(e));
                 coordinateEvent(&ce);
             }
-            break;
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
-
-
 
 void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
@@ -210,19 +197,17 @@ void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
-
-void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDimRadial::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", c)){
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     // setting new text label:
-    if (getStatus()==SetText) {
+    if (getStatus() == SetText){
         setText(c);
         RS_DIALOGFACTORY->requestOptions(this, true, true);
         graphicView->enableCoordinateInput();
@@ -231,19 +216,19 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
     }
 
     // command: text
-    if (checkCommand("text", c)) {
-        lastStatus = (Status)getStatus();
+    if (checkCommand("text", c)){
+        lastStatus = (Status) getStatus();
         graphicView->disableCoordinateInput();
         setStatus(SetText);
     }
 
     // setting angle
-    if (getStatus()==SetPos) {
+    if (getStatus() == SetPos){
         bool ok;
         double a = RS_Math::eval(c, &ok);
-		if (ok) {
-			pos->setPolar(1.0, RS_Math::deg2rad(a));
-			*pos += data->definitionPoint;
+        if (ok){
+            pos->setPolar(1.0, RS_Math::deg2rad(a));
+            *pos += data->definitionPoint;
             trigger();
             reset();
             setStatus(SetEntity);
@@ -253,7 +238,6 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent* e) {
         return;
     }
 }
-
 
 QStringList RS_ActionDimRadial::getAvailableCommands() {
     QStringList cmd;
@@ -270,7 +254,6 @@ QStringList RS_ActionDimRadial::getAvailableCommands() {
 
     return cmd;
 }
-
 
 void RS_ActionDimRadial::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -292,14 +275,12 @@ void RS_ActionDimRadial::updateMouseButtonHints() {
     }
 }
 
-
 void RS_ActionDimRadial::showOptions() {
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
     //RS_DIALOGFACTORY->requestDimRadialOptions(edata, true);
 }
-
 
 void RS_ActionDimRadial::hideOptions() {
     RS_ActionInterface::hideOptions();

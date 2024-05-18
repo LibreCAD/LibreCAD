@@ -46,7 +46,13 @@ public:
 		SetAngle,     /**< Setting angle in the command line. */
 		SetLength     /**< Setting length in the command line. */
     };
-	
+
+
+    enum SnapMode{
+        SNAP_START, SNAP_MIDDLE, SNAP_END
+    };
+
+
     RS_ActionDrawLineAngle(RS_EntityContainer& container,
                            RS_GraphicView& graphicView,
                            double angle=0.0,
@@ -91,6 +97,7 @@ public:
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
+ bool persistRelativeZero = false;
 };
 
 #endif

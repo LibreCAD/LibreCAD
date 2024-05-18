@@ -69,7 +69,7 @@ void RS_ActionDimAligned::trigger() {
     graphicView->moveRelativeZero(data->definitionPoint);
 
 		//data->text = getText();
-    RS_DimAligned* dim =
+    auto* dim =
 		new RS_DimAligned(container, *data, *edata);
     dim->setLayerToActive();
     dim->setPenToActive();
@@ -91,66 +91,61 @@ void RS_ActionDimAligned::trigger() {
                     " dim added: %lu", dim->getId());
 }
 
-
-
-void RS_ActionDimAligned::preparePreview() {
-	RS_Vector dirV = RS_Vector::polar(100.,
-				  edata->extensionPoint1.angleTo(
-					  edata->extensionPoint2)
-				  +M_PI_2);
-	RS_ConstructionLine cl(nullptr,
+void RS_ActionDimAligned::preparePreview(){
+    RS_Vector dirV = RS_Vector::polar(100.,
+                                      edata->extensionPoint1.angleTo(
+                                          edata->extensionPoint2)
+                                      + M_PI_2);
+    RS_ConstructionLine cl(nullptr,
                            RS_ConstructionLineData(
-							   edata->extensionPoint2,
-							   edata->extensionPoint2+dirV));
+                               edata->extensionPoint2,
+                               edata->extensionPoint2 + dirV));
 
     data->definitionPoint =
         cl.getNearestPointOnEntity(data->definitionPoint);
 }
 
-
-
-void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDimAligned::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimAligned::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetExtPoint1:
-        break;
+        case SetExtPoint1:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
 
-    case SetExtPoint2:
-		if (edata->extensionPoint1.valid) {
-            deletePreview();
-            preview->addEntity(
-				new RS_Line{preview.get(),edata->extensionPoint1, mouse}
-            );
-            drawPreview();
-        }
-        break;
+        case SetExtPoint2:
+            if (edata->extensionPoint1.valid){
+                deletePreview();
+                preview->addEntity(
+                    new RS_Line{preview.get(), edata->extensionPoint1, mouse}
+                );
+                drawPreview();
+            }
+            break;
 
-    case SetDefPoint:
-		if (edata->extensionPoint1.valid && edata->extensionPoint2.valid) {
-            deletePreview();
-			data->definitionPoint = mouse;
+        case SetDefPoint:
+            if (edata->extensionPoint1.valid && edata->extensionPoint2.valid){
+                deletePreview();
+                data->definitionPoint = mouse;
 
-            preparePreview();
+                preparePreview();
 
-						//data->text = getText();
-			RS_DimAligned* dim = new RS_DimAligned(preview.get(), *data, *edata);
-            preview->addEntity(dim);
-            dim->update();
-            drawPreview();
-        }
-        break;
+                //data->text = getText();
+                RS_DimAligned *dim = new RS_DimAligned(preview.get(), *data, *edata);
+                preview->addEntity(dim);
+                dim->update();
+                drawPreview();
+            }
+            break;
 
         default:
-                break;
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDimAligned::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDimAligned::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -162,88 +157,80 @@ void RS_ActionDimAligned::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionDimAligned::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
+void RS_ActionDimAligned::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e) return;
 
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetExtPoint1:
-		edata->extensionPoint1 = pos;
-        graphicView->moveRelativeZero(pos);
-        setStatus(SetExtPoint2);
-        break;
+        case SetExtPoint1:
+            edata->extensionPoint1 = pos;
+            graphicView->moveRelativeZero(pos);
+            setStatus(SetExtPoint2);
+            break;
 
-    case SetExtPoint2:
-		edata->extensionPoint2 = pos;
-        graphicView->moveRelativeZero(pos);
-        setStatus(SetDefPoint);
-        break;
+        case SetExtPoint2:
+            edata->extensionPoint2 = pos;
+            graphicView->moveRelativeZero(pos);
+            setStatus(SetDefPoint);
+            break;
 
-    case SetDefPoint:
-		data->definitionPoint = pos;
-        trigger();
-        reset();
-        setStatus(SetExtPoint1);
-        break;
+        case SetDefPoint:
+            data->definitionPoint = pos;
+            trigger();
+            reset();
+            setStatus(SetExtPoint1);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-void RS_ActionDimAligned::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDimAligned::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetText: {
+        case SetText: {
             setText(c);
-			RS_DIALOGFACTORY->requestOptions(this, true, true);
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
             graphicView->enableCoordinateInput();
         }
-        break;
+            break;
 
-    default:
-        if (checkCommand("text", c)) {
-            lastStatus = (Status)getStatus();
-            graphicView->disableCoordinateInput();
-            setStatus(SetText);
-        }
-        break;
+        default:
+            if (checkCommand("text", c)){
+                lastStatus = (Status) getStatus();
+                graphicView->disableCoordinateInput();
+                setStatus(SetText);
+            }
+            break;
     }
 }
 
-
-
-QStringList RS_ActionDimAligned::getAvailableCommands() {
+QStringList RS_ActionDimAligned::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetExtPoint1:
-    case SetExtPoint2:
-    case SetDefPoint:
-        cmd += command("text");
-        break;
+        case SetExtPoint1:
+        case SetExtPoint2:
+        case SetDefPoint:
+            cmd += command("text");
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     return cmd;
 }
-
-
 
 void RS_ActionDimAligned::updateMouseButtonHints() {
 	switch (getStatus()) {
@@ -271,15 +258,11 @@ void RS_ActionDimAligned::updateMouseButtonHints() {
 	}
 }
 
-
-
 void RS_ActionDimAligned::hideOptions() {
 	RS_DIALOGFACTORY->requestOptions(this, false);
 
     RS_ActionDimension::hideOptions();
 }
-
-
 
 void RS_ActionDimAligned::showOptions() {
     RS_ActionDimension::showOptions();

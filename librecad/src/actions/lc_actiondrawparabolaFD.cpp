@@ -136,21 +136,24 @@ void LC_ActionDrawParabolaFD::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    switch(getStatus()) {
-    case SetDirectrix:
-        mouse = snapFree(e);
-        drawSnapper();
-        break;
-    case SetStartPoint:
-        pPoints->SetStart(mouse);
-        preparePreview();
-        break;
-    case SetEndPoint:
-        pPoints->SetEnd(mouse);
-        preparePreview();
-        break;
-    default:
-        break;
+    switch (getStatus()) {
+        case SetFocus:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetDirectrix:
+            mouse = snapFree(e);
+            drawSnapper();
+            break;
+        case SetStartPoint:
+            pPoints->SetStart(mouse);
+            preparePreview();
+            break;
+        case SetEndPoint:
+            pPoints->SetEnd(mouse);
+            preparePreview();
+            break;
+        default:
+            break;
     }
     //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
 }

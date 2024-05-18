@@ -145,18 +145,31 @@ void RS_ActionDrawLine::trigger()
 void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
 {
     RS_Vector mouse = snapPoint(e);
-    if (getStatus() == SetEndpoint && pPoints->data.startpoint.valid) {
-        // Snapping to angle(15*) if shift key is pressed
-        if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->data.startpoint);
-        }
+    int status = getStatus();
 
-        deletePreview();
-        RS_Line *line = new RS_Line(pPoints->data.startpoint, mouse);
-        preview->addEntity(line);
-        line->setLayerToActive();
-        line->setPenToActive();
-        drawPreview();
+    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+    switch (status){
+        case SetStartpoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetEndpoint: {
+            RS_Vector &startPoint = pPoints->data.startpoint;
+            if (startPoint.valid){
+                // Snapping to angle(15*) if shift key is pressed
+                if (shiftPressed){
+                    mouse = snapToAngle(mouse, startPoint);
+                }
+                deletePreview();
+                auto *line = new RS_Line(startPoint, mouse);
+                preview->addEntity(line);
+                line->setLayerToActive();
+                line->setPenToActive();
+                drawPreview();
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 

@@ -111,20 +111,26 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent* e)
 	RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent begin");
 
 	RS_Vector mouse = snapPoint(e);
+    int status = getStatus();
+    switch (status) {
+        case SetStartPoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetNextPoint: {
+            auto *sp = dynamic_cast<LC_SplinePoints *>(pPoints->spline->clone());
+            sp->addPoint(mouse);
+            deletePreview();
+            preview->addEntity(sp);
 
-	if(getStatus() == SetNextPoint)
-	{
-		LC_SplinePoints*  sp = static_cast<LC_SplinePoints*>(pPoints->spline->clone());
-		sp->addPoint(mouse);
-		deletePreview();
-		preview->addEntity(sp);
-
-		for(auto const& v: sp->getPoints())
-		{
-			preview->addEntity(new RS_Point(preview.get(), RS_PointData(v)));
-		}
-		drawPreview();
-	}
+            for (auto const &v: sp->getPoints()) {
+                preview->addEntity(new RS_Point(preview.get(), RS_PointData(v)));
+            }
+            drawPreview();
+            break;
+        }
+        default:
+            break;
+    }
 
 	RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent end");
 }

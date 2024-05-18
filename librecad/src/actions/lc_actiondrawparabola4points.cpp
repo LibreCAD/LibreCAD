@@ -88,6 +88,9 @@ void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     pPoints->points.set(getStatus(),mouse);
     switch(getStatus()) {
+        case SetPoint1:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
     case SetPoint2:
     case SetPoint3:
         break;

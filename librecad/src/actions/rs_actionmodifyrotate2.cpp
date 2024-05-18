@@ -52,114 +52,114 @@ void RS_ActionModifyRotate2::init(int status) {
 	RS_ActionInterface::init(status);
 }
 
-void RS_ActionModifyRotate2::trigger() {
+void RS_ActionModifyRotate2::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
 
     RS_Modification m(*container, graphicView);
-	m.rotate2(*data);
+    m.rotate2(*data);
 
     finish(false);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 
-void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent begin");
 
-    if (getStatus()==SetReferencePoint1 ||
-            getStatus()==SetReferencePoint2) {
+    if (getStatus() == SetReferencePoint1 ||
+        getStatus() == SetReferencePoint2){
 
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
-        case SetReferencePoint1:
-			data->center1 = mouse;
-            break;
+            case SetReferencePoint1:
+                data->center1 = mouse;
+                break;
 
-        case SetReferencePoint2:
-			if (data->center1.valid) {
-				data->center2 = mouse;
-				//data->offset = data->center2-data->center1;
+            case SetReferencePoint2:
+                if (data->center1.valid){
+                    data->center2 = mouse;
+                    //data->offset = data->center2-data->center1;
 
-                /*deletePreview();
-                preview->addSelectionFrom(*container);
-				preview->rotate(data->center1, data->angle);
-				preview->move(data->offset);
-                drawPreview();
-                */
-            }
-            break;
+                    /*deletePreview();
+                    preview->addSelectionFrom(*container);
+        preview->rotate(data->center1, data->angle);
+        preview->move(data->offset);
+                    drawPreview();
+                    */
+                }
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
     RS_DEBUG->print("RS_ActionModifyRotate2::mouseMoveEvent end");
 }
 
-void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetReferencePoint1:
-		data->center1 = pos;
-        setStatus(SetReferencePoint2);
-        break;
+        case SetReferencePoint1:
+            data->center1 = pos;
+            setStatus(SetReferencePoint2);
+            break;
 
-    case SetReferencePoint2:
-		data->center2 = pos;
-        setStatus(ShowDialog);
-		if (RS_DIALOGFACTORY->requestRotate2Dialog(*data)) {
-            trigger();
-            //finish();
-        }
-        break;
+        case SetReferencePoint2:
+            data->center2 = pos;
+            setStatus(ShowDialog);
+            if (RS_DIALOGFACTORY->requestRotate2Dialog(*data)){
+                trigger();
+                //finish();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionModifyRotate2::commandEvent(RS_CommandEvent* /*e*/) {
+void RS_ActionModifyRotate2::commandEvent(RS_CommandEvent * /*e*/){
 }
 
-QStringList RS_ActionModifyRotate2::getAvailableCommands() {
+QStringList RS_ActionModifyRotate2::getAvailableCommands(){
     QStringList cmd;
     return cmd;
 }
 
-void RS_ActionModifyRotate2::updateMouseButtonHints() {
+void RS_ActionModifyRotate2::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetReferencePoint1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify absolute reference point"),
-                                            tr("Cancel"));
-        break;
-    case SetReferencePoint2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify relative reference point"),
-                                            tr("Back"));
-        break;
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetReferencePoint1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify absolute reference point"),
+                                                tr("Cancel"));
+            break;
+        case SetReferencePoint2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify relative reference point"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-void RS_ActionModifyRotate2::updateMouseCursor() {
+void RS_ActionModifyRotate2::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 

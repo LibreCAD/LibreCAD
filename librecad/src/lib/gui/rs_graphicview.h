@@ -439,7 +439,8 @@ private:
 	int borderRight=0;
 	int borderBottom=0;
 
-	RS_Vector relativeZero{false};
+//	RS_Vector relativeZero{false};
+	RS_Vector relativeZero = RS_Vector(0,0,0);
 	bool relativeZeroLocked=false;
 	//! Print preview flag
 	bool printPreview=false;

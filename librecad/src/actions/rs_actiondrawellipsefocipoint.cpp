@@ -62,24 +62,22 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
 
 RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() = default;
 
-void RS_ActionDrawEllipseFociPoint::init(int status) {
+void RS_ActionDrawEllipseFociPoint::init(int status){
     RS_PreviewActionInterface::init(status);
 
-    if (status==SetFocus1) {
-		pPoints->focus1.valid=false;
+    if (status == SetFocus1){
+        pPoints->focus1.valid = false;
     }
 }
 
-double RS_ActionDrawEllipseFociPoint::findRatio() const
-{
+double RS_ActionDrawEllipseFociPoint::findRatio() const{
     return std::sqrt(pPoints->d*pPoints->d-pPoints->c*pPoints->c)/pPoints->d;
-
 }
 
 void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	RS_Ellipse* ellipse = new RS_Ellipse{container,
+	auto* ellipse = new RS_Ellipse{container,
 	{pPoints->center,
 			pPoints->major*pPoints->d,
 			findRatio(),
@@ -107,42 +105,38 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():"
                     " entity added: %lu", ellipse->getId());
 }
-
-
-
-void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent* e) {
+// fixme - improve preview
+void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
 
+        case SetFocus1:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetPoint:
+            pPoints->point = mouse;
+            pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) +
+                                pPoints->focus2.distanceTo(pPoints->point));
+            if (pPoints->d > pPoints->c + RS_TOLERANCE){
+                deletePreview();
+                preview->addEntity(new RS_Ellipse{preview.get(),
+                                                  {pPoints->center,
+                                                   pPoints->major * pPoints->d,
+                                                   findRatio(),
+                                                   0., 0., false}});
+                drawPreview();
+            }
+            break;
 
-    case SetPoint:
-		pPoints->point=mouse;
-		pPoints->d=0.5*(pPoints->focus1.distanceTo(pPoints->point) +
-						pPoints->focus2.distanceTo(pPoints->point));
-		if (pPoints->d > pPoints->c+ RS_TOLERANCE) {
-			deletePreview();
-			preview->addEntity(new RS_Ellipse{preview.get(),
-											  {pPoints->center,
-											  pPoints->major*pPoints->d,
-											  findRatio(),
-											  0., 0.,false}});
-            drawPreview();
-        }
-        break;
-
-
-
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDrawEllipseFociPoint::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
@@ -158,78 +152,74 @@ void RS_ActionDrawEllipseFociPoint::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetFocus1:
-        graphicView->moveRelativeZero(mouse);
-		pPoints->focus1=mouse;
-        setStatus(SetFocus2);
-        break;
-
-    case SetFocus2:
-		pPoints->c = 0.5*pPoints->focus1.distanceTo(mouse);
-		if(pPoints->c > RS_TOLERANCE){
+        case SetFocus1:
             graphicView->moveRelativeZero(mouse);
-			pPoints->focus2=mouse;
-			pPoints->center=(pPoints->focus1+pPoints->focus2)*0.5;
-			pPoints->major=pPoints->focus1-pPoints->center;
-			pPoints->major /= pPoints->c ;
-            setStatus(SetPoint);
-        }
-        break;
-    case SetPoint:
-		pPoints->point=mouse;
-		pPoints->d=0.5*(pPoints->focus1.distanceTo(pPoints->point)+pPoints->focus2.distanceTo(pPoints->point));
-		if (pPoints->d > pPoints->c+ RS_TOLERANCE) {
-            graphicView->moveRelativeZero(mouse);
-            trigger();
-        }
-        break;
+            pPoints->focus1 = mouse;
+            setStatus(SetFocus2);
+            break;
 
+        case SetFocus2:
+            pPoints->c = 0.5 * pPoints->focus1.distanceTo(mouse);
+            if (pPoints->c > RS_TOLERANCE){
+                graphicView->moveRelativeZero(mouse);
+                pPoints->focus2 = mouse;
+                pPoints->center = (pPoints->focus1 + pPoints->focus2) * 0.5;
+                pPoints->major = pPoints->focus1 - pPoints->center;
+                pPoints->major /= pPoints->c;
+                setStatus(SetPoint);
+            }
+            break;
+        case SetPoint:
+            pPoints->point = mouse;
+            pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) + pPoints->focus2.distanceTo(pPoints->point));
+            if (pPoints->d > pPoints->c + RS_TOLERANCE){
+                graphicView->moveRelativeZero(mouse);
+                trigger();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent* e) {
-	QString cmd = e->getCommand().toLower();
+void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent *e){
+    QString cmd = e->getCommand().toLower();
 
-	if (checkCommand("help", cmd)) {
-			RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-											 + getAvailableCommands().join(": ")+
-											 tr("specify a point on ellipse, or total distance to foci")
-											 );
-		e->accept();
-		return;
-	}
+    if (checkCommand("help", cmd)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(": ") +
+                                         tr("specify a point on ellipse, or total distance to foci")
+        );
+        e->accept();
+        return;
+    }
 
-	if(getStatus()==SetPoint){
-		bool ok;
-		double a = RS_Math::eval(cmd, &ok);
-		if (ok) {
-			pPoints->d=0.5*fabs(a);
-			if (pPoints->d > pPoints->c + RS_TOLERANCE) {
-				trigger();
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
-		} else
-			RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+    if (getStatus() == SetPoint){
+        bool ok;
+        double a = RS_Math::eval(cmd, &ok);
+        if (ok){
+            pPoints->d = 0.5 * fabs(a);
+            if (pPoints->d > pPoints->c + RS_TOLERANCE){
+                trigger();
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
+        } else
+            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
 
-	}
+    }
 }
-
 
 QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
     return {};
 }
-
 
 
 void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {

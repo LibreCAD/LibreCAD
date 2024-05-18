@@ -98,7 +98,7 @@ void LC_ActionDimArc::trigger()
         document->addUndoable(new_dimArc_entity);
         document->endUndoCycle();
     }
-
+    // todo - review - what if invalid relzero?
     RS_Vector relativeZeroPos { graphicView->getRelativeZero() };
 
     setStatus (SetEntity);

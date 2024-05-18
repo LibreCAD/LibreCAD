@@ -38,8 +38,8 @@ class RS_Leader;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimLeader : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDimLeader:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -50,34 +50,31 @@ public:
     };
 
 public:
-    RS_ActionDimLeader(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-	~RS_ActionDimLeader() override;
-
+    RS_ActionDimLeader(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDimLeader() override;
     void reset();
-
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void keyPressEvent(QKeyEvent*) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void keyPressEvent(QKeyEvent *) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
 protected:
     /**
      * Leader entity.
      */
-    RS_Leader* leader = nullptr;
-	/**
-	 * Points set so far.
-	 */
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+//    RS_Leader *leader = nullptr;
+/**
+ * Points set so far.
+ */
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

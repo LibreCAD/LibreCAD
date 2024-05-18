@@ -36,7 +36,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>5</width>
+       <width>3</width>
        <height>16</height>
       </size>
      </property>
@@ -151,7 +151,7 @@
      </property>
      <property name="sizeHint" stdset="0">
       <size>
-       <width>5</width>
+       <width>3</width>
        <height>16</height>
       </size>
      </property>
@@ -228,6 +228,9 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>validate()</slot>
+ </slots>
  <buttongroups>
   <buttongroup name="bgLayerType"/>
  </buttongroups>

@@ -94,12 +94,10 @@ void RS_ActionDrawEllipseAxis::init(int status) {
     }
 }
 
-
-
 void RS_ActionDrawEllipseAxis::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	RS_Ellipse* ellipse = new RS_Ellipse{container,
+	auto* ellipse = new RS_Ellipse{container,
 	{pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
 			pPoints->angle1, pPoints->angle2, false}
 };
@@ -129,91 +127,84 @@ void RS_ActionDrawEllipseAxis::trigger() {
                     " entity added: %lu", ellipse->getId());
 }
 
-
-
 void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-//    case SetCenter:
-//        break;
+        case SetCenter:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
 
-    case SetMajor:
-		if (pPoints->center.valid) {
-            deletePreview();
-			preview->addEntity(new RS_Ellipse{preview.get(),
-				{pPoints->center, mouse-pPoints->center, 0.5, 0.0,
-											  pPoints->isArc?2.*M_PI:0.
-							   , false}});
-            drawPreview();
-        }
-        break;
+        case SetMajor:
+            if (pPoints->center.valid){
+                deletePreview();
+                preview->addEntity(new RS_Ellipse{preview.get(),
+                                                  {pPoints->center, mouse - pPoints->center, 0.5, 0.0,
+                                                   pPoints->isArc ? 2. * M_PI : 0., false}});
+                drawPreview();
+            }
+            break;
 
-    case SetMinor:
-		if (pPoints->center.valid && pPoints->m_vMajorP.valid) {
-            deletePreview();
-			RS_Line line{pPoints->center-pPoints->m_vMajorP, pPoints->center+pPoints->m_vMajorP};
-            double d = line.getDistanceToPoint(mouse);
-			pPoints->ratio = d/(line.getLength()/2);
-			preview->addEntity(new RS_Ellipse{preview.get(),
-											  {pPoints->center, pPoints->m_vMajorP, pPoints->ratio, 0., pPoints->isArc?2.*M_PI:0.
-											   , false}});
-			drawPreview();
-        }
-        break;
+        case SetMinor:
+            if (pPoints->center.valid && pPoints->m_vMajorP.valid){
+                deletePreview();
+                RS_Line line{pPoints->center - pPoints->m_vMajorP, pPoints->center + pPoints->m_vMajorP};
+                double d = line.getDistanceToPoint(mouse);
+                pPoints->ratio = d / (line.getLength() / 2);
+                preview->addEntity(new RS_Ellipse{preview.get(),
+                                                  {pPoints->center, pPoints->m_vMajorP, pPoints->ratio, 0., pPoints->isArc ? 2. * M_PI : 0., false}});
+                drawPreview();
+            }
+            break;
 
-    case SetAngle1:
-		if (pPoints->center.valid && pPoints->m_vMajorP.valid) {
-            deletePreview();
+        case SetAngle1:
+            if (pPoints->center.valid && pPoints->m_vMajorP.valid){
+                deletePreview();
 
-            //angle1 = center.angleTo(mouse);
+                //angle1 = center.angleTo(mouse);
 
-                        RS_Vector m = mouse;
-						m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-						RS_Vector v = m-pPoints->center;
-						v.y /= pPoints->ratio;
-						pPoints->angle1 = v.angle(); // + m_vMajorP.angle();
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle1 = v.angle(); // + m_vMajorP.angle();
 
-			preview->addEntity(new RS_Line{preview.get(), pPoints->center, mouse});
+                preview->addEntity(new RS_Line{preview.get(), pPoints->center, mouse});
 
-			preview->addEntity(new RS_Ellipse{preview.get(),
-				{pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle1+1.0
-				 , false}});
-            drawPreview();
-        }
-        break;
+                preview->addEntity(new RS_Ellipse{preview.get(),
+                                                  {pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle1 + 1.0, false}});
+                drawPreview();
+            }
+            break;
 
-    case SetAngle2:
-		if (pPoints->center.valid && pPoints->m_vMajorP.valid) {
-            deletePreview();
-            //angle2 = center.angleTo(mouse);
+        case SetAngle2:
+            if (pPoints->center.valid && pPoints->m_vMajorP.valid){
+                deletePreview();
+                //angle2 = center.angleTo(mouse);
 
-                        RS_Vector m = mouse;
-						m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-						RS_Vector v = m-pPoints->center;
-						v.y /= pPoints->ratio;
-						pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
+                RS_Vector m = mouse;
+                m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
+                RS_Vector v = m - pPoints->center;
+                v.y /= pPoints->ratio;
+                pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-			preview->addEntity(new RS_Line{preview.get(), pPoints->center, mouse});
+                preview->addEntity(new RS_Line{preview.get(), pPoints->center, mouse});
 
-			preview->addEntity(new RS_Ellipse{preview.get(),
-											  {pPoints->center, pPoints->m_vMajorP,
-												  pPoints->ratio,
-												  pPoints->angle1, pPoints->angle2
-							   , false}});
-            drawPreview();
-        }
+                preview->addEntity(new RS_Ellipse{preview.get(),
+                                                  {pPoints->center, pPoints->m_vMajorP,
+                                                   pPoints->ratio,
+                                                   pPoints->angle1, pPoints->angle2, false}});
+                drawPreview();
+            }
 
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDrawEllipseAxis::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
@@ -229,155 +220,150 @@ void RS_ActionDrawEllipseAxis::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
-	RS_Vector const& mouse = e->getCoordinate();
+void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e) return;
+    RS_Vector const &mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetCenter:
-		pPoints->center = mouse;
-        graphicView->moveRelativeZero(mouse);
-        setStatus(SetMajor);
-        break;
+        case SetCenter:
+            pPoints->center = mouse;
+            graphicView->moveRelativeZero(mouse);
+            setStatus(SetMajor);
+            break;
 
-    case SetMajor:
-		pPoints->m_vMajorP = mouse-	pPoints->center;
-        setStatus(SetMinor);
-        break;
+        case SetMajor:
+            pPoints->m_vMajorP = mouse - pPoints->center;
+            setStatus(SetMinor);
+            break;
 
-    case SetMinor: {
-			RS_Line line{pPoints->center-pPoints->m_vMajorP, pPoints->center+pPoints->m_vMajorP};
+        case SetMinor: {
+            RS_Line line{pPoints->center - pPoints->m_vMajorP, pPoints->center + pPoints->m_vMajorP};
             double d = line.getDistanceToPoint(mouse);
-			pPoints->ratio = d/(line.getLength()/2);
-			if (!pPoints->isArc) {
+            pPoints->ratio = d / (line.getLength() / 2);
+            if (!pPoints->isArc){
                 trigger();
                 setStatus(SetCenter);
             } else {
                 setStatus(SetAngle1);
             }
         }
-        break;
+            break;
 
-    case SetAngle1: {
-        //angle1 = center.angleTo(mouse);
-                RS_Vector m = mouse;
-				m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-				RS_Vector v = m-pPoints->center;
-				v.y /= pPoints->ratio;
-				pPoints->angle1 = v.angle();
-        setStatus(SetAngle2);
-                } break;
+        case SetAngle1: {
+            //angle1 = center.angleTo(mouse);
+            RS_Vector m = mouse;
+            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
+            RS_Vector v = m - pPoints->center;
+            v.y /= pPoints->ratio;
+            pPoints->angle1 = v.angle();
+            setStatus(SetAngle2);
+        }
+            break;
 
-    case SetAngle2: {
-        //angle2 = center.angleTo(mouse);
-                RS_Vector m = mouse;
-				m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
-				RS_Vector v = m-pPoints->center;
-				v.y /= pPoints->ratio;
-				pPoints->angle2 = v.angle();
-        trigger();
-		}
-		break;
+        case SetAngle2: {
+            //angle2 = center.angleTo(mouse);
+            RS_Vector m = mouse;
+            m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
+            RS_Vector v = m - pPoints->center;
+            v.y /= pPoints->ratio;
+            pPoints->angle2 = v.angle();
+            trigger();
+        }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-	if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
-		return;
-	}
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
+        return;
+    }
 
     switch (getStatus()) {
-    case SetMinor: {
+        case SetMinor: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->ratio = m / pPoints->m_vMajorP.magnitude();
-				if (!pPoints->isArc) {
+                pPoints->ratio = m / pPoints->m_vMajorP.magnitude();
+                if (!pPoints->isArc){
                     trigger();
                 } else {
                     setStatus(SetAngle1);
                 }
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
-        break;
+            break;
 
-    case SetAngle1: {
+        case SetAngle1: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->angle1 = RS_Math::deg2rad(a);
+                pPoints->angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
-        break;
+            break;
 
-    case SetAngle2: {
+        case SetAngle2: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->angle2 = RS_Math::deg2rad(a);
+                pPoints->angle2 = RS_Math::deg2rad(a);
                 trigger();
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
         }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCenter:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify ellipse center"),
-											tr("Cancel"));
-		break;
+    switch (getStatus()) {
+        case SetCenter:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify ellipse center"),
+                                                tr("Cancel"));
+            break;
 
-	case SetMajor:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify endpoint of major axis"),
-											tr("Back"));
-		break;
+        case SetMajor:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify endpoint of major axis"),
+                                                tr("Back"));
+            break;
 
-	case SetMinor:
-		RS_DIALOGFACTORY->updateMouseWidget(
-					tr("Specify endpoint or length of minor axis:"),
-					tr("Back"));
-		break;
+        case SetMinor:
+            RS_DIALOGFACTORY->updateMouseWidget(
+                tr("Specify endpoint or length of minor axis:"),
+                tr("Back"));
+            break;
 
-	case SetAngle1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify start angle"),
-											tr("Back"));
-		break;
+        case SetAngle1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify start angle"),
+                                                tr("Back"));
+            break;
 
-	case SetAngle2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify end angle"),
-											tr("Back"));
-		break;
+        case SetAngle2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify end angle"),
+                                                tr("Back"));
+            break;
 
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
-
-
 
 void RS_ActionDrawEllipseAxis::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

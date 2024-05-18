@@ -59,94 +59,86 @@ RS_ActionInfoDist2::~RS_ActionInfoDist2() {
 void RS_ActionInfoDist2::init(int status) {
     RS_PreviewActionInterface::init(status);
 }
-
-
-
-void RS_ActionInfoDist2::trigger() {
+// fixme - consider displaying information in EntityInfo widget
+void RS_ActionInfoDist2::trigger(){
 
     RS_DEBUG->print("RS_ActionInfoDist2::trigger()");
 
-	if (point->valid && entity) {
-		double dist = entity->getDistanceToPoint(*point);
-		QString str = RS_Units::formatLinear(dist, graphic->getUnit(),
-											 graphic->getLinearFormat(), graphic->getLinearPrecision());
+    if (point->valid && entity){
+        double dist = entity->getDistanceToPoint(*point);
+        QString str = RS_Units::formatLinear(dist, graphic->getUnit(),
+                                             graphic->getLinearFormat(), graphic->getLinearPrecision());
         RS_DIALOGFACTORY->commandMessage(tr("Distance: %1").arg(str));
         entity->setHighlighted(false);
         graphicView->redraw(RS2::RedrawDrawing);
     }
 }
 
-
-
-void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent begin");
 
     switch (getStatus()) {
-    case SetEntity:
-         suspend();
-        //entity = catchEntity(e);
-        deleteSnapper();
-        break;
-
-    case SetPoint:
-        if (entity) {
-             RS_Vector&& mouse=snapPoint(e);
-			*point = mouse;
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
-}
-
-
-
-void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-
-        switch (getStatus()) {
         case SetEntity:
-            entity = catchEntity(e);
-            if (entity) {
-                entity->setHighlighted(true);
-                graphicView->redraw(RS2::RedrawDrawing);
-                setStatus(SetPoint);
-            }
+            suspend();
+            //entity = catchEntity(e);
+            deleteSnapper();
             break;
 
-        case SetPoint: {
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
+        case SetPoint:
+            if (entity){
+                RS_Vector &&mouse = snapPoint(e);
+                *point = mouse;
+                trySnapToRelZeroCoordinateEvent(e);
             }
             break;
 
         default:
             break;
+    }
+
+    RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
+}
+
+void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
+
+        switch (getStatus()) {
+            case SetEntity:
+                entity = catchEntity(e);
+                if (entity){
+                    entity->setHighlighted(true);
+                    graphicView->redraw(RS2::RedrawDrawing);
+                    setStatus(SetPoint);
+                }
+                break;
+
+            case SetPoint: {
+                RS_CoordinateEvent ce(snapPoint(e));
+                coordinateEvent(&ce);
+            }
+                break;
+
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-
-void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
+void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
-    if (getStatus()==SetPoint && entity) {
-		*point = e->getCoordinate();
-		graphicView->moveRelativeZero(*point);
+    if (getStatus() == SetPoint && entity){
+        *point = e->getCoordinate();
+        graphicView->moveRelativeZero(*point);
         trigger();
         setStatus(SetEntity);
     }
 }
-
-
 
 void RS_ActionInfoDist2::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -165,8 +157,6 @@ void RS_ActionInfoDist2::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionInfoDist2::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QAction>
 #include <QMouseEvent>
 
@@ -49,62 +48,68 @@ struct RS_ActionDrawLineRectangle::Points {
 };
 
 RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw rectangles",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-{
-	actionType=RS2::ActionDrawLineRectangle;
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface("Draw rectangles",
+                               container, graphicView), pPoints(std::make_unique<Points>()){
+    actionType = RS2::ActionDrawLineRectangle;
 }
 
 RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 
+void RS_ActionDrawLineRectangle::trigger(){
+    RS_PreviewActionInterface::trigger();
 
-void RS_ActionDrawLineRectangle::trigger() {
-	RS_PreviewActionInterface::trigger();
+    RS_Polyline *polyline = new RS_Polyline(container);
 
-	RS_Polyline* polyline = new RS_Polyline(container);
-
-	// create and add rectangle:
-	polyline->addVertex(pPoints->corner1);
-	polyline->setLayerToActive();
-	polyline->setPenToActive();
-	polyline->addVertex({pPoints->corner2.x, pPoints->corner1.y});
-	polyline->addVertex(pPoints->corner2);
-	polyline->addVertex({pPoints->corner1.x, pPoints->corner2.y});
-	polyline->setClosed(true);
-	polyline->endPolyline();
-	container->addEntity(polyline);
+// create and add rectangle:
+    polyline->addVertex(pPoints->corner1);
+    polyline->setLayerToActive();
+    polyline->setPenToActive();
+    polyline->addVertex({pPoints->corner2.x, pPoints->corner1.y});
+    polyline->addVertex(pPoints->corner2);
+    polyline->addVertex({pPoints->corner1.x, pPoints->corner2.y});
+    polyline->setClosed(true);
+    polyline->endPolyline();
+    container->addEntity(polyline);
 
     // upd. undo list:
-    if (document) {
+    if (document){
         document->startUndoCycle();
-		document->addUndoable(polyline);
+        document->addUndoable(polyline);
         document->endUndoCycle();
     }
 
     // upd. view
-	graphicView->redraw(RS2::RedrawDrawing);
-	graphicView->moveRelativeZero(pPoints->corner2);
+    graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->moveRelativeZero(pPoints->corner2);
 }
-
-
 
 void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-	if (getStatus()==SetCorner2 && pPoints->corner1.valid) {
-		pPoints->corner2 = mouse;
-        deletePreview();
-		preview->addRectangle(pPoints->corner1, pPoints->corner2);
-		drawPreview();
+    int status = getStatus();
+    switch (status){
+        case SetCorner1:{
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        }
+        case SetCorner2:{
+            if (pPoints->corner1.valid){
+                pPoints->corner2 = mouse;
+                deletePreview();
+                preview->addRectangle(pPoints->corner1, pPoints->corner2);
+                drawPreview();
+            }
+            break;
+        }
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
 }
-
 
 void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -122,49 +127,48 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetCorner1:
-		pPoints->corner1 = mouse;
-        graphicView->moveRelativeZero(mouse);
-        setStatus(SetCorner2);
-        break;
+        case SetCorner1:
+            pPoints->corner1 = mouse;
+            graphicView->moveRelativeZero(mouse);
+            setStatus(SetCorner2);
+            break;
 
-    case SetCorner2:
-		pPoints->corner2 = mouse;
-        trigger();
-        setStatus(SetCorner1);
-        break;
+        case SetCorner2:
+            pPoints->corner2 = mouse;
+            trigger();
+            setStatus(SetCorner1);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent* e) {
-	QString const& c = e->getCommand().toLower();
+void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent *e){
+    QString const &c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
         return;
     }
 }
 
-void RS_ActionDrawLineRectangle::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCorner1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
-											tr("Cancel"));
-		break;
-	case SetCorner2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
-											tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetCorner1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
+                                                tr("Cancel"));
+            break;
+        case SetCorner2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
-
 
 void RS_ActionDrawLineRectangle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

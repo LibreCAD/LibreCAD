@@ -56,135 +56,131 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
-void RS_ActionModifyMove::trigger() {
+void RS_ActionModifyMove::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
 
     RS_Modification m(*container, graphicView);
-	m.move(pPoints->data);
+    m.move(pPoints->data);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
     finish(false);
 }
 
-
-void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
-    if (getStatus()==SetReferencePoint || getStatus()==SetTargetPoint) {
+    if (getStatus() == SetReferencePoint || getStatus() == SetTargetPoint){
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
-        case SetReferencePoint:
-			pPoints->referencePoint = mouse;
-            break;
+            case SetReferencePoint:
+                pPoints->referencePoint = mouse;
+                trySnapToRelZeroCoordinateEvent(e);
+                break;
 
-        case SetTargetPoint:
-            if (pPoints->referencePoint.valid) {
-                if (e->modifiers() & Qt::ShiftModifier) {
-                    mouse = snapToAngle(mouse, pPoints->referencePoint);
+            case SetTargetPoint:
+                if (pPoints->referencePoint.valid){
+                    if (e->modifiers() & Qt::ShiftModifier){
+                        mouse = snapToAngle(mouse, pPoints->referencePoint);
+                    }
+
+                    pPoints->targetPoint = mouse;
+
+                    deletePreview();
+                    preview->addSelectionFrom(*container);
+                    preview->move(pPoints->targetPoint - pPoints->referencePoint);
+
+                    if (e->modifiers() & Qt::ShiftModifier){
+                        auto *line = new RS_Line(pPoints->referencePoint, mouse);
+                        preview->addEntity(line);
+                        line->setSelected(true);
+                        line->setLayerToActive();
+                        line->setPenToActive();
+                    }
+                    drawPreview();
                 }
+                break;
 
-				pPoints->targetPoint = mouse;
-
-                deletePreview();
-                preview->addSelectionFrom(*container);
-				preview->move(pPoints->targetPoint-pPoints->referencePoint);
-
-                if (e->modifiers() & Qt::ShiftModifier) {
-                    RS_Line *line = new RS_Line(pPoints->referencePoint, mouse);
-                    preview->addEntity(line);
-                    line->setSelected(true);
-                    line->setLayerToActive();
-                    line->setPenToActive();
-                }
-                drawPreview();
-            }
-            break;
-
-        default:
-            break;
+            default:
+                break;
         }
     }
 
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
 }
 
-
-void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         RS_Vector snapped = snapPoint(e);
-        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
+        if ((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint)
             snapped = snapToAngle(snapped, pPoints->referencePoint);
 
         RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
+void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
 
-void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
-
-    if (e==nullptr) {
+    if (e == nullptr){
         return;
     }
 
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetReferencePoint:
-		pPoints->referencePoint = pos;
-		graphicView->moveRelativeZero(pPoints->referencePoint);
-        setStatus(SetTargetPoint);
-        break;
+        case SetReferencePoint:
+            pPoints->referencePoint = pos;
+            graphicView->moveRelativeZero(pPoints->referencePoint);
+            setStatus(SetTargetPoint);
+            break;
 
-    case SetTargetPoint:
-		pPoints->targetPoint = pos;
-		graphicView->moveRelativeZero(pPoints->targetPoint);
-        setStatus(ShowDialog);
-		if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)) {
-			if(pPoints->data.number<0){
-				pPoints->data.number=abs(pPoints->data.number);
-				RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
+        case SetTargetPoint:
+            pPoints->targetPoint = pos;
+            graphicView->moveRelativeZero(pPoints->targetPoint);
+            setStatus(ShowDialog);
+            if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
+                if (pPoints->data.number < 0){
+                    pPoints->data.number = abs(pPoints->data.number);
+                    RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
+                }
+                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                trigger();
             }
-			pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
-            trigger();
-        }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-void RS_ActionModifyMove::updateMouseButtonHints() {
-	switch (getStatus()) {
-	/*case Select:
-			RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-										   tr("Cancel"));
-			break;*/
-	case SetReferencePoint:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-											tr("Cancel"));
-		break;
-	case SetTargetPoint:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-											tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionModifyMove::updateMouseButtonHints(){
+    switch (getStatus()) {
+/*case Select:
+  RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
+            tr("Cancel"));
+  break;*/
+        case SetReferencePoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Cancel"));
+            break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
-
-void RS_ActionModifyMove::updateMouseCursor() {
-        if(graphicView != NULL){
-    graphicView->setMouseCursor(RS2::CadCursor);
-        }
+void RS_ActionModifyMove::updateMouseCursor(){
+    if (graphicView != NULL){
+        graphicView->setMouseCursor(RS2::CadCursor);
+    }
 }
 
 // EOF

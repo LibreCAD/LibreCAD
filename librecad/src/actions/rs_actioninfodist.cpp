@@ -59,66 +59,62 @@ void RS_ActionInfoDist::init(int status) {
     RS_PreviewActionInterface::init(status);
 }
 
-
-
-void RS_ActionInfoDist::trigger() {
+// fixme - consider displaying information in EntityInfo widget
+void RS_ActionInfoDist::trigger(){
 
     RS_DEBUG->print("RS_ActionInfoDist::trigger()");
 
-	if (pPoints->point1.valid && pPoints->point2.valid) {
+    if (pPoints->point1.valid && pPoints->point2.valid){
         RS_Vector dV = pPoints->point2 - pPoints->point1;
-		QStringList dists;
-		for(double a: {dV.magnitude(), dV.x, dV.y}){
-			dists<<RS_Units::formatLinear(a, graphic->getUnit(),
-										  graphic->getLinearFormat(), graphic->getLinearPrecision());
-		}
+        QStringList dists;
+        for (double a: {dV.magnitude(), dV.x, dV.y}) {
+            dists << RS_Units::formatLinear(a, graphic->getUnit(),
+                                            graphic->getLinearFormat(), graphic->getLinearPrecision());
+        }
 
         QString angle = RS_Units::formatAngle(dV.angle(),
-												graphic->getAngleFormat(), graphic->getAnglePrecision());
+                                              graphic->getAngleFormat(), graphic->getAnglePrecision());
 
-		RS_DIALOGFACTORY->commandMessage(
-                    tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5)").arg(dists[0])
-				.arg(dists[1]).arg(dists[2])
-				.arg(dists[0])
-				.arg(angle)
-				);
-	}
+        RS_DIALOGFACTORY->commandMessage(
+            tr("Distance: %1 Cartesian: (%2 , %3), Polar: (%4<%5)").arg(dists[0])
+                .arg(dists[1]).arg(dists[2])
+                .arg(dists[0])
+                .arg(angle)
+        );
+    }
 }
 
-
-
-void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent begin");
 
-    if (getStatus()==SetPoint1 ||
-            getStatus()==SetPoint2) {
+    int status = getStatus();
+    if (status == SetPoint1 ||
+        status == SetPoint2){
 
         RS_Vector mouse = snapPoint(e);
-        switch (getStatus()) {
-        case SetPoint1:
-            break;
+        switch (status) {
+            case SetPoint1:
+                trySnapToRelZeroCoordinateEvent(e);
+                break;
 
-        case SetPoint2:
-			if (pPoints->point1.valid) {
-				pPoints->point2 = mouse;
+            case SetPoint2:
+                if (pPoints->point1.valid){
+                    pPoints->point2 = mouse;
 
-                deletePreview();
+                    deletePreview();
 
-				preview->addEntity(new RS_Line{preview.get(), pPoints->point1, pPoints->point2});
+                    preview->addEntity(new RS_Line{preview.get(), pPoints->point1, pPoints->point2});
 
-                drawPreview();
-            }
-            break;
-
-        default:
-            break;
+                    drawPreview();
+                }
+                break;
+            default:
+                break;
         }
     }
 
     RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -130,57 +126,52 @@ void RS_ActionInfoDist::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
+void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetPoint1:
-		pPoints->point1 = mouse;
-		graphicView->moveRelativeZero(pPoints->point1);
-        setStatus(SetPoint2);
-        break;
+        case SetPoint1:
+            pPoints->point1 = mouse;
+            graphicView->moveRelativeZero(pPoints->point1);
+            setStatus(SetPoint2);
+            break;
 
-    case SetPoint2:
-		if (pPoints->point1.valid) {
-			pPoints->point2 = mouse;
-            deletePreview();
-				graphicView->moveRelativeZero(pPoints->point2);
-            trigger();
-            setStatus(SetPoint1);
-        }
-        break;
+        case SetPoint2:
+            if (pPoints->point1.valid){
+                pPoints->point2 = mouse;
+                deletePreview();
+                graphicView->moveRelativeZero(pPoints->point2);
+                trigger();
+                setStatus(SetPoint1);
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-void RS_ActionInfoDist::updateMouseButtonHints() {
+void RS_ActionInfoDist::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetPoint1:
-        RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Specify first point of distance"),
-            tr("Cancel"));
-        break;
-    case SetPoint2:
-        RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Specify second point of distance"),
-            tr("Back"));
-        break;
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetPoint1:
+            RS_DIALOGFACTORY->updateMouseWidget(
+                tr("Specify first point of distance"),
+                tr("Cancel"));
+            break;
+        case SetPoint2:
+            RS_DIALOGFACTORY->updateMouseWidget(
+                tr("Specify second point of distance"),
+                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
-
-
 
 void RS_ActionInfoDist::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

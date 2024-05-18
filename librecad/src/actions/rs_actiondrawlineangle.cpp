@@ -37,6 +37,8 @@
 #include "rs_preview.h"
 #include "rs_settings.h"
 
+
+
 struct RS_ActionDrawLineAngle::Points {
 	/**
 	 * Line data defined so far.
@@ -61,7 +63,7 @@ struct RS_ActionDrawLineAngle::Points {
 	/**
 	 * Snap point (start, middle, end).
 	 */
-	int snpPoint{0};
+	int snpPoint{SNAP_START};
 };
 
 RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
@@ -108,20 +110,26 @@ void RS_ActionDrawLineAngle::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
-	RS_Line* line = new RS_Line{container, pPoints->data};
+    auto *line = new RS_Line{container, pPoints->data};
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
 
     // upd. undo list:
-    if (document) {
+    if (document){
         document->startUndoCycle();
         document->addUndoable(line);
         document->endUndoCycle();
     }
-
-	graphicView->moveRelativeZero(pPoints->data.startpoint);
-        graphicView->redraw(RS2::RedrawDrawing);
+    if (!persistRelativeZero){
+        RS_Vector &newRelZero = pPoints->data.startpoint;
+        if (pPoints->snpPoint == SNAP_MIDDLE){ // snap to middle
+            newRelZero = (pPoints->data.startpoint + pPoints->data.endpoint)*0.5;
+        }
+        graphicView->moveRelativeZero(newRelZero);
+    }
+    persistRelativeZero = false;
+    graphicView->redraw(RS2::RedrawDrawing);
     RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
                     line->getId());
 }
@@ -130,11 +138,18 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
-		pPoints->pos = snapPoint(e);
+        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        RS_Vector position = snapPoint(e);
+        if (shiftPressed){
+            RS_Vector relZero = graphicView->getRelativeZero();
+            if (relZero.valid){
+                position = graphicView->getRelativeZero();
+            }
+        }
+        pPoints->pos = position;
         deletePreview();
         preparePreview();
-		preview->addEntity(new RS_Line(preview.get(),
-									   pPoints->data));
+        preview->addEntity(new RS_Line(preview.get(),pPoints->data));
         drawPreview();
     }
 
@@ -144,7 +159,18 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if (getStatus()==SetPos) {
-            RS_CoordinateEvent ce(snapPoint(e));
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            RS_Vector position = snapPoint(e);
+            // potentially, we could eliminate this and set line position on mouse move and complete action there. however,
+            // it seems explicit set of position on click is more consistent with default behavior of the action?
+            if (shiftPressed){
+                RS_Vector relZero = graphicView->getRelativeZero();
+                if (relZero.valid){
+                    position = graphicView->getRelativeZero();
+                    persistRelativeZero = true;
+                }
+            }
+            RS_CoordinateEvent ce(position);
             coordinateEvent(&ce);
         }
     } else if (e->button()==Qt::RightButton) {
@@ -157,21 +183,21 @@ void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionDrawLineAngle::preparePreview() {
     RS_Vector p1, p2;
     // End:
-	if (pPoints->snpPoint == 2) {
-		p2.setPolar(-pPoints->length, pPoints->angle);
+    if (pPoints->snpPoint == SNAP_END){
+        p2.setPolar(-pPoints->length, pPoints->angle);
     } else {
-		p2.setPolar(pPoints->length, pPoints->angle);
+        p2.setPolar(pPoints->length, pPoints->angle);
     }
 
     // Middle:
-	if (pPoints->snpPoint == 1) {
-		p1 = pPoints->pos - (p2 / 2);
+    if (pPoints->snpPoint == SNAP_MIDDLE){
+        p1 = pPoints->pos - (p2 / 2);
     } else {
-		p1 = pPoints->pos;
+        p1 = pPoints->pos;
     }
 
     p2 += p1;
-	pPoints->data = {p1, p2};
+    pPoints->data = {p1, p2};
 }
 
 void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {

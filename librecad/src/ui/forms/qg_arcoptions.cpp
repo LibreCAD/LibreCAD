@@ -52,23 +52,22 @@ QG_ArcOptions::~QG_ArcOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_ArcOptions::languageChange()
-{
+void QG_ArcOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
 void QG_ArcOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/ArcReversed", (int)ui->rbNeg->isChecked());
+    RS_SETTINGS->writeEntry("/ArcReversed", (int) ui->rbNeg->isChecked());
     RS_SETTINGS->endGroup();
 }
 
 void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawArc) {
-		action = static_cast<RS_ActionDrawArc*>(a);
+    if (a && a->rtti() == RS2::ActionDrawArc){
+        action = dynamic_cast<RS_ActionDrawArc *>(a);
 
         bool reversed;
-        if (update) {
+        if (update){
             reversed = action->isReversed();
         } else {
             RS_SETTINGS->beginGroup("/Draw");
@@ -76,14 +75,12 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
             RS_SETTINGS->endGroup();
             action->setReversed(reversed);
         }
-		ui->rbNeg->setChecked(reversed);
+        ui->rbNeg->setChecked(reversed);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR, "QG_ArcOptions::setAction: wrong action type");
-		action = nullptr;
+        action = nullptr;
     }
-
 }
-
 
 /*void QG_ArcOptions::init() {
 	data = nullptr;
@@ -94,16 +91,13 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
     rbNeg->setChecked(reversed);
 }*/
 
-
-
 /*void QG_ArcOptions::setData(RS_ArcData* d) {
     data = d;
     updateDirection(false);
 }*/
-
-void QG_ArcOptions::updateDirection(bool /*pos*/) {
-    if (action) {
-		action->setReversed(!(ui->rbPos->isChecked()));
+void QG_ArcOptions::updateDirection(bool /*pos*/){
+    if (action){
+        action->setReversed(!(ui->rbPos->isChecked()));
         saveSettings();
     }
 }

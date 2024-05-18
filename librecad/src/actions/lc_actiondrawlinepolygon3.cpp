@@ -72,17 +72,16 @@ void LC_ActionDrawLinePolygonCenTan::trigger() {
     }
 }
 
-
-
 void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetCenter:
+    case SetCenter: {
+        trySnapToRelZeroCoordinateEvent(e);
         break;
-
+    }
     case SetTangent:
         if (pPoints->center.valid) {
             pPoints->corner = mouse;
@@ -99,8 +98,6 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
         break;
     }
 }
-
-
 
 void LC_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -155,8 +152,6 @@ void LC_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
     }
 }
 
-
-
 void LC_ActionDrawLinePolygonCenTan::showOptions() {
     RS_ActionInterface::showOptions();
 
@@ -210,24 +205,19 @@ void LC_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
-
 QStringList LC_ActionDrawLinePolygonCenTan::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetCenter:
-    case SetTangent:
-        cmd += command("number");
-        break;
-    default:
-        break;
+        case SetCenter:
+        case SetTangent:
+            cmd += command("number");
+            break;
+        default:
+            break;
     }
-
     return cmd;
 }
-
-
 
 void LC_ActionDrawLinePolygonCenTan::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

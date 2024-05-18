@@ -57,16 +57,14 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
 
 RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;
 
-void RS_ActionDrawEllipseCenter3Points::init(int status) {
+void RS_ActionDrawEllipseCenter3Points::init(int status){
     RS_PreviewActionInterface::init(status);
 
-    if (status==SetCenter) {
-		pPoints->points.clear();
+    if (status == SetCenter){
+        pPoints->points.clear();
     }
     drawSnapper();
 }
-
-
 
 void RS_ActionDrawEllipseCenter3Points::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -94,72 +92,66 @@ void RS_ActionDrawEllipseCenter3Points::trigger() {
                     " entity added: %lu", ellipse->getId());
 }
 
-
-
-void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
-    if(getStatus() == SetCenter) return;
-	pPoints->points.resize(getStatus());
-	pPoints->points.push_back(mouse);
-    if(preparePreview()) {
-        switch(getStatus()) {
+    if (getStatus() == SetCenter){
+        trySnapToRelZeroCoordinateEvent(e);
+        return;
+    }
+    pPoints->points.resize(getStatus());
+    pPoints->points.push_back(mouse);
+    if (preparePreview()){
+        switch (getStatus()) {
+            case SetPoint1: {
+                auto *circle = new RS_Circle(preview.get(), pPoints->cData);
+                deletePreview();
+                preview->addEntity(circle);
+                drawPreview();
+            }
+                break;
 
-        case SetPoint1:
-		{
-			RS_Circle* circle=new RS_Circle(preview.get(), pPoints->cData);
-            deletePreview();
-            preview->addEntity(circle);
-            drawPreview();
-        }
-            break;
-
-        case SetPoint2:
-        case SetPoint3:
-        {
-            deletePreview();
-			RS_Ellipse* e=new RS_Ellipse(preview.get(), pPoints->eData);
-            preview->addEntity(e);
-            drawPreview();
-        }
-        default:
-            break;
+            case SetPoint2:
+            case SetPoint3: {
+                deletePreview();
+                auto *ellipse = new RS_Ellipse(preview.get(), pPoints->eData);
+                preview->addEntity(ellipse);
+                drawPreview();
+            }
+            default:
+                break;
         }
 
     }
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent end");
 }
 
-
 bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
-	pPoints->valid=false;
-    switch(getStatus()) {
-    case SetPoint1:
-    {
-		RS_Circle c(preview.get(), pPoints->cData);
-		pPoints->valid= c.createFromCR(pPoints->points.at(0),
-							  pPoints->points.get(0).distanceTo(pPoints->points.get(1)));
+    pPoints->valid = false;
+    switch (getStatus()) {
+        case SetPoint1: {
+            RS_Circle c(preview.get(), pPoints->cData);
+            pPoints->valid = c.createFromCR(pPoints->points.at(0),
+                                            pPoints->points.get(0).distanceTo(pPoints->points.get(1)));
 
-		if (pPoints->valid){
-			pPoints->cData = c.getData();
+            if (pPoints->valid){
+                pPoints->cData = c.getData();
+            }
+            break;
         }
-
-    }
-        break;
-    case SetPoint2:
-    case SetPoint3:
-    {
-		RS_Ellipse e(preview.get(), pPoints->eData);
-		pPoints->valid= e.createFromCenter3Points(pPoints->points);
-		if (pPoints->valid){
-			pPoints->eData = e.getData();
+        case SetPoint2:
+        case SetPoint3: {
+            RS_Ellipse e(preview.get(), pPoints->eData);
+            pPoints->valid = e.createFromCenter3Points(pPoints->points);
+            if (pPoints->valid){
+                pPoints->eData = e.getData();
+            }
+            break;
         }
+        default:
+            break;
     }
-        break;
-    default:
-        break;
-	}
-	return pPoints->valid;
+    return pPoints->valid;
 }
 
 void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
@@ -176,40 +168,39 @@ void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
+void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e) return;
     RS_Vector mouse = e->getCoordinate();
-	pPoints->points.alloc(getStatus()+1);
-	pPoints->points.set(getStatus(), mouse);
+    pPoints->points.alloc(getStatus() + 1);
+    pPoints->points.set(getStatus(), mouse);
 
     switch (getStatus()) {
-    case SetCenter:
-        graphicView->moveRelativeZero(mouse);
-        setStatus(SetPoint1);
-        break;
-    case SetPoint1:
-    case SetPoint2:
-        for(int i=0;i<getStatus()-1;i++) {
-			if( (mouse-pPoints->points.get(i)).squared() < RS_TOLERANCE15) {
-                return;//refuse to accept points already chosen
+        case SetCenter:
+            graphicView->moveRelativeZero(mouse);
+            setStatus(SetPoint1);
+            break;
+        case SetPoint1:
+        case SetPoint2:
+            for (int i = 0; i < getStatus() - 1; i++) {
+                if ((mouse - pPoints->points.get(i)).squared() < RS_TOLERANCE15){
+                    return;//refuse to accept points already chosen
+                }
             }
-        }
 //                setStatus(getStatus()+1);
 //                break;
-        // fall-through
-    case SetPoint3:
-        if( preparePreview()) {
-            if(getStatus() == SetPoint3) {
-                trigger();
-            }else{
-                setStatus(getStatus()+1);
+            // fall-through
+        case SetPoint3:
+            if (preparePreview()){
+                if (getStatus() == SetPoint3){
+                    trigger();
+                } else {
+                    setStatus(getStatus() + 1);
+                }
             }
-        }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -271,36 +262,35 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
 }
 */
 
-
 QStringList RS_ActionDrawEllipseCenter3Points::getAvailableCommands() {
 	return {};
 }
 
-void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCenter:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the center of ellipse"),
-											tr("Cancel"));
-		break;
+void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetCenter:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the center of ellipse"),
+                                                tr("Cancel"));
+            break;
 
-	case SetPoint1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
-											tr("Cancel"));
-		break;
-	case SetPoint2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on ellipse"),
-											tr("Back"));
-		break;
+        case SetPoint1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
+                                                tr("Cancel"));
+            break;
+        case SetPoint2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on ellipse"),
+                                                tr("Back"));
+            break;
 
-	case SetPoint3:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on ellipse"),
-											tr("Back"));
-		break;
+        case SetPoint3:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on ellipse"),
+                                                tr("Back"));
+            break;
 
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
 void RS_ActionDrawEllipseCenter3Points::updateMouseCursor() {

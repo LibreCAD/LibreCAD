@@ -65,8 +65,7 @@ RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
                                            RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Scale Entities",
                                 container, graphicView)
-    , pPoints(std::make_unique<Points>())
-{
+    , pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionModifyScale;
 }
 
@@ -75,7 +74,6 @@ RS_ActionModifyScale::~RS_ActionModifyScale() = default;
 
 void RS_ActionModifyScale::init(int status) {
     RS_ActionInterface::init(status);
-
 }
 
 void RS_ActionModifyScale::trigger() {
@@ -90,8 +88,6 @@ void RS_ActionModifyScale::trigger() {
     }
 }
 
-
-
 void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
 
@@ -100,6 +96,7 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
         switch (getStatus()) {
         case SetReferencePoint:
             pPoints->data.referencePoint = snapPoint(e);
+            trySnapToRelZeroCoordinateEvent(e);
             break;
 
         case SetSourcePoint:

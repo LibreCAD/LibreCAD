@@ -52,115 +52,116 @@ void RS_ActionModifyRotate::init(int status) {
     RS_ActionInterface::init(status);
 }
 
-void RS_ActionModifyRotate::trigger() {
+void RS_ActionModifyRotate::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyRotate::trigger()");
 
     RS_Modification m(*container, graphicView);
-	m.rotate(*data);
+    m.rotate(*data);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 
-void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-    case setCenterPoint:
-    case setReferencePoint:
-        break;
-
-    case setTargetPoint:
-        if( ! mouse.valid ) return;
-        deletePreview();
-        preview->addSelectionFrom(*container);
-		preview->rotate(data->center,RS_Math::correctAngle((mouse - data->center).angle() - data->angle));
-        drawPreview();
+        case SetCenterPoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetReferencePoint:
+            break;
+        case SetTargetPoint:
+            if (!mouse.valid) return;
+            deletePreview();
+            preview->addSelectionFrom(*container);
+            preview->rotate(data->center, RS_Math::correctAngle((mouse - data->center).angle() - data->angle));
+            drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionModifyRotate::mouseMoveEvent end");
 }
 
-void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == NULL){
         return;
     }
 
     RS_Vector pos = e->getCoordinate();
-    if (! pos.valid ) {
+    if (!pos.valid){
         return;
     }
     switch (getStatus()) {
-    case setCenterPoint:
-		data->center = pos;
-		graphicView->moveRelativeZero(data->center);
-        setStatus(setReferencePoint);
-        break;
-    case setReferencePoint:
-		pos -= data->center;
-        if ( pos.squared()< RS_TOLERANCE2 ) {
-			data->angle = 0.;//angle not well defined, go direct to dialog
+        case SetCenterPoint:
+            data->center = pos;
+            graphicView->moveRelativeZero(data->center);
+            setStatus(SetReferencePoint);
+            break;
+        case SetReferencePoint:
+            pos -= data->center;
+            if (pos.squared() < RS_TOLERANCE2){
+                data->angle = 0.;//angle not well defined, go direct to dialog
+                setStatus(ShowDialog);
+                if (RS_DIALOGFACTORY->requestRotateDialog(*data)){
+                    trigger();
+                    finish(false);
+                }
+            } else {
+                data->angle = pos.angle();
+                setStatus(SetTargetPoint);
+            }
+            break;
+        case SetTargetPoint:
+            pos -= data->center;
+            if (pos.squared() < RS_TOLERANCE2){
+                data->angle = 0.;//angle not well defined
+            } else {
+                data->angle = RS_Math::correctAngle(pos.angle() - data->angle);
+            }
             setStatus(ShowDialog);
-			if (RS_DIALOGFACTORY->requestRotateDialog(*data)) {
+            if (RS_DIALOGFACTORY->requestRotateDialog(*data)){
                 trigger();
                 finish(false);
             }
-        } else {
-			data->angle=pos.angle();
-            setStatus(setTargetPoint);
-        }
-        break;
-    case setTargetPoint:
-		pos -= data->center;
-        if ( pos.squared()< RS_TOLERANCE2 ) {
-			data->angle = 0.;//angle not well defined
-        } else {
-			data->angle = RS_Math::correctAngle(pos.angle() - data->angle);
-        }
-        setStatus(ShowDialog);
-		if (RS_DIALOGFACTORY->requestRotateDialog(*data)) {
-            trigger();
-            finish(false);
-        }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionModifyRotate::updateMouseButtonHints() {
+void RS_ActionModifyRotate::updateMouseButtonHints(){
     switch (getStatus()) {
-    case setCenterPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify rotation center"),
-                                            tr("Back"));
-        break;
+        case SetCenterPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify rotation center"),
+                                                tr("Back"));
+            break;
 
-    case setReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Back"));
-        break;
-    case setTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point to rotate to"),
-                                            tr("Back"));
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetReferencePoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Back"));
+            break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point to rotate to"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-void RS_ActionModifyRotate::updateMouseCursor() {
+void RS_ActionModifyRotate::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 

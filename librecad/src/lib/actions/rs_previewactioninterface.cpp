@@ -24,11 +24,12 @@
 **
 **********************************************************************/
 
-
+#include <QMouseEvent>
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 #include "rs_previewactioninterface.h"
+#include "rs_coordinateevent.h"
 
 /**
  * Constructor.
@@ -124,5 +125,31 @@ void RS_PreviewActionInterface::drawPreview() {
 	container->addEntity(preview.get());
 	graphicView->redraw(RS2::RedrawOverlay);
 	hasPreview=true;
+}
+
+bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEvent *e){
+    bool result = false;
+    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+    if (shiftPressed){
+        RS_Vector relZero = graphicView->getRelativeZero();
+        if (relZero.valid){
+            RS_CoordinateEvent ce(relZero);
+            coordinateEvent(&ce);
+            result = true;
+        }
+    }
+    return result;
+}
+
+RS_Vector RS_PreviewActionInterface::getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector& pos){
+    RS_Vector result = pos;
+    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+    if (shiftPressed){
+        RS_Vector relZero = graphicView->getRelativeZero();
+        if (relZero.valid){
+           result = relZero;
+        }
+    }
+    return result;
 }
 

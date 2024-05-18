@@ -61,19 +61,19 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
 RS_ActionDrawImage::~RS_ActionDrawImage() = default;
 
 
-void RS_ActionDrawImage::init(int status) {
+void RS_ActionDrawImage::init(int status){
     RS_PreviewActionInterface::init(status);
 
     reset();
 
-	pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
+    pImg->data.file = RS_DIALOGFACTORY->requestImageOpenDialog();
     // RVT_PORT should we really redarw here?? graphicView->redraw();
 
-	if (!pImg->data.file.isEmpty()) {
-		//std::cout << "file: " << pImg->data.file << "\n";
-		//qDebug() << "file: " << pImg->data.file;
+    if (!pImg->data.file.isEmpty()){
+//std::cout << "file: " << pImg->data.file << "\n";
+//qDebug() << "file: " << pImg->data.file;
 
-		pImg->img = QImage(pImg->data.file);
+        pImg->img = QImage(pImg->data.file);
 
         setStatus(SetTargetPoint);
     } else {
@@ -81,8 +81,6 @@ void RS_ActionDrawImage::init(int status) {
         //RS_DIALOGFACTORY->requestToolBar(RS2::ToolBarMain);
     }
 }
-
-
 
 void RS_ActionDrawImage::reset() {
 	pImg->data = {
@@ -96,14 +94,12 @@ void RS_ActionDrawImage::reset() {
 			   };
 }
 
-
-
-void RS_ActionDrawImage::trigger() {
+void RS_ActionDrawImage::trigger(){
     deletePreview();
 
-	if (!pImg->data.file.isEmpty()) {
+    if (!pImg->data.file.isEmpty()){
         RS_Creation creation(container, graphicView);
-		creation.createImage(& pImg->data);
+        creation.createImage(&pImg->data);
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
@@ -111,33 +107,33 @@ void RS_ActionDrawImage::trigger() {
     finish(false);
 }
 
+void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
+    if (getStatus() == SetTargetPoint){
+        bool snappedToRelZero = trySnapToRelZeroCoordinateEvent(e);
+        if (!snappedToRelZero){
+            pImg->data.insertionPoint = snapPoint(e);
 
-void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent* e) {
-	if (getStatus() == SetTargetPoint) {
-		pImg->data.insertionPoint = snapPoint(e);
-
-        deletePreview();
-		//RS_Creation creation(preview, nullptr, false);
-        //creation.createInsert(data);
-		double const w=pImg->img.width();
-		double const h=pImg->img.height();
-		RS_Line* line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};
-        preview->addEntity(line);
-		line = new RS_Line{preview.get(), {w, 0.}, {w, h}};
-        preview->addEntity(line);
-		line = new RS_Line{preview.get(), {w, h}, {0., h}};
-        preview->addEntity(line);
-		line = new RS_Line{preview.get(), {0., h}, {0., 0.}};
-        preview->addEntity(line);
-		preview->scale({0., 0.},
-			{pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
-		preview->rotate({0.,0.}, pImg->data.uVector.angle());
-		preview->move(pImg->data.insertionPoint);
-		drawPreview();
+            deletePreview();
+//RS_Creation creation(preview, nullptr, false);
+            //creation.createInsert(data);
+            double const w = pImg->img.width();
+            double const h = pImg->img.height();
+            RS_Line *line = new RS_Line{preview.get(), {0., 0.}, {w, 0.}};
+            preview->addEntity(line);
+            line = new RS_Line{preview.get(), {w, 0.}, {w, h}};
+            preview->addEntity(line);
+            line = new RS_Line{preview.get(), {w, h}, {0., h}};
+            preview->addEntity(line);
+            line = new RS_Line{preview.get(), {0., h}, {0., 0.}};
+            preview->addEntity(line);
+            preview->scale({0., 0.},
+                           {pImg->data.uVector.magnitude(), pImg->data.uVector.magnitude()});
+            preview->rotate({0., 0.}, pImg->data.uVector.angle());
+            preview->move(pImg->data.insertionPoint);
+            drawPreview();
+        }
     }
 }
-
-
 
 void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -149,180 +145,166 @@ void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) {
+void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
-	pImg->data.insertionPoint = e->getCoordinate();
+    pImg->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 
-
-
-void RS_ActionDrawImage::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawImage::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", c)){
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetTargetPoint:
-        if (checkCommand("angle", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetAngle);
-        } else if (checkCommand("factor", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetFactor);
-        } else if (checkCommand("dpi",c)) {
-            deletePreview();
-            lastStatus =(Status)getStatus();
-            setStatus(SetDPI);
+        case SetTargetPoint:
+            if (checkCommand("angle", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetAngle);
+            } else if (checkCommand("factor", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetFactor);
+            } else if (checkCommand("dpi", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetDPI);
+            }
+            break;
+
+        case SetAngle: {
+            bool ok;
+            double a = RS_Math::eval(c, &ok);
+            if (ok){
+                setAngle(RS_Math::deg2rad(a));
+            } else {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            }
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            setStatus(lastStatus);
         }
-        break;
+            break;
 
-    case SetAngle: {
-        bool ok;
-        double a = RS_Math::eval(c, &ok);
-		if (ok) {
-            setAngle(RS_Math::deg2rad(a));
-        } else {
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+        case SetFactor: {
+            bool ok;
+            double f = RS_Math::eval(c, &ok);
+            if (ok){
+                setFactor(f);
+            } else {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            }
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            setStatus(lastStatus);
         }
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-        setStatus(lastStatus);
-    }
-        break;
+            break;
 
-    case SetFactor: {
-        bool ok;
-        double f = RS_Math::eval(c, &ok);
-		if (ok) {
-            setFactor(f);
-        } else {
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+        case SetDPI : {
+            bool ok;
+            double dpi = RS_Math::eval(c, &ok);
+
+            if (ok){
+                setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
+            } else {
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            }
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            setStatus(lastStatus);
         }
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-        setStatus(lastStatus);
-    }
-        break;
+            break;
 
-    case SetDPI : {
-        bool ok;
-        double dpi = RS_Math::eval(c, &ok);
-
-		if(ok) {
-            setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
-        } else {
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-        setStatus(lastStatus);
-    }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-double RS_ActionDrawImage::getAngle() const {
-	return pImg->data.uVector.angle();
+double RS_ActionDrawImage::getAngle() const{
+    return pImg->data.uVector.angle();
 }
 
 void RS_ActionDrawImage::setAngle(double a) const{
-	double l = pImg->data.uVector.magnitude();
-	pImg->data.uVector.setPolar(l, a);
-	pImg->data.vVector.setPolar(l, a+M_PI_2);
+    double l = pImg->data.uVector.magnitude();
+    pImg->data.uVector.setPolar(l, a);
+    pImg->data.vVector.setPolar(l, a + M_PI_2);
 }
 
-double RS_ActionDrawImage::getFactor() const {
-	return pImg->data.uVector.magnitude();
+double RS_ActionDrawImage::getFactor() const{
+    return pImg->data.uVector.magnitude();
 }
 
-void RS_ActionDrawImage::setFactor(double f) const {
-	double a = pImg->data.uVector.angle();
-	pImg->data.uVector.setPolar(f, a);
-	pImg->data.vVector.setPolar(f, a+M_PI_2);
+void RS_ActionDrawImage::setFactor(double f) const{
+    double a = pImg->data.uVector.angle();
+    pImg->data.uVector.setPolar(f, a);
+    pImg->data.vVector.setPolar(f, a + M_PI_2);
 }
 
-double RS_ActionDrawImage::dpiToScale(double dpi) const {
-	return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
+double RS_ActionDrawImage::dpiToScale(double dpi) const{
+    return RS_Units::dpiToScale(dpi, document->getGraphicUnit());
 }
 
-
-
-double RS_ActionDrawImage::scaleToDpi(double scale) const {
-	return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
+double RS_ActionDrawImage::scaleToDpi(double scale) const{
+    return RS_Units::scaleToDpi(scale, document->getGraphicUnit());
 }
 
-
-
-void RS_ActionDrawImage::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawImage::updateMouseCursor(){
+    graphicView->setMouseCursor(RS2::CadCursor);
 }
 
-QStringList RS_ActionDrawImage::getAvailableCommands() {
+QStringList RS_ActionDrawImage::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetTargetPoint:
-        cmd += command("angle");
-        cmd += command("factor");
-        cmd += command("dpi");
-        break;
-    default:
-        break;
+        case SetTargetPoint:
+            cmd += command("angle");
+            cmd += command("factor");
+            cmd += command("dpi");
+            break;
+        default:
+            break;
     }
 
     return cmd;
 }
 
-
-
-void RS_ActionDrawImage::showOptions() {
+void RS_ActionDrawImage::showOptions(){
     RS_ActionInterface::showOptions();
 
-	RS_DIALOGFACTORY->requestOptions(this, true);
+    RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
-void RS_ActionDrawImage::hideOptions() {
+void RS_ActionDrawImage::hideOptions(){
     RS_ActionInterface::hideOptions();
-	RS_DIALOGFACTORY->requestOptions(this, false);
+    RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-
-void RS_ActionDrawImage::updateMouseButtonHints() {
+void RS_ActionDrawImage::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
-        break;
-    case SetAngle:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter angle:"),
-                                            "");
-        break;
-    case SetFactor:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter factor:"),
-                                            "");
-        break;
-    case SetDPI:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dpi:"),
-                                            "");
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Cancel"));
+            break;
+        case SetAngle:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter angle:"),
+                                                "");
+            break;
+        case SetFactor:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter factor:"),
+                                                "");
+            break;
+        case SetDPI:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dpi:"),
+                                                "");
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 

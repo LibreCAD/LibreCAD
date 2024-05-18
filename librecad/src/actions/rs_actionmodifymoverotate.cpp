@@ -71,42 +71,39 @@ void RS_ActionModifyMoveRotate::trigger() {
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 
-
-
-void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent begin");
 
-    if (getStatus()==SetReferencePoint ||
-            getStatus()==SetTargetPoint) {
+    if (getStatus() == SetReferencePoint ||
+        getStatus() == SetTargetPoint){
 
         RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
-        case SetReferencePoint:
-			pPoints->data.referencePoint = mouse;
-            break;
+            case SetReferencePoint:
+                pPoints->data.referencePoint = mouse;
+                trySnapToRelZeroCoordinateEvent(e);
+                break;
 
-        case SetTargetPoint:
-			if (pPoints->data.referencePoint.valid) {
-				pPoints->targetPoint = mouse;
-				pPoints->data.offset = pPoints->targetPoint-pPoints->data.referencePoint;
+            case SetTargetPoint:
+                if (pPoints->data.referencePoint.valid){
+                    pPoints->targetPoint = mouse;
+                    pPoints->data.offset = pPoints->targetPoint - pPoints->data.referencePoint;
 
-                deletePreview();
-                preview->addSelectionFrom(*container);
-				preview->rotate(pPoints->data.referencePoint, pPoints->data.angle);
-				preview->move(pPoints->data.offset);
-                drawPreview();
-            }
-            break;
+                    deletePreview();
+                    preview->addSelectionFrom(*container);
+                    preview->rotate(pPoints->data.referencePoint, pPoints->data.angle);
+                    preview->move(pPoints->data.offset);
+                    drawPreview();
+                }
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
     RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionModifyMoveRotate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -118,93 +115,86 @@ void RS_ActionModifyMoveRotate::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) return;
+void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr) return;
 
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetReferencePoint:
-		pPoints->data.referencePoint = pos;
-        setStatus(SetTargetPoint);
-        break;
+        case SetReferencePoint:
+            pPoints->data.referencePoint = pos;
+            setStatus(SetTargetPoint);
+            break;
 
-    case SetTargetPoint:
-		pPoints->targetPoint = pos;
+        case SetTargetPoint:
+            pPoints->targetPoint = pos;
 
-        setStatus(ShowDialog);
-		pPoints->data.offset = pPoints->targetPoint - pPoints->data.referencePoint;
-		if (RS_DIALOGFACTORY->requestMoveRotateDialog(pPoints->data)) {
-            trigger();
-            //finish();
-        }
-        break;
+            setStatus(ShowDialog);
+            pPoints->data.offset = pPoints->targetPoint - pPoints->data.referencePoint;
+            if (RS_DIALOGFACTORY->requestMoveRotateDialog(pPoints->data)){
+                trigger();
+                //finish();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent* e) {
+void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", c)){
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
-                // RVT_PORT changed from if (c==checkCommand("angle", c)) {
-        if (checkCommand("angle", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetAngle);
-        }
-        break;
+        case SetReferencePoint:
+        case SetTargetPoint:
+            // RVT_PORT changed from if (c==checkCommand("angle", c)) {
+            if (checkCommand("angle", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetAngle);
+            }
+            break;
 
-    case SetAngle: {
+        case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->data.angle = RS_Math::deg2rad(a);
+                pPoints->data.angle = RS_Math::deg2rad(a);
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
     }
 }
 
-
-
-QStringList RS_ActionModifyMoveRotate::getAvailableCommands() {
+QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetReferencePoint:
-    case SetTargetPoint:
-        cmd += command("angle");
-        break;
+        case SetReferencePoint:
+        case SetTargetPoint:
+            cmd += command("angle");
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     return cmd;
 }
 
-
-
-void RS_ActionModifyMoveRotate::showOptions() {
+void RS_ActionModifyMoveRotate::showOptions(){
     //std::cout << "RS_ActionModifyMoveRotate::showOptions()\n";
 
     RS_ActionInterface::showOptions();
@@ -212,9 +202,7 @@ void RS_ActionModifyMoveRotate::showOptions() {
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
-void RS_ActionModifyMoveRotate::hideOptions() {
+void RS_ActionModifyMoveRotate::hideOptions(){
     //std::cout << "RS_ActionModifyMoveRotate::hideOptions()\n";
 
     RS_ActionInterface::hideOptions();
@@ -222,37 +210,35 @@ void RS_ActionModifyMoveRotate::hideOptions() {
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-void RS_ActionModifyMoveRotate::setAngle(double a) {
-	pPoints->data.angle = a;
+void RS_ActionModifyMoveRotate::setAngle(double a){
+    pPoints->data.angle = a;
 }
+
 double RS_ActionModifyMoveRotate::getAngle() const{
-	return pPoints->data.angle;
+    return pPoints->data.angle;
 }
 
-
-void RS_ActionModifyMoveRotate::updateMouseButtonHints() {
+void RS_ActionModifyMoveRotate::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
-        break;
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                            tr("Back"));
-        break;
-    case SetAngle:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter rotation angle:"),
-                                            tr("Back"));
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetReferencePoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Cancel"));
+            break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+                                                tr("Back"));
+            break;
+        case SetAngle:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter rotation angle:"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionModifyMoveRotate::updateMouseCursor() {
+void RS_ActionModifyMoveRotate::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 

@@ -67,80 +67,85 @@ void RS_ActionDimLeader::init(int status) {
     reset();
 }
 
-
-
-void RS_ActionDimLeader::trigger() {
+void RS_ActionDimLeader::trigger(){
     RS_PreviewActionInterface::trigger();
 
-	if (pPoints->points.size()){
+    if (!pPoints->points.empty()){
 
-        RS_Leader* leader = new RS_Leader(container, RS_LeaderData(true));
-        leader->setLayerToActive();
-        leader->setPenToActive();
+        auto *leaderEntity = new RS_Leader(container, RS_LeaderData(true));
+        leaderEntity->setLayerToActive();
+        leaderEntity->setPenToActive();
 
-		for(const auto& vp: pPoints->points){
-			leader->addVertex(vp);
-		}
+        for (const auto &vp: pPoints->points) {
+            leaderEntity->addVertex(vp);
+        }
 
-        container->addEntity(leader);
+        container->addEntity(leaderEntity);
 
         // upd. undo list:
-		if (document) {
+        if (document){
             document->startUndoCycle();
-            document->addUndoable(leader);
+            document->addUndoable(leaderEntity);
             document->endUndoCycle();
         }
 
         deletePreview();
         RS_Vector rz = graphicView->getRelativeZero();
-		graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
         graphicView->moveRelativeZero(rz);
         //drawSnapper();
 
-        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leader added: %lu",
-                        leader->getId());
+        RS_DEBUG->print("RS_ActionDimLeader::trigger(): leaderEntity added: %lu",
+                        leaderEntity->getId());
     }
 }
 
-
-
-void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-	if (getStatus()==SetEndpoint && pPoints->points.size()) {
-        deletePreview();
+    int status = getStatus();
+    switch (status){
+        case SetStartpoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetEndpoint:{
+            if (!pPoints->points.empty()){
+                deletePreview();
 
-		// fill in lines that were already set:
-		RS_Vector last(false);
-		for(const auto& v: pPoints->points){
-			if (last.valid) {
-				preview->addEntity(new RS_Line{preview.get(), last, v});
-			}
-			last = v;
-		}
+// fill in lines that were already set:
+                RS_Vector last(false);
+                for (const auto &v: pPoints->points) {
+                    if (last.valid){
+                        preview->addEntity(new RS_Line{preview.get(), last, v});
+                    }
+                    last = v;
+                }
 
-		if (pPoints->points.size() ) {
-			RS_Vector const& p = pPoints->points.back();
+                if (!pPoints->points.empty()){
+                    RS_Vector const &p = pPoints->points.back();
 
-			if (e->modifiers() & Qt::ShiftModifier) {
-				mouse = snapToAngle(mouse, p);
-			}
+                    if (e->modifiers() & Qt::ShiftModifier){
+                        mouse = snapToAngle(mouse, p);
+                    }
 
-			preview->addEntity(new RS_Line{preview.get(), p, mouse});
+                    preview->addEntity(new RS_Line{preview.get(), p, mouse});
+                }
+                drawPreview();
+            }
+            break;
         }
-        drawPreview();
+        default:
+           break;
     }
 
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent end");
 }
 
-
-
 void RS_ActionDimLeader::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector snapped = snapPoint(e);
-        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetEndpoint && pPoints->points.size()) {
+        if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetEndpoint && !pPoints->points.empty()) {
             RS_Vector const& p = pPoints->points.back();
             snapped = snapToAngle(snapped, p);
         }
@@ -159,8 +164,6 @@ void RS_ActionDimLeader::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
     if (getStatus()==SetEndpoint && e->key()==Qt::Key_Enter) {
         trigger();
@@ -169,51 +172,47 @@ void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
     }
 }
 
-
-
-void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) {
+void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetStartpoint:
-        //data.startpoint = mouse;
-        pPoints->points.clear();
-	pPoints->points.push_back(mouse);
-        //start = data.startpoint;
-        setStatus(SetEndpoint);
-        graphicView->moveRelativeZero(mouse);
-        break;
+        case SetStartpoint:
+            //data.startpoint = mouse;
+            pPoints->points.clear();
+            pPoints->points.push_back(mouse);
+            //start = data.startpoint;
+            setStatus(SetEndpoint);
+            graphicView->moveRelativeZero(mouse);
+            break;
 
-    case SetEndpoint:
-        //data.endpoint = mouse;
-	pPoints->points.push_back(mouse);
-        //trigger();
-        //data.startpoint = data.endpoint;
-        graphicView->moveRelativeZero(mouse);
-        break;
+        case SetEndpoint:
+            //data.endpoint = mouse;
+            pPoints->points.push_back(mouse);
+            //trigger();
+            //data.startpoint = data.endpoint;
+            graphicView->moveRelativeZero(mouse);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDimLeader::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-	if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
-		return;
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
+        return;
     }
 
     // enter to finish
-    if (c=="") {
+    if (c == ""){
         trigger();
         reset();
         setStatus(SetStartpoint);
@@ -221,23 +220,21 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
-void RS_ActionDimLeader::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetStartpoint:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-											tr("Cancel"));
-		break;
-	case SetEndpoint:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point"),
-											tr("Finish"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionDimLeader::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetStartpoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+                                                tr("Cancel"));
+            break;
+        case SetEndpoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point"),
+                                                tr("Finish"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
-
 
 void RS_ActionDimLeader::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

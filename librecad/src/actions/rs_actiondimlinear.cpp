@@ -71,86 +71,80 @@ void RS_ActionDimLinear::reset() {
 	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
-
-void RS_ActionDimLinear::trigger() {
+void RS_ActionDimLinear::trigger(){
     RS_ActionDimension::trigger();
 
     preparePreview();
-	RS_DimLinear* dim = new RS_DimLinear(container, *data, *edata);
+    RS_DimLinear *dim = new RS_DimLinear(container, *data, *edata);
     dim->setLayerToActive();
     dim->setPenToActive();
     dim->update();
     container->addEntity(dim);
 
     // upd. undo list:
-    if (document) {
+    if (document){
         document->startUndoCycle();
         document->addUndoable(dim);
         document->endUndoCycle();
     }
 
     RS_Vector rz = graphicView->getRelativeZero();
-	graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(rz);
 
     RS_DEBUG->print("RS_ActionDimLinear::trigger():"
                     " dim added: %lu", dim->getId());
 }
 
-
-void RS_ActionDimLinear::preparePreview() {
-	RS_Vector dirV = RS_Vector::polar(100., edata->angle+M_PI_2);
-
+void RS_ActionDimLinear::preparePreview(){
+    RS_Vector dirV = RS_Vector::polar(100., edata->angle + M_PI_2);
     RS_ConstructionLine cl(
         NULL,
         RS_ConstructionLineData(
-			edata->extensionPoint2,
-			edata->extensionPoint2+dirV));
+            edata->extensionPoint2,
+            edata->extensionPoint2 + dirV));
 
-	data->definitionPoint =
-		cl.getNearestPointOnEntity(data->definitionPoint);
+    data->definitionPoint =
+        cl.getNearestPointOnEntity(data->definitionPoint);
 
 }
 
-
-
-void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDimLinear::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetExtPoint1:
-        break;
+        case SetExtPoint1:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
 
-    case SetExtPoint2:
-		if (edata->extensionPoint1.valid) {
-            deletePreview();
-			preview->addEntity(new RS_Line{preview.get(),
-										   edata->extensionPoint1, mouse});
-            drawPreview();
-        }
-        break;
+        case SetExtPoint2:
+            if (edata->extensionPoint1.valid){
+                deletePreview();
+                preview->addEntity(new RS_Line{preview.get(),
+                                               edata->extensionPoint1, mouse});
+                drawPreview();
+            }
+            break;
 
-    case SetDefPoint:
-		if (edata->extensionPoint1.valid && edata->extensionPoint2.valid) {
-            deletePreview();
-			data->definitionPoint = mouse;
+        case SetDefPoint:
+            if (edata->extensionPoint1.valid && edata->extensionPoint2.valid){
+                deletePreview();
+                data->definitionPoint = mouse;
 
-            preparePreview();
+                preparePreview();
 
-			RS_DimLinear* dim = new RS_DimLinear(preview.get(), *data, *edata);
-            preview->addEntity(dim);
-            dim->update();
-            drawPreview();
-        }
-        break;
+                auto *dim = new RS_DimLinear(preview.get(), *data, *edata);
+                preview->addEntity(dim);
+                dim->update();
+                drawPreview();
+            }
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionDimLinear::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -162,37 +156,35 @@ void RS_ActionDimLinear::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionDimLinear::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+void RS_ActionDimLinear::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetExtPoint1:
-		edata->extensionPoint1 = pos;
-        graphicView->moveRelativeZero(pos);
-        setStatus(SetExtPoint2);
-        break;
+        case SetExtPoint1:
+            edata->extensionPoint1 = pos;
+            graphicView->moveRelativeZero(pos);
+            setStatus(SetExtPoint2);
+            break;
 
-    case SetExtPoint2:
-		edata->extensionPoint2 = pos;
-        graphicView->moveRelativeZero(pos);
-        setStatus(SetDefPoint);
-        break;
+        case SetExtPoint2:
+            edata->extensionPoint2 = pos;
+            graphicView->moveRelativeZero(pos);
+            setStatus(SetDefPoint);
+            break;
 
-    case SetDefPoint:
-		data->definitionPoint = pos;
-        trigger();
-        reset();
-        setStatus(SetExtPoint1);
-        break;
+        case SetDefPoint:
+            data->definitionPoint = pos;
+            trigger();
+            reset();
+            setStatus(SetExtPoint1);
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -208,51 +200,49 @@ bool RS_ActionDimLinear::hasFixedAngle() const{
 	return fixedAngle;
 }
 
-void RS_ActionDimLinear::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDimLinear::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-	if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
-		return;
-	}
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
+        return;
+    }
 
     switch (getStatus()) {
-    case SetText:
-        setText(c);
-		RS_DIALOGFACTORY->requestOptions(this, true, true);
-        graphicView->enableCoordinateInput();
-        setStatus(lastStatus);
-        break;
+        case SetText:
+            setText(c);
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            graphicView->enableCoordinateInput();
+            setStatus(lastStatus);
+            break;
 
-    case SetAngle: {
+        case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-			if (ok) {
+            if (ok){
                 setAngle(RS_Math::deg2rad(a));
             } else {
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
-			RS_DIALOGFACTORY->requestOptions(this, true, true);
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-    default:
-        lastStatus = (Status)getStatus();
-        deletePreview();
-        if (checkCommand("text", c)) {
-            graphicView->disableCoordinateInput();
-            setStatus(SetText);
-            return;
-        } else if (!fixedAngle && (checkCommand("angle", c))) {
-            setStatus(SetAngle);
-        }
-        break;
+        default:
+            lastStatus = (Status) getStatus();
+            deletePreview();
+            if (checkCommand("text", c)){
+                graphicView->disableCoordinateInput();
+                setStatus(SetText);
+                return;
+            } else if (!fixedAngle && (checkCommand("angle", c))){
+                setStatus(SetAngle);
+            }
+            break;
     }
 }
-
-
 
 QStringList RS_ActionDimLinear::getAvailableCommands() {
     QStringList cmd;
@@ -273,7 +263,6 @@ QStringList RS_ActionDimLinear::getAvailableCommands() {
 
     return cmd;
 }
-
 
 void RS_ActionDimLinear::updateMouseButtonHints() {
 	switch (getStatus()) {
@@ -305,15 +294,11 @@ void RS_ActionDimLinear::updateMouseButtonHints() {
 	}
 }
 
-
-
 void RS_ActionDimLinear::showOptions() {
     RS_ActionInterface::showOptions();
 
 	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
-
-
 
 void RS_ActionDimLinear::hideOptions() {
     RS_ActionInterface::hideOptions();

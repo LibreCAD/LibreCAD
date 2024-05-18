@@ -3,27 +3,35 @@ project(LibreCAD)
 
 set(CMAKE_CXX_STANDARD 17)
 
-set(MIN_GW_PATH_PREFIX "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
+#set(MIN_GW_PATH_PREFIX "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
+set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
 #set(CMAKE_PREFIX_PATH "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
-set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
+#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
+set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 
-set(Qt5_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
-set(Qt5Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Core")
-set(Qt5Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Svg")
-
+#set(Qt5_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
+set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+#set(Qt5Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Core")
+set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
+set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
+#set(Qt5Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Svg")
+set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
 
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
+set(CMAKE_AUTOUIC_OPTIONS --connections string)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
+
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
+#find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
+find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
 find_package(Boost REQUIRED COMPONENTS)
 
 #qt5_wrap_cpp(plugins/asciifile.cpp)
@@ -1052,4 +1060,5 @@ add_executable(LibreCAD
 )
 
 
-target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
+#target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
+target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)

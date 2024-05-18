@@ -103,6 +103,14 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent* e) {
         //RS_Vector mouse = snapPoint(e);
         *pos = snapPoint(e);
 
+        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        if (shiftPressed){
+            RS_Vector relZero = graphicView->getRelativeZero();
+            if (relZero.valid){
+                *pos = relZero;
+            }
+        }
+
         /*RS_Creation creation(nullptr, nullptr);
             RS_Line* l = creation.createLineRelAngle(mouse,
                          entity,
@@ -134,29 +142,27 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
 
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
-        case SetEntity:
-        {
-            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
-            if (en != nullptr) {
-                entity = en;
+            case SetEntity: {
+                RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+                if (en != nullptr){
+                    entity = en;
 
-                entity->setHighlighted(true);
-                graphicView->drawEntity(entity);
+                    entity->setHighlighted(true);
+                    graphicView->drawEntity(entity);
 
-                setStatus(SetPos);
+                    setStatus(SetPos);
+                }
+                break;
             }
-        }
-        break;
-
-        case SetPos:
-        {
-            RS_CoordinateEvent ce(snapPoint(e));
-            coordinateEvent(&ce);
-        }
-        break;
-
-        default:
-        break;
+            case SetPos: {
+                const RS_Vector& snap = snapPoint(e);
+                RS_Vector position = getRelZeroAwarePoint(e, snap);
+                RS_CoordinateEvent ce(position);
+                coordinateEvent(&ce);
+                break;
+            }
+            default:
+                break;
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

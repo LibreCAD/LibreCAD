@@ -51,8 +51,7 @@ RS_ActionDrawCircle2P::RS_ActionDrawCircle2P(RS_EntityContainer& container,
     :RS_PreviewActionInterface("Draw circles",
                                container, graphicView)
     , data(new RS_CircleData())
-    , pPoints(std::make_unique<Points>())
-{
+    , pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionDrawCircle2P;
     reset();
 }
@@ -65,22 +64,17 @@ void RS_ActionDrawCircle2P::reset() {
     pPoints->point2 = {};
 }
 
-
-
 void RS_ActionDrawCircle2P::init(int status) {
     RS_PreviewActionInterface::init(status);
-
     reset();
 }
-
-
 
 void RS_ActionDrawCircle2P::trigger() {
     RS_PreviewActionInterface::trigger();
 
     preparePreview();
     if (data->isValid()) {
-        RS_Circle* circle = new RS_Circle(container,
+        auto* circle = new RS_Circle(container,
                                           *data);
         circle->setLayerToActive();
         circle->setPenToActive();
@@ -103,8 +97,6 @@ void RS_ActionDrawCircle2P::trigger() {
         RS_DIALOGFACTORY->requestWarningDialog(tr("Invalid Circle data."));
 }
 
-
-
 void RS_ActionDrawCircle2P::preparePreview() {
     data.reset(new RS_CircleData{});
     if (pPoints->point1.valid && pPoints->point2.valid) {
@@ -119,23 +111,24 @@ void RS_ActionDrawCircle2P::preparePreview() {
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-    case SetPoint1:
-        pPoints->point1 = mouse;
-        break;
+        case SetPoint1:
+            pPoints->point1 = mouse;
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
 
-    case SetPoint2:
-        pPoints->point2 = mouse;
-        preparePreview();
-        if (data->isValid()) {
-            RS_Circle* circle = new RS_Circle(preview.get(), *data);
-            deletePreview();
-            preview->addEntity(circle);
-            drawPreview();
-        }
-        break;
+        case SetPoint2:
+            pPoints->point2 = mouse;
+            preparePreview();
+            if (data->isValid()){
+                auto *circle = new RS_Circle(preview.get(), *data);
+                deletePreview();
+                preview->addEntity(circle);
+                drawPreview();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -148,8 +141,6 @@ void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==nullptr) {
@@ -176,7 +167,6 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
 void RS_ActionDrawCircle2P::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
@@ -192,8 +182,6 @@ void RS_ActionDrawCircle2P::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionDrawCircle2P::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

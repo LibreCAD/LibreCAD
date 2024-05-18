@@ -39,17 +39,17 @@
  */
 class RS_PreviewActionInterface : public RS_ActionInterface {
 public:
-    RS_PreviewActionInterface(const char* name,
-                              RS_EntityContainer& container,
-                              RS_GraphicView& graphicView,
-                              RS2::ActionType actionType = RS2::ActionNone);
-	~RS_PreviewActionInterface() override;
-
-	void init(int status=0) override;
-	void finish(bool updateTB=true) override;
-	void suspend() override;
-	void resume() override;
-	void trigger() override;
+    RS_PreviewActionInterface(
+        const char *name,
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        RS2::ActionType actionType = RS2::ActionNone);
+    ~RS_PreviewActionInterface() override;
+    void init(int status = 0) override;
+    void finish(bool updateTB = true) override;
+    void suspend() override;
+    void resume() override;
+    void trigger() override;
     void drawPreview();
     void deletePreview();
 
@@ -59,12 +59,14 @@ protected:
     /**
      * Preview that holds the entities to be previewed.
      */
-	std::unique_ptr<RS_Preview> preview;
+    std::unique_ptr<RS_Preview> preview;
     bool hasPreview = true;//whether preview is in use
 //    /**
 //     * Current offset of the preview.
 //     */
 //	std::unique_ptr<RS_Vector> offset;
+    bool trySnapToRelZeroCoordinateEvent(const QMouseEvent *e);
+    RS_Vector getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector &pos);
 };
 
 #endif

@@ -57,145 +57,135 @@ void RS_ActionModifyStretch::init(int status) {
 
 RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
 
-
-void RS_ActionModifyStretch::trigger() {
+void RS_ActionModifyStretch::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyStretch::trigger()");
 
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-	m.stretch(pPoints->firstCorner,
-			  pPoints->secondCorner,
-			  pPoints->targetPoint - pPoints->referencePoint);
+    m.stretch(pPoints->firstCorner,
+              pPoints->secondCorner,
+              pPoints->targetPoint - pPoints->referencePoint);
 
     setStatus(SetFirstCorner);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 
-
-
-void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-    case SetFirstCorner:
-        break;
+        case SetFirstCorner:
+            break;
 
-    case SetSecondCorner:
-		if (pPoints->firstCorner.valid) {
-			pPoints->secondCorner = snapPoint(e);
-			deletePreview();
-			preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
-            drawPreview();
-        }
-        break;
+        case SetSecondCorner:
+            if (pPoints->firstCorner.valid){
+                pPoints->secondCorner = snapPoint(e);
+                deletePreview();
+                preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
+                drawPreview();
+            }
+            break;
 
-    case SetReferencePoint:
-        break;
+        case SetReferencePoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
 
-    case SetTargetPoint:
-		if (pPoints->referencePoint.valid) {
-			pPoints->targetPoint = mouse;
+        case SetTargetPoint:
+            if (pPoints->referencePoint.valid){
+                pPoints->targetPoint = mouse;
 
-            deletePreview();
-			preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
-            //preview->move(targetPoint-referencePoint);
-			preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
-							 pPoints->targetPoint-pPoints->referencePoint);
-            drawPreview();
-        }
-        break;
+                deletePreview();
+                preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
+                //preview->move(targetPoint-referencePoint);
+                preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
+                                 pPoints->targetPoint - pPoints->referencePoint);
+                drawPreview();
+            }
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-
-
-void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == NULL){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetFirstCorner:
-		pPoints->firstCorner = mouse;
-        setStatus(SetSecondCorner);
-        break;
+        case SetFirstCorner:
+            pPoints->firstCorner = mouse;
+            setStatus(SetSecondCorner);
+            break;
 
-    case SetSecondCorner:
-		pPoints->secondCorner = mouse;
-        deletePreview();
-        setStatus(SetReferencePoint);
-        break;
+        case SetSecondCorner:
+            pPoints->secondCorner = mouse;
+            deletePreview();
+            setStatus(SetReferencePoint);
+            break;
 
-    case SetReferencePoint:
-		pPoints->referencePoint = mouse;
-		graphicView->moveRelativeZero(pPoints->referencePoint);
-        setStatus(SetTargetPoint);
-        break;
+        case SetReferencePoint:
+            pPoints->referencePoint = mouse;
+            graphicView->moveRelativeZero(pPoints->referencePoint);
+            setStatus(SetTargetPoint);
+            break;
 
-    case SetTargetPoint:
-		pPoints->targetPoint = mouse;
-		graphicView->moveRelativeZero(pPoints->targetPoint);
-        trigger();
-        //finish();
-        break;
+        case SetTargetPoint:
+            pPoints->targetPoint = mouse;
+            graphicView->moveRelativeZero(pPoints->targetPoint);
+            trigger();
+            //finish();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
-
 }
 
-
-void RS_ActionModifyStretch::updateMouseButtonHints() {
+void RS_ActionModifyStretch::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetFirstCorner:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
-                                            tr("Cancel"));
-        break;
-    case SetSecondCorner:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
-                                            tr("Back"));
-        break;
-    case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Back"));
-        break;
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                            tr("Back"));
-        break;
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetFirstCorner:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
+                                                tr("Cancel"));
+            break;
+        case SetSecondCorner:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
+                                                tr("Back"));
+            break;
+        case SetReferencePoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                                tr("Back"));
+            break;
+        case SetTargetPoint:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionModifyStretch::updateMouseCursor() {
+void RS_ActionModifyStretch::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::CadCursor);
 }
 

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QAction>
 #include <QMouseEvent>
 
@@ -50,8 +49,7 @@ RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
 		:RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
 		, pPoints(std::make_unique<Points>())
 		,number(3)
-		,lastStatus(SetCenter)
-{
+		,lastStatus(SetCenter){
 	actionType=RS2::ActionDrawLinePolygonCenCor;
 }
 
@@ -63,15 +61,13 @@ void RS_ActionDrawLinePolygonCenCor::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
-	bool ok = creation.createPolygon(pPoints->center, pPoints->corner, number);
+    bool ok = creation.createPolygon(pPoints->center, pPoints->corner, number);
 
-    if (!ok) {
+    if (!ok){
         RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:"
                         " No polygon added\n");
     }
 }
-
-
 
 void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
@@ -79,27 +75,26 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetCenter:
-        break;
-
-    case SetCorner:
-		if (pPoints->center.valid) {
-			pPoints->corner = mouse;
-            deletePreview();
-
-			RS_Creation creation(preview.get(), nullptr, false);
-			creation.createPolygon(pPoints->center, pPoints->corner, number);
-
-            drawPreview();
+        case SetCenter: {
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
         }
-        break;
+        case SetCorner:
+            if (pPoints->center.valid){
+                pPoints->corner = mouse;
+                deletePreview();
 
-    default:
-        break;
+                RS_Creation creation(preview.get(), nullptr, false);
+                creation.createPolygon(pPoints->center, pPoints->corner, number);
+
+                drawPreview();
+            }
+            break;
+
+        default:
+            break;
     }
 }
-
-
 
 void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -112,104 +107,98 @@ void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e)  return;
+    if (!e) return;
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetCenter:
-		pPoints->center = mouse;
-        setStatus(SetCorner);
-        graphicView->moveRelativeZero(mouse);
-        break;
+        case SetCenter:
+            pPoints->center = mouse;
+            setStatus(SetCorner);
+            graphicView->moveRelativeZero(mouse);
+            break;
 
-    case SetCorner:
-		pPoints->corner = mouse;
-        trigger();
-        break;
+        case SetCorner:
+            pPoints->corner = mouse;
+            trigger();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
 void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCenter:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
-											"");
-		break;
+    switch (getStatus()) {
+        case SetCenter:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
+                                                "");
+            break;
 
-	case SetCorner:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a corner"), "");
-		break;
+        case SetCorner:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a corner"), "");
+            break;
 
-	case SetNumber:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
-		break;
+        case SetNumber:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
+            break;
 
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
-
-
-void RS_ActionDrawLinePolygonCenCor::showOptions() {
+void RS_ActionDrawLinePolygonCenCor::showOptions(){
     RS_ActionInterface::showOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, true);
+    RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-void RS_ActionDrawLinePolygonCenCor::hideOptions() {
+void RS_ActionDrawLinePolygonCenCor::hideOptions(){
     RS_ActionInterface::hideOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, false);
+    RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-	if (checkCommand("help", c)) {
-		RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-										 + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+                                         + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetCenter:
-    case SetCorner:
-        if (checkCommand("number", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetNumber);
-        }
-        break;
+        case SetCenter:
+        case SetCorner:
+            if (checkCommand("number", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetNumber);
+            }
+            break;
 
-    case SetNumber: {
+        case SetNumber: {
             bool ok;
             int n = c.toInt(&ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-                if (n>0 && n<10000) {
+                if (n > 0 && n < 10000){
                     number = n;
-				} else
-					RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-														"Try 1..9999"));
-			} else
-				RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-			RS_DIALOGFACTORY->requestOptions(this, true, true);
+                } else
+                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
+                                                        "Try 1..9999"));
+            } else
+                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
-
-
 
 QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands() {
     QStringList cmd;
@@ -225,8 +214,6 @@ QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands() {
 
     return cmd;
 }
-
-
 
 void RS_ActionDrawLinePolygonCenCor::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

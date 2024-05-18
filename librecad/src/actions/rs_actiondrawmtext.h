@@ -36,8 +36,8 @@ struct RS_MTextData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawMText : public RS_PreviewActionInterface {
-        Q_OBJECT
+class RS_ActionDrawMText:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -49,40 +49,32 @@ public:
     };
 
 public:
-    RS_ActionDrawMText(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-	~RS_ActionDrawMText() override;
-
-	void init(int status=0) override;
-
-	void reset();
-
-	void trigger() override;
-	void preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-        void setText(const QString& t);
-        QString getText();
-
-        void setAngle(double a);
-        double getAngle();
+    RS_ActionDrawMText(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawMText() override;
+    void init(int status = 0) override;
+    void reset();
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void hideOptions() override;
+    void showOptions() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setText(const QString &t);
+    QString getText();
+    void setAngle(double a);
+    double getAngle();
 
 private:
-	std::unique_ptr<RS_MTextData> data;
-        //RS_Text* text;
-	std::unique_ptr<RS_Vector> pos;
+    std::unique_ptr<RS_MTextData> data;
+    //RS_Text* text;
+    std::unique_ptr<RS_Vector> pos;
     bool textChanged = false;
 };
 

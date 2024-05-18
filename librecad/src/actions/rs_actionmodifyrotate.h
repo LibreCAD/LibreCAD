@@ -43,9 +43,9 @@ public:
      * Action States.
      */
     enum Status {
-        setCenterPoint,    /**< Setting the rotation center */
-        setReferencePoint,    /**< Setting the reference point. */
-        setTargetPoint,    /**< Setting the target to rotation to*/
+        SetCenterPoint,    /**< Setting the rotation center */
+        SetReferencePoint,    /**< Setting the reference point. */
+        SetTargetPoint,    /**< Setting the target to rotation to*/
         ShowDialog            /**< Showing the options dialog. */
     };
 

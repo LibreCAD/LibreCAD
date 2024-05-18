@@ -69,50 +69,54 @@ void RS_ActionInfoArea::trigger() {
 
     init(SetFirstPoint);
 }
-
+// fixme - consider displaying information in EntityInfo widget
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
-void RS_ActionInfoArea::display() {
+void RS_ActionInfoArea::display(){
     deletePreview();
-	if(ia->size() < 1) {
+    if (ia->size() < 1){
         return;
     }
-	switch(ia->size()){
-    case 2:
-		preview->addEntity(new RS_Line(preview.get(), ia->at(0), ia->at(1)));
-        break;
-    default:
-		for(int i=0;i<ia->size();i++){
-			preview->addEntity(new RS_Line(preview.get(), ia->at(i), ia->at((i+1) % ia->size())));
-		}
-		QString const linear = RS_Units::formatLinear(ia->getCircumference(),
-													  graphic->getUnit(),
-													  graphic->getLinearFormat(),
-													  graphic->getLinearPrecision());
-		RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(linear));
-		RS_DIALOGFACTORY->commandMessage(tr("Area: %1 %2^2")
-										 .arg(ia->getArea())
-										 .arg(RS_Units::unitToString(graphic->getUnit())));
-        break;
+    switch (ia->size()) {
+        case 2:
+            preview->addEntity(new RS_Line(preview.get(), ia->at(0), ia->at(1)));
+            break;
+        default:
+            for (int i = 0; i < ia->size(); i++) {
+                preview->addEntity(new RS_Line(preview.get(), ia->at(i), ia->at((i + 1) % ia->size())));
+            }
+            QString const linear = RS_Units::formatLinear(ia->getCircumference(),
+                                                          graphic->getUnit(),
+                                                          graphic->getLinearFormat(),
+                                                          graphic->getLinearPrecision());
+            RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(linear));
+            RS_DIALOGFACTORY->commandMessage(tr("Area: %1 %2^2")
+                                                 .arg(ia->getArea())
+                                                 .arg(RS_Units::unitToString(graphic->getUnit())));
+            break;
     }
     drawPreview();
 }
-
 
 void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-    if ( getStatus()==SetNextPoint) {
-		ia->push_back(mouse);
-        display();
-		ia->pop_back();
+    int status = getStatus();
+    switch (status){
+        case SetFirstPoint:
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
+        case SetNextPoint:
+            ia->push_back(mouse);
+            display();
+            ia->pop_back();
+            break;
+        default:
+            break;
     }
-
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
 }
-
-
 
 void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
@@ -124,39 +128,36 @@ void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
+void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
-	if(ia->duplicated(mouse)) {
-		ia->push_back(mouse);
+    if (ia->duplicated(mouse)){
+        ia->push_back(mouse);
         RS_DIALOGFACTORY->commandMessage(tr("Closing Point: %1/%2")
-                                         .arg(mouse.x).arg(mouse.y));
+                                             .arg(mouse.x).arg(mouse.y));
         trigger();
         return;
     }
     graphicView->moveRelativeZero(mouse);
 
-	ia->push_back(mouse);
+    ia->push_back(mouse);
     RS_DIALOGFACTORY->commandMessage(tr("Point: %1/%2")
-                                     .arg(mouse.x).arg(mouse.y));
+                                         .arg(mouse.x).arg(mouse.y));
     switch (getStatus()) {
-    case SetFirstPoint:
-        setStatus(SetNextPoint);
-        break;
-    case SetNextPoint:
-        display();
-        break;
+        case SetFirstPoint:
+            setStatus(SetNextPoint);
+            break;
+        case SetNextPoint:
+            display();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
-
 
 void RS_ActionInfoArea::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -175,8 +176,6 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionInfoArea::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);
