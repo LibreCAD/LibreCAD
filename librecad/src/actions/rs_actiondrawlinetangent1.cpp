@@ -86,8 +86,6 @@ void RS_ActionDrawLineTangent1::trigger(){
     }
 }
 
-
-
 void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
@@ -100,6 +98,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
             break;
         }
         case SetCircle: {
+            deletePreview();
             RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
@@ -109,8 +108,8 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                     graphicView->drawEntity(en);
                 }
                 circle = en;
-                circle->setHighlighted(true);
-                graphicView->drawEntity(en);
+//                circle->setHighlighted(true);
+//                graphicView->drawEntity(en);
 
                 RS_Creation creation(nullptr, nullptr);
                 tangent.reset(
@@ -119,12 +118,16 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                                             circle)
                 );
 
+
                 if (tangent){
-                    deletePreview();
                     preview->addEntity(tangent->clone());
-                    drawPreview();
                 }
+                // clone of entity is used on preview instead of highlighting entity
+                // since arc may be part of polyline (and if it so, the polyline will not be highlighted)
+                // and so there might be no visual indication of selected entity
+                preview->addCloneOf(en);
             }
+            drawPreview();
             break;
         }
         default:
