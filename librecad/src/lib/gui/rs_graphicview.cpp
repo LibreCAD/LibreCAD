@@ -155,7 +155,7 @@ void RS_GraphicView::setFactorY(double f) {
 
 void RS_GraphicView::setOffset(int ox, int oy) {
 	//    DEBUG_HEADER
-	//    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"set offset from (%d, %d) to (%d, %d)", getOffsetX(), getOffsetY(), ox, oy);
+    RS_DEBUG->print(/*RS_Debug::D_WARNING, */"set offset from (%d, %d) to (%d, %d)", getOffsetX(), getOffsetY(), ox, oy);
 	setOffsetX(ox);
 	setOffsetY(oy);
 }
@@ -1663,6 +1663,7 @@ RS_Vector RS_GraphicView::toGraph(const QPointF& position) const
  */
 RS_Vector RS_GraphicView::toGraph(int x, int y) const
 {
+    LC_ERR<<__func__<<"(): position="<<x<<", "<<y;
     return RS_Vector(toGraphX(x), toGraphY(y));
 }
 

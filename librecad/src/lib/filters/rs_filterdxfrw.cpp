@@ -308,7 +308,7 @@ void RS_FilterDXFRW::addVport(const DRW_Vport &data) {
         graphic->setIsometricGrid(data.snapStyle);
         graphic->setCrosshairType( (RS2::CrosshairType)data.snapIsopair);
         RS_GraphicView *gv = graphic->getGraphicView();
-		if (gv ) {
+        if (gv ) {
             double width = data.height * data.ratio;
             double factorX= gv->getWidth() / width;
             double factorY= gv->getHeight() / data.height;

@@ -22,23 +22,35 @@ SCRIPTPATH="$(dirname "$0")"
 
 for i in /opt/local/libexec /usr/local/opt /usr/local $(dirname `which qmake6`)
 do
-    if [ -x "$i/qt6/bin/qmake6" ]
+    for j in "" 6
+    do
+        if [ -x "$i/qt$j/bin/qmake$j" ]
+        then
+            QT_PATH=$i/qt$j/bin/
+            QMAKE_CMD=${QT_PATH}qmake${j}
+            break
+        fi
+        if [ -x "$i/qmake${j}" ]; then
+        	QT_PATH="$i/"
+            QMAKE_CMD=${QT_PATH}qmake${j}
+    	break
+        fi
+    done
+    if [ -x "$QMAKE_CMD" ]
     then
-        QT_PATH=$i/qt6/bin/
-        break
-    fi
-    if [ -x "$i/qmake6" ]; then
-    	QT_PATH="$i"
 	break
     fi
 done
-if [ -z "$QT_PATH" ]
+
+#validate QT_PATH
+if [ ! -x "$QMAKE_CMD" ]
 then
-    echo QT_PATH could not be determined, exiting >&2
+    echo "QT_PATH or qmake could not be determined, exiting" >&2
     exit 1
 fi
 
 echo QT_PATH="$QT_PATH"
+echo QMAKE_CMD="$QMAKE_CMD"
 
 QMAKE_OPTS=""
 CODESIGN_IDENTITY=""
@@ -67,19 +79,6 @@ case $i in
     ;;
 esac
 done
-
-#validate QT_PATH
-if [[ ! -f ${QT_PATH}qmake6 ]]
-then
-    QT_PATH=$(dirname "$(which qmake6)")/
-	if [[ -z $QT_PATH ]]
-	then
-		echo "can not locate qmake"
-		exit 1
-	fi
-fi
-
-QMAKE_CMD=${QT_PATH}qmake6
 
 # validate QT_VERSION
 QT_VERSION=$(${QMAKE_CMD} -query QT_VERSION)
