@@ -42,7 +42,6 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 	:RS_PreviewActionInterface("Draw Tangents 1", container, graphicView)
 	,tangent(nullptr)
 	,point(new RS_Vector{})
-	,circle(nullptr)
 {
 	actionType=RS2::ActionDrawLineTangent1;
 }
@@ -53,32 +52,23 @@ void RS_ActionDrawLineTangent1::trigger(){
     RS_PreviewActionInterface::trigger();
 
     if (tangent){
-        RS_Entity *newEntity = nullptr;
+        auto *newEntity = new RS_Line(container, tangent->getData());
 
-        newEntity = new RS_Line(container,
-                                tangent->getData());
+        newEntity->setLayerToActive();
+        newEntity->setPenToActive();
+        container->addEntity(newEntity);
 
-        if (newEntity){
-            if (circle){
-                circle->setHighlighted(false);
-                graphicView->drawEntity(circle);
-            }
-
-            newEntity->setLayerToActive();
-            newEntity->setPenToActive();
-            container->addEntity(newEntity);
-
-// upd. undo list:
-            if (document){
-                document->startUndoCycle();
-                document->addUndoable(newEntity);
-                document->endUndoCycle();
-            }
-
-            graphicView->redraw(RS2::RedrawDrawing);
-
-            setStatus(SetPoint);
+        // upd. undo list:
+        if (document){
+            document->startUndoCycle();
+            document->addUndoable(newEntity);
+            document->endUndoCycle();
         }
+
+        graphicView->redraw(RS2::RedrawDrawing);
+
+        setStatus(SetPoint);
+
         tangent.reset();
     } else {
         RS_DEBUG->print("RS_ActionDrawLineTangent1::trigger:"
@@ -103,20 +93,12 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
-                if (circle){
-                    circle->setHighlighted(false);
-                    graphicView->drawEntity(en);
-                }
-                circle = en;
-//                circle->setHighlighted(true);
-//                graphicView->drawEntity(en);
 
                 RS_Creation creation(nullptr, nullptr);
                 tangent.reset(
                     creation.createTangent1(mouse,
                                             *point,
-                                            circle)
-                );
+                                            en));
 
 
                 if (tangent){
@@ -141,10 +123,6 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
 
     if (e->button() == Qt::RightButton){
         deletePreview();
-        if (circle){
-            circle->setHighlighted(false);
-            graphicView->drawEntity(circle);
-        }
         init(getStatus() - 1);
     } else {
         switch (getStatus()) {

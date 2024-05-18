@@ -64,8 +64,6 @@ private:
 	std::unique_ptr<RS_Line> tangent;
     /** Chosen startpoint */
 	std::unique_ptr<RS_Vector> point;
-    /** Chosen entity */
-    RS_Entity* circle = nullptr;
 
     //list of entity types supported by current action
     const EntityTypeList circleType = EntityTypeList{ RS2::EntityArc,
