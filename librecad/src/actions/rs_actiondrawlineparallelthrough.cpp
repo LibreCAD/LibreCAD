@@ -58,30 +58,29 @@ void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
 	RS_PreviewActionInterface::finish(updateTB);
 }
 
-void RS_ActionDrawLineParallelThrough::trigger() {
+void RS_ActionDrawLineParallelThrough::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    if (entity) {
+    if (entity){
         RS_Creation creation(container, graphicView);
-		RS_Entity* e = creation.createParallelThrough(*coord,
-                       number,
-                       entity);
+        RS_Entity *e = creation.createParallelThrough(*coord,
+                                                      number,
+                                                      entity);
 
-		if (!e) {
+        if (!e){
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger:"
                             " No parallels added\n");
         }
     }
 }
 
+#define HIGHLIGHT_ENTITY_ON_MOUSE_MOVE
 
-
-void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
 
-
     switch (getStatus()) {
-    case SetEntity: {
+        case SetEntity: {
             entity = catchEntity(e, RS2::ResolveAll);
             /*deletePreview();
 
@@ -91,151 +90,143 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent* e) {
                                            entity);
 
             drawPreview();*/
+#ifdef HIGHLIGHT_ENTITY_ON_MOUSE_MOVE
+            deletePreview();
+            if (entity != nullptr){
+                preview->addCloneOf(entity);
+            }
+            drawPreview();
+#endif
+            break;
         }
-        break;
-
-    case SetPos: {
-			*coord = snapPoint(e);
+        case SetPos: {
+            *coord = snapPoint(e);
             //RS_Vector(graphicView->toGraphX(e->x()),
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
 
-			RS_Creation creation(preview.get(), nullptr, false);
-			creation.createParallelThrough(*coord,
+            RS_Creation creation(preview.get(), nullptr, false);
+            creation.createParallelThrough(*coord,
                                            number,
                                            entity);
 
             drawPreview();
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         switch (getStatus()) {
-        case SetEntity:
-            entity = catchEntity(e, RS2::ResolveAll);
-            if (entity) {
-                entity->setHighlighted(true);
-                graphicView->drawEntity(entity);
-                setStatus(SetPos);
-            }
-            break;
-        case SetPos: {
+            case SetEntity:
+                entity = catchEntity(e, RS2::ResolveAll);
+                if (entity){
+                    entity->setHighlighted(true);
+                    graphicView->drawEntity(entity);
+                    setStatus(SetPos);
+                }
+                break;
+            case SetPos: {
                 RS_CoordinateEvent ce(snapPoint(e));
                 coordinateEvent(&ce);
             }
-            break;
-        default:
-            break;
+                break;
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        if (entity) {
+        if (entity){
             entity->setHighlighted(false);
             graphicView->drawEntity(entity);
-			entity=nullptr;
+            entity = nullptr;
         }
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) {
+void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetPos:
-		*coord = mouse;
-        trigger();
-        break;
+        case SetPos:
+            *coord = mouse;
+            trigger();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::updateMouseButtonHints() {
+void RS_ActionDrawLineParallelThrough::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetEntity:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select entity"), tr("Cancel"));
-        break;
+        case SetEntity:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select entity"), tr("Cancel"));
+            break;
 
-    case SetPos:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify through point"),
-                                            tr("Back"));
-        break;
+        case SetPos:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify through point"),
+                                                tr("Back"));
+            break;
 
-    case SetNumber:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Number:"), tr("Back"));
-        break;
+        case SetNumber:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Number:"), tr("Back"));
+            break;
 
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::showOptions() {
+void RS_ActionDrawLineParallelThrough::showOptions(){
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
     updateMouseButtonHints();
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::hideOptions() {
+void RS_ActionDrawLineParallelThrough::hideOptions(){
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", c)){
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetEntity:
-    case SetPos: {
-            if (checkCommand("number", c)) {
+        case SetEntity:
+        case SetPos: {
+            if (checkCommand("number", c)){
                 deletePreview();
-                lastStatus = (Status)getStatus();
+                lastStatus = (Status) getStatus();
                 setStatus(SetNumber);
             }
+            break;
         }
-        break;
-
-    case SetNumber: {
+        case SetNumber: {
             bool ok;
             int n = c.toInt(&ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-                if (n>0 && n<100) {
+                if (n > 0 && n < 100){
                     number = n;
                 } else {
                     RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
@@ -246,36 +237,29 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent* e) {
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands() {
+QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetEntity:
-        cmd += command("number");
-        break;
-    default:
-        break;
+        case SetEntity:
+            cmd += command("number");
+            break;
+        default:
+            break;
     }
 
     return cmd;
 }
 
-
-
-void RS_ActionDrawLineParallelThrough::updateMouseCursor()
-{
-    switch (getStatus())
-    {
+void RS_ActionDrawLineParallelThrough::updateMouseCursor(){
+    switch (getStatus()) {
         case SetEntity:
             graphicView->setMouseCursor(RS2::SelectCursor);
             break;
