@@ -67,7 +67,8 @@
 #endif
 
 // Issue #1765: set default cursor size: 32x32
-constexpr int g_cursorSize=32;
+// Issue #1787: cursor hot spot at center by using hotX=hotY=-1
+constexpr int g_cursorSize=-1;
 
 namespace {
 // maximum length for displayed block name in context menu
