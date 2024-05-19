@@ -280,8 +280,11 @@ RS_Commands::RS_Commands() {
         // draw parallel line
         {
             {{"linepar", QObject::tr("linepar", "create parallel")},
+                {"offset", QObject::tr("offset", "create parallel")},
+                {"parallel", QObject::tr("parallel", "create parallel")},
                 {"lineoff", QObject::tr("lineoff", "create parallel")}},
             {{"pa", QObject::tr("pa", "create parallel")},
+                {"o", QObject::tr("o", "create parallel")},
                 {"ll", QObject::tr("ll", "create parallel")}},
             RS2::ActionDrawLineParallel
         },
@@ -741,7 +744,9 @@ RS_Commands::RS_Commands() {
         // fillet
         {
             {{"modfillet", QObject::tr("modfillet", "modify - fillet")}},
-            {{"fi", QObject::tr("fi", "modify - fillet")}},
+            {{"fi", QObject::tr("fi", "modify - fillet")},
+                {"fillet", QObject::tr("fillet", "modify - fillet")},
+                {"bevel", QObject::tr("bevel", "modify - fillet")}},
             RS2::ActionModifyRound
         },
         // divide
