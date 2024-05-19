@@ -868,7 +868,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished">Réaccrocher les widgets</translation>
+        <translation>Réaccrocher les widgets</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
@@ -943,7 +943,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished">À main levée</translation>
+        <translation>Courbes</translation>
     </message>
     <message>
         <source>Ellipses</source>
@@ -3482,11 +3482,11 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Horizontalement&#x202f;:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Verticalement&#x202f;:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
@@ -3494,7 +3494,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Splines</translation>
     </message>
     <message>
         <source>&amp;Points</source>
@@ -3502,7 +3502,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Style de point</translation>
     </message>
     <message>
         <source>...</source>
@@ -3510,7 +3510,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille de point</translation>
     </message>
     <message>
         <source>Dwg Units</source>
@@ -3785,79 +3785,79 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Défilement automatique</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation>Masquer le marqueur du zéro relatif</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation>Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Visualiser l&apos;entité sous le curseur</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation>Effets au survol de la souris</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>Couleur du marqueur du zéro &amp;relatif&#x202f;:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Temps de sauvegarde automatique (minutes)&#x202f;:</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverse la direction du défilement lorsque la molette de la souris est utilisée en pressant la touche Maj.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverser la direction du défilement horizontal</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverse la direction du défilement lorsque la molette de la souris est utilisée en pressant la touche Ctrl.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverser la direction du défilement vertical</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverse la direction du zoom lorsque la molette de la souris est utilisée.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Inverser la direction du zoom</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Configuration du clavier</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Évaluer les commandes lorsque la barre ESPACE est pressée</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Basculer en mode accrochage libre lorsque la barre ESPACE est pressée et que la fenêtre de commande est vide</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Basculer en mode accrochage libre lorsque la barre ESPACE est pressée</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Préférences DAO</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoomer automatiquement sur le dessin à l&apos;ouverture</translation>
     </message>
 </context>
 <context>
@@ -3892,31 +3892,31 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Exporter en CAM/SVG non formaté</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Largeur par défaut des éléments (mm)</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Images</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Export des images matricielles</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Lignes pointillées</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Longueur du motif (mm)</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Transformer les lignes pointillées en chemin SVG</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
