@@ -820,7 +820,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>Pol&amp;ygone (centre, tangente)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -828,11 +828,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation>&amp;Montrer toutes les couches</translation>
+        <translation>&amp;Afficher tous les calques</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation>&amp;Cacher toutes les couches</translation>
+        <translation>&amp;Masquer tous les calques</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
@@ -844,11 +844,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exporter les calques sélectionnés</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter les calques &amp;visibles</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
@@ -860,7 +860,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exporter en CA&amp;M/SVG non formaté...</translation>
     </message>
     <message>
         <source>Close All</source>
@@ -868,11 +868,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Réaccrocher les widgets</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Enregistrer &amp;tout...</translation>
     </message>
 </context>
 <context>
@@ -886,7 +886,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation>Sauvegarder la couche &quot;%1&quot; en tant que &quot;%2&quot;. </translation>
+        <translation type="unfinished">Sauvegarder le calque &quot;%1&quot; en tant que &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -927,11 +927,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Interface</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flottant</translation>
     </message>
     <message>
         <source>Lines</source>
@@ -943,7 +943,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">À main levée</translation>
     </message>
     <message>
         <source>Ellipses</source>
@@ -1562,7 +1562,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Disposition</translation>
     </message>
     <message>
         <source>Rounded</source>
@@ -1610,7 +1610,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cmd</translation>
     </message>
     <message>
         <source>Float</source>
@@ -1627,7 +1627,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Manuel de l&apos;utilisateur</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
@@ -1635,11 +1635,11 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>Feuilles de &amp;style</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Wid&amp;gets</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
@@ -1647,19 +1647,19 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation>Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Information de &amp;parution</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>En &amp;ligne</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Donner</translation>
     </message>
 </context>
 <context>
@@ -1793,15 +1793,15 @@ in a separate window</source>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Supprimer le bloc</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Filtrer</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Rechercher les blocs correspondants</translation>
     </message>
 </context>
 <context>
@@ -1892,7 +1892,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélection personnalisée</translation>
     </message>
 </context>
 <context>
@@ -1950,7 +1950,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Flottant</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1958,7 +1958,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -2063,11 +2063,12 @@ in a separate window</source>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Appliquer également les attributs a toutes les sous-entités du INSERT sélectionné.
+Cela modifie récursivement toutes les entités du bloc lui-même.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Appliquer les attributs en profondeur du bloc</translation>
     </message>
 </context>
 <context>
@@ -2257,7 +2258,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélectionner un fichier image</translation>
     </message>
 </context>
 <context>
@@ -2374,7 +2375,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation>ID: </translation>
     </message>
 </context>
 <context>
@@ -2981,7 +2982,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Paramètres de police</translation>
     </message>
     <message>
         <source>Font:</source>
@@ -2989,15 +2990,15 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Direction du texte</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>De gauche à droite</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>De droite à gauche</translation>
     </message>
 </context>
 <context>
@@ -3453,7 +3454,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Format</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
@@ -3461,15 +3462,15 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Largeur&#x202f;:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Orientation</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation>Marges</translation>
     </message>
     <message>
         <source>Bottom</source>
@@ -3477,7 +3478,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Nombre de pages</translation>
     </message>
     <message>
         <source>Horizontally:</source>
