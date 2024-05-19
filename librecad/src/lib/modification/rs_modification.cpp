@@ -814,7 +814,7 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     // make new block in the destination
     RS_Block* blockClone = addNewBlock(name_new, *graphic);
     // create insert for the new block
-    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), insert->getAngle(), 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* insertClone = new RS_Insert(container, di);
     insertClone->reparent(container);
     container->addEntity(insertClone);
