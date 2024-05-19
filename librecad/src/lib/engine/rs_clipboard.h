@@ -29,13 +29,14 @@
 #define RS_CLIPBOARD_H
 
 #include <iosfwd>
-#include "rs_graphic.h"
+#include <memory>
 
 #define RS_CLIPBOARD RS_Clipboard::instance()
 
 class RS_Block;
-class RS_Layer;
 class RS_Entity;
+class RS_Graphic;
+class RS_Layer;
 
 /**
  * LibreCAD internal clipboard. We don't use the system clipboard for
@@ -46,66 +47,41 @@ class RS_Entity;
  */
 class RS_Clipboard {
 protected:
-    RS_Clipboard() {
-    }
+    RS_Clipboard();
 
 public:
     /**
      * @return Instance to the unique clipboard object.
      */
-    static RS_Clipboard* instance() {
-        if (uniqueInstance==NULL) {
-            uniqueInstance = new RS_Clipboard();
-        }
-        return uniqueInstance;
-    }
+    static RS_Clipboard* instance();
 
 	void clear();
 
 	void addBlock(RS_Block* b);
         bool hasBlock(const QString& name);
-	int  countBlocks() {
-		return graphic.countBlocks();
-	}
-	RS_Block* blockAt(int i) {
-		return graphic.blockAt(i);
-	}
+    int  countBlocks();
+    RS_Block* blockAt(int i);
 	
 	void addLayer(RS_Layer* l);
-        bool hasLayer(const QString& name);
-	int  countLayers() {
-		return graphic.countLayers();
-	}
-	RS_Layer* layerAt(int i) {
-		return graphic.layerAt(i);
-	}
+    bool hasLayer(const QString& name);
+    int  countLayers();
+    RS_Layer* layerAt(int i);
 
 	void addEntity(RS_Entity* e);
 
-    unsigned count() {
-		return graphic.count();
-	}
-    RS_Entity* entityAt(unsigned i) {
-		return graphic.entityAt(i);
-	}
-	RS_Entity* firstEntity() {
-		return graphic.firstEntity();
-	}
+    unsigned count();
+    RS_Entity* entityAt(unsigned i);
+    RS_Entity* firstEntity();
 	
-	RS_Entity* nextEntity() {
-		return graphic.nextEntity();
-	}
+    RS_Entity* nextEntity();
 
-	RS_Graphic* getGraphic() {
-		return &graphic;
-	}
+    RS_Graphic* getGraphic();
 
     friend std::ostream& operator << (std::ostream& os, RS_Clipboard& cb);
 
 protected:
-    static RS_Clipboard* uniqueInstance;
 
-	RS_Graphic graphic;
+    std::unique_ptr<RS_Graphic> m_graphic;
 };
 
 #endif

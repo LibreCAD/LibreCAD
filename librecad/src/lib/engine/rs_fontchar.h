@@ -52,7 +52,7 @@ public:
     virtual ~RS_FontChar() {}
 
     /** @return RS2::EntityFontChar */
-    virtual RS2::EntityType rtti() const {
+    RS2::EntityType rtti() const override {
         return RS2::EntityFontChar;
     }
 

@@ -18,18 +18,20 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include<cmath>
+#include <cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "lc_actiondrawcircle2pr.h"
 
+#include "lc_actiondrawcircle2pr.h"
+#include "rs_circle.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
 #include "rs_point.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
+#include "rs_previewactioninterface.h"
+
 
 
 struct LC_ActionDrawCircle2PR::Points
@@ -41,7 +43,7 @@ struct LC_ActionDrawCircle2PR::Points
 LC_ActionDrawCircle2PR::LC_ActionDrawCircle2PR(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_ActionDrawCircleCR(container, graphicView)
-	,pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawCircle2PR;
 	reset();
@@ -51,7 +53,9 @@ LC_ActionDrawCircle2PR::~LC_ActionDrawCircle2PR() = default;
 
 void LC_ActionDrawCircle2PR::reset() {
 	deletePreview();
+	double radius = data->radius;
 	*data = {};
+	data->radius = radius;
 	pPoints->point1 = {};
 	pPoints->point2 = {};
 }
@@ -172,6 +176,7 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
 	if (!e) return;
 
 	RS_Vector mouse = e->getCoordinate();
+	double distance = 0.0;
 
 	switch (getStatus()) {
 	case SetPoint1:
@@ -181,13 +186,14 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent* e) {
 		break;
 
 	case SetPoint2:
-		if(mouse.distanceTo(pPoints->point1) <= 2.*data->radius){
+		distance = mouse.distanceTo(pPoints->point1);
+		if(distance <= 2.*data->radius){
 			pPoints->point2 = mouse;
 			graphicView->moveRelativeZero(mouse);
 			setStatus(SelectCenter);
 		}else{
 			RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
-											 arg(data->radius).arg(pPoints->point1.distanceTo(pPoints->point2)).arg(2.*data->radius));
+											 arg(data->radius).arg(distance).arg(2.*data->radius));
 		}
 		break;
 
@@ -253,4 +259,3 @@ void LC_ActionDrawCircle2PR::updateMouseCursor() {
 }
 
 // EOF
-

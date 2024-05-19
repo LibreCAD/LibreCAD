@@ -20,9 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <QVariant>
 #include "qg_snapmiddleoptions.h"
 
-#include <QVariant>
 #include "ui_qg_snapmiddleoptions.h"
 
 /*
@@ -43,10 +43,7 @@ QG_SnapMiddleOptions::QG_SnapMiddleOptions(int& i, QWidget* parent, Qt::WindowFl
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_SnapMiddleOptions::~QG_SnapMiddleOptions()
-{
-	saveSettings();
-}
+QG_SnapMiddleOptions::~QG_SnapMiddleOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -93,6 +90,7 @@ void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i)
     RS_SETTINGS->beginGroup("/Snap");
     RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);
     RS_SETTINGS->endGroup();*/
+        saveSettings();
     }
 }
 //EOF

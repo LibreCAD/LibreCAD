@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actiontoolregeneratedimensions.h"
 
 #include <QAction>
+
+#include "rs_actiontoolregeneratedimensions.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_dimension.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_dimension.h"
-#include "rs_debug.h"
 
 
 

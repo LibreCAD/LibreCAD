@@ -36,6 +36,7 @@
         <file>redo.svg</file>
         <file>undo.svg</file>
         <file>text.svg</file>
+        <file>mtext.svg</file>
         <file>hatch.svg</file>
         <file>create_block.svg</file>
         <file>points.svg</file>
@@ -50,6 +51,7 @@
         <file>snap_grid.svg</file>
         <file>snap_intersection.svg</file>
         <file>snap_middle.svg</file>
+        <file>snap_middle_manual.svg</file>
         <file>lock_rel_zero.svg</file>
         <file>set_rel_zero.svg</file>
         <file>arc_3_points.svg</file>
@@ -105,6 +107,7 @@
         <file>dim_leader.svg</file>
         <file>dim_linear.svg</file>
         <file>dim_radial.svg</file>
+        <file>dim_arc.svg</file>
         <file>distance_point_to_entity.svg</file>
         <file>distance_point_to_point.svg</file>
         <file>divide.svg</file>
@@ -131,8 +134,10 @@
         <file>select_inverted.svg</file>
         <file>select_window.svg</file>
         <file>delete.svg</file>
+        <file>delete_freehand.svg</file>
         <file>total_length_selected_entities.svg</file>
         <file>zoom_pan.svg</file>
+        <file>order.svg</file>
         <file>up.svg</file>
         <file>down.svg</file>
         <file>downmost.svg</file>
@@ -194,6 +199,26 @@
         <file>text_align_topcenter.svg</file>
         <file>text_align_topleft.svg</file>
         <file>text_align_topright.svg</file>
+        <file>point_dot.svg</file>
+        <file>point_dot_circle.svg</file>
+        <file>point_dot_square.svg</file>
+        <file>point_dot_circle_square.svg</file>
+        <file>point_blank.svg</file>
+        <file>point_blank_circle.svg</file>
+        <file>point_blank_square.svg</file>
+        <file>point_blank_circle_square.svg</file>
+        <file>point_cross.svg</file>
+        <file>point_cross_circle.svg</file>
+        <file>point_cross_square.svg</file>
+        <file>point_cross_circle_square.svg</file>
+        <file>point_plus.svg</file>
+        <file>point_plus_circle.svg</file>
+        <file>point_plus_square.svg</file>
+        <file>point_plus_circle_square.svg</file>
+        <file>point_tick.svg</file>
+        <file>point_tick_circle.svg</file>
+        <file>point_tick_square.svg</file>
+        <file>point_tick_circle_square.svg</file>
         <file>options.svg</file>
         <file>line_polygon_cen_tan.svg</file>
         <file>noconstruction.svg</file>
@@ -201,5 +226,29 @@
         <file>close_all.svg</file>
         <file>save_all.svg</file>
         <file>scaleLineWidth.svg</file>
+        <file>parabola_4_points.svg</file>
+        <file>parabola_focus_directrix.svg</file>
+        <file>pen_apply.svg</file>
+        <file>pen_copy.svg</file>
+        <file>cross_circle.svg</file>
+        <file>cross_circle1.svg</file>
+        <file>line_rel.svg</file>
+        <file>line_rel_x.svg</file>
+        <file>line_rel_y.svg</file>
+        <file>line_angle_rel.svg</file>
+        <file>line_ortho_rel.svg</file>
+        <file>slice_divide.svg</file>
+        <file>circle_by_arc.svg</file>
+        <file>line_join.svg</file>
+        <file>line_points.svg</file>
+        <file>duplicate.svg</file>
+        <file>line_to_ortho.svg</file>
+        <file>rectangle_1_point.svg</file>
+        <file>rectangle_2_points.svg</file>
+        <file>rectangle_3_points.svg</file>
+        <file>line_polygon_star.svg</file>
+        <file>slice_divide_circle.svg</file>
+        <file>break_out_trim.svg</file>
+        <file>line_gap.svg</file>
     </qresource>
 </RCC>

@@ -24,14 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_actionblocksedit.h"
-
 #include <QAction>
-#include "rs_graphic.h"
-#include "rs_dialogfactory.h"
+
+#include "rs_actionblocksedit.h"
 #include "rs_debug.h"
-
-
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
 
 RS_ActionBlocksEdit::RS_ActionBlocksEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

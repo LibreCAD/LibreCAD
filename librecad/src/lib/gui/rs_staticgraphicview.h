@@ -28,7 +28,6 @@
 #define RS_STATICGRAPHICVIEW_H
 
 #include "rs_graphicview.h"
-//#include "rs_layerlistlistener.h"
 
 /**
  * This is an implementation of a graphic viewer with a fixed size
@@ -45,17 +44,17 @@ public:
 	void adjustZoomControls() override{}
 	void setMouseCursor(RS2::CursorType ) override{}
 
-	void updateGridStatusWidget(const QString& ) override{}
+    void updateGridStatusWidget(QString) override{}
 	RS_Vector getMousePosition() const override;
 
     void paint();
 
 private:
     //! Width
-    int width;
+    int width = 0;
 
     //! Height
-    int height;
+    int height = 0;
 };
 
 #endif

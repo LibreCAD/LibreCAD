@@ -23,19 +23,22 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
+
 #include<cmath>
-#include "rs_actionprintpreview.h"
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
+
+#include "qg_printpreviewoptions.h"
+#include "rs_actionprintpreview.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
-#include "rs_preview.h"
 #include "rs_settings.h"
+#include "rs_units.h"
 
 struct RS_ActionPrintPreview::Points {
 	RS_Vector v1;
@@ -51,7 +54,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 						container, graphicView)
 	, hasOptions(false)
 	, m_bPaperOffset(false)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
     actionType=RS2::ActionFilePrintPreview;
     RS_SETTINGS->beginGroup("/PrintPreview");
@@ -71,7 +74,7 @@ void RS_ActionPrintPreview::init(int status) {
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
-		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+		pPoints->v2 = graphicView->toGraph(e->position());
 		// if Shift is pressed the paper moves only horizontally
 		if (e->modifiers() & Qt::ShiftModifier)
 			pPoints->v2.y = pPoints->v1.y;
@@ -100,7 +103,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-			pPoints->v1 = graphicView->toGraph(e->x(), e->y());
+			pPoints->v1 = graphicView->toGraph(e->position());
             setStatus(Moving);
             break;
 
@@ -279,7 +282,8 @@ void RS_ActionPrintPreview::fit() {
 
 bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
-        if( fabs(f - graphic->getPaperScale()) < RS_TOLERANCE ) return false;
+        if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
+            return false;
         graphic->setPaperScale(f);
 //        graphic->centerToPage();
         if(autoZoom) graphicView->zoomPage();
@@ -360,4 +364,13 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
+void RS_ActionPrintPreview::setOption(std::unique_ptr<QG_PrintPreviewOptions> option)
+{
+    m_option = std::move(option);
+}
+
+std::unique_ptr<QG_PrintPreviewOptions>& RS_ActionPrintPreview::getOption()
+{
+    return m_option;
+}
 // EOF

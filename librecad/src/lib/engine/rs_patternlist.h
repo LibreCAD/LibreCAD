@@ -61,25 +61,25 @@ public:
 	void init();
 
 	int countPatterns() const {
-		return patterns.size();
+		return static_cast<int>(patterns.size());
     }
 
 	//! \{ range based loop support
 	PTN_MAP::iterator begin() {
 		return patterns.begin();
 	}
-	PTN_MAP::const_iterator begin() const{
-		return patterns.begin();
+    PTN_MAP::const_iterator cbegin() const{
+        return patterns.cbegin();
 	}
 	PTN_MAP::iterator end() {
 		return patterns.end();
 	}
-	PTN_MAP::const_iterator end() const{
-		return patterns.end();
+    PTN_MAP::const_iterator cend() const{
+        return patterns.cend();
 	}
 	//! \}
 
-	RS_Pattern* requestPattern(const QString& name);
+    std::unique_ptr<RS_Pattern> requestPattern(const QString& name);
 
 	bool contains(const QString& name) const;
 
@@ -88,7 +88,7 @@ public:
 
 private:
     //! patterns in the graphic
-	PTN_MAP patterns;
+    PTN_MAP patterns;
 };
 
 #endif

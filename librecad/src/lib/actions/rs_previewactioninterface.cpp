@@ -25,11 +25,10 @@
 **********************************************************************/
 
 
-#include "rs_previewactioninterface.h"
-
+#include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * Constructor.
@@ -38,11 +37,11 @@
  * from this interface operates.
  */
 RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
-													 RS_EntityContainer& container,
-													 RS_GraphicView& graphicView) :
-	RS_ActionInterface(name, container, graphicView)
-  ,preview(new RS_Preview(&container))
-//  ,offset(new RS_Vector{})
+                                                     RS_EntityContainer& container,
+                                                     RS_GraphicView& graphicView,
+                                                     RS2::ActionType actionType) :
+    RS_ActionInterface(name, container, graphicView, actionType)
+  ,preview(std::make_unique<RS_Preview>(&container))
 {
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
@@ -50,8 +49,7 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
     // preview is linked to the container for getting access to
     //   document settings / dictionary variables
 
-    preview->setLayer(NULL);
-    hasPreview = true;
+    preview->setLayer(nullptr);
 
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\": OK", name);
 }

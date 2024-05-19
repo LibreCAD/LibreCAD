@@ -24,15 +24,16 @@
 **
 **********************************************************************/
 
-#include "rs_actionlayersedit.h"
 
 #include <QAction>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
-#include "rs_layer.h"
+
 #include "qg_layerwidget.h"
+#include "rs_actionlayersedit.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
 
 RS_ActionLayersEdit::RS_ActionLayersEdit(RS_EntityContainer& container,
         RS_GraphicView& graphicView)

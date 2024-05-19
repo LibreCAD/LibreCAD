@@ -45,14 +45,6 @@ QG_ImageOptionsDialog::QG_ImageOptionsDialog(QWidget* parent, bool modal, Qt::Wi
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_ImageOptionsDialog::~QG_ImageOptionsDialog()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */

@@ -24,15 +24,16 @@
 **
 **********************************************************************/
 
-#include "qc_actiongetent.h"
 #include <QMouseEvent>
 #include <QKeyEvent>
+
 #include "doc_plugin_interface.h"
+#include "qc_actiongetent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_selection.h"
 #include "rs_snapper.h"
-#include "rs_debug.h"
-// #include <QDebug>
 
 
 QC_ActionGetEnt::QC_ActionGetEnt(RS_EntityContainer& container,

@@ -25,17 +25,17 @@
 #ifndef QG_DLGIMAGE_H
 #define QG_DLGIMAGE_H
 
-class RS_Image;
-
+#include <memory>
 #include "ui_qg_dlgimage.h"
+
+class RS_Image;
 
 class QG_DlgImage : public QDialog, public Ui::QG_DlgImage
 {
     Q_OBJECT
 
 public:
-    QG_DlgImage(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgImage();
+    QG_DlgImage(QWidget *parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
 
 public slots:
     virtual void setImage( RS_Image & e );
@@ -44,15 +44,16 @@ public slots:
     virtual void changeScale();
     virtual void changeDPI();
     virtual void updateImage();
+    virtual void setImageFile();
 
 
 protected slots:
     virtual void languageChange();
 
 private:
-    RS_Image* image;
-    double scale;    
-QDoubleValidator *val;
+    RS_Image* image = nullptr;
+    double scale = 1.;
+    std::unique_ptr<QDoubleValidator> val;
 };
 
 #endif // QG_DLGIMAGE_H

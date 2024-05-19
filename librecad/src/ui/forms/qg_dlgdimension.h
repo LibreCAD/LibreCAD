@@ -27,26 +27,26 @@
 #define QG_DLGDIMENSION_H
 
 #include "ui_qg_dlgdimension.h"
-#include "rs_dimension.h"
+
+class RS_Dimension;
 
 class QG_DlgDimension : public QDialog, public Ui::QG_DlgDimension
 {
     Q_OBJECT
 
 public:
-    QG_DlgDimension(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgDimension(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgDimension();
 
 public slots:
-    virtual void setDim( RS_Dimension & d );
+    virtual void setDim(RS_Dimension & d );
     virtual void updateDim();
 
 protected slots:
     virtual void languageChange();
 
 private:
-    RS_Dimension* dim;
-
+    RS_Dimension* dim = nullptr;
 };
 
 #endif // QG_DLGDIMENSION_H

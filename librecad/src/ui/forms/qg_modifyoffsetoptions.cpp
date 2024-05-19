@@ -28,10 +28,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "qg_modifyoffsetoptions.h"
 
-#include "rs_actionmodifyoffset.h"
+#include "rs_math.h"
 #include "rs_settings.h"
 #include "ui_qg_modifyoffsetoptions.h"
-#include "rs_math.h"
 
 /*
  *  Constructs a QG_ModifyOffsetOptions as a child of 'parent', with the
@@ -47,10 +46,7 @@ QG_ModifyOffsetOptions::QG_ModifyOffsetOptions(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions()
-{
-	saveSettings();
-}
+QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -87,5 +83,6 @@ void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
 void QG_ModifyOffsetOptions::updateDist(const QString& d) {
     if (dist) {
         *dist=RS_Math::eval(d);
+        saveSettings();
     }
 }

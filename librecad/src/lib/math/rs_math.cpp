@@ -31,8 +31,11 @@
 #include <cmath>
 #include <muParser.h>
 #include <QString>
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
 #include <QDebug>
 
+#include "rs.h"
 #include "rs_math.h"
 #include "rs_vector.h"
 #include "rs_debug.h"
@@ -43,14 +46,34 @@
 
 
 namespace {
-constexpr double m_piX2 = M_PI*2; //2*PI
+    constexpr double m_piX2 = M_PI*2; //2*PI
+    constexpr double m_halfPI = M_PI/2; //PI/2
+    const QRegularExpression unitreg(
+        R"((?P<sign>^-?))"
+        R"((?:(?:(?:(?P<degrees>\d+\.?\d*)(?:degree[s]?|deg|[Dd]|°)))"  // DMS
+            R"((?:(?P<minutes>\d+\.?\d*)(?:minute[s]?|min|[Mm]|'))?)"
+            R"((?:(?P<seconds>\d+\.?\d*)(?:second[s]?|sec|[Ss]|"))?$)|)"
+        R"((?:(?:(?P<meters>\d+\.?\d*)(?:meter[s]?|m(?![m])))?)"        // Metric
+            R"((?:(?P<centis>\d+\.?\d*)(?:centimeter[s]?|centi|cm))?)"
+            R"((?:(?P<millis>\d+\.?\d*)(?:millimeter[s]?|mm))?$)|)"
+        R"((?:(?:(?P<yards>\d+\.?\d*)(?:yards|yard|yd))?)"              // Imperial
+            R"((?:(?P<feet>\d+\.?\d*)(?:feet|foot|ft|'))?)"
+            R"((?:(?P<inches>\d+\.?\d*)[-+]?)"
+                R"((?:(?P<numer>\d+)\/(?P<denom>\d+))?)"                // rational inches
+            R"((?:inches|inch|in|"))?$)))"
+	);
 }
 
 /**
  * Rounds the given double to the closest int.
  */
 int RS_Math::round(double v) {
-    return (int) lrint(v);
+    return (int) std::lrint(v);
+}
+
+double RS_Math::round(const double v, const double precision)
+{
+    return precision * std::llround(v / precision);
 }
 
 /**
@@ -58,7 +81,7 @@ int RS_Math::round(double v) {
  */
 double RS_Math::pow(double x, double y) {
     errno = 0;
-    double ret = ::pow(x, y);
+    double ret = std::pow(x, y);
     if (errno==EDOM) {
         RS_DEBUG->print(RS_Debug::D_ERROR,
                         "RS_Math::pow: EDOM in pow");
@@ -73,8 +96,8 @@ double RS_Math::pow(double x, double y) {
 }
 
 /* pow of vector components */
-RS_Vector RS_Math::pow(RS_Vector vp, double y) {
-    return RS_Vector(pow(vp.x,y),pow(vp.y,y));
+RS_Vector RS_Math::pow(const RS_Vector& vp, double y) {
+    return RS_Vector(std::pow(vp.x, y), std::pow(vp.y, y));
 }
 
 /**
@@ -82,32 +105,32 @@ RS_Vector RS_Math::pow(RS_Vector vp, double y) {
  */
 bool RS_Math::equal(const double d1, const double d2)
 {
-    return fabs(d1 - d2) < RS_TOLERANCE;
+    return std::abs(d1 - d2) < RS_TOLERANCE;
 }
 
 /**
  * Converts radians to degrees.
  */
 double RS_Math::rad2deg(double a) {
-	return 180./M_PI*a;
+    return 180. / M_PI * a;
 }
 
 /**
  * Converts degrees to radians.
  */
 double RS_Math::deg2rad(double a) {
-	return M_PI/180.0*a;
+    return M_PI / 180.0 * a;
 }
 
 /**
  * Converts radians to gradians.
  */
 double RS_Math::rad2gra(double a) {
-	return 200./M_PI*a;
+    return 200. / M_PI * a;
 }
 
 double RS_Math::gra2rad(double a) {
-	return M_PI/200.*a;
+    return M_PI / 200. * a;
 }
 
 
@@ -115,9 +138,11 @@ double RS_Math::gra2rad(double a) {
  * Finds greatest common divider using Euclid's algorithm.
  */
 unsigned RS_Math::findGCD(unsigned a, unsigned b) {
+    if (b > a)
+        std::swap(a, b);
 
-	while (b) {
-		unsigned rem = a % b;
+    while (b) {
+        unsigned rem = a % b;
         a = b;
         b = rem;
     }
@@ -151,22 +176,30 @@ bool RS_Math::isAngleBetween(double a,
  * Corrects the given angle to the range of 0 to +PI*2.0.
  */
 double RS_Math::correctAngle(double a) {
-    return fmod(M_PI + remainder(a - M_PI, m_piX2), m_piX2);
+    return std::fmod(M_PI + std::remainder(a - M_PI, m_piX2), m_piX2);
 }
 
 /**
  * Corrects the given angle to the range of -PI to +PI.
  */
 double RS_Math::correctAngle2(double a) {
-    return remainder(a, m_piX2);
+    return std::remainder(a, m_piX2);
 }
 
 /**
  * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
  */
 double RS_Math::correctAngleU(double a) {
-    return fabs(remainder(a, m_piX2));
+    return std::abs(std::remainder(a, m_piX2));
 }
+
+/**
+ * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
+ */
+double RS_Math::correctAngle3(double a) {
+    return std::remainder(a, m_halfPI);
+}
+
 
 
 /**
@@ -226,9 +259,9 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
 bool RS_Math::isAngleReadable(double angle) {
 	const double tolerance=0.001;
     if (angle>M_PI_2)
-        return fabs(remainder(angle, m_piX2)) < (M_PI_2 - tolerance);
+        return std::abs(std::remainder(angle, m_piX2)) < (M_PI_2 - tolerance);
     else
-        return fabs(remainder(angle, m_piX2)) < (M_PI_2 + tolerance);
+        return std::abs(std::remainder(angle, m_piX2)) < (M_PI_2 + tolerance);
 }
 
 /**
@@ -256,7 +289,52 @@ double RS_Math::eval(const QString& expr, double def) {
 
     return res;
 }
+/**
+ * Helper function for derationalize; convert one unit to base unit using
+ * provided regex match, named group, conversion factor, and default value.
+ */
+double RS_Math::convert_unit(const QRegularExpressionMatch& match, const QString& name, double factor, double defval) {
+    if (!match.captured(name).isNull())
+        LC_ERR <<"name="<<name<<": "<<  match.captured(name);
+    QString input = (!match.captured(name).isNull()) ? match.captured(name) : QString("%1").arg(defval);
+    return input.toDouble() * factor;
+}
 
+/**
+ * Convert a string containing rational numbers (fractions) and / or
+ * various unit symbols into the current user unit (cm or inch).
+ * Note: only the gui cares about units, so all matched symbols are used naively.
+ */
+QString RS_Math::derationalize(const QString& expr) {
+	RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Math::derationalize: expr = '%s'", expr.toLatin1().data());
+
+	QRegularExpressionMatch match = unitreg.match(expr);
+	if (match.hasMatch()){
+		RS_DEBUG->print(RS_Debug::D_DEBUGGING,
+			"RS_Math::derationalize: matches = '%s'", match.capturedTexts().join(", ").toLatin1().data());
+		double total = 0.0;
+		int sign = (match.captured("sign").isNull() || match.captured("sign") == "") ? 1 : -1;
+
+        // convert_unit(<match obj ref>, <regex group name>, <unit->base conversion factor>, <default value>)
+        total += convert_unit(match, "degrees", 1.0, 0.0);
+        total += convert_unit(match, "minutes", 1/60.0, 0.0);
+        total += convert_unit(match, "seconds", 1/3600.0, 0.0);
+        total += convert_unit(match, "meters", 100.0, 0.0);
+        total += convert_unit(match, "centis", 1.0, 0.0);
+        total += convert_unit(match, "millis", 0.1, 0.0);
+        total += convert_unit(match, "yards", 36.0, 0.0);
+        total += convert_unit(match, "feet", 12.0, 0.0);
+        total += convert_unit(match, "inches", 1.0, 0.0);
+        total += convert_unit(match, "numer", 1.0, 0.0) / convert_unit(match, "denom", 1.0, 1.0);
+		total *= sign;
+
+		RS_DEBUG->print("RS_Math::derationalize: total = '%f'", total);
+		return QString("%1").arg(total);		
+	}
+	else {
+		return expr;
+	}
+}
 
 /**
  * Evaluates a mathematical expression and returns the result.
@@ -269,14 +347,17 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         *ok = false;
         return 0.0;
     }
+
+    QString derationalized = derationalize(expr);
+
     double ret(0.);
     try{
         mu::Parser p;
         p.DefineConst(_T("pi"),M_PI);
 #ifdef _UNICODE
-        p.SetExpr(expr.toStdWString());
+        p.SetExpr(derationalized.toStdWString());
 #else
-        p.SetExpr(expr.toStdString());
+        p.SetExpr(derationalized.toStdString());
 #endif
         ret=p.Eval();
         *ok=true;
@@ -332,8 +413,8 @@ QString RS_Math::doubleToString(double value, int prec) {
 
     if(valStr.contains('.')) {
         // Remove tailing point and zeros:
-//        valStr.replace(QRegExp("0*$"), "");
-//        valStr.replace(QRegExp(R"(\.$)"), "");
+//        valStr.replace(QRegularExpression("0*$"), "");
+//        valStr.replace(QRegularExpression(R"(\.$)"), "");
 //        while (valStr.at(valStr.length()-1)=='0') {
 //            valStr.truncate(valStr.length()-1);
 //        }
@@ -386,7 +467,7 @@ void RS_Math::test() {
 			for (size_t j=0; j < sol.size(); j++) {
 				double x0 = sol[j];
 				double x1 = expected[j];
-				double const prec = (x0 - x1)/(fabs(x0 + x1) + RS_TOLERANCE2);
+                double const prec = (x0 - x1)/(std::abs(x0 + x1) + RS_TOLERANCE2);
 				std::cout<<"root "<<j<<" : precision level = "<<prec<<std::endl;
 				std::cout<<std::setprecision(17)<<"found: "<<x0<<"\texpected: "<<x1<<std::endl;
 				assert(prec < RS_TOLERANCE);
@@ -447,7 +528,7 @@ std::vector<double> RS_Math::quadraticSolver(const std::vector<double>& ce)
 	LDouble const c = ce[1];
 	// x^2 -2 b x + c=0
 	// (x - b)^2 = b^2 - c
-	// b^2 >= fabs(c)
+    // b^2 >= std::abs(c)
 	// x = b \pm b sqrt(1. - c/(b^2))
 	LDouble const b2= b * b;
 	LDouble const discriminant= b2 - c;
@@ -514,8 +595,8 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
     //	discriminant= q^2/4 + p^3/27
     //std::cout<<"p="<<p<<"\tq="<<q<<std::endl;
     double discriminant= (1./27)*p*p*p+(1./4)*q*q;
-    if ( fabs(p)< 1.0e-75) {
-        ans.push_back((q>0)?-pow(q,(1./3)):pow(-q,(1./3)));
+    if ( std::abs(p)< 1.0e-75) {
+        ans.push_back(std::cbrt(q));
         ans[0] -= shift;
 //        DEBUG_HEADER
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
@@ -527,11 +608,12 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
         ce2[0]=q;
         ce2[1]=-1./27*p*p*p;
 		auto r=quadraticSolver(ce2);
-        if ( r.size()==0 ) { //should not happen
-			std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+        if ( r.empty() ) { //should not happen
+            std::cerr<<__FILE__<<" : "<<__func__<<" : line"<<__LINE__<<" :cubicSolver()::Error cubicSolver("<<ce[0]<<' '<<ce[1]<<' '<<ce[2]<<")\n";
+            return {};
         }
         double u,v;
-        u= (q<=0) ? pow(r[0], 1./3): -pow(-r[1],1./3);
+        u= std::signbit(q) ? std::cbrt(r[0]): std::cbrt(r[1]);
         //u=(q<=0)?pow(-0.5*q+sqrt(discriminant),1./3):-pow(0.5*q+sqrt(discriminant),1./3);
         v=(-1./3)*p/u;
         //std::cout<<"u="<<u<<"\tv="<<v<<std::endl;
@@ -542,9 +624,9 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 //        std::cout<<"cubic: one root: "<<ans[0]<<std::endl;
 	}else{
 		std::complex<double> u(q,0),rt[3];
-		u=std::pow(-0.5*u-sqrt(0.25*u*u+p*p*p/27),1./3);
-		rt[0]=u-p/(3.*u)-shift;
-		std::complex<double> w(-0.5,sqrt(3.)/2);
+        u=std::pow(-0.5*u - std::sqrt(0.25*u*u+p*p*p/27), 1./3);
+        rt[0]=u-p/(3.*u)-shift;
+        std::complex<double> w(-0.5, std::sqrt(3.)/2);
 		rt[1]=u*w-p/(3.*u*w)-shift;
 		rt[2]=u/w-p*w/(3.*u)-shift;
 		//        DEBUG_HEADER
@@ -562,7 +644,7 @@ std::vector<double> RS_Math::cubicSolver(const std::vector<double>& ce)
 		for(size_t i=0; i<20; ++i){
 			double f=( (x0 + ce[0])*x0 + ce[1])*x0 +ce[2];
 			double df=(3.*x0+2.*ce[0])*x0 +ce[1];
-			if(fabs(df)>fabs(f)+RS_TOLERANCE){
+            if(std::abs(df)>std::abs(f)+RS_TOLERANCE){
 				dx=f/df;
 				x0 -= dx;
 			}else
@@ -607,7 +689,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 		DEBUG_HEADER
         std::cout<<"x^4+("<<p<<")*x^2+("<<q<<")*x+("<<r<<")==0"<<std::endl;
     }
-    if (q*q <= 1.e-4*RS_TOLERANCE*fabs(p*r)) {// Biquadratic equations
+    if (q*q <= 1.e-4*RS_TOLERANCE*std::abs(p*r)) {// Biquadratic equations
         double discriminant= 0.25*p*p -r;
         if (discriminant < -1.e3*RS_TOLERANCE) {
 
@@ -616,7 +698,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
             return ans;
         }
         double t2[2];
-        t2[0]=-0.5*p-sqrt(fabs(discriminant));
+        t2[0]=-0.5*p-sqrt(std::abs(discriminant));
         t2[1]= -p - t2[0];
         //        std::cout<<"t2[0]="<<t2[0]<<std::endl;
         //        std::cout<<"t2[1]="<<t2[1]<<std::endl;
@@ -634,7 +716,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 //        }
         return ans;
     }
-    if ( fabs(r)< 1.0e-75 ) {
+    if ( std::abs(r)< 1.0e-75 ) {
         std::vector<double> cubic(3,0.);
         cubic[1]=p;
         cubic[2]=q;
@@ -660,6 +742,8 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
     cubic[1]=p*p-4.*r;
     cubic[2]=-q*q;
 	auto r3= cubicSolver(cubic);
+    if (r3.empty())
+        return {};
     //std::cout<<"quartic_solver:: real roots from cubic: "<<ret<<std::endl;
     //for(unsigned int i=0; i<ret; i++)
     //   std::cout<<"cubic["<<i<<"]="<<cubic[i]<<" x= "<<croots[i]<<std::endl;
@@ -707,7 +791,7 @@ std::vector<double> RS_Math::quarticSolver(const std::vector<double>& ce)
 			double df=((4.*x0+3.*ce[0])*x0 +2.*ce[1])*x0+ce[2];
 //			DEBUG_HEADER
 //			qDebug()<<"i="<<i<<"\tx0="<<x0<<"\tf="<<f<<"\tdf="<<df;
-			if(fabs(df)>RS_TOLERANCE2){
+            if(std::abs(df)>RS_TOLERANCE2){
 				dx=f/df;
 				x0 -= dx;
 			}else
@@ -735,10 +819,10 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
     if(ce.size()!=5) return roots;
     std::vector<double> ce2(4,0.);
 
-    if ( fabs(ce[4]) < 1.0e-14) { // this should not happen
-        if ( fabs(ce[3]) < 1.0e-14) { // this should not happen
-            if ( fabs(ce[2]) < 1.0e-14) { // this should not happen
-                if( fabs(ce[1]) > 1.0e-14) {
+    if ( std::abs(ce[4]) < 1.0e-14) { // this should not happen
+        if ( std::abs(ce[3]) < 1.0e-14) { // this should not happen
+            if ( std::abs(ce[2]) < 1.0e-14) { // this should not happen
+                if( std::abs(ce[1]) > 1.0e-14) {
                     roots.push_back(-ce[0]/ce[1]);
                 } else { // can not determine y. this means overlapped, but overlap should have been detected before, therefore return empty set
                     return roots;
@@ -767,7 +851,7 @@ std::vector<double> RS_Math::quarticSolverFull(const std::vector<double>& ce)
 			DEBUG_HEADER
             std::cout<<"ce2[4]={ "<<ce2[0]<<' '<<ce2[1]<<' '<<ce2[2]<<' '<<ce2[3]<<" }\n";
         }
-        if(fabs(ce2[3])<= RS_TOLERANCE15) {
+        if(std::abs(ce2[3])<= RS_TOLERANCE15) {
             //constant term is zero, factor 0 out, solve a cubic equation
             ce2.resize(3);
             roots=RS_Math::cubicSolver(ce2);
@@ -829,8 +913,8 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
     //    std::cout<<"dn="<<dn<<std::endl;
     //    data.center.set(-0.5*dn(1)/dn(0),-0.5*dn(3)/dn(2)); // center
     //    double d(1.+0.25*(dn(1)*dn(1)/dn(0)+dn(3)*dn(3)/dn(2)));
-    //    if(fabs(dn(0))<RS_TOLERANCE2
-    //            ||fabs(dn(2))<RS_TOLERANCE2
+    //    if(std::abs(dn(0))<RS_TOLERANCE2
+    //            ||std::abs(dn(2))<RS_TOLERANCE2
     //            ||d/dn(0)<RS_TOLERANCE2
     //            ||d/dn(2)<RS_TOLERANCE2
     //            ) {
@@ -845,14 +929,17 @@ bool RS_Math::linearSolver(const std::vector<std::vector<double> >& mt, std::vec
 	std::vector<std::vector<double> > mt0(mt); //copy the matrix;
 	for(size_t i=0;i<mSize;++i){
 		size_t imax(i);
-        double cmax(fabs(mt0[i][i]));
+        double cmax(std::abs(mt0[i][i]));
 		for(size_t j=i+1;j<mSize;++j) {
-            if(fabs(mt0[j][i]) > cmax ) {
+            if(std::abs(mt0[j][i]) > cmax ) {
                 imax=j;
-                cmax=fabs(mt0[j][i]);
+                cmax=std::abs(mt0[j][i]);
             }
         }
-        if(cmax<RS_TOLERANCE2) return false; //singular matrix
+	
+	// issue #1386: relax singular condition
+	// TODO: switch to QR-decomposition based algorithms
+        if(cmax<RS_TOLERANCE) return false; //singular matrix
         if(imax != i) {//move the line with largest absolute value at column i to row i, to avoid division by zero
             std::swap(mt0[i],mt0[imax]);
 		}
@@ -898,7 +985,7 @@ double RS_Math::ellipticIntegral_2(const double& k, const double& phi)
     if(a>0.) {
         return boost::math::ellint_2<double,double>(k,a);
     } else {
-        return - boost::math::ellint_2<double,double>(k,fabs(a));
+        return - boost::math::ellint_2<double,double>(k,std::abs(a));
     }
 }
 
@@ -1045,7 +1132,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
         ce[2]=c*roots[i0]*roots[i0]+e*roots[i0]+f;
 //    DEBUG_HEADER
 //                std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
-        if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) {
+        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) {
             ce[0]=g;
             ce[1]=h*roots[i0]+j;
             ce[2]=i*roots[i0]*roots[i0]+k*roots[i0]+f;
@@ -1053,9 +1140,9 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverFull(const std::vector<st
 //            std::cout<<"("<<ce[0]<<")*x^2 + ("<<ce[1]<<")*x + ("<<ce[2]<<") == 0"<<std::endl;
 
         }
-        if(fabs(ce[0])<1e-75 && fabs(ce[1])<1e-75) continue;
+        if(std::abs(ce[0])<1e-75 && std::abs(ce[1])<1e-75) continue;
 
-        if(fabs(a)>1e-75){
+        if(std::abs(a)>1e-75){
             std::vector<double> ce2(2,0.);
             ce2[0]=ce[1]/ce[0];
             ce2[1]=ce[2]/ce[0];
@@ -1125,7 +1212,7 @@ RS_VectorSolutions RS_Math::simultaneousQuadraticSolverMixed(const std::vector<s
 //    DEBUG_HEADER
 //    std::cout<<"("<<ce[0]<<") y^2 + ("<<ce[1]<<") y + ("<<ce[2]<<")==0"<<std::endl;
     std::vector<double> roots(0,0.);
-    if( fabs(ce[1])>RS_TOLERANCE15 && fabs(ce[0]/ce[1])<RS_TOLERANCE15){
+    if( std::abs(ce[1])>RS_TOLERANCE15 && std::abs(ce[0]/ce[1])<RS_TOLERANCE15){
         roots.push_back( - ce[2]/ce[1]);
     }else{
         std::vector<double> ce2(2,0.);
@@ -1184,12 +1271,12 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 		double x2=x*x;
 		double y2=y*y;
 		double const terms0[12]={ a*x2, b*x*y, c*y2, d*x, e*y, f, g*x2, h*x*y, i*y2, j*x, k*y, l};
-		amax0=fabs(terms0[0]), amax1=fabs(terms0[6]);
+        amax0=std::abs(terms0[0]), amax1=std::abs(terms0[6]);
 		double px=2.*a*x+b*y+d;
 		double py=b*x+2.*c*y+e;
 		sum0=0.;
 		for(int i=0; i<6; i++) {
-			if(amax0<fabs(terms0[i])) amax0=fabs(terms0[i]);
+            if(amax0<std::abs(terms0[i])) amax0=std::abs(terms0[i]);
 			sum0 += terms0[i];
 		}
 		std::vector<std::vector<double>> nrCe;
@@ -1198,7 +1285,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 		py=h*x+2.*i*y+k;
 		sum1=0.;
 		for(int i=6; i<12; i++) {
-			if(amax1<fabs(terms0[i])) amax1=fabs(terms0[i]);
+            if(amax1<std::abs(terms0[i])) amax1=std::abs(terms0[i]);
 			sum1 += terms0[i];
 		}
 		nrCe.push_back(std::vector<double>{px, py, sum1});
@@ -1213,7 +1300,7 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 		if(!ret) break;
 		v -= RS_Vector(dn[0], dn[1]);
 	}
-	if( fabs(sum0)> fabs(f00) && fabs(sum1)>fabs(f01)){
+    if( std::abs(sum0)> std::abs(f00) && std::abs(sum1)>std::abs(f01)){
 		v=v0;
 		sum0=f00;
 		sum1=f01;
@@ -1222,11 +1309,11 @@ bool RS_Math::simultaneousQuadraticVerify(const std::vector<std::vector<double> 
 //    DEBUG_HEADER
 //    std::cout<<"verifying: x="<<x<<"\ty="<<y<<std::endl;
 //    std::cout<<"0: maxterm: "<<amax0<<std::endl;
-//    std::cout<<"verifying: fabs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<fabs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
+//    std::cout<<"verifying: std::abs(a*x2 + b*x*y+c*y2+d*x+e*y+f)/maxterm="<<std::abs(sum0)/amax0<<" required to be smaller than "<<sqrt(6.)*sqrt(DBL_EPSILON)<<std::endl;
 //    std::cout<<"1: maxterm: "<<amax1<<std::endl;
-//    std::cout<<"verifying: fabs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< fabs(sum1)/amax1<<std::endl;
+//    std::cout<<"verifying: std::abs(g*x2+h*x*y+i*y2+j*x+k*y+l)/maxterm="<< std::abs(sum1)/amax1<<std::endl;
     const double tols=2.*sqrt(6.)*sqrt(DBL_EPSILON); //experimental tolerances to verify simultaneous quadratic
 
-    return (amax0<=tols || fabs(sum0)/amax0<tols) &&  (amax1<=tols || fabs(sum1)/amax1<tols);
+    return (amax0<=tols || std::abs(sum0)/amax0<tols) &&  (amax1<=tols || std::abs(sum1)/amax1<tols);
 }
 //EOF

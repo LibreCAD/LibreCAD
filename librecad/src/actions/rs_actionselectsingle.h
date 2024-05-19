@@ -27,6 +27,7 @@
 #ifndef RS_ACTIONSELECTSINGLE_H
 #define RS_ACTIONSELECTSINGLE_H
 
+#include <QList>
 #include "rs_actioninterface.h"
 
 
@@ -41,18 +42,25 @@ public:
     RS_ActionSelectSingle(RS_EntityContainer& container,
 						  RS_GraphicView& graphicView,
 						  RS_ActionInterface* actionSelect=nullptr,
-						  std::initializer_list<RS2::EntityType> const& entityTypeList=std::initializer_list<RS2::EntityType>{});
+                          QList<RS2::EntityType> entityTypeList={});
+
+    RS_ActionSelectSingle(enum RS2::EntityType typeToSelect, RS_EntityContainer& container,
+                          RS_GraphicView& graphicView,
+                          RS_ActionInterface* actionSelect=nullptr,
+                          QList<RS2::EntityType> entityTypeList={});
 
 	void trigger() override;
 	void keyPressEvent(QKeyEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseCursor() override;
-
+    enum RS2::EntityType getTypeToSelect();
 private:
-	std::initializer_list<RS2::EntityType> const entityTypeList;
+    const QList<RS2::EntityType> entityTypeList;
 
-    RS_Entity* en;
-    RS_ActionInterface* actionSelect;
+    RS_Entity* en = nullptr;
+    RS_ActionInterface* actionSelect = nullptr;
+    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+
 };
 
 #endif

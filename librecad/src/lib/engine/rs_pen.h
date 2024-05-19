@@ -44,12 +44,8 @@ public:
     /**
      * Creates a default pen (black, solid, width 0).
      */
-    RS_Pen() : RS_Flags() {
-        setColor(RS_Color(0,0,0));
-        setWidth(RS2::Width00);
-        setLineType(RS2::SolidLine);
-		setScreenWidth(0);
-    }
+    RS_Pen() = default;
+
     /**
      * Creates a pen with the given attributes.
      */
@@ -60,6 +56,7 @@ public:
         setWidth(w);
         setLineType(t);
 		setScreenWidth(0);
+        setAlpha(1.0);
     }
     /**
      * Creates a default pen with the given flags. This is 
@@ -75,13 +72,13 @@ public:
         setWidth(RS2::Width00);
         setLineType(RS2::SolidLine);
 		setScreenWidth(0);
+        setAlpha(1.0);
     }
     //RS_Pen(const RS_Pen& pen) : RS_Flags(pen.getFlags()) {
     //    lineType = pen.lineType;
     //    width = pen.width;
     //    color = pen.color;
     //}
-    virtual ~RS_Pen() {}
 
     RS2::LineType getLineType() const {
         return lineType;
@@ -101,7 +98,7 @@ public:
     void setScreenWidth(double w) {
         screenWidth = w;
     }
-    const RS_Color& getColor() const {
+    RS_Color getColor() const {
         return color;
     }
     void setColor(const RS_Color& c) {
@@ -109,6 +106,13 @@ public:
     }
     bool isValid() {
         return !getFlag(RS2::FlagInvalid);
+    }
+
+    double getAlpha() const {
+        return alpha;
+    }
+    void setAlpha(double a) {
+        alpha = a;
     }
 
     //RS_Pen& operator = (const RS_Pen& p) {
@@ -128,14 +132,27 @@ public:
         return !(*this==p);
     }
 
+    // accessor/mutator for dash pattern offset
+    void setDashOffset(double offset)
+    {
+        m_dashOffset = offset;
+    }
+
+    double dashOffset() const
+    {
+        return m_dashOffset;
+    }
+
     friend std::ostream& operator << (std::ostream& os, const RS_Pen& p);
 
 
 protected:
-    RS2::LineType lineType;
-    RS2::LineWidth width;
-	double screenWidth;
-    RS_Color color;
+    RS2::LineType lineType = RS2::SolidLine;
+    RS2::LineWidth width = RS2::Width00;
+    double screenWidth = 0.;
+    RS_Color color{};
+    double alpha = 1.;
+    double m_dashOffset = 0.;
 };
 
 #endif

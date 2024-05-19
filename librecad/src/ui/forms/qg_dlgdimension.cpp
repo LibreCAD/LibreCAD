@@ -25,6 +25,7 @@
 **********************************************************************/
 #include "qg_dlgdimension.h"
 
+#include "rs_dimension.h"
 #include "rs_graphic.h"
 
 /*
@@ -45,10 +46,7 @@ QG_DlgDimension::QG_DlgDimension(QWidget* parent, bool modal, Qt::WindowFlags fl
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgDimension::~QG_DlgDimension()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_DlgDimension::~QG_DlgDimension() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -61,7 +59,7 @@ void QG_DlgDimension::languageChange()
 
 void QG_DlgDimension::setDim(RS_Dimension& d) {
     dim = &d;
-    wPen->setPen(dim->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = dim->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -71,6 +69,9 @@ void QG_DlgDimension::setDim(RS_Dimension& d) {
         cbLayer->setLayer(*lay);
     }
 
+    wPen->setPen(dim, lay, "Pen");
+
+    wLabel->setRadialType(d);
     wLabel->setLabel(dim->getLabel(false));
 }
 

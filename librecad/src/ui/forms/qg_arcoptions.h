@@ -40,15 +40,15 @@ class QG_ArcOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_ArcOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
-    ~QG_ArcOptions();
+    QG_ArcOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
+    virtual ~QG_ArcOptions();
 
 public slots:
     virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateDirection( bool );
 
 protected:
-    RS_ActionDrawArc* action;
+    RS_ActionDrawArc* action = nullptr;
 	std::unique_ptr<Ui::Ui_ArcOptions> ui;
 
 protected slots:

@@ -17,19 +17,19 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-#include "rs_actionblockssave.h"
 
 #include <QAction>
 #include <QApplication>
+
+#include "qc_applicationwindow.h"
+#include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
-#include "qc_applicationwindow.h"
-#include "rs_graphic.h"
-#include "rs_dialogfactory.h"
-#include "rs_insert.h"
-#include "rs_coordinateevent.h"
-#include "qc_mdiwindow.h"
+#include "rs_actionblockssave.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphic.h"
+#include "rs_insert.h"
 
 
 
@@ -52,7 +52,7 @@ void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 
 void RS_ActionBlocksSave::trigger() {
     RS_DEBUG->print("save block to file");
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
 	if(!appWindow) {
         finish(false);
         return;
@@ -85,8 +85,8 @@ void RS_ActionBlocksSave::trigger() {
 
             RS2::FormatType t = RS2::FormatDXFRW;
 
-            QG_FileDialog dlg(appWindow->getMDIWindow(),0, QG_FileDialog::BlockFile);
-			QString const& fn = dlg.getSaveFile(&t);
+            QG_FileDialog dlg(appWindow->getMDIWindow(), {}, QG_FileDialog::BlockFile);
+            const QString fn = dlg.getSaveFile(&t);
             QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 //            g.setModified(true);
             g.saveAs(fn, t);

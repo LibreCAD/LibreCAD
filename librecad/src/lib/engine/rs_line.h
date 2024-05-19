@@ -93,12 +93,12 @@ public:
         return data.endpoint;
     }
     /** Sets the startpoint */
-    void setStartpoint(RS_Vector s) {
+    void setStartpoint(const RS_Vector& s) {
         data.startpoint = s;
         calculateBorders();
     }
     /** Sets the endpoint */
-    void setEndpoint(RS_Vector e) {
+    void setEndpoint(const RS_Vector& e) {
         data.endpoint = e;
         calculateBorders();
     }
@@ -197,6 +197,7 @@ public:
     void scale(const RS_Vector& factor) override;
     void scale(const RS_Vector& center, const RS_Vector& factor) override;
     void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
+    RS_Entity& shear(double k) override;
     void stretch(const RS_Vector& firstCorner,
                  const RS_Vector& secondCorner,
                  const RS_Vector& offset) override;
@@ -228,6 +229,12 @@ public:
     double areaLineIntegral() const override;
 
 protected:
+    /**
+     * @brief drawInfinite draw the line as an infinite line
+     * @param painter - a painter
+     * @param view - the rendering view
+     */
+    void drawInfinite(RS_Painter& painter, RS_GraphicView& view);
     RS_LineData data;
 };
 

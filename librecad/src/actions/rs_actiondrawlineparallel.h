@@ -77,15 +77,15 @@ public:
 
 private:
     /** Closest parallel. */
-    RS_Entity* parallel;
+    RS_Entity* parallel = nullptr;
     /** Distance of the parallel. */
-    double distance;
+    double distance = 0.;
 	/** Number of parallels. */
-	int number;
+    int number = 0;
 	/** Coordinate of the mouse. */
 	std::unique_ptr<RS_Vector> coord;
 	/** Original entity. */
-    RS_Entity* entity;
+    RS_Entity* entity = nullptr;
 	/**
 	 * Commands
 	 */

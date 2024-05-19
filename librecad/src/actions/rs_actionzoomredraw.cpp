@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionzoomredraw.h"
 
 #include <QAction>
+
+#include "rs_actionzoomredraw.h"
 #include "rs_graphicview.h"
 
 

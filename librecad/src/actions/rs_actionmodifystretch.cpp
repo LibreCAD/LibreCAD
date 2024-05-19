@@ -26,15 +26,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionmodifystretch.h"
 
+#include "rs_actionmodifystretch.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionModifyStretch::Points {
 	RS_Vector firstCorner;
@@ -47,7 +46,7 @@ RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Stretch Entities",
 							   container, graphicView)
-	, pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionModifyStretch;
 }

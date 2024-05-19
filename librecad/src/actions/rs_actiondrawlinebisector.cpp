@@ -26,16 +26,16 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlinebisector.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondrawlinebisector.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawLineBisector::Points {
 	/** Mouse pos when choosing the 1st line */
@@ -53,7 +53,7 @@ RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
 		,line2(nullptr)
 		,length(10.)
 		,number(1)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetLine1)
 {
 	actionType=RS2::ActionDrawLineBisector;
@@ -120,8 +120,7 @@ void RS_ActionDrawLineBisector::trigger() {
 void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
-    RS_Vector mouse = RS_Vector(graphicView->toGraphX(e->x()),
-                                graphicView->toGraphY(e->y()));
+    RS_Vector mouse = graphicView->toGraph(e->position());
 
     switch (getStatus()) {
     case SetLine1:
@@ -176,8 +175,7 @@ void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     } else {
 
-        RS_Vector mouse = RS_Vector(graphicView->toGraphX(e->x()),
-                                    graphicView->toGraphY(e->y()));
+        RS_Vector mouse = graphicView->toGraph(e->position());
 
         switch (getStatus()) {
         case SetLine1: {

@@ -80,7 +80,7 @@ private:
 	/** Original entity. */
 	RS_Entity* entity=nullptr;
 	/** Last status before entering length or number. */
-	Status lastStatus;
+    Status lastStatus = SetEntity;
 };
 
 #endif

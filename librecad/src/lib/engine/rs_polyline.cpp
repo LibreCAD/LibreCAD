@@ -23,23 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<iostream>
-#include<cmath>
 #include<cassert>
+#include<cmath>
+#include<iostream>
+
 #include "rs_polyline.h"
 
-#include "rs_debug.h"
-#include "rs_line.h"
 #include "rs_arc.h"
+#include "rs_debug.h"
 #include "rs_graphicview.h"
-#include "rs_math.h"
 #include "rs_information.h"
-
-RS_PolylineData::RS_PolylineData():
-	startpoint(false)
-	,endpoint(false)
-{
-}
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
 
 RS_PolylineData::RS_PolylineData(const RS_Vector& _startpoint,
 				const RS_Vector& _endpoint,
@@ -143,22 +139,21 @@ RS_Entity* RS_Polyline::addVertex(const RS_Vector& v, double bulge, bool prepend
     // consequent vertices:
     else {
         // add entity to the polyline:
-        entity = createVertex(v, nextBulge, prepend);
-		if (entity) {
-						if (!prepend) {
+        std::unique_ptr<RS_Entity> vertex = createVertex(v, nextBulge, prepend);
+        entity = vertex.get();
+        if (entity != nullptr) {
+            if (!prepend) {
                 RS_EntityContainer::addEntity(entity);
-                                data.endpoint = v;
-                        }
-                        else {
+                data.endpoint = v;
+            } else {
                 RS_EntityContainer::insertEntity(0, entity);
-                                data.startpoint = v;
-                        }
+                data.startpoint = v;
+            }
+            vertex.release();
         }
         nextBulge = bulge;
         endPolyline();
     }
-    //data.endpoint = v;
-
     return entity;
 }
 
@@ -187,8 +182,10 @@ void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> 
 
     // consequent vertices:
     for (; idx< vl.size();idx++){
-		entity = createVertex(vl.at(idx).first, nextBulge, false);
-        data.endpoint = entity->getEndpoint();
+        std::unique_ptr<RS_Entity> vertex = createVertex(vl.at(idx).first, nextBulge, false);
+        data.endpoint = vertex->getEndpoint();
+        entity=vertex.get();
+        vertex.release();
         RS_EntityContainer::addEntity(entity);
         nextBulge = vl.at(idx).second;
     }
@@ -210,86 +207,51 @@ void RS_Polyline::appendVertexs(const std::vector< std::pair<RS_Vector, double> 
  * @return Pointer to the entity that was created or nullptr if this
  *         was the first vertex added.
  */
-RS_Entity* RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prepend) {
+std::unique_ptr<RS_Entity> RS_Polyline::createVertex(const RS_Vector& v, double bulge, bool prepend) {
 
-	RS_Entity* entity=nullptr;
+    std::unique_ptr<RS_Entity> entity;
 
     RS_DEBUG->print("RS_Polyline::createVertex: %f/%f to %f/%f bulge: %f",
                     data.endpoint.x, data.endpoint.y, v.x, v.y, bulge);
 
     // create line for the polyline:
-    if (fabs(bulge)<RS_TOLERANCE) {
-		if (prepend) {
-			entity = new RS_Line{this, v, data.startpoint};
-		} else {
-			entity = new RS_Line{this, data.endpoint, v};
-		}
+    if (std::abs(bulge)<RS_TOLERANCE || std::abs(bulge) >= RS_MAXDOUBLE) {
+        entity = std::make_unique<RS_Line>(this,
+                                           prepend ? v : data.endpoint,
+                                           prepend ? data.startpoint : v);
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-		entity->setLayer(nullptr);
-        //RS_EntityContainer::addEntity(entity);
-        //data.endpoint = v;
-    }
+        entity->setLayer(nullptr);
+    } else {
+        // create arc for the polyline:
+        bool reversed = std::signbit(bulge);
+        double alpha = std::atan(std::abs(bulge)) * 4.0;
 
-    // create arc for the polyline:
-    else {
-        bool reversed = (bulge<0.0);
-        double alpha = atan(bulge)*4.0;
-
-        RS_Vector middle;
-        double dist;
-        double angle;
-
-				if (!prepend) {
-                middle = (data.endpoint+v)/2.0;
-            dist = data.endpoint.distanceTo(v)/2.0;
-                angle = data.endpoint.angleTo(v);
-                }
-                else {
-                middle = (data.startpoint+v)/2.0;
-            dist = data.startpoint.distanceTo(v)/2.0;
-                angle = v.angleTo(data.startpoint);
-                }
+        RS_Vector start = prepend ? data.startpoint : data.endpoint;
+        RS_Vector middle = (start + v)/2.0;
+        double dist=start.distanceTo(v)/2.0;
+        double angle=start.angleTo(v);
 
         // alpha can't be 0.0 at this point
-		double const radius = fabs(dist / sin(alpha/2.0));
+        double const radius = std::abs(dist / std::sin(alpha/2.0));
 
-		double const wu = fabs(radius*radius - dist*dist);
-        double h = sqrt(wu);
+        double const wu = std::abs(radius*radius - dist*dist);
+        double angleNew = reversed ? angle - M_PI_2 : angle + M_PI_2;
+        double h = (std::abs(alpha)>M_PI) ? -std::sqrt(wu) : std::sqrt(wu);
 
-        if (bulge>0.0) {
-			angle+=M_PI_2;
-        } else {
-			angle-=M_PI_2;
-        }
+        RS_Vector center = RS_Vector::polar(h, angleNew);
+        center += middle;
+        double a1 = center.angleTo(prepend ? v : data.endpoint);
+        double a2 = center.angleTo(prepend ? data.startpoint : v);
 
-        if (fabs(alpha)>M_PI) {
-            h*=-1.0;
-        }
-
-		RS_Vector center = RS_Vector::polar(h, angle);
-        center+=middle;
-
-                double a1;
-                double a2;
-
-				if (!prepend) {
-                        a1 = center.angleTo(data.endpoint);
-                        a2 = center.angleTo(v);
-                }
-                else {
-                        a1 = center.angleTo(v);
-                        a2 = center.angleTo(data.startpoint);
-                }
-
-		RS_ArcData const d(center, radius,
+        RS_ArcData const d(center, radius,
                      a1, a2,
                      reversed);
 
-        entity = new RS_Arc(this, d);
+        entity = std::make_unique<RS_Arc>(this, d);
         entity->setSelected(isSelected());
         entity->setPen(RS_Pen(RS2::FlagInvalid));
-		entity->setLayer(nullptr);
+        entity->setLayer(nullptr);
     }
 
     return entity;
@@ -311,7 +273,9 @@ void RS_Polyline::endPolyline() {
         }
 
         // add closing entity to the polyline:
-        closingEntity = createVertex(data.startpoint, nextBulge);
+        std::unique_ptr<RS_Entity> vertex = createVertex(data.startpoint, nextBulge);
+        closingEntity = vertex.get();
+        vertex.release();
 		if (closingEntity && closingEntity->getLength()>1.0E-4) {
             RS_EntityContainer::addEntity(closingEntity);
             //data.endpoint = data.startpoint;
@@ -729,25 +693,9 @@ void RS_Polyline::stretch(const RS_Vector& firstCorner,
  */
 void RS_Polyline::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
 
-	if (!view) return;
+    if (painter == nullptr || view == nullptr) return;
 
-    // draw first entity and set correct pen:
-    RS_Entity* e = firstEntity(RS2::ResolveNone);
-    // We get the pen from the entitycontainer and apply it to the
-    // first line so that subsequent line are draw in the right color
-    //prevent segfault if polyline is empty
-	if (e) {
-        RS_Pen p=this->getPen(true);
-        e->setPen(p);
-        double patternOffset=0.;
-        view->drawEntity(painter, e, patternOffset);
-
-        e = nextEntity(RS2::ResolveNone);
-		while(e) {
-            view->drawEntityPlain(painter, e, patternOffset);
-            e = nextEntity(RS2::ResolveNone);
-        }
-    }
+    painter->drawPolyline(*this, *view);
 }
 
 

@@ -25,24 +25,24 @@
 **********************************************************************/
 
 #include <QMouseEvent>
-#include "rs_actionselect.h"
 
+#include "rs_actionselect.h"
+#include "rs_actionselectsingle.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_actionselectsingle.h"
 
 
 RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
                                  RS_EntityContainer& container,
                                  RS_GraphicView& graphicView,
                                  RS2::ActionType nextAction,
-								 std::initializer_list<RS2::EntityType> const& entityTypeList)
+                                 QList<RS2::EntityType> allowedEntityTypes)
 	:RS_ActionInterface("Select Entities", container, graphicView)
-	,entityTypeList(entityTypeList)
-	,nextAction(nextAction)
     ,action_handler(a_handler)
+    ,nextAction(nextAction)
+    , entityTypeList(std::move(allowedEntityTypes))
 {
-	actionType=RS2::ActionSelect;
+    setActionType(RS2::ActionSelect);
 }
 
 

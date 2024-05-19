@@ -35,8 +35,7 @@ class QG_DlgSpline : public QDialog, public Ui::QG_DlgSpline
     Q_OBJECT
 
 public:
-    QG_DlgSpline(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-    ~QG_DlgSpline();
+    QG_DlgSpline(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
 
 public slots:
     virtual void setSpline( RS_Spline & e );
@@ -46,7 +45,7 @@ protected slots:
     virtual void languageChange();
 
 private:
-    RS_Spline* spline;
+    RS_Spline* spline = nullptr;
 
 };
 

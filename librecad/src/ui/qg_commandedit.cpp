@@ -33,8 +33,10 @@
 #include <QApplication>
 #include <QClipboard>
 
-#include <rs_math.h>
-#include <rs_settings.h>
+#include "rs_commands.h"
+#include "rs_math.h"
+#include "rs_settings.h"
+#include "rs_settings.h"
 
 
 /**
@@ -42,10 +44,10 @@
  * to use this constructor.
  */
 QG_CommandEdit::QG_CommandEdit(QWidget* parent)
-        : QLineEdit(parent)
-        , keycode_mode(false)
-        , relative_ray("none")
-        , calculator_mode(false)
+    : QLineEdit(parent)
+    , keycode_mode(false)
+    , relative_ray("none")
+    , calculator_mode(false)
 
 {
     setStyleSheet("selection-color: white; selection-background-color: green;");
@@ -57,15 +59,23 @@ QG_CommandEdit::QG_CommandEdit(QWidget* parent)
  * Bypass for key press events from the tab key.
  */
 bool QG_CommandEdit::event(QEvent* e) {
-	if (e->type()==QEvent::KeyPress) {
-		QKeyEvent* k = (QKeyEvent*)e;
-		if (k->key()==Qt::Key_Tab) {
-			emit tabPressed();
-			return true;
+    if (e->type()==QEvent::KeyPress) {
+        QKeyEvent* k = (QKeyEvent*)e;
+        switch(k->key()) {
+        case Qt::Key_Tab:
+            emit tabPressed();
+            return true;
+            // case Qt::Key_Space:
+            // if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+            //     emit spacePressed();
+            // }
+            // break;
+        default:
+            break;
         }
-	}
-	
-	return QLineEdit::event(e);
+    }
+
+    return QLineEdit::event(e);
 }
 
 /**
@@ -84,21 +94,21 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
         switch (e->key())
         {
-            case Qt::Key_Up:
-                r_string = "0," + value;
-                break;
-            case Qt::Key_Down:
-                r_string = "0,-" + value;
-                break;
-            case Qt::Key_Right:
-                r_string = value + ",0";
-                break;
-            case Qt::Key_Left:
-                r_string = "-" + value + ",0";
-                break;
-            default:
-                QLineEdit::keyPressEvent(e);
-                return;
+        case Qt::Key_Up:
+            r_string = "0," + value;
+            break;
+        case Qt::Key_Down:
+            r_string = "0,-" + value;
+            break;
+        case Qt::Key_Right:
+            r_string = value + ",0";
+            break;
+        case Qt::Key_Left:
+            r_string = "-" + value + ",0";
+            break;
+        default:
+            QLineEdit::keyPressEvent(e);
+            return;
         }
 
         // r_string is empty when Ctrl is pressed
@@ -107,8 +117,8 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
             if (value == "none")
             {
                 emit message(
-                QObject::tr("You must input a distance first.")
-                );
+                            QObject::tr("You must input a distance first.")
+                            );
             }
             else
             {
@@ -121,51 +131,50 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
     switch (e->key())
     {
-        case Qt::Key_Up:
-            if (!historyList.isEmpty() && it>historyList.begin())
-            {
-                it--;
+    case Qt::Key_Up:
+        if (!historyList.isEmpty() && it > historyList.begin())
+        {
+            it--;
+            setText(*it);
+        }
+        break;
+
+    case Qt::Key_Down:
+        if (!historyList.isEmpty() && it < historyList.end() )
+        {
+            it++;
+            if (it<historyList.end()) {
                 setText(*it);
-            }
-            break;
-
-        case Qt::Key_Down:
-            if (!historyList.isEmpty() && it<historyList.end() )
-            {
-                it++;
-                if (it<historyList.end()) {
-                    setText(*it);
-                }
-                else {
-                    setText("");
-                }
-            }
-            break;
-
-        case Qt::Key_Enter:
-        case Qt::Key_Return:
-            processInput(text());
-            break;
-		case Qt::Key_Space:
-			if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true) ||
-				(text().isEmpty() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true)))
-				processInput(text());
-            else if (!text().isEmpty())
-                QLineEdit::keyPressEvent(e);
-			break;
-        case Qt::Key_Escape:
-            if (text().isEmpty()) {
-                emit escape();
             }
             else {
                 setText("");
             }
-            break;
+        }
+        break;
 
-        default:
+    case Qt::Key_Enter:
+    case Qt::Key_Return:
+        processInput(text());
+        break;
+    case Qt::Key_Space:
+        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true))
+            processInput(text());
+        else if (!text().isEmpty())
             QLineEdit::keyPressEvent(e);
-            break;
-	}
+        break;
+    case Qt::Key_Escape:
+        if (text().isEmpty()) {
+            emit escape();
+        }
+        else {
+            setText("");
+        }
+        break;
+
+    default:
+        QLineEdit::keyPressEvent(e);
+        break;
+    }
 
     if (keycode_mode)
     {
@@ -190,13 +199,13 @@ void QG_CommandEdit::evaluateExpression(QString input)
 }
 
 void QG_CommandEdit::focusInEvent(QFocusEvent *e) {
-	emit focusIn();
-	QLineEdit::focusInEvent(e);
+    emit focusIn();
+    QLineEdit::focusInEvent(e);
 }
 
 void QG_CommandEdit::focusOutEvent(QFocusEvent *e) {
-	emit focusOut();
-	QLineEdit::focusOutEvent(e);
+    emit focusOut();
+    QLineEdit::focusOutEvent(e);
 }
 
 void QG_CommandEdit::processInput(QString input)
@@ -229,8 +238,46 @@ void QG_CommandEdit::processInput(QString input)
 
         historyList.append(input);
         it = historyList.end();
+    } else if (input == "") {
+        emit command("");
     }
     clear();
+}
+
+/**
+ * @brief extractCliCal, filter cli calculator math expression
+ * @param cmd, cli string
+ * @return empty string, if calculation is performed; the input string, otherwise
+ */
+QString QG_CommandEdit::filterCliCal(const QString& cmd)
+{
+    QString str=cmd.trimmed();
+    const QRegularExpression calCmd(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
+    QRegularExpressionMatch match = calCmd.match(str);
+    if(!(match.hasMatch()
+         || str.startsWith(QObject::tr("cal ","command to trigger cli calculator"), Qt::CaseInsensitive)
+         || str.startsWith(QObject::tr("calculate ","command to trigger cli calculator"), Qt::CaseInsensitive)
+                           )) {
+        return cmd;
+    }
+    int index = match.capturedEnd(0);
+    bool spaceFound=(index>=0);
+    str=str.mid(index);
+    index=str.indexOf(QRegularExpression(R"(\S)"));
+    if(!(spaceFound && index>=0))
+        return cmd;
+    str=str.mid(index);
+    if (!str.isEmpty())
+    {
+        // Do calculation
+        bool okay=false;
+        double result = RS_Math::eval(str, &okay);
+        if (okay) {
+            emit message(QString("%1 =%2").arg(str).arg(result, 12, 'g'));
+            return {};
+        }
+    }
+    return cmd;
 }
 
 bool QG_CommandEdit::isForeignCommand(QString input)
@@ -242,6 +289,9 @@ bool QG_CommandEdit::isForeignCommand(QString input)
     if (input == tr("clear"))
     {
         emit clearCommandsHistory();
+        r_value = false;
+    }
+    else if ((input = filterCliCal(input)).isEmpty()) {
         r_value = false;
     }
     else if (input == QObject::tr("cal"))

@@ -23,26 +23,60 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<QMouseEvent>
-#include "rs_actiondefault.h"
+#include <algorithm>
 
+#include<QMouseEvent>
+
+#include "qc_applicationwindow.h"
+#include "rs_actiondefault.h"
+#include "rs_commandevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
-#include "rs_commandevent.h"
 #include "rs_modification.h"
-#include "rs_selection.h"
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
-
-#include <cmath>
+#include "rs_selection.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 struct RS_ActionDefault::Points {
-	RS_Vector v1;
-	RS_Vector v2;
+    RS_Vector v1;
+    RS_Vector v2;
+
+    // Number of temporary entities for glowing effects
+    unsigned nHighLightDuplicates = 0;
+
+    RS_Entity* highlightedEntity = nullptr;
 };
+
+namespace {
+
+// Glowing effects on Mouse hover
+constexpr double minimumHoverTolerance =  3.0;
+
+constexpr double hoverToleranceFactor1 =  1.0;
+constexpr double hoverToleranceFactor2 = 10.0;
+
+// whether the entity supports glowing effects on mouse hovering
+bool allowMouseOverGlowing(const RS_Entity* entity)
+{
+    if (entity == nullptr)
+        return false;
+    switch (entity->rtti())
+    {
+    case RS2::EntityHatch:
+    case RS2::EntityImage:
+    case RS2::EntitySolid:
+    case RS2::EntityUnknown:
+    case RS2::EntityPattern:
+    return false;
+    default:
+    return true;
+    }
+}
+}
 
 /**
  * Constructor.
@@ -51,12 +85,13 @@ RS_ActionDefault::RS_ActionDefault(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
     : RS_PreviewActionInterface("Default",
 								container, graphicView)
-	, pPoints(new Points{})
-	, restrBak(RS2::RestrictNothing)
+	, pPoints(std::make_unique<Points>())
+    , snapRestriction(RS2::RestrictNothing)
 {
 
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault");
-	actionType=RS2::ActionDefault;
+    setActionType(RS2::ActionDefault);
+    typeToSelect = graphicView.getTypeToSelect();
     RS_DEBUG->print("RS_ActionDefault::RS_ActionDefault: OK");
 }
 
@@ -65,6 +100,9 @@ RS_ActionDefault::~RS_ActionDefault() = default;
 
 void RS_ActionDefault::init(int status) {
     RS_DEBUG->print("RS_ActionDefault::init");
+    if (status >= 0){
+        checkSupportOfQuickEntityInfo();
+    }
     if(status==Neutral){
         deletePreview();
         deleteSnapper();
@@ -79,11 +117,19 @@ void RS_ActionDefault::init(int status) {
     RS_DEBUG->print("RS_ActionDefault::init: OK");
 }
 
+void RS_ActionDefault::checkSupportOfQuickEntityInfo(){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        this->allowEntityQuickInfoAuto = entityInfoWidget->isAutoSelectEntitiesInDefaultAction();
+        this->allowEntityQuickInfoForCTRL = entityInfoWidget->isSelectEntitiesInDefaultActionWithCTRL();
+    }
+}
+
 void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
     //        std::cout<<"RS_ActionDefault::keyPressEvent(): begin"<<std::endl;
     switch(e->key()){
     case Qt::Key_Shift:
-        restrBak = snapMode.restriction;
+        snapRestriction = snapMode.restriction;
         setSnapRestriction(RS2::RestrictOrthogonal);
         e->accept();
         break; //avoid clearing command line at shift key
@@ -103,25 +149,90 @@ void RS_ActionDefault::keyPressEvent(QKeyEvent* e) {
 
 void RS_ActionDefault::keyReleaseEvent(QKeyEvent* e) {
     if (e->key()==Qt::Key_Shift) {
-        setSnapRestriction(restrBak);
+        setSnapRestriction(snapRestriction);
         e->accept();
     }
 }
 
 
+/*
+   Highlights hovered entities that are visible and not locked.
+
+   - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
+*/
+void RS_ActionDefault::highlightHoveredEntities(QMouseEvent* event)
+{
+    clearHighLighting();
+
+    bool shouldShowQuickInfoWidget = allowEntityQuickInfoAuto || (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier) && allowEntityQuickInfoForCTRL);
+
+    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
+    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0 || shouldShowQuickInfoWidget;
+    if (!showHighlightEntity)
+        return;
+
+    RS_Entity* entity = catchEntity(event);
+    if (entity == nullptr)
+        return;
+    if (!entity->isVisible() || (entity->isLocked() && !shouldShowQuickInfoWidget)){
+        return;
+    }
+
+    const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
+                                        ? hoverToleranceFactor1
+                                        : hoverToleranceFactor2;
+
+    const double hoverTolerance { hoverToleranceFactor / graphicView->getFactor().magnitude() };
+
+    double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
+                                     ? minimumHoverTolerance
+                                     : hoverTolerance;
+
+    double screenTolerance = graphicView->toGraphDX( 0.01*std::min(graphicView->getWidth(), graphicView->getHeight()));
+    hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
+    bool isPointOnEntity = false;
+
+    RS_Vector currentMousePosition = graphicView->toGraph(event->position());
+    if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
+            ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
+    {
+        double nearestDistanceTo_pointOnEntity = 0.;
+
+        entity->getNearestPointOnEntity(currentMousePosition, true, &nearestDistanceTo_pointOnEntity);
+
+        if (nearestDistanceTo_pointOnEntity <= hoverTolerance_adjusted) isPointOnEntity = true;
+    }
+    else
+    {
+        isPointOnEntity = entity->isPointOnEntity(currentMousePosition, hoverTolerance_adjusted);
+    }
+
+    // Glowing effect on mouse hovering
+    if (isPointOnEntity){
+        highlightEntity(entity);
+        if (shouldShowQuickInfoWidget){
+            updateQuickInfoWidget(entity);
+        }
+    }
+}
+
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 
+    // clear any existing hovering
+    clearHighLighting();
+
     switch (getStatus()) {
     case Neutral:
         deleteSnapper();
+        highlightHoveredEntities(e);
         break;
     case Dragging:
-        //v2 = graphicView->toGraph(e->x(), e->y());
+        //v2 = graphicView->toGraph(e->position());
 		pPoints->v2 = mouse;
 
 		if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>10) {
@@ -161,7 +272,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1);
             pPoints->v2 = mouse;
         }
 
@@ -183,7 +294,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
 		RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
         if (e->modifiers() & Qt::ShiftModifier) {
-            mouse = snapToAngle(mouse, pPoints->v1, 15.);
+            mouse = snapToAngle(mouse, pPoints->v1);
             pPoints->v2 = mouse;
         }
 
@@ -215,7 +326,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent* e) {
         break;
     case Panning:
     {
-        RS_Vector const vTarget(e->x(), e->y());
+        RS_Vector const vTarget{e->position()};
 		RS_Vector const v01=vTarget - pPoints->v1;
         if(v01.squared()>=64.){
             graphicView->zoomPan((int) v01.x, (int) v01.y);
@@ -238,10 +349,10 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         {
             auto const m=e->modifiers();
             if(m & (Qt::ControlModifier|Qt::MetaModifier)){
-				pPoints->v1 = RS_Vector(e->x(), e->y());
+                pPoints->v1 = RS_Vector{e->position()};
                 setStatus(Panning);
             } else {
-				pPoints->v1 = graphicView->toGraph(e->x(), e->y());
+                pPoints->v1 = graphicView->toGraph(e->position());
                 setStatus(Dragging);
             }
         }
@@ -250,7 +361,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case Moving: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
@@ -270,7 +381,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent* e) {
         case MovingRef: {
 			pPoints->v2 = snapPoint(e);
             if (e->modifiers() & Qt::ShiftModifier) {
-                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1, 15.);
+                pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1);
             }
             deletePreview();
             RS_Modification m(*container, graphicView);
@@ -301,16 +412,17 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
 
     if (e->button()==Qt::LeftButton) {
-		pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+        pPoints->v2 = graphicView->toGraph(e->position());
         switch (getStatus()) {
         case Dragging: {
             // select single entity:
             RS_Entity* en = catchEntity(e);
 
-			if (en) {
+            if (en != nullptr) {
                 deletePreview();
 
                 RS_Selection s(*container, graphicView);
+
                 s.selectSingle(en);
 
                 RS_DIALOGFACTORY->updateSelectionWidget(
@@ -327,7 +439,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 
         case SetCorner2: {
             //v2 = snapPoint(e);
-			pPoints->v2 = graphicView->toGraph(e->x(), e->y());
+            pPoints->v2 = graphicView->toGraph(e->position());
 
             // select window:
             //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
@@ -335,8 +447,8 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent* e) {
 
 			bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
-            bool select = (e->modifiers() & Qt::ShiftModifier) ? false : true;
-			s.selectWindow(pPoints->v1, pPoints->v2, select, cross);
+            bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
+			s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
             RS_DIALOGFACTORY->updateSelectionWidget(
                         container->countSelected(),container->totalSelectedLength());
@@ -421,4 +533,64 @@ void RS_ActionDefault::updateMouseCursor() {
     }
 }
 
+void RS_ActionDefault::clearHighLighting()
+{
+    auto* hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
+    if (hContainer->count()==0)
+        return;
+    hContainer->clear();
+    pPoints->highlightedEntity=nullptr;
+    graphicView->redraw(RS2::RedrawOverlay);
+    clearQuickInfoWidget();
+}
+
+void RS_ActionDefault::resume()
+{
+    clearHighLighting();
+    checkSupportOfQuickEntityInfo();
+    BASE_CLASS::resume();
+}
+
+void RS_ActionDefault::suspend()
+{
+    clearHighLighting();
+    BASE_CLASS::suspend();
+}
+
+void RS_ActionDefault::highlightEntity(RS_Entity* entity) {
+    if (!allowMouseOverGlowing(entity))
+        return;
+
+    // The container for highlighting effects
+    auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
+    hContainer->clear();
+
+    pPoints->highlightedEntity = entity;
+
+    RS_Entity* duplicatedEntity = pPoints->highlightedEntity->clone();
+
+    duplicatedEntity->reparent(hContainer);
+    duplicatedEntity->setHighlighted(true);
+    hContainer->addEntity(duplicatedEntity);
+
+    graphicView->redraw(RS2::RedrawOverlay);
+}
+
+RS2::EntityType RS_ActionDefault::getTypeToSelect(){
+    return typeToSelect;
+}
+
+void RS_ActionDefault::clearQuickInfoWidget(){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+//        entityInfoWidget->processEntity(nullptr);
+    }
+}
+
+void RS_ActionDefault::updateQuickInfoWidget(RS_Entity *pEntity){
+    LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+    if (entityInfoWidget != nullptr){
+        entityInfoWidget->processEntity(pEntity);
+    }
+}
 // EOF

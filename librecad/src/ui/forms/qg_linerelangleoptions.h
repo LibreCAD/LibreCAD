@@ -40,7 +40,7 @@ class QG_LineRelAngleOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_LineRelAngleOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_LineRelAngleOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_LineRelAngleOptions();
 
 public slots:
@@ -49,7 +49,7 @@ public slots:
 	virtual void updateLength(const QString & l);
 
 protected:
-    RS_ActionDrawLineRelAngle* action;
+    RS_ActionDrawLineRelAngle* action = nullptr;
 
 protected slots:
     virtual void languageChange();

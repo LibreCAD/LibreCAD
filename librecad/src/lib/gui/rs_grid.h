@@ -28,6 +28,7 @@
 #ifndef RS_GRID_H
 #define RS_GRID_H
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_GraphicView;
@@ -107,25 +108,25 @@ private:
 	RS_Vector getImperialGridWidth(RS_Vector const& userGrid, bool scaleGrid, int minGridSpacing);
 	//! \}
 
-	//! Graphic view this grid is connected to.
-	RS_GraphicView* graphicView;
+    //! Graphic view this grid is connected to.
+    RS_GraphicView *graphicView = nullptr;
 
-	//! Current grid spacing
-	double spacing;
-	//! Current meta grid spacing
-	double metaSpacing;
+    //! Current grid spacing
+    double spacing = 0.;
+    //! Current meta grid spacing
+    double metaSpacing = 0.;
 
-	//! Pointer to array of grid points
-	std::vector<RS_Vector> pt;
-	RS_Vector baseGrid; // the left-bottom grid point
-	RS_Vector cellV;// (dx,dy)
-	RS_Vector metaGridWidth;
-	//! Meta grid positions in X
-	std::vector<double> metaX;
-	//! Meta grid positions in Y
-	std::vector<double> metaY;
-	bool isometric;
-	RS2::CrosshairType crosshairType;
+    //! Pointer to array of grid points
+    std::vector<RS_Vector> pt;
+    RS_Vector baseGrid; // the left-bottom grid point
+    RS_Vector cellV;    // (dx,dy)
+    RS_Vector metaGridWidth;
+    //! Meta grid positions in X
+    std::vector<double> metaX;
+    //! Meta grid positions in Y
+    std::vector<double> metaY;
+    bool isometric = false;
+    RS2::CrosshairType crosshairType = RS2::LeftCrosshair;
 
 };
 

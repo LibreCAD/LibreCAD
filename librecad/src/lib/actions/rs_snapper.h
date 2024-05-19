@@ -28,7 +28,8 @@
 #ifndef RS_SNAPPER_H
 #define RS_SNAPPER_H
 
-#include<memory>
+#include <memory>
+#include <QList>
 #include "rs.h"
 
 class RS_Entity;
@@ -89,12 +90,13 @@ struct RS_SnapMode {
       */
     RS_SnapMode const & clear(void);
     bool operator == (RS_SnapMode const& rhs) const;
+    bool operator != (RS_SnapMode const& rhs) const;
 
-    static uint toInt(const RS_SnapMode& s);    //< convert to int, to save settings
+    static unsigned toInt(const RS_SnapMode& s);    //< convert to int, to save settings
     static RS_SnapMode fromInt(unsigned int);   //< convert from int, to restore settings
 };
 
-typedef std::initializer_list<RS2::EntityType> EntityTypeList;
+using EntityTypeList = QList<RS2::EntityType>;
 
 /**
  * This class is used for snapping functions in a graphic view.
@@ -108,7 +110,6 @@ typedef std::initializer_list<RS2::EntityType> EntityTypeList;
  */
 class RS_Snapper {
 public:
-	RS_Snapper() = delete;
     RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicView);
 	virtual ~RS_Snapper();
 
@@ -116,7 +117,7 @@ public:
 	//!
 	//! \brief finish stop using snapper
 	//!
-        void finish();
+    void finish();
 
     /**
      * @return Pointer to the entity which was the key entity for the
@@ -146,7 +147,7 @@ public:
          * @see catchEntity()
          */
         void setSnapRange(int r) {
-                snapRange = r;
+                catchEntityGuiRange = r;
         }
 
         /**manually set snapPoint*/
@@ -163,7 +164,8 @@ public:
     RS_Vector snapDist(const RS_Vector& coord);
     RS_Vector snapIntersection(const RS_Vector& coord);
     //RS_Vector snapDirect(RS_Vector coord, bool abs);
-    RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res);
+    RS_Vector snapToAngle(const RS_Vector &coord, const RS_Vector &ref_coord, const double ang_res = 15.);
+    RS_Vector snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution  = 15.);
 
     RS_Vector restrictOrthogonal(const RS_Vector& coord);
     RS_Vector restrictHorizontal(const RS_Vector& coord);
@@ -204,25 +206,25 @@ public:
 protected:
     void deleteSnapper();
     double getSnapRange() const;
-    RS_EntityContainer* container;
-    RS_GraphicView* graphicView;
-	RS_Entity* keyEntity;
-    RS_SnapMode snapMode;
+    RS_EntityContainer *container = nullptr;
+    RS_GraphicView *graphicView = nullptr;
+    RS_Entity *keyEntity = nullptr;
+    RS_SnapMode snapMode{};
     //RS2::SnapRestriction snapRes;
     /**
      * Snap distance for snapping to points with a
      * given distance from endpoints.
      */
-	double m_SnapDistance;
+    double m_SnapDistance = 1.;
     /**
      * Snap to equidistant middle points
      * default to 1, i.e., equidistant to start/end points
      */
-    int middlePoints;
+    int middlePoints = 1;
     /**
-     * Snap range for catching entities.
+     * Snap range for catching entities. In GUI units
      */
-    int snapRange;
+    int catchEntityGuiRange = 32;
     bool finished{false};
 
 private:
@@ -230,7 +232,7 @@ private:
 	std::unique_ptr<ImpData> pImpData;
 
     struct Indicator;
-    Indicator* snap_indicator{nullptr};
+    std::unique_ptr<Indicator> snap_indicator;
 };
 
 #endif

@@ -84,11 +84,11 @@ private:
     RS_Vector calculateIntersection(RS_Entity* first,RS_Entity* last);
 
 private:
-	RS_Entity* originalEntity;
+    RS_Entity* originalEntity = nullptr;
 	std::unique_ptr<RS_Vector> targetPoint;
-	double dist;
-	int number;
-	bool bRightSide;
+    double dist = 0.;
+    int number = 0;
+    bool bRightSide = false;
 };
 
 #endif

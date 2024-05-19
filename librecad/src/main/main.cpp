@@ -4,6 +4,7 @@
 **
 ** Copyright (C) 2018 A. Stebich (librecad@mail.lordofbikes.de)
 ** Copyright (C) 2018 Simon Wells <simonrwells@gmail.com>
+** Copyright (C) 2020 Nikita Letov <letovnn@gmail.com>
 ** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
 ** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
@@ -28,8 +29,9 @@
 #include <clocale>
 #include "main.h"
 
-#include <QDebug>
 #include <QApplication>
+#include <QByteArray>
+#include <QDebug>
 #include <QSplashScreen>
 #include <QSettings>
 #include <QMessageBox>
@@ -46,8 +48,12 @@
 #include "rs_debug.h"
 
 #include "console_dxf2pdf.h"
+#include "console_dxf2png.h"
 
-
+namespace
+{
+void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings);
+}
 /**
  * Main. Creates Application window.
  */
@@ -56,8 +62,8 @@ int main(int argc, char** argv)
     QT_REQUIRE_VERSION(argc, argv, "5.2.1");
 
     // Check first two arguments in order to decide if we want to run librecad
-    // as console dxf2pdf tool. On Linux we can create a link to librecad
-    // executable and  name it dxf2pdf. So, we can run either:
+    // as console dxf2pdf or dxf2png tools. On Linux we can create a link to
+    // librecad executable and  name it dxf2pdf. So, we can run either:
     //
     //     librecad dxf2pdf [options] ...
     //
@@ -72,6 +78,9 @@ int main(int argc, char** argv)
         }
         if (arg.compare("dxf2pdf") == 0) {
             return console_dxf2pdf(argc, argv);
+        }
+        if (arg.compare("dxf2png") == 0 || arg == "dxf2svg") {
+            return console_dxf2png(argc, argv);
         }
     }
 
@@ -110,6 +119,8 @@ int main(int argc, char** argv)
             qDebug()<<"Commands:";
             qDebug()<<"";
             qDebug()<<"  dxf2pdf\tRun librecad as console dxf2pdf tool. Use -h for help.";
+            qDebug()<<"  dxf2png\tRun librecad as console dxf2png tool. Use -h for help.";
+            qDebug()<<"  dxf2svg\tRun librecad as console dxf2svg tool. Use -h for help.";
             qDebug()<<"";
             qDebug()<<"Options:";
             qDebug()<<"";
@@ -134,14 +145,14 @@ int main(int argc, char** argv)
             // to control the level of debugging output use --debug with level 0-6, e.g. --debug3
             // for a list of debug levels use --debug?
             // if no level follows, the debugging level is set
-            argstr.remove(QRegExp("^"+lpDebugSwitch0));
-            argstr.remove(QRegExp("^"+lpDebugSwitch1));
+            argstr.remove(QRegularExpression("^"+lpDebugSwitch0));
+            argstr.remove(QRegularExpression("^"+lpDebugSwitch1));
             char level;
             if(argstr.size()==0)
             {
                 if(i+1<argc)
                 {
-                    if(QRegExp("\\d*").exactMatch(argv[i+1]))
+                    if(QRegularExpression(R"(\d*)").match(argv[i+1]).hasMatch())
                     {
                         ++i;
                         qDebug()<<"reading "<<argv[i]<<" as debugging level";
@@ -267,7 +278,7 @@ int main(int argc, char** argv)
     RS_DEBUG->print("main: loading translation: OK");
 
     RS_DEBUG->print("main: creating main window..");
-    QC_ApplicationWindow appWin;
+    QC_ApplicationWindow& appWin = *QC_ApplicationWindow::getAppWindow();
 #ifdef Q_OS_MAC
     app.installEventFilter(&appWin);
 #endif
@@ -275,13 +286,6 @@ int main(int argc, char** argv)
     appWin.setWindowTitle(app.applicationName());
 
     RS_DEBUG->print("main: show main window");
-
-    settings.beginGroup("Geometry");
-    int windowWidth = settings.value("WindowWidth", 1024).toInt();
-    int windowHeight = settings.value("WindowHeight", 1024).toInt();
-    int windowX = settings.value("WindowX", 32).toInt();
-    int windowY = settings.value("WindowY", 32).toInt();
-    settings.endGroup();
 
     settings.beginGroup("Defaults");
     if( !settings.contains("UseQtFileOpenDialog")) {
@@ -296,9 +300,7 @@ int main(int argc, char** argv)
     settings.endGroup();
 
     if (!first_load)
-        appWin.resize(windowWidth, windowHeight);
-
-    appWin.move(windowX, windowY);
+        restoreWindowGeometry(appWin, settings);
 
     bool maximize = settings.value("Startup/Maximize", 0).toBool();
 
@@ -330,6 +332,22 @@ int main(int argc, char** argv)
     // get the file list from LC_Application
     fileList << app.fileList();
 #endif
+
+    // reopen files that we open during last close of application
+    // we'll reopen them if no explicit files to open are provided in command line
+    RS_SETTINGS->beginGroup("/Startup");
+    bool reopenLastFiles = RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 0) == 1;
+    QString lastFiles = RS_SETTINGS->readEntry("/LastOpenFilesList", "");
+    QString activeFile = RS_SETTINGS->readEntry("/LastOpenFilesActive", "");
+    RS_SETTINGS->endGroup();
+
+    if (reopenLastFiles && fileList.isEmpty() && !lastFiles.isEmpty()){
+        foreach(const QString& filename, lastFiles.split(";")) {
+            if (!filename.isEmpty() && QFileInfo::exists(filename))
+                fileList << filename;
+        }
+    }
+
     bool files_loaded = false;
     for (QStringList::Iterator it = fileList.begin(); it != fileList.end(); ++it )
     {
@@ -342,6 +360,10 @@ int main(int argc, char** argv)
         }
         appWin.slotFileOpen(*it);
         files_loaded = true;
+    }
+
+    if (reopenLastFiles){
+        appWin.activateWindowWithFile(activeFile);
     }
     RS_DEBUG->print("main: loading files: OK");
 
@@ -363,6 +385,9 @@ int main(int argc, char** argv)
     int return_code = app.exec();
 
     RS_DEBUG->print("main: exited Qt event loop");
+
+    // Destroy the singleton
+    QC_ApplicationWindow::getAppWindow().reset();
 
     return return_code;
 }
@@ -402,3 +427,24 @@ QStringList handleArgs(int argc, char** argv, const QList<int>& argClean)
     return ret;
 }
 
+namespace {
+void restoreWindowGeometry(QC_ApplicationWindow& appWin, QSettings& settings)
+{
+    settings.beginGroup("Geometry");
+    auto geometryB64 = settings.value("/WindowGeometry").toString().toUtf8();
+    auto geometry = QByteArray::fromBase64(geometryB64, QByteArray::Base64Encoding);
+    if (!geometry.isEmpty()) {
+        appWin.restoreGeometry(geometry);
+    } else {
+        // fallback
+        int windowWidth = settings.value("WindowWidth", 1024).toInt();
+        int windowHeight = settings.value("WindowHeight", 1024).toInt();
+        int windowX = settings.value("WindowX", 32).toInt();
+        int windowY = settings.value("WindowY", 32).toInt();
+        appWin.resize(windowWidth, windowHeight);
+        appWin.move(windowX, windowY);
+    }
+
+    settings.endGroup();
+}
+}

@@ -38,19 +38,18 @@ class QG_CommandHistory : public QTextEdit
     Q_OBJECT
 
 public:
-	QG_CommandHistory()=delete;
     explicit QG_CommandHistory(QWidget* parent);
 
 private slots:
 
-	void mouseReleaseEvent(QMouseEvent* event);
+    void mouseReleaseEvent(QMouseEvent* event) override;
 	void slotTextChanged();
 
 private:
 	/*menu item for Copy*/
-	QAction* m_pCopy;
+    QAction* m_pCopy = nullptr;
 	/*menu item for Select All*/
-	QAction* m_pSelectAll;
+    QAction* m_pSelectAll = nullptr;
 };
 
 #endif // QG_COMMANDHISTORY_H

@@ -24,33 +24,194 @@
 **
 **********************************************************************/
 #include<cmath>
+
 #include <QSet>
+
 #include "rs_modification.h"
 
 #include "rs_arc.h"
+#include "rs_block.h"
 #include "rs_circle.h"
-#include "rs_ellipse.h"
-#include "rs_line.h"
-#include "rs_graphicview.h"
 #include "rs_clipboard.h"
 #include "rs_creation.h"
+#include "rs_debug.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
 #include "rs_graphic.h"
 #include "rs_information.h"
 #include "rs_insert.h"
-#include "rs_block.h"
-#include "rs_polyline.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
 #include "rs_layer.h"
-#include "lc_splinepoints.h"
+#include "rs_line.h"
 #include "rs_math.h"
-#include "rs_debug.h"
-#include "rs_dialogfactory.h"
+#include "rs_mtext.h"
+#include "rs_polyline.h"
+#include "rs_text.h"
+#include "rs_units.h"
+#include "lc_splinepoints.h"
 #include "lc_undosection.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+namespace {
+
+/**
+ * @brief getPasteScale - find scaling factor for pasting
+ * @param const RS_PasteData& data - RS_PasteData
+ * @param RS_Graphic *& source - source graphic. If source is nullptr, the graphic on the clipboard is used instead
+ * @param const RS_Graphic& graphic - the target graphic
+ * @return
+ */
+RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS_Graphic& graphic)
+{
+
+    // adjust scaling factor for units conversion in case of clipboard paste
+    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
+    // select source for paste
+    if (source == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
+        source = RS_CLIPBOARD->getGraphic();
+        // graphics from the clipboard need to be scaled. From the part lib not:
+        RS2::Unit sourceUnit = source->getUnit();
+        RS2::Unit targetUnit = graphic.getUnit();
+        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+    }
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
+    // scale factor as vector
+    return {factor, factor};
+}
+
+/**
+ * @brief addNewBlock() - create a new block
+ * @param name - name of the new block to create
+ * @param graphic - the target graphic
+ * @return RS_Block - the block created
+ */
+RS_Block* addNewBlock(const QString& name, RS_Graphic& graphic)
+{
+    RS_BlockData db = RS_BlockData(name, {0.0, 0.0}, false);
+    RS_Block* b = new RS_Block(&graphic, db);
+    b->reparent(&graphic);
+    graphic.addBlock(b);
+    return b;
+}
+
+RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4)
+{
+
+    RS_VectorSolutions sol;
+    if (limitEntity.isAtomic()) {
+        // intersection(s) of the two entities:
+        return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
+    }
+    if (limitEntity.isContainer()) {
+        auto ec = static_cast<const RS_EntityContainer*>(&limitEntity);
+
+        for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e != nullptr;
+             e=ec->nextEntity(RS2::ResolveAll)) {
+
+            RS_VectorSolutions s2 = RS_Information::getIntersection(&trimEntity,
+                                                                    e, false);
+
+            std::copy_if(s2.begin(), s2.end(), std::back_inserter(sol), [e, tolerance](const RS_Vector& vp) {
+                return vp.valid && e->isPointOnEntity(vp, tolerance);
+            });
+        }
+    }
+    return sol;
+}
+
+RS_Arc* trimCircle(RS_Circle* circle, const RS_Vector& trimCoord, const RS_VectorSolutions& sol)
+{
+    double aStart=0.;
+    double aEnd=2.*M_PI;
+    switch(sol.size()){
+    case 0:
+        break;
+    case 1:
+        aStart=circle->getCenter().angleTo(sol.at(0));
+        aEnd=aStart + 2.*M_PI;
+        break;
+    default:
+    case 2:
+        //trim according to intersections
+        std::vector<double> angles;
+        const auto& center0=circle->getCenter();
+        for(const RS_Vector& vp : sol){
+            angles.push_back(center0.angleTo(vp));
+        }
+        //sort intersections by angle to circle center
+        std::sort(angles.begin(), angles.end());
+        const double a0=center0.angleTo(trimCoord);
+        for(size_t i=0; i<angles.size(); ++i){
+            aStart=angles.at(i);
+            aEnd=angles.at( (i+1)%angles.size());
+            if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                break;
+        }
+        break;
+    }
+    RS_ArcData arcData(circle->getCenter(),
+                 circle->getRadius(),
+                 aStart,
+                 aEnd,
+                 false);
+    return new RS_Arc(circle->getParent(), arcData);
+}
+
+/**
+ * @brief getIdFlagString create a string by the entity and ID and type ID.
+ * @param entity - entity, could be nullptr
+ * @return std::string - "ID/typeID", or an empty string, if the input entity is nullptr
+ */
+std::string getIdFlagString(RS_Entity* entity)
+{
+    if (entity == nullptr) return {};
+    return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
+}
+
+// Support fillet trimming for whole ellipses
+RS_AtomicEntity* trimEllipseForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
+{
+    if (entity == nullptr)
+        return entity;
+    if ( entity->rtti() != RS2::EntityEllipse)
+        return entity;
+    auto ellipse = static_cast<RS_Ellipse*>(entity);
+    if (ellipse->isEllipticArc())
+        return entity;
+    RS_Vector tangent = entity->getNearestPointOnEntity(arcFillet.getCenter(), false);
+    RS_Line line{nullptr, {arcFillet.getCenter(), tangent}};
+    RS_Vector middle = arcFillet.getMiddlePoint();
+    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * ellipse->getMinorRadius()*0.01;
+    RS_Vector trimCoord = ellipse->getNearestPointOnEntity(opposite, false);
+    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+    ellipse->prepareTrim(trimCoord, sol);
+    return entity;
+}
+
+// A quick fix for rounding on circles
+RS_AtomicEntity* trimCircleForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
+{
+    if (entity == nullptr)
+        return entity;
+    if ( entity->rtti() == RS2::EntityEllipse)
+        return trimEllipseForRound(entity, arcFillet);
+    if ( entity->rtti() != RS2::EntityCircle)
+        return entity;
+    RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
+    RS_Vector middle = arcFillet.getMiddlePoint();
+    // prefer acute angle for fillet
+    // Use a trimCoord at the opposite side of the arc wrt to the
+    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * entity->getRadius()*0.01;
+    RS_Vector trimCoord = entity->getNearestPointOnEntity(opposite, true);
+    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+    RS_Arc* arc = trimCircle(static_cast<RS_Circle*>(entity), trimCoord, sol);
+    delete entity;
+    return arc;
+}
+}
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
 		double _factor,
@@ -100,15 +261,18 @@ void RS_Modification::remove() {
     }
 
     LC_UndoSection undo( document);
+    bool invalidContainer {true};
 	// not safe (?)
     for(auto e: *container) {
         if (e && e->isSelected()) {
             e->setSelected(false);
             e->changeUndoState();
             undo.addUndoable(e);
-        } else {
-            RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
+            invalidContainer = false;
         }
+    }
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
     }
 
     graphicView->redraw(RS2::RedrawDrawing);
@@ -131,15 +295,18 @@ void RS_Modification::revertDirection() {
 	}
 
 	std::vector<RS_Entity*> addList;
+    bool invalidContainer {true};
     for(auto e: *container) {
 		if (e && e->isSelected()) {
 			RS_Entity* ec = e->clone();
 			ec->revertDirection();
 			addList.push_back(ec);
-        } else {
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::revertDirection: no valid container is selected");
+            invalidContainer = false;
         }
 	}
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::revertDirection: no valid container is selected");
+    }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
@@ -271,18 +438,22 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     // start undo cycle for the container if we're cutting
     LC_UndoSection undo( document, cut && handleUndo);
 
+    bool invalidContainer {true};
 	// copy entities / layers / blocks
 	for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
         if (e && e->isSelected()) {
             copyEntity(e, ref, cut);
-        } else {
-            RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::copy: no valid container is selected");
+            invalidContainer = false;
         }
     }
-
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy: OK");
+    if (invalidContainer) {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::copy: no valid container is selected");
+    }
+    else {
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy: OK");
+    }
 }
 
 
@@ -306,9 +477,25 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
     }
 
     // add entity to clipboard:
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %d/%d", e->getId(), e->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: to clipboard: %s", getIdFlagString(e).c_str());
     RS_Entity* c = e->clone();
+
     c->move(-ref);
+
+    // issue #1616: copy&paste a rotated block results in a double rotated block
+    // At this point the copied block entities are already rotated, but at
+    // pasting, RS_Insert::update() would still rotate the entities again and
+    // cause double rotation.
+    bool isBlock = c->rtti() == RS2::EntityInsert;
+    double angle = isBlock ? static_cast<RS_Insert*>(c)->getAngle() : 0.;
+    // issue #1616: A quick fix: rotate back all block entities in the clipboard back by the
+    // rotation angle before pasting
+    if (isBlock && std::abs(std::remainder(angle, 2. * M_PI)) > RS_TOLERANCE_ANGLE)
+    {
+        auto* insert = static_cast<RS_Insert*>(c);
+        //insert->rotate(insert->getData().insertionPoint, - angle);
+        insert->setAngle(0.);
+    }
 
     RS_CLIPBOARD->addEntity(c);
     copyLayers(e);
@@ -319,7 +506,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
 
     if (cut) {
         LC_UndoSection undo( document);
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: cut ID/flag: %s", getIdFlagString(e).c_str());
         e->changeUndoState();
         undo.addUndoable(e);
 
@@ -329,7 +516,7 @@ void RS_Modification::copyEntity(RS_Entity* e, const RS_Vector& ref, const bool 
         }
         e->setSelected(false);
     } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyEntity: delete in view ID/flag: %s", getIdFlagString(e).c_str());
         // delete entity in graphic view:
         if (graphicView) {
             graphicView->deleteEntity(e);
@@ -371,7 +558,7 @@ void RS_Modification::copyLayers(RS_Entity* e) {
     // special handling of inserts:
     if (e->rtti()==RS2::EntityInsert) {
         // insert: add layer(s) of subentities:
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyLayers: copy insert entity ID/flag layers: %d/%d", e->getId(), e->rtti());
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyLayers: copy insert entity ID/flag layers: %s", getIdFlagString(e).c_str());
         RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
         if (!b) {
             RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copyLayers: could not find block for insert entity");
@@ -409,7 +596,7 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
         return;
     }
 
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: get insert entity ID/flag block: %d/%d", e->getId(), e->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: get insert entity ID/flag block: %s", getIdFlagString(e).c_str());
     RS_Block* b = ((RS_Insert*)e)->getBlockForInsert();
     if (!b) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copyBlocks: could not find block for insert entity");
@@ -425,7 +612,7 @@ void RS_Modification::copyBlocks(RS_Entity* e) {
     for(auto e2: *b) {
         //call copyBlocks only if entity are insert
         if (e2->rtti()==RS2::EntityInsert) {
-            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %d/%d", e2->getId(), e2->rtti());
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copyBlocks: process insert-into-insert blocks for %s", getIdFlagString(e).c_str());
             copyBlocks(e2);
         }
     }
@@ -453,29 +640,19 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         return;
     }
 
-    // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = (RS_TOLERANCE < fabs(data.factor)) ? data.factor : 1.0;
     // scale factor as vector
-    RS_Vector vfactor = RS_Vector(factor, factor);
+    RS_Vector vfactor = getPasteScale(data, source, *graphic);
     // select source for paste
-	if (!source) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
-        source = RS_CLIPBOARD->getGraphic();
-        // graphics from the clipboard need to be scaled. From the part lib not:
-        RS2::Unit sourceUnit = source->getUnit();
-        RS2::Unit targetUnit = graphic->getUnit();
-        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
-        vfactor = RS_Vector(factor, factor);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from parts library");
+    if (source == nullptr) {
+        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::%s(): line %d: no source found", __func__, __LINE__);
+        return;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %d", factor);
 
     // default insertion point for container
     RS_Vector ip = data.insertionPoint;
 
     // remember active layer before inserting absent layers
-    RS_Layer *l = graphic->getActiveLayer();
+    RS_Layer *layer = graphic->getActiveLayer();
 
     // insert absent layers from source to graphic
     if (!pasteLayers(source)) {
@@ -483,47 +660,29 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         return;
     }
 
-    // select the same layer in graphic as in source
-    /*
-    auto a_layer = source->getActiveLayer();
-    if (!a_layer)
-    {
-        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: copy wasn't properly finalized");
-        return;
-    }
-    QString ln = a_layer->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    */
-    if (!l) {
+    if (layer == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::paste: unable to select layer to paste in");
         return;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", l->getName().toLatin1().data());
-    graphic->activateLayer(l);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: selected layer: %s", layer->getName().toLatin1().data());
+    graphic->activateLayer(layer);
 
     // hash for renaming duplicated blocks
     QHash<QString, QString> blocksDict;
 
     // create block to paste entities as a whole
-    QString name_old = "paste-block";
-    if (data.blockName != nullptr) {
-        name_old = data.blockName;
-    }
-    QString name_new = name_old;
-    if (graphic->findBlock(name_old)) {
-        name_new = graphic->getBlockList()->newName(name_old);
+    QString name_old = (data.blockName != nullptr) ? data.blockName : "paste-block";
+    QString name_new = (graphic->findBlock(name_old) != nullptr) ? graphic->getBlockList()->newName(name_old) : name_old;
+    if (graphic->findBlock(name_old) != nullptr) {
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: paste block name: %s", name_new.toLatin1().data());
     }
     blocksDict[name_old] = name_new;
 
     // create block
-    RS_BlockData db = RS_BlockData(name_new, RS_Vector(0.0, 0.0), false);
-    RS_Block* b = new RS_Block(graphic, db);
-    b->reparent(graphic);
-    graphic->addBlock(b);
+    RS_Block* b = addNewBlock(name_new, *graphic);
 
     // create insert object for the paste block
-    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, 0., 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* i = new RS_Insert(document, di);
     i->setLayerToActive();
     i->setPenToActive();
@@ -532,7 +691,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // copy sub- blocks, inserts and entities from source to the paste block
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: copy content to the paste block");
-    for(auto e: * static_cast<RS_EntityContainer*>(source)) {
+    for(auto e: *source) {
 
         if (!e) {
             RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::paste: nullptr entity in source");
@@ -626,22 +785,22 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert");
 
-    if (!entity || entity->rtti() != RS2::EntityInsert) {
+    RS_Insert* insert = dynamic_cast<RS_Insert*>(entity);
+    if (insert == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: no container to process");
         return false;
     }
 
-    RS_Insert* i = (RS_Insert*)entity;
     // get block for this insert object
-    RS_Block* ib = i->getBlockForInsert();
-    if (!ib) {
+    RS_Block* insertBlock = insert->getBlockForInsert();
+    if (insertBlock == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: no block to process");
         return false;
     }
     // get name for this insert object
-    QString name_old = ib->getName();
+    QString name_old = insertBlock->getName();
     QString name_new = name_old;
-    if (name_old != i->getName()) {
+    if (name_old != insert->getName()) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: block and insert names don't coincide");
         return false;
     }
@@ -653,36 +812,33 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
     }
     blocksDict[name_old] = name_new;
     // make new block in the destination
-    RS_BlockData db = RS_BlockData(name_new, RS_Vector(0.0, 0.0), false);
-    RS_Block* bc = new RS_Block(graphic, db);
-    bc->reparent(graphic);
-    graphic->addBlock(bc);
+    RS_Block* blockClone = addNewBlock(name_new, *graphic);
     // create insert for the new block
     RS_InsertData di = RS_InsertData(name_new, insertionPoint, RS_Vector(1.0, 1.0), 0.0, 1, 1, RS_Vector(0.0,0.0));
-    RS_Insert* ic = new RS_Insert(container, di);
-    ic->reparent(container);
-    container->addEntity(ic);
+    RS_Insert* insertClone = new RS_Insert(container, di);
+    insertClone->reparent(container);
+    container->addEntity(insertClone);
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    if (!l) {
+    RS_Layer* layer = graphic->getLayerList()->find(ln);
+    if (!layer) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
         return false;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
-    ic->setLayer(l);
-    ic->setPen(entity->getPen(false));
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", layer->getName().toLatin1().data());
+    insertClone->setLayer(layer);
+    insertClone->setPen(entity->getPen(false));
 
     // get relative insertion point
-    RS_Vector ip = RS_Vector(0.0, 0.0);
+    RS_Vector ip{0.0, 0.0};
     if (container->getId() != graphic->getId()) {
-        ip = bc->getBasePoint();
+        ip = blockClone->getBasePoint();
     }
 
     // copy content of block/insert to destination
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: copy content to the subcontainer");
-    for(auto* e: *i) {
+    for(auto* e: *insert) {
 
         if(!e) {
             RS_DEBUG->print(RS_Debug::D_NOTICE, "RS_Modification::pasteInsert: nullptr entity in block");
@@ -691,20 +847,20 @@ bool RS_Modification::pasteContainer(RS_Entity* entity, RS_EntityContainer* cont
 
         if (e->rtti() == RS2::EntityInsert) {
             RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: process sub-insert for %s", ((RS_Insert*)e)->getName().toLatin1().data());
-            if (!pasteContainer(e, (RS_EntityContainer*)bc, blocksDict, ip)) {
+            if (!pasteContainer(e, blockClone, blocksDict, ip)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity to sub-insert");
                 return false;
             }
         } else {
-            if (!pasteEntity(e, (RS_EntityContainer*)bc)) {
+            if (!pasteEntity(e, blockClone)) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to paste entity");
                 return false;
             }
         }
     }
 
-    ic->update();
-    ic->setSelected(false);
+    insertClone->update();
+    insertClone->setSelected(false);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: OK");
     return true;
@@ -726,18 +882,18 @@ bool RS_Modification::pasteEntity(RS_Entity* entity, RS_EntityContainer* contain
     }
 
     // create entity copy to paste
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity ID/flag: %d/%d", entity->getId(), entity->rtti());
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteEntity ID/flag: %s", getIdFlagString(entity).c_str());
     RS_Entity* e = entity->clone();
 
     // set the same layer in clone as in source
     QString ln = entity->getLayer()->getName();
-    RS_Layer* l = graphic->getLayerList()->find(ln);
-    if (!l) {
+    RS_Layer* layer = graphic->getLayerList()->find(ln);
+    if (!layer) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::pasteInsert: unable to select layer to paste in");
         return false;
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", l->getName().toLatin1().data());
-    e->setLayer(l);
+    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::pasteInsert: selected layer: %s", layer->getName().toLatin1().data());
+    e->setLayer(layer);
     e->setPen(entity->getPen(false));
 
     // scaling entity doesn't needed as it scaled with insert object
@@ -1742,10 +1898,10 @@ bool RS_Modification::scale(RS_ScaleData& data) {
 
 	for(auto ec: *container){
         if (ec->isSelected() ) {
-            if ( fabs(data.factor.x - data.factor.y) > RS_TOLERANCE ) {
+            if ( !data.isotropicScaling ) {
                     if ( ec->rtti() == RS2::EntityCircle ) {
     //non-isotropic scaling, replacing selected circles with ellipses
-				RS_Circle *c=static_cast<RS_Circle*>(ec);
+                auto* c=static_cast<RS_Circle*>(ec);
 				ec= new RS_Ellipse{container,
 				{c->getCenter(), {c->getRadius(),0.},
 						1.,
@@ -2055,9 +2211,9 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
                            RS_Entity* limitEntity,
                            bool both) {
 
-	if (!(trimEntity && limitEntity)) {
+    if (trimEntity == nullptr || limitEntity == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::trim: At least one entity is nullptr");
+                        "RS_Modification::trim: At least one entity is nullptr");
         return false;
     }
 
@@ -2067,38 +2223,8 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
     if(trimEntity->isLocked()|| !trimEntity->isVisible()) return false;
 
-    RS_VectorSolutions sol;
-    if (limitEntity->isAtomic()) {
-        // intersection(s) of the two entities:
-        sol = RS_Information::getIntersection(trimEntity, limitEntity, false);
-    } else if (limitEntity->isContainer()) {
-        RS_EntityContainer* ec = (RS_EntityContainer*)limitEntity;
+    RS_VectorSolutions sol = findIntersection(*trimEntity, *limitEntity);
 
-        //sol.alloc(128);
-
-        for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e;
-                e=ec->nextEntity(RS2::ResolveAll)) {
-            //for (int i=0; i<container->count(); ++i) {
-            //    RS_Entity* e = container->entityAt(i);
-
-            if (e) {
-
-                RS_VectorSolutions s2 = RS_Information::getIntersection(trimEntity,
-                                        e, false);
-
-                if (s2.hasValid()) {
-					for (const RS_Vector& vp: s2){
-						if (vp.valid) {
-							if (e->isPointOnEntity(vp, 1.0e-4)) {
-								sol.push_back(vp);
-                            }
-                        }
-                    }
-                    //break;
-                }
-            }
-        }
-    }
 //if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
     if (trimEntity->rtti()==RS2::EntityLine){
         RS_Line *lin = (RS_Line *)trimEntity;
@@ -2120,41 +2246,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
-        RS_Circle* c = static_cast<RS_Circle*>(trimEntity);
-        double aStart=0.;
-        double aEnd=2.*M_PI;
-        switch(sol.size()){
-        case 0:
-            break;
-        case 1:
-            aStart=c->getCenter().angleTo(sol.at(0));
-            aEnd=aStart+2.*M_PI;
-            break;
-        default:
-        case 2:
-            //trim according to intersections
-			std::vector<double> angles;
-            const auto& center0=c->getCenter();
-			for(const RS_Vector& vp : sol){
-				angles.push_back(center0.angleTo(vp));
-            }
-            //sort intersections by angle to circle center
-            std::sort(angles.begin(), angles.end());
-            const double a0=center0.angleTo(trimCoord);
-			for(size_t i=0; i<angles.size(); ++i){
-                aStart=angles.at(i);
-                aEnd=angles.at( (i+1)%angles.size());
-                if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
-                    break;
-            }
-            break;
-        }
-        RS_ArcData d(c->getCenter(),
-                     c->getRadius(),
-                     aStart,
-                     aEnd,
-                     false);
-        trimmed1 = new RS_Arc(trimEntity->getParent(), d);
+        trimmed1 = trimCircle(static_cast<RS_Circle*>(trimEntity), trimCoord, sol);
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
@@ -2173,7 +2265,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print("RS_Modification::trim: limitCoord: %f/%f", limitCoord.x, limitCoord.y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(0): %f/%f", sol.get(0).x, sol.get(0).y);
         RS_DEBUG->print("RS_Modification::trim: sol.get(1): %f/%f", sol.get(1).x, sol.get(1).y);
-        RS_DEBUG->print("RS_Modification::trim: ind: %d", ind);
+        RS_DEBUG->print("RS_Modification::trim: ind: %lu", ind);
         is2 = sol.get(ind==0 ? 1 : 0);
         //RS_Vector is2 = sol.get(ind);
         RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
@@ -2819,6 +2911,8 @@ bool RS_Modification::round(const RS_Vector& coord,
     RS_Entity* par1 = creation.createParallel(coord, data.radius, 1, entity1);
     RS_Entity* par2 = creation.createParallel(coord, data.radius, 1, entity2);
 
+    if ((par1 == nullptr) || (par2 == nullptr)) return false;
+
     RS_VectorSolutions sol2 =
         RS_Information::getIntersection(entity1, entity2, false);
 
@@ -2877,6 +2971,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             trimmed1->trimEndpoint(p1);
             break;
         default:
+            trimmed1 = trimCircleForRound(trimmed1, *arc);
             break;
         }
 
@@ -2890,6 +2985,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             trimmed2->trimEndpoint(p2);
             break;
         default:
+            trimmed2 = trimCircleForRound(trimmed2, *arc);
             break;
         }
 
@@ -3085,6 +3181,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 case RS2::EntityDimDiametric:
                 case RS2::EntityDimAngular:
                 case RS2::EntityDimLeader:
+                case RS2::EntityDimArc:
                     rl = RS2::ResolveNone;
                     resolveLayer = true;
                     resolvePen = false;

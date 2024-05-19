@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>438</width>
-    <height>294</height>
+    <height>370</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
        <property name="title">
         <string>Preview</string>
        </property>
-       <layout class="QVBoxLayout">
+       <layout class="QVBoxLayout" name="verticalLayout">
         <item>
          <widget class="QCheckBox" name="cbEnablePreview">
           <property name="text">
@@ -75,7 +75,27 @@
          </widget>
         </item>
         <item>
-         <widget class="QG_GraphicView" name="gvPreview" native="true"/>
+         <widget class="QWidget" name="widget" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QG_GraphicView" name="gvPreview" native="true"/>
+           </item>
+           <item>
+            <widget class="QLabel" name="lArea">
+             <property name="text">
+              <string>Area</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="leHatchArea">
+             <property name="readOnly">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
         </item>
        </layout>
       </widget>
@@ -305,4 +325,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updatePreview()</slot>
+ </slots>
 </ui>

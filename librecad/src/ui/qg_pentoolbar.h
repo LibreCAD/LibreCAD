@@ -50,8 +50,17 @@ public:
 	RS_Pen getPen() const;
 
     // Methods from RS_LayerListListener Interface:
-    virtual void layerActivated(RS_Layer*);
-    virtual void layerEdited(RS_Layer*);
+    void layerActivated(RS_Layer*) override;
+    void layerEdited(RS_Layer*) override;
+
+    void setLayerColor(RS_Color color, bool b);
+    void setLayerWidth(RS2::LineWidth width, bool b);
+    void setLayerLineType(RS2::LineType lineType, bool b);
+
+    void setColor(RS_Color color);
+    void setWidth(RS2::LineWidth width);
+    void setLineType(RS2::LineType lineType);
+    void emitPenChanged();
 
 public slots:
     void slotColorChanged(const RS_Color& color);

@@ -105,11 +105,11 @@ public:
 	void setRowSpacing(double rs);
 
 protected:
-	RS_Block* block;
+    RS_Block* block = nullptr;
 	std::unique_ptr<RS_InsertData> data;
 	
 	/** Last status before entering option. */
-	Status lastStatus;
+    Status lastStatus = SetUndefined;
 };
 
 #endif

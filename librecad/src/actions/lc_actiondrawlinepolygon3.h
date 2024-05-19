@@ -77,9 +77,9 @@ private:
     struct Points;
     std::unique_ptr<Points> pPoints;
     /** Number of edges. */
-    int number;
+    int number = 0;
     /** Last status before entering text. */
-    Status lastStatus;
+    Status lastStatus = SetCenter;
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGON3_H

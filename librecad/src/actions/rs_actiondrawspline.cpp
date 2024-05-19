@@ -26,17 +26,17 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawspline.h"
 
-#include "rs_spline.h"
+#include "rs_actiondrawspline.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
 #include "rs_point.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_spline.h"
 
 struct RS_ActionDrawSpline::Points {
 
@@ -63,7 +63,7 @@ RS_ActionDrawSpline::RS_ActionDrawSpline(RS_EntityContainer& container,
 										 RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw splines",
 							   container, graphicView)
-	,pPoints(new Points{})
+	, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawSpline;
 	reset();
@@ -111,7 +111,7 @@ void RS_ActionDrawSpline::trigger() {
         RS_Vector r = graphicView->getRelativeZero();
         graphicView->redraw(RS2::RedrawDrawing);
     graphicView->moveRelativeZero(r);
-    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %d",
+    RS_DEBUG->print("RS_ActionDrawSpline::trigger(): spline added: %lu",
 					pPoints->spline->getId());
 
 		pPoints->spline = nullptr;
@@ -147,9 +147,11 @@ void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent* e) {
         RS_CoordinateEvent ce(snapPoint(e));
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
-				if (getStatus()==SetNextPoint &&
-						pPoints->spline &&
-						pPoints->spline->getNumberOfControlPoints()>=pPoints->spline->getDegree()+1) {
+                if (getStatus()==SetNextPoint && pPoints->spline ) {
+                    const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
+                    bool isClosed = pPoints->spline->isClosed();
+                    // Issue #1689: allow closed splines by 3 control points
+                    if (nPoints > size_t(pPoints->spline->getDegree()) || (isClosed && nPoints == 3 ))
                         trigger();
                 }
         deletePreview();

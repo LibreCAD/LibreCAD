@@ -23,12 +23,15 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include "qg_widgetpen.h"
 
 #include <QVariant>
+#include "qg_widgetpen.h"
+#include "qevent.h"
 #include "qg_colorbox.h"
 #include "qg_widthbox.h"
 #include "qg_linetypebox.h"
+#include "rs_debug.h"
+#include "rs_entity.h"
 
 /*
  *  Constructs a QG_WidgetPen as a child of 'parent', with the
@@ -38,7 +41,11 @@ QG_WidgetPen::QG_WidgetPen(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
 {
     setupUi(this);
-
+//    cbColor->setFocusPolicy(Qt::StrongFocus);
+//    cbWidth->setFocusPolicy(Qt::StrongFocus);
+//    cbLineType->setFocusPolicy(Qt::StrongFocus);
+//    setTabOrder(cbColor, cbWidth); // cbColor to cbWidth
+//    setTabOrder(cbWidth, cbLineType); // cbColor to cbWidth to cbLineType
 }
 
 void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer, 
@@ -55,6 +62,36 @@ void QG_WidgetPen::setPen(RS_Pen pen, bool showByLayer,
     if (!title.isEmpty()) {
         bgPen->setTitle(title);
     }
+}
+
+
+void QG_WidgetPen::setPen(RS_Entity* entity, RS_Layer* layer, const QString &title){
+    RS_Pen entityPen = entity->getPen(false);
+    RS_Pen entityResolvedPen = entity->getPen(true);
+
+    RS_Color originalColor = entityPen.getColor();
+    RS_Color resolvedColor = entityResolvedPen.getColor();
+    resolvedColor.applyFlags(originalColor);
+    entityResolvedPen.setColor(resolvedColor);
+
+    entityResolvedPen.setLineType(entityPen.getLineType());
+    entityResolvedPen.setWidth(entityPen.getWidth());
+
+    setPen(entityResolvedPen, layer, title);
+}
+
+
+void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title){
+    setPen(pen, true, showUnchanged, title);
+    if (layer != nullptr){
+        RS_Pen layerPen = layer->getPen();
+        RS_Color layerColor = layerPen.getColor();
+        cbColor->setLayerColor(layerColor);
+    }
+}
+void QG_WidgetPen::setPen(RS_Pen pen, RS_Layer* layer, const QString &title)
+{
+    setPen(pen, layer, false, title);
 }
 
 RS_Pen QG_WidgetPen::getPen() {
@@ -94,4 +131,25 @@ void QG_WidgetPen::languageChange()
 {
     retranslateUi(this);
 }
+
+/*
+ *  When tabbing in to the widget, passes the focus to the 
+ *  cbColor subwidget.
+ */
+void QG_WidgetPen::focusInEvent(QFocusEvent *event)
+{
+    int reason = event->reason();
+    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusInEvent, reason '%d'",reason);
+//	if ( reason == Qt::BacktabFocusReason )
+//	    cbLineType->setFocus();
+//	else
+//	    cbColor->setFocus();
+}
+
+void QG_WidgetPen::focusOutEvent(QFocusEvent *event)
+{
+    int reason = event->reason();
+    RS_DEBUG->print(RS_Debug::D_ERROR,"QG_WidgetPen::focusOutEvent, reason '%d'",reason);
+}
+
 

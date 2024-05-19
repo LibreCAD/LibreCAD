@@ -132,6 +132,7 @@ public:
 	void requestOptions(RS_ActionInterface* action,
 								bool on, bool update = false) override;
 
+ void addOptionsWidget(QWidget * options) override;
 protected:
 	void requestPrintPreviewOptions(RS_ActionInterface* action,
 											bool on, bool update);
@@ -158,7 +159,7 @@ protected:
 	void requestArcOptions(RS_ActionInterface* action,
 								   bool on, bool update);
 
-	void requestArcTangentialOptions(RS_ActionInterface* action,
+ void requestArcTangentialOptions(RS_ActionInterface* action,
 											 bool on, bool update);
 
 	void requestCircleOptions(RS_ActionInterface* action,
@@ -236,35 +237,35 @@ public:
 								   const QString& right=QString()) override;
 	void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
 	void commandMessage(const QString& message) override;
+ void command(const QString& message) override;
 
 	static QString extToFormat(const QString& ext);
-	void updateArcTangentialOptions(const double& d, bool byRadius) override;
+ void updateArcTangentialOptions(double d, bool byRadius) override;
 
-
+ void displayBlockName(const QString& blockName, const bool& display) override;
 
 protected:
 	//! Pointer to the widget which can host dialogs
-	QWidget* parent;
+    QWidget* parent = nullptr;
 	//! Pointer to the widget which can host individual tool options
-	QToolBar* optionWidget;
+    QToolBar* optionWidget = nullptr;
 	//! Pointer to the coordinate widget.
-	QG_CoordinateWidget* coordinateWidget;
+    QG_CoordinateWidget* coordinateWidget = nullptr;
 	//! Pointer to the mouse widget.
-	QG_MouseWidget* mouseWidget;
+    QG_MouseWidget* mouseWidget = nullptr;
 	//! Pointer to the selection widget.
-	QG_SelectionWidget* selectionWidget;
+    QG_SelectionWidget* selectionWidget = nullptr;
 	//! Pointer to the command line widget
-	QG_CommandWidget* commandWidget;
+    QG_CommandWidget* commandWidget = nullptr;
 	//! Pointer to arcTangential Option widge
-	QG_ArcTangentialOptions* arcTangentialOptions;
-	QG_PolylineEquidistantOptions* polylineEquidistantOptions;
+    QG_ArcTangentialOptions* arcTangentialOptions = nullptr;
+    QG_PolylineEquidistantOptions* polylineEquidistantOptions = nullptr;
 private:
 	// pointers to snap option widgets
-	QG_SnapMiddleOptions* snapMiddleOptions;
-	QG_SnapDistOptions* snapDistOptions;
-	QG_ModifyOffsetOptions* modifyOffsetOptions;
-	QG_PrintPreviewOptions* printPreviewOptions;
-	QG_LineAngleOptions* m_pLineAngleOptions;
+    QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
+    QG_SnapDistOptions* snapDistOptions = nullptr;
+    QG_ModifyOffsetOptions* modifyOffsetOptions = nullptr;
+    QG_LineAngleOptions* m_pLineAngleOptions = nullptr;
 };
 
 #endif

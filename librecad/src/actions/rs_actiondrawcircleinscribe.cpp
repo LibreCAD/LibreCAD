@@ -20,17 +20,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include<vector>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawcircleinscribe.h"
 
+#include "rs_actiondrawcircleinscribe.h"
+#include "rs_circle.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawCircleInscribe::Points {
 	RS_CircleData cData;
@@ -47,7 +47,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw circle inscribed",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		, valid(false)
 {
 	actionType=RS2::ActionDrawCircleInscribe;
@@ -102,7 +102,7 @@ void RS_ActionDrawCircleInscribe::trigger() {
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
-                    " entity added: %d", circle->getId());
+                    " entity added: %lu", circle->getId());
 }
 
 
@@ -119,7 +119,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
         }
 		if(en->getParent() && en->getParent()->ignoredOnModification())
 			return;
-		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->position());
 		deletePreview();
 		while(pPoints->lines.size()==3){
 			pPoints->lines.back()->setHighlighted(false);
@@ -173,7 +173,7 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
 			pPoints->lines.pop_back();
 		}
 		pPoints->lines.push_back(static_cast<RS_Line*>(en));
-		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->position());
         switch (getStatus()) {
         case SetLine1:
         case SetLine2:
@@ -262,13 +262,6 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
     }
 }
 */
-
-
-QStringList RS_ActionDrawCircleInscribe::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {

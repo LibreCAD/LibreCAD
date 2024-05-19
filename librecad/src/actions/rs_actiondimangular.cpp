@@ -25,20 +25,20 @@
 **
 **********************************************************************/
 
-#include <cmath>
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimangular.h"
-#include "rs_dimangular.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondimangular.h"
 #include "rs_commandevent.h"
-#include "rs_information.h"
 #include "rs_coordinateevent.h"
-#include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dimangular.h"
+#include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_math.h"
+#include "rs_preview.h"
 
 RS_ActionDimAngular::RS_ActionDimAngular(RS_EntityContainer& container,
                                          RS_GraphicView& graphicView) :
@@ -54,10 +54,10 @@ void RS_ActionDimAngular::reset()
     RS_ActionDimension::reset();
 
     actionType = RS2::ActionDimAngular;
-    edata.reset( new RS_DimAngularData( RS_Vector( false),
+    edata = std::make_unique<RS_DimAngularData>( RS_Vector( false),
                                         RS_Vector( false),
                                         RS_Vector( false),
-                                        RS_Vector( false)) );
+                                        RS_Vector( false));
     RS_DIALOGFACTORY->requestOptions( this, true, true);
 }
 
@@ -124,7 +124,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
             RS_Entity *en {catchEntity( e, RS2::ResolveAll)};
             if (en && RS2::EntityLine == en->rtti()) {
                 line1 = *dynamic_cast<RS_Line*>(en);
-                click1 = line1.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                click1 = line1.getNearestPointOnEntity( graphicView->toGraph(e->position()));
                 setStatus(SetLine2);
             }
             break; }
@@ -133,7 +133,7 @@ void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e)
             RS_Entity *en{catchEntity(e, RS2::ResolveAll)};
             if (en && en->rtti()==RS2::EntityLine) {
                 line2 = *dynamic_cast<RS_Line*>(en);
-                click2 = line2.getNearestPointOnEntity( graphicView->toGraph( e->x(), e->y()));
+                click2 = line2.getNearestPointOnEntity( graphicView->toGraph(e->position()));
                 if( setData( click2, true)) {
                     graphicView->moveRelativeZero( center);
                     setStatus(SetPos);

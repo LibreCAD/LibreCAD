@@ -44,11 +44,11 @@ class RS_ActionDrawImage : public RS_PreviewActionInterface {
      * Action States.
      */
     enum Status {
-		ShowDialog,        /**< Dialog. */
-                SetTargetPoint,    /**< Setting the reference point. */
-		SetAngle,          /**< Setting angle in the command line. */
-                SetFactor,          /**< Setting factor in the command line. */
-                SetDPI              /**< Setting dpi in the command line. */
+        ShowDialog,        /**< Dialog. */
+        SetTargetPoint,    /**< Setting the reference point. */
+        SetAngle,          /**< Setting angle in the command line. */
+        SetFactor,          /**< Setting factor in the command line. */
+        SetDPI              /**< Setting dpi in the command line. */
 		//SetColumns,        /**< Setting columns in the command line. */
 		//SetRows,           /**< Setting rows in the command line. */
 		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
@@ -98,7 +98,7 @@ protected:
 	std::unique_ptr<ImageData> pImg;
 	
 	/** Last status before entering option. */
-	Status lastStatus;
+    Status lastStatus = ShowDialog;
 };
 
 #endif

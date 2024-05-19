@@ -34,7 +34,7 @@ class QG_DlgMText : public QDialog, public Ui::QG_DlgMText
     Q_OBJECT
 
 public:
-    QG_DlgMText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
+    QG_DlgMText(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
     ~QG_DlgMText();
 
     virtual int getAlignment();
@@ -52,7 +52,7 @@ public slots:
     virtual void setAlignmentBL();
     virtual void setAlignmentBC();
     virtual void setAlignmentBR();
-    virtual void setAlignment( int a );
+    virtual void setAlignment(QToolButton* button);
     virtual void setFont( const QString & f );
     virtual void defaultChanged( bool );
     virtual void loadText();
@@ -62,20 +62,26 @@ public slots:
     virtual void insertSymbol( int );
     virtual void updateUniCharButton( int );
     virtual void insertChar();
-    virtual void reject();
+    void reject() override;
 
 protected slots:
     virtual void languageChange();
 
 private:
-    bool isNew;
-    bool saveSettings;
-    RS_MText* text;
-    RS_Font* font;
+    void layoutDirectionChanged();
+    bool isNew = false;
+    bool saveSettings = true;
+    RS_MText* text = nullptr;
+    RS_Font* font = nullptr;
 
     void init();
     void destroy();
 
+protected:
+    bool eventFilter(QObject *obj, QEvent *event) override;
+private:
+    size_t alignmentButtonIdex(QToolButton* button) const;
+    std::vector<QToolButton*> alignmentButtons;
 };
 
 #endif // QG_DLGMTEXT_H

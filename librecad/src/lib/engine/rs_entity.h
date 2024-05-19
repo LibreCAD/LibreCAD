@@ -61,7 +61,6 @@ class QString;
 class RS_Entity : public RS_Undoable {
 public:
 	RS_Entity(RS_EntityContainer* parent=nullptr);
-	virtual ~RS_Entity() = default;
 
     void init();
     virtual void initId();
@@ -74,20 +73,21 @@ public:
 
     void resetBorders();
 	void moveBorders(const RS_Vector& offset);
-	void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
+    void scaleBorders(const RS_Vector& center, const RS_Vector& factor);
     /**
      * Must be overwritten to return the rtti of this entity
      * (e.g. RS2::EntityArc).
      */
-	virtual RS2::EntityType rtti() const{
-		return RS2::EntityUnknown;
-	}
+    virtual RS2::EntityType rtti() const
+    {
+        return RS2::EntityUnknown;
+    }
 
     /**
      * Identify all entities as undoable entities.
      * @return RS2::UndoableEntity
      */
-	virtual RS2::UndoableType undoRtti() const override {
+	 RS2::UndoableType undoRtti() const override {
         return RS2::UndoableEntity;
     }
 
@@ -201,7 +201,7 @@ public:
 	virtual bool isVisible() const;
 	virtual void setVisible(bool v);
     virtual void setHighlighted(bool on);
-	virtual bool isHighlighted() const;
+    virtual bool isHighlighted() const;
 
 	bool isLocked() const;
 
@@ -373,6 +373,16 @@ public:
     }
 
     /**
+     * @brief dualLineTangentPoint find the tangent point for a line in line coordinates
+     * @param line a tangent line in line coordinates
+     * @return the tangent point for the line
+     */
+    virtual RS_Vector dualLineTangentPoint([[maybe_unused]] const RS_Vector& line) const
+    {
+        return RS_Vector{false};
+    }
+
+    /**
      * Must be overwritten to get the nearest reference point for this entity.
      *
      * @param coord Coordinate (typically a mouse coordinate)
@@ -481,6 +491,37 @@ public:
                          const RS_Vector& offset);
 
     /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] double - k the skew/shear parameter
+     */
+    virtual RS_Entity& shear(double k) = 0;
+    /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] const RS_Vector& - origin the point to be used as the origin
+     * @param[in] const RS_Vector& - the x-axis direction
+     * @param[in] double - k the skew/shear parameter
+     */
+    virtual RS_Entity& shear(const RS_Vector &origin, const RS_Vector &xAxis, double k)
+    {
+        rotate(origin, -xAxis.angle());
+        move(-origin);
+        shear(k);
+        move(origin);
+        rotate(origin, xAxis.angle());
+        return *this;
+    }
+
+    /**
          * Implementations must drag the reference point(s) of all
          * (sub-)entities that are very close to ref by offset.
          */
@@ -556,7 +597,7 @@ m0 x + m1 y + m2 =0
 	 * @brief isArcLine determine the entity is either Arc, Circle, or Line
 	 * @return true if entity is Arc, Circle, or Line
 	 */
-	virtual bool isArcCircleLine() const;
+    virtual bool isArcCircleLine() const;
 
 protected:
 	//! Entity's parent entity or nullptr is this entity has no parent.
@@ -567,19 +608,19 @@ protected:
     RS_Vector maxV;
 
     //! Pointer to layer
-    RS_Layer* layer;
+    RS_Layer* layer = nullptr;
 
     //! Entity id
-    unsigned long int id;
+    unsigned long long id = 0;
 
     //! pen (attributes) for this entity
     RS_Pen pen;
 
     //! auto updating enabled?
-    bool updateEnabled;
+    bool updateEnabled = false;
 
 private:
-	std::map<QString, QString> varList;
+    std::map<QString, QString> varList;
 };
 
 #endif

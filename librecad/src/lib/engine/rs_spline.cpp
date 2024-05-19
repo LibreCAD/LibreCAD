@@ -24,18 +24,17 @@
 **
 **********************************************************************/
 
-#include<iostream>
-#include<cmath>
-#include<numeric>
+#include <algorithm>
+#include <cmath>
+#include <iostream>
+#include <numeric>
 
 #include "rs_spline.h"
-
 
 #include "rs_line.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_graphic.h"
 
 
 RS_SplineData::RS_SplineData(int _degree, bool _closed):
@@ -97,14 +96,16 @@ void RS_Spline::calculateBorders() {
 }
 
 
-void RS_Spline::setDegree(size_t deg) {
-	if (deg>=1 && deg<=3) {
-		data.degree = deg;
-	}
+void RS_Spline::setDegree(int degree) {
+    if (degree>=1 && degree<=3) {
+        data.degree = degree;
+    } else {
+        RS_DEBUG->print(RS_Debug::D_CRITICAL, "%s(%d): invalid degree = %d", __func__, degree, degree);
+    }
 }
 
 /** @return Degree of this spline curve (1-3).*/
-size_t RS_Spline::getDegree() const{
+int RS_Spline::getDegree() const{
 	return data.degree;
 }
 
@@ -124,13 +125,21 @@ bool RS_Spline::isClosed() const {
  * Sets the closed flag of this spline.
  */
 void RS_Spline::setClosed(bool c) {
-		data.closed = c;
-		update();
+    if (data.closed == c)
+        return;
+
+    // when switching from closed to open, remove wrapped control points
+    if (data.closed && hasWrappedControlPoints()) {
+        data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), data.controlPoints.end());
+    }
+    data.closed = c;
+
+    update();
 }
 
 RS_VectorSolutions RS_Spline::getRefPoints() const
 {
-	return RS_VectorSolutions(data.controlPoints);
+    return {data.controlPoints};
 }
 
 RS_Vector RS_Spline::getNearestRef( const RS_Vector& coord,
@@ -168,24 +177,25 @@ void RS_Spline::update() {
         return;
     }
 
-    if (data.controlPoints.size() < data.degree+1) {
+    // Issue #1689: allow closed splines by 3 control points
+    if ( (!data.closed && data.controlPoints.size() < size_t(data.degree)+1) || data.controlPoints.size() < 3) {
         RS_DEBUG->print("RS_Spline::update: not enough control points");
         return;
     }
 
     resetBorders();
 
-	std::vector<RS_Vector> tControlPoints = data.controlPoints;
-
-    if (data.closed) {
-		for (size_t i=0; i<data.degree; ++i) {
-			tControlPoints.push_back(data.controlPoints.at(i));
-        }
+    // wrap control points, if it's not wrapped yet
+    std::vector<RS_Vector>& tControlPoints = data.controlPoints;
+    if (data.closed && (data.degree == 2 || !hasWrappedControlPoints())) {
+        std::vector<RS_Vector> wrappedPoints{data.controlPoints.cbegin(), data.controlPoints.cbegin() + data.degree};
+        tControlPoints.insert(tControlPoints.end(), wrappedPoints.cbegin(), wrappedPoints.cend());
+        RS_DEBUG->print(RS_Debug::D_NOTICE, "%s: controlPoints: size=%llu\n", __func__, data.controlPoints.size());
     }
 
 	const size_t npts = tControlPoints.size();
     // order:
-	const size_t  k = data.degree+1;
+    const size_t  k = data.degree + 1;
     // resolution:
 	const size_t  p1 = getGraphicVariableInt("$SPLINESEGS", 8) * npts;
 
@@ -233,10 +243,10 @@ RS_Vector RS_Spline::getNearestEndpoint(const RS_Vector& coord,
        double d2( (coord-vp2).squared());
        if( d1<d2){
            ret=vp1;
-           minDist=sqrt(d1);
+           minDist=std::sqrt(d1);
        }else{
            ret=vp2;
-           minDist=sqrt(d2);
+           minDist=std::sqrt(d2);
        }
 //        for (int i=0; i<data.controlPoints.count(); i++) {
 //            d = (data.controlPoints.at(i)).distanceTo(coord);
@@ -292,11 +302,10 @@ RS_Vector RS_Spline::getNearestMiddle(const RS_Vector& /*coord*/,
 RS_Vector RS_Spline::getNearestDist(double /*distance*/,
                                     const RS_Vector& /*coord*/,
 									double* dist) const{
-	if (dist) {
+    if (dist)
         *dist = RS_MAXDOUBLE;
-    }
 
-    return RS_Vector(false);
+    return {};
 }
 
 
@@ -306,7 +315,6 @@ void RS_Spline::move(const RS_Vector& offset) {
 	for (RS_Vector& vp: data.controlPoints) {
 		vp.move(offset);
     }
-//    update();
 }
 
 
@@ -333,7 +341,15 @@ void RS_Spline::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
+RS_Entity& RS_Spline::shear(double k)
+{
+    for (RS_Vector& vp: data.controlPoints) {
+        vp.shear(k);
+    }
 
+    update();
+    return *this;
+}
 
 void RS_Spline::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 	for (RS_Vector& vp: data.controlPoints) {
@@ -360,30 +376,13 @@ void RS_Spline::revertDirection() {
 }
 
 
-
-
 void RS_Spline::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
 
 	if (!(painter && view)) {
         return;
     }
 
-
-    RS_Entity* e=firstEntity(RS2::ResolveNone);
-	if (e) {
-        RS_Pen p=this->getPen(true);
-        e->setPen(p);
-        double patternOffset(0.0);
-        view->drawEntity(painter, e, patternOffset);
-        //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
-
-        e = nextEntity(RS2::ResolveNone);
-		while(e) {
-            view->drawEntityPlain(painter, e, patternOffset);
-            e = nextEntity(RS2::ResolveNone);
-            //RS_DEBUG->print("offset: %f\nlength was: %f", offset, e->getLength());
-        }
-    }
+    painter->drawSpline(*this, *view);
 }
 
 
@@ -471,7 +470,11 @@ const std::vector<RS_Vector>& RS_Spline::getControlPoints() const{
  * Appends the given point to the control points.
  */
 void RS_Spline::addControlPoint(const RS_Vector& v) {
-	data.controlPoints.push_back(v);
+    if (isClosed() && hasWrappedControlPoints()) {
+        data.controlPoints.insert(data.controlPoints.begin() + (data.controlPoints.size() - data.degree), v );
+    } else {
+        data.controlPoints.push_back(v);
+    }
 }
 
 
@@ -480,7 +483,27 @@ void RS_Spline::addControlPoint(const RS_Vector& v) {
  * Removes the control point that was last added.
  */
 void RS_Spline::removeLastControlPoint() {
-    data.controlPoints.pop_back();
+    if (isClosed() && hasWrappedControlPoints()) {
+        data.controlPoints.erase(data.controlPoints.begin() + (data.controlPoints.size() - data.degree));
+    } else {
+        data.controlPoints.pop_back();
+    }
+}
+
+
+/**
+ * @brief hasWrappedControlPoints whether the control points are wrapped, needed for a closed spline.
+ *          only implemented for cubic splines
+ * @return bool - true, if the control points are already wrapped.
+ *          for a cubic spline with wrapped splines, the last three control points are the same as the first three.
+ */
+bool RS_Spline::hasWrappedControlPoints() const {
+    const std::vector<RS_Vector>& controlPoints = data.controlPoints;
+    if (!data.closed || data.degree < 3 || controlPoints.size() < size_t(2 * data.degree) + 1)
+        return false;
+
+    return std::equal(controlPoints.cbegin(), controlPoints.cbegin() + data.degree,
+               controlPoints.cbegin() + controlPoints.size() - data.degree);
 }
 
 //TODO: private interface cleanup; de Boor's Algorithm
@@ -632,5 +655,3 @@ std::ostream& operator << (std::ostream& os, const RS_Spline& l) {
     os << " Spline: " << l.getData() << "\n";
     return os;
 }
-
-

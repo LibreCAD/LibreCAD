@@ -24,14 +24,15 @@
 **********************************************************************************
 */
 
-#include "widgetcreator.h"
-#include "ui_widgetcreator.h"
 
 #include <QAction>
 #include <QActionGroup>
 #include <QSettings>
 #include <QLineEdit>
 #include <QPushButton>
+
+#include "widgetcreator.h"
+#include "ui_widgetcreator.h"
 
 WidgetCreator::WidgetCreator(QWidget* parent,
                              QMap<QString, QAction*>& actions,

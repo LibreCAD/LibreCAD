@@ -125,6 +125,9 @@ public slots:
 	void slotDrawLineParallel();
 	void slotDrawLineParallelThrough();
 	void slotDrawLineRectangle();
+	void slotDrawLineRectangleRel();
+ void slotDrawLineRectangle1Point();
+ void slotDrawLineRectangle2Points();
 	void slotDrawLineBisector();
 	void slotDrawLineTangent1();
 	void slotDrawLineTangent2();
@@ -134,7 +137,17 @@ public slots:
 	void slotDrawLinePolygon();
 	void slotDrawLinePolygon2();
     void slotDrawLinePolygon3();//added by txmy
+ void slotDrawLinePoints();
 	void slotDrawCircle();
+ void slotDrawCircleCross();
+ void slotDrawLineSnake();
+ void slotDrawLineSnakeX();
+ void slotDrawLineSnakeY();
+ void slotDrawLineOrthogonalRel();
+ void slotDrawLineOrthogonalTo();
+ void slotDrawLineAngleRel();
+ void slotDrawSliceDivideLine();
+ void slotDrawSliceDivideCircle();
 	void slotDrawCircleCR();
 	void slotDrawCircle2P();
 	void slotDrawCircle2PR();
@@ -145,6 +158,7 @@ public slots:
 	void slotDrawCircleTan3();
 	void slotDrawCircleTan1_2P();
 	void slotDrawCircleTan2_1P();
+ void slotDrawCircleByArc();
 	void slotDrawArc();
 	void slotDrawArc3P();
 	void slotDrawArcParallel();
@@ -153,9 +167,11 @@ public slots:
 	void slotDrawEllipseArcAxis();
 	void slotDrawEllipseFociPoint();
 	void slotDrawEllipse4Points();
-	void slotDrawEllipseCenter3Points();
+    void slotDrawEllipseCenter3Points();
 	void slotDrawEllipseInscribe();
-	void slotDrawSpline();
+    void slotDrawParabola4Points();
+    void slotDrawParabolaFD();
+    void slotDrawSpline();
 	void slotDrawSplinePoints();
 	void slotDrawMText();
 	void slotDrawText();
@@ -177,6 +193,7 @@ public slots:
 	void slotDimRadial();
 	void slotDimDiametric();
 	void slotDimAngular();
+	void slotDimArc();
 	void slotDimLeader();
 
 	void slotModifyAttributes();
@@ -209,6 +226,7 @@ public slots:
 	void slotSnapCenter();
 	void slotSnapMiddle();
 	void slotSnapDist();
+   void slotSnapMiddleManual();
 	void slotSnapIntersection();
 	void slotSnapIntersectionManual();
 
@@ -229,6 +247,8 @@ public slots:
 	void slotInfoAngle();
 	void slotInfoTotalLength();
 	void slotInfoArea();
+ void slotEntityInfo();
+ void slotPickCoordinates();
 
 	void slotLayersDefreezeAll();
 	void slotLayersFreezeAll();
@@ -239,29 +259,43 @@ public slots:
 	void slotLayersEdit();
 	void slotLayersToggleView();
 	void slotLayersToggleLock();
-	void slotLayersTogglePrint();
-	void slotLayersToggleConstruction();
+    void slotLayersTogglePrint();
+    void slotLayersToggleConstruction();
+    void slotLayersExportSelected();
+    void slotLayersExportVisible();
 
-	void slotBlocksDefreezeAll();
-	void slotBlocksFreezeAll();
-	void slotBlocksAdd();
-	void slotBlocksRemove();
-	void slotBlocksAttributes();
-	void slotBlocksEdit();
-	void slotBlocksSave();
-	void slotBlocksInsert();
-	void slotBlocksToggleView();
-	void slotBlocksCreate();
-	void slotBlocksExplode();
+    void slotBlocksDefreezeAll();
+    void slotBlocksFreezeAll();
+    void slotBlocksAdd();
+    void slotBlocksRemove();
+    void slotBlocksAttributes();
+    void slotBlocksEdit();
+    void slotBlocksSave();
+    void slotBlocksInsert();
+    void slotBlocksToggleView();
+    void slotBlocksCreate();
+    void slotBlocksExplode();
+    void slotModifyLineJoin();
+    void slotModifyDuplicate();
+    void slotDrawStar();
+    void slotModifyBreakDivide();
+    void slotModifyLineGap();
+
 	void slotOptionsDrawing();
-
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);
     void togglePrint(RS_Layer* layer);
     void toggleConstruction(RS_Layer* layer);
-private:
+    void slotRedockWidgets();
 
-	// Type of draw order selected command
+  void slotPenPick();
+  void slotPenPickResolved();
+  void slotPenApply();
+  void slotPenCopy();
+  void slotPenSyncFromLayer();
+
+private:
+    // Type of draw order selected command
     RS2::ActionType orderType{RS2::ActionOrderTop};
     QG_SnapToolBar* snap_toolbar{nullptr};
     RS_GraphicView* view{nullptr};

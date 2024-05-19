@@ -2,29 +2,27 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
-** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
-**
-**
-** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software
-** Foundation and appearing in the file gpl-2.0.txt included in the
-** packaging of this file.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License
-** along with this program; if not, write to the Free Software
-** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
-**
-** This copyright notice MUST APPEAR in all copies of the script!
-**
+** Copyright (C) 2015-2024 LibreCAD.org
+** Copyright (C) 2015-2024 Dongxu Li (dongxuli2011@gmail.com)
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
+#include <algorithm>
 #include <cfloat>
+#include <numeric>
 #include <QDebug>
 #include "rs_math.h"
 #include "rs_information.h"
@@ -133,7 +131,7 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle, const RS_Vector& point
         }
         double c=0.5*(center.distanceTo(point));
         double d=0.5*r;
-        if(fabs(c)<RS_TOLERANCE ||fabs(d)<RS_TOLERANCE || fabs(c-d)<RS_TOLERANCE){
+        if(std::abs(c)<RS_TOLERANCE ||std::abs(d)<RS_TOLERANCE || std::abs(c-d)<RS_TOLERANCE){
             m_bValid=false;
             return;
         }
@@ -333,8 +331,8 @@ LC_Quadratic::LC_Quadratic(const RS_AtomicEntity* circle0,
     //two circles
 
 	double const f=(circle0->getCenter()-circle1->getCenter()).magnitude()*0.5;
-	double const a=fabs(circle0->getRadius()+circle1->getRadius())*0.5;
-	double const c=fabs(circle0->getRadius()-circle1->getRadius())*0.5;
+    double const a=std::abs(circle0->getRadius()+circle1->getRadius())*0.5;
+    double const c=std::abs(circle0->getRadius()-circle1->getRadius())*0.5;
 //    DEBUG_HEADER
 //    qDebug()<<"circle center to center distance="<<2.*f<<"\ttotal radius="<<2.*a;
     if(a<RS_TOLERANCE) return;
@@ -458,10 +456,33 @@ LC_Quadratic LC_Quadratic::rotate(const RS_Vector& center, const double& angle)
     return *this;
 }
 
+/**
+ * @author{Dongxu Li}
+ */
+LC_Quadratic LC_Quadratic::shear(double k)
+{
+    if(isQuadratic()){
+        auto getCes = [this]() -> std::array<double, 6>{
+            std::vector<double> cev = getCoefficients();
+            return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
+        };
+        const auto& [a,b,c,d,e,f] = getCes();
+
+        const std::vector<double> sheared = {{
+            a, -2.*k*a + b, k*(k*a - b) + c,
+            d, e - k*d, f
+        }};
+        return {sheared};
+    }
+    LC_Quadratic qf(*this);
+    qf.m_vLinear(1) -= k * qf.m_vLinear(0);
+    return qf;
+}
+
 /** switch x,y coordinates */
 LC_Quadratic LC_Quadratic::flipXY(void) const
 {
-        LC_Quadratic qf(*this);
+    LC_Quadratic qf(*this);
     if(isQuadratic()){
         std::swap(qf.m_mQuad(0,0),qf.m_mQuad(1,1));
         std::swap(qf.m_mQuad(0,1),qf.m_mQuad(1,0));
@@ -507,7 +528,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
     if(p2->isQuadratic()==false){
         //one line, one quadratic
         //avoid division by zero
-        if(fabs(p2->m_vLinear(0))+DBL_EPSILON<fabs(p2->m_vLinear(1))){
+        if(std::abs(p2->m_vLinear(0))+DBL_EPSILON<std::abs(p2->m_vLinear(1))){
             ret=getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
 //            for(size_t j=0;j<ret.size();j++){
 //                DEBUG_HEADER
@@ -516,7 +537,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
             return ret;
         }
         std::vector<std::vector<double> >  ce(0);
-		if(fabs(p2->m_vLinear(1))<RS_TOLERANCE){
+        if(std::abs(p2->m_vLinear(1))<RS_TOLERANCE){
             const double angle=0.25*M_PI;
             LC_Quadratic p11(*p1);
             LC_Quadratic p22(*p2);
@@ -539,11 +560,11 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 //        }
         return ret;
     }
-    if( fabs(p1->m_mQuad(0,0))<RS_TOLERANCE && fabs(p1->m_mQuad(0,1))<RS_TOLERANCE
+    if( std::abs(p1->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p1->m_mQuad(0,1))<RS_TOLERANCE
             &&
-            fabs(p2->m_mQuad(0,0))<RS_TOLERANCE && fabs(p2->m_mQuad(0,1))<RS_TOLERANCE
+            std::abs(p2->m_mQuad(0,0))<RS_TOLERANCE && std::abs(p2->m_mQuad(0,1))<RS_TOLERANCE
             ){
-        if(fabs(p1->m_mQuad(1,1))<RS_TOLERANCE && fabs(p2->m_mQuad(1,1))<RS_TOLERANCE){
+        if(std::abs(p1->m_mQuad(1,1))<RS_TOLERANCE && std::abs(p2->m_mQuad(1,1))<RS_TOLERANCE){
             //linear
             std::vector<double> ce(0);
             ce.push_back(p1->m_vLinear(0));
@@ -559,9 +580,8 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
         }
         return getIntersection(p1->flipXY(),p2->flipXY()).flipXY();
     }
-    std::vector<std::vector<double> >  ce(0);
-    ce.push_back(p1->getCoefficients());
-    ce.push_back(p2->getCoefficients());
+    std::vector<std::vector<double> >  ce = { p1->getCoefficients(),
+                                              p2->getCoefficients()};
     if(RS_DEBUG->getLevel()>=RS_Debug::D_INFORMATIONAL){
         DEBUG_HEADER
         std::cout<<*p1<<std::endl;
@@ -570,10 +590,15 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
 	auto sol= RS_Math::simultaneousQuadraticSolverFull(ce);
     bool valid= sol.size()>0;
 	for(auto & v: sol){
-		if(v.magnitude()>=RS_MAXDOUBLE){
+        if(v.magnitude()>=RS_MAXDOUBLE){
             valid=false;
             break;
         }
+        const std::vector<double> xyi = {v.x * v.x, v.x * v.y, v.y * v.y, v.x, v.y, 1.};
+        const double e0 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.front().cbegin(), 0.);
+        const double e1 = std::inner_product(xyi.cbegin(), xyi.cend(), ce.back().cbegin(), 0.);
+        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ0= "<<e0;
+        LC_LOG<<__func__<<"(): "<<v.x<<","<<v.y<<": equ1= "<<e1;
     }
     if(valid) return sol;
     ce.clear();
@@ -599,7 +624,7 @@ RS_VectorSolutions LC_Quadratic::getIntersection(const LC_Quadratic& l1, const L
    cos x, sin x
    -sin x, cos x
    */
-boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double& angle)
+boost::numeric::ublas::matrix<double> LC_Quadratic::rotationMatrix(const double& angle)
 {
     boost::numeric::ublas::matrix<double> ret(2,2);
     ret(0,0)=cos(angle);
@@ -609,6 +634,35 @@ boost::numeric::ublas::matrix<double>  LC_Quadratic::rotationMatrix(const double
     return ret;
 }
 
+/**
+ * @description: Given a general conic section with homogeneous coordinates $[a,b,c,d,e,f]$:
+        $$ax^2+b x y+c y^2+d x + e y + f = 0 $$
+    The dual curve is:
+        $$
+        \begin{split}
+        (e^2-4 c f)A^2&+&(4b f-2 d e) A B&+&(d^2-4 a f)B^2 &\\
+        &+&(4c d -2 b e) A C&+&(4a e - 2b d) B C&\\
+        & & &+&(b^2 - 4 a c) C^2&= 0
+        \end{split}
+        $$
+ */
+LC_Quadratic LC_Quadratic::getDualCurve() const
+{
+    if (!isQuadratic())
+        return LC_Quadratic{};
+    auto getCes = [this]() -> std::array<double, 6>{
+        std::vector<double> cev = getCoefficients();
+        return {cev[0], cev[1], cev[2], cev[3], cev[4], cev[5]};
+    };
+    const auto& [a,b,c,d,e,f] = getCes();
+
+    const std::vector<double> dualCe = {{
+                                   e*e - 4.*c*f, 4.*b*f - 2.*d*e, d*d - 4.*a*f,
+                                   4.*c*d-2.*b*e, 4.*a*e-2.*b*d,
+                                   b*b-4.*a*c
+                               }};
+    return {dualCe};
+}
 
 /**
  * Dumps the point's data to stdout.

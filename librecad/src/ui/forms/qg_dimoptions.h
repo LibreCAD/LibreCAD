@@ -40,7 +40,7 @@ class QG_DimOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_DimOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_DimOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_DimOptions();
 
 public slots:
@@ -49,7 +49,7 @@ public slots:
     virtual void insertSign( const QString & c );
 
 protected:
-    RS_ActionDimension* action;
+    RS_ActionDimension* action = nullptr;
 
 protected slots:
     virtual void languageChange();

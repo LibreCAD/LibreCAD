@@ -68,22 +68,14 @@ RS_Entity* RS_Block::clone() const {
 
 RS_LayerList* RS_Block::getLayerList() {
     RS_Graphic* g = getGraphic();
-    if (g) {
-        return g->getLayerList();
-    } else {
-        return NULL;
-    }
+    return (g != nullptr) ? g->getLayerList() : nullptr;
 }
 
 
 
 RS_BlockList* RS_Block::getBlockList() {
     RS_Graphic* g = getGraphic();
-    if (g) {
-        return g->getBlockList();
-    } else {
-        return NULL;
-    }
+    return (g != nullptr) ? g->getBlockList() : nullptr;
 }
 
 
@@ -143,7 +135,7 @@ bool RS_Block::isVisibleInBlockList() const {
  *
  * @param v true: selected, false: deselected
  */
-void RS_Block::selectedInBlockList(bool v) {
+void RS_Block::selectedInBlockList(bool v) const {
     data.selectedInBlockList = v;
 }
 

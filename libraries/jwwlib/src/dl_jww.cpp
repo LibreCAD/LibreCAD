@@ -114,14 +114,14 @@ void DL_Jww::CreateSen(DL_CreationInterface* creationInterface, CDataSen& DSen)
 	// add layer
 	creationInterface->addLayer(DL_LayerData(lName,0));
 //#ifdef	DEBUG
-if(DSen.m_nPenStyle > ArraySize(lTable)-1)
-	std::cout << "線種番号 " << (jwWORD)DSen.m_nPenStyle << std::endl;   //線種番号
-if(DSen.m_nPenColor > ArraySize(colTable)-1)
-	std::cout << "線色番号 " << (jwWORD)DSen.m_nPenColor << std::endl;   //線色番号
-if(DSen.m_nPenWidth > 26)
-	std::cout << "線色幅 " << (jwWORD)DSen.m_nPenWidth << std::endl;//線色幅
+    if(DSen.m_nPenStyle > ArraySize(lTable)-1)
+        std::cout << "線種番号 " << (jwWORD)DSen.m_nPenStyle << std::endl;   //線種番号
+    if(DSen.m_nPenColor > ArraySize(colTable)-1)
+        std::cout << "線色番号 " << (jwWORD)DSen.m_nPenColor << std::endl;   //線色番号
+    if(DSen.m_nPenWidth > 26)
+        std::cout << "線色幅 " << (jwWORD)DSen.m_nPenWidth << std::endl;//線色幅
 //#endif
-	int width;
+    int width;
 	if(DSen.m_nPenWidth > 26)
 		width = 0;
 	else
@@ -536,7 +536,7 @@ printf("r = %d, left = %d, bufleft = %d\n", r, left, bufleft);
 #else
 //	int ires = SJIS2UTF8N(sjis,buf,bufleft);
 	int nBytesOut;
-	strcpy(buf,(const char *)CUnicodeF::sjis_to_euc((const unsigned char *)sjis/*, &nBytesOut*/));
+    strncpy(buf, sizeof(buf) -1, (const char *)CUnicodeF::sjis_to_euc((const unsigned char *)sjis/*, &nBytesOut*/));
 //	QTextCodec* codec = QTextCodec::codecForName("eucJP");
 //	data3.text = codec->toUnicode(buf);
 #endif

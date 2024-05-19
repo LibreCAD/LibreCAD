@@ -26,16 +26,16 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawtext.h"
 
+#include "rs_actiondrawtext.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
 #include "rs_line.h"
-#include "rs_text.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_text.h"
 
 struct RS_ActionDrawText::Points {
 	RS_Vector pos;
@@ -46,7 +46,7 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		,textChanged(true)
 {
 	actionType=RS2::ActionDrawText;

@@ -24,22 +24,25 @@
 **
 **********************************************************************/
 
-#include "rs_preview.h"
 #include "rs_entitycontainer.h"
-#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
+#include "rs_line.h"
+#include "rs_preview.h"
 #include "rs_settings.h"
 
 /**
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent)
-		: RS_EntityContainer(parent, true) {
-
-    RS_SETTINGS->beginGroup("/Appearance");
+        : RS_EntityContainer(parent, true)
+{
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Appearance");
     maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
-    RS_SETTINGS->endGroup();
+
+    groupGuard = RS_SETTINGS->beginGroupGuard("/Colors");
+    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 
 /**
@@ -52,7 +55,6 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 
     // only border preview for complex entities:
-    //if ((entity->count() > maxEntities-count()) &&
 
     bool addBorder = false;
 
@@ -87,7 +89,6 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         RS_EntityContainer::addEntity(l4);
 
         delete entity;
-        entity = nullptr;
     } else {
         entity->setLayer(nullptr);
         entity->setSelected(false);

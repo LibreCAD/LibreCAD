@@ -24,14 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionorder.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionorder.h"
 #include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_polyline.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 
 
 

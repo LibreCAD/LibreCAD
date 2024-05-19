@@ -24,14 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actioneditcopy.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actioneditcopy.h"
+#include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_coordinateevent.h"
 
 /**
  * Constructor.

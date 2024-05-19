@@ -25,12 +25,16 @@
 **********************************************************************/
 
 #include <QKeyEvent>
+#include <QToolBar>
+
 #include "rs_actioninterface.h"
-#include "rs_graphicview.h"
 #include "rs_commands.h"
-#include "rs_dialogfactory.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_entitycontainer.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
 
 /**
  * Constructor.
@@ -48,16 +52,22 @@
  *               is suspended and resumed again the cursor will always
  *               be reset to the one given here.
  */
-RS_ActionInterface::RS_ActionInterface(const char* name,
-                                       RS_EntityContainer& container,
-                                       RS_GraphicView& graphicView) :
-RS_Snapper(container, graphicView) {
+RS_ActionInterface::RS_ActionInterface(const char *name,
+                                       RS_EntityContainer &container,
+                                       RS_GraphicView &graphicView,
+                                       RS2::ActionType actionType)
+    :
+    RS_Snapper(container, graphicView)
+    , status{0}
+    , name{name}
+    , finished{false}
+    , graphic{container.getGraphic()}
+    , document{container.getDocument()}
+    , actionType{actionType}
+{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
 
-    this->name = name;
-    status = 0;
-    finished = false;
     //triggerOnResume = false;
 
     // graphic provides a pointer to the graphic if the
@@ -68,12 +78,14 @@ RS_Snapper(container, graphicView) {
     // document pointer will be used for undo / redo
     document = container.getDocument();
 
-    //this->cursor = cursor;
-    //setSnapMode(graphicView.getDefaultSnapMode());
-    actionType=RS2::ActionNone;
-
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
+}
 
+RS_ActionInterface::~RS_ActionInterface(){
+    if (m_optionWidget != nullptr){
+        m_optionWidget->deleteLater();
+        m_optionWidget.release();
+    }
 }
 
 /**
@@ -116,7 +128,6 @@ void RS_ActionInterface::init(int status)
 
     }
 }
-
 
 
 /**
@@ -181,7 +192,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
  *  for the command line.
  */
 QStringList RS_ActionInterface::getAvailableCommands() {
-	return QStringList{};
+    return {};
 }
 
 /**
@@ -206,7 +217,7 @@ void RS_ActionInterface::setStatus(int status) {
 /**
  * @return Current status of this action.
  */
-int RS_ActionInterface::getStatus() {
+int RS_ActionInterface::getStatus() const {
     return status;
 }
 
@@ -231,7 +242,7 @@ void RS_ActionInterface::updateMouseCursor() {}
 /**
  * @return true, if the action is finished and can be deleted.
  */
-bool RS_ActionInterface::isFinished() {
+bool RS_ActionInterface::isFinished() const {
     return finished;
 }
 
@@ -289,6 +300,22 @@ void RS_ActionInterface::resume() {
  */
 void RS_ActionInterface::hideOptions() {
     RS_Snapper::hideOptions();
+    if (m_optionWidget != nullptr){
+        m_optionWidget->hideOptions();
+    }
+}
+
+void RS_ActionInterface::updateOptions(){
+    if (m_optionWidget != nullptr){
+
+        m_optionWidget->setAction(this, true);
+    }
+}
+
+void RS_ActionInterface::updateOptionsUI(int mode){
+    if (m_optionWidget != nullptr){
+        m_optionWidget->updateUI(mode);
+    }
 }
 
 /**
@@ -296,6 +323,23 @@ void RS_ActionInterface::hideOptions() {
  */
 void RS_ActionInterface::showOptions() {
     RS_Snapper::showOptions();
+    if (m_optionWidget == nullptr){
+        createOptionsWidget();
+    }
+        if (m_optionWidget != nullptr){
+        if (!m_optionWidget->isVisible()){
+            if (m_optionWidget->parent() == nullptr){ // first time created
+               RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
+               m_optionWidget->setAction(this);
+            }
+            else{
+              m_optionWidget->show();
+            }
+        }
+    }
+}
+
+void RS_ActionInterface::createOptionsWidget(){
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){
@@ -322,5 +366,10 @@ QString RS_ActionInterface::command(const QString& cmd) {
  */
 QString RS_ActionInterface::msgAvailableCommands() {
     return RS_COMMANDS->msgAvailableCommands();
+}
+
+int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
+{
+    return (graphic != nullptr) ? graphic->getGraphicVariableInt(key, def) : def;
 }
 

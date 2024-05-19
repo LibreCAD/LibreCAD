@@ -168,7 +168,7 @@
  <connections>
   <connection>
    <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
+   <signal>editingFinished(QString)</signal>
    <receiver>Ui_DimLinearOptions</receiver>
    <slot>updateAngle(QString)</slot>
    <hints>

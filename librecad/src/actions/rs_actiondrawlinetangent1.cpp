@@ -26,15 +26,15 @@
 
 #include<QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlinetangent1.h"
 
+#include "rs_actiondrawlinetangent1.h"
+#include "rs_coordinateevent.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_creation.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
@@ -91,8 +91,7 @@ void RS_ActionDrawLineTangent1::trigger() {
 void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 	RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
-	RS_Vector mouse(graphicView->toGraphX(e->x()),
-					graphicView->toGraphY(e->y()));
+    RS_Vector mouse{graphicView->toGraph(e->position())};
 
 	switch (getStatus()) {
 	case SetPoint:
@@ -102,6 +101,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 	case SetCircle: {
 		RS_Entity* en = catchEntity(e, circleType, RS2::ResolveAll);
 		if (en && (en->isArc() ||
+                   en->rtti() == RS2::EntityParabola ||
 				   en->rtti()==RS2::EntitySplinePoints)) {
 			if(circle){
 				circle->setHighlighted(false);
@@ -110,7 +110,6 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 			circle = en;
 			circle->setHighlighted(true);
 			graphicView->drawEntity(en);
-
 
 			RS_Creation creation(nullptr, nullptr);
 			tangent.reset(

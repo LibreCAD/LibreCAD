@@ -24,20 +24,20 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifymove.h"
-
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_line.h"
-#include "rs_coordinateevent.h"
-#include "rs_modification.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
+#include <cmath>
 
 #include <QAction>
 #include <QMouseEvent>
 
-#include <cmath>
+#include "rs_actionmodifymove.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
+#include "rs_modification.h"
+#include "rs_preview.h"
+
 
 struct RS_ActionModifyMove::Points {
 	RS_MoveData data;
@@ -49,7 +49,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionModifyMove;
 }
@@ -81,7 +81,7 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent* e) {
         case SetTargetPoint:
             if (pPoints->referencePoint.valid) {
                 if (e->modifiers() & Qt::ShiftModifier) {
-                    mouse = snapToAngle(mouse, pPoints->referencePoint, 15.);
+                    mouse = snapToAngle(mouse, pPoints->referencePoint);
                 }
 
 				pPoints->targetPoint = mouse;
@@ -114,7 +114,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector snapped = snapPoint(e);
         if((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint )
-            snapped = snapToAngle(snapped, pPoints->referencePoint, 15.);
+            snapped = snapToAngle(snapped, pPoints->referencePoint);
 
         RS_CoordinateEvent ce(snapped);
         coordinateEvent(&ce);
@@ -127,7 +127,7 @@ void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 

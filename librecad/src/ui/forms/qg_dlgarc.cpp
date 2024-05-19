@@ -45,14 +45,6 @@ QG_DlgArc::QG_DlgArc(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgArc::~QG_DlgArc()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
@@ -63,8 +55,8 @@ void QG_DlgArc::languageChange()
 
 void QG_DlgArc::setArc(RS_Arc& a) {
     arc = &a;
-    //pen = arc->getPen();
-    wPen->setPen(arc->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = arc->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -73,6 +65,9 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(arc, lay, "Pen");
+
     QString s;
     s.setNum(arc->getCenter().x);
     leCenterX->setText(s);
@@ -85,6 +80,7 @@ void QG_DlgArc::setArc(RS_Arc& a) {
     s.setNum(RS_Math::rad2deg(arc->getAngle2()));
     leAngle2->setText(s);
     cbReversed->setChecked(arc->isReversed());
+    lId->setText(QString("ID: %1").arg(arc->getId()));
 }
 
 void QG_DlgArc::updateArc() {
@@ -93,7 +89,9 @@ void QG_DlgArc::updateArc() {
     arc->setRadius(RS_Math::eval(leRadius->text()));
     arc->setAngle1(RS_Math::deg2rad(RS_Math::eval(leAngle1->text())));
     arc->setAngle2(RS_Math::deg2rad(RS_Math::eval(leAngle2->text())));
-    arc->setReversed(cbReversed->isChecked());
+    if (arc->isReversed() != cbReversed->isChecked())
+        arc->revertDirection();
+
     arc->setPen(wPen->getPen());
 	arc->setLayer(cbLayer->currentText());
     arc->calculateBorders();

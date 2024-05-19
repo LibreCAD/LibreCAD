@@ -24,12 +24,13 @@
 **
 **********************************************************************/
 
-#include "rs_actioneditundo.h"
 
 #include <QAction>
+
+#include "rs_actioneditundo.h"
 #include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
 #include "rs_graphic.h"
+#include "rs_graphicview.h"
 
 /**
  * Constructor.

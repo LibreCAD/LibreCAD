@@ -24,16 +24,20 @@
 **
 **********************************************************************/
 
-#include <QMdiArea>
-#include "rs_grid.h"
 #include "qc_dialogfactory.h"
+
+#include <QMdiArea>
+
 #include "qc_applicationwindow.h"
-#include "qg_blockwidget.h"
 #include "qc_mdiwindow.h"
+
+#include "qg_blockwidget.h"
 #include "qg_graphicview.h"
 
 #include "rs_blocklist.h"
 #include "rs_debug.h"
+#include "rs_grid.h"
+
 
 
 QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
@@ -49,7 +53,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "QC_DialogFactory::requestEditBlockWindow()");
 
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* parent = appWindow->getMDIWindow();
 
     if (!appWindow || !parent) {
@@ -107,7 +111,7 @@ void QC_DialogFactory::requestEditBlockWindow(RS_BlockList* blockList) {
 void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
     RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow");
 
-    QC_ApplicationWindow* appWindow = QC_ApplicationWindow::getAppWindow();
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
     QC_MDIWindow* blockWindow = appWindow->getWindowWithDoc(block);
 
     if (!blockWindow) {

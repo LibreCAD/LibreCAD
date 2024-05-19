@@ -26,12 +26,13 @@
 
 #include <QAction>
 #include <QMouseEvent>
+
 #include "rs_actiondrawlinefree.h"
-#include "rs_polyline.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -62,7 +63,7 @@ void RS_ActionDrawLineFree::trigger() {
 			}
 			graphicView->redraw(RS2::RedrawDrawing);
 			RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
-							" polyline added: %d", ent->getId());
+                            " polyline added: %lu", ent->getId());
 		}
 		polyline.reset();
 	}
@@ -90,7 +91,7 @@ void RS_ActionDrawLineFree::mouseMoveEvent(QMouseEvent* e) {
 		*vertex = v;
 
         RS_DEBUG->print("RS_ActionDrawLineFree::%s:"
-                        " line added: %d", __func__, ent->getId());
+                        " line added: %lu", __func__, ent->getId());
     }
 }
 

@@ -37,7 +37,7 @@
  */
 QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_BevelOptions{})
+    , ui(std::make_unique<Ui::Ui_BevelOptions>())
 {
 	ui->setupUi(this);
 }
@@ -45,9 +45,7 @@ QG_BevelOptions::QG_BevelOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_BevelOptions::~QG_BevelOptions() {
-	saveSettings();
-}
+QG_BevelOptions::~QG_BevelOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -72,7 +70,7 @@ void QG_BevelOptions::setAction(RS_ActionInterface* a, bool update) {
 
         QString sd1;
         QString sd2;
-                QString st;
+        QString st;
         if (update) {
             sd1 = QString("%1").arg(action->getLength1());
             sd2 = QString("%1").arg(action->getLength2());
@@ -99,5 +97,6 @@ void QG_BevelOptions::updateData() {
 		action->setTrim(ui->cbTrim->isChecked());
 		action->setLength1(RS_Math::eval(ui->leLength1->text()));
 		action->setLength2(RS_Math::eval(ui->leLength2->text()));
+        saveSettings();
     }
 }

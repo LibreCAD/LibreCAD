@@ -28,13 +28,15 @@
 
 #include "ui_qg_widgetpen.h"
 #include "rs_pen.h"
+#include "rs_layer.h"
+#include "rs_entity.h"
 
 class QG_WidgetPen : public QWidget, public Ui::QG_WidgetPen
 {
     Q_OBJECT
 
 public:
-    QG_WidgetPen(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_WidgetPen(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_WidgetPen();
 
     virtual bool isColorUnchanged();
@@ -43,10 +45,17 @@ public:
 
 public slots:
     virtual void setPen( RS_Pen pen, bool showByLayer, bool showUnchanged, const QString & title );
+    void setPen(RS_Pen pen, RS_Layer* layer, const QString &title);
+    void setPen(RS_Pen pen, RS_Layer* layer, bool showUnchanged, const QString &title);
+    void setPen(RS_Entity *entity, RS_Layer *layer, const QString &title);
     virtual RS_Pen getPen();
 
 protected slots:
     virtual void languageChange();
+
+protected:
+    void focusInEvent(QFocusEvent *event) override;
+    void focusOutEvent(QFocusEvent *event) override;
 
 };
 

@@ -53,7 +53,7 @@ signals:
     void fontChanged(RS_Font* font);
 
 private:
-    RS_Font* currentFont;
+    RS_Font* currentFont = nullptr;
 };
 
 #endif

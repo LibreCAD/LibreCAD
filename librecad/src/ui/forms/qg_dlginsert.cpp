@@ -63,8 +63,8 @@ void QG_DlgInsert::languageChange()
 
 void QG_DlgInsert::setInsert(RS_Insert& i) {
     insert = &i;
-    //pen = insert->getPen();
-    wPen->setPen(insert->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = insert->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -73,6 +73,9 @@ void QG_DlgInsert::setInsert(RS_Insert& i) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(insert, lay,  "Pen");
+
     QString s;
     s.setNum(insert->getInsertionPoint().x);
     leInsertionPointX->setText(s);

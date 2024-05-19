@@ -24,8 +24,10 @@
 **
 **********************************************************************/
 
-#ifndef RS_ACTIONSELECTWINDOW_H
-#define RS_ACTIONSELECTWINDOW_H
+#ifndef RS_ACTIONDEFAULT_H
+#define RS_ACTIONDEFAULT_H
+
+#include <memory>
 
 #include "rs_previewactioninterface.h"
 
@@ -37,6 +39,8 @@
  */
 class RS_ActionDefault : public RS_PreviewActionInterface {
     Q_OBJECT
+
+    using BASE_CLASS = RS_PreviewActionInterface;
 public:
     /**
      * Action States.
@@ -55,31 +59,45 @@ public:
 public:
     RS_ActionDefault(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
-	~RS_ActionDefault() override;
+    ~RS_ActionDefault() override;
 
-	void finish(bool /*updateTB*/ = true ) override{}
+    void finish(bool /*updateTB*/ = true ) override{}
 
-	void init(int status=0) override;
+    void init(int status=0) override;
+    void resume() override;
+    void suspend() override;
 
-	void keyPressEvent(QKeyEvent* e) override;
-	void keyReleaseEvent(QKeyEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void keyReleaseEvent(QKeyEvent* e) override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-//    void resume() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
+    // clear temporary entities for highlighting
+    void clearHighLighting();
+    enum RS2::EntityType getTypeToSelect();
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-    RS2::SnapRestriction restrBak;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS2::SnapRestriction snapRestriction;
 
+    bool allowEntityQuickInfoForCTRL = false;
+    bool allowEntityQuickInfoAuto = false;
+    void checkSupportOfQuickEntityInfo();
+    void clearQuickInfoWidget();
+    void updateQuickInfoWidget(RS_Entity *pEntity);
+private:
+
+    void highlightHoveredEntities(QMouseEvent* currentMousePosition);
+    void highlightEntity(RS_Entity* entity);
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
 
 #endif

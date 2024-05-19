@@ -64,7 +64,7 @@ void QG_DlgPoint::languageChange()
 void QG_DlgPoint::setPoint(RS_Point& p) {
     point = &p;
 
-    wPen->setPen(point->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = point->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -73,6 +73,8 @@ void QG_DlgPoint::setPoint(RS_Point& p) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(point, lay,"Pen");
 
     QString s;
     s.setNum(point->getPos().x);

@@ -24,26 +24,26 @@
 **********************************************************************************
 */
 
-#include "lc_penwizard.h"
+#include <QVBoxLayout>
+
 
 #include "colorwizard.h"
+#include "lc_penwizard.h"
 #include "qc_mdiwindow.h"
-#include "rs_graphic.h"
-#include "rs_entity.h"
 #include "qg_graphicview.h"
+#include "rs_entity.h"
+#include "rs_graphic.h"
 
-#include <QVBoxLayout>
 
 LC_PenWizard::LC_PenWizard(const QString& title, QWidget* parent)
     : QDockWidget(title, parent)
-    , mdi_win(nullptr)
     , color_wiz(new ColorWizard(this))
 {
     auto frame = new QFrame(this);
     auto layout = new QVBoxLayout;
     frame->setLayout(layout);
 
-    layout->setMargin(0);
+    layout->setContentsMargins(QMargins{});
     layout->addWidget(color_wiz);
 
     setWidget(frame);
@@ -92,4 +92,9 @@ void LC_PenWizard::setActivePenColor(QColor color)
     auto pen = graphic->getActivePen();
     pen.setColor(RS_Color(color));
     graphic->setActivePen(pen);
+}
+
+void LC_PenWizard::setMdiWindow(QC_MDIWindow* mdiWindow)
+{
+    mdi_win = mdiWindow;
 }

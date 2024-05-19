@@ -24,16 +24,13 @@
 **
 **********************************************************************/
 
-#include "rs_actionzoompan.h"
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_graphicview.h"
+
+#include "rs_actionzoompan.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-#include "rs_debug.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView)
@@ -57,7 +54,7 @@ void RS_ActionZoomPan::trigger() {
         graphicView->zoomPan(v2-v1);
         v1 = v2;
 }*/
-    if (getStatus()==SetPanning && (abs(x2-x1)>7 || abs(y2-y1)>7)) {
+    if (getStatus()==SetPanning && (std::abs(x2-x1)>7 || std::abs(y2-y1)>7)) {
         graphicView->zoomPan(x2-x1, y2-y1);
         x1 = x2;
         y1 = y2;
@@ -65,20 +62,24 @@ void RS_ActionZoomPan::trigger() {
     if(getStatus()==SetPanEnd)
     {
         finish(false);
-        graphicView->setPanning(false);
-        graphicView->redraw();
     }
 }
 
 
+void RS_ActionZoomPan::finish(bool updateTB) {
+    RS_ActionInterface::finish(updateTB);
+    graphicView->setPanning(false);
+    graphicView->redraw();
+}
+
 
 void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
     //v2 = snapPoint(e);
-    x2 = e->x();
-    y2 = e->y();
+    x2 = e->position().x();
+    y2 = e->position().y();
     //if (getStatus()==1 && graphicView->toGuiDX((v2-v1).magnitude())>10) {
     if (getStatus()==SetPanning ) {
-            if (abs(x2-x1)>7 || abs(y2-y1)>7) {
+            if (std::abs(x2-x1)>7 || std::abs(y2-y1)>7) {
         trigger();
             }
     }
@@ -89,8 +90,8 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::MiddleButton ||
             e->button()==Qt::LeftButton) {
         //v1 = snapPoint(e);
-        x1 = e->x();
-        y1 = e->y();
+        x1 = e->position().x();
+        y1 = e->position().y();
         setStatus(SetPanning);
         graphicView->setPanning(true);
     }

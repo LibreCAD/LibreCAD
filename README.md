@@ -14,15 +14,28 @@ as published by the Free Software Foundation.
 Please read the [LICENSE](LICENSE) file for additional information.
 
 The master branch represents the latest pre-release code,  
-and now requires Qt 5.2.1 or newer.  
+and now requires Qt 6.4.0 or newer.  
+The 2.2.1 branch requires Qt 5.15.0 or newer.
+The 2.2 branch requires Qt 5.2.1 or newer.
 The 2.1 branch will be the last to support Qt4.  
 The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](https://travis-ci.org/LibreCAD/LibreCAD.svg?branch=2.0)](https://travis-ci.org/LibreCAD/LibreCAD) 
 
-- [Releases](https://github.com/LibreCAD/LibreCAD/releases)
+## DXF Converter
+LibreCAD can be used as dxf to a pdf, png or svg converter. For example, to convert a foo.dxf to foo.pdf, foo.png or foo.svg:
+```bash
+$ librecad dxf2pdf foo.dxf
+$ librecad dxf2png foo.dxf
+$ librecad dxf2svg foo.dxf
+```
+## Releases and Milestones
+
+- [Releases and Prereleases](https://github.com/LibreCAD/LibreCAD/releases)
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
-[libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DWG files.
+## libdxfrw
+[libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DXF and DWG files.
 
+#
 **Requests and Bug reports**
 
 - [GitHub issues (preferred)](https://github.com/LibreCAD/LibreCAD/issues)
@@ -36,14 +49,14 @@ The 2.0 branch will be the last to support the QCAD toolbar. [![Build Status](ht
 **Questions or Comments**
 
 - [LibreCAD's Forum](https://forum.librecad.org/)
-- IRC: [#librecad](https://webchat.freenode.net/?channels=librecad) at freenode.net
+- IRC: [#librecad](https://web.libera.chat/#librecad) at libera.chat
 
 **Building**
 
 Requirements:
 
-- [Qt](https://www.qt.io/download-open-source/) 5.2.1+ (MinGW version on Windows)
-- [Boost](https://www.boost.org/)
+- [Qt](https://www.qt.io/download-open-source/) 6.4.0+ (MinGW version on Windows)
+- [Boost](https://www.boost.org/) 1.55.0+
 
 More information: [Build from source](https://github.com/LibreCAD/LibreCAD/wiki/Build-from-source)
 

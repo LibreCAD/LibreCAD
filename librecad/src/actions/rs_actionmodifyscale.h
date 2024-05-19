@@ -29,7 +29,6 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_ScaleData;
 
 /**
  * This action class can handle user events to move entities.
@@ -44,7 +43,9 @@ public:
      */
     enum Status {
         SetReferencePoint,    /**< Setting the reference point. */
-        ShowDialog            /**< Showing the options dialog. */
+        ShowDialog,            /**< Showing the options dialog. */
+        SetSourcePoint,         /**< Set the source point to find scaling factor */
+        SetTargetPoint         /**< Set the target point to scale the source point to */
     };
 
 public:
@@ -62,6 +63,11 @@ public:
 	void updateMouseCursor() override;
 
 private:
+    void showPreview();
+    void findFactor();
+    // set scaling target point to support isotropic or xy-scaling
+    RS_Vector getTargetPoint(QMouseEvent* e);
+
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

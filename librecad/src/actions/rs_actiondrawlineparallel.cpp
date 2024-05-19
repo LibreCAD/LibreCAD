@@ -26,17 +26,17 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlineparallel.h"
 
+#include "rs_actiondrawlineparallel.h"
+#include "rs_actiondrawlineparallelthrough.h"
+#include "rs_commandevent.h"
+#include "rs_commands.h"
+#include "rs_creation.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_creation.h"
-#include "rs_commands.h"
-#include "rs_commandevent.h"
-#include "rs_actiondrawlineparallelthrough.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
@@ -86,7 +86,7 @@ void RS_ActionDrawLineParallel::trigger() {
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
 
-	*coord = {graphicView->toGraphX(e->x()), graphicView->toGraphY(e->y())};
+    *coord = {graphicView->toGraph(e->position())};
 
     entity = catchEntity(e, RS2::ResolveAll);
 

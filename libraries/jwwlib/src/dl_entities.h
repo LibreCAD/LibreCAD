@@ -58,7 +58,7 @@ struct DL_LayerData {
     string name;
     /** Layer flags. (1 = frozen, 2 = frozen by default, 4 = locked) */
     int flags;
-    bool plotF;
+    bool plotF=false;
 };
 
 
@@ -138,11 +138,11 @@ struct DL_PointData {
     }
 
     /*! X Coordinate of the point. */
-    double x;
+    double x=0.;
     /*! Y Coordinate of the point. */
-    double y;
+    double y=0.;
     /*! Z Coordinate of the point. */
-    double z;
+    double z=0.;
 };
 
 
@@ -324,14 +324,7 @@ struct DL_VertexData {
  * @author Andrew Mustun
  */
 struct DL_TraceData {
-    DL_TraceData() {
-        thickness = 0.0;
-        for (int i=0; i<4; i++) {
-            x[i] = 0.0;
-            y[i] = 0.0;
-            z[i] = 0.0;
-        }
-    }
+    DL_TraceData() = default;
 
     /**
      * Constructor.
@@ -363,12 +356,12 @@ struct DL_TraceData {
     }
 
     /*! Thickness */
-    double thickness;
+    double thickness=0.;
 
     /*! Points */
-    double x[4];
-    double y[4];
-    double z[4];
+    double x[4]={};
+    double y[4]={};
+    double z[4]={};
 };
 
 
@@ -427,7 +420,7 @@ struct DL_SplineData {
  * @author Andrew Mustun
  */
 struct DL_KnotData {
-    DL_KnotData() {}
+    DL_KnotData()=default;
     /**
      * Constructor.
      * Parameters: see member variables.
@@ -437,7 +430,7 @@ struct DL_KnotData {
     }
 
     /*! Knot value. */
-    double k;
+    double k=0.;
 };
 
 
@@ -1230,7 +1223,7 @@ struct DL_HatchData {
     /**
      * Default constructor.
      */
-    DL_HatchData() {}
+    DL_HatchData()=default;
 
     /**
      * Constructor.
@@ -1249,13 +1242,13 @@ struct DL_HatchData {
     }
 
     /*! Number of boundary paths (loops). */
-    int numLoops;
+    int numLoops=0;
     /*! Solid fill flag (true=solid, false=pattern). */
-    bool solid;
+    bool solid=false;
     /*! Pattern scale or spacing */
-    double scale;
+    double scale=0.;
     /*! Pattern angle */
-    double angle;
+    double angle=0.;
     /*! Pattern name. */
     string pattern;
 };
@@ -1269,7 +1262,7 @@ struct DL_HatchLoopData {
     /**
      * Default constructor.
      */
-    DL_HatchLoopData() {}
+    DL_HatchLoopData() = default;
     /**
      * Constructor.
      * Parameters: see member variables.
@@ -1279,8 +1272,8 @@ struct DL_HatchLoopData {
     }
 
     /*! Number of edges in this loop. */
-    int numEdges;
-    int pathType; //Boundary path type
+    int numEdges=0;
+    int pathType=0; //Boundary path type
 };
 
 
@@ -1331,12 +1324,12 @@ struct DL_HatchEdgeData {
     /**
      * Edge type. 1=line, 2=arc.
      */
-    int type;
+    int type=0;
 
     /**
      * Set to true if this edge is fully defined.
      */
-    bool defined;
+    bool defined=false;
 
     /*! Start point (X). */
     double x1;

@@ -45,15 +45,16 @@
  */
 QG_ArcTangentialOptions::QG_ArcTangentialOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_ArcTangentialOptions{})
+    , ui(new Ui::Ui_ArcTangentialOptions{})
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
+    connect(ui->rbRadius, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbRadius_clicked);
+    connect(ui->rbAngle, &QRadioButton::clicked, this, &QG_ArcTangentialOptions::on_rbAngle_clicked);
+    connect(ui->leRadius, SIGNAL(editingFinished()), this, SLOT(on_leRadius_editingFinished));
+    connect(ui->leAngle, SIGNAL(editingFinished()), this, SLOT(on_leAngle_editingFinished));
 }
 
-QG_ArcTangentialOptions::~QG_ArcTangentialOptions()
-{
-	saveSettings();
-}
+QG_ArcTangentialOptions::~QG_ArcTangentialOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -61,123 +62,75 @@ QG_ArcTangentialOptions::~QG_ArcTangentialOptions()
  */
 void QG_ArcTangentialOptions::languageChange()
 {
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
-void QG_ArcTangentialOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/ArcTangentialRadius", ui->leRadius->text());
-	RS_SETTINGS->writeEntry("/ArcTangentialAngle", ui->leAngle->text());
-	if(ui->rbRadius->isChecked()) {
-		RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
-    }else {
-		RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"0"});
-    }
-    RS_SETTINGS->endGroup();
-//    delete leRadius->validator();
-//    delete leAngle->validator();
-}
-
-void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, bool update) {
+void QG_ArcTangentialOptions::setAction(RS_ActionInterface* a, [[maybe_unused]] bool update) {
     if (a && a->rtti()==RS2::ActionDrawArcTangential) {
-		action = static_cast<RS_ActionDrawArcTangential*>(a);
+        action = static_cast<RS_ActionDrawArcTangential*>(a);
 
-        QString sr,sa;
-        bool bbr;
-        if (update) {
-            sr = QString("%1").arg(action->getRadius());
-            sa = QString("%1").arg(action->getAngle()*180./M_PI);
-            bbr= action->getByRadius();
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sr = RS_SETTINGS->readEntry("/ArcTangentialRadius", "1.0");
-            sa = RS_SETTINGS->readEntry("/ArcTangentialAngle", "90");
-            int br = RS_SETTINGS->readNumEntry("/ArcTangentialByRadius", 1);
-            bbr = ( br != 0 );
-            RS_SETTINGS->endGroup();
-            action->setRadius(sr.toDouble());
-            action->setAngle(sa.toDouble()*M_PI/180.);
-            action->setByRadius(bbr);
-        }
-		ui->leRadius->setText(sr);
-		ui->leAngle->setText(sa);
+        QString sr = QString("%1").arg(action->getRadius());
+        QString sa = QString("%1").arg(action->getAngle()*180./M_PI);
+        bool bbr= action->getByRadius();
+        ui->leRadius->setText(sr);
+        ui->leAngle->setText(sa);
         updateByRadius(bbr);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_ArcTangentialOptions::setAction: wrong action type");
-		action = nullptr;
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_ArcTangentialOptions::setAction: wrong action type");
+        action = nullptr;
     }
 }
 
-
-/*void QG_ArcTangentialOptions::init() {
-	data = nullptr;
-    RS_SETTINGS->beginGroup("/Draw");
-    bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
-    RS_SETTINGS->endGroup();
-
-    rbNeg->setChecked(reversed);
-}*/
-
-
-
-/*void QG_ArcTangentialOptions::setData(RS_ArcData* d) {
-    data = d;
-    updateDirection(false);
-}*/
-
 void QG_ArcTangentialOptions::updateRadius(const QString& s) {
-	ui->leRadius->setText(s);
+    ui->leRadius->setText(s);
 }
 
 void QG_ArcTangentialOptions::updateAngle(const QString& s) {
-	ui->leAngle->setText(s);
+    ui->leAngle->setText(s);
 }
-void QG_ArcTangentialOptions::updateByRadius(const bool br) {
-		ui->rbRadius->setChecked(br);
-		ui->rbAngle->setChecked(!br);
-		ui->leRadius->setDisabled(!br);
-		ui->leAngle->setDisabled(br);
+
+void QG_ArcTangentialOptions::updateByRadius(bool br) {
+    ui->rbRadius->setChecked(br);
+    ui->rbAngle->setChecked(!br);
+    action->setByRadius(br);
+    ui->leRadius->setDisabled(!br);
+    ui->leAngle->setDisabled(br);
 }
 
 void QG_ArcTangentialOptions::on_leRadius_editingFinished()
 {
-	if(ui->rbRadius->isChecked()) {
-        bool ok;
-		double d=fabs(RS_Math::eval(ui->leRadius->text(), &ok));
+    if(ui->rbRadius->isChecked()) {
+        bool ok = false;
+        double d=std::abs(RS_Math::eval(ui->leRadius->text(), &ok));
         if(!ok) return;
         if (d<RS_TOLERANCE) d=1.0;
-        //updateRadius(QString::number(d,'g',5));
         action->setRadius(d);
-        action->setByRadius(true);
-		ui->leRadius->setText(QString::number(d,'g', 5));
+        ui->leRadius->setText(QString::number(d,'g', 6));
     }
 }
 
 void QG_ArcTangentialOptions::on_leAngle_editingFinished()
 {
-	if(ui->rbAngle->isChecked()) {
-        bool ok;
+    if(ui->rbAngle->isChecked()) {
+        bool ok = false;
         double d=RS_Math::correctAngle(RS_Math::eval(ui->leAngle->text(), &ok)*M_PI/180.);
         if(!ok) return;
-        if(d<RS_TOLERANCE_ANGLE || d + RS_TOLERANCE_ANGLE > 2. * M_PI) d=M_PI; // can not do full circle
+        if(d<RS_TOLERANCE_ANGLE || d + RS_TOLERANCE_ANGLE > 2. * M_PI)
+            d=M_PI; // can not do full circle
         action->setAngle(d);
         //updateAngle(QString::number(d*180./M_PI,'g',5));
-        action->setByRadius(false);
-        ui->leAngle->setText(QString::number(RS_Math::rad2deg( d),'g',5));
+        ui->leAngle->setText(QString::number(RS_Math::rad2deg( d),'g',6));
     }
 }
 
 void QG_ArcTangentialOptions::on_rbRadius_clicked(bool /*checked*/)
 {
-    action->setByRadius(true);
-	action->setRadius(ui->leRadius->text().toDouble());
+    //action->setRadius(ui->leRadius->text().toDouble());
     updateByRadius(true);
 }
 
 void QG_ArcTangentialOptions::on_rbAngle_clicked(bool /*checked*/)
 {
-    action->setByRadius(false);
-	action->setAngle(ui->leAngle->text().toDouble()*M_PI/180.);
+    //action->setAngle(ui->leAngle->text().toDouble()*M_PI/180.);
     updateByRadius(false);
 }

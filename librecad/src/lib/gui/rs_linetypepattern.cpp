@@ -25,51 +25,96 @@
 **********************************************************************/
 
 
-#include<cmath>
+#include <cmath>
+#include <map>
+
 #include "rs_linetypepattern.h"
+
+#include "rs.h"
+
+namespace {
+//define all line patterns in pixels
+const RS_LineTypePattern patternSolidLine={10.0};
+
+const RS_LineTypePattern patternDotLineTiny{{0.15, -1.}};
+const RS_LineTypePattern patternDotLine{{0.2, -6.2}};
+const RS_LineTypePattern patternDotLine2{{0.2, -3.1}};
+const RS_LineTypePattern patternDotLineX2{{0.2, -12.4}};
+
+const RS_LineTypePattern patternDashLineTiny{{2., -1.}};
+const RS_LineTypePattern patternDashLine{{12.0, -6.0}};
+const RS_LineTypePattern patternDashLine2{{6.0, -3.0}};
+const RS_LineTypePattern patternDashLineX2{{24.0, -12.0}};
+
+const RS_LineTypePattern patternDashDotLineTiny{{2., -2., 0.15, -2.}};
+const RS_LineTypePattern patternDashDotLine{{12.0, -5., 0.2, -5.}};
+const RS_LineTypePattern patternDashDotLine2{{6.0, -2.5, 0.2, -2.5}};
+const RS_LineTypePattern patternDashDotLineX2{{24.0, -8., 0.2, -8.}};
+
+const RS_LineTypePattern patternDivideLineTiny{{2., -0.7, 0.15, -0.7, 0.15, -0.7}};
+const RS_LineTypePattern patternDivideLine{{12.0, -4.9, 0.2, -4.9, 0.2, -4.9}};
+const RS_LineTypePattern patternDivideLine2{{6.0, -1.9, 0.2, -1.9, 0.2, -1.9}};
+const RS_LineTypePattern patternDivideLineX2{{24.0, -8., 0.2, -8., 0.2, -8.}};
+
+const RS_LineTypePattern patternCenterLineTiny{{5., -1., 1., -1.}};
+const RS_LineTypePattern patternCenterLine{{32.0, -6.0, 6.0, -6.0}};
+const RS_LineTypePattern patternCenterLine2{{16.0, -3.0, 3.0, -3.0}};
+const RS_LineTypePattern patternCenterLineX2{{64.0, -12.0, 12.0, -12.0}};
+
+const RS_LineTypePattern patternBorderLineTiny{{2., -1., 2., -1., 0.15, -1.}};
+const RS_LineTypePattern patternBorderLine{{12.0, -4.0, 12.0, -4., 0.2, -4.}};
+const RS_LineTypePattern patternBorderLine2{{6.0, -3.0, 6.0, -3., 0.2, -3.}};
+const RS_LineTypePattern patternBorderLineX2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
+
+const RS_LineTypePattern patternBlockLine{{0.5, -0.5}};
+const RS_LineTypePattern patternSelected{{1.0, -3.0}};
+}
 
 RS_LineTypePattern::RS_LineTypePattern(std::initializer_list<double> const& pattern):
 	pattern(pattern)
+    , num { pattern.size()}
 {
-    totalLength=0.;
-	num = pattern.size();
-	for(double const& l: this->pattern){
-		totalLength += fabs(l);
-	}
+    for(double l: pattern){
+        totalLength += std::abs(l);
+    }
 }
 
-//define all line patterns in pixels
-const RS_LineTypePattern RS_LineTypePattern::patternSolidLine={10.0};
 
-const RS_LineTypePattern RS_LineTypePattern::patternDotLineTiny{{0.15, -1.}};
-const RS_LineTypePattern RS_LineTypePattern::patternDotLine{{0.2, -6.2}};
-const RS_LineTypePattern RS_LineTypePattern::patternDotLine2{{0.2, -3.1}};
-const RS_LineTypePattern RS_LineTypePattern::patternDotLineX2{{0.2, -12.4}};
+const RS_LineTypePattern* RS_LineTypePattern::getPattern(RS2::LineType lineType)
+{
+    static std::map<RS2::LineType, const RS_LineTypePattern*> lineTypeToPattern = {
+            {RS2::NoPen, &patternSolidLine},
+            {RS2::SolidLine, &patternSolidLine},
+            {RS2::DotLine, &patternDotLine},
+            {RS2::DotLineTiny, &patternDotLineTiny},
+            {RS2::DotLine2, &patternDotLine2},
+            {RS2::DotLineX2, &patternDotLineX2},
+            {RS2::DashLine, &patternDashLine},
+            {RS2::DashLineTiny, &patternDashLineTiny},
+            {RS2::DashLine2, &patternDashLine2},
+            {RS2::DashLineX2, &patternDashLineX2},
+            {RS2::DashDotLine, &patternDashDotLine},
+            {RS2::DashDotLineTiny, &patternDashDotLineTiny},
+            {RS2::DashDotLine2, &patternDashDotLine2},
+            {RS2::DashDotLineX2, &patternDashDotLineX2},
+            {RS2::DivideLine, &patternDivideLine},
+            {RS2::DivideLineTiny, &patternDivideLineTiny},
+            {RS2::DivideLine2, &patternDivideLine2},
+            {RS2::DivideLineX2, &patternDivideLineX2},
+            {RS2::CenterLine, &patternCenterLine},
+            {RS2::CenterLineTiny, &patternCenterLineTiny},
+            {RS2::CenterLine2, &patternCenterLine2},
+            {RS2::CenterLineX2, &patternCenterLineX2},
+            {RS2::BorderLine, &patternBorderLine},
+            {RS2::BorderLineTiny, &patternBorderLineTiny},
+            {RS2::BorderLine2, &patternBorderLine2},
+            {RS2::BorderLineX2, &patternBorderLineX2},
+            {RS2::LineByLayer, &patternBlockLine},
+            {RS2::LineByBlock, &patternBlockLine},
+            {RS2::LineSelected, &patternSelected}
+            };
+    if (lineTypeToPattern.count(lineType) == 0)
+        return nullptr;
+    return lineTypeToPattern[lineType];
+}
 
-const RS_LineTypePattern RS_LineTypePattern::patternDashLineTiny{{2., -1.}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashLine{{12.0, -6.0}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashLine2{{6.0, -3.0}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashLineX2{{24.0, -12.0}};
-
-const RS_LineTypePattern RS_LineTypePattern::patternDashDotLineTiny{{2., -0.7, 0.15, -2.}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashDotLine{{12.0, -5., 0.2, -5.95}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashDotLine2{{6.0, -2., 0.2, -2.}};
-const RS_LineTypePattern RS_LineTypePattern::patternDashDotLineX2{{24.0, -8., 0.2, -8.}};
-
-const RS_LineTypePattern RS_LineTypePattern::patternDivideLineTiny{{2., -0.7, 0.15, -0.7, 0.15, -0.7}};
-const RS_LineTypePattern RS_LineTypePattern::patternDivideLine{{12.0, -4.9, 0.2, -4.9, 0.2, -4.9}};
-const RS_LineTypePattern RS_LineTypePattern::patternDivideLine2{{6.0, -1.9, 0.2, -1.9, 0.2, -1.9}};
-const RS_LineTypePattern RS_LineTypePattern::patternDivideLineX2{{24.0, -8., 0.2, -8., 0.2, -8.}};
-
-const RS_LineTypePattern RS_LineTypePattern::patternCenterLineTiny{{5., -1., 1., -1.}};
-const RS_LineTypePattern RS_LineTypePattern::patternCenterLine{{32.0, -6.0, 6.0, -6.0}};
-const RS_LineTypePattern RS_LineTypePattern::patternCenterLine2{{16.0, -3.0, 3.0, -3.0}};
-const RS_LineTypePattern RS_LineTypePattern::patternCenterLineX2{{64.0, -12.0, 12.0, -12.0}};
-
-const RS_LineTypePattern RS_LineTypePattern::patternBorderLineTiny{{2., -1., 2., -1., 0.15, -1.}};
-const RS_LineTypePattern RS_LineTypePattern::patternBorderLine{{12.0, -4.0, 12.0, -4., 0.2, -4.}};
-const RS_LineTypePattern RS_LineTypePattern::patternBorderLine2{{6.0, -3.0, 6.0, -3., 0.2, -3.}};
-const RS_LineTypePattern RS_LineTypePattern::patternBorderLineX2{{24.0, -8.0, 24.0, -8., 0.2, -8.}};
-
-const RS_LineTypePattern RS_LineTypePattern::patternBlockLine{{0.5, -0.5}};
-const RS_LineTypePattern RS_LineTypePattern::patternSelected{{1.0, -3.0}};

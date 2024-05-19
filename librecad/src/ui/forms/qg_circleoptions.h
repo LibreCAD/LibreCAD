@@ -32,7 +32,7 @@
 class RS_ActionInterface;
 class RS_ActionDrawCircleCR;
 namespace Ui {
-class Ui_CircleOptions;
+    class Ui_CircleOptions;
 }
 
 class QG_CircleOptions : public QWidget
@@ -40,15 +40,15 @@ class QG_CircleOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_CircleOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_CircleOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_CircleOptions();
 
 public slots:
-	virtual void setAction(RS_ActionInterface * a, bool update );
-    virtual void updateRadius( const QString & r );
+    virtual void setAction(RS_ActionInterface * a, bool update );
+    virtual void updateRadius(const QString& r);
 
 protected:
-    RS_ActionDrawCircleCR* action;
+    RS_ActionDrawCircleCR* action = nullptr;
 
 protected slots:
     virtual void languageChange();

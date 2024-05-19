@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionzoomprevious.h"
 
 #include <QAction>
+
+#include "rs_actionzoomprevious.h"
 #include "rs_graphicview.h"
 
 

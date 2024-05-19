@@ -26,11 +26,9 @@
 #include "qg_dlghatch.h"
 
 #include "rs_settings.h"
-#include "rs_line.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
 #include "rs_pattern.h"
-#include "rs_math.h"
 #include "rs_math.h"
 
 /*
@@ -49,6 +47,7 @@ QG_DlgHatch::QG_DlgHatch(QWidget* parent, bool modal, Qt::WindowFlags fl)
     init();
 }
 
+QG_DlgHatch::~QG_DlgHatch() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -64,8 +63,8 @@ void QG_DlgHatch::init() {
 	hatch = nullptr;
     isNew = false;
 
-    preview = new RS_EntityContainer();
-    gvPreview->setContainer(preview);
+    preview = std::make_unique<RS_EntityContainer>();
+    gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
     gvPreview->addScrollbars();
 
@@ -83,10 +82,6 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
     gvPreview->zoomAuto();
 }
 
-QG_DlgHatch::~QG_DlgHatch()
-{
-    delete preview;
-}
 
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
@@ -111,6 +106,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         setPattern(pat);
         leScale->setText(scale);
         leAngle->setText(angle);
+        leHatchArea->setText("");
     }
     // initialize dialog based on given hatch:
     else {
@@ -121,6 +117,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         leScale->setText(s);
         s.setNum(RS_Math::rad2deg(hatch->getAngle()));
         leAngle->setText(s);
+        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
     }
 }
 
@@ -130,6 +127,8 @@ void QG_DlgHatch::updateHatch() {
         hatch->setPattern(cbPattern->currentText());
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
+        if (!isNew)
+            leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
     }
 }
 
@@ -170,7 +169,7 @@ void QG_DlgHatch::updatePreview() {
 
     preview->clear();
 
-    RS_Hatch* prevHatch = new RS_Hatch(preview,
+    RS_Hatch* prevHatch = new RS_Hatch(preview.get(),
                                        RS_HatchData(isSolid, scale, angle, patName));
     prevHatch->setPen(hatch->getPen());
 
@@ -190,12 +189,11 @@ void QG_DlgHatch::saveSettings()
 {
     if (isNew)
     {
-        RS_SETTINGS->beginGroup("/Draw");
+        RS_SETTINGS->beginGroupGuard("/Draw");
         RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
         RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
         RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
         RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
         RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
-        RS_SETTINGS->endGroup();
     }
 }

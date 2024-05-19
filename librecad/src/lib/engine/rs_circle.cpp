@@ -30,15 +30,11 @@
 #include <QPolygonF>
 #include "rs_circle.h"
 
-#include "rs_arc.h"
 #include "rs_line.h"
-#include "rs_constructionline.h"
 #include "rs_information.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "lc_hyperbola.h"
 #include "lc_quadratic.h"
 #include "rs_debug.h"
 
@@ -54,9 +50,11 @@ bool RS_CircleData::isValid() const {
 
 bool RS_CircleData::operator == (RS_CircleData const& rhs) const
 {
-	if(! (center.valid && rhs.center.valid)) return false;
-	if( center.squaredTo(rhs.center) > RS_TOLERANCE2) return false;
-	return fabs(radius - rhs.radius)< RS_TOLERANCE;
+    if (!(center.valid && rhs.center.valid))
+      return false;
+    if (center.squaredTo(rhs.center) > RS_TOLERANCE2)
+      return false;
+    return std::abs(radius - rhs.radius) < RS_TOLERANCE;
 }
 
 std::ostream& operator << (std::ostream& os, const RS_CircleData& ad)
@@ -85,9 +83,9 @@ RS_Entity* RS_Circle::clone() const {
 
 
 void RS_Circle::calculateBorders() {
-	RS_Vector r(data.radius,data.radius);
-	minV = data.center - r;
-	maxV = data.center + r;
+    RS_Vector r{data.radius, data.radius};
+    minV = data.center - r;
+    maxV = data.center + r;
 }
 
 
@@ -115,23 +113,21 @@ double RS_Circle::getAngleLength() const {
     return 2*M_PI;
 }
 
-
-
 /**
  * @return Length of the circle which is the circumference.
  */
 double RS_Circle::getLength() const {
-	return 2*M_PI*data.radius;
+    return 2 * M_PI * data.radius;
 }
 
 bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
 	const double d=circleData.center.distanceTo(data.center);
 //    DEBUG_HEADER
-	const double r0=fabs(circleData.radius);
-	const double r1=fabs(data.radius);
-//    std::cout<<fabs(d-fabs(r0-r1))<<" : "<<fabs(d-fabs(r0+r1))<<std::endl;
-    if( fabs(d-fabs(r0-r1))<20.*RS_TOLERANCE ||
-            fabs(d-fabs(r0+r1))<20.*RS_TOLERANCE ) return true;
+    const double r0=std::abs(circleData.radius);
+    const double r1=std::abs(data.radius);
+//    std::cout<<std::abs(d-std::abs(r0-r1))<<" : "<<std::abs(d-std::abs(r0+r1))<<std::endl;
+    if( std::abs(d-std::abs(r0-r1))<20.*RS_TOLERANCE ||
+            std::abs(d-std::abs(r0+r1))<20.*RS_TOLERANCE ) return true;
     return false;
 }
 
@@ -143,8 +139,8 @@ bool RS_Circle::isTangent(const RS_CircleData&  circleData) const{
  * @param r Radius
  */
 bool RS_Circle::createFromCR(const RS_Vector& c, double r) {
-    if (fabs(r)>RS_TOLERANCE && c.valid ) {
-		data.radius = fabs(r);
+    if (std::abs(r)>RS_TOLERANCE && c.valid ) {
+        data.radius = std::abs(r);
 		data.center = c;
         return true;
     } else {
@@ -191,7 +187,7 @@ bool RS_Circle::createFrom3P(const RS_Vector& p1, const RS_Vector& p2,
         double ra2=vra.squared()*0.5;
         double rb2=vrb.squared()*0.5;
         double crossp=vra.x * vrb.y - vra.y * vrb.x;
-        if (fabs(crossp)< RS_TOLERANCE2) {
+        if (std::abs(crossp)< RS_TOLERANCE2) {
                 RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
                 return false;
@@ -214,7 +210,7 @@ bool RS_Circle::createFrom3P(const RS_VectorSolutions& sol) {
     double ra2=vra.squared()*0.5;
     double rb2=vrb.squared()*0.5;
     double crossp=vra.x * vrb.y - vra.y * vrb.x;
-    if (fabs(crossp)< RS_TOLERANCE2) {
+    if (std::abs(crossp)< RS_TOLERANCE2) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Circle::createFrom3P(): "
                         "Cannot create a circle with radius 0.0.");
         return false;
@@ -278,8 +274,8 @@ std::vector<RS_Entity* > RS_Circle::offsetTwoSides(const double& distance) const
 {
 	std::vector<RS_Entity*> ret(0,nullptr);
 	ret.push_back(new RS_Circle(nullptr, {getCenter(),getRadius()+distance}));
-	if(fabs(getRadius()-distance)>RS_TOLERANCE)
-	ret.push_back(new RS_Circle(nullptr, {getCenter(),fabs(getRadius()-distance)}));
+    if(std::abs(getRadius()-distance)>RS_TOLERANCE)
+    ret.push_back(new RS_Circle(nullptr, {getCenter(),std::abs(getRadius()-distance)}));
     return ret;
 }
 
@@ -331,9 +327,9 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
     do{
         for(unsigned short j=0u;j<3u;++j){
             if(flags & (1u<<j)) {
-                cs[j].setRadius( - fabs(cs[j].getRadius()));
+                cs[j].setRadius( - std::abs(cs[j].getRadius()));
             }else{
-                cs[j].setRadius( fabs(cs[j].getRadius()));
+                cs[j].setRadius( std::abs(cs[j].getRadius()));
             }
         }
 //        RS_DEBUG->print(RS_Debug::D_ERROR, "flags=%d\n",flags);
@@ -342,7 +338,7 @@ std::vector<RS_Circle> RS_Circle::createTan3(const std::vector<RS_AtomicEntity*>
             for(RS_Circle& c0: list){
                 bool addNew=true;
                 for(RS_Circle& c: ret){
-                    if((c0.getCenter()-c.getCenter()).squared()<RS_TOLERANCE15 && fabs(c0.getRadius() - c.getRadius())<RS_TOLERANCE){
+                    if((c0.getCenter()-c.getCenter()).squared()<RS_TOLERANCE15 && std::abs(c0.getRadius() - c.getRadius())<RS_TOLERANCE){
                         addNew=false;
                         break;
                     }
@@ -375,20 +371,20 @@ bool RS_Circle::testTan3(const std::vector<RS_AtomicEntity*>& circles)
 //        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //        std::cout<<"to verify Center = ( "<<data.center.x<<" , "<<data.center.y<<" ), r= "<<data.radius<<std::endl;
     for(auto const& c: circles){
-		const double r0 = fabs(data.radius);
-        const double r1 = fabs(c->getRadius());
+        const double r0 = std::abs(data.radius);
+        const double r1 = std::abs(c->getRadius());
 
-        const double dist=fabs((data.center - c->getCenter()).magnitude());
+        const double dist=std::abs((data.center - c->getCenter()).magnitude());
 //        DEBUG_HEADER
 //        std::cout<<"testing: "<<getCenter()<<" r="<<getRadius()<<". \twith Center = ( "<<(*it)->getCenter().x<<" , "<<(*it)->getCenter().y<<" ), r= "<<(*it)->getRadius()<<std::endl;
-//        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<fabs(dist - fabs(r0 - r1)) <<"\tdelta1="<<fabs(dist - fabs(r0 + r1))
+//        std::cout<<"r0="<<r0<<"\tr1="<<r1<<"\tdist="<<dist<<"\tdelta0="<<std::abs(dist - std::abs(r0 - r1)) <<"\tdelta1="<<std::abs(dist - std::abs(r0 + r1))
 //                <<"\t"<<sqrt(DBL_EPSILON)*qMax(r0,r1)<<std::endl;
 
         double const rmax=std::max(r0,r1);
         if( dist < rmax )
-                return fabs(dist - fabs(r0 - r1)) <= sqrt(DBL_EPSILON)*rmax;
+                return std::abs(dist - std::abs(r0 - r1)) <= sqrt(DBL_EPSILON)*rmax;
         else
-                return fabs(dist - fabs(r0 + r1)) <= sqrt(DBL_EPSILON)*rmax;
+                return std::abs(dist - std::abs(r0 + r1)) <= sqrt(DBL_EPSILON)*rmax;
     }
     return true;
 }
@@ -422,7 +418,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     mat[0][1]=centers[2].y - centers[0].y;
     mat[1][0]=centers[2].x - centers[1].x;
     mat[1][1]=centers[2].y - centers[1].y;
-    if(fabs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE2){
+    if(std::abs(mat[0][0]*mat[1][1] - mat[0][1]*mat[1][0])<RS_TOLERANCE2){
 //        DEBUG_HEADER
 //        std::cout<<"The provided circles are in a line, not common tangent circle"<<std::endl;
         size_t i0=0;
@@ -433,7 +429,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
 //        qDebug()<<"c0.size()="<<c0.size();
         for(size_t i=0; i<c0.size(); i++){
             const double dc =  c0[i].distanceTo(centers[i0]);
-			ret.push_back(RS_Circle(nullptr, {c0[i], fabs(dc - radii[i0])}));
+            ret.push_back(RS_Circle(nullptr, {c0[i], std::abs(dc - radii[i0])}));
             if( dc > radii[i0]) {
 				ret.push_back(RS_Circle(nullptr, {c0[i], dc + radii[i0]}));
             }
@@ -471,7 +467,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     //form quadratic equation for r
     RS_Vector dcp=vp-centers[0];
     double a=vq.squared()-1.;
-    if(fabs(a)<RS_TOLERANCE*1e-4) {
+    if(std::abs(a)<RS_TOLERANCE*1e-4) {
         return ret;
     }
     std::vector<double> ce(0,0.);
@@ -480,7 +476,7 @@ std::vector<RS_Circle> RS_Circle::solveAppolloniusSingle(const std::vector<RS_Ci
     std::vector<double>&& vr=RS_Math::quadraticSolver(ce);
     for(size_t i=0; i < vr.size();i++){
         if(vr.at(i)<RS_TOLERANCE) continue;
-		ret.emplace_back(RS_Circle(nullptr, {vp+vq*vr.at(i),fabs(vr.at(i))}));
+        ret.emplace_back(RS_Circle(nullptr, {vp+vq*vr.at(i),std::abs(vr.at(i))}));
     }
 //    std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
 //    std::cout<<"Found "<<ret.size()<<" solutions"<<std::endl;
@@ -678,6 +674,17 @@ RS_Vector RS_Circle::getNearestOrthTan(const RS_Vector& coord,
         }
 }
 
+RS_Vector RS_Circle::dualLineTangentPoint(const RS_Vector& line) const
+{
+    RS_Vector dr = line.normalized() * data.radius;
+    RS_Vector vp0 = data.center + dr;
+    RS_Vector vp1 = data.center - dr;
+    auto lineEqu = [&line](const RS_Vector& vp) {
+        return std::abs(line.dotP(vp) + 1.);
+    };
+    return lineEqu(vp0) < lineEqu(vp1) ? vp0 : vp1;
+}
+
 void RS_Circle::move(const RS_Vector& offset) {
 	data.center.move(offset);
     moveBorders(offset);
@@ -696,9 +703,9 @@ bool RS_Circle::offset(const RS_Vector& coord, const double& distance) {
     double r0(coord.distanceTo(getCenter()));
     if(r0 > getRadius()){
         //external
-        r0 = getRadius()+ fabs(distance);
+        r0 = getRadius()+ std::abs(distance);
     }else{
-        r0 = getRadius()- fabs(distance);
+        r0 = getRadius()- std::abs(distance);
         if(r0<RS_TOLERANCE) {
             return false;
         }
@@ -721,25 +728,29 @@ void RS_Circle::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
 void RS_Circle::scale(const RS_Vector& center, const RS_Vector& factor) {
 	data.center.scale(center, factor);
     //radius always is positive
-	data.radius *= fabs(factor.x);
+    data.radius *= std::abs(factor.x);
     scaleBorders(center,factor);
-//    calculateBorders();
 }
 
 double RS_Circle::getDirection1() const{
 		return M_PI_2;
 }
 
-double RS_Circle::getDirection2() const{
-		return M_PI_2*3.0;
+double RS_Circle::getDirection2() const {
+    return M_PI_2 * 3.0;
 }
-
-
 
 void RS_Circle::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 	data.center.mirror(axisPoint1, axisPoint2);
     calculateBorders();
 }
+RS_Entity& RS_Circle::shear(double k)
+{
+    if (!std::isnormal(k))
+        assert(!"shear() should not not be called for circle");
+    return *this;
+}
+
 
 
 /** whether the entity's bounding box intersects with visible portion of graphic view
@@ -765,17 +776,12 @@ bool RS_Circle::isVisibleInWindow(RS_GraphicView* view) const
     return (vpMin-getCenter()).squared() > getRadius()*getRadius();
 }
 
-
 void RS_Circle::draw(RS_Painter* painter, RS_GraphicView* view, double& /*patternOffset*/) {
-//    // draw circle as a 2 pi arc
-//    RS_Arc arc(getParent(), RS_ArcData(getCenter(),getRadius(),0.,2.*M_PI, false));
-//    arc.setSelected(isSelected());
-//    arc.setPen(getPen());
-//    arc.draw(painter,view,patternOffset);
+    if (!isVisibleInWindow(view))
+        return;
 
     painter->drawCircle(view->toGui(getCenter()), view->toGuiDX(getRadius()));
 }
-
 
 void RS_Circle::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 	if(ref.distanceTo(data.center)<1.0e-4){
@@ -838,4 +844,3 @@ std::ostream& operator << (std::ostream& os, const RS_Circle& a) {
     os << " Circle: " << a.data << "\n";
     return os;
 }
-

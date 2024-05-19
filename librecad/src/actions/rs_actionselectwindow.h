@@ -50,6 +50,9 @@ public:
     RS_ActionSelectWindow(RS_EntityContainer& container,
                          RS_GraphicView& graphicView,
                          bool select);
+    RS_ActionSelectWindow(enum RS2::EntityType typeToSelect,RS_EntityContainer& container,
+                        RS_GraphicView& graphicView,
+                        bool select);
 	~RS_ActionSelectWindow() override;
 
 	void init(int status=0) override;
@@ -62,11 +65,12 @@ public:
 	
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
-
+    enum RS2::EntityType getTypeToSelect();
 private:
-	bool select;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
+    enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    bool select = false;
 };
 
 #endif

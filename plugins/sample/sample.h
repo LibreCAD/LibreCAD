@@ -36,7 +36,7 @@ class lc_Sampledlg : public QDialog
 
 public:
     explicit lc_Sampledlg(QWidget *parent = 0);
-    ~lc_Sampledlg();
+    ~lc_Sampledlg() override;
 
 public slots:
 //    void processAction(QStringList *commandList);
@@ -44,7 +44,7 @@ public slots:
     void checkAccept();
 
 protected:
-    void closeEvent(QCloseEvent *event);
+    void closeEvent(QCloseEvent *event) override;
 
 private:
     void readSettings();

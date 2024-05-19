@@ -27,15 +27,17 @@
 #define QG_DIMENSIONLABELEDITOR_H
 
 #include "ui_qg_dimensionlabeleditor.h"
+class RS_Dimension;
 
 class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEditor
 {
     Q_OBJECT
 
 public:
-    QG_DimensionLabelEditor(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_DimensionLabelEditor(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
     ~QG_DimensionLabelEditor();
 
+    void setRadialType(const RS_Dimension&);
     virtual QString getLabel();
 
 public slots:

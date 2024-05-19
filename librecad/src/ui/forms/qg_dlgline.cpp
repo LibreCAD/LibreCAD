@@ -45,14 +45,6 @@ QG_DlgLine::QG_DlgLine(QWidget* parent, bool modal, Qt::WindowFlags fl)
 }
 
 /*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgLine::~QG_DlgLine()
-{
-    // no need to delete child widgets, Qt does it all for us
-}
-
-/*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
@@ -63,16 +55,27 @@ void QG_DlgLine::languageChange()
 
 void QG_DlgLine::setLine(RS_Line& l) {
     line = &l;
-    //pen = line->getPen();
-    wPen->setPen(line->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = line->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
     }
-    RS_Layer* lay = line->getLayer(false);
+    RS_Layer* lay = line->getLayer(true);
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    RS_Pen linePen = line->getPen(false);
+    RS_Pen lineResolvedPen = line->getPen(true);
+
+    RS_Color originalColor = linePen.getColor();
+    RS_Color resolvedColor = lineResolvedPen.getColor();
+    resolvedColor.applyFlags(originalColor);
+    lineResolvedPen.setColor(resolvedColor);
+
+    wPen->setPen(lineResolvedPen, lay, "Pen");
+//    wPen->setPen(linePen,lay, "Pen");
     QString s;
     s.setNum(line->getStartpoint().x);
     leStartX->setText(s);
@@ -82,6 +85,7 @@ void QG_DlgLine::setLine(RS_Line& l) {
     leEndX->setText(s);
     s.setNum(line->getEndpoint().y);
     leEndY->setText(s);
+    lId->setText(QString("ID: %1").arg(line->getId()));
 }
 
 void QG_DlgLine::updateLine() {

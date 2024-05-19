@@ -24,17 +24,18 @@
 **
 **********************************************************************/
 
+
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionsnapintersectionmanual.h"
 
+#include "rs_actionsnapintersectionmanual.h"
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
-#include "rs_circle.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 /**
  * @param both Trim both entities.
@@ -45,8 +46,8 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 	:RS_PreviewActionInterface("Trim Entity",
 							   container, graphicView)
 	,entity1(nullptr)
-	,entity2(nullptr)
-	,coord(new RS_Vector{})
+    ,entity2(nullptr)
+    ,coord(std::make_unique<RS_Vector>())
 {
 }
 
@@ -98,7 +99,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent begin");
 
     RS_Entity* se = catchEntity(e);
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
 
     switch (getStatus()) {
     case ChooseEntity1:
@@ -145,7 +146,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+        RS_Vector mouse = graphicView->toGraph(e->position());
         RS_Entity* se = catchEntity(e);
 
         switch (getStatus()) {

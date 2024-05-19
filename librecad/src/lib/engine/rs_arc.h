@@ -27,6 +27,8 @@
 #ifndef RS_ARC_H
 #define RS_ARC_H
 
+#include <iosfwd>
+
 #include "rs_atomicentity.h"
 class LC_Quadratic;
 
@@ -36,7 +38,6 @@ class LC_Quadratic;
  */
 struct RS_ArcData {
 	RS_ArcData() = default;
-	~RS_ArcData() = default;
 
 	RS_ArcData(const RS_Vector& center,
 			   double radius,
@@ -48,10 +49,10 @@ struct RS_ArcData {
 	bool isValid() const;
 
 	RS_Vector center;
-	double radius;
-	double angle1;
-	double angle2;
-	bool reversed;
+    double radius = 0.;
+    double angle1 = 0.;
+    double angle2 = 0.;
+    bool reversed = false;
 };
 
 std::ostream& operator << (std::ostream& os, const RS_ArcData& ad);
@@ -88,7 +89,7 @@ public:
 	RS_VectorSolutions getRefPoints() const override;
 
     /** Sets new arc parameters. **/
-    void setData(RS_ArcData d) {
+    void setData(const RS_ArcData& d) {
         data = d;
     }
 
@@ -212,12 +213,23 @@ public:
 	RS_Vector getNearestOrthTan(const RS_Vector& coord,
                     const RS_Line& normal,
 					bool onEntity = false) const override;
+    RS_Vector dualLineTangentPoint(const RS_Vector& line) const override;
 	RS_VectorSolutions getTangentPoint(const RS_Vector& point) const override;//find the tangential points seeing from given point
 	RS_Vector getTangentDirection(const RS_Vector& point) const override;
 	void move(const RS_Vector& offset) override;
 	void rotate(const RS_Vector& center, const double& angle) override;
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
+    /**
+     * @description:    Implementation of the Shear/Skew the entity
+     *                  The shear transform is
+     *                  1  k  0
+     *                  0  1  0
+     *                        1
+     * @author          Dongxu Li
+     * @param[in] double - k the skew/shear parameter
+     */
+    RS_Entity& shear(double k) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
 	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 	void stretch(const RS_Vector& firstCorner,
@@ -231,7 +243,7 @@ public:
 
     friend std::ostream& operator << (std::ostream& os, const RS_Arc& a);
 
-	virtual void calculateBorders() override;
+	 void calculateBorders() override;
     /** return the equation of the entity
 for quadratic,
 
@@ -241,17 +253,17 @@ m0 x^2 + m1 xy + m2 y^2 + m3 x + m4 y + m5 =0
 for linear:
 m0 x + m1 y + m2 =0
 **/
-	virtual LC_Quadratic getQuadratic() const override;
+	 LC_Quadratic getQuadratic() const override;
     /**
      * @brief areaLineIntegral, line integral for contour area calculation by Green's Theorem
      * Contour Area =\oint x dy
      * @return line integral \oint x dy along the entity
      * \oint x dy = c_x r \sin t + \frac{1}{4}r^2\sin 2t +  \frac{1}{2}r^2 t
      */
-	virtual double areaLineIntegral() const override;
+	 double areaLineIntegral() const override;
 
 protected:
-	RS_ArcData data;
+    RS_ArcData data{};
 };
 
 #endif

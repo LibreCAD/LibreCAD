@@ -81,7 +81,7 @@ unix {
 
     isEmpty( BOOST_DIR ) {
 
-        BOOST_DIR = $$findBoostDirIn( /usr /usr/local /usr/pkg /opt/local )
+        BOOST_DIR = $$findBoostDirIn( /usr /usr/local /usr/pkg /opt/local /opt/homebrew /opt/homebrew/Cellar)
 
         isEmpty( BOOST_DIR ) {
             error( Boost installation not found. )
@@ -133,10 +133,12 @@ unix {
 }
 
 win32 {
-    exists( "$$(BOOST_DIR)" ) {			# Is it set in the environment?
-        BOOST_DIR = "$$(BOOST_DIR)"		# Yes, use
-    } else:isEmpty( BOOST_DIR ) {		# Is it set in custom.pro?
-        BOOST_DIR = "/boost/boost_1_53_0"	# No, hardcode
+	!equals($$(BOOST_DIR), ""):exists( "$$(BOOST_DIR)" ) {
+		# BOOST_DIR environment variable is set, use it:
+		BOOST_DIR = "$$(BOOST_DIR)"
+	} else:isEmpty( BOOST_DIR ) {
+		# BOOST_DIR QMake variable is not set at all (in custom.pro), use a hardcoded default:
+		BOOST_DIR = "/boost/boost_1_53_0"
     }
 
     !exists( "$${BOOST_DIR}/boost/version.hpp" ) {

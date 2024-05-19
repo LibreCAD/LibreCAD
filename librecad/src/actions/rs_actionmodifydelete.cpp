@@ -24,13 +24,14 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifydelete.h"
 
 #include <QAction>
+
+#include "rs_actionmodifydelete.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_debug.h"
 
 
 

@@ -29,15 +29,18 @@
 #define RS_ACTIONINTERFACE_H
 
 #include <QObject>
+#include <QtCore/QtContainerFwd>
 
 #include "rs_snapper.h"
+#include "lc_actionoptionswidget.h"
 
-class QKeyEvent;
 class RS_CommandEvent;
 class RS_CoordinateEvent;
 class RS_Graphic;
 class RS_Document;
 class QAction;
+class QKeyEvent;
+class QString;
 
 /**
  * This is the interface that must be implemented for all
@@ -53,8 +56,9 @@ class RS_ActionInterface : public QObject, public RS_Snapper {
 public:
     RS_ActionInterface(const char* name,
                        RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-	virtual ~RS_ActionInterface() = default;
+                       RS_GraphicView& graphicView,
+                       RS2::ActionType actionType = RS2::ActionNone);
+	   virtual ~RS_ActionInterface();
 
     virtual RS2::ActionType rtti() const;
 
@@ -72,23 +76,25 @@ public:
     virtual void commandEvent(RS_CommandEvent*);
     virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
-    virtual int getStatus();
+    virtual int getStatus() const;
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
-    virtual bool isFinished();
+    virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
-    virtual void suspend();
-    virtual void resume();
-    virtual void hideOptions();
-    virtual void showOptions();
-	virtual void setActionType(RS2::ActionType actionType);
+    void suspend() override;
+    void resume() override;
+    void hideOptions() override;
+    void showOptions() override;
+    void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
-        QString command(const QString& cmd);
-        QString msgAvailableCommands();
+    QString command(const QString& cmd);
+    QString msgAvailableCommands();
+    // Accessor for drawing keys
+    int getGraphicVariableInt(const QString& key, int def) const;
 
 private:
     /**
@@ -100,7 +106,7 @@ private:
      * first corner (status 0), and selecting the second
      * corner (status 1).
      */
-    int status;
+    int status = 0;
 
 protected:
     /** Action name. Used internally for debugging */
@@ -110,18 +116,18 @@ protected:
      * This flag is set when the action has terminated and
      * can be deleted.
      */
-    bool finished;
+    bool finished = false;
 
     /**
      * Pointer to the graphic is this container is a graphic.
      * NULL otherwise
      */
-    RS_Graphic* graphic;
+    RS_Graphic *graphic = nullptr;
 
-        /**
+    /**
          * Pointer to the document (graphic or block) or NULL.
          */
-        RS_Document* document;
+    RS_Document *document = nullptr;
 
     /**
      * Pointer to the default mouse cursor for this action or NULL.
@@ -131,7 +137,7 @@ protected:
     /**
      * Predecessor of this action or NULL.
      */
-    RS_ActionInterface* predecessor;
+    RS_ActionInterface* predecessor = nullptr;
 
     /**
      * String prepended to the help text for currently available commands.
@@ -154,7 +160,13 @@ protected:
      */
     //static QString cmdNo;
     //static QString cmdNo2;
-    RS2::ActionType actionType;
+    RS2::ActionType actionType = RS2::ActionNone;
+
+    std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
+
+    virtual void createOptionsWidget();
+    void updateOptions();
+    void updateOptionsUI(int mode);
 };
 
 

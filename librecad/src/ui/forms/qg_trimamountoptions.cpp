@@ -45,10 +45,7 @@ QG_TrimAmountOptions::QG_TrimAmountOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_TrimAmountOptions::~QG_TrimAmountOptions()
-{
-	saveSettings();
-}
+QG_TrimAmountOptions::~QG_TrimAmountOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -101,6 +98,7 @@ void QG_TrimAmountOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_TrimAmountOptions::updateDist(const QString& d) {
     if (action) {
         action->setDistance(RS_Math::eval(d, 1.0));
+        saveSettings();
     }
 }
 
@@ -113,5 +111,6 @@ void QG_TrimAmountOptions::on_cbTotalLength_toggled(bool checked)
 {
 	if (action) {
 		action->setByTotal(checked);
-	}
+        saveSettings();
+    }
 }

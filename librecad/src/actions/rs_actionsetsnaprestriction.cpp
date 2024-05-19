@@ -25,7 +25,6 @@
 **********************************************************************/
 
 #include "rs_actionsetsnaprestriction.h"
-
 #include "rs_graphicview.h"
 
 

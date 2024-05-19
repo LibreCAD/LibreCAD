@@ -76,19 +76,19 @@ public:
 
 private:
     /** Closest bisector. */
-    RS_Line* bisector;
+    RS_Line* bisector = nullptr;
     /** First chosen entity */
-    RS_Line* line1;
+    RS_Line* line1 = nullptr;
     /** Second chosen entity */
-    RS_Line* line2;
+    RS_Line* line2 = nullptr;
     /** Length of the bisector. */
-    double length;
+    double length = 0.;
 	/** Number of bisectors to create. */
-	int number;
+    int number = 0;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	/** Last status before entering length or number. */
-	Status lastStatus;
+    Status lastStatus = SetLine1;
 };
 
 #endif

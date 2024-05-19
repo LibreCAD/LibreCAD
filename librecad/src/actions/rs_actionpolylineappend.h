@@ -37,10 +37,10 @@ class RS_Polyline;
  */
 class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {//public RS_PreviewActionInterface {
 	Q_OBJECT
-public:
-	/**
-	 * Action States.
-	 */
+//public:
+    // /**
+    //  * Action States.
+    //  */
 //	enum Status {
 //		SetStartpoint,   /**< Setting the startpoint.  */
 //		SetNextPoint	  /**< Setting the endpoint. */
@@ -83,8 +83,8 @@ private:
 	 * Polyline entity we're working on.
 	 */
 //	RS_Polyline* polyline;
-	RS_Polyline* originalPolyline;
-	bool prepend;
+    RS_Polyline* originalPolyline = nullptr;
+    bool prepend = false;
 	/**
 	 * last point.
 	 */

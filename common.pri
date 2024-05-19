@@ -25,6 +25,10 @@ win32 {
     COPY = cp
 }
 
+# use c++ only
+QMAKE_CC = g++
+QMAKE_CFLAGS = -std=c++17
+
 # Windows compiler settings
 win32 {
     QMAKE_CXXFLAGS += -U__STRICT_ANSI__
@@ -49,7 +53,7 @@ win32 {
 
     # The .NET 2003 compiler (at least) is touchy about its own headers ...
     win32-msvc2003 {
-       # Silence "unused formal parameter" warnings about unused `_Iosbase` 
+       # Silence "unused formal parameter" warnings about unused `_Iosbase`
        # in the header file `xloctime` (a Vc7 header after all!).
        QMAKE_CXXFLAGS += /wd4100
     }
@@ -69,16 +73,17 @@ QMAKE_CFLAGS_ISYSTEM = ""
 # svg support
 QT += svg
 
-greaterThan( QT_MAJOR_VERSION, 4) {
-	CONFIG += c++11
+greaterThan( QT_MAJOR_VERSION, 5) {
+    CONFIG += c++17
 }else{
     unix|macx|win32-g++ {
         # no such option for MSVC
-	QMAKE_CXXFLAGS += -std=c++11
-	QMAKE_CXXFLAGS_DEBUG += -std=c++11
+    QMAKE_CXXFLAGS += -std=c++17
+    QMAKE_CXXFLAGS_DEBUG += -std=c++17
     }
 }
 
+DEFINES += MUPARSER_STATIC
 # RVT July 12 2015, I believe we need these here
 #macx{
 #    QMAKE_CXXFLAGS_DEBUG += -mmacosx-version-min=10.8

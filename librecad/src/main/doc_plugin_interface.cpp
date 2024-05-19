@@ -24,36 +24,36 @@
 **
 **********************************************************************/
 
-#include "doc_plugin_interface.h"
 #include <QEventLoop>
 #include <QList>
 #include <QInputDialog>
 #include <QFileInfo>
-#include "rs_graphicview.h"
-#include "rs_actioninterface.h"
-#include "rs_eventhandler.h"
-#include "rs_actionselect.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
-#include "rs_line.h"
-#include "rs_point.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
-#include "rs_layer.h"
-#include "rs_image.h"
-#include "rs_block.h"
-#include "rs_insert.h"
-#include "rs_polyline.h"
-#include "rs_ellipse.h"
-#include "rs_polyline.h"
-#include "lc_splinepoints.h"
-#include "lc_undosection.h"
+
+#include "doc_plugin_interface.h"
+#include "intern/qc_actiongetent.h"
 #include "intern/qc_actiongetpoint.h"
 #include "intern/qc_actiongetselect.h"
-#include "intern/qc_actiongetent.h"
-#include "rs_math.h"
+#include "lc_splinepoints.h"
+#include "lc_undosection.h"
+#include "rs_actioninterface.h"
+#include "rs_arc.h"
+#include "rs_block.h"
+#include "rs_circle.h"
 #include "rs_debug.h"
-// #include <QDebug>
+#include "rs_ellipse.h"
+#include "rs_eventhandler.h"
+#include "rs_graphicview.h"
+#include "rs_image.h"
+#include "rs_insert.h"
+#include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_mtext.h"
+#include "rs_point.h"
+#include "rs_polyline.h"
+#include "rs_polyline.h"
+#include "rs_text.h"
+#include "rs_units.h"
 
 convLTW::convLTW(){
 //    QHash<int, QString> lType;
@@ -224,6 +224,10 @@ Plugin_Entity::Plugin_Entity(RS_EntityContainer* parent, enum DPI::ETYPE type){
 Plugin_Entity::~Plugin_Entity() {
     if(!hasContainer)
         delete entity;
+}
+
+RS2::EntityType Plugin_Entity::getEntityType(){
+    return entity->rtti();
 }
 
 void Plugin_Entity::getData(QHash<int, QVariant> *data){
@@ -702,10 +706,10 @@ void Plugin_Entity::updatePolylineData(QList<Plug_VertexData> *data){
 
 }
 
-void Plugin_Entity::move(QPointF offset){
+void Plugin_Entity::move(QPointF offset, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->move( RS_Vector(offset.x(), offset.y()) );
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->move( RS_Vector(offset.x(), offset.y()) );
@@ -714,12 +718,11 @@ void Plugin_Entity::move(QPointF offset){
         this->entity = ne;
 }
 
-void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, double angle)
-{
+void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp) {
 	RS_Entity *ne = entity->clone();
 	ne->move( RS_Vector(offset.x(), offset.y()) );
 	ne->rotate( RS_Vector(center.x(), center.y()) , angle);
-	bool ok = dpi->addToUndo(entity, ne);
+	bool ok = dpi->addToUndo(entity, ne, disp);
 	//if doc interface fails to handle for undo only modify original entity
 	if (!ok){
 		entity->move( RS_Vector(offset.x(), offset.y()) );
@@ -729,10 +732,10 @@ void Plugin_Entity::moveRotate(QPointF const& offset, QPointF const& center, dou
 		this->entity = ne;
 }
 
-void Plugin_Entity::rotate(QPointF center, double angle){
+void Plugin_Entity::rotate(QPointF center, double angle, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->rotate( RS_Vector(center.x(), center.y()) , angle);
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->rotate( RS_Vector(center.x(), center.y()) , angle);
@@ -741,11 +744,11 @@ void Plugin_Entity::rotate(QPointF center, double angle){
         this->entity = ne;
 }
 
-void Plugin_Entity::scale(QPointF center, QPointF factor){
+void Plugin_Entity::scale(QPointF center, QPointF factor, DPI::Disposition disp) {
     RS_Entity *ne = entity->clone();
     ne->scale( RS_Vector(center.x(), center.y()),
                 RS_Vector(factor.x(), factor.y()) );
-    bool ok = dpi->addToUndo(entity, ne);
+    bool ok = dpi->addToUndo(entity, ne, disp);
     //if doc interface fails to handle for undo only modify original entity
     if (!ok){
         entity->scale( RS_Vector(center.x(), center.y()),
@@ -767,14 +770,17 @@ doc(d)
 {
 }
 
-bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified){
+bool Doc_plugin_interface::addToUndo(RS_Entity* current, RS_Entity* modified,
+				     DPI::Disposition how) {
     if (doc) {
         doc->addEntity(modified);
         LC_UndoSection undo(doc);
         if (current->isSelected())
             current->setSelected(false);
-        current->changeUndoState();
-        undo.addUndoable(current);
+	if (how == DPI::DELETE_ORIGINAL) {
+	    current->changeUndoState();
+	    undo.addUndoable(current);
+	}
         undo.addUndoable(modified);
         return true;
     } else
@@ -1019,7 +1025,7 @@ QString Doc_plugin_interface::addBlockfromFromdisk(QString fullName){
         RS_Graphic g;
         if (!g.open(fi.absoluteFilePath(), RS2::FormatUnknown)) {
             RS_DEBUG->print(RS_Debug::D_WARNING,
-                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s");
+                            "Doc_plugin_interface::addBlockfromFromdisk: Cannot open file: %s", fullName.toStdString().c_str());
             delete b;
 			return nullptr;
         }
@@ -1252,6 +1258,49 @@ bool Doc_plugin_interface::getSelect(QList<Plug_Entity *> *sel, const QString& m
 
 }
 
+bool Doc_plugin_interface::getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message){
+    bool status = false;
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+    if(type==DPI::LINE){
+        typeToSelect = RS2::EntityType::EntityLine;
+    } else if(type==DPI::POINT){
+        typeToSelect = RS2::EntityType::EntityPoint;
+    } else if (type==DPI::POLYLINE){
+        typeToSelect = RS2::EntityType::EntityPolyline;
+    } else {
+        //Unhandled case
+    }
+    
+    gView->setTypeToSelect(typeToSelect);
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(typeToSelect, *doc, *gView);
+
+
+    if (a) {
+        if (!(message.isEmpty()) )
+            a->setMessage(message);
+        gView->killAllActions();
+        gView->setCurrentAction(a);
+        QEventLoop ev;
+        while (!a->isCompleted())
+        {
+            ev.processEvents ();
+            if (!gView->getEventHandler()->hasAction()){
+                break;
+            }
+
+        }
+    }
+    //check if a are cancelled by the user issue #349
+    RS_EventHandler* eh = gView->getEventHandler();
+    if (eh && eh->isValid(a) ) {
+        a->getSelected(sel, this);
+        status = true;
+    }
+    gView->killAllActions();
+    gView->setTypeToSelect(RS2::EntityType::EntityUnknown);
+    return status;
+}
+
 bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visible){
     bool status = false;
 
@@ -1264,6 +1313,11 @@ bool Doc_plugin_interface::getAllEntities(QList<Plug_Entity *> *sel, bool visibl
     }
     status = true;
     return status;
+}
+
+void Doc_plugin_interface::unselectEntities() {
+    QC_ActionGetSelect* a = new QC_ActionGetSelect(*doc, *gView);
+    a->unselectEntities();
 }
 
 bool Doc_plugin_interface::getVariableInt(const QString& key, int *num){

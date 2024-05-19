@@ -23,21 +23,20 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondimlinear.h"
-#include "rs_dimlinear.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondimlinear.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"
-#include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_dimlinear.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 /**
  * Constructor.
@@ -52,7 +51,7 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 									   bool _fixedAngle, RS2::ActionType /*type*/)
         :RS_ActionDimension("Draw linear dimensions",
                     container, graphicView)
-		,edata(new RS_DimLinearData(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.))
+        , edata(std::make_unique<RS_DimLinearData>(RS_Vector(0., 0.), RS_Vector(0., 0.), angle, 0.))
 		,fixedAngle(_fixedAngle)
 		,lastStatus(SetExtPoint1)
 {
@@ -62,20 +61,15 @@ RS_ActionDimLinear::RS_ActionDimLinear(RS_EntityContainer& container,
 }
 
 
-
 RS_ActionDimLinear::~RS_ActionDimLinear() = default;
 
 void RS_ActionDimLinear::reset() {
     RS_ActionDimension::reset();
 
-	edata.reset(new RS_DimLinearData(RS_Vector(false),
-                             RS_Vector(false),
-							 (fixedAngle ? edata->angle : 0.0), 0.0)
-				);
+    *edata = {{}, {}, fixedAngle ? edata->angle : 0.0, 0.0};
 
 	RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
-
 
 
 void RS_ActionDimLinear::trigger() {
@@ -100,7 +94,7 @@ void RS_ActionDimLinear::trigger() {
     graphicView->moveRelativeZero(rz);
 
     RS_DEBUG->print("RS_ActionDimLinear::trigger():"
-                    " dim added: %d", dim->getId());
+                    " dim added: %lu", dim->getId());
 }
 
 

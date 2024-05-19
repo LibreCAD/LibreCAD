@@ -26,14 +26,14 @@
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actionselectintersected.h"
 
+#include "rs_actionselectintersected.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_selection.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_selection.h"
 
 struct RS_ActionSelectIntersected::Points {
 	RS_Vector v1;
@@ -50,8 +50,8 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
     RS_GraphicView& graphicView,
     bool select)
         : RS_PreviewActionInterface("Select Intersected",
-							container, graphicView)
-		, pPoints(new Points{})
+                            container, graphicView)
+    , pPoints(std::make_unique<Points>())
 		,select(select)
 {
 	actionType=RS2::ActionSelectIntersected;
@@ -59,9 +59,10 @@ RS_ActionSelectIntersected::RS_ActionSelectIntersected(
 
 RS_ActionSelectIntersected::~RS_ActionSelectIntersected() = default;
 
+
 void RS_ActionSelectIntersected::init(int status) {
     RS_PreviewActionInterface::init(status);
-	pPoints.reset(new Points{});
+    pPoints = std::make_unique<Points>();
     snapMode.clear();
     snapMode.restriction = RS2::RestrictNothing;
 }

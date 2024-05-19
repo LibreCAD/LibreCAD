@@ -27,7 +27,7 @@
 #include <set>
 #include <iostream>
 #include <QString>
-#include <QRegExp>
+#include <QRegularExpression>
 #include "rs_debug.h"
 #include "rs_blocklist.h"
 #include "rs_block.h"
@@ -173,8 +173,15 @@ void RS_BlockList::remove(RS_Block* block) {
 bool RS_BlockList::rename(RS_Block* block, const QString& name) {
 	if (block) {
 		if (!find(name)) {
+			QString oldName = block->getName();
 			block->setName(name);
 			setModified(true);
+
+			// when the renamed block is nested within other block, we need to rename its inserts as well
+			for(RS_Block* b: blocks) {
+				b->renameInserts(oldName, name);
+			}
+
 			return true;
 		}
 	}
@@ -234,8 +241,8 @@ QString RS_BlockList::newName(const QString& suggestion) {
 		return suggestion;
 
 	QString name=suggestion;
-	QRegExp const rx(R"(-\d+$)");
-	int index=name.lastIndexOf(rx);
+    QRegularExpression const rx(R"(-\d+$)");
+    int index=rx.match(name).lastCapturedIndex();
 	int i=-1;
 	if(index>0){
 		i=name.mid(index+1).toInt();

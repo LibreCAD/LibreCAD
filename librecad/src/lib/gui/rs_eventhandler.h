@@ -28,8 +28,10 @@
 #ifndef RS_EVENTHANDLER_H
 #define RS_EVENTHANDLER_H
 
+#include <memory>
 #include <QObject>
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_ActionInterface;
@@ -94,8 +96,8 @@ public:
 private:
 
 	QAction* q_action{nullptr};
-	RS_ActionInterface* defaultAction{nullptr};
-	QList<RS_ActionInterface*> currentActions;
+    std::shared_ptr<RS_ActionInterface> defaultAction{nullptr};
+    QList<std::shared_ptr<RS_ActionInterface>> currentActions;
 	bool coordinateInputEnabled{true};
     RS_Vector relative_zero;
 

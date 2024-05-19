@@ -63,8 +63,8 @@ void QG_DlgEllipse::languageChange()
 
 void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     ellipse = &e;
-    //pen = ellipse->getPen();
-    wPen->setPen(ellipse->getPen(false), true, false, "Pen");
+
+
     RS_Graphic* graphic = ellipse->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -73,6 +73,8 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(ellipse, lay, "Pen");
     QString s;
     s.setNum(ellipse->getCenter().x);
     leCenterX->setText(s);
@@ -89,6 +91,7 @@ void QG_DlgEllipse::setEllipse(RS_Ellipse& e) {
     s.setNum(RS_Math::rad2deg(ellipse->getAngle2()));
     leAngle2->setText(s);
     cbReversed->setChecked(ellipse->isReversed());
+    lId->setText(QString("ID: %1").arg(ellipse->getId()));
 }
 
 void QG_DlgEllipse::updateEllipse() {

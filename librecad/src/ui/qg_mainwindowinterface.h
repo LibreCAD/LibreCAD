@@ -29,10 +29,8 @@
 
 #include <QMainWindow>
 
-#include "rs_document.h"
 #include "rs_mainwindowinterface.h"
 
-#include "qg_graphicview.h"
 #include "qg_actionhandler.h"
 
 

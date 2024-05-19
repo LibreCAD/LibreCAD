@@ -26,7 +26,6 @@
 #include "qg_splineoptions.h"
 
 #include "rs_actiondrawspline.h"
-#include "lc_actiondrawsplinepoints.h"
 #include "rs_settings.h"
 #include "ui_qg_splineoptions.h"
 #include "rs_debug.h"
@@ -46,10 +45,7 @@ QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_SplineOptions::~QG_SplineOptions()
-{
-	saveSettings();
-}
+QG_SplineOptions::~QG_SplineOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -116,7 +112,10 @@ void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update)
 }
 
 void QG_SplineOptions::setClosed(bool c) {
-    if (action) action->setClosed(c);
+    if (action) {
+        action->setClosed(c);
+        saveSettings();
+    }
 }
 
 void QG_SplineOptions::undo() {
@@ -126,5 +125,6 @@ void QG_SplineOptions::undo() {
 void QG_SplineOptions::setDegree(const QString& deg) {
     if (action) {
         action->setDegree(deg.toInt());
+        saveSettings();
     }
 }

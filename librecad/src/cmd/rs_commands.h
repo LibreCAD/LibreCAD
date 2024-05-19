@@ -30,6 +30,9 @@
 #define RS_COMMANDS_H
 
 #include <map>
+
+#include <QtCore/qcontainerfwd.h>
+
 #include "rs.h"
 
 #define RS_COMMANDS RS_Commands::instance()
@@ -50,9 +53,9 @@ public:
      */
     static RS_Commands* instance();
 
-    QStringList complete(const QString& cmd);
-    RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true);
-    RS2::ActionType keycodeToAction(const QString& code);
+    QStringList complete(const QString& cmd) const;
+    RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true) const;
+    RS2::ActionType keycodeToAction(const QString& code) const;
 
     static QString command(const QString& cmd);
 
@@ -66,21 +69,14 @@ public:
     static const char *FnPrefix;
     static const char *AltPrefix;
     static const char *MetaPrefix;
-    /**
-      * @brief extractCliCal, filter cli calculator math expression
-      * @param cmd, cli string
-      * @return math expression for RS_Math:eval();
-      */
-    static QString filterCliCal(const QString& cmd);
-
-protected:
-    static RS_Commands* uniqueInstance;
 
 private:
     RS_Commands() ;
     ~RS_Commands()=delete;
-    RS_Commands(RS_Commands& ) = delete;
-    RS_Commands& operator = ( RS_Commands& ) = delete;
+    RS_Commands(const RS_Commands &) = delete;
+    RS_Commands &operator=(const RS_Commands &) = delete;
+    RS_Commands(RS_Commands &&) = delete;
+    RS_Commands &operator=(RS_Commands &&) = delete;
 
     std::map<QString, RS2::ActionType> mainCommands;
     std::map<QString, RS2::ActionType> shortCommands;
@@ -89,4 +85,3 @@ private:
 };
 
 #endif
-

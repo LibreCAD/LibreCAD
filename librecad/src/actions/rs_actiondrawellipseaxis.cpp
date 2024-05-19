@@ -23,20 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawellipseaxis.h"
 
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
+#include "rs_actiondrawellipseaxis.h"
 #include "rs_commandevent.h"
-#include "rs_ellipse.h"
-#include "rs_line.h"
 #include "rs_coordinateevent.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
+#include "rs_ellipse.h"
+#include "rs_graphicview.h"
+#include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawEllipseAxis::Points {
 	/** Center of ellipse */
@@ -44,13 +43,13 @@ struct RS_ActionDrawEllipseAxis::Points {
 	/** Endpoint of major axis */
 	RS_Vector m_vMajorP;
 	/** Ratio major / minor */
-	double ratio;
+    double ratio = 1.;
 	/** Start angle */
-	double angle1;
+    double angle1 = 0.;
 	/** End angle */
-	double angle2;
+    double angle2 = 0.;
 	/** Do we produce an arc (true) or full ellipse (false) */
-	bool isArc;
+    bool isArc = false;
 };
 
 /**
@@ -64,10 +63,12 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 		RS_GraphicView& graphicView,
 		bool isArc)
 	:RS_PreviewActionInterface("Draw ellipse with axis",
-							   container, graphicView)
-	,pPoints(new Points{{}, {}, 0.5, 0., isArc?2.*M_PI:0., isArc})
+                               container, graphicView)
+    ,pPoints(std::make_unique<Points>())
 {
-	actionType=isArc?RS2::ActionDrawEllipseArcAxis:RS2::ActionDrawEllipseAxis;
+    pPoints->isArc = isArc;
+    pPoints->angle2 = isArc ? 2. * M_PI : 0.;
+    actionType = isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis;
 }
 
 RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() = default;
@@ -125,7 +126,7 @@ void RS_ActionDrawEllipseAxis::trigger() {
     setStatus(SetCenter);
 
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::trigger():"
-                    " entity added: %d", ellipse->getId());
+                    " entity added: %lu", ellipse->getId());
 }
 
 
@@ -340,14 +341,6 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent* e) {
         break;
     }
 }
-
-
-
-QStringList RS_ActionDrawEllipseAxis::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints() {

@@ -67,6 +67,7 @@ bool RS_Information::isDimension(RS2::EntityType type) {
 	case RS2::EntityDimRadial:
 	case RS2::EntityDimDiametric:
 	case RS2::EntityDimAngular:
+	case RS2::EntityDimArc:
 		return true;
 	default:
 		return false;

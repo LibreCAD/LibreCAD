@@ -28,7 +28,9 @@
 #ifndef RS_ENTITYCONTAINER_H
 #define RS_ENTITYCONTAINER_H
 
+#include <memory>
 #include <vector>
+#include <QList>
 #include "rs_entity.h"
 
 /**
@@ -44,6 +46,7 @@ public:
 
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
+	
 	~RS_EntityContainer() override;
 
 	RS_Entity* clone() const override;
@@ -79,9 +82,12 @@ public:
 	bool setSelected(bool select=true) override;
 	bool toggleSelected() override;
 
-	virtual void selectWindow(RS_Vector v1, RS_Vector v2,
-				bool select=true, bool cross=false);
+    void setHighlighted(bool on) override;
 
+	/*virtual void selectWindow(RS_Vector v1, RS_Vector v2,
+				bool select=true, bool cross=false);*/
+	virtual void selectWindow(enum RS2::EntityType typeToSelect, RS_Vector v1, RS_Vector v2,
+				bool select=true, bool cross=false);
     virtual void addEntity(RS_Entity* entity);
     virtual void appendEntity(RS_Entity* entity);
     virtual void prependEntity(RS_Entity* entity);
@@ -96,10 +102,10 @@ public:
 	//!
 	void addRectangle(RS_Vector const& v0, RS_Vector const& v1);
 
-    virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone);
-    virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone);
+    virtual RS_Entity* firstEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* lastEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* nextEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
+    virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* entityAt(int index);
 	virtual void setEntityAt(int index,RS_Entity* en);
 //RLZ unused	virtual int entityAt();
@@ -119,7 +125,7 @@ public:
 	* @param deep count sub-containers, if true
 	* @param types if is not empty, only counts by types listed
 	*/
-	virtual unsigned countSelected(bool deep=true, std::initializer_list<RS2::EntityType> const& types = {});
+    virtual unsigned countSelected(bool deep=true, QList<RS2::EntityType> const& types = {});
     virtual double totalSelectedLength();
 
     /**
@@ -149,9 +155,9 @@ public:
 								RS2::ResolveLevel level=RS2::ResolveAll) const;
 
 	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-            bool onEntity = true,
-						double* dist = nullptr,
-			RS_Entity** entity=nullptr)const override;
+                                      bool onEntity = true,
+                                      double* dist = nullptr,
+                                      RS_Entity** entity=nullptr)const override;
 
 	RS_Vector getNearestCenter(const RS_Vector& coord,
 									   double* dist = nullptr)const override;
@@ -186,6 +192,7 @@ public:
 	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
 	void scale(const RS_Vector& center, const RS_Vector& factor) override;
 	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2a) override;
+    RS_Entity& shear(double k) override;
 
 	void stretch(const RS_Vector& firstCorner,
                          const RS_Vector& secondCorner,
@@ -207,7 +214,7 @@ public:
      * @return line integral \oint x dy along the entity
      * returns absolute value
      */
-    virtual double areaLineIntegral() const override;
+     double areaLineIntegral() const override;
     /**
 	 * @brief ignoreForModification ignore this entity for entity catch for certain actions
      * like catching circles to create tangent circles
@@ -233,18 +240,25 @@ public:
     const QList<RS_Entity*>& getEntityList();
 
 protected:
+    /**
+     * @brief getLoops for hatch, split closed loops into single simple loops. All returned containers are owned by
+     * the returned object.
+     * @return std::vector<std::unique_ptr<RS_EntityContainer>> - each container contains edge entities of a single
+     * closed loop. Each loop is assumed to be simply closed, and loops never cross each other.
+     */
+    virtual std::vector<std::unique_ptr<RS_EntityContainer>> getLoops() const;
 
     /** entities in the container */
     QList<RS_Entity *> entities;
 
     /** sub container used only temporarily for iteration. */
-    RS_EntityContainer* subContainer;
+    mutable RS_EntityContainer* subContainer = nullptr;
 
     /**
      * Automatically update the borders of the container when entities
      * are added or removed.
      */
-    static bool autoUpdateBorders;
+    bool autoUpdateBorders = true;
 
 private:
 	/**
@@ -252,8 +266,8 @@ private:
 	 * @return true when entity of this container won't be considered for snapping points
 	 */
 	bool ignoredSnap() const;
-    int entIdx;
-    bool autoDelete;
+    mutable int entIdx = 0;
+    bool autoDelete = false;
 };
 
 #endif

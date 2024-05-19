@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifydeletefree.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifydeletefree.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_polyline.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
+#include "rs_polyline.h"
 
 struct RS_ActionModifyDeleteFree::Points {
 	RS_Vector v1;
@@ -44,7 +44,7 @@ RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
 					container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	init();
 }
@@ -74,8 +74,8 @@ void RS_ActionModifyDeleteFree::trigger() {
                     graphicView->deleteEntity((RS_Entity*)polyline);
 
                     // splits up the polyline in the container:
-                    RS_Polyline* pl1;
-                    RS_Polyline* pl2;
+                    RS_Polyline* pl1 = nullptr;
+                    RS_Polyline* pl2 = nullptr;
                     RS_Modification m(*container);
                     m.splitPolyline(*polyline,
 									*e1, pPoints->v1,

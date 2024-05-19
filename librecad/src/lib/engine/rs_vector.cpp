@@ -24,13 +24,15 @@
 **
 **********************************************************************/
 
-#include <iostream>
-#include <cmath>
 #include <algorithm>
-#include "rs_vector.h"
-#include "rs_debug.h"
+#include <cmath>
+#include <iostream>
+#include <QPointF>
+
+#include "rs.h"
 #include "rs_math.h"
 #include "lc_rect.h"
+#include "rs_vector.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h" /* remainder() */
@@ -51,11 +53,15 @@ RS_Vector::RS_Vector(double vx, double vy, double vz):
  * Constructor for a unit vector with given angle
  */
 RS_Vector::RS_Vector(double angle):
-	x(cos(angle))
-  ,y(sin(angle))
-  ,valid(true)
+    x(std::cos(angle))
+    ,y(std::sin(angle))
+    ,valid(true)
 {
 }
+
+RS_Vector::RS_Vector(const QPointF &point):
+    RS_Vector{point.x(), point.y()}
+{}
 
 /**
  * Constructor for a point with given valid flag.
@@ -77,8 +83,8 @@ RS_Vector::operator bool() const
  * Sets to a unit vector by the direction angle
  */
 void RS_Vector::set(double angle) {
-    x = cos(angle);
-    y = sin(angle);
+    x = std::cos(angle);
+    y = std::sin(angle);
     z = 0.;
     valid = true;
 }
@@ -97,21 +103,30 @@ void RS_Vector::set(double vx, double vy, double vz) {
  * Sets a new position for the vector in polar coordinates.
  */
 void RS_Vector::setPolar(double radius, double angle) {
-    x = radius * cos(angle);
-    y = radius * sin(angle);
+    x = radius * std::cos(angle);
+    y = radius * std::sin(angle);
     z = 0.0;
     valid = true;
 }
 
 RS_Vector RS_Vector::polar(double rho, double theta){
-	return {rho*cos(theta), rho*sin(theta), 0.};
+    return {rho * std::cos(theta), rho * std::sin(theta), 0.};
+}
+/**
+ * Returns vector that defines point located in specified distance and angle from current
+ * @param distance distance to target point
+ * @param angle angle from target point from this one
+ * @return resulting point
+ */
+RS_Vector RS_Vector::relative(double distance, double angle) const{
+    return {x + distance * std::cos(angle), y +distance * std::sin(angle), 0.};
 }
 
 /**
  * @return The angle from zero to this vector (in rad).
  */
 double RS_Vector::angle() const {
-	return RS_Math::correctAngle(atan2(y,x));
+    return RS_Math::correctAngle(std::atan2(y,x));
 }
 
 /**
@@ -129,8 +144,10 @@ double RS_Vector::angleTo(const RS_Vector& v) const {
 double RS_Vector::angleBetween(const RS_Vector& v1, const RS_Vector& v2) const {
 	if (!valid || !v1.valid || !v2.valid) return 0.0;
 	RS_Vector const vStart(v1 - (*this));
-	RS_Vector const vEnd(v2 - (*this));
-	return RS_Math::correctAngle( atan2( vStart.x*vEnd.y-vStart.y*vEnd.x, vStart.x*vEnd.x+vStart.y*vEnd.y));
+    RS_Vector const vEnd(v2 - (*this));
+        return RS_Math::correctAngle(
+            std::atan2(vStart.x * vEnd.y - vStart.y * vEnd.x,
+                       vStart.x * vEnd.x + vStart.y * vEnd.y));
 }
 
 /**
@@ -140,8 +157,8 @@ double RS_Vector::magnitude() const {
     double ret(0.0);
     // Note that the z coordinate is also needed for 2d
     //   (due to definition of crossP())
-	if (valid)
-		ret = hypot(hypot(x, y), z);
+    if (valid)
+        ret = std::hypot(std::hypot(x, y), z);
 
     return ret;
 }
@@ -168,11 +185,33 @@ double RS_Vector::squaredTo(const RS_Vector& v1) const
     return RS_MAXDOUBLE;
 }
 
+
+RS_Vector RS_Vector::normalized() const
+{
+    if (valid) {
+        double length = magnitude();
+        if (length > RS_TOLERANCE)
+            return (*this) * (1. / length);
+    }
+    return *this;
+}
+
+
+RS_Vector& RS_Vector::normalize()
+{
+    if (valid) {
+        double length = magnitude();
+        if (length > RS_TOLERANCE)
+            *this *= 1./length;
+    }
+    return *this;
+}
+
 /**
  *
  */
 RS_Vector RS_Vector::lerp(const RS_Vector& v, double t) const {
-	return {x+(v.x-x)*t, y+(v.y-y)*t};
+    return {x + (v.x - x) * t, y + (v.y - y) * t};
 }
 
 /**
@@ -183,7 +222,7 @@ double RS_Vector::distanceTo(const RS_Vector& v) const {
         return RS_MAXDOUBLE;
     }
     else {
-        return (*this-v).magnitude();
+        return (*this - v).magnitude();
     }
 }
 
@@ -201,24 +240,25 @@ bool RS_Vector::isInWindow(const RS_Vector& firstCorner,
  * of ordered vectors
  */
 bool RS_Vector::isInWindowOrdered(const RS_Vector& vLow,
-								  const RS_Vector& vHigh) const {
-	if(!valid) return false;
-	return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
+                                  const RS_Vector& vHigh) const {
+    if(!valid)
+        return false;
+    return (x>=vLow.x && x<=vHigh.x && y>=vLow.y && y<=vHigh.y);
 }
 
 /**
  * move to the closest integer point
  */
 RS_Vector RS_Vector::toInteger() {
-	x = rint(x);
-	y = rint(y);
+    x = std::rint(x);
+    y = std::rint(y);
     return *this;
 }
 
 /**
  * Moves this vector by the given offset. Equal to the operator +=.
  */
-RS_Vector RS_Vector::move(const RS_Vector& offset) {
+RS_Vector& RS_Vector::move(const RS_Vector& offset) {
     *this+=offset;
     return *this;
 }
@@ -226,7 +266,7 @@ RS_Vector RS_Vector::move(const RS_Vector& offset) {
 /**
  * Rotates this vector around 0/0 by the given angle.
  */
-RS_Vector RS_Vector::rotate(double ang) {
+RS_Vector& RS_Vector::rotate(double ang) {
 	rotate(RS_Vector{ang});
     return *this;
 }
@@ -236,7 +276,7 @@ RS_Vector RS_Vector::rotate(double ang) {
  * if the vector is a unit, then, it's the same as rotating around
  * 0/0 by the angle of the vector
  */
-RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& angleVector) {
 	double x0 = x * angleVector.x - y * angleVector.y;
 	y = x * angleVector.y + y * angleVector.x;
 	x = x0;
@@ -247,11 +287,11 @@ RS_Vector RS_Vector::rotate(const RS_Vector& angleVector) {
 /**
  * Rotates this vector around the given center by the given angle.
  */
-RS_Vector RS_Vector::rotate(const RS_Vector& center, double ang) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& center, double ang) {
     *this = center + (*this-center).rotate(ang);
     return *this;
 }
-RS_Vector RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
+RS_Vector& RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVector) {
     *this = center + (*this-center).rotate(angleVector);
     return *this;
 }
@@ -259,7 +299,7 @@ RS_Vector RS_Vector::rotate(const RS_Vector& center, const RS_Vector& angleVecto
 /**
  * Scales this vector by the given factors with 0/0 as center.
  */
-RS_Vector RS_Vector::scale(double factor) {
+RS_Vector& RS_Vector::scale(double factor) {
     x *= factor;
     y *= factor;
     return *this;
@@ -268,20 +308,20 @@ RS_Vector RS_Vector::scale(double factor) {
 /**
  * Scales this vector by the given factors with 0/0 as center.
  */
-RS_Vector RS_Vector::scale(const RS_Vector& factor) {
+RS_Vector& RS_Vector::scale(const RS_Vector& factor) {
     x *= factor.x;
     y *= factor.y;
     return *this;
 }
 
 RS_Vector RS_Vector::scale(const RS_Vector& factor) const{
-	return {x*factor.x, y*factor.y};
+    return {x*factor.x, y*factor.y};
 }
 
 /**
  * Scales this vector by the given factors with the given center.
  */
-RS_Vector RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
+RS_Vector& RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
     *this = center + (*this-center).scale(factor);
     return *this;
 }
@@ -291,17 +331,24 @@ RS_Vector RS_Vector::scale(const RS_Vector& center, const RS_Vector& factor) {
 /**
  * Mirrors this vector at the given axis, defined by two points on axis.
  */
-RS_Vector RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
+RS_Vector& RS_Vector::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
 
     RS_Vector direction(axisPoint2-axisPoint1);
     double a= direction.squared();
-    RS_Vector ret(false);
+    static RS_Vector ret(false);
     if(a<RS_TOLERANCE2) {
+        ret = RS_Vector{false};
         return ret;
     }
     ret= axisPoint1 + direction* dotP(*this - axisPoint1,direction)/a; //projection point
     *this = ret + ret - *this;
 
+    return *this;
+}
+
+RS_Vector& RS_Vector::shear(double k)
+{
+    x += k * y;
     return *this;
 }
 
@@ -544,9 +591,8 @@ RS_VectorSolutions::RS_VectorSolutions():
 {
 }
 
-RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
-	vector( l.begin(), l.end())
-  ,tangent(false)
+RS_VectorSolutions::RS_VectorSolutions(std::vector<RS_Vector> vectors):
+    vector(std::move(vectors))
 {
 }
 
@@ -554,14 +600,12 @@ RS_VectorSolutions::RS_VectorSolutions(const std::vector<RS_Vector>& l):
  * Constructor for num solutions.
  */
 RS_VectorSolutions::RS_VectorSolutions(int num):
-	vector(num, RS_Vector(false))
-  ,tangent(false)
+    vector(num, RS_Vector(false))
 {
 }
 
-RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> const& l):
-	vector(l)
-  ,tangent(false)
+RS_VectorSolutions::RS_VectorSolutions(std::initializer_list<RS_Vector> list):
+    vector(list)
 {
 }
 
@@ -598,6 +642,12 @@ size_t RS_VectorSolutions::size() const
 {
 	return vector.size();
 }
+
+bool RS_VectorSolutions::empty() const
+{
+    return vector.empty();
+}
+
 /**
  * Deletes vector array and resets everything.
  */
@@ -626,10 +676,7 @@ size_t RS_VectorSolutions::getNumber() const {
  * @retval false There's no valid solution.
  */
 bool RS_VectorSolutions::hasValid() const {
-	for(const RS_Vector& v: vector)
-		if (v.valid)  return true;
-
-    return false;
+    return std::any_of(vector.cbegin(), vector.cend(), [](const RS_Vector& point) {return bool(point); });
 }
 
 void RS_VectorSolutions::resize(size_t n){
@@ -640,14 +687,24 @@ const std::vector<RS_Vector>& RS_VectorSolutions::getVector() const {
     return vector;
 }
 
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::cbegin() const
+{
+    return vector.cbegin();
+}
+
+std::vector<RS_Vector>::const_iterator RS_VectorSolutions::cend() const
+{
+    return vector.cend();
+}
+
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::begin() const
 {
-	return vector.begin();
+    return vector.cbegin();
 }
 
 std::vector<RS_Vector>::const_iterator RS_VectorSolutions::end() const
 {
-	return vector.end();
+    return vector.cend();
 }
 
 std::vector<RS_Vector>::iterator RS_VectorSolutions::begin()
@@ -801,7 +858,7 @@ RS_Vector RS_VectorSolutions::getClosest(const RS_Vector& coord,
         }
     }
 	if (dist) {
-        *dist = sqrt(minDist);
+        *dist = std::sqrt(minDist);
     }
 	if (index) {
         *index = pos;
@@ -829,7 +886,7 @@ double RS_VectorSolutions::getClosestDistance(const RS_Vector& coord,
 	}
 	);
 
-	return sqrt(ret);
+    return std::sqrt(ret);
 }
 
 /** switch x,y for all vectors */

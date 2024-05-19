@@ -45,10 +45,7 @@ QG_LineParallelOptions::QG_LineParallelOptions(QWidget* parent, Qt::WindowFlags 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineParallelOptions::~QG_LineParallelOptions()
-{
-	saveSettings();
-}
+QG_LineParallelOptions::~QG_LineParallelOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -94,11 +91,13 @@ void QG_LineParallelOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_LineParallelOptions::updateDist(const QString& d) {
     if (action) {
         action->setDistance(RS_Math::eval(d));
+        saveSettings();
     }
 }
 
 void QG_LineParallelOptions::updateNumber(int n) {
     if (action) {
         action->setNumber(n);
+        saveSettings();
     }
 }

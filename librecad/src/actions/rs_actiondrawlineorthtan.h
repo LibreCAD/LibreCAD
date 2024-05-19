@@ -57,11 +57,11 @@ public:
 private:
 	void clearLines();
     /** normal to tangent. */
-    RS_Line* normal; // the select normal line
+    RS_Line* normal = nullptr; // the select normal line
     /** tangent. */
-    RS_Line* tangent; //holds the tangent line for preview
+    RS_Line* tangent = nullptr; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
-    RS_Entity* circle;
+    RS_Entity* circle = nullptr;
 };
 
 #endif

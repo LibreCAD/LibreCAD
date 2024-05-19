@@ -25,10 +25,9 @@
 **********************************************************************/
 #include<cmath>
 #include <QPolygon>
+#include "rs.h"
 #include "rs_infoarea.h"
 
-#include "rs_math.h"
-#include "rs_debug.h"
 
 /**
  * Constructor.

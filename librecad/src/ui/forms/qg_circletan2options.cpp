@@ -42,11 +42,7 @@ QG_CircleTan2Options::QG_CircleTan2Options(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_CircleTan2Options::~QG_CircleTan2Options()
-{
-	saveSettings();
-    // no need to delete child widgets, Qt does it all for us
-}
+QG_CircleTan2Options::~QG_CircleTan2Options() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -75,7 +71,7 @@ void QG_CircleTan2Options::setAction(RS_ActionInterface* a, bool update) {
             sr = RS_SETTINGS->readEntry("/CircleTan2Radius", "1.0");
             RS_SETTINGS->endGroup();
         }
-		ui->leRadius->setText(sr);
+		ui->leRadius->setText(sr);		/* calls updateRadius() indirectly via QT signal */
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
             "QG_CircleTan2Options::setAction: wrong action type");
@@ -85,13 +81,9 @@ void QG_CircleTan2Options::setAction(RS_ActionInterface* a, bool update) {
 
 void QG_CircleTan2Options::updateRadius(const QString& r) {
     if (action) {
-        bool ok;
-        double radius=RS_Math::eval(r,&ok);
-        if(ok){
-            action->setRadius(radius);
-        }/*else{
-			ui->leRadius->setText("10.0");
-        }*/
+//		RS_DEBUG->print(RS_Debug::D_ERROR,"QG_CircleTan2Options::updateRadius, setRadius '%s'",qPrintable(r));
+		if(action->setRadius(r))
+			saveSettings();
     }
 }
 

@@ -24,46 +24,96 @@
 **
 **********************************************************************/
 
-#include<QAction>
-#include <QMouseEvent>
-#include "rs_actiondrawlinetangent2.h"
+#include <vector>
 
+#include <QAction>
+#include <QMouseEvent>
+
+#include "rs_actiondrawlinetangent2.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_creation.h"
 #include "rs_line.h"
+#include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
-RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Draw Tangents 2", container, graphicView)
-	,circle1(nullptr)
-	,circle2(nullptr)
-	,valid(false)
+struct RS_ActionDrawLineTangent2::Points {
+    /** Closest tangent. */
+    std::vector<std::unique_ptr<RS_Line>> tangents;
+    /** 1st chosen entity */
+    RS_Entity* circle1 = nullptr;
+    /** 2nd chosen entity */
+    RS_Entity* circle2 = nullptr;
+};
+
+namespace {
+
+//list of entity types supported by current action
+const EntityTypeList circleType = EntityTypeList{RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola};
+
+double linePointDist(const RS_Line& line, const RS_Vector& point)
 {
-	actionType=RS2::ActionDrawLineTangent2;
-    setStatus(SetCircle1);
+    return point.distanceTo(line.getNearestPointOnEntity(point));
+}
 }
 
-RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2() = default;
+RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
+        RS_EntityContainer& container,
+        RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Draw Tangents 2", container, graphicView, RS2::ActionDrawLineTangent2)
+    , m_pPoints{std::make_unique<Points>()}
+{
+    init(SetCircle1);
+}
 
+RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2()
+{
+    init(SetCircle1);
+    for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
+    {
+        if (circle != nullptr) {
+            circle->setHighlighted(false);
+            graphicView->drawEntity(circle);
+        }
+    }
+}
+
+void RS_ActionDrawLineTangent2::init(int status)
+{
+    setStatus(status);
+    switch (status) {
+    case SetCircle1:
+        if (m_pPoints->circle1 != nullptr) {
+            m_pPoints->circle1->setHighlighted(false);
+            graphicView->drawEntity(m_pPoints->circle1);
+            m_pPoints->circle1 = nullptr;
+        }
+        [[fallthrough]];
+    case SetCircle2:
+    case SelectLine:
+        if (m_pPoints->circle2 != nullptr) {
+            m_pPoints->circle2->setHighlighted(false);
+            graphicView->drawEntity(m_pPoints->circle2);
+            m_pPoints->circle2 = nullptr;
+        }
+        break;
+    }
+    RS_PreviewActionInterface::init(status);
+}
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
-    if(circle1){
-        circle1->setHighlighted(false);
-		graphicView->drawEntity(circle1);
-    }
+    clearHighlighted();
     RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionDrawLineTangent2::trigger() {
     RS_PreviewActionInterface::trigger();
+    if (m_pPoints->tangents.empty() || m_pPoints->tangents.front() == nullptr)
+        return;
 
-	RS_Entity* newEntity = new RS_Line(container, *lineData);
+    auto* newEntity = new RS_Line{container, m_pPoints->tangents.front()->getData()};
 
-    if (newEntity) {
+    if (newEntity != nullptr) {
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
         container->addEntity(newEntity);
@@ -73,97 +123,176 @@ void RS_ActionDrawLineTangent2::trigger() {
             document->startUndoCycle();
             document->addUndoable(newEntity);
             document->endUndoCycle();
-		}
-		clearHighlighted();
-
-        setStatus(SetCircle1);
+        }
+        init(SetCircle1);
+        for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
+        {
+            if (circle != nullptr) {
+                circle->setHighlighted(false);
+                graphicView->drawEntity(circle);
+            }
+        }
+        m_pPoints->circle1 = nullptr;
+        m_pPoints->circle2 = nullptr;
     }
-    tangent.reset();
 }
 
 void RS_ActionDrawLineTangent2::clearHighlighted()
 {
-	for(RS_Entity** p: {&circle1, &circle2}){
-		if(*p){
-			(*p)->setHighlighted(false);
-			graphicView->drawEntity(*p);
-			*p=nullptr;
-		}
-	}
+    auto clearHighlight = [this](RS_Entity** pCircle) {
+        if (*pCircle != nullptr) {
+            (*pCircle)->setHighlighted(false);
+            graphicView->drawEntity(*pCircle);
+            *pCircle = nullptr;
+        }
+    };
+    switch(getStatus()) {
+    case SetCircle1:
+        if (m_pPoints->circle2 == nullptr)
+            clearHighlight(&m_pPoints->circle1);
+        [[fallthrough]];
+    case SelectLine:
+    case SetCircle2:
+        clearHighlight(&m_pPoints->circle2);
+        break;
+    default:
+        break;
+    }
 }
 
 void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
-//    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
-	e->accept();
-    if(getStatus() != SetCircle2) return;
-	RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
-	if(!en || en==circle1) return;
-	if(circle2){
-		circle2->setHighlighted(false);
-		graphicView->drawEntity(circle2);
-	}
-	circle2=en;
-	circle2->setHighlighted(true);
-	graphicView->drawEntity(circle2);
-	RS_Creation creation(nullptr, nullptr);
-    RS_Vector mouse(graphicView->toGraphX(e->x()),
-                    graphicView->toGraphY(e->y()));
-    tangent.reset(creation.createTangent2(mouse,
-                                          circle1,
-                                          circle2));
-	if(!tangent.get()){
-        valid=false;
-        return;
-    }
-    valid=true;
-	lineData.reset(new RS_LineData(tangent->getData()));
-
+    //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
+    deleteSnapper();
     deletePreview();
-	preview->addEntity(new RS_Line(preview.get(), *lineData));
-    drawPreview();
+
+    switch(getStatus())
+    {
+    case SetCircle1:
+        return;
+    case SetCircle2:
+    {
+        RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
+        if(en == nullptr || en==m_pPoints->circle1)
+            return;
+        clearHighlighted();
+        m_pPoints->circle2=en;
+        m_pPoints->circle2->setHighlighted(true);
+        graphicView->drawEntity(m_pPoints->circle2);
+        m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+        if (m_pPoints->tangents.empty()) {
+            m_pPoints->circle2->setHighlighted(false);
+            graphicView->drawEntity(m_pPoints->circle2);
+        } else {
+            preparePreivew(e);
+        }
+    }
+        break;
+    case SelectLine:
+        preparePreivew(e);
+    }
 }
 
-void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e) {
-
+void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
+{
+    deleteSnapper();
     if (e->button()==Qt::RightButton) {
         deletePreview();
-		init(getStatus()-1);
-		if(getStatus()>=0){
-			clearHighlighted();
+        if (getStatus() == SetCircle1) {
+            if (m_pPoints->circle1 != nullptr) {
+                m_pPoints->circle1->setHighlighted(true);
+                graphicView->drawEntity(m_pPoints->circle1);
+                m_pPoints->circle1 = nullptr;
+            }
         }
+        init(getStatus() - 1);
+        clearHighlighted();
         return;
     }
     switch (getStatus()) {
     case SetCircle1:
     {
-        circle1 = catchEntity(e, circleType, RS2::ResolveAll);
-		if(!circle1) return;
-        circle1->setHighlighted(true);
-		graphicView->drawEntity(circle1);
-        setStatus(getStatus()+1);
+        m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
+        if(!m_pPoints->circle1) return;
+        m_pPoints->circle1->setHighlighted(true);
+        graphicView->drawEntity(m_pPoints->circle1);
+        init(getStatus()+1);
     }
         break;
 
     case SetCircle2:
-        if(valid) trigger();
+    {
+        m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+        if (!m_pPoints->tangents.empty()) {
+            if (m_pPoints->tangents.size() == 1) {
+                trigger();
+            } else {
+                init(getStatus()+1);
+                preparePreivew(e);
+            }
+        }
+    }
+        break;
+    case SelectLine:
+    {
+        if (!m_pPoints->tangents.empty())
+            trigger();
+    }
+        break;
+    default:
         break;
     }
 }
 
+void RS_ActionDrawLineTangent2::preparePreivew(QMouseEvent* e)
+{
+    switch(getStatus()) {
+    case SetCircle2:
+    case SelectLine:
+    {
+        RS_Vector mouse = snapFree(e);
+        deleteSnapper();
+        deletePreview();
+        std::sort(m_pPoints->tangents.begin(), m_pPoints->tangents.end(), [&mouse](
+                  const std::unique_ptr<RS_Line>& lhs,
+                  const std::unique_ptr<RS_Line>& rhs) {
+            return linePointDist(*lhs, mouse) < linePointDist(*rhs, mouse);
+        });
+        for(const auto& line: m_pPoints->tangents){
+            auto newEndpoint = new RS_Point{preview.get(), line->getData().startpoint};
+            preview->addEntity(newEndpoint);
+            newEndpoint = new RS_Point{preview.get(), line->getData().endpoint};
+            preview->addEntity(newEndpoint);
+        }
+        auto* newLine = new RS_Line{preview.get(), m_pPoints->tangents.front()->getData()};
+        preview->addEntity(newLine);
+        drawPreview();
+    }
+        break;
+    default:
+        break;
+    }
+    deleteSnapper();
+}
+
+
 void RS_ActionDrawLineTangent2::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCircle1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Select first circle or ellipse"),
-											tr("Cancel"));
-		break;
-	case SetCircle2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Select second circle or ellipse"),
-											tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+    switch (getStatus()) {
+    case SetCircle1:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select first circle/ellipse/parabola"),
+                                            tr("Cancel"));
+        break;
+    case SetCircle2:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select second circle/ellipse/parabola"),
+                                            tr("Back"));
+        break;
+    case SelectLine:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Select the tangent line closest to cursor"),
+                                            tr("Back"));
+        break;
+    default:
+        RS_DIALOGFACTORY->updateMouseWidget();
+        break;
+    }
 }
 
 void RS_ActionDrawLineTangent2::updateMouseCursor() {

@@ -31,11 +31,6 @@
 #include "lc_quadratic.h"
 #include "rs_math.h"
 
-RS_ConstructionLineData::RS_ConstructionLineData():
-	point1(false),
-	point2(false)
-{}
-
 RS_ConstructionLineData::RS_ConstructionLineData(const RS_Vector& point1,
 						const RS_Vector& point2):
 	point1(point1)
@@ -273,7 +268,12 @@ void RS_ConstructionLine::mirror(const RS_Vector& axisPoint1, const RS_Vector& a
         data.point2.mirror(axisPoint1, axisPoint2);
 }
 
-
+RS_Entity& RS_ConstructionLine::shear(double k)
+{
+    data.point1.shear(k);
+    data.point2.shear(k);
+    return *this;
+}
 
 /**
  * Dumps the point's data to stdout.

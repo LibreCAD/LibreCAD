@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.0-alpha"
+LC_VERSION="2.2.2-alpha"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -27,20 +27,29 @@ CONFIG += qt \
     depend_includepath
 
 QT += widgets printsupport
-CONFIG += c++11
+CONFIG += c++17
+
+# using qt5 connections for UI forms
+QMAKE_UIC_FLAGS += --connections string
+
 *-g++ {
     QMAKE_CXXFLAGS += -fext-numeric-literals
 }
 
 GEN_LIB_DIR = ../../generated/lib
-PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
-		$$GEN_LIB_DIR/libjwwlib.a
+msvc {
+	PRE_TARGETDEPS += $$GEN_LIB_DIR/dxfrw.lib \
+			$$GEN_LIB_DIR/jwwlib.lib
+} else {
+	PRE_TARGETDEPS += $$GEN_LIB_DIR/libdxfrw.a \
+			$$GEN_LIB_DIR/libjwwlib.a
+}
 
 DESTDIR = $${INSTALLDIR}
 
 # Make translations at the end of the process
 unix {
-    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --tags)" || echo "$${LC_VERSION}")
+    LC_VERSION=$$system([ "$(which git)x" != "x" -a -d ../../.git ] && echo "$(git describe --always)" || echo "$${LC_VERSION}")
 
     macx {
         TARGET = LibreCAD
@@ -60,6 +69,7 @@ unix {
         contains(DISABLE_POSTSCRIPT, false) {
             QMAKE_POST_LINK = cd $$_PRO_FILE_PWD_/../.. && scripts/postprocess-unix.sh
         }
+        DEFINES -=  QT_NO_SHORTCUT
     }
 }
 win32 {
@@ -68,7 +78,7 @@ win32 {
 
     # add MSYSGIT_DIR = PathToGitBinFolder (without quotes) in custom.pro file, for commit hash in about dialog
     !isEmpty( MSYSGIT_DIR ) {
-        LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe --tags || echo "$${LC_VERSION}")
+        LC_VERSION = $$system( \"$$MSYSGIT_DIR/git.exe\" describe || echo "$${LC_VERSION}")
     }
 
     RC_FILE = ../res/main/librecad.rc
@@ -120,12 +130,36 @@ RESOURCES += ../../licenses/licenses.qrc
 # ################################################################################
 # Library
 HEADERS += \
+    actions/lc_abstractactionwithpreview.h \
+    actions/lc_actiondrawlinefrompointtoline.h \
+    actions/lc_actiondrawparabola4points.h \
+    actions/lc_actiondrawparabolaFD.h \
+    actions/lc_actiondrawstar.h \
+    actions/lc_actioninfopickcoordinates.h \
+    actions/lc_actioninfoproperties.h \
+    actions/lc_actionmodifybreakdivide.h \
+    actions/lc_actionmodifyduplicate.h \
+    actions/lc_actionmodifylinegap.h \
+    actions/lc_actionpenapply.h \
+    actions/lc_actionpenpick.h \
+    actions/lc_actionpensyncactivebylayer.h \
+    actions/lc_abstractactiondrawrectangle.h \
+    actions/lc_actiondrawcirclebyarc.h \
+    actions/lc_actiondrawlineanglerel.h \
+    actions/lc_actiondrawlinepoints.h \
+    actions/lc_actiondrawrectangle1point.h \
+    actions/lc_actiondrawlinesnake.h \
+    actions/lc_actiondrawrectangle2points.h \
+    actions/lc_actiondrawslicedivide.h \
+    actions/lc_actionmodifylinejoin.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
     lib/actions/rs_snapper.h \
     lib/creation/rs_creation.h \
     lib/debug/rs_debug.h \
+    lib/engine/lc_looputils.h \
+    lib/engine/lc_parabola.h \
     lib/engine/rs.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
@@ -142,6 +176,7 @@ HEADERS += \
     lib/engine/rs_dimension.h \
     lib/engine/rs_dimlinear.h \
     lib/engine/rs_dimradial.h \
+    lib/engine/lc_dimarc.h \
     lib/engine/rs_document.h \
     lib/engine/rs_ellipse.h \
     lib/engine/rs_entity.h \
@@ -205,11 +240,13 @@ HEADERS += \
     lib/information/rs_locale.h \
     lib/information/rs_information.h \
     lib/information/rs_infoarea.h \
+    lib/math/lc_linemath.h \
     lib/modification/rs_modification.h \
     lib/modification/rs_selection.h \
     lib/math/rs_math.h \
     lib/math/lc_quadratic.h \
     actions/lc_actiondrawcircle2pr.h \
+    main/console_dxf2png.h \
     test/lc_simpletests.h \
     lib/generators/lc_makercamsvg.h \
     lib/generators/lc_xmlwriterinterface.h \
@@ -219,15 +256,79 @@ HEADERS += \
     lib/engine/lc_undosection.h \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
-    main/lc_application.h
+    main/lc_application.h \
+    ui/generic/lc_flexlayout.h \
+    ui/forms/lc_linefrompointtolineoptions.h \
+    ui/forms/lc_linepointsoptions.h \
+    ui/forms/lc_duplicateoptions.h \
+    ui/forms/lc_modifybreakdivideoptions.h \
+    ui/forms/lc_modifygapoptions.h \
+    ui/forms/lc_staroptions.h \
+    ui/generic/lc_plaintextedit.h \
+    ui/lc_peninforegistry.h \
+    ui/lc_penpalettedata.h \
+    ui/lc_penpalettemodel.h \
+    ui/lc_penpaletteoptions.h \
+    ui/lc_penpaletteoptionsdialog.h \
+    ui/lc_penpalettewidget.h \
+    ui/forms/lc_layertreeoptionsdialog.h \
+    ui/lc_layertreeitem.h \
+    ui/lc_layertreemodel.h \
+    ui/lc_layertreemodel_options.h \
+    ui/lc_layertreewidget.h \
+    ui/lc_layertreeview.h\
+    ui/lc_quickinfobasedata.h \
+    ui/lc_quickinfoentitydata.h \
+    ui/lc_quickinfopointsdata.h \
+    ui/lc_quickinfowidget.h \
+    ui/forms/lc_layerdialog_ex.h\
+    ui/forms/lc_actionoptionswidget.h \
+    ui/forms/lc_circlebyarcoptions.h \
+    ui/forms/lc_crossoptions.h \
+    ui/forms/lc_lineanglereloptions.h \
+    ui/forms/lc_linejoinoptions.h \
+    ui/forms/lc_lineoptions.h \
+    ui/forms/lc_slicedivideoptions.h\
+    ui/forms/lc_rectangle2pointsoptions.h \
+    ui/forms/lc_rectangle1pointoptions.h \
+    ui/forms/lc_rectangle3pointsoptions.h \
+    actions/lc_abstractactiondrawline.h \
+    ui/forms/LC_DlgParabola.h \
+    ui/lc_quickinfowidgetoptions.h \
+    ui/lc_quickinfowidgetoptionsdialog.h
 
 SOURCES += \
+    actions/lc_abstractactiondrawrectangle.cpp \
+    actions/lc_abstractactionwithpreview.cpp \
+    actions/lc_actiondrawcirclebyarc.cpp \
+    actions/lc_actiondrawlineanglerel.cpp \
+    actions/lc_actiondrawlinefrompointtoline.cpp \
+    actions/lc_actiondrawlinepoints.cpp \
+    actions/lc_actiondrawrectangle1point.cpp \
+    actions/lc_actiondrawlinesnake.cpp \
+    actions/lc_actiondrawrectangle2points.cpp \
+    actions/lc_actiondrawslicedivide.cpp \
+    actions/lc_abstractactiondrawline.cpp \
+    actions/lc_actiondrawparabola4points.cpp \
+    actions/lc_actiondrawparabolaFD.cpp \
+    actions/lc_actiondrawstar.cpp \
+    actions/lc_actioninfopickcoordinates.cpp \
+    actions/lc_actioninfoproperties.cpp \
+    actions/lc_actionmodifybreakdivide.cpp \
+    actions/lc_actionmodifyduplicate.cpp \
+    actions/lc_actionmodifylinegap.cpp \
+    actions/lc_actionpenapply.cpp \
+    actions/lc_actionpenpick.cpp \
+    actions/lc_actionpensyncactivebylayer.cpp \
+    actions/lc_actionmodifylinejoin.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \
     lib/actions/rs_snapper.cpp \
     lib/creation/rs_creation.cpp \
     lib/debug/rs_debug.cpp \
+    lib/engine/lc_looputils.cpp \
+    lib/engine/lc_parabola.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \
@@ -240,6 +341,7 @@ SOURCES += \
     lib/engine/rs_dimension.cpp \
     lib/engine/rs_dimlinear.cpp \
     lib/engine/rs_dimradial.cpp \
+    lib/engine/lc_dimarc.cpp \
     lib/engine/rs_document.cpp \
     lib/engine/rs_ellipse.cpp \
     lib/engine/rs_entity.cpp \
@@ -291,6 +393,7 @@ SOURCES += \
     lib/information/rs_locale.cpp \
     lib/information/rs_information.cpp \
     lib/information/rs_infoarea.cpp \
+    lib/math/lc_linemath.cpp \
     lib/math/rs_math.cpp \
     lib/math/lc_quadratic.cpp \
     lib/modification/rs_modification.cpp \
@@ -298,6 +401,7 @@ SOURCES += \
     lib/engine/rs_color.cpp \
     lib/engine/rs_pen.cpp \
     actions/lc_actiondrawcircle2pr.cpp \
+    main/console_dxf2png.cpp \
     test/lc_simpletests.cpp \
     lib/generators/lc_xmlwriterqxmlstreamwriter.cpp \
     lib/generators/lc_makercamsvg.cpp \
@@ -310,7 +414,45 @@ SOURCES += \
     lib/engine/rs.cpp \
     lib/printing/lc_printing.cpp \
     actions/lc_actiondrawlinepolygon3.cpp \
-    main/lc_application.cpp
+    main/lc_application.cpp \
+    ui/forms/LC_DlgParabola.cpp \
+    ui/generic/lc_flexlayout.cpp \
+    ui/forms/lc_linefrompointtolineoptions.cpp \
+    ui/forms/lc_linepointsoptions.cpp \
+    ui/forms/lc_duplicateoptions.cpp \
+    ui/forms/lc_modifybreakdivideoptions.cpp \
+    ui/forms/lc_modifygapoptions.cpp \
+    ui/forms/lc_staroptions.cpp \
+    ui/lc_peninforegistry.cpp \
+    ui/lc_penpalettedata.cpp \
+    ui/lc_penpalettemodel.cpp \
+    ui/lc_penpaletteoptions.cpp \
+    ui/lc_penpaletteoptionsdialog.cpp \
+    ui/lc_penpalettewidget.cpp \
+    ui/forms/lc_layerdialog_ex.cpp \
+    ui/forms/lc_layertreeoptionsdialog.cpp \
+    ui/lc_layertreeitem.cpp \
+    ui/lc_layertreemodel.cpp \
+    ui/lc_layertreemodel_options.cpp \
+    ui/lc_layertreewidget.cpp \
+    ui/lc_layertreeview.cpp\
+    ui/forms/lc_actionoptionswidget.cpp \
+    ui/forms/lc_circlebyarcoptions.cpp \
+    ui/forms/lc_crossoptions.cpp \
+    ui/forms/lc_lineanglereloptions.cpp \
+    ui/forms/lc_linejoinoptions.cpp \
+    ui/forms/lc_lineoptions.cpp \
+    ui/forms/lc_rectangle3pointsoptions.cpp \
+    ui/forms/lc_rectangle1pointoptions.cpp \
+    ui/forms/lc_rectangle2pointsoptions.cpp \
+    ui/forms/lc_slicedivideoptions.cpp \
+    ui/lc_quickinfobasedata.cpp \
+    ui/lc_quickinfoentitydata.cpp \
+    ui/lc_quickinfopointsdata.cpp \
+    ui/lc_quickinfowidget.cpp \
+    ui/lc_quickinfowidgetoptions.cpp \
+    ui/lc_quickinfowidgetoptionsdialog.cpp
+
 
 # ################################################################################
 # Command
@@ -337,6 +479,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondimleader.h \
     actions/rs_actiondimlinear.h \
     actions/rs_actiondimradial.h \
+    actions/lc_actiondimarc.h \
     actions/rs_actiondrawarc.h \
     actions/rs_actiondrawarc3p.h \
     actions/rs_actiondrawarctangential.h \
@@ -367,6 +510,8 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actiondrawlinepolygon.h \
     actions/rs_actiondrawlinepolygon2.h \
     actions/rs_actiondrawlinerectangle.h \
+    actions/lc_actiondrawrectangle3points.h \
+    actions/lc_actiondrawcross.h\
     actions/rs_actiondrawlinerelangle.h \
     actions/rs_actiondrawlinetangent1.h \
     actions/rs_actiondrawlinetangent2.h \
@@ -399,6 +544,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionlayerstoggleview.h \
     actions/rs_actionlayerstoggleprint.h \
     actions/lc_actionlayerstoggleconstruction.h \
+    actions/lc_actionlayersexport.h \
     actions/rs_actionlibraryinsert.h \
     actions/rs_actionlockrelativezero.h \
     actions/rs_actionmodifyattributes.h \
@@ -442,6 +588,7 @@ HEADERS += actions/rs_actionblocksadd.h \
     actions/rs_actionselectlayer.h \
     actions/rs_actionsetrelativezero.h \
     actions/rs_actionsetsnapmode.h \
+    actions/lc_actionsnapmiddlemanual.h \
     actions/rs_actionsetsnaprestriction.h \
     actions/rs_actionsnapintersectionmanual.h \
     actions/rs_actiontoolregeneratedimensions.h \
@@ -472,6 +619,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondimleader.cpp \
     actions/rs_actiondimlinear.cpp \
     actions/rs_actiondimradial.cpp \
+    actions/lc_actiondimarc.cpp \
     actions/rs_actiondrawarc.cpp \
     actions/rs_actiondrawarc3p.cpp \
     actions/rs_actiondrawarctangential.cpp \
@@ -502,6 +650,8 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actiondrawlinepolygon.cpp \
     actions/rs_actiondrawlinepolygon2.cpp \
     actions/rs_actiondrawlinerectangle.cpp \
+    actions/lc_actiondrawrectangle3points.cpp \
+    actions/lc_actiondrawcross.cpp \
     actions/rs_actiondrawlinerelangle.cpp \
     actions/rs_actiondrawlinetangent1.cpp \
     actions/rs_actiondrawlinetangent2.cpp \
@@ -534,6 +684,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionlayerstoggleview.cpp \
     actions/rs_actionlayerstoggleprint.cpp \
     actions/lc_actionlayerstoggleconstruction.cpp \
+    actions/lc_actionlayersexport.cpp \
     actions/rs_actionlibraryinsert.cpp \
     actions/rs_actionlockrelativezero.cpp \
     actions/rs_actionmodifyattributes.cpp \
@@ -577,6 +728,7 @@ SOURCES += actions/rs_actionblocksadd.cpp \
     actions/rs_actionselectlayer.cpp \
     actions/rs_actionsetrelativezero.cpp \
     actions/rs_actionsetsnapmode.cpp \
+    actions/lc_actionsnapmiddlemanual.cpp \
     actions/rs_actionsetsnaprestriction.cpp \
     actions/rs_actionsnapintersectionmanual.cpp \
     actions/rs_actiontoolregeneratedimensions.cpp \
@@ -696,7 +848,8 @@ HEADERS += ui/lc_actionfactory.h \
     ui/generic/colorcombobox.h \
     ui/generic/colorwizard.h \
     ui/lc_penwizard.h \
-    ui/generic/textfileviewer.h
+    ui/generic/textfileviewer.h \
+    ui/lc_filedialogservice.h
 
 SOURCES += ui/lc_actionfactory.cpp \
     ui/qg_actionhandler.cpp \
@@ -799,9 +952,25 @@ SOURCES += ui/lc_actionfactory.cpp \
     ui/generic/colorcombobox.cpp \
     ui/generic/colorwizard.cpp \
     ui/lc_penwizard.cpp \
-    ui/generic/textfileviewer.cpp
+    ui/generic/textfileviewer.cpp \
+    ui/lc_filedialogservice.cpp\
+    ui/lc_penitem.cpp
 
 FORMS = ui/forms/qg_commandwidget.ui \
+    ui/forms/LC_DlgParabola.ui \
+    ui/forms/lc_circlebyarcoptions.ui \
+    ui/forms/lc_crossoptions.ui \
+    ui/forms/lc_lineanglereloptions.ui \
+    ui/forms/lc_linejoinoptions.ui \
+    ui/forms/lc_linefrompointtolineoptions.ui \
+    ui/forms/lc_linepointsoptions.ui \
+    ui/forms/lc_modifybreakdivideoptions.ui \
+    ui/forms/lc_modifygapoptions.ui \
+    ui/forms/lc_rectangle3pointsoptions.ui \
+    ui/forms/lc_rectangle1pointoptions.ui \
+    ui/forms/lc_rectangle2pointsoptions.ui \
+    ui/forms/lc_slicedivideoptions.ui \
+    ui/forms/lc_staroptions.ui \
     ui/forms/qg_arcoptions.ui \
     ui/forms/qg_arctangentialoptions.ui \
     ui/forms/qg_beveloptions.ui \
@@ -842,10 +1011,13 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_imageoptions.ui \
     ui/forms/qg_insertoptions.ui \
     ui/forms/qg_layerdialog.ui \
+    ui/forms/lc_layerdialog_ex.ui \
+    ui/forms/lc_layertreeoptionsdialog.ui \
     ui/forms/qg_libraryinsertoptions.ui \
     ui/forms/qg_lineangleoptions.ui \
     ui/forms/qg_linebisectoroptions.ui \
     ui/forms/qg_lineoptions.ui \
+    ui/forms/lc_lineoptions.ui \
     ui/forms/qg_lineparalleloptions.ui \
     ui/forms/qg_lineparallelthroughoptions.ui \
     ui/forms/qg_linepolygon2options.ui \
@@ -874,7 +1046,12 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/comboboxoption.ui \
     ui/generic/widgetcreator.ui \
     ui/generic/colorwizard.ui \
-    ui/generic/textfileviewer.ui
+    ui/generic/textfileviewer.ui \
+    ui/forms/lc_duplicateoptions.ui \
+    ui/lc_penpaletteoptionsdialog.ui \
+    ui/lc_penpalettewidget.ui \
+    ui/lc_quickinfowidget.ui \
+    ui/lc_quickinfowidgetoptionsdialog.ui
 
 # ################################################################################
 # Main
@@ -916,15 +1093,15 @@ contains(DEFINES, EMU_C99) {
 
 # ################################################################################
 # Translations
-TRANSLATIONS = ../ts/librecad_ar.ts \
+TRANSLATIONS = \
+    ../ts/librecad_ar.ts \
     ../ts/librecad_ca.ts \
     ../ts/librecad_cs.ts \
-    ../ts/librecad_en.ts \
-    ../ts/librecad_en_au.ts \
     ../ts/librecad_da.ts \
     ../ts/librecad_de.ts \
     ../ts/librecad_el.ts \
-    ../ts/librecad_es.ts \
+    ../ts/librecad_en_au.ts \
+    ../ts/librecad_en.ts \
     ../ts/librecad_es_ar.ts \
     ../ts/librecad_es_bo.ts \
     ../ts/librecad_es_cl.ts \
@@ -941,6 +1118,7 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_es_pr.ts \
     ../ts/librecad_es_py.ts \
     ../ts/librecad_es_sv.ts \
+    ../ts/librecad_es.ts \
     ../ts/librecad_es_us.ts \
     ../ts/librecad_es_uy.ts \
     ../ts/librecad_es_ve.ts \
@@ -949,11 +1127,13 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_fi.ts \
     ../ts/librecad_fr.ts \
     ../ts/librecad_gl.ts \
+    ../ts/librecad_he.ts \
     ../ts/librecad_hi.ts \
     ../ts/librecad_hu.ts \
     ../ts/librecad_id_ID.ts \
     ../ts/librecad_it.ts \
     ../ts/librecad_ja.ts \
+    ../ts/librecad_ka.ts \
     ../ts/librecad_ko.ts \
     ../ts/librecad_lv.ts \
     ../ts/librecad_mk.ts \
@@ -968,8 +1148,10 @@ TRANSLATIONS = ../ts/librecad_ar.ts \
     ../ts/librecad_sk.ts \
     ../ts/librecad_sl.ts \
     ../ts/librecad_sq_al.ts \
+    ../ts/librecad_sr.ts \
     ../ts/librecad_sv.ts \
     ../ts/librecad_ta.ts \
+    ../ts/librecad_th.ts \
     ../ts/librecad_tr.ts \
     ../ts/librecad_uk.ts \
     ../ts/librecad_zh_cn.ts \

@@ -7,7 +7,7 @@
 ** Copyright (C) 2015, 2016 ravas (github.com/r-a-v-a-s)
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,23 +15,26 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_dlgoptionsgeneral.h"
 
 #include <QMessageBox>
+#include <qc_applicationwindow.h>
 #include <QColorDialog>
+
+#include "qg_filedialog.h"
+
+#include "rs_debug.h"
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "qg_filedialog.h"
-#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -54,15 +57,9 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
-}
+    connect(cbAutoBackup, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 
-/*
- *  Destroys the object and frees any allocated resources
- */
-QG_DlgOptionsGeneral::~QG_DlgOptionsGeneral()
-{
-    destroy();
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
@@ -123,7 +120,12 @@ void QG_DlgOptionsGeneral::init()
 
     bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     cursor_hiding_checkbox->setChecked(cursor_hiding);
-    
+
+    bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
+    cbHideRelativeZero->setChecked(hideRelativeZero);
+    bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
+    cbVisualizeHovering->setChecked(visualizeHovering);
+
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
     cbScaleGrid->setChecked(scaleGrid=="1");
@@ -133,6 +135,11 @@ void QG_DlgOptionsGeneral::init()
     int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
     cb_antialiasing->setChecked(checked?true:false);
 
+    checked = RS_SETTINGS->readNumEntry("/UnitlessGrid", 0);
+    cb_unitless_grid->setChecked(checked?true:false);
+    checked = RS_SETTINGS->readNumEntry("/Autopanning");
+    cb_autopanning->setChecked(checked?true:false);
+
     checked = RS_SETTINGS->readNumEntry("/ScrollBars");
     scrollbars_check_box->setChecked(checked?true:false);
 
@@ -141,16 +148,17 @@ void QG_DlgOptionsGeneral::init()
 
     RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("Colors");
-    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", Colors::background));
-    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", Colors::grid));
-    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid));
-    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", Colors::select));
-    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", Colors::highlight));
-    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", Colors::start_handle));
-    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", Colors::handle));
-    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", Colors::end_handle));
-    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", Colors::snap_indicator));
+    RS_SETTINGS->beginGroup("DefaultColors");
+    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", RS_Settings::background));
+    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
+    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
+    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", RS_Settings::select));
+    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle));
+    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
+    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
+    initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
+    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator));
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("/Paths");
@@ -202,6 +210,7 @@ void QG_DlgOptionsGeneral::init()
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
     cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
+    cbOpenLastFiles->setChecked(RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 1));
     RS_SETTINGS->endGroup();
 
 	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
@@ -210,16 +219,13 @@ void QG_DlgOptionsGeneral::init()
     restartNeeded = false;
 }
 
-void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, QString text) {
+void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, const QString& text) {
 	int idx = cb->findText(text);
 	if( idx < 0) {
 		idx =0;
 		cb->insertItem(idx, text);
 	}
 	cb->setCurrentIndex( idx );
-}
-
-void QG_DlgOptionsGeneral::destroy() {
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
@@ -240,16 +246,20 @@ void QG_DlgOptionsGeneral::ok()
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
+        RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int)cbHideRelativeZero->isChecked()));
+        RS_SETTINGS->writeEntry("/VisualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
         RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
         RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
-        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());      
+        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/UnitlessGrid", cb_unitless_grid->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
         RS_SETTINGS->endGroup();
 
@@ -262,6 +272,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
         RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
         RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
+        RS_SETTINGS->writeEntry("/relativeZeroColor", cbRelativeZeroColor->currentText());
         RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
@@ -300,17 +311,16 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
         RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/OpenLastOpenedFiles", cbOpenLastFiles->isChecked() ? 1: 0);
         RS_SETTINGS->endGroup();
 
 		RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
 		RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
     }
-	
+
 	if (restartNeeded==true) {
         QMessageBox::warning( this, tr("Preferences"),
-                              tr("Please restart the application to apply all changes."),
-                              QMessageBox::Ok,
-                              Qt::NoButton);
+                              tr("Please restart the application to apply all changes."));
     }
     accept();
 }
@@ -323,8 +333,7 @@ void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
 
 void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 {
-    QColor current;
-    current.setNamedColor(combo->lineEdit()->text());
+    QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
 	dlg.setCustomColor(0, custom.rgb());
@@ -338,47 +347,52 @@ void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
 
 void QG_DlgOptionsGeneral::on_pb_background_clicked()
 {
-    set_color(cbBackgroundColor, QColor(Colors::background));
+    set_color(cbBackgroundColor, QColor(RS_Settings::background));
 }
 
 void QG_DlgOptionsGeneral::on_pb_grid_clicked()
 {
-    set_color(cbGridColor, QColor(Colors::grid));
+    set_color(cbGridColor, QColor(RS_Settings::grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_meta_clicked()
 {
-    set_color(cbMetaGridColor, QColor(Colors::meta_grid));
+    set_color(cbMetaGridColor, QColor(RS_Settings::meta_grid));
 }
 
 void QG_DlgOptionsGeneral::on_pb_selected_clicked()
 {
-    set_color(cbSelectedColor, QColor(Colors::select));
+    set_color(cbSelectedColor, QColor(RS_Settings::select));
 }
 
 void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
 {
-    set_color(cbHighlightedColor, QColor(Colors::highlight));
+    set_color(cbHighlightedColor, QColor(RS_Settings::highlight));
 }
 
 void QG_DlgOptionsGeneral::on_pb_start_clicked()
 {
-    set_color(cbStartHandleColor, QColor(Colors::start_handle));
+    set_color(cbStartHandleColor, QColor(RS_Settings::start_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_handle_clicked()
 {
-    set_color(cbHandleColor, QColor(Colors::handle));
+    set_color(cbHandleColor, QColor(RS_Settings::handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_end_clicked()
 {
-    set_color(cbEndHandleColor, QColor(Colors::end_handle));
+    set_color(cbEndHandleColor, QColor(RS_Settings::end_handle));
 }
 
 void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
 {
-    set_color(cb_snap_color, QColor(Colors::snap_indicator));
+    set_color(cb_snap_color, QColor(RS_Settings::snap_indicator));
+}
+
+void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked()
+{
+    set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
 }
 
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
@@ -425,4 +439,24 @@ void QG_DlgOptionsGeneral::setFontsFolder()
         auto dir = dlg.selectedFiles()[0];
         lePathFonts->setText(QDir::toNativeSeparators(dir));
     }
+}
+
+void QG_DlgOptionsGeneral::setLibraryPath()
+{
+    QG_FileDialog dlg(this);
+    dlg.setFileMode(QFileDialog::Directory);
+
+    if (dlg.exec())
+    {
+        auto dir = dlg.selectedFiles()[0];
+        lePathLibrary->setText(QDir::toNativeSeparators(dir));
+        setRestartNeeded();
+    }
+}
+
+void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
+{
+    bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
+    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+    appWindow->startAutoSave(allowBackup);
 }

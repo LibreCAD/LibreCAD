@@ -24,7 +24,8 @@
 **
 **********************************************************************/
 
-#include <QTextCodec>
+#include <QRegularExpression>
+#include <QStringConverter>
 #include "rs_filterjww.h"
 
 #include "dl_attributes.h"
@@ -209,9 +210,9 @@ void RS_FilterJWW::addBlock(const DL_BlockData& data) {
                                                                 variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                         // get the codec for Japanese
                         QString blName = data.name.c_str();
-                        QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
-                        if(codec)
-                                blName = codec->toUnicode(data.name.c_str());
+                        std::optional<QStringConverter::Encoding> encoding = QStringConverter::encodingForName(enc.toLatin1());
+                        if(encoding)
+                                blName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(data.name));
 //////////////////////////////
                         RS_Block* block =
                                 new RS_Block(graphic,
@@ -460,7 +461,7 @@ void RS_FilterJWW::addInsert(const DL_InsertData& data) {
                                         RS2::NoUpdate);
         RS_Insert* entity = new RS_Insert(currentContainer, d);
         setEntityAttributes(entity, attributes);
-        RS_DEBUG->print("  id: %d", entity->getId());
+        RS_DEBUG->print("  id: %lu", entity->getId());
         //entity->update();
         currentContainer->addEntity(entity);
 }
@@ -487,7 +488,7 @@ void RS_FilterJWW::addMTextChunk(const char* text) {
 QString RS_FilterJWW::getDXFEncoding() {
 
     QString acadver=variables.getString("$ACADVER", "");
-    acadver.replace(QRegExp("[a-zA-Z]"), "");
+    acadver.replace(QRegularExpression("[a-zA-Z]"), "");
     bool ok;
     int version=acadver.toInt(&ok);
 
@@ -1774,7 +1775,7 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
                 return;
         }
 
-        if (s->getNumberOfControlPoints() < s->getDegree()+1) {
+        if (s->getNumberOfControlPoints() < size_t(s->getDegree())+1) {
                 RS_DEBUG->print(RS_Debug::D_ERROR, "RS_FilterJWW::writeSpline: "
                                                 "Discarding spline: not enough control points given.");
                 return;
@@ -1786,12 +1787,7 @@ void RS_FilterJWW::writeSpline(DL_WriterA& dw,
         // Number of knots (= number of control points + spline degree + 1)
         int numKnots = numCtrl + s->getDegree() + 1;
 
-        int flags;
-        if (s->isClosed()) {
-                flags = 11;
-        } else {
-                flags = 8;
-        }
+        int flags = s->isClosed() ? 11 : 8;
 
         // write spline header:
         jww.writeSpline(
@@ -2386,7 +2382,7 @@ void RS_FilterJWW::writeEntityContainer(DL_WriterA& dw, RS_EntityContainer* con,
 
         while (true) {
                 tmp = tmp/c;
-                blkName.append((char) tmp %10 + 48);
+                blkName.append(QChar{tmp %10 + 48});
                 c *= 10;
                 if (tmp < 10) {
                         break;
@@ -2489,9 +2485,9 @@ void RS_FilterJWW::setEntityAttributes(RS_Entity* entity,
                                                         variables.getString("$DWGCODEPAGE", "ANSI_1252"));
                 // get the codec for Japanese
                 QString lName = attrib.getLayer().c_str();
-                QTextCodec *codec = QTextCodec::codecForName(enc.toLatin1());
-                if(codec)
-                        lName = codec->toUnicode(attrib.getLayer().c_str());
+                auto encoding = QStringConverter::encodingForName(enc.toLatin1());
+                if(encoding)
+                        lName = QStringEncoder{QStringEncoder::Utf8}(QString::fromStdString(attrib.getLayer()));
 				if (!graphic->findLayer(lName)) {
                         addLayer(DL_LayerData(attrib.getLayer(), 0));
                 }
@@ -3085,34 +3081,33 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
      *	  the string through a textcoder.
      *	--------------------------------------------------------------------- */
     if (!res.contains("\\U+")) {
-        QTextCodec *codec = QTextCodec::codecForName(encoding.toLatin1());
-        if (codec)
-            res = codec->toUnicode(data);
+        auto qEncoding = QStringConverter::encodingForName(encoding.toLatin1());
+        if (qEncoding)
+            res = QStringEncoder{QStringEncoder::Utf8}(data);
     }
 
     // Line feed:
-    res = res.replace(QRegExp("\\\\P"), "\n");
+    res = res.replace(QRegularExpression("\\\\P"), "\n");
     // Space:
-    res = res.replace(QRegExp("\\\\~"), " ");
+    res = res.replace(QRegularExpression("\\\\~"), " ");
     // diameter:
-    res = res.replace(QRegExp("%%c"), QChar(0x2205));
+    res = res.replace(QRegularExpression("%%c"), QChar(0x2205));
     // degree:
-    res = res.replace(QRegExp("%%d"), QChar(0x00B0));
+    res = res.replace(QRegularExpression("%%d"), QChar(0x00B0));
     // plus/minus
-    res = res.replace(QRegExp("%%p"), QChar(0x00B1));
+    res = res.replace(QRegularExpression("%%p"), QChar(0x00B1));
 
     // Unicode characters:
     QString cap = "";
     int uCode = 0;
     bool ok = false;
     do {
-        QRegExp regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
-        regexp.indexIn(res);
-        cap = regexp.cap();
-        if (!cap.isNull()) {
-            uCode = cap.right(4).toInt(&ok, 16);
+        QRegularExpression regexp("\\\\U\\+[0-9A-Fa-f]{4,4}");
+        QRegularExpressionMatch match=regexp.match(res);
+        if (match.hasMatch()) {
+            uCode = match.captured(0).right(4).toInt(&ok, 16);
             // workaround for Qt 3.0.x:
-            res.replace(QRegExp("\\\\U\\+" + cap.right(4)), QChar(uCode));
+            res.replace(QRegularExpression("\\\\U\\+" + cap.right(4)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3124,13 +3119,12 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
 //    uCode = 0;
     ok = false;
     do {
-        QRegExp regexp("%%[0-9]{3,3}");
-        regexp.indexIn(res);
-        cap = regexp.cap();
-        if (!cap.isNull()) {
-            uCode = cap.right(3).toInt(&ok, 10);
+        QRegularExpression regexp("%%[0-9]{3,3}");
+        QRegularExpressionMatch match = regexp.match(res);
+        if (match.hasMatch()) {
+            uCode = match.captured(0).right(3).toInt(&ok, 10);
             // workaround for Qt 3.0.x:
-            res.replace(QRegExp("%%" + cap.right(3)), QChar(uCode));
+            res.replace(QRegularExpression("%%" + cap.right(3)), QChar(uCode));
             // for Qt 3.1:
             //res.replace(cap, QChar(uCode));
         }
@@ -3138,7 +3132,7 @@ QString RS_FilterJWW::toNativeString(const char* data, const QString& encoding) 
     while (!cap.isNull());
 
     // Ignore font tags:
-    res = res.replace(QRegExp("\\\\f[0-9A-Za-z| ]{0,};"), "");
+    res = res.replace(QRegularExpression("\\\\f[0-9A-Za-z| ]{0,};"), "");
 
     // Ignore {}
     res = res.replace("\\{", "#curly#");

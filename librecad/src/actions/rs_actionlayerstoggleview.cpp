@@ -28,11 +28,12 @@
 ** This file was changed in 2016 by ravas. See ChangeLogs/r-a-v-a-s.txt
 ****************************************************************************/
 
-#include "rs_actionlayerstoggleview.h"
 
 #include <QAction>
-#include "rs_graphic.h"
+
+#include "rs_actionlayerstoggleview.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
 #include "rs_layer.h"
 
 

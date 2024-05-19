@@ -22,14 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 
-#include "rs_actionlayerstoggleprint.h"
 
 #include <QAction>
-#include "rs_dialogfactory.h"
-#include "rs_graphicview.h"
-#include "rs_graphic.h"
-#include "rs_layer.h"
+
+#include "rs_actionlayerstoggleprint.h"
 #include "rs_debug.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_layer.h"
 
 /**
  * whether a layer should appear on print (a construction layer doesn't appear on

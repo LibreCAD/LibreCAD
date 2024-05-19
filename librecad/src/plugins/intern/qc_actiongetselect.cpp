@@ -23,37 +23,43 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
+#include "qc_actiongetselect.h"
 
 #include <QMouseEvent>
 #include <QKeyEvent>
-#include "qc_actiongetselect.h"
+
 #include "doc_plugin_interface.h"
+#include "rs_actionselectsingle.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_actionselectsingle.h"
-// #include <QDebug>
-
 #include "rs_snapper.h"
 
 
 QC_ActionGetSelect::QC_ActionGetSelect(RS_EntityContainer& container,
                                  RS_GraphicView& graphicView)
 		:RS_ActionInterface("Get Select", container, graphicView)
-		,completed(false)
-		,message(tr("Select objects:"))
+        , completed(false)
+        , message(std::make_unique<QString>(tr("Select objects:")))
 {
     actionType = RS2::ActionGetSelect;
 }
 
-QC_ActionGetSelect::~QC_ActionGetSelect()
+QC_ActionGetSelect::QC_ActionGetSelect(RS2::EntityType typeToSelect, RS_EntityContainer& container,
+                                 RS_GraphicView& graphicView)
+        :RS_ActionInterface("Get Select", container, graphicView)
+        , completed(false)
+        , message(std::make_unique<QString>(tr("Select objects:"))),
+        typeToSelect(typeToSelect)
 {
-    // qDebug() << "~QC_ActionGetSelect";
+    actionType = RS2::ActionGetSelect;
 }
+
+QC_ActionGetSelect::~QC_ActionGetSelect() = default;
 
 void QC_ActionGetSelect::updateMouseButtonHints() {
     switch (getStatus()) {
     case Select:
-		RS_DIALOGFACTORY->updateMouseWidget(message, tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(*message, tr("Cancel"));
             break;
     default:
 		RS_DIALOGFACTORY->updateMouseWidget();
@@ -67,13 +73,13 @@ void QC_ActionGetSelect::updateMouseCursor() {
 }
 
 void QC_ActionGetSelect::setMessage(QString msg){
-	message = msg;
+    *message = std::move(msg);
 }
 
 void QC_ActionGetSelect::init(int status) {
         RS_ActionInterface::init(status);
         graphicView->setCurrentAction(
-                new RS_ActionSelectSingle(*container, *graphicView, this));
+                new RS_ActionSelectSingle(typeToSelect, *container, *graphicView, this));
 }
 
 void QC_ActionGetSelect::mouseReleaseEvent(QMouseEvent* e) {
@@ -106,6 +112,17 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
             se->append(reinterpret_cast<Plug_Entity*>(pe));
         }
     }
+}
+
+void QC_ActionGetSelect::unselectEntities(){
+    for(auto e: *container){
+
+        if (e->isSelected()) {
+            e->setSelected(false);
+        }
+    }
+    RS_DIALOGFACTORY->updateSelectionWidget(
+                container->countSelected(),container->totalSelectedLength());
 }
 
 

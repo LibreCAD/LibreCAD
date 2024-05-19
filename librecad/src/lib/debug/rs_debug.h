@@ -28,7 +28,8 @@
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
 
-#include <iosfwd>
+#include <QString>
+#include <QTextStream>
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
@@ -41,6 +42,12 @@ void debugHeader(char const* file, char const* func, int line);
 #define RS_DEBUG RS_Debug::instance()
 #define RS_DEBUG_VERBOSE DEBUG_HEADER \
 	RS_Debug::instance()
+
+// stream style logging
+// Example: LC_LOG<<"logging debugging message"; // default log level: D_DEBUGGING
+//          LC_LOG(D_ERROR)<<"Logging error message"; // specified logging level: D_ERROR
+#define LC_LOG RS_Debug::Log()
+#define LC_ERR RS_Debug::Log(RS_Debug::D_ERROR)
 
 /**
  * Debugging facilities.
@@ -73,19 +80,44 @@ public:
 
 private:
     RS_Debug();
-	RS_Debug(const RS_Debug&)=delete;
+    RS_Debug(const RS_Debug&)=delete;
 	RS_Debug& operator = (const RS_Debug&)=delete;
 	RS_Debug(RS_Debug&&)=delete;
 	RS_Debug& operator = (RS_Debug&&)=delete;
 
 public:
+    ~RS_Debug();
     static RS_Debug* instance();
 
-    static void deleteInstance();
+    /**
+     * @brief The LogStream class: Support for debugging info by the c++ stream style
+     *
+     * Example:
+     *      LC_LOG(D_ERROR)<<"Log text";
+     */
+    class LogStream : public QTextStream {
+    public:
+        LogStream(RS_DebugLevel level = D_DEBUGGING);
+        ~LogStream() override;
+
+        LogStream& operator () (RS_DebugLevel level)
+        {
+            m_debugLevel = level;
+            return *this;
+        }
+
+    private:
+        QString m_string;
+        RS_DebugLevel m_debugLevel;
+    };
+
+    static LogStream Log(RS_DebugLevel level = D_DEBUGGING);
+
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
     void print(RS_DebugLevel level, const char* format ...);
     void print(const char* format ...);
+    void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
     void setStream(FILE* s) {
@@ -93,10 +125,8 @@ public:
     }
 
 private:
-    static RS_Debug* uniqueInstance;
-
-    RS_DebugLevel debugLevel;
-    FILE* stream;
+    RS_DebugLevel debugLevel = D_INFORMATIONAL;
+    FILE* stream = nullptr;
 };
 
 #endif

@@ -36,17 +36,17 @@
  */
 QG_ArcOptions::QG_ArcOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_ArcOptions{})
+    , ui(std::make_unique<Ui::Ui_ArcOptions>())
 {
 	ui->setupUi(this);
+    connect(ui->rbPos, SIGNAL(toggled(bool)), this, SLOT(updateDirection(bool)));
+    connect(ui->rbNeg, SIGNAL(toggled(bool)), this, SLOT(updateDirection(bool)));
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_ArcOptions::~QG_ArcOptions() {
-	saveSettings();
-}
+QG_ArcOptions::~QG_ArcOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -104,5 +104,6 @@ void QG_ArcOptions::setAction(RS_ActionInterface* a, bool update) {
 void QG_ArcOptions::updateDirection(bool /*pos*/) {
     if (action) {
 		action->setReversed(!(ui->rbPos->isChecked()));
+        saveSettings();
     }
 }

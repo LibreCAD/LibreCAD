@@ -42,12 +42,11 @@ class RS_OverlayLine : public RS_Line {
 public:
 	RS_OverlayLine(RS_EntityContainer* parent, const RS_LineData& d);
 	
-    virtual void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
+     void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
 
     RS2::EntityType rtti() const override{
         return RS2::EntityOverlayLine;
     }
-}
-;
+};
 
 #endif

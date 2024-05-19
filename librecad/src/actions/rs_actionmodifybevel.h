@@ -28,9 +28,10 @@
 #define RS_ACTIONMODIFYBEVEL_H
 
 #include<memory>
+
 #include "rs_previewactioninterface.h"
 
-class RS_BevelData;
+class RS_Entity;
 
 /**
  * This action class can handle user events to bevel corners.
@@ -38,57 +39,59 @@ class RS_BevelData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyBevel : public RS_PreviewActionInterface {
-	Q_OBJECT
+    Q_OBJECT
     /**
      * Action States.
      */
     enum Status {
         SetEntity1,      /**< Choosing the 1st entity. */
         SetEntity2,      /**< Choosing the 2nd entity. */
-		SetLength1,      /**< Setting length 1 in command line. */
-		SetLength2       /**< Setting length 2 in command line. */
-		//SetTrim             /**< Setting trim flag in command line. */
+        SetLength1,      /**< Setting length 1 in command line. */
+        SetLength2       /**< Setting length 2 in command line. */
     };
 
 public:
     RS_ActionModifyBevel(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyBevel() override;
+                         RS_GraphicView& graphicView);
+    ~RS_ActionModifyBevel() override;
 
-	void init(int status) override;
-	void trigger() override;
+    void init(int status) override;
+    void trigger() override;
+    void finish(bool updateTB = false) override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void setLength1(double l1);
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	double getLength1() const;
-	
-	void setLength2(double l2);
+    void hideOptions() override;
+    void showOptions() override;
 
-	double getLength2() const;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
-	void setTrim(bool t);
+    void setLength1(double l1);
 
-	bool isTrimOn() const;
+    double getLength1() const;
+
+    void setLength2(double l2);
+
+    double getLength2() const;
+
+    void setTrim(bool t);
+
+    bool isTrimOn() const;
 
 private:
-    RS_Entity* entity1;
-    RS_Entity* entity2;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	/** Last status before entering angle. */
-	Status lastStatus;
-};
+    // update highlight status
+    void unhighlightEntity();
 
+    RS_Entity* entity1 = nullptr;
+    RS_Entity* entity2 = nullptr;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    /** Last status before entering angle. */
+    Status lastStatus = SetEntity1;
+};
 #endif

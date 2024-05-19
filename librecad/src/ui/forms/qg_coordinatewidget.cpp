@@ -25,9 +25,10 @@
 **********************************************************************/
 #include "qg_coordinatewidget.h"
 
+#include "rs_graphic.h"
 #include "rs_settings.h"
 #include "rs_vector.h"
-#include "rs_graphic.h"
+#include "rs_units.h"
 
 /*
  *  Constructs a QG_CoordinateWidget as a child of 'parent', with the
@@ -92,6 +93,16 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
             aprec = graphic->getAnglePrecision();
         }
 
+        RS_SETTINGS->beginGroup("/Appearance");
+        if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1)
+        {
+            x  = RS_Units::convert(x);
+            y  = RS_Units::convert(y);
+            rx = RS_Units::convert(rx);
+            ry = RS_Units::convert(ry);
+        }
+        RS_SETTINGS->endGroup();
+
         // abs / rel coordinates:
         QString absX = RS_Units::formatLinear(x,
                                                graphic->getUnit(),
@@ -107,7 +118,7 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                format, prec);
 
         lCoord1->setText(absX + " , " + absY);
-        lCoord2->setText(relX + " , " + relY);
+        lCoord2->setText("@  " + relX + " , " + relY);
 
         // polar coordinates:
         RS_Vector v;
@@ -128,7 +139,7 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                format, prec);
         aStr = RS_Units::formatAngle(v.angle(),
                                                aformat, aprec);
-        str = rStr + " < " + aStr;
-        lCoord2b->setText(str);
+
+        lCoord2b->setText("@  " + rStr + " < " + aStr);
     }
 }

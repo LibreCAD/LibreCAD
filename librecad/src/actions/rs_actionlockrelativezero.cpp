@@ -24,9 +24,10 @@
 **
 **********************************************************************/
 
-#include "rs_actionlockrelativezero.h"
 
 #include <QAction>
+
+#include "rs_actionlockrelativezero.h"
 #include "rs_graphicview.h"
 
 RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(

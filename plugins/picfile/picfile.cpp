@@ -233,7 +233,11 @@ void picPunto::processFilePic(QFile* file)
 {
     //    QString outname, sep;
     QString sep = " ";
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts;
+#else
     QString::SplitBehavior skip = QString::KeepEmptyParts;
+#endif
     QStringList data;
     QString cmd;
     pointData *pd;
@@ -282,7 +286,7 @@ void picPunto::processFilePic(QFile* file)
                         QString txt = line.split("\"", skip).at(1);
                         QStringList rline = line.split("\"", skip).at(2).split(" ",skip);
                         txt.remove ( txt.size()-3, 3);
-                        txt.remove (QRegExp("^.*fR"));
+                        txt.remove (QRegularExpression("^.*fR"));
                         // printf("process line: %s: %s\n",rline.at(2).toStdString().c_str(),txt.toStdString().c_str() );
                         drawText(rline.at(2).split(',').at(0), rline.at(2).split(',').at(1), txt, rline.at(3));
                     }

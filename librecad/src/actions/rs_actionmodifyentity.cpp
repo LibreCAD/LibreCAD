@@ -24,15 +24,16 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifyentity.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "lc_quickinfowidget.h"
+#include "qc_applicationwindow.h"
+#include "rs_actionmodifyentity.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_debug.h"
-
-
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -42,32 +43,58 @@ RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyEntity;
 }
 
+void RS_ActionModifyEntity::setDisplaySelected(bool highlighted)
+{
+    if (en != nullptr) {
+        en->setSelected(highlighted);
+        graphicView->drawEntity(en);
+    }
+}
+
 void RS_ActionModifyEntity::trigger() {
-    if (en) {
-        RS_Entity* clone = en->clone();
-        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone)) {
-            container->addEntity(clone);
+    if (en != nullptr) {
+        std::unique_ptr<RS_Entity> clone{en->clone()};
+        bool selected = en->isSelected();
+        // RAII style: restore the highlighted status
+        std::shared_ptr<bool> scopedFlag(&selected, [this](bool* pointer) {
+            if (pointer != nullptr && en->isSelected() != *pointer) {
+                setDisplaySelected(*pointer);
+            }});
+        // Always show the entity being edited as "Selected"
+        setDisplaySelected(true);
+
+        unsigned long originalEntityId = en->getId();
+
+        if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get())) {
+            container->addEntity(clone.get());
 
             graphicView->deleteEntity(en);
-                        en->setSelected(false);
+            en->setSelected(false);
 
-                        clone->setSelected(false);
-            graphicView->drawEntity(clone);
+            clone->setSelected(false);
+            graphicView->drawEntity(clone.get());
 
             if (document) {
                 document->startUndoCycle();
 
-                document->addUndoable(clone);
+                document->addUndoable(clone.get());
                 en->setUndoState(true);
                 document->addUndoable(en);
 
                 document->endUndoCycle();
             }
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-        } else {
-            delete clone;
-        }
 
+            unsigned long cloneEntityId = clone->getId();
+
+            // hm... probably there is a better way to notify (signal, broadcasting etc) without direct dependency?
+            LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
+            if (entityInfoWidget != nullptr){
+                entityInfoWidget->onEntityPropertiesEdited(originalEntityId, cloneEntityId);
+            }
+
+            clone.release();
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        }
     } else {
         RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
     }

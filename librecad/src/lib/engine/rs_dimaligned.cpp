@@ -34,6 +34,7 @@
 #include "rs_constructionline.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 
 RS_DimAlignedData::RS_DimAlignedData():
 	extensionPoint1(false),
@@ -108,6 +109,10 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const
 QString RS_DimAligned::getMeasuredLabel() {
 	double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
 
+    RS_SETTINGS->beginGroup("/Appearance");
+    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
+    RS_SETTINGS->endGroup();
+
     RS_Graphic* graphic = getGraphic();
     QString ret;
     if (graphic) {
@@ -116,7 +121,7 @@ QString RS_DimAligned::getMeasuredLabel() {
         int dimzin = getGraphicVariableInt("$DIMZIN", 1);
         RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
 
-        ret = RS_Units::formatLinear(dist, RS2::None, format, dimdec);
+        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
         if (format == RS2::Decimal)
             ret = stripZerosLinear(ret, dimzin);
         //verify if units are decimal and comma separator

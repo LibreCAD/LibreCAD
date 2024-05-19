@@ -22,19 +22,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawcircletan1_2p.h"
 
+#include "lc_quadratic.h"
+#include "rs_actiondrawcircletan1_2p.h"
+#include "rs_circle.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_arc.h"
-#include "rs_circle.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "lc_quadratic.h"
-#include "rs_coordinateevent.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+
+namespace {
+    //list of entity types supported by current action
+    const EntityTypeList enTypeList = {RS2::EntityLine, RS2::EntityArc, RS2::EntityCircle};
+}
 
 struct RS_ActionDrawCircleTan1_2P::Points {
 	std::vector<RS_Vector> points;
@@ -56,7 +59,7 @@ RS_ActionDrawCircleTan1_2P::RS_ActionDrawCircleTan1_2P(
     :RS_PreviewActionInterface("Draw tangent circle 2P",
                                container, graphicView)
 	,circle(nullptr)
-	,pPoints(new Points{})
+    , pPoints(std::make_unique<Points>())
 {
 	actionType = RS2::ActionDrawCircleTan1_2P;
 }
@@ -115,7 +118,7 @@ void RS_ActionDrawCircleTan1_2P::trigger() {
     setStatus(SetCircle1);
 
     RS_DEBUG->print("RS_ActionDrawCircleTan1_2P::trigger():"
-                    " entity added: %d", c->getId());
+                    " entity added: %lu", c->getId());
 }
 
 
@@ -177,7 +180,7 @@ void RS_ActionDrawCircleTan1_2P::mouseMoveEvent(QMouseEvent* e) {
     case SetCenter: {
 
         //        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
-		pPoints->coord= graphicView->toGraph(e->x(), e->y());
+		pPoints->coord= graphicView->toGraph(e->position());
         //        circles[getStatus()]=static_cast<RS_Line*>(en);
         if(preparePreview()) {
             deletePreview();
@@ -267,7 +270,7 @@ bool RS_ActionDrawCircleTan1_2P::preparePreview(){
 
 RS_Entity* RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent* e) {
 	RS_Entity* ret=nullptr;
-	RS_Entity* en = catchEntity(e,enTypeList, RS2::ResolveAll);
+    RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
 	if (!en) return ret;
 	if (!en->isVisible()) return ret;
 	if (en->getParent()) {
@@ -301,7 +304,7 @@ void RS_ActionDrawCircleTan1_2P::mouseReleaseEvent(QMouseEvent* e) {
         }
             break;
         case SetCenter:
-			pPoints->coord=graphicView->toGraph(e->x(),e->y());
+			pPoints->coord=graphicView->toGraph(e->position());
             if(preparePreview()) trigger();
             break;
 
@@ -414,13 +417,6 @@ void RS_ActionDrawCircleTan1_2P::commandEvent(RS_CommandEvent* e) {
 
 //        RS_DIALOGFACTORY->requestOptions(this, false);
 //}
-
-
-QStringList RS_ActionDrawCircleTan1_2P::getAvailableCommands() {
-    QStringList cmd;
-    return cmd;
-}
-
 
 
 void RS_ActionDrawCircleTan1_2P::updateMouseButtonHints() {

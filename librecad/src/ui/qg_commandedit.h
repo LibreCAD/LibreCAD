@@ -28,29 +28,29 @@
 #define QG_COMMANDEDIT_H
 
 #include <QLineEdit>
-#include <QString>
 #include <QMap>
+#include <QString>
 
 /**
- * A command line edit with some typical console features 
+ * A command line edit with some typical console features
  * (uparrow for the history, tab, ..).
  */
 class QG_CommandEdit: public QLineEdit {
     Q_OBJECT
 
 public:
-    QG_CommandEdit(QWidget* parent=0);
-    virtual ~QG_CommandEdit()=default;
+    QG_CommandEdit(QWidget* parent=nullptr);
+    virtual ~QG_CommandEdit() = default;
 
     void readCommandFile(const QString& path);
 
-    bool keycode_mode;
+    bool keycode_mode = false;
 
 protected:
-	virtual bool event(QEvent* e);
-	virtual void keyPressEvent(QKeyEvent* e);
-	virtual void focusInEvent(QFocusEvent *e);
-	virtual void focusOutEvent(QFocusEvent *e);
+    bool event(QEvent* e) override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void focusInEvent(QFocusEvent *e) override;
+    void focusOutEvent(QFocusEvent *e) override;
     void evaluateExpression(QString input);
 
     QString relative_ray;
@@ -61,20 +61,27 @@ protected:
     void processVariable(QString input);
 
 signals:
-	void tabPressed();
-	void escape();
-	void focusIn();
-	void focusOut();
+    void spacePressed();
+    void tabPressed();
+    void escape();
+    void focusIn();
+    void focusOut();
     void clearCommandsHistory();
     void command(QString cmd);
     void message(QString msg);
     void keycode(QString code);
 
 private:
-	QStringList historyList;
-	QStringList::Iterator it;
-	bool acceptCoordinates;
-    bool calculator_mode;
+    /**
+      * @brief extractCliCal, filter cli calculator math expression
+      * @param cmd, cli string
+      * @return an empty string, if calculation is performed; the input string, otherwise
+      */
+    QString filterCliCal(const QString& cmd);
+    QStringList historyList;
+    QStringList::const_iterator it = historyList.cbegin();
+    bool acceptCoordinates = false;
+    bool calculator_mode = false;
 
 public slots:
     void modifiedPaste();

@@ -29,7 +29,7 @@
 
 #include "rs_previewactioninterface.h"
 
-class RS_MoveRotateData;
+struct RS_MoveRotateData;
 
 /**
  * This action class can handle user events to move and at the same
@@ -79,7 +79,7 @@ private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	/** Last status before entering angle. */
-	Status lastStatus;
+    Status lastStatus = SetReferencePoint;
 	/**
 	 * Commands
 	 */

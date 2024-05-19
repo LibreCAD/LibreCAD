@@ -26,6 +26,8 @@
 #ifndef QG_DLGHATCH_H
 #define QG_DLGHATCH_H
 
+#include <memory>
+
 #include "ui_qg_dlghatch.h"
 
 class RS_Hatch;
@@ -35,28 +37,28 @@ class QG_DlgHatch : public QDialog, public Ui::QG_DlgHatch
     Q_OBJECT
 
 public:
-    QG_DlgHatch(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = 0);
-	~QG_DlgHatch();
+    QG_DlgHatch(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
+    ~QG_DlgHatch();
 
     void saveSettings();
 
 public slots:
     virtual void polish();
-    virtual void showEvent( QShowEvent * e );
+    void showEvent( QShowEvent * e ) override;
     virtual void setHatch( RS_Hatch & h, bool isNew );
     virtual void updateHatch();
     virtual void setPattern( const QString & p );
-	virtual void resizeEvent( QResizeEvent * );
+    void resizeEvent( QResizeEvent * ) override;
 	virtual void updatePreview();
 
 protected slots:
     virtual void languageChange();
 
 private:
-    RS_EntityContainer* preview;
-    bool isNew;
-    RS_Pattern* pattern;
-    RS_Hatch* hatch;
+    std::unique_ptr<RS_EntityContainer> preview;
+    bool isNew = false;
+    std::shared_ptr<RS_Pattern> pattern;
+    RS_Hatch* hatch = nullptr;
 
     void init();
 

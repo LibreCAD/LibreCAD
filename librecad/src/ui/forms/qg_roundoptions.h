@@ -40,7 +40,7 @@ class QG_RoundOptions : public QWidget
     Q_OBJECT
 
 public:
-    QG_RoundOptions(QWidget* parent = 0, Qt::WindowFlags fl = 0);
+    QG_RoundOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
     ~QG_RoundOptions();
 
 public slots:
@@ -48,7 +48,7 @@ public slots:
     virtual void updateData();
 
 protected:
-    RS_ActionModifyRound* action;
+    RS_ActionModifyRound* action = nullptr;
 
 protected slots:
     virtual void languageChange();

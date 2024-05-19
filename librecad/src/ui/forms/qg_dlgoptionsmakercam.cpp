@@ -37,6 +37,7 @@ QG_DlgOptionsMakerCam::QG_DlgOptionsMakerCam(QWidget* parent, bool modal, Qt::Wi
     this->gbDashLines->setToolTip(tr("Many CAM's(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, \nwhich can be useful in lasercut of plywood or for papercraft. "));
     this->dSpinBoxDefaultElementWidth->setToolTip(tr("Default width of elements can affect some CAM's/SVG Editors, \nbut ignored by other"));
     this->dSpinBoxDashLinePatternLength->setToolTip(tr("Length of line pattern related to zoom, \nso default step value required for baking"));
+    gbImages->setToolTip(tr("Whether to export points"));
 
     loadSettings();
 }
@@ -59,7 +60,7 @@ void QG_DlgOptionsMakerCam::cancel() {
 
 void QG_DlgOptionsMakerCam::loadSettings() {
 
-    RS_SETTINGS->beginGroup("/ExportMakerCam");
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
 
     updateCheckbox(checkInvisibleLayers, "ExportInvisibleLayers", 0);
     updateCheckbox(checkConstructionLayers, "ExportConstructionLayers", 0);
@@ -67,9 +68,9 @@ void QG_DlgOptionsMakerCam::loadSettings() {
     updateCheckbox(checkEllipsesToBeziers, "ConvertEllipsesToBeziers", 1);
     updateCheckbox(checkImages, "ExportImages", 0);
     updateCheckbox(checkDashDotLines, "BakeDashDotLines", 0);
+    updateCheckbox(checkPoint, "ExportPoints", 0);
     updateDoubleSpinBox(dSpinBoxDefaultElementWidth, "DefaultElementWidth", 1.0);
     updateDoubleSpinBox(dSpinBoxDashLinePatternLength, "DefaultDashLinePatternLength", 2.5);
-    RS_SETTINGS->endGroup();
 }
 
 void QG_DlgOptionsMakerCam::updateCheckbox(QCheckBox* checkbox, QString name, int defaultValue) {
@@ -84,7 +85,7 @@ void QG_DlgOptionsMakerCam::updateDoubleSpinBox(QDoubleSpinBox* dSpinBox, QStrin
 
 void QG_DlgOptionsMakerCam::saveSettings() {
 
-    RS_SETTINGS->beginGroup("/ExportMakerCam");
+    auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
 
     saveBoolean("ExportInvisibleLayers", checkInvisibleLayers);
     saveBoolean("ExportConstructionLayers", checkConstructionLayers);
@@ -92,10 +93,9 @@ void QG_DlgOptionsMakerCam::saveSettings() {
     saveBoolean("ConvertEllipsesToBeziers", checkEllipsesToBeziers);
     saveBoolean("ExportImages", checkImages);
     saveBoolean("BakeDashDotLines", checkDashDotLines);
+    saveBoolean("ExportPoints", checkPoint);
     saveDouble("DefaultElementWidth", dSpinBoxDefaultElementWidth);
     saveDouble("DefaultDashLinePatternLength", dSpinBoxDashLinePatternLength);
-
-    RS_SETTINGS->endGroup();
 }
 
 void QG_DlgOptionsMakerCam::saveBoolean(QString name, QCheckBox* checkbox) {

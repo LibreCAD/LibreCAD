@@ -45,15 +45,15 @@ public:
                         RS_GraphicView& graphicView);
 	~QC_ActionGetPoint();
 
-    virtual void trigger() override;
+     void trigger() override;
 	
-    virtual void mouseMoveEvent(QMouseEvent* e) override;
-    virtual void mouseReleaseEvent(QMouseEvent* e) override;
+     void mouseMoveEvent(QMouseEvent* e) override;
+     void mouseReleaseEvent(QMouseEvent* e) override;
 	
-    virtual void coordinateEvent(RS_CoordinateEvent* e ) override;
+     void coordinateEvent(RS_CoordinateEvent* e ) override;
 
-    virtual void updateMouseButtonHints() override;
-    virtual void updateMouseCursor() override;
+     void updateMouseButtonHints() override;
+     void updateMouseCursor() override;
 
     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);

@@ -92,6 +92,49 @@ void QG_PenToolBar::layerActivated(RS_Layer* l) {
     //}
 }
 
+void QG_PenToolBar::setLayerColor(RS_Color color, bool updateSelection){
+    colorBox->setLayerColor(color);
+    if (updateSelection){
+       colorBox->setCurrentIndex(0);
+    }
+    currentPen->setColor(color);
+    emitPenChanged();
+}
+
+void QG_PenToolBar::setColor(RS_Color color){
+    colorBox->setColor(color);
+}
+
+void QG_PenToolBar::setLayerLineType(RS2::LineType lineType, bool updateSelection){
+    lineTypeBox->setLayerLineType(lineType);
+    if (updateSelection){
+       lineTypeBox->setCurrentIndex(0);
+    }
+    currentPen->setLineType(lineType);
+    emitPenChanged();
+
+}
+
+void QG_PenToolBar::setLineType(RS2::LineType lineType){
+    lineTypeBox->setLineType(lineType);
+}
+
+void QG_PenToolBar::setLayerWidth(RS2::LineWidth width, bool updateSelection){
+    widthBox->setLayerWidth(width);
+    if (updateSelection){
+       widthBox->setCurrentIndex(0);
+    }
+    currentPen->setWidth(width);
+    emitPenChanged();
+}
+
+void QG_PenToolBar::setWidth(RS2::LineWidth width){
+    widthBox->setWidth(width);
+}
+
+void QG_PenToolBar::emitPenChanged(){
+    emit penChanged(*currentPen);
+}
 
 RS_Pen QG_PenToolBar::getPen() const {
 	return *currentPen;
@@ -101,7 +144,8 @@ RS_Pen QG_PenToolBar::getPen() const {
  * Called by the layer list (if this object was previously
  * added as a listener to a layer list).
  */
-void QG_PenToolBar::layerEdited(RS_Layer*) {}
+void QG_PenToolBar::layerEdited(RS_Layer*)
+{}
 
 
 /**

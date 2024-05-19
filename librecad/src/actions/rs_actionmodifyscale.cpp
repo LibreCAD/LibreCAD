@@ -28,25 +28,46 @@
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_coordinateevent.h"
+#include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionModifyScale::Points {
-	RS_ScaleData data;
-	RS_Vector referencePoint;
+    RS_ScaleData data;
+    RS_Vector sourcePoint;
+    RS_Vector targetPoint;
 };
 
+namespace {
+
+/**
+ * @brief getFactor find the factor to scale source to target around reference
+ *        target = reference + (source - reference) * factor
+ * @param reference - the reference
+ * @param source - the source
+ * @param target - the target
+ * @return double - factor
+ */
+double getFactor(double reference, double source, double target) {
+    const double dxOld = source - reference;
+    const double dxNew = target - reference;
+    return (std::abs(dxOld) > RS_TOLERANCE && std::abs(dxNew)) ? dxNew/dxOld : 1.;
+}
+
+}
+
 RS_ActionModifyScale::RS_ActionModifyScale(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Scale Entities",
-						   container, graphicView)
-		, pPoints(new Points{})
+                                           RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Scale Entities",
+                                container, graphicView)
+    , pPoints(std::make_unique<Points>())
 {
-	actionType=RS2::ActionModifyScale;
+    actionType=RS2::ActionModifyScale;
 }
 
 RS_ActionModifyScale::~RS_ActionModifyScale() = default;
@@ -60,9 +81,10 @@ void RS_ActionModifyScale::init(int status) {
 void RS_ActionModifyScale::trigger() {
 
     RS_DEBUG->print("RS_ActionModifyScale::trigger()");
-	if(pPoints->data.factor.valid){
+    deletePreview();
+    if(pPoints->data.factor.valid){
         RS_Modification m(*container, graphicView);
-		m.scale(pPoints->data);
+        m.scale(pPoints->data);
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
     }
@@ -73,12 +95,20 @@ void RS_ActionModifyScale::trigger() {
 void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");
 
-    if (getStatus()==SetReferencePoint) {
+    if (getStatus()!=ShowDialog) {
 
-        RS_Vector mouse = snapPoint(e);
         switch (getStatus()) {
         case SetReferencePoint:
-			pPoints->referencePoint = mouse;
+            pPoints->data.referencePoint = snapPoint(e);
+            break;
+
+        case SetSourcePoint:
+            pPoints->sourcePoint = snapPoint(e);
+            break;
+
+        case SetTargetPoint:
+            pPoints->targetPoint = getTargetPoint(e);
+            showPreview();
             break;
 
         default:
@@ -89,15 +119,43 @@ void RS_ActionModifyScale::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent end");
 }
 
+RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
+{
+    if (!pPoints->data.isotropicScaling)
+        return snapPoint(e);
+    RS_Vector mouse = graphicView->toGraph(e->position());
+    // project mouse to the line (center, source)
+    RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
+    RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
+    snapPoint(projected, true);
+    return projected;
+}
 
+void RS_ActionModifyScale::showPreview()
+{
+    deletePreview();
+    preview->addSelectionFrom(*container);
+    findFactor();
+
+    // RS_Modification only considers selected
+    for(auto* entity: *preview)
+        entity->setSelected(true);
+
+    RS_Modification m(*preview, graphicView);
+    m.scale(pPoints->data);
+
+    for(auto* entity: *preview)
+        entity->setSelected(false);
+    drawPreview();
+}
 
 void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        if (getStatus()== SetReferencePoint){
-             RS_CoordinateEvent ce(snapPoint(e));
-             coordinateEvent(&ce);
+        if (getStatus() != ShowDialog){
+            RS_CoordinateEvent ce(snapPoint(e));
+            coordinateEvent(&ce);
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button()==Qt::RightButton && getStatus() != SetSourcePoint) {
         deletePreview();
         init(getStatus()-1);
     }
@@ -105,17 +163,58 @@ void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
 
 void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
 
-    if (e==NULL || getStatus() != SetReferencePoint) {
+    if (e==nullptr || getStatus() == ShowDialog) {
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
-    setStatus(ShowDialog);
-	if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
-		pPoints->data.referencePoint = mouse;
-        trigger();
-        finish();
+    switch(getStatus()) {
+    case SetReferencePoint:
+    {
+        setStatus(ShowDialog);
+        pPoints->data.referencePoint = mouse;
+        graphicView->setRelativeZero(mouse);
+        if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
+            if (!pPoints->data.toFindFactor) {
+                trigger();
+                finish();
+            } else {
+                if (pPoints->data.toFindFactor)
+                    setStatus(SetSourcePoint);
+                else
+                    setStatus(SetReferencePoint);
+            }
+        }
     }
+    break;
+
+    case SetSourcePoint:
+        if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
+            pPoints->sourcePoint = mouse;
+            setStatus(SetTargetPoint);
+        }
+        break;
+
+    case SetTargetPoint:
+        if (mouse.squaredTo(pPoints->data.referencePoint) > RS_TOLERANCE2) {
+            pPoints->targetPoint = mouse;
+            trigger();
+            finish();
+        }
+        break;
+    default:
+        break;
+    }
+}
+
+void RS_ActionModifyScale::findFactor()
+{
+    auto& p0 = pPoints->data.referencePoint;
+    auto& p1 = pPoints->sourcePoint;
+    auto& p2 = pPoints->targetPoint;
+    pPoints->data.factor.x = getFactor(p0.x, p1.x, p2.x);
+    pPoints->data.factor.y = getFactor(p0.y, p1.y, p2.y);
+    pPoints->data.factor.valid = true;
 }
 
 void RS_ActionModifyScale::updateMouseButtonHints() {
@@ -125,7 +224,16 @@ void RS_ActionModifyScale::updateMouseButtonHints() {
                                            tr("Cancel"));
             break;*/
     case SetReferencePoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify scale center"),
+                                            tr("Cancel"));
+        break;
+        // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
+    case SetSourcePoint:
         RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
+                                            tr("Cancel"));
+        break;
+    case SetTargetPoint:
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
                                             tr("Cancel"));
         break;
     default:
@@ -133,8 +241,6 @@ void RS_ActionModifyScale::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionModifyScale::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::CadCursor);

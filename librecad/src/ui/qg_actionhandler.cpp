@@ -26,7 +26,15 @@
 **********************************************************************/
 
 #include<cmath>
+
+#include <QDockWidget>
+
 #include "qg_actionhandler.h"
+
+#include "qc_applicationwindow.h"
+
+#include "lc_actiondrawparabola4points.h"
+#include "lc_actiondrawparabolaFD.h"
 
 #include "rs_dialogfactory.h"
 #include "rs_commandevent.h"
@@ -48,6 +56,7 @@
 #include "rs_actiondimleader.h"
 #include "rs_actiondimlinear.h"
 #include "rs_actiondimradial.h"
+#include "lc_actiondimarc.h"
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 #include "rs_actiondrawarctangential.h"
@@ -110,6 +119,8 @@
 #include "rs_actionlayerstoggleview.h"
 #include "rs_actionlayerstoggleprint.h"
 #include "lc_actionlayerstoggleconstruction.h"
+#include "lc_actionlayersexport.h"
+#include "rs_actionlibraryinsert.h"
 #include "rs_actionlibraryinsert.h"
 #include "rs_actionlockrelativezero.h"
 #include "rs_actionmodifyattributes.h"
@@ -117,7 +128,6 @@
 #include "rs_actionmodifycut.h"
 #include "rs_actionmodifydelete.h"
 #include "rs_actionmodifydeletefree.h"
-#include "rs_actionmodifydeletequick.h"
 #include "rs_actionmodifyentity.h"
 #include "rs_actionmodifyexplodetext.h"
 #include "rs_actionmodifymirror.h"
@@ -142,9 +152,7 @@
 #include "rs_actionselectsingle.h"
 #include "rs_actionselectwindow.h"
 #include "rs_actionsetrelativezero.h"
-#include "rs_actionsetsnapmode.h"
-#include "rs_actionsetsnaprestriction.h"
-#include "rs_actionsnapintersectionmanual.h"
+#include "lc_actionsnapmiddlemanual.h"
 #include "rs_actiontoolregeneratedimensions.h"
 #include "rs_actionzoomauto.h"
 #include "rs_actionzoomin.h"
@@ -152,7 +160,9 @@
 #include "rs_actionzoomprevious.h"
 #include "rs_actionzoomredraw.h"
 #include "rs_actionzoomwindow.h"
-
+#include "lc_actiondrawrectangle3points.h"
+#include "lc_actiondrawcross.h"
+#include "lc_actiondrawlinesnake.h"
 #include "rs_actiondrawpolyline.h"
 #include "rs_actionpolylineadd.h"
 #include "rs_actionpolylineappend.h"
@@ -163,11 +173,29 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
-
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
+#include "rs_graphicview.h"
 #include "rs_layer.h"
 #include "rs_settings.h"
+#include "lc_actionpenpick.h"
+#include "lc_actionpenapply.h"
+#include "lc_actionpensyncactivebylayer.h"
+#include "lc_actiondrawlineanglerel.h"
+#include "lc_actiondrawlinefrompointtoline.h"
+#include "rs_math.h"
+#include "lc_actiondrawslicedivide.h"
+#include "lc_actiondrawrectangle1point.h"
+#include "lc_actiondrawrectangle2points.h"
+#include "lc_actiondrawcirclebyarc.h"
+#include "lc_actionmodifylinejoin.h"
+#include "lc_actiondrawlinepoints.h"
+#include "lc_actionmodifyduplicate.h"
+#include "lc_actiondrawstar.h"
+#include "lc_actionmodifybreakdivide.h"
+#include "lc_actionmodifylinegap.h"
+#include "lc_actioninfoproperties.h"
+#include "lc_actioninfopickcoordinates.h"
 
 /**
  * Constructor
@@ -198,39 +226,39 @@ void QG_ActionHandler::killAllActions() {
 }
 
 /**
- * @return Current action or NULL.
+ * @return Current action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
 
 	if (view) {
         return view->getCurrentAction();
     } else {
-        return NULL;
+        return nullptr;
     }
 }
 
 /**
  * Sets current action.
  *
- * @return Pointer to the created action or NULL.
+ * @return Pointer to the created action or nullptr.
  */
 RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     RS_DEBUG->print("QG_ActionHandler::setCurrentAction()");
-    RS_ActionInterface* a = NULL;
+    RS_ActionInterface* a = nullptr;
 //    view->killAllActions();
 
     RS_DEBUG->print("QC_ActionHandler::setCurrentAction: "
             "view = %p, document = %p", view, document);
 
     // only global options are allowed without a document:
-    if (view==NULL || document==NULL) {
+    if (view==nullptr || document==nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                 "QG_ActionHandler::setCurrentAction: graphic view or "
-                "document is NULL");
-        return NULL;
+                "document is nullptr");
+        return nullptr;
     }
 
-    auto a_layer = document->getLayerList()->getActive();
+    auto a_layer = (document->getLayerList() != nullptr) ? document->getLayerList()->getActive() : nullptr;
 
     switch (id) {
         //case RS2::ActionFileNew:
@@ -334,7 +362,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         if(getCurrentAction()->rtti() != RS2::ActionSelectSingle) {
             a = new RS_ActionSelectSingle(*document, *view,getCurrentAction());
         }else{
-            a=NULL;
+            a=nullptr;
         }
         break;
     case RS2::ActionSelectContour:
@@ -349,7 +377,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionSelectWindow:
         view->killSelectActions();
-        a = new RS_ActionSelectWindow(*document, *view, true);
+        a = new RS_ActionSelectWindow(view->getTypeToSelect(),*document, *view, true);
         break;
     case RS2::ActionDeselectWindow:
         view->killSelectActions();
@@ -436,6 +464,37 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawLineRectangle:
         a = new RS_ActionDrawLineRectangle(*document, *view);
         break;
+     case RS2::ActionDrawRectangle3Points:
+        a = new LC_ActionDrawRectangle3Points(*document, *view);
+        break;
+     case RS2::ActionDrawRectangle2Points:
+        a = new LC_ActionDrawRectangle2Points(*document, *view);
+        break;
+
+     case RS2::ActionDrawRectangle1Point:
+            a = new LC_ActionDrawRectangle1Point(*document, *view);
+            break;
+     case RS2::ActionDrawCross:
+         a = new LC_ActionDrawCross(*document, *view);
+         break;
+     case RS2::ActionDrawSnakeLine:
+         a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_POINT);
+         break;
+     case RS2::ActionDrawSnakeLineX:
+         a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_X);
+         break;
+      case RS2::ActionDrawSnakeLineY:
+            a = new LC_ActionDrawLineSnake(*document, *view, LC_ActionDrawLineSnake::DIRECTION_Y);
+            break;
+        case RS2::ActionDrawSliceDivideLine:
+            a = new LC_ActionDrawSliceDivide(*document, *view, false);
+            break;
+        case RS2::ActionDrawSliceDivideCircle:
+            a = new LC_ActionDrawSliceDivide(*document, *view, true);
+            break;
+        case RS2::ActionDrawLinePoints:
+            a = new LC_ActionDrawLinePoints(*document, *view);
+            break;
     case RS2::ActionDrawLineBisector:
         a = new RS_ActionDrawLineBisector(*document, *view);
         break;
@@ -457,6 +516,20 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawPolyline:
         a = new RS_ActionDrawPolyline(*document, *view);
         break;
+    case RS2::ActionDrawLineOrthogonalRel:
+        a = new LC_ActionDrawLineAngleRel(*document, *view, 90.0, true);
+        break;
+    case RS2::ActionDrawLineAngleRel:
+         a = new LC_ActionDrawLineAngleRel(*document, *view, 0.0, false);
+         break;
+    case RS2::ActionDrawLineFromPointToLine:{
+         a = new LC_ActionDrawLineFromPointToLine(this, *document, *view);
+         break;
+    }
+    case RS2::ActionDrawStar:{
+        a = new LC_ActionDrawStar(*document, *view);
+        break;
+    }
     case RS2::ActionPolylineAdd:
         a = new RS_ActionPolylineAdd(*document, *view);
         break;
@@ -492,6 +565,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionDrawCircleCR:
         a = new RS_ActionDrawCircleCR(*document, *view);
+        break;
+    case RS2::ActionDrawCircleByArc:
+        a = new LC_ActionDrawCircleByArc(*document, *view);
         break;
     case RS2::ActionDrawCircle2P:
         a = new RS_ActionDrawCircle2P(*document, *view);
@@ -541,6 +617,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDrawEllipseArcAxis:
         a = new RS_ActionDrawEllipseAxis(*document, *view, true);
         a->setActionType(id);
+        break;
+    case RS2::ActionDrawParabola4Points:
+        a = new LC_ActionDrawParabola4Points(*document, *view);
+        break;
+    case RS2::ActionDrawParabolaFD:
+        a = new LC_ActionDrawParabolaFD(*document, *view);
         break;
     case RS2::ActionDrawEllipseFociPoint:
         a = new RS_ActionDrawEllipseFociPoint(*document, *view);
@@ -603,12 +685,32 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionDimAngular:
         a = new RS_ActionDimAngular(*document, *view);
         break;
+    case RS2::ActionDimArc:
+        a = new LC_ActionDimArc(*document, *view);
+        break;
     case RS2::ActionDimLeader:
         a = new RS_ActionDimLeader(*document, *view);
         break;
 
         // Modifying actions:
-        //
+            //
+        case RS2::ActionModifyLineJoin: {
+            a = new LC_ActionModifyLineJoin(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyDuplicate: {
+            a = new LC_ActionModifyDuplicate(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyBreakDivide: {
+            a = new LC_ActionModifyBreakDivide(*document, *view);
+            break;
+        }
+        case RS2::ActionModifyLineGap: {
+            a = new LC_ActionModifyLineGap(*document, *view);
+            break;
+        }
+
     case RS2::ActionModifyAttributes:
 		if(!document->countSelected()){
 			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
@@ -721,7 +823,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         break;
     case RS2::ActionModifyOffset:
     {
-		auto allowedOffsetTypes={RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
+        auto allowedOffsetTypes=QList<RS2::EntityType>{RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
         if(!document->countSelected(true, allowedOffsetTypes)){
             a = new RS_ActionSelect(this, *document, *view,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
 			break;
@@ -810,7 +912,25 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionLockRelativeZero(*document, *view, false);
         break;
 
-        // Info actions:
+        // pen actions
+
+     case RS2::ActionPenPick:
+         a = new LC_ActionPenPick(*document, *view,  false);
+         break;
+     case RS2::ActionPenPickResolved:
+         a = new LC_ActionPenPick(*document, *view, true);
+         break;
+      case RS2::ActionPenApply:
+           a = new LC_ActionPenApply(*document, *view, false);
+           break;
+      case RS2::ActionPenCopy:
+          a = new LC_ActionPenApply(*document, *view, true);
+        break;
+
+      case RS2::ActionPenSyncFromLayer:
+         a = new LC_ActionPenSyncActiveByLayer(*document, *view);
+       break;
+            // Info actions:
         //
     case RS2::ActionInfoInside:
         a = new RS_ActionInfoInside(*document, *view);
@@ -833,11 +953,18 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionInfoTotalLengthNoSelect:
         a = new RS_ActionInfoTotalLength(*document, *view);
         break;
-    case RS2::ActionInfoArea:
-        a = new RS_ActionInfoArea(*document, *view);
-        break;
+        case RS2::ActionInfoArea:
+            a = new RS_ActionInfoArea(*document, *view);
+            break;
+        case RS2::ActionInfoProperties:
+            a = new LC_ActionInfoProperties(*document, *view);
+            break;
+        case RS2::ActionInfoPickCoordinates:
+            a = new LC_ActionInfoPickCoordinates(*document, *view);
+            break;
 
-        // Layer actions:
+
+            // Layer actions:
         //
     case RS2::ActionLayersDefreezeAll:
         a = new RS_ActionLayersFreezeAll(false, *document, *view);
@@ -861,17 +988,28 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionLayersEdit(*document, *view);
         break;
     case RS2::ActionLayersToggleView:
-        a = new RS_ActionLayersToggleView(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersToggleView(*document, *view, a_layer);
         break;
     case RS2::ActionLayersToggleLock:
-        a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersToggleLock(*document, *view, a_layer);
         break;
     case RS2::ActionLayersTogglePrint:
-        a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new RS_ActionLayersTogglePrint(*document, *view, a_layer);
         break;
     case RS2::ActionLayersToggleConstruction:
-        a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
+        if (a_layer != nullptr)
+            a = new LC_ActionLayersToggleConstruction(*document, *view, a_layer);
         break;
+    case RS2::ActionLayersExportSelected:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::SelectedMode);
+        break;
+    case RS2::ActionLayersExportVisible:
+        a = new LC_ActionLayersExport(*document, *view, document->getLayerList(), LC_ActionLayersExport::VisibleMode);
+        break;
+
         // Block actions:
         //
     case RS2::ActionBlocksDefreezeAll:
@@ -1122,8 +1260,19 @@ bool QG_ActionHandler::command(const QString& cmd)
 
     if (cmd.isEmpty())
     {
-		if (RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", true))
-			slotSnapFree();
+        if (snap_toolbar != nullptr && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+            RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: begin");
+            RS_SnapMode smFree = {};
+            RS_SnapMode smGV = snap_toolbar->getSnaps();
+            if (smFree != smGV) {
+                const bool isSnappingFree = view->getDefaultSnapMode() == smFree;
+                view->setDefaultSnapMode(isSnappingFree ? smGV: smFree);
+                RS_DIALOGFACTORY->commandMessage(isSnappingFree?
+                                                     tr("Spacebar: restored snapping mode to normal")
+                                                   : tr("Spacebar: temporarily set snapping mode to free snapping"));
+            }
+            RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: OK");
+        }
         return true;
     }
 
@@ -1362,6 +1511,52 @@ void QG_ActionHandler::slotDrawLineRectangle() {
     setCurrentAction(RS2::ActionDrawLineRectangle);
 }
 
+void QG_ActionHandler::slotDrawLineRectangleRel() {
+    setCurrentAction(RS2::ActionDrawRectangle3Points);
+}
+
+void QG_ActionHandler::slotDrawLineRectangle1Point() {
+    setCurrentAction(RS2::ActionDrawRectangle1Point);
+}
+
+void QG_ActionHandler::slotDrawLineRectangle2Points(){
+    setCurrentAction(RS2::ActionDrawRectangle2Points);
+}
+
+void QG_ActionHandler::slotDrawLineSnake() {
+    setCurrentAction(RS2::ActionDrawSnakeLine);
+}
+
+void QG_ActionHandler::slotDrawLineSnakeX() {
+    setCurrentAction(RS2::ActionDrawSnakeLineX);
+}
+
+void QG_ActionHandler::slotDrawLineSnakeY() {
+    setCurrentAction(RS2::ActionDrawSnakeLineY);
+}
+
+void QG_ActionHandler::slotDrawLineAngleRel(){
+    setCurrentAction(RS2::ActionDrawLineAngleRel);
+}
+
+void QG_ActionHandler::slotDrawLineOrthogonalRel(){
+    setCurrentAction(RS2::ActionDrawLineOrthogonalRel);
+}
+
+void QG_ActionHandler::slotDrawLineOrthogonalTo(){
+    setCurrentAction(RS2::ActionDrawLineFromPointToLine);
+}
+
+
+void QG_ActionHandler::slotDrawSliceDivideLine(){
+    setCurrentAction(RS2::ActionDrawSliceDivideLine);
+}
+
+void QG_ActionHandler::slotDrawSliceDivideCircle(){
+    setCurrentAction(RS2::ActionDrawSliceDivideCircle);
+}
+
+
 void QG_ActionHandler::slotDrawLineBisector() {
     setCurrentAction(RS2::ActionDrawLineBisector);
 }
@@ -1389,6 +1584,7 @@ void QG_ActionHandler::slotDrawLineRelAngle() {
 void QG_ActionHandler::slotDrawPolyline() {
     setCurrentAction(RS2::ActionDrawPolyline);
 }
+
 
 void QG_ActionHandler::slotPolylineAdd() {
     setCurrentAction(RS2::ActionPolylineAdd);
@@ -1433,9 +1629,18 @@ void QG_ActionHandler::slotDrawCircle() {
     setCurrentAction(RS2::ActionDrawCircle);
 }
 
+void QG_ActionHandler::slotDrawCircleCross(){
+    setCurrentAction(RS2::ActionDrawCross);
+}
+
 void QG_ActionHandler::slotDrawCircleCR() {
     setCurrentAction(RS2::ActionDrawCircleCR);
 }
+
+void QG_ActionHandler::slotDrawCircleByArc() {
+    setCurrentAction(RS2::ActionDrawCircleByArc);
+}
+
 
 void QG_ActionHandler::slotDrawCircle2P() {
     setCurrentAction(RS2::ActionDrawCircle2P);
@@ -1507,7 +1712,12 @@ void QG_ActionHandler::slotDrawEllipseCenter3Points() {
 void QG_ActionHandler::slotDrawEllipseInscribe() {
     setCurrentAction(RS2::ActionDrawEllipseInscribe);
 }
-
+void QG_ActionHandler::slotDrawParabola4Points() {
+    setCurrentAction(RS2::ActionDrawParabola4Points);
+}
+void QG_ActionHandler::slotDrawParabolaFD() {
+    setCurrentAction(RS2::ActionDrawParabolaFD);
+}
 void QG_ActionHandler::slotDrawSpline() {
     setCurrentAction(RS2::ActionDrawSpline);
 }
@@ -1558,6 +1768,10 @@ void QG_ActionHandler::slotDimDiametric() {
 
 void QG_ActionHandler::slotDimAngular() {
     setCurrentAction(RS2::ActionDimAngular);
+}
+
+void QG_ActionHandler::slotDimArc() {
+    setCurrentAction(RS2::ActionDimArc);
 }
 
 void QG_ActionHandler::slotDimLeader() {
@@ -1656,7 +1870,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snap_toolbar->setSnaps(s);
     }else{
-    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is NULL");
+    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is nullptr");
     }
 	if(view) {
         view->setDefaultSnapMode(s);
@@ -1665,7 +1879,7 @@ void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
 }
 
 void QG_ActionHandler::slotSnapFree() {
-//    if ( snapFree == NULL) return;
+//    if ( snapFree == nullptr) return;
 //    disableSnaps();
     RS_SnapMode s=getSnaps();
     s.snapFree = !s.snapFree;
@@ -1673,14 +1887,14 @@ void QG_ActionHandler::slotSnapFree() {
 }
 
 void QG_ActionHandler::slotSnapGrid() {
-//    if(snapGrid==NULL) return;
+//    if(snapGrid==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapGrid = !s.snapGrid;
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapEndpoint() {
-//    if(snapEndpoint==NULL) return;
+//    if(snapEndpoint==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = !s.snapEndpoint;
 
@@ -1688,7 +1902,7 @@ void QG_ActionHandler::slotSnapEndpoint() {
 }
 
 void QG_ActionHandler::slotSnapOnEntity() {
-//    if(snapOnEntity==NULL) return;
+//    if(snapOnEntity==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = !s.snapOnEntity;
 
@@ -1697,7 +1911,7 @@ void QG_ActionHandler::slotSnapOnEntity() {
 
 void QG_ActionHandler::slotSnapCenter() {
 //    std::cout<<" QG_ActionHandler::slotSnapCenter(): start"<<std::endl;
-//    if(snapCenter==NULL) return;
+//    if(snapCenter==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapCenter = !s.snapCenter;
     slotSetSnaps(s);
@@ -1733,6 +1947,22 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
         snapToolBar->setSnapMode(RS2::SnapIntersectionManual);
 }*/
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
+}
+
+void QG_ActionHandler::slotSnapMiddleManual()
+{
+    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)
+    {
+        getCurrentAction()->init(-1);
+        return;
+    }
+
+    const RS_Pen currentAppPen { document->getActivePen() };
+    const RS_Pen snapMiddleManual_pen { RS_Pen(RS_Color(255,0,0), RS2::Width01, RS2::DashDotLineTiny) };
+    document->setActivePen(snapMiddleManual_pen);
+    auto a = new LC_ActionSnapMiddleManual(*document, *view, currentAppPen);
+    connect(a, &LC_ActionSnapMiddleManual::signalUnsetSnapMiddleManual, snap_toolbar, &QG_SnapToolBar::slotUnsetSnapMiddleManual);
+    view->setCurrentAction(a);
 }
 
 void QG_ActionHandler::disableSnaps() {
@@ -1815,6 +2045,14 @@ void QG_ActionHandler::slotInfoArea() {
     setCurrentAction(RS2::ActionInfoArea);
 }
 
+void QG_ActionHandler::slotEntityInfo() {
+    setCurrentAction(RS2::ActionInfoProperties);
+}
+
+void QG_ActionHandler::slotPickCoordinates() {
+    setCurrentAction(RS2::ActionInfoPickCoordinates);
+}
+
 void QG_ActionHandler::slotLayersDefreezeAll() {
     setCurrentAction(RS2::ActionLayersDefreezeAll);
 }
@@ -1857,6 +2095,14 @@ void QG_ActionHandler::slotLayersTogglePrint() {
 
 void QG_ActionHandler::slotLayersToggleConstruction() {
     setCurrentAction(RS2::ActionLayersToggleConstruction);
+}
+
+void QG_ActionHandler::slotLayersExportSelected() {
+    setCurrentAction(RS2::ActionLayersExportSelected);
+}
+
+void QG_ActionHandler::slotLayersExportVisible() {
+    setCurrentAction(RS2::ActionLayersExportVisible);
 }
 
 
@@ -1904,9 +2150,52 @@ void QG_ActionHandler::slotBlocksExplode() {
     setCurrentAction(RS2::ActionBlocksExplode);
 }
 
+void QG_ActionHandler::slotModifyLineJoin() {
+    setCurrentAction(RS2::ActionModifyLineJoin);
+}
+
+void QG_ActionHandler::slotModifyDuplicate() {
+    setCurrentAction(RS2::ActionModifyDuplicate);
+}
+
+void QG_ActionHandler::slotDrawStar() {
+    setCurrentAction(RS2::ActionDrawStar);
+}
+
+void QG_ActionHandler::slotModifyBreakDivide() {
+    setCurrentAction(RS2::ActionModifyBreakDivide);
+}
+
+void QG_ActionHandler::slotModifyLineGap() {
+    setCurrentAction(RS2::ActionModifyLineGap);
+}
+
 
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
+}
+
+void QG_ActionHandler::slotPenPick(){
+    setCurrentAction(RS2::ActionPenPick);
+}
+
+
+void QG_ActionHandler::slotPenPickResolved(){
+    setCurrentAction(RS2::ActionPenPickResolved);
+}
+
+void QG_ActionHandler::slotPenApply(){
+    setCurrentAction(RS2::ActionPenApply);
+}
+
+void QG_ActionHandler::slotPenCopy(){
+    setCurrentAction(RS2::ActionPenCopy);
+}
+
+void QG_ActionHandler::slotPenSyncFromLayer(){
+    setCurrentAction(RS2::ActionPenSyncFromLayer);
+//    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
+//    penPaletteWidget->updatePenToolbarByActiveLayer();
 }
 
 void QG_ActionHandler::set_view(RS_GraphicView* gview)
@@ -1944,5 +2233,16 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
     view->setCurrentAction(a);
 }
 
+void QG_ActionHandler::slotRedockWidgets()
+{
+    QList<QDockWidget*> dockwidgets =
+            QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget*>();
+    for(auto* dockwidget: dockwidgets)
+        dockwidget->setFloating(false);
+}
+
+void QG_ActionHandler::slotDrawLinePoints(){
+    setCurrentAction(RS2::ActionDrawLinePoints);
+}
 // EOF
 

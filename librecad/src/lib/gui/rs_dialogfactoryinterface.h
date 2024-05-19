@@ -31,16 +31,14 @@
 #include "rs.h"
 #include <QString>
 
+class QWidget;
+class QG_CommandWidget;
+class QG_CoordinateWidget;
+class QG_MouseWidget;
+class QG_SelectionWidget;
 class RS_ActionInterface;
-struct RS_ArcData;
-class RS_AttributesData;
-class RS_BevelData;
 class RS_Block;
-struct RS_BlockData;
 class RS_BlockList;
-struct RS_CircleData;
-struct RS_DimLinearData;
-struct RS_DimensionData;
 class RS_Document;
 class RS_Entity;
 class RS_EventHandler;
@@ -51,22 +49,27 @@ class RS_Hatch;
 class RS_Insert;
 class RS_Layer;
 class RS_LayerList;
-class RS_MirrorData;
-class RS_MoveData;
-class RS_MoveRotateData;
 class RS_MText;
 class RS_Painter;
-class RS_Rotate2Data;
-class RS_RotateData;
-class RS_RoundData;
-class RS_ScaleData;
 class RS_Solid;
 class RS_Text;
 class RS_Vector;
-class QG_MouseWidget;
-class QG_CoordinateWidget;
-class QG_SelectionWidget;
-class QG_CommandWidget;
+
+struct RS_ArcData;
+struct RS_AttributesData;
+struct RS_BevelData;
+struct RS_BlockData;
+struct RS_CircleData;
+struct RS_DimLinearData;
+struct RS_DimensionData;
+struct RS_MirrorData;
+struct RS_MoveData;
+struct RS_MoveRotateData;
+struct RS_Rotate2Data;
+struct RS_RotateData;
+struct RS_RoundData;
+struct RS_ScaleData;
+
 
 /**
  * Interface for objects that can create and show dialogs.
@@ -247,6 +250,8 @@ public:
     virtual void requestOptions(RS_ActionInterface* action,
                 bool on, bool update = false) = 0;
 
+    virtual void addOptionsWidget(QWidget * options) = 0;
+
     /**
      * This virtual method must be overwritten and must present
      * a widget for snap point with distance options.
@@ -414,7 +419,7 @@ public:
 	 */
 	virtual void updateMouseWidget(const QString& = QString(),
 								   const QString& = QString())=0;
-    virtual void updateArcTangentialOptions(const double& d, bool byRadius)=0;
+    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
      * This virtual method must be overwritten if the graphic view has
@@ -427,6 +432,8 @@ public:
      */
     virtual void updateSelectionWidget(int num, double length) = 0;
 
+    virtual void displayBlockName(const QString& blockName, const bool& display) = 0;
+
     /**
      * This virtual method must be overwritten if the graphic view has
      * a component that is interested in command messages (such as a
@@ -437,10 +444,14 @@ public:
      * @param message The message for the user.
      */
     virtual void commandMessage(const QString& message) = 0;
+    virtual void command(const QString& message) = 0;
+
 	virtual void setMouseWidget(QG_MouseWidget*) = 0;
 	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
 	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
 	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
+
+
 };
 
 #endif

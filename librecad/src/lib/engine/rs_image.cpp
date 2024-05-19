@@ -24,16 +24,44 @@
 **
 **********************************************************************/
 #include<iostream>
+#include <QDir>
+#include <QFileInfo>
 #include <QImage>
+
+#include "rs_debug.h"
+#include "rs_document.h"
+#include "rs_graphicview.h"
 #include "rs_image.h"
 #include "rs_line.h"
+#include "rs_math.h"
+#include "rs_painter.h"
+#include "qc_applicationwindow.h"
 #include "rs_settings.h"
 
-#include "rs_constructionline.h"
-#include "rs_debug.h"
-#include "rs_graphicview.h"
-#include "rs_painterqt.h"
-#include "rs_math.h"
+namespace
+{
+// Return the file path name to use relative to the dxf file folder
+QString imageRelativePathName(QString& imageFile)
+{
+    auto* doc = QC_ApplicationWindow::getAppWindow()->getDocument();
+    if (doc == nullptr || imageFile.isEmpty())
+        return imageFile;
+    QFileInfo dxfFileInfo(doc->getFilename());
+    QFileInfo fileInfo(imageFile);
+    // file exists as input file path
+    if (fileInfo.exists()) {
+        QDir dxfDir(dxfFileInfo.canonicalPath());
+        imageFile = dxfDir.relativeFilePath(imageFile);
+        return fileInfo.canonicalFilePath();
+    }
+    // test a relative file path from the dxf file folder
+    fileInfo.setFile(dxfFileInfo.canonicalPath() + "/" + imageFile);
+    if (fileInfo.exists())
+        return fileInfo.canonicalFilePath();
+    // search the current folder of the dxf for the dxf file name
+    return dxfFileInfo.canonicalPath() + "/" + fileInfo.fileName();
+}
+}
 
 RS_ImageData::RS_ImageData(int _handle,
 						   const RS_Vector& _insertionPoint,
@@ -72,38 +100,6 @@ RS_Image::RS_Image(RS_EntityContainer* parent,
     calculateBorders();
 }
 
-RS_Image::RS_Image(const RS_Image& _image):
-	RS_AtomicEntity(_image.getParent())
-  ,data(_image.data)
-  ,img(_image.img.get()?new QImage(*_image.img):nullptr)
-{
-}
-
-RS_Image& RS_Image::operator = (const RS_Image& _image)
-{
-	data=_image.data;
-	if(_image.img.get()){
-		img.reset(new QImage(*_image.img));
-	}else{
-		img.reset();
-	}
-	return *this;
-}
-
-RS_Image::RS_Image(RS_Image&& _image):
-	RS_AtomicEntity(_image.getParent())
-  ,data(std::move(_image.data))
-  ,img(std::move(_image.img))
-{
-}
-
-RS_Image& RS_Image::operator = (RS_Image&& _image)
-{
-	data=_image.data;
-	img = std::move(_image.img);
-	return *this;
-}
-
 
 RS_Entity* RS_Image::clone() const {
     RS_Image* i = new RS_Image(*this);
@@ -128,11 +124,15 @@ void RS_Image::update() {
     RS_DEBUG->print("RS_Image::update");
 
     // the whole image:
+    QString filePathName = imageRelativePathName(data.file);
+
     //QImage image = QImage(data.file);
-	img.reset(new QImage(data.file));
+    img = std::make_shared<QImage>(filePathName);
 	if (!img->isNull()) {
 		data.size = RS_Vector(img->width(), img->height());
 		calculateBorders(); // image update need this.
+    } else {
+        LC_LOG(RS_Debug::D_ERROR)<<"RS_Image::"<<__func__<<"(): image file not found: "<<data.file<<"("<<filePathName<<")";
     }
 
     RS_DEBUG->print("RS_Image::update: OK");
@@ -391,11 +391,10 @@ void RS_Image::draw(RS_Painter* painter, RS_GraphicView* view, double& /*pattern
 
 	RS_Vector scale{view->toGuiDX(data.uVector.magnitude()),
 								view->toGuiDY(data.vVector.magnitude())};
-    double angle = data.uVector.angle();
 
-	painter->drawImg(*img,
+    painter->drawImg(*img,
                      view->toGui(data.insertionPoint),
-                     angle, scale);
+                     data.uVector, data.vVector, scale);
 
     if (isSelected() && !(view->isPrinting() || view->isPrintPreview())) {
         RS_VectorSolutions sol = getCorners();

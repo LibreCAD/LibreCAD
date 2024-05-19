@@ -25,19 +25,19 @@
 **
 **********************************************************************/
 
-#include<iostream>
 #include<cmath>
-#include "rs_dimangular.h"
-#include "rs_math.h"
+#include<iostream>
 
-#include "rs_constructionline.h"
 #include "rs_arc.h"
-#include "rs_line.h"
-#include "rs_graphic.h"
-#include "rs_information.h"
-#include "rs_solid.h"
-#include "rs_mtext.h"
+#include "rs_constructionline.h"
 #include "rs_debug.h"
+#include "rs_dimangular.h"
+#include "rs_information.h"
+#include "rs_line.h"
+#include "rs_math.h"
+#include "rs_mtext.h"
+#include "rs_solid.h"
+#include "rs_units.h"
 
 RS_DimAngularData::RS_DimAngularData():
     definitionPoint1( false),
@@ -241,41 +241,49 @@ void RS_DimAngular::arrow(const RS_Vector& point,
                           const LC_DimAngularVars& av,
                           const RS_Pen& pen)
 {
-    if (RS_TOLERANCE_ANGLE >= av.arrow()) {
-        // arrow size is 0, no need to add an arrow
-        return;
-    }
+    if ((getTickSize() * getGeneralScale()) < 0.01)
+    {
+        double arrowAngle {0.0};
 
-    double arrowAngle {0.0};
+        if (outsideArrows) {
+            // for outside arrows use tangent angle on endpoints
+            // because for small radius the arrows looked inclined
+            arrowAngle = angle + std::copysign( M_PI_2, direction);
+        }
+        else
+        {
+            // compute the angle from center to the endpoint of the arrow on the arc
+            double endAngle {0.0};
 
-    if (outsideArrows) {
-        // for outside arrows use tangent angle on endpoints
-        // because for small radius the arrows looked inclined
-        arrowAngle = angle + std::copysign( M_PI_2, direction);
-    }
-    else {
-        // compute the angle from center to the endpoint of the arrow on the arc
-        double endAngle {0.0};
-        if (RS_TOLERANCE_ANGLE < dimRadius) {
-            endAngle = av.arrow() / dimRadius;
+            if (RS_TOLERANCE_ANGLE < dimRadius) endAngle = av.arrow() / dimRadius;
+
+            // compute the endpoint of the arrow on the arc
+            RS_Vector arrowEnd;
+            arrowEnd.setPolar(dimRadius, angle + std::copysign(endAngle, direction));
+            arrowEnd  += dimCenter;
+            arrowAngle = arrowEnd.angleTo( point);
         }
 
-        // compute the endpoint of the arrow on the arc
-        RS_Vector arrowEnd;
-        arrowEnd.setPolar( dimRadius, angle + std::copysign( endAngle, direction));
-        arrowEnd += dimCenter;
-        arrowAngle = arrowEnd.angleTo( point);
+        RS_SolidData sd;
+        RS_Solid* arrow;
+
+        arrow = new RS_Solid(this, sd);
+        arrow->shapeArrow(point, arrowAngle, av.arrow());
+        arrow->setPen( pen);
+        arrow->setLayer(nullptr);
+        addEntity(arrow);
     }
+    else
+    {
+        RS_Line* tick;
+        RS_Vector tickVector = RS_Vector::polar( getTickSize() * getGeneralScale(), 
+                                                 (dimAngleL1 + dimAngleL2) / 2.0);
 
-    RS_SolidData sd;
-    RS_Solid* arrow;
-
-    arrow = new RS_Solid( this, sd);
-    arrow->shapeArrow( point, arrowAngle, av.arrow());
-    arrow->setPen( pen);
-    arrow->setLayer( nullptr);
-    addEntity( arrow);
-
+        tick = new RS_Line(this, point - tickVector, point + tickVector);
+        tick->setPen(pen);
+        tick->setLayer(nullptr);
+        addEntity(tick);
+    }
 }
 
 /**

@@ -46,10 +46,7 @@ QG_InsertOptions::QG_InsertOptions(QWidget* parent, Qt::WindowFlags fl)
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_InsertOptions::~QG_InsertOptions()
-{
-	saveSettings();
-}
+QG_InsertOptions::~QG_InsertOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -119,5 +116,6 @@ void QG_InsertOptions::updateData() {
 		action->setRows(ui->sbRows->value());
 		action->setColumnSpacing(RS_Math::eval(ui->leColumnSpacing->text()));
 		action->setRowSpacing(RS_Math::eval(ui->leRowSpacing->text()));
+        saveSettings();
     }
 }

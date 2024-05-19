@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifyrevertdirection.h"
 
 #include <QAction>
-#include "rs_graphic.h"
-#include "rs_modification.h"
+
+#include "rs_actionmodifyrevertdirection.h"
 #include "rs_debug.h"
+#include "rs_modification.h"
 
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
 	:RS_ActionInterface("Revert direction", container, graphicView)

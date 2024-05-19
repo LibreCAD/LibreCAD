@@ -25,12 +25,25 @@
 **********************************************************************/
 #include "qg_lineangleoptions.h"
 
-#include "rs_actioninterface.h"
 #include "rs_actiondrawlineangle.h"
-#include "rs_settings.h"
-#include "rs_math.h"
+#include "rs_actioninterface.h"
 #include "rs_debug.h"
+#include "rs_dimension.h"
+#include "rs_math.h"
+#include "rs_settings.h"
 #include "ui_qg_lineangleoptions.h"
+
+namespace {
+// format a number with specified digits after point
+QString formatNumber(double value, int precision = 8)
+{
+    precision = std::max(precision, 0);
+    precision = std::min(precision, 16);
+    QString text = QString("%1").arg(value, 0, 'f', precision);
+    RS_Dimension::stripZerosLinear(text, 12);
+    return text;
+}
+}
 
 /*
  *  Constructs a QG_LineAngleOptions as a child of 'parent', with the
@@ -38,18 +51,15 @@
  */
 QG_LineAngleOptions::QG_LineAngleOptions(QWidget* parent, Qt::WindowFlags fl)
     : QWidget(parent, fl)
-	, ui(new Ui::Ui_LineAngleOptions{})
+    , ui(std::make_unique<Ui::Ui_LineAngleOptions>())
 {
-	ui->setupUi(this);
+    ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_LineAngleOptions::~QG_LineAngleOptions()
-{
-	saveSettings();
-}
+QG_LineAngleOptions::~QG_LineAngleOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
@@ -57,7 +67,7 @@ QG_LineAngleOptions::~QG_LineAngleOptions()
  */
 void QG_LineAngleOptions::languageChange()
 {
-	ui->retranslateUi(this);
+    ui->retranslateUi(this);
 }
 
 void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
@@ -66,45 +76,44 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
                 ||a->rtti()==RS2::ActionDrawLineHorizontal
                 ||a->rtti()==RS2::ActionDrawLineVertical
                 )
-    ){
-		action = static_cast<RS_ActionDrawLineAngle*>(a);
+            ){
+        action = static_cast<RS_ActionDrawLineAngle*>(a);
         m_bFixedAngle=action->hasFixedAngle();
-		ui->leLength->show();
-		ui->lLength->show();
-		ui->leAngle->setVisible(!action->hasFixedAngle());
-		ui->lAngle->setVisible(!action->hasFixedAngle());
+        ui->leLength->show();
+        ui->lLength->show();
+        ui->leAngle->setVisible(!action->hasFixedAngle());
+        ui->lAngle->setVisible(!action->hasFixedAngle());
 
         QString sa;
         QString sl;
-        int sp;
 
         // settings from action:
-        if (update) {
-			if (!action->hasFixedAngle())
+        if (update && action->getLength() > RS_TOLERANCE) {
+            if (!action->hasFixedAngle())
                 sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
             sl = QString("%1").arg(action->getLength());
-			sp = action->getSnapPoint();
+            m_snapPoint = action->getSnapPoint();
         } else {
-        // settings from config file:
+            // settings from config file:
             RS_SETTINGS->beginGroup("/Draw");
-			if (!action->hasFixedAngle()) {
+            if (!action->hasFixedAngle()) {
                 sa = RS_SETTINGS->readEntry("/LineAngleAngle", "30.0");
             } else {
-                sa = QString("%1").arg(action->getAngle());
+                sa = formatNumber(RS_Math::rad2deg(action->getAngle()));
             }
             sl = RS_SETTINGS->readEntry("/LineAngleLength", "10.0");
-            sp = RS_SETTINGS->readNumEntry("/LineAngleSnapPoint", 0);
+            m_snapPoint = RS_SETTINGS->readNumEntry("/LineAngleSnapPoint", 0);
             RS_SETTINGS->endGroup();
-			action->setSnapPoint(sp);
+            action->setSnapPoint(m_snapPoint);
         }
 
-		ui->leAngle->setText(sa);
-		ui->leLength->setText(sl);
-				ui->cbSnapPoint->setCurrentIndex(sp);
+        ui->leAngle->setText(sa);
+        ui->leLength->setText(sl);
+        ui->cbSnapPoint->setCurrentIndex(m_snapPoint);
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LineAngleOptions::setAction: wrong action type");
-		this->action = nullptr;
+        RS_DEBUG->print(RS_Debug::D_ERROR,
+                        "QG_LineAngleOptions::setAction: wrong action type");
+        action = nullptr;
     }
 }
 
@@ -112,33 +121,41 @@ void QG_LineAngleOptions::setAction(RS_ActionInterface* a, bool update) {
   class
   need to implement in shared_ptr*/
 void QG_LineAngleOptions::saveSettings() {
-//    if (action) {
-//        RS_SETTINGS->beginGroup("/Draw");
-//        if (!action->hasFixedAngle()) {
-//            RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(action->getAngle()));
-//        }
-//        RS_SETTINGS->writeEntry("/LineAngleLength", action->getLength());
-//        RS_SETTINGS->writeEntry("/LineAngleSnapPoint", action->getSnapPoint());
-//        RS_SETTINGS->endGroup();
-//    }
+    if (action != nullptr) {
+        RS_SETTINGS->beginGroup("/Draw");
+        if (!m_bFixedAngle) {
+            QString angle = formatNumber(RS_Math::rad2deg(action->getAngle()));
+            RS_SETTINGS->writeEntry("/LineAngleAngle", angle);
+        }
+        if (action->getLength() > RS_TOLERANCE) {
+            QString length = formatNumber(action->getLength());
+            RS_SETTINGS->writeEntry("/LineAngleLength", length);
+        }
+        RS_SETTINGS->writeEntry("/LineAngleSnapPoint", m_snapPoint);
+        RS_SETTINGS->endGroup();
+    }
 }
 
 void QG_LineAngleOptions::updateAngle(const QString& a) {
-    if (action && !action->hasFixedAngle()) {
+    if (action != nullptr && !action->hasFixedAngle()) {
         action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+        saveSettings();
     }
 }
 
 void QG_LineAngleOptions::updateLength(const QString& l) {
-    if (action) {
-        bool ok(false);
+    if (action != nullptr) {
+        bool ok = false;
         double length=RS_Math::eval(l,&ok);
-        if(ok) action->setLength(length);
+        if(ok)
+            action->setLength(length);
+        saveSettings();
     }
 }
 
 void QG_LineAngleOptions::updateSnapPoint(int sp) {
-    if (action) {
+    if (action != nullptr) {
         action->setSnapPoint(sp);
+        saveSettings();
     }
 }

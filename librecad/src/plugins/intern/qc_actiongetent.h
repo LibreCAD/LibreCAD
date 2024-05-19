@@ -52,9 +52,8 @@ class QC_ActionGetEnt : public RS_ActionInterface {
 public:
     QC_ActionGetEnt(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-    ~QC_ActionGetEnt() {}
 
-    virtual void updateMouseButtonHints();
+    void updateMouseButtonHints() override;
 
 /*    virtual void init(int status=0);
 	
@@ -63,13 +62,13 @@ public:
     virtual void updateMouseCursor();
     virtual void updateToolBar();*/
 
-    virtual void trigger();
-    virtual void keyPressEvent(QKeyEvent* e);
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-    virtual void updateMouseCursor();
+    void trigger() override;
+    void keyPressEvent(QKeyEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
+    void updateMouseCursor() override;
 
     void setMessage(QString msg);
-    bool isCompleted(){return completed;}
+    bool isCompleted() const {return completed;}
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
 private:

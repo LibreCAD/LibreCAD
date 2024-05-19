@@ -26,9 +26,25 @@
 
 // RVT_PORT changed QSettings s(QSettings::Ini) to QSettings s("./qcad.ini", QSettings::IniFormat);
 #include <QSettings>
+
+#include "rs_debug.h"
 #include "rs_settings.h"
 
-RS_Settings* RS_Settings::uniqueInstance = nullptr;
+RS_Settings::GroupGuard::GroupGuard(QString group): m_group{std::move(group)}
+{}
+
+RS_Settings::GroupGuard::~GroupGuard()
+{
+    try {
+        RS_SETTINGS->endGroup();
+        if (!m_group.isEmpty()) {
+            RS_SETTINGS->beginGroup(m_group);
+        }
+    } catch (...) {
+        LC_LOG(RS_Debug::D_CRITICAL)<<"RS_SETTINGS cleanup error";
+    }
+}
+
 bool RS_Settings::save_is_allowed = true;
 
 RS_Settings::RS_Settings():
@@ -37,9 +53,7 @@ RS_Settings::RS_Settings():
 }
 
 RS_Settings* RS_Settings::instance() {
-	if (!uniqueInstance) {
-		uniqueInstance = new RS_Settings();
-	}
+    static RS_Settings* uniqueInstance = new RS_Settings();
 	return uniqueInstance;
 }
 
@@ -54,7 +68,7 @@ RS_Settings* RS_Settings::instance() {
 void RS_Settings::init(const QString& companyKey,
                        const QString& appKey) {
 
-    group = "";
+    m_group = "";
 	
     this->companyKey = companyKey;
     this->appKey = appKey;
@@ -64,21 +78,18 @@ void RS_Settings::init(const QString& companyKey,
     initialized = true;
 }
 
-
-/**
- * Destructor
- */
-RS_Settings::~RS_Settings() {
-}
-
-
-
-void RS_Settings::beginGroup(const QString& group) {
-    this->group = group;
+void RS_Settings::beginGroup(QString group) {
+    m_group = std::move(group);
 }
 
 void RS_Settings::endGroup() {
-    this->group = "";
+    m_group.clear();
+}
+
+std::unique_ptr<RS_Settings::GroupGuard> RS_Settings::beginGroupGuard(QString group) {
+    auto guard = std::make_unique<RS_Settings::GroupGuard>(std::move(m_group));
+    m_group = std::move(group);
+    return guard;
 }
 
 bool RS_Settings::writeEntry(const QString& key, int value) {
@@ -105,7 +116,7 @@ bool RS_Settings::writeEntry(const QString& key, const QVariant& value) {
 	QSettings s(companyKey, appKey);
     // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
-    s.setValue(QString("%1%2").arg(group).arg(key), value);
+    s.setValue(QString("%1%2").arg(m_group).arg(key), value);
 	cache[key]=value;
 
     return true;
@@ -123,10 +134,10 @@ QString RS_Settings::readEntry(const QString& key,
     	// RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 		
 		if (ok) {
-			*ok=s.contains(QString("%1%2").arg(group).arg(key));
+            *ok=s.contains(QString("%1%2").arg(m_group).arg(key));
 		}
 		
-        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+        ret = s.value(QString("%1%2").arg(m_group).arg(key), QVariant(def));
 		cache[key]=ret;
     }
 
@@ -144,10 +155,10 @@ QByteArray RS_Settings::readByteArrayEntry(const QString& key,
         // RVT_PORT not supported anymore s.insertSearchPath(QSettings::Windows, companyKey);
 
                 if (ok) {
-                        *ok=s.contains(QString("%1%2").arg(group).arg(key));
+                        *ok=s.contains(QString("%1%2").arg(m_group).arg(key));
                 }
 
-        ret = s.value(QString("%1%2").arg(group).arg(key), QVariant(def));
+        ret = s.value(QString("%1%2").arg(m_group).arg(key), QVariant(def));
 		cache[key]=ret;
     }
 
@@ -161,12 +172,14 @@ int RS_Settings::readNumEntry(const QString& key, int def)
 	if (!value.isValid())
 	{
 		QSettings s(companyKey, appKey);
-		QString str = QString("%1%2").arg(group).arg(key);
+        QString str = QString("%1%2").arg(m_group).arg(key);
 		// qDebug() << str;
 		value = s.value(str, QVariant(def));
 		cache[key] = value;
 	}
-	return value.toInt();
+    unsigned long long uValue = value.toULongLong();
+    uValue = uValue % 0x80000000ull;
+    return int(uValue);
 }
 
 

@@ -29,6 +29,7 @@
 #include "rs_circle.h"
 #include "rs_graphic.h"
 #include "rs_math.h"
+//#include "rs_debug.h"
 
 /*
  *  Constructs a QG_DlgCircle as a child of 'parent', with the
@@ -64,8 +65,7 @@ void QG_DlgCircle::languageChange()
 
 void QG_DlgCircle::setCircle(RS_Circle& c) {
     circle = &c;
-    //pen = circle->getPen();
-    wPen->setPen(circle->getPen(false), true, false, "Pen");
+
     RS_Graphic* graphic = circle->getGraphic();
     if (graphic) {
         cbLayer->init(*(graphic->getLayerList()), false, false);
@@ -74,18 +74,22 @@ void QG_DlgCircle::setCircle(RS_Circle& c) {
     if (lay) {
         cbLayer->setLayer(*lay);
     }
+
+    wPen->setPen(circle, lay, "Pen");
     QString s;
     s.setNum(circle->getCenter().x);
     leCenterX->setText(s);
     s.setNum(circle->getCenter().y);
     leCenterY->setText(s);
     s.setNum(circle->getRadius());
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::setCircle, leRadius->setText '%s'",qPrintable(s));
     leRadius->setText(s);
 }
 
 void QG_DlgCircle::updateCircle() {
     circle->setCenter(RS_Vector(RS_Math::eval(leCenterX->text()),
                                   RS_Math::eval(leCenterY->text())));
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgCircle::updateCircle, setRadius '%s'",qPrintable(leRadius->text()));
     circle->setRadius(RS_Math::eval(leRadius->text()));
     circle->setPen(wPen->getPen());
     circle->setLayer(cbLayer->currentText());

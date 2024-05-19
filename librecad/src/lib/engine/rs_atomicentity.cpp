@@ -22,6 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 #include "rs_atomicentity.h"
+#include "rs_graphic.h"
+#include "rs_graphicview.h"
+#include "rs_painter.h"
+#include "rs_units.h"
+
 RS_AtomicEntity::RS_AtomicEntity(RS_EntityContainer* parent) : RS_Entity(parent) {}
 
 bool RS_AtomicEntity::isContainer() const {
@@ -203,4 +208,19 @@ void RS_AtomicEntity::moveSelectedRef(const RS_Vector& ref, const RS_Vector& off
 	if (isSelected()) {
 		moveRef(ref, offset);
 	}
+}
+
+void RS_AtomicEntity::updateDashOffset(RS_Painter& painter, RS_GraphicView& view, double& patternOffset) const
+{
+    // Adjust dash offset
+    RS_Pen pen = painter.getPen();
+    if (pen.getLineType() == RS2::SolidLine || view.getGraphic() == nullptr)
+        return;
+
+    // factor from model space to GUI
+    const double toMm = RS_Units::convert(1., view.getGraphic()->getUnit(), RS2::Millimeter);
+
+    pen.setDashOffset(patternOffset * toMm);
+    painter.setPen(pen);
+    patternOffset -= getLength() * toMm;
 }

@@ -26,36 +26,23 @@
 
 #include "lc_xmlwriterinterface.h"
 
+#include "lc_splinepoints.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
+#include "rs_debug.h"
 #include "rs_ellipse.h"
-#include "rs_hatch.h"
+#include "rs_graphic.h"
 #include "rs_image.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
-#include "rs_leader.h"
 #include "rs_line.h"
-#include "rs_dimaligned.h"
-#include "rs_dimangular.h"
-#include "rs_dimdiametric.h"
-#include "rs_dimlinear.h"
-#include "rs_dimradial.h"
-#include "rs_hatch.h"
-#include "rs_image.h"
-#include "rs_insert.h"
-#include "rs_mtext.h"
-#include "rs_polyline.h"
+#include "rs_math.h"
 #include "rs_point.h"
+#include "rs_polyline.h"
 #include "rs_spline.h"
-#include "lc_splinepoints.h"
-#include "rs_graphic.h"
-#include "rs_system.h"
-#include "rs_text.h"
 #include "rs_units.h"
 #include "rs_utility.h"
-#include "rs_math.h"
-#include "rs_debug.h"
 
 namespace {
 const std::string NAMESPACE_URI_SVG = "http://www.w3.org/2000/svg";
@@ -63,16 +50,16 @@ const std::string NAMESPACE_URI_LC = "https://librecad.org";
 const std::string NAMESPACE_URI_XLINK = "http://www.w3.org/1999/xlink";
 }
 
-LC_MakerCamSVG::LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
+LC_MakerCamSVG::LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter,
                                bool writeInvisibleLayers,
                                bool writeConstructionLayers,
-							   bool writeBlocksInline,
+                               bool writeBlocksInline,
                                bool convertEllipsesToBeziers,
                                bool exportImages,
                                bool convertLineTypes,
                                double defaultElementWidth,
                                double defaultDashLinePatternLength):
-  xmlWriter(xmlWriter)
+  xmlWriter(std::move(xmlWriter))
   ,writeInvisibleLayers(writeInvisibleLayers)
   ,writeConstructionLayers(writeConstructionLayers)
   ,writeBlocksInline(writeBlocksInline)
@@ -256,7 +243,9 @@ void LC_MakerCamSVG::writeEntity(RS_Entity* entity) {
             writeInsert((RS_Insert*)entity);
             break;
         case RS2::EntityPoint:
-            writePoint((RS_Point*)entity);
+            if (m_exportPoints) {
+                writePoint((RS_Point*)entity);
+            }
             break;
         case RS2::EntityLine:
             writeLine((RS_Line*)entity);
@@ -295,13 +284,22 @@ void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
 
     RS_Block* block = insert->getBlockForInsert();
 
-    RS_Vector insertionpoint = convertToSvg(insert->getInsertionPoint());
+    RS_Vector insertionpoint = insert->getInsertionPoint();
+    // The conversion from drawing space to the svg space (column major) transform matrix(M):
+    // 1  0  0
+    // 0 -1  max.y
+    // 0  0  1
+    // Or: MV = RV + T, with R the rotation part, T the translation part, T=(0; max.y)
+    // For insertions the transform should be M(V + I), with I as the insertion point offset
+    // M(V+I) = R(V+I) + T = M(V) + RI
+    // Therefore, insertion point offset means RI in SVG offset
+    // (x, y) -> (x, -y)
 
     if (writeBlocksInline) {
 
         RS_DEBUG->print("RS_MakerCamSVG::writeInsert: Writing insert inline ...");
 
-        offset.set(insertionpoint.x, insertionpoint.y - (max.y - min.y));
+        offset.set(insertionpoint.x, - insertionpoint.y);
 
         xmlWriter->addElement("g", NAMESPACE_URI_SVG);
 
@@ -320,7 +318,7 @@ void LC_MakerCamSVG::writeInsert(RS_Insert* insert) {
         xmlWriter->addElement("use", NAMESPACE_URI_SVG);
 
         xmlWriter->addAttribute("x", lengthXml(insertionpoint.x));
-        xmlWriter->addAttribute("y", lengthXml(insertionpoint.y - (max.y - min.y)));
+        xmlWriter->addAttribute("y", lengthXml(- insertionpoint.y));
         xmlWriter->addAttribute("href", "#" + std::to_string(block->getId()), NAMESPACE_URI_XLINK);
 
         xmlWriter->closeElement();

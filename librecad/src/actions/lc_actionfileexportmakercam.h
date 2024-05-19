@@ -26,14 +26,19 @@
 
 #include "rs_actioninterface.h"
 
+class QString;
+class RS_Graphic;
+
 class LC_ActionFileExportMakerCam : public RS_ActionInterface {
     Q_OBJECT
 public:
-	LC_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
+    LC_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
 
-	void init(int status=0) override;
-	void trigger() override;
+    void init(int status=0) override;
+    void trigger() override;
 
+    // helper function to generate SVG
+    static bool writeSvg(const QString& fileName, RS_Graphic& graphic);
 };
 
 #endif

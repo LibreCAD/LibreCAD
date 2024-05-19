@@ -48,8 +48,13 @@ namespace DPI {
         HAlignRight     /*!< Right */
     };
 
+    //! Options for what to do with originals in a modification
+    enum Disposition {
+	DELETE_ORIGINAL,
+	KEEP_ORIGINAL
+    };
 
-   //! Entity's type.
+    //! Entity's type.
     enum ETYPE {
         POINT,
         LINE,
@@ -210,6 +215,8 @@ class Plug_Entity
 public:
     virtual ~Plug_Entity() {}
 
+    virtual int getEntityType();
+
     //! Obtain the entity data.
     /*!
     * The data is a QHash with the EDATA keys relevant to the type of entity
@@ -234,7 +241,7 @@ public:
     //! Update the polyline list of vertex.
     /*!
     * The data is a QList of Plug_VertexData with the coordinates of each vertex to the
-    * polyline the cuurent vertex are removed and replaced for the new list.
+    * polyline the current vertex are removed and replaced for the new list.
     *  \param data pointer to a QList<Plug_VertexData> with the coordinates vertex's.
     */
     virtual void updatePolylineData(QList<Plug_VertexData> *data) = 0;
@@ -242,24 +249,34 @@ public:
     //! Move the entity.
     /*!
     *  \param offset move the entity by the given QPointF.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void move(QPointF offset) = 0;
+    virtual void move(QPointF offset, DPI::Disposition disp = DPI::DELETE_ORIGINAL ) = 0;
 
-	virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle)=0;
+    //! Move and rotate the entity.
+    /*!
+    *  \param offset move the entity by the given QPointF.
+    *  \param center center of rotation
+    *  \param angle angle to rotate
+    *  \param disp whether to delete the original entity or keep it
+    */
+    virtual void moveRotate(QPointF const& offset, QPointF const& center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! rotate the entity.
     /*!
     *  \param center center of rotation.
     *  \param angle angle to rotate.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void rotate(QPointF center, double angle) = 0;
+    virtual void rotate(QPointF center, double angle, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! Scale the entity.
     /*!
     *  \param center base point for scale.
     *  \param factor scale factor.
+    *  \param disp whether to delete the original entity or keep it
     */
-    virtual void scale(QPointF center, QPointF factor) = 0;
+    virtual void scale(QPointF center, QPointF factor, DPI::Disposition disp = DPI::DELETE_ORIGINAL) = 0;
 
     //! Utility: Get color as string.
     /*!
@@ -466,6 +483,17 @@ public:
     */
     virtual bool getSelect(QList<Plug_Entity *> *sel, const QString& message = "") = 0;
 
+    //! Gets a entities selection based on the provided type.
+    /*! Prompt message or an default message to the user asking for a selection.
+    * You can delete all, the Plug_Entity and the returned QList wen no more needed.
+    * \param sel a QList of pointers to Plug_Entity handled the selected entities.
+    * \param message an optional QString with prompt message.
+    * \param type is the required entity type
+    * \return true if success.
+    * \return false if fail, i.e. user cancel.
+    */
+    virtual bool getSelectByType(QList<Plug_Entity *> *sel, enum DPI::ETYPE type, const QString& message = "") = 0;
+
     //! Gets all entities in document.
     /*! You can delete all, the Plug_Entity and the returned QList wen no more needed.
     * \param sel a QList of pointers to Plug_Entity handled the selected entities.
@@ -474,6 +502,8 @@ public:
     * \return false if fail, i.e. user cancel.
     */
     virtual bool getAllEntities(QList<Plug_Entity *> *sel, bool visible = false) = 0;
+
+    virtual void unselectEntities() = 0;
 
     virtual bool getVariableInt(const QString& key, int *num) = 0;
     virtual bool getVariableDouble(const QString& key, double *num) = 0;

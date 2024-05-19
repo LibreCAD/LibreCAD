@@ -39,13 +39,29 @@
  * @param fileName File name of a DXF file defining the pattern
  */
 RS_Pattern::RS_Pattern(const QString& fileName)
-		: RS_EntityContainer(NULL)
+        : RS_EntityContainer(nullptr)
 		,fileName(fileName)
 		,loaded(false)
 {
 	RS_DEBUG->print("RS_Pattern::RS_Pattern() ");
 }
 
+
+/**
+ * Clone
+ *
+ * @author{Dongxu Li}
+ */
+RS_Entity* RS_Pattern::clone() const
+{
+    auto* cloned = new RS_Pattern(fileName);
+    cloned->loaded = loaded;
+    if (loaded) {
+            for(auto* entity: *this)
+            cloned->addEntity(isOwner() ? entity->clone() : entity);
+        }
+    return cloned;
+}
 
 /**
  * Loads the given pattern file into this pattern.
@@ -61,21 +77,19 @@ bool RS_Pattern::loadPattern() {
 
     RS_DEBUG->print("RS_Pattern::loadPattern");
 
+    // Search for the appropriate pattern if we have only the name of the pattern:
     QString path;
 
-    // Search for the appropriate pattern if we have only the name of the pattern:
-    if (!fileName.toLower().contains(".dxf")) {
-        QStringList patterns = RS_SYSTEM->getPatternList();
-        QFileInfo file;
-        for (QStringList::Iterator it = patterns.begin();
-                it!=patterns.end();
-                it++) {
-
-            if (QFileInfo(*it).baseName().toLower()==fileName.toLower()) {
-                path = *it;
+    if (!fileName.endsWith(".dxf", Qt::CaseInsensitive)) {
+        foreach (const QString& path0, RS_SYSTEM->getPatternList()) {
+            if (QFileInfo(path0).baseName().toLower()==fileName.toLower()) {
+                path = path0;
                 RS_DEBUG->print("Pattern found: %s", path.toLatin1().data());
                 break;
             }
+        }
+        if (path.isEmpty()) {
+                RS_DEBUG->print("Pattern not found: %s", fileName.toLatin1().data());
         }
     }
 
@@ -92,11 +106,11 @@ bool RS_Pattern::loadPattern() {
 
 	RS_Graphic gr;
 	RS_FileIO::instance()->fileImport(gr, path);
-	for(auto e: gr){
-		if (e->rtti()==RS2::EntityLine ||
+    for(const auto* e: gr){
+        if (e && (e->rtti()==RS2::EntityLine ||
 				e->rtti()==RS2::EntityArc||
 				e->rtti()==RS2::EntityEllipse
-				) {
+                  )) {
             RS_Layer* l = e->getLayer();
             RS_Entity* cl = e->clone();
             cl->reparent(this);

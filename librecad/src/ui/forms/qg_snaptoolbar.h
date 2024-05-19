@@ -54,6 +54,8 @@ public:
 
 public slots:
 	void setSnaps(RS_SnapMode const & s);
+    void slotEnableRelativeZeroSnaps(const bool);
+    void slotUnsetSnapMiddleManual();
 
 private slots:
     void actionTriggered(void);
@@ -61,6 +63,7 @@ private slots:
     void slotRestrictNothing(bool checked);
 
 private:
+    QAction* createAction(QString icon, QString tip, QActionGroup* group);
 
 	QG_ActionHandler* actionHandler;
 
@@ -72,6 +75,7 @@ private:
     QAction *snapMiddle;
     QAction *snapDistance;
     QAction *snapIntersection;
+    QAction *snapMiddleManual;
 
 
     QAction *restrictHorizontal;

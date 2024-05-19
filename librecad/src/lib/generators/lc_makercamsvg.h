@@ -25,9 +25,10 @@
 #ifndef LC_MAKERCAMSVG_H
 #define LC_MAKERCAMSVG_H
 
-#include <string>
 #include <memory>
+#include <string>
 
+#include "rs.h"
 #include "rs_vector.h"
 
 class RS_Arc;
@@ -56,7 +57,7 @@ class RS_Graphic;
 
 class LC_MakerCamSVG {
 public:
-	LC_MakerCamSVG(LC_XMLWriterInterface* xmlWriter,
+    LC_MakerCamSVG(std::unique_ptr<LC_XMLWriterInterface> xmlWriter,
                    bool writeInvisibleLayers = true,
                    bool writeConstructionLayers = true,
                    bool writeBlocksInline = false,
@@ -70,6 +71,9 @@ public:
 
     bool generate(RS_Graphic* graphic);
     std::string resultAsString();
+    void setExportPoints(bool exportPoints) {
+        m_exportPoints = exportPoints;
+    }
 
 private:
     void write(RS_Graphic* graphic);
@@ -129,14 +133,15 @@ private:
 
     std::unique_ptr<LC_XMLWriterInterface> xmlWriter;
 
-    bool writeInvisibleLayers;
-    bool writeConstructionLayers;
-    bool writeBlocksInline;
-    bool convertEllipsesToBeziers;
-    bool exportImages;
-    bool convertLineTypes;
-    double defaultElementWidth;
-    double defaultDashLinePatternLength;
+    bool writeInvisibleLayers = false;
+    bool writeConstructionLayers = false;
+    bool writeBlocksInline = false;
+    bool convertEllipsesToBeziers = false;
+    bool exportImages = false;
+    bool convertLineTypes = false;
+    bool m_exportPoints = false;
+    double defaultElementWidth = 0.;
+    double defaultDashLinePatternLength = 0.;
 
     RS_Vector min;
     RS_Vector max;
@@ -147,7 +152,7 @@ private:
     /**
      * @brief lengthFactor factor from current unit to svg length units
      */
-    double lengthFactor;
+    double lengthFactor = 0.;
 
 };
 

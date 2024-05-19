@@ -25,17 +25,18 @@
 **********************************************************************/
 
 #include<cmath>
-#include "rs_actionmodifytrimamount.h"
+
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifytrimamount.h"
+#include "rs_atomicentity.h"
+#include "rs_commandevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_modification.h"
 #include "rs_math.h"
-#include "rs_preview.h"
-#include "rs_atomicentity.h"
-#include "rs_debug.h"
+#include "rs_modification.h"
 
 RS_ActionModifyTrimAmount::RS_ActionModifyTrimAmount(
 		RS_EntityContainer& container,
@@ -87,7 +88,7 @@ void RS_ActionModifyTrimAmount::trigger() {
 
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent* e) {
 
-	*trimCoord = graphicView->toGraph(e->x(), e->y());
+	*trimCoord = graphicView->toGraph(e->position());
     trimEntity = catchEntity(e);
 
     if (e->button()==Qt::LeftButton) {

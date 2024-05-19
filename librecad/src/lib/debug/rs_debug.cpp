@@ -24,18 +24,16 @@
 **
 **********************************************************************/
 
+#include <cstdarg>
+#include <cstdio>
+#include <iostream>
+
+#include <QDateTime>
+#include <QIODevice>
+#include <QString>
 
 #include "rs_debug.h"
 
-#include <iostream>
-#include <cstdio>
-#include <cstdarg>
-#include <QString>
-
-#include <QDateTime>
-#include <QDebug>
-
-RS_Debug* RS_Debug::uniqueInstance = nullptr;
 void debugHeader(char const* file, char const* func, int line)
 {
 	std::cout<<file<<" : "<<func<<" : line "<<line<<std::endl;
@@ -49,7 +47,8 @@ void debugHeader(char const* file, char const* func, int line)
  * singleton class
  */
 RS_Debug* RS_Debug::instance() {
-	if(!uniqueInstance) {
+    static RS_Debug* uniqueInstance = nullptr;
+    if(uniqueInstance == nullptr) {
         QDateTime now = QDateTime::currentDateTime();
         QString nowStr;
 		nowStr = now.toString("yyyyMMdd_hhmmss");
@@ -57,8 +56,8 @@ RS_Debug* RS_Debug::instance() {
                 //QString fName = QString("%1/debug_%2.log")
 		//	.arg(RS_SYSTEM->getHomeDir())
 		//	.arg(nowStr);
-                QString fName = QString("debug_%1.log")
-			.arg(nowStr);
+                // QString fName = QString("debug_%1.log")
+            // .arg(nowStr);
 
         uniqueInstance = new RS_Debug;
         //uniqueInstance->stream = fopen(fName.latin1(), "wt");
@@ -69,21 +68,15 @@ RS_Debug* RS_Debug::instance() {
 
 
 /**
- * Deletes the one and only RS_Debug instance.
- */
-void
-RS_Debug::deleteInstance() {
-    if (uniqueInstance) {
-        fclose(uniqueInstance->stream);
-        delete uniqueInstance;
-    }
-}
-
-/**
  * Constructor setting the default debug level.
  */
 RS_Debug::RS_Debug() {
     debugLevel = D_DEBUGGING;
+}
+
+RS_Debug::~RS_Debug() {
+    if (stream != nullptr and stream != stderr)
+        fclose(stream);
 }
 
 /**
@@ -169,4 +162,40 @@ void RS_Debug::printUnicode(const QString& text) {
 }
 
 
+/**
+ * Prints the unicode for every character in the given string.
+ */
+void RS_Debug::print(const QString& text) {
+    std::cerr<<text.toStdString()<<std::endl;
+}
+
+/**
+ * @brief RS_Debug::Log - returns an instance of stringstream. Anything directed to the stringstream will be redirected
+ * to the RS_Debug stream at the end of lifetime of the stringstream
+ * @param level - debugging level
+ * @return RS_Debug::LogStream - an instance of LogStream
+ */
+RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level)
+{
+    return {level};
+}
+RS_Debug::LogStream::LogStream(RS_DebugLevel level):
+    m_debugLevel{level}
+{
+    setString(&m_string, QIODevice::WriteOnly);
+}
+
+/**
+ * output buffered in stringstream
+ */
+RS_Debug::LogStream::~LogStream()
+{
+    try {
+        if (!m_string.isEmpty())
+            instance()->print(m_debugLevel, "%s", m_string.toStdString().c_str());
+    } catch (...)
+    {
+        instance()->print(D_CRITICAL, "RS_Debug::LogStream:: Failed to log");
+    }
+}
 // EOF

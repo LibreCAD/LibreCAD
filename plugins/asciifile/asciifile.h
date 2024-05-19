@@ -26,8 +26,8 @@
 
 class pointBox;
 class textBox;
-class pointData;
 class QVBoxLayout;
+struct PointData;
 
 class AsciiFile : public QObject, QC_PluginInterface
 {
@@ -36,10 +36,10 @@ class AsciiFile : public QObject, QC_PluginInterface
     Q_PLUGIN_METADATA(IID LC_DocumentInterface_iid FILE  "asciifile.json")
 
  public:
-    virtual PluginCapabilities getCapabilities() const Q_DECL_OVERRIDE;
-    virtual QString name() const Q_DECL_OVERRIDE;
-    virtual void execComm(Document_Interface *doc,
-                          QWidget *parent, QString cmd) Q_DECL_OVERRIDE;
+    PluginCapabilities getCapabilities() const override;
+    QString name() const override;
+    void execComm(Document_Interface *doc,
+                          QWidget *parent, QString cmd) override;
 };
 
 namespace DPT {
@@ -51,7 +51,7 @@ class dibPunto : public QDialog
     Q_OBJECT
 
 public:
-    explicit dibPunto(QWidget *parent = 0);
+    explicit dibPunto(QWidget *parent = nullptr);
     ~dibPunto();
     void SetupUI(QWidget *parent);
 
@@ -64,7 +64,11 @@ private:
     void readSettings();
     void writeSettings();
     void procesfileODB(QFile* file, QString sep);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    void procesfileNormal(QFile* file, QString sep, Qt::SplitBehaviorFlags skip = Qt::KeepEmptyParts);
+#else
     void procesfileNormal(QFile* file, QString sep, QString::SplitBehavior skip = QString::KeepEmptyParts);
+#endif
     void drawLine();
     void draw2D();
     void draw3D();
@@ -85,7 +89,7 @@ private:
     QLineEdit *fileedit;
     QComboBox *formatedit;
     QCheckBox *connectPoints;
-    QList<pointData*> dataList;
+    QList<PointData*> dataList;
 
     Document_Interface *currDoc;
 
@@ -97,14 +101,13 @@ class imgLabel : public QLabel
     Q_OBJECT
 
 public:
-    imgLabel(QWidget * parent = 0, Qt::WindowFlags f = 0 );
-    ~imgLabel(){}
+    imgLabel(QWidget * parent = nullptr, Qt::WindowFlags f = {} );
 
     void setPos(DPT::txtposition pos = DPT::N);
     DPT::txtposition getPos() { return currPos;}
 
 protected:
-    void mouseReleaseEvent(QMouseEvent *event);
+    void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
     void drawImage();
@@ -121,8 +124,7 @@ class pointBox : public QGroupBox
     Q_OBJECT
 
 public:
-    pointBox(const QString & title, const QString & label, QWidget * parent = 0 );
-    ~pointBox();
+    pointBox(const QString & title, const QString & label, QWidget * parent = nullptr );
     void setInLayout(QLayout *lo);
     bool checkOn() { return rb->isChecked();}
     void setCheck(bool val) { rb->setChecked(val);}
@@ -140,8 +142,7 @@ class textBox : public pointBox
     Q_OBJECT
 
 public:
-    textBox(const QString & title, const QString & label, QWidget * parent = 0 );
-    ~textBox();
+    textBox(const QString & title, const QString & label, QWidget * parent = nullptr );
     void setPos(DPT::txtposition p) { img->setPos(p); }
     QString getStyleStr() { return combostyle->currentText();}
     void setStyleIdx(int idx) { combostyle->setCurrentIndex(idx);}
@@ -163,9 +164,8 @@ private:
     imgLabel *img;
 };
 /***********/
-class pointData
+struct PointData
 {
-public:
     QString number;
     QString x;
     QString y;

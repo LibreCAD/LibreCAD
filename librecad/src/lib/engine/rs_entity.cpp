@@ -31,13 +31,14 @@
 #include <QPolygon>
 #include <QString>
 
-#include "rs_entity.h"
 #include "rs_arc.h"
 #include "rs_block.h"
 #include "rs_circle.h"
 #include "rs_ellipse.h"
+#include "rs_entity.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_information.h"
 #include "rs_insert.h"
 #include "rs_layer.h"
 #include "rs_line.h"
@@ -45,10 +46,22 @@
 #include "rs_point.h"
 #include "rs_polyline.h"
 #include "rs_text.h"
+#include "rs_units.h"
 #include "rs_vector.h"
-#include "rs_information.h"
+
 #include "lc_quadratic.h"
-#include "rs_debug.h"
+
+namespace {
+
+// Whether the entity is a member of cross hatch filling curves
+bool isHatchMember(const RS_Entity* entity) {
+    if (entity == nullptr || entity->getParent() == nullptr)
+        return false;
+
+    return entity->rtti() == RS2::EntityHatch || isHatchMember(entity->getParent());
+}
+
+}
 
 /**
  * Default constructor.
@@ -56,9 +69,9 @@
  *               E.g. a line might have a graphic entity or
  *               a polyline entity as parent.
  */
-RS_Entity::RS_Entity(RS_EntityContainer* parent) {
-
-    this->parent = parent;
+RS_Entity::RS_Entity(RS_EntityContainer *parent)
+    : parent{parent}
+{
     init();
 }
 
@@ -96,7 +109,7 @@ void RS_Entity::init() {
  * Gives this entity a new unique id.
  */
 void RS_Entity::initId() {
-    static unsigned long int idCounter=0;
+    static unsigned long long idCounter=0;
     id = idCounter++;
 }
 
@@ -317,7 +330,7 @@ bool RS_Entity::isVisibleInWindow(RS_GraphicView* view) const
 bool RS_Entity::isPointOnEntity(const RS_Vector& coord,
                                 double tolerance) const {
 	double dist = getDistanceToPoint(coord, nullptr, RS2::ResolveNone);
-    return (dist<=fabs(tolerance));
+    return dist <= std::abs(tolerance);
 }
 
 double RS_Entity::getDistanceToPoint(const RS_Vector& coord,
@@ -999,14 +1012,17 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
             // do not expand entities on construction layers, except lines
             return false;
     }
-	if (layer) return layer->isConstruction();
-    return false;
+
+    // Issue #1773, hatch filling curves are not shown as infinite on construction layers
+    if (isHatchMember(this))
+        return false;
+
+    return (layer != nullptr) && layer->isConstruction();
 }
 
 //! whether printing is enabled or disabled for the entity's layer
 bool RS_Entity::isPrint(void) const{
-    if (nullptr != layer) return layer->isPrint();
-    return true;
+    return (nullptr != layer) && layer->isPrint();
 }
 
 bool RS_Entity::trimmable() const
@@ -1016,6 +1032,7 @@ bool RS_Entity::trimmable() const
     case RS2::EntityCircle:
     case RS2::EntityEllipse:
     case RS2::EntityLine:
+    case RS2::EntityParabola:
     case RS2::EntitySplinePoints:
         return true;
     default:

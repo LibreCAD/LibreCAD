@@ -257,7 +257,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
         *type = ftype;
 
     // append default extension:
-	if (!fi.fileName().endsWith(".dxf",Qt::CaseInsensitive))
+    if (!fi.fileName().endsWith(".dxf",Qt::CaseInsensitive))
         fn += getExtension(ftype);
 
     // store new default settings:

@@ -43,25 +43,24 @@ struct LC_HyperbolaData {
 					 const RS_Vector& majorP,
 					 double ratio,
 					 double angle1, double angle2,
-					 bool reversed);
-	~LC_HyperbolaData() = default;
+                     bool reversed);
 	/** create data based on foci and a point on hyperbola */
 	LC_HyperbolaData(const RS_Vector& focus0,
 					 const RS_Vector& focus1,
 					 const RS_Vector& point);
 
 	//! Hyperbola center
-	RS_Vector center;
+    RS_Vector center{};
 	//! Endpoint of major axis relative to center.
-	RS_Vector majorP;
+    RS_Vector majorP{};
 	//! Ratio of minor axis to major axis.
-	double ratio;
+    double ratio = 0.;
 	//! Start angle
-	double angle1;
+    double angle1 = 0.;
 	//! End angle
-	double angle2;
+    double angle2 = 0.;
 	//! Reversed (cw) flag
-	bool reversed;
+    bool reversed = false;
 };
 
 std::ostream& operator << (std::ostream& os, const LC_HyperbolaData& ed);
@@ -82,6 +81,8 @@ public:
     LC_Hyperbola(const RS_Vector& focus0,
                      const RS_Vector& focus1,
                      const RS_Vector& point);
+    bool createFromQuadratic(const LC_Quadratic& q);
+    bool createFromQuadratic(const std::vector<double>& q);
 
 	RS_Entity* clone() const override;
 
@@ -227,6 +228,8 @@ public:
 	void rotate(const RS_Vector& /*center*/, const RS_Vector& /*angle*/)override{}
 	void scale(const RS_Vector& /*center*/, const RS_Vector& /*factor*/)override{}
 	void mirror(const RS_Vector& /*axisPoint1*/, const RS_Vector& /*axisPoint2*/)override{}
+    RS_Entity& shear(double k) override;
+
 	void moveRef(const RS_Vector& /*ref*/, const RS_Vector& /*offset*/)override{}
 
 	void draw(RS_Painter* /*painter*/, RS_GraphicView* /*view*/, double& /*patternOffset*/)override{}
@@ -252,7 +255,7 @@ public:
 
 protected:
     LC_HyperbolaData data;
-    bool m_bValid;
+    bool m_bValid = false;
 
 };
 

@@ -27,7 +27,11 @@
 #ifndef RS_ACTIONPRINTPREVIEW_H
 #define RS_ACTIONPRINTPREVIEW_H
 
+#include <memory>
+
 #include "rs_actioninterface.h"
+
+class QG_PrintPreviewOptions;
 
 /**
  * Default action for print preview.
@@ -79,13 +83,16 @@ public:
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
 
+    void setOption(std::unique_ptr<QG_PrintPreviewOptions> option);
+    std::unique_ptr<QG_PrintPreviewOptions>& getOption();
 
 private:
 
-	bool hasOptions;
-	bool m_bPaperOffset;
+    bool hasOptions = false;
+    bool m_bPaperOffset = false;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
+    std::unique_ptr<QG_PrintPreviewOptions> m_option;
 };
 
 #endif

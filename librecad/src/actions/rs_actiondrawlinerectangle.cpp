@@ -24,18 +24,18 @@
 **
 **********************************************************************/
 
-#include "rs_actiondrawlinerectangle.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actiondrawlinerectangle.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionDrawLineRectangle::Points {
 	/**
@@ -53,7 +53,7 @@ RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw rectangles",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 	actionType=RS2::ActionDrawLineRectangle;
 }

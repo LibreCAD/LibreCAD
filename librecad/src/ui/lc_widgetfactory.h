@@ -3,7 +3,9 @@
 
 #include <QMap>
 #include <QObject>
-#include <QString>
+
+#include "lc_penpalettewidget.h"
+#include "lc_quickinfowidget.h"
 
 class QMenu;
 class QAction;
@@ -14,6 +16,8 @@ class QActionGroup;
 class QG_PenToolBar;
 class QG_SnapToolBar;
 class QG_LayerWidget;
+class LC_LayerTreeWidget;
+class LC_QuickInfoWidget;
 class QG_BlockWidget;
 class QG_ActionHandler;
 class QG_LibraryWidget;
@@ -45,23 +49,26 @@ public:
 
     // --- tagged widgets ---
 
-    QG_SnapToolBar* snap_toolbar;
-    QG_PenToolBar* pen_toolbar;
-    QToolBar* options_toolbar;
+    QG_SnapToolBar* snap_toolbar = nullptr;
+    QG_PenToolBar* pen_toolbar = nullptr;
+    QToolBar* options_toolbar = nullptr;
 
-    QG_LayerWidget* layer_widget;
-    QG_BlockWidget* block_widget;
-    QG_LibraryWidget* library_widget;
-    QG_CommandWidget* command_widget;
+    QG_LayerWidget* layer_widget = nullptr;
+    LC_QuickInfoWidget* quick_info_widget = nullptr;
+    LC_LayerTreeWidget* layer_tree_widget = nullptr;
+    LC_PenPaletteWidget* pen_palette = nullptr;
+    QG_BlockWidget* block_widget = nullptr;
+    QG_LibraryWidget* library_widget = nullptr;
+    QG_CommandWidget* command_widget = nullptr;
 
-    QMenu* file_menu;
-    QMenu* windows_menu;
+    QMenu* file_menu = nullptr;
+    QMenu* windows_menu = nullptr;
 
 
 private:
-    QC_ApplicationWindow* main_window;
+    QC_ApplicationWindow* main_window = nullptr;
     QMap<QString, QAction*>& a_map;
-    LC_ActionGroupManager* ag_manager;
+    LC_ActionGroupManager* ag_manager = nullptr;
 
     QList<QAction*> file_actions;
     QList<QAction*> line_actions;
@@ -72,9 +79,11 @@ private:
     QList<QAction*> select_actions;
     QList<QAction*> dimension_actions;
     QList<QAction*> modify_actions;
+    QList<QAction*> order_actions;
     QList<QAction*> info_actions;
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;
+    QList<QAction*> pen_actions;
 };
 
 #endif // LC_WIDGETFACTORY_H

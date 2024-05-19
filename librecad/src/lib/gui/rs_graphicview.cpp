@@ -29,31 +29,55 @@
 #include<cmath>
 
 #include <QApplication>
-#include <QDesktopWidget>
 #include <QAction>
 #include <QMouseEvent>
 #include <QtAlgorithms>
-
 #include "rs_graphicview.h"
 
-#include "rs_line.h"
-#include "rs_linetypepattern.h"
+#include "rs_color.h"
+#include "rs_debug.h"
+#include "rs_dialogfactory.h"
 #include "rs_eventhandler.h"
 #include "rs_graphic.h"
 #include "rs_grid.h"
-#include "rs_painter.h"
-#include "rs_mtext.h"
-#include "rs_text.h"
-#include "rs_settings.h"
-#include "rs_dialogfactory.h"
-#include "rs_layer.h"
+#include "rs_line.h"
+#include "rs_linetypepattern.h"
 #include "rs_math.h"
-#include "rs_debug.h"
-#include "rs_color.h"
+#include "rs_painter.h"
+#include "rs_snapper.h"
+#include "rs_settings.h"
+#include "rs_units.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
 #endif
+
+struct RS_GraphicView::ColorData {
+    /** background color (any color) */
+    RS_Color background;
+    /** foreground color (black or white) */
+    RS_Color foreground;
+    /** grid color */
+    RS_Color gridColor = Qt::gray;
+    /** meta grid color */
+    RS_Color metaGridColor;
+    /** selected color */
+    RS_Color selectedColor;
+    /** highlighted color */
+    RS_Color highlightedColor;
+    /** Start handle color */
+    RS_Color startHandleColor;
+    /** Intermediate (not start/end vertex) handle color */
+    RS_Color handleColor;
+    /** End handle color */
+    RS_Color endHandleColor;
+
+    /** Relative-zero marker color */
+    RS_Color relativeZeroColor;
+
+    /* Relative-zero hidden state */
+    bool hideRelativeZero = false;
+};
 
 /**
  * Constructor.
@@ -61,23 +85,28 @@
 RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     :QWidget(parent, f)
 	,eventHandler{new RS_EventHandler{this}}
-	,gridColor(Qt::gray)
-	,metaGridColor{64, 64, 64}
-	,grid{new RS_Grid{this}}
+    , m_colorData{std::make_unique<ColorData>()}
+    ,grid{std::make_unique<RS_Grid>(this)}
+    ,defaultSnapMode{std::make_unique<RS_SnapMode>()}
 	,drawingMode(RS2::ModeFull)
 	,savedViews(16)
-    ,previousViewTime(QDateTime::currentDateTime())
-    ,panning(false)
+    ,previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())}
 {
     RS_SETTINGS->beginGroup("Colors");
-    setBackground(QColor(RS_SETTINGS->readEntry("/background", Colors::background)));
-    setGridColor(QColor(RS_SETTINGS->readEntry("/grid", Colors::grid)));
-    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", Colors::meta_grid)));
-    setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", Colors::select)));
-    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/highlight", Colors::highlight)));
-    setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", Colors::start_handle)));
-    setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", Colors::handle)));
-    setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", Colors::end_handle)));
+    setBackground(QColor(RS_SETTINGS->readEntry("/background", RS_Settings::background)));
+    setGridColor(QColor(RS_SETTINGS->readEntry("/grid", RS_Settings::grid)));
+    setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid)));
+    setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", RS_Settings::select)));
+    setHighlightedColor(QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight)));
+    setStartHandleColor(QColor(RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle)));
+    setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", RS_Settings::handle)));
+    setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle)));
+    setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor)));
+
+    RS_SETTINGS->endGroup();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    RS_SETTINGS->writeEntry("/hideRelativeZero", RS_SETTINGS->readNumEntry("/hideRelativeZero", 0));
     RS_SETTINGS->endGroup();
 }
 
@@ -109,7 +138,7 @@ void RS_GraphicView::setContainer(RS_EntityContainer* container) {
  */
 void RS_GraphicView::setFactorX(double f) {
 	if (!zoomFrozen) {
-		factor.x = fabs(f);
+        factor.x = std::abs(f);
 	}
 }
 
@@ -120,7 +149,7 @@ void RS_GraphicView::setFactorX(double f) {
  */
 void RS_GraphicView::setFactorY(double f) {
 	if (!zoomFrozen) {
-		factor.y = fabs(f);
+        factor.y = std::abs(f);
 	}
 }
 
@@ -136,9 +165,9 @@ void RS_GraphicView::setOffset(int ox, int oy) {
  */
 bool RS_GraphicView::isGridOn() const{
 	if (container) {
-		RS_Graphic* g = container->getGraphic();
-		if (g) {
-			return g->isGridOn();
+        RS_Graphic* graphic = container->getGraphic();
+        if (graphic != nullptr) {
+            return graphic->isGridOn();
 		}
 	}
 	return true;
@@ -251,11 +280,9 @@ RS_ActionInterface* RS_GraphicView::getCurrentAction() {
  * Sets the current action of the event handler.
  */
 void RS_GraphicView::setCurrentAction(RS_ActionInterface* action) {
-    RS_DEBUG->print("RS_GraphicView::setCurrentAction");
 	if (eventHandler) {
 		eventHandler->setCurrentAction(action);
 	}
-	RS_DEBUG->print("RS_GraphicView::setCurrentAction: OK");
 }
 
 
@@ -565,8 +592,8 @@ void RS_GraphicView::saveView() {
 	if(getGraphic()) getGraphic()->setModified(true);
 	QDateTime noUpdateWindow=QDateTime::currentDateTime().addMSecs(-500);
 	//do not update view within 500 milliseconds
-	if(previousViewTime > noUpdateWindow) return;
-	previousViewTime = QDateTime::currentDateTime();
+    if(*previousViewTime > noUpdateWindow) return;
+    *previousViewTime = QDateTime::currentDateTime();
 	savedViews[savedViewIndex]=std::make_tuple(offsetX,offsetY,factor);
 	savedViewIndex = (savedViewIndex+1)%savedViews.size();
 	if(savedViewCount<savedViews.size()) savedViewCount++;
@@ -724,8 +751,8 @@ void RS_GraphicView::zoomWindow(RS_Vector v1, RS_Vector v2,
 		}
 	}
 
-	zoomX=fabs(zoomX);
-	zoomY=fabs(zoomY);
+    zoomX=std::abs(zoomX);
+    zoomY=std::abs(zoomY);
 
 	// Borders in pixel after zoom
 	int pixLeft  =(int)(v1.x*zoomX);
@@ -890,11 +917,12 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 	if (!isPrintPreview()) {
 
 		//increase grid point size on for DPI>96
-		int dpiX = qApp->desktop()->logicalDpiX();
+		auto dpiX = int(qApp->screens().front()->logicalDotsPerInch());
+        const bool isHiDpi = dpiX > 96;
 		//        DEBUG_HEADER
 		//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
 		const RS_Pen penSaved=painter->getPen();
-		if(dpiX>96) {
+        if(isHiDpi) {
 			RS_Pen pen=penSaved;
 			pen.setWidth(RS2::Width01);
 			painter->setPen(pen);
@@ -906,10 +934,12 @@ void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 		//bug# 3430258
 		drawGrid(painter);
 
-		if(dpiX>96) painter->setPen(penSaved);
+        if(isDraftMode())
+            drawDraftSign(painter);
 
+        if(isHiDpi)
+            painter->setPen(penSaved);
 	}
-
 }
 
 
@@ -965,20 +995,18 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
  *	Returns:			void
  */
 
-void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
+void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& patternOffset)
 {
 	if (draftMode) {
-		painter->setPen(RS_Pen(foreground,
+        painter->setPen(RS_Pen(m_colorData->foreground,
 							   RS2::Width00, RS2::SolidLine));
 	}
 
 	// Getting pen from entity (or layer)
 	RS_Pen pen = e->getPen(true);
 
-	int w = pen.getWidth();
-	if (w<0) {
-		w = 0;
-	}
+    // Avoid negative widths
+    int w = std::max(static_cast<int>(pen.getWidth()), 0);
 
 	// - Scale pen width.
 	// - By default pen width is not scaled on print and print preview.
@@ -1009,9 +1037,9 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 				}
 
 			}
-		}
+        }
 
-		pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
+        if (pen.getAlpha() == 1.0) pen.setScreenWidth(toGuiDX(w / 100.0 * uf * wf));
 	}
 	else
 	{
@@ -1026,30 +1054,41 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e)
 
     // prevent background color on background drawing
     // and enhance visibility of black lines on dark backgrounds
-    RS_Color    penColor {pen.getColor().stripFlags()};
-    if ( penColor == background.stripFlags()
+    RS_Color    penColor{pen.getColor().stripFlags()};
+    if ( penColor == m_colorData->background.stripFlags()
          || (penColor.toIntColor() == RS_Color::Black
-             && penColor.colorDistance( background) < RS_Color::MinColorDistance)) {
-        pen.setColor( foreground);
+             && penColor.colorDistance(m_colorData->background) < RS_Color::MinColorDistance)) {
+        pen.setColor(m_colorData->foreground);
     }
 
-	if (!isPrinting() && !isPrintPreview())
-	{
-		// this entity is selected:
-		if (e->isSelected()) {
-			pen.setLineType(RS2::DotLine);
-			pen.setColor(selectedColor);
-		}
+    pen.setDashOffset(patternOffset);
 
-		// this entity is highlighted:
-		if (e->isHighlighted()) {
-			pen.setColor(highlightedColor);
-		}
+    if (!isPrinting() && !isPrintPreview())
+    {
+        // this entity is selected:
+        if (e->isSelected()) {
+            pen.setLineType(RS2::DashLineTiny);
+            pen.setWidth(RS2::Width00);
+            pen.setColor(m_colorData->selectedColor);
+        }
+
+        // this entity is highlighted:
+        if (e->isHighlighted()) {
+            // Glowing effects on mouse hovering: use the "selected" color
+            if (e->getParent() == overlayEntities[RS2::OverlayEffects])
+            {
+                // for glowing effects on mouse hovering, draw solid lines
+                pen.setColor(m_colorData->selectedColor);
+                pen.setLineType(RS2::SolidLine);
+            } else {
+                pen.setColor(m_colorData->highlightedColor);
+            }
+        }
 	}
 
 	// deleting not drawing:
 	if (getDeleteMode()) {
-		pen.setColor(background);
+        pen.setColor(m_colorData->background);
 	}
 
 	painter->setPen(pen);
@@ -1116,7 +1155,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     }
 
 	// set pen (color):
-	setPenForEntity(painter, e );
+    setPenForEntity(painter, e, patternOffset);
 
 	//RS_DEBUG->print("draw plain");
 	if (isDraftMode()) {
@@ -1146,15 +1185,15 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 
 			for (size_t i=0; i<s.getNumber(); ++i) {
 				int sz = -1;
-				RS_Color col = handleColor;
+                RS_Color col = m_colorData->handleColor;
 				if (i == 0) {
-					col = startHandleColor;
+                    col = m_colorData->startHandleColor;
 				}
 				else if (i == s.getNumber() - 1) {
-					col = endHandleColor;
+                    col = m_colorData->endHandleColor;
 				}
 				if (getDeleteMode()) {
-					painter->drawHandle(toGui(s.get(i)), background, sz);
+                    painter->drawHandle(toGui(s.get(i)), m_colorData->background, sz);
 				} else {
 					painter->drawHandle(toGui(s.get(i)), col, sz);
 				}
@@ -1196,6 +1235,18 @@ void RS_GraphicView::drawEntityPlain(RS_Painter *painter, RS_Entity* e) {
 	double patternOffset(0.);
 	e->draw(painter, this, patternOffset);
 }
+
+void RS_GraphicView::drawEntityHighlighted(RS_Entity* e, bool highlighted)
+{
+    if (e==nullptr)
+        return;
+    if (e->isHighlighted() != highlighted)
+    {
+        e->setHighlighted(highlighted);
+        drawEntity(e);
+    }
+}
+
 /**
  * Deletes an entity with the background color.
  * Might be recursively called e.g. for polylines.
@@ -1212,105 +1263,12 @@ void RS_GraphicView::deleteEntity(RS_Entity* e) {
 
 
 
-
 /**
  * @return Pointer to the static pattern struct that belongs to the
  * given pattern type or nullptr.
  */
 const RS_LineTypePattern* RS_GraphicView::getPattern(RS2::LineType t) {
-	switch (t) {
-	case RS2::SolidLine:
-		return &RS_LineTypePattern::patternSolidLine;
-		break;
-
-	case RS2::DotLine:
-		return &RS_LineTypePattern::patternDotLine;
-		break;
-	case RS2::DotLineTiny:
-		return &RS_LineTypePattern::patternDotLineTiny;
-		break;
-	case RS2::DotLine2:
-		return &RS_LineTypePattern::patternDotLine2;
-		break;
-	case RS2::DotLineX2:
-		return &RS_LineTypePattern::patternDotLineX2;
-		break;
-
-	case RS2::DashLine:
-		return &RS_LineTypePattern::patternDashLine;
-		break;
-	case RS2::DashLineTiny:
-		return &RS_LineTypePattern::patternDashLineTiny;
-		break;
-	case RS2::DashLine2:
-		return &RS_LineTypePattern::patternDashLine2;
-		break;
-	case RS2::DashLineX2:
-		return &RS_LineTypePattern::patternDashLineX2;
-		break;
-
-	case RS2::DashDotLine:
-		return &RS_LineTypePattern::patternDashDotLine;
-		break;
-	case RS2::DashDotLineTiny:
-		return &RS_LineTypePattern::patternDashDotLineTiny;
-		break;
-	case RS2::DashDotLine2:
-		return &RS_LineTypePattern::patternDashDotLine2;
-		break;
-	case RS2::DashDotLineX2:
-		return &RS_LineTypePattern::patternDashDotLineX2;
-		break;
-
-	case RS2::DivideLine:
-		return &RS_LineTypePattern::patternDivideLine;
-		break;
-	case RS2::DivideLineTiny:
-		return &RS_LineTypePattern::patternDivideLineTiny;
-		break;
-	case RS2::DivideLine2:
-		return &RS_LineTypePattern::patternDivideLine2;
-		break;
-	case RS2::DivideLineX2:
-		return &RS_LineTypePattern::patternDivideLineX2;
-		break;
-
-	case RS2::CenterLine:
-		return &RS_LineTypePattern::patternCenterLine;
-		break;
-	case RS2::CenterLineTiny:
-		return &RS_LineTypePattern::patternCenterLineTiny;
-		break;
-	case RS2::CenterLine2:
-		return &RS_LineTypePattern::patternCenterLine2;
-		break;
-	case RS2::CenterLineX2:
-		return &RS_LineTypePattern::patternCenterLineX2;
-		break;
-
-	case RS2::BorderLine:
-		return &RS_LineTypePattern::patternBorderLine;
-		break;
-	case RS2::BorderLineTiny:
-		return &RS_LineTypePattern::patternBorderLineTiny;
-		break;
-	case RS2::BorderLine2:
-		return &RS_LineTypePattern::patternBorderLine2;
-		break;
-	case RS2::BorderLineX2:
-		return &RS_LineTypePattern::patternBorderLineX2;
-		break;
-
-	case RS2::LineByLayer:
-		return &RS_LineTypePattern::patternBlockLine;
-		break;
-	case RS2::LineByBlock:
-		return &RS_LineTypePattern::patternBlockLine;
-		break;
-	default:
-		break;
-	}
-    return nullptr;
+    return RS_LineTypePattern::getPattern(t);
 }
 
 
@@ -1359,7 +1317,11 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 		return;
 	}
 
-    RS_Pen p(RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
+    RS2::LineType relativeZeroPenType = RS2::SolidLine;
+
+    if (m_colorData->hideRelativeZero) relativeZeroPenType = RS2::NoPen;
+
+    RS_Pen p(m_colorData->relativeZeroColor, RS2::Width00, relativeZeroPenType);
 	p.setScreenWidth(0);
 	painter->setPen(p);
 
@@ -1448,7 +1410,7 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 					  RS_Color(255,255,255));
 
 	// don't paint boundaries if zoom is to small
-	if (qMin(fabs(printAreaW/numX), fabs(printAreaH/numY)) > 2) {
+    if (qMin(std::abs(printAreaW/numX), std::abs(printAreaH/numY)) > 2) {
 		// boundaries between pages:
 		for (int pX = 1; pX < numX; pX++) {
 			double offset = ((double)printAreaW*pX)/numX;
@@ -1478,7 +1440,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 
 	// draw grid:
 	//painter->setPen(Qt::gray);
-	painter->setPen(gridColor);
+    painter->setPen(m_colorData->gridColor);
 
 	//grid->updatePointArray();
 	auto const& pts = grid->getPoints();
@@ -1514,14 +1476,14 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
 	//bug# 3430258
 	grid->updatePointArray();
-	RS_Pen pen(metaGridColor,
+    RS_Pen pen(m_colorData->metaGridColor,
 			   RS2::Width00,
-			   RS2::DotLine);
+               RS2::DotLineTiny);
 	painter->setPen(pen);
 
 	RS_Vector dv=grid->getMetaGridWidth().scale(factor);
-	double dx=fabs(dv.x);
-	double dy=fabs(dv.y); //potential bug, need to recover metaGrid.width
+    double dx=std::abs(dv.x);
+    double dy=std::abs(dv.y); //potential bug, need to recover metaGrid.width
 	// draw meta grid:
 	auto mx = grid->getMetaX();
 	for(auto const& x: mx){
@@ -1534,17 +1496,17 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 	}
 	auto my = grid->getMetaY();
 	if(grid->isIsometric()){//isometric metaGrid
-		dx=fabs(dx);
-		dy=fabs(dy);
+        dx=std::abs(dx);
+        dy=std::abs(dy);
 		if(!my.size()|| dx<1||dy<1) return;
 		RS_Vector baseMeta(toGui(RS_Vector(mx[0],my[0])));
 		// x-x0=k*dx, x-remainder(x-x0,dx)
-		RS_Vector vp0(-remainder(-baseMeta.x,dx)-dx,getHeight()-remainder(getHeight()-baseMeta.y,dy)+dy);
+        RS_Vector vp0(-std::remainder(-baseMeta.x,dx)-dx,getHeight()-remainder(getHeight()-baseMeta.y,dy)+dy);
 		RS_Vector vp1(vp0);
-		RS_Vector vp2(getWidth()-remainder(getWidth()-baseMeta.x,dx)+dx,vp0.y);
+        RS_Vector vp2(getWidth()-std::remainder(getWidth()-baseMeta.x,dx)+dx,vp0.y);
 		RS_Vector vp3(vp2);
-		int cmx = round((vp2.x - vp0.x)/dx);
-		int cmy = round((vp0.y +remainder(-baseMeta.y,dy)+dy)/dy);
+        int cmx = std::round((vp2.x - vp0.x)/dx);
+        int cmy = std::round((vp0.y + std::remainder(-baseMeta.y,dy)+dy)/dy);
 		for(int i=cmx+cmy+2;i>=0;i--){
 			if ( i <= cmx ) {
 				vp0.x += dx;
@@ -1575,6 +1537,19 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
 }
 
+void RS_GraphicView::drawDraftSign(RS_Painter *painter)
+{
+    const QString draftSign = tr("Draft");
+    QRect boundingRect{0, 0, 64, 64};
+    for (int i = 1; i <= 4; ++i) {
+        painter->drawText(boundingRect, draftSign, &boundingRect);
+        QPoint position{
+            (i&1) ? getWidth() - boundingRect.width() : 0,
+            (i&2) ? getHeight() - boundingRect.height() : 0};
+        boundingRect.moveTopLeft(position);
+    }
+}
+
 void RS_GraphicView::drawOverlay(RS_Painter *painter)
 {
     double patternOffset(0.);
@@ -1583,7 +1558,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter)
     {
         foreach (auto e, ec->getEntityList())
         {
-            setPenForEntity(painter, e);
+            setPenForEntity(painter, e, patternOffset);
             e->draw(painter, this, patternOffset);
         }
     }
@@ -1596,14 +1571,14 @@ RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const
 
 RS_SnapMode RS_GraphicView::getDefaultSnapMode() const
 {
-	return defaultSnapMode;
+    return *defaultSnapMode;
 }
 
 /**
  * Sets the default snap mode used by newly created actions.
  */
 void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
-	defaultSnapMode = sm;
+    *defaultSnapMode = sm;
 	if (eventHandler) {
 		eventHandler->setSnapMode(sm);
 	}
@@ -1668,7 +1643,7 @@ double RS_GraphicView::toGuiDY(double d) const{
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(RS_Vector v) const{
+RS_Vector RS_GraphicView::toGraph(const RS_Vector& v) const{
 	return RS_Vector(toGraphX(RS_Math::round(v.x)),
 					 toGraphY(RS_Math::round(v.y)));
 }
@@ -1678,10 +1653,18 @@ RS_Vector RS_GraphicView::toGraph(RS_Vector v) const{
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(int x, int y) const{
-	return RS_Vector(toGraphX(x), toGraphY(y));
+RS_Vector RS_GraphicView::toGraph(const QPointF& position) const
+{
+    return toGraph(position.x(), position.y());
 }
 
+/**
+ * Translates two screen coordinates to a vector in real coordinates.
+ */
+RS_Vector RS_GraphicView::toGraph(int x, int y) const
+{
+    return RS_Vector(toGraphX(x), toGraphY(y));
+}
 
 /**
  * Translates a screen coordinate in X to a real coordinate X.
@@ -1737,7 +1720,7 @@ void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
  */
 void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 	setRelativeZero(pos);
-	redraw(RS2::RedrawGrid);
+	redraw(RS2::RedrawOverlay);
 }
 
 
@@ -1746,10 +1729,14 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  */
 RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
 {
-	if (overlayEntities[position]) {
-		return overlayEntities[position];
-	}
+    if (overlayEntities[position]) {
+        return overlayEntities[position];
+    }
+
     overlayEntities[position]=new RS_EntityContainer(nullptr);
+    if (position == RS2::OverlayEffects) {
+        overlayEntities[position]->setOwner(true);
+    }
 
 	return overlayEntities[position];
 
@@ -1764,15 +1751,76 @@ RS_EventHandler* RS_GraphicView::getEventHandler() const{
 }
 
 void RS_GraphicView::setBackground(const RS_Color& bg) {
-	background = bg;
+    m_colorData->background = bg;
 
     RS_Color black(0,0,0);
     if (black.colorDistance( bg) >= RS_Color::MinColorDistance) {
-        foreground = black;
+        m_colorData->foreground = black;
     }
     else {
-        foreground = RS_Color(255,255,255);
+        m_colorData->foreground = RS_Color(255,255,255);
     }
+}
+
+
+RS_Color RS_GraphicView::getBackground() const{
+    return m_colorData->background;
+}
+
+/**
+     * @return Current foreground color.
+     */
+RS_Color RS_GraphicView::getForeground() const{
+    return m_colorData->foreground;
+}
+
+/**
+     * Sets the grid color.
+     */
+void RS_GraphicView::setGridColor(const RS_Color& c) {
+    m_colorData->gridColor = c;
+}
+
+/**
+     * Sets the meta grid color.
+     */
+void RS_GraphicView::setMetaGridColor(const RS_Color& c) {
+    m_colorData->metaGridColor = c;
+}
+
+/**
+     * Sets the selection color.
+     */
+void RS_GraphicView::setSelectedColor(const RS_Color& c) {
+    m_colorData->selectedColor = c;
+}
+
+/**
+     * Sets the highlight color.
+     */
+void RS_GraphicView::setHighlightedColor(const RS_Color& c) {
+    m_colorData->highlightedColor = c;
+}
+
+/**
+     * Sets the color for the first handle (start vertex)
+     */
+void RS_GraphicView::setStartHandleColor(const RS_Color& c) {
+    m_colorData->startHandleColor = c;
+}
+
+/**
+     * Sets the color for handles, that are neither start nor end vertices
+     */
+void RS_GraphicView::setHandleColor(const RS_Color& c) {
+    m_colorData->handleColor = c;
+}
+
+/**
+     * Sets the color for the last handle (end vertex)
+     */
+void RS_GraphicView::setEndHandleColor(const RS_Color& c) {
+    m_colorData->endHandleColor = c;
 }
 
 void RS_GraphicView::setBorders(int left, int top, int right, int bottom) {
@@ -1880,4 +1928,26 @@ bool RS_GraphicView::isPanning() const {
 
 void RS_GraphicView::setPanning(bool state) {
     panning = state;
+}
+
+
+
+/* Sets the color for the relative-zero marker. */
+void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)
+{
+    m_colorData->relativeZeroColor = c;
+}
+
+/* Sets the hidden state for the relative-zero marker. */
+void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
+{
+    m_colorData->hideRelativeZero = isHidden;
+}
+
+RS2::EntityType RS_GraphicView::getTypeToSelect() const{
+    return typeToSelect;
+}
+
+void RS_GraphicView::setTypeToSelect(RS2::EntityType mType){
+    typeToSelect = mType;
 }

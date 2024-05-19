@@ -23,20 +23,19 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include<cmath>
 #include <QAction>
 #include <QMouseEvent>
-#include "rs_actiondrawlineangle.h"
 
+#include "rs_actiondrawlineangle.h"
+#include "rs_commandevent.h"
+#include "rs_coordinateevent.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_commandevent.h"
-#include "rs_settings.h"
 #include "rs_line.h"
-#include "rs_coordinateevent.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_debug.h"
+#include "rs_settings.h"
 
 struct RS_ActionDrawLineAngle::Points {
 	/**
@@ -71,7 +70,7 @@ RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
         bool fixedAngle, RS2::ActionType actionType)
         :RS_PreviewActionInterface("Draw lines with given angle",
 						   container, graphicView)
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 {
 
     this->actionType=actionType;
@@ -123,7 +122,7 @@ void RS_ActionDrawLineAngle::trigger() {
 
 	graphicView->moveRelativeZero(pPoints->data.startpoint);
         graphicView->redraw(RS2::RedrawDrawing);
-    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %d",
+    RS_DEBUG->print("RS_ActionDrawLineAngle::trigger(): line added: %lu",
                     line->getId());
 }
 

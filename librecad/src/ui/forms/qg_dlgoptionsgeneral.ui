@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>783</width>
-    <height>603</height>
+    <width>847</width>
+    <height>646</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,14 +32,14 @@
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -105,107 +105,17 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout" name="graphic_view_layout">
-          <item row="0" column="0">
-           <widget class="QCheckBox" name="indicator_lines_checkbox">
-            <property name="text">
-             <string>Snap indicator lines</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+S</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="indicator_lines_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Isometric</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Spiderweb</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QCheckBox" name="indicator_shape_checkbox">
-            <property name="text">
-             <string>Snap indicator shape</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="indicator_shape_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Circle</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Point</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Square</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cursor_hiding_checkbox">
-            <property name="text">
-             <string>Hide cursor when snapping</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="cb_antialiasing">
-            <property name="text">
-             <string>Anti-aliasing</string>
-            </property>
-           </widget>
-          </item>
           <item row="4" column="0">
-           <widget class="QCheckBox" name="scrollbars_check_box">
+           <widget class="QCheckBox" name="cb_autopanning">
             <property name="text">
-             <string>Scrollbars</string>
+             <string>Auto-panning</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="cbScaleGrid">
+          <item row="12" column="0">
+           <widget class="QLabel" name="lMaxPreview">
             <property name="text">
-             <string>A&amp;utomatically scale grid</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+U</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QLabel" name="lMinGridSpacing">
-            <property name="text">
-             <string>Minimal Grid Spacing (p&amp;x):</string>
+             <string>N&amp;umber of preview entities:</string>
             </property>
             <property name="wordWrap">
              <bool>false</bool>
@@ -215,7 +125,14 @@
             </property>
            </widget>
           </item>
-          <item row="6" column="1">
+          <item row="1" column="0">
+           <widget class="QCheckBox" name="indicator_shape_checkbox">
+            <property name="text">
+             <string>Snap indicator shape</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -262,20 +179,114 @@
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
-           <widget class="QLabel" name="lMaxPreview">
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cursor_hiding_checkbox">
             <property name="text">
-             <string>N&amp;umber of preview entities:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
+             <string>Hide cursor when snapping</string>
             </property>
            </widget>
           </item>
-          <item row="7" column="1">
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="scrollbars_check_box">
+            <property name="text">
+             <string>Scrollbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cb_antialiasing">
+            <property name="text">
+             <string>Anti-aliasing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="text">
+             <string>Unitless grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="indicator_lines_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Crosshair</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Crosshair2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Isometric</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Spiderweb</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="indicator_shape_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Circle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Point</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Square</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QCheckBox" name="cbScaleGrid">
+            <property name="text">
+             <string>A&amp;utomatically scale grid</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+U</string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="cbHideRelativeZero">
+            <property name="text">
+             <string>Hide the relative-&amp;zero marker</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+Z</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="0">
+           <widget class="QCheckBox" name="indicator_lines_checkbox">
+            <property name="text">
+             <string>Snap indicator lines</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+S</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -310,6 +321,29 @@
               <string notr="true">800</string>
              </property>
             </item>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QLabel" name="lMinGridSpacing">
+            <property name="text">
+             <string>Minimal Grid Spacing (p&amp;x):</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="cbVisualizeHovering">
+            <property name="toolTip">
+             <string>Visualize the entity under the cursor</string>
+            </property>
+            <property name="text">
+             <string>Mouse-over effects</string>
+            </property>
            </widget>
           </item>
          </layout>
@@ -355,6 +389,16 @@
             </property>
            </widget>
           </item>
+          <item row="9" column="0">
+           <widget class="QLabel" name="lRelativeZeroColor">
+            <property name="text">
+             <string>&amp;Relative-Zero Marker Color:</string>
+            </property>
+            <property name="buddy">
+             <cstring>cbRelativeZeroColor</cstring>
+            </property>
+           </widget>
+          </item>
           <item row="2" column="0">
            <widget class="QLabel" name="lGridColor">
             <property name="text">
@@ -379,6 +423,26 @@
             <item>
              <property name="text">
               <string notr="true">#0000FF</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="9" column="2">
+           <widget class="QComboBox" name="cbRelativeZeroColor">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <property name="editable">
+             <bool>true</bool>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">#1E90FF</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">#FFC200</string>
              </property>
             </item>
            </widget>
@@ -504,6 +568,23 @@
           </item>
           <item row="8" column="3">
            <widget class="QPushButton" name="pb_end">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="text">
+             <string/>
+            </property>
+            <property name="icon">
+             <iconset resource="../../../res/ui/ui.qrc">
+              <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="3">
+           <widget class="QPushButton" name="pb_relativeZeroColor">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
               <horstretch>0</horstretch>
@@ -801,7 +882,19 @@
         <widget class="QLineEdit" name="leTemplate"/>
        </item>
        <item row="3" column="2">
-        <widget class="QLineEdit" name="lePathLibrary"/>
+        <widget class="QLineEdit" name="lePathLibrary">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;Part library folder. The symbol library dxf files must be located in the subdirectories of this folder. The subfolder names will be displayed in the Library Browser.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-family:'-apple-system','BlinkMacSystemFont','Segoe UI','Noto Sans','Helvetica','Arial','sans-serif','Apple Color Emoji','Segoe UI Emoji'; font-size:14px; color:#1f2328; background-color:#ffffff;&quot;&gt;( Menu: Widgets &amp;gt; Dock Widgets &amp;gt; Library Browser)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="3">
+        <widget class="QToolButton" name="btPathLibrary">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
        </item>
        <item row="2" column="2">
         <widget class="QLineEdit" name="lePathFonts"/>
@@ -817,10 +910,10 @@
        <item row="6" column="2">
         <spacer name="spacer5_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
+          <enum>QSizePolicy::Policy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -853,10 +946,10 @@
        <item row="6" column="0">
         <spacer name="spacer5">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
+          <enum>QSizePolicy::Policy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -925,7 +1018,7 @@
             <item>
              <widget class="QLabel" name="label">
               <property name="text">
-               <string>Auto save time:</string>
+               <string>Auto save time (minutes):</string>
               </property>
              </widget>
             </item>
@@ -987,7 +1080,7 @@
        <item row="3" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1062,6 +1155,13 @@
            <widget class="QCheckBox" name="maximize_checkbox">
             <property name="text">
              <string>Start with main window maximized</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbOpenLastFiles">
+            <property name="text">
+             <string>Open last opened files</string>
             </property>
            </widget>
           </item>
@@ -1145,7 +1245,7 @@
           <item>
            <widget class="QCheckBox" name="cbToggleFreeSnapOnSpace">
             <property name="toolTip">
-             <string>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</string>
+             <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Temporarily toggle free snapping when the spacebar is pressed and the command window is activated&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
             </property>
             <property name="text">
              <string>Toggle free snap mode when SPACE BAR is pressed</string>
@@ -1202,8 +1302,10 @@
   <tabstop>cbStartHandleColor</tabstop>
   <tabstop>cbHandleColor</tabstop>
   <tabstop>cbEndHandleColor</tabstop>
+  <tabstop>cbRelativeZeroColor</tabstop>
   <tabstop>buttonBox</tabstop>
   <tabstop>lePathLibrary</tabstop>
+  <tabstop>btPathLibrary</tabstop>
   <tabstop>cbUnit</tabstop>
   <tabstop>lePathFonts</tabstop>
   <tabstop>leTemplate</tabstop>
@@ -1213,8 +1315,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -1278,6 +1381,22 @@
     <hint type="destinationlabel">
      <x>20</x>
      <y>20</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>btPathLibrary</sender>
+   <signal>clicked()</signal>
+   <receiver>QG_DlgOptionsGeneral</receiver>
+   <slot>setLibraryPath()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>682</x>
+     <y>193</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>322</x>
+     <y>201</y>
     </hint>
    </hints>
   </connection>

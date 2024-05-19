@@ -25,6 +25,8 @@
 **
 **********************************************************************/
 
+#include <algorithm>
+
 #include <QScrollBar>
 #include <QTableView>
 #include <QHeaderView>
@@ -35,11 +37,9 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 
-#include <algorithm>
-
+#include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
-#include "qg_actionhandler.h"
 #include "rs_debug.h"
 
 QG_BlockModel::QG_BlockModel(QObject * parent) : QAbstractTableModel(parent) {
@@ -71,7 +71,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
      */
     beginResetModel();
     listBlock.clear();
-    if (bl == NULL){
+    if (bl == nullptr){
         endResetModel();
         return;
     }
@@ -89,7 +89,7 @@ void QG_BlockModel::setBlockList(RS_BlockList* bl) {
 
 RS_Block *QG_BlockModel::getBlock( int row ){
     if ( row >= listBlock.size() || row < 0)
-        return NULL;
+        return nullptr;
     return listBlock.at(row);
 }
 
@@ -136,10 +136,10 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     setObjectName(name);
     actionHandler = ah;
-    blockList = NULL;
-    lastBlock = NULL;
+    blockList = nullptr;
+    lastBlock = nullptr;
 
-    blockModel = new QG_BlockModel;
+    blockModel = new QG_BlockModel(this);
     blockView = new QTableView(this);
     blockView->setModel (blockModel);
     blockView->setShowGrid (false);
@@ -242,13 +242,6 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
             this, &QG_BlockWidget::slotSelectionChanged);
 }
 
-/**
- * Destructor
- */
-QG_BlockWidget::~QG_BlockWidget() {
-    delete blockView;
-    delete blockModel;
-}
 
 /**
  * Updates the block box from the blocks in the graphic.
@@ -256,28 +249,20 @@ QG_BlockWidget::~QG_BlockWidget() {
 void QG_BlockWidget::update() {
     RS_DEBUG->print("QG_BlockWidget::update()");
 
-    int yPos = blockView->verticalScrollBar()->value();
-    RS_Block* activeBlock;
-
-    if (blockList) {
-        activeBlock = blockList->getActive();
-    } else {
-        activeBlock = NULL;
-    }
-
-    blockModel->setBlockList(blockList);
-
-    if (blockList==NULL) {
-        RS_DEBUG->print("QG_BlockWidget::update(): blockList is NULL");
+    if (blockList==nullptr) {
+        RS_DEBUG->print("QG_BlockWidget::update(): blockList is nullptr");
         blockModel->setActiveBlock(nullptr);
         return;
     }
+
+    RS_Block* activeBlock = (blockList != nullptr) ? blockList->getActive() : nullptr;
+
+    blockModel->setBlockList(blockList);
 
     RS_Block* b = lastBlock;
     activateBlock(activeBlock);
     lastBlock = b;
     blockView->resizeRowsToContents();
-    blockView->verticalScrollBar()->setValue(yPos);
 
     restoreSelections();
 
@@ -308,12 +293,13 @@ void QG_BlockWidget::restoreSelections() {
 void QG_BlockWidget::activateBlock(RS_Block* block) {
     RS_DEBUG->print("QG_BlockWidget::activateBlock()");
 
-    if (block==NULL || blockList==NULL) {
+    if (block==nullptr || blockList==nullptr) {
         return;
     }
 
     lastBlock = blockList->getActive();
     blockList->activate(block);
+    int yPos = blockView->verticalScrollBar()->value();
     QModelIndex idx = blockModel->getIndex (block);
 
     // remember selected status of the block
@@ -332,13 +318,14 @@ void QG_BlockWidget::activateBlock(RS_Block* block) {
     }
     block->selectedInBlockList(selected);
     blockView->selectionModel()->select(QItemSelection(idx, idx), selFlag);
+    blockView->verticalScrollBar()->setValue(yPos);
 }
 
 /**
  * Called when the user activates (highlights) a block.
  */
 void QG_BlockWidget::slotActivated(QModelIndex blockIdx) {
-    if (!blockIdx.isValid() || blockList==NULL)
+    if (!blockIdx.isValid() || blockList==nullptr)
         return;
 
     RS_Block * block = blockModel->getBlock( blockIdx.row() );
@@ -396,39 +383,28 @@ void QG_BlockWidget::contextMenuEvent(QContextMenuEvent *e) {
     // select item (block) in Block List widget first because left-mouse-click event are not to be triggered
     // slotActivated(blockView->currentIndex());
 
-    QMenu* contextMenu = new QMenu(this);
-    QLabel* caption = new QLabel(tr("Block Menu"), this);
-    QPalette palette;
-    palette.setColor(caption->backgroundRole(), RS_Color(0,0,0));
-    palette.setColor(caption->foregroundRole(), RS_Color(255,255,255));
-    caption->setPalette(palette);
-    caption->setAlignment( Qt::AlignCenter );
+    auto contextMenu = std::make_unique<QMenu>(this);
+
+    using ActionMemberFunc = void (QG_ActionHandler::*)();
+    const auto addActionFunc = [this, &contextMenu](const QString& name, ActionMemberFunc func) {
+        contextMenu->addAction(name, actionHandler, func);
+    };
     // Actions for all blocks:
-    contextMenu->addAction( tr("&Defreeze all Blocks"), actionHandler,
-                             SLOT(slotBlocksDefreezeAll()), 0);
-    contextMenu->addAction( tr("&Freeze all Blocks"), actionHandler,
-                             SLOT(slotBlocksFreezeAll()), 0);
+    addActionFunc(tr("&Defreeze all Blocks"), &QG_ActionHandler::slotBlocksDefreezeAll);
+    addActionFunc(tr("&Freeze all Blocks"), &QG_ActionHandler::slotBlocksFreezeAll);
     contextMenu->addSeparator();
     // Actions for selected blocks or,
     // if nothing is selected, for active block:
-    contextMenu->addAction( tr("&Toggle Visibility"), actionHandler,
-                             SLOT(slotBlocksToggleView()), 0);
-    contextMenu->addAction( tr("&Remove Block"), actionHandler,
-                             SLOT(slotBlocksRemove()), 0);
+    addActionFunc(tr("&Toggle Visibility"), &QG_ActionHandler::slotBlocksToggleView);
+    addActionFunc(tr("&Remove Block"), &QG_ActionHandler::slotBlocksRemove);
     contextMenu->addSeparator();
     // Single block actions:
-    contextMenu->addAction( tr("&Add Block"), actionHandler,
-                             SLOT(slotBlocksAdd()), 0);
-    contextMenu->addAction( tr("&Rename Block"), actionHandler,
-                             SLOT(slotBlocksAttributes()), 0);
-    contextMenu->addAction( tr("&Edit Block"), actionHandler,
-                             SLOT(slotBlocksEdit()), 0);
-    contextMenu->addAction( tr("&Insert Block"), actionHandler,
-                             SLOT(slotBlocksInsert()), 0);
-    contextMenu->addAction( tr("&Create New Block"), actionHandler,
-                             SLOT(slotBlocksCreate()), 0);
+    addActionFunc(tr("&Add Block"), &QG_ActionHandler::slotBlocksAdd);
+    addActionFunc(tr("&Rename Block"), &QG_ActionHandler::slotBlocksAttributes);
+    addActionFunc(tr("&Edit Block"), &QG_ActionHandler::slotBlocksEdit);
+    addActionFunc(tr("&Insert Block"), &QG_ActionHandler::slotBlocksInsert);
+    addActionFunc(tr("&Create New Block"), &QG_ActionHandler::slotBlocksCreate);
     contextMenu->exec(QCursor::pos());
-    delete contextMenu;
 
     e->accept();
 }
@@ -468,20 +444,12 @@ void QG_BlockWidget::slotUpdateBlockList() {
         return;
     }
 
-    QRegExp rx("");
-    int pos = 0;
-    QString s, n;
-
-    n = matchBlockName->text();
-    rx.setPattern(n);
-    rx.setPatternSyntax(QRegExp::WildcardUnix);
+    QRegularExpression rx{ QRegularExpression::wildcardToRegularExpression(matchBlockName->text())};
 
     for (int i = 0; i < blockList->count(); i++) {
         RS_Block* block = blockModel->getBlock(i);
         if (!block) continue;
-        s = block->getName();
-        int f = rx.indexIn(s, pos);
-        if (!f) {
+        if (block->getName().indexOf(rx) == 0) {
             blockView->showRow(i);
             blockModel->getBlock(i)->visibleInBlockList(true);
         } else {

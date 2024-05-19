@@ -24,15 +24,15 @@
 **
 **********************************************************************/
 
-#include "rs_actionmodifytrim.h"
 
 #include <QAction>
 #include <QMouseEvent>
+
+#include "rs_actionmodifytrim.h"
+#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_preview.h"
-#include "rs_debug.h"
 
 struct RS_ActionModifyTrim::Points {
 	RS_Vector limitCoord;
@@ -49,7 +49,7 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer& container,
 						   container, graphicView)
 		, trimEntity{nullptr}
 		, limitEntity{nullptr}
-		, pPoints(new Points{})
+		, pPoints(std::make_unique<Points>())
 		, both{both}
 {
 }
@@ -101,7 +101,7 @@ void RS_ActionModifyTrim::trigger() {
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
 
-    RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+    RS_Vector mouse = graphicView->toGraph(e->position());
     RS_Entity* se = catchEntity(e);
 
     switch (getStatus()) {
@@ -127,7 +127,7 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse = graphicView->toGraph(e->x(), e->y());
+        RS_Vector mouse = graphicView->toGraph(e->position());
         RS_Entity* se = catchEntity(e);
 
         switch (getStatus()) {

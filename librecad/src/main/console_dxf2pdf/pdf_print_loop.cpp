@@ -29,20 +29,20 @@
 #include "rs_painterqt.h"
 #include "lc_printing.h"
 #include "rs_staticgraphicview.h"
+#include "rs_units.h"
 
 #include "pdf_print_loop.h"
 
 
-static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, QString&);
+static bool openDocAndSetGraphic(RS_Document**, RS_Graphic**, const QString&);
 static void touchGraphic(RS_Graphic*, PdfPrintParams&);
 static void setupPrinterAndPaper(RS_Graphic*, QPrinter&, PdfPrintParams&);
 static void drawPage(RS_Graphic*, QPrinter&, RS_PainterQt&);
 
-
 void PdfPrintLoop::run()
 {
     if (params.outFile.isEmpty()) {
-        for (auto f : params.dxfFiles) {
+        for (auto &&f : params.dxfFiles) {
             printOneDxfToOnePdf(f);
         }
     } else {
@@ -53,7 +53,7 @@ void PdfPrintLoop::run()
 }
 
 
-void PdfPrintLoop::printOneDxfToOnePdf(QString& dxfFile) {
+void PdfPrintLoop::printOneDxfToOnePdf(const QString& dxfFile) {
 
     // Main code logic and flow for this method is originally stolen from
     // QC_ApplicationWindow::slotFilePrint(bool printPDF) method.
@@ -99,7 +99,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
         RS_Document* doc;
         RS_Graphic* graphic;
         QString dxfFile;
-        QPrinter::PageSize paperSize;
+        QPageSize::PageSizeId paperSize;
     };
 
     if (!params.outDir.isEmpty()) {
@@ -170,7 +170,7 @@ void PdfPrintLoop::printManyDxfToOnePdf() {
 
 
 static bool openDocAndSetGraphic(RS_Document** doc, RS_Graphic** graphic,
-    QString& dxfFile)
+    const QString& dxfFile)
 {
     *doc = new RS_Graphic();
 
@@ -217,24 +217,28 @@ static void setupPrinterAndPaper(RS_Graphic* graphic, QPrinter& printer,
     bool landscape = false;
 
     RS2::PaperFormat pf = graphic->getPaperFormat(&landscape);
-    QPrinter::PageSize paperSize = LC_Printing::rsToQtPaperFormat(pf);
+    QPageSize::PageSizeId paperSize = LC_Printing::rsToQtPaperFormat(pf);
 
-    if (paperSize == QPrinter::Custom){
+    if (paperSize == QPageSize::Custom){
         RS_Vector r = graphic->getPaperSize();
-        RS_Vector&& s = RS_Units::convert(r, graphic->getUnit(),
+        RS_Vector s = RS_Units::convert(r, graphic->getUnit(),
             RS2::Millimeter);
         if (landscape)
             s = s.flipXY();
-        printer.setPaperSize(QSizeF(s.x,s.y), QPrinter::Millimeter);
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+        printer.setPageSize(QPageSize{QSizeF{s.x,s.y}, QPageSize::Millimeter});
+#else
+        printer.setPaperSize(QSizeF{s.x,s.y}, QPrinter::Millimeter);
+#endif
     } else {
-        printer.setPaperSize(paperSize);
+        printer.setPageSize(paperSize);
     }
 
-    if (landscape) {
-        printer.setOrientation(QPrinter::Landscape);
-    } else {
-        printer.setOrientation(QPrinter::Portrait);
-    }
+#if QT_VERSION >= QT_VERSION_CHECK(5, 15, 0)
+    printer.setPageOrientation(landscape ? QPageLayout::Landscape : QPageLayout::Portrait);
+#else
+    printer.setOrientation(landscape ? QPrinter::Landscape : QPrinter::Portrait);
+#endif
 
     printer.setOutputFileName(params.outFile);
     printer.setOutputFormat(QPrinter::PdfFormat);

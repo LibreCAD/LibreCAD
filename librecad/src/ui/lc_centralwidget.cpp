@@ -22,10 +22,10 @@
 **********************************************************************************
 */
 
-#include "lc_centralwidget.h"
 
 #include <QMdiArea>
 #include <QVBoxLayout>
+#include "lc_centralwidget.h"
 
 LC_CentralWidget::LC_CentralWidget(QWidget* parent)
     : QFrame(parent)
