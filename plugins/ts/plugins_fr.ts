@@ -713,7 +713,7 @@ première base, deuxième base, première cible, deuxième cible.</translation>
         <location filename="../divide/divide.cpp" line="500"/>
         <location filename="../divide/divide.cpp" line="519"/>
         <source>center point</source>
-        <translation type="unfinished">centre</translation>
+        <translation>centre du point</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="506"/>
@@ -818,7 +818,7 @@ première base, deuxième base, première cible, deuxième cible.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>lieux</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
