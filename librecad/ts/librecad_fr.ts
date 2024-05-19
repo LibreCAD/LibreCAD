@@ -959,7 +959,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Cotation</translation>
+        <translation>Cotations</translation>
     </message>
     <message>
         <source>Modify</source>
@@ -1524,7 +1524,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation>Sauvegarder le dessin : %1</translation>
+        <translation>Sauvegarder le dessin&#x202f;: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
@@ -1537,7 +1537,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation>Sauvegarder les changements de l’élément suivant ?
+        <translation>Sauvegarder les changements de l’élément suivant&#x202f;?
 %1</translation>
     </message>
     <message>
@@ -2985,7 +2985,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Font:</source>
-        <translation>Police :</translation>
+        <translation>Police&#x202f;:</translation>
     </message>
     <message>
         <source>Text Direction</source>
@@ -3457,7 +3457,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation>&amp;Hauteur :</translation>
+        <translation>&amp;Hauteur&#x202f;:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
@@ -6894,7 +6894,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>None</source>
         <comment>unknown length unit</comment>
-        <translation>Inféfini</translation>
+        <translation>Indéfini</translation>
     </message>
     <message>
         <source>error reading file metadata in dwg file</source>
@@ -7041,7 +7041,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation>Vous devez tout d&apos;abord saisir une distance.</translation>
+        <translation>Vous devez d&apos;abord saisir une distance.</translation>
     </message>
     <message>
         <source>cal</source>
@@ -7061,47 +7061,47 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Aucune couche %1 trouvée</translation>
     </message>
     <message>
         <source>line2p</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ligne2p</translation>
     </message>
     <message>
         <source>lineang</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ligneinc</translation>
     </message>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation type="unfinished"></translation>
+        <translation>li</translation>
     </message>
     <message>
         <source>linehor</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lignehor</translation>
     </message>
     <message>
         <source>lh</source>
         <comment>horizontal line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lh</translation>
     </message>
     <message>
         <source>linever</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lignever</translation>
     </message>
     <message>
         <source>lv</source>
         <comment>vertical line</comment>
-        <translation type="unfinished"></translation>
+        <translation>lv</translation>
     </message>
     <message>
         <source>linerec</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>rec</translation>
     </message>
     <message>
         <source>re</source>
@@ -7111,92 +7111,92 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>para</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>par</translation>
     </message>
     <message>
         <source>pa</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>pa</translation>
     </message>
     <message>
         <source>ll</source>
         <comment>create parallel</comment>
-        <translation type="unfinished"></translation>
+        <translation>ll</translation>
     </message>
     <message>
         <source>lineparthro</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>parap</translation>
     </message>
     <message>
         <source>lp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pp</translation>
     </message>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>bis</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanpc</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tpc</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>tan2c</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation type="unfinished"></translation>
+        <translation>t2c</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tanp</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>tp</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>per</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>p</translation>
     </message>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>angrel</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>polygoncencor</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygonecp</translation>
     </message>
     <message>
         <source>pp</source>
@@ -7206,37 +7206,37 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>polycp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>polycp</translation>
     </message>
     <message>
         <source>pcp</source>
         <comment>polygon centre point</comment>
-        <translation type="unfinished"></translation>
+        <translation>pcp</translation>
     </message>
     <message>
         <source>polygoncentan</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polygonecentan</translation>
     </message>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>pct</translation>
     </message>
     <message>
         <source>polyct</source>
         <comment>polygon centre vertex</comment>
-        <translation type="unfinished"></translation>
+        <translation>polyct</translation>
     </message>
     <message>
         <source>p2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>p2</translation>
     </message>
     <message>
         <source>c</source>
         <comment>draw circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>c</translation>
     </message>
     <message>
         <source>circle2p</source>
@@ -7251,37 +7251,37 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>circle2pr</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cercle2pr</translation>
     </message>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation type="unfinished">ccr</translation>
+        <translation>c2pr</translation>
     </message>
     <message>
         <source>circle3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished">cercle3p</translation>
+        <translation>cercle3p</translation>
     </message>
     <message>
         <source>c3p</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished">c3p</translation>
+        <translation>c3p</translation>
     </message>
     <message>
         <source>circlecr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished">cerclecr</translation>
+        <translation>cerclecr</translation>
     </message>
     <message>
         <source>cr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cr</translation>
     </message>
     <message>
         <source>ccr</source>
         <comment>circle point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ccr</translation>
     </message>
     <message>
         <source>circletan2cp</source>
@@ -7321,42 +7321,42 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>t3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished">a3</translation>
+        <translation>t3</translation>
     </message>
     <message>
         <source>arc</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished">arc</translation>
+        <translation>arc</translation>
     </message>
     <message>
         <source>ar</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>ar</translation>
     </message>
     <message>
         <source>a</source>
         <comment>arc point radius</comment>
-        <translation type="unfinished">a</translation>
+        <translation>a</translation>
     </message>
     <message>
         <source>arc3p</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished"></translation>
+        <translation>arc3p</translation>
     </message>
     <message>
         <source>a3</source>
         <comment>draw 3pt arc</comment>
-        <translation type="unfinished">a3</translation>
+        <translation>a3</translation>
     </message>
     <message>
         <source>arctan</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>arctan</translation>
     </message>
     <message>
         <source>at</source>
         <comment>arc tangent</comment>
-        <translation type="unfinished"></translation>
+        <translation>at</translation>
     </message>
     <message>
         <source>sf</source>
@@ -11115,7 +11115,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Calculer le nombre de pages nécessaires pour contenir le dessin</translation>
     </message>
 </context>
 <context>
