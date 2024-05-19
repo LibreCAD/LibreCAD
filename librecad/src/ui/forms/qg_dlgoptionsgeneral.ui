@@ -32,14 +32,14 @@
    <item row="1" column="0">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+      <set>QDialogButtonBox::StandardButton::Cancel|QDialogButtonBox::StandardButton::Ok</set>
      </property>
     </widget>
    </item>
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -105,14 +105,14 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout" name="graphic_view_layout">
-          <item row="3" column="0">
+          <item row="4" column="0">
            <widget class="QCheckBox" name="cb_autopanning">
             <property name="text">
              <string>Auto-panning</string>
             </property>
            </widget>
           </item>
-          <item row="11" column="0">
+          <item row="12" column="0">
            <widget class="QLabel" name="lMaxPreview">
             <property name="text">
              <string>N&amp;umber of preview entities:</string>
@@ -132,7 +132,7 @@
             </property>
            </widget>
           </item>
-          <item row="10" column="1">
+          <item row="11" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -186,17 +186,24 @@
             </property>
            </widget>
           </item>
-          <item row="5" column="0">
+          <item row="6" column="0">
            <widget class="QCheckBox" name="scrollbars_check_box">
             <property name="text">
              <string>Scrollbars</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="0">
+          <item row="5" column="0">
            <widget class="QCheckBox" name="cb_antialiasing">
             <property name="text">
              <string>Anti-aliasing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="text">
+             <string>Unitless grid</string>
             </property>
            </widget>
           </item>
@@ -249,7 +256,7 @@
             </item>
            </widget>
           </item>
-          <item row="7" column="0">
+          <item row="8" column="0">
            <widget class="QCheckBox" name="cbScaleGrid">
             <property name="text">
              <string>A&amp;utomatically scale grid</string>
@@ -259,7 +266,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
+          <item row="9" column="0">
            <widget class="QCheckBox" name="cbHideRelativeZero">
             <property name="text">
              <string>Hide the relative-&amp;zero marker</string>
@@ -279,7 +286,7 @@
             </property>
            </widget>
           </item>
-          <item row="11" column="1">
+          <item row="12" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -316,7 +323,7 @@
             </item>
            </widget>
           </item>
-          <item row="10" column="0">
+          <item row="11" column="0">
            <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
              <string>Minimal Grid Spacing (p&amp;x):</string>
@@ -329,7 +336,7 @@
             </property>
            </widget>
           </item>
-          <item row="9" column="0">
+          <item row="10" column="0">
            <widget class="QCheckBox" name="cbVisualizeHovering">
             <property name="toolTip">
              <string>Visualize the entity under the cursor</string>
@@ -903,10 +910,10 @@
        <item row="6" column="2">
         <spacer name="spacer5_2">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
+          <enum>QSizePolicy::Policy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -939,10 +946,10 @@
        <item row="6" column="0">
         <spacer name="spacer5">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
+          <enum>QSizePolicy::Policy::Expanding</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1073,7 +1080,7 @@
        <item row="3" column="0">
         <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Vertical</enum>
+          <enum>Qt::Orientation::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
@@ -1309,7 +1316,6 @@
  </tabstops>
  <resources>
   <include location="../../../res/ui/ui.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
  </resources>
