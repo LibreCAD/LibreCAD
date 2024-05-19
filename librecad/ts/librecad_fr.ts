@@ -7286,37 +7286,37 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>circletan2cp</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation>cercletan2cp</translation>
     </message>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">c2tp</translation>
     </message>
     <message>
         <source>circletan2p</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>cercletan2p</translation>
     </message>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ct2p</translation>
     </message>
     <message>
         <source>circletan2cr</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>cercletan2cr</translation>
     </message>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">c2tr</translation>
     </message>
     <message>
         <source>circletan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>cercletan3</translation>
     </message>
     <message>
         <source>t3</source>
