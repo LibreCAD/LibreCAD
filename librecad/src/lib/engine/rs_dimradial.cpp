@@ -131,140 +131,61 @@ RS_VectorSolutions RS_DimRadial::getRefPoints() const
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimRadial::updateDim(bool autoText) {
+void RS_DimRadial::updateDim(bool autoText)
+{
 
     RS_DEBUG->print("RS_DimRadial::update");
 
     clear();
 
-    if (isUndone()) {
-        return;
-    }
+    if (isUndone()) return;
 
-    // general scale (DIMSCALE)
-    double dimscale = getGeneralScale();
+    const RS_Vector p1 = data.definitionPoint;
+    const RS_Vector p2 = edata.definitionPoint;
 
-	RS_Vector p1 = data.definitionPoint;
-    RS_Vector p2 = edata.definitionPoint;
-    double angle = p1.angleTo(p2);
+    const RS_Pen pen(getDimensionLineColor(), getDimensionLineWidth(), RS2::LineByBlock);
 
-    // text height (DIMTXT)
-    double dimtxt = getTextHeight()*dimscale;
-
-    RS_Pen pen(getDimensionLineColor(),
-           getDimensionLineWidth(),
-           RS2::LineByBlock);
-
-    RS_MTextData textData;
-
-    textData = RS_MTextData(RS_Vector(0.0,0.0),
-                           dimtxt, 30.0,
-                           RS_MTextData::VAMiddle,
-                           RS_MTextData::HACenter,
-                           RS_MTextData::LeftToRight,
-                           RS_MTextData::Exact,
-                           1.0,
-                           getLabel(),
-                           getTextStyle(),
-                           0.0);
+    const RS_MTextData textData = RS_MTextData( RS_Vector(0.0,0.0), 
+                                                getTextHeight() * getGeneralScale(), 
+                                                30.0, 
+                                                RS_MTextData::VAMiddle, 
+                                                RS_MTextData::HACenter, 
+                                                RS_MTextData::LeftToRight, 
+                                                RS_MTextData::Exact, 
+                                                1.0, 
+                                                getLabel(), 
+                                                getTextStyle(), 
+                                                0.0);
 
     RS_MText* text = new RS_MText(this, textData);
-    double textWidth = text->getSize().x;
 
-    double arrow_size = getArrowSize()*dimscale;
-    double length = p1.distanceTo(p2); // line length
-
-    // do we have to put the arrow / text outside of the arc?
-    bool outsideArrow = (length < ((arrow_size * 2.0) + textWidth));
-
-    double arrowAngle;
-
-    if (outsideArrow)
+    const double textWidth   = text->getSize().x;
+    const double arrow_size  = getArrowSize() * getGeneralScale();
+    const double line_length = p1.distanceTo(p2);
+    const double line_angle  = p1.angleTo(p2);
+    if (line_length < ((arrow_size * 2.0) + textWidth))
     {
-        length += (arrow_size * 2) + textWidth;
-        arrowAngle = angle + M_PI;
+        const RS_Vector p1b = p1 + RS_Vector::polar(line_length, line_angle);
+
+
+        // Create dimension line 1:
+        RS_Line* dimensionLine_1 = new RS_Line{this, p1, p1b};
+        dimensionLine_1->setPen(pen);
+        dimensionLine_1->setLayer(nullptr);
+        addEntity(dimensionLine_1);
+
+        const double extended_line_length = line_length + (arrow_size * 2) + textWidth;
+
+        const RS_Vector p3 = p1 + RS_Vector::polar(extended_line_length, line_angle);
+
+        updateCreateDimensionLine(p1b, p3, true, false, autoText);
     }
     else
     {
-        arrowAngle = angle;
+        const RS_Vector p3 = p1 + RS_Vector::polar(line_length, line_angle);
+
+        updateCreateDimensionLine(p1, p3, false, true, autoText);
     }
-
-    if ((getTickSize() * getGeneralScale()) < 0.01)
-    {
-        // create arrow:
-        RS_SolidData sd;
-        RS_Solid* arrow;
-
-        arrow = new RS_Solid(this, sd);
-        arrow->shapeArrow(p2, arrowAngle, arrow_size);
-        arrow->setPen(pen);
-        arrow->setLayer(nullptr);
-        addEntity(arrow);
-    }
-    else
-    {
-        RS_Line* tick;
-        RS_Vector tickVector = RS_Vector::polar( getTickSize() * dimscale, 
-                                                 arrowAngle + (M_PI_2 / 2.0));
-
-        tick = new RS_Line(this, p2 - tickVector, p2 + tickVector);
-        tick->setPen(pen);
-        tick->setLayer(nullptr);
-        addEntity(tick);
-    }
-
-	RS_Vector p3 = RS_Vector::polar(length, angle);
-    p3 += p1;
-
-    // Create dimension line:
-	RS_Line* dimensionLine = new RS_Line{this, p1, p3};
-    dimensionLine->setPen(pen);
-	dimensionLine->setLayer(nullptr);
-    addEntity(dimensionLine);
-
-    RS_Vector distV;
-    double textAngle;
-
-    // text distance to line (DIMGAP)
-    double dimgap = getDimensionLineGap()*dimscale;
-
-    // rotate text so it's readable from the bottom or right (ISO)
-    // quadrant 1 & 4
-    if (angle > M_PI_2*3.0+0.001 || angle < M_PI_2+0.001)
-    {
-		distV.setPolar(dimgap + dimtxt/2.0, angle+M_PI_2);
-        textAngle = angle;
-    }
-    // quadrant 2 & 3
-    else
-    {
-		distV.setPolar(dimgap + dimtxt/2.0, angle-M_PI_2);
-        textAngle = angle+M_PI;
-    }
-
-    // move text label:
-    RS_Vector textPos;
-
-    if (data.middleOfText.valid && !autoText) {
-        textPos = data.middleOfText;
-    } else {
-        if (outsideArrow) {
-            textPos.setPolar(length-textWidth/2.0-arrow_size, angle);
-        } else {
-            textPos.setPolar(length/2.0, angle);
-        }
-        textPos += p1;
-        // move text away from dimension line:
-        textPos += distV;
-        data.middleOfText = textPos;
-    }
-
-	text->rotate({0., 0.}, textAngle);
-    text->move(textPos);
-
-    text->setPen(RS_Pen(getTextColor(), RS2::WidthByBlock, RS2::SolidLine));
-	text->setLayer(nullptr);
-    addEntity(text);
 
     calculateBorders();
 }
