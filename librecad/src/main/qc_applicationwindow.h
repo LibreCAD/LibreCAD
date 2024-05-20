@@ -319,6 +319,9 @@ public:
      */
     QC_MDIWindow* getWindowWithDoc(const RS_Document* doc);
 
+    RS_Vector getMouseAbsolutePosition();
+    RS_Vector getMouseRelativePosition();
+    
     // Highlight the active block in the block widget
     void showBlockActivated(const RS_Block* block);
 

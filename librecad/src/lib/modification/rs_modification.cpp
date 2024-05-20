@@ -247,40 +247,83 @@ RS_Modification::RS_Modification(RS_EntityContainer& container,
 }
 
 
-
 /**
  * Deletes all selected entities.
  */
-void RS_Modification::remove() {
-
+void RS_Modification::remove()
+{
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove");
 
-	if (!container) {
+    if (container == nullptr)
+    {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no valid container");
+
         return;
     }
 
-    LC_UndoSection undo( document);
+    bool found = false;
+
+    bool deselectEntitiesMode = false;
+
+    LC_UndoSection undo(document);
     bool invalidContainer {true};
 	// not safe (?)
-    for(auto e: *container) {
-        if (e && e->isSelected()) {
+    for (auto* e : *container)
+    {
+        if (e != nullptr && e->isSelected())
+        {
+            found = true;
+
+            if (m_deletePolylineNodeMode)
+            {
+                switch(e->rtti())
+                {
+                case RS2::EntityPolyline:
+                    e = deletePolylineNode((RS_Polyline&) *e, ((RS_Polyline&) *e).getHighlightedVertex());
+                    break;
+                case RS2::EntityLine:
+                {
+                    if (document->countSelected() != 1)
+                    {
+                        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: multiple lines selected");
+                        deselectEntitiesMode = true;
+                    }
+                    else
+                    {
+                        deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
+                    }
+                }
+                    break;
+                default:
+                    RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no line or polyline selected");
+                }
+                m_deletePolylineNodeMode = false;
+            }
+            else if (!deselectEntitiesMode)
+            {
+                e->changeUndoState();
+                undo.addUndoable(e);
+                invalidContainer = false;
+            }
+
             e->setSelected(false);
-            e->changeUndoState();
-            undo.addUndoable(e);
-            invalidContainer = false;
         }
     }
     if (invalidContainer) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
     }
 
+    if (!found) RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
+
     graphicView->redraw(RS2::RedrawDrawing);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove: OK");
 }
 
-
+void RS_Modification::setDeletePolylineNodeMode()
+{
+    m_deletePolylineNodeMode = true;
+}
 
 /**
  * Revert direction of selected entities.
@@ -1122,6 +1165,133 @@ RS_Polyline* RS_Modification::addPolylineNode(RS_Polyline& polyline,
     }
 
     return newPolyline;
+}
+
+
+
+/*
+    Deletes a node from a set of lines, as if it were a polyline; and if no other
+    lines are near the selected node/point, then it deletes the line itself.
+
+    - by Melwyn Francis Carlo
+*/
+void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
+{
+    RS_DEBUG->print("RS_Modification::deleteLineNode");
+
+	if (!container)
+    {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::deleteLineNode: no valid container");
+		return;
+    }
+
+	if (!node.valid)
+    {
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::deleteLineNode: node not valid");
+		return;
+    }
+
+
+    bool nodeIsStartPoint { true };
+
+    if (node == line->getEndpoint()) nodeIsStartPoint = false;
+
+
+    for (unsigned int i = 0; i < document->count(); i++)
+    {
+        if (document->entityAt(i)->rtti() == RS2::EntityLine)
+        {
+            RS_DEBUG->print("RS_Modification::deleteLineNode: connecting (another) line found");
+
+            RS_Line *anotherLine = (RS_Line *) (document->entityAt(i));
+
+            if (line == anotherLine) continue;
+
+            RS_Vector startEndPoints[2] { line->getStartpoint(), line->getEndpoint() };
+
+            if (nodeIsStartPoint)
+            {
+                RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's start point");
+
+                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
+                {
+                    startEndPoints[0] = anotherLine->getEndpoint();
+                }
+                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
+                {
+                    startEndPoints[0] = anotherLine->getStartpoint();
+                }
+                else
+                {
+                    continue;
+                }
+            }
+            else
+            {
+                RS_DEBUG->print("RS_Modification::deleteLineNode: node is original line's end point");
+
+                if (node.distanceTo(anotherLine->getStartpoint()) < RS_TOLERANCE)
+                {
+                    startEndPoints[1] = anotherLine->getEndpoint();
+                }
+                else if (node.distanceTo(anotherLine->getEndpoint()) < RS_TOLERANCE)
+                {
+                    startEndPoints[1] = anotherLine->getStartpoint();
+                }
+                else
+                {
+                    continue;
+                }
+            }
+
+
+            RS_DEBUG->print("RS_Modification::deleteLineNode: adding new line and deleting another line");
+
+            RS_Line* newLine { new RS_Line(container, startEndPoints[0], startEndPoints[1]) };
+
+            newLine->setLayer(line->getLayer());
+            newLine->setPen(line->getPen());
+
+            container->addEntity(newLine);
+
+            if (graphicView)
+            {
+                graphicView->drawEntity(newLine);
+                graphicView->deleteEntity(anotherLine);
+            }
+
+            RS_DEBUG->print("RS_Modification::deleteLineNode: handling new and another line's undo");
+
+            if (handleUndo)
+            {
+                LC_UndoSection undo(document);
+
+                newLine->setUndoState(false);
+                anotherLine->setUndoState(true);
+
+                undo.addUndoable(newLine);
+                undo.addUndoable(anotherLine);
+            }
+
+            break;
+        }
+    }
+
+
+    RS_DEBUG->print("RS_Modification::deleteLineNode: deleting original line");
+
+    if (graphicView) graphicView->deleteEntity(line);
+
+    RS_DEBUG->print("RS_Modification::deleteLineNode: handling original line's undo");
+
+    if (handleUndo)
+    {
+        LC_UndoSection undo(document);
+        line->setUndoState(true);
+        undo.addUndoable(line);
+    }
+
+    RS_DEBUG->print("RS_Modification::deleteLineNode: OK");
 }
 
 
