@@ -1022,7 +1022,7 @@ bool RS_Entity::isConstruction(bool typeCheck) const{
 
 //! whether printing is enabled or disabled for the entity's layer
 bool RS_Entity::isPrint(void) const{
-    return (nullptr != layer) && layer->isPrint();
+    return nullptr == layer || layer->isPrint();
 }
 
 bool RS_Entity::trimmable() const
