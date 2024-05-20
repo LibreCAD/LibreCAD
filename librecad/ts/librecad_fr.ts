@@ -886,7 +886,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished">Sauvegarder le calque &quot;%1&quot; en tant que &quot;%2&quot; </translation>
+        <translation>Sauvegarder le calque &quot;%1&quot; en tant que &quot;%2&quot; </translation>
     </message>
 </context>
 <context>
@@ -1164,7 +1164,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Loaded document: </source>
-        <translation>Document chargé :</translation>
+        <translation>Document chargé&#x202f;: </translation>
     </message>
     <message>
         <source>Opening aborted</source>
@@ -1725,7 +1725,8 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Edit the active block
 in a separate window</source>
-        <translation>Éditer le bloc actif dans une nouvelle fenêtre</translation>
+        <translation>Éditer le bloc actif
+dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Insert the active block</source>
@@ -3514,15 +3515,15 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Unités de dessin</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille relative à l&apos;écran</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation>Taille en unités de dessin</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
@@ -4974,7 +4975,8 @@ so default step value required for baking</source>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation>Un calque de construction contient des lignes droites de longueur infinie prévues pour être utilisée dans les constructions géométriques. Le contenu d&apos;un calque de construction ne devrait pas être imprimé.</translation>
+        <translation>Un calque de construction contient des lignes droites de longueur infinie prévues pour être utilisée dans les constructions géométriques.
+Le contenu d&apos;un calque de construction ne devrait pas être imprimé.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
@@ -5612,45 +5614,47 @@ Cette action NE peut PAS être annulée.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le calque &quot;0&quot; ne peut être supprimé.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Supprimer %n calque</numerusform>
+            <numerusform>Supprimer %n calques</numerusform>
+            <numerusform>Supprimer %n calque</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les calques sélectionnés et toutes leurs entités seront supprimés.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertissement&#x202f;: cette action ne peut PAS être annulée&#x202f;!</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Avertissement&#x202f;: le calque &quot;0&quot; ne peut être supprimé.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Calques à supprimer&#x202f;:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Supprimer %n bloc</numerusform>
+            <numerusform>Supprimer %n blocs</numerusform>
+            <numerusform>Supprimer %n bloc</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Les blocs sélectionnés et toutes leurs entités seront supprimés.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Blocs à supprimer&#x202f;:</translation>
     </message>
 </context>
 <context>
@@ -6903,7 +6907,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Calculator error for input: </source>
-        <translation>Erreur de calcul pour l&apos;expression :</translation>
+        <translation>Erreur de calcul pour l&apos;expression&#x202f;: </translation>
     </message>
     <message>
         <source>bw</source>
@@ -8164,7 +8168,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Sélection personnalisée</translation>
     </message>
     <message>
         <source>noname</source>
@@ -9084,7 +9088,7 @@ This block cannot be inserted.</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation>Le nombre de lignes n&apos;est pas dans la gamme admissible :</translation>
+        <translation>Le nombre de lignes n&apos;est pas dans la gamme admissible&#x202f;: </translation>
     </message>
 </context>
 <context>
@@ -9865,7 +9869,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Invalid number of copies, use %1 </source>
-        <translation>Nombre de copies invalide, utilisez %1</translation>
+        <translation>Nombre de copies invalide, utilisez %1 </translation>
     </message>
 </context>
 <context>
@@ -10040,7 +10044,7 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyTrimAmount</name>
     <message>
         <source>No entity found. </source>
-        <translation>Entité introuvable.</translation>
+        <translation>Entité introuvable. </translation>
     </message>
     <message>
         <source>The chosen Entity is in a block. Please edit the block.</source>
