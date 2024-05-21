@@ -8623,11 +8623,11 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>rayon=%1 est invalide (négatif)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>rayon=%1 est invalide (zéro)</translation>
     </message>
 </context>
 <context>
@@ -8704,23 +8704,23 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Expression invalide &apos;%1&apos; pour le rayon</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rayon négatif invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Rayon nul invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de cercle tangent possible pour un rayon de &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Pas de cercle tangent commun pour un rayon de &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -9030,11 +9030,11 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Annulation impossible&#x202f;: début de l&apos;historique atteint</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Rétablissement impossible&#x202f;: fin de l&apos;historique atteinte</translation>
     </message>
 </context>
 <context>
@@ -9406,31 +9406,31 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer le point final x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer le nombre de polylignes</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>équation</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer une équation, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation>Entrer le point de départ x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Le x saisi n&apos;est pas valide.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
