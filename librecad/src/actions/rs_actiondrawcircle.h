@@ -30,6 +30,7 @@
 #include <memory>
 
 #include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
 
@@ -39,7 +40,7 @@ struct RS_CircleData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawCircle : public RS_PreviewActionInterface {
+class RS_ActionDrawCircle : public LC_ActionDrawCircleBase {
 	Q_OBJECT
 public:
     /**
@@ -51,33 +52,22 @@ public:
     };
 
 public:
-    RS_ActionDrawCircle(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionDrawCircle() override;
-
-    void reset();
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+    RS_ActionDrawCircle(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircle() override;
+    void reset() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    void updateMouseButtonHints() override;
 protected:
     /**
      * Circle data defined so far.
      */
-	std::unique_ptr<RS_CircleData> data;
+    std::unique_ptr<RS_CircleData> data;
+
 };
 
 #endif

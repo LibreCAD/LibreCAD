@@ -80,7 +80,11 @@ void LC_ActionDrawCircle2PR::trigger(){
     // todo - review - setting the same rel zero - what for?
     RS_Vector rz = graphicView->getRelativeZero();
     graphicView->redraw(RS2::RedrawDrawing);
+    if (moveRelPointAtCenterAfterTrigger){
+        rz = circle->getCenter();
+    }
     graphicView->moveRelativeZero(rz);
+
     drawSnapper();
 
     setStatus(SetPoint1);
@@ -126,10 +130,25 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             break;
 
         case SetPoint2:
-            if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius) pPoints->point2 = mouse;
+            if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius){
+                pPoints->point2 = mouse;
+            }
+            if (drawCirclePointsOnPreview){
+                deletePreview();
+                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
+                preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
+                if (preparePreview(mouse)){
+                    if (data->center.valid){
+                        auto *circle = new RS_Circle(preview.get(), *data);
+                        preview->addEntity(circle);
+                    }
+                }
+                drawPreview();
+            }
             break;
 
         case SelectCenter: {
+
             if (preparePreview(mouse)){
                 bool existing = false;
                 for (auto p: *preview) {
@@ -143,24 +162,21 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     preview->addEntity(new RS_Point(preview.get(), RS_PointData(data->center)));
                     auto *circle = new RS_Circle(preview.get(), *data);
                     preview->addEntity(circle);
+                    if (drawCirclePointsOnPreview){
+                        preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
+                        preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
+                    }
                     drawPreview();
                 }
             } else {
-                if (data->isValid()) trigger();
+                if (data->isValid()){
+                    trigger();
+                }
             }
         }
     }
 }
 
-void LC_ActionDrawCircle2PR::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
-    }
-}
 
 void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
     if (!e) return;
@@ -236,8 +252,6 @@ void LC_ActionDrawCircle2PR::updateMouseButtonHints(){
     }
 }
 
-void LC_ActionDrawCircle2PR::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
+
 
 // EOF

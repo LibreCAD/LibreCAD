@@ -24,6 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONDRAWCIRCLEINSCRIBE_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 class RS_Line;
 struct RS_CircleData;
@@ -33,7 +34,7 @@ struct RS_CircleData;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleInscribe : public RS_PreviewActionInterface {
+class RS_ActionDrawCircleInscribe : public LC_ActionDrawCircleBase {
         Q_OBJECT
 public:
     /**

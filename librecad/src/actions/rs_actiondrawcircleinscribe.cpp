@@ -38,6 +38,8 @@ struct RS_ActionDrawCircleInscribe::Points {
 	std::vector<RS_Line*> lines;
 };
 
+// fixme - highlight lines on selection, polyline highlighting
+
 /**
  * Constructor.
  *
@@ -45,7 +47,7 @@ struct RS_ActionDrawCircleInscribe::Points {
 RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw circle inscribed",
+        :LC_ActionDrawCircleBase("Draw circle inscribed",
 						   container, graphicView)
 		, pPoints(std::make_unique<Points>())
 		, valid(false)
@@ -80,58 +82,58 @@ void RS_ActionDrawCircleInscribe::finish(bool updateTB){
 	RS_PreviewActionInterface::finish(updateTB);
 }
 
-
-void RS_ActionDrawCircleInscribe::trigger() {
+void RS_ActionDrawCircleInscribe::trigger(){
     RS_PreviewActionInterface::trigger();
 
-
-	RS_Circle* circle=new RS_Circle(container, pPoints->cData);
+    auto *circle = new RS_Circle(container, pPoints->cData);
 
     deletePreview();
     container->addEntity(circle);
 
     // upd. undo list:
-	if (document) {
+    if (document){
         document->startUndoCycle();
         document->addUndoable(circle);
         document->endUndoCycle();
     }
 
-	clearLines(false);
+    clearLines(false);
 
+    graphicView->redraw(RS2::RedrawDrawing);
+    if (moveRelPointAtCenterAfterTrigger){
+        graphicView->moveRelativeZero(circle->getCenter());
+    }
     setStatus(SetLine1);
 
     RS_DEBUG->print("RS_ActionDrawCircle4Line::trigger():"
                     " entity added: %lu", circle->getId());
 }
 
-
-
-void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
 
-    if(getStatus() == SetLine3) {
-        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-		if(!en) return;
-        if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
-        for(int i=0;i<getStatus();i++) {
-            if(en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
+    if (getStatus() == SetLine3){
+        RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+        if (!en) return;
+        if (!(en->isVisible() && en->rtti() == RS2::EntityLine)) return;
+        for (int i = 0; i < getStatus(); i++) {
+            if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-		if(en->getParent() && en->getParent()->ignoredOnModification())
-			return;
-		pPoints->coord= graphicView->toGraph(e->position());
-		deletePreview();
-		while(pPoints->lines.size()==3){
-			pPoints->lines.back()->setHighlighted(false);
-			graphicView->drawEntity(pPoints->lines.back());
-			pPoints->lines.pop_back();
-		}
-		en->setHighlighted(true);
-		pPoints->lines.push_back(static_cast<RS_Line*>(en));
-		graphicView->drawEntity(pPoints->lines.back());
-        if(preparePreview()) {
-			RS_Circle* e=new RS_Circle(preview.get(), pPoints->cData);
-            preview->addEntity(e);
+        if (en->getParent() && en->getParent()->ignoredOnModification())
+            return;
+        pPoints->coord = graphicView->toGraph(e->position());
+        deletePreview();
+        while (pPoints->lines.size() == 3) {
+            pPoints->lines.back()->setHighlighted(false);
+            graphicView->drawEntity(pPoints->lines.back());
+            pPoints->lines.pop_back();
+        }
+        en->setHighlighted(true);
+        pPoints->lines.push_back(static_cast<RS_Line *>(en));
+        graphicView->drawEntity(pPoints->lines.back());
+        if (preparePreview()){
+            auto *c = new RS_Circle(preview.get(), pPoints->cData);
+            preview->addEntity(c);
             drawPreview();
         }
 
@@ -139,66 +141,65 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
 }
 
-
 bool RS_ActionDrawCircleInscribe::preparePreview(){
-    valid=false;
-    if(getStatus() == SetLine3) {
-		RS_Circle c(preview.get(), pPoints->cData);
-		valid= c.createInscribe(pPoints->coord, pPoints->lines);
-        if(valid){
-			pPoints->cData = c.getData();
+    valid = false;
+    if (getStatus() == SetLine3){
+        RS_Circle c(preview.get(), pPoints->cData);
+        valid = c.createInscribe(pPoints->coord, pPoints->lines);
+        if (valid){
+            pPoints->cData = c.getData();
         }
     }
     return valid;
 }
 
-void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent* e) {
+void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
     // Proceed to next status
-    if (e->button()==Qt::LeftButton) {
-		if (!e) {
+    if (e->button() == Qt::LeftButton){
+        if (!e){
             return;
         }
-        RS_Entity*  en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-		if(!en) return;
-        if(!(en->isVisible() && en->rtti()== RS2::EntityLine)) return;
-        for(int i=0;i<getStatus();i++) {
-            if(en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
+        RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+        if (!en) return;
+        if (!(en->isVisible() && en->rtti() == RS2::EntityLine)) return;
+        for (int i = 0; i < getStatus(); i++) {
+            if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-		if(en->getParent()) {
-			if ( en->getParent()->ignoredOnModification()) return;
+        if (en->getParent()){
+            if (en->getParent()->ignoredOnModification()) return;
         }
-		while((int) pPoints->lines.size()>getStatus()){
-			pPoints->lines.back()->setHighlighted(false);
-			graphicView->drawEntity(pPoints->lines.back());
-			pPoints->lines.pop_back();
-		}
-		pPoints->lines.push_back(static_cast<RS_Line*>(en));
-		pPoints->coord= graphicView->toGraph(e->position());
+        while ((int) pPoints->lines.size() > getStatus()) {
+            pPoints->lines.back()->setHighlighted(false);
+            graphicView->drawEntity(pPoints->lines.back());
+            pPoints->lines.pop_back();
+        }
+        pPoints->lines.push_back(static_cast<RS_Line *>(en));
+        pPoints->coord = graphicView->toGraph(e->position());
         switch (getStatus()) {
-        case SetLine1:
-        case SetLine2:
-			en->setHighlighted(true);
-			setStatus(getStatus()+1);
-			graphicView->redraw(RS2::RedrawDrawing);
-			break;
-        case SetLine3:
-            if( preparePreview()) {
-                trigger();
-            }
+            case SetLine1:
+            case SetLine2:
+                en->setHighlighted(true);
+                setStatus(getStatus() + 1);
+                graphicView->redraw(RS2::RedrawDrawing);
+                break;
+            case SetLine3:
+                if (preparePreview()){
+                    trigger();
+                }
 
-        default:
-            break;
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         // Return to last status:
-		if(getStatus()>0){
-			clearLines(true);
-			pPoints->lines.back()->setHighlighted(false);
-			pPoints->lines.pop_back();
+        if (getStatus() > 0){
+            clearLines(true);
+            pPoints->lines.back()->setHighlighted(false);
+            pPoints->lines.pop_back();
             graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
         }
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 

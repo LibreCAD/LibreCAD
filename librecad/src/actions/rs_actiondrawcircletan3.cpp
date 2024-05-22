@@ -41,6 +41,8 @@ namespace {
     const EntityTypeList enTypeList = {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
 }
 
+// fixme - highlighting for polyline segments
+
 struct RS_ActionDrawCircleTan3::Points {
 		std::vector<RS_AtomicEntity*> circles;
 		std::shared_ptr<RS_CircleData> cData{std::make_shared<RS_CircleData>()};
@@ -60,7 +62,7 @@ struct RS_ActionDrawCircleTan3::Points {
 RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Draw circle inscribed",
+	:LC_ActionDrawCircleBase("Draw circle inscribed",
                                container, graphicView)
     , pPoints(std::make_unique<Points>())
 {
@@ -93,32 +95,35 @@ void RS_ActionDrawCircleTan3::finish(bool updateTB){
 }
 
 
-void RS_ActionDrawCircleTan3::trigger() {
+void RS_ActionDrawCircleTan3::trigger(){
 
-	RS_PreviewActionInterface::trigger();
+    RS_PreviewActionInterface::trigger();
 
+    RS_Circle *circle = new RS_Circle(container, *pPoints->cData);
 
-	RS_Circle* circle=new RS_Circle(container, *pPoints->cData);
+    container->addEntity(circle);
 
-	container->addEntity(circle);
+// upd. undo list:
+    if (document){
+        document->startUndoCycle();
+        document->addUndoable(circle);
+        document->endUndoCycle();
+    }
 
-	// upd. undo list:
-	if (document) {
-		document->startUndoCycle();
-		document->addUndoable(circle);
-		document->endUndoCycle();
-	}
+    for (RS_AtomicEntity *const pc: pPoints->circles)
+        if (pc) pc->setHighlighted(false);
+    graphicView->redraw(RS2::RedrawDrawing);
+    if (moveRelPointAtCenterAfterTrigger){
+        graphicView->moveRelativeZero(circle->getCenter());
+    }
 
-	for(RS_AtomicEntity* const pc: pPoints->circles)
-		if(pc) pc->setHighlighted(false);
-	graphicView->redraw(RS2::RedrawDrawing);
-	//    drawSnapper();
+//    drawSnapper();
 
-	pPoints->circles.clear();
-	setStatus(SetCircle1);
+    pPoints->circles.clear();
+    setStatus(SetCircle1);
 
-	RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger():"
-					" entity added: %lu", circle->getId());
+    RS_DEBUG->print("RS_ActionDrawCircleTan3::trigger():"
+                    " entity added: %lu", circle->getId());
 }
 
 

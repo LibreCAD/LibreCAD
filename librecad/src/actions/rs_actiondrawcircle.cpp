@@ -25,11 +25,11 @@
 **********************************************************************/
 
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawcircle.h"
 #include "rs_circle.h"
+#include "rs_point.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -40,7 +40,7 @@
 
 RS_ActionDrawCircle::RS_ActionDrawCircle(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw circles",
+        :LC_ActionDrawCircleBase("Draw circles",
                            container, graphicView)
     , data(std::make_unique<RS_CircleData>())
 {
@@ -51,11 +51,6 @@ RS_ActionDrawCircle::~RS_ActionDrawCircle() = default;
 
 void RS_ActionDrawCircle::reset() {
     data = std::make_unique<RS_CircleData>();
-}
-
-void RS_ActionDrawCircle::init(int status) {
-    RS_PreviewActionInterface::init(status);
-    reset();
 }
 
 void RS_ActionDrawCircle::trigger() {
@@ -73,7 +68,9 @@ void RS_ActionDrawCircle::trigger() {
         document->endUndoCycle();
     }
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(circle->getCenter());
+    if (moveRelPointAtCenterAfterTrigger){
+        graphicView->moveRelativeZero(circle->getCenter());
+    }
 
     setStatus(SetCenter);
     reset();
@@ -98,6 +95,9 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
                 deletePreview();
                 preview->addEntity(new RS_Circle(preview.get(),
                                                  *data));
+                if (drawCirclePointsOnPreview){
+                    preview->addEntity(new RS_Point(preview.get(),data->center));
+                }
                 drawPreview();
             }
             break;
@@ -105,16 +105,6 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     }
 
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent end");
-}
-
-void RS_ActionDrawCircle::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
 }
 
 void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
@@ -180,18 +170,6 @@ void RS_ActionDrawCircle::updateMouseButtonHints() {
             RS_DIALOGFACTORY->updateMouseWidget();
             break;
     }
-}
-
-void RS_ActionDrawCircle::showOptions() {
-    RS_ActionInterface::showOptions();
-}
-
-void RS_ActionDrawCircle::hideOptions() {
-    RS_ActionInterface::hideOptions();
-}
-
-void RS_ActionDrawCircle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

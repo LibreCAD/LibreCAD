@@ -28,6 +28,7 @@
 #define RS_ACTIONDRAWCIRCLE2P_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
 
@@ -37,8 +38,8 @@ struct RS_CircleData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawCircle2P : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawCircle2P:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -49,32 +50,25 @@ public:
     };
 
 public:
-    RS_ActionDrawCircle2P(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-	~RS_ActionDrawCircle2P() override;
-
-    void reset();
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	void preparePreview();
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionDrawCircle2P(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircle2P() override;
+    void reset() override;
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void updateMouseButtonHints() override;
 
 protected:
     /**
      * Circle data defined so far.
      */
-	std::unique_ptr<RS_CircleData> data;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    std::unique_ptr<RS_CircleData> data;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
 };
 
 #endif

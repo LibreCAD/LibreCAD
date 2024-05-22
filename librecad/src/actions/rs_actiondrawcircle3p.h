@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONDRAWCIRCLE3P_H
 #define RS_ACTIONDRAWCIRCLE3P_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
 
@@ -37,8 +37,10 @@ struct RS_CircleData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawCircle3P : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawCircle3P:public LC_ActionDrawCircleBase {
+Q_OBJECT
+protected:
+    void reset() override;
 public:
     /**
      * Action States.
@@ -50,29 +52,22 @@ public:
     };
 
 public:
-    RS_ActionDrawCircle3P(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-	~RS_ActionDrawCircle3P() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	void preparePreview();
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionDrawCircle3P(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircle3P() override;
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void updateMouseButtonHints() override;
 
 protected:
     /**
      * Circle data defined so far.
      */
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

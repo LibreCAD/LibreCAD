@@ -30,6 +30,7 @@
 
 #include "rs_actiondrawcircle3p.h"
 #include "rs_circle.h"
+#include "rs_point.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -53,7 +54,7 @@ struct RS_ActionDrawCircle3P::Points {
 
 RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw circles",
+        :LC_ActionDrawCircleBase("Draw circles",
 						   container, graphicView)
         , pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionDrawCircle3P;
@@ -61,8 +62,8 @@ RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
 
 RS_ActionDrawCircle3P::~RS_ActionDrawCircle3P() = default;
 
-void RS_ActionDrawCircle3P::init(int status){
-    RS_PreviewActionInterface::init(status);
+
+void RS_ActionDrawCircle3P::reset(){
     pPoints.reset(new Points{});
 }
 
@@ -83,12 +84,15 @@ void RS_ActionDrawCircle3P::trigger(){
             document->endUndoCycle();
         }
         RS_Vector rz = graphicView->getRelativeZero();
-        graphicView->redraw(RS2::RedrawDrawing);
+        if (moveRelPointAtCenterAfterTrigger){
+            rz = pPoints->data.center;
+        }
         graphicView->moveRelativeZero(rz);
+        graphicView->redraw(RS2::RedrawDrawing);
         drawSnapper();
 
         setStatus(SetPoint1);
-        pPoints.reset(new Points{});
+        reset();
     } else
         RS_DIALOGFACTORY->requestWarningDialog(tr("Invalid circle data."));
 }
@@ -117,29 +121,30 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
 
         case SetPoint2:
             pPoints->point2 = mouse;
+            if (drawCirclePointsOnPreview){
+                deletePreview();
+                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
+                drawPreview();
+            }
             break;
 
         case SetPoint3:
             pPoints->point3 = mouse;
             preparePreview();
+            deletePreview();
             if (pPoints->data.isValid()){
                 auto *circle = new RS_Circle{preview.get(), pPoints->data};
-
-                deletePreview();
                 preview->addEntity(circle);
-                drawPreview();
+                if (drawCirclePointsOnPreview){
+                    preview->addEntity(new RS_Point(preview.get(),pPoints->data.center));
+                }
             }
+            if (drawCirclePointsOnPreview){
+                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
+                preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
+            }
+            drawPreview();
             break;
-    }
-}
-
-void RS_ActionDrawCircle3P::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
     }
 }
 
@@ -190,10 +195,6 @@ void RS_ActionDrawCircle3P::updateMouseButtonHints(){
             RS_DIALOGFACTORY->updateMouseWidget();
             break;
     }
-}
-
-void RS_ActionDrawCircle3P::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

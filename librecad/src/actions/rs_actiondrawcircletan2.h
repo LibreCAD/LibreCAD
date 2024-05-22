@@ -23,7 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWCIRCLETAN2_H
 #define RS_ACTIONDRAWCIRCLETAN2_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actiondrawcirclebase.h"
 
 class RS_AtomicEntity;
 struct RS_CircleData;
@@ -33,7 +34,7 @@ struct RS_CircleData;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleTan2 : public RS_PreviewActionInterface {
+class RS_ActionDrawCircleTan2 : public LC_ActionDrawCircleBase {
         Q_OBJECT
 public:
     /**

@@ -45,7 +45,7 @@
 RS_ActionDrawCircleCR::RS_ActionDrawCircleCR(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw circles CR",
+    :LC_ActionDrawCircleBase("Draw circles CR",
                                container, graphicView), data(std::make_unique<RS_CircleData>()){
     actionType = RS2::ActionDrawCircleCR;
     reset();
@@ -129,15 +129,6 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent end");
 }
 
-void RS_ActionDrawCircleCR::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
-    }
-}
 
 void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr) return;
@@ -233,9 +224,7 @@ void RS_ActionDrawCircleCR::hideOptions(){
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-void RS_ActionDrawCircleCR::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
+
 
 double RS_ActionDrawCircleCR::getRadius() const{
     return data->radius;
