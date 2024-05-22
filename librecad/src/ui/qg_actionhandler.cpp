@@ -173,6 +173,8 @@
 #include "rs_actionpolylinesegment.h"
 #include "rs_selection.h"
 #include "rs_actionorder.h"
+#include "rs_modification.h"
+
 #include "qg_snaptoolbar.h"
 #include "rs_debug.h"
 #include "rs_graphicview.h"
@@ -2231,6 +2233,15 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
 {
     auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
     view->setCurrentAction(a);
+}
+
+void QG_ActionHandler::slotDeletePolylineNodePromptly()
+{
+    RS_Modification m(*document, view);
+
+    m.setDeletePolylineNodeMode();
+
+    m.remove();
 }
 
 void QG_ActionHandler::slotRedockWidgets()

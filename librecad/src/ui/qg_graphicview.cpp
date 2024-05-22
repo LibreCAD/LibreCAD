@@ -67,8 +67,9 @@
 #endif
 
 // Issue #1765: set default cursor size: 32x32
+constexpr int g_cursorSize=32;
 // Issue #1787: cursor hot spot at center by using hotX=hotY=-1
-constexpr int g_cursorSize=-1;
+constexpr int g_hotspotXY=-1;
 
 namespace {
 // maximum length for displayed block name in context menu
@@ -252,11 +253,11 @@ struct QG_GraphicView::AutoPanData
 QG_GraphicView::QG_GraphicView(QWidget* parent, Qt::WindowFlags f, RS_Document* doc)
     :RS_GraphicView(parent, f)
     ,device("Mouse")
-    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), g_cursorSize, g_cursorSize))
-    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), g_cursorSize, g_cursorSize))
-    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), g_cursorSize, g_cursorSize))
-    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), g_cursorSize, g_cursorSize))
-    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), g_cursorSize, g_cursorSize))
+    ,curCad(new QCursor(QPixmap(":ui/cur_cad_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curDel(new QCursor(QPixmap(":ui/cur_del_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curSelect(new QCursor(QPixmap(":ui/cur_select_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curMagnifier(new QCursor(QPixmap(":ui/cur_glass_bmp.png"), g_hotspotXY, g_hotspotXY))
+    ,curHand(new QCursor(QPixmap(":ui/cur_hand_bmp.png"), g_hotspotXY, g_hotspotXY))
     ,redrawMethod(RS2::RedrawAll)
     ,isSmoothScrolling(false)
     , m_panData{std::make_unique<AutoPanData>()}

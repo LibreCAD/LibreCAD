@@ -509,6 +509,8 @@ void QG_DlgOptionsDrawing::validate() {
         auto unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
 		graphic->setUnit(unit);
 
+        RS_Units::setCurrentDrawingUnits(unit);
+
         graphic->addVariable("$LUNITS", cbLengthFormat->currentIndex()+1, 70);
         graphic->addVariable("$LUPREC", cbLengthPrecision->currentIndex(), 70);
         graphic->addVariable("$AUNITS", cbAngleFormat->currentIndex(), 70);

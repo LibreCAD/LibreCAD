@@ -32,6 +32,7 @@
 #include "rs_graphic.h"
 #include "rs_math.h"
 #include "rs_debug.h"
+#include "rs_settings.h"
 #include "rs_units.h"
 
 
@@ -113,6 +114,10 @@ QString RS_DimLinear::getMeasuredLabel() {
 
     // Definitive dimension line:
     double dist = dimP1.distanceTo(dimP2) * getGeneralFactor();
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
+    RS_SETTINGS->endGroup();
 
         RS_Graphic* graphic = getGraphic();
 

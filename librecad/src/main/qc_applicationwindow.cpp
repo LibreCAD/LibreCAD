@@ -1050,6 +1050,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
     enableFileActions(m);
 
+    RS_Units::setCurrentDrawingUnits(m->getDocument()->getGraphic()->getUnit());
+
     if (m && m->getDocument()) {
 
         RS_DEBUG->print("QC_ApplicationWindow::slotWindowActivated: "
@@ -3833,3 +3835,20 @@ QAction* QC_ApplicationWindow::getAction(const QString& actionName) const
         return nullptr;
     return a_map[actionName];
 }
+
+
+RS_Vector QC_ApplicationWindow::getMouseAbsolutePosition()
+{
+    if (coordinateWidget != nullptr) return coordinateWidget->getAbsoluteCoordinates();
+
+    return RS_Vector(false);
+}
+
+
+RS_Vector QC_ApplicationWindow::getMouseRelativePosition()
+{
+    if (coordinateWidget != nullptr) return coordinateWidget->getRelativeCoordinates();
+
+    return RS_Vector(false);
+}
+

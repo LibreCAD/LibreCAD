@@ -93,6 +93,16 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
             aprec = graphic->getAnglePrecision();
         }
 
+        RS_SETTINGS->beginGroup("/Appearance");
+        if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1)
+        {
+            x  = RS_Units::convert(x);
+            y  = RS_Units::convert(y);
+            rx = RS_Units::convert(rx);
+            ry = RS_Units::convert(ry);
+        }
+        RS_SETTINGS->endGroup();
+
         // abs / rel coordinates:
         QString absX = RS_Units::formatLinear(x,
                                                graphic->getUnit(),
@@ -131,5 +141,21 @@ void QG_CoordinateWidget::setCoordinates(double x, double y,
                                                aformat, aprec);
 
         lCoord2b->setText("@  " + rStr + " < " + aStr);
+
+        absoluteCoordinates = RS_Vector( x,  y, 0.0);
+        relativeCoordinates = RS_Vector(rx, ry, 0.0);
     }
 }
+
+
+RS_Vector QG_CoordinateWidget::getAbsoluteCoordinates()
+{
+    return absoluteCoordinates;
+}
+
+
+RS_Vector QG_CoordinateWidget::getRelativeCoordinates()
+{
+    return relativeCoordinates;
+}
+

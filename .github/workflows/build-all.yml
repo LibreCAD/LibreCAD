@@ -105,6 +105,10 @@ jobs:
         with:
           fetch-depth: 0
 
+      - name: uninstall p7zip
+        run: |
+          brew uninstall p7zip
+
       - name: Install Qt6
         uses: jurplel/install-qt-action@v3
         with:
