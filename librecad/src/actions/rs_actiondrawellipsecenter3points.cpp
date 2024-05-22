@@ -20,8 +20,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QAction>
-#include <QDebug>
 #include <QMouseEvent>
 
 #include "rs_actiondrawellipsecenter3points.h"
@@ -29,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
+#include "rs_point.h"
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
@@ -48,7 +47,7 @@ struct RS_ActionDrawEllipseCenter3Points::Points {
 RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse by center and 3 points",
+        :LC_ActionDrawCircleBase("Draw ellipse by center and 3 points",
                            container, graphicView)
     , pPoints(std::make_unique<Points>())
 {
@@ -66,17 +65,16 @@ void RS_ActionDrawEllipseCenter3Points::init(int status){
     drawSnapper();
 }
 
-void RS_ActionDrawEllipseCenter3Points::trigger() {
+void RS_ActionDrawEllipseCenter3Points::trigger(){
     RS_PreviewActionInterface::trigger();
 
-
-	RS_Ellipse* ellipse=new RS_Ellipse(container, pPoints->eData);
+    auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 
     deletePreview();
     container->addEntity(ellipse);
 
     // upd. undo list:
-    if (document) {
+    if (document){
         document->startUndoCycle();
         document->addUndoable(ellipse);
         document->endUndoCycle();
@@ -95,34 +93,37 @@ void RS_ActionDrawEllipseCenter3Points::trigger() {
 void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     //    RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
-    if (getStatus() == SetCenter){
+    int status = getStatus();
+    if (status == SetCenter){
         trySnapToRelZeroCoordinateEvent(e);
         return;
     }
-    pPoints->points.resize(getStatus());
+    pPoints->points.resize(status);
     pPoints->points.push_back(mouse);
+
+    deletePreview();
+    if (drawCirclePointsOnPreview){
+        for (int i = SetPoint1; i <= status; i++) {
+            preview->addEntity(new RS_Point(preview.get(), pPoints->points.at(i - 1)));
+        }
+    }
     if (preparePreview()){
-        switch (getStatus()) {
+        switch (status) {
             case SetPoint1: {
                 auto *circle = new RS_Circle(preview.get(), pPoints->cData);
-                deletePreview();
                 preview->addEntity(circle);
-                drawPreview();
-            }
                 break;
-
+            }
             case SetPoint2:
             case SetPoint3: {
-                deletePreview();
                 auto *ellipse = new RS_Ellipse(preview.get(), pPoints->eData);
                 preview->addEntity(ellipse);
-                drawPreview();
             }
             default:
                 break;
         }
-
     }
+    drawPreview();
     RS_DEBUG->print("RS_ActionDrawEllipseCenter3Points::mouseMoveEvent end");
 }
 
@@ -293,8 +294,5 @@ void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawEllipseCenter3Points::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
 
 // EOF

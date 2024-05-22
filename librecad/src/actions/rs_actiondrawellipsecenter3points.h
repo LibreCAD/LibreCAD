@@ -23,14 +23,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSECENTER3POINTS_H
 #define RS_ACTIONDRAWELLIPSECENTER3POINTS_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 /**
  * Draw ellipse by center and 3 points on ellipse
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawEllipseCenter3Points : public RS_PreviewActionInterface {
+class RS_ActionDrawEllipseCenter3Points : public LC_ActionDrawCircleBase {
         Q_OBJECT
 public:
     /**
@@ -61,7 +61,6 @@ public:
 		QStringList getAvailableCommands() override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 
 private:
 	struct Points;

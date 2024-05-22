@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSE4POINTS_H
 #define RS_ACTIONDRAWELLIPSE4POINTS_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_CircleData;
 struct RS_EllipseData;
@@ -33,8 +33,8 @@ struct RS_EllipseData;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawEllipse4Points : public RS_PreviewActionInterface {
-        Q_OBJECT
+class RS_ActionDrawEllipse4Points:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -47,29 +47,24 @@ public:
     };
 
 public:
-    RS_ActionDrawEllipse4Points(RS_EntityContainer& container,
-                                RS_GraphicView& graphicView);
-	~RS_ActionDrawEllipse4Points() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	//    void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionDrawEllipse4Points(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawEllipse4Points() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+//    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
 
 protected:
-	// 4 points on ellipse
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+// 4 points on ellipse
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

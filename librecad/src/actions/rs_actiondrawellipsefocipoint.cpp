@@ -32,6 +32,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_ellipse.h"
+#include "rs_point.h"
+#include "rs_line.h"
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
@@ -53,7 +55,7 @@ struct RS_ActionDrawEllipseFociPoint::Points {
 RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw ellipse by foci and a point",
+        :LC_ActionDrawCircleBase("Draw ellipse by foci and a point",
                            container, graphicView)
     , pPoints(std::make_unique<Points>())
 {
@@ -105,7 +107,7 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::trigger():"
                     " entity added: %lu", ellipse->getId());
 }
-// fixme - improve preview
+
 void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawEllipseFociPoint::mouseMoveEvent begin");
 
@@ -116,21 +118,38 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
         case SetFocus1:
             trySnapToRelZeroCoordinateEvent(e);
             break;
-        case SetPoint:
+        case SetFocus2: {
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                mouse = snapToAngle(mouse, pPoints->focus1);
+            }
+            deletePreview();
+            if (drawCirclePointsOnPreview){
+                preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
+            }
+            preview->addEntity(new RS_Line(preview.get(), pPoints->focus1, mouse));
+            drawPreview();
+            break;
+        }
+        case SetPoint: {
             pPoints->point = mouse;
             pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) +
                                 pPoints->focus2.distanceTo(pPoints->point));
+            deletePreview();
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
-                deletePreview();
                 preview->addEntity(new RS_Ellipse{preview.get(),
                                                   {pPoints->center,
                                                    pPoints->major * pPoints->d,
                                                    findRatio(),
                                                    0., 0., false}});
-                drawPreview();
             }
+            if (drawCirclePointsOnPreview){
+                preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
+                preview->addEntity(new RS_Point(preview.get(), pPoints->focus2));
+            }
+            drawPreview();
             break;
-
+        }
         default:
             break;
     }
@@ -139,14 +158,17 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionDrawEllipseFociPoint::mouseReleaseEvent(QMouseEvent* e) {
-    // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector snap = snapPoint(e);
+        if (getStatus() == SetFocus2){
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                snap = snapToAngle(snap,pPoints->focus1);
+            }
+        }
+        RS_CoordinateEvent ce(snap);
         coordinateEvent(&ce);
-    }
-
-    // Return to last status:
-    else if (e->button()==Qt::RightButton) {
+    } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }
@@ -221,7 +243,6 @@ QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
     return {};
 }
 
-
 void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {
 	switch (getStatus()) {
 	case SetFocus1:
@@ -244,10 +265,6 @@ void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {
 		RS_DIALOGFACTORY->updateMouseWidget();
 		break;
 	}
-}
-
-void RS_ActionDrawEllipseFociPoint::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

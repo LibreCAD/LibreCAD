@@ -28,15 +28,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_ellipse.h"
+#include "rs_point.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 
 struct RS_ActionDrawEllipse4Points::Points {
-	RS_VectorSolutions points;
-	RS_CircleData cData;
-	RS_EllipseData eData;
-    bool valid = false,evalid =false;
-	bool m_bUniqueEllipse{false}; //a message of non-unique ellipse is shown
+    RS_VectorSolutions points;
+    RS_CircleData cData;
+    RS_EllipseData eData;
+    bool valid = false, evalid = false;
+    bool m_bUniqueEllipse{false}; //a message of non-unique ellipse is shown
 };
 
 /**
@@ -46,7 +47,7 @@ struct RS_ActionDrawEllipse4Points::Points {
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface("Draw ellipse from 4 points", container,
+	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", container,
                                graphicView)
     , pPoints(std::make_unique<Points>())
 {
@@ -79,6 +80,9 @@ void RS_ActionDrawEllipse4Points::trigger(){
     }
     RS_Vector rz = graphicView->getRelativeZero();
     graphicView->redraw(RS2::RedrawDrawing);
+    if (moveRelPointAtCenterAfterTrigger){
+        rz = en->getCenter();
+    }
     graphicView->moveRelativeZero(rz);
     drawSnapper();
     setStatus(SetPoint1);
@@ -91,33 +95,61 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     if (status == SetPoint1){
-       trySnapToRelZeroCoordinateEvent(e);
+        trySnapToRelZeroCoordinateEvent(e);
     }
+    deletePreview();
+    if (drawCirclePointsOnPreview){
+        for (int i = SetPoint2; i <= status; i++) {
+            preview->addEntity(new RS_Point(preview.get(), pPoints->points.at(i - 1)));
+        }
+    }
+
+    if (status == SetPoint2){
+        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        if (shiftPressed){
+            mouse = snapToAngle(mouse,pPoints->points.at(SetPoint1));
+        }
+    }
+
     pPoints->points.set(status, mouse);
     if (preparePreview()){
         switch (status) {
             case SetPoint2:
+                break;
             case SetPoint3:
                 if (pPoints->valid){
                     auto *circle = new RS_Circle(preview.get(), pPoints->cData);
-                    deletePreview();
                     preview->addEntity(circle);
-                    drawPreview();
                 }
                 break;
             case SetPoint4:
                 if (pPoints->evalid){
-                    deletePreview();
                     auto ellipse = new RS_Ellipse(preview.get(), pPoints->eData);
                     preview->addEntity(ellipse);
-                    drawPreview();
                 }
             default:
                 break;
         }
-
     }
+    drawPreview();
 //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
+}
+
+void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
+    if (e->button()==Qt::LeftButton) {
+        RS_Vector snap = snapPoint(e);
+        if (getStatus() == SetPoint2){
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                snap = snapToAngle(snap,pPoints->points.at(SetPoint1));
+            }
+        }
+        RS_CoordinateEvent ce(snap);
+        coordinateEvent(&ce);
+    } else if (e->button()==Qt::RightButton) {
+        deletePreview();
+        init(getStatus()-1);
+    }
 }
 
 bool RS_ActionDrawEllipse4Points::preparePreview(){
@@ -164,27 +196,13 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
-    // Proceed to next status
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    }
-
-    // Return to last status:
-    else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
-}
-
-void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) {
+void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e){
         return;
     }
     RS_Vector mouse = e->getCoordinate();
-	pPoints->points.alloc(getStatus()+1);
-	pPoints->points.set(getStatus(),mouse);
+    pPoints->points.alloc(getStatus() + 1);
+    pPoints->points.set(getStatus(), mouse);
 
     switch (getStatus()) {
         case SetPoint1:
@@ -302,8 +320,5 @@ void RS_ActionDrawEllipse4Points::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawEllipse4Points::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::CadCursor);
-}
 
 // EOF

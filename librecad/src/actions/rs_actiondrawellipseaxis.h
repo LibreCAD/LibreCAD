@@ -27,7 +27,8 @@
 #ifndef RS_ACTIONDRAWELLIPSEAXIS_H
 #define RS_ACTIONDRAWELLIPSEAXIS_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actiondrawcirclebase.h"
 
 /**
  * This action class can handle user events to draw ellipses
@@ -35,7 +36,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawEllipseAxis : public RS_PreviewActionInterface {
+class RS_ActionDrawEllipseAxis : public LC_ActionDrawCircleBase {
 	Q_OBJECT
 public:
     /**
@@ -60,13 +61,10 @@ public:
 	void trigger() override;
 	
 	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
+ void mouseReleaseEvent(QMouseEvent *e) override;
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
-
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 
 protected:
 	struct Points;
