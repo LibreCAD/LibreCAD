@@ -273,7 +273,7 @@ void RS_ActionDimAngular::justify(RS_Line &line, const RS_Vector &click)
 {
     RS_Vector vStartPoint( line.getStartpoint());
 
-    if( ! RS_Math::equal( vStartPoint.angleTo(center), click.angleTo( center))
+    if( ! RS_Math::equal( vStartPoint.angleTo(center), click.angleTo( center), RS_TOLERANCE_ANGLE)
         || vStartPoint.distanceTo( center) < click.distanceTo( center)) {
         line.reverse();
     }
@@ -321,7 +321,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos)
     // find starting quadrant and compute the offset for quadrant() method
     int startQuadrant = 0;
     for( auto angle : angles) {
-        if( RS_Math::equal( a1, angle)) {
+        if( RS_Math::equal( a1, angle, RS_TOLERANCE_ANGLE)) {
             break;
         }
         ++startQuadrant;

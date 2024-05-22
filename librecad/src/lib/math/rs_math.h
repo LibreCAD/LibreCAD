@@ -41,10 +41,10 @@ class QRegularExpressionMatch;
  */
 namespace RS_Math {
 int round(double v);
-double round(const double v, const double precision);
+double round(double v, double precision);
 double pow(double x, double y);
 RS_Vector pow(const RS_Vector &x, double y);
-bool equal(const double d1, const double d2);
+bool equal(double d1, double d2, double tolerance);
 
 double rad2deg(double a);
 double deg2rad(double a);
