@@ -6024,7 +6024,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation>ml</translation>
+        <translation>lml</translation>
     </message>
     <message>
         <source>spline</source>
@@ -6059,7 +6059,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation>biss</translation>
+        <translation>bi</translation>
     </message>
     <message>
         <source>tanpc</source>
@@ -6069,7 +6069,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation>perpen</translation>
+        <translation>ortho</translation>
     </message>
     <message>
         <source>rect</source>
@@ -7074,7 +7074,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished">Aucune couche %1 trouvée</translation>
+        <translation type="unfinished">Aucun calque %1 trouvé</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7124,12 +7124,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>linepar</source>
         <comment>create parallel</comment>
-        <translation>para</translation>
+        <translation>lignepar</translation>
     </message>
     <message>
         <source>lineoff</source>
         <comment>create parallel</comment>
-        <translation>par</translation>
+        <translation>lignedec</translation>
     </message>
     <message>
         <source>pa</source>
@@ -7154,47 +7154,47 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>linebisect</source>
         <comment>angle bisector</comment>
-        <translation>bis</translation>
+        <translation>lignebissect</translation>
     </message>
     <message>
         <source>linetancp</source>
         <comment>tangent point and circle</comment>
-        <translation>tanpc</translation>
+        <translation>lignetanpc</translation>
     </message>
     <message>
         <source>lt</source>
         <comment>tangent point and circle</comment>
-        <translation>tpc</translation>
+        <translation>lt</translation>
     </message>
     <message>
         <source>linetan2c</source>
         <comment>tangent two circles</comment>
-        <translation>tan2c</translation>
+        <translation>lignetan2c</translation>
     </message>
     <message>
         <source>lc</source>
         <comment>tangent two circles</comment>
-        <translation>t2c</translation>
+        <translation>lc</translation>
     </message>
     <message>
         <source>linetancper</source>
         <comment>tangent line and circle</comment>
-        <translation>tanp</translation>
+        <translation>lignetancper</translation>
     </message>
     <message>
         <source>or</source>
         <comment>tangent line and circle</comment>
-        <translation>tp</translation>
+        <translation>or</translation>
     </message>
     <message>
         <source>lineperp</source>
         <comment>perpendicular line</comment>
-        <translation>per</translation>
+        <translation>ligneperp</translation>
     </message>
     <message>
         <source>lo</source>
         <comment>perpendicular line</comment>
-        <translation>p</translation>
+        <translation>lo</translation>
     </message>
     <message>
         <source>linerelang</source>
@@ -7394,7 +7394,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>fh</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>ml</translation>
     </message>
     <message>
         <source>ellipsec2p</source>
