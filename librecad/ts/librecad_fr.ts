@@ -872,7 +872,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished">Enregistrer &amp;tout...</translation>
+        <translation>Enregistrer &amp;tout...</translation>
     </message>
 </context>
 <context>
@@ -927,11 +927,11 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished">Interface</translation>
+        <translation>Interface</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished">Flottant</translation>
+        <translation>Flottant</translation>
     </message>
     <message>
         <source>Lines</source>
@@ -1562,7 +1562,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished">&amp;Disposition</translation>
+        <translation>&amp;Disposition</translation>
     </message>
     <message>
         <source>Rounded</source>
@@ -1598,11 +1598,11 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Enregistrer tout annulé</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>Fermer tout annulé</translation>
     </message>
     <message>
         <source>The Code</source>
@@ -1610,16 +1610,16 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished">Cmd</translation>
+        <translation>Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Flottant</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Interface</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -6144,12 +6144,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation>textmulti</translation>
+        <translation>textemulti</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation>txtmulti</translation>
+        <translation>txtm</translation>
     </message>
     <message>
         <source>text</source>
@@ -6164,17 +6164,17 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation>regenerer</translation>
+        <translation>regen</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation>redessiner</translation>
+        <translation>redess</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation>rv</translation>
+        <translation>rg</translation>
     </message>
     <message>
         <source>zr</source>
@@ -6239,7 +6239,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>u</source>
         <comment>undo cycle</comment>
-        <translation>a</translation>
+        <translation>z</translation>
     </message>
     <message>
         <source>redo</source>
@@ -6294,7 +6294,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation>cotan</translation>
+        <translation>cotang</translation>
     </message>
     <message>
         <source>dimradial</source>
@@ -6324,7 +6324,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ld</source>
         <comment>dimension - leader</comment>
-        <translation>rep</translation>
+        <translation>cp</translation>
     </message>
     <message>
         <source>dimregen</source>
@@ -6339,7 +6339,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation>conta</translation>
+        <translation>ta</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
@@ -6349,7 +6349,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation>conto</translation>
+        <translation>to</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
@@ -6359,7 +6359,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation>conth</translation>
+        <translation>th</translation>
     </message>
     <message>
         <source>restrictvertical</source>
@@ -6369,7 +6369,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation>contv</translation>
+        <translation>tv</translation>
     </message>
     <message>
         <source>mv</source>
@@ -6384,12 +6384,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ch</source>
         <comment>modify - bevel</comment>
-        <translation>ch</translation>
+        <translation>cf</translation>
     </message>
     <message>
         <source>fi</source>
         <comment>modify - fillet</comment>
-        <translation>arr</translation>
+        <translation>co</translation>
     </message>
     <message>
         <source>cut</source>
@@ -6404,7 +6404,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>mi</source>
         <comment>modify -  mirror</comment>
-        <translation>sym</translation>
+        <translation>mi</translation>
     </message>
     <message>
         <source>rev</source>
@@ -6434,17 +6434,17 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>le</source>
         <comment>modify - lengthen</comment>
-        <translation>all</translation>
+        <translation>lg</translation>
     </message>
     <message>
         <source>ss</source>
         <comment>modify - stretch</comment>
-        <translation>def</translation>
+        <translation>df</translation>
     </message>
     <message>
         <source>er</source>
         <comment>modify - delete (erase)</comment>
-        <translation>eff</translation>
+        <translation>su</translation>
     </message>
     <message>
         <source>del</source>
@@ -6454,12 +6454,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>xp</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>dis</translation>
+        <translation>dc</translation>
     </message>
     <message>
         <source>snapfree</source>
         <comment>snap - free</comment>
-        <translation>accrochelibre</translation>
+        <translation>accrochagelibre</translation>
     </message>
     <message>
         <source>os</source>
@@ -6469,72 +6469,72 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>snapcenter</source>
         <comment>snap - center</comment>
-        <translation>accrochercentre</translation>
+        <translation>accrochagecentre</translation>
     </message>
     <message>
         <source>sc</source>
         <comment>snap - center</comment>
-        <translation>accc</translation>
+        <translation>ac</translation>
     </message>
     <message>
         <source>snapdist</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>accrocherdistance</translation>
+        <translation>accrochagedistance</translation>
     </message>
     <message>
         <source>sd</source>
         <comment>snap - distance to endpoints</comment>
-        <translation>accd</translation>
+        <translation>ad</translation>
     </message>
     <message>
         <source>snapend</source>
         <comment>snap - end points</comment>
-        <translation>accrocherextremite</translation>
+        <translation>accrochageextremite</translation>
     </message>
     <message>
         <source>se</source>
         <comment>snap - end points</comment>
-        <translation>acce</translation>
+        <translation>ax</translation>
     </message>
     <message>
         <source>snapgrid</source>
         <comment>snap - grid</comment>
-        <translation>accrochergrille</translation>
+        <translation>accrochagegrille</translation>
     </message>
     <message>
         <source>sg</source>
         <comment>snap - grid</comment>
-        <translation>accg</translation>
+        <translation>ag</translation>
     </message>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>accrocherintersection</translation>
+        <translation>accrochageintersection</translation>
     </message>
     <message>
         <source>si</source>
         <comment>snap - intersection</comment>
-        <translation>acci</translation>
+        <translation>ai</translation>
     </message>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>accrochermilieu</translation>
+        <translation>accrochagemilieu</translation>
     </message>
     <message>
         <source>sm</source>
         <comment>snap - middle points</comment>
-        <translation>accm</translation>
+        <translation>am</translation>
     </message>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>accrocherentite</translation>
+        <translation>accrochageentite</translation>
     </message>
     <message>
         <source>sn</source>
         <comment>snap - on entity</comment>
-        <translation>acce</translation>
+        <translation>ao</translation>
     </message>
     <message>
         <source>np</source>
@@ -6579,7 +6579,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ma</source>
         <comment>modify attribute</comment>
-        <translation>attr</translation>
+        <translation>ma</translation>
     </message>
     <message>
         <source>prop</source>
@@ -6846,7 +6846,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>u</source>
         <comment>undo</comment>
-        <translation>a</translation>
+        <translation>z</translation>
     </message>
     <message>
         <source>redo</source>
@@ -6942,7 +6942,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>mp</source>
         <comment>modify properties</comment>
-        <translation>prop</translation>
+        <translation>mp</translation>
     </message>
     <message>
         <source>Block</source>
@@ -7464,7 +7464,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation>pd</translation>
+        <translation>ps</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
@@ -7484,7 +7484,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation>ps</translation>
+        <translation>pg</translation>
     </message>
     <message>
         <source>plinepar</source>
@@ -7529,7 +7529,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dimradius</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished">cotationrayon</translation>
+        <translation>cotationrayon</translation>
     </message>
     <message>
         <source>dr</source>
@@ -7539,142 +7539,142 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>da</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>cg</translation>
     </message>
     <message>
         <source>dg</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>cregen</translation>
     </message>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdeplacer</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifrotation</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifechelle</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifmiroir</translation>
     </message>
     <message>
         <source>modmovrot</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdeplrota</translation>
     </message>
     <message>
         <source>mr</source>
         <comment>modify - move rotate</comment>
-        <translation type="unfinished"></translation>
+        <translation>dr</translation>
     </message>
     <message>
         <source>mod2rot</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>modif2rotation</translation>
     </message>
     <message>
         <source>r2</source>
         <comment>modify - rotate2</comment>
-        <translation type="unfinished"></translation>
+        <translation>r2</translation>
     </message>
     <message>
         <source>modrevert</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifinverser</translation>
     </message>
     <message>
         <source>md</source>
         <comment>modify -  revert direction</comment>
-        <translation type="unfinished"></translation>
+        <translation>iv</translation>
     </message>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifajuster</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifajuster2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation type="unfinished"></translation>
+        <translation>modiflongueur</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdecalage</translation>
     </message>
     <message>
         <source>mo</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>md</translation>
     </message>
     <message>
         <source>moff</source>
         <comment>modify - offset</comment>
-        <translation type="unfinished"></translation>
+        <translation>mdec</translation>
     </message>
     <message>
         <source>modbevel</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifchanfrein</translation>
     </message>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifconge</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdiviser</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdeformer</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifproprietes</translation>
     </message>
     <message>
         <source>modattr</source>
         <comment>modify attribute</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifattributs</translation>
     </message>
     <message>
         <source>modexpltext</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifexpltexte</translation>
     </message>
     <message>
         <source>xt</source>
         <comment>explode text strings</comment>
-        <translation type="unfinished">xt</translation>
+        <translation>xt</translation>
     </message>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifdecompos</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation type="unfinished"></translation>
+        <translation>modifsuppr</translation>
     </message>
     <message>
         <source>infodistance</source>
@@ -7689,17 +7689,17 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>infodistep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>infodistentitepoint</translation>
     </message>
     <message>
         <source>ii</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ip</translation>
     </message>
     <message>
         <source>dep</source>
         <comment>distance entity to point</comment>
-        <translation type="unfinished"></translation>
+        <translation>dep</translation>
     </message>
     <message>
         <source>infoangle</source>
@@ -7714,81 +7714,81 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>infoarea</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>infoaire</translation>
     </message>
     <message>
         <source>aa</source>
         <comment>measure area</comment>
-        <translation type="unfinished"></translation>
+        <translation>ir</translation>
     </message>
     <message>
         <source>mt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished">mt</translation>
+        <translation>mt</translation>
     </message>
     <message>
         <source>tx</source>
         <comment>draw text</comment>
-        <translation type="unfinished">tx</translation>
+        <translation>tx</translation>
     </message>
     <message>
         <source>so</source>
         <comment>snap - free</comment>
-        <translation type="unfinished"></translation>
+        <translation>al</translation>
     </message>
     <message>
         <source>ki</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>tu</translation>
     </message>
     <message>
         <source>un</source>
         <comment>undo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>cz</translation>
     </message>
     <message>
         <source>rd</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished">rd</translation>
+        <translation>rt</translation>
     </message>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>prefdess</translation>
     </message>
     <message>
         <source>dp</source>
         <comment>drawing preferences</comment>
-        <translation type="unfinished"></translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>equation</translation>
     </message>
     <message>
         <source>length1</source>
         <comment>bevel/fillet length1</comment>
-        <translation type="unfinished">longueur1</translation>
+        <translation>longueur1</translation>
     </message>
     <message>
         <source>length2</source>
         <comment>bevel/fillet length2</comment>
-        <translation type="unfinished">longueur2</translation>
+        <translation>longueur2</translation>
     </message>
     <message>
         <source>eqn</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eqn</translation>
     </message>
     <message>
         <source>eq</source>
         <comment>equation</comment>
-        <translation type="unfinished"></translation>
+        <translation>eq</translation>
     </message>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished">Personnalisé</translation>
+        <translation>Personnalisé</translation>
     </message>
     <message>
         <source>A0</source>
