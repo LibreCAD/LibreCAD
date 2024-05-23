@@ -6079,7 +6079,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation>polygon2s</translation>
+        <translation>polygone2s</translation>
     </message>
     <message>
         <source>poly2</source>
@@ -6129,7 +6129,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation>ei</translation>
+        <translation>ie</translation>
     </message>
     <message>
         <source>hatch</source>
@@ -6264,7 +6264,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation>coth</translation>
+        <translation>ch</translation>
     </message>
     <message>
         <source>dimvertical</source>
@@ -6274,7 +6274,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation>cotv</translation>
+        <translation>cv</translation>
     </message>
     <message>
         <source>dimlinear</source>
@@ -6284,7 +6284,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation>cotl</translation>
+        <translation>cl</translation>
     </message>
     <message>
         <source>dimangular</source>
@@ -6314,7 +6314,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation>cotd</translation>
+        <translation>cd</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -7199,12 +7199,12 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>linerelang</source>
         <comment>relative line</comment>
-        <translation>angrel</translation>
+        <translation>ligneangrel</translation>
     </message>
     <message>
         <source>lr</source>
         <comment>relative line</comment>
-        <translation>ar</translation>
+        <translation>lr</translation>
     </message>
     <message>
         <source>polygoncencor</source>
@@ -7234,7 +7234,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>pv</source>
         <comment>polygon centre vertex</comment>
-        <translation>pct</translation>
+        <translation>pt</translation>
     </message>
     <message>
         <source>polyct</source>
@@ -7269,7 +7269,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>cc</source>
         <comment>circle 2 points radius</comment>
-        <translation>c2pr</translation>
+        <translation>cc</translation>
     </message>
     <message>
         <source>circle3p</source>
@@ -7304,7 +7304,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>tr</source>
         <comment>circle 2 tangent point</comment>
-        <translation type="unfinished">c2tp</translation>
+        <translation>tr</translation>
     </message>
     <message>
         <source>circletan2p</source>
@@ -7314,7 +7314,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>td</source>
         <comment>circle tangent 2 points</comment>
-        <translation type="unfinished">ct2p</translation>
+        <translation>td</translation>
     </message>
     <message>
         <source>circletan2cr</source>
@@ -7324,7 +7324,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>tc</source>
         <comment>circle 2 tangent radius</comment>
-        <translation type="unfinished">c2tr</translation>
+        <translation>tc</translation>
     </message>
     <message>
         <source>circletan3</source>
@@ -7374,22 +7374,22 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>sf</source>
         <comment>draw spline</comment>
-        <translation type="unfinished">accl</translation>
+        <translation>sf</translation>
     </message>
     <message>
         <source>sp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>sp</translation>
     </message>
     <message>
         <source>arcellc2ax</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>arcellc2ax</translation>
     </message>
     <message>
         <source>ae</source>
         <comment>arc ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ae</translation>
     </message>
     <message>
         <source>fh</source>
@@ -7399,132 +7399,132 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>ellipsec2p</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec2p</translation>
     </message>
     <message>
         <source>ea</source>
         <comment>ellipse axis</comment>
-        <translation type="unfinished"></translation>
+        <translation>ea</translation>
     </message>
     <message>
         <source>ellipse3p</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse3p</translation>
     </message>
     <message>
         <source>ef</source>
         <comment>ellipse foci</comment>
-        <translation type="unfinished"></translation>
+        <translation>ef</translation>
     </message>
     <message>
         <source>ellipse4p</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipse4p</translation>
     </message>
     <message>
         <source>e4</source>
         <comment>ellipse 4 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e4</translation>
     </message>
     <message>
         <source>ellipsec3p</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>ellipsec3p</translation>
     </message>
     <message>
         <source>e3</source>
         <comment>ellipse center 3 point</comment>
-        <translation type="unfinished"></translation>
+        <translation>e3</translation>
     </message>
     <message>
         <source>plineadd</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pligneajout</translation>
     </message>
     <message>
         <source>pi</source>
         <comment>pl add node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pi</translation>
     </message>
     <message>
         <source>plineapp</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignecont</translation>
     </message>
     <message>
         <source>pn</source>
         <comment>pl append node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pn</translation>
     </message>
     <message>
         <source>plinedel</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignesuppr</translation>
     </message>
     <message>
         <source>pd</source>
         <comment>pl delete node</comment>
-        <translation type="unfinished"></translation>
+        <translation>pd</translation>
     </message>
     <message>
         <source>plinedeltwn</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignesupprent</translation>
     </message>
     <message>
         <source>pr</source>
         <comment>pl del between nodes</comment>
-        <translation type="unfinished"></translation>
+        <translation>pr</translation>
     </message>
     <message>
         <source>plinetrm</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignerogn</translation>
     </message>
     <message>
         <source>pt</source>
         <comment>pl trim segments</comment>
-        <translation type="unfinished"></translation>
+        <translation>ps</translation>
     </message>
     <message>
         <source>plinepar</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignepar</translation>
     </message>
     <message>
         <source>pe</source>
         <comment>pl equidistant</comment>
-        <translation type="unfinished"></translation>
+        <translation>pe</translation>
     </message>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>plignejoin</translation>
     </message>
     <message>
         <source>pj</source>
         <comment>pl join</comment>
-        <translation type="unfinished"></translation>
+        <translation>pj</translation>
     </message>
     <message>
         <source>sx</source>
         <comment>deselect all entities</comment>
-        <translation type="unfinished"></translation>
+        <translation>sx</translation>
     </message>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>inverserselect</translation>
     </message>
     <message>
         <source>is</source>
         <comment>invert select</comment>
-        <translation type="unfinished"></translation>
+        <translation>is</translation>
     </message>
     <message>
         <source>ds</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>ca</translation>
     </message>
     <message>
         <source>dimradius</source>
@@ -7534,7 +7534,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>dr</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>ci</translation>
     </message>
     <message>
         <source>da</source>
