@@ -1231,7 +1231,7 @@ la distance entre les points=%2 est supérieure au diamètre=%3</translation>
     </message>
     <message>
         <source>Exported: %1</source>
-        <translation>Exporté: %1</translation>
+        <translation>Exporté&#x202f;: %1</translation>
     </message>
     <message>
         <source>Exporting...</source>
@@ -1619,7 +1619,7 @@ Veuillez vérifiez son existance ainsi que les droits d&apos;accès.</translatio
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished">Interface</translation>
+        <translation>Interface</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
@@ -1802,7 +1802,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished">Rechercher les blocs correspondants</translation>
+        <translation>Rechercher les blocs correspondants</translation>
     </message>
 </context>
 <context>
@@ -1889,7 +1889,7 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/ColorBox</translation>
     </message>
     <message>
         <source>Custom Picked</source>
@@ -1947,11 +1947,11 @@ dans une nouvelle fenêtre</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Interface</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished">Flottant</translation>
+        <translation>Flottant</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -2064,12 +2064,12 @@ dans une nouvelle fenêtre</translation>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished">Appliquer également les attributs a toutes les sous-entités du INSERT sélectionné.
+        <translation>Appliquer également les attributs a toutes les sous-entités du INSERT sélectionné.
 Cela modifie récursivement toutes les entités du bloc lui-même.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished">Appliquer les attributs en profondeur du bloc</translation>
+        <translation>Appliquer les attributs en profondeur du bloc</translation>
     </message>
 </context>
 <context>
@@ -3084,7 +3084,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>&amp;Angle (a):</source>
-        <translation>&amp;Angle (a):</translation>
+        <translation>&amp;Angle (a)&#x202f;:</translation>
     </message>
     <message>
         <source>Use current &amp;attributes</source>
@@ -3491,7 +3491,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished">longueur fixée de ligne d&apos;extension</translation>
+        <translation>longueur fixée de ligne d&apos;extension</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
@@ -3893,7 +3893,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished">Exporter en CAM/SVG non formaté</translation>
+        <translation>Exporter en CAM/SVG non formaté</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
@@ -3909,7 +3909,7 @@ Veuillez choisir l&apos;unité que vous souhaitez utiliser pour les nouveaux des
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished">Lignes pointillées</translation>
+        <translation>Lignes pointillées</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
@@ -3960,7 +3960,7 @@ mais est ignorée par d&apos;autres</translation>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished">Longueur du motif de ligne en fonction du zoom,
+        <translation>Longueur du motif de ligne en fonction du zoom,
 donc valeur de pas par défaut requise pour la construction</translation>
     </message>
 </context>
@@ -5959,7 +5959,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>File on disk modified. Please save to another file to avoid data loss! File modified: %1</source>
-        <translation>Le fichier a été modifié sur le disque. Veuillez enregistrer dans un autre fichier pour éviter toute perte de donnée. Fichier modifié: %1</translation>
+        <translation>Le fichier a été modifié sur le disque. Veuillez enregistrer dans un autre fichier pour éviter toute perte de donnée. Fichier modifié&#x202f;: %1</translation>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
@@ -6876,7 +6876,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Command: %1 (%2)</source>
-        <translation>Commande: %1 (%2)</translation>
+        <translation>Commande&#x202f;: %1 (%2)</translation>
     </message>
     <message>
         <source>RS_Commands:: command not found: %1</source>
@@ -6888,7 +6888,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Accepted keycode: %1</source>
-        <translation>Keucode accepté : %1</translation>
+        <translation>Code clavier accepté&#x202f;: %1</translation>
     </message>
     <message>
         <source>Available commands:</source>
@@ -7074,7 +7074,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished">Aucun calque %1 trouvé</translation>
+        <translation>Aucun calque %1 trouvé</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -8089,7 +8089,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source> -o some.pdf *.dxf</source>
-        <translation type="unfinished"> -o fichier.pdf *.dxf</translation>
+        <translation> -o fichier.pdf *.dxf</translation>
     </message>
     <message>
         <source>-- print all dxf files to &apos;some.pdf&apos; file.</source>
@@ -8105,11 +8105,11 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished">Impression en teintes de gris.</translation>
+        <translation>Impression en teintes de gris.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished">Impression monochrome (noir/blanc).</translation>
+        <translation>Impression monochrome (noir/blanc).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
@@ -8119,7 +8119,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished">Résolution de sortie (DPI).</translation>
+        <translation>Résolution de sortie (PPP).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
@@ -8136,11 +8136,11 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Fichier PDF de sortie.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Repertoire de sortie cible.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
@@ -8148,11 +8148,11 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Fichier(s) DXF d&apos;entree</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Mode code clavier</translation>
     </message>
     <message>
         <source>Load command file</source>
@@ -8164,7 +8164,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished">Combiner tous les calques</translation>
+        <translation>Combiner tous les calques</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
@@ -8172,7 +8172,7 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation type="unfinished">/CustomColor%1</translation>
+        <translation>/CustomColor%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
@@ -8239,12 +8239,13 @@ Voulez-vous le remplacer ?</translation>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation>Un bloc ne peut pas se contenir lui-même.</translation>
+        <translation>Un bloc ne peut pas contenir une insertion de lui-même.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation> contient une insertion du bloc courant dans:
+</translation>
     </message>
     <message>
         <source>
@@ -8619,7 +8620,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished">rayon=%1 est invalide (expression)</translation>
+        <translation>rayon=%1 est invalide (expression)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
@@ -8948,23 +8949,23 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Hatch Error: Invalid contour found!</source>
-        <translation>Erreur de hachures : contour invalide!</translation>
+        <translation>Erreur de hachures&#x202f;: contour invalide&#x202f;!</translation>
     </message>
     <message>
         <source>Hatch Error: Pattern not found!</source>
-        <translation>Erreur de hachures : motif introuvable!</translation>
+        <translation>Erreur de hachures&#x202f;: motif introuvable&#x202f;!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour or pattern too small!</source>
-        <translation>Erreur de hachures : contour ou motif trop petit!</translation>
+        <translation>Erreur de hachures&#x202f;: contour ou motif trop petit&#x202f;!</translation>
     </message>
     <message>
         <source>Hatch Error: Contour too big!</source>
-        <translation>Erreur de hachures : contour trop grand!</translation>
+        <translation>Erreur de hachures&#x202f;: contour trop grand&#x202f;!</translation>
     </message>
     <message>
         <source>Hatch Error: Undefined Error!</source>
-        <translation>Erreur de hachures : erreur indéfinie!</translation>
+        <translation>Erreur de hachures&#x202f;: erreur indéfinie&#x202f;!</translation>
     </message>
     <message>
         <source>Total hatch area = %1</source>
@@ -9434,11 +9435,11 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>La taille de pas saisie est invalide.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>La valeur x saisie est invalide.</translation>
     </message>
 </context>
 <context>
@@ -9517,11 +9518,11 @@ Ce bloc ne peut être inséré.</translation>
     <name>RS_ActionEditUndo</name>
     <message>
         <source>Nothing to undo!</source>
-        <translation>Rien à annuler!</translation>
+        <translation>Rien à annuler&#x202f;!</translation>
     </message>
     <message>
         <source>Nothing to redo!</source>
-        <translation>Rien à rétablir!</translation>
+        <translation>Rien à rétablir&#x202f;!</translation>
     </message>
 </context>
 <context>
@@ -9602,7 +9603,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation>Distance: %1 cartésienne: (%2 , %3), polaire: (%4&lt;%5)</translation>
+        <translation>Distance&#x202f;: %1 cartésienne&#x202f;: (%2 , %3), polaire&#x202f;: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -9832,11 +9833,11 @@ Ce bloc ne peut être inséré.</translation>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Cliquer sur l&apos;entité pour modifier</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Annuler</translation>
+        <translation>Annuler</translation>
     </message>
 </context>
 <context>
@@ -9981,7 +9982,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Indiquer la première entité ou entrer le rayon &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -10328,7 +10329,7 @@ Ce bloc ne peut être inséré.</translation>
     <name>RS_ActionPrintPreview</name>
     <message>
         <source>RS_ActionPrintPreview::fit(): Invalid paper size</source>
-        <translation>RS_ActionPrintPreview::fit(): taille de papier invalide</translation>
+        <translation>RS_ActionPrintPreview::fit(): Taille de papier invalide</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
@@ -10368,7 +10369,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation>RS_ActionPrintPreview::calcPagesNum(): La limite de pages a été dépassée.</translation>
     </message>
 </context>
 <context>
@@ -10431,7 +10432,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>No entity selected!</source>
-        <translation>Aucune entité sélectionnée!</translation>
+        <translation>Aucune entité sélectionnée&#x202f;!</translation>
     </message>
     <message>
         <source>Select to create offset</source>
@@ -11125,7 +11126,7 @@ Ce bloc ne peut être inséré.</translation>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Appliquer l&apos;échelle d&apos;impression à la largeur de ligne</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
