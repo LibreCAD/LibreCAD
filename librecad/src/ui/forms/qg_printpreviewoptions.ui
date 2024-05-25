@@ -56,7 +56,7 @@
       <bool>true</bool>
      </property>
      <property name="insertPolicy">
-      <enum>QComboBox::InsertAtTop</enum>
+      <enum>QComboBox::InsertPolicy::InsertAtTop</enum>
      </property>
     </widget>
    </item>
@@ -91,7 +91,7 @@
    <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -246,10 +246,10 @@
       </sizepolicy>
      </property>
      <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+      <enum>QFrame::Shape::VLine</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Shadow::Sunken</enum>
      </property>
     </widget>
    </item>
@@ -258,119 +258,6 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
- <connections>
-  <connection>
-   <sender>bCenter</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>center()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bScaleLineWidth</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>setLineWidthScaling(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bBlackWhite</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>setBlackWhite(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbScale</sender>
-   <signal>currentIndexChanged(QString)</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>scale(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bFit</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>fit()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cFixed</sender>
-   <signal>clicked(bool)</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>setScaleFixed(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>170</x>
-     <y>10</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>154</x>
-     <y>10</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>bCalcPagesNum</sender>
-   <signal>clicked()</signal>
-   <receiver>Ui_PrintPreviewOptions</receiver>
-   <slot>calcPagesNum()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
 </ui>

@@ -284,9 +284,17 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
         if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
+        auto pinBase = graphic->getPaperInsertionBase();
+        double oldScale = graphic->getPaperScale();
+
         graphic->setPaperScale(f);
-//        graphic->centerToPage();
-        if(autoZoom) graphicView->zoomPage();
+
+        // changing scale around the drawing center
+        pinBase += graphic->getSize()*(oldScale - f)*0.5;
+        graphic->setPaperInsertionBase(pinBase);
+
+        if(autoZoom)
+            graphicView->zoomPage();
         graphicView->redraw();
         return true;
     }
