@@ -71,7 +71,7 @@ chmod +x appimagetool-*.AppImage
 wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
 chmod +x *.AppImage
 #ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-ARCH=x86_64 ./linuxdeploy*.AppImage appdir/usr/share/applications/librecad.desktop
+ARCH=x86_64 ./linuxdeploy*.AppImage appdir/usr/bin/librecad
 VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage appdir/
 #chmod +x linuxdeployqt-x86_64.AppImage
 #./linuxdeployqt-x86_64.AppImage appdir/usr/bin/librecad -qmake=$(which qmake6) -appimage
