@@ -52,6 +52,9 @@
        <height>0</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="editable">
       <bool>true</bool>
      </property>
@@ -260,4 +263,5 @@
   <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
  </resources>
+ <connections/>
 </ui>
