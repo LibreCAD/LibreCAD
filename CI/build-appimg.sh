@@ -68,9 +68,11 @@ find appdir
 
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
-ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
+wget https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage
+chmod +x *.AppImage
+#ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
+ARCH=x86_64 ./linuxdeploy*.AppImage appdir/usr/share/applications/librecad.desktop
 VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage appdir/
-#wget -q https://github.com/omergoktas/linuxdeployqt/releases/download/latest/linuxdeployqt-x86_64.AppImage
 #chmod +x linuxdeployqt-x86_64.AppImage
 #./linuxdeployqt-x86_64.AppImage appdir/usr/bin/librecad -qmake=$(which qmake6) -appimage
 #./appimagetool-*.AppImage -s deploy appdir/usr/bin/librecad.desktop
