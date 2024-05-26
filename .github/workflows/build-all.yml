@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
