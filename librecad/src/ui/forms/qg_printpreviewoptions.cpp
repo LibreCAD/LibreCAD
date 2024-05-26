@@ -141,6 +141,9 @@ void QG_PrintPreviewOptions::initGuiActions() {
     connect(ui->cbScale->lineEdit(), &QLineEdit::editingFinished, [this](){
         scale(ui->cbScale->currentText());
     });
+    connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](int index){
+        scale(ui->cbScale->itemText(index));
+    });
     connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::fit);
     connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::center);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::calcPagesNum);
@@ -201,6 +204,7 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
                     fit();
                 updateScaleBox();
                 setScaleFixed(false);
+                updateScaleBox(action->getScale());
             }
         }else{
             double f=action->getScale();
@@ -353,7 +357,7 @@ void QG_PrintPreviewOptions::updateScaleBox(double f){
     for(i=0;i<ui->cbScale->count();i++){
         QString s=ui->cbScale->itemText(i);
         int i0 = s.indexOf(':');
-        bool ok1,ok2;
+        bool ok1 = false,ok2 = false;
         double n = s.left(i0).toDouble(&ok1);
         double d = s.mid(i0+1).toDouble(&ok2);
         if(! (ok1 && ok2)|| std::abs(d)<RS_TOLERANCE) continue;
