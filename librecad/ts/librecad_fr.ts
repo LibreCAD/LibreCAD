@@ -7089,7 +7089,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>la</source>
         <comment>angled line</comment>
-        <translation>li</translation>
+        <translation>la</translation>
     </message>
     <message>
         <source>linehor</source>
@@ -7214,7 +7214,7 @@ Voulez-vous le remplacer ?</translation>
     <message>
         <source>pp</source>
         <comment>polygon centre point</comment>
-        <translation>pp</translation>
+        <translation>pc</translation>
     </message>
     <message>
         <source>polycp</source>
