@@ -41,7 +41,7 @@ jobs:
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
