@@ -60,6 +60,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     RS_SETTINGS->beginGroup("/PrintPreview");
     bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
     RS_SETTINGS->endGroup();
+    fit();
     setPaperScaleFixed(fixed);
     showOptions();
 }

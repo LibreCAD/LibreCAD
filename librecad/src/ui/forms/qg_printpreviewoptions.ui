@@ -52,11 +52,14 @@
        <height>0</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;printed size : drawing size&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
      <property name="editable">
       <bool>true</bool>
      </property>
      <property name="insertPolicy">
-      <enum>QComboBox::InsertAtTop</enum>
+      <enum>QComboBox::InsertPolicy::InsertAtTop</enum>
      </property>
     </widget>
    </item>
@@ -91,7 +94,7 @@
    <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+      <enum>Qt::Orientation::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -246,10 +249,10 @@
       </sizepolicy>
      </property>
      <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+      <enum>QFrame::Shape::VLine</enum>
      </property>
      <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+      <enum>QFrame::Shadow::Sunken</enum>
      </property>
     </widget>
    </item>
@@ -257,6 +260,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources>
+  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
@@ -373,4 +377,13 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>center()</slot>
+  <slot>setLineWidthScaling(bool)</slot>
+  <slot>setBlackWhite(bool)</slot>
+  <slot>scale(QString)</slot>
+  <slot>fit()</slot>
+  <slot>setScaleFixed(bool)</slot>
+  <slot>calcPagesNum()</slot>
+ </slots>
 </ui>
