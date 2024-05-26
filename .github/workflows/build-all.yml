@@ -36,7 +36,7 @@ jobs:
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang-10 clang-tools-10
 
       - name: Build and analyze
         run: |
