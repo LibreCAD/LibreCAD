@@ -55,18 +55,16 @@ cp -r librecad/support/library appdir/usr/share/librecad/
 cp -r librecad/support/patterns appdir/usr/share/librecad/
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
-find / -type f -name "libicui18n*.so*" -print
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
 	for q_lib in libLLVM-15 libOpenGL libelf libxcb libicu  libsensors libQt6 libQt6Core5Compat libQt6QuickControls2 libQt6StateMachine libQt6WebView libQt6Xml libQt6Svg libQt6DBus libQt6WaylandClient libQt6WaylandEglClientHwIntegration libxcb
 	do
-	for f in $(find ../Qt /usr/lib -iname "${q_lib}*.so*" -print)
-	do
-		cp -av $f appdir/usr/lib/$(basename $f)
-		chmod -f 755 appdir/usr/lib/$(basename $f)
-		#cp -Lv $f appdir/usr/lib/$(echo $(basename $f)|sed -e 's:\.so.*$::').so
+		for f in $(find ../Qt /usr/lib -iname "${q_lib}*.so*" -print)
+		do
+			cp -av $f appdir/usr/lib/$(basename $f)
+			chmod -f 755 appdir/usr/lib/$(basename $f)
+		done
 	done
-	done
-find appdir/
+find appdir
 
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
 chmod +x appimagetool-*.AppImage
