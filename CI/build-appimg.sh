@@ -59,7 +59,7 @@ find / -type f -name "libicui18n*.so*" -print
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
 	for q_lib in libLLVM-15 libOpenGL libelf libxcb libicudata libicui18n libicuuc  libsensors libQt6 libQt6Core5Compat libQt6QuickControls2 libQt6StateMachine libQt6WebView libQt6Xml libQt6Svg libQt6DBus libQt6WaylandClient libQt6WaylandEglClientHwIntegration libxcb
 	do
-	for f in $(find ../Qt /usr/lib64 /lib64 -iname "${q_lib}*.so*" -print)
+	for f in $(find ../Qt /usr/lib -iname "${q_lib}*.so*" -print)
 	do
 		cp -av $f appdir/usr/lib/$(basename $f)
 		chmod -f 755 appdir/usr/lib/$(basename $f)
