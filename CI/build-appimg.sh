@@ -56,14 +56,14 @@ cp -r librecad/support/patterns appdir/usr/share/librecad/
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
-	for q_lib in libLLVM-15 libOpenGL libelf libxcb libicu libsensors libxcb libQt6Svg libQt6PrintSupport libQt6Widgets libQt6Gui libQt6Core libQt6DBus
-	do
+	#for q_lib in libLLVM-15 libOpenGL libelf libxcb libicu libsensors libxcb libQt6Svg libQt6PrintSupport libQt6Widgets libQt6Gui libQt6Core libQt6DBus
+	#do
 		for f in $(find ../Qt -iname "${q_lib}*.so*" -print)
 		do
 			cp -av $f appdir/usr/lib/$(basename $f)
 			chmod -f 755 appdir/usr/lib/$(basename $f)
 		done
-	done
+	#done
 find appdir
 
 wget -c https://github.com/$(wget -q https://github.com/probonopd/go-appimage/releases/expanded_assets/continuous -O - | grep "appimagetool-.*-x86_64.AppImage" | head -n 1 | cut -d '"' -f 2)
