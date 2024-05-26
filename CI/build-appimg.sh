@@ -73,10 +73,6 @@ wget https://github.com/linuxdeploy/linuxdeploy/releases/download/continuous/lin
 wget https://github.com/linuxdeploy/linuxdeploy-plugin-qt/releases/download/continuous/linuxdeploy-plugin-qt-x86_64.AppImage
 chmod +x *.AppImage
 #ARCH=x86_64 ./appimagetool-*.AppImage deploy appdir/usr/share/applications/librecad.desktop
-ARCH=x86_64 ./linuxdeploy*.AppImage --appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
-./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir
+ARCH=x86_64 ./linuxdeploy-x86_64.AppImage--appdir appdir -e appdir/usr/bin/librecad -d appdir/usr/share/applications/librecad.desktop
+ARCH=x86_64 ./linuxdeploy-plugin-qt-x86_64.AppImage --appdir appdir
 VERSION=`git describe --always` ARCH=x86_64 ./appimagetool-*.AppImage appdir/
-#chmod +x linuxdeployqt-x86_64.AppImage
-#./linuxdeployqt-x86_64.AppImage appdir/usr/bin/librecad -qmake=$(which qmake6) -appimage
-#./appimagetool-*.AppImage -s deploy appdir/usr/bin/librecad.desktop
-#VERSION=`git describe --always` ./appimagetool-*.AppImage appdir/
