@@ -5,6 +5,7 @@
 /\.*
 
 # Apple generated directories
+build/
 LibreCAD.app/
 LibreCAD.pbproj/
 LibreCAD.dmg
