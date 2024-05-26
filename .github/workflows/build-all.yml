@@ -23,8 +23,8 @@ jobs:
 
       - name: Qt6 path
         run: |
+          find ${{github.workspace}}/../Qt -type f -iname "*.so"
           ls -l ${{github.workspace}}/../Qt
-          find ${{github.workspace}}/../Qt -type f -iname "libqt6*svg*.so"
 
       - name: Install Qt and dependencies
         run: |
