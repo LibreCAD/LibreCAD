@@ -58,11 +58,11 @@ cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
 	#for q_lib in libLLVM-15 libOpenGL libelf libxcb libicu libsensors libxcb libQt6Svg libQt6PrintSupport libQt6Widgets libQt6Gui libQt6Core libQt6DBus
 	#do
-		for f in $(find ../Qt -iname "*.so*" -print)
-		do
-			cp -av $f appdir/usr/lib/$(basename $f)
-			chmod -f 755 appdir/usr/lib/$(basename $f)
-		done
+		#for f in $(find ../Qt -iname "*.so*" -print)
+		#do
+			#cp -av $f appdir/usr/lib/$(basename $f)
+			#chmod -f 755 appdir/usr/lib/$(basename $f)
+		#done
 	#done
 find appdir
 
