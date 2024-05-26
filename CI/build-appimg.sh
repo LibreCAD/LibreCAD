@@ -56,6 +56,7 @@ cp -r librecad/support/patterns appdir/usr/share/librecad/
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
+cp -av $Qt6_DIR/plugins appdir/usr/lib/
 	#for q_lib in libLLVM-15 libOpenGL libelf libxcb libicu libsensors libxcb libQt6Svg libQt6PrintSupport libQt6Widgets libQt6Gui libQt6Core libQt6DBus
 	#do
 		#for f in $(find ../Qt -iname "*.so*" -print)
