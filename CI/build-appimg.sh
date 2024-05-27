@@ -56,6 +56,8 @@ cp -r librecad/support/patterns appdir/usr/share/librecad/
 
 cp CI/librecad.svg appdir/usr/share/icons/hicolor/scalable/apps/
 convert -resize 256x256 CI/librecad.svg appdir/usr/share/icons/hicolor/256x256/apps/librecad.png
+# libc6
+cp -av /usr/lib64/libstdc++.so* appdir/usr/lib/
 #cp -av $Qt6_DIR/plugins appdir/usr/lib/
 #mkdir -p appdir/usr/lib/qt6
 #cp -av $QT_PLUGIN_PATH appdir/usr/lib/qt6/
