@@ -3836,15 +3836,15 @@ Lütfen yeni çizimler için kullanmak istediğiniz birimi ve tercih ettiğiniz 
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation>BOŞLUK ÇUBUĞUNA basıldığında girilen komutları çalıştır</translation>
+        <translation>BOŞLUK ÇUBUĞU&apos;na basıldığında girilen komutları çalıştır</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation>Komut penceresi boşken BOŞLUK ÇUBUĞUNA basıldığında serbest yakalama moduna geçiş yap</translation>
+        <translation>Komut penceresi boşken BOŞLUK ÇUBUĞU&apos;na basıldığında serbest yakalama moduna geçiş yap</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation>BOŞLUK ÇUBUĞUNA basıldığında serbest yakalama moduna geç</translation>
+        <translation>BOŞLUK ÇUBUĞU&apos;na basıldığında serbest yakalama moduna geç</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
