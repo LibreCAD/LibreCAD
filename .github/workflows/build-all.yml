@@ -152,11 +152,6 @@ jobs:
           choco uninstall mingw --force
           choco uninstall strawberryperl --force
 
-      - name: Install MinGW8.1 32-bit
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW32
-
       - name: Install Qt-5.15
         uses: jurplel/install-qt-action@v3
         with:
@@ -174,6 +169,7 @@ jobs:
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--external 7z'
+          tools: 'tools_mingw,qt.tools.win64_mingw810 tools_qtcreator,qt.tools.qtcreator'
 
       - name: Install boost
         shell: bash
