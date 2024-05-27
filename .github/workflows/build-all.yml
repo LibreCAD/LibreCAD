@@ -169,7 +169,7 @@ jobs:
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--external 7z'
-          tools: 'tools_mingw,qt.tools.win64_mingw810 tools_qtcreator,qt.tools.qtcreator'
+          tools: 'tools_mingw,qt.tools.win32_mingw810 tools_qtcreator,qt.tools.qtcreator'
 
       - name: Install boost
         shell: bash
@@ -199,10 +199,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
+        
 
       - name: Build
         run: |
-          set PATH=c:\msys64\mingw32\bin;%PATH%
+          set PATH=c:\msys32\mingw32\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
