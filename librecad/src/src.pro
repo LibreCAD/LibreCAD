@@ -10,7 +10,7 @@ DISABLE_POSTSCRIPT = false
 DEFINES += DWGSUPPORT
 DEFINES -= JWW_WRITE_SUPPORT
 
-LC_VERSION="2.2.1-alpha"
+LC_VERSION="2.2.1_rc2"
 VERSION=$${LC_VERSION}
 
 # Store intermedia stuff somewhere else
@@ -275,11 +275,11 @@ HEADERS += \
     ui/forms/lc_crossoptions.h \
     ui/forms/lc_lineanglereloptions.h \
     ui/forms/lc_linejoinoptions.h \
-    ui/forms/lc_lineoptions.h \        
+    ui/forms/lc_lineoptions.h \
     ui/forms/lc_slicedivideoptions.h\
     ui/forms/lc_rectangle2pointsoptions.h \
     ui/forms/lc_rectangle1pointoptions.h \
-    ui/forms/lc_rectangle3pointsoptions.h \    
+    ui/forms/lc_rectangle3pointsoptions.h \
     actions/lc_abstractactiondrawline.h \
     ui/forms/LC_DlgParabola.h
 
@@ -428,7 +428,7 @@ SOURCES += \
     ui/forms/lc_lineoptions.cpp \
     ui/forms/lc_rectangle3pointsoptions.cpp \
     ui/forms/lc_rectangle1pointoptions.cpp \
-    ui/forms/lc_rectangle2pointsoptions.cpp \         
+    ui/forms/lc_rectangle2pointsoptions.cpp \
     ui/forms/lc_slicedivideoptions.cpp
 
 # ################################################################################
@@ -1025,7 +1025,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
     ui/forms/lc_duplicateoptions.ui \
-    ui/lc_penpaletteoptionsdialog.ui \    
+    ui/lc_penpaletteoptionsdialog.ui \
     ui/lc_penpalettewidget.ui
 
 # ################################################################################
