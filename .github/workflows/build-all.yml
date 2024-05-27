@@ -169,7 +169,6 @@ jobs:
           aqtversion: '==3.1.*'
           py7zrversion: '==0.20.*'
           extra: '--external 7z'
-          tools: 'tools_mingw,qt.tools.win32_mingw810 tools_qtcreator,qt.tools.qtcreator'
 
       - name: Install boost
         shell: bash
@@ -178,6 +177,11 @@ jobs:
           7z x -o. -y boost.7z
           mv boost_1_75_0 ../boost
           rm boost.7z
+          
+      - name: install mingw-32
+        shell: cmd
+        run: |
+          aqt install-tool windows desktop tools_mingw qt.tools.win32_mingw810
 
       - name: Debugging
         if: ${{ always() }}
@@ -199,11 +203,11 @@ jobs:
           echo.
           dir ..\Qt
           echo.
-        
+          dir ..\Qt\5.15.2
 
       - name: Build
         run: |
-          set PATH=c:\msys32\mingw32\bin;%PATH%
+          set PATH=${{ github.workspace }}\Tools\mingw810_32\bin;%PATH%
           copy CI\custom-win.pri custom.pri
           copy CI\custom-win.nsh scripts\postprocess-windows\custom.nsh
           echo SET:
