@@ -45,9 +45,6 @@ struct RS_ActionDefault::Points {
     RS_Vector v1;
     RS_Vector v2;
 
-    // Number of temporary entities for glowing effects
-    unsigned nHighLightDuplicates = 0;
-
     RS_Entity* highlightedEntity = nullptr;
 };
 
