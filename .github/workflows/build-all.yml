@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-20.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -36,12 +36,12 @@ jobs:
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang-10 clang-tools-10
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
