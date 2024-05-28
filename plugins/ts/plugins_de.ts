@@ -31,7 +31,7 @@
     <message>
         <location filename="../align/align.cpp" line="50"/>
         <source>Specify base points first</source>
-        <translation type="unfinished"></translation>
+        <translation>Legen Sie zuerst die Basispunkte fest</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="54"/>
@@ -42,7 +42,8 @@
         <location filename="../align/align.cpp" line="57"/>
         <source>Click on options to set/unset,
 Ok to accept and start alignment.</source>
-        <translation type="unfinished"></translation>
+        <translation>Klicken Sie auf die Optionen, um sie einzustellen/zu deaktivieren,
+Ok zum Akzeptieren und Starten der Ausrichtung.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="60"/>
@@ -52,7 +53,12 @@ Align will copy rather than move the selected objects.
 If &apos;Specify base points first&apos; is checked,
 Align will prompt for the alignment points in the order
 first base, second base, first target, second target.</source>
-        <translation type="unfinished"></translation>
+        <translation>Wenn &quot;Originalobjekte beibehalten&quot; aktiviert ist,
+Ausrichten die ausgewählten Objekte kopieren und nicht verschieben.
+
+Wenn &apos;Basispunkte zuerst angeben&apos; angekreuzt ist,
+fragt Align nach den Ausrichtungspunkten in der Reihenfolge
+erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     </message>
     <message>
         <location filename="../align/align.cpp" line="81"/>
