@@ -26,6 +26,7 @@
 #include <cmath>
 #include <iostream>
 #include <memory>
+#include <set>
 
 #include <QPainterPath>
 #include <QBrush>
@@ -75,6 +76,21 @@ void pr(RS_EntityContainer* loop)
         }
     }
     LC_ERR<<" |"<<loop->getId()<<" )";
+}
+
+void avoidZeroLength(RS_EntityContainer* loop) {
+    if (loop == nullptr)
+        return;
+    std::set<RS_Entity*> toCleanUp;
+    for (RS_Entity* e: *loop) {
+        if (e != nullptr && e->isContainer())
+            avoidZeroLength(static_cast<RS_EntityContainer*>(e));
+        else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
+            toCleanUp.insert(e);
+        }
+    }
+    for (RS_Entity* e: toCleanUp)
+        loop->removeEntity(e);
 }
 }
 

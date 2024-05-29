@@ -105,7 +105,7 @@ RS_Vector RS_Math::pow(const RS_Vector& vp, double y) {
  */
 bool RS_Math::equal(double d1, double d2, double tolerance)
 {
-    return std::abs(d1 - d2) < std::max({ulp(d1), ulp(d2), tolerance});
+    return std::abs(d1 - d2) < std::max({2. * ulp(d1), 2. * ulp(d2), tolerance});
 }
 
 /**

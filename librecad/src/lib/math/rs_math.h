@@ -44,7 +44,14 @@ int round(double v);
 double round(double v, double precision);
 double pow(double x, double y);
 RS_Vector pow(const RS_Vector &x, double y);
-bool equal(double d1, double d2, double tolerance);
+/**
+ * @brief equal test whether two floating points are equal
+ * @param d1 number 1
+ * @param d2 number 2
+ * @param tolerance tolerance to use, if the value is smaller than ulp of d1/d2, double of the ulp is used
+ * @return true if the floating points are considered equal
+ */
+bool equal(double d1, double d2, double tolerance = 0.);
 
 double rad2deg(double a);
 double deg2rad(double a);

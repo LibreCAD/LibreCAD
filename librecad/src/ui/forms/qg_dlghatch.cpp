@@ -117,7 +117,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         leScale->setText(s);
         s.setNum(RS_Math::rad2deg(hatch->getAngle()));
         leAngle->setText(s);
-        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
+        showArea();
     }
 }
 
@@ -128,9 +128,21 @@ void QG_DlgHatch::updateHatch() {
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         if (!isNew)
-            leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
+            showArea();
     }
 }
+
+void QG_DlgHatch::showArea()
+{
+    double area = hatch->getTotalArea();
+    if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
+        QString number = QString::number(hatch->getTotalArea(), 'g', 10);
+        leHatchArea->setText(number);
+    } else {
+        leHatchArea->setText({});
+    }
+}
+
 
 void QG_DlgHatch::setPattern(const QString& p) {
     if (!RS_PATTERNLIST->contains(p)) {
