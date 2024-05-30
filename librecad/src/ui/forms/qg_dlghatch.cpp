@@ -59,10 +59,6 @@ void QG_DlgHatch::languageChange()
 }
 
 void QG_DlgHatch::init() {
-	pattern=nullptr;
-	hatch = nullptr;
-    isNew = false;
-
     preview = std::make_unique<RS_EntityContainer>();
     gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
@@ -153,31 +149,31 @@ void QG_DlgHatch::setPattern(const QString& p) {
 }
 
 void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
-	updatePreview();
+    updatePreview();
 }
 
 void QG_DlgHatch::updatePreview() {
-	if (preview==nullptr) {
+    if (preview==nullptr) {
         return;
     }
-	if (hatch==nullptr || !cbEnablePreview->isChecked()) {
+    if (hatch==nullptr || !cbEnablePreview->isChecked()) {
         preview->clear();
         gvPreview->zoomAuto();
         return;
     }
-	pattern = cbPattern->getPattern();
-	if (pattern->countDeep()==0)
-		return;
+    pattern = cbPattern->getPattern();
+    if (pattern->countDeep()==0)
+        return;
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
-	double prevSize = 100.0;
+    double prevSize = 100.0;
     if (pattern) {
         pattern->calculateBorders();
-		prevSize = std::max(prevSize, pattern->getSize().magnitude());
-	}
+        prevSize = std::max(prevSize, pattern->getSize().magnitude());
+    }
 
     preview->clear();
 
@@ -187,7 +183,7 @@ void QG_DlgHatch::updatePreview() {
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
-	loop->addRectangle({0., 0.}, {prevSize,prevSize});
+    loop->addRectangle({0., 0.}, {prevSize,prevSize});
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {

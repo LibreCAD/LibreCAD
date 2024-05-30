@@ -36,8 +36,29 @@
 #include "rs_hatch.h"
 #include "rs_debug.h"
 
+namespace {
+bool hatchAble(RS_Entity* entity) {
+    if (entity == nullptr)
+        return false;
+    switch (entity->rtti()) {
+    case RS2::EntityHatch:
+    case RS2::EntityPoint:
+    case RS2::EntityImage:
+    case RS2::EntityMText:
+    case RS2::EntityText:
+        return false;
+    default:
+        break;
+    }
+    if (RS_Information::isDimension(entity->rtti()))
+        return false;
+
+    return  entity->getLength() > RS_TOLERANCE;
+}
+}
+
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
-                                :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
+    :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
     , data{std::make_unique<RS_HatchData>()}
 {
     actionType = RS2::ActionDrawHatch;
@@ -46,19 +67,19 @@ RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_Graphic
 RS_ActionDrawHatch::~RS_ActionDrawHatch() = default;
 
 void RS_ActionDrawHatch::setShowArea(bool s){
-	m_bShowArea=s;
+    m_bShowArea=s;
 }
 
 void RS_ActionDrawHatch::init(int status) {
     RS_ActionInterface::init(status);
 
-	RS_Hatch tmp(container, *data);
+    RS_Hatch tmp(container, *data);
     tmp.setLayerToActive();
     tmp.setPenToActive();
     if (RS_DIALOGFACTORY->requestHatchDialog(&tmp)) {
-		*data = tmp.getData();
+        *data = tmp.getData();
         trigger();
-        graphicView->redraw(RS2::RedrawDrawing); 
+        graphicView->redraw(RS2::RedrawDrawing);
     }
     finish(false);
 }
@@ -67,63 +88,52 @@ void RS_ActionDrawHatch::trigger() {
 
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
-    //if (pos.valid) {
-    //deletePreview();
-	RS_Entity* e;
+    RS_Entity* e;
 
-	// deselect unhatchable entities:
-	for(auto e: *container){
-        if (e->isSelected() && 
-            (e->rtti()==RS2::EntityHatch ||
-            /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
-             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText ||
-			 RS_Information::isDimension(e->rtti()))) {
-			e->setSelected(false);
-        }
-    }
-	for (e=container->firstEntity(RS2::ResolveAll); e;
-            e=container->nextEntity(RS2::ResolveAll)) {
-        if (e->isSelected() && 
-            (e->rtti()==RS2::EntityHatch ||
-            /* e->rtti()==RS2::EntityEllipse ||*/ e->rtti()==RS2::EntityPoint ||
-             e->rtti()==RS2::EntityMText || e->rtti()==RS2::EntityText ||
-			 RS_Information::isDimension(e->rtti()))) {
-			e->setSelected(false);
-        }
+    // deselect unhatchable entities:
+    for(auto e: *container) {
+        if (e->isSelected() && !hatchAble(e))
+            e->setSelected(false);
     }
 
-	// look for selected contours:
+    for (e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+         e=container->nextEntity(RS2::ResolveAll)) {
+        if (e->isSelected() && !hatchAble(e))
+            e->setSelected(false);
+    }
+
+    // look for selected contours:
     bool haveContour = false;
-	for (e=container->firstEntity(RS2::ResolveAll); e;
-            e=container->nextEntity(RS2::ResolveAll)) {
+    for (e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+         e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected()) {
             haveContour = true;
         }
     }
 
     if (!haveContour) {
-        std::cerr << "no contour selected\n";
+        LC_ERR << "RS_ActionDrawHatch:: "<<__func__<<"(): line "<<__LINE__<<", no contour selected\n";
         return;
     }
 
     std::unique_ptr<RS_Hatch> hatch=std::make_unique<RS_Hatch>(container, *data);
     hatch->setLayerToActive();
     hatch->setPenToActive();
-	RS_EntityContainer* loop = new RS_EntityContainer(hatch.get());
+    RS_EntityContainer* loop = new RS_EntityContainer(hatch.get());
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
-	for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e;
-            e=container->nextEntity(RS2::ResolveAll)) {
+    for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e;
+         e=container->nextEntity(RS2::ResolveAll)) {
 
         if (e->isSelected()) {
             e->setSelected(false);
-			// entity is part of a complex entity (spline, polyline, ..):
-			if (e->getParent() &&
-// RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
-//			    (e->getParent()->rtti()==RS2::EntitySpline ||
-//				 e->getParent()->rtti()==RS2::EntityPolyline)) {
-                (e->getParent()->rtti()==RS2::EntitySpline)) {
+            // entity is part of a complex entity (spline, polyline, ..):
+            if (e->getParent() &&
+                    // RVT - Don't de-delect the parent EntityPolyline, this is messing up the getFirst and getNext iterators
+                    //			    (e->getParent()->rtti()==RS2::EntitySpline ||
+                    //				 e->getParent()->rtti()==RS2::EntityPolyline)) {
+                    (e->getParent()->rtti()==RS2::EntitySpline)) {
                 e->getParent()->setSelected(false);
             }
             RS_Entity* cp = e->clone();
@@ -134,26 +144,26 @@ void RS_ActionDrawHatch::trigger() {
     }
 
     hatch->addEntity(loop);
-	if (hatch->validate()) {
-		container->addEntity(hatch.get());
+    if (hatch->validate()) {
+        container->addEntity(hatch.get());
 
-		if (document) {
-			document->startUndoCycle();
-			document->addUndoable(hatch.get());
-			document->endUndoCycle();
-		}
-		hatch->update();
+        if (document) {
+            document->startUndoCycle();
+            document->addUndoable(hatch.get());
+            document->endUndoCycle();
+        }
+        hatch->update();
 
-		graphicView->redraw(RS2::RedrawDrawing);
+        graphicView->redraw(RS2::RedrawDrawing);
 
-		bool printArea = true;
+        bool printArea = true;
         switch( hatch->getUpdateError()) {
         case RS_Hatch::HATCH_OK :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch created successfully."));
             break;
         case RS_Hatch::HATCH_INVALID_CONTOUR :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Invalid contour found!"));
-			printArea = false;
+            printArea = false;
             break;
         case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Pattern not found!"));
@@ -166,21 +176,21 @@ void RS_ActionDrawHatch::trigger() {
             break;
         default :
             RS_DIALOGFACTORY->commandMessage(tr("Hatch Error: Undefined Error!"));
-			printArea = false;
+            printArea = false;
             break;
         }
-		if(m_bShowArea && printArea){
+        if(m_bShowArea && printArea){
             RS_DIALOGFACTORY->commandMessage(tr("Total hatch area = %1").
                                              arg(hatch->getTotalArea(),12,'g',10));
         }
 
-		hatch.release();
+        hatch.release();
 
-	} else {
-		hatch.reset();
-		RS_DIALOGFACTORY->commandMessage(tr("Invalid hatch area. Please check that "
-		"the entities chosen form one or more closed contours."));
-	}
+    } else {
+        hatch.reset();
+        RS_DIALOGFACTORY->commandMessage(tr("Invalid hatch area. Please check that "
+                                            "the entities chosen form one or more closed contours."));
+    }
     //}
 }
 
@@ -195,7 +205,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 
         deletePreview();
-		if (hatch && !hatch->isVisible()) {
+        if (hatch && !hatch->isVisible()) {
             hatch->setVisible(true);
         }
         offset = RS_Vector(graphicView->toGuiDX(pos.x),
@@ -210,15 +220,7 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
 
 void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-		snapPoint(e);
-
-        switch (getStatus()) {
-        case ShowDialog:
-            break;
-
-        default:
-            break;
-        }
+        snapPoint(e);
     } else if (e->button()==Qt::RightButton) {
         //deletePreview();
         init(getStatus()-1);
@@ -228,7 +230,7 @@ void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionDrawHatch::updateMouseButtonHints() {
-	RS_DIALOGFACTORY->updateMouseWidget();
+    RS_DIALOGFACTORY->updateMouseWidget();
 }
 
 void RS_ActionDrawHatch::updateMouseCursor() {
