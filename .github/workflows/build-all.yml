@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     steps:
       - name: Checkout code
         uses: actions/checkout@main
@@ -21,22 +21,26 @@ jobs:
           name: snap
           path: ${{ steps.snapcraft.outputs.snap }}
 
-      - name: Install Qt and dependencies
+      - name: Install Qt5
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '5.15.*'
+
+      - name: Install dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtbase5-dev libqt5svg5-dev qt5-qmake qtbase5-dev-tools qttools5-dev-tools qtchooser \
+          sudo apt-get -qq install \
           libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
-          sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang-10 clang-tools-10
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-10 -o out --use-cc=g++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 
@@ -63,7 +67,6 @@ jobs:
 
       - name: Create AppImage
         run: |
-          find unix/
           ./CI/build-appimg.sh
 
       - name: Upload artifact
