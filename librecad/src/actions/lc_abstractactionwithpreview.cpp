@@ -72,6 +72,7 @@ LC_AbstractActionWithPreview::LC_AbstractActionWithPreview(
 void LC_AbstractActionWithPreview::init(int status){
     RS_PreviewActionInterface::init(status);
     // check whether we may trigger with such status
+    // fixme - refactor to separate methods
     if (doCheckMayTriggerOnInit(status)){
         // collect selected entities
         QList<RS_Entity*> selectedEntities;
@@ -520,6 +521,7 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
     checkPreSnapToRelativeZero(status, e);
     status = getStatus();
     deletePreview();
+    deleteHighlights();
     if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
         RS_Vector snap = doGetMouseSnapPoint(e);
         bool drawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions
@@ -533,6 +535,7 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
     else{
         updateSnapperAndCoordinateWidget(e, status);
     }
+    drawHighlights();
     doMouseMoveEnd(status, e);
     clearAlternativeActionMode();
 }
@@ -720,6 +723,7 @@ void LC_AbstractActionWithPreview::finishAction(){
     init(-1);
     updateMouseButtonHints();
     finish(true);
+    graphicView->repaint();
 }
 
 /**

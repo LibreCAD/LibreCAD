@@ -30,6 +30,8 @@
 #include "rs_previewactioninterface.h"
 
 
+
+
 /**
  * This action class can handle user events to draw polygons.
  *
@@ -42,22 +44,22 @@ class RS_ActionDrawLinePolygonCorCor : public RS_PreviewActionInterface {
 		SetCorner2,    /**< Setting corner 2. */
 		SetNumber      /**< Setting number in the command line. */
 	};
-	
+
 public:
     RS_ActionDrawLinePolygonCorCor(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
 	~RS_ActionDrawLinePolygonCorCor() override;
-	
+
 	void trigger() override;
-	
+
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
-	
+
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
 		QStringList getAvailableCommands() override;
-	
+
 	void hideOptions() override;
 	void showOptions() override;
 
@@ -78,6 +80,8 @@ private:
     int number = 0;
 	/** Last status before entering text. */
     Status lastStatus = SetCorner1;
+
+    RS_Vector determinePolygonCenter() const;
 };
 
 #endif

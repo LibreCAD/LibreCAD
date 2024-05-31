@@ -28,39 +28,38 @@
 #define RS_ACTIONSELECTSINGLE_H
 
 #include <QList>
-#include "rs_actioninterface.h"
-
+#include "rs_previewactioninterface.h"
 
 /**
  * This action class can handle user events to select entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectSingle : public RS_ActionInterface {
-    Q_OBJECT
+class RS_ActionSelectSingle:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
-    RS_ActionSelectSingle(RS_EntityContainer& container,
-						  RS_GraphicView& graphicView,
-						  RS_ActionInterface* actionSelect=nullptr,
-                          QList<RS2::EntityType> entityTypeList={});
-
-    RS_ActionSelectSingle(enum RS2::EntityType typeToSelect, RS_EntityContainer& container,
-                          RS_GraphicView& graphicView,
-                          RS_ActionInterface* actionSelect=nullptr,
-                          QList<RS2::EntityType> entityTypeList={});
-
-	void trigger() override;
-	void keyPressEvent(QKeyEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseCursor() override;
+    RS_ActionSelectSingle(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        RS_ActionInterface *actionSelect = nullptr,
+        QList<RS2::EntityType> entityTypeList = {});
+    RS_ActionSelectSingle(
+        enum RS2::EntityType typeToSelect, RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        RS_ActionInterface *actionSelect = nullptr,
+        QList<RS2::EntityType> entityTypeList = {});
+    void trigger() override;
+    void keyPressEvent(QKeyEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseCursor() override;
     enum RS2::EntityType getTypeToSelect();
+    void mouseMoveEvent(QMouseEvent *event) override;
 private:
     const QList<RS2::EntityType> entityTypeList;
-
-    RS_Entity* en = nullptr;
-    RS_ActionInterface* actionSelect = nullptr;
+    RS_Entity *en = nullptr;
+    RS_ActionInterface *actionSelect = nullptr;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-
+    bool isEntityAllowedToSelect(RS_Entity* ent) const;
 };
 
 #endif

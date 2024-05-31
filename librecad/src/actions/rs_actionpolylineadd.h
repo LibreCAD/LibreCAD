@@ -34,35 +34,33 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineAdd : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionPolylineAdd:public RS_PreviewActionInterface {
+Q_OBJECT
     /**
      * Action States.
      */
     enum Status {
-    	ChooseSegment,		/**< Choosing a segment of existing polyline to add node. */
-        SetAddCoord			/**< Setting the reference point. */
+        ChooseSegment,  /**< Choosing a segment of existing polyline to add node. */
+        SetAddCoord   /**< Setting the reference point. */
     };
 
 public:
-    RS_ActionPolylineAdd(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionPolylineAdd() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionPolylineAdd(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionPolylineAdd() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void finish(bool updateTB) override;
 
 private:
-    RS_Entity* addEntity = nullptr;
-    RS_Entity* addSegment = nullptr;
-	std::unique_ptr<RS_Vector> addCoord;
+    RS_Polyline *polylineToModify = nullptr;
+    RS_Entity *addSegment = nullptr;
+    std::unique_ptr<RS_Vector> addCoord;
 };
 
 #endif

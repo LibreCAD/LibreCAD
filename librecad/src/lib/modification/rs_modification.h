@@ -216,91 +216,91 @@ struct RS_PasteData {
  */
 class RS_Modification {
 public:
-    RS_Modification(RS_EntityContainer& entityContainer,
-                    RS_GraphicView* graphicView=nullptr,
-                                        bool handleUndo=true);
-
-	void remove();
-	void revertDirection();
-	bool changeAttributes(RS_AttributesData& data);
-    bool changeAttributes(RS_AttributesData& data, RS_EntityContainer* container);
-
-    void setDeletePolylineNodeMode();
-
-    void copy(const RS_Vector& ref, const bool cut);
+    RS_Modification(
+        RS_EntityContainer &entityContainer,
+        RS_GraphicView *graphicView = nullptr,
+        bool handleUndo = true);
+    void remove();
+    void revertDirection();
+    bool changeAttributes(RS_AttributesData &data);
+    bool changeAttributes(RS_AttributesData &data, RS_EntityContainer *container);
+    void copy(const RS_Vector &ref, const bool cut);
 
 public:
-    void paste(const RS_PasteData& data, RS_Graphic* source=nullptr);
-
-    bool move(RS_MoveData& data);
-    bool rotate(RS_RotateData& data);
-    bool scale(RS_ScaleData& data);
-    bool mirror(RS_MirrorData& data);
-    bool moveRotate(RS_MoveRotateData& data);
-    bool rotate2(RS_Rotate2Data& data);
-
-    bool trim(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
-              const RS_Vector& limitCoord, RS_Entity* limitEntity,
-              bool both);
-    bool trimAmount(const RS_Vector& trimCoord, RS_AtomicEntity* trimEntity,
-                    double dist);
-    bool offset(const RS_OffsetData& data);
-    bool cut(const RS_Vector& cutCoord, RS_AtomicEntity* cutEntity);
-    bool stretch(const RS_Vector& firstCorner,
-                                const RS_Vector& secondCorner,
-                                const RS_Vector& offset);
-
-    bool bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
-              const RS_Vector& coord2, RS_AtomicEntity* entity2,
-                          RS_BevelData& data);
-    bool round(const RS_Vector& coord,
-               const RS_Vector& coord1,
-                   RS_AtomicEntity* entity1,
-               const RS_Vector& coord2,
-               RS_AtomicEntity* entity2,
-                           RS_RoundData& data);
-
+    void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
+    bool move(RS_MoveData &data);
+    bool rotate(RS_RotateData &data);
+    bool scale(RS_ScaleData &data);
+    bool mirror(RS_MirrorData &data);
+    bool moveRotate(RS_MoveRotateData &data);
+    bool rotate2(RS_Rotate2Data &data);
+    bool trim(
+        const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
+        const RS_Vector &limitCoord, RS_Entity *limitEntity,
+        bool both);
+    bool trimAmount(
+        const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
+        double dist);
+    bool offset(const RS_OffsetData &data);
+    bool cut(const RS_Vector &cutCoord, RS_AtomicEntity *cutEntity);
+    bool stretch(
+        const RS_Vector &firstCorner,
+        const RS_Vector &secondCorner,
+        const RS_Vector &offset);
+    bool bevel(
+        const RS_Vector &coord1, RS_AtomicEntity *entity1,
+        const RS_Vector &coord2, RS_AtomicEntity *entity2,
+        RS_BevelData &data);
+    bool round(
+        const RS_Vector &coord,
+        const RS_Vector &coord1,
+        RS_AtomicEntity *entity1,
+        const RS_Vector &coord2,
+        RS_AtomicEntity *entity2,
+        RS_RoundData &data);
     bool explode(const bool remove = true);
     bool explodeTextIntoLetters();
-    bool moveRef(RS_MoveRefData& data);
-
-        void deleteLineNode(RS_Line* polyline, const RS_Vector& node);
-
-    bool splitPolyline(RS_Polyline& polyline,
-                       RS_Entity& e1, RS_Vector v1,
-                       RS_Entity& e2, RS_Vector v2,
-                       RS_Polyline** polyline1,
-                       RS_Polyline** polyline2) const;
-    RS_Polyline* addPolylineNode(RS_Polyline& polyline,
-                 const RS_AtomicEntity& segment,
-                             const RS_Vector& node);
-    RS_Polyline* deletePolylineNode(RS_Polyline& polyline,
-                            const RS_Vector& node);
-    RS_Polyline* deletePolylineNodesBetween(RS_Polyline& polyline, RS_AtomicEntity& segment,
-                            const RS_Vector& node1, const RS_Vector& node2);
-    RS_Polyline* polylineTrim(RS_Polyline& polyline,
-                            RS_AtomicEntity& segment1,
-                            RS_AtomicEntity& segment2);
+    bool moveRef(RS_MoveRefData &data);
+    void deleteLineNode(RS_Line *polyline, const RS_Vector &node);
+    bool splitPolyline(
+        RS_Polyline &polyline,
+        RS_Entity &e1, RS_Vector v1,
+        RS_Entity &e2, RS_Vector v2,
+        RS_Polyline **polyline1,
+        RS_Polyline **polyline2) const;
+    RS_Polyline *addPolylineNode(
+        RS_Polyline &polyline,
+        const RS_AtomicEntity &segment,
+        const RS_Vector &node);
+    RS_Polyline *deletePolylineNode(
+        RS_Polyline &polyline,
+        const RS_Vector &node, bool createOnly);
+    RS_Polyline *deletePolylineNodesBetween(
+        RS_Polyline &polyline,
+        const RS_Vector &node1, const RS_Vector &node2, bool createOnly);
+    RS_Polyline *polylineTrim(
+        RS_Polyline &polyline,
+        RS_AtomicEntity &segment1,
+        RS_AtomicEntity &segment2,
+        bool createOnly);
 
 private:
-    void copyEntity(RS_Entity* e, const RS_Vector& ref, bool cut);
-    void copyLayers(RS_Entity* e);
-    void copyBlocks(RS_Entity* e);
-    bool pasteLayers(RS_Graphic* source);
-    bool pasteContainer(RS_Entity* entity, RS_EntityContainer* container, QHash<QString, QString>blocksDict, RS_Vector insertionPoint);
-    bool pasteEntity(RS_Entity* entity, RS_EntityContainer* container);
+    void copyEntity(RS_Entity *e, const RS_Vector &ref, bool cut);
+    void copyLayers(RS_Entity *e);
+    void copyBlocks(RS_Entity *e);
+    bool pasteLayers(RS_Graphic *source);
+    bool pasteContainer(RS_Entity *entity, RS_EntityContainer *container, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
+    bool pasteEntity(RS_Entity *entity, RS_EntityContainer *container);
     void deselectOriginals(bool remove);
-	void addNewEntities(std::vector<RS_Entity*>& addList);
-	bool explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList);
-	bool explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList);
-
-    bool m_deletePolylineNodeMode = false;
+    void addNewEntities(std::vector<RS_Entity *> &addList);
+    bool explodeTextIntoLetters(RS_MText *text, std::vector<RS_Entity *> &addList);
+    bool explodeTextIntoLetters(RS_Text *text, std::vector<RS_Entity *> &addList);
 
 protected:
-    RS_EntityContainer* container =nullptr;
-    RS_Graphic* graphic = nullptr;
-    RS_Document* document = nullptr;
-    RS_GraphicView* graphicView = nullptr;
+    RS_EntityContainer *container = nullptr;
+    RS_Graphic *graphic = nullptr;
+    RS_Document *document = nullptr;
+    RS_GraphicView *graphicView = nullptr;
     bool handleUndo = false;
 };
 

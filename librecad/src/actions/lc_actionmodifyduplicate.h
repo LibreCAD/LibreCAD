@@ -28,7 +28,8 @@ class LC_ActionModifyDuplicate:public LC_AbstractActionWithPreview{
     Q_OBJECT
 public:
     enum{
-        SelectEntity
+        SelectEntity,
+        SetOffsetDirection
     };
 
 
@@ -50,6 +51,7 @@ public:
     void setLayerMode(int value){layerMode = value;};
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
     void createOptionsWidget() override;
@@ -66,6 +68,10 @@ private:
      * entity for which duplicate will be created
      */
     RS_Entity * selectedEntity = nullptr;
+    /**
+     * point in which offset direction was fixed (for alternative mode)
+     */
+     RS_Vector triggerPoint = RS_Vector(false);
     /**
      * offset for duplicated entity by X axis
      */
@@ -88,7 +94,8 @@ private:
      */
     int layerMode = LAYER_ACTIVE;
 
-    RS_Vector determineOffset() const;
+    RS_Vector determineOffset(RS_Vector& snap,const RS_Vector& center) const;
+    RS_Vector getEntityCenterPoint(const RS_Entity *en) const;
 };
 
 #endif // LC_ACTIONMODIFYDUPLICATE_H

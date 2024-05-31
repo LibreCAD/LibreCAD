@@ -27,15 +27,14 @@
 #ifndef RS_ACTIONSELECTLAYER_H
 #define RS_ACTIONSELECTLAYER_H
 
-#include "rs_actioninterface.h"
-
+#include "rs_previewactioninterface.h"
 
 /**
  * This action class can handle user events to select contours.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectLayer : public RS_ActionInterface {
+class RS_ActionSelectLayer : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
     RS_ActionSelectLayer(RS_EntityContainer& container,
@@ -43,7 +42,8 @@ public:
 
 	void trigger() override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseCursor() override;
+    void mouseMoveEvent(QMouseEvent *event) override;
+    void updateMouseCursor() override;
 
 private:
     RS_Entity* en = nullptr;

@@ -36,38 +36,41 @@ struct RS_RotateData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyRotate : public RS_PreviewActionInterface {
-    Q_OBJECT
+class RS_ActionModifyRotate:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-        SetCenterPoint,    /**< Setting the rotation center */
+        SelectEntity,
         SetReferencePoint,    /**< Setting the reference point. */
+        SetCenterPoint,    /**< Setting the rotation center */
         SetTargetPoint,    /**< Setting the target to rotation to*/
         ShowDialog            /**< Showing the options dialog. */
     };
 
 public:
-    RS_ActionModifyRotate(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-	~RS_ActionModifyRotate() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+    RS_ActionModifyRotate(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionModifyRotate() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void keyPressEvent(QKeyEvent *e) override;
+    void finish(bool updateTB) override;
+    void keyReleaseEvent(QKeyEvent *e) override;
 private:
-	std::unique_ptr<RS_RotateData> data;
+    int selectedCount = 0;
+    bool selectRefPointFirst = false;
+    std::unique_ptr<RS_RotateData> data;
+    RS_Vector originalReferencePoint = RS_Vector(false);
+    void finishSelection(bool refPointFirst);
 };
 
 #endif

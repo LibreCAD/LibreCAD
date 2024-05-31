@@ -46,7 +46,7 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 	actionType=RS2::ActionDrawLineParallelThrough;
 	m_SnapDistance=1.;
 }
-
+// fixme - add support of symmetrix mode for parallel (both sides)
 RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
 
 void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
@@ -74,29 +74,25 @@ void RS_ActionDrawLineParallelThrough::trigger(){
     }
 }
 
-#define HIGHLIGHT_ENTITY_ON_MOUSE_MOVE
-
 void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent begin");
 
+    deleteHighlights();
     switch (getStatus()) {
         case SetEntity: {
             entity = catchEntity(e, RS2::ResolveAll);
-            /*deletePreview();
-
-			RS_Creation creation(preview, nullptr, false);
-			creation.createParallelThrough(*coord,
-                                           number,
-                                           entity);
-
-            drawPreview();*/
-#ifdef HIGHLIGHT_ENTITY_ON_MOUSE_MOVE
-            deletePreview();
             if (entity != nullptr){
-                preview->addCloneOf(entity);
+
+			            RS_Creation creation(nullptr, nullptr, false);
+                const RS_Vector &artificialCoordinates = *coord + RS_Vector(100, 100, 0);
+                RS_Entity* en = creation.createParallelThrough(artificialCoordinates,
+                                                               number,
+                                                               entity);
+               if (en != nullptr){
+                   addToHighlights(entity);
+                   delete en;
+               }
             }
-            drawPreview();
-#endif
             break;
         }
         case SetPos: {
@@ -104,7 +100,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
             //RS_Vector(graphicView->toGraphX(e->x()),
             //                  graphicView->toGraphY(e->y()));
             deletePreview();
-
+            addToHighlights(entity);
             RS_Creation creation(preview.get(), nullptr, false);
             creation.createParallelThrough(*coord,
                                            number,
@@ -116,6 +112,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
         default:
             break;
     }
+    drawHighlights();
 
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
 }
@@ -126,8 +123,8 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
             case SetEntity:
                 entity = catchEntity(e, RS2::ResolveAll);
                 if (entity){
-                    entity->setHighlighted(true);
-                    graphicView->drawEntity(entity);
+//                    entity->setHighlighted(true);
+//                    graphicView->drawEntity(entity);
                     setStatus(SetPos);
                 }
                 break;
@@ -142,8 +139,8 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
     } else if (e->button() == Qt::RightButton){
         deletePreview();
         if (entity){
-            entity->setHighlighted(false);
-            graphicView->drawEntity(entity);
+//            entity->setHighlighted(false);
+//            graphicView->drawEntity(entity);
             entity = nullptr;
         }
         init(getStatus() - 1);

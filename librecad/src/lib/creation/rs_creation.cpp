@@ -124,7 +124,7 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
     double dist;
 
     if (e->rtti()==RS2::EntityLine) {
-        RS_Line* l = (RS_Line*)e;
+        auto* l = (RS_Line*)e;
         RS_ConstructionLine cl(nullptr,
                                RS_ConstructionLineData(l->getStartpoint(),
                                                        l->getEndpoint()));
@@ -243,7 +243,7 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                 parallelData = parallel2.getData();
             }
 
-            RS_Line* newLine = new RS_Line{container, parallelData};
+            auto* newLine = new RS_Line{container, parallelData};
             if (!ret) {
                 ret = newLine;
             }
@@ -315,7 +315,7 @@ RS_Arc* RS_Creation::createParallelArc(const RS_Vector& coord,
             //}
 
             LC_UndoSection undo( document, handleUndo);
-            RS_Arc* newArc = new RS_Arc(container, parallelData);
+            auto* newArc = new RS_Arc(container, parallelData);
             if (!ret) {
                 ret = newArc;
             }
@@ -387,7 +387,7 @@ RS_Circle* RS_Creation::createParallelCircle(const RS_Vector& coord,
             //}
 
             LC_UndoSection undo( document, handleUndo);
-            RS_Circle* newCircle = new RS_Circle(container, parallelData);
+            auto newCircle = new RS_Circle(container, parallelData);
             if (!ret) {
                 ret = newCircle;
             }
@@ -485,7 +485,7 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
 
         RS_Vector const& v = RS_Vector::polar(length, angle);
 
-        RS_Line* newLine = new RS_Line{container, inters, inters + v};
+        auto* newLine = new RS_Line{container, inters, inters + v};
         if (!ret) ret = newLine;
         setEntity(newLine);
     }
@@ -657,7 +657,7 @@ RS_Line* RS_Creation::createLineRelAngle(const RS_Vector& coord,
 
     RS_Vector const v1 = RS_Vector::polar(length, a1);
 
-    RS_Line* ret = new RS_Line{container, coord, coord+v1};
+    auto* ret = new RS_Line{container, coord, coord+v1};
     setEntity(ret);
 
     return ret;
@@ -691,7 +691,7 @@ RS_Line* RS_Creation::createPolygon(const RS_Vector& center,
         RS_Vector const& c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        RS_Line* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
@@ -747,7 +747,7 @@ RS_Line* RS_Creation::createPolygon2(const RS_Vector& corner1,
         RS_Vector const& c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        RS_Line* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
@@ -799,7 +799,7 @@ RS_Line* RS_Creation::createPolygon3(const RS_Vector& center,    //added by txmy
         RS_Vector const& c1 = center +
                 RS_Vector::polar(r, angle0 + ((i+1)%number)*da);
 
-        RS_Line* line = new RS_Line{container, c0, c1};
+        auto* line = new RS_Line{container, c0, c1};
         line->setLayerToActive();
         line->setPenToActive();
 
@@ -827,7 +827,7 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
     RS_DEBUG->print("RS_Creation::createInsert");
 
     LC_UndoSection undo( document, handleUndo);
-    RS_Insert* ins = new RS_Insert(container, *pdata);
+    auto ins = new RS_Insert(container, *pdata);
     // inserts are also on layers
     setEntity(ins);
 
@@ -844,7 +844,7 @@ RS_Insert* RS_Creation::createInsert(const RS_InsertData* pdata) {
 RS_Image* RS_Creation::createImage(const RS_ImageData* data) {
 
     LC_UndoSection undo( document, handleUndo);
-    RS_Image* img = new RS_Image(container, *data);
+    auto* img = new RS_Image(container, *data);
     img->update();
     setEntity(img);
 

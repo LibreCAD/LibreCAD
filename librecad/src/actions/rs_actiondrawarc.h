@@ -28,6 +28,7 @@
 #define RS_ACTIONDRAWARC_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_ArcData;
 
@@ -37,8 +38,8 @@ struct RS_ArcData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawArc : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawArc:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -48,49 +49,42 @@ public:
         SetRadius,       /**< Setting the radius. */
         SetAngle1,       /**< Setting the startpoint.  */
         SetAngle2,       /**< Setting the endpoint. */
-		SetIncAngle,     /**< Setting the included angle. */
-		SetChordLength   /**< Setting carc chord length. */
+        SetIncAngle,     /**< Setting the included angle. */
+        SetChordLength   /**< Setting carc chord length. */
     };
 
 public:
-    RS_ActionDrawArc(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
-	~RS_ActionDrawArc() override;
-	
+    RS_ActionDrawArc(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawArc() override;
     void reset();
-
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	bool isReversed() const;
-
-	void setReversed(bool r) const;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void hideOptions() override;
+    void showOptions() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    bool isReversed() const;
+    void setReversed(bool r) const;
 
 protected:
     /**
      * Arc data defined so far.
      */
-	std::unique_ptr<RS_ArcData> data;
-	/**
-	 * Commands
-	 */
-        /*QString cmdReversed;
-        QString cmdReversed2;
-        QString cmdReversed3;
-	*/
+    std::unique_ptr<RS_ArcData> data;
+/**
+ * Commands
+ */
+    /*QString cmdReversed;
+    QString cmdReversed2;
+    QString cmdReversed3;
+*/
 };
 
 #endif

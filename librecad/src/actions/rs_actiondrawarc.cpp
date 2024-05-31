@@ -31,6 +31,8 @@
 
 #include "rs_actiondrawarc.h"
 #include "rs_arc.h"
+#include "rs_line.h"
+#include "rs_point.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -44,7 +46,7 @@
 RS_ActionDrawArc::RS_ActionDrawArc(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Draw arcs",
+    :LC_ActionDrawCircleBase("Draw arcs",
                                container, graphicView), data(std::make_unique<RS_ArcData>()){
     actionType = RS2::ActionDrawArc;
     reset();
@@ -69,8 +71,8 @@ void RS_ActionDrawArc::init(int status){
 void RS_ActionDrawArc::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    RS_Arc *arc = new RS_Arc(container,
-                             *data);
+    auto arc = new RS_Arc(container,
+                          *data);
     arc->setLayerToActive();
     arc->setPenToActive();
     container->addEntity(arc);
@@ -97,22 +99,29 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             data->center = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
-
-        case SetRadius:
+        }
+        case SetRadius: {
             if (data->center.valid){
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
+                if (drawCreationPointsOnPreview){
+                    preview->addEntity(new RS_Point(preview.get(), data->center));
+                }
                 preview->addEntity(new RS_Circle(preview.get(),
                                                  {data->center, data->radius}));
                 drawPreview();
             }
             break;
-
-        case SetAngle1:
+        }
+        case SetAngle1:{
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                mouse = snapToAngle(mouse, data->center);
+            }
             data->angle1 = data->center.angleTo(mouse);
             if (data->reversed){
                 data->angle2 = RS_Math::correctAngle(data->angle1 - M_PI / 3);
@@ -122,17 +131,35 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
             preview->addEntity(new RS_Arc(preview.get(),
                                           *data));
+            if (drawCreationPointsOnPreview){
+                preview->addEntity(new RS_Point(preview.get(), data->center));
+                RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
+                preview->addEntity(new RS_Point(preview.get(), startArcPoint));
+                preview->addEntity(new RS_Line(preview.get(), data->center, mouse));
+            }
             drawPreview();
             break;
-
-        case SetAngle2:
+        }
+        case SetAngle2: {
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                mouse = snapToAngle(mouse, data->center);
+            }
             data->angle2 = data->center.angleTo(mouse);
             deletePreview();
             preview->addEntity(new RS_Arc(preview.get(),
                                           *data));
+            if (drawCreationPointsOnPreview){
+                preview->addEntity(new RS_Point(preview.get(), data->center));
+                RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
+                preview->addEntity(new RS_Point(preview.get(), startArcPoint));
+                RS_Vector endArcPoint = data->center + RS_Vector::polar(data->radius, data->angle2);
+                preview->addEntity(new RS_Point(preview.get(), endArcPoint));
+                preview->addEntity(new RS_Line(preview.get(), data->center, mouse));
+            }
             drawPreview();
             break;
-
+        }
         case SetIncAngle:
             data->angle2 = data->angle1 + data->center.angleTo(mouse);
             deletePreview();
@@ -163,7 +190,16 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawArc::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector mouse = snapPoint(e);
+        // todo - will it better if coordinateEvent() will also take at least modifiers from mouse - or, original event?
+        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        if (shiftPressed){
+            int status = getStatus();
+            if (status == SetAngle1 || status == SetAngle2){
+                mouse = snapToAngle(mouse, data->center);
+            }
+        }
+        RS_CoordinateEvent ce(mouse);
         coordinateEvent(&ce);
     } else if (e->button() == Qt::RightButton){
         deletePreview();

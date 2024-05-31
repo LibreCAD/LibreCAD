@@ -19,7 +19,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cmath>
-#include <QAction>
 #include <QMouseEvent>
 
 #include "lc_actiondrawcircle2pr.h"
@@ -119,7 +118,7 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse){
     return false;
 }
 
-// fixme - add preview for second point state?
+
 void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
 
@@ -129,24 +128,26 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             trySnapToRelZeroCoordinateEvent(e);
             break;
 
-        case SetPoint2:
+        case SetPoint2: {
+            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse);
             if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius){
                 pPoints->point2 = mouse;
             }
-            if (drawCirclePointsOnPreview){
-                deletePreview();
-                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
-                preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
-                if (preparePreview(mouse)){
-                    if (data->center.valid){
-                        auto *circle = new RS_Circle(preview.get(), *data);
-                        preview->addEntity(circle);
-                    }
+            deletePreview();
+            addReferencePointToPreview(pPoints->point1);
+            addReferencePointToPreview(pPoints->point2);
+            addReferencePointToPreview(data->center);
+            addReferenceLineToPreview(pPoints->point1, pPoints->point2);
+            if (preparePreview(mouse)){
+                if (data->center.valid){
+                    auto *circle = new RS_Circle(preview.get(), *data);
+                    preview->addEntity(circle);
                 }
-                drawPreview();
             }
-            break;
+            drawPreview();
 
+            break;
+        }
         case SelectCenter: {
 
             if (preparePreview(mouse)){
@@ -162,10 +163,9 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                     preview->addEntity(new RS_Point(preview.get(), RS_PointData(data->center)));
                     auto *circle = new RS_Circle(preview.get(), *data);
                     preview->addEntity(circle);
-                    if (drawCirclePointsOnPreview){
-                        preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
-                        preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
-                    }
+                    addReferencePointToPreview(pPoints->point1);
+                    addReferencePointToPreview(pPoints->point2);
+                    addReferenceLineToPreview(pPoints->point1, pPoints->point2);
                     drawPreview();
                 }
             } else {
@@ -177,6 +177,19 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
+void LC_ActionDrawCircle2PR::mouseReleaseEvent(QMouseEvent* e) {
+    if (e->button()==Qt::LeftButton) {
+        RS_Vector coord = snapPoint(e);
+        if (getStatus() == SetPoint2){
+            coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        }
+        RS_CoordinateEvent ce(coord);
+        coordinateEvent(&ce);
+    } else if (e->button()==Qt::RightButton) {
+        deletePreview();
+        init(getStatus()-1);
+    }
+}
 
 void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
     if (!e) return;

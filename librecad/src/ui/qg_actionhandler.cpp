@@ -753,11 +753,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
 		a = new RS_ActionModifyRevertDirection(*document, *view);
 		break;
 	case RS2::ActionModifyRotate:
-		if(!document->countSelected()){
-			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotateNoSelect);
-			break;
-		}
-        // fall-through
+//		if(!document->countSelected()){
+//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotateNoSelect);
+//			break;
+//		}
+//        // fall-through
     case RS2::ActionModifyRotateNoSelect:
         a = new RS_ActionModifyRotate(*document, *view);
         break;
@@ -943,6 +943,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     case RS2::ActionInfoDist2:
         a = new RS_ActionInfoDist2(*document, *view);
         break;
+    case RS2::ActionInfoDist3:
+         a = new RS_ActionInfoDist2(*document, *view, true);
+         break;
     case RS2::ActionInfoAngle:
         a = new RS_ActionInfoAngle(*document, *view);
         break;
@@ -2035,6 +2038,10 @@ void QG_ActionHandler::slotInfoDist2() {
     setCurrentAction(RS2::ActionInfoDist2);
 }
 
+void QG_ActionHandler::slotInfoDist3() {
+    setCurrentAction(RS2::ActionInfoDist3);
+}
+
 void QG_ActionHandler::slotInfoAngle() {
     setCurrentAction(RS2::ActionInfoAngle);
 }
@@ -2233,15 +2240,6 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
 {
     auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
     view->setCurrentAction(a);
-}
-
-void QG_ActionHandler::slotDeletePolylineNodePromptly()
-{
-    RS_Modification m(*document, view);
-
-    m.setDeletePolylineNodeMode();
-
-    m.remove();
 }
 
 void QG_ActionHandler::slotRedockWidgets()

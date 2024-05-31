@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionselectsingle.h"
@@ -33,13 +32,11 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-
-
 RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* action_select,
                                              QList<RS2::EntityType> entityTypeList)
-    :RS_ActionInterface("Select Entities", container, graphicView)
+    :RS_PreviewActionInterface("Select Entities", container, graphicView)
     ,entityTypeList(std::move(entityTypeList))
     ,actionSelect(action_select)
 {
@@ -50,71 +47,81 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
                                              RS_GraphicView& graphicView,
                                              RS_ActionInterface* action_select,
                                              QList<RS2::EntityType> entityTypeList)
-    :RS_ActionInterface("Select Entities", container, graphicView)
+    :RS_PreviewActionInterface("Select Entities", container, graphicView)
     ,entityTypeList(std::move(entityTypeList))
     ,actionSelect(action_select),
     typeToSelect(typeToSelect)
 {
     actionType = RS2::ActionSelectSingle;
 }
-void RS_ActionSelectSingle::trigger() {
-	bool typeMatch{true};
-	if (en && entityTypeList.size())
-		typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), en->rtti())
-				!= entityTypeList.end();
-	if (en && typeMatch) {
-        RS_Selection s(*container, graphicView);
 
-        if(this->getTypeToSelect()==RS2::EntityType::EntityUnknown ||
-                (this->getTypeToSelect()!=RS2::EntityType::EntityUnknown && en->rtti()==this->getTypeToSelect())){
+void RS_ActionSelectSingle::trigger(){
+    if (en != nullptr){
+        bool typeMatch = isEntityAllowedToSelect(en);
+        if (typeMatch){
+            RS_Selection s(*container, graphicView);
 
-            s.selectSingle(en);
-        } else {
-            return;
+            if (getTypeToSelect() == RS2::EntityType::EntityUnknown ||
+                (getTypeToSelect() != RS2::EntityType::EntityUnknown && en->rtti() == getTypeToSelect())){
+                s.selectSingle(en);
+            } else {
+                return;
+            }
+
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
         }
-
-
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-    } else {
+    }
+    else {
         RS_DEBUG->print("RS_ActionSelectSingle::trigger: Entity is NULL\n");
     }
+    en = nullptr;
 }
 
+void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
+    snapPoint(event);
+    deleteHighlights();
+    auto ent = catchEntity(event, entityTypeList);
+    if (ent != nullptr){
+        bool typeMatch = isEntityAllowedToSelect(ent);
+        if (typeMatch){
+            addToHighlights(ent);
+        }
+    }
+    drawHighlights();
+}
 
-void RS_ActionSelectSingle::keyPressEvent(QKeyEvent* e)
-{
-    if (e->key()==Qt::Key_Escape)
-    {
+bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity* ent) const{
+    bool typeMatch{true};
+    if (!entityTypeList.empty()){
+        typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), ent->rtti()) != entityTypeList.end();
+    }
+    return typeMatch;
+}
+
+void RS_ActionSelectSingle::keyPressEvent(QKeyEvent *e){
+    if (e->key() == Qt::Key_Escape){
         finish(false);
         actionSelect->keyPressEvent(e);
     }
 
-    if (container->countSelected() > 0 && e->key()==Qt::Key_Enter)
-    {
+    if (container->countSelected() > 0 && e->key() == Qt::Key_Enter){
         finish(false);
         actionSelect->keyPressEvent(e);
     }
 }
 
-
-void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent* e)
-{
-    if (e->button()==Qt::RightButton)
-    {
+void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::RightButton){
         finish();
         if (actionSelect->rtti() == RS2::ActionSelect)
             actionSelect->finish();
         else
             actionSelect->mouseReleaseEvent(e);
-    }
-    else
-    {
+    } else {
         en = catchEntity(e, entityTypeList);
         trigger();
     }
 }
-
-
 
 void RS_ActionSelectSingle::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);

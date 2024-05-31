@@ -69,40 +69,43 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2()
 {
     init(SetCircle1);
-    for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
+    /*for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
     {
         if (circle != nullptr) {
             circle->setHighlighted(false);
             graphicView->drawEntity(circle);
         }
-    }
+    }*/
 }
 
-void RS_ActionDrawLineTangent2::init(int status)
-{
+void RS_ActionDrawLineTangent2::init(int status){
     setStatus(status);
     switch (status) {
-    case SetCircle1:
-        if (m_pPoints->circle1 != nullptr) {
-            m_pPoints->circle1->setHighlighted(false);
-            graphicView->drawEntity(m_pPoints->circle1);
-            m_pPoints->circle1 = nullptr;
-        }
-        [[fallthrough]];
-    case SetCircle2:
-    case SelectLine:
-        if (m_pPoints->circle2 != nullptr) {
-            m_pPoints->circle2->setHighlighted(false);
-            graphicView->drawEntity(m_pPoints->circle2);
+        case SetCircle1:
+//        if (m_pPoints->circle1 != nullptr) {
+//            m_pPoints->circle1->setHighlighted(false);
+//            graphicView->drawEntity(m_pPoints->circle1);
+//            m_pPoints->circle1 = nullptr;
+//        }
+            cleanup();
+            break;
+        case SetCircle2:
             m_pPoints->circle2 = nullptr;
-        }
-        break;
+            break;
+        case SelectLine:
+//        if (m_pPoints->circle2 != nullptr) {
+//            m_pPoints->circle2->setHighlighted(false);
+//            graphicView->drawEntity(m_pPoints->circle2);
+//            m_pPoints->circle2 = nullptr;
+//        }
+            break;
     }
     RS_PreviewActionInterface::init(status);
 }
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
-    clearHighlighted();
+//    clearHighlighted();
+    cleanup();
     RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -113,28 +116,29 @@ void RS_ActionDrawLineTangent2::trigger() {
 
     auto* newEntity = new RS_Line{container, m_pPoints->tangents.front()->getData()};
 
-    if (newEntity != nullptr) {
-        newEntity->setLayerToActive();
-        newEntity->setPenToActive();
-        container->addEntity(newEntity);
+    newEntity->setLayerToActive();
+    newEntity->setPenToActive();
+    container->addEntity(newEntity);
 
-        // upd. undo list:
-        if (document) {
-            document->startUndoCycle();
-            document->addUndoable(newEntity);
-            document->endUndoCycle();
-        }
-        init(SetCircle1);
-        for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
-        {
-            if (circle != nullptr) {
-                circle->setHighlighted(false);
-                graphicView->drawEntity(circle);
-            }
-        }
-        m_pPoints->circle1 = nullptr;
-        m_pPoints->circle2 = nullptr;
+    // upd. undo list:
+    if (document){
+        document->startUndoCycle();
+        document->addUndoable(newEntity);
+        document->endUndoCycle();
     }
+    init(SetCircle1);
+    for (RS_Entity *circle: {m_pPoints->circle1, m_pPoints->circle2}) {
+        if (circle != nullptr){
+            circle->setHighlighted(false);
+            graphicView->drawEntity(circle);
+        }
+    }
+    cleanup();
+}
+
+void RS_ActionDrawLineTangent2::cleanup(){
+    this->m_pPoints->circle1 = nullptr;
+    this->m_pPoints->circle2 = nullptr;
 }
 
 void RS_ActionDrawLineTangent2::clearHighlighted()
@@ -164,86 +168,95 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent* e) {
     //    RS_DEBUG->print("RS_ActionDrawLineTangent2::mouseMoveEvent begin");
     deleteSnapper();
     deletePreview();
+    deleteHighlights();
+    switch (getStatus()) {
+        case SetCircle1: {
+            deletePreview();
+            auto *en = catchEntity(e, circleType, RS2::ResolveAll);
+            if (en != nullptr){
+                addToHighlights(en);
+            }
+            drawPreview();
+            break;
+        }
+        case SetCircle2: {
+            RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
+            addToHighlights(m_pPoints->circle1);
+            if (en != nullptr && en != m_pPoints->circle1){
 
-    switch(getStatus())
-    {
-    case SetCircle1:
-        return;
-    case SetCircle2:
-    {
-        RS_Entity* en= catchEntity(e, circleType, RS2::ResolveAll);
-        if(en == nullptr || en==m_pPoints->circle1)
-            return;
-        clearHighlighted();
-        m_pPoints->circle2=en;
-        m_pPoints->circle2->setHighlighted(true);
-        graphicView->drawEntity(m_pPoints->circle2);
-        m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
-        if (m_pPoints->tangents.empty()) {
-            m_pPoints->circle2->setHighlighted(false);
-            graphicView->drawEntity(m_pPoints->circle2);
-        } else {
-            preparePreivew(e);
+//            clearHighlighted();
+                addToHighlights(en);
+                m_pPoints->circle2 = en;
+//            m_pPoints->circle2->setHighlighted(true);
+                graphicView->drawEntity(m_pPoints->circle2);
+                m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+                if (m_pPoints->tangents.empty()){
+//                m_pPoints->circle2->setHighlighted(false);
+//                graphicView->drawEntity(m_pPoints->circle2);
+                } else {
+                    preparePreview(e);
+                }
+            }
+            break;
+        }
+        case SelectLine: {
+            addToHighlights(m_pPoints->circle1);
+            addToHighlights(m_pPoints->circle2);
+            preparePreview(e);
+            break;
         }
     }
-        break;
-    case SelectLine:
-        preparePreivew(e);
-    }
+    drawHighlights();
 }
 
 void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent* e)
 {
     deleteSnapper();
-    if (e->button()==Qt::RightButton) {
+    if (e->button() == Qt::RightButton){
         deletePreview();
-        if (getStatus() == SetCircle1) {
-            if (m_pPoints->circle1 != nullptr) {
-                m_pPoints->circle1->setHighlighted(true);
-                graphicView->drawEntity(m_pPoints->circle1);
+        if (getStatus() == SetCircle1){
+            if (m_pPoints->circle1 != nullptr){
+//                m_pPoints->circle1->setHighlighted(true);
+//                graphicView->drawEntity(m_pPoints->circle1);
                 m_pPoints->circle1 = nullptr;
             }
         }
         init(getStatus() - 1);
-        clearHighlighted();
+//        clearHighlighted();
         return;
     }
     switch (getStatus()) {
-    case SetCircle1:
-    {
-        m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
-        if(!m_pPoints->circle1) return;
-        m_pPoints->circle1->setHighlighted(true);
-        graphicView->drawEntity(m_pPoints->circle1);
-        init(getStatus()+1);
-    }
-        break;
-
-    case SetCircle2:
-    {
-        m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
-        if (!m_pPoints->tangents.empty()) {
-            if (m_pPoints->tangents.size() == 1) {
-                trigger();
-            } else {
-                init(getStatus()+1);
-                preparePreivew(e);
-            }
+        case SetCircle1: {
+            m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
+            if (!m_pPoints->circle1) return;
+//        m_pPoints->circle1->setHighlighted(true);
+//        graphicView->drawEntity(m_pPoints->circle1);
+            init(getStatus() + 1);
+            break;
         }
-    }
-        break;
-    case SelectLine:
-    {
-        if (!m_pPoints->tangents.empty())
-            trigger();
-    }
-        break;
-    default:
-        break;
+        case SetCircle2: {
+            m_pPoints->tangents = RS_Creation{preview.get()}.createTangent2(m_pPoints->circle1, m_pPoints->circle2);
+            if (!m_pPoints->tangents.empty()){
+                if (m_pPoints->tangents.size() == 1){
+                    trigger();
+                } else {
+                    init(getStatus() + 1);
+                    preparePreview(e);
+                }
+            }
+            break;
+        }
+        case SelectLine: {
+            if (!m_pPoints->tangents.empty())
+                trigger();
+        }
+            break;
+        default:
+            break;
     }
 }
 
-void RS_ActionDrawLineTangent2::preparePreivew(QMouseEvent* e)
+void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent* e)
 {
     switch(getStatus()) {
     case SetCircle2:

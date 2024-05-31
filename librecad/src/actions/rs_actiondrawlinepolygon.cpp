@@ -24,13 +24,13 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinepolygon.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
+#include "rs_point.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
@@ -43,6 +43,9 @@ struct RS_ActionDrawLinePolygonCenCor::Points {
 	RS_Vector corner;
 };
 
+// fixme - support creation of polygone as polyline
+// fixme - support of rounded corners
+
 RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
@@ -54,6 +57,7 @@ RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
 }
 
 RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;
+
 
 void RS_ActionDrawLinePolygonCenCor::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -73,7 +77,6 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLinePolygon::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-
     switch (getStatus()) {
         case SetCenter: {
             trySnapToRelZeroCoordinateEvent(e);
@@ -81,9 +84,11 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetCorner:
             if (pPoints->center.valid){
-                pPoints->corner = mouse;
+                mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse);
                 deletePreview();
-
+                addReferencePointToPreview(pPoints->center);
+                addReferenceLineToPreview(pPoints->center, mouse);
+                pPoints->corner = mouse;
                 RS_Creation creation(preview.get(), nullptr, false);
                 creation.createPolygon(pPoints->center, pPoints->corner, number);
 
@@ -98,7 +103,11 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector coord = snapPoint(e);
+        if (getStatus() == SetCorner){
+            coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
+        }
+        RS_CoordinateEvent ce(coord);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

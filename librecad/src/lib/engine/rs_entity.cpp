@@ -450,6 +450,18 @@ void RS_Entity::setHighlighted(bool on) {
     }
 }
 
+bool RS_Entity::isTransparent() const{
+    return getFlag(RS2::FlagTransparent);
+}
+
+void RS_Entity::setTransparent(bool on) {
+    if (on) {
+        setFlag(RS2::FlagTransparent);
+    } else {
+        delFlag(RS2::FlagTransparent);
+    }
+}
+
 RS_Vector RS_Entity::getStartpoint() const {
 	return {};
 }

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionpolylineadd.h"
@@ -47,7 +46,8 @@ RS_ActionPolylineAdd::~RS_ActionPolylineAdd() = default;
 
 void RS_ActionPolylineAdd::init(int status) {
     RS_ActionInterface::init(status);
-    addEntity = addSegment = nullptr;
+    polylineToModify = nullptr;
+    addSegment = nullptr;
     *addCoord = {};
 }
 
@@ -56,18 +56,18 @@ void RS_ActionPolylineAdd::trigger() {
     RS_PreviewActionInterface::trigger();
     RS_DEBUG->print("RS_ActionPolylineAdd::trigger()");
 
-    if (addEntity && addSegment->isAtomic() && addCoord->valid &&
-            addSegment->isPointOnEntity(*addCoord)) {
-
-        addEntity->setHighlighted(false);
-        graphicView->drawEntity(addEntity);
+    if (polylineToModify && addSegment->isAtomic() && addCoord->valid &&
+        addSegment->isPointOnEntity(*addCoord)) {
+        graphicView->drawEntity(polylineToModify);
 
         RS_Modification m(*container, graphicView);
-        addEntity = m.addPolylineNode(
-                        *static_cast<RS_Polyline*>(addEntity),
-                        (RS_AtomicEntity&) *addSegment,
-                        *addCoord );
-
+        RS_Polyline *createdPolyline = m.addPolylineNode(
+            *polylineToModify,
+            (RS_AtomicEntity &) *addSegment,
+            *addCoord);
+        if (createdPolyline != nullptr){
+            polylineToModify = createdPolyline;
+        }
         *addCoord = {};
 
         RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
@@ -75,94 +75,120 @@ void RS_ActionPolylineAdd::trigger() {
     graphicView->redraw(RS2::RedrawDrawing);
 }
 
-
-
-void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent begin");
-
-    switch (getStatus()) {
-    case ChooseSegment:
-    break;
-    case SetAddCoord:
     snapPoint(e);
-    break;
-    default:
-    break;
+    deleteHighlights();
+    int status = getStatus();
+    switch (status) {
+        case ChooseSegment: {
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
+            if (polyline != nullptr){
+                addToHighlights(polyline);
+            }
+            break;
+        }
+        case SetAddCoord: {
+            bool oldSnapOnEntity = snapMode.snapOnEntity;
+            snapMode.snapOnEntity = true;
+            RS_Vector snap = snapPoint(e);
+            snapMode.snapOnEntity = oldSnapOnEntity;
+            deletePreview();
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
+            if (polyline == polylineToModify){
+                RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
+                addReferencePointToPreview(coordinate);
+                RS_Entity * segment = catchEntity(coordinate, RS2::ResolveAll);
+                addToHighlights(segment);
+            }
+            drawPreview();
+            break;
+        }
+        default:
+            break;
     }
-
+    drawHighlights();
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         switch (getStatus()) {
-        case ChooseSegment:
-        addEntity = catchEntity(e);
-        if (!addEntity) {
-            RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-        } else if (addEntity->rtti()!=RS2::EntityPolyline) {
-
-            RS_DIALOGFACTORY->commandMessage(
+            case ChooseSegment: {
+                auto en = catchEntity(e);
+                if (!en){
+                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                } else if (en->rtti() != RS2::EntityPolyline){
+                    RS_DIALOGFACTORY->commandMessage(
                         tr("Entity must be a polyline."));
-        } else {
-            addEntity->setHighlighted(true);
-            graphicView->drawEntity(addEntity);
-            setStatus(SetAddCoord);
-            graphicView->redraw(RS2::RedrawDrawing);
-        }
-        break;
-
-        case SetAddCoord:
-        *addCoord = snapPoint(e);
-        if (!addEntity) {
-            RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-        } else if (!addCoord->valid) {
-            RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
-        } else {
-            RS_Vector clickCoord = snapPoint(e);
-            addSegment = nullptr;
-            double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-            addSegment =  ((RS_Polyline*)addEntity)->getNearestEntity( clickCoord, &dist, RS2::ResolveNone);
-            if (!addSegment) {
-                RS_DIALOGFACTORY->commandMessage(
-                            tr("Adding point is not on entity."));
+                } else {
+                    polylineToModify = dynamic_cast<RS_Polyline *>(en);
+                    polylineToModify->setSelected(true);
+                    graphicView->drawEntity(polylineToModify);
+                    setStatus(SetAddCoord);
+                }
                 break;
             }
-            deleteSnapper();
-            trigger();
-        }
-        break;
+            case SetAddCoord: {
+                bool oldSnapOnEntity = snapMode.snapOnEntity;
+                snapMode.snapOnEntity = true;
+                RS_Vector snap = snapPoint(e);
+                snapMode.snapOnEntity = oldSnapOnEntity;
 
-        default:
-        break;
+                const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
+                *addCoord = newCoord;
+                if (!polylineToModify){
+                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                } else if (!addCoord->valid){
+                    RS_DIALOGFACTORY->commandMessage(tr("Adding point is invalid."));
+                } else {
+                    addSegment = nullptr;
+                    addSegment = catchEntity(newCoord, RS2::ResolveAll);
+                    if (!addSegment){
+                        RS_DIALOGFACTORY->commandMessage(
+                            tr("Adding point is not on entity."));
+                        break;
+                    }
+                    deleteSnapper();
+                    trigger();
+                }
+                break;
+            }
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deleteSnapper();
-        if (addEntity) {
-            addEntity->setHighlighted(false);
-            graphicView->drawEntity(addEntity);
-            graphicView->redraw(RS2::RedrawDrawing);
-        }
-        init(getStatus()-1);
+        finish(true);
     }
 }
 
+void RS_ActionPolylineAdd::finish(bool updateTB){
+    if (polylineToModify){
+//            polylineToModify->setHighlighted(false);
+        polylineToModify->setSelected(false);
+        graphicView->drawEntity(polylineToModify);
+        graphicView->redraw(RS2::RedrawDrawing);
+        polylineToModify = nullptr;
+        addSegment = nullptr;
+        *addCoord = {};
+    }
+    RS_PreviewActionInterface::finish(updateTB);
+}
 
-void RS_ActionPolylineAdd::updateMouseButtonHints() {
+void RS_ActionPolylineAdd::updateMouseButtonHints(){
     switch (getStatus()) {
-    case ChooseSegment:
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to add nodes"),
-                                        tr("Cancel"));
-    break;
-    case SetAddCoord:
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Specify adding node's point"),
-                                        tr("Back"));
-    break;
-    default:
-    RS_DIALOGFACTORY->updateMouseWidget();
-    break;
+        case ChooseSegment:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to add nodes"),
+                                                tr("Cancel"));
+            break;
+        case SetAddCoord:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify adding node's point"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 

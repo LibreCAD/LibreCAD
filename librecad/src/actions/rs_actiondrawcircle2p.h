@@ -58,6 +58,7 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 

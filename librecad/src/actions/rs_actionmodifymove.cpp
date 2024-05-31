@@ -56,6 +56,11 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
+
+// fixme - selection of entities as part of action
+// fixme - options widget
+// fixme - get rid of options dialog?
+// fixme - multiple copies on preview support (for consistency with other actions)
 void RS_ActionModifyMove::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
@@ -87,15 +92,18 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
                     pPoints->targetPoint = mouse;
 
                     deletePreview();
+
+                    addReferencePointToPreview(pPoints->referencePoint);
                     preview->addSelectionFrom(*container);
                     preview->move(pPoints->targetPoint - pPoints->referencePoint);
 
+                    addReferencePointToPreview(pPoints->referencePoint);
+
                     if (e->modifiers() & Qt::ShiftModifier){
-                        auto *line = new RS_Line(pPoints->referencePoint, mouse);
-                        preview->addEntity(line);
-                        line->setSelected(true);
-                        line->setLayerToActive();
-                        line->setPenToActive();
+                        addLineToPreview(pPoints->referencePoint, mouse);
+                    }
+                    else{
+                        addReferenceLineToPreview(pPoints->referencePoint, mouse);
                     }
                     drawPreview();
                 }

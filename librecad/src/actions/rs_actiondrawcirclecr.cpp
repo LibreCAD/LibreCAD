@@ -64,7 +64,7 @@ void RS_ActionDrawCircleCR::init(int status){
 void RS_ActionDrawCircleCR::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    RS_Circle *circle = new RS_Circle(container,
+    auto *circle = new RS_Circle(container,
                                       *data);
     circle->setLayerToActive();
     circle->setPenToActive();
@@ -121,7 +121,13 @@ void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
                 deletePreview();
                 preview->addEntity(new RS_Circle(preview.get(),
                                                  *data));
+
+                addReferencePointToPreview(data->center);
+
                 drawPreview();
+            }
+            else {
+                setStatus(-1);
             }
             break;
     }

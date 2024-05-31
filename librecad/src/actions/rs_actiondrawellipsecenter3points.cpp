@@ -102,7 +102,7 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     pPoints->points.push_back(mouse);
 
     deletePreview();
-    if (drawCirclePointsOnPreview){
+    if (drawCreationPointsOnPreview){
         for (int i = SetPoint1; i <= status; i++) {
             preview->addEntity(new RS_Point(preview.get(), pPoints->points.at(i - 1)));
         }

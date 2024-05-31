@@ -141,7 +141,6 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["PolylineAdd"]
             << a_map["PolylineAppend"]
             << a_map["PolylineDel"]
-            << a_map["DeletePolylineNodePromptly"]
             << a_map["PolylineDelBetween"]
             << a_map["PolylineTrim"]
             << a_map["PolylineEquidistant"]
@@ -209,6 +208,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     info_actions
             << a_map["InfoDist"]
             << a_map["InfoDist2"]
+            << a_map["InfoDist3"]
             << a_map["InfoAngle"]
             << a_map["InfoTotalLength"]
             << a_map["InfoArea"]

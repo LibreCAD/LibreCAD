@@ -1033,6 +1033,12 @@ add_executable(LibreCAD
         librecad/src/ui/lc_quickinfowidgetoptionsdialog.cpp
         librecad/src/ui/lc_quickinfowidgetoptions.h
         librecad/src/ui/lc_quickinfowidgetoptions.cpp
+        librecad/src/actions/lc_actiondrawcirclebase.h
+        librecad/src/actions/lc_actiondrawcirclebase.h
+        librecad/src/actions/lc_actiondrawcirclebase.cpp
+        librecad/src/actions/lc_actiondrawcirclebase.cpp
+        librecad/src/lib/actions/lc_highlight.cpp
+        librecad/src/actions/lc_actionpolylinedeletebase.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

@@ -36,58 +36,50 @@ class RS_Line;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineBisector : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawLineBisector:public RS_PreviewActionInterface {
+Q_OBJECT
 private:
     enum Status {
         SetLine1,     /**< Choose the 1st line. */
         SetLine2,     /**< Choose the 2nd line. */
-		SetLength,    /**< Set length in command line. */
-		SetNumber     /**< Set number in command line. */
+        SetLength,    /**< Set length in command line. */
+        SetNumber     /**< Set number in command line. */
     };
 
 public:
-    RS_ActionDrawLineBisector(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLineBisector() override;
-	
-	void init(int status=0) override;
-
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	
-	void setLength(double l);
-
-	double getLength() const;
-	
-	void setNumber(int n);
-
-	int getNumber() const;
+    RS_ActionDrawLineBisector(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawLineBisector() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void hideOptions() override;
+    void showOptions() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setLength(double l);
+    double getLength() const;
+    void setNumber(int n);
+    int getNumber() const;
 
 private:
     /** Closest bisector. */
-    RS_Line* bisector = nullptr;
+    RS_Line *bisector = nullptr;
     /** First chosen entity */
-    RS_Line* line1 = nullptr;
+    RS_Line *line1 = nullptr;
     /** Second chosen entity */
-    RS_Line* line2 = nullptr;
+    RS_Line *line2 = nullptr;
     /** Length of the bisector. */
     double length = 0.;
-	/** Number of bisectors to create. */
+/** Number of bisectors to create. */
     int number = 0;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	/** Last status before entering length or number. */
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+/** Last status before entering length or number. */
     Status lastStatus = SetLine1;
 };
 

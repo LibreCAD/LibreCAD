@@ -28,6 +28,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define STAR_MIN_RAYS 3
 #define STAR_MAX_RAYS 99
 
+// fixme - add snap to angle for outer and inner points
+// fixme - add center point on preview
 class LC_ActionDrawStar:public LC_AbstractActionWithPreview
 {
    Q_OBJECT

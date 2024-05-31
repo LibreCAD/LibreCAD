@@ -35,8 +35,8 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectIntersected : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionSelectIntersected:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -47,25 +47,22 @@ public:
     };
 
 public:
-    RS_ActionSelectIntersected(RS_EntityContainer& container,
-                         RS_GraphicView& graphicView,
-                         bool select);
+    RS_ActionSelectIntersected(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        bool select);
     ~RS_ActionSelectIntersected() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mousePressEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     bool select = false;
 };
 

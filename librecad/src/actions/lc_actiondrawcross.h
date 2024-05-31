@@ -61,6 +61,7 @@ struct LC_CrossData {
 /**
  * Action that draws cross positioned in center of selected circle, arc or ellipse
  */
+
 class LC_ActionDrawCross:public LC_AbstractActionWithPreview {
 Q_OBJECT
 

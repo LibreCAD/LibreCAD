@@ -144,7 +144,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
         RS_Entity* en = catchEntity(snap, RS2::EntityLine, RS2::ResolveAll);
         if (en != nullptr){
             auto potentialLine = dynamic_cast<RS_Line *>(en);
-            highlightEntity(potentialLine);
+            addToHighlights(potentialLine);
             auto line = createLineFromPointToTarget(potentialLine);
 
             list << line;

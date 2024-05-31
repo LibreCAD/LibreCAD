@@ -98,7 +98,7 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
         trySnapToRelZeroCoordinateEvent(e);
     }
     deletePreview();
-    if (drawCirclePointsOnPreview){
+    if (drawCreationPointsOnPreview){
         for (int i = SetPoint2; i <= status; i++) {
             preview->addEntity(new RS_Point(preview.get(), pPoints->points.at(i - 1)));
         }

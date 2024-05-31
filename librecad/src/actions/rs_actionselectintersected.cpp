@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionselectintersected.h"
@@ -46,14 +45,11 @@ struct RS_ActionSelectIntersected::Points {
  * @param select true: select window. false: deselect window
  */
 RS_ActionSelectIntersected::RS_ActionSelectIntersected(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView,
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView,
     bool select)
-        : RS_PreviewActionInterface("Select Intersected",
-                            container, graphicView)
-    , pPoints(std::make_unique<Points>())
-		,select(select)
-{
+    :RS_PreviewActionInterface("Select Intersected",
+                               container, graphicView), pPoints(std::make_unique<Points>()), select(select){
 	actionType=RS2::ActionSelectIntersected;
 }
 
@@ -67,85 +63,79 @@ void RS_ActionSelectIntersected::init(int status) {
     snapMode.restriction = RS2::RestrictNothing;
 }
 
-
-
-void RS_ActionSelectIntersected::trigger() {
+void RS_ActionSelectIntersected::trigger(){
     RS_PreviewActionInterface::trigger();
 
-	if (pPoints->v1.valid && pPoints->v2.valid) {
-		if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>10) {
+    if (pPoints->v1.valid && pPoints->v2.valid){
+        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
 
             RS_Selection s(*container, graphicView);
-			s.selectIntersected(pPoints->v1, pPoints->v2, select);
+            s.selectIntersected(pPoints->v1, pPoints->v2, select);
 
-			RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 
             init();
         }
     }
 }
 
-
-
-void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent* e) {
-	if (getStatus()==SetPoint2 && pPoints->v1.valid) {
-		pPoints->v2 = snapPoint(e);
+void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent *e){
+    RS_Vector snap = snapPoint(e);
+    if (getStatus() == SetPoint2 && pPoints->v1.valid){
+        pPoints->v2 = snap;
         deletePreview();
-		preview->addEntity(new RS_Line{preview.get(), pPoints->v1, pPoints->v2});
+        preview->addEntity(new RS_Line{preview.get(), pPoints->v1, pPoints->v2});
+        // todo - of course, ideally it will be also to highlight entities that will be selected...
+        // however, calculating of intersections as it is currently is may be quite costly operation for mouse move
+        // todo - review preview for selected entities after indexing
         drawPreview();
     }
 }
 
-
-
-void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
         switch (getStatus()) {
-        case SetPoint1:
-			pPoints->v1 = snapPoint(e);
-            setStatus(SetPoint2);
-            break;
+            case SetPoint1:
+                pPoints->v1 = snapPoint(e);
+                setStatus(SetPoint2);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
     }
 
     RS_DEBUG->print("RS_ActionSelectIntersected::mousePressEvent(): %f %f",
-					pPoints->v1.x, pPoints->v1.y);
+                    pPoints->v1.x, pPoints->v1.y);
 }
 
-
-
-void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent* e) {
+void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
-    if (e->button()==Qt::RightButton) {
-        if (getStatus()==SetPoint2) {
+    if (e->button() == Qt::RightButton){
+        if (getStatus() == SetPoint2){
             deletePreview();
         }
-        init(getStatus()-1);
-    } else if (e->button()==Qt::LeftButton) {
-        if (getStatus()==SetPoint2) {
-			pPoints->v2 = snapPoint(e);
+        init(getStatus() - 1);
+    } else if (e->button() == Qt::LeftButton){
+        if (getStatus() == SetPoint2){
+            pPoints->v2 = snapPoint(e);
             trigger();
         }
     }
 }
 
-
-
-void RS_ActionSelectIntersected::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetPoint1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Choose first point of intersection line"), tr("Cancel"));
-		break;
-	case SetPoint2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second point of intersection line"), tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionSelectIntersected::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetPoint1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose first point of intersection line"), tr("Cancel"));
+            break;
+        case SetPoint2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second point of intersection line"), tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
 void RS_ActionSelectIntersected::updateMouseCursor() {

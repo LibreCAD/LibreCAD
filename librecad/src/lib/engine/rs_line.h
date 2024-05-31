@@ -79,10 +79,6 @@ public:
         return true;
     }
 
-    bool toggleSelected() override;
-
-    RS_Vector getHighlightedVertex();
-
     /** @return Copy of data that defines the line. */
     RS_LineData getData() const{
         return data;

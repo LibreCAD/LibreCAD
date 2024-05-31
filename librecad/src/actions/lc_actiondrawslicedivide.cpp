@@ -90,17 +90,20 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
         switch (rtti) {
             case RS2::EntityLine: {
                 auto *lineEntity = dynamic_cast<RS_Line *>(en);
+                addToHighlights(en);
                 prepareLineTicks(lineEntity);
                 break;
             }
             case RS2::EntityArc: {
                 auto *arcEntity = dynamic_cast<RS_Arc *>(en);
+                addToHighlights(en);
                 prepareArcTicks(arcEntity);
                 optionsMode = SELECTION_ARC;
                 break;
             }
             case RS2::EntityCircle: {
                 auto *circleEntity = dynamic_cast<RS_Circle *>(en);
+                addToHighlights(en);
                 prepareCircleTicks(circleEntity);
                 optionsMode = SELECTION_CIRCLE;
                 break;

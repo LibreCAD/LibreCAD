@@ -55,7 +55,7 @@
 #endif
 
 namespace {
-
+// fixme - hm, is it actually needed to mix the logic of modification and ui/undo?
 /**
  * @brief getPasteScale - find scaling factor for pasting
  * @param const RS_PasteData& data - RS_PasteData
@@ -63,24 +63,23 @@ namespace {
  * @param const RS_Graphic& graphic - the target graphic
  * @return
  */
-RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS_Graphic& graphic)
-{
+    RS_Vector getPasteScale(const RS_PasteData &data, RS_Graphic *&source, const RS_Graphic &graphic){
 
-    // adjust scaling factor for units conversion in case of clipboard paste
-    double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
-    // select source for paste
-    if (source == nullptr) {
-        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
-        source = RS_CLIPBOARD->getGraphic();
-        // graphics from the clipboard need to be scaled. From the part lib not:
-        RS2::Unit sourceUnit = source->getUnit();
-        RS2::Unit targetUnit = graphic.getUnit();
-        factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+        // adjust scaling factor for units conversion in case of clipboard paste
+        double factor = (RS_TOLERANCE < std::abs(data.factor)) ? data.factor : 1.0;
+        // select source for paste
+        if (source == nullptr){
+            RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: add graphic source from clipboard");
+            source = RS_CLIPBOARD->getGraphic();
+            // graphics from the clipboard need to be scaled. From the part lib not:
+            RS2::Unit sourceUnit = source->getUnit();
+            RS2::Unit targetUnit = graphic.getUnit();
+            factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+        }
+        RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
+        // scale factor as vector
+        return {factor, factor};
     }
-    RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
-    // scale factor as vector
-    return {factor, factor};
-}
 
 /**
  * @brief addNewBlock() - create a new block
@@ -88,130 +87,130 @@ RS_Vector getPasteScale(const RS_PasteData& data, RS_Graphic *& source, const RS
  * @param graphic - the target graphic
  * @return RS_Block - the block created
  */
-RS_Block* addNewBlock(const QString& name, RS_Graphic& graphic)
-{
-    RS_BlockData db = RS_BlockData(name, {0.0, 0.0}, false);
-    RS_Block* b = new RS_Block(&graphic, db);
-    b->reparent(&graphic);
-    graphic.addBlock(b);
-    return b;
-}
-
-RS_VectorSolutions findIntersection(const RS_Entity& trimEntity, const RS_Entity& limitEntity, double tolerance = 1e-4)
-{
-
-    RS_VectorSolutions sol;
-    if (limitEntity.isAtomic()) {
-        // intersection(s) of the two entities:
-        return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
+    RS_Block *addNewBlock(const QString &name, RS_Graphic &graphic){
+        RS_BlockData db = RS_BlockData(name, {0.0, 0.0}, false);
+        RS_Block *b = new RS_Block(&graphic, db);
+        b->reparent(&graphic);
+        graphic.addBlock(b);
+        return b;
     }
-    if (limitEntity.isContainer()) {
-        auto ec = static_cast<const RS_EntityContainer*>(&limitEntity);
 
-        for (RS_Entity* e=ec->firstEntity(RS2::ResolveAll); e != nullptr;
-             e=ec->nextEntity(RS2::ResolveAll)) {
+    RS_VectorSolutions findIntersection(const RS_Entity &trimEntity, const RS_Entity &limitEntity, double tolerance = 1e-4){
 
-            RS_VectorSolutions s2 = RS_Information::getIntersection(&trimEntity,
-                                                                    e, false);
-
-            std::copy_if(s2.begin(), s2.end(), std::back_inserter(sol), [e, tolerance](const RS_Vector& vp) {
-                return vp.valid && e->isPointOnEntity(vp, tolerance);
-            });
+        RS_VectorSolutions sol;
+        if (limitEntity.isAtomic()){
+            // intersection(s) of the two entities:
+            return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
         }
+        if (limitEntity.isContainer()){
+            auto ec = static_cast<const RS_EntityContainer *>(&limitEntity);
+
+            for (RS_Entity *e = ec->firstEntity(RS2::ResolveAll); e != nullptr;
+                 e = ec->nextEntity(RS2::ResolveAll)) {
+
+                RS_VectorSolutions s2 = RS_Information::getIntersection(&trimEntity,
+                                                                        e, false);
+
+                std::copy_if(s2.begin(), s2.end(), std::back_inserter(sol), [e, tolerance](const RS_Vector &vp){
+                    return vp.valid && e->isPointOnEntity(vp, tolerance);
+                });
+            }
+        }
+        return sol;
     }
-    return sol;
-}
 
-RS_Arc* trimCircle(RS_Circle* circle, const RS_Vector& trimCoord, const RS_VectorSolutions& sol)
-{
-    double aStart=0.;
-    double aEnd=2.*M_PI;
-    switch(sol.size()){
-    case 0:
-        break;
-    case 1:
-        aStart=circle->getCenter().angleTo(sol.at(0));
-        aEnd=aStart + 2.*M_PI;
-        break;
-    default:
-    case 2:
-        //trim according to intersections
-        std::vector<double> angles;
-        const auto& center0=circle->getCenter();
-        for(const RS_Vector& vp : sol){
-            angles.push_back(center0.angleTo(vp));
-        }
-        //sort intersections by angle to circle center
-        std::sort(angles.begin(), angles.end());
-        const double a0=center0.angleTo(trimCoord);
-        for(size_t i=0; i<angles.size(); ++i){
-            aStart=angles.at(i);
-            aEnd=angles.at( (i+1)%angles.size());
-            if(RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+    RS_Arc *trimCircle(RS_Circle *circle, const RS_Vector &trimCoord, const RS_VectorSolutions &sol){
+        double aStart = 0.;
+        double aEnd = 2. * M_PI;
+        switch (sol.size()) {
+            case 0:
+                break;
+            case 1:
+                aStart = circle->getCenter().angleTo(sol.at(0));
+                aEnd = aStart + 2. * M_PI;
+                break;
+            default:
+            case 2:
+                //trim according to intersections
+                std::vector<double> angles;
+                const auto &center0 = circle->getCenter();
+                for (const RS_Vector &vp: sol) {
+                    angles.push_back(center0.angleTo(vp));
+                }
+                //sort intersections by angle to circle center
+                std::sort(angles.begin(), angles.end());
+                const double a0 = center0.angleTo(trimCoord);
+                for (size_t i = 0; i < angles.size(); ++i) {
+                    aStart = angles.at(i);
+                    aEnd = angles.at((i + 1) % angles.size());
+                    if (RS_Math::isAngleBetween(a0, aStart, aEnd, false))
+                        break;
+                }
                 break;
         }
-        break;
+        RS_ArcData arcData(circle->getCenter(),
+                           circle->getRadius(),
+                           aStart,
+                           aEnd,
+                           false);
+        return new RS_Arc(circle->getParent(), arcData);
     }
-    RS_ArcData arcData(circle->getCenter(),
-                 circle->getRadius(),
-                 aStart,
-                 aEnd,
-                 false);
-    return new RS_Arc(circle->getParent(), arcData);
-}
 
 /**
  * @brief getIdFlagString create a string by the entity and ID and type ID.
  * @param entity - entity, could be nullptr
  * @return std::string - "ID/typeID", or an empty string, if the input entity is nullptr
  */
-std::string getIdFlagString(RS_Entity* entity)
-{
-    if (entity == nullptr) return {};
-    return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
-}
+    std::string getIdFlagString(RS_Entity *entity){
+        if (entity == nullptr) return {};
+        return std::to_string(entity->getId()) + "/" + std::to_string(entity->rtti());
+    }
 
 // Support fillet trimming for whole ellipses
-RS_AtomicEntity* trimEllipseForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
-{
-    if (entity == nullptr)
+    RS_AtomicEntity *trimEllipseForRound(RS_AtomicEntity *entity, const RS_Arc &arcFillet){
+        if (entity == nullptr)
+            return entity;
+        if (entity->rtti() != RS2::EntityEllipse)
+            return entity;
+        auto ellipse = static_cast<RS_Ellipse *>(entity);
+        if (ellipse->isEllipticArc())
+            return entity;
+        RS_Vector tangent = entity->getNearestPointOnEntity(arcFillet.getCenter(), false);
+        RS_Line line{nullptr, {arcFillet.getCenter(), tangent}};
+        RS_Vector middle = arcFillet.getMiddlePoint();
+        RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * ellipse->getMinorRadius() * 0.01;
+        RS_Vector trimCoord = ellipse->getNearestPointOnEntity(opposite, false);
+        RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+        ellipse->prepareTrim(trimCoord, sol);
         return entity;
-    if ( entity->rtti() != RS2::EntityEllipse)
-        return entity;
-    auto ellipse = static_cast<RS_Ellipse*>(entity);
-    if (ellipse->isEllipticArc())
-        return entity;
-    RS_Vector tangent = entity->getNearestPointOnEntity(arcFillet.getCenter(), false);
-    RS_Line line{nullptr, {arcFillet.getCenter(), tangent}};
-    RS_Vector middle = arcFillet.getMiddlePoint();
-    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * ellipse->getMinorRadius()*0.01;
-    RS_Vector trimCoord = ellipse->getNearestPointOnEntity(opposite, false);
-    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
-    ellipse->prepareTrim(trimCoord, sol);
-    return entity;
-}
+    }
 
 // A quick fix for rounding on circles
-RS_AtomicEntity* trimCircleForRound(RS_AtomicEntity* entity, const RS_Arc& arcFillet)
-{
-    if (entity == nullptr)
-        return entity;
-    if ( entity->rtti() == RS2::EntityEllipse)
-        return trimEllipseForRound(entity, arcFillet);
-    if ( entity->rtti() != RS2::EntityCircle)
-        return entity;
-    RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
-    RS_Vector middle = arcFillet.getMiddlePoint();
-    // prefer acute angle for fillet
-    // Use a trimCoord at the opposite side of the arc wrt to the
-    RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * entity->getRadius()*0.01;
-    RS_Vector trimCoord = entity->getNearestPointOnEntity(opposite, true);
-    RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
-    RS_Arc* arc = trimCircle(static_cast<RS_Circle*>(entity), trimCoord, sol);
-    delete entity;
-    return arc;
+    RS_AtomicEntity *trimCircleForRound(RS_AtomicEntity *entity, const RS_Arc &arcFillet){
+        if (entity == nullptr)
+            return entity;
+        if (entity->rtti() == RS2::EntityEllipse)
+            return trimEllipseForRound(entity, arcFillet);
+        if (entity->rtti() != RS2::EntityCircle)
+            return entity;
+        RS_Line line{nullptr, {arcFillet.getCenter(), entity->getCenter()}};
+        RS_Vector middle = arcFillet.getMiddlePoint();
+        // prefer acute angle for fillet
+        // Use a trimCoord at the opposite side of the arc wrt to the
+        RS_Vector opposite = arcFillet.getCenter() + (arcFillet.getCenter() - middle).normalized() * entity->getRadius() * 0.01;
+        RS_Vector trimCoord = entity->getNearestPointOnEntity(opposite, true);
+        RS_VectorSolutions sol = RS_Information::getIntersection(entity, &line, false);
+        RS_Arc *arc = trimCircle(static_cast<RS_Circle *>(entity), trimCoord, sol);
+        delete entity;
+        return arc;
+    }
+
+    inline bool isOneOfPoints(const RS_Vector& candidate, const RS_Vector& point1, const RS_Vector& point2) {
+       bool result = point1.distanceTo(candidate) < RS_TOLERANCE || point2.distanceTo(candidate) < RS_TOLERANCE;
+       return result;
+    }
 }
-}
+
 
 RS_PasteData::RS_PasteData(RS_Vector _insertionPoint,
 		double _factor,
@@ -274,37 +273,37 @@ void RS_Modification::remove()
         {
             found = true;
 
-            if (m_deletePolylineNodeMode)
-            {
-                switch(e->rtti())
-                {
-                case RS2::EntityPolyline:
-                    e = deletePolylineNode((RS_Polyline&) *e, ((RS_Polyline&) *e).getHighlightedVertex());
-                    break;
-                case RS2::EntityLine:
-                {
-                    if (document->countSelected() != 1)
-                    {
-                        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: multiple lines selected");
-                        deselectEntitiesMode = true;
-                    }
-                    else
-                    {
-                        deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
-                    }
-                }
-                    break;
-                default:
-                    RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no line or polyline selected");
-                }
-                m_deletePolylineNodeMode = false;
-            }
-            else if (!deselectEntitiesMode)
-            {
-                e->changeUndoState();
-                undo.addUndoable(e);
-                invalidContainer = false;
-            }
+//            if (m_deletePolylineNodeMode)
+//            {
+//                switch(e->rtti())
+//                {
+//                case RS2::EntityPolyline:
+//                    e = deletePolylineNode((RS_Polyline&) *e, ((RS_Polyline&) *e).getHighlightedVertex());
+//                    break;
+//                case RS2::EntityLine:
+//                {
+//                    if (document->countSelected() != 1)
+//                    {
+//                        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: multiple lines selected");
+//                        deselectEntitiesMode = true;
+//                    }
+//                    else
+//                    {
+//                        deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
+//                    }
+//                }
+//                    break;
+//                default:
+//                    RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no line or polyline selected");
+//                }
+//                m_deletePolylineNodeMode = false;
+//            }
+//            else if (!deselectEntitiesMode)
+//            {
+//                e->changeUndoState();
+//                undo.addUndoable(e);
+//                invalidContainer = false;
+//            }
 
             e->setSelected(false);
         }
@@ -318,11 +317,6 @@ void RS_Modification::remove()
     graphicView->redraw(RS2::RedrawDrawing);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove: OK");
-}
-
-void RS_Modification::setDeletePolylineNodeMode()
-{
-    m_deletePolylineNodeMode = true;
 }
 
 /**
@@ -1306,74 +1300,76 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
  */
 
 RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
-        const RS_Vector& node) {
+        const RS_Vector& node, bool createOnly) {
 
     RS_DEBUG->print("RS_Modification::deletePolylineNode");
 
-	if (!container) {
+    if (!container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::addPolylineNode: no valid container");
-		return nullptr;
+        return nullptr;
     }
 
-	if (!node.valid) {
+    if (!node.valid){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::deletePolylineNode: node not valid");
-		return nullptr;
+        return nullptr;
     }
 
     // check if the polyline is no longer there after deleting the node:
-    if (polyline.count()==1) {
-        RS_Entity* e = polyline.firstEntity();
-        if (e && e->isAtomic()) {
-            RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-            if (node.distanceTo(ae->getStartpoint())<1.0e-6 ||
-                    node.distanceTo(ae->getEndpoint())<1.0e-6) {
+    if (polyline.count() == 1){
+        RS_Entity *e = polyline.firstEntity();
+        if (e && e->isAtomic()){
+            auto ae = dynamic_cast<RS_AtomicEntity *>(e);
+            if (node.distanceTo(ae->getStartpoint()) < 1.0e-6 ||
+                node.distanceTo(ae->getEndpoint()) < 1.0e-6){
 
-                if (graphicView) {
+                if (graphicView){
                     graphicView->deleteEntity(&polyline);
                 }
 
-                if (handleUndo) {
-                    LC_UndoSection undo( document);
+                if (handleUndo){
+                    LC_UndoSection undo(document);
                     polyline.setUndoState(true);
                     undo.addUndoable(&polyline);
                 }
             }
         }
-		return nullptr;
+        return nullptr;
     }
 
-    RS_Polyline* newPolyline = new RS_Polyline(container);
+    auto* newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());
-    newPolyline->setSelected(polyline.isSelected());
-    newPolyline->setLayer(polyline.getLayer());
-    newPolyline->setPen(polyline.getPen());
+    if (!createOnly){
+        newPolyline->setSelected(polyline.isSelected());
+        newPolyline->setLayer(polyline.getLayer());
+        newPolyline->setPen(polyline.getPen());
+    }
 
     // copy polyline and drop deleted node:
     bool first = true;
     bool lastDropped = false;
     RS_Entity* lastEntity = polyline.lastEntity();
-	for(auto e: polyline){
+    for (auto e: polyline) {
 
-        if (e->isAtomic()) {
-            RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
+        if (e->isAtomic()){
+            auto ae = dynamic_cast<RS_AtomicEntity *>(e);
             double bulge = 0.0;
-            if (ae->rtti()==RS2::EntityArc) {
+            if (ae->rtti() == RS2::EntityArc){
                 RS_DEBUG->print("RS_Modification::deletePolylineNode: arc segment");
-                bulge = ((RS_Arc*)ae)->getBulge();
+                bulge = ((RS_Arc *) ae)->getBulge();
             } else {
                 RS_DEBUG->print("RS_Modification::deletePolylineNode: line segment");
                 bulge = 0.0;
             }
 
             // last entity is closing entity and will be added below with endPolyline()
-            if (e==lastEntity && polyline.isClosed()) {
+            if (e == lastEntity && polyline.isClosed()){
                 continue;
             }
 
             // first vertex (startpoint)
-            if (first && node.distanceTo(ae->getStartpoint())>1.0e-6) {
+            if (first && node.distanceTo(ae->getStartpoint()) > 1.0e-6){
                 RS_DEBUG->print("RS_Modification::deletePolylineNode: first node: %f/%f",
                                 ae->getStartpoint().x, ae->getStartpoint().y);
 
@@ -1383,10 +1379,10 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
             }
 
             // normal node (not deleted):
-            if (first==false && node.distanceTo(ae->getEndpoint())>1.0e-6) {
+            if (first == false && node.distanceTo(ae->getEndpoint()) > 1.0e-6){
                 RS_DEBUG->print("RS_Modification::deletePolylineNode: normal vertex found: %f/%f",
                                 ae->getEndpoint().x, ae->getEndpoint().y);
-                if (lastDropped) {
+                if (lastDropped){
                     //bulge = 0.0;
                 }
                 newPolyline->setNextBulge(bulge);
@@ -1394,7 +1390,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
                 lastDropped = false;
             }
 
-            // drop deleted node:
+                // drop deleted node:
             else {
                 RS_DEBUG->print("RS_Modification::deletePolylineNode: deleting vertex: %f/%f",
                                 ae->getEndpoint().x, ae->getEndpoint().y);
@@ -1410,31 +1406,27 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
     newPolyline->setNextBulge(polyline.getClosingBulge());
     newPolyline->endPolyline();
 
-    //if (newPolyline->count()==1) {
-    //}
-
     // add new polyline:
     RS_DEBUG->print("RS_Modification::deletePolylineNode: adding new polyline");
+
     container->addEntity(newPolyline);
-    if (graphicView) {
-        graphicView->deleteEntity(&polyline);
-        graphicView->drawEntity(newPolyline);
+    if (!createOnly){
+        if (graphicView){
+            graphicView->deleteEntity(&polyline);
+            graphicView->drawEntity(newPolyline);
+        }
+
+        RS_DEBUG->print("RS_Modification::deletePolylineNode: handling undo");
+        if (handleUndo){
+            LC_UndoSection undo(document);
+
+            polyline.setUndoState(true);
+            undo.addUndoable(&polyline);
+            undo.addUndoable(newPolyline);
+        }
     }
-
-    RS_DEBUG->print("RS_Modification::deletePolylineNode: handling undo");
-    if (handleUndo) {
-        LC_UndoSection undo( document);
-
-        polyline.setUndoState(true);
-        undo.addUndoable(&polyline);
-        undo.addUndoable(newPolyline);
-    }
-
     return newPolyline;
 }
-
-
-
 
 /**
  * Deletes all nodes between the two given nodes (exclusive).
@@ -1445,105 +1437,103 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
  * @return Pointer to the new polyline or nullptr.
  */
 
-RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
-        RS_AtomicEntity& segment, const RS_Vector& node1, const RS_Vector& node2) {
-    Q_UNUSED(segment);
+RS_Polyline *RS_Modification::deletePolylineNodesBetween(
+    RS_Polyline &polyline,
+    const RS_Vector &node1, const RS_Vector &node2, bool createOnly){
+
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween");
 
-	if (!container) {
+    if (!container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::addPolylineNodesBetween: no valid container");
-		return nullptr;
+        return nullptr;
     }
 
-    if (node1.valid==false || node2.valid==false) {
+    if (node1.valid == false || node2.valid == false){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::deletePolylineNodesBetween: node not valid");
-		return nullptr;
+        return nullptr;
     }
 
-    if (node1.distanceTo(node2)<1.0e-6) {
+    if (node1.distanceTo(node2) < 1.0e-6){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::deletePolylineNodesBetween: nodes are identical");
-		return nullptr;
+        return nullptr;
     }
 
     // check if there's nothing to delete:
-	for(auto e: polyline){
+    for (auto e: polyline) {
 
-        if (e->isAtomic()) {
-            RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-
-            if ((node1.distanceTo(ae->getStartpoint())<1.0e-6 &&
-                    node2.distanceTo(ae->getEndpoint())<1.0e-6) ||
-                    (node2.distanceTo(ae->getStartpoint())<1.0e-6 &&
-                     node1.distanceTo(ae->getEndpoint())<1.0e-6)) {
+        if (e->isAtomic()){
+            auto *ae = dynamic_cast<RS_AtomicEntity *>(e);
+            /// FIXME- RS_TOLERANCE?
+            if ((node1.distanceTo(ae->getStartpoint()) < RS_TOLERANCE  &&
+                 node2.distanceTo(ae->getEndpoint()) < 1.0e-6) ||
+                (node2.distanceTo(ae->getStartpoint()) < 1.0e-6 &&
+                 node1.distanceTo(ae->getEndpoint()) < 1.0e-6)){
 
                 RS_DEBUG->print(RS_Debug::D_WARNING,
                                 "RS_Modification::deletePolylineNodesBetween: nothing to delete");
-				return nullptr;
+                return nullptr;
             }
         }
     }
 
 
     // check if the start point is involved:
-    bool startpointInvolved = false;
-    if (node1.distanceTo(polyline.getStartpoint())<1.0e-6 ||
-            node2.distanceTo(polyline.getStartpoint())<1.0e-6) {
-        startpointInvolved = true;
-    }
+    const RS_Vector &polylineStartpoint = polyline.getStartpoint();
+    bool startpointInvolved = isOneOfPoints(polylineStartpoint, node1, node2);
 
 
     // check which part of the polyline has to be deleted:
     bool deleteStart = false;
-    if (polyline.isClosed()) {
+    if (polyline.isClosed()){
         bool found = false;
         double length1 = 0.0;
         double length2 = 0.0;
-        RS_Entity* e=polyline.firstEntity();
+        RS_Entity *e = polyline.firstEntity();
 
-        if (startpointInvolved) {
-            if (e->isAtomic()) {
-                RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-                length1+=ae->getLength();
+        if (startpointInvolved){
+            if (e->isAtomic()){
+                auto *ae = dynamic_cast<RS_AtomicEntity *>(e);
+                length1 += ae->getLength();
             }
             e = polyline.nextEntity();
         }
-        for (; e; e=polyline.nextEntity()) {
+        for (; e; e = polyline.nextEntity()) {
 
-            if (e->isAtomic()) {
-                RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
+            if (e->isAtomic()){
+                auto *ae = dynamic_cast<RS_AtomicEntity *>(e);
 
-                if (node1.distanceTo(ae->getStartpoint())<1.0e-6 ||
-                        node2.distanceTo(ae->getStartpoint())<1.0e-6) {
-
+                if (isOneOfPoints(ae->getStartpoint(), node1, node2)){
                     found = !found;
                 }
 
-                if (found) {
-                    length2+=ae->getLength();
+                if (found){
+                    length2 += ae->getLength();
                 } else {
-                    length1+=ae->getLength();
+                    length1 += ae->getLength();
                 }
             }
         }
-        if (length1<length2) {
+        if (length1 < length2){
             deleteStart = true;
         } else {
             deleteStart = false;
         }
     }
 
-    RS_Polyline* newPolyline = new RS_Polyline(container);
+    auto *newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());
-    newPolyline->setSelected(polyline.isSelected());
-    newPolyline->setLayer(polyline.getLayer());
-    newPolyline->setPen(polyline.getPen());
+    if (!createOnly){
+        newPolyline->setSelected(polyline.isSelected());
+        newPolyline->setLayer(polyline.getLayer());
+        newPolyline->setPen(polyline.getPen());
+    }
 
-    if (startpointInvolved && deleteStart && polyline.isClosed()) {
+    if (startpointInvolved && deleteStart && polyline.isClosed()){
         newPolyline->setNextBulge(0.0);
-        newPolyline->addVertex(polyline.getStartpoint());
+        newPolyline->addVertex(polylineStartpoint);
     }
 
     // copy polyline and drop deleted nodes:
@@ -1551,92 +1541,84 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
     bool removing = deleteStart;
     bool done = false;
     bool nextIsStraight = false;
-    RS_Entity* lastEntity = polyline.lastEntity();
-    int i=0;
-	double bulge = 0.0;
-	for(auto e: polyline){
+    RS_Entity *lastEntity = polyline.lastEntity();
+    int i = 0;
+    double bulge = 0.0;
+
+    bool shouldRemove = false;
+    for (auto e: polyline) {
 
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: entity: %d", i++);
-        RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: removing: %d", (int)removing);
+        RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: removing: %d", (int) removing);
 
-        if (e->isAtomic()) {
-            RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-            if (ae->rtti()==RS2::EntityArc) {
+        if (e->isAtomic()){
+            auto ae = dynamic_cast<RS_AtomicEntity *>(e);
+            if (ae->rtti() == RS2::EntityArc){
                 RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: arc segment");
-                bulge = ((RS_Arc*)ae)->getBulge();
+                auto arc = dynamic_cast<RS_Arc *>(ae);
+                bulge = arc->getBulge();
             } else {
                 RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: line segment");
                 bulge = 0.0;
             }
 
+            const RS_Vector &endpoint = ae->getEndpoint();
+            const RS_Vector &startpoint = ae->getStartpoint();
+
             // last entity is closing entity and will be added below with endPolyline()
-            if (e==lastEntity && polyline.isClosed()) {
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "dropping last vertex of closed polyline");
+            if (e == lastEntity && polyline.isClosed()){
+                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: dropping last vertex of closed polyline");
                 continue;
             }
 
             // first vertex (startpoint)
-            if (first) {
-                if (!removing) {
-                    RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: first node: %f/%f",
-                                    ae->getStartpoint().x, ae->getStartpoint().y);
+            if (first){
+                if (!removing){
+                    RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: first node: %f/%f", startpoint.x, startpoint.y);
                     newPolyline->setNextBulge(bulge);
-                    newPolyline->addVertex(ae->getStartpoint());
+                    newPolyline->addVertex(startpoint);
                     first = false;
                 }
             }
 
+
             // stop removing nodes:
-            if (removing==true &&
-                    (node1.distanceTo(ae->getEndpoint())<1.0e-6 ||
-                     node2.distanceTo(ae->getEndpoint())<1.0e-6)) {
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "stop removing at: %f/%f",
-                                ae->getEndpoint().x, ae->getEndpoint().y);
+
+            if (removing == true && isOneOfPoints(endpoint, node1, node2)){
+                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: stop removing at: %f/%f",endpoint.x, endpoint.y);
                 removing = false;
                 done = true;
-                if (first==false) {
+                if (first == false){
                     nextIsStraight = true;
                 }
             }
 
             // normal node (not deleted):
-            if (removing==false && (done==false || deleteStart==false)) {
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "normal vertex found: %f/%f",
-                                ae->getEndpoint().x, ae->getEndpoint().y);
-                if (nextIsStraight) {
+            if (removing == false && (done == false || deleteStart == false)){
+                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: normal vertex shouldRemove: %f/%f", endpoint.x, endpoint.y);
+                if (nextIsStraight){
                     bulge = 0.0;
                     nextIsStraight = false;
                 }
                 newPolyline->setNextBulge(bulge);
-                newPolyline->addVertex(ae->getEndpoint());
+                newPolyline->addVertex(endpoint);
             }
-
-            // drop deleted node:
+                // drop deleted node:
             else {
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "deleting vertex: %f/%f",
-                                ae->getEndpoint().x, ae->getEndpoint().y);
+                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: deleting vertex: %f/%f", endpoint.x, endpoint.y);
             }
 
             // start to remove nodes from now on:
-            if (done==false && removing==false &&
-                    (node1.distanceTo(ae->getEndpoint())<1.0e-6 ||
-                     node2.distanceTo(ae->getEndpoint())<1.0e-6)) {
-                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: "
-                                "start removing at: %f/%f",
-                                ae->getEndpoint().x, ae->getEndpoint().y);
+            if (done == false && removing == false && isOneOfPoints(endpoint, node1, node2)){
+                RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: start removing at: %f/%f", endpoint.x, endpoint.y);
                 removing = true;
             }
 
-            if (done) {
-                done=false;
+            if (done){
+                done = false;
             }
         } else {
-            RS_DEBUG->print(RS_Debug::D_WARNING,
-                            "RS_Modification::deletePolylineNodesBetween: Polyline contains non-atomic entities");
+            RS_DEBUG->print(RS_Debug::D_WARNING,"RS_Modification::deletePolylineNodesBetween: Polyline contains non-atomic entities");
         }
     }
 
@@ -1647,25 +1629,24 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
     // add new polyline:
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: adding new polyline");
     container->addEntity(newPolyline);
-    if (graphicView) {
-        graphicView->deleteEntity(&polyline);
-        graphicView->drawEntity(newPolyline);
-    }
+    if (!createOnly){
+        if (graphicView){
+            graphicView->deleteEntity(&polyline);
+            graphicView->drawEntity(newPolyline);
+        }
 
-    RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: handling undo");
-    if (handleUndo) {
-        LC_UndoSection undo( document);
+        RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: handling undo");
+        if (handleUndo){
+            LC_UndoSection undo(document);
 
-        polyline.setUndoState(true);
-        undo.addUndoable(&polyline);
-        undo.addUndoable(newPolyline);
+            polyline.setUndoState(true);
+            undo.addUndoable(&polyline);
+            undo.addUndoable(newPolyline);
+        }
     }
 
     return newPolyline;
 }
-
-
-
 
 /**
  * Trims two segments of a polyline all nodes between the two trim segments
@@ -1677,43 +1658,44 @@ RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
  *
  * @return Pointer to the new polyline or nullptr.
  */
-
-RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
-        RS_AtomicEntity& segment1,
-        RS_AtomicEntity& segment2) {
+RS_Polyline *RS_Modification::polylineTrim(
+    RS_Polyline &polyline,
+    RS_AtomicEntity &segment1,
+    RS_AtomicEntity &segment2,
+    bool createOnly){
 
     RS_DEBUG->print("RS_Modification::polylineTrim");
 
-	if (!container) {
+    if (!container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::addPolylineNodesBetween: no valid container");
-		return nullptr;
+        return nullptr;
     }
 
-    if (segment1.getParent()!=&polyline || segment2.getParent()!=&polyline) {
+    if (segment1.getParent() != &polyline || segment2.getParent() != &polyline){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::polylineTrim: segments not in polyline");
-		return nullptr;
+        return nullptr;
     }
 
-    if (&segment1==&segment2) {
+    if (&segment1 == &segment2){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::polylineTrim: segments are identical");
-		return nullptr;
+        return nullptr;
     }
 
     RS_VectorSolutions sol;
     sol = RS_Information::getIntersection(&segment1, &segment2, false);
 
-    if (sol.getNumber()==0) {
+    if (sol.getNumber() == 0){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::polylineTrim: segments cannot be trimmed");
-		return nullptr;
+        return nullptr;
     }
 
     // check which segment comes first in the polyline:
-    RS_AtomicEntity* firstSegment;
-    if (polyline.findEntity(&segment1) > polyline.findEntity(&segment2)) {
+    RS_AtomicEntity *firstSegment;
+    if (polyline.findEntity(&segment1) > polyline.findEntity(&segment2)){
         firstSegment = &segment2;
     } else {
         firstSegment = &segment1;
@@ -1722,45 +1704,47 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     // find out if we need to trim towards the open part of the polyline
     bool reverseTrim;
     reverseTrim = !RS_Math::isSameDirection(firstSegment->getDirection1(),
-											firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI_2);
+                                            firstSegment->getStartpoint().angleTo(sol.get(0)), M_PI_2);
     //reverseTrim = reverseTrim || !RS_Math::isSameDirection(segment2.getDirection1(),
-	//	segment2.getStartpoint().angleTo(sol.get(0)), M_PI_2);
+//	segment2.getStartpoint().angleTo(sol.get(0)), M_PI_2);
 
-    RS_Polyline* newPolyline = new RS_Polyline(container);
+    auto *newPolyline = new RS_Polyline(container);
     newPolyline->setClosed(polyline.isClosed());
-    newPolyline->setSelected(polyline.isSelected());
-    newPolyline->setLayer(polyline.getLayer());
-    newPolyline->setPen(polyline.getPen());
+    if (!createOnly){
+        newPolyline->setSelected(polyline.isSelected());
+        newPolyline->setLayer(polyline.getLayer());
+        newPolyline->setPen(polyline.getPen());
+    }
 
     // normal trimming: start removing nodes at trim segment. ends stay the same
-	if (!reverseTrim) {
+    if (!reverseTrim){
         // copy polyline, trim segments and drop between nodes:
         bool first = true;
         bool removing = false;
         bool nextIsStraight = false;
-		RS_Entity* lastEntity = polyline.lastEntity();
-		for(auto e: polyline){
+        RS_Entity *lastEntity = polyline.lastEntity();
+        for (auto e: polyline) {
 
-            if (e->isAtomic()) {
-                RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
+            if (e->isAtomic()){
+                auto ae = dynamic_cast<RS_AtomicEntity *>(e);
                 double bulge = 0.0;
-                if (ae->rtti()==RS2::EntityArc) {
+                if (ae->rtti() == RS2::EntityArc){
                     RS_DEBUG->print("RS_Modification::polylineTrim: arc segment");
-                    bulge = ((RS_Arc*)ae)->getBulge();
+                    bulge = ((RS_Arc *) ae)->getBulge();
                 } else {
                     RS_DEBUG->print("RS_Modification::polylineTrim: line segment");
                     bulge = 0.0;
                 }
 
                 // last entity is closing entity and will be added below with endPolyline()
-                if (e==lastEntity && polyline.isClosed()) {
+                if (e == lastEntity && polyline.isClosed()){
                     RS_DEBUG->print("RS_Modification::polylineTrim: "
                                     "dropping last vertex of closed polyline");
                     continue;
                 }
 
                 // first vertex (startpoint)
-                if (first) {
+                if (first){
                     RS_DEBUG->print("RS_Modification::polylineTrim: first node: %f/%f",
                                     ae->getStartpoint().x, ae->getStartpoint().y);
 
@@ -1770,7 +1754,7 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                 }
 
                 // trim and start removing nodes:
-				if (!removing && (ae==&segment1 || ae==&segment2)) {
+                if (!removing && (ae == &segment1 || ae == &segment2)){
                     RS_DEBUG->print("RS_Modification::polylineTrim: "
                                     "start removing at trim point %f/%f",
                                     sol.get(0).x, sol.get(0).y);
@@ -1780,18 +1764,18 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                     nextIsStraight = true;
                 }
 
-                // stop removing nodes:
-				else if (removing && (ae==&segment1 || ae==&segment2)) {
+                    // stop removing nodes:
+                else if (removing && (ae == &segment1 || ae == &segment2)){
                     RS_DEBUG->print("RS_Modification::polylineTrim: stop removing at: %f/%f",
                                     ae->getEndpoint().x, ae->getEndpoint().y);
                     removing = false;
                 }
 
                 // normal node (not deleted):
-				if (!removing) {
+                if (!removing){
                     RS_DEBUG->print("RS_Modification::polylineTrim: normal vertex found: %f/%f",
                                     ae->getEndpoint().x, ae->getEndpoint().y);
-                    if (nextIsStraight) {
+                    if (nextIsStraight){
                         newPolyline->setNextBulge(0.0);
                         nextIsStraight = false;
                     } else {
@@ -1806,35 +1790,36 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
         }
     }
 
-    // reverse trimming: remove nodes at the ends and keep those in between
+        // reverse trimming: remove nodes at the ends and keep those in between
     else {
         // copy polyline, trim segments and drop between nodes:
         //bool first = true;
         bool removing = true;
         bool nextIsStraight = false;
-		RS_Entity* lastEntity = polyline.lastEntity();
-		for(auto e: polyline){
+        RS_Entity *lastEntity = polyline.lastEntity();
+        for (auto e: polyline) {
 
-            if (e->isAtomic()) {
-                RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
+            if (e->isAtomic()){
+                auto *ae = dynamic_cast<RS_AtomicEntity *>(e);
                 double bulge = 0.0;
-                if (ae->rtti()==RS2::EntityArc) {
+                if (ae->rtti() == RS2::EntityArc){
                     RS_DEBUG->print("RS_Modification::polylineTrim: arc segment");
-                    bulge = ((RS_Arc*)ae)->getBulge();
+                    auto arc = dynamic_cast<RS_Arc *>(ae);
+                    bulge = arc ->getBulge();
                 } else {
                     RS_DEBUG->print("RS_Modification::polylineTrim: line segment");
                     bulge = 0.0;
                 }
 
                 // last entity is closing entity and will be added below with endPolyline()
-                if (e==lastEntity && polyline.isClosed()) {
+                if (e == lastEntity && polyline.isClosed()){
                     RS_DEBUG->print("RS_Modification::polylineTrim: "
                                     "dropping last vertex of closed polyline");
                     continue;
                 }
 
                 // trim and stop removing nodes:
-                if (removing==true && (ae==&segment1 || ae==&segment2)) {
+                if (removing == true && (ae == &segment1 || ae == &segment2)){
                     RS_DEBUG->print("RS_Modification::polylineTrim: "
                                     "stop removing at trim point %f/%f",
                                     sol.get(0).x, sol.get(0).y);
@@ -1845,8 +1830,8 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                     nextIsStraight = true;
                 }
 
-                // start removing nodes again:
-                else if (removing==false && (ae==&segment1 || ae==&segment2)) {
+                    // start removing nodes again:
+                else if (removing == false && (ae == &segment1 || ae == &segment2)){
                     RS_DEBUG->print("RS_Modification::polylineTrim: start removing at: %f/%f",
                                     ae->getEndpoint().x, ae->getEndpoint().y);
                     newPolyline->setNextBulge(0.0);
@@ -1856,10 +1841,10 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
                 }
 
                 // normal node (not deleted):
-                if (removing==false) {
+                if (removing == false){
                     RS_DEBUG->print("RS_Modification::polylineTrim: normal vertex found: %f/%f",
                                     ae->getEndpoint().x, ae->getEndpoint().y);
-                    if (nextIsStraight) {
+                    if (nextIsStraight){
                         newPolyline->setNextBulge(0.0);
                         nextIsStraight = false;
                     } else {
@@ -1881,18 +1866,20 @@ RS_Polyline* RS_Modification::polylineTrim(RS_Polyline& polyline,
     // add new polyline:
     RS_DEBUG->print("RS_Modification::polylineTrim: adding new polyline");
     container->addEntity(newPolyline);
-    if (graphicView) {
-        graphicView->deleteEntity(&polyline);
-        graphicView->drawEntity(newPolyline);
-    }
+    if (!createOnly){
+        if (graphicView){
+            graphicView->deleteEntity(&polyline);
+            graphicView->drawEntity(newPolyline);
+        }
 
-    RS_DEBUG->print("RS_Modification::polylineTrim: handling undo");
-    if (handleUndo) {
-        LC_UndoSection undo( document);
+        RS_DEBUG->print("RS_Modification::polylineTrim: handling undo");
+        if (handleUndo){
+            LC_UndoSection undo(document);
 
-        polyline.setUndoState(true);
-        undo.addUndoable(&polyline);
-        undo.addUndoable(newPolyline);
+            polyline.setUndoState(true);
+            undo.addUndoable(&polyline);
+            undo.addUndoable(newPolyline);
+        }
     }
 
     return newPolyline;
@@ -2002,50 +1989,47 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     return true;
 }
 
-
-
-
 /**
  * Rotates all selected entities with the given data for the rotation.
  */
-bool RS_Modification::rotate(RS_RotateData& data) {
-	if (!container) {
+bool RS_Modification::rotate(RS_RotateData &data){
+    if (!container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::rotate: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity *> addList;
 
     // Create new entities
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-			num++) {
-		for(auto e: *container){
+    for (int num = 1;
+         num <= data.number || (data.number == 0 && num <= 1);
+         num++) {
+        for (auto e: *container) {
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 
-            if (e && e->isSelected()) {
-                RS_Entity* ec = e->clone();
+            if (e && e->isSelected()){
+                RS_Entity *ec = e->clone();
                 ec->setSelected(false);
 
-                ec->rotate(data.center, data.angle*num);
-                if (data.useCurrentLayer) {
+                ec->rotate(data.center, data.angle * num);
+                if (data.useCurrentLayer){
                     ec->setLayerToActive();
                 }
-                if (data.useCurrentAttributes) {
+                if (data.useCurrentAttributes){
                     ec->setPenToActive();
                 }
-                if (ec->rtti()==RS2::EntityInsert) {
-                    ((RS_Insert*)ec)->update();
+                if (ec->rtti() == RS2::EntityInsert){
+                    ((RS_Insert *) ec)->update();
                 }
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
+    LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
+    deselectOriginals(data.number == 0);
     addNewEntities(addList);
 
     return true;

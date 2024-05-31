@@ -35,7 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-
+// fixme - add reference points
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
@@ -89,26 +89,24 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetCircle: {
             deletePreview();
+            deleteHighlights();
             RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
             if (en && (en->isArc() ||
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
 
+                // fixme - it worth to rework and show all possible solutions (all tangents) - this will be more consistent with RS_ActionDrawLineTangent2 approach
                 RS_Creation creation(nullptr, nullptr);
-                tangent.reset(
-                    creation.createTangent1(mouse,
+                tangent.reset(creation.createTangent1(mouse,
                                             *point,
                                             en));
 
-
                 if (tangent){
+                    addToHighlights(en);
                     preview->addEntity(tangent->clone());
                 }
-                // clone of entity is used on preview instead of highlighting entity
-                // since arc may be part of polyline (and if it so, the polyline will not be highlighted)
-                // and so there might be no visual indication of selected entity
-                preview->addCloneOf(en);
             }
+            drawHighlights();
             drawPreview();
             break;
         }

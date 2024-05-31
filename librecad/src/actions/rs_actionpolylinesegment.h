@@ -39,41 +39,37 @@ class RS_Vector;
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineSegment : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionPolylineSegment:public RS_PreviewActionInterface {
+Q_OBJECT
     /**
      * Action States.
      */
     enum Status {
-		ChooseEntity = 0	/**< Choosing one of the polyline segments. */
+        ChooseEntity = 0 /**< Choosing one of the polyline segments. */
     };
 
 public:
-    RS_ActionPolylineSegment(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-
-    RS_ActionPolylineSegment(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView,
-                             RS_Entity* targetEntity);
-
-    void init(int status=0) override;
-
+    RS_ActionPolylineSegment(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    RS_ActionPolylineSegment(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        RS_Entity *targetEntity);
+    void init(int status = 0) override;
     void trigger() override;
-
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
+    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	//! create polyline from segments
-	//! @param useSelected only create from selected entities
-	bool convertPolyline(RS_Entity* selectedEntity, bool useSelected = false);
-
+    void updateMouseCursor() override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 private:
+
+//! create polyline from segments
+//! @param useSelected only create from selected entities
+    RS_Polyline* convertPolyline(RS_EntityContainer* cnt, RS_Entity *selectedEntity, bool useSelected = false, bool createOnly=false);
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
-
-    RS_Entity* targetEntity = nullptr;
-
-    bool initWithTarget {false};
+    RS_Entity *targetEntity = nullptr;
+    bool initWithTarget{false};
 };
 
 #endif

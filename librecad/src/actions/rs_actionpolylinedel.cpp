@@ -25,7 +25,7 @@
 **********************************************************************/
 
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actionpolylinedel.h"
@@ -33,14 +33,14 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
 #include "rs_polyline.h"
+#include "lc_actionpolylinedeletebase.h"
 
 RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Delete node",
-						   container, graphicView)
-		, delPoint(new RS_Vector{})
-{
+        :LC_ActionPolylineDeleteBase("Delete node",
+						   container, graphicView){
 	actionType=RS2::ActionPolylineDel;
 }
 
@@ -48,117 +48,115 @@ RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
 
 void RS_ActionPolylineDel::init(int status) {
     RS_ActionInterface::init(status);
-	delEntity = nullptr;
-	*delPoint = {};
-}
-
-
-
-void RS_ActionPolylineDel::trigger() {
-
-    RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
-
-		if (delEntity && delPoint->valid &&
-			delEntity->isPointOnEntity(*delPoint)) {
-
-                delEntity->setHighlighted(false);
-                graphicView->drawEntity(delEntity);
-
-                RS_Modification m(*container, graphicView);
-				delEntity = m.deletePolylineNode((RS_Polyline&)*delEntity, *delPoint );
-
-				*delPoint = RS_Vector(false);
-
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    if (status <= SetPolyline){
+        polylineToModify = nullptr;
     }
-////////////////////////////////////////2006/06/15
-                graphicView->redraw();
-////////////////////////////////////////
 }
 
+void RS_ActionPolylineDel::trigger(){
+    RS_DEBUG->print("RS_ActionPolylineDel::trigger()");
+    RS_Modification m(*container, graphicView);
+    auto createdPolyline = m.deletePolylineNode(*polylineToModify, vertexToDelete, false);
+    if (createdPolyline != nullptr){
+        polylineToModify = createdPolyline;
+        vertexToDelete = RS_Vector(false);
+        deleteHighlights();
+    }
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    graphicView->redraw();
+}
 
-
-void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent begin");
 
+    snapPoint(e);
+    int status = getStatus();
+    deleteHighlights();
+    switch (status) {
+        case SetPolyline: {
+            auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
+            if (polyline != nullptr){
+                addToHighlights(polyline);
+            }
+            break;
+        }
+        case SetVertex1:{
+            deletePreview();
+            RS_Vector vertex;
+            RS_Entity * segment;
+            getSelectedPolylineVertex(e, vertex, segment);
 
-    switch (getStatus()) {
-    case ChooseEntity:
-                break;
-
-    case SetDelPoint:
-                snapPoint(e);
-                break;
-
-    default:
-                break;
+            if (vertex.valid){
+                addToHighlights(segment);
+                addReferencePointToPreview(vertex);
+                RS_Modification m(*preview, graphicView);
+                m.deletePolylineNode(*polylineToModify, vertex, true);
+            }
+            drawPreview();
+            break;
+         }
+        default:
+            break;
     }
+    drawHighlights();
 
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionPolylineDel::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-                switch (getStatus()) {
-                case ChooseEntity:
-                    delEntity = catchEntity(e);
-					if (delEntity==nullptr) {
-                        RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                    } else if (delEntity->rtti()!=RS2::EntityPolyline) {
-
-                        RS_DIALOGFACTORY->commandMessage(
-                            tr("Entity must be a polyline."));
-                    } else {
-							snapPoint(e);
-                                delEntity->setHighlighted(true);
-                                graphicView->drawEntity(delEntity);
-                                setStatus(SetDelPoint);
-////////////////////////////////////////2006/06/15
-                                graphicView->redraw();
-////////////////////////////////////////
+void RS_ActionPolylineDel::processMouseLeftButtonRelease(QMouseEvent *e, int status){
+    switch (status) {
+        case SetPolyline: {
+            auto en = catchEntity(e);
+            if (en == nullptr){
+                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+            } else if (en->rtti() != RS2::EntityPolyline){
+                RS_DIALOGFACTORY->commandMessage(tr("Entity must be a polyline."));
+            } else {
+                snapPoint(e);
+                polylineToModify = dynamic_cast<RS_Polyline *>(en);
+                polylineToModify->setSelected(true);
+                graphicView->drawEntity(polylineToModify);
+                setStatus(SetVertex1);
+                graphicView->redraw();
+            }
+            break;
+        }
+        case SetVertex1: {
+            if (polylineToModify == nullptr){
+                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+            } else {
+                RS_Vector vertex;
+                RS_Entity * segment;
+                getSelectedPolylineVertex(e, vertex, segment);
+                if (vertex.valid){
+                    if (!polylineToModify->isPointOnEntity(vertex)){
+                        RS_DIALOGFACTORY->commandMessage(tr("Deleting point is not on entity."));
                     }
-                    break;
-
-                case SetDelPoint:
-					*delPoint = snapPoint(e);
-					if (delEntity==nullptr) {
-                                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-					} else if (!delPoint->valid) {
-                                RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
-					} else if (!delEntity->isPointOnEntity(*delPoint)) {
-                                RS_DIALOGFACTORY->commandMessage(
-                                    tr("Deleting point is not on entity."));
-                    } else {
-                                deleteSnapper();
-                                trigger();
+                    else{
+                        vertexToDelete = vertex;
+                        deleteSnapper();
+                        trigger();
                     }
-                    break;
+                }
+                else{
+                    RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
+                }
 
-                default:
-                    break;
-                }
-    } else if (e->button()==Qt::RightButton) {
-                deleteSnapper();
-                if (delEntity) {
-                delEntity->setHighlighted(false);
-                graphicView->drawEntity(delEntity);
-////////////////////////////////////////2006/06/15
-                        graphicView->redraw();
-////////////////////////////////////////
-                }
-                init(getStatus()-1);
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 
 void RS_ActionPolylineDel::updateMouseButtonHints() {
     switch (getStatus()) {
-    case ChooseEntity:
+    case SetPolyline:
                 RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to delete node"),
                                             tr("Cancel"));
                 break;
-    case SetDelPoint:
+    case SetVertex1:
                 RS_DIALOGFACTORY->updateMouseWidget(tr("Specify deleting node's point"),
                                             tr("Back"));
                 break;
@@ -167,11 +165,4 @@ void RS_ActionPolylineDel::updateMouseButtonHints() {
                 break;
     }
 }
-
-
-
-void RS_ActionPolylineDel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
-}
-
 // EOF

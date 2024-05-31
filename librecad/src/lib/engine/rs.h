@@ -80,8 +80,9 @@ namespace RS2 {
         FlagSelected1   = 1<<12,
         /** Endpoint selected */
         FlagSelected2   = 1<<13,
-                /** Entity is highlighted temporarily (as a user action feedback) */
-                FlagHighlighted = 1<<14
+        /** Entity is highlighted temporarily (as a user action feedback) */
+        FlagHighlighted = 1<<14,
+        FlagTransparent = 1<<15
     };
 
     /**
@@ -383,6 +384,7 @@ namespace RS2 {
         ActionInfoInside,
         ActionInfoDist,
         ActionInfoDist2,
+        ActionInfoDist3,
         ActionInfoAngle,
         ActionInfoTotalLength,
         ActionInfoTotalLengthNoSelect,

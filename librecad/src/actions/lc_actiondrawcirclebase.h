@@ -14,7 +14,7 @@ public:
     void init(int status = 0) override;
 protected:
     virtual void reset();
-    bool drawCirclePointsOnPreview = true; // fixme - move to options?
+    bool drawCreationPointsOnPreview = true; // fixme - move to options?
     bool moveRelPointAtCenterAfterTrigger = true; // fixme - move to options
 };
 

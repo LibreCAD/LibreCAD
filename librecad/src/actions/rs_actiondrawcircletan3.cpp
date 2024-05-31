@@ -21,7 +21,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawcircletan3.h"
@@ -41,7 +40,7 @@ namespace {
     const EntityTypeList enTypeList = {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPoint};
 }
 
-// fixme - highlighting for polyline segments
+// fixme - cleanup
 
 struct RS_ActionDrawCircleTan3::Points {
 		std::vector<RS_AtomicEntity*> circles;
@@ -71,29 +70,27 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 
 RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;
 
-void RS_ActionDrawCircleTan3::init(int status) {
-	RS_PreviewActionInterface::init(status);
-	if(status>=0) {
-		RS_Snapper::suspend();
-	}
+void RS_ActionDrawCircleTan3::init(int status){
+    RS_PreviewActionInterface::init(status);
+    if (status >= 0){
+        RS_Snapper::suspend();
+    }
 
-	if (status==SetCircle1) {
-		pPoints->circles.clear();
-	}
+    if (status == SetCircle1){
+        pPoints->circles.clear();
+    }
 }
-
 
 void RS_ActionDrawCircleTan3::finish(bool updateTB){
-	if(pPoints->circles.size()>0){
-		for(RS_AtomicEntity* const pc: pPoints->circles)
-			if(pc) pc->setHighlighted(false);
+    if (pPoints->circles.size() > 0){
+//        for (RS_AtomicEntity *const pc: pPoints->circles)
+//            if (pc) pc->setHighlighted(false);
 
-		graphicView->redraw(RS2::RedrawDrawing);
-		pPoints->circles.clear();
-	}
-	RS_PreviewActionInterface::finish(updateTB);
+        graphicView->redraw(RS2::RedrawDrawing);
+        pPoints->circles.clear();
+    }
+    RS_PreviewActionInterface::finish(updateTB);
 }
-
 
 void RS_ActionDrawCircleTan3::trigger(){
 
@@ -126,268 +123,320 @@ void RS_ActionDrawCircleTan3::trigger(){
                     " entity added: %lu", circle->getId());
 }
 
+void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
+    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent begin");
+    deleteHighlights();
+    snapPoint(e);
+    for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
+        addToHighlights(pc);
+    }
+    switch (getStatus()) {
+        case SetCircle1:
+        case SetCircle2: {
+            auto *c = catchCircle(e);
+            if (c != nullptr){
+                addToHighlights(c);
+            }
+            break;
+        }
+        case SetCircle3: {
+            auto *c = catchCircle(e);
+            if (c != nullptr){
+                bool canBuildCircle = getData(c);
+                if (canBuildCircle){
+                    addToHighlights(c);
+                }
+            }
+            break;
+        }
+        case SetCenter: {
+            pPoints->coord = graphicView->toGraph(e->position());
+            deletePreview();
+            if (preparePreview()){
+                auto *circle = new RS_Circle(preview.get(), *pPoints->cData);
+                preview->addEntity(circle);
+                for (auto &c: pPoints->candidates) {
+                    preview->addEntity(new RS_Point(nullptr, RS_PointData(c->center)));
+                }
+                for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
+                    RS_Vector candidateCircleCenter = circle->getCenter();
+                    if (pc->rtti() == RS2::EntityLine){
+                        addReferencePointToPreview(pc->getNearestPointOnEntity(candidateCircleCenter, false));
+                    }
+                    else {
+                        addReferencePointToPreview(getTangentPoint(candidateCircleCenter, circle->getRadius(), pc));
+                    }
 
-
-void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent* e) {
-	RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent begin");
-
-	switch(getStatus() ){
-	case SetCenter: {
-		//        RS_Entity*  en = catchEntity(e, enTypeList, RS2::ResolveAll);
-		pPoints->coord= graphicView->toGraph(e->position());
-		//        circles[getStatus()]=static_cast<RS_Line*>(en);
-		deletePreview();
-		if(preparePreview()) {
-			RS_Circle* e=new RS_Circle(preview.get(), *pPoints->cData);
-			preview->addEntity(e);
-			for(auto& c: pPoints->candidates){
-                preview->addEntity(new RS_Point(nullptr, RS_PointData(c->center)));
-			}
-			drawPreview();
-		}
-	}
-		break;
-	default:
-		break;
-	}
-	RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
+                }
+                drawPreview();
+            }
+            break;
+        }
+        default:
+            break;
+    }
+    drawHighlights();
+    RS_DEBUG->print("RS_ActionDrawCircleTan3::mouseMoveEvent end");
 }
 
+bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
 
-bool RS_ActionDrawCircleTan3::getData(){
-	if(getStatus() != SetCircle3) return false;
-	//find the nearest circle
-	size_t i=0;
-	size_t const countLines=std::count_if(pPoints->circles.begin(), pPoints->circles.end(), [](RS_AtomicEntity* e)->bool
-	{
-			return e->rtti()==RS2::EntityLine;
-});
+    std::vector<RS_AtomicEntity*> circlesList;
+    if (testThirdEntity != nullptr){
+        std::vector<RS_AtomicEntity *> testCirclesList = pPoints->circles;
+        auto *atomicThird = dynamic_cast<RS_AtomicEntity *>(testThirdEntity);
+        testCirclesList.push_back(atomicThird);
+        circlesList = testCirclesList;
+    }
+    else{
+        circlesList = pPoints->circles;
+    }
+//find the nearest circle
+    size_t i = 0;
+    size_t const countLines = std::count_if(circlesList.begin(), circlesList.end(), [](RS_AtomicEntity *e) -> bool{
+        return e->rtti() == RS2::EntityLine;
+    });
 
-	for(;i<pPoints->circles.size();++i)
-		if(pPoints->circles[i]->rtti() == RS2::EntityLine) break;
-	pPoints->candidates.clear();
-	size_t i1=(i+1)%3;
-	size_t i2=(i+2)%3;
-	if(i<pPoints->circles.size() && pPoints->circles[i]->rtti() == RS2::EntityLine){
-		//one or more lines
+    for (; i < circlesList.size(); ++i)
+        if (circlesList[i]->rtti() == RS2::EntityLine) break;
+    pPoints->candidates.clear();
+    size_t i1 = (i + 1) % 3;
+    size_t i2 = (i + 2) % 3;
+    if (i < circlesList.size() && circlesList[i]->rtti() == RS2::EntityLine){
+//one or more lines
 
-		LC_Quadratic lc0(pPoints->circles[i],pPoints->circles[i1],false);
-		LC_Quadratic lc1;
-		RS_VectorSolutions sol;
-		//detect degenerate case two circles with the same radius
-		switch(countLines){
-		default:
-		case 0:
-			//this should not happen
-			assert(false);
-		case 1:
-			//1 line, two circles
-		{
-			for(unsigned k=0; k<4; ++k){
-				//loop through all mirroring cases
-				lc1=LC_Quadratic(pPoints->circles[i],pPoints->circles[i1], k & 1u);
-				LC_Quadratic lc2=LC_Quadratic(pPoints->circles[i],pPoints->circles[i2], k & 2u);
-				sol.push_back(LC_Quadratic::getIntersection(lc1,lc2));
-			}
+        LC_Quadratic lc0(circlesList[i], circlesList[i1], false);
+        LC_Quadratic lc1;
+        RS_VectorSolutions sol;
+//detect degenerate case two circles with the same radius
+        switch (countLines) {
+            default:
+            case 0:
+//this should not happen
+                assert(false);
+            case 1:
+//1 line, two circles
+            {
+                for (unsigned k = 0; k < 4; ++k) {
+                    //loop through all mirroring cases
+                    lc1 = LC_Quadratic(circlesList[i], circlesList[i1], k & 1u);
+                    LC_Quadratic lc2 = LC_Quadratic(circlesList[i], circlesList[i2], k & 2u);
+                    sol.push_back(LC_Quadratic::getIntersection(lc1, lc2));
+                }
 
-		}
-			break;
-		case 2:
-			//2 lines, one circle
-		{
-			if(pPoints->circles[i2]->rtti()==RS2::EntityLine){
-				std::swap(i1, i2);
-			}
-			//i2 is circle
+            }
+                break;
+            case 2:
+//2 lines, one circle
+            {
+                if (circlesList[i2]->rtti() == RS2::EntityLine){
+                    std::swap(i1, i2);
+                }
+//i2 is circle
 
-			for(unsigned k=0; k<4; ++k){
-				//loop through all mirroring cases
-				lc1=LC_Quadratic(pPoints->circles[i2],pPoints->circles[i], k & 1u);
-				LC_Quadratic lc2=LC_Quadratic(pPoints->circles[i2],pPoints->circles[i1], k & 2u);
-				sol.push_back(LC_Quadratic::getIntersection(lc1,lc2));
-			}
-		}
-			break;
-		case 3:
-			//3 lines
-		{
-			lc0=pPoints->circles[i]->getQuadratic();
-			lc1=pPoints->circles[i1]->getQuadratic();
-			auto lc2=pPoints->circles[i2]->getQuadratic();
-			//attempt to have intersections (lc0, lc1), (lc0, lc2)
-			auto sol1=LC_Quadratic::getIntersection(lc0,lc1);
-			if(sol1.size()<1) {
-				std::swap(lc0, lc2);
-				std::swap(i, i2);
-			}
-			sol1=LC_Quadratic::getIntersection(lc0,lc2);
-			if(sol1.size()<1) {
-				std::swap(lc0, lc1);
-				std::swap(i, i1);
-			}
+                for (unsigned k = 0; k < 4; ++k) {
+                    //loop through all mirroring cases
+                    lc1 = LC_Quadratic(circlesList[i2], circlesList[i], k & 1u);
+                    LC_Quadratic lc2 = LC_Quadratic(circlesList[i2], circlesList[i1], k & 2u);
+                    sol.push_back(LC_Quadratic::getIntersection(lc1, lc2));
+                }
+            }
+                break;
+            case 3:
+//3 lines
+            {
+                lc0 = circlesList[i]->getQuadratic();
+                lc1 = circlesList[i1]->getQuadratic();
+                auto lc2 = circlesList[i2]->getQuadratic();
+//attempt to have intersections (lc0, lc1), (lc0, lc2)
+                auto sol1 = LC_Quadratic::getIntersection(lc0, lc1);
+                if (sol1.empty()){
+                    std::swap(lc0, lc2);
+                    std::swap(i, i2);
+                }
+                sol1 = LC_Quadratic::getIntersection(lc0, lc2);
+                if (sol1.empty()){
+                    std::swap(lc0, lc1);
+                    std::swap(i, i1);
+                }
 
-			RS_Line* line0=static_cast<RS_Line*>(pPoints->circles[i]);
-			RS_Line* line1=static_cast<RS_Line*>(pPoints->circles[i1]);
-			RS_Line* line2=static_cast<RS_Line*>(pPoints->circles[i2]);
-			lc0=line0->getQuadratic();
-			lc1=line1->getQuadratic();
-			lc2=line2->getQuadratic();
-			//intersection 0, 1
-			sol1=LC_Quadratic::getIntersection(lc0,lc1);
-			if(!sol1.size()) {
-				return false;
-			}
-			RS_Vector const v1=sol1.at(0);
-			double angle1=0.5*(line0->getAngle1()+line1->getAngle1());
+                auto line0 = dynamic_cast<RS_Line *>(circlesList[i]);
+                auto line1 = dynamic_cast<RS_Line *>(circlesList[i1]);
+                auto line2 = dynamic_cast<RS_Line *>(circlesList[i2]);
+                lc0 = line0->getQuadratic();
+                lc1 = line1->getQuadratic();
+                lc2 = line2->getQuadratic();
+//intersection 0, 1
+                sol1 = LC_Quadratic::getIntersection(lc0, lc1);
+                if (!sol1.size()){
+                    return false;
+                }
+                RS_Vector const v1 = sol1.at(0);
+                double angle1 = 0.5 * (line0->getAngle1() + line1->getAngle1());
 
-			//intersection 0, 2
-			sol1=LC_Quadratic::getIntersection(lc0,lc2);
-			double angle2;
-			if(sol1.size()<1) {
-				return false;
-			}
-			angle2=0.5*(line0->getAngle1()+line2->getAngle1());
-			RS_Vector const& v2=sol1.at(0);
-			//two bisector lines per intersection
-			for(unsigned j=0; j<2; ++j){
-				RS_Line l1{v1, v1+RS_Vector{angle1}};
-				for(unsigned j1=0; j1<2; ++j1){
-					RS_Line l2{v2, v2+RS_Vector{angle2}};
-					sol.push_back(RS_Information::getIntersectionLineLine(&l1, &l2));
-					angle2 += M_PI_2;
-				}
-				angle1 += M_PI_2;
-			}
-		}
-		}
+//intersection 0, 2
+                sol1 = LC_Quadratic::getIntersection(lc0, lc2);
+                double angle2;
+                if (sol1.empty()){
+                    return false;
+                }
+                angle2 = 0.5 * (line0->getAngle1() + line2->getAngle1());
+                RS_Vector const &v2 = sol1.at(0);
+//two bisector lines per intersection
+                for (unsigned j = 0; j < 2; ++j) {
+                    RS_Line l1{v1, v1 + RS_Vector{angle1}};
+                    for (unsigned j1 = 0; j1 < 2; ++j1) {
+                        RS_Line l2{v2, v2 + RS_Vector{angle2}};
+                        sol.push_back(RS_Information::getIntersectionLineLine(&l1, &l2));
+                        angle2 += M_PI_2;
+                    }
+                    angle1 += M_PI_2;
+                }
+            }
+        }
 
 
-		//line passes circle center, need a second parabola as the image of the line
-		for(int j=1;j<=2;j++){
-			if(pPoints->circles[(i+j)%3]->rtti() == RS2::EntityCircle){
+//line passes circle center, need a second parabola as the image of the line
+        for (int j = 1; j <= 2; j++) {
+            if (circlesList[(i + j) % 3]->rtti() == RS2::EntityCircle){
                 double d = RS_MAXDOUBLE;
-                pPoints->circles[i]->getNearestPointOnEntity(pPoints->circles[(i+j)%3]->getCenter(),
-						false,&d);
-				if(d<RS_TOLERANCE) {
-					LC_Quadratic lc2(pPoints->circles[i],pPoints->circles[(i+j)%3], true);
-					sol.push_back(LC_Quadratic::getIntersection(lc2,lc1));
-				}
-			}
-		}
+                circlesList[i]->getNearestPointOnEntity(circlesList[(i + j) % 3]->getCenter(),
+                                                        false, &d);
+                if (d < RS_TOLERANCE){
+                    LC_Quadratic lc2(circlesList[i], circlesList[(i + j) % 3], true);
+                    sol.push_back(LC_Quadratic::getIntersection(lc2, lc1));
+                }
+            }
+        }
 
-		//clean up duplicate and invalid
-		RS_VectorSolutions sol1;
-		for(const RS_Vector& vp: sol){
-			if(vp.magnitude()>RS_MAXDOUBLE) continue;
-			if(sol1.size() && sol1.getClosestDistance(vp)<RS_TOLERANCE) continue;
-			sol1.push_back(vp);
-		}
+//clean up duplicate and invalid
+        RS_VectorSolutions sol1;
+        for (const RS_Vector &vp: sol) {
+            if (vp.magnitude() > RS_MAXDOUBLE) continue;
+            if (!sol1.empty() && sol1.getClosestDistance(vp) < RS_TOLERANCE) continue;
+            sol1.push_back(vp);
+        }
 
-		for(auto const& v: sol1){
+        for (auto const &v: sol1) {
             double d = RS_MAXDOUBLE;
-            pPoints->circles[i]->getNearestPointOnEntity(v,false,&d);
-			auto data = std::make_shared<RS_CircleData>(v,d);
-			if(pPoints->circles[(i+1)%3]->isTangent(*data)==false) continue;
-			if(pPoints->circles[(i+2)%3]->isTangent(*data)==false) continue;
-			pPoints->candidates.push_back(data);
-		}
+            circlesList[i]->getNearestPointOnEntity(v, false, &d);
+            auto data = std::make_shared<RS_CircleData>(v, d);
+            if (circlesList[(i + 1) % 3]->isTangent(*data) == false) continue;
+            if (circlesList[(i + 2) % 3]->isTangent(*data) == false) continue;
+            pPoints->candidates.push_back(data);
+        }
 
-	} else {
-		RS_Circle c{nullptr, *pPoints->cData};
-		auto solutions=c.createTan3(pPoints->circles);
-		pPoints->candidates.clear();
-		for(const RS_Circle& s: solutions){
-			pPoints->candidates.push_back(std::make_shared<RS_CircleData>(s.getData()));
-		}
-	}
-	pPoints->valid = ( pPoints->candidates.size() >0);
-	return pPoints->valid;
+    } else {
+        RS_Circle c{nullptr, *pPoints->cData};
+        auto solutions = c.createTan3(circlesList);
+        pPoints->candidates.clear();
+        for (const RS_Circle &s: solutions) {
+            pPoints->candidates.push_back(std::make_shared<RS_CircleData>(s.getData()));
+        }
+    }
+    pPoints->valid = !pPoints->candidates.empty();
+    return pPoints->valid;
 }
 
 bool RS_ActionDrawCircleTan3::preparePreview(){
-	if(getStatus() != SetCenter || pPoints->valid==false) {
-		pPoints->valid=false;
-		return false;
-	}
-	//find the nearest circle
-	size_t index=pPoints->candidates.size();
-	double dist=RS_MAXDOUBLE*RS_MAXDOUBLE;
-	for(size_t i=0;i<pPoints->candidates.size();++i){
+    if (getStatus() != SetCenter || pPoints->valid == false){
+        pPoints->valid = false;
+        return false;
+    }
+//find the nearest circle
+    size_t index = pPoints->candidates.size();
+    double dist = RS_MAXDOUBLE * RS_MAXDOUBLE;
+    for (size_t i = 0; i < pPoints->candidates.size(); ++i) {
 
-		preview->addEntity(new RS_Point(preview.get(), RS_PointData(pPoints->candidates.at(i)->center)));
+        preview->addEntity(new RS_Point(preview.get(), RS_PointData(pPoints->candidates.at(i)->center)));
         double d = RS_MAXDOUBLE;
-		RS_Circle(nullptr, *pPoints->candidates.at(i)).getNearestPointOnEntity(pPoints->coord,false,&d);
-		double dCenter=pPoints->coord.distanceTo(pPoints->candidates.at(i)->center);
-		d=std::min(d,dCenter);
-		if(d<dist){
-			dist=d;
-			index=i;
-		}
-	}
-	if( index<pPoints->candidates.size()){
-		pPoints->cData=pPoints->candidates.at(index);
-		pPoints->valid=true;
-	}else{
-		pPoints->valid=false;
-	}
-	return pPoints->valid;
+        RS_Circle(nullptr, *pPoints->candidates.at(i)).getNearestPointOnEntity(pPoints->coord, false, &d);
+        double dCenter = pPoints->coord.distanceTo(pPoints->candidates.at(i)->center);
+        d = std::min(d, dCenter);
+        if (d < dist){
+            dist = d;
+            index = i;
+        }
+    }
+    if (index < pPoints->candidates.size()){
+        pPoints->cData = pPoints->candidates.at(index);
+        pPoints->valid = true;
+    } else {
+        pPoints->valid = false;
+    }
+    return pPoints->valid;
 }
 
-RS_Entity* RS_ActionDrawCircleTan3::catchCircle(QMouseEvent* e) {
-    RS_Entity* ret=nullptr;
-	RS_Entity*  en = catchEntity(e,enTypeList, RS2::ResolveAll);
-	if (!en) return ret;
-	if (!en->isVisible()) return ret;
-	for(int i=0;i<getStatus();++i) {
-		if(en->getId() == pPoints->circles[i]->getId()) return ret; //do not pull in the same line again
-	}
-	if(en->getParent()) {
-		if ( en->getParent()->ignoredOnModification()){
+RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e){
+    RS_Entity *ret = nullptr;
+    RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+    if (!en) return ret;
+    if (!en->isVisible()) return ret;
+    for (int i = 0; i < getStatus(); ++i) {
+        if (en->getId() == pPoints->circles[i]->getId()) return ret; //do not pull in the same line again
+    }
+    if (en->getParent()){
+        if (en->getParent()->ignoredOnModification()){
             return nullptr;
-		}
-	}
-	return en;
+        }
+    }
+    return en;
 }
 
-void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent* e) {
-	// Proceed to next status
-	if (e->button()==Qt::LeftButton) {
+void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent *e){
+// Proceed to next status
+    if (e->button() == Qt::LeftButton){
 
-		switch (getStatus()) {
-		case SetCircle1:
-		case SetCircle2:
-		case SetCircle3: {
-			RS_Entity*  en = catchCircle(e);
-			if (!en) return;
-			pPoints->circles.resize(getStatus());
-			for(const RS_AtomicEntity* const pc: pPoints->circles)
-				if(pc == en) continue;
-			pPoints->circles.push_back(static_cast<RS_AtomicEntity*>(en));
-			if(getStatus()<=SetCircle2 || (getStatus()==SetCircle3 && getData())){
-				pPoints->circles.at(pPoints->circles.size()-1)->setHighlighted(true);
-				graphicView->redraw(RS2::RedrawDrawing);
-				setStatus(getStatus()+1);
-			}
-		}
-			break;
-		case SetCenter:
-			pPoints->coord= graphicView->toGraph(e->position());
-			if( preparePreview()) trigger();
-			break;
+        switch (getStatus()) {
+            case SetCircle1:
+            case SetCircle2:{
+                RS_Entity *en = catchCircle(e);
+                if (en != nullptr){
+                    pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
+                    for (const RS_AtomicEntity *const pc: pPoints->circles)
+                        if (pc == en) continue;
+                    pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+                    setStatus(getStatus() + 1);
+                }
+                break;
+            }
+            case SetCircle3: {
+                RS_Entity *en = catchCircle(e);
+                if (en != nullptr){
+                    pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
+                    for (const RS_AtomicEntity *const pc: pPoints->circles)
+                        if (pc == en) continue;
 
-		default:
-			break;
-		}
-	} else if (e->button()==Qt::RightButton) {
-		// Return to last status:
-		if(getStatus()>0){
-			pPoints->circles[getStatus()-1]->setHighlighted(false);
-			pPoints->circles.pop_back();
-			graphicView->redraw(RS2::RedrawDrawing);
-			deletePreview();
-		}
-		init(getStatus()-1);
-	}
+                    if (getData(en)){
+                        pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+//                    pPoints->circles.at(pPoints->circles.size() - 1)->setHighlighted(true);
+//                    graphicView->redraw(RS2::RedrawDrawing);
+                        setStatus(getStatus() + 1);
+                    }
+                    else {
+                        RS_DIALOGFACTORY->commandMessage(tr("No common tangential circle for selected entities"));
+                    }
+                }
+                break;
+            }
+            case SetCenter:
+                pPoints->coord = graphicView->toGraph(e->position());
+                if (preparePreview()) trigger();
+                break;
+
+            default:
+                break;
+        }
+    } else if (e->button() == Qt::RightButton){
+// Return to last status:
+        if (getStatus() > 0){
+            pPoints->circles[getStatus() - 1]->setHighlighted(false);
+            pPoints->circles.pop_back();
+            graphicView->redraw(RS2::RedrawDrawing);
+            deletePreview();
+        }
+        init(getStatus() - 1);
+    }
 }
 
 
@@ -479,6 +528,19 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
 
 void RS_ActionDrawCircleTan3::updateMouseCursor() {
 	graphicView->setMouseCursor(RS2::SelectCursor);
+}
+
+RS_Vector RS_ActionDrawCircleTan3::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle){
+    bool calcTangentFromOriginalCircle = (creatingCircleCenter.distanceTo(circle->getCenter()) < circle->getRadius()) &&
+                                         (creatingCircleRadius < circle->getRadius());
+
+    const RS_Vector &circleCenter = circle->getCenter();
+    if (calcTangentFromOriginalCircle){
+        return circleCenter + RS_Vector::polar(circle->getRadius(), circleCenter.angleTo(creatingCircleCenter));
+    }
+    else{
+        return creatingCircleCenter + RS_Vector::polar(creatingCircleRadius, creatingCircleCenter.angleTo(circleCenter));
+    }
 }
 
 // EOF

@@ -31,6 +31,11 @@
 
 struct RS_MirrorData;
 
+
+// fixme - mirror for specific point (via reference point and distance)?
+// fixme - mirror by selected line
+// fixme - remove dialog
+// fixme - options widget
 /**
  * This action class can handle user events to mirror entities.
  *

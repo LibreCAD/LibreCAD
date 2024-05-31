@@ -26,7 +26,8 @@
 #ifndef RS_ACTIONPOLYLINEDELBETWEEN_H
 #define RS_ACTIONPOLYLINEDELBETWEEN_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actionpolylinedeletebase.h"
 
 class RS_AtomicEntity;
 
@@ -35,38 +36,23 @@ class RS_AtomicEntity;
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineDelBetween : public RS_PreviewActionInterface {
-	Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-    	ChooseSegment,		/**< Choosing segment of existing polyline to delete between two nodes. */
-        SetNodePoint1,    /**< Setting the node's point1. */
-        SetNodePoint2       /**< Setting the node's point2. */
-    };
+class RS_ActionPolylineDelBetween:public LC_ActionPolylineDeleteBase {
+Q_OBJECT
 
 public:
-    RS_ActionPolylineDelBetween(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionPolylineDelBetween() override;
+    RS_ActionPolylineDelBetween(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionPolylineDelBetween() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-private:
-    RS_Entity* delEntity = nullptr;
-    RS_AtomicEntity* delSegment = nullptr;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+protected:
+    RS_Vector vertexToDelete2 = RS_Vector(false);
+    void processMouseLeftButtonRelease(QMouseEvent *e, int status) override;
+    void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);
 };
 
 #endif

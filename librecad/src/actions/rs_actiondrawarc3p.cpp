@@ -24,12 +24,12 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawarc.h"
 #include "rs_actiondrawarc3p.h"
 #include "rs_arc.h"
+#include "rs_point.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
@@ -56,7 +56,7 @@ struct RS_ActionDrawArc3P::Points {
 
 RS_ActionDrawArc3P::RS_ActionDrawArc3P(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw arcs 3P",
+        :LC_ActionDrawCircleBase("Draw arcs 3P",
 						   container, graphicView)
         , pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionDrawArc3P;
@@ -91,7 +91,11 @@ void RS_ActionDrawArc3P::trigger(){
         }
 
         graphicView->redraw(RS2::RedrawDrawing);
-        graphicView->moveRelativeZero(arc->getEndpoint());
+        RS_Vector rz = arc->getEndpoint();
+        if (moveRelPointAtCenterAfterTrigger){
+            rz = arc->getCenter();
+        }
+        graphicView->moveRelativeZero(rz);
 
         setStatus(SetPoint1);
         reset();
@@ -128,6 +132,9 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
 
                 deletePreview();
                 preview->addEntity(line);
+                if (drawCreationPointsOnPreview){
+                    preview->addEntity(new RS_Point(preview.get(), pPoints->point1));
+                }
                 drawPreview();
             }
             break;
@@ -140,6 +147,10 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
 
                 deletePreview();
                 preview->addEntity(arc);
+                if (drawCreationPointsOnPreview){
+                    preview->addEntity(new RS_Point(preview.get(), pPoints->point1));
+                    preview->addEntity(new RS_Point(preview.get(), pPoints->point2));
+                }
                 drawPreview();
             }
             break;
@@ -229,9 +240,6 @@ void RS_ActionDrawArc3P::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionDrawArc3P::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
-}
 
 // EOF
 

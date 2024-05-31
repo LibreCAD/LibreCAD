@@ -37,13 +37,14 @@ class RS_Polyline;
  */
 class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {//public RS_PreviewActionInterface {
 	Q_OBJECT
-//public:
-    // /**
-    //  * Action States.
-    //  */
+
+     /**
+      * Action States.
+      */
 //	enum Status {
-//		SetStartpoint,   /**< Setting the startpoint.  */
-//		SetNextPoint	  /**< Setting the endpoint. */
+//     SetPolyline,
+//		   SetStartpoint,   /**< Setting the startpoint.  */
+//		   SetNextPoint	  /**< Setting the endpoint. */
 //	};
 
 public:
@@ -72,6 +73,7 @@ public:
 //	void updateToolBar() override;
 //	void close();
     void undo();
+    void mouseMoveEvent(QMouseEvent *e) override;
 
 private:
 	/**

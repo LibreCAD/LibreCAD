@@ -31,6 +31,9 @@
 
 struct RS_MoveRotateData;
 
+// fixme - reference points,
+// fixme - remove dialog
+// fixme - options widget
 /**
  * This action class can handle user events to move and at the same
  * time rotate entities.

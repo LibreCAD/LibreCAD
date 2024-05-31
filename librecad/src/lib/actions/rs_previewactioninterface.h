@@ -30,6 +30,7 @@
 
 #include <memory>
 #include "rs_actioninterface.h"
+#include "lc_highlight.h"
 
 /**
  * This is the interface that must be implemented for all
@@ -53,6 +54,10 @@ public:
     void drawPreview();
     void deletePreview();
 
+    void deleteHighlights();
+    void drawHighlights();
+    void addToHighlights(RS_Entity *e, bool enable = true);
+
 private:
 
 protected:
@@ -61,12 +66,20 @@ protected:
      */
     std::unique_ptr<RS_Preview> preview;
     bool hasPreview = true;//whether preview is in use
+
+    std::unique_ptr<LC_Highlight> highlight;
 //    /**
 //     * Current offset of the preview.
 //     */
 //	std::unique_ptr<RS_Vector> offset;
     bool trySnapToRelZeroCoordinateEvent(const QMouseEvent *e);
     RS_Vector getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector &pos);
+    void addReferencePointToPreview(const RS_Vector &coord);
+    void addPointToPreview(const RS_Vector &coord);
+    RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos);
+    void addReferenceLineToPreview(const RS_Vector &start, const RS_Vector &end);
+    void addLineToPreview(const RS_Vector &start, const RS_Vector &end);
+    void addReferenceArcToPreview(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
 };
 
 #endif

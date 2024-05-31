@@ -883,7 +883,7 @@ bool RS_Ellipse::createFromQuadratic(const LC_Quadratic& q){
 *
 *@author Dongxu Li
 */
-bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
+bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines, std::vector<RS_Vector> &tangent)
 {
 	if(lines.size() != 4) return false; //only do 4 lines
 	std::vector<std::unique_ptr<RS_Line> > quad(4);
@@ -915,7 +915,7 @@ bool	RS_Ellipse::createInscribeQuadrilateral(const std::vector<RS_Line*>& lines)
 	}
 	//        std::cout<<"RS_Ellipse::createInscribe(): centerProjection="<<centerProjection<<std::endl;
 
-	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
+//	std::vector<RS_Vector> tangent;//holds the tangential points on edges, in the order of edges: 1 3 2 0
 	int parallel=0;
 	int parallel_index=0;
 	for(int i=0;i<=1;++i) {

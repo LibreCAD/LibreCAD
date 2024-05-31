@@ -174,7 +174,7 @@ public:
 	/** : generic quadratic: A x^2 + C xy + B y^2 + D x + E y + F =0 */
 	bool createFromQuadratic(const LC_Quadratic& q);
 	//! \}
-	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines);
+	bool createInscribeQuadrilateral(const std::vector<RS_Line*>& lines,std::vector<RS_Vector> &tangent);
 	RS_Vector getMiddlePoint(void)const override;
 	RS_Vector getNearestEndpoint(const RS_Vector& coord,
 										 double* dist = nullptr) const override;

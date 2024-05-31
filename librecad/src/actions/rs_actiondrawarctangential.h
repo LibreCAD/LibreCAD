@@ -38,54 +38,45 @@ struct RS_ArcData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawArcTangential : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawArcTangential:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-		SetBaseEntity,   /**< Setting base entity. */
-		SetEndAngle      /**< Setting end angle. */
+        SetBaseEntity,   /**< Setting base entity. */
+        SetEndAngle      /**< Setting end angle. */
     };
 
 public:
-    RS_ActionDrawArcTangential(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
-	~RS_ActionDrawArcTangential() override;
-
+    RS_ActionDrawArcTangential(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawArcTangential() override;
     void reset();
-
-	void init(int status=0) override;
-
-	void trigger() override;
+    void init(int status = 0) override;
+    void trigger() override;
     void preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
     void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	void setRadius(double r);
+    void showOptions() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setRadius(double r);
     double getRadius() const;
-
     void setAngle(double r);
     double getAngle() const;
-
-    void setByRadius(bool status=true);
+    void setByRadius(bool status = true);
     bool getByRadius() const;
 
 protected:
     /**
      * Base entity.
      */
-    RS_AtomicEntity* baseEntity = nullptr;
+    RS_AtomicEntity *baseEntity = nullptr;
     /**
   * Start point of base entity clicked?
   */
@@ -93,11 +84,11 @@ protected:
     /**
      * Point that determines end angle.
      */
-	std::unique_ptr<RS_Vector> point;
+    std::unique_ptr<RS_Vector> point;
     /**
   * Arc data calculated.
   */
-	std::unique_ptr<RS_ArcData> data;
+    std::unique_ptr<RS_ArcData> data;
 private:
     void readSettings();
     void saveSettings() const;

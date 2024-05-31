@@ -34,45 +34,42 @@ struct RS_CircleData;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleInscribe : public LC_ActionDrawCircleBase {
-        Q_OBJECT
+class RS_ActionDrawCircleInscribe:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-		SetLine1,   //  Setting the First Line.  */
+        SetLine1,   //  Setting the First Line.  */
         SetLine2,   //  Setting the Second Line.  */
         SetLine3   //  Setting the Third Line.  */
     };
 
 public:
-    RS_ActionDrawCircleInscribe(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleInscribe() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	//        void coordinateEvent(RS_CoordinateEvent* e) override;
-	//    void commandEvent(RS_CommandEvent* e) override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+    RS_ActionDrawCircleInscribe(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircleInscribe() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+//        void coordinateEvent(RS_CoordinateEvent* e) override;
+//    void commandEvent(RS_CommandEvent* e) override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 private:
-	/**
+
+    bool preparePreview(RS_Line *en);
+    /**
 	 * @brief clearLines unset highlighten lines, and clear the vector "lines"
 	 * @param checkStatus keep lines members according to getStatus()
 	 */
-	void clearLines(bool checkStatus=false);
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    void clearLines(bool checkStatus = false);
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     bool valid = false;
 };
 

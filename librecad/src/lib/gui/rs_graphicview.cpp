@@ -1084,13 +1084,17 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& p
                 pen.setColor(m_colorData->highlightedColor);
             }
         }
+
+        if (e->isTransparent()){
+            pen.setColor(m_colorData->background);
+        }
 	}
 
 	// deleting not drawing:
 	if (getDeleteMode()) {
         pen.setColor(m_colorData->background);
 	}
-
+// LC_ERR << "PEN " << pen.getColor().name() << "Width: " << pen.getWidth() <<  " | " << pen.getScreenWidth() << " LT " << pen.getLineType();
 	painter->setPen(pen);
 }
 
@@ -1723,6 +1727,24 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
 	redraw(RS2::RedrawOverlay);
 }
 
+/**
+ * utility class - it's necessary for proper drawing of entities (such as RS_Point) in overlay
+ * which require Graphic for their drawing.
+ * todo - potentially, for usage in preview and overlay, it's better to have separate point entity that will not require variables and will not depend on settings - and so will use own drawing?
+ */
+class OverlayEntityContainer:public RS_EntityContainer{
+public:
+    OverlayEntityContainer(RS_Graphic* g):RS_EntityContainer(nullptr){
+        graphic = g;
+    }
+
+    RS_Graphic *getGraphic() const override{
+        return graphic;
+    }
+
+    RS_Graphic* graphic;
+};
+void isRelativeZeroHidden();
 
 /**
  * Gets the specified overlay container.
@@ -1732,8 +1754,12 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
     if (overlayEntities[position]) {
         return overlayEntities[position];
     }
-
-    overlayEntities[position]=new RS_EntityContainer(nullptr);
+    if (position == RS2::OverlayGraphics::OverlayEffects){
+        overlayEntities[position]=new OverlayEntityContainer(getGraphic());
+    }
+    else {
+        overlayEntities[position] = new RS_EntityContainer(nullptr);
+    }
     if (position == RS2::OverlayEffects) {
         overlayEntities[position]->setOwner(true);
     }
@@ -1942,6 +1968,10 @@ void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)
 void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
 {
     m_colorData->hideRelativeZero = isHidden;
+}
+
+bool RS_GraphicView::isRelativeZeroHidden(){
+    return m_colorData->hideRelativeZero;
 }
 
 RS2::EntityType RS_GraphicView::getTypeToSelect() const{

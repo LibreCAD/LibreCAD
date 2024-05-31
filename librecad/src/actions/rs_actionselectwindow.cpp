@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionselectwindow.h"
@@ -40,7 +38,6 @@ struct RS_ActionSelectWindow::Points {
     RS_Vector v1;
     RS_Vector v2;
 };
-
 
 /**
  * Constructor.
@@ -82,35 +79,31 @@ void RS_ActionSelectWindow::init(int status) {
     //snapMode.restriction = RS2::RestrictNothing;
 }
 
-
-
-void RS_ActionSelectWindow::trigger() {
+void RS_ActionSelectWindow::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    if (pPoints->v1.valid && pPoints->v2.valid) {
-        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2))>10) {
+    if (pPoints->v1.valid && pPoints->v2.valid){
+        if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
 
-            bool cross = (pPoints->v1.x>pPoints->v2.x);
-
+            bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 
             init();
         }
     }
 }
 
-
-
 void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
+    snapPoint(e);
     snapFree(e);
     drawSnapper();
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
-        pPoints->v2 = snapFree(e);
+        pPoints->v2 = graphicView->toGraph(e->position());
         deletePreview();
-        RS_OverlayBox* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
+        auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
         preview->addEntity(ob);
 
         //RLZ: not needed overlay have contour
@@ -137,13 +130,11 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
-            pPoints->v1 = snapFree(e);
+            pPoints->v1 = graphicView->toGraph(e->position());
             setStatus(SetCorner2);
             break;
 
@@ -174,8 +165,6 @@ void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionSelectWindow::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCorner1:
@@ -189,8 +178,6 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
         break;
     }
 }
-
-
 
 void RS_ActionSelectWindow::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);

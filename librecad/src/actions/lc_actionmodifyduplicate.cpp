@@ -20,6 +20,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <QList>
+#include "rs_math.h"
 #include "lc_linemath.h"
 #include "lc_duplicateoptions.h"
 #include "lc_actionmodifyduplicate.h"
@@ -62,8 +63,8 @@ void LC_ActionModifyDuplicate::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
     if (clone != nullptr){
         clone->setHighlighted(false);
 
-        // move clone if needed to offset
-        RS_Vector offset = determineOffset();
+        // move clone if needed to offset        
+        RS_Vector offset = determineOffset(triggerPoint, getEntityCenterPoint(en));
         if (offset.valid){
             clone->move(offset);
         }
@@ -76,12 +77,26 @@ void LC_ActionModifyDuplicate::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
         list<<clone;
     }
 }
+namespace {
+// todo - remove later
+//  offset transformation verctors for directions of offset - for each 45 degress. 
+    const std::vector<RS_Vector> offsetDirectionVectors{
+        RS_Vector(1, 0), // 0
+        RS_Vector(1, 1), // 45
+        RS_Vector(0, 1), // 90
+        RS_Vector(-1, 1), // 135    
+        RS_Vector(-1, 0), // 180
+        RS_Vector(-1, -1), // 225
+        RS_Vector(0, -1), // 270
+        RS_Vector(1, -1), // 315    
+    };
+}
 
 /**
  * Calculate vector that will be used for moving entity duplicate
  * @return
  */
-RS_Vector LC_ActionModifyDuplicate::determineOffset() const{
+RS_Vector LC_ActionModifyDuplicate::determineOffset(RS_Vector& snapOfOffset, const RS_Vector& center) const{
     RS_Vector offset(false);
     if (!duplicateInplace){
         bool moveX = LC_LineMath::isMeaningful(offsetX);
@@ -92,6 +107,21 @@ RS_Vector LC_ActionModifyDuplicate::determineOffset() const{
             double mx = LC_LineMath::getMeaningful(offsetX);
             double my = LC_LineMath::getMeaningful(offsetY);
             offset = RS_Vector(mx, my, 0.0);
+        }       
+        if (snapOfOffset.valid){
+            double angle = center.angleTo(snapOfOffset);
+            double correctedAngle = RS_Math::correctAngle(angle);
+            /**
+            int mode = correctedAngle / M_PI_4;
+            
+//            if (mode >= 0 && mode << 8){
+             */
+//                RS_Vector offsetDirection = offsetDirectionVectors.at(mode);
+                RS_Vector offsetDirection = RS_Vector(std::cos(correctedAngle), std::sin(correctedAngle), 0);
+                // prepare vector we'll use for moving shape
+                RS_Vector resultingOffset = offsetDirection * offset;
+                offset = resultingOffset;
+//            }
         }
     }
     return offset;
@@ -99,22 +129,50 @@ RS_Vector LC_ActionModifyDuplicate::determineOffset() const{
 
 void LC_ActionModifyDuplicate::doAfterTrigger(){
     LC_AbstractActionWithPreview::doAfterTrigger();
-    selectedEntity = nullptr;
+    triggerPoint = RS_Vector{false};
+    int status = getStatus();
+    if (status == SelectEntity){
+        selectedEntity = nullptr;
+    }
+    else if (status == SetOffsetDirection){
+        // stay in the same status
+//        setStatus(SelectEntity);
+    }
+    else{
+        finishAction();
+    }
 }
 
 void LC_ActionModifyDuplicate::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, [[maybe_unused]]const RS_Vector &snapPoint){
-    if (status == SelectEntity){
-        RS_Entity *en = catchEntity(e, RS2::ResolveNone);
-        if (en != nullptr){
-            // just call trigger for duplicate creation
-            selectedEntity = en;
-            trigger();
+    switch (status) {
+        case SelectEntity: {
+            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+            if (en != nullptr){
+                // just call trigger for duplicate creation
+                selectedEntity = en;
+                if (alternativeActionMode && !duplicateInplace){
+                    RS_Vector center = getEntityCenterPoint(selectedEntity);
+                    moveRelativeZero(center);
+                    setStatus(SetOffsetDirection);
+                } else {
+                    trigger();
+                }
+            }
+            break;
         }
+        case SetOffsetDirection:
+//            if (alternativeActionMode){
+                triggerPoint = snapPoint;
+//            }
+            trigger();
+            break;
+        default:
+            break;
     }
 }
 
 bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
-    return status ==  SelectEntity;
+    return status ==  SelectEntity || SetOffsetDirection;
 }
 
 /**
@@ -125,25 +183,64 @@ bool LC_ActionModifyDuplicate::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
  * @param status
  */
 void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
-    RS_Entity *en = catchEntity(e, RS2::ResolveNone);
-    if (en != nullptr){
-        // highlight original
-        highlightEntity(en);
+    switch (status){
+        case SelectEntity:{
+            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+            if (en != nullptr){
+                // highlight original
+                addToHighlights(en);
 
-        // handle offset - if it is present, create a clone of snapped entity and display it for preview
-        RS_Vector offset = determineOffset();
-        if (offset.valid){
-            RS_Entity *clone = en->clone();
-            clone->move(offset);
-            list << clone;
+                // handle offset - if it is present, create a clone of snapped entity and display it for preview
+                auto snapForOffset = RS_Vector(false);
+                RS_Vector offset = determineOffset(snapForOffset, getEntityCenterPoint(en));
+                if (offset.valid){
+                    RS_Entity *clone = en->clone();
+                    clone->move(offset);
+                    list << clone;
+                }
+            }
+            break;
         }
+        case SetOffsetDirection:{
+            if (selectedEntity != nullptr){
+                addToHighlights(selectedEntity);
+                auto snapOffset = RS_Vector(false);
+//                if (alternativeActionMode){
+                    snapOffset = snap;
+//                }
+                const RS_Vector &center = getEntityCenterPoint(selectedEntity);
+                addReferenceLineToPreview(center, snap);
+                RS_Vector offset = determineOffset(snapOffset, center);
+                if (offset.valid){
+                    RS_Entity *clone = selectedEntity->clone();
+                    clone->move(offset);
+                    const RS_Vector newCenter = getEntityCenterPoint(clone);
+                    addReferencePointToPreview(newCenter);
+                    list << clone;
+                }
+            }
+            break;
+        }
+        default:
+          break;
     }
+}
+
+RS_Vector LC_ActionModifyDuplicate::getEntityCenterPoint(const RS_Entity *en) const{
+    RS_Vector result =  en->getCenter();
+    if (!result.valid){
+        result = (en->getMin() + en->getMax())/2;
+    }
+    return result;
 }
 
 void LC_ActionModifyDuplicate::updateMouseButtonHints(){
     switch (getStatus()){
         case SelectEntity:
             updateMouseWidgetTR("Select entity to duplicate", "Cancel");
+            break;
+        case SetOffsetDirection:
+            updateMouseWidgetTR("Select direction of offset", "Cancel");
             break;
         default:
             LC_AbstractActionWithPreview::updateMouseButtonHints();
@@ -156,6 +253,17 @@ void LC_ActionModifyDuplicate::createOptionsWidget(){
 
 RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int status){
     return RS2::SelectCursor;
+}
+
+RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
+    RS_Vector snapped = snapPoint(e);
+    // Snapping to angle(15*) if shift key is pressed
+    if (selectedEntity != nullptr){
+        if (alternativeActionMode){
+            snapped = snapToAngle(snapped, getEntityCenterPoint(selectedEntity) /*,45.*/);
+        }
+    }
+    return snapped;
 }
 
 

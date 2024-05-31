@@ -95,26 +95,6 @@ RS_Entity* RS_Polyline::clone() const {
 	return p;
 }
 
-
-bool RS_Polyline::toggleSelected()
-{
-    if (!isSelected())
-    {
-        highlightedVertex = getNearestRef(QC_ApplicationWindow::getAppWindow()->getMouseAbsolutePosition());
-
-        QC_ApplicationWindow::getAppWindow()->getGraphicView()->moveRelativeZero(highlightedVertex);
-    }
-
-    return this->setSelected(!isSelected());
-}
-
-
-RS_Vector RS_Polyline::getHighlightedVertex()
-{
-    return highlightedVertex;
-}
-
-
 /**
  * Removes the last vertex of this polyline.
  */

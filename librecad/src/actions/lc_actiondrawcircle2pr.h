@@ -54,7 +54,7 @@ public:
     bool preparePreview(const RS_Vector& mouse);
 	
 	void mouseMoveEvent(QMouseEvent* e) override;
-
+ void mouseReleaseEvent(QMouseEvent *e) override;
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;

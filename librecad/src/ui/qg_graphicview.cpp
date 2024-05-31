@@ -941,7 +941,7 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     e->accept();
 }
 
-
+// fixme - move by keyboard support!!!
     void QG_GraphicView::keyPressEvent(QKeyEvent * e)
     {
         if (container == nullptr) {

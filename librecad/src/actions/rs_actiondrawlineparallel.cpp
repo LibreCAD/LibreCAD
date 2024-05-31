@@ -82,7 +82,7 @@ void RS_ActionDrawLineParallel::trigger(){
                         " No parallels added\n");
     }
 }
-#define HIGHLIGHT_ORIGINAL_ENTITY_ON_PREVIEW
+
 
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
@@ -94,15 +94,16 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     switch (getStatus()) {
         case SetEntity: {
             deletePreview();
+            deleteHighlights();
             if (entity != nullptr){
                 RS_Creation creation(preview.get(), nullptr, false);
-                creation.createParallel(*coord,
+                RS_Entity* createdParallel = creation.createParallel(*coord,
                                         distance, number,
                                         entity);
-
-#ifdef HIGHLIGHT_ORIGINAL_ENTITY_ON_PREVIEW
-                preview->addCloneOf(entity);
-#endif
+                if (createdParallel != nullptr){
+                    addToHighlights(entity);
+                }
+                drawHighlights();
             }
             drawPreview();
             break;

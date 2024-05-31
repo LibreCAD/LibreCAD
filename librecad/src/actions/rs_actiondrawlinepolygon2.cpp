@@ -25,7 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinepolygon2.h"
@@ -33,6 +32,8 @@
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
 #include "rs_debug.h"
+#include "rs_point.h"
+#include "rs_math.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
@@ -43,6 +44,9 @@ struct RS_ActionDrawLinePolygonCorCor::Points {
 	/** 2nd corner */
 	RS_Vector corner2;
 };
+
+// fixme - support creation of polygone as polyline
+// fixme - support of rounded corners
 
 RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
     RS_EntityContainer& container,
@@ -56,6 +60,7 @@ RS_ActionDrawLinePolygonCorCor::RS_ActionDrawLinePolygonCorCor(
 }
 
 RS_ActionDrawLinePolygonCorCor::~RS_ActionDrawLinePolygonCorCor() = default;
+
 
 void RS_ActionDrawLinePolygonCorCor::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -83,8 +88,16 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetCorner2: {
             if (pPoints->corner1.valid){
+                mouse = getSnapAngleAwarePoint(e, pPoints->corner1, mouse);
                 pPoints->corner2 = mouse;
                 deletePreview();
+                addReferencePointToPreview(pPoints->corner1);
+
+                RS_Vector center = determinePolygonCenter();
+
+                addReferencePointToPreview(center);
+
+                addReferenceLineToPreview(center, pPoints->corner1);
 
                 RS_Creation creation(preview.get(), nullptr, false);
                 creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
@@ -98,9 +111,44 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
+RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter() const{
+    // angle for edge
+    double edgeAngle = this->pPoints->corner1.angleTo(this->pPoints->corner2);
+
+    // rotate second corner so edge will be horizontal
+    RS_Vector rotatedCorner2 = this->pPoints->corner2;
+    rotatedCorner2 = rotatedCorner2.rotate(this->pPoints->corner1, -edgeAngle);
+
+    // half inner angle of polygon
+    double angleFromCornerToCenter = RS_Math::deg2rad(90 * (this->number - 2) / this->number);
+
+    // middle point of edge
+    RS_Vector edgeCenter = (this->pPoints->corner1 + rotatedCorner2) * 0.5;
+
+    // distance between corner and edge center
+    double distanceToEdgeCenter = this->pPoints->corner1.distanceTo(edgeCenter);
+
+    // leg of triangle with vertexes in corner1, edgeCenter and polygon center
+    double distanceToPolygonCenter =  distanceToEdgeCenter * tan(angleFromCornerToCenter);
+
+    //normal angle to center of polygon from edge center - depends on whether center is on left or on right from the corner
+    double normalAngle = (edgeCenter.x > this->pPoints->corner1.x) ? M_PI_2 : - M_PI_2;
+
+    // position of rotate polygon center
+    RS_Vector center = edgeCenter + RS_Vector::polar(distanceToPolygonCenter, normalAngle);
+
+    // actual position of center taking into consideration rotation of the edge
+    center = center.rotate(this->pPoints->corner1, edgeAngle);
+    return center;
+}
+
 void RS_ActionDrawLinePolygonCorCor::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector coord = snapPoint(e);
+        if (getStatus() == SetCorner2){
+            coord = getSnapAngleAwarePoint(e, pPoints->corner1, coord);
+        }
+        RS_CoordinateEvent ce(coord);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

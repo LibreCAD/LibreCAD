@@ -38,8 +38,8 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionInfoDist2 : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionInfoDist2:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -50,23 +50,23 @@ public:
     };
 
 public:
-    RS_ActionInfoDist2(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionInfoDist2() override;
-
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionInfoDist2(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        bool fromPointToEntity = false);
+    ~RS_ActionInfoDist2() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
 private:
-    RS_Entity* entity = nullptr;
-	std::unique_ptr<RS_Vector> point;
+    RS_Entity *entity = nullptr;
+    RS_Vector point = RS_Vector(false);
+    bool fromPointToEntity = false;
 };
 
 #endif

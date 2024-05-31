@@ -244,6 +244,7 @@ public slots:
 	void slotInfoInside();
 	void slotInfoDist();
 	void slotInfoDist2();
+ void slotInfoDist3();
 	void slotInfoAngle();
 	void slotInfoTotalLength();
 	void slotInfoArea();
@@ -282,7 +283,7 @@ public slots:
     void slotModifyLineGap();
 
     void slotOptionsDrawing();
-    void slotDeletePolylineNodePromptly();
+
 
     void toggleVisibility(RS_Layer* layer);
     void toggleLock(RS_Layer* layer);

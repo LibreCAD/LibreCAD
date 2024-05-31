@@ -570,15 +570,6 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("PolylineDel");
     a_map["PolylineDel"] = action;
 
-    action = new QAction(tr("&Delete a polyline node promptly"), agm->polyline);
-    action->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::Key_Delete)
-                                               << QKeySequence(Qt::CTRL | Qt::Key_Backspace));
-    action->setIcon(QIcon(":/icons/delete_node.svg"));
-    connect(action, SIGNAL(triggered()),
-    action_handler, SLOT(slotDeletePolylineNodePromptly()));
-    action->setObjectName("DeletePolylineNodePromptly");
-    a_map["DeletePolylineNodePromptly"] = action;
-
     action = new QAction(tr("Delete &between two nodes"), agm->polyline);
     action->setShortcut(QKeySequence());
     action->setIcon(QIcon(":/icons/delete_between_nodes.svg"));
@@ -938,6 +929,13 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action_handler, SLOT(slotInfoDist2()));
     action->setObjectName("InfoDist2");
     a_map["InfoDist2"] = action;
+
+    action = new QAction(tr("&Distance Point to Entity"), agm->info);
+    action->setIcon(QIcon(":/icons/distance_entity_to_point.svg"));
+    connect(action, SIGNAL(triggered()),
+            action_handler, SLOT(slotInfoDist3()));
+    action->setObjectName("InfoDist3");
+    a_map["InfoDist3"] = action;
 
     action = new QAction(tr("An&gle between two lines"), agm->info);
     action->setIcon(QIcon(":/icons/angle_line_to_line.svg"));

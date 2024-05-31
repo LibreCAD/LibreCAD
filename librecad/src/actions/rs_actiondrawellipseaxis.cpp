@@ -153,7 +153,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 preview->addEntity(new RS_Ellipse{preview.get(),
                                                   {pPoints->center, mouse - pPoints->center, 0.5, 0.0,
                                                    pPoints->isArc ? 2. * M_PI : 0., false}});
-                if (drawCirclePointsOnPreview) {
+                if (drawCreationPointsOnPreview) {
                     preview->addEntity(new RS_Point(preview.get(), pPoints->center));
                     preview->addEntity(new RS_Line(preview.get(), pPoints->center, mouse));
                 }
@@ -172,7 +172,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 preview->addEntity(new RS_Ellipse{preview.get(),
                                                   {pPoints->center, pPoints->m_vMajorP, pPoints->ratio, 0., pPoints->isArc ? 2. * M_PI : 0., false}});
 
-                if (drawCirclePointsOnPreview) {
+                if (drawCreationPointsOnPreview) {
                     preview->addEntity(new RS_Point(preview.get(), pPoints->center));
                     preview->addEntity(new RS_Point(preview.get(), major2Point));
                     preview->addEntity(new RS_Point(preview.get(), major1Point));
@@ -183,8 +183,12 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
 
         case SetAngle1:
             if (pPoints->center.valid && pPoints->m_vMajorP.valid){
-                deletePreview();
+                bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+                if (shiftPressed){
+                    mouse = snapToAngle(mouse, pPoints->center);
+                }
 
+                deletePreview();
                 //angle1 = center.angleTo(mouse);
 
                 RS_Vector m = mouse;
@@ -198,7 +202,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 preview->addEntity(new RS_Ellipse{preview.get(),
                                                   {pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle1 + 1.0, false}});
 
-                if (drawCirclePointsOnPreview) {
+                if (drawCreationPointsOnPreview) {
                     preview->addEntity(new RS_Point(preview.get(), pPoints->center));
                 }
                 drawPreview();
@@ -209,6 +213,11 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
             if (pPoints->center.valid && pPoints->m_vMajorP.valid){
                 deletePreview();
                 //angle2 = center.angleTo(mouse);
+
+                bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+                if (shiftPressed){
+                    mouse = snapToAngle(mouse, pPoints->center);
+                }
 
                 RS_Vector m = mouse;
                 m.rotate(pPoints->center, -pPoints->m_vMajorP.angle());
@@ -224,12 +233,12 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                                                              pPoints->angle1, pPoints->angle2, false}};
                 preview->addEntity(previewEllipse);
 
-                if (drawCirclePointsOnPreview) {
+                if (drawCreationPointsOnPreview) {
                     preview->addEntity(new RS_Point(preview.get(), pPoints->center));
                     auto point = pPoints->center + RS_Vector{pPoints->angle1}.scale({previewEllipse->getMajorRadius(), /*-*/previewEllipse->getMinorRadius()});
                     point.rotate(pPoints->center, /*-*/ pPoints->m_vMajorP.angle());
                     preview->addEntity(new RS_Point(preview.get(), point));
-                    // fixme - restore point on arc
+                    // fixme - restore start point on arc
 //                    RS_Vector arcStart = RS_Vector::polar(pPoints->ratio / sin(pPoints->angle1),pPoints->angle1);
 //                    arcStart.rotate(pPoints->center, pPoints->m_vMajorP.angle());
 //                    preview->addEntity(new RS_Point(preview.get(), pPoints->center + arcStart));

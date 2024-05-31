@@ -28,15 +28,15 @@
 #define RS_ACTIONDRAWLINETANGENT2_H
 
 #include "rs_previewactioninterface.h"
-
+// fixme - add reference points
 /**
  * This action class can handle user events to draw tangents from circle to
  * circle.
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineTangent2 : public RS_PreviewActionInterface {
-        Q_OBJECT
+class RS_ActionDrawLineTangent2:public RS_PreviewActionInterface {
+Q_OBJECT
 private:
     enum Status {
         SetCircle1,     /**< Choose the startpoint. */
@@ -45,23 +45,22 @@ private:
     };
 
 public:
-    RS_ActionDrawLineTangent2(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLineTangent2() override;
-
-	void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
+    RS_ActionDrawLineTangent2(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawLineTangent2() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
     void init(int status) override;
-	void finish(bool updateTB) override;
-
+    void finish(bool updateTB) override;
     void updateMouseCursor() override;
-
 private:
-    void preparePreivew(QMouseEvent* e);
-	void clearHighlighted();
 
+    void cleanup();
+    void preparePreview(QMouseEvent *e);
+    void clearHighlighted();
     struct Points;
     std::unique_ptr<Points> m_pPoints;
 };

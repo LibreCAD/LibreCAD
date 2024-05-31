@@ -23,14 +23,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSEINSCRIBE_H
 #define RS_ACTIONDRAWELLIPSEINSCRIBE_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actiondrawcirclebase.h"
+
 /**
  * Draw ellipse by foci and a point on ellipse
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawEllipseInscribe : public RS_PreviewActionInterface {
-        Q_OBJECT
+class RS_ActionDrawEllipseInscribe:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -43,31 +44,27 @@ public:
     };
 
 public:
-    RS_ActionDrawEllipseInscribe(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawEllipseInscribe() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	//        void coordinateEvent(RS_CoordinateEvent* e) override;
-	//    void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+    RS_ActionDrawEllipseInscribe(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawEllipseInscribe() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+//        void coordinateEvent(RS_CoordinateEvent* e) override;
+//    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 protected:
-    // 4 points on ellipse
-private:
-	void clearLines(bool checkStatus=false);
 
-	struct Points;
+    // 4 points on ellipse
+    bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
+private:
+    void clearLines(bool checkStatus = false);
+    struct Points;
     std::unique_ptr<Points> pPoints;
 };
 

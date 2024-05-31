@@ -36,36 +36,34 @@ class RS_Entity;
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineTrim : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionPolylineTrim:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-    	ChooseEntity,			/**< Choosing existing polyline to trim. */
+        ChooseEntity,   /**< Choosing existing polyline to trim. */
         SetSegment1,    /**< Setting first segment. */
         SetSegment2       /**< Setting second segment. */
     };
 
 public:
-    RS_ActionPolylineTrim(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionPolylineTrim(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void finish(bool updateTB) override;
 
 private:
-    RS_Entity* delEntity = nullptr;
-    RS_AtomicEntity* Segment1 = nullptr;
-    RS_AtomicEntity* Segment2 = nullptr;
+    RS_Entity *polylineToModify = nullptr;
+    RS_AtomicEntity *Segment1 = nullptr;
+    RS_AtomicEntity *Segment2 = nullptr;
 };
 
 #endif

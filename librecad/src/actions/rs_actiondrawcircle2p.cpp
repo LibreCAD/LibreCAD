@@ -116,16 +116,18 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             break;
 
         case SetPoint2:
+            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse);
             pPoints->point2 = mouse;
             preparePreview();
             if (data->isValid()){
                 auto *circle = new RS_Circle(preview.get(), *data);
                 deletePreview();
                 preview->addEntity(circle);
-                if (drawCirclePointsOnPreview){
-                    preview->addEntity(new RS_Point(preview.get(),data->center));
-                    preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
-                }
+                addReferencePointToPreview(data->center);
+                addReferencePointToPreview(pPoints->point1);
+                addReferencePointToPreview(pPoints->point2);
+                addReferenceLineToPreview(data->center, pPoints->point1);
+//                    addReferenceLineToPreview(pPoints->point1, pPoints->point2);
                 drawPreview();
             }
             break;
@@ -135,6 +137,19 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
+void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
+    if (e->button()==Qt::LeftButton) {
+        RS_Vector coord = snapPoint(e);
+        if (getStatus() == SetPoint2){
+            coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        }
+        RS_CoordinateEvent ce(coord);
+        coordinateEvent(&ce);
+    } else if (e->button()==Qt::RightButton) {
+        deletePreview();
+        init(getStatus()-1);
+    }
+}
 
 void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==nullptr) {

@@ -250,5 +250,6 @@
         <file>slice_divide_circle.svg</file>
         <file>break_out_trim.svg</file>
         <file>line_gap.svg</file>
+        <file>distance_entity_to_point.svg</file>
     </qresource>
 </RCC>

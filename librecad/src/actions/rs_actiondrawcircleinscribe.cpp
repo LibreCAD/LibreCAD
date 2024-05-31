@@ -33,53 +33,46 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_preview.h"
 
 struct RS_ActionDrawCircleInscribe::Points {
-	RS_CircleData cData;
-	RS_Vector coord;
-	std::vector<RS_Line*> lines;
+    RS_CircleData cData;
+    RS_Vector coord;
+    std::vector<RS_Line *> lines;
 };
 
-// fixme - highlight lines on selection, polyline highlighting
+// fixme - cleanup, optoins
 
 /**
  * Constructor.
  *
  */
 RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionDrawCircleBase("Draw circle inscribed",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-		, valid(false)
-{
-	actionType=RS2::ActionDrawCircleInscribe;
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :LC_ActionDrawCircleBase("Draw circle inscribed",
+                             container, graphicView), pPoints(std::make_unique<Points>()), valid(false){
+    actionType = RS2::ActionDrawCircleInscribe;
 }
 
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
-void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus)
-{
-	while(pPoints->lines.size() ){
-		if(checkStatus && (int) pPoints->lines.size()<=getStatus() )
-			break;
-		pPoints->lines.back()->setHighlighted(false);
-		graphicView->drawEntity(pPoints->lines.back());
-		pPoints->lines.pop_back();
-	}
+void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
+    while (pPoints->lines.size()) {
+        if (checkStatus && (int) pPoints->lines.size() <= getStatus())
+            break;
+        pPoints->lines.pop_back();
+    }
 }
 
-
-void RS_ActionDrawCircleInscribe::init(int status) {
+void RS_ActionDrawCircleInscribe::init(int status){
     RS_PreviewActionInterface::init(status);
-    if(status>=0) {
+    if (status >= 0){
         RS_Snapper::suspend();
-	}
-	clearLines(true);
+    }
+    clearLines(true);
 }
 
 void RS_ActionDrawCircleInscribe::finish(bool updateTB){
-	clearLines();
-	RS_PreviewActionInterface::finish(updateTB);
+    clearLines();
+    RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionDrawCircleInscribe::trigger(){
@@ -88,6 +81,7 @@ void RS_ActionDrawCircleInscribe::trigger(){
     auto *circle = new RS_Circle(container, pPoints->cData);
 
     deletePreview();
+    deleteHighlights();
     container->addEntity(circle);
 
     // upd. undo list:
@@ -111,54 +105,60 @@ void RS_ActionDrawCircleInscribe::trigger(){
 
 void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent begin");
-
-    if (getStatus() == SetLine3){
-        RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-        if (!en) return;
-        if (!(en->isVisible() && en->rtti() == RS2::EntityLine)) return;
-        for (int i = 0; i < getStatus(); i++) {
-            if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
-        }
-        if (en->getParent() && en->getParent()->ignoredOnModification())
-            return;
-        pPoints->coord = graphicView->toGraph(e->position());
-        deletePreview();
-        while (pPoints->lines.size() == 3) {
-            pPoints->lines.back()->setHighlighted(false);
-            graphicView->drawEntity(pPoints->lines.back());
-            pPoints->lines.pop_back();
-        }
-        en->setHighlighted(true);
-        pPoints->lines.push_back(static_cast<RS_Line *>(en));
-        graphicView->drawEntity(pPoints->lines.back());
-        if (preparePreview()){
-            auto *c = new RS_Circle(preview.get(), pPoints->cData);
-            preview->addEntity(c);
-            drawPreview();
-        }
-
+    snapPoint(e);
+    int status = getStatus();
+    deleteHighlights();
+    deletePreview();
+    for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
+        addToHighlights(pc);
     }
+    auto en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);  // fixme - check whether snap is used for entity selection?  Ensure free snap
+    bool shouldIgnore = false;
+    if (en != nullptr){
+        if (en->getParent()){
+            shouldIgnore = en->getParent()->ignoredOnModification();
+        }
+        if (!shouldIgnore){
+            auto *line = dynamic_cast<RS_Line *>(en);
+            switch (status) {
+                case SetLine1: {
+                    addToHighlights(en);
+                    break;
+                }
+                case SetLine2: {
+                    if (en != pPoints->lines[SetLine1]){
+                        addToHighlights(en);
+                    }
+                    break;
+                }
+                case SetLine3: {
+                    if (pPoints->lines[SetLine1] != line && pPoints->lines[SetLine2] != line){
+                        pPoints->coord = graphicView->toGraph(e->position());
+                        if (preparePreview(line)){
+                            addToHighlights(en);
+                            auto *c = new RS_Circle(preview.get(), pPoints->cData);
+                            preview->addEntity(c);
+
+                            addReferencePointToPreview(pPoints->lines[SetLine1]->getNearestPointOnEntity(pPoints->cData.center, false));
+                            addReferencePointToPreview(pPoints->lines[SetLine2]->getNearestPointOnEntity(pPoints->cData.center, false));
+                            addReferencePointToPreview(pPoints->lines[SetLine3]->getNearestPointOnEntity(pPoints->cData.center, false));
+                            drawPreview();
+                        }
+                    }
+                    break;
+                }
+                default:
+                    break;
+            }
+        }
+    }
+    drawHighlights();
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
-}
-
-bool RS_ActionDrawCircleInscribe::preparePreview(){
-    valid = false;
-    if (getStatus() == SetLine3){
-        RS_Circle c(preview.get(), pPoints->cData);
-        valid = c.createInscribe(pPoints->coord, pPoints->lines);
-        if (valid){
-            pPoints->cData = c.getData();
-        }
-    }
-    return valid;
 }
 
 void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
     // Proceed to next status
     if (e->button() == Qt::LeftButton){
-        if (!e){
-            return;
-        }
         RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if (!en) return;
         if (!(en->isVisible() && en->rtti() == RS2::EntityLine)) return;
@@ -168,41 +168,55 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
         if (en->getParent()){
             if (en->getParent()->ignoredOnModification()) return;
         }
-        while ((int) pPoints->lines.size() > getStatus()) {
-            pPoints->lines.back()->setHighlighted(false);
-            graphicView->drawEntity(pPoints->lines.back());
-            pPoints->lines.pop_back();
-        }
-        pPoints->lines.push_back(static_cast<RS_Line *>(en));
+
         pPoints->coord = graphicView->toGraph(e->position());
+        auto *line = dynamic_cast<RS_Line *>(en);
+
         switch (getStatus()) {
-            case SetLine1:
+            case SetLine1:{
+                pPoints->lines.push_back(line);
+                setStatus(SetLine2);
+                break;
+            }
             case SetLine2:
-                en->setHighlighted(true);
-                setStatus(getStatus() + 1);
-                graphicView->redraw(RS2::RedrawDrawing);
+                pPoints->lines.push_back(line);
+                setStatus(SetLine3);
                 break;
             case SetLine3:
-                if (preparePreview()){
+                if (preparePreview(line)){
                     trigger();
                 }
-
+                break;
             default:
                 break;
         }
     } else if (e->button() == Qt::RightButton){
         // Return to last status:
         if (getStatus() > 0){
-            clearLines(true);
-            pPoints->lines.back()->setHighlighted(false);
             pPoints->lines.pop_back();
-            graphicView->redraw(RS2::RedrawDrawing);
             deletePreview();
         }
         init(getStatus() - 1);
     }
 }
 
+bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
+    valid = false;
+    if (getStatus() == SetLine3){
+        if (en != nullptr){
+          pPoints->lines.push_back(en);
+        }
+        RS_Circle c(preview.get(), pPoints->cData);
+        valid = c.createInscribe(pPoints->coord, pPoints->lines);
+        if (valid){
+            pPoints->cData = c.getData();
+        }
+    }
+    if (en != nullptr){
+        pPoints->lines.pop_back();
+    }
+    return valid;
+}
 
 //void RS_ActionDrawCircleInscribe::coordinateEvent(RS_CoordinateEvent* e) {
 
@@ -265,32 +279,30 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
 */
 
 
-void RS_ActionDrawCircleInscribe::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetLine1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
-											tr("Cancel"));
-		break;
+void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetLine1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
+                                                tr("Cancel"));
+            break;
 
-	case SetLine2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line"),
-											tr("Back"));
-		break;
+        case SetLine2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line"),
+                                                tr("Back"));
+            break;
 
-	case SetLine3:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line"),
-											tr("Back"));
-		break;
+        case SetLine3:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line"),
+                                                tr("Back"));
+            break;
 
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
 
-
-
-void RS_ActionDrawCircleInscribe::updateMouseCursor() {
+void RS_ActionDrawCircleInscribe::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 

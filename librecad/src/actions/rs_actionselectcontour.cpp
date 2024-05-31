@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionselectcontour.h"
@@ -33,34 +31,42 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_selection.h"
-#include "rs_selection.h"
-
-
 
 RS_ActionSelectContour::RS_ActionSelectContour(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-		:RS_ActionInterface("Select Contours", container, graphicView)
+		:RS_PreviewActionInterface("Select Contours", container, graphicView)
 		,en(nullptr)
 {
 	actionType=RS2::ActionSelectContour;
 }
 
+void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
+    snapPoint(event);
+    deleteHighlights();
+    auto ent = catchEntity(event);
+    if (ent != nullptr){
+        // fixme - proper highlighting of planned selection - yet after fixing underlying logic!
+//        RS_Selection s(*container, graphicView);
+//        s.selectContour(en);
+        // fixme - temporarily highlight only caught entity only
+        addToHighlights(ent);
+    }
+    drawHighlights();
+}
 
-void RS_ActionSelectContour::trigger() {
-    if (en) {
-        if (en->isAtomic()) {
+void RS_ActionSelectContour::trigger(){
+    if (en){
+        if (en->isAtomic()){ // fixme - why so??? why it's not suitable to select, say, polyline here too?
             RS_Selection s(*container, graphicView);
             s.selectContour(en);
 
-			RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
-		} else
-			RS_DIALOGFACTORY->commandMessage(
-						tr("Entity must be an Atomic Entity."));
-	} else
+            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        } else
+            RS_DIALOGFACTORY->commandMessage(
+                tr("Entity must be an Atomic Entity."));
+    } else
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }
-
-
 
 void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
@@ -70,8 +76,6 @@ void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
         trigger();
     }
 }
-
-
 
 void RS_ActionSelectContour::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);

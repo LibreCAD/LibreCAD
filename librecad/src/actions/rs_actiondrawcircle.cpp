@@ -95,8 +95,10 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
                 deletePreview();
                 preview->addEntity(new RS_Circle(preview.get(),
                                                  *data));
-                if (drawCirclePointsOnPreview){
-                    preview->addEntity(new RS_Point(preview.get(),data->center));
+                if (drawCreationPointsOnPreview){
+                    addReferencePointToPreview(data->center);
+                    addReferencePointToPreview(mouse);
+                    addReferenceLineToPreview(data->center, mouse);
                 }
                 drawPreview();
             }

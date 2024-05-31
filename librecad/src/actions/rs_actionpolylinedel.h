@@ -26,42 +26,28 @@
 #ifndef RS_ACTIONPOLYLINEDEL_H
 #define RS_ACTIONPOLYLINEDEL_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actionpolylinedeletebase.h"
 
 /**
  * This action class can handle user events to move entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineDel : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionPolylineDel:public LC_ActionPolylineDeleteBase {
+Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-    	ChooseEntity,			/**< Choosing existing polyline to delete its node. */
-        SetDelPoint    /**< Setting the deleting node point. */
-    };
+    RS_ActionPolylineDel(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionPolylineDel() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 
-public:
-    RS_ActionPolylineDel(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionPolylineDel() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-private:
-    RS_Entity* delEntity = nullptr;
-	std::unique_ptr<RS_Vector> delPoint;
+protected:
+    void processMouseLeftButtonRelease(QMouseEvent *e, int status) override;
 };
 
 #endif

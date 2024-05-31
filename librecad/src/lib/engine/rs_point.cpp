@@ -205,6 +205,7 @@ void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternO
     }
 
     RS_Graphic* graphic = getGraphic();
+
     if (graphic) {
 		int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
 		double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
@@ -219,7 +220,7 @@ void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternO
 		else
 			screenPDSize = view->toGuiDY(pdsize);
 
-		//RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
+//		RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
 		painter->drawPoint(guiPos,pdmode,screenPDSize);
 	}
 }

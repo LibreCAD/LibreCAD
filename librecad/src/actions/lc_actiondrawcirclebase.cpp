@@ -20,7 +20,7 @@ void LC_ActionDrawCircleBase::mouseReleaseEvent(QMouseEvent* e) {
 void LC_ActionDrawCircleBase::init(int status) {
     RS_PreviewActionInterface::init(status);
     reset(); // fixme - review implmenetation in inherited actions
-    drawCirclePointsOnPreview = true; // fixme - read from options
+    drawCreationPointsOnPreview = true; // fixme - read from options
     moveRelPointAtCenterAfterTrigger = true; // fixme - read from options
 }
 

@@ -33,62 +33,59 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineEquidistant : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionPolylineEquidistant:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
-	/**
-	 * Action States.
-	 */
-	enum Status {
-		ChooseEntity			/**< Choosing the original polyline. */
-	};
+/**
+ * Action States.
+ */
+    enum Status {
+        ChooseEntity   /**< Choosing the original polyline. */
+    };
 
 public:
-	RS_ActionPolylineEquidistant(RS_EntityContainer& container,
-						RS_GraphicView& graphicView);
-	~RS_ActionPolylineEquidistant() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-
-//        void mouseMoveEvent(QMouseEvent* e) override;
-		void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionPolylineEquidistant(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionPolylineEquidistant() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 //	void updateToolBar() override;
-	void showOptions() override;
-	void hideOptions() override;
+    void showOptions() override;
+    void hideOptions() override;
 
-    void setDist(const double& d) {
-		dist = d;
-	}
+    void setDist(const double &d){
+        dist = d;
+    }
 
-	double getDist() const{
-		return dist;
-	}
+    double getDist() const{
+        return dist;
+    }
 
-    void setNumber(unsigned n) {
-		number = n;
-	}
+    void setNumber(unsigned n){
+        number = n;
+    }
 
-	int getNumber() const{
-		return number;
-	}
+    int getNumber() const{
+        return number;
+    }
 
-	bool makeContour();
-
-private:
-    RS_Entity* calculateOffset(RS_Entity* newEntity,RS_Entity* orgEntity, double dist);
-    RS_Vector calculateIntersection(RS_Entity* first,RS_Entity* last);
+    void makeContour(RS_Polyline*  originalPolyline, bool contourOnRightSide, QList<RS_Polyline*> &createdPolylines);
 
 private:
-    RS_Entity* originalEntity = nullptr;
-	std::unique_ptr<RS_Vector> targetPoint;
+    RS_Entity *calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist);
+    RS_Vector calculateIntersection(RS_Entity *first, RS_Entity *last);
+
+private:
+    RS_Polyline *originalEntity = nullptr;
     double dist = 0.;
     int number = 0;
     bool bRightSide = false;
+    bool isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const;
 };
 
 #endif

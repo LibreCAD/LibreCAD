@@ -221,11 +221,6 @@ LC_CrossData LC_ActionDrawCross::createCrossDataForEntity(RS_Entity* ent) const{
 }
 
 
-// flag that controls whether target circle or arc should be highlighted during
-// mouse selection. In general, it might be candidate to moving to options?
-// todo - consider this later whether option is needed
-#define HIGHLIGHT_TARGET_ENTITY_ON_MOVE false
-
 bool LC_ActionDrawCross::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
     return status == SetEntity;
 }
@@ -251,9 +246,8 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
         if (isArc){ // can draw
             // handle visual highlighting
             entity = en;
-            if (HIGHLIGHT_TARGET_ENTITY_ON_MOVE){
-                highlightEntity(en);
-            }
+
+            addToHighlights(en);
 
             // prepare data for preview
             LC_CrossData crossData = createCrossDataForEntity(en);

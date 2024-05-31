@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actionpolylinetrim.h"
@@ -32,10 +32,9 @@
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_preview.h"
 #include "rs_modification.h"
 #include "rs_polyline.h"
-
-
 
 RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -46,154 +45,176 @@ RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
 
 void RS_ActionPolylineTrim::init(int status) {
         RS_ActionInterface::init(status);
-        delEntity = Segment1 = Segment2 = NULL;
+    polylineToModify = Segment1 = Segment2 = nullptr;
 }
 
+void RS_ActionPolylineTrim::trigger(){
 
+    RS_DEBUG->print("RS_ActionPolylineTrim::trigger()");
 
-void RS_ActionPolylineTrim::trigger() {
+    polylineToModify->setSelected(false);
+    graphicView->drawEntity(polylineToModify);
 
-        RS_DEBUG->print("RS_ActionPolylineTrim::trigger()");
+    RS_Modification m(*container, graphicView);
+    auto newPolyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *Segment2, false);
+    if (newPolyline != nullptr){
+        polylineToModify = newPolyline;
+        Segment1 = Segment2 = nullptr;
+        setStatus(SetSegment1);
+    }
 
-        if (delEntity && Segment1->isAtomic() && Segment2->isAtomic()) {
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 
-                delEntity->setHighlighted(false);
-                graphicView->drawEntity(delEntity);
+    graphicView->redraw();
+}
 
-                RS_Modification m(*container, graphicView);
-                delEntity = m.polylineTrim((RS_Polyline&)*delEntity, *Segment1, *Segment2 );
-
-//		delEntity = NULL;
-                Segment1 = Segment2 = NULL;
-                setStatus(SetSegment1);
-
-                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
+    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
+    snapPoint(e);
+    deleteHighlights();
+    switch (getStatus()) {
+        case ChooseEntity: {
+            RS_Entity *pl = catchEntity(e, RS2::EntityPolyline);
+            if (pl != nullptr){
+                addToHighlights(pl);
+            }
+            break;
         }
-////////////////////////////////////////2006/06/15
+        case SetSegment1:{
+            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            if (en != nullptr){
+                if (en->getParent() == polylineToModify){
+                    addToHighlights(en);
+                }
+            }
+            break;
+        }
+        case SetSegment2:{
+            addToHighlights(Segment1);
+            deletePreview();
+            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
+            if (en != nullptr){
+                if (en->getParent() == polylineToModify){
+                    if (en != Segment1){
+                        if (en->isAtomic()){
+                            auto candidate = dynamic_cast<RS_AtomicEntity *>(en);
+                            addToHighlights(en);
+                            RS_Modification m(*preview, graphicView);
+                            m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *candidate, true);
+                        }
+                    }
+                }
+            }
+            drawPreview();
+            break;
+        }
+        default:
+            break;
+    }
+    drawHighlights();
+    RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
+}
+
+// fixme - complete refactoring
+void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
+        RS_Vector cPoint;
+        switch (getStatus()) {
+            case ChooseEntity: {
+                polylineToModify = catchEntity(e);
+                if (polylineToModify == nullptr){
+                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                } else if (polylineToModify->rtti() != RS2::EntityPolyline){
+                    RS_DIALOGFACTORY->commandMessage(
+                        tr("Entity must be a polyline."));
+                } else {
+                    polylineToModify->setSelected(true);
+                    graphicView->drawEntity(polylineToModify);
+                    setStatus(SetSegment1);
+                    graphicView->redraw();
+                }
+                break;
+            }
+            case SetSegment1:{
+                cPoint = snapPoint(e);
+                if (polylineToModify == nullptr){
+                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                } else if (!cPoint.valid){
+                    RS_DIALOGFACTORY->commandMessage(tr("Specifying point is invalid."));
+                } else if (!polylineToModify->isPointOnEntity(cPoint)){
+                    RS_DIALOGFACTORY->commandMessage(
+                        tr("No Segment found on entity."));
+                } else {
+                    Segment1 = nullptr;
+                    double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+                    Segment1 = (RS_AtomicEntity *) ((RS_Polyline *) polylineToModify)->getNearestEntity(graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
+                    if (Segment1 == nullptr)
+                        break;
+                    setStatus(SetSegment2);
+                }
+                break;
+            }
+            case SetSegment2: {
+                cPoint = snapPoint(e);
+                if (polylineToModify == nullptr){
+                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                } else if (!cPoint.valid){
+                    RS_DIALOGFACTORY->commandMessage(tr("Specifying point is invalid."));
+                } else if (!polylineToModify->isPointOnEntity(cPoint)){
+                    RS_DIALOGFACTORY->commandMessage(
+                        tr("No Segment found on entity."));
+                } else {
+                    Segment2 = nullptr;
+                    double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+                    Segment2 = (RS_AtomicEntity *) ((RS_Polyline *) polylineToModify)->getNearestEntity(graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
+                    if (Segment2 == nullptr)
+                        break;
+                    deleteSnapper();
+                    trigger();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    } else if (e->button() == Qt::RightButton){
+        deleteSnapper();
+        deletePreview();
+        int newStatus = getStatus() - 1;
+        if (newStatus == ChooseEntity){
+            if (polylineToModify){
+                polylineToModify->setSelected(false);
+                graphicView->redraw();
+            }
+        }
+        setStatus(newStatus);
+    }
+}
+
+void RS_ActionPolylineTrim::finish(bool updateTB){
+    if (polylineToModify){
+        polylineToModify->setSelected(false);
         graphicView->redraw();
-////////////////////////////////////////
+    }
+    RS_PreviewActionInterface::finish(updateTB);
 }
 
-
-
-void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent* e) {
-        RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent begin");
-
-        switch (getStatus()) {
+void RS_ActionPolylineTrim::updateMouseButtonHints(){
+    switch (getStatus()) {
         case ChooseEntity:
-        break;
-
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to trim"),tr("Cancel"));
+            break;
         case SetSegment1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first segment"),tr("Back"));
+            break;
         case SetSegment2:
-                snapPoint(e);
-                break;
-
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second segment"),tr("Back"));
+            break;
         default:
-                break;
-        }
-
-        RS_DEBUG->print("RS_ActionPolylineTrim::mouseMoveEvent end");
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
+    }
 }
-
-
-
-void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent* e) {
-        if (e->button()==Qt::LeftButton) {
-                RS_Vector cPoint;
-                switch (getStatus()) {
-                case ChooseEntity:
-                        delEntity = catchEntity(e);
-                        if (delEntity==NULL) {
-                                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (delEntity->rtti()!=RS2::EntityPolyline) {
-                                RS_DIALOGFACTORY->commandMessage(
-                                        tr("Entity must be a polyline."));
-                        } else {
-                                delEntity->setHighlighted(true);
-                                graphicView->drawEntity(delEntity);
-                                setStatus(SetSegment1);
-////////////////////////////////////////2006/06/15
-                                graphicView->redraw();
-////////////////////////////////////////
-                        }
-                        break;
-
-                case SetSegment1:
-                        cPoint = snapPoint(e);
-                        if (delEntity==NULL) {
-                                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (!cPoint.valid) {
-                                RS_DIALOGFACTORY->commandMessage(tr("Specifying point is invalid."));
-                        } else if (!delEntity->isPointOnEntity(cPoint)) {
-                                RS_DIALOGFACTORY->commandMessage(
-                                        tr("No Segment found on entity."));
-                        }else{
-                                Segment1 = NULL;
-                                        double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-                                Segment1 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
-                                if(Segment1 == NULL)
-                                        break;
-                                setStatus(SetSegment2);
-                        }
-                        break;
-                case SetSegment2:
-                        cPoint = snapPoint(e);
-                        if (delEntity==NULL) {
-                                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                        } else if (!cPoint.valid) {
-                                RS_DIALOGFACTORY->commandMessage(tr("Specifying point is invalid."));
-                        } else if (!delEntity->isPointOnEntity(cPoint)) {
-                                RS_DIALOGFACTORY->commandMessage(
-                                        tr("No Segment found on entity."));
-                        }else{
-                                Segment2 = NULL;
-                                        double dist = graphicView->toGraphDX(catchEntityGuiRange)*0.9;
-                                Segment2 =  (RS_AtomicEntity*)((RS_Polyline*)delEntity)->getNearestEntity( graphicView->toGraph(e->position()), &dist, RS2::ResolveNone);
-                                if(Segment2 == NULL)
-                                        break;
-                                deleteSnapper();
-                                trigger();
-                        }
-                        break;
-
-                default:
-                        break;
-                }
-        } else if (e->button()==Qt::RightButton) {
-                deleteSnapper();
-                if (delEntity) {
-                        delEntity->setHighlighted(false);
-                        graphicView->drawEntity(delEntity);
-////////////////////////////////////////2006/06/15
-                        graphicView->redraw();
-////////////////////////////////////////
-                }
-                init(getStatus()-1);
-        }
-}
-
-
-void RS_ActionPolylineTrim::updateMouseButtonHints() {
-        switch (getStatus()) {
-        case ChooseEntity:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to trim"),
-                                                        tr("Cancel"));
-                break;
-        case SetSegment1:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first segment"),
-                                                        tr("Back"));
-                break;
-        case SetSegment2:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second segment"),
-                                                        tr("Back"));
-                break;
-        default:
-                RS_DIALOGFACTORY->updateMouseWidget();
-                break;
-        }
-}
-
-
 
 void RS_ActionPolylineTrim::updateMouseCursor() {
         graphicView->setMouseCursor(RS2::SelectCursor);

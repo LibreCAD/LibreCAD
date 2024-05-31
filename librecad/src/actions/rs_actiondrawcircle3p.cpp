@@ -41,15 +41,15 @@ struct RS_ActionDrawCircle3P::Points {
 	/**
 	 * 1st point.
 	 */
-	RS_Vector point1;
+	RS_Vector point1 = RS_Vector(false);
 	/**
 	 * 2nd point.
 	 */
-	RS_Vector point2;
+	RS_Vector point2 = RS_Vector(false);
 	/**
 	 * 3rd point.
 	 */
-	RS_Vector point3;
+	RS_Vector point3 = RS_Vector(false);
 };
 
 RS_ActionDrawCircle3P::RS_ActionDrawCircle3P(RS_EntityContainer& container,
@@ -119,32 +119,60 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
             trySnapToRelZeroCoordinateEvent(e);
             break;
 
-        case SetPoint2:
-            pPoints->point2 = mouse;
-            if (drawCirclePointsOnPreview){
-                deletePreview();
-                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
-                drawPreview();
-            }
-            break;
+        case SetPoint2: {
+            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse);
 
-        case SetPoint3:
+            pPoints->point2 = mouse;
+
+            deletePreview();
+
+            RS_Vector center = (mouse + pPoints->point1) / 2;
+            double radius = pPoints->point1.distanceTo(center);
+            auto *circle = new RS_Circle{preview.get(), RS_CircleData(center, radius)};
+            preview->addEntity(circle);
+
+            addReferencePointToPreview(pPoints->point1);
+            addReferenceLineToPreview(pPoints->point1, mouse);
+            addReferencePointToPreview(mouse);
+            drawPreview();
+
+            break;
+        }
+        case SetPoint3: {
             pPoints->point3 = mouse;
             preparePreview();
             deletePreview();
             if (pPoints->data.isValid()){
                 auto *circle = new RS_Circle{preview.get(), pPoints->data};
                 preview->addEntity(circle);
-                if (drawCirclePointsOnPreview){
-                    preview->addEntity(new RS_Point(preview.get(),pPoints->data.center));
-                }
+                addReferencePointToPreview(pPoints->data.center);
             }
-            if (drawCirclePointsOnPreview){
-                preview->addEntity(new RS_Point(preview.get(),pPoints->point1));
-                preview->addEntity(new RS_Point(preview.get(),pPoints->point2));
-            }
+
+            addReferencePointToPreview(pPoints->point1);
+            addReferencePointToPreview(pPoints->point2);
+            addReferencePointToPreview(mouse);
+
+            addReferenceLineToPreview(pPoints->point1, pPoints->data.center);
+            addReferenceLineToPreview(pPoints->point2, pPoints->data.center);
+            addReferenceLineToPreview(mouse, pPoints->data.center);
+
             drawPreview();
             break;
+        }
+    }
+}
+
+void RS_ActionDrawCircle3P::mouseReleaseEvent(QMouseEvent* e) {
+    if (e->button()==Qt::LeftButton) {
+        RS_Vector coord = snapPoint(e);
+        if (getStatus() == SetPoint2){
+            coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
+        }
+        RS_CoordinateEvent ce(coord);
+        coordinateEvent(&ce);
+    } else if (e->button()==Qt::RightButton) {
+        deletePreview();
+        init(getStatus()-1);
     }
 }
 

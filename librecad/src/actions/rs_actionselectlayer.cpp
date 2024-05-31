@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionselectlayer.h"
@@ -34,27 +32,32 @@
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
-
-
-RS_ActionSelectLayer::RS_ActionSelectLayer(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-		:RS_ActionInterface("Select Layers", container, graphicView)
-		,en(nullptr)
-{
-	actionType=RS2::ActionSelectLayer;
+RS_ActionSelectLayer::RS_ActionSelectLayer(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface("Select Layers", container, graphicView), en(nullptr){
+    actionType = RS2::ActionSelectLayer;
 }
 
-void RS_ActionSelectLayer::trigger() {
-    if (en) {
+void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
+    snapPoint(event);
+    deleteHighlights();
+    auto ent = catchEntity(event);
+    if (ent != nullptr){
+        addToHighlights(ent);
+    }
+    drawHighlights();
+}
+
+void RS_ActionSelectLayer::trigger(){
+    if (en){
         RS_Selection s(*container, graphicView);
         s.selectLayer(en);
-		RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");
     }
 }
-
-
 
 void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
@@ -64,8 +67,6 @@ void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
         trigger();
     }
 }
-
-
 
 void RS_ActionSelectLayer::updateMouseCursor() {
     graphicView->setMouseCursor(RS2::SelectCursor);

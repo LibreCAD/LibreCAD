@@ -38,7 +38,7 @@ class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
 private:
     enum Status {
         SetLine,     /**< Choose the line orthogonal to the tangent line */
-		SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
+        SetCircle    /**< Choose the arc/circle/ellipse to create its tangent line*/
     };
 
 public:

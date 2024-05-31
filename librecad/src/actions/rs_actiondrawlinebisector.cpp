@@ -37,6 +37,13 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 
+namespace {
+
+    //list of entity types supported by current action - only lines so far
+    const auto enTypeList = EntityTypeList{RS2::EntityLine};
+}
+
+
 struct RS_ActionDrawLineBisector::Points {
 	/** Mouse pos when choosing the 1st line */
 	RS_Vector coord1;
@@ -45,189 +52,177 @@ struct RS_ActionDrawLineBisector::Points {
 };
 
 RS_ActionDrawLineBisector::RS_ActionDrawLineBisector(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-		:RS_PreviewActionInterface("Draw Bisectors", container, graphicView)
-		,bisector(nullptr)
-		,line1(nullptr)
-		,line2(nullptr)
-		,length(10.)
-		,number(1)
-		, pPoints(std::make_unique<Points>())
-		,lastStatus(SetLine1)
-{
-	actionType=RS2::ActionDrawLineBisector;
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface("Draw Bisectors", container, graphicView), bisector(nullptr), line1(nullptr), line2(nullptr), length(10.), number(1),
+     pPoints(std::make_unique<Points>()), lastStatus(SetLine1){
+    actionType = RS2::ActionDrawLineBisector;
 }
 
 RS_ActionDrawLineBisector::~RS_ActionDrawLineBisector() = default;
 
 
-void RS_ActionDrawLineBisector::setLength(double l) {
-	length = l;
+void RS_ActionDrawLineBisector::setLength(double l){
+    length = l;
 }
 
 double RS_ActionDrawLineBisector::getLength() const{
-	return length;
+    return length;
 }
 
-void RS_ActionDrawLineBisector::setNumber(int n) {
-	number = n;
+void RS_ActionDrawLineBisector::setNumber(int n){
+    number = n;
 }
 
-int RS_ActionDrawLineBisector::getNumber() const {
-	return number;
+int RS_ActionDrawLineBisector::getNumber() const{
+    return number;
 }
 
+void RS_ActionDrawLineBisector::init(int status){
+    RS_PreviewActionInterface::init(status);
+    if (status >= 0){
+        RS_Snapper::suspend();
+    }
 
-void RS_ActionDrawLineBisector::init(int status) {
-	RS_PreviewActionInterface::init(status);
-	if(status>=0) {
-		RS_Snapper::suspend();
-	}
-
-	if (status<SetLine2) {
-		if(line2 && line2->isHighlighted()){
-			line2->setHighlighted(false);
-		}
-		if(status<0 && line1 && line1->isHighlighted()){
-			line1->setHighlighted(false);
-		}
-		graphicView->redraw(RS2::RedrawDrawing);
-	}
+    if (status < SetLine2){
+        if (line2 && line2->isHighlighted()){
+            line2->setHighlighted(false);
+        }
+        if (status < 0 && line1 && line1->isHighlighted()){
+            line1->setHighlighted(false);
+        }
+        graphicView->redraw(RS2::RedrawDrawing);
+    }
 }
 
-void RS_ActionDrawLineBisector::trigger() {
+void RS_ActionDrawLineBisector::trigger(){
     RS_PreviewActionInterface::trigger();
 
-	for(auto p: {line1, line2}){
-		if(p && p->isHighlighted()){
-			p->setHighlighted(false);
-		}
-	}
-	graphicView->redraw(RS2::RedrawDrawing);
+    for (auto p: {line1, line2}) {
+        if (p && p->isHighlighted()){
+            p->setHighlighted(false);
+        }
+    }
+    graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Creation creation(container, graphicView);
-	creation.createBisector(pPoints->coord1,
-							pPoints->coord2,
+    creation.createBisector(pPoints->coord1,
+                            pPoints->coord2,
                             length,
                             number,
                             line1,
-							line2);
+                            line2);
 }
 
 
-
-void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent begin");
 
+    snapPoint(e); // update coordinates widget
     RS_Vector mouse = graphicView->toGraph(e->position());
 
+    deleteHighlights();
     switch (getStatus()) {
-    case SetLine1:
-        break;
+        case SetLine1: {
+            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            if (en != nullptr){
+                addToHighlights(en);
+            }
+            break;
+        }
+        case SetLine2: {
+            addToHighlights(line1);
+            pPoints->coord2 = mouse;
+            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            deletePreview();
+            if (en == line1){
+                line2 = nullptr;
+            } else if (en != nullptr){
+                line2 = dynamic_cast<RS_Line *>(en);
 
-    case SetLine2: {
-			pPoints->coord2 = mouse;
-            RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-			if(en==line1) break;
-			if (en && en->rtti()==RS2::EntityLine) {
-				if(line2 && line2->isHighlighted()){
-					line2->setHighlighted(false);
-				}
-				line2 = static_cast<RS_Line*>(en);
-				line2->setHighlighted(true);
-				graphicView->redraw(RS2::RedrawDrawing);
+                addToHighlights(en);
 
-                deletePreview();
-
-				RS_Creation creation(preview.get(), nullptr, false);
-				creation.createBisector(pPoints->coord1,
-										pPoints->coord2,
+                RS_Creation creation(preview.get(), nullptr, false);
+                creation.createBisector(pPoints->coord1,
+                                        pPoints->coord2,
                                         length,
                                         number,
                                         line1,
                                         line2);
                 drawPreview();
-			}else{
-				if(line2 && line2->isHighlighted()){
-					line2->setHighlighted(false);
-					graphicView->redraw(RS2::RedrawDrawing);
-				}
-				line2=nullptr;
-
-			}
-        }
-        break;
-
-    default:
-        break;
-    }
-
-    RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
-}
-
-
-
-void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent* e) {
-
-    if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    } else {
-
-        RS_Vector mouse = graphicView->toGraph(e->position());
-
-        switch (getStatus()) {
-        case SetLine1: {
-				pPoints->coord1 = mouse;
-                RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-				if (en && en->rtti()==RS2::EntityLine) {
-					line1 = static_cast<RS_Line*>(en);
-					line1->setHighlighted(true);
-					graphicView->redraw(RS2::RedrawDrawing);
-					line2=nullptr;
-					setStatus(SetLine2);
-				}
             }
             break;
-
-        case SetLine2:
-			pPoints->coord2 = mouse;
-            trigger();
-            setStatus(SetLine1);
+        }
+        case SetLength:
+        case SetNumber:{
+            if (line1 != nullptr){
+                addToHighlights(line1);
+            }
             break;
         }
+        default:
+            break;
+    }
+    drawHighlights();
+
+    RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
     }
 
+void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent *e){
+
+    if (e->button() == Qt::RightButton){
+        deletePreview();
+        init(getStatus() - 1);
+    } else {
+        RS_Vector mouse = graphicView->toGraph(e->position());
+        switch (getStatus()) {
+            case SetLine1: {
+                pPoints->coord1 = mouse;
+                RS_Entity *en = catchEntity(e,enTypeList,RS2::ResolveAll);
+                if (en && en->rtti() == RS2::EntityLine){
+                    line1 = dynamic_cast<RS_Line *>(en);
+                    line2 = nullptr;
+                    setStatus(SetLine2);
+                }
+                break;
+            }
+            case SetLine2:
+                pPoints->coord2 = mouse;
+                trigger();
+                setStatus(SetLine1);
+                break;
+            default:
+                break;
+        }
+    }
 }
 
-
-void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
+    if (checkCommand("help", c)){
         RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetLine1:
-    case SetLine2:
-        lastStatus = (Status)getStatus();
-        if (checkCommand("length", c)) {
-            deletePreview();
-            setStatus(SetLength);
-        } else if (checkCommand("number", c)) {
-            deletePreview();
-            setStatus(SetNumber);
-        }
-        break;
+        case SetLine1:
+        case SetLine2:
+            lastStatus = (Status) getStatus();
+            if (checkCommand("length", c)){
+                deletePreview();
+                setStatus(SetLength);
+            } else if (checkCommand("number", c)){
+                deletePreview();
+                setStatus(SetNumber);
+            }
+            break;
 
-    case SetLength: {
+        case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
                 length = l;
             } else {
@@ -236,93 +231,84 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent* e) {
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-    case SetNumber: {
+        case SetNumber: {
             bool ok;
-            int n = (int)RS_Math::eval(c, &ok);
-            if (ok) {
+            int n = (int) RS_Math::eval(c, &ok);
+            if (ok){
                 e->accept();
-                if(n>0 && n<=200)
+                if (n > 0 && n <= 200)
                     number = n;
                 else
-                     RS_DIALOGFACTORY->commandMessage(tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]")+QString::number(n));
+                    RS_DIALOGFACTORY->commandMessage(
+                        tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
             } else {
                 RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-QStringList RS_ActionDrawLineBisector::getAvailableCommands() {
+QStringList RS_ActionDrawLineBisector::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetLine1:
-    case SetLine2:
-        cmd += command("length");
-        cmd += command("number");
-        break;
-    default:
-        break;
+        case SetLine1:
+        case SetLine2:
+            cmd += command("length");
+            cmd += command("number");
+            break;
+        default:
+            break;
     }
 
     return cmd;
 }
 
-
-void RS_ActionDrawLineBisector::updateMouseButtonHints() {
+void RS_ActionDrawLineBisector::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetLine1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select first line"),
-                                            tr("Cancel"));
-        break;
-    case SetLine2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select second line"),
-                                            tr("Back"));
-        break;
-    case SetLength:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter bisector length:"),
-                                            tr("Back"));
-        break;
-    case SetNumber:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number of bisectors:"),
-                                            tr("Back"));
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetLine1:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select first line"),
+                                                tr("Cancel"));
+            break;
+        case SetLine2:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Select second line"),
+                                                tr("Back"));
+            break;
+        case SetLength:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter bisector length:"),
+                                                tr("Back"));
+            break;
+        case SetNumber:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number of bisectors:"),
+                                                tr("Back"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionDrawLineBisector::showOptions() {
+void RS_ActionDrawLineBisector::showOptions(){
     RS_ActionInterface::showOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
-void RS_ActionDrawLineBisector::hideOptions() {
+void RS_ActionDrawLineBisector::hideOptions(){
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
-
-
-void RS_ActionDrawLineBisector::updateMouseCursor() {
+void RS_ActionDrawLineBisector::updateMouseCursor(){
     graphicView->setMouseCursor(RS2::SelectCursor);
 }
 

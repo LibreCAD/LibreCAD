@@ -165,8 +165,6 @@ RS_EllipseData LC_ActionDrawCircleByArc::createEllipseData(RS_Ellipse *ellipseAr
     return result;
 }
 
-#define HIGHLIGHT_ORIGINAL_ARC false
-
 bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
     return status == SetArc;
 }
@@ -174,13 +172,12 @@ bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
     if (en != nullptr){
+        addToHighlights(en);
         int rtti = en->rtti();
         bool isArc = (en->isArc() && rtti == RS2::EntityArc);
         if (isArc){
             auto *arc = dynamic_cast<RS_Arc *>(en);
-            if (HIGHLIGHT_ORIGINAL_ARC){
-                highlightEntity(arc);
-            }
+
             RS_CircleData circleData = createCircleData(arc);
             RS_Entity *circle = new RS_Circle(container, circleData);
             list << circle;
@@ -189,6 +186,7 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
         } else {
             if (rtti == RS2::EntityEllipse){
                 auto *ellipseArc = dynamic_cast<RS_Ellipse *>(en);
+
                 if (ellipseArc->isEllipticArc()){
                     RS_EllipseData ellipseData = createEllipseData(ellipseArc);
                     auto ellipse = new RS_Ellipse(container, ellipseData);

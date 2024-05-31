@@ -64,7 +64,7 @@ struct RS_SnapMode;
  * Note that this is just an interface used as a slot to
  * communicate with the LibreCAD from a GUI level.
  */
-class RS_GraphicView : public QWidget
+class   RS_GraphicView : public QWidget
 {
     Q_OBJECT
 
@@ -182,6 +182,8 @@ public:
 
 	/* Sets the hidden state for the relative-zero marker. */
     void setRelativeZeroHiddenState(bool isHidden);
+
+    bool isRelativeZeroHidden();
 
 	/**
 	 * This virtual method can be overwritten to set the mouse

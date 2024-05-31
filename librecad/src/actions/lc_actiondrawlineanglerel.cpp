@@ -223,7 +223,8 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
             RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);
-                highlightEntity(line);
+
+                addToHighlights(line);
 
                 // determine snap point
                 RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snap, true);
@@ -244,6 +245,7 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
         }
         case SetTickLength: { // tick length setting state
 
+            addToHighlights(tickData->line);
             // create temporary preview tick data
             TickData* data = prepareLineData( tickData->line, tickData->tickSnapPosition, snap, alternativeActionMode);
 

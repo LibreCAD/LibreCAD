@@ -34,8 +34,8 @@ struct RS_CircleData;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleTan2 : public LC_ActionDrawCircleBase {
-        Q_OBJECT
+class RS_ActionDrawCircleTan2:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -47,35 +47,31 @@ public:
     };
 
 public:
-    RS_ActionDrawCircleTan2(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan2() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool getCenters();
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	//        void coordinateEvent(RS_CoordinateEvent* e) override;
-	//    void commandEvent(RS_CommandEvent* e) override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	void showOptions() override;
-	void hideOptions() override;
-	bool setRadius(const QString& sr);
-	double getRadius() const;
-
+    RS_ActionDrawCircleTan2(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircleTan2() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+//        void coordinateEvent(RS_CoordinateEvent* e) override;
+//    void commandEvent(RS_CommandEvent* e) override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void showOptions() override;
+    void hideOptions() override;
+    bool setRadius(const QString &sr);
+    double getRadius() const;
 
 protected:
-    RS_Entity* catchCircle(QMouseEvent* e);
+    RS_Entity *catchCircle(QMouseEvent *e);
+    RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle);
 private:
-	struct Points;
+    struct Points;
     std::unique_ptr<Points> pPoints;
 };
 

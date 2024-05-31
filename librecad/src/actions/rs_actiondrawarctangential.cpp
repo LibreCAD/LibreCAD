@@ -26,7 +26,6 @@
 
 #include<cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawarctangential.h"
@@ -39,14 +38,12 @@
 #include "rs_preview.h"
 #include "rs_settings.h"
 
-
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
                                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw arcs tangential",
                                container, graphicView)
     , point(std::make_unique<RS_Vector>())
-    , data(std::make_unique<RS_ArcData>())
-{
+    , data(std::make_unique<RS_ArcData>()){
     actionType=RS2::ActionDrawArcTangential;
 }
 
@@ -60,14 +57,11 @@ void RS_ActionDrawArcTangential::reset() {
     readSettings();
 }
 
-
 void RS_ActionDrawArcTangential::init(int status) {
     RS_PreviewActionInterface::init(status);
     readSettings();
     //reset();
 }
-
-
 
 void RS_ActionDrawArcTangential::trigger() {
     RS_PreviewActionInterface::trigger();
@@ -79,7 +73,7 @@ void RS_ActionDrawArcTangential::trigger() {
     }
 
     preparePreview();
-    RS_Arc* arc = new RS_Arc(container, *data);
+    auto* arc = new RS_Arc(container, *data);
     container->addEntity(arc);
     arc->setLayerToActive();
     arc->setPenToActive();
@@ -127,59 +121,70 @@ void RS_ActionDrawArcTangential::preparePreview() {
     }
 }
 
-
 void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
-    if(getStatus() == SetEndAngle) {
-        *point = snapPoint(e);
-        preparePreview();
-        if (data->isValid()) {
-            RS_Arc* arc = new RS_Arc(preview.get(), *data);
-            deletePreview();
-            preview->addEntity(arc);
-            drawPreview();
+    int status = getStatus();
+    *point = snapPoint(e);
+    deleteHighlights();
+    switch (status){
+        case SetBaseEntity: {
+            RS_Entity *entity = catchEntity(e, RS2::ResolveAll);
+            if (entity != nullptr){
+                if (entity->isAtomic()){
+                    addToHighlights(entity);
+                }
+            }
+            break;
         }
+        case SetEndAngle:
+            addToHighlights(baseEntity);
+            preparePreview();
+            if (data->isValid()) {
+                auto* arc = new RS_Arc(preview.get(), *data);
+                deletePreview();
+                preview->addEntity(arc);
+                drawPreview();
+            }
+            break;
+        default:
+            break;
     }
+    drawHighlights();
 }
-
 
 void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
 
-        // set base entity:
-        case SetBaseEntity: {
-            RS_Vector coord = graphicView->toGraph(e->position());
-            RS_Entity* entity = catchEntity(coord, RS2::ResolveAll);
-            if (entity) {
-                if (entity->isAtomic()) {
-                    baseEntity = static_cast<RS_AtomicEntity*>(entity);
-                    if (baseEntity->getStartpoint().distanceTo(coord) <
-                            baseEntity->getEndpoint().distanceTo(coord)) {
-                        isStartPoint = true;
-                    } else {
-                        isStartPoint = false;
+            // set base entity:
+            case SetBaseEntity: {
+                RS_Vector coord = graphicView->toGraph(e->position());
+                RS_Entity *entity = catchEntity(coord, RS2::ResolveAll);
+                if (entity){
+                    if (entity->isAtomic()){
+                        baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
+                        if (baseEntity->getStartpoint().distanceTo(coord) <
+                            baseEntity->getEndpoint().distanceTo(coord)){
+                            isStartPoint = true;
+                        } else {
+                            isStartPoint = false;
+                        }
+                        setStatus(SetEndAngle);
+                        updateMouseButtonHints();
                     }
-                    setStatus(SetEndAngle);
-                    updateMouseButtonHints();
                 }
+                break;
             }
-        }
-            break;
-
-            // set angle (point that defines the angle)
-        case SetEndAngle: {
-            RS_CoordinateEvent ce(snapPoint(e));
-            coordinateEvent(&ce);
-        }
-            break;
+            case SetEndAngle: {// set angle (point that defines the angle)
+                RS_CoordinateEvent ce(snapPoint(e));
+                coordinateEvent(&ce);
+                break;
+            }
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==nullptr) {
@@ -201,7 +206,6 @@ void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
 void RS_ActionDrawArcTangential::showOptions() {
     RS_ActionInterface::showOptions();
 
@@ -209,15 +213,11 @@ void RS_ActionDrawArcTangential::showOptions() {
     updateMouseButtonHints();
 }
 
-
-
 void RS_ActionDrawArcTangential::hideOptions() {
     RS_ActionInterface::hideOptions();
 
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
-
 
 void RS_ActionDrawArcTangential::updateMouseButtonHints() {
     switch (getStatus()) {

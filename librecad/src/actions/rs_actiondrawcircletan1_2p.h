@@ -79,6 +79,8 @@ protected:
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
+
+ RS_Vector getTangentPoint(RS_Vector& creatingCircleCenter,bool fromOriginalCircle) const;
 };
 
 #endif

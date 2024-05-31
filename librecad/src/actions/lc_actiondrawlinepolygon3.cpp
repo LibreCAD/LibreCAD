@@ -28,12 +28,12 @@
 
 #include "lc_actiondrawlinepolygon3.h"
 
-#include <QAction>
 #include <QMouseEvent>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commandevent.h"
 #include "rs_creation.h"
+#include "rs_point.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
@@ -44,6 +44,9 @@ struct LC_ActionDrawLinePolygonCenTan::Points {
     /** Edge */
     RS_Vector corner;
 };
+
+// fixme - support creation of polygone as polyline
+// fixme - support of rounded corners
 
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
@@ -84,8 +87,15 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     }
     case SetTangent:
         if (pPoints->center.valid) {
+            mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse);
+
             pPoints->corner = mouse;
+
             deletePreview();
+
+            addReferencePointToPreview(pPoints->center);
+            addReferencePointToPreview(mouse);
+            addReferenceLineToPreview(pPoints->center, mouse);
 
             RS_Creation creation(preview.get(), nullptr, false);
             creation.createPolygon3(pPoints->center, pPoints->corner, number);
@@ -101,7 +111,11 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
 
 void LC_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
+        RS_Vector coord = snapPoint(e);
+        if (getStatus()==SetTangent){
+            coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
+        }
+        RS_CoordinateEvent ce(coord);
         coordinateEvent(&ce);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();

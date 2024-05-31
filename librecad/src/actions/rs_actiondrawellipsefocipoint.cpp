@@ -124,7 +124,7 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
                 mouse = snapToAngle(mouse, pPoints->focus1);
             }
             deletePreview();
-            if (drawCirclePointsOnPreview){
+            if (drawCreationPointsOnPreview){
                 preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
             }
             preview->addEntity(new RS_Line(preview.get(), pPoints->focus1, mouse));
@@ -143,7 +143,7 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
                                                    findRatio(),
                                                    0., 0., false}});
             }
-            if (drawCirclePointsOnPreview){
+            if (drawCreationPointsOnPreview){
                 preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
                 preview->addEntity(new RS_Point(preview.get(), pPoints->focus2));
             }

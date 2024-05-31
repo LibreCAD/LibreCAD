@@ -127,9 +127,11 @@ int LC_ActionDrawRectangle1Point::doGetStatusForInitialSnapToRelativeZero(){
     return SetPoint1;
 }
 
+// fixme - invalid code!!!! refactor to initial presnap trigger logic
 void LC_ActionDrawRectangle1Point::doInitialSnapToRelativeZero(RS_Vector relZero){
     createShapeData(relZero);
     trigger();
+    finishAction();
 }
 
 void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snap){

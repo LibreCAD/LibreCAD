@@ -35,8 +35,8 @@ class RS_AtomicEntity;
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleTan3 : public LC_ActionDrawCircleBase {
-        Q_OBJECT
+class RS_ActionDrawCircleTan3:public LC_ActionDrawCircleBase {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -49,33 +49,28 @@ public:
     };
 
 public:
-    RS_ActionDrawCircleTan3(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan3() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool getData();
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	//        void coordinateEvent(RS_CoordinateEvent* e) override;
-	//    void commandEvent(RS_CommandEvent* e) override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+    RS_ActionDrawCircleTan3(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircleTan3() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+//    void coordinateEvent(RS_CoordinateEvent* e) override;
+//    void commandEvent(RS_CommandEvent* e) override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 //protected:
-    private:
-	std::vector<double> verifyCenter(const RS_Vector& center) const;
-	std::vector<double> getRadii(RS_AtomicEntity* entity, const RS_Vector& center) const;
-    RS_Entity* catchCircle(QMouseEvent* e);
 
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+private:
+    struct Points;
+    RS_Entity *catchCircle(QMouseEvent *e);
+    std::unique_ptr<Points> pPoints;
+    bool getData(RS_Entity *en = nullptr);
+    RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
 };
 
 #endif

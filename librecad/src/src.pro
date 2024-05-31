@@ -131,6 +131,7 @@ RESOURCES += ../../licenses/licenses.qrc
 # Library
 HEADERS += \
     actions/lc_abstractactionwithpreview.h \
+    actions/lc_actiondrawcirclebase.h \
     actions/lc_actiondrawlinefrompointtoline.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
@@ -152,6 +153,8 @@ HEADERS += \
     actions/lc_actiondrawrectangle2points.h \
     actions/lc_actiondrawslicedivide.h \
     actions/lc_actionmodifylinejoin.h \
+    actions/lc_actionpolylinedeletebase.h \
+    lib/actions/lc_highlight.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -300,6 +303,7 @@ HEADERS += \
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
     actions/lc_abstractactionwithpreview.cpp \
+    actions/lc_actiondrawcirclebase.cpp \
     actions/lc_actiondrawcirclebyarc.cpp \
     actions/lc_actiondrawlineanglerel.cpp \
     actions/lc_actiondrawlinefrompointtoline.cpp \
@@ -321,6 +325,8 @@ SOURCES += \
     actions/lc_actionpenpick.cpp \
     actions/lc_actionpensyncactivebylayer.cpp \
     actions/lc_actionmodifylinejoin.cpp \
+    actions/lc_actionpolylinedeletebase.cpp \
+    lib/actions/lc_highlight.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \

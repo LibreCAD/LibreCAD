@@ -37,66 +37,62 @@ class RS_Vector;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineRelAngle : public RS_PreviewActionInterface {
-	Q_OBJECT
+// fixme - add line snap mode (start/end, middle)
+class RS_ActionDrawLineRelAngle:public RS_PreviewActionInterface {
+Q_OBJECT
 private:
     enum Status {
         SetEntity,     /**< Choose entity. */
         SetPos,        /**< Choose position. */
-		SetAngle,      /**< Set angle in console. */
-		SetLength      /**< Set length in console. */
+        SetAngle,      /**< Set angle in console. */
+        SetLength      /**< Set length in console. */
     };
 
 public:
-    RS_ActionDrawLineRelAngle(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView,
-                              double angle = 0.0,
-                              bool fixedAngle = false);
-	~RS_ActionDrawLineRelAngle() override;
-	
-	RS2::ActionType rtti() const override;
-
+    RS_ActionDrawLineRelAngle(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        double angle = 0.0,
+        bool fixedAngle = false);
+    ~RS_ActionDrawLineRelAngle() override;
+    RS2::ActionType rtti() const override;
     void finish(bool updateTB = true) override;
-	void trigger() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void hideOptions() override;
+    void showOptions() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	
-	void setAngle(double a) {
-		angle = a;
-	}
+    void setAngle(double a){
+        angle = a;
+    }
 
-	double getAngle() const{
-		return angle;
-	}
+    double getAngle() const{
+        return angle;
+    }
 
-	void setLength(double l) {
-		length = l;
-	}
+    void setLength(double l){
+        length = l;
+    }
 
-	double getLength() const{
-		return length;
-	}
+    double getLength() const{
+        return length;
+    }
 
-	bool hasFixedAngle() const{
-		return fixedAngle;
-	}
+    bool hasFixedAngle() const{
+        return fixedAngle;
+    }
 
 private:
     /** Chosen entity */
-    RS_Entity* entity = nullptr;
+    RS_Entity *entity = nullptr;
     /** Chosen position */
-	std::unique_ptr<RS_Vector> pos;
+    std::unique_ptr<RS_Vector> pos;
     /**
      * Line angle.
      */
@@ -109,7 +105,6 @@ private:
      * Is the angle fixed?
      */
     bool fixedAngle = false;
-
     void unhighlightEntity();
 };
 
