@@ -93,7 +93,7 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     ,previousViewTime{std::make_unique<QDateTime>(QDateTime::currentDateTime())}
 {
     RS_SETTINGS->beginGroup("Colors");
-    setBackground(QColor(RS_SETTINGS->readEntry("/background", RS_Settings::background)));
+    RS_GraphicView::setBackground(QColor(RS_SETTINGS->readEntry("/background", RS_Settings::background)));
     setGridColor(QColor(RS_SETTINGS->readEntry("/grid", RS_Settings::grid)));
     setMetaGridColor(QColor(RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid)));
     setSelectedColor(QColor(RS_SETTINGS->readEntry("/select", RS_Settings::select)));
@@ -105,9 +105,8 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
 
     RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    RS_SETTINGS->writeEntry("/hideRelativeZero", RS_SETTINGS->readNumEntry("/hideRelativeZero", 0));
-    RS_SETTINGS->endGroup();
+    auto groupGuide = RS_SETTINGS->beginGroupGuard("/Appearance");
+    m_colorData->hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
 }
 
 RS_GraphicView::~RS_GraphicView()
