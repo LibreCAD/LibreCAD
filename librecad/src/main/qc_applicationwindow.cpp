@@ -2428,7 +2428,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
     QPageSize::PageSizeId paperSizeName = LC_Printing::rsToQtPaperFormat(pf);
     RS_Vector paperSize = graphic->getPaperSize();
     if(paperSizeName==QPageSize::Custom){
-        RS_Vector&& s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
+        RS_Vector s=RS_Units::convert(paperSize, graphic->getUnit(),RS2::Millimeter);
         if(landscape) s=s.flipXY();
         printer.setPageSize(QPageSize{QSizeF(s.x,s.y), QPageSize::Millimeter});
         // RS_DEBUG->print(RS_Debug::D_ERROR, "set Custom paper size to (%g, %g)\n", s.x,s.y);
@@ -2495,10 +2495,16 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         // fullPage must be set to true to get full width and height
         // (without counting margins).
         printer.setFullPage(true);
+        auto compareSize = [&printer](const RS_Vector& v0, const RS_Vector& v1) {
+            // from DPI to pixel/mm
+            auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
+            // ignore difference by two pixels
+            return v0.distanceTo(v1) * resolution <= 2.;
+        };
         QMarginsF printerMargins = printer.pageLayout().margins();
         RS_Vector printerSize(printer.widthMM(), printer.heightMM());
         if (bStartPrinting
-                && (paperSize != printerSize || paperMargins != printerMargins)) {
+            && (!compareSize(printerSize, paperSize) || paperMargins != printerMargins)) {
             QMessageBox msgBox(this);
             msgBox.setWindowTitle("Paper settings");
             msgBox.setText("Paper size and/or margins have been changed!");
