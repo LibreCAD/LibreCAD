@@ -336,24 +336,25 @@ QString RS_Math::derationalize(const QString& expr) {
  * If an error occurred, ok will be set to false (if ok isn't NULL).
  */
 double RS_Math::eval(const QString& expr, bool* ok) {
-    bool okTmp(false);
-    if(!ok)
+    bool okTmp = false;
+    if(ok == nullptr)
         ok=&okTmp;
+    double ret = 0.;
     if (expr.isEmpty()) {
         *ok = false;
-        return 0.0;
+        return ret;
     }
 
     QString derationalized = derationalize(expr);
     //expr = normalizedUnitsExpression(expr);
 
-    double ret(0.);
     try{
         mu::Parser p;
-        p.DefineConst(_T("pi"),M_PI);
 #ifdef _UNICODE
+        p.DefineConst(L"pi",M_PI);
         p.SetExpr(derationalized.toStdWString());
 #else
+        p.DefineConst("pi",M_PI);
         p.SetExpr(derationalized.toStdString());
 #endif
         ret=p.Eval();
@@ -364,6 +365,11 @@ double RS_Math::eval(const QString& expr, bool* ok) {
         mu::console() << e.GetMsg() << std::endl;
         *ok=false;
     }
+    catch (...)
+    {
+        LC_ERR<<"MuParser error";
+    }
+
     return ret;
 }
 
