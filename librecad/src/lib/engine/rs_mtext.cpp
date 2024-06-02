@@ -368,7 +368,7 @@ void RS_MText::update() {
 
   updateAddLine(oneLine, lineCounter);
 
-  alignVertically(lineCounter);
+  alignVertically();
   RS_DEBUG->print("RS_MText::update: OK");
 }
 
