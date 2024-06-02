@@ -2501,10 +2501,11 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
             // ignore difference by two pixels
             return v0.distanceTo(v1) * resolution <= 2.;
         };
+        RS_Vector paperSizeMm = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
         QMarginsF printerMargins = printer.pageLayout().margins();
-        RS_Vector printerSize(printer.widthMM(), printer.heightMM());
+        RS_Vector printerSizeMm(printer.widthMM(), printer.heightMM());
         if (bStartPrinting
-            && (!compareSize(printerSize, paperSize) || paperMargins != printerMargins)) {
+            && (!compareSize(printerSizeMm, paperSizeMm) || paperMargins != printerMargins)) {
             QMessageBox msgBox(this);
             msgBox.setWindowTitle("Paper settings");
             msgBox.setText("Paper size and/or margins have been changed!");
@@ -2525,8 +2526,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
                 .arg(RS_Units::convert(paperMargins.top(), RS2::Millimeter, graphic->getUnit()))
                 .arg(RS_Units::convert(paperMargins.right(), RS2::Millimeter, graphic->getUnit()))
                 .arg(RS_Units::convert(paperMargins.bottom(), RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerSize.x, RS2::Millimeter, graphic->getUnit()))
-                .arg(RS_Units::convert(printerSize.y, RS2::Millimeter, graphic->getUnit()))
+                .arg(RS_Units::convert(printerSizeMm.x, RS2::Millimeter, graphic->getUnit()))
+                .arg(RS_Units::convert(printerSizeMm.y, RS2::Millimeter, graphic->getUnit()))
                 .arg(printer.pageLayout().pageSize().name())
                 .arg(RS_Units::convert(printerMargins.left(), RS2::Millimeter, graphic->getUnit()))
                 .arg(RS_Units::convert(printerMargins.top(), RS2::Millimeter, graphic->getUnit()))
@@ -2536,7 +2537,7 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
             int answer = msgBox.exec();
             switch (answer) {
             case QMessageBox::Yes:
-                graphic->setPaperSize(RS_Units::convert(printerSize, RS2::Millimeter, graphic->getUnit()));
+                graphic->setPaperSize(RS_Units::convert(printerSizeMm, RS2::Millimeter, graphic->getUnit()));
                 graphic->setMargins(printerMargins.left(), printerMargins.top(),
                                     printerMargins.right(), printerMargins.bottom());
                 break;
