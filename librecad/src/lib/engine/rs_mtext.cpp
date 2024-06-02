@@ -368,26 +368,25 @@ void RS_MText::update() {
 
   updateAddLine(oneLine, lineCounter);
 
-  alignVertically();
+  alignVertically(lineCounter);
   RS_DEBUG->print("RS_MText::update: OK");
 }
 
 void RS_MText::alignVertically()
 {
-    forcedCalculateBorders();
-
     // Vertical Align:
 
     switch (data.valign) {
     case RS_MTextData::VATop:
-        RS_EntityContainer::move({0., data.insertionPoint.y - getMax().y});
-      break;
+        // no change
+        break;
+
     case RS_MTextData::VAMiddle:
-        RS_EntityContainer::move({0., data.insertionPoint.y - 0.5 * (getMin().y + getMax().y)});
+        RS_EntityContainer::move({0., 0.5 * usedTextHeight});
       break;
 
     case RS_MTextData::VABottom:
-        RS_EntityContainer::move({0., data.insertionPoint.y - getMin().y});
+        RS_EntityContainer::move({0., usedTextHeight});
       break;
 
     default:
@@ -434,8 +433,7 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
   letterEntity->update();
   letterEntity->forcedCalculateBorders();
 
-  RS_Vector letterWidth{letterEntity->getMax().x - letterEntity->getMin().x,
-                        0.};
+  RS_Vector letterWidth = {font.getWordSpacing(), 0.};
   letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
 
   oneLine.addEntity(letterEntity);
