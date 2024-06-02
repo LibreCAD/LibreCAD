@@ -2495,17 +2495,28 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         // fullPage must be set to true to get full width and height
         // (without counting margins).
         printer.setFullPage(true);
-        auto compareSize = [&printer](const RS_Vector& v0, const RS_Vector& v1) {
+        auto equalPaperSize = [&printer](const RS_Vector& v0, const RS_Vector& v1) {
             // from DPI to pixel/mm
             auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
-            // ignore difference by two pixels
+            // ignore difference within two pixels
             return v0.distanceTo(v1) * resolution <= 2.;
         };
+        auto equalMargins = [&printer](const QMarginsF& drawingMargins) {
+            QMarginsF printerMarginsPixels = printer.pageLayout().marginsPixels(printer.resolution());
+            // from DPI to pixel/mm
+            auto resolution = RS_Units::convert(1., RS2::Millimeter, RS2::Inch) * printer.resolution();
+            // assuming drawingMargins in mm
+            QMarginsF drawingMarginsPixels = drawingMargins * resolution;
+            QMarginsF diff = printerMarginsPixels - drawingMarginsPixels;
+            // ignore difference within two pixels
+            return std::max({std::abs(diff.left()), std::abs(diff.right()), std::abs(diff.top()), std::abs(diff.bottom())}) <= 2.;
+        };
+
         RS_Vector paperSizeMm = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
         QMarginsF printerMargins = printer.pageLayout().margins();
         RS_Vector printerSizeMm(printer.widthMM(), printer.heightMM());
         if (bStartPrinting
-            && (!compareSize(printerSizeMm, paperSizeMm) || paperMargins != printerMargins)) {
+            && (!equalPaperSize(printerSizeMm, paperSizeMm) || !equalMargins(paperMargins))) {
             QMessageBox msgBox(this);
             msgBox.setWindowTitle("Paper settings");
             msgBox.setText("Paper size and/or margins have been changed!");
