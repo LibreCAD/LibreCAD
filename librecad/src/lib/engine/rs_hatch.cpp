@@ -78,19 +78,18 @@ void pr(RS_EntityContainer* loop)
     LC_ERR<<" |"<<loop->getId()<<" )";
 }
 
-void avoidZeroLength(RS_EntityContainer* loop) {
-    if (loop == nullptr)
-        return;
+// Clean up zero length entities from a container
+void avoidZeroLength(RS_EntityContainer& container) {
     std::set<RS_Entity*> toCleanUp;
-    for (RS_Entity* e: *loop) {
+    for (RS_Entity* e: container) {
         if (e != nullptr && e->isContainer())
-            avoidZeroLength(static_cast<RS_EntityContainer*>(e));
+            avoidZeroLength(*static_cast<RS_EntityContainer*>(e));
         else if (e != nullptr && RS_Math::equal(e->getLength(), 0.)) {
             toCleanUp.insert(e);
         }
     }
     for (RS_Entity* e: toCleanUp)
-        loop->removeEntity(e);
+        container.removeEntity(e);
 }
 }
 
@@ -137,8 +136,10 @@ bool RS_Hatch::validate() {
     // loops:
     foreach(auto* l, entities){
 
-        if (l->rtti()==RS2::EntityContainer) {
-            RS_EntityContainer* loop = (RS_EntityContainer*)l;
+        auto* loop = dynamic_cast<RS_EntityContainer*>(l);
+        if (loop != nullptr) {
+            // skip zero length edges
+            avoidZeroLength(*loop);
 
             ret = loop->optimizeContours() && ret;
         }
