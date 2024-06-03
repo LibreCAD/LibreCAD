@@ -52,7 +52,7 @@ jobs:
           overwrite: true
 
   BuildMacOS:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -66,6 +66,7 @@ jobs:
 
       - name: Build and packaging
         run: |
+          find / -name qmake
           scripts/build-osx.sh
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
