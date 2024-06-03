@@ -52,7 +52,7 @@ jobs:
           overwrite: true
 
   BuildMacOS:
-    runs-on: macos-12
+    runs-on: macos-11
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -61,7 +61,7 @@ jobs:
 
       - name: Install Qt5 and dependencies
         run: |
-          brew install boost qt5
+          brew install boost qt@5
           brew link qt5 --force
 
       - name: Build and packaging
