@@ -49,9 +49,10 @@ jobs:
           name: assets
           path: LibreCAD*.AppImage
           retention-days: 2
+          overwrite: true
 
   BuildMacOS:
-    runs-on: macos-11
+    runs-on: macos-12
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
