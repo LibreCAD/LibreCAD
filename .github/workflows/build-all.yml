@@ -27,6 +27,7 @@ jobs:
         with:
           boost_version: 1.75.0
           boost_install_dir: '${{ github.workspace }}/'
+          platform_version: 20.04
 
       - name: Install Clang
         run: |
@@ -62,11 +63,10 @@ jobs:
       - name: Install Qt5 and dependencies
         run: |
           brew install boost qt@5
-          brew link qt5 --force
+          brew link qt@5 --force
 
       - name: Build and packaging
         run: |
-          find / -name qmake
           scripts/build-osx.sh
           mv LibreCAD.dmg LibreCAD-`git describe --always`.dmg
 
@@ -76,6 +76,7 @@ jobs:
           name: assets
           path: LibreCAD*.dmg
           retention-days: 2
+          overwrite: true
 
   BuildWindows:
     runs-on: windows-2019
@@ -134,6 +135,7 @@ jobs:
           name: assets
           path: LibreCAD-Installer*.exe
           retention-days: 2
+          overwrite: true
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'

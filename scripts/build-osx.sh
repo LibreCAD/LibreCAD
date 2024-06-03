@@ -28,6 +28,12 @@ do
         break
     fi
 done
+# qmake on MacOS 12, using brew qt@5
+if [ -x "/usr/local/bin/qmake" ]
+then
+    QT_PATH=/usr/local/bin/
+    break
+fi
 if [ -z "$QT_PATH" ]
 then
     echo QT_PATH could not be determined, exiting >&2
