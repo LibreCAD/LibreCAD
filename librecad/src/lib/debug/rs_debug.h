@@ -120,13 +120,9 @@ public:
     void print(const QString& text);
     void printUnicode(const QString& text);
     void timestamp();
-    void setStream(FILE* s) {
-        stream = s;
-    }
 
 private:
     RS_DebugLevel debugLevel = D_INFORMATIONAL;
-    FILE* stream = nullptr;
 };
 
 #endif
