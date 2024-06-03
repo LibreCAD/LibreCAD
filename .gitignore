@@ -95,3 +95,7 @@ core.*
 *.vcxproj
 *.vcxproj.filters
 *.sln
+
+#VS Code files
+.vscode/*
+*.code-workspace
