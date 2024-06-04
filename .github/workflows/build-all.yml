@@ -47,10 +47,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: assets
+          name: assets.AppImage
           path: LibreCAD*.AppImage
           retention-days: 2
-          overwrite: true
 
   BuildMacOS:
     runs-on: macos-12
@@ -73,10 +72,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: assets
+          name: assets.dmg
           path: LibreCAD*.dmg
           retention-days: 2
-          overwrite: true
 
   BuildWindows:
     runs-on: windows-2019
@@ -132,10 +130,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: assets
+          name: assets.exe
           path: LibreCAD-Installer*.exe
           retention-days: 2
-          overwrite: true
 
   UpdateAssets:
     if: github.repository_owner == 'LibreCAD'
@@ -150,13 +147,22 @@ jobs:
       - name: Fetch artifacts
         uses: actions/download-artifact@v4
 
+      - name: Delete previous assets
+        run: gh release delete "2.2.0-latest" -y
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+      # https://github.com/marketplace/actions/gh-release
       - name: Upload latest pre-release
-        uses: "marvinpinto/action-automatic-releases@latest"
+        uses: "softprops/action-gh-release@v2"
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "2.2.0-latest"
+          token: "${{ secrets.GITHUB_TOKEN }}"
+          tag_name: "2.2.0-latest"
           prerelease: true
-          title: "Continuous Build"
+          generate_release_notes: true
+          name: "Continuous Build 2.2.0.x"
           files: |
-            assets/LibreCAD*.*
+            assets.AppImage/LibreCAD*.*
+            assets.dmg/LibreCAD*.*
+            assets.exe/LibreCAD*.*
             LICENSE
