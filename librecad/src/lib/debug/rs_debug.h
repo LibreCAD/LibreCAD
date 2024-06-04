@@ -28,13 +28,15 @@
 #ifndef RS_DEBUG_H
 #define RS_DEBUG_H
 
-#include <QString>
-#include <QTextStream>
 #ifdef __hpux
 #include <sys/_size_t.h>
 #endif
 
+class QChar;
+class QLatin1String;
+class QByteArray;
 class QString;
+class QStringView;
 
 /** print out a debug header*/
 #define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
@@ -95,23 +97,37 @@ public:
      * Example:
      *      LC_LOG(D_ERROR)<<"Log text";
      */
-    class LogStream : public QTextStream {
+    class LogStreamInterface {
     public:
-        LogStream(RS_DebugLevel level = D_DEBUGGING);
-        ~LogStream() override;
-
-        LogStream& operator () (RS_DebugLevel level)
-        {
-            m_debugLevel = level;
-            return *this;
-        }
-
+        LogStreamInterface(RS_DebugLevel level);
+        ~LogStreamInterface();
+        LogStreamInterface& operator<<(char16_t ch);
+        LogStreamInterface& operator<<(QChar ch);
+        LogStreamInterface& operator<<(char ch);
+        LogStreamInterface& operator<<(signed short i);
+        LogStreamInterface& operator<<(unsigned short i);
+        LogStreamInterface& operator<<(signed int i);
+        LogStreamInterface& operator<<(unsigned int i);
+        LogStreamInterface& operator<<(signed long i);
+        LogStreamInterface& operator<<(unsigned long i);
+        LogStreamInterface& operator<<(long long i);
+        LogStreamInterface& operator<<(unsigned long long i);
+        LogStreamInterface& operator<<(float f);
+        LogStreamInterface& operator<<(double f);
+        LogStreamInterface& operator<<(const QString& s);
+        LogStreamInterface& operator<<(QStringView s);
+        LogStreamInterface& operator<<(QLatin1String s);
+        LogStreamInterface& operator<<(const QByteArray& array);
+        LogStreamInterface& operator<<(const char *c);
+        LogStreamInterface& operator<<(const void *ptr);
+        LogStreamInterface& operator () (RS_DebugLevel level);
     private:
-        QString m_string;
-        RS_DebugLevel m_debugLevel;
+        struct StreamImpl;
+        StreamImpl* m_pStream = nullptr;
     };
 
-    static LogStream Log(RS_DebugLevel level = D_DEBUGGING);
+
+    static LogStreamInterface Log(RS_DebugLevel level = D_DEBUGGING);
 
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
