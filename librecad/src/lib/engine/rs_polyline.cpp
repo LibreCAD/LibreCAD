@@ -311,8 +311,7 @@ void RS_Polyline::endPolyline() {
 }
 
 //RLZ: rewrite this:
-void RS_Polyline::setClosed(bool cl, double bulge) {
-    Q_UNUSED(bulge);
+void RS_Polyline::setClosed(bool cl, [[maybe_unused]] double bulge) {
     bool areClosed = isClosed();
     setClosed(cl);
     if (isClosed()) {

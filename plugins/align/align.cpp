@@ -34,10 +34,8 @@ PluginCapabilities LC_Align::getCapabilities() const
 }
 
 void LC_Align::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+                             [[maybe_unused]] QWidget *parent, QString cmd)
 {
-    Q_UNUSED(parent);
-
     /* First load the settings */
     QSettings settings(QSettings::IniFormat, QSettings::UserScope,
 		       "LibreCAD", "align_plugin");

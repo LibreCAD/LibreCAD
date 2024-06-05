@@ -158,10 +158,8 @@ void LC_DimArc::arrow( const RS_Vector& point,
 }
 
 
-void LC_DimArc::updateDim(bool autoText /* = false */)
+void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
 {
-    Q_UNUSED (autoText)
-
     RS_DEBUG->print("LC_DimArc::update");
 
     clear();

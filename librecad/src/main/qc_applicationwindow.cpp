@@ -3762,7 +3762,7 @@ void QC_ApplicationWindow::destroyMenu(const QString& menu_name)
     settings.endGroup();
 }
 
-void QC_ApplicationWindow::changeEvent(QEvent* event)
+void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent* event)
 {
     // author: ravas
     // returning to LC via Command+Tab won't always activate a subwindow #821
@@ -3780,8 +3780,6 @@ void QC_ApplicationWindow::changeEvent(QEvent* event)
                 current_subwindow = mdiAreaCAD->currentSubWindow();
             }
         }
-    #else
-    Q_UNUSED( event)
     #endif
 }
 

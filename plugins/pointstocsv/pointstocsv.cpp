@@ -43,10 +43,8 @@ PluginCapabilities ExpTo_Csv::getCapabilities() const
 }
 
 void ExpTo_Csv::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(cmd);
     d = doc;
     //Deselecting all entities to start a fresh selection.
     d->unselectEntities();

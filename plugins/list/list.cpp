@@ -31,10 +31,8 @@ PluginCapabilities LC_List::getCapabilities() const
 }
 
 void LC_List::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+                             [[maybe_unused]] QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(parent);
-    Q_UNUSED(cmd);
     d = doc;
     QList<Plug_Entity *> obj;
     bool yes  = doc->getSelect(&obj);
