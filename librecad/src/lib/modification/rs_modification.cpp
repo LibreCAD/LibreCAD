@@ -993,7 +993,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
     RS_Polyline* pl2 = new RS_Polyline(container);
     RS_Polyline* pl = pl1;	// Current polyline
 	RS_Line* line = nullptr;
-	RS_Arc* arc = nullptr;
+	[[maybe_unused]] RS_Arc* arc = nullptr;
 
     if (polyline1) {
         *polyline1 = pl1;
@@ -1052,7 +1052,7 @@ bool RS_Modification::splitPolyline(RS_Polyline& polyline,
     container->addEntity(pl2);
     //container->removeEntity(&polyline);
     polyline.changeUndoState();
-	Q_UNUSED( arc ); /* TNick: set but not used */
+
     return true;
 }
 
@@ -1446,8 +1446,7 @@ RS_Polyline* RS_Modification::deletePolylineNode(RS_Polyline& polyline,
  */
 
 RS_Polyline* RS_Modification::deletePolylineNodesBetween(RS_Polyline& polyline,
-        RS_AtomicEntity& segment, const RS_Vector& node1, const RS_Vector& node2) {
-    Q_UNUSED(segment);
+        [[maybe_unused]] RS_AtomicEntity& segment, const RS_Vector& node1, const RS_Vector& node2) {
     RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween");
 
 	if (!container) {
