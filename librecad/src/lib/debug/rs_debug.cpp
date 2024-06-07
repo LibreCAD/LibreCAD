@@ -24,9 +24,12 @@
 **
 **********************************************************************/
 
+#include <climits>
 #include <cstdarg>
 #include <cstdio>
+#include <cuchar>
 #include <iostream>
+#include <string_view>
 
 #include <QDateTime>
 #include <QString>
@@ -35,132 +38,136 @@
 #include "rs_debug.h"
 
 namespace {
-FILE *stream = nullptr;
+FILE *s_logStream = nullptr;
 }
 
-struct RS_Debug::LogStreamInterface::StreamImpl : public QTextStream {
-  StreamImpl(RS_Debug::RS_DebugLevel level) : m_debugLevel{level} {
-    setString(&m_string);
-  }
+// The implementation to delegate methods to QTextStream
+struct RS_Debug::LogStream::StreamImpl : public QTextStream {
+    StreamImpl(RS_Debug::RS_DebugLevel level) :
+        QTextStream{&m_string, QIODeviceBase::WriteOnly}
+      , m_debugLevel{level}
+    {
+    }
 
-  QString m_string;
-  RS_Debug::RS_DebugLevel m_debugLevel;
+    QString m_string;
+    RS_Debug::RS_DebugLevel m_debugLevel = RS_Debug::D_INFORMATIONAL;
 };
 
-RS_Debug::LogStreamInterface::LogStreamInterface(RS_Debug::RS_DebugLevel level)
-    : m_pStream(new RS_Debug::LogStreamInterface::StreamImpl{level}) {}
+RS_Debug::LogStream::LogStream(RS_Debug::RS_DebugLevel level)
+    : m_pStream(new RS_Debug::LogStream::StreamImpl{level})
+{}
 
-RS_Debug::LogStreamInterface::~LogStreamInterface() {
-  try {
-    if (!m_pStream->m_string.isEmpty())
-      RS_Debug::instance()->print(m_pStream->m_debugLevel, "%s",
-                                  m_pStream->m_string.toStdString().c_str());
-  } catch (...) {
-    RS_Debug::instance()->print(RS_Debug::D_CRITICAL,
-                                "RS_Debug::LogStream:: Failed to log");
-  }
-  delete m_pStream;
-}
-
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator()(RS_Debug::RS_DebugLevel level) {
-  m_pStream->m_debugLevel = level;
-  return *this;
+RS_Debug::LogStream::~LogStream() {
+    try {
+        if (!m_pStream->m_string.isEmpty())
+            RS_Debug::instance()->print(m_pStream->m_debugLevel, "%s",
+                                        m_pStream->m_string.toStdString().c_str());
+    } catch (...) {
+        RS_Debug::instance()->print(RS_Debug::D_CRITICAL,
+                                    "RS_Debug::LogStream:: Failed to log");
+    }
+    delete m_pStream;
 }
 
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(QChar ch) {
-  (*m_pStream) << ch;
-  return *this;
+// delegate to QTextStream methods
+RS_Debug::LogStream& RS_Debug::LogStream::operator()(RS_Debug::RS_DebugLevel level) {
+    m_pStream->m_debugLevel = level;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(char ch) {
-  (*m_pStream) << ch;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QChar ch) {
+    *m_pStream << ch;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(signed short i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(char ch) {
+    *m_pStream << ch;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(unsigned short i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed short i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(signed int i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned short i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(unsigned int i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed int i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(signed long i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned int i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(unsigned long i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(signed long i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(long long i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned long i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(unsigned long long i) {
-  (*m_pStream) << i;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(long long i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(float f) {
-  (*m_pStream) << f;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(unsigned long long i) {
+    *m_pStream << i;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(double f) {
-  (*m_pStream) << f;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(float f) {
+    *m_pStream << f;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(const QString &s) {
-  (*m_pStream) << s;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(double f) {
+    *m_pStream << f;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(QStringView s) {
-  (*m_pStream) << s;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QString &s) {
+    *m_pStream << s;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(QLatin1String s) {
-  (*m_pStream) << s;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QStringView s) {
+    *m_pStream << s;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(const QByteArray &array) {
-  (*m_pStream) << array;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(QLatin1String s) {
+    *m_pStream << s;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(const char *c) {
-  (*m_pStream) << c;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const QByteArray &array) {
+    *m_pStream << array;
+    return *this;
 }
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(const void *ptr) {
-  (*m_pStream) << ptr;
-  return *this;
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const char *c) {
+    *m_pStream << c;
+    return *this;
 }
+
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(const void *ptr) {
+    *m_pStream << ptr;
+    return *this;
+}
+// end of QTextStream delegation
 
 void debugHeader(char const *file, char const *func, int line) {
-  std::cout << file << " : " << func << " : line " << line << std::endl;
+    std::cout << file << " : " << func << " : line " << line << std::endl;
 }
 
 /**
@@ -171,43 +178,49 @@ void debugHeader(char const *file, char const *func, int line) {
  * singleton class
  */
 RS_Debug *RS_Debug::instance() {
-  static RS_Debug *uniqueInstance = nullptr;
-  if (uniqueInstance == nullptr) {
-    QDateTime now = QDateTime::currentDateTime();
-    QString nowStr;
-    nowStr = now.toString("yyyyMMdd_hhmmss");
+    static RS_Debug *uniqueInstance = nullptr;
+    if (uniqueInstance == nullptr) {
+        QDateTime now = QDateTime::currentDateTime();
+        QString nowStr = now.toString("yyyyMMdd_hhmmss");
 
-    uniqueInstance = new RS_Debug;
-    // uniqueInstance->stream = fopen(fName.latin1(), "wt");
-    stream = stderr;
-  }
-  return uniqueInstance;
+        uniqueInstance = new RS_Debug;
+        s_logStream = stderr;
+    }
+    return uniqueInstance;
 }
 
 /**
  * Constructor setting the default debug level.
  */
-RS_Debug::RS_Debug() { debugLevel = D_DEBUGGING; }
+RS_Debug::RS_Debug()  :
+    debugLevel{ D_DEBUGGING}
+{}
 
 RS_Debug::~RS_Debug() {
-  if (stream != nullptr and stream != stderr)
-    fclose(stream);
+    try {
+    if (s_logStream != nullptr && s_logStream != stderr && s_logStream != stdout)
+        fclose(s_logStream);
+    }
+    catch(...) {
+        std::cerr<<"RS_Debug::"<<__func__<<":: Failed to close stream";
+
+    }
 }
 
 /**
  * Sets the debugging level.
  */
 void RS_Debug::setLevel(RS_DebugLevel level) {
-  if (debugLevel == level)
-    return;
-  debugLevel = level;
-  print(D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
-  print(D_CRITICAL, "RS_DEBUG: Critical");
-  print(D_ERROR, "RS_DEBUG: Errors");
-  print(D_WARNING, "RS_DEBUG: Warnings");
-  print(D_NOTICE, "RS_DEBUG: Notice");
-  print(D_INFORMATIONAL, "RS_DEBUG: Informational");
-  print(D_DEBUGGING, "RS_DEBUG: Debugging");
+    if (debugLevel == level)
+        return;
+    debugLevel = level;
+    print(D_NOTHING, "RS_DEBUG::setLevel(%d)", level);
+    print(D_CRITICAL, "RS_DEBUG: Critical");
+    print(D_ERROR, "RS_DEBUG: Errors");
+    print(D_WARNING, "RS_DEBUG: Warnings");
+    print(D_NOTICE, "RS_DEBUG: Notice");
+    print(D_INFORMATIONAL, "RS_DEBUG: Informational");
+    print(D_DEBUGGING, "RS_DEBUG: Debugging");
 }
 
 /**
@@ -219,14 +232,14 @@ RS_Debug::RS_DebugLevel RS_Debug::getLevel() { return debugLevel; }
  * Prints the given message to stdout.
  */
 void RS_Debug::print(const char *format...) {
-  if (debugLevel == D_DEBUGGING) {
-    va_list ap;
-    va_start(ap, format);
-    vfprintf(stream, format, ap);
-    fprintf(stream, "\n");
-    va_end(ap);
-    fflush(stream);
-  }
+    if (true || debugLevel == D_DEBUGGING) {
+        va_list ap;
+        va_start(ap, format);
+        vfprintf(s_logStream, format, ap);
+        fprintf(s_logStream, "\n");
+        va_end(ap);
+        fflush(s_logStream);
+    }
 }
 
 /**
@@ -237,43 +250,51 @@ void RS_Debug::print(const char *format...) {
  */
 void RS_Debug::print(RS_DebugLevel level, const char *format...) {
 
-  if (debugLevel >= level) {
-    va_list ap;
-    va_start(ap, format);
-    vfprintf(stream, format, ap);
-    fprintf(stream, "\n");
-    va_end(ap);
-    fflush(stream);
-  }
+    if (debugLevel >= level) {
+        va_list ap;
+        va_start(ap, format);
+        vfprintf(s_logStream, format, ap);
+        fprintf(s_logStream, "\n");
+        va_end(ap);
+        fflush(s_logStream);
+    }
 }
 
 /**
  * Prints a time stamp in the format yyyyMMdd_hhmmss.
  */
 void RS_Debug::timestamp() {
-  QDateTime now = QDateTime::currentDateTime();
-  QString nowStr;
+    QDateTime now = QDateTime::currentDateTime();
+    QString nowStr;
 
-  nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
-  fprintf(stream, "%s", nowStr.toLatin1().data());
-  fprintf(stream, "\n");
-  fflush(stream);
+    nowStr = now.toString("yyyyMMdd_hh:mm:ss:zzz ");
+    fprintf(s_logStream, "%s", nowStr.toLatin1().data());
+    fprintf(s_logStream, "\n");
+    fflush(s_logStream);
 }
 
 /**
  * Prints the unicode for every character in the given string.
  */
 void RS_Debug::printUnicode(const QString &text) {
-  for (auto const &v : text) {
-    print("[%X] %c", v.unicode(), v.toLatin1());
-  }
+    for (u_int32_t v : text.toUcs4()) {
+        print("[0x%X] ", v);
+        char32_t c{v};
+        std::mbstate_t state{};
+         char buffer[MB_LEN_MAX]{};
+         std::size_t counts = std::c32rtomb(buffer, c, &state);
+         if (counts != std::numeric_limits<size_t>::max()) {
+             std::string utf8Str(buffer, counts);
+             print(" %s", utf8Str.c_str());
+         }
+    }
 }
 
 /**
  * Prints the unicode for every character in the given string.
  */
 void RS_Debug::print(const QString &text) {
-  std::cerr << text.toStdString() << std::endl;
+    std::cerr << text.toStdString() << std::endl;
 }
 
 /**
@@ -283,12 +304,16 @@ void RS_Debug::print(const QString &text) {
  * @param level - debugging level
  * @return RS_Debug::LogStream - an instance of LogStream
  */
-RS_Debug::LogStreamInterface RS_Debug::Log(RS_DebugLevel level) {
-  return {level};
+RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level) {
+    return {level};
 }
 
-RS_Debug::LogStreamInterface &
-RS_Debug::LogStreamInterface::operator<<(char16_t ch) {
-  return *this << QChar(ch);
+/**
+ * @brief QChar is UTF16 chars
+ * @param ch a UTF16 char
+ * @return RS_Debug::LogStream& to allow chaining
+ */
+RS_Debug::LogStream& RS_Debug::LogStream::operator<<(char16_t ch) {
+    return *this << QChar(ch);
 }
 // EOF

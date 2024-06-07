@@ -32,9 +32,9 @@
 #include <sys/_size_t.h>
 #endif
 
+class QByteArray;
 class QChar;
 class QLatin1String;
-class QByteArray;
 class QString;
 class QStringView;
 
@@ -42,8 +42,10 @@ class QStringView;
 #define DEBUG_HEADER debugHeader(__FILE__, __func__, __LINE__);
 void debugHeader(char const* file, char const* func, int line);
 #define RS_DEBUG RS_Debug::instance()
-#define RS_DEBUG_VERBOSE DEBUG_HEADER \
-	RS_Debug::instance()
+#define RS_DEBUG_VERBOSE \
+    DEBUG_HEADER\
+    RS_Debug::instance()
+
 
 // stream style logging
 // Example: LC_LOG<<"logging debugging message"; // default log level: D_DEBUGGING
@@ -80,15 +82,16 @@ public:
                          D_INFORMATIONAL,
                          D_DEBUGGING };
 
-private:
-    RS_Debug();
-    RS_Debug(const RS_Debug&)=delete;
-	RS_Debug& operator = (const RS_Debug&)=delete;
-	RS_Debug(RS_Debug&&)=delete;
-	RS_Debug& operator = (RS_Debug&&)=delete;
-
-public:
     ~RS_Debug();
+    RS_Debug(const RS_Debug&)=delete;
+    RS_Debug& operator = (const RS_Debug&)=delete;
+    RS_Debug(RS_Debug&&)=delete;
+    RS_Debug& operator = (RS_Debug&&)=delete;
+
+    /**
+     * @brief instance() - accessor for the singleton instance
+     * @return the singleton instance
+     */
     static RS_Debug* instance();
 
     /**
@@ -96,38 +99,39 @@ public:
      *
      * Example:
      *      LC_LOG(D_ERROR)<<"Log text";
+     *      LC_ERR<<"Error text";
      */
-    class LogStreamInterface {
+    class LogStream {
     public:
-        LogStreamInterface(RS_DebugLevel level);
-        ~LogStreamInterface();
-        LogStreamInterface& operator<<(char16_t ch);
-        LogStreamInterface& operator<<(QChar ch);
-        LogStreamInterface& operator<<(char ch);
-        LogStreamInterface& operator<<(signed short i);
-        LogStreamInterface& operator<<(unsigned short i);
-        LogStreamInterface& operator<<(signed int i);
-        LogStreamInterface& operator<<(unsigned int i);
-        LogStreamInterface& operator<<(signed long i);
-        LogStreamInterface& operator<<(unsigned long i);
-        LogStreamInterface& operator<<(long long i);
-        LogStreamInterface& operator<<(unsigned long long i);
-        LogStreamInterface& operator<<(float f);
-        LogStreamInterface& operator<<(double f);
-        LogStreamInterface& operator<<(const QString& s);
-        LogStreamInterface& operator<<(QStringView s);
-        LogStreamInterface& operator<<(QLatin1String s);
-        LogStreamInterface& operator<<(const QByteArray& array);
-        LogStreamInterface& operator<<(const char *c);
-        LogStreamInterface& operator<<(const void *ptr);
-        LogStreamInterface& operator () (RS_DebugLevel level);
+        LogStream(RS_DebugLevel level);
+        virtual ~LogStream();
+        LogStream& operator<<(char16_t ch);
+        LogStream& operator<<(QChar ch);
+        LogStream& operator<<(char ch);
+        LogStream& operator<<(signed short i);
+        LogStream& operator<<(unsigned short i);
+        LogStream& operator<<(signed int i);
+        LogStream& operator<<(unsigned int i);
+        LogStream& operator<<(signed long i);
+        LogStream& operator<<(unsigned long i);
+        LogStream& operator<<(long long i);
+        LogStream& operator<<(unsigned long long i);
+        LogStream& operator<<(float f);
+        LogStream& operator<<(double f);
+        LogStream& operator<<(const QString& s);
+        LogStream& operator<<(QStringView s);
+        LogStream& operator<<(QLatin1String s);
+        LogStream& operator<<(const QByteArray& array);
+        LogStream& operator<<(const char *c);
+        LogStream& operator<<(const void *ptr);
+        LogStream& operator () (RS_DebugLevel level);
     private:
         struct StreamImpl;
         StreamImpl* m_pStream = nullptr;
     };
 
 
-    static LogStreamInterface Log(RS_DebugLevel level = D_DEBUGGING);
+    static LogStream Log(RS_DebugLevel level = D_DEBUGGING);
 
     void setLevel(RS_DebugLevel level);
     RS_DebugLevel getLevel();
@@ -138,6 +142,8 @@ public:
     void timestamp();
 
 private:
+    RS_Debug();
+
     RS_DebugLevel debugLevel = D_INFORMATIONAL;
 };
 
