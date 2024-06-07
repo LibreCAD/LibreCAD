@@ -26,9 +26,9 @@
 
 #include <climits>
 #include <cstdarg>
-#include <cstdio>
 #include <cuchar>
 #include <iostream>
+#include <cstdio>
 #include <string_view>
 
 #include <QDateTime>
@@ -198,8 +198,8 @@ RS_Debug::RS_Debug()  :
 
 RS_Debug::~RS_Debug() {
     try {
-    if (s_logStream != nullptr && s_logStream != stderr && s_logStream != stdout)
-        fclose(s_logStream);
+        if (s_logStream != nullptr && s_logStream != stderr && s_logStream != stdout)
+            fclose(s_logStream);
     }
     catch(...) {
         std::cerr<<"RS_Debug::"<<__func__<<":: Failed to close stream";
@@ -277,16 +277,15 @@ void RS_Debug::timestamp() {
  * Prints the unicode for every character in the given string.
  */
 void RS_Debug::printUnicode(const QString &text) {
-    for (u_int32_t v : text.toUcs4()) {
+    for (char32_t v : text.toUcs4()) {
         print("[0x%X] ", v);
-        char32_t c{v};
         std::mbstate_t state{};
-         char buffer[MB_LEN_MAX]{};
-         std::size_t counts = std::c32rtomb(buffer, c, &state);
-         if (counts != std::numeric_limits<size_t>::max()) {
-             std::string utf8Str(buffer, counts);
-             print(" %s", utf8Str.c_str());
-         }
+        char buffer[MB_LEN_MAX]{};
+        std::size_t counts = std::c32rtomb(buffer, v, &state);
+        if (counts != std::numeric_limits<size_t>::max()) {
+            std::string utf8Str(buffer, counts);
+            print(" %s", utf8Str.c_str());
+        }
     }
 }
 
