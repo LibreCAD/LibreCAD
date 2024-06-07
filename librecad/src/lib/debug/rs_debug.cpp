@@ -26,9 +26,8 @@
 
 #include <climits>
 #include <cstdarg>
-#include <cuchar>
-#include <iostream>
 #include <cstdio>
+#include <iostream>
 #include <string_view>
 
 #include <QDateTime>
@@ -232,7 +231,7 @@ RS_Debug::RS_DebugLevel RS_Debug::getLevel() { return debugLevel; }
  * Prints the given message to stdout.
  */
 void RS_Debug::print(const char *format...) {
-    if (true || debugLevel == D_DEBUGGING) {
+    if (debugLevel == D_DEBUGGING) {
         va_list ap;
         va_start(ap, format);
         vfprintf(s_logStream, format, ap);
@@ -279,13 +278,8 @@ void RS_Debug::timestamp() {
 void RS_Debug::printUnicode(const QString &text) {
     for (char32_t v : text.toUcs4()) {
         print("[0x%X] ", v);
-        std::mbstate_t state{};
-        char buffer[MB_LEN_MAX]{};
-        std::size_t counts = std::c32rtomb(buffer, v, &state);
-        if (counts != std::numeric_limits<size_t>::max()) {
-            std::string utf8Str(buffer, counts);
-            print(" %s", utf8Str.c_str());
-        }
+        QString str = QString::fromUcs4(&v, 1);
+        print(" %s", str.toStdString().c_str());
     }
 }
 
