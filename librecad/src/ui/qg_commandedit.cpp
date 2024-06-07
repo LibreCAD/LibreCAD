@@ -38,6 +38,11 @@
 #include "rs_settings.h"
 #include "rs_settings.h"
 
+namespace {
+// Limits for command file reading
+constexpr unsigned g_maxLinesToRead = 1024;
+const unsigned g_maxLineLength = 65536;
+}
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -369,19 +374,41 @@ void QG_CommandEdit::processVariable(QString input)
 void QG_CommandEdit::readCommandFile(const QString& path)
 {
     // author: ravas
-
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    QTextStream txt_stream(&file);
-    QString line;
-    while (!txt_stream.atEnd())
-    {
-        line = txt_stream.readLine();
-        line.remove(" ");
-        if (!line.startsWith("#"))
-            processInput(line);
+    // keep the pos of the read part
+    size_t pos = 0;
+    bool ended = false;
+    while (!ended) {
+        if (!file.isOpen())
+        {
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                break;
+            file.skip(pos);
+        }
+
+        // read lines to buffer and close the file immediately
+        QTextStream txt_stream(&file);
+        QStringList lines;
+        for(int i=0; i < g_maxLinesToRead; ++i) {
+            if (txt_stream.atEnd())
+                break;
+            lines << txt_stream.readLine(g_maxLineLength);
+        }
+        ended = txt_stream.atEnd();
+        pos = txt_stream.pos();
+
+        // Issue #1803: close the file to avoid blocking command loading
+        file.close();
+
+        // Process the commands while the file is closed
+        for (QString line: lines) {
+            line.remove(" ");
+            if (!line.startsWith("#"))
+                processInput(line);
+        }
     }
 }
 
