@@ -26,22 +26,23 @@
 
 #include "qg_commandedit.h"
 
-#include <QKeyEvent>
-#include <QRegularExpression>
-#include <QFile>
-#include <QTextStream>
 #include <QApplication>
 #include <QClipboard>
+#include <QFile>
+#include <QKeyEvent>
+#include <QRegularExpression>
+#include <QTextStream>
 
 #include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_settings.h"
-#include "rs_settings.h"
 
 namespace {
 // Limits for command file reading
-constexpr unsigned g_maxLinesToRead = 1024;
-const unsigned g_maxLineLength = 65536;
+// limit for the number of lines read together
+constexpr unsigned g_maxLinesToRead = 10240;
+// the maximum line length allowed
+constexpr unsigned g_maxLineLength = 4096;
 }
 
 /**
