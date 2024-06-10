@@ -1364,7 +1364,7 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Compiled on: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilado en: %1</translation>
     </message>
     <message>
         <source>Version: %1</source>
@@ -1372,43 +1372,43 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Warning: File already opened : </source>
-        <translation type="unfinished"></translation>
+        <translation>Advertencia: Archivo ya abierto : </translation>
     </message>
     <message>
         <source>Cannot save the file </source>
-        <translation type="unfinished"></translation>
+        <translation>No es posible guardar el archivo </translation>
     </message>
     <message>
         <source> , please check the filename and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation> , por favor verifique el nombre del archivo y los permisos.</translation>
     </message>
     <message>
         <source>Su&amp;b-Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo Su&amp;b-Ventana</translation>
     </message>
     <message>
         <source>Tile &amp;Vertically</source>
-        <translation type="unfinished"></translation>
+        <translation>Organizar &amp;Verticalmente</translation>
     </message>
     <message>
         <source>Ta&amp;b mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo P&amp;estaña</translation>
     </message>
     <message>
         <source>New document from template: </source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo documento de plantilla: </translation>
     </message>
     <message>
         <source>Select Template aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Selecciona Plantilla abortada</translation>
     </message>
     <message>
         <source>Auto-saving failed</source>
-        <translation type="unfinished"></translation>
+        <translation>Autoguardado fallido</translation>
     </message>
     <message>
         <source>Snap Selection</source>
-        <translation type="unfinished"></translation>
+        <translation>Forzar Selección</translation>
     </message>
     <message>
         <source>CAD Tools</source>
@@ -1416,27 +1416,27 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar como</translation>
     </message>
     <message>
         <source>Compiler: Clang %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: Clang %1.%2.%3</translation>
     </message>
     <message>
         <source>Compiler: GNU GCC %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: GNU GCC %1.%2.%3</translation>
     </message>
     <message>
         <source>Qt Version: %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de Qt: %1</translation>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Modo Borrador</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar como PDF</translation>
     </message>
     <message>
         <source>&amp;Text</source>
@@ -1444,25 +1444,27 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation>No es posible abrir el archivo
+%1
+Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivo &apos;%1&apos; no existe. Apertura cancelada</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation>Categorías</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Orden</translation>
     </message>
     <message>
         <source>Order</source>
