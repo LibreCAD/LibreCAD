@@ -2420,6 +2420,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         return;
     }
 
+    graphic->fitToPage();
+
     statusBar()->showMessage(tr("Printing..."));
     QPrinter printer(QPrinter::HighResolution);
 
