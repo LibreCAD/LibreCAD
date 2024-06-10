@@ -35,7 +35,7 @@
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation>SplinePoints</translation>
+        <translation>PuntosdeSpline</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -6179,7 +6179,7 @@ Do you want to replace it?</source>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation>zoomwindow</translation>
+        <translation>zoomventana</translation>
     </message>
     <message>
         <source>zw</source>
@@ -6504,7 +6504,7 @@ Do you want to replace it?</source>
     <message>
         <source>snapintersection</source>
         <comment>snap - intersection</comment>
-        <translation>forzaralaintersacción</translation>
+        <translation>forzaralaintersección</translation>
     </message>
     <message>
         <source>si</source>
@@ -6514,7 +6514,7 @@ Do you want to replace it?</source>
     <message>
         <source>snapmiddle</source>
         <comment>snap - middle points</comment>
-        <translation>chasquido medio</translation>
+        <translation>forzaralamitad</translation>
     </message>
     <message>
         <source>sm</source>
@@ -6524,7 +6524,7 @@ Do you want to replace it?</source>
     <message>
         <source>snaponentity</source>
         <comment>snap - on entity</comment>
-        <translation>snaponentidad</translation>
+        <translation>forzarsobreentidad</translation>
     </message>
     <message>
         <source>sn</source>
@@ -6539,7 +6539,7 @@ Do you want to replace it?</source>
     <message>
         <source>setrelativezero</source>
         <comment>set relative zero position</comment>
-        <translation>setrelativezero</translation>
+        <translation>establecerrelativoacero</translation>
     </message>
     <message>
         <source>rz</source>
@@ -6559,7 +6559,7 @@ Do you want to replace it?</source>
     <message>
         <source>deselectall</source>
         <comment>deselect all entities</comment>
-        <translation>deseleccionar</translation>
+        <translation>deseleccionartodo</translation>
     </message>
     <message>
         <source>tn</source>
@@ -6748,7 +6748,7 @@ Do you want to replace it?</source>
     <message>
         <source>length1</source>
         <comment>length1</comment>
-        <translation>length1</translation>
+        <translation>longitud1</translation>
     </message>
     <message>
         <source>len1</source>
@@ -7494,7 +7494,7 @@ Do you want to replace it?</source>
     <message>
         <source>plinejoin</source>
         <comment>pl join</comment>
-        <translation>plinejoin</translation>
+        <translation>plineunir</translation>
     </message>
     <message>
         <source>pj</source>
@@ -7509,7 +7509,7 @@ Do you want to replace it?</source>
     <message>
         <source>invertselect</source>
         <comment>invert select</comment>
-        <translation>invertselect</translation>
+        <translation>invertirseleccion</translation>
     </message>
     <message>
         <source>is</source>
@@ -7544,22 +7544,22 @@ Do you want to replace it?</source>
     <message>
         <source>modmove</source>
         <comment>modify - move (copy)</comment>
-        <translation>modmove</translation>
+        <translation>modmover</translation>
     </message>
     <message>
         <source>modrotate</source>
         <comment>modify - rotate</comment>
-        <translation>modrotate</translation>
+        <translation>modgirar</translation>
     </message>
     <message>
         <source>modscale</source>
         <comment>modify - scale</comment>
-        <translation>modscale</translation>
+        <translation>modescalar</translation>
     </message>
     <message>
         <source>modmirror</source>
         <comment>modify -  mirror</comment>
-        <translation>modmirror</translation>
+        <translation>modreflejo</translation>
     </message>
     <message>
         <source>modmovrot</source>
@@ -7594,22 +7594,22 @@ Do you want to replace it?</source>
     <message>
         <source>modtrim</source>
         <comment>modify - trim (extend)</comment>
-        <translation>modtrim</translation>
+        <translation>modrecortar</translation>
     </message>
     <message>
         <source>modtrim2</source>
         <comment>modify - multi trim (extend)</comment>
-        <translation>modtrim2</translation>
+        <translation>modrecortar2</translation>
     </message>
     <message>
         <source>modlengthen</source>
         <comment>modify - lengthen</comment>
-        <translation>modlengthen</translation>
+        <translation>modextender</translation>
     </message>
     <message>
         <source>modoffset</source>
         <comment>modify - offset</comment>
-        <translation>modoffset</translation>
+        <translation>moddesfase</translation>
     </message>
     <message>
         <source>mo</source>
@@ -7629,22 +7629,22 @@ Do you want to replace it?</source>
     <message>
         <source>modfillet</source>
         <comment>modify - fillet</comment>
-        <translation>modfillet</translation>
+        <translation>modempalme</translation>
     </message>
     <message>
         <source>moddivide</source>
         <comment>modify - divide (cut)</comment>
-        <translation>moddivide</translation>
+        <translation>moddividir</translation>
     </message>
     <message>
         <source>modstretch</source>
         <comment>modify - stretch</comment>
-        <translation>modstretch</translation>
+        <translation>modestirar</translation>
     </message>
     <message>
         <source>modproperties</source>
         <comment>modify properties</comment>
-        <translation>modproperties</translation>
+        <translation>modpropiedades</translation>
     </message>
     <message>
         <source>modattr</source>
@@ -7664,17 +7664,17 @@ Do you want to replace it?</source>
     <message>
         <source>modexplode</source>
         <comment>explode block/polyline into entities</comment>
-        <translation>modexplode</translation>
+        <translation>moddescomponer</translation>
     </message>
     <message>
         <source>moddelete</source>
         <comment>modify - delete (erase)</comment>
-        <translation>moddelete</translation>
+        <translation>modborrar</translation>
     </message>
     <message>
         <source>infodistance</source>
         <comment>distance point to point</comment>
-        <translation>infodistance</translation>
+        <translation>infodistancia</translation>
     </message>
     <message>
         <source>id</source>
@@ -7749,7 +7749,7 @@ Do you want to replace it?</source>
     <message>
         <source>drawpref</source>
         <comment>drawing preferences</comment>
-        <translation>drawpref</translation>
+        <translation>confdibujo</translation>
     </message>
     <message>
         <source>dp</source>
@@ -7813,7 +7813,7 @@ Do you want to replace it?</source>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation>Letter / ANSI A</translation>
+        <translation>Carta / ANSI A</translation>
     </message>
     <message>
         <source>Legal</source>
@@ -7823,7 +7823,7 @@ Do you want to replace it?</source>
     <message>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation>Tabloid / ANSI B</translation>
+        <translation>Tabloide / ANSI B</translation>
     </message>
     <message>
         <source>ANSI C</source>
@@ -10488,7 +10488,7 @@ Este bloque no se puede insertar.</translation>
     </message>
     <message>
         <source>Click and drag for the selection window</source>
-        <translation>Hacer clic y arrastre para crear ventana de selección.</translation>
+        <translation>Hacer clic y arrastre para crear ventana de selección</translation>
     </message>
 </context>
 <context>
