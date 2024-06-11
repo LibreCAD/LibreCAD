@@ -65,7 +65,7 @@
     </message>
     <message>
         <source>Layer:</source>
-        <translation type="unfinished">Capa:</translation>
+        <translation>Capa:</translation>
     </message>
     <message>
         <source>Geometry</source>
@@ -553,19 +553,19 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished">mover hacia abajo</translation>
+        <translation>mover al fondo</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished"></translation>
+        <translation>poner debajo de entidad</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished"></translation>
+        <translation>poner encima de entidad</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished"></translation>
+        <translation>mover hacia arriba</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
@@ -597,11 +597,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar &amp;Imprimir Capa</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar Capa de &amp;Construcción</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -854,11 +854,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation>Formario</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <source>Mouse</source>
@@ -866,7 +866,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar</translation>
     </message>
 </context>
 <context>
@@ -877,34 +877,34 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished"></translation>
+        <translation>Insertar Imagen</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de Widget</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation>Barra de herramientas</translation>
     </message>
     <message>
         <source>Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de Ícono</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation>General</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Estilo</translation>
     </message>
     <message>
         <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Hoja de Estilos</translation>
     </message>
     <message>
         <source>Statusbar</source>
@@ -912,46 +912,46 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation>Altura</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Tamaño de Fuente</translation>
     </message>
     <message>
         <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ingresa la ruta de una hoja de estilo Qt.</translation>
     </message>
     <message>
         <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>longitud del lado en píxeles</translation>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Usar iconos temáticos</translation>
     </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation type="unfinished"></translation>
+        <translation>seleccionar:</translation>
     </message>
     <message>
         <source>remove left</source>
-        <translation type="unfinished"></translation>
+        <translation>eliminar a la izquierda</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation type="unfinished"></translation>
+        <translation>eliminar a la derecha</translation>
     </message>
     <message>
         <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>suprimir 0&apos;</translation>
     </message>
     <message>
         <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation>suprimir 0&quot;</translation>
     </message>
 </context>
 <context>
@@ -966,18 +966,18 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>Distancia desde polilínea original</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished"></translation>
+        <translation>Copias:</translation>
     </message>
 </context>
 <context>
     <name>QC_ActionGetEnt</name>
     <message>
         <source>Select object:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar objeto:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -995,7 +995,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     <name>QC_ActionGetSelect</name>
     <message>
         <source>Select objects:</source>
-        <translation type="unfinished"></translation>
+        <translation>Seleccionar objetos:</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -1341,26 +1341,29 @@ Ahora puede guardar su trabajo.</translation>
     </message>
     <message>
         <source>Auto-saving drawing...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardando el dibujo automáticamente...</translation>
     </message>
     <message>
         <source>Auto-saved drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Dibujo guardado automáticamente</translation>
     </message>
     <message>
         <source>Cannot auto-save the file
 %1
 Please check the permissions.
 Auto-save disabled.</source>
-        <translation type="unfinished"></translation>
+        <translation>No se pudo guardar automáticamente el archivo
+%1
+Por favor compruebe los permisos.
+Guardado automático desactivado.</translation>
     </message>
     <message>
         <source>Import</source>
-        <translation type="unfinished"></translation>
+        <translation>Importar</translation>
     </message>
     <message>
         <source>&amp;Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Barra de herramientas</translation>
     </message>
     <message>
         <source>Compiled on: %1</source>
@@ -1468,7 +1471,7 @@ Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation>Orden</translation>
     </message>
     <message>
         <source>Select</source>
@@ -1484,11 +1487,11 @@ Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Curva</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Curva</translation>
     </message>
     <message>
         <source>Ellipse</source>
@@ -1512,15 +1515,15 @@ Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation>Áreas de Carga</translation>
     </message>
     <message>
         <source>Grid Status</source>
-        <translation type="unfinished"></translation>
+        <translation>Estado de Cuadrícula</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation>Barras de herramientas</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
@@ -1528,39 +1531,39 @@ Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de Dispositivo</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Dispositivo</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Opciones</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Pl&amp;ugins</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation>Co&amp;ta</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Acoplar Wid&amp;gets</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Archivos Recientes</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
+        <translation>Compilador: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Versión de Boost: %1.%2.%3</translation>
     </message>
     <message>
         <source>Copy</source>
@@ -1568,31 +1571,31 @@ Por favor, verifique su existencia y permisos.</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation>Contribuidores</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Licencia</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation>Sistema</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Creador de Barra de Herramientas</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Creador de Menús</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation>Asignador de Menú</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Herramientas</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
