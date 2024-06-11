@@ -529,7 +529,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished"></translation>
+        <translation>Cursor de &amp;Selección</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
@@ -541,11 +541,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Cu&amp;t</source>
-        <translation type="unfinished"></translation>
+        <translation>Cor&amp;tar</translation>
     </message>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Copiar</translation>
     </message>
     <message>
         <source>&amp;Paste</source>
@@ -553,7 +553,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">mover hacia abajo</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -569,11 +569,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Show all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Mostrar todo</translation>
     </message>
     <message>
         <source>&amp;Hide all</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ocultar todo</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
@@ -581,7 +581,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Remove Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eliminar Capa</translation>
     </message>
     <message>
         <source>&amp;Edit Layer</source>
@@ -589,11 +589,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar B&amp;loqueo de Capa</translation>
     </message>
     <message>
         <source>&amp;Toggle Layer Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Alternar Visibilidad de Capa</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
@@ -605,31 +605,31 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Agregar Bloque</translation>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Eliminar Bloque</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Renombrar Bloque</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Editar Bloque</translation>
     </message>
     <message>
         <source>&amp;Save Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Guardar Bloque</translation>
     </message>
     <message>
         <source>&amp;Insert Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Insertar Bloque</translation>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Alternar &amp;Visibilidad de Bloque</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
@@ -637,7 +637,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Ex&amp;plode</source>
-        <translation type="unfinished"></translation>
+        <translation>Descom&amp;poner</translation>
     </message>
     <message>
         <source>&amp;Preferences</source>
@@ -649,7 +649,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Preferencias del &amp;Dibujo Actual</translation>
     </message>
     <message>
         <source>Open IDE</source>
@@ -661,7 +661,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Borrar selección</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
@@ -669,11 +669,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished"></translation>
+        <translation>Deseleccionar &amp;todo</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+K</translation>
     </message>
     <message>
         <source>Invert Selection</source>
@@ -681,7 +681,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Export as &amp;MakerCAM SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar como &amp;MakerCAM SVG...</translation>
     </message>
     <message>
         <source>Regenerate Dimension Entities</source>
@@ -689,19 +689,19 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom hacia Ad&amp;entro</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished"></translation>
+        <translation>Zoom Hacia Af&amp;uera</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Auto Zoom</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Vista Previa</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
@@ -709,11 +709,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Nuevo</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished"></translation>
+        <translation>Nuevo De &amp;Plantilla</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -725,11 +725,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Guardar &amp;como...</translation>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Exportar como imagen</translation>
     </message>
     <message>
         <source>&amp;Close</source>
@@ -741,11 +741,11 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar como PDF</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>Imprimir &amp;Vista Previa</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
@@ -757,7 +757,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Pantalla Completa</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
@@ -766,7 +766,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
@@ -779,7 +779,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
@@ -787,7 +787,7 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de Widget</translation>
     </message>
     <message>
         <source>Left</source>
@@ -799,55 +799,55 @@ distancia entre los puntos=%2 es mayor que el diámetro=%3</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished"></translation>
+        <translation>Superior</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Inferior</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Flotante</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Actualizar Hoja de Estilo</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Opciones de Dispositivo</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Mo&amp;ver y Rotar</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation>Recor&amp;tar Dos</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation>Des&amp;fase</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar Menú</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Modificar Barra de Herramientas</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
-        <translation type="unfinished"></translation>
+        <translation>Exportar como</translation>
     </message>
 </context>
 <context>
