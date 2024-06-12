@@ -28,6 +28,8 @@
 #define RS_ACTIONDIMLINEAR_H
 
 #include "rs_actiondimension.h"
+#include "rs_constructionline.h"
+#include "lc_actiondimlinearbase.h"
 
 struct RS_DimLinearData;
 
@@ -37,71 +39,51 @@ struct RS_DimLinearData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimLinear : public RS_ActionDimension {
-	Q_OBJECT
+class RS_ActionDimLinear: public LC_ActionDimLinearBase {
+Q_OBJECT
 public:
-	/**
-	 * Varitions of this action.
-	 */
-	enum Variation {
-		AnyAngle,
-		Horizontal,
-		Vertical
-	};
-	 
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetExtPoint1,    /**< Setting the 1st ext point.  */
-        SetExtPoint2,    /**< Setting the 2nd ext point. */
-        SetDefPoint,     /**< Setting the common def point. */
-		SetText,         /**< Setting the text label in the command line. */
-		SetAngle         /**< Setting the angle in the command line. */
+/**
+ * Varitions of this action.
+ */
+    enum Variation {
+        AnyAngle,
+        Horizontal,
+        Vertical
     };
 
 public:
-    RS_ActionDimLinear(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView,
-                       double angle=0.0, bool fixedAngle=false,
-                       RS2::ActionType type = RS2::ActionDimLinear);
-	~RS_ActionDimLinear() override;
-	
-	void reset() override;
-
-	void trigger() override;
-	void preparePreview();
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-
-	double getAngle() const;
-
-	void setAngle(double a);
-
-	bool hasFixedAngle() const;
+    RS_ActionDimLinear(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        double angle = 0.0, bool fixedAngle = false,
+        RS2::ActionType type = RS2::ActionDimLinear);
+    ~RS_ActionDimLinear() override;
+    void reset() override;
+    void preparePreview() override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+//    void showOptions() override;
+    double getAngle() const;
+    void setAngle(double a);
+    bool hasFixedAngle() const;
 
 protected:
     /**
      * Aligned dimension data.
      */
-	std::unique_ptr<RS_DimLinearData> edata;
+    std::unique_ptr<RS_DimLinearData> edata;
     /**
      * Is the angle fixed?
      */
     bool fixedAngle = false;
-
-	/** Last status before entering text or angle. */
+/** Last status before entering text or angle. */
     Status lastStatus = SetExtPoint1;
+    RS_Vector getExtensionPoint1() override;
+    RS_Vector getExtensionPoint2() override;
+    double getDimAngle() override;
+    void setExtensionPoint1(RS_Vector p) override;
+    void setExtensionPoint2(RS_Vector p) override;
+    RS_Entity *createDim(RS_EntityContainer* parent) override;
 };
 
 #endif

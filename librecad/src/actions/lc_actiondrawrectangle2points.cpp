@@ -28,6 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_rectangle2pointsoptions.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionDrawRectangle2Points::LC_ActionDrawRectangle2Points(
     RS_EntityContainer &container,
@@ -173,6 +174,14 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
     return polyline;
 }
 
+void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+    LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
+    if (corner1Set){
+        createRefPoint(corner1, list);
+    }
+    createRefSelectablePoint(snap, list);
+}
+
 RS_Vector LC_ActionDrawRectangle2Points::createSecondCornerSnapForGivenRectSize(RS_Vector size){
     RS_Vector result;
 
@@ -261,16 +270,16 @@ void LC_ActionDrawRectangle2Points::doProcessCoordinateEvent(const RS_Vector &co
 void LC_ActionDrawRectangle2Points::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetPoint2:
-            updateMouseWidgetTR("Specify second point", "Back");
+            updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
             break;
         case SetPoint1Snap:
-            updateMouseWidgetTR("Specify point 1 snap [corner|mid-vert|mid-hor|middle]", "Back");
+            updateMouseWidgetTRBack("Specify point 1 snap [corner|mid-vert|mid-hor|middle]");
             break;
         case SetPoint2Snap:
-            updateMouseWidgetTR("Specify point 2 snap [corner|mid-vert|mid-hor|middle]", "Back");
+            updateMouseWidgetTRBack("Specify point 2 snap [corner|mid-vert|mid-hor|middle]");
             break;
         case SetSize:
-            updateMouseWidgetTR("Specify size (width, height)", "Back");
+            updateMouseWidgetTRBack("Specify size (width, height)");
             break;
         default:
             LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(status);

@@ -37,77 +37,64 @@ RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(RS_EntityContainer& container
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Set the relative Zero",
                            container, graphicView)
-    , pt(std::make_unique<RS_Vector>())
-{
+    , pt(std::make_unique<RS_Vector>()){
 	actionType=RS2::ActionSetRelativeZero;
 }
 
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
-QAction* RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
+QAction *RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject * /*parent*/){
 /* RVT_PORT    QAction* action = new QAction(tr("Set Relative Zero"), tr("&Set Relative Zero"),
 								  QKeySequence(), nullptr); */
-	QAction* action = new QAction(tr("Set &Relative Zero"), nullptr);
+    QAction *action = new QAction(tr("Set &Relative Zero"), nullptr);
     //action->zetStatusTip(tr("Set position of the Relative Zero point"));
-        action->setIcon(QIcon(":/extui/relzeromove.png"));
+    action->setIcon(QIcon(":/extui/relzeromove.png"));
     return action;
 }
 
-
-void RS_ActionSetRelativeZero::trigger() {
+void RS_ActionSetRelativeZero::trigger(){
     bool wasLocked = graphicView->isRelativeZeroLocked();
-	if (pt->valid) {
+    if (pt->valid){
         graphicView->lockRelativeZero(false);
-		graphicView->moveRelativeZero(*pt);
+        moveRelativeZero(*pt);
         graphicView->lockRelativeZero(wasLocked);
     }
     finish(false);
 }
 
-
-
-void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent *e){
     snapPoint(e);
 }
 
-
-
-void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
+void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::RightButton){
+        init(getStatus() - 1);
     } else {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     }
 }
 
+void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr) return;
 
-
-void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) return;
-
-	*pt = e->getCoordinate();
+    *pt = e->getCoordinate();
     trigger();
     updateMouseButtonHints();
 }
 
-
-
-void RS_ActionSetRelativeZero::updateMouseButtonHints() {
+void RS_ActionSetRelativeZero::updateMouseButtonHints(){
     switch (getStatus()) {
-    case 0:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Set relative Zero"), tr("Cancel"));
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case 0:
+            updateMouseWidgetTRCancel("Set relative Zero");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionSetRelativeZero::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionSetRelativeZero::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

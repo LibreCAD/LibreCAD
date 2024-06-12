@@ -35,6 +35,7 @@
 #include "rs_insert.h"
 #include "rs_modification.h"
 #include "rs_coordinateevent.h"
+#include "rs_actioninterface.h"
 
 /**
  * Constructor.
@@ -115,8 +116,7 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }
@@ -146,18 +146,17 @@ void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionBlocksCreate::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify reference point");
         break;
     default:
-		RS_DIALOGFACTORY->updateMouseWidget();
+		     updateMouseWidget();
         break;
     }
 }
 
 
 void RS_ActionBlocksCreate::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

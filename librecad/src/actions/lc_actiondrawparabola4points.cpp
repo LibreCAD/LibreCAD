@@ -68,16 +68,13 @@ void LC_ActionDrawParabola4Points::trigger() {
     if(getStatus()==SetAxis && pPoints->valid){
         LC_Parabola* en = new LC_Parabola{container, pPoints->data};
         container->addEntity(en);
-        if (document) {
-            document->startUndoCycle();
-            document->addUndoable(en);
-            document->endUndoCycle();
-        }
+
+        addToDocumentUndoable(en);
     }
     RS_Vector rz = graphicView->getRelativeZero();
        // graphicView->SignVerbor(container) : graphicView->
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(rz);
+    moveRelativeZero(rz);
     drawSnapper();
     setStatus(SetPoint1);
 }
@@ -124,7 +121,7 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
             auto* l = new RS_Line{preview.get(), pd.GetAxis()};
             double ds0 = RS_MAXDOUBLE;
             l->getNearestPointOnEntity(mouse, false, &ds0);
-            preview->addEntity(l);
+            previewEntity(l);
             if (ds0 < ds) {
                 pPoints->data = pd;
                 ds = ds0;
@@ -132,7 +129,7 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
             }
         }
         auto* pl = new LC_Parabola{preview.get(), pPoints->data};
-        preview->addEntity(pl);
+        previewEntity(pl);
         drawPreview();
     }
     return pPoints->valid;
@@ -141,8 +138,8 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
 void LC_ActionDrawParabola4Points::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce{getStatus() != SetAxis ? snapPoint(e) : snapFree(e)};
-        coordinateEvent(&ce);
+        const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
+        fireCoordinateEvent(coord);
     }
 
     // Return to last status:
@@ -151,7 +148,7 @@ void LC_ActionDrawParabola4Points::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
         pPoints->points.resize(getStatus()+1);
         if (!pPoints->points.empty()) {
-            graphicView->moveRelativeZero(pPoints->points.at(getStatus()));
+            moveRelativeZero(pPoints->points.at(getStatus()));
         }
     }
 }
@@ -169,7 +166,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
     case SetPoint1:
     case SetPoint2:
     case SetPoint3:
-        graphicView->moveRelativeZero(mouse);
+        moveRelativeZero(mouse);
         setStatus(getStatus()+1);
         break;
     case SetPoint4:
@@ -268,32 +265,22 @@ QStringList LC_ActionDrawParabola4Points::getAvailableCommands() {
 void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on parabola"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify the first point on parabola", Qt::ShiftModifier);
         break;
-
     case SetPoint2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the second point on parabola");
         break;
-
     case SetPoint3:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the third point on parabola");
         break;
-
     case SetPoint4:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the fourth point on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the fourth point on parabola");
         break;
-
     case SetAxis:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the Axis on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the Axis on parabola");
         break;
-
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }

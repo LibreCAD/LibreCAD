@@ -39,7 +39,8 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 
-
+// fixme - options for selection definition point,
+// fixme - adding dimensions to selected items
 RS_ActionDimDiametric::RS_ActionDimDiametric(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
@@ -54,266 +55,217 @@ RS_ActionDimDiametric::RS_ActionDimDiametric(
 
 RS_ActionDimDiametric::~RS_ActionDimDiametric() = default;
 
-void RS_ActionDimDiametric::reset() {
+void RS_ActionDimDiametric::reset(){
     RS_ActionDimension::reset();
 
     *edata = {{}, 0.0};
-	entity = nullptr;
-	*pos = {};
+    entity = nullptr;
+    *pos = {};
     RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
-
-
-void RS_ActionDimDiametric::trigger() {
-    RS_PreviewActionInterface::trigger();
+void RS_ActionDimDiametric::trigger(){
+    RS_ActionDimension::trigger();
 
     preparePreview();
-    if (entity) {
-		RS_DimDiametric* newEntity = nullptr;
-
-        newEntity = new RS_DimDiametric(container,
-										*data,
-										*edata);
-
+    if (entity != nullptr){
+        auto *newEntity = createDim(container);
         newEntity->setLayerToActive();
         newEntity->setPenToActive();
         newEntity->update();
         container->addEntity(newEntity);
 
-        // upd. undo list:
-        if (document) {
-            document->startUndoCycle();
-            document->addUndoable(newEntity);
-            document->endUndoCycle();
-        }
-        RS_Vector rz = graphicView->getRelativeZero();
-		graphicView->redraw(RS2::RedrawDrawing);
-        graphicView->moveRelativeZero(rz);
-		RS_Snapper::finish();
+        addToDocumentUndoable(newEntity);
+
+        graphicView->redraw(RS2::RedrawDrawing);
+        RS_Snapper::finish();
 
     } else {
         RS_DEBUG->print("RS_ActionDimDiametric::trigger:"
-						" Entity is nullptr\n");
+                        " Entity is nullptr\n");
     }
 }
 
+RS_DimDiametric *RS_ActionDimDiametric::createDim(RS_EntityContainer *parent) const{
+    RS_DimDiametric *newEntity;
+    newEntity = new RS_DimDiametric(parent,
+                                *data,
+                                *edata);
+    return newEntity;
+}
 
+void RS_ActionDimDiametric::preparePreview(){
+    if (entity){
+        double radius = entity->getRadius();
+        RS_Vector center = entity->getCenter();
 
-void RS_ActionDimDiametric::preparePreview() {
-    if (entity) {
-		double radius{0.};
-		RS_Vector center{false};
-        if (entity->rtti()==RS2::EntityArc) {
-			RS_Arc* p = static_cast<RS_Arc*>(entity);
-			radius = p->getRadius();
-			center = p->getCenter();
-        } else if (entity->rtti()==RS2::EntityCircle) {
-			RS_Circle* p = static_cast<RS_Circle*>(entity);
-			radius = p->getRadius();
-			center = p->getCenter();
-        }
-		double angle = center.angleTo(*pos);
+        double angle = center.angleTo(*pos);
 
-		data->definitionPoint.setPolar(radius, angle + M_PI);
-		data->definitionPoint += center;
+        data->definitionPoint.setPolar(radius, angle + M_PI);
+        data->definitionPoint += center;
 
-		edata->definitionPoint.setPolar(radius, angle);
-		edata->definitionPoint += center;
+        edata->definitionPoint.setPolar(radius, angle);
+        edata->definitionPoint += center;
     }
 }
 
-
-
-void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent begin");
-
-	switch (getStatus()) {
-
-    case SetPos:
-		if (entity) {
-			*pos = snapPoint(e);
-
-            preparePreview();
-			RS_DimDiametric* d = new RS_DimDiametric(preview.get(), *data, *edata);
-
-            deletePreview();
-            preview->addEntity(d);
-            d->update();
-            drawPreview();
+    RS_Vector snap = snapPoint(e);
+    deleteHighlights();
+    switch (getStatus()) {
+        case SetEntity: {
+            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            if (isArc(en) || isCircle(en)){
+                highlightHover(en);
+            }
+            break;
         }
-        break;
+        case SetPos:{
+            if (entity != nullptr){
+                highlightSelected(entity);
+                deletePreview();
+                *pos = getSnapAngleAwarePoint(e, entity->getCenter(), snap, true);
+                preparePreview();
 
-    default:
-        break;
+                auto *d = createDim(preview.get());
+                previewEntity(d);
+                d->update();
+
+                previewRefSelectablePoint(d->getDefinitionPoint());
+
+                drawPreview();
+            }
+            break;
     }
-
+        default:
+            break;
+    }
+    drawHighlights();
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent end");
 }
 
+void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent *e){
 
-
-void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent* e) {
-
-    if (e->button()==Qt::LeftButton) {
+    if (e->button() == Qt::LeftButton){
         switch (getStatus()) {
-        case SetEntity: {
-                RS_Entity* en = catchEntity(e, RS2::ResolveAll);
-                if (en) {
-                    if (en->rtti()==RS2::EntityArc ||
-                            en->rtti()==RS2::EntityCircle) {
-
+            case SetEntity: {
+                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+                if (en!= nullptr){
+                    if (isArc(en) || isCircle(en)){
                         entity = en;
-                        RS_Vector center;
-						if (entity->rtti()==RS2::EntityArc) {
-							center =
-									static_cast<RS_Arc*>(entity)->getCenter();
-						} else {
-							center =
-									static_cast<RS_Circle*>(entity)->getCenter();
-						}
-                        graphicView->moveRelativeZero(center);
+                        const RS_Vector &center = en->getCenter();
+                        moveRelativeZero(center);
                         setStatus(SetPos);
-					} else
-						RS_DIALOGFACTORY->commandMessage(tr("Not a circle "
-															"or arc entity"));
+                    } else {
+                        commandMessageTR("Not a circle or arc entity");
+                    }
                 }
+                break;
             }
-            break;
+            case SetPos: {
+                RS_Vector snap = snapPoint(e);
+                snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
+                fireCoordinateEvent(snap);
+                break;
+            }
+            default:
+                break;
+        }
+    } else if (e->button() == Qt::RightButton){
+        deletePreview();
+        init(getStatus() - 1);
+    }
+}
 
-        case SetPos: {
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
-            }
+void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent *e){
+    if (e == nullptr) return;
+
+    switch (getStatus()) {
+        case SetPos:
+            *pos = e->getCoordinate();
+            trigger();
+            reset();
+            setStatus(SetEntity);
             break;
 
         default:
             break;
-        }
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
-
-}
-
-
-
-void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
-
-    switch (getStatus()) {
-    case SetPos:
-		*pos = e->getCoordinate();
-        trigger();
-        reset();
-        setStatus(SetEntity);
-        break;
-
-    default:
-        break;
     }
 }
 
-
-
-void RS_ActionDimDiametric::commandEvent(RS_CommandEvent* e) {
+void RS_ActionDimDiametric::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
     // setting new text label:
-    if (getStatus()==SetText) {
+    if (getStatus() == SetText){
         setText(c);
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        updateOptions();
         graphicView->enableCoordinateInput();
         setStatus(lastStatus);
         return;
     }
 
     // command: text
-    if (checkCommand("text", c)) {
-        lastStatus = (Status)getStatus();
+    if (checkCommand("text", c)){
+        lastStatus = (Status) getStatus();
         graphicView->disableCoordinateInput();
         setStatus(SetText);
     }
 
     // setting angle
-    if (getStatus()==SetPos) {
+    if (getStatus() == SetPos){
         bool ok;
         double a = RS_Math::eval(c, &ok);
-		if (ok) {
-			pos->setPolar(1.0, RS_Math::deg2rad(a));
-			*pos += data->definitionPoint;
+        if (ok){
+            pos->setPolar(1.0, RS_Math::deg2rad(a));
+            *pos += data->definitionPoint;
             trigger();
             reset();
             setStatus(SetEntity);
         } else {
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+            commandMessageTR("Not a valid expression");
         }
         return;
     }
 }
 
-
-
-QStringList RS_ActionDimDiametric::getAvailableCommands() {
+QStringList RS_ActionDimDiametric::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetEntity:
-    case SetPos:
-        cmd += command("text");
-        break;
+        case SetEntity:
+        case SetPos:
+            cmd += command("text");
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     return cmd;
 }
 
-
-void RS_ActionDimDiametric::updateMouseButtonHints() {
+void RS_ActionDimDiametric::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetEntity:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select arc or circle entity"),
-                                            tr("Cancel"));
-        break;
-    case SetPos:
-        RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Specify dimension line location"), tr("Cancel"));
-        break;
-    case SetText:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter dimension text:"), "");
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetEntity:
+            updateMouseWidgetTRCancel("Select arc or circle entity");
+            break;
+        case SetPos:
+            updateMouseWidgetTRCancel("Specify dimension line location", Qt::ShiftModifier);
+            break;
+        case SetText:
+            updateMouseWidgetTR("Enter dimension text:", "");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
-
-
-
-void RS_ActionDimDiametric::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-
-
-void RS_ActionDimDiametric::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    //RS_DIALOGFACTORY->requestDimDiametricOptions(edata, false);
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
-
 
 // EOF

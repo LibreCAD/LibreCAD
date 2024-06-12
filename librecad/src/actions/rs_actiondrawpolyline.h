@@ -83,9 +83,6 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
 
-    void showOptions() override;
-    void hideOptions() override;
-
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
 
@@ -93,24 +90,15 @@ public:
     void undo();
 
     void setMode(SegmentMode m);
-
     int getMode() const;
-
     void setRadius(double r);
-
     double getRadius() const;
-
     void setAngle(double a);
-
     double getAngle() const;
-
     void setReversed(bool c);
-
     bool isReversed() const;
 
     double solveBulge(const RS_Vector& mouse);
-
-
 protected:
 
     RS_Polyline*& getPolyline() const;
@@ -119,7 +107,7 @@ protected:
     RS_Vector& getPoint() const;
     RS_Vector& getStart() const;
     RS_PolylineData& getData() const;
-
+    void createOptionsWidget() override;
     double m_radius = 0.;
     double m_angle = 0.;
     SegmentMode m_mode{};

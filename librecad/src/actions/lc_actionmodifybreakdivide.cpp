@@ -21,15 +21,17 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 #include <cfloat>
+#include <QMouseEvent>
 
-#include "lc_actionmodifybreakdivide.h"
-#include "lc_linemath.h"
-#include "lc_modifybreakdivideoptions.h"
 #include "rs_arc.h"
 #include "rs_circle.h"
 #include "rs_entitycontainer.h"
 #include "rs_information.h"
+#include "rs_graphicview.h"
 #include "rs_math.h"
+#include "lc_actionmodifybreakdivide.h"
+#include "lc_linemath.h"
+#include "lc_modifybreakdivideoptions.h"
 
 
 namespace {
@@ -57,7 +59,7 @@ bool LC_ActionModifyBreakDivide::doCheckMayDrawPreview([[maybe_unused]]QMouseEve
  */
 void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SetLine){
-        RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+        RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -85,7 +87,7 @@ void LC_ActionModifyBreakDivide::doPreparePreviewEntities(QMouseEvent *e, RS_Vec
 
 void LC_ActionModifyBreakDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
     if (status == SetLine){
-        RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+        RS_Entity *en = catchModifiableEntity(e, enTypeList);
         if (en != nullptr){
             int rtti = en->rtti();
             switch (rtti) {
@@ -173,15 +175,20 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
         RS_Vector start = line->getStartpoint();
         RS_Vector end = line->getEndpoint();
 
+
         // create segments only if tick snap point is between of original lines endpoints
         if (nearestPoint != start && nearestPoint != end){
             // calculate segments data
             LineSegmentData *data = calculateLineSegment(line, snap);
             if (data != nullptr){
 
+                if (preview){
+                    highlightHover(line);
+                }
+
                 // determine which segments should be created
-                bool createSnapSegment = true;
-                bool createNonSnapSegments = true;
+                bool createSnapSegment = !preview;
+                bool createNonSnapSegments = !preview;
 
                 if (removeSegments){
                     if (preview){
@@ -204,18 +211,16 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
                 }
                 int segmentDisposition = data->segmentDisposition;
 
-                // if segments are not removed (so the line is just divided by intersection points) - in preview mode
-                // provide visual indication of division points
-                if (preview && !removeSegments){
-
+                // in preview mode provide visual indication of division/break points
+                if (preview){
                     // check that start of segment is not line endpoint
                     if (segmentDisposition != SEGMENT_TO_START){
-                        createPoint(data->snapSegmentStart, list);
+                        createRefSelectablePoint(data->snapSegmentStart, list);
                     }
 
                     // check that end of segment is not line endpoint
                     if (segmentDisposition != SEGMENT_TO_END){
-                        createPoint(data->snapSegmentEnd, list);
+                        createRefSelectablePoint(data->snapSegmentEnd, list);
                     }
                 }
 
@@ -247,8 +252,12 @@ void LC_ActionModifyBreakDivide::createEntitiesForLine(RS_Line *line, RS_Vector 
  */
 void LC_ActionModifyBreakDivide::createLineEntity(bool preview, const RS_Vector &start, const RS_Vector &end,
                                                   const RS_Pen &pen, RS_Layer *layer, QList<RS_Entity *> &list) const{
-    auto *createdLine = LC_AbstractActionWithPreview::createLine(start, end, list);
-    if (!preview){
+    if (preview){
+        createRefLine(start, end, list);
+        createLine(start, end, list);
+    }
+    else{
+        auto *createdLine = createLine(start, end, list);
         createdLine->setPen(pen);
         createdLine->setLayer(layer);
     }
@@ -271,6 +280,10 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
         CircleSegmentData *data = calculateCircleSegment(circle, nearestPoint);
         if (data != nullptr){
 
+            if (preview){
+                highlightHover(circle);
+            }
+
             const RS_Vector &center = circle->getCenter();
             double radius = circle->getRadius();
 
@@ -283,8 +296,8 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
             arcData.reversed = false;
 
             // determine which segments should be created of circle
-            bool createSnapSegment = true;
-            bool createNonSnapSegments = true;
+            bool createSnapSegment = !preview;
+            bool createNonSnapSegments = !preview;
 
             if (removeSegments){
                 if (preview){
@@ -314,13 +327,13 @@ void LC_ActionModifyBreakDivide::createEntitiesForCircle(RS_Circle *circle, RS_V
              }
 
             // for circle divide mode, add visual indication of divide points if we're creating preview
-            if (preview && !removeSegments){
-
+            if (preview){
+                // fixme - refpoints visibility
                 RS_Vector dividePoint1 = center.relative(radius, data->snapSegmentStartAngle);
-                createPoint(dividePoint1, list);
+                createRefSelectablePoint(dividePoint1, list);
 
                 RS_Vector dividePoint2 = center.relative(radius, data->snapSegmentEndAngle);
-                createPoint(dividePoint2, list);
+                createRefSelectablePoint(dividePoint2, list);
             }
         }
         // don't need temporary data, so delete it
@@ -347,9 +360,13 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
             // determine snap segment coordinates
             ArcSegmentData *data = calculateArcSegments(arc, snap);
             if (data != nullptr){
+                if (preview){
+                    highlightHover(arc);
+                }
+
                 // determine which segment entities should be created
-                bool createSnapSegment = true;
-                bool createNonSnapSegments = true;
+                bool createSnapSegment = !preview;
+                bool createNonSnapSegments = !preview;
 
                 if (removeSegments){
                     if (preview){
@@ -373,21 +390,9 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                     createArcEntity(arcData, preview, pen, layer, list);
                 }
 
-                // for preview and arc divide mode, add points that highlights places where arc will be divided
+                // for preview and arc break/divide mode, add points that highlights places where arc will be divided/broken
                 int segmentDisposition = data->segmentDisposition;
-                if (preview && !removeSegments){
-                    double radius = arc->getRadius();
-                    RS_Vector center = arc->getCenter();
-                    if (segmentDisposition != SEGMENT_TO_START){
-                        RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
-                        createPoint(segmentStart, list);
-                    }
 
-                    if (segmentDisposition != SEGMENT_TO_END){
-                        RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
-                        createPoint(segmentEnd, list);
-                    }
-                }
                 // create non-snap segments, if necessary
                 if (createNonSnapSegments){
                     if (segmentDisposition != SEGMENT_TO_START){
@@ -404,8 +409,22 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
                         createArcEntity(arcData2, preview, pen, layer, list);
                     }
                 }
-                // don't need temporary data, so delete it
+
+                if (preview){
+                    double radius = arc->getRadius();
+                    RS_Vector center = arc->getCenter();
+                    if (segmentDisposition != SEGMENT_TO_START){
+                        RS_Vector segmentStart = center.relative(radius, data->snapSegmentStartAngle);
+                        createRefSelectablePoint(segmentStart, list);
+                    }
+
+                    if (segmentDisposition != SEGMENT_TO_END){
+                        RS_Vector segmentEnd = center.relative(radius, data->snapSegmentEndAngle);
+                        createRefSelectablePoint(segmentEnd, list);
+                    }
+                }
             }
+            // don't need temporary data, so delete it
             delete data;
         }
     }
@@ -420,12 +439,17 @@ void LC_ActionModifyBreakDivide::createEntitiesForArc(RS_Arc *arc, RS_Vector &sn
  * @param list list of entities to add created entity
  */
 void LC_ActionModifyBreakDivide::createArcEntity(const RS_ArcData &arcData, bool preview, const RS_Pen &pen, RS_Layer *layer, QList<RS_Entity *> &list) const{
-    auto *createdArc = new RS_Arc(container, arcData);
-    if (!preview){
+    if (preview){
+        createRefArc(arcData, list);
+        auto arc = new RS_Arc(container, arcData);
+        list << arc;
+    }
+    else{
+        auto createdArc = new RS_Arc(container, arcData);
         createdArc->setPen(pen);
         createdArc->setLayer(layer);
+        list << createdArc;
     }
-    list << createdArc;
 
 }
 
@@ -435,7 +459,8 @@ void LC_ActionModifyBreakDivide::createArcEntity(const RS_ArcData &arcData, bool
  * @return
  */
 RS_Vector LC_ActionModifyBreakDivide::doGetMouseSnapPoint(QMouseEvent *e){
-    RS_Vector result = snapFree(e);
+    snapPoint(e);
+    RS_Vector result = toGraph(e);
     return result;
 }
 
@@ -898,7 +923,7 @@ RS2::CursorType LC_ActionModifyBreakDivide::doGetMouseCursor([[maybe_unused]]int
 }
 
 void LC_ActionModifyBreakDivide::updateMouseButtonHints(){
-    updateMouseWidgetTR("Select line, arc or circle", "Cancel");
+    updateMouseWidgetTRCancel("Select line, arc or circle");
 }
 
 void LC_ActionModifyBreakDivide::createOptionsWidget(){

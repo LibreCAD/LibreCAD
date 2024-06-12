@@ -83,5 +83,6 @@ protected:
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H

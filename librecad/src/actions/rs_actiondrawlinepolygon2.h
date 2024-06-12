@@ -27,60 +27,39 @@
 #ifndef RS_ACTIONDRAWLINEPOLYGON2_H
 #define RS_ACTIONDRAWLINEPOLYGON2_H
 
-#include "rs_previewactioninterface.h"
-
-
-
+#include "lc_actiondrawlinepolygonbase.h"
 
 /**
  * This action class can handle user events to draw polygons.
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLinePolygonCorCor : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawLinePolygonCorCor:public LC_ActionDrawLinePolygonBase {
+Q_OBJECT
     enum Status {
         SetCorner1,    /**< Setting center 1. */
-		SetCorner2,    /**< Setting corner 2. */
-		SetNumber      /**< Setting number in the command line. */
-	};
+        SetCorner2,    /**< Setting corner 2. */
+        SetNumber      /**< Setting number in the command line. */
+    };
 
 public:
-    RS_ActionDrawLinePolygonCorCor(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLinePolygonCorCor() override;
-
-	void trigger() override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseCursor() override;
-
-	int getNumber() {
-		return number;
-	}
-
-	void setNumber(int n) {
-		number = n;
-	}
+    RS_ActionDrawLinePolygonCorCor(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawLinePolygonCorCor() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
 
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	/** Number of edges. */
-    int number = 0;
-	/** Last status before entering text. */
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+/** Last status before entering text. */
     Status lastStatus = SetCorner1;
-
     RS_Vector determinePolygonCenter() const;
 };
 

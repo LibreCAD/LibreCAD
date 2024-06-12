@@ -43,7 +43,7 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
     switch (status){
         case (SetEntity):{ // selecting the line
             // finding line entity
-            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            RS_Entity* en = catchModifiableEntity(e, enTypeList);
             if (en != nullptr){
                 auto *line = dynamic_cast<RS_Line *>(en);
                 // check that line may be expanded
@@ -55,9 +55,11 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
                     // determine start point for gap
                     RS_Vector gapStartPosition = obtainLineSnapPointForMode(line, nearestPoint);
 
+                    highlightHover(line);
+
                     // calculate gap temporary data
                     GapData *data = prepareGapData(line, snap, gapStartPosition);
-                    createPreviewEntities(data, list);
+                    createPreviewEntities(data, list, false);
 
                     // don't need temporary data, so delete it
                     delete data;
@@ -69,11 +71,13 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
 
             RS_Line *line = gapData->originalLine;
 
+            highlightSelected(line);
+
             // gap end is projection of snap point to previously selected line
             RS_Vector nearestPoint = line->getNearestPointOnEntity(snap);
             gapData->endPoint = nearestPoint;
 
-            createPreviewEntities(gapData, list);
+            createPreviewEntities(gapData, list, true);
 
             break;
         }
@@ -86,23 +90,32 @@ void LC_ActionModifyLineGap::doPreparePreviewEntities(QMouseEvent *e, RS_Vector 
  * Utility method that creates entities used on preview and adds them to provided list. Entities are the line for gap location and boundary points for the gap
  * @param data data for gap
  * @param list list to add entities
+ * @param startPointNoSelected - if true, first entity is not selected
  */
-void LC_ActionModifyLineGap::createPreviewEntities(LC_ActionModifyLineGap::GapData *data, QList<RS_Entity *> &list) const{
+void LC_ActionModifyLineGap::createPreviewEntities(LC_ActionModifyLineGap::GapData *data, QList<RS_Entity *> &list, bool startPointNoSelected) const{
     RS_Vector &startPoint = data->startPoint;
     RS_Vector &endPoint = data->endPoint;
 
     // create preview line
     createLine(startPoint, endPoint, list);
+    createRefLine(startPoint, endPoint, list);
+
+
     // create boundary points for gap for better visibility on preview
-    createPoint(startPoint, list);
-    createPoint(endPoint, list);
+    if (startPointNoSelected){
+        createRefPoint(startPoint, list);
+    }
+    else {
+        createRefSelectablePoint(startPoint, list);
+    }
+    createRefSelectablePoint(endPoint, list);
 }
 
 void LC_ActionModifyLineGap::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case SetEntity:{ // entity selection
             // catching the line
-            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            RS_Entity* en = catchModifiableEntity(e, enTypeList);
             if (en != nullptr) {
                 auto* line = dynamic_cast<RS_Line *>(en);
                 // check whether line is expandable
@@ -401,11 +414,11 @@ LC_ActionModifyLineGap::GapData *LC_ActionModifyLineGap::prepareGapData(RS_Line 
  void LC_ActionModifyLineGap::updateMouseButtonHints(){
     switch (getStatus()){
         case SetEntity:{
-            updateMouseWidgetTR("Select line", "Cancel");
+            updateMouseWidgetTRCancel("Select line", Qt::ShiftModifier);
             break;
         }
         case SetGapEndPoint:{
-            updateMouseWidgetTR("Select endpoint of gap", "Back");
+            updateMouseWidgetTRBack("Select endpoint of gap");
             break;
         }
     default:

@@ -70,7 +70,7 @@ void RS_ActionModifyStretch::trigger(){
 
     setStatus(SetFirstCorner);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
@@ -116,8 +116,7 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionModifyStretch::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button() == Qt::RightButton){
         deletePreview();
         init(getStatus() - 1);
@@ -145,13 +144,13 @@ void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
 
         case SetReferencePoint:
             pPoints->referencePoint = mouse;
-            graphicView->moveRelativeZero(pPoints->referencePoint);
+            moveRelativeZero(pPoints->referencePoint);
             setStatus(SetTargetPoint);
             break;
 
         case SetTargetPoint:
             pPoints->targetPoint = mouse;
-            graphicView->moveRelativeZero(pPoints->targetPoint);
+            moveRelativeZero(pPoints->targetPoint);
             trigger();
             //finish();
             break;
@@ -164,29 +163,25 @@ void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionModifyStretch::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetFirstCorner:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify first corner");
             break;
         case SetSecondCorner:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify second corner");
             break;
         case SetReferencePoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify reference point", Qt::ShiftModifier);
             break;
         case SetTargetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify target point");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionModifyStretch::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

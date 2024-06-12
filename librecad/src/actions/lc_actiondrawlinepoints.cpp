@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_linepointsoptions.h"
 #include "lc_abstractactiondrawline.h"
 #include "lc_actiondrawlinepoints.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionDrawLinePoints::LC_ActionDrawLinePoints(RS_EntityContainer &container, RS_GraphicView &graphicView)
     :LC_AbstractActionDrawLine("LineDrawPoints",container, graphicView){
@@ -127,6 +128,8 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEve
     // draw preview if this is non-zero line
     if (isNonZeroLine(possibleEndPoint)){
         createPoints(possibleEndPoint, list);
+        createRefSelectablePoint(possibleEndPoint, list);
+        createRefPoint(startpoint, list);
     }
 }
 
@@ -484,22 +487,22 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
     QString msg;
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTR("Specify First Point","Cancel");
+            updateMouseWidgetTRCancel("Specify First Point",Qt::ShiftModifier);
             break;
         case SetPoint:
-            updateMouseWidgetTR("Specify Second Point\nor [number|x|y|angle|p|edges|distance]","Back");
+            updateMouseWidgetTRBack("Specify Second Point\nor [number|x|y|angle|p|edges|distance]",Qt::ShiftModifier);
             break;
         case SetDirection:
-            updateMouseWidgetTR("Specify line direction\n[x|y|angle|p|distance]","Back");
+            updateMouseWidgetTRBack("Specify line direction\n[x|y|angle|p|distance]");
             break;
         case SetAngle:
-            updateMouseWidgetTR("Specify line direction angle\nor [x|y|p|number|edges|distance]","Back");
+            updateMouseWidgetTRBack("Specify line direction angle\nor [x|y|p|number|edges|distance]");
             break;
         case SetEdge:
-            updateMouseWidgetTR("Specify edge points mode\n[none|start|end|both|distance]","Back");
+            updateMouseWidgetTRBack("Specify edge points mode\n[none|start|end|both|distance]");
             break;
         case SetFixDistance:
-            updateMouseWidgetTR("Specify fixed distance between points\nor[x|y|p|number|edges]","Back");
+            updateMouseWidgetTRBack("Specify fixed distance between points\nor[x|y|p|number|edges]");
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
@@ -518,12 +521,12 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
                 msg += "|" + getCommand("x");
                 msg += "|" + getCommand("y");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"));
+                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), Qt::ShiftModifier);
             }
             break;
         }
         case SetPointsCount:
-            updateMouseWidgetTR("Specify points count","Back");
+            updateMouseWidgetTRBack("Specify points count");
             break;
         default:
             LC_AbstractActionDrawLine::updateMouseButtonHints();

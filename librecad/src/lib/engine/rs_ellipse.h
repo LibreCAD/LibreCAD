@@ -51,6 +51,8 @@ struct RS_EllipseData {
     double angle2 = 0.;
     //! Reversed (cw) flag
     bool reversed = false;
+
+
 };
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);

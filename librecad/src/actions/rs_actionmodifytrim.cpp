@@ -92,7 +92,7 @@ void RS_ActionModifyTrim::trigger() {
             setStatus(ChooseTrimEntity);
         }
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        updateSelectionWidget();
     }
 }
 
@@ -101,7 +101,7 @@ void RS_ActionModifyTrim::trigger() {
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
 
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector mouse = toGraph(e);
     RS_Entity* se = catchEntity(e);
 
     switch (getStatus()) {
@@ -127,7 +127,7 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
 
-        RS_Vector mouse = graphicView->toGraph(e->position());
+        RS_Vector mouse = toGraph(e);
         RS_Entity* se = catchEntity(e);
 
         switch (getStatus()) {
@@ -174,24 +174,20 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
     case ChooseLimitEntity:
         if (both) {
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select first trim entity"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Select first trim entity");
         } else {
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select limiting entity"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Select limiting entity");
         }
         break;
     case ChooseTrimEntity:
         if (both) {
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select second trim entity"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Select second trim entity");
         } else {
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select entity to trim"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Select entity to trim");
         }
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
@@ -199,7 +195,7 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
 
 
 void RS_ActionModifyTrim::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 void RS_ActionModifyTrim::unhighlightLimitingEntity() {

@@ -245,7 +245,6 @@ RS_Modification::RS_Modification(RS_EntityContainer& container,
     document = container.getDocument();
 }
 
-
 /**
  * Deletes all selected entities.
  */
@@ -253,66 +252,25 @@ void RS_Modification::remove()
 {
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::remove");
 
-    if (container == nullptr)
-    {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no valid container");
-
         return;
     }
 
-    bool found = false;
-
-    bool deselectEntitiesMode = false;
-
-    LC_UndoSection undo(document);
+    LC_UndoSection undo( document);
     bool invalidContainer {true};
-	// not safe (?)
-    for (auto* e : *container)
-    {
-        if (e != nullptr && e->isSelected())
-        {
-            found = true;
-
-//            if (m_deletePolylineNodeMode)
-//            {
-//                switch(e->rtti())
-//                {
-//                case RS2::EntityPolyline:
-//                    e = deletePolylineNode((RS_Polyline&) *e, ((RS_Polyline&) *e).getHighlightedVertex());
-//                    break;
-//                case RS2::EntityLine:
-//                {
-//                    if (document->countSelected() != 1)
-//                    {
-//                        RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: multiple lines selected");
-//                        deselectEntitiesMode = true;
-//                    }
-//                    else
-//                    {
-//                        deleteLineNode((RS_Line *) e, ((RS_Line&) *e).getHighlightedVertex());
-//                    }
-//                }
-//                    break;
-//                default:
-//                    RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::remove: no line or polyline selected");
-//                }
-//                m_deletePolylineNodeMode = false;
-//            }
-//            else if (!deselectEntitiesMode)
-//            {
-//                e->changeUndoState();
-//                undo.addUndoable(e);
-//                invalidContainer = false;
-//            }
-
+// not safe (?)
+    for(auto e: *container) {
+        if (e && e->isSelected()) {
             e->setSelected(false);
+            e->changeUndoState();
+            undo.addUndoable(e);
+            invalidContainer = false;
         }
     }
     if (invalidContainer) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
     }
-
-    if (!found) RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::remove: no valid container is selected");
 
     graphicView->redraw(RS2::RedrawDrawing);
 
@@ -2514,50 +2472,76 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
  * @param trimEntity Entity which will be trimmed.
  * @param dist Amount to trim by.
  */
-bool RS_Modification::trimAmount(const RS_Vector& trimCoord,
+RS_Entity* RS_Modification::trimAmount(const RS_Vector& trimCoord,
                                  RS_AtomicEntity* trimEntity,
-                                 double dist) {
+                                 double dist,
+                                 bool trimBoth,
+                                 bool &trimStart, bool &trimEnd,
+                                 bool forPreview) {
 
-	if (!trimEntity) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::trimAmount: Entity is nullptr");
-        return false;
+    if (!trimEntity){
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::trimAmount: Entity is nullptr");
+        return nullptr;
     }
-    if(trimEntity->isLocked() || ! trimEntity->isVisible()) return false;
 
-	RS_AtomicEntity* trimmed = nullptr;
+    if (trimEntity->isLocked() || !trimEntity->isVisible()) {
+        return nullptr;
+    }
+
+    RS_AtomicEntity *trimmed = nullptr;
 
     // remove trim entity:
-    trimmed = (RS_AtomicEntity*)trimEntity->clone();
-    if (graphicView) {
+    trimmed = (RS_AtomicEntity *) trimEntity->clone();
+
+    if (graphicView != nullptr){
         graphicView->deleteEntity(trimEntity);
     }
 
     // trim trim entity
-    RS_Vector is = trimmed->getNearestDist(-dist, trimCoord);
-    if (trimCoord.distanceTo(trimmed->getStartpoint()) <
-            trimCoord.distanceTo(trimmed->getEndpoint())) {
-        trimmed->trimStartpoint(is);
-    } else {
-        trimmed->trimEndpoint(is);
+
+    trimStart = false;
+    trimEnd = false;
+    if (trimBoth){
+        RS_Vector isStart = trimmed->getNearestDist(-dist, trimmed->getStartpoint());
+        RS_Vector isEnd = trimmed->getNearestDist(-dist, trimmed->getEndpoint());
+
+        trimmed->trimStartpoint(isStart);
+        trimmed->trimEndpoint(isEnd );
+        trimStart = true;
+        trimEnd = true;
+    }
+    else {
+        RS_Vector is = trimmed->getNearestDist(-dist, trimCoord);
+
+        if (trimCoord.distanceTo(trimmed->getStartpoint()) <
+            trimCoord.distanceTo(trimmed->getEndpoint())){
+            trimmed->trimStartpoint(is);
+            trimStart = true;
+        } else {
+            trimmed->trimEndpoint(is);
+            trimEnd = true;
+        }
     }
 
-    // add new trimmed trim entity:
-    container->addEntity(trimmed);
+    if (!forPreview){
+        // add new trimmed trim entity:
+        if (container != nullptr){
+            container->addEntity(trimmed);
+        }
 
-    if (graphicView) {
-        graphicView->drawEntity(trimmed);
+        if (graphicView != nullptr){
+            graphicView->drawEntity(trimmed);
+        }
+
+        if (handleUndo){
+            LC_UndoSection undo(document);
+
+            undo.addUndoable(trimmed);
+            trimEntity->setUndoState(true);
+            undo.addUndoable(trimEntity);
+        }
     }
-
-    if (handleUndo) {
-        LC_UndoSection undo( document);
-
-        undo.addUndoable(trimmed);
-        trimEntity->setUndoState(true);
-        undo.addUndoable(trimEntity);
-    }
-
-    return true;
+    return trimmed;
 }
 
 
@@ -2735,8 +2719,6 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
     return true;
 }
 
-
-
 /**
  * Bevels a corner.
  *
@@ -2746,42 +2728,49 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
  * @param entity2 Second entity of the corner.
  * @param data Lengths and trim flag.
  */
-bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
-                            const RS_Vector& coord2, RS_AtomicEntity* entity2,
-                            RS_BevelData& data) {
+LC_BevelResult* RS_Modification::bevel(
+    const RS_Vector &coord1, RS_AtomicEntity *entity1,
+    const RS_Vector &coord2, RS_AtomicEntity *entity2,
+    RS_BevelData &data,
+    bool previewOnly){
 
     RS_DEBUG->print("RS_Modification::bevel");
 
-	if (!(entity1 && entity2)) {
+    if (!(entity1 && entity2)){
         RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::bevel: At least one entity is nullptr");
-        return false;
+                        "RS_Modification::bevel: At least one entity is nullptr");
+        return nullptr;
     }
-    if(entity1->isLocked() || ! entity1->isVisible()) return false;
-    if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    if (entity1->isLocked() || !entity1->isVisible()) return nullptr;
+    if (entity2->isLocked() || !entity2->isVisible()) return nullptr;
 
-    RS_EntityContainer* baseContainer = container;
+    RS_EntityContainer *baseContainer = container;
     bool isPolyline = false;
 //    bool isClosedPolyline = false;
 
-    LC_UndoSection undo( document, handleUndo);
+    LC_UndoSection undo(document, handleUndo);
 
     // find out whether we're bevelling within a polyline:
+
+    auto* result = new LC_BevelResult();
+
+    //fixme - that check should be in action too
     if (entity1->getParent() &&
-            entity1->getParent()->rtti()==RS2::EntityPolyline) {
+        entity1->getParent()->rtti() == RS2::EntityPolyline){
         RS_DEBUG->print("RS_Modification::bevel: trimming polyline segments");
-        if (entity1->getParent()!=entity2->getParent()) {
+        if (entity1->getParent() != entity2->getParent()){
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "RS_Modification::bevel: entities not in the same polyline");
-            return false;
+            result->error = LC_BevelResult::ERR_NOT_THE_SAME_POLYLINE;
+            return result;
         }
         //TODO: check if entity1 & entity2 are lines.
         //bevel only can be with lines.
 
         // clone polyline for undo
-        if (handleUndo) {
-            RS_EntityContainer* cl =
-                (RS_EntityContainer*)entity1->getParent()->clone();
+        auto *cl = dynamic_cast<RS_EntityContainer *>(entity1->getParent()->clone());
+        baseContainer = cl;
+        if (handleUndo && !previewOnly){
             container->addEntity(cl);
             //cl->setUndoState(true);
             undo.addUndoable(cl);
@@ -2789,11 +2778,10 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
             undo.addUndoable(entity1->getParent());
             entity1->getParent()->setUndoState(true);
 
-            baseContainer = cl;
         }
 
-        entity1 = (RS_AtomicEntity*)baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
-        entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
+        entity1 = (RS_AtomicEntity *) baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
+        entity2 = (RS_AtomicEntity *) baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
 
         //baseContainer = entity1->getParent();
         isPolyline = true;
@@ -2805,29 +2793,33 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     RS_VectorSolutions sol =
         RS_Information::getIntersection(entity1, entity2, false);
 
-    if (sol.getNumber()==0) {
-        return false;
+    if (sol.getNumber() == 0){
+        result->error = LC_BevelResult::ERR_NO_INTERSECTION;
+        return result;
     }
 
-	RS_AtomicEntity* trimmed1 = nullptr;
-	RS_AtomicEntity* trimmed2 = nullptr;
+    RS_AtomicEntity *trimmed1 = nullptr;
+    RS_AtomicEntity *trimmed2 = nullptr;
+
+
+    result->polyline = isPolyline;
 
     //if (data.trim || isPolyline) {
-    if (isPolyline) {
+    if (isPolyline){
         trimmed1 = entity1;
         trimmed2 = entity2;
         //Always trim if are working with a polyline, to work with trim==false
         //bevel can't be part of the polyline
         data.trim = true;
     } else {
-        trimmed1 = (RS_AtomicEntity*)entity1->clone();
-        trimmed2 = (RS_AtomicEntity*)entity2->clone();
+        trimmed1 = (RS_AtomicEntity *) entity1->clone();
+        trimmed2 = (RS_AtomicEntity *) entity2->clone();
     }
 
     // remove trim entity (on screen):
-	if (data.trim || isPolyline) {
-        if (graphicView) {
-            if (isPolyline) {
+    if (data.trim || isPolyline){
+        if (graphicView){
+            if (isPolyline){
                 graphicView->deleteEntity(baseContainer);
             } else {
                 graphicView->deleteEntity(entity1);
@@ -2840,38 +2832,42 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
     RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 01");
     bool start1 = false;
     RS_Vector is = sol.getClosest(coord2);
+    result->intersectionPoint = is;
+
     RS2::Ending ending1 = trimmed1->getTrimPoint(coord1, is);
     switch (ending1) {
-    case RS2::EndingStart:
-        trimmed1->trimStartpoint(is);
-        start1 = true;
-        break;
-    case RS2::EndingEnd:
-        trimmed1->trimEndpoint(is);
-        start1 = false;
-        break;
-    default:
-        break;
+        case RS2::EndingStart:
+            trimmed1->trimStartpoint(is);
+            start1 = true;
+            break;
+        case RS2::EndingEnd:
+            trimmed1->trimEndpoint(is);
+            start1 = false;
+            break;
+        default:
+            break;
     }
+
+    result->trimStart1 = start1;
 
     RS_DEBUG->print("RS_Modification::bevel: trim entities to intersection 02");
     bool start2 = false;
     is = sol.getClosest(coord1);
     RS2::Ending ending2 = trimmed2->getTrimPoint(coord2, is);
     switch (ending2) {
-    case RS2::EndingStart:
-        trimmed2->trimStartpoint(is);
-        start2 = true;
-        break;
-    case RS2::EndingEnd:
-        trimmed2->trimEndpoint(is);
-        start2 = false;
-        break;
-    default:
-        break;
+        case RS2::EndingStart:
+            trimmed2->trimStartpoint(is);
+            start2 = true;
+            break;
+        case RS2::EndingEnd:
+            trimmed2->trimEndpoint(is);
+            start2 = false;
+            break;
+        default:
+            break;
     }
     //}
-
+    result->trimStart2 = start2;
 
     // find definitive bevel points
     RS_DEBUG->print("RS_Modification::bevel: find definitive bevel points");
@@ -2880,36 +2876,36 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
 
     // final trim:
     RS_DEBUG->print("RS_Modification::bevel: final trim");
-	if (data.trim) {
+    if (data.trim){
         switch (ending1) {
-        case RS2::EndingStart:
-            trimmed1->trimStartpoint(bp1);
-            break;
-        case RS2::EndingEnd:
-            trimmed1->trimEndpoint(bp1);
-            break;
-        default:
-            break;
+            case RS2::EndingStart:
+                trimmed1->trimStartpoint(bp1);
+                break;
+            case RS2::EndingEnd:
+                trimmed1->trimEndpoint(bp1);
+                break;
+            default:
+                break;
         }
 
         switch (ending2) {
-        case RS2::EndingStart:
-            trimmed2->trimStartpoint(bp2);
-            break;
-        case RS2::EndingEnd:
-            trimmed2->trimEndpoint(bp2);
-            break;
-        default:
-            break;
+            case RS2::EndingStart:
+                trimmed2->trimStartpoint(bp2);
+                break;
+            case RS2::EndingEnd:
+                trimmed2->trimEndpoint(bp2);
+                break;
+            default:
+                break;
         }
 
         // add new trimmed entities:
-		if (!isPolyline) {
+        if (!isPolyline && !previewOnly){
             container->addEntity(trimmed1);
             container->addEntity(trimmed2);
         }
-        if (graphicView) {
-            if (!isPolyline) {
+        if (graphicView){
+            if (!isPolyline){
                 graphicView->drawEntity(trimmed1);
                 graphicView->drawEntity(trimmed2);
             }
@@ -2919,10 +2915,21 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
 
     // add bevel line:
     RS_DEBUG->print("RS_Modification::bevel: add bevel line");
-	RS_Line* bevel = new RS_Line{baseContainer, {bp1, bp2}};
+    RS_Line *bevel;
 
-	if (!isPolyline) {
-        baseContainer->addEntity(bevel);
+    if (previewOnly){
+        bevel = new RS_Line(nullptr, bp1, bp2);
+    }
+    else{
+        bevel = new RS_Line(baseContainer, bp1, bp2);
+    }
+
+    result->bevel = bevel;
+
+    if (!isPolyline){
+        if (!previewOnly){
+            baseContainer->addEntity(bevel);
+        }
     } else {
         int idx1 = baseContainer->findEntity(trimmed1);
         int idx2 = baseContainer->findEntity(trimmed2);
@@ -2932,38 +2939,45 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
             //inverted, reorder it (swap).
             idx1 = idx2;
             idx2 = idx;
-            RS_AtomicEntity* trimmedTmp = trimmed1;
+            RS_AtomicEntity *trimmedTmp = trimmed1;
             trimmed1 = trimmed2;
             trimmed2 = trimmedTmp;
         }
         idx = idx1;
 
-        bevel->setSelected(baseContainer->isSelected());
-        bevel->setLayer(baseContainer->getLayer());
-        bevel->setPen(baseContainer->getPen());
+        if (!previewOnly){
+            bevel->setSelected(baseContainer->isSelected());
+            bevel->setLayer(baseContainer->getLayer());
+            bevel->setPen(baseContainer->getPen());
+        }
 
         // insert bevel at the right position:
-        if (trimmed1 == baseContainer->first() && trimmed2 == baseContainer->last()){
+        if (trimmed1 == baseContainer->first() && trimmed2 == baseContainer->last() && baseContainer->count() > 2){
             //bevel are from last and first segments, add at the end
-            if (trimmed2->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
+            if (trimmed2->getEndpoint().distanceTo(bevel->getStartpoint()) > 1.0e-4){
                 bevel->reverse();
             }
             idx = idx2;
-        } else{
+        } else {
             //consecutive segments
-            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint())>1.0e-4) {
+            if (trimmed1->getEndpoint().distanceTo(bevel->getStartpoint()) > 1.0e-4){
                 bevel->reverse();
             }
         }
-        baseContainer->insertEntity(idx+1, bevel);
+        baseContainer->insertEntity(idx + 1, bevel);
     }
 
-    if (isPolyline) {
-        ((RS_Polyline*)baseContainer)->updateEndpoints();
+    result->trimmed1 = trimmed1;
+    result->trimmed2 = trimmed2;
+
+    if (isPolyline){
+        auto* polyline = dynamic_cast<RS_Polyline *>(baseContainer);
+        polyline->updateEndpoints();
+        result->polyline = polyline;
     }
 
-    if (graphicView) {
-        if (isPolyline) {
+    if (graphicView){
+        if (isPolyline){
             graphicView->drawEntity(baseContainer);
         } else {
             graphicView->drawEntity(bevel);
@@ -2972,8 +2986,8 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
 
     RS_DEBUG->print("RS_Modification::bevel: handling undo");
 
-    if (handleUndo) {
-		if (!isPolyline && data.trim) {
+    if (handleUndo && !previewOnly){
+        if (!isPolyline && data.trim){
             undo.addUndoable(trimmed1);
             entity1->setUndoState(true);
             undo.addUndoable(entity1);
@@ -2983,19 +2997,19 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
             undo.addUndoable(entity2);
         }
 
-		if (!isPolyline) {
+        if (!isPolyline){
             undo.addUndoable(bevel);
         }
     }
 //Do not delete trimmed* if are part of a polyline
-	if (!(data.trim || isPolyline)) {
+    if (!(data.trim || isPolyline)){
         RS_DEBUG->print("RS_Modification::bevel: delete trimmed elements");
         delete trimmed1;
         delete trimmed2;
         RS_DEBUG->print("RS_Modification::bevel: delete trimmed elements: ok");
     }
 
-    return true;
+    return result;
 
 }
 
@@ -3009,63 +3023,68 @@ bool RS_Modification::bevel(const RS_Vector& coord1, RS_AtomicEntity* entity1,
  * @param entity2 Second entity of the corner.
  * @param data Radius and trim flag.
  */
-bool RS_Modification::round(const RS_Vector& coord,
+LC_RoundResult* RS_Modification::round(const RS_Vector& coord,
                             const RS_Vector& coord1,
                             RS_AtomicEntity* entity1,
                             const RS_Vector& coord2,
                             RS_AtomicEntity* entity2,
-                            RS_RoundData& data) {
+                            RS_RoundData& data){
 
-	if (!(entity1 && entity2)) {
+    if (!(entity1 && entity2)){
         RS_DEBUG->print(RS_Debug::D_WARNING,
-						"RS_Modification::round: At least one entity is nullptr");
-        return false;
+                        "RS_Modification::round: At least one entity is nullptr");
+        return nullptr;
     }
-    if(entity1->isLocked() || ! entity1->isVisible()) return false;
-    if(entity2->isLocked() || ! entity2->isVisible()) return false;
+    if (entity1->isLocked() || !entity1->isVisible()) return nullptr;
+    if (entity2->isLocked() || !entity2->isVisible()) return nullptr;
 
-    RS_EntityContainer* baseContainer = container;
+    auto* result = new LC_RoundResult();
+
+    RS_EntityContainer *baseContainer = container;
     bool isPolyline = false;
 //    bool isClosedPolyline = false;
 
-    LC_UndoSection undo( document, handleUndo);
+    LC_UndoSection undo(document, handleUndo);
     // find out whether we're rounding within a polyline:
     if (entity1->getParent() &&
-            entity1->getParent()->rtti()==RS2::EntityPolyline) {
+        entity1->getParent()->rtti() == RS2::EntityPolyline){
 
-        if (entity1->getParent()!=entity2->getParent()) {
+        if (entity1->getParent() != entity2->getParent()){
             RS_DEBUG->print(RS_Debug::D_WARNING,
                             "RS_Modification::round: entities not in "
                             "the same polyline");
-            return false;
+            result->error = LC_RoundResult::ERR_NOT_THE_SAME_POLYLINE;
+            return result;
         }
 
         // clone polyline for undo
-        if (handleUndo) {
-            RS_EntityContainer* cl =
-                (RS_EntityContainer*)entity1->getParent()->clone();
+        auto cl = dynamic_cast<RS_EntityContainer *>(entity1->getParent()->clone());
+        baseContainer = cl;
+
+        if (handleUndo){
             container->addEntity(cl);
             undo.addUndoable(cl);
-
             undo.addUndoable(entity1->getParent());
             entity1->getParent()->setUndoState(true);
-
-            baseContainer = cl;
         }
 
-        entity1 = (RS_AtomicEntity*)baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
-        entity2 = (RS_AtomicEntity*)baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
+        entity1 = (RS_AtomicEntity *) baseContainer->entityAt(entity1->getParent()->findEntity(entity1));
+        entity2 = (RS_AtomicEntity *) baseContainer->entityAt(entity2->getParent()->findEntity(entity2));
 
         isPolyline = true;
+        result->polyline = true;
 //        isClosedPolyline = ((RS_Polyline*)entity1->getParent())->isClosed();
     }
 
     // create 2 tmp parallels
-	RS_Creation creation(nullptr, nullptr);
-    RS_Entity* par1 = creation.createParallel(coord, data.radius, 1, entity1);
-    RS_Entity* par2 = creation.createParallel(coord, data.radius, 1, entity2);
+    RS_Creation creation(nullptr, nullptr);
+    RS_Entity *par1 = creation.createParallel(coord, data.radius, 1, entity1);
+    RS_Entity *par2 = creation.createParallel(coord, data.radius, 1, entity2);
 
-    if ((par1 == nullptr) || (par2 == nullptr)) return false;
+    if ((par1 == nullptr) || (par2 == nullptr)) {
+        result->error = LC_RoundResult::NO_PARALLELS;
+        return result;
+    }
 
     RS_VectorSolutions sol2 =
         RS_Information::getIntersection(entity1, entity2, false);
@@ -3073,8 +3092,9 @@ bool RS_Modification::round(const RS_Vector& coord,
     RS_VectorSolutions sol =
         RS_Information::getIntersection(par1, par2, false);
 
-    if (sol.getNumber()==0) {
-        return false;
+    if (sol.getNumber() == 0){
+        result->error = LC_RoundResult::ERR_NO_INTERSECTION;
+        return result;
     }
 
     // there might be two intersections: choose the closest:
@@ -3083,30 +3103,30 @@ bool RS_Modification::round(const RS_Vector& coord,
     RS_Vector p2 = entity2->getNearestPointOnEntity(is, false);
     double ang1 = is.angleTo(p1);
     double ang2 = is.angleTo(p2);
-    bool reversed = (RS_Math::getAngleDifference(ang1, ang2)>M_PI);
-
-    RS_Arc* arc = new RS_Arc(baseContainer,
+    bool reversed = (RS_Math::getAngleDifference(ang1, ang2) > M_PI);
+    auto *arc = new RS_Arc(baseContainer,
                              RS_ArcData(is,
                                         data.radius,
                                         ang1, ang2,
                                         reversed));
 
+    result->round = arc;
 
-	RS_AtomicEntity* trimmed1 = nullptr;
-	RS_AtomicEntity* trimmed2 = nullptr;
+    RS_AtomicEntity *trimmed1 = nullptr;
+    RS_AtomicEntity *trimmed2 = nullptr;
 
-    if (data.trim || isPolyline) {
-        if (isPolyline) {
+    if (data.trim || isPolyline){
+        if (isPolyline){
             trimmed1 = entity1;
             trimmed2 = entity2;
         } else {
-            trimmed1 = (RS_AtomicEntity*)entity1->clone();
-            trimmed2 = (RS_AtomicEntity*)entity2->clone();
+            trimmed1 = (RS_AtomicEntity *) entity1->clone();
+            trimmed2 = (RS_AtomicEntity *) entity2->clone();
         }
 
         // remove trim entity:
-        if (graphicView) {
-            if (isPolyline) {
+        if (graphicView){
+            if (isPolyline){
                 graphicView->deleteEntity(baseContainer);
             } else {
                 graphicView->deleteEntity(entity1);
@@ -3118,38 +3138,44 @@ bool RS_Modification::round(const RS_Vector& coord,
         RS_Vector is2 = sol2.getClosest(coord2);
         RS2::Ending ending1 = trimmed1->getTrimPoint(coord1, is2);
         switch (ending1) {
-        case RS2::EndingStart:
-            trimmed1->trimStartpoint(p1);
-            break;
-        case RS2::EndingEnd:
-            trimmed1->trimEndpoint(p1);
-            break;
-        default:
-            trimmed1 = trimCircleForRound(trimmed1, *arc);
-            break;
+            case RS2::EndingStart:
+                trimmed1->trimStartpoint(p1);
+                result->trim1Mode = LC_RoundResult::TRIM_START;
+                break;
+            case RS2::EndingEnd:
+                trimmed1->trimEndpoint(p1);
+                result->trim1Mode = LC_RoundResult::TRIM_END;
+                break;
+            default:
+                trimmed1 = trimCircleForRound(trimmed1, *arc);
+                result->trim1Mode = LC_RoundResult::TRIM_CIRCLE;
+                break;
         }
 
         is2 = sol2.getClosest(coord1);
         RS2::Ending ending2 = trimmed2->getTrimPoint(coord2, is2);
         switch (ending2) {
-        case RS2::EndingStart:
-            trimmed2->trimStartpoint(p2);
-            break;
-        case RS2::EndingEnd:
-            trimmed2->trimEndpoint(p2);
-            break;
-        default:
-            trimmed2 = trimCircleForRound(trimmed2, *arc);
-            break;
+            case RS2::EndingStart:
+                trimmed2->trimStartpoint(p2);
+                result -> trim2Mode = LC_RoundResult::TRIM_START;
+                break;
+            case RS2::EndingEnd:
+                trimmed2->trimEndpoint(p2);
+                result->trim2Mode = LC_RoundResult::TRIM_END;
+                break;
+            default:
+                trimmed2 = trimCircleForRound(trimmed2, *arc);
+                result->trim2Mode = LC_RoundResult::TRIM_CIRCLE;
+                break;
         }
 
         // add new trimmed entities:
-		if (!isPolyline) {
+        if (!isPolyline){
             container->addEntity(trimmed1);
             container->addEntity(trimmed2);
         }
-        if (graphicView) {
-            if (!isPolyline) {
+        if (graphicView){
+            if (!isPolyline){
                 graphicView->drawEntity(trimmed1);
                 graphicView->drawEntity(trimmed2);
             }
@@ -3157,7 +3183,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     }
 
     // add rounding:
-	if (!isPolyline) {
+    if (!isPolyline){
         baseContainer->addEntity(arc);
     } else {
         // find out which base entity is before the rounding:
@@ -3168,46 +3194,49 @@ bool RS_Modification::round(const RS_Vector& coord,
         arc->setLayer(baseContainer->getLayer());
         arc->setPen(baseContainer->getPen());
 
-        RS_DEBUG->print("RS_Modification::round: idx1<idx2: %d", (int)(idx1<idx2));
-        RS_DEBUG->print("RS_Modification::round: idx1!=0: %d", (int)(idx1!=0));
-        RS_DEBUG->print("RS_Modification::round: idx2==0: %d", (int)(idx2==0));
+        RS_DEBUG->print("RS_Modification::round: idx1<idx2: %d", (int) (idx1 < idx2));
+        RS_DEBUG->print("RS_Modification::round: idx1!=0: %d", (int) (idx1 != 0));
+        RS_DEBUG->print("RS_Modification::round: idx2==0: %d", (int) (idx2 == 0));
         RS_DEBUG->print("RS_Modification::round: idx1==(int)baseContainer->count()-1: %d",
-                        (int)(idx1==(int)baseContainer->count()-1));
+                        (int) (idx1 == (int) baseContainer->count() - 1));
 
-        bool insertAfter1 = ((idx1<idx2 && idx1!=0) ||(idx1==0 && idx2==1) ||
-                            (idx2==0 && idx1==(int)baseContainer->count()-1));
+        bool insertAfter1 = ((idx1 < idx2 && idx1 != 0) || (idx1 == 0 && idx2 == 1) ||
+                             (idx2 == 0 && idx1 == (int) baseContainer->count() - 1));
 
         // insert rounding at the right position:
         //if ((idx1<idx2 && idx1!=0) ||
         //	(idx2==0 && idx1==(int)baseContainer->count()-1)) {
         //if (idx1<idx2) {
-        if (insertAfter1) {
-            if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint())>1.0e-4) {
+        if (insertAfter1){
+            if (trimmed1->getEndpoint().distanceTo(arc->getStartpoint()) > 1.0e-4){
                 arc->reverse();
             }
-            baseContainer->insertEntity(idx1+1, arc);
+            baseContainer->insertEntity(idx1 + 1, arc);
         } else {
-            if (trimmed2->getEndpoint().distanceTo(arc->getStartpoint())>1.0e-4) {
+            if (trimmed2->getEndpoint().distanceTo(arc->getStartpoint()) > 1.0e-4){
                 arc->reverse();
             }
-            baseContainer->insertEntity(idx2+1, arc);
+            baseContainer->insertEntity(idx2 + 1, arc);
         }
     }
 
-    if (isPolyline) {
-        ((RS_Polyline*)baseContainer)->updateEndpoints();
+    result->trimmed1 = trimmed1;
+    result->trimmed2 = trimmed2;
+
+    if (isPolyline){
+        ((RS_Polyline *) baseContainer)->updateEndpoints();
     }
 
-    if (graphicView) {
-        if (isPolyline) {
+    if (graphicView){
+        if (isPolyline){
             graphicView->drawEntity(baseContainer);
         } else {
             graphicView->drawEntity(arc);
         }
     }
 
-    if (handleUndo) {
-		if (!isPolyline && data.trim) {
+    if (handleUndo){
+        if (!isPolyline && data.trim){
             undo.addUndoable(trimmed1);
             entity1->setUndoState(true);
             undo.addUndoable(entity1);
@@ -3217,7 +3246,7 @@ bool RS_Modification::round(const RS_Vector& coord,
             undo.addUndoable(entity2);
         }
 
-		if (!isPolyline) {
+        if (!isPolyline){
             undo.addUndoable(arc);
         }
     }
@@ -3225,7 +3254,7 @@ bool RS_Modification::round(const RS_Vector& coord,
     delete par1;
     delete par2;
 
-    return true;
+    return result;
 }
 
 

@@ -186,13 +186,15 @@ private:
      */
     LC_LineJoinData* linesJoinData = nullptr;
 
+    RS_Vector line1ClickPosition = RS_Vector(false);
+
     LC_LineJoinData* createLineJoinData(RS_Line* secondLine, RS_Vector &snapPoint);
     LC_PointsDisposition determine3PointsDisposition(RS_Vector start, RS_Vector end, const RS_Vector intersection, const RS_Vector &snapPoint) const;
     RS_Vector getMajorPointFromLine(int edgeMode, const RS_Vector &lineStart, const RS_Vector &lineEnd, const LC_ActionModifyLineJoin::LC_PointsDisposition &lineDisposition) const;
     void updateLine1TrimData(RS_Vector snap);
     LC_LineJoinData* proceedParallelLinesJoin(const RS_Vector &line1Start, const RS_Vector &line1End, const RS_Vector &line2Start, const RS_Vector &line2End) const;
     LC_LineJoinData* proceedNonParallelLines(
-        RS_Vector &snapPoint,  const RS_Vector &intersection, const RS_Vector &line1Start, const RS_Vector &line1End,
+        RS_Vector &line1ClickPoint, RS_Vector &snapPoint,  const RS_Vector &intersection, const RS_Vector &line1Start, const RS_Vector &line1End,
         const RS_Vector &line2Start, const RS_Vector &line2End);
 
     void applyAttributes(RS_Entity *entity, bool forLine1);

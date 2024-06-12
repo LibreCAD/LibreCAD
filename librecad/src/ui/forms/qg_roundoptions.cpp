@@ -35,10 +35,9 @@
  *  Constructs a QG_RoundOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_RoundOptions{})
-{
+QG_RoundOptions::QG_RoundOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyRound, "/Modify", "/Round")
+	, ui(new Ui::Ui_RoundOptions{}){
 	ui->setupUi(this);
 }
 
@@ -46,51 +45,53 @@ QG_RoundOptions::QG_RoundOptions(QWidget* parent, Qt::WindowFlags fl)
  *  Destroys the object and frees any allocated resources
  */
 QG_RoundOptions::~QG_RoundOptions() = default;
+
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_RoundOptions::languageChange()
-{
+void QG_RoundOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_RoundOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Modify");
-	RS_SETTINGS->writeEntry("/RoundRadius", ui->leRadius->text());
-	RS_SETTINGS->writeEntry("/RoundTrim", (int)ui->cbTrim->isChecked());
-    RS_SETTINGS->endGroup();
+void QG_RoundOptions::doSaveSettings(){
+    save("Radius", ui->leRadius->text());
+    save("Trim", ui->cbTrim->isChecked());
 }
 
-void QG_RoundOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionModifyRound) {
-		action = static_cast<RS_ActionModifyRound*>(a);
+void QG_RoundOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionModifyRound *>(a);
 
-        QString sr;
-	QString st;
-        if (update) {
-            sr = QString("%1").arg(action->getRadius());
-            st = QString("%1").arg((int)action->isTrimOn());
-        } else {
-            RS_SETTINGS->beginGroup("/Modify");
-            sr = RS_SETTINGS->readEntry("/RoundRadius", "1.0");
-            st = RS_SETTINGS->readEntry("/RoundTrim", "1");
-            RS_SETTINGS->endGroup();
-        }
-	ui->leRadius->setText(sr);
-		ui->cbTrim->setChecked(st=="1");
+    QString radius;
+    bool trim;
+    if (update){
+        radius = fromDouble(action->getRadius());
+        trim = action->isTrimOn();
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LineParallelOptions::setAction: wrong action type");
-		action = nullptr;
+        radius = load("Radius", "1.0");
+        trim = loadBool("Trim", true);
     }
+    setTrimToActionAndView(trim);
+    setRadiusToActionAndView(radius);
 }
 
+void QG_RoundOptions::on_leRadius_editingFinished(){
+    setRadiusToActionAndView(ui->leRadius->text());
+}
 
-void QG_RoundOptions::updateData() {
-    if (action) {
-		action->setTrim(ui->cbTrim->isChecked());
-		action->setRadius(RS_Math::eval(ui->leRadius->text()));
-        saveSettings();
+void QG_RoundOptions::on_cbTrim_toggled(bool checked){
+    setTrimToActionAndView(checked);
+}
+
+void QG_RoundOptions::setTrimToActionAndView(bool checked){
+    ui->cbTrim->setChecked(checked);
+    action->setTrim(checked);
+}
+
+void QG_RoundOptions::setRadiusToActionAndView(QString strValue){
+    double radius;
+    if (toDouble(strValue, radius, 1.0, false)){
+        action->setRadius(radius);
+        ui->leRadius->setText(fromDouble(radius));
     }
 }

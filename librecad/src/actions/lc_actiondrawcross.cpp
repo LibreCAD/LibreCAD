@@ -238,7 +238,7 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
     if (en != nullptr){
         bool isArc = en->isArc();
         if (!isArc){
-            if (en->rtti() == RS2::EntityEllipse){
+            if (en->is(RS2::EntityEllipse)){
                 // for ellipse arcs
                 isArc = true;
             }
@@ -247,12 +247,14 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
             // handle visual highlighting
             entity = en;
 
-            addToHighlights(en);
+            highlightHover(en);
 
             // prepare data for preview
             LC_CrossData crossData = createCrossDataForEntity(en);
             // create lines
             addCrossDataEntities(list, crossData);
+            // ref point
+            createRefPoint(crossData.centerPoint, list);
         }
     }
 }
@@ -279,7 +281,7 @@ void LC_ActionDrawCross::coordinateEvent([[maybe_unused]]RS_CoordinateEvent *e){
 void LC_ActionDrawCross::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTR("Select circle, arc or ellipse","Back");
+            updateMouseWidgetTRCancel("Select circle, arc or ellipse");
             break;
         default:
             updateMouseWidget();

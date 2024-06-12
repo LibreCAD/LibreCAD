@@ -61,8 +61,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void hideOptions() override;
-    void showOptions() override;
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
     void setRadius(double r);
@@ -84,16 +82,21 @@ protected:
     /**
      * Point that determines end angle.
      */
-    std::unique_ptr<RS_Vector> point;
+    RS_Vector point;
+
+    RS_Vector arcStartPoint;
     /**
   * Arc data calculated.
   */
     std::unique_ptr<RS_ArcData> data;
 private:
-    void readSettings();
-    void saveSettings() const;
     double angleLength = 0.;
     bool byRadius = false;
+    RS_Vector forecastArcCenter() const;
+    void updateOptionsRadius(double radius);
+protected:
+    void createOptionsWidget() override;
+    void updateOptionsAngle(double angle);
 };
 
 #endif

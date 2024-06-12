@@ -28,142 +28,132 @@
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
 #include "rs_graphicview.h"
+#include "rs_actioninterface.h"
+#include "qg_dimoptions.h"
 
 namespace {
     const QString g_radialPrefix=QObject::tr("R", "Radial dimension prefix");
 }
 
-
-RS_ActionDimension::RS_ActionDimension(const char* name,
-									   RS_EntityContainer& container,
-									   RS_GraphicView& graphicView)
-	:RS_PreviewActionInterface(name,
-							   container, graphicView) {
-
-	reset();
+RS_ActionDimension::RS_ActionDimension(
+    const char *name,
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface(name,
+                               container, graphicView){
+    reset();
 }
 
 RS_ActionDimension::~RS_ActionDimension() = default;
 
-void RS_ActionDimension::reset() {
+void RS_ActionDimension::reset(){
     RS_PreviewActionInterface::init(0);
-    data=std::make_unique<RS_DimensionData>(RS_Vector(false),
-									RS_Vector(false),
-									RS_MTextData::VAMiddle,
-									RS_MTextData::HACenter,
-									RS_MTextData::Exact,
-									1.0,
-									"",
-									"Standard",
-                                    0.0);
-	diameter = false;
+    data = std::make_unique<RS_DimensionData>(RS_Vector(false),
+                                              RS_Vector(false),
+                                              RS_MTextData::VAMiddle,
+                                              RS_MTextData::HACenter,
+                                              RS_MTextData::Exact,
+                                              1.0,
+                                              "",
+                                              "Standard",
+                                              0.0);
+    diameter = false;
 }
 
-
-
-void RS_ActionDimension::init(int status) {
-	RS_PreviewActionInterface::init(status);
-	//reset();
+void RS_ActionDimension::init(int status){
+    RS_PreviewActionInterface::init(status);
+//reset();
 }
 
-
-
-void RS_ActionDimension::hideOptions() {
-	RS_ActionInterface::hideOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, false);
+void RS_ActionDimension::updateMouseCursor(){
+    setMouseCursor(RS2::SelectCursor);
 }
 
-
-
-void RS_ActionDimension::showOptions() {
-	RS_ActionInterface::showOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, true, true);
+bool RS_ActionDimension::isDimensionAction(RS2::ActionType type){
+    switch (type) {
+        case RS2::ActionDimAligned:
+        case RS2::ActionDimLinear:
+        case RS2::ActionDimLinearVer:
+        case RS2::ActionDimLinearHor:
+        case RS2::ActionDimAngular:
+        case RS2::ActionDimDiametric:
+        case RS2::ActionDimRadial:
+        case RS2::ActionDimArc:
+            return true;
+        default:
+            return false;
+    }
 }
 
+QString RS_ActionDimension::getText() const{
+    if (!data->text.isEmpty()){
+        return data->text;
+    }
 
+    QString l = label;
 
-void RS_ActionDimension::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::SelectCursor);
-}
+    if (l.isEmpty() &&
+        (diameter == true || !tol1.isEmpty() || !tol2.isEmpty())){
+        l = "<>";
+    }
 
-bool RS_ActionDimension::isDimensionAction(RS2::ActionType type) {
-	switch(type){
-	case RS2::ActionDimAligned:
-	case RS2::ActionDimLinear:
-	case RS2::ActionDimLinearVer:
-	case RS2::ActionDimLinearHor:
-	case RS2::ActionDimAngular:
-	case RS2::ActionDimDiametric:
-	case RS2::ActionDimRadial:
-	case RS2::ActionDimArc:
-		return true;
-	default:
-		return false;
-	}
-}
-
-
-QString RS_ActionDimension::getText() const {
-	if (!data->text.isEmpty()) {
-		return data->text;
-	}
-
-	QString l = label;
-
-	if (l.isEmpty() &&
-			(diameter==true || !tol1.isEmpty() || !tol2.isEmpty())) {
-		l = "<>";
-	}
-
-    if (diameter) {
+    if (diameter){
         if (rtti() == RS2::ActionDimRadial && !l.startsWith(g_radialPrefix))
             l = g_radialPrefix + l;
         else if (l.at(0) != QChar(0x2205))
             l = QChar(0x2205) + l;
-    } else if (l.startsWith({QChar(0x2205)})) {
+    } else if (l.startsWith({QChar(0x2205)})){
         l = l.mid(1);
-    } else if (l.startsWith(g_radialPrefix)) {
+    } else if (l.startsWith(g_radialPrefix)){
         l = l.mid(g_radialPrefix.length());
     }
 
-	if (!tol1.isEmpty() || !tol2.isEmpty()) {
-		l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
-	}
+    if (!tol1.isEmpty() || !tol2.isEmpty()){
+        l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
+    }
 
-	return l;
-}
-
-void RS_ActionDimension::setText(const QString& t) {
-	data->text = t;
+    return l;
 }
 
-const QString& RS_ActionDimension::getLabel() const{
-	return label;
+void RS_ActionDimension::setText(const QString &t){
+    data->text = t;
 }
 
-void RS_ActionDimension::setLabel(const QString& t) {
-	//data->text = t;
-	label = t;
+const QString &RS_ActionDimension::getLabel() const{
+    return label;
 }
-const QString& RS_ActionDimension::getTol1() const{
-	return tol1;
+
+void RS_ActionDimension::setLabel(const QString &t){
+//data->text = t;
+    label = t;
 }
-void RS_ActionDimension::setTol1(const QString& t) {
-	tol1 = t;
+
+const QString &RS_ActionDimension::getTol1() const{
+    return tol1;
 }
-const QString& RS_ActionDimension::getTol2() const{
-	return tol2;
+
+void RS_ActionDimension::setTol1(const QString &t){
+    tol1 = t;
 }
-void RS_ActionDimension::setTol2(const QString& t) {
-	tol2 = t;
+
+const QString &RS_ActionDimension::getTol2() const{
+    return tol2;
 }
-bool RS_ActionDimension::getDiameter() const {
-	return diameter;
+
+void RS_ActionDimension::setTol2(const QString &t){
+    tol2 = t;
 }
-void RS_ActionDimension::setDiameter(bool d) {
-	diameter = d;
+
+bool RS_ActionDimension::getDiameter() const{
+    return diameter;
+}
+
+void RS_ActionDimension::setDiameter(bool d){
+    diameter = d;
+}
+
+void RS_ActionDimension::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_DimOptions>();
 }
 
 // EOF

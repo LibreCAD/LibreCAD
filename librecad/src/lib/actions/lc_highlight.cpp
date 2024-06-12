@@ -37,7 +37,7 @@ bool LC_Highlight::removeEntity(RS_Entity *entity){
     }
     return result;
 }
-
+// fixme - return bool value if actually cleared
 void LC_Highlight::clear(){
     for (auto it = entitiesMap.keyValueBegin(); it != entitiesMap.keyValueEnd(); ++it) {
         RS_Entity *entity = it->first;

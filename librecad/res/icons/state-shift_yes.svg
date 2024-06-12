@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+
+<svg
+   width="800px"
+   height="800px"
+   viewBox="0 0 24 24"
+   role="img"
+   aria-labelledby="shiftIconTitle"
+   stroke="#000000"
+   stroke-width="2"
+   stroke-linecap="round"
+   stroke-linejoin="round"
+   fill="none"
+   color="#000000"
+   version="1.1"
+   id="svg5"
+   sodipodi:docname="state-shift_yes.svg"
+   inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs9" />
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="1.52625"
+     inkscape:cx="371.49877"
+     inkscape:cy="398.6896"
+     inkscape:window-width="3840"
+     inkscape:window-height="2126"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg5" />
+  <title
+     id="shiftIconTitle">Shift</title>
+  <path
+     d="M5,21 L19,21 L5,21 Z M16,12 L16,17 L8,17 L8,12 L3,12 L12,3 L21,12 L16,12 Z"
+     id="path3" />
+  <path
+     style="fill:#00ff7f;stroke:#000000;stroke-width:6.55201;stroke-opacity:0"
+     d="m 300.0819,463.67338 c 0,-75.7455 0.18071,-71.92285 -3.76868,-79.72178 -2.16007,-4.26555 -9.41132,-11.47763 -13.75094,-13.67668 -7.318,-3.70831 -7.04165,-3.69015 -56.16357,-3.69015 h -45.23426 l 109.41704,-109.41851 109.41704,-109.41851 109.25662,109.25471 109.25661,109.25471 -46.68422,0.3276 c -45.99458,0.32275 -46.73533,0.34856 -50.14447,1.74662 -10.34354,4.24181 -17.65976,12.17339 -20.7091,22.45092 -0.94196,3.17478 -1.05587,11.03884 -1.05587,72.89107 v 69.33235 H 400 300.0819 Z"
+     id="path307"
+     transform="scale(0.03)" />
+</svg>

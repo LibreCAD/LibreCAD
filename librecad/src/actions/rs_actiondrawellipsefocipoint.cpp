@@ -90,15 +90,10 @@ void RS_ActionDrawEllipseFociPoint::trigger() {
 
     container->addEntity(ellipse);
 
-    // upd. undo list:
-    if (document) {
-        document->startUndoCycle();
-        document->addUndoable(ellipse);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(ellipse);
 
 //    RS_Vector rz = graphicView->getRelativeZero();
-    graphicView->moveRelativeZero(ellipse->getCenter());
+    moveRelativeZero(ellipse->getCenter());
     graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 
@@ -114,39 +109,33 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-
         case SetFocus1:
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetFocus2: {
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                mouse = snapToAngle(mouse, pPoints->focus1);
-            }
             deletePreview();
-            if (drawCreationPointsOnPreview){
-                preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
-            }
-            preview->addEntity(new RS_Line(preview.get(), pPoints->focus1, mouse));
+            mouse = getSnapAngleAwarePoint(e, pPoints->focus1, mouse, true);
+
+            previewRefPoint(pPoints->focus1);
+            previewRefSelectablePoint(mouse);
+            previewLine(pPoints->focus1, mouse);
+            previewRefLine(pPoints->focus1, mouse);
+
             drawPreview();
             break;
         }
         case SetPoint: {
+            deletePreview();
             pPoints->point = mouse;
             pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) +
                                 pPoints->focus2.distanceTo(pPoints->point));
-            deletePreview();
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
-                preview->addEntity(new RS_Ellipse{preview.get(),
-                                                  {pPoints->center,
-                                                   pPoints->major * pPoints->d,
-                                                   findRatio(),
-                                                   0., 0., false}});
+                auto ellipse = previewEllipse({pPoints->center, pPoints->major * pPoints->d, findRatio(), 0., 0., false});
+                previewEllipseReferencePoints(ellipse, true, mouse);
             }
-            if (drawCreationPointsOnPreview){
-                preview->addEntity(new RS_Point(preview.get(), pPoints->focus1));
-                preview->addEntity(new RS_Point(preview.get(), pPoints->focus2));
-            }
+
+            previewRefPoint(pPoints->focus1);
+            previewRefPoint(pPoints->focus2);
             drawPreview();
             break;
         }
@@ -161,13 +150,9 @@ void RS_ActionDrawEllipseFociPoint::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_Vector snap = snapPoint(e);
         if (getStatus() == SetFocus2){
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                snap = snapToAngle(snap,pPoints->focus1);
-            }
+            snap = getSnapAngleAwarePoint(e, pPoints->focus1, snap);
         }
-        RS_CoordinateEvent ce(snap);
-        coordinateEvent(&ce);
+        fireCoordinateEvent(snap);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -182,7 +167,7 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
 
     switch (getStatus()) {
         case SetFocus1:
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             pPoints->focus1 = mouse;
             setStatus(SetFocus2);
             break;
@@ -190,11 +175,11 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
         case SetFocus2:
             pPoints->c = 0.5 * pPoints->focus1.distanceTo(mouse);
             if (pPoints->c > RS_TOLERANCE){
-                graphicView->moveRelativeZero(mouse);
                 pPoints->focus2 = mouse;
                 pPoints->center = (pPoints->focus1 + pPoints->focus2) * 0.5;
                 pPoints->major = pPoints->focus1 - pPoints->center;
                 pPoints->major /= pPoints->c;
+                moveRelativeZero(pPoints->center);
                 setStatus(SetPoint);
             }
             break;
@@ -243,28 +228,21 @@ QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
     return {};
 }
 
-void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetFocus1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first focus of ellipse"),
-											tr("Cancel"));
-		break;
-
-	case SetFocus2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second focus of ellipse"),
-											tr("Back"));
-		break;
-
-	case SetPoint:
-		RS_DIALOGFACTORY->updateMouseWidget(
-					tr("Specify a point on ellipse or total distance to foci"),
-					tr("Back"));
-		break;
-
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetFocus1:
+            updateMouseWidgetTRCancel("Specify first focus of ellipse", Qt::ShiftModifier);
+            break;
+        case SetFocus2:
+            updateMouseWidgetTRBack("Specify second focus of ellipse", Qt::ShiftModifier);
+            break;
+        case SetPoint:
+            updateMouseWidgetTRBack("Specify a point on ellipse or total distance to foci");
+            break;
+        default:
+            updateMouseWidget();
+            break;
+    }
 }
 
 // EOF

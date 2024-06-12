@@ -294,7 +294,15 @@ void RS_DimLinear::scale(const RS_Vector& center, const RS_Vector& factor) {
     update();
 }
 
+void RS_DimLinear::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
+    RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
+    // construction line for dimension line
+    RS_ConstructionLine dimLine(nullptr,RS_ConstructionLineData(data.definitionPoint,data.definitionPoint + dirDim));
+
+    dimP1 = dimLine.getNearestPointOnEntity(edata.extensionPoint1);
+    dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
+}
 
 void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) {
     RS_Dimension::mirror(axisPoint1, axisPoint2);
@@ -309,8 +317,6 @@ void RS_DimLinear::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoin
 
     update();
 }
-
-
 
 void RS_DimLinear::stretch(const RS_Vector& firstCorner,
                            const RS_Vector& secondCorner,
@@ -356,8 +362,6 @@ void RS_DimLinear::stretch(const RS_Vector& firstCorner,
     }
     updateDim(true);
 }
-
-
 
 void RS_DimLinear::moveRef(const RS_Vector& ref, const RS_Vector& offset) {
 

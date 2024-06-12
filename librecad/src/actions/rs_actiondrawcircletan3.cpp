@@ -33,6 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_point.h"
 #include "rs_preview.h"
 #include "lc_quadratic.h"
+#include "rs_actioninterface.h"
 
 namespace {
 
@@ -100,18 +101,11 @@ void RS_ActionDrawCircleTan3::trigger(){
 
     container->addEntity(circle);
 
-// upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(circle);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(circle);
 
-    for (RS_AtomicEntity *const pc: pPoints->circles)
-        if (pc) pc->setHighlighted(false);
     graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        graphicView->moveRelativeZero(circle->getCenter());
+        moveRelativeZero(circle->getCenter());
     }
 
 //    drawSnapper();
@@ -128,14 +122,14 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     snapPoint(e);
     for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
-        addToHighlights(pc);
+        highlightSelected(pc);
     }
     switch (getStatus()) {
         case SetCircle1:
         case SetCircle2: {
             auto *c = catchCircle(e);
             if (c != nullptr){
-                addToHighlights(c);
+                highlightHover(c);
             }
             break;
         }
@@ -144,27 +138,26 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
             if (c != nullptr){
                 bool canBuildCircle = getData(c);
                 if (canBuildCircle){
-                    addToHighlights(c);
+                    highlightHover(c);
                 }
             }
             break;
         }
         case SetCenter: {
-            pPoints->coord = graphicView->toGraph(e->position());
+            pPoints->coord = toGraph(e);
             deletePreview();
             if (preparePreview()){
-                auto *circle = new RS_Circle(preview.get(), *pPoints->cData);
-                preview->addEntity(circle);
+                previewCircle(*pPoints->cData);
                 for (auto &c: pPoints->candidates) {
-                    preview->addEntity(new RS_Point(nullptr, RS_PointData(c->center)));
+                    previewRefSelectablePoint(c->center, true);
                 }
                 for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
-                    RS_Vector candidateCircleCenter = circle->getCenter();
-                    if (pc->rtti() == RS2::EntityLine){
-                        addReferencePointToPreview(pc->getNearestPointOnEntity(candidateCircleCenter, false));
+                    RS_Vector candidateCircleCenter = pPoints->cData->center;
+                    if (isLine(pc)){
+                        previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
                     }
                     else {
-                        addReferencePointToPreview(getTangentPoint(candidateCircleCenter, circle->getRadius(), pc));
+                        previewRefPoint(getTangentPoint(candidateCircleCenter, pPoints->cData->radius, pc));
                     }
 
                 }
@@ -181,14 +174,13 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
 
 bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
 
-    std::vector<RS_AtomicEntity*> circlesList;
+    std::vector<RS_AtomicEntity *> circlesList;
     if (testThirdEntity != nullptr){
         std::vector<RS_AtomicEntity *> testCirclesList = pPoints->circles;
         auto *atomicThird = dynamic_cast<RS_AtomicEntity *>(testThirdEntity);
         testCirclesList.push_back(atomicThird);
         circlesList = testCirclesList;
-    }
-    else{
+    } else {
         circlesList = pPoints->circles;
     }
 //find the nearest circle
@@ -198,11 +190,11 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
     });
 
     for (; i < circlesList.size(); ++i)
-        if (circlesList[i]->rtti() == RS2::EntityLine) break;
+        if (isLine(circlesList[i])) break;
     pPoints->candidates.clear();
     size_t i1 = (i + 1) % 3;
     size_t i2 = (i + 2) % 3;
-    if (i < circlesList.size() && circlesList[i]->rtti() == RS2::EntityLine){
+    if (i < circlesList.size() && isLine(circlesList[i])){
 //one or more lines
 
         LC_Quadratic lc0(circlesList[i], circlesList[i1], false);
@@ -229,7 +221,7 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
             case 2:
 //2 lines, one circle
             {
-                if (circlesList[i2]->rtti() == RS2::EntityLine){
+                if (isLine(circlesList[i2])){
                     std::swap(i1, i2);
                 }
 //i2 is circle
@@ -347,8 +339,7 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
     size_t index = pPoints->candidates.size();
     double dist = RS_MAXDOUBLE * RS_MAXDOUBLE;
     for (size_t i = 0; i < pPoints->candidates.size(); ++i) {
-
-        preview->addEntity(new RS_Point(preview.get(), RS_PointData(pPoints->candidates.at(i)->center)));
+//        previewRefSelectablePoint(pPoints->candidates.at(i)->center);
         double d = RS_MAXDOUBLE;
         RS_Circle(nullptr, *pPoints->candidates.at(i)).getNearestPointOnEntity(pPoints->coord, false, &d);
         double dCenter = pPoints->coord.distanceTo(pPoints->candidates.at(i)->center);
@@ -369,16 +360,11 @@ bool RS_ActionDrawCircleTan3::preparePreview(){
 
 RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e){
     RS_Entity *ret = nullptr;
-    RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+    RS_Entity *en = catchModifiableEntity(e, enTypeList);
     if (!en) return ret;
     if (!en->isVisible()) return ret;
     for (int i = 0; i < getStatus(); ++i) {
         if (en->getId() == pPoints->circles[i]->getId()) return ret; //do not pull in the same line again
-    }
-    if (en->getParent()){
-        if (en->getParent()->ignoredOnModification()){
-            return nullptr;
-        }
     }
     return en;
 }
@@ -386,7 +372,6 @@ RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e){
 void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent *e){
 // Proceed to next status
     if (e->button() == Qt::LeftButton){
-
         switch (getStatus()) {
             case SetCircle1:
             case SetCircle2:{
@@ -414,13 +399,13 @@ void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent *e){
                         setStatus(getStatus() + 1);
                     }
                     else {
-                        RS_DIALOGFACTORY->commandMessage(tr("No common tangential circle for selected entities"));
+                        commandMessageTR("No common tangential circle for selected entities");
                     }
                 }
                 break;
             }
             case SetCenter:
-                pPoints->coord = graphicView->toGraph(e->position());
+                pPoints->coord = toGraph(e);
                 if (preparePreview()) trigger();
                 break;
 
@@ -501,33 +486,27 @@ void RS_ActionDrawCircleTan3::commandEvent(RS_CommandEvent* e) {
 */
 
 void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetCircle1:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line/arc/circle"),
-											tr("Cancel"));
-		break;
-
-	case SetCircle2:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line/arc/circle"),
-											tr("Back"));
-		break;
-	case SetCircle3:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line/arc/circle"),
-											tr("Back"));
-		break;
-
-	case SetCenter:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Select the center of the tangent circle"),
-											tr("Back"));
-		break;
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+    switch (getStatus()) {
+        case SetCircle1:
+            updateMouseWidgetTRCancel("Specify the first line/arc/circle");
+            break;
+        case SetCircle2:
+            updateMouseWidgetTRBack("Specify the second line/arc/circle");
+            break;
+        case SetCircle3:
+            updateMouseWidgetTRBack("Specify the third line/arc/circle");
+            break;
+        case SetCenter:
+            updateMouseWidgetTRBack("Select the center of the tangent circle");
+            break;
+        default:
+            updateMouseWidget();
+            break;
+    }
 }
 
 void RS_ActionDrawCircleTan3::updateMouseCursor() {
-	graphicView->setMouseCursor(RS2::SelectCursor);
+	  setMouseCursor(RS2::SelectCursor);
 }
 
 RS_Vector RS_ActionDrawCircleTan3::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle){

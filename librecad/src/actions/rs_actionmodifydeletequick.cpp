@@ -67,7 +67,7 @@ void RS_ActionModifyDeleteQuick::trigger() {
             }
         }
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        updateSelectionWidget();
     } else {
         RS_DEBUG->print("RS_ActionModifyDeleteQuick::mousePressEvent:"
                         " Entity is NULL\n");
@@ -99,10 +99,8 @@ void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionModifyDeleteQuick::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::DelCursor);
+    setMouseCursor(RS2::DelCursor);
 }
 
 // EOF

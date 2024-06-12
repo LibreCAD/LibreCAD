@@ -67,7 +67,7 @@ public:
     void keyReleaseEvent(QKeyEvent *e) override;
 private:
     int selectedCount = 0;
-    bool selectRefPointFirst = false;
+    bool selectRefPointFirst = true;
     std::unique_ptr<RS_RotateData> data;
     RS_Vector originalReferencePoint = RS_Vector(false);
     void finishSelection(bool refPointFirst);

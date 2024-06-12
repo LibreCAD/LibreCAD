@@ -86,7 +86,7 @@ void RS_ActionModifyRotate::trigger(){
     RS_Modification m(*container, graphicView);
     m.rotate(*data);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
@@ -98,7 +98,7 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
             auto en = catchEntity(e);
             deleteHighlights();
             if (en != nullptr){
-                addToHighlights(en);
+                highlightHover(en);
                 drawHighlights();
             }
             break;
@@ -106,14 +106,14 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
         case SetReferencePoint: {
             if (selectRefPointFirst){
                 deletePreview();
-                addReferencePointToPreview(mouse);
+                previewRefPoint(mouse);
                 drawPreview();
             } else {
                 preview->addSelectionFrom(*container);
                 RS_Vector center = (preview->getMin() + preview->getMax()) / 2;
-                addReferenceLineToPreview(data->center, mouse);
-                addReferenceLineToPreview(data->center, center);
-                addReferencePointToPreview(center);
+                previewRefLine(data->center, mouse);
+                previewRefLine(data->center, center);
+                previewRefPoint(center);
                 deletePreview();
                 drawPreview();
             }
@@ -121,37 +121,40 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
         }
         case SetCenterPoint: {
             if (selectRefPointFirst){
-                addReferenceLineToPreview(originalReferencePoint, mouse);
-                addReferencePointToPreview(originalReferencePoint);
+                previewRefLine(originalReferencePoint, mouse);
+                previewRefPoint(originalReferencePoint);
                 drawPreview();
             } else {
                 trySnapToRelZeroCoordinateEvent(e);
                 preview->addSelectionFrom(*container);
                 RS_Vector center = (preview->getMin() + preview->getMax()) / 2;
                 deletePreview();
-                addReferenceLineToPreview(center, mouse);
+                previewRefLine(center, mouse);
                 drawPreview();
             }
             break;
         }
         case SetTargetPoint:
             if (!mouse.valid) return;
-            mouse = getSnapAngleAwarePoint(e, data->center, mouse);
             deletePreview();
+            mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             preview->addSelectionFrom(*container);
             double rotationAngle = RS_Math::correctAngle((mouse - data->center).angle() - data->angle);
             preview->rotate(data->center, rotationAngle);
 
             RS_Vector newReferencePoint = originalReferencePoint;
             newReferencePoint.rotate(data->center, rotationAngle);
-            addReferencePointToPreview(originalReferencePoint);
-            addReferencePointToPreview(newReferencePoint);
-            addReferencePointToPreview(data->center);
-            addReferenceLineToPreview(originalReferencePoint, data->center);
-            addReferenceLineToPreview(mouse, data->center);
+            previewRefPoint(originalReferencePoint);
+            previewRefSelectablePoint(newReferencePoint);
+            previewRefPoint(data->center);
+            previewRefLine(originalReferencePoint, data->center);
+            previewRefLine(mouse, data->center);
 
             if (originalReferencePoint.valid){
-                addReferenceArcToPreview(data->center, originalReferencePoint, mouse, true);
+                //previewRefArc(data->center, originalReferencePoint, mouse, true);
+                double radius = data->center.distanceTo((originalReferencePoint));
+                // fixme - temporarily add copy of circle to the document. If it is there, intersection snap for target reference point will work.
+                previewRefCircle(data->center, radius);
             }
             drawPreview();
     }
@@ -173,7 +176,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
         case SetReferencePoint: {
             if (selectRefPointFirst){
                 originalReferencePoint = e->getCoordinate();
-                graphicView->moveRelativeZero(originalReferencePoint);
+                moveRelativeZero(originalReferencePoint);
                 setStatus(SetCenterPoint);
             }
             else{
@@ -201,7 +204,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
                 if (radius.squared() > RS_TOLERANCE2){
                     data->center = pos;
                     data->angle = (originalReferencePoint - pos).angle();
-                    graphicView->moveRelativeZero(data->center);
+                    moveRelativeZero(data->center);
                     setStatus(SetTargetPoint);
                 } else {
                     RS_DIALOGFACTORY->commandMessage(tr("Rotation center is too close to reference point."));
@@ -210,7 +213,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
             }
             else{
                 data->center = pos;
-                graphicView->moveRelativeZero(data->center);
+                moveRelativeZero(data->center);
                 setStatus(SetReferencePoint);
                 break;
             }
@@ -250,9 +253,7 @@ void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent *e){
         else if (status == SetTargetPoint){
             snap = getSnapAngleAwarePoint(e, data->center, snap);
         }
-
-        RS_CoordinateEvent ce(snap);
-        coordinateEvent(&ce);
+        fireCoordinateEvent(snap);
     } else if (e->button() == Qt::RightButton){
         deletePreview();
         int newStatus = -1;
@@ -305,23 +306,19 @@ void RS_ActionModifyRotate::keyReleaseEvent(QKeyEvent *e){
 void RS_ActionModifyRotate::updateMouseButtonHints(){
     switch (getStatus()) {
         case SelectEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select to rotate"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Select to rotate");
             break;
         case SetCenterPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify rotation center"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify rotation center", Qt::ShiftModifier);
             break;
-
         case SetReferencePoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify reference point");
             break;
         case SetTargetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point to rotate to"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify target point to rotate to", Qt::ShiftModifier);
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
@@ -329,9 +326,9 @@ void RS_ActionModifyRotate::updateMouseButtonHints(){
 void RS_ActionModifyRotate::updateMouseCursor(){
     if (graphicView){
         if (getStatus() == SelectEntity){
-            graphicView->setMouseCursor(RS2::SelectCursor);
+            setMouseCursor(RS2::SelectCursor);
         } else {
-            graphicView->setMouseCursor(RS2::CadCursor);
+            setMouseCursor(RS2::CadCursor);
         }
     }
 }

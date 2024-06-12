@@ -1039,6 +1039,22 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawcirclebase.cpp
         librecad/src/lib/actions/lc_highlight.cpp
         librecad/src/actions/lc_actionpolylinedeletebase.cpp
+        librecad/src/ui/forms/lc_infodist2options.cpp
+        librecad/src/ui/forms/lc_infodist2options.cpp
+        librecad/src/actions/lc_actiondimlinearbase.cpp
+        librecad/src/lib/engine/lc_refpoint.cpp
+        librecad/src/lib/engine/lc_refpoint.h
+        librecad/src/lib/engine/lc_refpoint.cpp
+        librecad/src/lib/engine/lc_refline.h
+        librecad/src/lib/engine/lc_refline.cpp
+        librecad/src/lib/engine/lc_refcircle.h
+        librecad/src/lib/engine/lc_refcircle.cpp
+        librecad/src/lib/engine/lc_refarc.cpp
+        librecad/src/lib/engine/lc_refarc.h
+        librecad/src/ui/forms/lc_actionoptionswidgetbase.cpp
+        librecad/src/ui/forms/lc_actionoptionswidgetbase.h
+        librecad/src/actions/lc_actiondrawlinepolygonbase.h
+        librecad/src/actions/lc_actiondrawlinepolygonbase.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

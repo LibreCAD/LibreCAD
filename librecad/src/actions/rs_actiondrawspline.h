@@ -39,6 +39,8 @@ class RS_Spline;
  */
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
 	Q_OBJECT
+protected:
+    void createOptionsWidget() override;
     /**
      * Action States.
      */
@@ -48,39 +50,32 @@ class RS_ActionDrawSpline : public RS_PreviewActionInterface {
 	};
 
 public:
-    RS_ActionDrawSpline(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-	~RS_ActionDrawSpline() override;
-
+    RS_ActionDrawSpline(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawSpline() override;
     void reset();
-
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void showOptions() override;
-	void hideOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 //    void updateToolBar() override;
 
-	//void close();
-	virtual void undo();
-	virtual void setDegree(int deg);
-	int getDegree();
-	virtual void setClosed(bool c);
-	virtual bool isClosed();
+//void close();
+    virtual void undo();
+    virtual void setDegree(int deg);
+    int getDegree();
+    virtual void setClosed(bool c);
+    virtual bool isClosed();
 
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 
 };
 

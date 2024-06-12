@@ -25,107 +25,84 @@
   <property name="windowTitle">
    <string>Tangential Arc Options</string>
   </property>
-  <widget class="Line" name="sep1">
-   <property name="geometry">
-    <rect>
-     <x>124</x>
-     <y>0</y>
-     <width>16</width>
-     <height>24</height>
-    </rect>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>3</number>
    </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
+   <property name="topMargin">
+    <number>1</number>
    </property>
-   <property name="frameShape">
-    <enum>QFrame::VLine</enum>
+   <property name="bottomMargin">
+    <number>1</number>
    </property>
-   <property name="frameShadow">
-    <enum>QFrame::Sunken</enum>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="leRadius">
-   <property name="geometry">
-    <rect>
-     <x>70</x>
-     <y>0</y>
-     <width>60</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="toolTip">
-    <string>Radius of the tangential arc</string>
-   </property>
-  </widget>
-  <widget class="QLineEdit" name="leAngle">
-   <property name="geometry">
-    <rect>
-     <x>192</x>
-     <y>0</y>
-     <width>60</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="sizePolicy">
-    <sizepolicy hsizetype="Ignored" vsizetype="Fixed">
-     <horstretch>0</horstretch>
-     <verstretch>0</verstretch>
-    </sizepolicy>
-   </property>
-   <property name="toolTip">
-    <string>Total subtending angle of the tangential arc</string>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="rbRadius">
-   <property name="geometry">
-    <rect>
-     <x>0</x>
-     <y>0</y>
-     <width>70</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string extracomment="Draw Tangential Arc by the given radius">Radius</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>12</width>
-     <height>12</height>
-    </size>
-   </property>
-   <property name="checked">
-    <bool>true</bool>
-   </property>
-  </widget>
-  <widget class="QRadioButton" name="rbAngle">
-   <property name="geometry">
-    <rect>
-     <x>130</x>
-     <y>0</y>
-     <width>65</width>
-     <height>22</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string extracomment="Draw Tangential Arc by the given radius">Angle</string>
-   </property>
-   <property name="iconSize">
-    <size>
-     <width>12</width>
-     <height>12</height>
-    </size>
-   </property>
-  </widget>
+   <item row="0" column="0">
+    <widget class="QRadioButton" name="rbRadius">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string extracomment="Draw Tangential Arc by the given radius">Radius</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>12</width>
+       <height>12</height>
+      </size>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leRadius">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Radius of the tangential arc</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QRadioButton" name="rbAngle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="text">
+      <string extracomment="Draw Tangential Arc by the given radius">Angle</string>
+     </property>
+     <property name="iconSize">
+      <size>
+       <width>12</width>
+       <height>12</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Total subtending angle of the tangential arc</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>

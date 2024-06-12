@@ -36,8 +36,8 @@
  *  Constructs a QG_CircleOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_CircleOptions::QG_CircleOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_CircleOptions::QG_CircleOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/Circle")
     , ui(std::make_unique<Ui::Ui_CircleOptions>())
 {
 	ui->setupUi(this);
@@ -52,41 +52,40 @@ QG_CircleOptions::~QG_CircleOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_CircleOptions::languageChange()
-{
+void QG_CircleOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_CircleOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/CircleRadius", ui->leRadius->text());
-    RS_SETTINGS->endGroup();
+bool QG_CircleOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return  actionType ==RS2::ActionDrawCircleCR ||  actionType ==RS2::ActionDrawCircle2PR;
 }
 
-void QG_CircleOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a != nullptr && ( a->rtti()==RS2::ActionDrawCircleCR ||  a->rtti()==RS2::ActionDrawCircle2PR) ) {
-        action = static_cast<RS_ActionDrawCircleCR*>(a);
+void QG_CircleOptions::doSaveSettings(){
+	  save("Radius", ui->leRadius->text());
+}
 
-        QString sr;
-        if (update) {
-            sr = QString("%1").arg(action->getRadius());
-			ui->leRadius->setText(sr);
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sr = RS_SETTINGS->readEntry("/CircleRadius", "1.0");
-            RS_SETTINGS->endGroup();
-            // calls updateRadius() indirectly via QT signal
-			      ui->leRadius->setText(sr);
-        }
+void QG_CircleOptions::doSetAction(RS_ActionInterface *a, bool update){
+
+    action = dynamic_cast<RS_ActionDrawCircleCR *>(a);
+
+    QString radius;
+    if (update){
+        radius = fromDouble(action->getRadius());
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,"QG_CircleOptions::setAction: wrong action type");
-		action = nullptr;
+        radius = load("Radius", "1.0");
     }
-
+    
+    setRadiusToActionAndVIew(radius);
 }
 
+void QG_CircleOptions::setRadiusToActionAndVIew(QString val){
+    double radius;
+    if (toDouble(val, radius, 1.0, true)){
+        action->setRadius(radius);
+        ui->leRadius->setText(fromDouble(radius));
+    }
+}
 
-void QG_CircleOptions::updateRadius(const QString& r) {
-    if (action != nullptr && action->setRadius(r))
-        saveSettings();
+void QG_CircleOptions::on_leRadius_editingFinished(){
+    setRadiusToActionAndVIew(ui->leRadius->text());
 }

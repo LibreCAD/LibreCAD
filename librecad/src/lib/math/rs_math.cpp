@@ -228,11 +228,11 @@ double RS_Math::makeAngleReadable(double angle, bool readable,
 
     bool cor = isAngleReadable(ret) ^ readable;
 
-    // quadrant 1 & 4
+    // determineQuadrant 1 & 4
     if (cor) {
         //        ret = angle;
         //    }
-        // quadrant 2 & 3
+        // determineQuadrant 2 & 3
         //    else {
         ret = correctAngle(angle+M_PI);
     }

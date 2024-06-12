@@ -61,7 +61,7 @@ void RS_ActionModifyRotate2::trigger(){
 
     finish(false);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent *e){
@@ -100,8 +100,7 @@ void RS_ActionModifyRotate2::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionModifyRotate2::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button() == Qt::RightButton){
         deletePreview();
         init(getStatus() - 1);
@@ -146,21 +145,19 @@ QStringList RS_ActionModifyRotate2::getAvailableCommands(){
 void RS_ActionModifyRotate2::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetReferencePoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify absolute reference point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify absolute reference point");
             break;
         case SetReferencePoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify relative reference point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify relative reference point");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionModifyRotate2::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

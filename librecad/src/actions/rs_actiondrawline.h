@@ -39,6 +39,8 @@
 class RS_ActionDrawLine : public RS_PreviewActionInterface
 {
     Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 
 public:
     /// Action States
@@ -71,9 +73,6 @@ public:
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
-
-    void showOptions() override;
-    void hideOptions() override;
 
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;

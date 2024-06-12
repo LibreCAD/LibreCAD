@@ -37,6 +37,7 @@
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
+#include "rs_actioninterface.h"
 
 struct LC_ActionDrawLinePolygonCenTan::Points {
     /** Center of polygon */
@@ -51,12 +52,9 @@ struct LC_ActionDrawLinePolygonCenTan::Points {
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw Polygons (Center,Corner)", container, graphicView)
+        :LC_ActionDrawLinePolygonBase("Draw Polygons (Center,Corner)", container, graphicView, actionType=RS2::ActionDrawLinePolygonCenTan)
         , pPoints(std::make_unique<Points>())
-        ,number(3)
-        ,lastStatus(SetCenter)
-{
-    actionType=RS2::ActionDrawLinePolygonCenCor;
+        ,lastStatus(SetCenter){
 }
 
 LC_ActionDrawLinePolygonCenTan::~LC_ActionDrawLinePolygonCenTan() = default;
@@ -70,8 +68,7 @@ void LC_ActionDrawLinePolygonCenTan::trigger() {
     bool ok = creation.createPolygon3(pPoints->center, pPoints->corner, number);
 
     if (!ok) {
-        RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:"
-                        " No polygon added\n");
+        RS_DEBUG->print("RS_ActionDrawLinePolygon::trigger:  No polygon added\n");
     }
 }
 
@@ -81,31 +78,30 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
 
     switch (getStatus()) {
-    case SetCenter: {
-        trySnapToRelZeroCoordinateEvent(e);
-        break;
-    }
-    case SetTangent:
-        if (pPoints->center.valid) {
-            mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse);
-
-            pPoints->corner = mouse;
-
-            deletePreview();
-
-            addReferencePointToPreview(pPoints->center);
-            addReferencePointToPreview(mouse);
-            addReferenceLineToPreview(pPoints->center, mouse);
-
-            RS_Creation creation(preview.get(), nullptr, false);
-            creation.createPolygon3(pPoints->center, pPoints->corner, number);
-
-            drawPreview();
+        case SetCenter: {
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
         }
-        break;
+        case SetTangent: {
+            if (pPoints->center.valid){
+                deletePreview();
 
-    default:
-        break;
+                mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
+                pPoints->corner = mouse;
+
+                previewRefPoint(pPoints->center);
+                previewRefSelectablePoint(mouse);
+                previewRefLine(pPoints->center, mouse);
+
+                RS_Creation creation(preview.get(), nullptr, false);
+                creation.createPolygon3(pPoints->center, pPoints->corner, number);
+
+                drawPreview();
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -115,8 +111,7 @@ void LC_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
         if (getStatus()==SetTangent){
             coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
         }
-        RS_CoordinateEvent ce(coord);
-        coordinateEvent(&ce);
+        fireCoordinateEvent(coord);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -129,99 +124,70 @@ void LC_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetCenter:
-        pPoints->center = mouse;
-        setStatus(SetTangent);
-        graphicView->moveRelativeZero(mouse);
-        break;
+        case SetCenter:
+            pPoints->center = mouse;
+            setStatus(SetTangent);
+            moveRelativeZero(mouse);
+            break;
 
-    case SetTangent:
-        pPoints->corner = mouse;
-        trigger();
-        break;
+        case SetTangent:
+            pPoints->corner = mouse;
+            trigger();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
 void LC_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"),
-                                            "");
+        updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
         break;
-
     case SetTangent:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify a tangent"), "");
+        updateMouseWidgetTRBack("Specify a tangent", Qt::ShiftModifier);
         break;
-
     case SetNumber:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
+        updateMouseWidgetTR("Enter number:","");
         break;
-
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-void LC_ActionDrawLinePolygonCenTan::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void LC_ActionDrawLinePolygonCenTan::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
-void LC_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent* e) {
+void LC_ActionDrawLinePolygonCenTan::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetCenter:
-    case SetTangent:
-        if (checkCommand("number", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetNumber);
+        case SetCenter:
+        case SetTangent: {
+            if (checkCommand("number", c)){
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetNumber);
+            }
+            break;
         }
-        break;
-
-    case SetNumber: {
-            bool ok;
-            int n = c.toInt(&ok);
-            if (ok) {
-                e->accept();
-                if (n>0 && n<10000) {
-                    number = n;
-                } else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-                                                        "Try 1..9999"));
-            } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+        case SetNumber: {
+            parseNumber(e, c);
+            updateOptions();
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
 QStringList LC_ActionDrawLinePolygonCenTan::getAvailableCommands() {
     QStringList cmd;
-
     switch (getStatus()) {
         case SetCenter:
         case SetTangent:
@@ -231,8 +197,4 @@ QStringList LC_ActionDrawLinePolygonCenTan::getAvailableCommands() {
             break;
     }
     return cmd;
-}
-
-void LC_ActionDrawLinePolygonCenTan::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
 }

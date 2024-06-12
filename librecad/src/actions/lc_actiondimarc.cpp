@@ -25,7 +25,6 @@
 
 #include <iostream>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_arc.h"
@@ -38,256 +37,196 @@
 
 #include "lc_actiondimarc.h"
 
-
-LC_ActionDimArc::LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView) 
-                                 :
-                                 RS_ActionDimension("Draw Arc Dimensions", container, graphicView)
-{
+LC_ActionDimArc::LC_ActionDimArc(RS_EntityContainer &container, RS_GraphicView &graphicView):
+    RS_ActionDimension("Draw Arc Dimensions", container, graphicView){
     reset();
 }
 
-
 LC_ActionDimArc::~LC_ActionDimArc() = default;
 
-
-void LC_ActionDimArc::reset()
-{
+void LC_ActionDimArc::reset(){
     RS_ActionDimension::reset();
 
     actionType = RS2::ActionDimArc;
 
-    dimArcData.radius    = 0.0;
+    dimArcData.radius = 0.0;
     dimArcData.arcLength = 0.0;
 
-    dimArcData.centre     = RS_Vector(false);
-    dimArcData.endAngle   = RS_Vector(false);
+    dimArcData.centre = RS_Vector(false);
+    dimArcData.endAngle = RS_Vector(false);
     dimArcData.startAngle = RS_Vector(false);
 
     selectedArcEntity = nullptr;
 
-    RS_DIALOGFACTORY->requestOptions (this, true, true);
+    RS_DIALOGFACTORY->requestOptions(this, true, true);
 }
 
-
-void LC_ActionDimArc::trigger()
-{
+void LC_ActionDimArc::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    if (selectedArcEntity == nullptr)
-    {
+    if (selectedArcEntity == nullptr){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: selectedArcEntity is nullptr.\n");
         return;
     }
 
-    if ( ! dimArcData.centre.valid)
-    {
+    if (!dimArcData.centre.valid){
         RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionDimArc::trigger: dimArcData.centre is not valid.\n");
         return;
     }
 
-    LC_DimArc* new_dimArc_entity { new LC_DimArc (container, *data, dimArcData) };
+    auto newEntity= new LC_DimArc(container, *data, dimArcData);
 
-    new_dimArc_entity->setLayerToActive();
-    new_dimArc_entity->setPenToActive();
-    new_dimArc_entity->update();
-    container->addEntity(new_dimArc_entity);
+    newEntity->setLayerToActive();
+    newEntity->setPenToActive();
+    newEntity->update();
+    container->addEntity(newEntity);
 
-    if (document)
-    {
-        document->startUndoCycle();
-        document->addUndoable(new_dimArc_entity);
-        document->endUndoCycle();
-    }
-    // todo - review - what if invalid relzero?
-    RS_Vector relativeZeroPos { graphicView->getRelativeZero() };
+    addToDocumentUndoable(newEntity);
 
-    setStatus (SetEntity);
-
-    graphicView->redraw (RS2::RedrawDrawing);
-    graphicView->moveRelativeZero (relativeZeroPos);
+    setStatus(SetEntity);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     RS_Snapper::finish();
 }
 
+void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
+    RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent begin");
+    RS_Vector snap = snapPoint(e);
+    deleteHighlights();
+    switch (getStatus()) {
+        case SetEntity:{
+            auto en = catchEntity(e, RS2::EntityArc, RS2::ResolveAll);
+            if (en != nullptr){
+                highlightHover(en);
+            }
+            break;
+        }
+        case SetPos: {
+            snap = getFreeSnapAwarePoint(e, snap);
+            highlightSelected(selectedArcEntity);
+            setRadius(snap);
 
-void LC_ActionDimArc::mouseMoveEvent(QMouseEvent* e)
-{
-    RS_DEBUG->print( "LC_ActionDimArc::mouseMoveEvent begin");
+            // fixme - determine why DimArc is drawn on preview by preview pen, while other dimension entities - using normal pen...
 
-    switch (getStatus())
-    {
-        case SetPos:
-        {
-            setRadius (snapPoint(e));
-
-            LC_DimArc *temp_dimArc_entity { new LC_DimArc (preview.get(), *data, dimArcData) };
+            LC_DimArc *temp_dimArc_entity{new LC_DimArc(preview.get(), *data, dimArcData)};
 
             deletePreview();
-            preview->addEntity(temp_dimArc_entity);
-
+            previewEntity(temp_dimArc_entity);
             drawPreview();
+            break;
         }
-        break;
-
         default:
             break;
     }
-
+    drawHighlights();
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
 }
 
+void LC_ActionDimArc::mouseReleaseEvent(QMouseEvent *e){
+    int status = getStatus();
+    if (Qt::LeftButton == e->button()){
+        switch (status) {
+            case SetEntity: {
+                selectedArcEntity = catchEntity(e, RS2::ResolveAll);
 
-void LC_ActionDimArc::mouseReleaseEvent(QMouseEvent* e)
-{
-    if (Qt::LeftButton == e->button())
-    {
-        switch (getStatus())
-        {
-            case SetEntity:
-            {
-                selectedArcEntity = catchEntity (e, RS2::ResolveAll);
-
-                if (selectedArcEntity != nullptr)
-                {
-                    if (selectedArcEntity->rtti() == RS2::EntityArc)
-                    {
-                        dimArcData.centre     = selectedArcEntity->getCenter();
-                        dimArcData.arcLength  = selectedArcEntity->getLength();
+                if (selectedArcEntity != nullptr){
+                    if (selectedArcEntity->is(RS2::EntityArc)){
+                        dimArcData.centre = selectedArcEntity->getCenter();
+                        dimArcData.arcLength = selectedArcEntity->getLength();
 
                         dimArcData.startAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle1());
-                        dimArcData.endAngle   = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
+                        dimArcData.endAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
 
                         data->definitionPoint = selectedArcEntity->getStartpoint();
 
-                        if (((RS_Arc *) selectedArcEntity)->isReversed())
-                        {
+                        if (((RS_Arc *) selectedArcEntity)->isReversed()){
                             const RS_Vector tempAngle = RS_Vector(dimArcData.startAngle);
 
                             dimArcData.startAngle = dimArcData.endAngle;
-                            dimArcData.endAngle   = tempAngle;
+                            dimArcData.endAngle = tempAngle;
 
                             data->definitionPoint = selectedArcEntity->getEndpoint();
                         }
 
-                        setStatus (SetPos);
-                    }
-                    else
-                    {
-                        RS_DEBUG->print( RS_Debug::D_ERROR, 
-                                         "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
+                        setStatus(SetPos);
+                    } else {
+                        RS_DEBUG->print(RS_Debug::D_ERROR,
+                                        "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
 
                         selectedArcEntity = nullptr;
                     }
                 }
+                break;
             }
-            break;
-
-            case SetPos:
-            {
-                RS_CoordinateEvent ce (snapPoint (e));
-                coordinateEvent (&ce);
+            case SetPos: {
+                RS_Vector snap = snapPoint(e);
+                snap = getFreeSnapAwarePoint(e, snap);
+                fireCoordinateEvent(snap);
+                break;
             }
-            break;
+            default:
+               break;
         }
-    }
-    else if (e->button() == Qt::RightButton)
-    {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init (getStatus() - 1);
+        init(status - 1);
     }
 }
 
-
-void LC_ActionDimArc::showOptions()
-{
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions (this, true);
-}
-
-
-void LC_ActionDimArc::hideOptions()
-{
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions (this, false);
-}
-
-
-void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent* e)
-{
+void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr) return;
 
-    switch (getStatus())
-    {
-        case SetPos:
-            setRadius (e->getCoordinate());
+    switch (getStatus()) {
+        case SetPos: {
+            setRadius(e->getCoordinate());
             trigger();
             reset();
-            setStatus (SetEntity);
+            setStatus(SetEntity);
             break;
-
+        }
         default:
             break;
     }
 }
 
+void LC_ActionDimArc::commandEvent(RS_CommandEvent *e){
+    QString inputCommand(e->getCommand().toLower());
 
-void LC_ActionDimArc::commandEvent(RS_CommandEvent* e)
-{
-    QString inputCommand (e->getCommand().toLower());
-
-    if (checkCommand (QStringLiteral ("help"), inputCommand))
-    {
-        RS_DIALOGFACTORY->commandMessage(getAvailableCommands().join(", "));
+    if (checkCommand(QStringLiteral ("help"), inputCommand)){
+        commandMessage(getAvailableCommands().join(", "));
         return;
     }
-
-    if (checkCommand (QStringLiteral ("exit"), inputCommand))
-    {
-        init (-1);
+    if (checkCommand(QStringLiteral ("exit"), inputCommand)){
+        init(-1);
         return;
     }
 }
 
-
-QStringList LC_ActionDimArc::getAvailableCommands()
-{
-    QStringList availableCommandsList { "help", "exit" };
-
+QStringList LC_ActionDimArc::getAvailableCommands(){
+    QStringList availableCommandsList{"help", "exit"};
     return availableCommandsList;
 }
 
-
-void LC_ActionDimArc::updateMouseButtonHints()
-{
-    switch (getStatus())
-    {
+void LC_ActionDimArc::updateMouseButtonHints(){
+    switch (getStatus()) {
         case SetEntity:
-            RS_DIALOGFACTORY->updateMouseWidget( tr("Select arc entity"),
-                                                 tr("Cancel"));
+            updateMouseWidgetTRCancel("Select arc entity");
             break;
-
         case SetPos:
-            RS_DIALOGFACTORY->updateMouseWidget( tr("Specify dimension arc location"),
-                                                 tr("Cancel"));
+            updateMouseWidgetTRBack("Specify dimension arc location", Qt::ShiftModifier);
             break;
-
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-
-void LC_ActionDimArc::setRadius(const RS_Vector& selectedPosition)
-{
+void LC_ActionDimArc::setRadius(const RS_Vector &selectedPosition){
     const double minimum_dimArc_gap = 0.0;
-
-    dimArcData.radius = selectedPosition.distanceTo (dimArcData.centre);
-
+    dimArcData.radius = selectedPosition.distanceTo(dimArcData.centre);
     const double minimumRadius = selectedArcEntity->getRadius() + minimum_dimArc_gap;
-
-    if (dimArcData.radius < minimumRadius) dimArcData.radius = minimumRadius;
+    if (dimArcData.radius < minimumRadius) {
+        dimArcData.radius = minimumRadius;
+    }
 }
 

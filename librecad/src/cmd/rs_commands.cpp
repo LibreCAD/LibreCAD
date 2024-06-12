@@ -1046,6 +1046,7 @@ RS_Commands::RS_Commands() {
         {"dpi",QObject::tr("dpi")},
         {"close",QObject::tr("close")},
         {"chord length",QObject::tr("chord length")},
+        {"chordlen",QObject::tr("chordlen")},
         {"columns",QObject::tr("columns")},
         {"columnspacing",QObject::tr("columnspacing")},
         {"equation",QObject::tr("equation")},
@@ -1143,7 +1144,7 @@ RS_Commands::RS_Commands() {
         {QObject::tr("cen", "center"),"center"},
         {QObject::tr("ce", "center"),"center"},
 
-        {QObject::tr("chord length"),"chord length"},
+        {QObject::tr("chordlen"),"chordlen"},
         //    {QObject::tr("length", "chord length"),"chord length"},
         {QObject::tr("cl", "chord length"),"chord length"},
 

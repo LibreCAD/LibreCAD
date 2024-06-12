@@ -75,18 +75,14 @@ void RS_ActionDrawCircle2P::trigger() {
         circle->setPenToActive();
         container->addEntity(circle);
 
-        // upd. undo list:
-        if (document){
-            document->startUndoCycle();
-            document->addUndoable(circle);
-            document->endUndoCycle();
-        }
+        addToDocumentUndoable(circle);
+
         if (moveRelPointAtCenterAfterTrigger){
-            graphicView->moveRelativeZero(data->center);
+            moveRelativeZero(data->center);
 
         } else {
             RS_Vector rz = graphicView->getRelativeZero();
-            graphicView->moveRelativeZero(rz);
+            moveRelativeZero(rz);
         }
         graphicView->redraw(RS2::RedrawDrawing);
 
@@ -116,20 +112,19 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             break;
 
         case SetPoint2:
-            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse);
+            deletePreview();
+            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             pPoints->point2 = mouse;
             preparePreview();
             if (data->isValid()){
-                auto *circle = new RS_Circle(preview.get(), *data);
-                deletePreview();
-                preview->addEntity(circle);
-                addReferencePointToPreview(data->center);
-                addReferencePointToPreview(pPoints->point1);
-                addReferencePointToPreview(pPoints->point2);
-                addReferenceLineToPreview(data->center, pPoints->point1);
-//                    addReferenceLineToPreview(pPoints->point1, pPoints->point2);
-                drawPreview();
+                previewCircle(*data);
+                previewRefPoint(data->center);
+                previewRefPoint(pPoints->point1);
+                previewRefSelectablePoint(pPoints->point2);
+                previewRefLine(data->center, pPoints->point1);
+//                    previewRefLine(pPoints->point1, pPoints->point2);
             }
+            drawPreview();
             break;
 
         default:
@@ -143,8 +138,7 @@ void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
         if (getStatus() == SetPoint2){
             coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
         }
-        RS_CoordinateEvent ce(coord);
-        coordinateEvent(&ce);
+        fireCoordinateEvent(coord);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -159,18 +153,18 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-    case SetPoint1:
+    case SetPoint1: {
         pPoints->point1 = mouse;
-        graphicView->moveRelativeZero(mouse);
+        moveRelativeZero(mouse);
         setStatus(SetPoint2);
         break;
-
-    case SetPoint2:
+    }
+    case SetPoint2: {
         pPoints->point2 = mouse;
-        graphicView->moveRelativeZero(mouse);
+        moveRelativeZero(mouse);
         trigger();
         break;
-
+    }
     default:
         break;
     }
@@ -179,13 +173,13 @@ void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawCircle2P::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"), tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
         break;
     case SetPoint2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second point"), tr("Back"));
+        updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }

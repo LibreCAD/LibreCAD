@@ -48,7 +48,7 @@ void RS_ActionSelectInvert::trigger() {
     RS_Selection s(*container, graphicView);
     s.invertSelection();
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 // EOF

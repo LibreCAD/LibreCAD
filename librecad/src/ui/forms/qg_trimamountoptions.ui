@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>168</width>
-    <height>33</height>
+    <width>211</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Maximum" vsizetype="Maximum">
+   <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -24,7 +24,7 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="spacing">
-    <number>6</number>
+    <number>3</number>
    </property>
    <property name="leftMargin">
     <number>1</number>
@@ -39,21 +39,40 @@
     <number>1</number>
    </property>
    <item>
+    <widget class="QCheckBox" name="cbTotalLength">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>The input length is used as total length after trimming, instead of length increase</string>
+     </property>
+     <property name="text">
+      <string>Total</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QLabel" name="lDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Maximum" vsizetype="Preferred">
+      <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="minimumSize">
       <size>
-       <width>51</width>
+       <width>0</width>
        <height>0</height>
       </size>
      </property>
      <property name="text">
       <string>Length:</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -86,18 +105,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QCheckBox" name="cbTotalLength">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="toolTip">
-      <string>The input length is used as total length after trimming, instead of length increase</string>
-     </property>
+    <widget class="QCheckBox" name="cbSymmetric">
      <property name="text">
-      <string/>
+      <string>Symmetric</string>
      </property>
     </widget>
    </item>
@@ -113,13 +123,6 @@
       </size>
      </property>
     </spacer>
-   </item>
-   <item>
-    <widget class="Line" name="line">
-     <property name="orientation">
-      <enum>Qt::Vertical</enum>
-     </property>
-    </widget>
    </item>
   </layout>
  </widget>

@@ -25,8 +25,8 @@
 **********************************************************************/
 
 #include <QKeyEvent>
-#include <QToolBar>
 
+#include "rs.h"
 #include "rs_actioninterface.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
@@ -306,9 +306,18 @@ void RS_ActionInterface::hideOptions() {
 }
 
 void RS_ActionInterface::updateOptions(){
+    if (m_optionWidget == nullptr){
+        createOptionsWidget();
+    }
     if (m_optionWidget != nullptr){
-
-        m_optionWidget->setAction(this, true);
+        if (!m_optionWidget->isVisible()){
+            if (m_optionWidget->parent() == nullptr){ // first time created
+                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
+                m_optionWidget->setAction(this, true);
+            } else {
+                m_optionWidget->show();
+            }
+        }
     }
 }
 
@@ -372,3 +381,13 @@ int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
     return (graphic != nullptr) ? graphic->getGraphicVariableInt(key, def) : def;
 }
 
+void RS_ActionInterface::updateSelectionWidget() const{
+    updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+}
+void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
+    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+}
+
+void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
+    graphicView->setMouseCursor(cursor);
+}

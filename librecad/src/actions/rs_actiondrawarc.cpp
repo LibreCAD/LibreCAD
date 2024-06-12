@@ -26,13 +26,11 @@
 
 #include<cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawarc.h"
 #include "rs_arc.h"
 #include "rs_line.h"
-#include "rs_point.h"
 #include "rs_circle.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
@@ -42,12 +40,15 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "lc_linemath.h"
+#include "rs_actioninterface.h"
+#include "qg_arcoptions.h"
 
+// fixme - add proper options for the action
 RS_ActionDrawArc::RS_ActionDrawArc(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :LC_ActionDrawCircleBase("Draw arcs",
-                               container, graphicView), data(std::make_unique<RS_ArcData>()){
+    :LC_ActionDrawCircleBase("Draw arcs",container, graphicView), data(std::make_unique<RS_ArcData>()){
     actionType = RS2::ActionDrawArc;
     reset();
 }
@@ -63,36 +64,30 @@ void RS_ActionDrawArc::reset(){
 }
 
 void RS_ActionDrawArc::init(int status){
-    RS_PreviewActionInterface::init(status);
-
+    LC_ActionDrawCircleBase::init(status);
     reset();
 }
 
 void RS_ActionDrawArc::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    auto arc = new RS_Arc(container,
-                          *data);
+    auto arc = new RS_Arc(container,*data);
     arc->setLayerToActive();
     arc->setPenToActive();
     container->addEntity(arc);
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(arc);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(arc);
 
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(arc->getCenter());
+    moveRelativeZero(arc->getCenter());
 
     setStatus(SetCenter);
     reset();
 
-    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu",
-                    arc->getId());
+    RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());
 }
+
+
 
 void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
@@ -106,104 +101,162 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
         }
         case SetRadius: {
             if (data->center.valid){
+                mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
-                if (drawCreationPointsOnPreview){
-                    preview->addEntity(new RS_Point(preview.get(), data->center));
-                }
-                preview->addEntity(new RS_Circle(preview.get(),
-                                                 {data->center, data->radius}));
+                previewRefPoint(data->center);
+                previewRefPoint(mouse);
+                previewCircle({data->center, data->radius});
                 drawPreview();
             }
             break;
         }
-        case SetAngle1:{
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                mouse = snapToAngle(mouse, data->center);
-            }
+        case SetAngle1: {
+            deletePreview();
+            mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
+
             data->angle1 = data->center.angleTo(mouse);
             if (data->reversed){
                 data->angle2 = RS_Math::correctAngle(data->angle1 - M_PI / 3);
             } else {
                 data->angle2 = RS_Math::correctAngle(data->angle1 + M_PI / 3);
             }
-            deletePreview();
-            preview->addEntity(new RS_Arc(preview.get(),
-                                          *data));
-            if (drawCreationPointsOnPreview){
-                preview->addEntity(new RS_Point(preview.get(), data->center));
-                RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
-                preview->addEntity(new RS_Point(preview.get(), startArcPoint));
-                preview->addEntity(new RS_Line(preview.get(), data->center, mouse));
-            }
+            previewArc(*data);
+
+            previewRefPoint(data->center);
+            RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
+            previewRefSelectablePoint(startArcPoint);
+            previewRefLine(data->center, mouse);
+
             drawPreview();
             break;
         }
         case SetAngle2: {
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                mouse = snapToAngle(mouse, data->center);
-            }
+            deletePreview();
+            mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             data->angle2 = data->center.angleTo(mouse);
-            deletePreview();
-            preview->addEntity(new RS_Arc(preview.get(),
-                                          *data));
-            if (drawCreationPointsOnPreview){
-                preview->addEntity(new RS_Point(preview.get(), data->center));
-                RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
-                preview->addEntity(new RS_Point(preview.get(), startArcPoint));
-                RS_Vector endArcPoint = data->center + RS_Vector::polar(data->radius, data->angle2);
-                preview->addEntity(new RS_Point(preview.get(), endArcPoint));
-                preview->addEntity(new RS_Line(preview.get(), data->center, mouse));
-            }
+            auto arc = previewArc(*data);
+
+//            previewRefPoint(data->center);
+//            previewRefPoint(arc->getStartpoint());
+
+            previewRefPoints({data->center, arc->getStartpoint()});
+            previewRefSelectablePoint(arc->getEndpoint());
+            previewRefLine(data->center, mouse);
+
             drawPreview();
             break;
         }
-        case SetIncAngle:
-            data->angle2 = data->angle1 + data->center.angleTo(mouse);
+        case SetIncAngle: {
             deletePreview();
-            preview->addEntity(new RS_Arc(preview.get(),
-                                          *data));
+            mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
+            double angleToMouse = data->center.angleTo(mouse);
+            data->angle2 = data->angle1 + angleToMouse;
+            auto arc = previewArc(*data);
+
+            previewRefPoint(data->center);
+            previewRefPoint(arc->getStartpoint());
+            previewRefPoint(arc->getEndpoint());
+            RS_Vector nearest = arc->getNearestPointOnEntity(mouse, false);
+            previewRefSelectablePoint(nearest);
+
+            double halfRadius = data->radius/2;
+            const RS_Vector &horizontalPoint = data->center + RS_Vector(halfRadius, 0, 0);
+            previewRefLine(data->center, mouse);
+            previewRefLine(data->center, horizontalPoint);
+            previewRefLine(data->center, arc->getEndpoint());
+            previewRefLine(data->center, arc->getStartpoint());
+            previewRefArc(RS_ArcData(data->center, halfRadius, 0, angleToMouse, data->reversed));
+            previewRefArc(RS_ArcData(data->center, halfRadius *1.1 , arc->getAngle1(), arc->getAngle2(), data->reversed));
+
             drawPreview();
             break;
-
+        }
         case SetChordLength: {
-            double x = data->center.distanceTo(mouse);
-            if (fabs(x / (2 * data->radius)) <= 1.0){
-                data->angle2 = data->angle1 + asin(x / (2 * data->radius)) * 2;
-                deletePreview();
-                preview->addEntity(new RS_Arc(preview.get(),
-                                              *data));
-                drawPreview();
-            }
-        }
-            break;
+            // todo - add  more relaxed snap... to grid etc???
+            RS_Vector arcStart;
+            RS_Vector halfCircleArcEnd;
+            snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
+            double distanceFromStartToMouse = arcStart.distanceTo(mouse);
 
+            deletePreview();
+            double diameter = data->radius * 2;
+            data->angle2 = data->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
+            if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)){
+                auto arc = previewArc(*data);
+                previewRefPoint(arc->getEndpoint());
+                previewRefLine(arcStart, mouse);
+                previewRefLine(arc->getStartpoint(), arc->getEndpoint());
+                if (LC_LineMath::isMeaningfulDistance(mouse, halfCircleArcEnd)){
+                    previewRefArc(
+                        RS_ArcData(arcStart, distanceFromStartToMouse, arcStart.angleTo(data->center), arcStart.angleTo(arc->getEndpoint()), true));
+                }
+            }
+            previewRefPoint(arcStart);
+            previewRefPoint(data->center);
+            previewRefSelectablePoint(mouse, true);
+            previewRefPoint(halfCircleArcEnd);
+
+            drawPreview();
+            break;
+        }
         default:
             break;
-
     }
 
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent end");
 }
 
+void RS_ActionDrawArc::snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const{
+    arcStart= data->center + RS_Vector::polar(data->radius, data->angle1);
+    halfCircleArcEnd= data->center - RS_Vector::polar(data->radius, data->angle1);
+    RS_Line diameter = RS_Line(nullptr, RS_LineData(arcStart, halfCircleArcEnd));
+
+    // projection of mouse to diameter
+    mouse = diameter.getNearestPointOnEntity(mouse, true);
+}
+
 void RS_ActionDrawArc::mouseReleaseEvent(QMouseEvent *e){
+    int status = getStatus();
     if (e->button() == Qt::LeftButton){
         RS_Vector mouse = snapPoint(e);
-        // todo - will it better if coordinateEvent() will also take at least modifiers from mouse - or, original event?
-        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-        if (shiftPressed){
-            int status = getStatus();
-            if (status == SetAngle1 || status == SetAngle2){
-                mouse = snapToAngle(mouse, data->center);
+        bool shouldFireCoordinateEvent = true;
+        switch (status) {
+            case SetRadius: {
+                mouse = getFreeSnapAwarePoint(e, mouse);
+                break;
             }
+            case SetAngle1:
+            case SetAngle2:
+            case SetIncAngle: {
+                mouse = getSnapAngleAwarePoint(e, data->center, mouse);
+                break;
+            }
+            case SetChordLength: {
+                RS_Vector arcStart;
+                RS_Vector halfCircleArcEnd;
+                snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
+                shouldFireCoordinateEvent = LC_LineMath::isMeaningfulDistance(mouse, arcStart);
+                if (!shouldFireCoordinateEvent){
+                    commandMessageTR("Length of chord should be non-zero");
+                }
+                break;
+            }
+            default:
+                break;
         }
-        RS_CoordinateEvent ce(mouse);
-        coordinateEvent(&ce);
+        if (shouldFireCoordinateEvent){
+            fireCoordinateEvent(mouse);
+        }
     } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus() - 1);
+        if (status == SetChordLength){
+            moveRelativeZero(data->center);
+            setStatus(SetAngle2);
+        }
+        else{
+            setStatus(status - 1);
+        }
     }
 }
 
@@ -213,38 +266,41 @@ void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent *e){
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             data->center = mouse;
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             setStatus(SetRadius);
             break;
-
-        case SetRadius:
+        }
+        case SetRadius: {
             if (data->center.valid){
                 data->radius = data->center.distanceTo(mouse);
             }
             setStatus(SetAngle1);
             break;
-
-        case SetAngle1:
+        }
+        case SetAngle1: {
             data->angle1 = data->center.angleTo(mouse);
             setStatus(SetAngle2);
             break;
-
-        case SetAngle2:
+        }
+        case SetAngle2: {
             data->angle2 = data->center.angleTo(mouse);
             trigger();
             break;
-
-        case SetIncAngle:
+        }
+        case SetIncAngle: {
             data->angle2 = data->angle1 + data->center.angleTo(mouse);
             trigger();
             break;
-
+        }
         case SetChordLength: {
-            double x = data->center.distanceTo(mouse);
-            if (fabs(x / (2 * data->radius)) <= 1.0){
-                data->angle2 = data->angle1 + asin(x / (2 * data->radius)) * 2;
+            // todo - double calculation of arc start - store it for later use?
+            RS_Vector arcStart= data->center + RS_Vector::polar(data->radius, data->angle1);
+            double distanceFromStartToMouse = arcStart.distanceTo(mouse);
+            double diameter = 2 * data->radius;
+            if (fabs(distanceFromStartToMouse / diameter) <= 1.0){
+                data->angle2 = data->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
                 trigger();
             }
             break;
@@ -257,17 +313,16 @@ void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (RS_COMMANDS->checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
-    if (RS_COMMANDS->checkCommand("reversed", c)){
+    if (checkCommand("reversed", c)){
         e->accept();
         setReversed(!isReversed());
 
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
+        updateOptions();
         return;
     }
 
@@ -281,10 +336,9 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
                 setStatus(SetAngle1);
                 e->accept();
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
+                commandMessageTR("Not a valid expression");
             break;
-
+        }
         case SetAngle1: {
             bool ok = false;
             double a = RS_Math::eval(c, &ok);
@@ -293,14 +347,15 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
                 e->accept();
                 setStatus(SetAngle2);
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
+                commandMessageTR("Not a valid expression");
             break;
-
+        }
         case SetAngle2: {
-            if (RS_COMMANDS->checkCommand("angle", c)){
+            if (checkCommand("angle", c)){
                 setStatus(SetIncAngle);
-            } else if (RS_COMMANDS->checkCommand("chord length", c)){
+            } else if (checkCommand("chordlen", c)){
+                RS_Vector arcStart = data->center + RS_Vector::polar(data->radius, data->angle1);
+                moveRelativeZero(arcStart);
                 setStatus(SetChordLength);
             } else {
                 bool ok = false;
@@ -310,11 +365,10 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
                     e->accept();
                     trigger();
                 } else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                    commandMessageTR("Not a valid expression");
             }
-        }
             break;
-
+        }
         case SetIncAngle: {
             bool ok = false;
             double a = RS_Math::eval(c, &ok);
@@ -323,10 +377,9 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
                 e->accept();
                 trigger();
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
+                commandMessageTR("Not a valid expression");
             break;
-
+        }
         case SetChordLength: {
             bool ok = false;
             double l = RS_Math::eval(c, &ok);
@@ -335,13 +388,12 @@ void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
                     data->angle2 = data->angle1 + asin(l / (2 * data->radius)) * 2;
                     trigger();
                 } else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid chord length"));
+                    commandMessageTR("Not a valid chord length");
                 e->accept();
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
+                commandMessageTR("Not a valid expression");
             break;
-
+        }
         default:
             break;
     }
@@ -354,56 +406,43 @@ QStringList RS_ActionDrawArc::getAvailableCommands() {
 void RS_ActionDrawArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
             break;
         case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify radius"), tr("Back"));
+            updateMouseWidgetTRBack("Specify radius", Qt::ShiftModifier);
             break;
         case SetAngle1:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify start angle:"), tr("Back"));
+            updateMouseWidgetTRBack("Specify start angle:", Qt::ShiftModifier);
             break;
         case SetAngle2:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify end angle or [angle/chord length]"),
-                tr("Back"));
+            updateMouseWidgetTRBack("Specify end angle or [angle/chordlen]", Qt::ShiftModifier);
             break;
         case SetIncAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify included angle:"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify included angle:");
             break;
         case SetChordLength:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify chord length:"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify chord length:");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-void RS_ActionDrawArc::showOptions() {
-    RS_ActionInterface::showOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionDrawArc::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
-void RS_ActionDrawArc::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawArc::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
 bool RS_ActionDrawArc::isReversed() const{
-	return data->reversed;
+    return data->reversed;
 }
 
 void RS_ActionDrawArc::setReversed(bool r) const{
-	data->reversed = r;
+    data->reversed = r;
+}
+
+void RS_ActionDrawArc::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_ArcOptions>();
 }
 
 // EOF

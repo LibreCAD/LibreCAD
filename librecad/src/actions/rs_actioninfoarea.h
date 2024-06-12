@@ -38,8 +38,8 @@ class RS_InfoArea;
  *
  * @author Andrew Mustun
  */
-class RS_ActionInfoArea : public RS_PreviewActionInterface {
-    Q_OBJECT
+class RS_ActionInfoArea:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -50,24 +50,22 @@ public:
     };
 
 public:
-    RS_ActionInfoArea(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
+    RS_ActionInfoArea(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
     ~RS_ActionInfoArea() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void display();//display results from current polygon
 
-	void init(int status=0) override;
-	void trigger() override;
-	void display();//display results from current polygon
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
 private:
-	std::unique_ptr<RS_InfoArea> ia;
+    std::unique_ptr<RS_InfoArea> ia;
 };
 
 #endif

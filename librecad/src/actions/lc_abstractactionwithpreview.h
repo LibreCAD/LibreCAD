@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qg_actionhandler.h"
 #include "rs_previewactioninterface.h"
 #include "rs_vector.h"
+#include "rs_line.h"
 
 class RS_Line;
 class RS_Point;
@@ -188,16 +189,8 @@ protected:
     void highlightEntity(RS_Entity *en);
     void highlightEntityExplicit(RS_Entity *en, bool highlight);
 
-
     void drawPreviewForLastPoint();
     void deleteEntityUndoable(RS_Entity *entity);
-
-    // simplified mouse widget and command message operations
-    void updateMouseWidgetTR(const char* left,const char* right);
-    void commandMessageTR(const char*);
-    void updateMouseWidget(const QString& = QString(),
-                           const QString& = QString());
-    void commandMessage(const QString &msg) const;
 
     virtual void checkPreSnapToRelativeZero(int status, QMouseEvent *pEvent);
     virtual bool doCheckMouseEventValidForInitialSnap(QMouseEvent *e);
@@ -214,15 +207,20 @@ protected:
     void unSelectEntities(const QList<RS_Entity *> &entities);
     virtual bool isUnselectEntitiesOnInitTrigger();
     void applyPenAndLayerBySourceEntity(const RS_Entity *source, RS_Entity *target, int penMode, int layerMode) const;
-    virtual void moveRelativeZero(const RS_Vector &zero);
     QString getCommand(const QString &cmd);
     bool checkMayExpandEntity(const RS_Entity *e, const QString &entityName) const;
     RS_Point* createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
+    void createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     RS_Line* createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
+    void createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
     virtual void checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed);
     virtual void clearAlternativeActionMode();
     void updateSnapperAndCoordinateWidget(QMouseEvent *e, int status);
     void doUpdateCoordinateWidgetByMouse(QMouseEvent *e);
+    RS_Line *createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const;
+    void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list, bool visibleAlways = false) const;
+    bool isMouseMove(QMouseEvent* e);
+    void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
 };
 
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

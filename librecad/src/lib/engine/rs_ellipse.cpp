@@ -1146,54 +1146,54 @@ RS_Vector RS_Ellipse::getNearestMiddle(const RS_Vector& coord,
   *@author: Dongxu Li
   */
 
-RS_Vector RS_Ellipse::getNearestOrthTan(const RS_Vector& coord,
-                                        const RS_Line& normal,
-										bool onEntity ) const
-{
-    if ( !coord.valid ) {
+RS_Vector RS_Ellipse::getNearestOrthTan(
+    const RS_Vector &coord,
+    const RS_Line &normal,
+    bool onEntity) const{
+    if (!coord.valid){
         return RS_Vector(false);
     }
-    RS_Vector direction=normal.getEndpoint() - normal.getStartpoint();
-	if (direction.squared()< RS_TOLERANCE15) {
+    RS_Vector direction = normal.getEndpoint() - normal.getStartpoint();
+    if (direction.squared() < RS_TOLERANCE15){
         //undefined direction
         return RS_Vector(false);
     }
     //scale to ellipse angle
     RS_Vector aV(-getAngle());
     direction.rotate(aV);
-    double angle=direction.scale(RS_Vector(1.,getRatio())).angle();
+    double angle = direction.scale(RS_Vector(1., getRatio())).angle();
     double ra(getMajorRadius());
-    direction.set(ra*cos(angle),getRatio()*ra*sin(angle));//relative to center
-	std::vector<RS_Vector> sol;
-    for(int i=0;i<2;i++){
-        if(!onEntity ||
-                RS_Math::isAngleBetween(angle,getAngle1(),getAngle2(),isReversed())) {
-            if(i){
-				sol.push_back(- direction);
-            }else{
-				sol.push_back(direction);
+    direction.set(ra * cos(angle), getRatio() * ra * sin(angle));//relative to center
+    std::vector<RS_Vector> sol;
+    for (int i = 0; i < 2; i++) {
+        if (!onEntity ||
+            RS_Math::isAngleBetween(angle, getAngle1(), getAngle2(), isReversed())){
+            if (i){
+                sol.push_back(-direction);
+            } else {
+                sol.push_back(direction);
             }
         }
-        angle=RS_Math::correctAngle(angle+M_PI);
+        angle = RS_Math::correctAngle(angle + M_PI);
     }
-    if(sol.size()<1) return RS_Vector(false);
-    aV.y*=-1.;
-	for(auto& v: sol){
-		v.rotate(aV);
-	}
+    if (sol.size() < 1) return RS_Vector(false);
+    aV.y *= -1.;
+    for (auto &v: sol) {
+        v.rotate(aV);
+    }
     RS_Vector vp;
-	switch(sol.size()) {
-    case 0:
-        return RS_Vector(false);
-    case 2:
-        if( RS_Vector::dotP(sol[1],coord-getCenter())>0.) {
-            vp=sol[1];
+    switch (sol.size()) {
+        case 0:
+            return RS_Vector(false);
+        case 2:
+            if (RS_Vector::dotP(sol[1], coord - getCenter()) > 0.){
+                vp = sol[1];
+                break;
+            }
+            // fall-through
+        default:
+            vp = sol[0];
             break;
-        }
-        // fall-through
-    default:
-        vp=sol[0];
-        break;
     }
     return getCenter() + vp;
 }

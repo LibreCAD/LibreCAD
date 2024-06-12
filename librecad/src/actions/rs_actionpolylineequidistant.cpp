@@ -36,6 +36,7 @@
 #include "rs_information.h"
 #include "rs_line.h"
 #include "rs_polyline.h"
+#include "qg_polylineequidistantoptions.h"
 
 // fixme - options
 RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& container,
@@ -43,8 +44,7 @@ RS_ActionPolylineEquidistant::RS_ActionPolylineEquidistant(RS_EntityContainer& c
 	:RS_PreviewActionInterface("Create Equidistant Polylines",
 							   container, graphicView)
 	, dist(1.)
-	,number(1)
-{
+	,number(1){
 	actionType=RS2::ActionPolylineEquidistant;
 }
 
@@ -68,8 +68,8 @@ void RS_ActionPolylineEquidistant::init(int status){
  * @author Rallaz
  */
 RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist){
-    if (orgEntity->rtti() == RS2::EntityArc && newEntity->rtti() == RS2::EntityArc){
-        RS_Arc *arc = (RS_Arc *) newEntity;
+    if (isArc(orgEntity) && isArc(newEntity)){
+        auto *arc = (RS_Arc *) newEntity;
         double r0 = ((RS_Arc *) orgEntity)->getRadius();
         double r;
         if (((RS_Arc *) orgEntity)->isReversed())
@@ -82,7 +82,7 @@ RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, R
         arc->setRadius(r);
         arc->calculateBorders();
         return newEntity;
-    } else if (orgEntity->rtti() == RS2::EntityLine && newEntity->rtti() == RS2::EntityLine){
+    } else if (isLine(orgEntity) && isLine(newEntity)){
         auto *line0 = (RS_Line *) orgEntity;
         auto *line1 = (RS_Line *) newEntity;
         RS_Vector v0 = line0->getStartpoint();
@@ -156,7 +156,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
         RS_Entity *currEntity = nullptr;
         for (auto en : entities) {
             RS_Vector v{false};
-            if (en->rtti() == RS2::EntityArc){
+            if (isArc(en)){
                 currEntity = &arc1;
                 calculateOffset(currEntity, en, dist * num * neg);
                 bulge = arc1.getBulge();
@@ -167,7 +167,7 @@ void RS_ActionPolylineEquidistant::makeContour(RS_Polyline*  originalPolyline, b
             }
             if (first){
                 if (closed){
-                    if (prevEntity->rtti() == RS2::EntityArc){
+                    if (isArc(prevEntity)){
                         prevEntity = calculateOffset(&arcFirst, prevEntity, dist * num * neg);
                     } else {
                         prevEntity = calculateOffset(&lineFirst, prevEntity, dist * num * neg);
@@ -285,11 +285,9 @@ void RS_ActionPolylineEquidistant::trigger(){
         bRightSide = false;
         setStatus(ChooseEntity);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        updateSelectionWidget();
     }
-////////////////////////////////////////2006/06/15
     graphicView->redraw();
-////////////////////////////////////////
 }
 
 void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
@@ -299,16 +297,19 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
     if (getStatus() == ChooseEntity){
         auto en = catchEntity(event, RS2::EntityPolyline);
         if (en != nullptr){
-            addToHighlights(en);
+            highlightHover(en);
             auto polyline = dynamic_cast<RS_Polyline *>(en);
-            RS_Vector coord = graphicView->toGraph(event->position());
+            RS_Vector coord = toGraph(event);
+            RS_Vector nearest = polyline->getNearestPointOnEntity(coord, true);
+            previewRefPoint(nearest);
+            previewRefLine(nearest, coord);
             bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, coord);
             QList<RS_Polyline *> polylines;
             makeContour(polyline, pointOnRightSide, polylines);
 
             for (RS_Polyline *newPolyline: polylines) {
                newPolyline->reparent(preview.get());
-               preview->addEntity(newPolyline);
+               previewEntity(newPolyline);
             }
             drawPreview();
         }
@@ -322,13 +323,12 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent *e){
             case ChooseEntity:{
                 RS_Entity *en = catchEntity(e);
                 if (!en){
-                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                    commandMessageTR("No Entity found.");
                 } else if (en->rtti() != RS2::EntityPolyline){
-                    RS_DIALOGFACTORY->commandMessage(
-                        tr("Entity must be a polyline."));
+                    commandMessageTR("Entity must be a polyline.");
                 } else {
                     auto polyline = dynamic_cast<RS_Polyline *>(en);
-                    RS_Vector snapPoint = snapFree(e);
+                    RS_Vector snapPoint = toGraph(e);
                     bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, snapPoint);
                     bRightSide = pointOnRightSide;
                     originalEntity = polyline;
@@ -342,9 +342,7 @@ void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent *e){
     } else if (e->button() == Qt::RightButton){
         deleteSnapper();
         if (originalEntity){
-////////////////////////////////////////2006/06/15
             graphicView->redraw();
-////////////////////////////////////////
         }
         init(getStatus() - 1);
     }
@@ -354,7 +352,7 @@ bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polylin
     bool pointOnRightSide = false;
     double d = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
     auto segment = polyline->getNearestEntity(snapPoint, &d, RS2::ResolveNone);
-    if (segment->rtti() == RS2::EntityLine){
+    if (isLine(segment)){
         auto line = dynamic_cast<RS_Line *>(segment);
         double ang = line->getAngle1();
         double ang1 = line->getStartpoint().angleTo(snapPoint);
@@ -368,30 +366,23 @@ bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polylin
     return pointOnRightSide;
 }
 
-void RS_ActionPolylineEquidistant::showOptions() {
-        RS_ActionInterface::showOptions();
-        RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionPolylineEquidistant::hideOptions() {
-        RS_ActionInterface::hideOptions();
-        RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionPolylineEquidistant::updateMouseCursor() {
-        graphicView->setMouseCursor(RS2::SelectCursor);
+   setMouseCursor(RS2::SelectCursor);
 }
 
 void RS_ActionPolylineEquidistant::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose the original polyline"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Choose the original polyline");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
+}
+
+void RS_ActionPolylineEquidistant::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_PolylineEquidistantOptions>();
 }
 
 // EOF

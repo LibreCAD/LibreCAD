@@ -49,7 +49,7 @@ void RS_ActionSelectContour::mouseMoveEvent(QMouseEvent *event){
 //        RS_Selection s(*container, graphicView);
 //        s.selectContour(en);
         // fixme - temporarily highlight only caught entity only
-        addToHighlights(ent);
+        highlightHover(ent);
     }
     drawHighlights();
 }
@@ -59,11 +59,9 @@ void RS_ActionSelectContour::trigger(){
         if (en->isAtomic()){ // fixme - why so??? why it's not suitable to select, say, polyline here too?
             RS_Selection s(*container, graphicView);
             s.selectContour(en);
-
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+            updateSelectionWidget();
         } else
-            RS_DIALOGFACTORY->commandMessage(
-                tr("Entity must be an Atomic Entity."));
+           commandMessageTR("Entity must be an Atomic Entity.");
     } else
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }
@@ -78,7 +76,7 @@ void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionSelectContour::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

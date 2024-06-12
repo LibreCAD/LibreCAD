@@ -31,7 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
-
+#include "lc_actiondrawcirclebase.h"
 
 struct RS_ActionDrawEllipseCenter3Points::Points {
 	RS_VectorSolutions points;
@@ -73,14 +73,9 @@ void RS_ActionDrawEllipseCenter3Points::trigger(){
     deletePreview();
     container->addEntity(ellipse);
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(ellipse);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(ellipse);
 
-    graphicView->moveRelativeZero(ellipse->getCenter());
+    moveRelativeZero(ellipse->getCenter());
     graphicView->redraw(RS2::RedrawDrawing);
     drawSnapper();
 
@@ -102,22 +97,24 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
     pPoints->points.push_back(mouse);
 
     deletePreview();
-    if (drawCreationPointsOnPreview){
-        for (int i = SetPoint1; i <= status; i++) {
-            preview->addEntity(new RS_Point(preview.get(), pPoints->points.at(i - 1)));
-        }
+
+    for (int i = SetPoint1; i <= status; i++) {
+        previewRefPoint(pPoints->points.at(i - 1));
     }
+
+    previewRefSelectablePoint(mouse);
+
     if (preparePreview()){
         switch (status) {
             case SetPoint1: {
-                auto *circle = new RS_Circle(preview.get(), pPoints->cData);
-                preview->addEntity(circle);
+                previewCircle(pPoints->cData);
                 break;
             }
             case SetPoint2:
             case SetPoint3: {
-                auto *ellipse = new RS_Ellipse(preview.get(), pPoints->eData);
-                preview->addEntity(ellipse);
+                auto ellipse = previewEllipse(pPoints->eData);
+                previewEllipseReferencePoints(ellipse, true);
+                break;
             }
             default:
                 break;
@@ -158,8 +155,7 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
 void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     }
 
     // Return to last status:
@@ -177,7 +173,7 @@ void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent *e){
 
     switch (getStatus()) {
         case SetCenter:
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             setStatus(SetPoint1);
             break;
         case SetPoint1:
@@ -270,26 +266,19 @@ QStringList RS_ActionDrawEllipseCenter3Points::getAvailableCommands() {
 void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the center of ellipse"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify the center of ellipse", Qt::ShiftModifier);
             break;
-
         case SetPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first point on ellipse"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify the first point on ellipse");
             break;
         case SetPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second point on ellipse"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify the second point on ellipse");
             break;
-
         case SetPoint3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third point on ellipse"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify the third point on ellipse");
             break;
-
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }

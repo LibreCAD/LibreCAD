@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDrawCircleInscribe::Points {
     RS_CircleData cData;
@@ -84,18 +85,13 @@ void RS_ActionDrawCircleInscribe::trigger(){
     deleteHighlights();
     container->addEntity(circle);
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(circle);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(circle);
 
     clearLines(false);
 
     graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        graphicView->moveRelativeZero(circle->getCenter());
+        moveRelativeZero(circle->getCenter());
     }
     setStatus(SetLine1);
 
@@ -110,46 +106,40 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     deletePreview();
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
-        addToHighlights(pc);
+        highlightSelected(pc);
     }
-    auto en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);  // fixme - check whether snap is used for entity selection?  Ensure free snap
-    bool shouldIgnore = false;
-    if (en != nullptr){
-        if (en->getParent()){
-            shouldIgnore = en->getParent()->ignoredOnModification();
-        }
-        if (!shouldIgnore){
-            auto *line = dynamic_cast<RS_Line *>(en);
-            switch (status) {
-                case SetLine1: {
-                    addToHighlights(en);
-                    break;
-                }
-                case SetLine2: {
-                    if (en != pPoints->lines[SetLine1]){
-                        addToHighlights(en);
-                    }
-                    break;
-                }
-                case SetLine3: {
-                    if (pPoints->lines[SetLine1] != line && pPoints->lines[SetLine2] != line){
-                        pPoints->coord = graphicView->toGraph(e->position());
-                        if (preparePreview(line)){
-                            addToHighlights(en);
-                            auto *c = new RS_Circle(preview.get(), pPoints->cData);
-                            preview->addEntity(c);
+    auto en = catchModifiableEntity(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap
 
-                            addReferencePointToPreview(pPoints->lines[SetLine1]->getNearestPointOnEntity(pPoints->cData.center, false));
-                            addReferencePointToPreview(pPoints->lines[SetLine2]->getNearestPointOnEntity(pPoints->cData.center, false));
-                            addReferencePointToPreview(pPoints->lines[SetLine3]->getNearestPointOnEntity(pPoints->cData.center, false));
-                            drawPreview();
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
+    if (en != nullptr){
+        auto *line = dynamic_cast<RS_Line *>(en);
+        switch (status) {
+            case SetLine1: {
+                highlightHover(en);
+                break;
             }
+            case SetLine2: {
+                if (en != pPoints->lines[SetLine1]){
+                    highlightHover(en);
+                }
+                break;
+            }
+            case SetLine3: {
+                if (pPoints->lines[SetLine1] != line && pPoints->lines[SetLine2] != line){
+                    pPoints->coord = toGraph(e);
+                    if (preparePreview(line)){
+                        highlightHover(en);
+                        previewCircle(pPoints->cData);
+                        RS_Vector &center = pPoints->cData.center;
+                        previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
+                        previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
+                        previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
+                        drawPreview();
+                    }
+                }
+                break;
+            }
+            default:
+                break;
         }
     }
     drawHighlights();
@@ -158,21 +148,19 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
     // Proceed to next status
+    int status = getStatus();
     if (e->button() == Qt::LeftButton){
-        RS_Entity *en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+        RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
         if (!en) return;
-        if (!(en->isVisible() && en->rtti() == RS2::EntityLine)) return;
-        for (int i = 0; i < getStatus(); i++) {
+        if (!(en->isVisible() && isLine(en))) return;
+        for (int i = 0; i < status; i++) {
             if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-        if (en->getParent()){
-            if (en->getParent()->ignoredOnModification()) return;
-        }
 
-        pPoints->coord = graphicView->toGraph(e->position());
+        pPoints->coord = toGraph(e);
         auto *line = dynamic_cast<RS_Line *>(en);
 
-        switch (getStatus()) {
+        switch (status) {
             case SetLine1:{
                 pPoints->lines.push_back(line);
                 setStatus(SetLine2);
@@ -192,11 +180,11 @@ void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
         }
     } else if (e->button() == Qt::RightButton){
         // Return to last status:
-        if (getStatus() > 0){
+        if (status > 0){
             pPoints->lines.pop_back();
             deletePreview();
         }
-        init(getStatus() - 1);
+        init(status - 1);
     }
 }
 
@@ -278,32 +266,25 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
 }
 */
 
-
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the first line"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify the first line");
             break;
-
         case SetLine2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the second line"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify the second line");
             break;
-
         case SetLine3:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the third line"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify the third line");
             break;
-
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionDrawCircleInscribe::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

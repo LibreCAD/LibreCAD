@@ -1156,3 +1156,7 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
     return os;
 }
 
+bool RS_Entity::isParentIgnoredOnModifications() const {
+     return parent != nullptr && parent->ignoredOnModification();
+}
+

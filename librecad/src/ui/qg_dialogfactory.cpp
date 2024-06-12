@@ -749,76 +749,76 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestPrintPreviewOptions(action, on, update);
         break;
 
-    case RS2::ActionDrawLine:
+    /*case RS2::ActionDrawLine:
         RS_DEBUG->print("QG_DialogFactory::requestOptions: line");
         requestLineOptions(action, on);
         RS_DEBUG->print("QG_DialogFactory::requestOptions: line: OK");
         break;
+*/
+//    case RS2::ActionDrawPolyline:
+//        requestPolylineOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawPolyline:
-        requestPolylineOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawLineAngle:
+//    case RS2::ActionDrawLineHorizontal:
+//    case RS2::ActionDrawLineVertical:
+//        requestLineAngleOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawLineAngle:
-    case RS2::ActionDrawLineHorizontal:
-    case RS2::ActionDrawLineVertical:
-        requestLineAngleOptions(action, on, update);
-        break;
-
-    case RS2::ActionDrawLineParallel:
+    /*case RS2::ActionDrawLineParallel:
         requestLineParallelOptions(action, on, update);
-        break;
+        break;*/
 
-    case RS2::ActionDrawLineParallelThrough:
-        requestLineParallelThroughOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawLineParallelThrough:
+//        requestLineParallelThroughOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawLineBisector:
-        requestLineBisectorOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawLineBisector:
+//        requestLineBisectorOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawLineOrthogonal:
-    case RS2::ActionDrawLineRelAngle:
-        requestLineRelAngleOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawLineOrthogonal:
+//    case RS2::ActionDrawLineRelAngle:
+//        requestLineRelAngleOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawLinePolygonCenCor:
-        requestLinePolygonOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawLinePolygonCenCor:
+//        requestLinePolygonOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawLinePolygonCorCor:
-        requestLinePolygon2Options(action, on, update);
-        break;
+//    case RS2::ActionDrawLinePolygonCorCor:
+//        requestLinePolygon2Options(action, on, update);
+//        break;
 
-    case RS2::ActionDrawArc:
-        requestArcOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawArc:
+//        requestArcOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawArcTangential:
-        requestArcTangentialOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawArcTangential:
+//        requestArcTangentialOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDrawCircleCR:
+    /*case RS2::ActionDrawCircleCR:
     case RS2::ActionDrawCircle2PR:
         requestCircleOptions(action, on, update);
         break;
-
-    case RS2::ActionDrawCircleTan2:
+*/
+    /*case RS2::ActionDrawCircleTan2:
         requestCircleTan2Options(action, on, update);
-        break;
+        break;*/
 
-    case RS2::ActionDrawSpline:
+    /*case RS2::ActionDrawSpline:
     case RS2::ActionDrawSplinePoints:
         requestSplineOptions(action, on, update);
         break;
-
-    case RS2::ActionDrawMText:
+*/
+    /*case RS2::ActionDrawMText:
         requestMTextOptions(action, on, update);
-        break;
+        break;*/
 
-    case RS2::ActionDrawText:
-        requestTextOptions(action, on, update);
-        break;
+//    case RS2::ActionDrawText:
+//        requestTextOptions(action, on, update);
+//        break;
 
     case RS2::ActionBlocksInsert:
         requestInsertOptions(action, on, update);
@@ -828,57 +828,59 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestImageOptions(action, on, update);
         break;
 
-    case RS2::ActionDimAligned:
-        requestDimensionOptions(action, on, update);
-        break;
+//    case RS2::ActionDimAligned:
+//        requestDimensionOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDimLinear:
-    case RS2::ActionDimLinearVer:
-    case RS2::ActionDimLinearHor:
-        requestDimensionOptions(action, on, update);
-        if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
-            requestDimLinearOptions(action, on, update);
-        }
-        break;
+//    case RS2::ActionDimLinear:
+//    case RS2::ActionDimLinearVer:
+//    case RS2::ActionDimLinearHor:
+//        requestDimensionOptions(action, on, update);
+//        if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
+//            requestDimLinearOptions(action, on, update);
+//        }
+//        break;
 
-    case RS2::ActionDimRadial:
-        requestDimensionOptions(action, on, update);
-        break;
+//    case RS2::ActionDimRadial:
+//        requestDimensionOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDimDiametric:
-        requestDimensionOptions(action, on, update);
-        break;
+//    case RS2::ActionDimDiametric:
+//        requestDimensionOptions(action, on, update);
+//        break;
+//
+//    case RS2::ActionDimAngular:
+//        requestDimensionOptions(action, on, update);
+//        break;
+//
+//    case RS2::ActionDimArc:
+//        requestDimensionOptions(action, on, update);
+//        break;
 
-    case RS2::ActionDimAngular:
-        requestDimensionOptions(action, on, update);
-        break;
-
-    case RS2::ActionDimArc:
-        requestDimensionOptions(action, on, update);
-        break;
-
+/*
     case RS2::ActionModifyTrimAmount:
         requestTrimAmountOptions(action, on, update);
         break;
+*/
 
     case RS2::ActionModifyMoveRotate:
         requestMoveRotateOptions(action, on, update);
         break;
 
-    case RS2::ActionModifyBevel:
-        requestBevelOptions(action, on, update);
-        break;
+//    case RS2::ActionModifyBevel:
+//        requestBevelOptions(action, on, update);
+//        break;
 
-    case RS2::ActionModifyRound:
-        requestRoundOptions(action, on, update);
-        break;
+//    case RS2::ActionModifyRound:
+//        requestRoundOptions(action, on, update);
+//        break;
 
     case RS2::ActionLibraryInsert:
         requestLibraryInsertOptions(action, on, update);
         break;
-    case RS2::ActionPolylineEquidistant:
-        requestPolylineEquidistantOptions(action, on, update);
-        break;
+//    case RS2::ActionPolylineEquidistant:
+//        requestPolylineEquidistantOptions(action, on, update);
+//        break;
 
     default:
         break;
@@ -924,76 +926,77 @@ void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
 /**
  * Shows a widget for options for the action: "draw line"
  */
-void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestLineOptions(RS_ActionInterface* action,
                                           bool on) {
     LC_LOG<<__func__<<"(): begin";
     addOptionWidget<QG_LineOptions>(optionWidget, action, on);
     LC_LOG<<__func__<<"(): end";
     RS_DEBUG->print("QG_DialogFactory::requestLineOptions: OK");
 }
-
+*/
 
 /**
  * Shows a widget for options for the action: "draw polyline"
  */
-void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
-                                              bool on, bool update) {
-    addOptionWidget<QG_PolylineOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestPolylineOptions(RS_ActionInterface* action,
+//                                              bool on, bool update) {
+//    addOptionWidget<QG_PolylineOptions>(optionWidget, action, on, update);
+//}
 
 /**
  * Shows a widget for options for the action: "draw equidistant polyline"
  */
-void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* action,
-                                                         bool on, bool /*update*/ ) {
-
-    if(!on) {
-        if (polylineEquidistantOptions) {
-            polylineEquidistantOptions->hide();
-            polylineEquidistantOptions->deleteLater();
-            polylineEquidistantOptions=nullptr;
-        }
-        return;
-    }
-    if (optionWidget ) {
-        if (!polylineEquidistantOptions) {
-            polylineEquidistantOptions = new QG_PolylineEquidistantOptions(optionWidget);
-            optionWidget->addWidget(polylineEquidistantOptions);
-            // settings from action
-            polylineEquidistantOptions -> setAction(action, false);
-        }else{
-            // settings from widget using saved config
-            polylineEquidistantOptions -> setAction(action, true);
-        }
-        polylineEquidistantOptions->show();
-    }
-}
+//void QG_DialogFactory::requestPolylineEquidistantOptions(RS_ActionInterface* action,
+//                                                         bool on, bool /*update*/ ) {
+//
+//    if(!on) {
+//        if (polylineEquidistantOptions) {
+//            polylineEquidistantOptions->hide();
+//            polylineEquidistantOptions->deleteLater();
+//            polylineEquidistantOptions=nullptr;
+//        }
+//        return;
+//    }
+//    if (optionWidget ) {
+//        if (!polylineEquidistantOptions) {
+//            polylineEquidistantOptions = new QG_PolylineEquidistantOptions(optionWidget);
+//            optionWidget->addWidget(polylineEquidistantOptions);
+//            // settings from action
+//            polylineEquidistantOptions -> setAction(action, false);
+//        }else{
+//            // settings from widget using saved config
+//            polylineEquidistantOptions -> setAction(action, true);
+//        }
+//        polylineEquidistantOptions->show();
+//    }
+//}
 
 
 
 /**
  * Shows a widget for options for the action: "draw line parallel"
  */
-void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestLineParallelOptions(RS_ActionInterface* action,
                                                   bool on, bool update) {
     addOptionWidget<QG_LineParallelOptions>(optionWidget, action, on, update);
-}
+}*/
 
 
 
 /**
  * Shows a widget for options for the action: "draw line parallel through"
  */
-void QG_DialogFactory::requestLineParallelThroughOptions(
-        RS_ActionInterface* action,
-        bool on, bool update) {
-    addOptionWidget<QG_LineParallelThroughOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestLineParallelThroughOptions(
+//        RS_ActionInterface* action,
+//        bool on, bool update) {
+//    addOptionWidget<QG_LineParallelThroughOptions>(optionWidget, action, on, update);
+//}
 
 
 /**
  * Shows a widget for options for the action: "line angle"
  */
+/*
 void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
                                                bool on, bool update) {
 
@@ -1016,133 +1019,136 @@ void QG_DialogFactory::requestLineAngleOptions(RS_ActionInterface* action,
         }
     }
 }
+*/
 
 
 
 /**
  * Shows a widget for options for the action: "line relative angle"
  */
-void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestLineRelAngleOptions(RS_ActionInterface* action,
                                                   bool on, bool update) {
     addOptionWidget<QG_LineRelAngleOptions>(optionWidget, action, on, update);
-}
+}*/
 
 
-
-/**
- * Shows a widget for options for the action: "line angle"
- */
-void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
-                                                  bool on, bool update) {
-    addOptionWidget<QG_LineBisectorOptions>(optionWidget, action, on, update);
-}
+//
+///**
+// * Shows a widget for options for the action: "line angle"
+// */
+//void QG_DialogFactory::requestLineBisectorOptions(RS_ActionInterface* action,
+//                                                  bool on, bool update) {
+//    addOptionWidget<QG_LineBisectorOptions>(optionWidget, action, on, update);
+//}
 
 
 
 /**
  * Shows a widget for options for the action: "draw polygon"
  */
+/*
 void QG_DialogFactory::requestLinePolygonOptions(RS_ActionInterface* action,
                                                  bool on, bool update) {
     addOptionWidget<QG_LinePolygonOptions>(optionWidget, action, on, update);
 }
+*/
 
 
 
 /**
  * Shows a widget for options for the action: "draw polygon2"
  */
-void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
-                                                  bool on, bool update) {
-
-    addOptionWidget<QG_LinePolygon2Options>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestLinePolygon2Options(RS_ActionInterface* action,
+//                                                  bool on, bool update) {
+//
+//    addOptionWidget<QG_LinePolygon2Options>(optionWidget, action, on, update);
+//}
 
 
 
 /**
  * Shows a widget for arc options.
  */
-void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
-                                         bool on, bool update) {
-
-    addOptionWidget<QG_ArcOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestArcOptions(RS_ActionInterface* action,
+//                                         bool on, bool update) {
+//
+//    addOptionWidget<QG_ArcOptions>(optionWidget, action, on, update);
+//}
 
 
 /**
  * Shows a widget for tangential arc options.
  */
-void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
-                                                   bool on, bool update) {
-    LC_ERR<<__func__<<"(): update from action="<<update;
-    arcTangentialOptions = addOptionWidget<QG_ArcTangentialOptions>(optionWidget, action, on, update);
-}
-
-void QG_DialogFactory::updateArcTangentialOptions(double d, bool byRadius)
-{
-    if (arcTangentialOptions == nullptr) return;
-    if (byRadius){
-        arcTangentialOptions->updateRadius(QString::number(d,'g',5));
-    }else{
-        arcTangentialOptions->updateAngle(QString::number(d,'g',5));
-    }
-}
+//void QG_DialogFactory::requestArcTangentialOptions(RS_ActionInterface* action,
+//                                                   bool on, bool update) {
+//    LC_ERR<<__func__<<"(): update from action="<<update;
+//    arcTangentialOptions = addOptionWidget<QG_ArcTangentialOptions>(optionWidget, action, on, update);
+//}
+//
+//void QG_DialogFactory::updateArcTangentialOptions(double d, bool byRadius)
+//{
+//    if (arcTangentialOptions == nullptr) return;
+//    if (byRadius){
+//        arcTangentialOptions->setRadiusToActionAndView(QString::number(d,'g',5));
+//    }else{
+//        arcTangentialOptions->updateAngle(QString::number(d,'g',5));
+//    }
+//}
 
 
 
 /**
  * Shows a widget for arc options.
  */
-void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestCircleOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
     addOptionWidget<QG_CircleOptions>(optionWidget, action, on, update);
     //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestCircleOptions, action %s, on %s, update %s",qPrintable(action->getName()),on?"TRUE":"FALSE",update?"TRUE":"FALSE");
-}
+}*/
 
 
 /**
  * Shows a widget for arc options.
  */
-void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
-                                                bool on, bool update) {
-    addOptionWidget<QG_CircleTan2Options>(optionWidget, action, on, update);
-
-}
+//void QG_DialogFactory::requestCircleTan2Options(RS_ActionInterface* action,
+//                                                bool on, bool update) {
+//    addOptionWidget<QG_CircleTan2Options>(optionWidget, action, on, update);
+//
+//}
 
 
 /**
  * Shows a widget for spline options.
  */
-void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestSplineOptions(RS_ActionInterface* action,
                                             bool on, bool update) {
 
     addOptionWidget<QG_SplineOptions>(optionWidget, action, on, update);
-}
+}*/
 
 
 
 /**
  * Shows a widget for multi-line text options.
  */
-void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
-                                           bool on, bool update) {
-
-
-    addOptionWidget<QG_MTextOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestMTextOptions(RS_ActionInterface* action,
+//                                           bool on, bool update) {
+//
+//
+//    addOptionWidget<QG_MTextOptions>(optionWidget, action, on, update);
+//}
 
 
 /**
  * Shows a widget for text options.
  */
-void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
-                                          bool on, bool update) {
-
-    addOptionWidget<QG_TextOptions>(optionWidget, action, on, update);
-
-}
+//void QG_DialogFactory::requestTextOptions(RS_ActionInterface* action,
+//                                          bool on, bool update) {
+//
+//    addOptionWidget<QG_TextOptions>(optionWidget, action, on, update);
+//
+//}
 
 
 /**
@@ -1171,21 +1177,21 @@ void QG_DialogFactory::requestImageOptions(RS_ActionInterface* action,
 /**
  * Shows a widget for dimension options.
  */
-void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
-                                               bool on, bool update) {
-    addOptionWidget<QG_DimOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestDimensionOptions(RS_ActionInterface* action,
+//                                               bool on, bool update) {
+//    addOptionWidget<QG_DimOptions>(optionWidget, action, on, update);
+//}
 
 
 
 /**
  * Shows a widget for linear dimension options.
  */
-void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
-                                               bool on, bool update) {
-
-    addOptionWidget<QG_DimLinearOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestDimLinearOptions(RS_ActionInterface* action,
+//                                               bool on, bool update) {
+//
+//    addOptionWidget<QG_DimLinearOptions>(optionWidget, action, on, update);
+//}
 
 /**
  * Shows a widget for 'snap to equidistant middle points ' options.
@@ -1255,31 +1261,31 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
 /**
  * Shows a widget for 'trim amount' options.
  */
-void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
-                                                bool on, bool update) {
-    addOptionWidget<QG_TrimAmountOptions>(optionWidget, action, on, update);
-}
+//void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
+//                                                bool on, bool update) {
+//    addOptionWidget<QG_TrimAmountOptions>(optionWidget, action, on, update);
+//}
 
 
 
 /**
  * Shows a widget for beveling options.
  */
-void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
-                                           bool on, bool update) {
-    addOptionWidget<QG_BevelOptions>(optionWidget, action, on, update);
-
-}
+//void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
+//                                           bool on, bool update) {
+//    addOptionWidget<QG_BevelOptions>(optionWidget, action, on, update);
+//
+//}
 
 
 
 /**
  * Shows a widget for rounding options.
  */
-void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
+/*void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
                                            bool on, bool update) {
     addOptionWidget<QG_RoundOptions>(optionWidget, action, on, update);
-}
+}*/
 
 
 /**
@@ -1733,9 +1739,10 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
 }
 
 void QG_DialogFactory::updateMouseWidget(const QString& left,
-                                         const QString& right) {
+                                         const QString& right,
+                                         const Qt::KeyboardModifiers modifiers) {
     if (mouseWidget) {
-        mouseWidget->setHelp(left, right);
+        mouseWidget->setHelp(left, right, modifiers);
     }
     if (commandWidget) {
         commandWidget->setCommand(left);

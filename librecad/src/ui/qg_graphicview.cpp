@@ -616,8 +616,9 @@ bool QG_GraphicView::event(QEvent *event)
     }
     // skip events without a default action
     // Hatch preview in qg_dlghatch doesn't have its default action
-    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr)
+    if (dynamic_cast<QInputEvent*>(event) == nullptr || getDefaultAction() != nullptr){
         return QWidget::event(event);
+    }
     return true;
 }
 

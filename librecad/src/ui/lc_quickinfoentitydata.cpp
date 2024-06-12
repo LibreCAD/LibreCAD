@@ -380,11 +380,13 @@ void LC_QuickInfoEntityData::collectArcProperties(RS_Arc *arc){
     double endAngle = arc->getAngle2();
     RS_Vector startPoint = arc->getStartpoint();
     RS_Vector endPoint = arc->getEndpoint();
+    double chordLength = startPoint.distanceTo(endPoint);
 
     addVectorProperty("Center", center);
     addLinearProperty("Radius", radius);
     addLinearProperty("Diameter", diameter);
     addLinearProperty("Circumference", circumference, OTHER);
+    addLinearProperty("Chord Length", chordLength, OTHER);
     addAngleProperty("Angle Length", angleLength);
     addVectorProperty("Start", startPoint);
     addAngleProperty("Start Angle", startAngle);

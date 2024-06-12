@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLineRelAngle;
@@ -35,28 +36,27 @@ namespace Ui {
 class Ui_LineRelAngleOptions;
 }
 
-class QG_LineRelAngleOptions : public QWidget
+class QG_LineRelAngleOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_LineRelAngleOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_LineRelAngleOptions();
+    QG_LineRelAngleOptions();
+    ~QG_LineRelAngleOptions() override;
 
 public slots:
-	virtual void setAction(RS_ActionInterface * a, bool update);
-	virtual void updateAngle(const QString & a);
-	virtual void updateLength(const QString & l);
-
-protected:
-    RS_ActionDrawLineRelAngle* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
+    void languageChange() override;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+    void on_leLength_editingFinished();
+    void on_leAngle_editingFinished();
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LineRelAngleOptions> ui;
+    RS_ActionDrawLineRelAngle* action = nullptr;
+   	std::unique_ptr<Ui::Ui_LineRelAngleOptions> ui;
+    void setLengthToActionAndView(QString val);
+    void setAngleToActionAndView(QString val);
 };
 
 #endif // QG_LINERELANGLEOPTIONS_H

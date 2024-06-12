@@ -30,62 +30,53 @@
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
-
 /**
  * This action class can handle user events to draw parallel 
  * lines, arcs and circles.
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineParallel : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawLineParallel:public RS_PreviewActionInterface {
+Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 private:
+    // fixme - why no possibility to set distance via command line?
     enum Status {
         SetEntity,    /**< Choose original entity. */
-		//SetDistance,  /**< Setting distance in the command line. */
-		SetNumber     /**< Setting number in the command line. */
-		//SetThrough     /**< Setting a point for the parallel to go through. */
-	};
-	
+//SetDistance,  /**< Setting distance in the command line. */
+        SetNumber     /**< Setting number in the command line. */
+//SetThrough     /**< Setting a point for the parallel to go through. */
+    };
+
 public:
-    RS_ActionDrawLineParallel(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLineParallel() override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseCursor() override;
-//    void updateToolBar() override;
-
-	double getDistance() const;
-
-	void setDistance(double d);
-
-	int getNumber() const;
-
-	void setNumber(int n);
+    RS_ActionDrawLineParallel(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawLineParallel() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseCursor() override;
+    double getDistance() const;
+    void setDistance(double d);
+    int getNumber() const;
+    void setNumber(int n);
 
 private:
     /** Closest parallel. */
-    RS_Entity* parallel = nullptr;
+    RS_Entity *parallel = nullptr;
     /** Distance of the parallel. */
     double distance = 0.;
-	/** Number of parallels. */
+/** Number of parallels. */
     int number = 0;
-	/** Coordinate of the mouse. */
-	std::unique_ptr<RS_Vector> coord;
-	/** Original entity. */
-    RS_Entity* entity = nullptr;
+/** Coordinate of the mouse. */
+    std::unique_ptr<RS_Vector> coord;
+/** Original entity. */
+    RS_Entity *entity = nullptr;
 	/**
 	 * Commands
 	 */

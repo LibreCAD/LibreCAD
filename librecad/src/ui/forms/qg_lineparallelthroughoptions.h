@@ -28,34 +28,34 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallelThrough;
 namespace Ui {
 class Ui_LineParallelThroughOptions;
 }
-
-class QG_LineParallelThroughOptions : public QWidget
-{
-    Q_OBJECT
+class QG_LineParallelThroughOptions:public LC_ActionOptionsWidgetBase {
+Q_OBJECT
 
 public:
-    QG_LineParallelThroughOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LineParallelThroughOptions();
-
-public slots:
-	virtual void setAction(RS_ActionInterface * a, bool update);
-	virtual void updateNumber(int n );
+    QG_LineParallelThroughOptions();
+    ~QG_LineParallelThroughOptions() override;
 
 protected:
-    RS_ActionDrawLineParallelThrough* action;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    RS_ActionDrawLineParallelThrough *action;
 
 protected slots:
-    virtual void languageChange();
+    void on_cbSymmetric_toggled(bool checked);
+    void on_sbNumber_valueChanged(int number);
+    virtual void languageChange() override;
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LineParallelThroughOptions> ui;
+    std::unique_ptr<Ui::Ui_LineParallelThroughOptions> ui;
+    void setCopyNumberToActionAndView(int number);
+    void setSymmetricToActionAndView(bool symmetric);
 };
 
 #endif // QG_LINEPARALLELTHROUGHOPTIONS_H

@@ -63,31 +63,14 @@ public:
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-    void hideOptions() override;
-    void showOptions() override;
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
 
-    void setAngle(double a){
-        angle = a;
-    }
-
-    double getAngle() const{
-        return angle;
-    }
-
-    void setLength(double l){
-        length = l;
-    }
-
-    double getLength() const{
-        return length;
-    }
-
-    bool hasFixedAngle() const{
-        return fixedAngle;
-    }
-
+    void setAngle(double a){angle = a;}
+    double getAngle() const{return angle;}
+    void setLength(double l){length = l;}
+    double getLength() const{return length;}
+    bool hasFixedAngle() const{return fixedAngle;}
 private:
     /** Chosen entity */
     RS_Entity *entity = nullptr;
@@ -106,6 +89,8 @@ private:
      */
     bool fixedAngle = false;
     void unhighlightEntity();
+protected:
+    void createOptionsWidget() override;
 };
 
 #endif

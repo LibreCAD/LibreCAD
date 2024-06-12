@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawText;
@@ -35,27 +36,24 @@ namespace Ui {
 class Ui_TextOptions;
 }
 
-class QG_TextOptions : public QWidget
+class QG_TextOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_TextOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_TextOptions();
+    QG_TextOptions();
+    ~QG_TextOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
+
     virtual void updateText();
     virtual void updateAngle();
-
+    void languageChange() override;
 protected:
     RS_ActionDrawText* action;
-
-protected slots:
-    virtual void languageChange();
-
-private:
-	std::unique_ptr<Ui::Ui_TextOptions> ui;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    std::unique_ptr<Ui::Ui_TextOptions> ui;
 };
 
 #endif // QG_TEXTOPTIONS_H

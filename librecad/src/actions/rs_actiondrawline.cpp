@@ -27,7 +27,6 @@
 
 #include <vector>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawline.h"
@@ -40,6 +39,8 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "qg_lineoptions.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLine::History
 {
@@ -129,15 +130,10 @@ void RS_ActionDrawLine::trigger()
     line->setPenToActive();
     container->addEntity(line);
 
-    // update undo list
-    if (document) {
-        document->startUndoCycle();
-        document->addUndoable(line);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(line);
 
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
+    moveRelativeZero(pPoints->history.at(pPoints->index()).currPt);
     RS_DEBUG->print("RS_ActionDrawLine::trigger(): line added: %lu",
                     line->getId());
 }
@@ -147,25 +143,21 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
 
-    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
     switch (status){
         case SetStartpoint:
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetEndpoint: {
+            deletePreview();
             RS_Vector &startPoint = pPoints->data.startpoint;
             if (startPoint.valid){
                 // Snapping to angle(15*) if shift key is pressed
-                if (shiftPressed){
-                    mouse = snapToAngle(mouse, startPoint);
-                }
-                deletePreview();
-                auto *line = new RS_Line(startPoint, mouse);
-                preview->addEntity(line);
-                line->setLayerToActive();
-                line->setPenToActive();
-                drawPreview();
+                mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
+                previewLine(startPoint, mouse);
+                previewRefPoint(startPoint);
+                previewRefSelectablePoint(mouse);
             }
+            drawPreview();
             break;
         }
         default:
@@ -179,13 +171,11 @@ void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e)
         RS_Vector snapped = snapPoint(e);
 
         // Snapping to angle(15*) if shift key is pressed
-        if ((e->modifiers() & Qt::ShiftModifier)
-            && getStatus() == SetEndpoint ) {
-            snapped = snapToAngle(snapped, pPoints->data.startpoint);
-        }
 
-        RS_CoordinateEvent ce(snapped);
-        coordinateEvent(&ce);
+        if (getStatus() == SetEndpoint ) {
+            snapped = getSnapAngleAwarePoint(e,  pPoints->data.startpoint, snapped);
+        }
+        fireCoordinateEvent(snapped);
     }
     else if (e->button() == Qt::RightButton) {
         deletePreview();
@@ -224,7 +214,7 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e)
         pPoints->startOffset = 0;
         addHistory( HA_SetStartpoint, graphicView->getRelativeZero(), mouse, pPoints->startOffset);
         setStatus(SetEndpoint);
-        graphicView->moveRelativeZero(mouse);
+        moveRelativeZero(mouse);
         updateMouseButtonHints();
         break;
 
@@ -322,64 +312,44 @@ void RS_ActionDrawLine::updateMouseButtonHints()
 {
     switch (getStatus()) {
     case SetStartpoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
         break;
     case SetEndpoint: {
         QString msg = "";
 
         if (pPoints->startOffset >= 2) {
-            msg += RS_COMMANDS->command("close");
+            msg += command("close");
         }
         if (pPoints->index() + 1 < pPoints->history.size()) {
             if (msg.size() > 0) {
                 msg += "/";
             }
-            msg += RS_COMMANDS->command("redo");
+            msg += command("redo");
         }
         if (pPoints->historyIndex >= 1) {
             if (msg.size() > 0) {
                 msg += "/";
             }
-            msg += RS_COMMANDS->command("undo");
+            msg += command("undo");
         }
 
         if (pPoints->historyIndex >= 1) {
-            RS_DIALOGFACTORY->updateMouseWidget(
-                        tr("Specify next point or [%1]").arg(msg),
-                        tr("Back"));
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"), Qt::ShiftModifier);
         } else {
-            RS_DIALOGFACTORY->updateMouseWidget(
-                        tr("Specify next point"),
-                        tr("Back"));
+            updateMouseWidgetTRBack("Specify next point", Qt::ShiftModifier);
         }
         break;
     }
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-void RS_ActionDrawLine::showOptions()
-{
-    RS_DEBUG->print("RS_ActionDrawLine::showOptions");
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionDrawLine::hideOptions()
-{
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
 
 
-void RS_ActionDrawLine::updateMouseCursor()
-{
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawLine::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
 void RS_ActionDrawLine::close()
@@ -398,8 +368,8 @@ void RS_ActionDrawLine::close()
         }
     }
     else {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot close sequence of lines: "
-                                            "Not enough entities defined yet, or already closed."));
+        commandMessageTR("Cannot close sequence of lines: "
+                         "Not enough entities defined yet, or already closed.");
     }
 }
 
@@ -427,7 +397,7 @@ void RS_ActionDrawLine::undo()
 
         --pPoints->historyIndex;
         deletePreview();
-        graphicView->moveRelativeZero(h.prevPt);
+        moveRelativeZero(h.prevPt);
 
         switch (h.histAct) {
         case HA_SetStartpoint:
@@ -452,8 +422,7 @@ void RS_ActionDrawLine::undo()
         pPoints->startOffset = h.startOffset;
     }
     else {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot undo: "
-                                            "Begin of history reached"));
+       commandMessageTR("Cannot undo: Begin of history reached");
     }
 }
 
@@ -463,7 +432,7 @@ void RS_ActionDrawLine::redo()
         ++pPoints->historyIndex;
         History h( pPoints->history.at( pPoints->index()));
         deletePreview();
-        graphicView->moveRelativeZero(h.currPt);
+        moveRelativeZero(h.currPt);
         pPoints->data.startpoint = h.currPt;
         pPoints->startOffset = h.startOffset;
         switch (h.histAct) {
@@ -487,7 +456,10 @@ void RS_ActionDrawLine::redo()
         }
     }
     else {
-        RS_DIALOGFACTORY->commandMessage( tr("Cannot redo: "
-                                             "End of history reached"));
+        commandMessageTR("Cannot redo: End of history reached");
     }
+}
+
+void RS_ActionDrawLine::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_LineOptions>();
 }

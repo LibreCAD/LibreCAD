@@ -210,6 +210,7 @@ RS_Snapper::RS_Snapper(RS_EntityContainer& container, RS_GraphicView& graphicVie
 {}
 
 RS_Snapper::~RS_Snapper() = default;
+RS_Entity *catchEntity(const RS_Vector &coord, const EntityTypeList &enTypeList, RS2::ResolveLevel level);
 
 /**
  * Initialize (called by all constructors)
@@ -270,7 +271,7 @@ RS_Vector RS_Snapper::snapFree(QMouseEvent* e) {
 						"RS_Snapper::snapFree: event is nullptr");
         return RS_Vector(false);
     }
-    pImpData->snapSpot=graphicView->toGraph(e->position());
+    pImpData->snapSpot=toGraph(e);
     pImpData->snapCoord=pImpData->snapSpot;
     snap_indicator->lines_state=true;
     return pImpData->snapCoord;
@@ -293,7 +294,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
 		return pImpData->snapSpot;
     }
 
-    RS_Vector mouseCoord = graphicView->toGraph(e->position());
+    RS_Vector mouseCoord = toGraph(e);
     double ds2Min=RS_MAXDOUBLE*RS_MAXDOUBLE;
 
     if (snapMode.snapEndpoint) {
@@ -691,6 +692,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 		break;
 	}
 
+ // fixme - iteration over all elements of drawing
 	for(RS_Entity* en= container->firstEntity(level);en;en=container->nextEntity(level)){
         if(en->isVisible()==false) continue;
 		if(en->rtti() != enType && isContainer){
@@ -744,7 +746,7 @@ RS_Entity* RS_Snapper::catchEntity(const RS_Vector& pos, RS2::EntityType enType,
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
                                    RS2::ResolveLevel level) {
 
-    RS_Entity* entity = catchEntity(graphicView->toGraph(e->position()), level);
+    RS_Entity* entity = catchEntity(toGraph(e), level);
     return entity;
 }
 
@@ -760,39 +762,39 @@ RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e,
  */
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, RS2::EntityType enType,
                                    RS2::ResolveLevel level) {
-    return catchEntity(
-               graphicView->toGraph(e->position()),
-				enType,
-				level);
+    return catchEntity(toGraph(e),enType,level);
 }
 
 RS_Entity* RS_Snapper::catchEntity(QMouseEvent* e, const EntityTypeList& enTypeList,
                                    RS2::ResolveLevel level) {
-	RS_Entity* pten = nullptr;
-    RS_Vector coord = graphicView->toGraph(e->position());
-    switch(enTypeList.size()) {
-    case 0:
-        return catchEntity(coord, level);
-    default:
-    {
+    RS_Vector coord = toGraph(e);
+    return catchEntity(coord, enTypeList, level);
+}
 
-		RS_EntityContainer ec(nullptr,false);
-		for( auto t0: enTypeList){
-			RS_Entity* en=catchEntity(coord, t0, level);
-			if(en) ec.addEntity(en);
+RS_Entity* RS_Snapper::catchEntity(const RS_Vector& coord, const EntityTypeList& enTypeList,
+                                   RS2::ResolveLevel level) {
+    RS_Entity *pten = nullptr;
+    switch (enTypeList.size()) {
+        case 0:
+            return catchEntity(coord, level);
+        default: {
+
+            RS_EntityContainer ec(nullptr, false);
+            for (auto t0: enTypeList) {
+                RS_Entity *en = catchEntity(coord, t0, level);
+                if (en) ec.addEntity(en);
 //			if(en) {
 //            std::cout<<__FILE__<<" : "<<__func__<<" : lines "<<__LINE__<<std::endl;
 //            std::cout<<"caught id= "<<en->getId()<<std::endl;
 //            }
-        }
-        if(ec.count()>0){
-            ec.getDistanceToPoint(coord, &pten, RS2::ResolveNone);
-            return pten;
+            }
+            if (ec.count() > 0){
+                ec.getDistanceToPoint(coord, &pten, RS2::ResolveNone);
+                return pten;
+            }
         }
     }
-
-    }
-	return nullptr;
+    return nullptr;
 }
 
 void RS_Snapper::suspend() {
@@ -1023,8 +1025,7 @@ void RS_Snapper::drawSnapper()
     }
 }
 
-RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution)
-{
+RS_Vector RS_Snapper::snapToRelativeAngle(double baseAngle, const RS_Vector &currentCoord, const RS_Vector &referenceCoord, const double angularResolution){
 
     if(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)
     {
@@ -1084,5 +1085,10 @@ RS_Vector RS_Snapper::snapToAngle(const RS_Vector &currentCoord, const RS_Vector
         snapPoint(res, true);
         return res;
     }
+}
+
+const RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
+    RS_Vector result = graphicView->toGraph(e->position());
+    return result;
 }
 

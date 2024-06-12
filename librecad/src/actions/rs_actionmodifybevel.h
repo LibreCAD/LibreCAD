@@ -33,6 +33,7 @@
 
 class RS_Entity;
 
+
 /**
  * This action class can handle user events to bevel corners.
  *
@@ -65,33 +66,30 @@ public:
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
-    void hideOptions() override;
-    void showOptions() override;
-
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
 
     void setLength1(double l1);
-
     double getLength1() const;
-
     void setLength2(double l2);
-
     double getLength2() const;
-
     void setTrim(bool t);
-
     bool isTrimOn() const;
 
 private:
-    // update highlight status
-    void unhighlightEntity();
 
-    RS_Entity* entity1 = nullptr;
-    RS_Entity* entity2 = nullptr;
+    RS_AtomicEntity* entity1 = nullptr;
+    RS_AtomicEntity* entity2 = nullptr;
     struct Points;
     std::unique_ptr<Points> pPoints;
     /** Last status before entering angle. */
     Status lastStatus = SetEntity1;
+
+    bool isEntityAccepted(RS_Entity *en) const;
+    bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
+
+    void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
+protected:
+    void createOptionsWidget() override;
 };
 #endif

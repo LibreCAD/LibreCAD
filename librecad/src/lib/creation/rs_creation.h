@@ -76,16 +76,17 @@ public:
 
     RS_Entity* createParallelThrough(const RS_Vector& coord,
                                      int number,
-                                     RS_Entity* e);
+                                     RS_Entity* e,
+                                     bool symmetric);
 
     RS_Entity* createParallel(const RS_Vector& coord,
                               double distance,
                               int number,
-                              RS_Entity* e);
+                              RS_Entity* e, bool symmetric = false);
 
     RS_Line* createParallelLine(const RS_Vector& coord,
                                 double distance, int number,
-                                RS_Line* e);
+                                RS_Line* e, bool symmetric = false);
 
     RS_Arc* createParallelArc(const RS_Vector& coord,
                               double distance, int number,
@@ -108,13 +109,16 @@ public:
 
     RS_Line* createTangent1(const RS_Vector& coord,
                             const RS_Vector& point,
-                            RS_Entity* circle);
+                            RS_Entity* circle,
+                            RS_Vector& tangentPoint,
+                            RS_Vector& altTangentPoint);
 /**
  * create a tangent line which is orthogonal to the given RS_Line(normal)
  */
     RS_Line* createLineOrthTan(const RS_Vector& coord,
                                RS_Line* normal,
-                               RS_Entity* circle);
+                               RS_Entity* circle,
+                               RS_Vector& alternativeTangent);
     std::vector<std::unique_ptr<RS_Line>> createTangent2(
                             RS_Entity* circle1,
                             RS_Entity* circle2);

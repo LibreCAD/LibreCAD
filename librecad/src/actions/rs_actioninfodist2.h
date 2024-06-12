@@ -49,6 +49,11 @@ public:
         SetPoint      /**< Setting the point of the distance. */
     };
 
+    enum Mode{
+        FIRST_IS_ENTITY,
+        FIRST_IS_POINT
+    };
+
 public:
     RS_ActionInfoDist2(
         RS_EntityContainer &container,
@@ -63,10 +68,22 @@ public:
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
 
+    bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};
+    void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
+
+    void finish(bool updateTB) override;;
 private:
     RS_Entity *entity = nullptr;
     RS_Vector point = RS_Vector(false);
-    bool fromPointToEntity = false;
+    int selectionMode = FIRST_IS_ENTITY;
+    RS_Entity *doCatchEntity(QMouseEvent *e);
+    bool nearestPointShouldBeOnEntity = true;
+protected:
+    void createOptionsWidget() override;
+    RS_Vector savedRelZero = RS_Vector{false};
+    RS_Vector entityNearestPoint = RS_Vector{false};
+    void restoreRelZero();
+    RS_Vector obtainNearestPointOnEntity(const RS_Vector &snap) const;
 };
 
 #endif

@@ -32,6 +32,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 struct LC_ActionDrawParabolaFD::Points {
     RS_Vector focus, startPoint, endPoint, projection;
@@ -119,15 +120,11 @@ void LC_ActionDrawParabolaFD::trigger() {
     if(pPoints->data.valid){
         LC_Parabola* en = new LC_Parabola{container, pPoints->data};
         container->addEntity(en);
-        if (document) {
-            document->startUndoCycle();
-            document->addUndoable(en);
-            document->endUndoCycle();
-        }
+        addToDocumentUndoable(en);
     }
     RS_Vector rz = graphicView->getRelativeZero();
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(rz);
+    moveRelativeZero(rz);
     drawSnapper();
     init(SetFocus);
 }
@@ -163,7 +160,7 @@ bool LC_ActionDrawParabolaFD::preparePreview()
     deletePreview();
     if (pPoints->data.valid) {
         auto* pl = new LC_Parabola{preview.get(), pPoints->data};
-        preview->addEntity(pl);
+        previewEntity(pl);
         drawPreview();
     }
     return pPoints->valid;
@@ -183,8 +180,7 @@ void LC_ActionDrawParabolaFD::mouseReleaseEvent(QMouseEvent* e) {
                 }
             }
         }else{
-            RS_CoordinateEvent ce{snapPoint(e)};
-            coordinateEvent(&ce);
+            fireCoordinateEventForSnap(e);
         }
     }
 
@@ -202,7 +198,7 @@ void LC_ActionDrawParabolaFD::coordinateEvent(RS_CoordinateEvent* e) {
     }
     RS_Vector mouse = e->getCoordinate();
 
-    graphicView->moveRelativeZero(mouse);
+    moveRelativeZero(mouse);
     switch (getStatus()) {
     case SetFocus:
         pPoints->focus = mouse;
@@ -290,28 +286,21 @@ QStringList LC_ActionDrawParabolaFD::getAvailableCommands() {
 void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFocus:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the focus of parabola"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify the focus of parabola", Qt::ShiftModifier);
         break;
-
     case SetDirectrix:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the directrix of parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the directrix of parabola");
         break;
 
     case SetStartPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the start point on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the start point on parabola");
         break;
 
     case SetEndPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify the end point on parabola"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify the end point on parabola");
         break;
-
-
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
@@ -319,7 +308,7 @@ void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
 
 
 void LC_ActionDrawParabolaFD::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

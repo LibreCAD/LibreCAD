@@ -34,10 +34,9 @@
  *  Constructs a QG_TextOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_TextOptions::QG_TextOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_TextOptions{})
-{
+QG_TextOptions::QG_TextOptions()
+    :LC_ActionOptionsWidgetBase(RS2::ActionDrawText, "","")
+	, ui(new Ui::Ui_TextOptions{}){
 	ui->setupUi(this);
 }
 
@@ -55,19 +54,21 @@ void QG_TextOptions::languageChange()
 	ui->retranslateUi(this);
 }
 
-void QG_TextOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawText) {
-		action = static_cast<RS_ActionDrawText*>(a);
+void QG_TextOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-        QString st;
-        QString sa;
-        if (update) {
-            st = action->getText();
-            sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-        } else {
-            st = "";
-            sa = "0.0";
-        }
+    action = dynamic_cast<RS_ActionDrawText *>(a);
+
+    QString text;
+    QString angle;
+    if (update){
+        text = action->getText();
+        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+    } else {
+        text = "";
+        angle = "0.0";
+    }
+
+    LC_ERR << " Options: --- " <<  text << " Angle: " << angle;
 
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
         QCString iso = RS_System::localeToISO( QTextCodec::locale() );
@@ -78,15 +79,9 @@ void QG_TextOptions::setAction(RS_ActionInterface* a, bool update) {
             st = RS_FilterDXF::toNativeString(action->getText().local8Bit());
         }
 //#else*/
-		ui->teText->setText(st);
+    ui->teText->setText(text);
 //#endif
-		ui->leAngle->setText(sa);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_TextOptions::setAction: wrong action type");
-		action = nullptr;
-    }
-
+    ui->leAngle->setText(angle);
 }
 
 void QG_TextOptions::updateText() {
@@ -105,7 +100,8 @@ void QG_TextOptions::updateText() {
 }
 
 void QG_TextOptions::updateAngle() {
-    if (action) {
 		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
-    }
+}
+
+void QG_TextOptions::doSaveSettings(){
 }

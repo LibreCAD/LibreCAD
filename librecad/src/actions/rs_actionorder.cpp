@@ -159,7 +159,7 @@ void RS_ActionOrder::updateMouseButtonHints() {
 
 
 void RS_ActionOrder::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 

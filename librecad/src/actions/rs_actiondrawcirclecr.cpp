@@ -26,7 +26,6 @@
 
 #include <cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawcirclecr.h"
@@ -38,6 +37,7 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "qg_circleoptions.h"
 
 /**
  * Constructor.
@@ -72,18 +72,14 @@ void RS_ActionDrawCircleCR::trigger(){
     switch (getStatus()) {
         case SetCenter:
             container->addEntity(circle);
-            graphicView->moveRelativeZero(circle->getCenter());
+            moveRelativeZero(circle->getCenter());
             break;
         case SetRadius:
             break;
     }
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(circle);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(circle);
+
     graphicView->redraw(RS2::RedrawDrawing);
 
     setStatus(SetCenter);
@@ -92,49 +88,28 @@ void RS_ActionDrawCircleCR::trigger(){
                     circle->getId());
 }
 
-bool RS_ActionDrawCircleCR::setRadius(const QString &sr){
-    bool ok = false;
-    double r = RS_Math::eval(sr, &ok);
-    if (!ok){ // fixme - good candidate for generic utility method, may be useful for setting values via ui
-        RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (expression)").arg(sr));
-    } else if (std::signbit(r)){
-        RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (negative)").arg(sr));
-        ok = false;
-    } else if (r <= RS_TOLERANCE){
-        RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is invalid (zero)").arg(sr));
-        ok = false;
-    } else {
-        data->radius = r;
-    }
-
-    return ok;
-}
 
 void RS_ActionDrawCircleCR::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             if (!trySnapToRelZeroCoordinateEvent(e)){
                 data->center = mouse;
                 deletePreview();
-                preview->addEntity(new RS_Circle(preview.get(),
-                                                 *data));
-
-                addReferencePointToPreview(data->center);
-
+                previewCircle(*data);
+                previewRefSelectablePoint(data->center);
                 drawPreview();
-            }
-            else {
+            } else {
                 setStatus(-1);
             }
             break;
+        }
     }
 
     RS_DEBUG->print("RS_ActionDrawCircleCR::mouseMoveEvent end");
 }
-
 
 void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr) return;
@@ -142,11 +117,11 @@ void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent *e){
     RS_Vector position = e->getCoordinate();
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             data->center = position;
             trigger();
             break;
-
+        }
         default:
             break;
     }
@@ -156,37 +131,55 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             if (checkCommand("radius", c)){
                 deletePreview();
                 setStatus(SetRadius);
             }
             break;
-
+        }
         case SetRadius: {
             bool ok = false;
+            // fixme - review processing and add more messages if needed
             double r = RS_Math::eval(c, &ok);
             if (ok && r > RS_TOLERANCE){
                 data->radius = r;
                 e->accept();
                 trigger();
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
-        }
+            updateOptions();
             break;
-
+        }
         default:
             break;
     }
 }
+
+bool RS_ActionDrawCircleCR::setRadiusStr(const QString &sr){
+    bool ok = false;
+    double r = RS_Math::eval(sr, &ok);
+    if (!ok){ // fixme - good candidate for generic utility method, may be useful for setting values via ui
+        commandMessage(tr("radius=%1 is invalid (expression)").arg(sr));
+    } else if (std::signbit(r)){
+        commandMessage(tr("radius=%1 is invalid (negative)").arg(sr));
+        ok = false;
+    } else if (r <= RS_TOLERANCE){
+        commandMessage(tr("radius=%1 is invalid (zero)").arg(sr));
+        ok = false;
+    } else {
+        data->radius = r;
+    }
+
+    return ok;
+}
+
 
 QStringList RS_ActionDrawCircleCR::getAvailableCommands(){
     QStringList cmd;
@@ -205,34 +198,26 @@ QStringList RS_ActionDrawCircleCR::getAvailableCommands(){
 void RS_ActionDrawCircleCR::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify circle center"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify circle center",Qt::ShiftModifier);
             break;
         case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify circle radius"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify circle radius");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-void RS_ActionDrawCircleCR::showOptions(){
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
+void RS_ActionDrawCircleCR::setRadius(double val){
+    data->radius = val;
 }
-
-void RS_ActionDrawCircleCR::hideOptions(){
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
-
 
 double RS_ActionDrawCircleCR::getRadius() const{
     return data->radius;
+}
+
+void RS_ActionDrawCircleCR::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_CircleOptions>();
 }
 // EOF

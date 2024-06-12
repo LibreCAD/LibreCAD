@@ -57,9 +57,10 @@ void LC_ActionDrawCircle2PR::reset(){
 }
 
 void LC_ActionDrawCircle2PR::init(int status){
-    RS_PreviewActionInterface::init(status);
-
-    reset();
+    RS_ActionDrawCircleCR::init(status);
+    if (status <= 0){
+        reset();
+    }
 }
 
 void LC_ActionDrawCircle2PR::trigger(){
@@ -70,19 +71,15 @@ void LC_ActionDrawCircle2PR::trigger(){
     circle->setPenToActive();
     container->addEntity(circle);
 
-// upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(circle);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(circle);
+
     // todo - review - setting the same rel zero - what for?
     RS_Vector rz = graphicView->getRelativeZero();
     graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
         rz = circle->getCenter();
     }
-    graphicView->moveRelativeZero(rz);
+    moveRelativeZero(rz);
 
     drawSnapper();
 
@@ -90,7 +87,7 @@ void LC_ActionDrawCircle2PR::trigger(){
     reset();
 }
 
-bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse){
+bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse, RS_Vector& altCenter){
     const RS_Vector vp = (pPoints->point1 + pPoints->point2) * 0.5;
     double const angle = pPoints->point1.angleTo(pPoints->point2) + 0.5 * M_PI;
     double const &r0 = data->radius;
@@ -106,12 +103,15 @@ bool LC_ActionDrawCircle2PR::preparePreview(const RS_Vector &mouse){
     }
 
     const double ds = mouse.squaredTo(center1) - mouse.squaredTo(center2);
+
     if (ds < 0.){
         data->center = center1;
+        altCenter = center2;
         return true;
     }
     if (ds > 0.){
         data->center = center2;
+        altCenter = center1;
         return true;
     }
     data->center.valid = false;
@@ -129,43 +129,52 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             break;
 
         case SetPoint2: {
-            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse);
+            deletePreview();
+
+            mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius){
                 pPoints->point2 = mouse;
             }
-            deletePreview();
-            addReferencePointToPreview(pPoints->point1);
-            addReferencePointToPreview(pPoints->point2);
-            addReferencePointToPreview(data->center);
-            addReferenceLineToPreview(pPoints->point1, pPoints->point2);
-            if (preparePreview(mouse)){
+
+            previewRefPoint(pPoints->point1);
+            previewRefSelectablePoint(pPoints->point2);
+            previewRefLine(pPoints->point1, pPoints->point2);
+
+            RS_Vector altCenter;
+            if (preparePreview(mouse, altCenter)){
                 if (data->center.valid){
                     auto *circle = new RS_Circle(preview.get(), *data);
-                    preview->addEntity(circle);
+                    previewEntity(circle);
+
+                    previewRefSelectablePoint(data->center, true);
+                    previewRefSelectablePoint(altCenter, true);
                 }
             }
+
             drawPreview();
 
             break;
         }
         case SelectCenter: {
-
-            if (preparePreview(mouse)){
+            RS_Vector altCenter;
+            if (preparePreview(mouse, altCenter)){
+                // todo - review, what for we're checking for circle there?
                 bool existing = false;
                 for (auto p: *preview) {
-                    if (p->rtti() == RS2::EntityCircle){
+                    if (isCircle(p)){
                         if (dynamic_cast<RS_Circle *>(p)->getData() == *data)
                             existing = true;
                     }
                 }
                 if (!existing){
                     deletePreview();
-                    preview->addEntity(new RS_Point(preview.get(), RS_PointData(data->center)));
+                    previewRefSelectablePoint(data->center, true);
+                    previewRefSelectablePoint(altCenter, true);
                     auto *circle = new RS_Circle(preview.get(), *data);
-                    preview->addEntity(circle);
-                    addReferencePointToPreview(pPoints->point1);
-                    addReferencePointToPreview(pPoints->point2);
-                    addReferenceLineToPreview(pPoints->point1, pPoints->point2);
+                    previewEntity(circle);
+                    previewRefPoint(pPoints->point1);
+                    previewRefPoint(pPoints->point2);
+                    previewRefLine(pPoints->point1, pPoints->point2);
                     drawPreview();
                 }
             } else {
@@ -183,8 +192,7 @@ void LC_ActionDrawCircle2PR::mouseReleaseEvent(QMouseEvent* e) {
         if (getStatus() == SetPoint2){
             coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
         }
-        RS_CoordinateEvent ce(coord);
-        coordinateEvent(&ce);
+        fireCoordinateEvent(coord);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -198,33 +206,33 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
     double distance = 0.0;
 
     switch (getStatus()) {
-        case SetPoint1:
+        case SetPoint1: {
             pPoints->point1 = mouse;
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             setStatus(SetPoint2);
             break;
-
-        case SetPoint2:
+        }
+        case SetPoint2: {
             distance = mouse.distanceTo(pPoints->point1);
             if (distance <= 2. * data->radius){
                 pPoints->point2 = mouse;
-                graphicView->moveRelativeZero(mouse);
+                moveRelativeZero(mouse);
                 setStatus(SelectCenter);
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
+                commandMessage(tr("radius=%1 is too small for points selected\ndistance between points=%2 is larger than diameter=%3").
                     arg(data->radius).arg(distance).arg(2. * data->radius));
             }
             break;
-
+        }
         case SelectCenter: {
-            bool showPreview = preparePreview(mouse);
+            RS_Vector altCenter;
+            bool showPreview = preparePreview(mouse, altCenter);
             if (showPreview || data->isValid())
                 trigger();
             else
-                RS_DIALOGFACTORY->commandMessage(tr("Select from two possible circle centers"));
-        }
+                commandMessageTR("Select from two possible circle centers");
             break;
-
+        }
         default:
             break;
     }
@@ -234,8 +242,7 @@ void LC_ActionDrawCircle2PR::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 }
@@ -248,23 +255,17 @@ QStringList LC_ActionDrawCircle2PR::getAvailableCommands(){
 void LC_ActionDrawCircle2PR::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
             break;
         case SetPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
             break;
         case SelectCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select circle center"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Select circle center");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
-
-
-
 // EOF

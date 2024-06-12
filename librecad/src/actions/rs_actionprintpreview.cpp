@@ -74,7 +74,7 @@ void RS_ActionPrintPreview::init(int status) {
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
-		pPoints->v2 = graphicView->toGraph(e->position());
+		pPoints->v2 = toGraph(e);
 		// if Shift is pressed the paper moves only horizontally
 		if (e->modifiers() & Qt::ShiftModifier)
 			pPoints->v2.y = pPoints->v1.y;
@@ -240,10 +240,10 @@ void RS_ActionPrintPreview::hideOptions() {
 void RS_ActionPrintPreview::updateMouseCursor() {
     switch (getStatus()){
     case Moving:
-        graphicView->setMouseCursor(RS2::ClosedHandCursor);
+        setMouseCursor(RS2::ClosedHandCursor);
         break;
     default:
-        graphicView->setMouseCursor(RS2::OpenHandCursor);
+        setMouseCursor(RS2::OpenHandCursor);
     }
 }
 

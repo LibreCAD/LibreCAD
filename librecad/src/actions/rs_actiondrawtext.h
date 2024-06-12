@@ -37,54 +37,46 @@ struct RS_TextData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawText : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 public:
-	/**
-	 * Action States.
-	 */
-	enum Status {
-		ShowDialog,           /**< Showing the text dialog. */
-		SetPos,               /**< Setting the position. */
-		SetSecPos,            /**< Setting the second point for aligned of fit text. */
-		SetText               /**< Setting the text in the command line. */
-	};
+/**
+ * Action States.
+ */
+    enum Status {
+        ShowDialog,           /**< Showing the text dialog. */
+        SetPos,               /**< Setting the position. */
+        SetSecPos,            /**< Setting the second point for aligned of fit text. */
+        SetText               /**< Setting the text in the command line. */
+    };
 
 public:
-	RS_ActionDrawText(RS_EntityContainer& container,
-					  RS_GraphicView& graphicView);
-	~RS_ActionDrawText() override;
-
-	void init(int status=0) override;
-
-	void reset();
-
-	void trigger() override;
-	void preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	void setText(const QString& t);
-	const QString& getText() const;
-
-	void setAngle(double a);
-	double getAngle() const;
+    RS_ActionDrawText(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawText() override;
+    void init(int status = 0) override;
+    void reset();
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setText(const QString &t);
+    const QString &getText() const;
+    void setAngle(double a);
+    double getAngle() const;
 
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	std::unique_ptr<RS_TextData> data;
-	//RS_Text* text;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    std::unique_ptr<RS_TextData> data;
+//RS_Text* text;
     bool textChanged = false;
 };
 

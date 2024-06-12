@@ -37,12 +37,14 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "rs_settings.h"
+#include "rs_actioninterface.h"
+#include "qg_arctangentialoptions.h"
 
 RS_ActionDrawArcTangential::RS_ActionDrawArcTangential(RS_EntityContainer& container,
                                                        RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw arcs tangential",
                                container, graphicView)
-    , point(std::make_unique<RS_Vector>())
+    , point(false)
     , data(std::make_unique<RS_ArcData>()){
     actionType=RS2::ActionDrawArcTangential;
 }
@@ -52,21 +54,19 @@ RS_ActionDrawArcTangential::~RS_ActionDrawArcTangential() = default;
 void RS_ActionDrawArcTangential::reset() {
     baseEntity = nullptr;
     isStartPoint = false;
-    *point = {};
+    point = RS_Vector(false);
     data = std::make_unique<RS_ArcData>();
-    readSettings();
 }
 
 void RS_ActionDrawArcTangential::init(int status) {
     RS_PreviewActionInterface::init(status);
-    readSettings();
     //reset();
 }
 
 void RS_ActionDrawArcTangential::trigger() {
     RS_PreviewActionInterface::trigger();
 
-    if (!(point->valid && baseEntity)) {
+    if (!(point.valid && baseEntity)) {
         RS_DEBUG->print("RS_ActionDrawArcTangential::trigger: "
                         "conditions not met");
         return;
@@ -78,22 +78,17 @@ void RS_ActionDrawArcTangential::trigger() {
     arc->setLayerToActive();
     arc->setPenToActive();
 
-    // upd. undo list:
-    if (document) {
-        document->startUndoCycle();
-        document->addUndoable(arc);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(arc);
 
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(arc->getCenter());
+    moveRelativeZero(arc->getCenter());
 
     setStatus(SetBaseEntity);
     reset();
 }
 
 void RS_ActionDrawArcTangential::preparePreview() {
-    if (baseEntity && point->valid) {
+    if (baseEntity && point.valid) {
         RS_Vector startPoint;
         double direction;
         if (isStartPoint) {
@@ -105,50 +100,96 @@ void RS_ActionDrawArcTangential::preparePreview() {
         }
 
         RS_Arc arc(nullptr, RS_ArcData());
-        bool suc = false;
+        bool suc;
         if (byRadius) {
-            suc = arc.createFrom2PDirectionRadius(startPoint, *point, direction, data->radius);
+            suc = arc.createFrom2PDirectionRadius(startPoint, point, direction, data->radius);
         } else {
-            suc = arc.createFrom2PDirectionAngle(startPoint, *point, direction, angleLength);
+            suc = arc.createFrom2PDirectionAngle(startPoint, point, direction, angleLength);
         }
         if (suc) {
             data.reset(new RS_ArcData(arc.getData()));
-            if (byRadius)
-                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getRadius(), true);
-            else
-                RS_DIALOGFACTORY->updateArcTangentialOptions(arc.getAngleLength()*180./M_PI, false);
+            if (byRadius){
+                updateOptionsRadius(arc.getRadius());
+            }
+            else {
+                updateOptionsAngle(RS_Math::rad2deg(arc.getAngleLength()));
+            }
         }
     }
 }
 
 void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
     int status = getStatus();
-    *point = snapPoint(e);
+    point = snapPoint(e);
     deleteHighlights();
     switch (status){
         case SetBaseEntity: {
             RS_Entity *entity = catchEntity(e, RS2::ResolveAll);
             if (entity != nullptr){
                 if (entity->isAtomic()){
-                    addToHighlights(entity);
+                    highlightHover(entity);
                 }
             }
             break;
         }
-        case SetEndAngle:
-            addToHighlights(baseEntity);
-            preparePreview();
-            if (data->isValid()) {
-                auto* arc = new RS_Arc(preview.get(), *data);
-                deletePreview();
-                preview->addEntity(arc);
-                drawPreview();
+        case SetEndAngle: {
+            highlightSelected(baseEntity);
+            deletePreview();
+            RS_Vector center;
+            if (byRadius){
+                if (isShift(e)){ // double check for efficiency, eliminate center forecasting calculations if not needed
+                    center = forecastArcCenter();
+                    point = getSnapAngleAwarePoint(e, center, point, true);
+                }
             }
+            preparePreview();
+            if (data->isValid()){
+                auto arc = previewArc(*data);
+                previewRefPoint(data->center);
+                previewRefPoint(arc->getStartpoint());
+                if (byRadius){
+                    previewRefLine(data->center, point);
+                    previewRefSelectablePoint(arc->getEndpoint());
+                    previewRefSelectablePoint(center);
+                }
+                else{
+                    previewRefLine(data->center, arc->getEndpoint());
+                    previewRefLine(data->center, arc->getStartpoint());
+                    RS_Vector nearest = arc->getNearestPointOnEntity(point, false);
+                    previewRefLine(data->center, point);
+                    previewRefSelectablePoint(nearest);
+                    RS_ArcData circleArcData = arc->getData();
+                    std::swap(circleArcData.angle1, circleArcData.angle2);
+                    previewRefArc(circleArcData);
+                }
+            }
+            drawPreview();
             break;
+        }
         default:
             break;
     }
     drawHighlights();
+}
+
+RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
+    RS_Vector center;
+    double direction;
+    if (isStartPoint) {
+        direction = RS_Math::correctAngle(baseEntity->getDirection1() + M_PI);
+    } else {
+        direction = RS_Math::correctAngle(baseEntity->getDirection2() + M_PI);
+    }
+
+    RS_Vector ortho = RS_Vector::polar(data->radius, direction + M_PI_2);
+    RS_Vector center1 = arcStartPoint + ortho;
+    RS_Vector center2 = arcStartPoint - ortho;
+    if (center1.distanceTo(point) < center2.distanceTo(point)) {
+        center = center1;
+    } else {
+        center = center2;
+    }
+    return center;
 }
 
 void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
@@ -157,16 +198,20 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
 
             // set base entity:
             case SetBaseEntity: {
-                RS_Vector coord = graphicView->toGraph(e->position());
+                RS_Vector coord = toGraph(e);
                 RS_Entity *entity = catchEntity(coord, RS2::ResolveAll);
                 if (entity){
                     if (entity->isAtomic()){
                         baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
-                        if (baseEntity->getStartpoint().distanceTo(coord) <
-                            baseEntity->getEndpoint().distanceTo(coord)){
+                        const RS_Vector &startPoint = baseEntity->getStartpoint();
+                        const RS_Vector &endPoint = baseEntity->getEndpoint();
+                        if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)){
                             isStartPoint = true;
+                            arcStartPoint = startPoint;
+
                         } else {
                             isStartPoint = false;
+                            arcStartPoint = endPoint;
                         }
                         setStatus(SetEndAngle);
                         updateMouseButtonHints();
@@ -175,8 +220,15 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
                 break;
             }
             case SetEndAngle: {// set angle (point that defines the angle)
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
+                if (byRadius){
+                    if (isShift(e)){ // double check for efficiency, eliminate calculations if not needed
+                        RS_Vector center = forecastArcCenter();
+                        point = getSnapAngleAwarePoint(e, center, point);
+                    }
+                }else {
+                    point = getSnapAngleAwarePoint(e, arcStartPoint, point);
+                }
+                fireCoordinateEvent(point);
                 break;
             }
         }
@@ -185,7 +237,7 @@ void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
         init(getStatus()-1);
     }
 }
-
+// fixme - more intelligent porcessing
 void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==nullptr) {
         return;
@@ -195,80 +247,53 @@ void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
     case SetBaseEntity:
         break;
-
     case SetEndAngle:
-        *point = mouse;
+        point = mouse;
         trigger();
         break;
-
     default:
         break;
     }
-}
-
-void RS_ActionDrawArcTangential::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-    updateMouseButtonHints();
-}
-
-void RS_ActionDrawArcTangential::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 void RS_ActionDrawArcTangential::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetBaseEntity:
-        RS_DIALOGFACTORY->updateMouseWidget(
-                    tr("Specify base entity"),
-                    tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify base entity");
         break;
     case SetEndAngle:
         if(byRadius) {
-            RS_DIALOGFACTORY->updateMouseWidget(
-                        tr("Specify end angle"), tr("Back"));
+            updateMouseWidgetTRBack("Specify end angle", Qt::ShiftModifier);
         } else {
-            RS_DIALOGFACTORY->updateMouseWidget(
-                        tr("Specify end point"), tr("Back"));
+            updateMouseWidgetTRBack("Specify end point");
         }
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-
+// fixme - add suport of commands
 
 void RS_ActionDrawArcTangential::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
-
 
 void RS_ActionDrawArcTangential::setRadius(double r){
     data->radius = std::abs(r);
-    setByRadius(true);
-
-    auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
-    RS_SETTINGS->writeEntry("/ArcTangentialRadius", QString{"%1"}.arg(data->radius, 0, 'g', 12));
-    RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
 }
 
 double RS_ActionDrawArcTangential::getRadius() const {
     return data->radius;
 }
 
-bool RS_ActionDrawArcTangential::getByRadius() const
-{
+bool RS_ActionDrawArcTangential::getByRadius() const{
     return byRadius;
 }
 
 void RS_ActionDrawArcTangential::setByRadius(bool status) {
     byRadius=status;
-    saveSettings();
 }
 
 double RS_ActionDrawArcTangential::getAngle() const {
@@ -277,33 +302,24 @@ double RS_ActionDrawArcTangential::getAngle() const {
 
 void RS_ActionDrawArcTangential::setAngle(double angle) {
     angleLength = angle;
-    setByRadius(false);
-
-    auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
-    RS_SETTINGS->writeEntry("/ArcTangentialAngle", QString{"%1"}.arg(angle, 0, 'g', 12));
-    RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{"1"});
 }
 
-void RS_ActionDrawArcTangential::readSettings()
-{
-    auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
-    QString sr = RS_SETTINGS->readEntry("/ArcTangentialRadius", "1.0");
-    QString sa = RS_SETTINGS->readEntry("/ArcTangentialAngle", "90");
-    int br = RS_SETTINGS->readNumEntry("/ArcTangentialByRadius", 1);
-    data->radius = RS_Math::eval(sr, 1.0);
-    angleLength = RS_Math::eval(sa, 90.);
-    byRadius = br == 1;
+void RS_ActionDrawArcTangential::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_ArcTangentialOptions>();
 }
 
-void RS_ActionDrawArcTangential::saveSettings() const
-{
+void RS_ActionDrawArcTangential::updateOptionsRadius(double radius){
+    if (m_optionWidget != nullptr){
+        auto* options = dynamic_cast <QG_ArcTangentialOptions*> (m_optionWidget.get());
+        options->updateRadius(radius);
+    }
+}
 
-    auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
-    if (byRadius)
-        RS_SETTINGS->writeEntry("/ArcTangentialRadius", QString{"%1"}.arg(getRadius(), 0, 'g', 12));
-    else
-        RS_SETTINGS->writeEntry("/ArcTangentialAngle", QString{"%1"}.arg(getAngle(), 0, 'g', 12));
-    RS_SETTINGS->writeEntry("/ArcTangentialByRadius", QString{byRadius ? "1" : "0"});
+void RS_ActionDrawArcTangential::updateOptionsAngle(double angle){
+    if (m_optionWidget != nullptr){
+        auto* options = dynamic_cast <QG_ArcTangentialOptions*> (m_optionWidget.get());
+        options->updateAngle(angle);
+    }
 }
 
 // EOF

@@ -77,6 +77,7 @@ protected:
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
     void doBack(QMouseEvent *pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
 
 private:
     /**

@@ -50,32 +50,16 @@ public:
     ~RS_ActionPolylineEquidistant() override;
     void init(int status = 0) override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
-//	void updateToolBar() override;
-    void showOptions() override;
-    void hideOptions() override;
 
-    void setDist(const double &d){
-        dist = d;
-    }
-
-    double getDist() const{
-        return dist;
-    }
-
-    void setNumber(unsigned n){
-        number = n;
-    }
-
-    int getNumber() const{
-        return number;
-    }
-
-    void makeContour(RS_Polyline*  originalPolyline, bool contourOnRightSide, QList<RS_Polyline*> &createdPolylines);
-
+    void setDist(const double &d){dist = d;}
+    double getDist() const{return dist;}
+    void setNumber(unsigned n){number = n;}
+    int getNumber() const{return number;}
+    void makeContour(RS_Polyline *originalPolyline, bool contourOnRightSide, QList<RS_Polyline *> &createdPolylines);
 private:
     RS_Entity *calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist);
     RS_Vector calculateIntersection(RS_Entity *first, RS_Entity *last);
@@ -86,6 +70,8 @@ private:
     int number = 0;
     bool bRightSide = false;
     bool isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const;
+protected:
+    void createOptionsWidget() override;
 };
 
 #endif

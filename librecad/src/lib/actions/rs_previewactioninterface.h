@@ -28,10 +28,17 @@
 #ifndef RS_PREVIEWACTIONINTERFACE_H
 #define RS_PREVIEWACTIONINTERFACE_H
 
+#include "rs_line.h"
+#include "rs_vector.h"
+#include "qg_actionhandler.h"
 #include <memory>
 #include "rs_actioninterface.h"
 #include "lc_highlight.h"
+#include "rs_arc.h"
+#include "rs_ellipse.h"
+#include "lc_defaults.h"
 
+struct RS_CircleData;
 /**
  * This is the interface that must be implemented for all
  * action classes which need a preview.
@@ -68,18 +75,60 @@ protected:
     bool hasPreview = true;//whether preview is in use
 
     std::unique_ptr<LC_Highlight> highlight;
+
+    double refPointSize = 2.0;
+    int refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
+    bool showRefEntitiesOnPreview = false;
 //    /**
 //     * Current offset of the preview.
 //     */
 //	std::unique_ptr<RS_Vector> offset;
     bool trySnapToRelZeroCoordinateEvent(const QMouseEvent *e);
     RS_Vector getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector &pos);
-    void addReferencePointToPreview(const RS_Vector &coord);
-    void addPointToPreview(const RS_Vector &coord);
-    RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos);
-    void addReferenceLineToPreview(const RS_Vector &start, const RS_Vector &end);
-    void addLineToPreview(const RS_Vector &start, const RS_Vector &end);
-    void addReferenceArcToPreview(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
+    RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark = false);
+    RS_Vector getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const;
+    RS_Vector getFreeSnapAwarePointAlt(const QMouseEvent *e, const RS_Vector &pos) const;
+    // simplified mouse widget and command message operations
+    void updateMouseWidgetTR(const char* left,const char* right,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    void updateMouseWidgetTRBack(const char* left,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+
+    void updateMouseWidgetTRCancel(const char* left,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    void updateMouseWidget(const QString& = QString(),const QString& = QString(), Qt::KeyboardModifiers modifiers = Qt::NoModifier);
+    void commandMessageTR(const char*);
+    void commandMessage(const QString &msg) const;
+    void previewEntity(RS_Entity *en);
+    RS_Circle* previewCircle(const RS_CircleData& circleData);
+    RS_Arc *previewArc(const RS_ArcData &arcData);
+    RS_Ellipse *previewEllipse(const RS_EllipseData &ellipseData);
+    void previewPoint(const RS_Vector &coord);
+    RS_Line* previewLine(const RS_Vector &start, const RS_Vector &end);
+    void previewRefLine(const RS_Vector &start, const RS_Vector &end);
+    void previewRefPoint(const RS_Vector &coord, bool alwaysVisible = false);
+    RS_Arc* previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
+    RS_Circle* previewRefCircle(const RS_Vector &center, const double radius, bool alwaysVisible = false);
+    void previewRefSelectablePoint(const RS_Vector &coord, bool alwaysVisible = false);
+    void previewRefPoints(const std::vector<RS_Vector>& points);
+    void previewRefLines(const std::vector<RS_LineData>& points);
+    void initRefEntitiesMetrics();
+    void highlightHover(RS_Entity *e);
+    void highlightSelected(RS_Entity *e, bool enable=true);
+    virtual void moveRelativeZero(const RS_Vector &zero);
+    bool is(RS_Entity* e, RS2::EntityType type) const;
+    bool isLine(RS_Entity*  e) const{return is(e, RS2::EntityLine);};
+    bool isPolyline(RS_Entity*  e) const{return is(e, RS2::EntityPolyline);};
+    bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);};
+    bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);};
+    bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);};
+    void fireCoordinateEvent(const RS_Vector& coord);
+    void fireCoordinateEventForSnap(QMouseEvent *e);
+    static bool isControl(const QMouseEvent *e);
+    static bool isShift(const QMouseEvent *e);
+    bool addToDocumentUndoable(RS_Undoable* e) const;
+    RS_Arc *previewRefArc(const RS_ArcData &arcData);
+    void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
+    RS_Entity *catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList);
+    RS_Entity *catchModifiableEntity(QMouseEvent *e, const RS2::EntityType &enType);
+    RS_Entity *catchModifiableEntity(RS_Vector &coord, const RS2::EntityType &enType);
 };
 
 #endif

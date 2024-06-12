@@ -120,7 +120,7 @@ protected:
      */
     double endOffset = 0.0;
 
-    RS_Line *createLineFromPointToTarget(RS_Line *line);
+    RS_Line *createLineFromPointToTarget(RS_Line *line, RS_Vector& intersection);
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector zero) override;
     void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;

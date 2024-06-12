@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDimension;
@@ -35,28 +36,30 @@ namespace Ui {
 class Ui_DimOptions;
 }
 
-class QG_DimOptions : public QWidget
-{
+class QG_DimOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    QG_DimOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_DimOptions();
+    QG_DimOptions();
+    ~QG_DimOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateLabel();
-    virtual void insertSign( const QString & c );
+    void updateLabel();
+    void insertSign( const QString & c );
+    void languageChange() override;
+    void on_leAngle_editingFinished();
+    void on_bHor_clicked();
+    void on_bVer_clicked();
 
 protected:
-    RS_ActionDimension* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
+    void updateAngle( const QString& a );
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_DimOptions> ui;
+    RS_ActionDimension* action = nullptr;
+    std::unique_ptr<Ui::Ui_DimOptions> ui;
 };
 
 #endif // QG_DIMOPTIONS_H

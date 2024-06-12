@@ -80,16 +80,23 @@ private slots:
 
     void on_pb_relativeZeroColor_clicked();
 
-    void setVariableFile();
+    void on_pb_previewRefColor_clicked();
 
+    void on_pb_previewRefHighlightColor_clicked();
+
+    void on_rbRelSize_toggled(bool checked);
+
+    void setVariableFile();
     void setFontsFolder();
 
 private:
     bool restartNeeded=false;
-
     void init();
     void initComboBox(QComboBox* cb, const QString& text);
     void destroy();
+    void initReferencePoints();
+    void updateLPtSzUnits();
+    void saveReferencePoints();
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H

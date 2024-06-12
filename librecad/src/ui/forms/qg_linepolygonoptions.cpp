@@ -34,10 +34,9 @@
  *  Constructs a QG_LinePolygonOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LinePolygonOptions::QG_LinePolygonOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_LinePolygonOptions{})
-{
+QG_LinePolygonOptions::QG_LinePolygonOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/LinePolygon")
+	    , ui(new Ui::Ui_LinePolygonOptions{}){
 	ui->setupUi(this);
 }
 
@@ -50,41 +49,53 @@ QG_LinePolygonOptions::~QG_LinePolygonOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LinePolygonOptions::languageChange()
-{
+void QG_LinePolygonOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_LinePolygonOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/LinePolygonNumber", ui->sbNumber->text());
-    RS_SETTINGS->endGroup();
+bool QG_LinePolygonOptions::checkActionRttiValid(RS2::ActionType actionType){
+    return actionType == RS2::ActionDrawLinePolygonCenCor ||
+           actionType == RS2::ActionDrawLinePolygonCenTan ||
+           actionType == RS2::ActionDrawLinePolygonCorCor;
 }
 
-void QG_LinePolygonOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLinePolygonCenCor) {
-		action = static_cast<RS_ActionDrawLinePolygonCenCor*>(a);
+void QG_LinePolygonOptions::doSaveSettings(){
+	save("Number", ui->sbNumber->text());
+}
 
-        QString sn;
-        if (update) {
-            sn = QString("%1").arg(action->getNumber());
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sn = RS_SETTINGS->readEntry("/LinePolygonNumber", "3");
-            RS_SETTINGS->endGroup();
-        }
-		ui->sbNumber->setValue(sn.toInt());
+QString QG_LinePolygonOptions::getSettingsOptionNamePrefix(){
+    switch (action->rtti()){
+        case RS2::ActionDrawLinePolygonCenCor:
+            return "/LinePolygon";
+        case RS2::ActionDrawLinePolygonCenTan:
+            return "/LinePolygon3";
+            break;
+        case RS2::ActionDrawLinePolygonCorCor:
+            return "/LinePolygon2";
+        default:
+            return "/LinePolygon";
+    }
+}
+
+void QG_LinePolygonOptions::doSetAction(RS_ActionInterface *a, bool update){
+    action = dynamic_cast<LC_ActionDrawLinePolygonBase*>(a);
+
+    int number;
+    if (update){
+        number = action->getNumber();
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LinePolygonOptions::setAction: wrong action type");
-		action = nullptr;
+        number = loadInt("Number", 3);
     }
-
+    setNumberToActionAndView(number);
 }
 
-void QG_LinePolygonOptions::updateNumber(int n) {
-    if (action) {
-        action->setNumber(n);
-        saveSettings();
-    }
+void QG_LinePolygonOptions::setNumberToActionAndView(int number){
+    action->setNumber(number);
+    ui->sbNumber->setValue(number);
 }
+
+void QG_LinePolygonOptions::on_sbNumber_valueChanged(int number){
+    setNumberToActionAndView(ui->sbNumber->value());
+}
+
+

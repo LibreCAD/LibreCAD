@@ -34,10 +34,9 @@
  *  Constructs a QG_LineParallelThroughOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineParallelThroughOptions::QG_LineParallelThroughOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_LineParallelThroughOptions{})
-{
+QG_LineParallelThroughOptions::QG_LineParallelThroughOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineParallelThrough, "/Draw", "/LineParallel")
+	, ui(new Ui::Ui_LineParallelThroughOptions{}){
 	ui->setupUi(this);
 }
 
@@ -55,36 +54,42 @@ void QG_LineParallelThroughOptions::languageChange()
 	ui->retranslateUi(this);
 }
 
-void QG_LineParallelThroughOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/LineParallelNumber", ui->sbNumber->text());
-    RS_SETTINGS->endGroup();
+void QG_LineParallelThroughOptions::doSaveSettings(){
+	    save("Number", ui->sbNumber->text());
+     save("Symmetric", ui->cbSymmetric->isChecked());
 }
 
-void QG_LineParallelThroughOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLineParallelThrough) {
+void QG_LineParallelThroughOptions::doSetAction(RS_ActionInterface *a, bool update){
         action = (RS_ActionDrawLineParallelThrough*)a;
 
-        QString sn;
+        int copyNumber;
+        bool symmetric;
         if (update) {
-            sn = QString("%1").arg(action->getNumber());
+            copyNumber = action->getNumber();
+            symmetric = action->isSymmetric();
         } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sn = RS_SETTINGS->readEntry("/LineParallelNumber", "1");
+            copyNumber = loadInt("Number", 1);
+            symmetric = loadBool("Symmetric", false);
             RS_SETTINGS->endGroup();
         }
-		ui->sbNumber->setValue(sn.toInt());
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LineParallelThroughOptions::setAction: wrong action type");
-		action = nullptr;
-    }
-
+        setSymmetricToActionAndView(symmetric);
+        setCopyNumberToActionAndView(copyNumber);
 }
 
-void QG_LineParallelThroughOptions::updateNumber(int n) {
-    if (action) {
-        action->setNumber(n);
-        saveSettings();
-    }
+void QG_LineParallelThroughOptions::on_cbSymmetric_toggled(bool checked){
+    setSymmetricToActionAndView(checked);
+}
+
+void QG_LineParallelThroughOptions::on_sbNumber_valueChanged(int number){
+    setCopyNumberToActionAndView(number);
+}
+
+void QG_LineParallelThroughOptions::setCopyNumberToActionAndView(int number){
+    action->setNumber(number);
+    ui->sbNumber->setValue(number);
+}
+
+void QG_LineParallelThroughOptions::setSymmetricToActionAndView(bool symmetric){
+    action->setSymmetric(symmetric);
+    ui->cbSymmetric->setChecked(symmetric);
 }

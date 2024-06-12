@@ -66,8 +66,6 @@ public:
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-    void hideOptions() override;
-    void showOptions() override;
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
     bool isReversed() const;
@@ -85,6 +83,8 @@ protected:
     QString cmdReversed2;
     QString cmdReversed3;
 */
+    void snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const;
+    void createOptionsWidget() override;
 };
 
 #endif

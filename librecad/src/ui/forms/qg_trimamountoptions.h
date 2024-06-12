@@ -28,38 +28,34 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionModifyTrimAmount;
 namespace Ui {
 class Ui_TrimAmountOptions;
 }
-
-class QG_TrimAmountOptions : public QWidget
-{
-    Q_OBJECT
+class QG_TrimAmountOptions:public LC_ActionOptionsWidgetBase {
+Q_OBJECT
 
 public:
-    QG_TrimAmountOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_TrimAmountOptions();
+    QG_TrimAmountOptions();
+    ~QG_TrimAmountOptions() override;
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateDist( const QString & d );
-
-protected:
-    RS_ActionModifyTrimAmount* action;
-
-protected slots:
-    virtual void languageChange();
-
-private slots:
+    void languageChange() override;
     void on_cbTotalLength_toggled(bool checked);
-	void on_leDist_editingFinished();
-
+    void on_cbSymmetric_toggled(bool checked);
+    void on_leDist_editingFinished();
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;
+    RS_ActionModifyTrimAmount *action;
+    std::unique_ptr<Ui::Ui_TrimAmountOptions> ui;
+    void setDistanceToActionAndView(const QString &strValue);
+    void setByTotalToActionAndView(bool val);
+    void setDistanceSymmetricToActionAndView(bool val);
 };
 
 #endif // QG_TRIMAMOUNTOPTIONS_H

@@ -117,17 +117,16 @@ void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionEditPaste::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Set reference point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Set reference point");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
 
 void RS_ActionEditPaste::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 // EOF

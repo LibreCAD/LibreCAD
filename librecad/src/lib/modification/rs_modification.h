@@ -30,6 +30,7 @@
 #include <QHash>
 #include "rs_pen.h"
 #include "rs_vector.h"
+#include "rs_arc.h"
 
 class RS_AtomicEntity;
 class RS_Entity;
@@ -143,6 +144,48 @@ struct RS_BevelData
     bool trim = false;
 };
 
+struct LC_BevelResult{
+    RS_Line* bevel = nullptr;
+    bool polyline = false;
+    RS_Entity* trimmed1 = nullptr;
+    RS_Entity* trimmed2 = nullptr;
+    bool trimStart1 = false;
+    bool trimStart2 = false;
+    RS_Vector intersectionPoint = RS_Vector(false);
+    int error = OK;
+
+    enum{
+        OK,
+        ERR_NO_INTERSECTION,
+        ERR_NOT_THE_SAME_POLYLINE
+    };
+};
+
+struct LC_RoundResult{
+    RS_Arc* round = nullptr;
+    bool polyline = false;
+    RS_Entity* trimmed1 = nullptr;
+    RS_Entity* trimmed2 = nullptr;
+    int trim1Mode = false;
+    int trim2Mode = false;
+    RS_Vector trimmingPoint1 = RS_Vector(false);
+    RS_Vector trimmingPoint2 = RS_Vector(false);
+    RS_Vector intersectionPoint = RS_Vector(false);
+    int error = OK;
+
+    enum {
+        TRIM_START,
+        TRIM_END,
+        TRIM_CIRCLE
+    };
+
+    enum{
+        OK,
+        ERR_NO_INTERSECTION,
+        ERR_NOT_THE_SAME_POLYLINE,
+        NO_PARALLELS
+    };
+};
 
 
 
@@ -238,20 +281,19 @@ public:
         const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
         const RS_Vector &limitCoord, RS_Entity *limitEntity,
         bool both);
-    bool trimAmount(
-        const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
-        double dist);
+    RS_Entity* trimAmount(const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
+                          double dist, bool trimBoth, bool &trimStart, bool &trimEnd, bool forPreview = false);
     bool offset(const RS_OffsetData &data);
     bool cut(const RS_Vector &cutCoord, RS_AtomicEntity *cutEntity);
     bool stretch(
         const RS_Vector &firstCorner,
         const RS_Vector &secondCorner,
         const RS_Vector &offset);
-    bool bevel(
+    LC_BevelResult* bevel(
         const RS_Vector &coord1, RS_AtomicEntity *entity1,
         const RS_Vector &coord2, RS_AtomicEntity *entity2,
-        RS_BevelData &data);
-    bool round(
+        RS_BevelData &data, bool previewOnly);
+    LC_RoundResult* round(
         const RS_Vector &coord,
         const RS_Vector &coord1,
         RS_AtomicEntity *entity1,

@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLineBisector;
@@ -35,28 +36,26 @@ namespace Ui {
 class Ui_LineBisectorOptions;
 }
 
-class QG_LineBisectorOptions : public QWidget
+class QG_LineBisectorOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_LineBisectorOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LineBisectorOptions();
-
+    QG_LineBisectorOptions();
+    ~QG_LineBisectorOptions() override;
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateLength( const QString & l );
-    virtual void updateNumber( int n );
 
-protected:
-    RS_ActionDrawLineBisector* action;
+    void languageChange() override;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 
-protected slots:
-    virtual void languageChange();
-
+    void on_sbNumber_valueChanged(int number);
+    void on_leLength_editingFinished();
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LineBisectorOptions> ui;
+    RS_ActionDrawLineBisector* action;
+    std::unique_ptr<Ui::Ui_LineBisectorOptions> ui;
+    void setLengthToActionAndView(QString val);
+    void setNumberToActionAndView(int number);
 };
 
 #endif // QG_LINEBISECTOROPTIONS_H

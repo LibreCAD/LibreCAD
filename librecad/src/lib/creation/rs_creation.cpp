@@ -116,7 +116,8 @@ RS_Creation::RS_Creation(RS_EntityContainer* container,
  */
 RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
                                               int number,
-                                              RS_Entity* e) {
+                                              RS_Entity* e,
+                                              bool symmetric) {
     if (!e) {
         return nullptr;
     }
@@ -134,13 +135,11 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
     }
 
     if (dist<RS_MAXDOUBLE) {
-        return createParallel(coord, dist, number, e);
+        return createParallel(coord, dist, number, e, symmetric);
     } else {
         return nullptr;
     }
 }
-
-
 
 /**
  * Creates an entity parallel to the given entity e.
@@ -159,14 +158,14 @@ RS_Entity* RS_Creation::createParallelThrough(const RS_Vector& coord,
  */
 RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
                                        double distance, int number,
-                                       RS_Entity* e) {
+                                       RS_Entity* e, bool symmetric) {
     if (!e) {
         return nullptr;
     }
 
     switch (e->rtti()) {
     case RS2::EntityLine:
-        return createParallelLine(coord, distance, number, (RS_Line*)e);
+        return createParallelLine(coord, distance, number, (RS_Line*)e, symmetric);
         break;
 
     case RS2::EntityArc:
@@ -205,7 +204,8 @@ RS_Entity* RS_Creation::createParallel(const RS_Vector& coord,
  */
 RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
                                          double distance, int number,
-                                         RS_Line* e) {
+                                         RS_Line* e,
+                                         bool symmetric) {
 
     if (!e) {
         return nullptr;
@@ -237,17 +237,26 @@ RS_Line* RS_Creation::createParallelLine(const RS_Vector& coord,
         double minDist = std::min(dist1, dist2);
 
         if (minDist<RS_MAXDOUBLE) {
-            if (dist1<dist2) {
+
+            RS_LineData dataToSkip;
+            if (dist1 < dist2){
                 parallelData = parallel1.getData();
+                dataToSkip = parallel2.getData();
             } else {
                 parallelData = parallel2.getData();
+                dataToSkip = parallel1.getData();
             }
 
-            auto* newLine = new RS_Line{container, parallelData};
-            if (!ret) {
+            auto *newLine = new RS_Line{container, parallelData};
+            if (!ret){
                 ret = newLine;
             }
             setEntity(newLine);
+
+            if (symmetric){
+                auto *symmetricLine = new RS_Line{container, dataToSkip};
+                setEntity(symmetricLine);
+            }
         }
     }
 
@@ -503,16 +512,134 @@ RS_Line* RS_Creation::createBisector(const RS_Vector& coord1,
  */
 RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
                                         RS_Line* normal,
-                                        RS_Entity* circle) {
+                                        RS_Entity* circle,
+                                        RS_Vector& alternativeTangent) {
     RS_Line* ret = nullptr;
 
     // check given entities:
     if (!(circle && normal))
         return ret;
-    if (!(circle->isArc() || circle->rtti() == RS2::EntityParabola))
+    RS2::EntityType rtti = circle->rtti();
+    if (!(circle->isArc() || rtti == RS2::EntityParabola))
         return ret;
     //if( normal->getLength()<RS_TOLERANCE) return ret;//line too short
-    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
+    
+//    RS_Vector const& t0 = circle->getNearestOrthTan(coord,*normal,false);
+    RS_Vector  t0;
+    RS_Vector  t1;
+    // todo - potentially, it's possible to move this fragment to appropriate implementations of  getNearestOrthTan - and expand it for returning all tangent points instead of nearest one
+    switch (rtti){
+        case RS2::EntityCircle: {
+            auto *cir = dynamic_cast<RS_Circle *>(circle);
+            const RS_Vector &center = cir->getCenter();
+            double radius = cir->getRadius();
+            RS_Vector vp0(coord - center);
+            RS_Vector vp1(normal->getAngle1());
+            double d = RS_Vector::dotP(vp0, vp1);
+            const RS_Vector &ortVector = vp1 * radius;
+            if (d >= 0.){
+                t0 = center + ortVector;
+                t1 = center - ortVector;
+            } else {
+                t0 = center - ortVector;
+                t1 = center + ortVector;
+            }
+            break;
+        }
+        case RS2::EntityArc: {
+            auto *cir = dynamic_cast<RS_Arc *>(circle);
+            double angle=normal->getAngle1();
+            double radius = cir->getRadius();
+            RS_Vector vp = RS_Vector::polar(radius, angle);
+            std::vector<RS_Vector> sol;
+            bool onEntity = false;
+            for(int i=0; i <= 1; i++){
+                if(!onEntity || RS_Math::isAngleBetween(angle,cir->getAngle1(),cir->getAngle2(),cir->isReversed())) {
+                    if (i)
+                        sol.push_back(- vp);
+                    else
+                        sol.push_back(vp);
+                }
+                angle=RS_Math::correctAngle(angle+M_PI);
+            }
+            const RS_Vector &center = cir->getCenter();
+            switch(sol.size()) {
+                case 0:
+                    t0 = RS_Vector(false);
+                case 2:
+                    if(RS_Vector::dotP(sol[1], coord - center) > 0.) {
+                        t0 = center + sol[1];
+                        t1 = center + sol[0];
+                        break;
+                    }
+                    else{
+                        t0 = center + sol[0];
+                        t1 = center + sol[1];
+                    }
+                    // fall-through
+                default:
+                    vp=sol[0]; // hm?
+                    break;
+            }
+            break;
+        }
+        case RS2::EntityEllipse: {
+            auto *cir = dynamic_cast<RS_Ellipse *>(circle);            
+            //scale to ellipse angle
+            RS_Vector aV(-cir->getAngle());
+            RS_Vector direction = normal->getEndpoint() - normal->getStartpoint();
+            direction.rotate(aV);
+            double ratio = cir->getRatio();
+            double angle = direction.scale(RS_Vector(1., ratio)).angle();
+            double ra(cir->getMajorRadius());
+            direction.set(ra * cos(angle), ratio * ra * sin(angle));//relative to center
+            std::vector<RS_Vector> sol;
+            bool onEntity = false;
+            for (int i = 0; i < 2; i++) {
+                if (!onEntity ||
+                    RS_Math::isAngleBetween(angle, cir->getAngle1(), cir->getAngle2(), cir->isReversed())){
+                    if (i){
+                        sol.push_back(-direction);
+                    } else {
+                        sol.push_back(direction);
+                    }
+                }
+                angle = RS_Math::correctAngle(angle + M_PI);
+            }
+            if (sol.size() < 1) {
+                t0 = RS_Vector(false);
+            }
+            else {
+                aV.y *= -1.;
+                for (auto &v: sol) {
+                    v.rotate(aV);
+                }
+                RS_Vector vp;
+                const RS_Vector &center = cir->getCenter();
+                switch (sol.size()) {
+                    case 0:
+                        t0 = RS_Vector(false);
+                    case 2:
+                        if (RS_Vector::dotP(sol[1], coord - center) > 0.){
+                            t0 = center + sol[1];
+                            t1 = center + sol[0];
+                            break;
+                        }
+                        // fall-through
+                    default:
+                        t0 = center + sol[0];
+                        t1 = center + sol[1];
+                        break;
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    alternativeTangent = t1;
+
     if(!t0.valid) return ret;
     RS_Vector const& vp=normal->getNearestPointOnEntity(t0, false);
     LC_UndoSection undo( document, handleUndo);
@@ -534,7 +661,9 @@ RS_Line* RS_Creation::createLineOrthTan(const RS_Vector& coord,
 */
 RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
                                      const RS_Vector& point,
-                                     RS_Entity* circle) {
+                                     RS_Entity* circle,
+                                     RS_Vector& tangentPoint,
+                                     RS_Vector& altTangentPoint) {
     RS_Line* ret = nullptr;
     //RS_Vector circleCenter;
 
@@ -557,6 +686,8 @@ RS_Line* RS_Creation::createTangent1(const RS_Vector& coord,
         d={point+circle->getTangentDirection(point), point};
     }
 
+    tangentPoint = d.startpoint;
+    altTangentPoint = (sol[0] == vp2 ) ? sol[1] : sol[0];
 
     // create the closest tangent:
     LC_UndoSection undo( document, handleUndo);

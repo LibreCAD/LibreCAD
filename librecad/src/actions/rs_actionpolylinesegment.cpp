@@ -63,9 +63,9 @@ void RS_ActionPolylineSegment::init(int status){
     if (initWithTarget){
         initWithTarget = false;
         convertPolyline(container, targetEntity, false);
-        RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+        commandMessageTR("Polyline created");
         graphicView->redraw();
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        updateSelectionWidget();
         finish(false);
         return;
     }
@@ -121,7 +121,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
     RS_Entity *e = entities.takeFirst();
 
 //First polyline vertex
-    if (e->rtti() == RS2::EntityArc){
+    if (isArc(e)){
         if (reversed)
             current->setNextBulge(((RS_Arc *) e)->getBulge() * -1);
         else
@@ -130,7 +130,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
 
     while (!entities.isEmpty()) {
         e = entities.takeFirst();
-        if (e->rtti() == RS2::EntityArc){
+        if (isArc(e)){
             if (reversed)
                 bulge = ((RS_Arc *) e)->getBulge() * -1;
             else
@@ -175,7 +175,7 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
     for (RS_Entity *e1: *container) {
         if (useSelected && !e1->isSelected()) continue;
         if (e1->isLocked() || !e1->isVisible() || e1 == selectedEntity) continue;
-        if (e1->rtti() == RS2::EntityLine || e1->rtti() == RS2::EntityArc
+        if (isLine(e1) || isArc(e1)
             || e1->rtti() == RS2::EntityPolyline){
             if (selectedEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) selectedEntity)->isClosed())
                 continue;
@@ -303,7 +303,7 @@ void RS_ActionPolylineSegment::trigger(){
         targetEntity = nullptr;
         setStatus(ChooseEntity);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        updateSelectionWidget();
     }
     graphicView->redraw();
 }
@@ -314,7 +314,7 @@ void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
     deleteHighlights();
     RS_Entity* en = catchEntity(event, entityType);
     if (en != nullptr){
-        addToHighlights(en);
+        highlightHover(en);
         if (!(en->rtti() == RS2::EntityPolyline && ((RS_Polyline *) en)->isClosed())){
             convertPolyline(preview.get(), en, false, true);
         }
@@ -369,17 +369,16 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent *e){
 void RS_ActionPolylineSegment::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose one of the segments on the original polyline"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Choose one of the segments on the original polyline");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionPolylineSegment::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

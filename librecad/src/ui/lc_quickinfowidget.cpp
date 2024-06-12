@@ -77,6 +77,8 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     ui->pteInfo->setOpenLinks(false);
     ui->pteInfo->document()->setDefaultStyleSheet("a{ text-decoration: none;}");
 
+    ui->pteInfo->setStyleSheet("background-color: white;");
+
     // raw content control useful for debugging, but not needed in live mode
     ui->pteInfo1->setVisible(false);
 

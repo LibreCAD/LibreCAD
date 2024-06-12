@@ -161,7 +161,11 @@ namespace RS2 {
         EntityOverlayBox,    /**< OverlayBox */
         EntityPreview,    /**< Preview Container */
         EntityPattern,
-        EntityOverlayLine
+        EntityOverlayLine,
+        EntityRefPoint,
+        EntityRefLine,
+        EntityRefArc,
+        EntityRefCircle
     };
 
 
@@ -968,9 +972,9 @@ namespace RS2 {
          * it always shows up
          */
         enum OverlayGraphics: short {
-                ActionPreviewEntity = 0, // Action Entities
-                Snapper = 1, // Snapper
-                OverlayEffects =2 // special effects, like glowing on hover
+                ActionPreviewEntity = 1, // Action Entities
+                Snapper = 2, // Snapper
+                OverlayEffects =0 // special effects, like glowing on hover
         };
 
         //Different re-draw methods to speed up rendering of the screen

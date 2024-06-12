@@ -43,9 +43,8 @@ public slots:
     void onYEditingFinished();
     void onAngleEditingFinished();
     void onModeIndexChanged(int index);
-
-protected:
     void languageChange() override;
+protected:
     void doSaveSettings() override;
     void doSetAction( RS_ActionInterface * a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;

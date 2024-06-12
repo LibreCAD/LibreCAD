@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>425</width>
-    <height>28</height>
+    <width>441</width>
+    <height>29</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -112,6 +112,12 @@
    </item>
    <item>
     <widget class="QLineEdit" name="leRadius">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
      <property name="maximumSize">
       <size>
        <width>16777215</width>
@@ -157,59 +163,64 @@
      <property name="flat">
       <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="rbPos">
-     <property name="toolTip">
-      <string>Counter Clockwise</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
-     </property>
-     <property name="checked">
-      <bool>true</bool>
-     </property>
-    </widget>
-   </item>
-   <item>
-    <widget class="QRadioButton" name="rbNeg">
-     <property name="minimumSize">
-      <size>
-       <width>0</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Clockwise</string>
-     </property>
-     <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../res/extui/extui.qrc">
-       <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
-     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item>
+       <widget class="QRadioButton" name="rbNeg">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Clockwise</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../res/extui/extui.qrc">
+          <normaloff>:/extui/dirneg.png</normaloff>:/extui/dirneg.png</iconset>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QRadioButton" name="rbPos">
+        <property name="toolTip">
+         <string>Counter Clockwise</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../res/extui/extui.qrc">
+          <normaloff>:/extui/dirpos.png</normaloff>:/extui/dirpos.png</iconset>
+        </property>
+        <property name="checked">
+         <bool>true</bool>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>0</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>
@@ -252,74 +263,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>leRadius</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_PolylineOptions</receiver>
-   <slot>updateRadius(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_PolylineOptions</receiver>
-   <slot>updateAngle(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
    <sender>cbMode</sender>
    <signal>activated(int)</signal>
    <receiver>Ui_PolylineOptions</receiver>
-   <slot>updateMode(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbNeg</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Ui_PolylineOptions</receiver>
-   <slot>updateDirection(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbPos</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>Ui_PolylineOptions</receiver>
-   <slot>updateDirection(bool)</slot>
+   <slot>setModeToActionAndView(int)</slot>
    <hints>
     <hint type="sourcelabel">
      <x>20</x>
@@ -332,4 +279,11 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>undo()</slot>
+  <slot>setRadiusToActionAndView(QString)</slot>
+  <slot>updateAngle(QString)</slot>
+  <slot>setModeToActionAndView(int)</slot>
+  <slot>updateDirection(bool)</slot>
+ </slots>
 </ui>

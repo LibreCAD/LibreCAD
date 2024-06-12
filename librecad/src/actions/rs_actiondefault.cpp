@@ -40,6 +40,7 @@
 #include "rs_selection.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDefault::Points {
     RS_Vector v1;
@@ -176,7 +177,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
     double screenTolerance = graphicView->toGraphDX(0.01 * std::min(graphicView->getWidth(), graphicView->getHeight()));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
-    RS_Vector currentMousePosition = graphicView->toGraph(event->position());
+    RS_Vector currentMousePosition = toGraph(event);
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
         || (entity->rtti() == RS2::EntityText) || (entity->rtti() == RS2::EntityMText)){
         double nearestDistanceTo_pointOnEntity = 0.;
@@ -199,7 +200,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
 
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector mouse = toGraph(e);
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
@@ -225,7 +226,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                                     "moving reference point");
                     setStatus(MovingRef);
                     pPoints->v1 = ref;
-                    graphicView->moveRelativeZero(pPoints->v1);
+                    moveRelativeZero(pPoints->v1);
                 } else {
                     // test for an entity to drag:
                     RS_Entity *en = catchEntity(pPoints->v1);
@@ -247,33 +248,36 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             }
             break;
 
-        case MovingRef:
+        case MovingRef: {
             pPoints->v2 = snapPoint(e);
             RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
 
-            if (e->modifiers() & Qt::ShiftModifier){
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
+                // fixme - use more relaxing angle snap
                 mouse = snapToAngle(mouse, pPoints->v1);
                 pPoints->v2 = mouse;
             }
+
+            //fixme - add more restrictive mode for line - that will allows do lengthing by mouse + CTRL
 
             deletePreview();
             preview->addSelectionFrom(*container);
             preview->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
 
-            if (e->modifiers() & Qt::ShiftModifier){
-                auto *line = new RS_Line(pPoints->v1, mouse);
-                preview->addEntity(line);
-                line->setSelected(true);
+            if (shiftPressed){
+                previewLine(pPoints->v1, mouse);
+                previewRefLine(pPoints->v1, mouse);
             }
 
             drawPreview();
             break;
-
-        case Moving:
+        }
+        case Moving: {
             pPoints->v2 = snapPoint(e);
             RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
-
-            if (e->modifiers() & Qt::ShiftModifier){
+            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+            if (shiftPressed){
                 mouse = snapToAngle(mouse, pPoints->v1);
                 pPoints->v2 = mouse;
             }
@@ -282,7 +286,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             preview->addSelectionFrom(*container);
             preview->move(pPoints->v2 - pPoints->v1);
 
-            if (e->modifiers() & Qt::ShiftModifier){
+            if (shiftPressed){
                 auto *line = new RS_Line(pPoints->v1, mouse);
                 preview->addEntity(line);
                 line->setSelected(true);
@@ -290,7 +294,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
             drawPreview();
             break;
-
+        }
         case SetCorner2:
             if (pPoints->v1.valid){
                 pPoints->v2 = mouse;
@@ -328,7 +332,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                     pPoints->v1 = RS_Vector{e->position()};
                     setStatus(Panning);
                 } else {
-                    pPoints->v1 = graphicView->toGraph(e->position());
+                    pPoints->v1 = toGraph(e);
                     setStatus(Dragging);
                 }
             }
@@ -348,12 +352,10 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 data.offset = pPoints->v2 - pPoints->v1;
                 m.move(data);
                 setStatus(Neutral);
-                RS_DIALOGFACTORY->updateSelectionWidget(
-                    container->countSelected(), container->totalSelectedLength());
+                updateSelectionWidget();
                 deleteSnapper();
-            }
                 break;
-
+            }
             case MovingRef: {
                 pPoints->v2 = snapPoint(e);
                 if (e->modifiers() & Qt::ShiftModifier){
@@ -367,11 +369,9 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 m.moveRef(data);
                 //container->moveSelectedRef(v1, v2-v2);
                 setStatus(Neutral);
-                RS_DIALOGFACTORY->updateSelectionWidget(
-                    container->countSelected(), container->totalSelectedLength());
-            }
+                updateSelectionWidget();
                 break;
-
+            }
             default:
                 break;
         }
@@ -386,7 +386,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
 
     if (e->button() == Qt::LeftButton){
-        pPoints->v2 = graphicView->toGraph(e->position());
+        pPoints->v2 = toGraph(e);
         switch (getStatus()) {
             case Dragging: {
                 // select single entity:
@@ -413,7 +413,7 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
 
             case SetCorner2: {
                 //v2 = snapPoint(e);
-                pPoints->v2 = graphicView->toGraph(e->position());
+                pPoints->v2 = toGraph(e);
 
                 // select window:
                 //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
@@ -474,15 +474,18 @@ QStringList RS_ActionDefault::getAvailableCommands(){
 
 void RS_ActionDefault::updateMouseButtonHints(){
     switch (getStatus()) {
+        case Moving:
+        case MovingRef:
+            updateMouseWidget("", "", Qt::ShiftModifier);
+            break;
         case Neutral:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
         case SetCorner2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Choose second edge");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
@@ -490,14 +493,14 @@ void RS_ActionDefault::updateMouseButtonHints(){
 void RS_ActionDefault::updateMouseCursor(){
     switch (getStatus()) {
         case Neutral:
-            graphicView->setMouseCursor(RS2::ArrowCursor);
+            setMouseCursor(RS2::ArrowCursor);
             break;
         case Moving:
         case MovingRef:
-            graphicView->setMouseCursor(RS2::SelectCursor);
+            setMouseCursor(RS2::SelectCursor);
             break;
         case Panning:
-            graphicView->setMouseCursor(RS2::ClosedHandCursor);
+            setMouseCursor(RS2::ClosedHandCursor);
             break;
         default:
             break;

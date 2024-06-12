@@ -251,5 +251,8 @@
         <file>break_out_trim.svg</file>
         <file>line_gap.svg</file>
         <file>distance_entity_to_point.svg</file>
+        <file>state-shift_no.svg</file>
+        <file>state-shift_yes.svg</file>
+        <file>state_ctrl_yes.svg</file>
     </qresource>
 </RCC>

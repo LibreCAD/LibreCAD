@@ -33,6 +33,7 @@
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -46,28 +47,25 @@ RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
 
 RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
-void RS_ActionDrawLineFree::trigger() {
-	deleteSnapper();
-	if (polyline.get()) {
-		deletePreview();
+void RS_ActionDrawLineFree::trigger(){
+    deleteSnapper();
+    if (polyline.get()){
+        deletePreview();
 
-		polyline->endPolyline();
-		RS_VectorSolutions sol=polyline->getRefPoints();
-		if(sol.getNumber() > 2 ) {
-			RS_Entity* ent=polyline->clone();
-			container->addEntity(ent);
-			if (document) {
-				document->startUndoCycle();
-				document->addUndoable(ent);
-				document->endUndoCycle();
-			}
-			graphicView->redraw(RS2::RedrawDrawing);
-			RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
+        polyline->endPolyline();
+        RS_VectorSolutions sol = polyline->getRefPoints();
+        if (sol.getNumber() > 2){
+            RS_Entity *ent = polyline->clone();
+            container->addEntity(ent);
+            addToDocumentUndoable(ent);
+
+            graphicView->redraw(RS2::RedrawDrawing);
+            RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
                             " polyline added: %lu", ent->getId());
-		}
-		polyline.reset();
-	}
-	setStatus(SetStartpoint);
+        }
+        polyline.reset();
+    }
+    setStatus(SetStartpoint);
 }
 
 /*
@@ -138,8 +136,7 @@ void RS_ActionDrawLineFree::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetStartpoint:
     case Dragging:
-        RS_DIALOGFACTORY->updateMouseWidget(
-            tr("Click and drag to draw a line"), tr("Cancel"));
+        RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag to draw a line"), tr("Cancel"));
         break;
     default:
         RS_DIALOGFACTORY->updateMouseWidget();
@@ -148,7 +145,7 @@ void RS_ActionDrawLineFree::updateMouseButtonHints() {
 }
 
 void RS_ActionDrawLineFree::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

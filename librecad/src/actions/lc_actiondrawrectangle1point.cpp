@@ -146,6 +146,11 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
     }
 }
 
+void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+    LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
+    createRefSelectablePoint(snap, list);
+}
+
 void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coord,[[maybe_unused]] bool isRelativeZero, int status){
     switch (status) {
         case SetPoint1:
@@ -244,16 +249,16 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
 void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetHeight:
-            updateMouseWidgetTR("Specify height", "Back");
+            updateMouseWidgetTRBack("Specify height");
             break;
         case SetWidth:
-            updateMouseWidgetTR("Specify width", "Back");
+            updateMouseWidgetTRBack("Specify width");
             break;
         case SetSize:
-            updateMouseWidgetTR("Specify size (width, height)", "Back");
+            updateMouseWidgetTRBack("Specify size (width, height)");
             break;
         case SetPoint1Snap:
-            updateMouseWidgetTR("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]", "Back");
+            updateMouseWidgetTRBack("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]");
             break;
         default:
             updateMouseWidget();

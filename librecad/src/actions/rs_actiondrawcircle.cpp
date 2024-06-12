@@ -61,15 +61,11 @@ void RS_ActionDrawCircle::trigger() {
     circle->setPenToActive();
     container->addEntity(circle);
 
-    // upd. undo list:
-    if (document) {
-        document->startUndoCycle();
-        document->addUndoable(circle);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(circle);
+
     graphicView->redraw(RS2::RedrawDrawing);
     if (moveRelPointAtCenterAfterTrigger){
-        graphicView->moveRelativeZero(circle->getCenter());
+        moveRelativeZero(circle->getCenter());
     }
 
     setStatus(SetCenter);
@@ -91,15 +87,14 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
         }
         case SetRadius: {
             if (data->center.valid){
+//                fixme - complete support
+                //mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
-                preview->addEntity(new RS_Circle(preview.get(),
-                                                 *data));
-                if (drawCreationPointsOnPreview){
-                    addReferencePointToPreview(data->center);
-                    addReferencePointToPreview(mouse);
-                    addReferenceLineToPreview(data->center, mouse);
-                }
+                previewCircle(*data);
+                previewRefPoint(data->center);
+                previewRefSelectablePoint(mouse);
+                previewRefLine(data->center, mouse);
                 drawPreview();
             }
             break;
@@ -119,12 +114,12 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
         case SetCenter:
             data->center = mouse;
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             setStatus(SetRadius);
             break;
         case SetRadius:
             if (data->center.valid){
-                graphicView->moveRelativeZero(mouse);
+                moveRelativeZero(mouse);
                 data->radius = data->center.distanceTo(mouse);
                 trigger();
             }
@@ -153,7 +148,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
                 e->accept();
                 trigger();
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
         }
         default:
             break;
@@ -163,13 +158,13 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCenter:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify center"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
             break;
         case SetRadius:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point on circle"), tr("Back"));
+            updateMouseWidgetTRBack("Specify point on circle");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }

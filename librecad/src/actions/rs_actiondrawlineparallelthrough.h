@@ -37,49 +37,46 @@ class RS_Vector;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLineParallelThrough : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionDrawLineParallelThrough:public RS_PreviewActionInterface {
+Q_OBJECT
+protected:
+    void createOptionsWidget() override;
     enum Status {
         SetEntity,    /**< Choose original entity. */
-		SetPos,       /**< Setting point for this parallel to go through. */
-		SetNumber     /**< Setting number in the command line. */
-	};
-	
+        SetPos,       /**< Setting point for this parallel to go through. */
+        SetNumber     /**< Setting number in the command line. */
+    };
+
 public:
-    RS_ActionDrawLineParallelThrough(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDrawLineParallelThrough() override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	void finish(bool updateTB=true) override;
-
-	void updateMouseCursor() override;
-
-	int getNumber() const;
-
-	void setNumber(int n);
-
+    RS_ActionDrawLineParallelThrough(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawLineParallelThrough() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void finish(bool updateTB = true) override;
+    void updateMouseCursor() override;
+    int getNumber() const;
+    void setNumber(int n);
+    bool isSymmetric(){return symmetric;};
+    void setSymmetric(bool value){symmetric = value;};
 private:
     /** Closest parallel. */
-	RS_Entity* parallel=nullptr;
-	/** Number of parallels. */
-	int number=1;
-	/** Coordinate of the mouse. */
-	std::unique_ptr<RS_Vector> coord;
-	/** Original entity. */
-	RS_Entity* entity=nullptr;
-	/** Last status before entering length or number. */
+    RS_Entity *parallel = nullptr;
+/** Number of parallels. */
+    int number = 1;
+
+    bool symmetric = false;
+/** Coordinate of the mouse. */
+    std::unique_ptr<RS_Vector> coord;
+/** Original entity. */
+    RS_Entity *entity = nullptr;
+/** Last status before entering length or number. */
     Status lastStatus = SetEntity;
 };
 

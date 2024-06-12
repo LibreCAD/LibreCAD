@@ -28,38 +28,35 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLineAngle;
 namespace Ui {
-class Ui_LineAngleOptions;
+    class Ui_LineAngleOptions;
 }
-
-class QG_LineAngleOptions : public QWidget
-{
-    Q_OBJECT
+class QG_LineAngleOptions:public LC_ActionOptionsWidgetBase {
+Q_OBJECT
 
 public:
-    QG_LineAngleOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_LineAngleOptions();
-
-public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateAngle( const QString & a );
-    virtual void updateLength( const QString & l );
-    virtual void updateSnapPoint( int sp );
+    QG_LineAngleOptions();
+    ~QG_LineAngleOptions() override;
 
 protected:
-    RS_ActionDrawLineAngle* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
-
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+public slots:
+    void on_leAngle_editingFinished();
+    void on_leLength_editingFinished();
+    void on_cbSnapPoint_currentIndexChanged(int number);
+    void languageChange() override;
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
-	int m_snapPoint = 0;
-	bool m_bFixedAngle = false;
+    std::unique_ptr<Ui::Ui_LineAngleOptions> ui;
+    RS_ActionDrawLineAngle *action = nullptr;
+    void setAngleToActionAndView(QString val);
+    void setSnapPointToActionAndView(int val);
+    void setLengthToActionAndVeiw(QString val);
 };
 
 #endif // QG_LINEANGLEOPTIONS_H

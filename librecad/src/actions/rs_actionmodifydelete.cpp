@@ -60,8 +60,7 @@ void RS_ActionModifyDelete::trigger() {
 
     finish(false);
 
-	RS_DIALOGFACTORY->updateSelectionWidget(
-				container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 
@@ -81,7 +80,7 @@ void RS_ActionModifyDelete::updateMouseButtonHints() {
 
 
 void RS_ActionModifyDelete::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::DelCursor);
+    setMouseCursor(RS2::DelCursor);
 }
 
 // EOF

@@ -83,7 +83,7 @@ void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]QM
 RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(QMouseEvent *e){
     bool freeSnap = e->modifiers() & Qt::ShiftModifier;
     if (freeSnap){ // let free point snap if shift pressed
-        return snapFree(e);
+        return toGraph(e);
     }
     else{
         return snapPoint(e);
@@ -92,6 +92,7 @@ RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(QMouseEvent *e){
 
 void LC_ActionInfoPickCoordinates::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     // preview for this point
+    // todo - review - should we display normal or reference point?
     createPoint(snap, list);
     // preview for previously collected points
     int size = points.size();
@@ -115,5 +116,5 @@ void LC_ActionInfoPickCoordinates::updateQuickInfoWidget(const RS_Vector& coord)
 }
 
 void LC_ActionInfoPickCoordinates::updateMouseButtonHints(){
-    updateMouseWidgetTR("Select point","Cancel");
+    updateMouseWidgetTRCancel("Select point", Qt::ShiftModifier);
 }

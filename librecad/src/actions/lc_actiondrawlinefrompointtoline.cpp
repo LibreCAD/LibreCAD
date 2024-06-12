@@ -24,9 +24,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMouseEvent>
 #include "rs_math.h"
 #include "lc_linemath.h"
+#include "rs_point.h"
 #include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawlinefrompointtoline.h"
 #include "lc_linefrompointtolineoptions.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionDrawLineFromPointToLine::LC_ActionDrawLineFromPointToLine(
     QG_ActionHandler* a_handler,
@@ -50,7 +52,8 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayTrigger(){
  * @param list
  */
 void LC_ActionDrawLineFromPointToLine::doPrepareTriggerEntities(QList<RS_Entity *> &list){
-    RS_Line* line = createLineFromPointToTarget(targetLine);
+    RS_Vector intersection;
+    RS_Line* line = createLineFromPointToTarget(targetLine, intersection);
     list << line;
 }
 
@@ -110,7 +113,7 @@ void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused
         }
         case (SelectLine):{
             // try to select target line
-            RS_Entity* en = catchEntity(snapPoint, RS2::EntityLine, RS2::ResolveAll);
+            RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
             if (en != nullptr){
                 targetLine = dynamic_cast<RS_Line *>(en);
                 trigger();
@@ -141,14 +144,24 @@ bool LC_ActionDrawLineFromPointToLine::doCheckMayDrawPreview([[maybe_unused]] QM
  */
 void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     if (status == SelectLine){
-        RS_Entity* en = catchEntity(snap, RS2::EntityLine, RS2::ResolveAll);
+        RS_Entity* en = catchModifiableEntity(e, RS2::EntityLine);
+        RS_Line* line;
         if (en != nullptr){
             auto potentialLine = dynamic_cast<RS_Line *>(en);
-            addToHighlights(potentialLine);
-            auto line = createLineFromPointToTarget(potentialLine);
-
-            list << line;
+            highlightHover(potentialLine);
+            auto intersectionPoint = RS_Vector(false);
+            line = createLineFromPointToTarget(potentialLine, intersectionPoint);
+            createRefPoint(line->getEndpoint(), list);
+            if (sizeMode == SIZE_INTERSECTION && LC_LineMath::isMeaningful(endOffset)){
+                createRefPoint(intersectionPoint, list);
+            }
         }
+        else{
+            line = new RS_Line(startPoint, snap);
+        }
+        createRefSelectablePoint(snap, list);
+        createRefPoint(startPoint, list);
+        list << line;
     }
 }
 
@@ -180,7 +193,7 @@ void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(const RS_Vector &coord,
  * @param line
  * @return
  */
-RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *line){
+RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *line, RS_Vector& intersection){
     RS_Vector lineStart = line->getStartpoint();
     RS_Vector lineEnd = line->getEndpoint();
 
@@ -231,23 +244,21 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
 
             // determine intersection point
             RS_Vector intersectionPoint = LC_LineMath::getIntersectionLineLine(startPoint, vectorEnd, lineStart, lineEnd);
-            // process end offset from intersection point, if needed
-            if (LC_LineMath::isMeaningful(endOffset)){
-                RS_Vector offsetVector = RS_Vector::polar(endOffset, vectorAngle);
-                if (alternativeActionMode){
-                    intersectionPoint = intersectionPoint + offsetVector;
-                }
-                else{
-                    intersectionPoint = intersectionPoint - offsetVector;
-                }
-            }
 
             if (intersectionPoint.valid){
                 // rotate intersection back to return to drawing coordinates
                 RS_Vector restoredIntersection = intersectionPoint.rotate(startPoint, targetLineAngle);
+                // process end offset from intersection point, if needed
+                RS_Vector endPoint = restoredIntersection;
+                if (LC_LineMath::isMeaningful(endOffset)){
+                    RS_Vector offsetVector = RS_Vector::polar(endOffset, startPoint.angleTo(restoredIntersection));
+                    endPoint = restoredIntersection + offsetVector;
+                }
+
+                intersection  = restoredIntersection;
 
                 // end of the line to be build is intersection point
-                ortLineEnd = restoredIntersection;
+                ortLineEnd = endPoint;
             } else {
                 // should not be there - if we're here, it means calculation error, since it is always should be possible to create a line from point to line
                 ortLineEnd = ortLineStart;
@@ -303,10 +314,10 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
 void LC_ActionDrawLineFromPointToLine::updateMouseButtonHints(){
     switch (getStatus()){
         case SetPoint:
-            updateMouseWidgetTR("Select Initial Point", "Cancel");
+            updateMouseWidgetTRCancel("Select Initial Point", Qt::ShiftModifier);
             break;
         case SelectLine:
-            updateMouseWidgetTR("Select Line", "Back");
+            updateMouseWidgetTRBack("Select Line", (orthogonalMode && (sizeMode == SIZE_INTERSECTION))? Qt::NoModifier : Qt::ShiftModifier);
             break;
         default:
             break;

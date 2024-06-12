@@ -28,7 +28,7 @@
 #include <cmath>
 #include "rs_dimaligned.h"
 #include "rs_line.h"
-
+#include "rs_point.h"
 #include "rs_graphic.h"
 #include "rs_units.h"
 #include "rs_constructionline.h"
@@ -76,7 +76,6 @@ RS_DimAligned::RS_DimAligned(RS_EntityContainer* parent,
 
     calculateBorders();
 }
-
 
 
 /**
@@ -225,6 +224,13 @@ void RS_DimAligned::updateDim(bool autoText) {
     calculateBorders();
 }
 
+void RS_DimAligned::getDimPoints(RS_Vector& dimP1, RS_Vector& dimP2){
+    double extAngle = edata.extensionPoint2.angleTo(data.definitionPoint);
+    RS_Vector e1 = RS_Vector::polar(1.0, extAngle);
+    double extLength = edata.extensionPoint2.distanceTo(data.definitionPoint);
+    dimP1 = edata.extensionPoint1 + e1*extLength;
+    dimP2 = edata.extensionPoint2 + e1*extLength;
+}
 
 void RS_DimAligned::updateDimPoint(){
     // temporary construction line

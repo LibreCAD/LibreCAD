@@ -76,9 +76,9 @@ void LC_AbstractActionDrawLine::doInitialSnapToRelativeZero(RS_Vector relZero){
  */
 RS_Vector LC_AbstractActionDrawLine::doGetMouseSnapPoint(QMouseEvent *e){
     RS_Vector snapped = snapPoint(e);
-    // Snapping to angle(15*) if shift key is pressed
-    if (alternativeActionMode){
-        snapped = snapToAngle(snapped, getStartPointForAngleSnap());
+    if (direction == DIRECTION_POINT || direction == DIRECTION_NONE){
+        // Snapping to angle(15*) if shift key is pressed
+        snapped = getSnapAngleAwarePoint(e, getStartPointForAngleSnap(), snapped, isMouseMove(e));
     }
     return snapped;
 }

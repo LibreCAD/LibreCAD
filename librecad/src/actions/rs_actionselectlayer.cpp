@@ -44,7 +44,7 @@ void RS_ActionSelectLayer::mouseMoveEvent(QMouseEvent *event){
     deleteHighlights();
     auto ent = catchEntity(event);
     if (ent != nullptr){
-        addToHighlights(ent);
+        highlightHover(ent);
     }
     drawHighlights();
 }
@@ -53,7 +53,7 @@ void RS_ActionSelectLayer::trigger(){
     if (en){
         RS_Selection s(*container, graphicView);
         s.selectLayer(en);
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+        updateSelectionWidget();
     } else {
         RS_DEBUG->print("RS_ActionSelectLayer::trigger: Entity is NULL\n");
     }
@@ -69,7 +69,7 @@ void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionSelectLayer::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

@@ -37,58 +37,56 @@
 #include "rs_math.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "qg_roundoptions.h"
 
-namespace{
+namespace {
 // supported entity types for fillet
-EntityTypeList eType = {{RS2::EntityLine,
-                         RS2::EntityPolyline,
-                         RS2::EntityArc,
-                         RS2::EntityCircle,
-                         RS2::EntityEllipse,
-                         RS2::EntitySpline}};
+    EntityTypeList eType = {{RS2::EntityLine,
+//                             RS2::EntityPolyline, // not atomic
+                             RS2::EntityArc,
+                             RS2::EntityCircle,
+                             RS2::EntityEllipse,
+                             RS2::EntitySpline}};
 
 // Whether the point is on an endPoint of the entity
-bool atEndPoint(RS_Entity &entity, const RS_Vector &point)
-{
-    double distance = 1.;
-    entity.getNearestEndpoint(point, &distance);
-    return distance < RS_TOLERANCE;
-}
+    bool atEndPoint(RS_Entity &entity, const RS_Vector &point){
+        double distance = 1.;
+        entity.getNearestEndpoint(point, &distance);
+        return distance < RS_TOLERANCE;
+    }
 
-bool atEndPoint(RS_Entity &entity1, RS_Entity &entity2, const RS_Vector &point)
-{
-    return atEndPoint(entity1, point) || atEndPoint(entity2, point);
+    bool atEndPoint(RS_Entity &entity1, RS_Entity &entity2, const RS_Vector &point){
+        return atEndPoint(entity1, point) || atEndPoint(entity2, point);
+    }
 }
-}
-
 struct RS_ActionModifyRound::Points {
     RS_Vector coord1;
     RS_Vector coord2;
     RS_RoundData data{};
 };
 
-RS_ActionModifyRound::RS_ActionModifyRound(RS_EntityContainer& container,
-                                           RS_GraphicView& graphicView)
+// fixme - review cases for rounding circles and arcs, it's weird enough
+// fixme - potentially, it's better to support more fine grained trim mode that will control which entities should be trimmed (first, second, both)?
+
+RS_ActionModifyRound::RS_ActionModifyRound(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("Round Entities",
-                               container, graphicView)
-    , pPoints(std::make_unique<Points>())
-    ,lastStatus(SetEntity1)
-{
+                               container, graphicView), pPoints(std::make_unique<Points>()), lastStatus(SetEntity1){
     setActionType(RS2::ActionModifyRound);
 }
 
 RS_ActionModifyRound::~RS_ActionModifyRound() = default;
 
-void RS_ActionModifyRound::init(int status) {
-    RS_ActionInterface::init(status);
+
+void RS_ActionModifyRound::init(int status){
+    RS_PreviewActionInterface::init(status);
 
     snapMode.clear();
     snapMode.restriction = RS2::RestrictNothing;
 }
 
-void RS_ActionModifyRound::finish(bool updateTB)
-{
-    unhighlightEntity();
+void RS_ActionModifyRound::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -97,16 +95,14 @@ void RS_ActionModifyRound::finish(bool updateTB)
 
     - by Melwyn Francis Carlo.
 */
-bool RS_ActionModifyRound::removeOldFillet(RS_Entity* e, const bool& isPolyline)
-{
-    if (e == nullptr || e->rtti() != RS2::EntityArc || entity1 == nullptr || entity2 == nullptr)
+bool RS_ActionModifyRound::removeOldFillet(RS_Entity *e, const bool &isPolyline){
+    if (!isArc(e) || entity1 == nullptr || entity2 == nullptr)
         return false;
 
-    auto isChained = [this](const RS_Vector &point) {
+    auto isChained = [this](const RS_Vector &point){
         return atEndPoint(*entity1, *entity2, point);
     };
     std::vector<RS_Vector> endPoints = {e->getStartpoint(), e->getEndpoint()};
-
     bool chained = std::all_of(endPoints.begin(), endPoints.end(), isChained);
     if (!chained)
         return false;
@@ -117,33 +113,26 @@ bool RS_ActionModifyRound::removeOldFillet(RS_Entity* e, const bool& isPolyline)
     return true;
 }
 
-
-void RS_ActionModifyRound::trigger() {
+void RS_ActionModifyRound::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyRound::trigger()");
 
     if (entity1 && entity1->isAtomic() &&
-            entity2 && entity2->isAtomic()) {
+        entity2 && entity2->isAtomic()){
 
-        unhighlightEntity();
         deletePreview();
 
         bool foundPolyline = false;
 
-        if ((entity1->getParent() != nullptr) && (entity2->getParent() != nullptr))
-        {
-            if ((entity1->getParent()->rtti() == RS2::EntityPolyline)
-                    &&  (entity2->getParent()->rtti() == RS2::EntityPolyline)
-                    &&  (entity1->getParent() == entity2->getParent()))
-            {
+        if ((entity1->getParent() != nullptr) && (entity2->getParent() != nullptr)){
+            if (isPolyline(entity1->getParent()) &&
+                isPolyline(entity2->getParent()) &&
+                (entity1->getParent() == entity2->getParent())){
                 foundPolyline = true;
 
-                for (auto* e : entity1->getParent()->getEntityList())
-                {
-                    if ((e != entity1) && (e != entity2))
-                    {
-                        if (removeOldFillet(e, foundPolyline))
-                        {
+                for (auto *e: entity1->getParent()->getEntityList()) {
+                    if ((e != entity1) && (e != entity2)){
+                        if (removeOldFillet(e, foundPolyline)){
                             entity1->getParent()->removeEntity(e);
                             break;
                         }
@@ -151,11 +140,9 @@ void RS_ActionModifyRound::trigger() {
                 }
             }
 
-            if (!foundPolyline) {
-                for (auto* e : graphicView->getContainer()->getEntityList())
-                {
-                    if ((e != entity1) && (e != entity2))
-                    {
+            if (!foundPolyline){
+                for (auto *e: graphicView->getContainer()->getEntityList()) {
+                    if ((e != entity1) && (e != entity2)){
                         if (removeOldFillet(e, foundPolyline))
                             break;
                     }
@@ -166,9 +153,9 @@ void RS_ActionModifyRound::trigger() {
         RS_Modification m(*container, graphicView);
         m.round(pPoints->coord2,
                 pPoints->coord1,
-                (RS_AtomicEntity*)entity1,
+                (RS_AtomicEntity *) entity1,
                 pPoints->coord2,
-                (RS_AtomicEntity*)entity2,
+                (RS_AtomicEntity *) entity2,
                 pPoints->data);
 
         //coord = RS_Vector(false);
@@ -176,201 +163,241 @@ void RS_ActionModifyRound::trigger() {
         entity1 = nullptr;
         pPoints->coord2 = RS_Vector(false);
         entity2 = nullptr;
+        // fixme - decide to which state go after trigger - probably it's more convenient to say in SetEntity2?
         setStatus(SetEntity1);
-
-        RS_DIALOGFACTORY->updateSelectionWidget(
-                    container->countSelected(),
-                    container->totalSelectedLength());
+        graphicView->redraw();
+        updateSelectionWidget();
     }
 }
 
-
-
-void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent begin");
 
-    RS_Vector mouse = graphicView->toGraph(e->position());
-    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
+    RS_Vector mouse = toGraph(e);
+    RS_Entity *se = catchEntity(e, eType, RS2::ResolveAllButTextImage);
+    deleteHighlights();
+    deletePreview();
 
     switch (getStatus()) {
-    case SetEntity1:
-    if (RS_Information::isTrimmable(se)) {
-        entity1 = se;
-        pPoints->coord1 = mouse;
+        case SetEntity1: {
+            if (se != nullptr){
+                if (RS_Information::isTrimmable(se)){
+                    highlightHover(se);
+                }
+            }
+            break;
+        }
+        case SetEntity2: {
+            highlightSelected(entity1);
+            if (se != nullptr){
+                if (entity1 != se && RS_Information::isTrimmable(se) && se->isAtomic()){
+
+                    RS_Vector coord2 = se->getNearestPointOnEntity(mouse, true);
+                    RS_Entity *tmp1 = entity1->clone();
+                    RS_Entity *tmp2 = se->clone();
+                    tmp1->reparent(preview.get());
+                    tmp2->reparent(preview.get());
+                    previewEntity(tmp1);
+                    previewEntity(tmp2);
+
+                    bool trim = pPoints->data.trim;
+//                    pPoints->data.trim = false;
+                    RS_Modification m(*preview, nullptr, false);
+                    LC_RoundResult *roundResult = m.round(mouse,
+                                                          pPoints->coord1,
+                                                          (RS_AtomicEntity *) tmp1,
+                                                          coord2,
+                                                          (RS_AtomicEntity *) tmp2,
+                                                          pPoints->data);
+
+                    if (roundResult != nullptr && roundResult->error == LC_RoundResult::OK){
+                        highlightHover(se);
+                        auto *arc = roundResult->round;
+                        if (arc != nullptr){
+                            RS_Vector arcStartPoint = arc->getStartpoint();
+                            RS_Vector arcEndPoint = arc->getEndpoint();
+                            previewRefPoint(arcStartPoint);
+                            previewRefPoint(arcEndPoint);
+                            previewRefPoint(pPoints->coord1);
+                            previewRefSelectablePoint(coord2);
+                            previewRefPoint(mouse);
+                            previewRefLine(mouse, coord2);
+
+                            if (trim){
+                                previewEntityModifications(entity1, roundResult->trimmed1, arcStartPoint, roundResult->trim1Mode);
+                                previewEntityModifications(se, roundResult->trimmed2, arcEndPoint, roundResult->trim2Mode);
+                                preview->removeEntity(roundResult->trimmed1);
+                                preview->removeEntity(roundResult->trimmed2);
+                            }
+                        }
+                    }
+
+                    pPoints->data.trim = trim;
+
+                    preview->removeEntity(tmp1);
+                    preview->removeEntity(tmp2);
+
+                }
+            }
+            break;
+        }
+        default:
+            break;
     }
-    break;
-
-    case SetEntity2:
-    if (entity1 != entity2 && entity2 != nullptr && entity2->isHighlighted())
-        graphicView->drawEntityHighlighted(entity2, false);
-
-    if (entity1 != se && RS_Information::isTrimmable(se) && se->isAtomic()) {
-        entity2 = se;
-        pPoints->coord2 = mouse;
-        graphicView->drawEntityHighlighted(entity2, true);
-
-        deletePreview();
-        RS_Entity* tmp1 = entity1->clone();
-        RS_Entity* tmp2 = entity2->clone();
-        tmp1->reparent(preview.get());
-        tmp2->reparent(preview.get());
-        preview->addEntity(tmp1);
-        preview->addEntity(tmp2);
-
-        bool trim = pPoints->data.trim;
-        pPoints->data.trim = false;
-        RS_Modification m(*preview, nullptr, false);
-        m.round(pPoints->coord2,
-                pPoints->coord1,
-                (RS_AtomicEntity*)tmp1,
-                pPoints->coord2,
-                (RS_AtomicEntity*)tmp2,
-                pPoints->data);
-        pPoints->data.trim = trim;
-
-        preview->removeEntity(tmp1);
-        preview->removeEntity(tmp2);
-        drawPreview();
-    }
-    break;
-
-    default:
-    break;
-    }
+    drawPreview();
+    drawHighlights();
 
     RS_DEBUG->print("RS_ActionModifyRound::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent* e) {
-    RS_Vector mouse = graphicView->toGraph(e->position());
-    RS_Entity* se = catchEntity(e, eType, RS2::ResolveAll);
-
-    if (e->button()==Qt::LeftButton) {
-        switch (getStatus()) {
-        case SetEntity1:
-        graphicView->drawEntityHighlighted(entity1, false);
-
-        entity1 = se;
-        pPoints->coord1 = mouse;
-        if (entity1 && entity1->isAtomic() &&
-                RS_Information::isTrimmable(entity1)) {
-            graphicView->drawEntityHighlighted(entity1, true);
-            setStatus(SetEntity2);
+void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode){
+    bool decreased = modified->getLength() < original->getLength();
+    if (isLine(modified)){
+        if (decreased){
+            if (mode == LC_RoundResult::TRIM_START){
+                previewRefLine(modified->getStartpoint(), original->getStartpoint());
+            }
+            else{
+                previewRefLine(modified->getEndpoint(), original->getEndpoint());
+            }
         }
-        break;
-
-        case SetEntity2:
-        entity2 = se;
-        pPoints->coord2 = mouse;
-        if (entity2 && entity2->isAtomic() &&
-                RS_Information::isTrimmable(entity1, entity2)) {
-            //setStatus(ChooseRounding);
-            trigger();
+        else{
+            if (mode == LC_RoundResult::TRIM_START){
+                previewRefPoint(original->getStartpoint());
+                previewLine(original->getStartpoint(), roundPoint);
+            }
+            else{
+                previewRefPoint(original->getEndpoint());
+                previewLine(original->getEndpoint(), roundPoint);
+            }
         }
-        break;
-
-        default:
-        break;
-        }
-    } else if (e->button()==Qt::RightButton) {
-        unhighlightEntity();
-        deletePreview();
-        init(getStatus()-1);
+    }
+    else if (this->isArc(modified)){
+            auto* newArc = dynamic_cast<RS_Arc*>(modified);
+            RS_ArcData arcData = newArc->getData();
+            std::swap(arcData.angle1, arcData.angle2);
+            previewRefArc(arcData);
     }
 }
 
+void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent *e){
+    RS_Vector mouse = toGraph(e);
+    RS_Entity *se = catchEntity(e, eType, RS2::ResolveAll);
 
+    if (e->button() == Qt::LeftButton){
+        switch (getStatus()) {
+            case SetEntity1: {
+                if (se && se->isAtomic() &&
+                    RS_Information::isTrimmable(se)){
+                    entity1 = se;
+                    pPoints->coord1 = se->getNearestPointOnEntity(mouse, true);
+                    setStatus(SetEntity2);
+                }
+                break;
+            }
+            case SetEntity2: {
+                if (se && se->isAtomic() &&
+                    RS_Information::isTrimmable(entity1, se)){
+                    entity2 = se;
+                    pPoints->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
+                    //setStatus(ChooseRounding);
+                    trigger();
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    } else if (e->button() == Qt::RightButton){
+        deletePreview();
+        init(getStatus() - 1);
+    }
+}
 
-void RS_ActionModifyRound::commandEvent(RS_CommandEvent* e) {
+void RS_ActionModifyRound::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(
-                    msgAvailableCommands() +
-                    getAvailableCommands().join(", "));
+    if (checkCommand("help", c)){
+        commandMessage( msgAvailableCommands() +  getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetEntity1:
-    case SetEntity2:
-    if (checkCommand("radius", c)) {
-        e->accept();
-        deletePreview();
-        lastStatus = (Status)getStatus();
-        setStatus(SetRadius);
-    } else if (checkCommand("trim", c)) {
-        e->accept();
-        deletePreview();
-        lastStatus = (Status)getStatus();
-        setStatus(SetTrim);
-        pPoints->data.trim = !pPoints->data.trim;
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-    } else {
-        bool ok;
-        double r = RS_Math::eval(c, &ok);
-        if(ok && r > 1.0e-10) {
-            e->accept();
-            pPoints->data.radius = r;
-        } else
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-        setStatus(lastStatus);
-    }
-    break;
+        case SetEntity1:
+        case SetEntity2: {
+            if (checkCommand("radius", c)){
+                e->accept();
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetRadius);
+            } else if (checkCommand("trim", c)){
+                e->accept();
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetTrim);
+                pPoints->data.trim = !pPoints->data.trim;
+                updateOptions();
+            } else {
+                bool ok;
+                double r = RS_Math::eval(c, &ok);
+                if (ok && r > 1.0e-10){
+                    e->accept();
+                    pPoints->data.radius = r;
+                } else
+                    commandMessageTR("Not a valid expression");
+                updateOptions();
 
-    case SetRadius: {
-        bool ok;
-        double r = RS_Math::eval(c, &ok);
-        if (ok) {
-            e->accept();
-            pPoints->data.radius = r;
-        } else
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        RS_DIALOGFACTORY->requestOptions(this, true, true);
-        setStatus(lastStatus);
-    }
-    break;
-
-    /*case SetTrim: {
-        if (c==cmdYes.lower() || c==cmdYes2) {
-        data->trim = true;
-    } else if (c==cmdNo.lower() || c==cmdNo2) {
-        data->trim = false;
-                } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Please enter 'Yes' "
-               "or 'No'"));
-                }
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
                 setStatus(lastStatus);
             }
-            break;*/
+            break;
+        }
+        case SetRadius: {
+            bool ok;
+            double r = RS_Math::eval(c, &ok);
+            if (ok){
+                e->accept();
+                pPoints->data.radius = r;
+            } else {
+                commandMessageTR("Not a valid expression");
+            }
+            updateOptions();
+            setStatus(lastStatus);
+            break;
+        }
+            /*case SetTrim: {
+                if (c==cmdYes.lower() || c==cmdYes2) {
+                data->trim = true;
+            } else if (c==cmdNo.lower() || c==cmdNo2) {
+                data->trim = false;
+                        } else {
+                            RS_DIALOGFACTORY->commandMessage(tr("Please enter 'Yes' "
+                       "or 'No'"));
+                        }
+                        RS_DIALOGFACTORY->requestOptions(this, true, true);
+                        setStatus(lastStatus);
+                    }
+                    break;*/
 
-    default:
-    break;
+        default:
+            break;
     }
 }
 
-
-
-QStringList RS_ActionModifyRound::getAvailableCommands() {
+QStringList RS_ActionModifyRound::getAvailableCommands(){
     QStringList cmd;
     switch (getStatus()) {
-    case SetEntity1:
-    case SetEntity2:
-    cmd += command("radius");
-    cmd += command("trim");
-    break;
-    default:
-    break;
+        case SetEntity1:
+        case SetEntity2:
+            cmd += command("radius");
+            cmd += command("trim");
+            break;
+        default:
+            break;
     }
     return cmd;
 }
 
-
-void RS_ActionModifyRound::setRadius(double r) {
+void RS_ActionModifyRound::setRadius(double r){
     pPoints->data.radius = r;
 }
 
@@ -378,7 +405,7 @@ double RS_ActionModifyRound::getRadius() const{
     return pPoints->data.radius;
 }
 
-void RS_ActionModifyRound::setTrim(bool t) {
+void RS_ActionModifyRound::setTrim(bool t){
     pPoints->data.trim = t;
 }
 
@@ -386,56 +413,35 @@ bool RS_ActionModifyRound::isTrimOn() const{
     return pPoints->data.trim;
 }
 
-void RS_ActionModifyRound::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-
-
-void RS_ActionModifyRound::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
-
-
-void RS_ActionModifyRound::updateMouseButtonHints() {
+void RS_ActionModifyRound::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetEntity1:
-    RS_DIALOGFACTORY->updateMouseWidget(
+        case SetEntity1:
+            updateMouseWidget(
                 tr("Specify first entity or enter radius <%1>").arg(getRadius()),
                 tr("Back"));
-    break;
-    case SetEntity2:
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second entity"),
-                                        tr("Back"));
-    break;
-    case SetRadius:
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Enter radius:"),
-                                        tr("Cancel"));
-    break;
-    /*case SetTrim:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
-                                                    "");
-                break;*/
-    default:
-    RS_DIALOGFACTORY->updateMouseWidget();
-    break;
+            break;
+        case SetEntity2:
+            updateMouseWidgetTRBack("Specify second entity");
+            break;
+        case SetRadius:
+            updateMouseWidgetTRCancel("Enter radius:");
+            break;
+            /*case SetTrim:
+                        RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),
+                                                            "");
+                        break;*/
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
-
-
-void RS_ActionModifyRound::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+void RS_ActionModifyRound::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_RoundOptions>();
 }
 
-void RS_ActionModifyRound::unhighlightEntity()
-{
-    graphicView->drawEntityHighlighted(entity1, false);
-    graphicView->drawEntityHighlighted(entity2, false);
+void RS_ActionModifyRound::updateMouseCursor(){
+    setMouseCursor(RS2::SelectCursor);
 }
+
 // EOF

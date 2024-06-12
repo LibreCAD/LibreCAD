@@ -81,6 +81,10 @@ public:
         return RS2::EntityUnknown;
     }
 
+    bool is(RS2::EntityType rttiCandidate) const{
+        return rtti() == rttiCandidate;
+    }
+
     /**
      * Identify all entities as undoable entities.
      * @return RS2::UndoableEntity
@@ -129,7 +133,7 @@ public:
         parent = p;
     }
     /** @return The center point (x) of this arc */
-    //get center for entities: arc, circle and ellipse
+    //get center for entities arc, circle and ellipse
     virtual RS_Vector getCenter() const;
     virtual double getRadius() const;
     virtual RS_Graphic *getGraphic() const;
@@ -592,6 +596,8 @@ m0 x + m1 y + m2 =0
  * @return true if entity is Arc, Circle, or Line
  */
     virtual bool isArcCircleLine() const;
+
+    bool isParentIgnoredOnModifications() const;
 
 protected:
 //! Entity's parent entity or nullptr is this entity has no parent.

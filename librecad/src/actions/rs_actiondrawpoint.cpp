@@ -33,8 +33,9 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_point.h"
+#include "rs_actioninterface.h"
 
-    RS_ActionDrawPoint::RS_ActionDrawPoint(
+RS_ActionDrawPoint::RS_ActionDrawPoint(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("Draw Points",
@@ -49,28 +50,29 @@ void RS_ActionDrawPoint::trigger(){
         auto *point = new RS_Point(container, RS_PointData(*pt));
         container->addEntity(point);
 
-        if (document){
-            document->startUndoCycle();
-            document->addUndoable(point);
-            document->endUndoCycle();
-        }
+        addToDocumentUndoable(point);
 
-        graphicView->moveRelativeZero(*pt);
+        moveRelativeZero(*pt);
         graphicView->redraw((RS2::RedrawMethod) (RS2::RedrawDrawing | RS2::RedrawOverlay));
     }
 }
 
 void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
-    snapPoint(e);
-    trySnapToRelZeroCoordinateEvent(e);
+    RS_Vector pos = snapPoint(e);
+    deletePreview();
+    if (!trySnapToRelZeroCoordinateEvent(e)){
+        pos = getFreeSnapAwarePointAlt(e, pos);
+        previewPoint(pos);
+        previewRefSelectablePoint(pos);
+        drawPreview();
+    };
 }
-
-
 
 void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+       RS_Vector snap = snapPoint(e);
+        snap = getFreeSnapAwarePointAlt(e, snap);
+        fireCoordinateEvent(snap);
     } else if (e->button() == Qt::RightButton){
         init(getStatus() - 1);
     }
@@ -104,16 +106,16 @@ QStringList RS_ActionDrawPoint::getAvailableCommands(){
 void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify location"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify location", Qt::ShiftModifier | Qt::ControlModifier);
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionDrawPoint::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

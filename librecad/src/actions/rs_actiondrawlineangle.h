@@ -37,67 +37,49 @@
  */
 class RS_ActionDrawLineAngle : public RS_PreviewActionInterface {
 	Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 public:
     /**
      * Action States.
      */
     enum Status {
         SetPos,       /**< Setting the position.  */
-		SetAngle,     /**< Setting angle in the command line. */
-		SetLength     /**< Setting length in the command line. */
+        SetAngle,     /**< Setting angle in the command line. */
+        SetLength     /**< Setting length in the command line. */
     };
-
-
-    enum SnapMode{
+    enum SnapMode {
         SNAP_START, SNAP_MIDDLE, SNAP_END
     };
-
-
-    RS_ActionDrawLineAngle(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView,
-                           double angle=0.0,
-                           bool fixedAngle=false,
-                           RS2::ActionType actionType=RS2::ActionDrawLineAngle);
-	~RS_ActionDrawLineAngle() override;
-
+    RS_ActionDrawLineAngle(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        double angle = 0.0,
+        bool fixedAngle = false,
+        RS2::ActionType actionType = RS2::ActionDrawLineAngle);
+    ~RS_ActionDrawLineAngle() override;
     void reset();
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void preparePreview();
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	void setSnapPoint(int sp);
-
-	int getSnapPoint() const;
-
-	void setAngle(double a);
-
-	double getAngle() const;
-
-	void setLength(double l);
-
-	double getLength() const;
-
-	bool hasFixedAngle() const;
-
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void preparePreview();
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setSnapPoint(int sp);
+    int getSnapPoint() const;
+    void setAngle(double a);
+    double getAngle() const;
+    void setLength(double l);
+    double getLength() const;
+    bool hasFixedAngle() const;
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
- bool persistRelativeZero = false;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    bool persistRelativeZero = false;
 };
 
 #endif

@@ -85,7 +85,7 @@ void LC_ActionInfoProperties::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e){
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector mouse = toGraph(e);
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
@@ -108,7 +108,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
         return;
     }
 
-    const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
+    const double hoverToleranceFactor = entity->is(RS2::EntityEllipse)
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
 
@@ -122,7 +122,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
 
-    RS_Vector currentMousePosition = graphicView->toGraph(event->position());
+    RS_Vector currentMousePosition = toGraph(event);
     if (((entity->rtti() >= RS2::EntityDimAligned) && (entity->rtti() <= RS2::EntityDimLeader))
         ||   (entity->rtti() == RS2::EntityText)       || (entity->rtti() == RS2::EntityMText))
     {
@@ -193,6 +193,6 @@ void LC_ActionInfoProperties::clearQuickInfoWidget(){
 }
 
 void LC_ActionInfoProperties::updateMouseButtonHints(){
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Select entity"), tr("Cancel"));
+    updateMouseWidgetTRCancel("Select entity");
 }
 

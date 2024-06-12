@@ -37,21 +37,18 @@ struct RS_DimRadialData {
     /**
      * Default constructor. Leaves the data object uninitialized.
      */
-	RS_DimRadialData();
-
+    RS_DimRadialData();
     /**
      * Constructor with initialisation.
      *
      * @param definitionPoint Definition point of the radial dimension.
      * @param leader Leader length.
      */
-    RS_DimRadialData(const RS_Vector& definitionPoint,
-					 double leader);
-
+    RS_DimRadialData(const RS_Vector &definitionPoint,double leader);
     /** Definition point. */
     RS_Vector definitionPoint;
     /** Leader length. */
-    double leader=0.;
+    double leader = 0.;
 };
 
 std::ostream& operator << (std::ostream& os,

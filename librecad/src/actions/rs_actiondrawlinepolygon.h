@@ -27,21 +27,24 @@
 #ifndef RS_ACTIONDRAWLINEPOLYGON_H
 #define RS_ACTIONDRAWLINEPOLYGON_H
 
-#include "rs_previewactioninterface.h"
 
+#include "lc_actiondrawlinepolygonbase.h"
 
 /**
  * This action class can handle user events to draw polygons.
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLinePolygonCenCor : public RS_PreviewActionInterface {
+class RS_ActionDrawLinePolygonCenCor : public LC_ActionDrawLinePolygonBase {
 	Q_OBJECT
+
+protected:
+
     enum Status {
         SetCenter,    /**< Setting center. */
-		SetCorner,    /**< Setting corner. */
-		SetNumber     /**< Setting number in the command line. */
-	};
+        SetCorner,    /**< Setting corner. */
+        SetNumber     /**< Setting number in the command line. */
+    };
 	
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
@@ -56,26 +59,13 @@ public:
 	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseCursor() override;
-
-	int getNumber() const{
-		return number;
-	}
-
-	void setNumber(int n) {
-		number = n;
-	}
+	QStringList getAvailableCommands() override;
 
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 	/** Number of edges. */
-    int number = 0;
+
 	/** Last status before entering text. */
     Status lastStatus = SetCenter;
 };

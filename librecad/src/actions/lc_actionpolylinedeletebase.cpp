@@ -3,8 +3,7 @@
 #include "rs_modification.h"
 #include "rs_graphicview.h"
 #include "lc_actionpolylinedeletebase.h"
-
-
+#include "rs_actioninterface.h"
 
 LC_ActionPolylineDeleteBase::LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView)
    :RS_PreviewActionInterface(name,container, graphicView){
@@ -37,7 +36,7 @@ void LC_ActionPolylineDeleteBase::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void LC_ActionPolylineDeleteBase::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 void LC_ActionPolylineDeleteBase::finish(bool updateTB){

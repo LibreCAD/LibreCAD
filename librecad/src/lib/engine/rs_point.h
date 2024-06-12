@@ -47,75 +47,71 @@ struct RS_PointData {
  *
  * @author Andrew Mustun
  */
-class RS_Point : public RS_AtomicEntity {
+class RS_Point:public RS_AtomicEntity {
 public:
-    RS_Point(RS_EntityContainer* parent,
-             const RS_PointData& d);
-
-	RS_Entity* clone() const override;
-
+    RS_Point(
+        RS_EntityContainer *parent,
+        const RS_PointData &d);
+    RS_Entity *clone() const override;
     /**	@return RS_ENTITY_POINT */
-	RS2::EntityType rtti() const override;
-
+    RS2::EntityType rtti() const override;
     /**
          * @return Start point of the entity.
          */
-	RS_Vector getStartpoint() const override;
+    RS_Vector getStartpoint() const override;
     /**
          * @return End point of the entity.
          */
-	RS_Vector getEndpoint() const override;
-
-		void moveStartpoint(const RS_Vector& pos) override;
-
+    RS_Vector getEndpoint() const override;
+    void moveStartpoint(const RS_Vector &pos) override;
     /** @return Copy of data that defines the point. */
     RS_PointData getData() const;
-
-	RS_VectorSolutions getRefPoints() const override;
-
+    RS_VectorSolutions getRefPoints() const override;
     /** @return Position of the point */
     RS_Vector getPos() const;
-
     /** Sets a new position for this point. */
-    void setPos(const RS_Vector& pos);
-	RS_Vector getCenter() const override;
-	double getRadius() const override;
-	bool isTangent(const RS_CircleData& circleData) const override;
-
-	RS_Vector getMiddlePoint(void)const override;
-	RS_Vector getNearestEndpoint(const RS_Vector& coord,
-										 double* dist = nullptr)const override;
-	RS_Vector getNearestPointOnEntity(const RS_Vector& coord,
-			bool onEntity = true, double* dist = nullptr, RS_Entity** entity = nullptr)const override;
-	RS_Vector getNearestCenter(const RS_Vector& coord,
-									   double* dist = nullptr)const override;
-	RS_Vector getNearestMiddle(const RS_Vector& coord,
-                                       double* dist = nullptr,
-									   int middlePoints = 1)const override;
-	RS_Vector getNearestDist(double distance,
-                                     const RS_Vector& coord,
-									 double* dist = nullptr)const override;
-	double getDistanceToPoint(const RS_Vector& coord,
-                                      RS_Entity** entity=nullptr,
-                                      RS2::ResolveLevel level=RS2::ResolveNone,
-							  double solidDist = RS_MAXDOUBLE)const override;
-
-	void move(const RS_Vector& offset) override;
-	void rotate(const RS_Vector& center, const double& angle) override;
-	void rotate(const RS_Vector& center, const RS_Vector& angleVector) override;
-	void scale(const RS_Vector& center, const RS_Vector& factor) override;
-	void mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) override;
-    RS_Entity& shear(double k) override;
-
-	void draw(RS_Painter* painter, RS_GraphicView* view, double& patternOffset) override;
-
-    friend std::ostream& operator << (std::ostream& os, const RS_Point& p);
-
+    void setPos(const RS_Vector &pos);
+    RS_Vector getCenter() const override;
+    double getRadius() const override;
+    bool isTangent(const RS_CircleData &circleData) const override;
+    RS_Vector getMiddlePoint(void) const override;
+    RS_Vector getNearestEndpoint(
+        const RS_Vector &coord,
+        double *dist = nullptr) const override;
+    RS_Vector getNearestPointOnEntity(
+        const RS_Vector &coord,
+        bool onEntity = true, double *dist = nullptr, RS_Entity **entity = nullptr) const override;
+    RS_Vector getNearestCenter(
+        const RS_Vector &coord,
+        double *dist = nullptr) const override;
+    RS_Vector getNearestMiddle(
+        const RS_Vector &coord,
+        double *dist = nullptr,
+        int middlePoints = 1) const override;
+    RS_Vector getNearestDist(
+        double distance,
+        const RS_Vector &coord,
+        double *dist = nullptr) const override;
+    double getDistanceToPoint(
+        const RS_Vector &coord,
+        RS_Entity **entity = nullptr,
+        RS2::ResolveLevel level = RS2::ResolveNone,
+        double solidDist = RS_MAXDOUBLE) const override;
+    void move(const RS_Vector &offset) override;
+    void rotate(const RS_Vector &center, const double &angle) override;
+    void rotate(const RS_Vector &center, const RS_Vector &angleVector) override;
+    void scale(const RS_Vector &center, const RS_Vector &factor) override;
+    void mirror(const RS_Vector &axisPoint1, const RS_Vector &axisPoint2) override;
+    RS_Entity &shear(double k) override;
+    friend std::ostream &operator<<(std::ostream &os, const RS_Point &p);
     /** Recalculates the borders of this entity. */
-	void calculateBorders () override;
+    void calculateBorders() override;
+
+    //RS_Vector point;
+    void draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset) override;
 
 protected:
     RS_PointData data;
-    //RS_Vector point;
+    int determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const;
 };
 #endif

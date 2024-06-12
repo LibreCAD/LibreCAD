@@ -35,6 +35,7 @@
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineRectangle::Points {
 	/**
@@ -73,16 +74,11 @@ void RS_ActionDrawLineRectangle::trigger(){
     polyline->endPolyline();
     container->addEntity(polyline);
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(polyline);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(polyline);
 
     // upd. view
     graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(pPoints->corner2);
+    moveRelativeZero(pPoints->corner2);
 }
 
 void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
@@ -100,6 +96,8 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
                 pPoints->corner2 = mouse;
                 deletePreview();
                 preview->addRectangle(pPoints->corner1, pPoints->corner2);
+                previewRefPoint(pPoints->corner1);
+                previewRefPoint(pPoints->corner2);
                 drawPreview();
             }
             break;
@@ -113,8 +111,7 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -129,7 +126,7 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
         case SetCorner1:
             pPoints->corner1 = mouse;
-            graphicView->moveRelativeZero(mouse);
+            moveRelativeZero(mouse);
             setStatus(SetCorner2);
             break;
 
@@ -157,21 +154,19 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent *e){
 void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCorner1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first corner"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify first corner", Qt::ShiftModifier);
             break;
         case SetCorner2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second corner"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify second corner");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionDrawLineRectangle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

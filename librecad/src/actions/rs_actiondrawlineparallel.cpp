@@ -37,6 +37,8 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "qg_lineparalleloptions.h"
+#include "rs_actioninterface.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
@@ -83,11 +85,10 @@ void RS_ActionDrawLineParallel::trigger(){
     }
 }
 
-
 void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent begin");
 
-    *coord = {graphicView->toGraph(e->position())};
+    *coord = {toGraph(e)};
 
     entity = catchEntity(e, RS2::ResolveAll);
 
@@ -101,7 +102,9 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
                                         distance, number,
                                         entity);
                 if (createdParallel != nullptr){
-                    addToHighlights(entity);
+                    highlightHover(entity);
+                    RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+                    previewRefPoint(nearest);
                 }
                 drawHighlights();
             }
@@ -126,33 +129,16 @@ void RS_ActionDrawLineParallel::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionDrawLineParallel::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(
-                tr("Specify Distance <%1> or select entity or [%2]")
-                    .arg(distance).arg(RS_COMMANDS->command("through")),
+            updateMouseWidget(tr("Specify Distance <%1> or select entity or [%2]").arg(distance).arg(command("through")),
                 tr("Cancel"));
             break;
-
         case SetNumber:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter number:"), "");
+            updateMouseWidgetTR("Enter number:", "");
             break;
-
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
-}
-
-void RS_ActionDrawLineParallel::showOptions() {
-	RS_ActionInterface::showOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, true);
-	updateMouseButtonHints();
-}
-
-void RS_ActionDrawLineParallel::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
@@ -166,6 +152,7 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
 
     switch (getStatus()) {
         case SetEntity: {
+            // fixme = rework support of throught for simpler UX - add this to UI, probably combine two actions into same implementation
             if (checkCommand("through", c)){
                 finish(false);
                 graphicView->setCurrentAction(
@@ -180,15 +167,15 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
                 if (ok) e->accept();
                 if (ok && d > 1.0e-10){
                     distance = d;
-                } else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-                RS_DIALOGFACTORY->requestOptions(this, true, true);
+                } else {
+                    commandMessageTR("Not a valid expression");
+                }
+                updateOptions();
                 updateMouseButtonHints();
                 //setStatus(SetEntity);
             }
-        }
             break;
-
+        }
         case SetNumber: {
             bool ok;
             int n = c.toInt(&ok);
@@ -197,15 +184,14 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
                 if (n > 0 && n < 100){
                     number = n;
                 } else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-                                                        "Try 1..99"));
-            } else
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+                    commandMessageTR("Not a valid number. Try 1..99");
+            } else {
+                commandMessageTR("Not a valid expression");
+            }
+            updateOptions();
             setStatus(SetEntity);
-        }
             break;
-
+        }
         default:
             break;
     }
@@ -222,12 +208,15 @@ QStringList RS_ActionDrawLineParallel::getAvailableCommands() {
     default:
         break;
     }
-
     return cmd;
 }
 
 void RS_ActionDrawLineParallel::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
+}
+
+void RS_ActionDrawLineParallel::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_LineParallelOptions>();
 }
 
 // EOF

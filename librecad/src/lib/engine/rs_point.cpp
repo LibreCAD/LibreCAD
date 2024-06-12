@@ -30,7 +30,6 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_painter.h"
-#include "rs_debug.h"
 #include "lc_defaults.h"
 
 RS_Point::RS_Point(RS_EntityContainer* parent,
@@ -200,29 +199,39 @@ RS_Entity& RS_Point::shear(double k)
 }
 
 void RS_Point::draw(RS_Painter* painter,RS_GraphicView* view, double& /*patternOffset*/) {
-    if (painter==NULL || view==NULL) {
+    if (painter == nullptr || view == nullptr){
         return;
     }
 
-    RS_Graphic* graphic = getGraphic();
+    RS_Graphic *graphic = getGraphic();
 
-    if (graphic) {
-		int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-		double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
-		RS_Vector guiPos = view->toGui(getPos());
-
-		int deviceHeight = painter->getHeight();
-		int screenPDSize;
-		if (pdsize == 0)
-			screenPDSize = deviceHeight / 20;
-		else if (DXF_FORMAT_PDSize_isPercent(pdsize))
-			screenPDSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
-		else
-			screenPDSize = view->toGuiDY(pdsize);
+    if (graphic){
+        // fixme - isn't it too ugly to retreive settings within each DRAW!! method??
+        // fixme - that's is definitely candidate for performance improvement, by mode caching or so ...
+        int pdmode = getGraphicVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+        double pdsize = getGraphicVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+        int screenPDSize = determinePointSreenSize(painter, view, pdsize);
 
 //		RS_DEBUG->print(RS_Debug::D_ERROR,"RS_Point::draw X = %f, Y = %f, PDMODE = %d, PDSIZE = %f, ScreenPDSize = %i",guiPos.x,guiPos.y,pdmode,pdsize,screenPDSize);
-		painter->drawPoint(guiPos,pdmode,screenPDSize);
-	}
+        RS_Vector guiPos = view->toGui(getPos());
+
+        painter->drawPoint(guiPos, pdmode, screenPDSize);
+    }
+}
+
+int RS_Point::determinePointSreenSize(const RS_Painter *painter, const RS_GraphicView *view, double pdsize) const{
+    int deviceHeight = painter->getHeight();
+    int screenPDSize;
+    if (pdsize == 0){
+        screenPDSize = deviceHeight / 20;
+    }
+    else if (DXF_FORMAT_PDSize_isPercent(pdsize)){
+        screenPDSize = (deviceHeight * DXF_FORMAT_PDSize_Percent(pdsize)) / 100;
+    }
+    else {
+        screenPDSize = view->toGuiDY(pdsize);
+    }
+    return screenPDSize;
 }
 
 /**

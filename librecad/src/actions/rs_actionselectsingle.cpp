@@ -68,7 +68,7 @@ void RS_ActionSelectSingle::trigger(){
                 return;
             }
 
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+            updateSelectionWidget();
         }
     }
     else {
@@ -84,7 +84,7 @@ void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
     if (ent != nullptr){
         bool typeMatch = isEntityAllowedToSelect(ent);
         if (typeMatch){
-            addToHighlights(ent);
+            highlightHover(ent);
         }
     }
     drawHighlights();
@@ -124,7 +124,7 @@ void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void RS_ActionSelectSingle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 enum RS2::EntityType RS_ActionSelectSingle::getTypeToSelect(){

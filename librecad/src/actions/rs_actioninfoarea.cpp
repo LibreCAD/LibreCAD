@@ -60,8 +60,6 @@ void RS_ActionInfoArea::init(int status) {
     //RS_DEBUG->print( "RS_ActionInfoArea::init: %d" ,status );
 }
 
-
-
 void RS_ActionInfoArea::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoArea::trigger()");
@@ -70,6 +68,7 @@ void RS_ActionInfoArea::trigger() {
     init(SetFirstPoint);
 }
 // fixme - consider displaying information in EntityInfo widget
+// fixme - add area info to entity info widget for coordinates mode
 //todo: we regenerate the whole preview, it's possible to generate needed lines only
 /** display area circumference and preview of polygon **/
 void RS_ActionInfoArea::display(){
@@ -78,20 +77,32 @@ void RS_ActionInfoArea::display(){
         return;
     }
     switch (ia->size()) {
+        case 1:
+            previewRefSelectablePoint(ia->at(0));
+            break;
         case 2:
-            preview->addEntity(new RS_Line(preview.get(), ia->at(0), ia->at(1)));
+            previewLine(ia->at(0), ia->at(1));
+            previewRefLine(ia->at(0), ia->at(1));
+            previewRefPoint(ia->at(0));
+            previewRefSelectablePoint(ia->at(1));
             break;
         default:
             for (int i = 0; i < ia->size(); i++) {
-                preview->addEntity(new RS_Line(preview.get(), ia->at(i), ia->at((i + 1) % ia->size())));
+                previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
             }
+            for (int i = 0; i < ia->size()-1; i++) {
+                previewRefPoint(ia->at(i));
+            }
+            previewRefSelectablePoint(ia->at(ia->size()-1));
+
             QString const linear = RS_Units::formatLinear(ia->getCircumference(),
                                                           graphic->getUnit(),
                                                           graphic->getLinearFormat(),
                                                           graphic->getLinearPrecision());
-            RS_DIALOGFACTORY->commandMessage(tr("Circumference: %1").arg(linear));
-            RS_DIALOGFACTORY->commandMessage(tr("Area: %1 %2^2")
-                                                 .arg(ia->getArea())
+            commandMessage("---\n");
+            commandMessage(tr("Circumference: %1").arg(linear));
+            commandMessage(tr("Area: %1 %2^2").arg(ia->getArea())
                                                  .arg(RS_Units::unitToString(graphic->getUnit())));
             break;
     }
@@ -108,6 +119,7 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         case SetNextPoint:
+            mouse = getSnapAngleAwarePoint(e, ia->back(), mouse); // fixme - delete preview....
             ia->push_back(mouse);
             display();
             ia->pop_back();
@@ -119,12 +131,15 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+    int status = getStatus();
+    if (e->button() == Qt::LeftButton) {
+        RS_Vector snap = snapPoint(e);
+        if (status == SetNextPoint){
+            snap = getSnapAngleAwarePoint(e, ia->back(), snap);
+        }
+        fireCoordinateEvent(snap);
     } else if (e->button()==Qt::RightButton) {
-
-        init(getStatus()-1);
+        init(status - 1);
     }
 }
 
@@ -136,16 +151,14 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
     RS_Vector mouse = e->getCoordinate();
     if (ia->duplicated(mouse)){
         ia->push_back(mouse);
-        RS_DIALOGFACTORY->commandMessage(tr("Closing Point: %1/%2")
-                                             .arg(mouse.x).arg(mouse.y));
+        commandMessage(tr("Closing Point: %1/%2").arg(mouse.x).arg(mouse.y));
         trigger();
         return;
     }
-    graphicView->moveRelativeZero(mouse);
+    moveRelativeZero(mouse);
 
     ia->push_back(mouse);
-    RS_DIALOGFACTORY->commandMessage(tr("Point: %1/%2")
-                                         .arg(mouse.x).arg(mouse.y));
+    commandMessage(tr("Point: %1/%2").arg(mouse.x).arg(mouse.y));
     switch (getStatus()) {
         case SetFirstPoint:
             setStatus(SetNextPoint);
@@ -153,7 +166,6 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
         case SetNextPoint:
             display();
             break;
-
         default:
             break;
     }
@@ -162,23 +174,19 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoArea::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFirstPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(
-                    tr("Specify first point of polygon"),
-                    tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify first point of polygon", Qt::ShiftModifier);
         break;
     case SetNextPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(
-                    tr("Specify next point of polygon"),
-					tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify next point of polygon", Qt::ShiftModifier);
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
 void RS_ActionInfoArea::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

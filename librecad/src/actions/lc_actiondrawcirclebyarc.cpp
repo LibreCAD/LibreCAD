@@ -104,7 +104,7 @@ void LC_ActionDrawCircleByArc::doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS
             auto* ellipseArc = dynamic_cast<RS_Ellipse*>(en);
             RS_EllipseData ellipseData = createEllipseData(ellipseArc);
             // setup new circle
-            RS_Entity *ellipse = new RS_Ellipse(container, ellipseData);
+            auto ellipse = new RS_Ellipse(container, ellipseData);
             // apply attributes
             applyPenAndLayerBySourceEntity(ellipseArc, ellipse, penMode, layerMode);
             list << ellipse;
@@ -124,7 +124,7 @@ void LC_ActionDrawCircleByArc::performTriggerDeletions(){
 }
 
 void LC_ActionDrawCircleByArc::deleteOriginalArcOrEllipse(RS_Entity *en){
-    if (checkMayExpandEntity(en,  (en->rtti() == RS2::EntityArc)?"Arc":"Ellipse")){
+    if (checkMayExpandEntity(en,  en->is(RS2::EntityArc) ? "Arc":"Ellipse")){
         deleteEntityUndoable(en);
     }
 }
@@ -172,7 +172,7 @@ bool LC_ActionDrawCircleByArc::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent
 void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     RS_Entity *en = catchEntity(e, circleType, RS2::ResolveAll);
     if (en != nullptr){
-        addToHighlights(en);
+        highlightHover(en);
         int rtti = en->rtti();
         bool isArc = (en->isArc() && rtti == RS2::EntityArc);
         if (isArc){
@@ -181,6 +181,8 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
             RS_CircleData circleData = createCircleData(arc);
             RS_Entity *circle = new RS_Circle(container, circleData);
             list << circle;
+
+            createRefPoint(circleData.center, list);
 
             entity = arc;
         } else {
@@ -191,6 +193,8 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
                     RS_EllipseData ellipseData = createEllipseData(ellipseArc);
                     auto ellipse = new RS_Ellipse(container, ellipseData);
                     list << ellipse;
+
+                    createRefPoint(ellipse->getCenter(), list);
                     entity = ellipseArc;
                 }
             }
@@ -216,7 +220,7 @@ void LC_ActionDrawCircleByArc::coordinateEvent([[maybe_unused]]RS_CoordinateEven
 void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetArc:
-            updateMouseWidgetTR("Select arc or ellipse arc","Back");
+            updateMouseWidgetTRCancel("Select arc or ellipse arc");
             break;
         default:
             updateMouseWidget();

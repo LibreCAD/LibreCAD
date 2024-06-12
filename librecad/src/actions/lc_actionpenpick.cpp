@@ -110,7 +110,7 @@ void LC_ActionPenPick::updateMouseButtonHints(){
 }
 
 void LC_ActionPenPick::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 /**

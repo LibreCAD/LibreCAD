@@ -71,6 +71,11 @@ struct RS_GraphicView::ColorData {
     RS_Color handleColor;
     /** End handle color */
     RS_Color endHandleColor;
+    /** reference entities on preview color */
+    RS_Color previewReferenceEntitiesColor;
+
+    /** reference entities on preview color */
+    RS_Color previewReferenceHighlightedEntitiesColor;
 
     /** Relative-zero marker color */
     RS_Color relativeZeroColor;
@@ -102,6 +107,8 @@ RS_GraphicView::RS_GraphicView(QWidget* parent, Qt::WindowFlags f)
     setHandleColor(QColor(RS_SETTINGS->readEntry("/handle", RS_Settings::handle)));
     setEndHandleColor(QColor(RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle)));
     setRelativeZeroColor(QColor(RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor)));
+    setPreviewReferenceEntitiesColor(QColor(RS_SETTINGS->readEntry("/previewReferencesColor", RS_Settings::previewRefColor)));
+    setPreviewReferenceHighlightedEntitiesColor(QColor(RS_SETTINGS->readEntry("/previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor)));
 
     RS_SETTINGS->endGroup();
 
@@ -976,6 +983,43 @@ void RS_GraphicView::drawLayer3(RS_Painter *painter) {
 }
 
 
+void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter,RS_Entity *e, double& patternOffset){
+    // todo - potentially, for overlays (preview etc) we may have simpler processing for pens rather than for normal drawing,
+    // todo - therefore, review this later
+            int rtti = e->rtti();
+            switch (rtti) {
+                case RS2::EntityRefPoint:
+                case RS2::EntityRefLine:
+                case RS2::EntityRefCircle:
+                case RS2::EntityRefArc: {
+                    // fixme - if not ref point are enabled, draw as transparent?
+                    // fixme - where to disable ref points?
+                    RS_Pen pen = e->getPen(true);
+                    if (e->isHighlighted()){
+                        pen.setColor(m_colorData->previewReferenceHighlightedEntitiesColor);
+                    }
+                    else {
+                        pen.setColor(m_colorData->previewReferenceEntitiesColor);
+                    }
+                    pen.setLineType(RS2::SolidLine);
+                    pen.setWidth(RS2::LineWidth::Width00);
+                    e->setPen(pen);
+
+//            pen.setScreenWidth(0.0);
+                    painter->setPen(pen);
+                    break;
+                }
+                default: {
+                setPenForEntity(painter, e, patternOffset);
+                }
+            }
+//        }
+//    }
+//    else{
+//        setPenForEntity(painter, e, patternOffset);
+//    }
+}
+
 /*	*
  *	Function name:
  *
@@ -1562,7 +1606,7 @@ void RS_GraphicView::drawOverlay(RS_Painter *painter)
     {
         foreach (auto e, ec->getEntityList())
         {
-            setPenForEntity(painter, e, patternOffset);
+            setPenForOverlayEntity(painter, e, patternOffset);
             e->draw(painter, this, patternOffset);
         }
     }
@@ -1745,6 +1789,8 @@ public:
     RS_Graphic* graphic;
 };
 void isRelativeZeroHidden();
+void setPreviewReferenceEntitiesColor(const RS_Color &c);
+void setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c);
 
 /**
  * Gets the specified overlay container.
@@ -1956,7 +2002,13 @@ void RS_GraphicView::setPanning(bool state) {
     panning = state;
 }
 
+void RS_GraphicView::setPreviewReferenceEntitiesColor(const RS_Color& c){
+    m_colorData->previewReferenceEntitiesColor = c;
+}
 
+void RS_GraphicView::setPreviewReferenceHighlightedEntitiesColor(const RS_Color& c){
+    m_colorData->previewReferenceHighlightedEntitiesColor = c;
+}
 
 /* Sets the color for the relative-zero marker. */
 void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)

@@ -133,6 +133,7 @@ HEADERS += \
     actions/lc_abstractactionwithpreview.h \
     actions/lc_actiondrawcirclebase.h \
     actions/lc_actiondrawlinefrompointtoline.h \
+    actions/lc_actiondrawlinepolygonbase.h \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actiondrawstar.h \
@@ -163,6 +164,10 @@ HEADERS += \
     lib/debug/rs_debug.h \
     lib/engine/lc_looputils.h \
     lib/engine/lc_parabola.h \
+    lib/engine/lc_refarc.h \
+    lib/engine/lc_refcircle.h \
+    lib/engine/lc_refline.h \
+    lib/engine/lc_refpoint.h \
     lib/engine/rs.h \
     lib/engine/rs_arc.h \
     lib/engine/rs_atomicentity.h \
@@ -260,6 +265,8 @@ HEADERS += \
     lib/printing/lc_printing.h \
     actions/lc_actiondrawlinepolygon3.h \
     main/lc_application.h \
+    ui/forms/lc_actionoptionswidgetbase.h \
+    ui/forms/lc_infodist2options.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
@@ -298,7 +305,8 @@ HEADERS += \
     actions/lc_abstractactiondrawline.h \
     ui/forms/LC_DlgParabola.h \
     ui/lc_quickinfowidgetoptions.h \
-    ui/lc_quickinfowidgetoptionsdialog.h
+    ui/lc_quickinfowidgetoptionsdialog.h\
+    actions/lc_actiondimlinearbase.h
 
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
@@ -308,6 +316,7 @@ SOURCES += \
     actions/lc_actiondrawlineanglerel.cpp \
     actions/lc_actiondrawlinefrompointtoline.cpp \
     actions/lc_actiondrawlinepoints.cpp \
+    actions/lc_actiondrawlinepolygonbase.cpp \
     actions/lc_actiondrawrectangle1point.cpp \
     actions/lc_actiondrawlinesnake.cpp \
     actions/lc_actiondrawrectangle2points.cpp \
@@ -335,6 +344,10 @@ SOURCES += \
     lib/debug/rs_debug.cpp \
     lib/engine/lc_looputils.cpp \
     lib/engine/lc_parabola.cpp \
+    lib/engine/lc_refarc.cpp \
+    lib/engine/lc_refcircle.cpp \
+    lib/engine/lc_refline.cpp \
+    lib/engine/lc_refpoint.cpp \
     lib/engine/rs_arc.cpp \
     lib/engine/rs_block.cpp \
     lib/engine/rs_blocklist.cpp \
@@ -422,6 +435,8 @@ SOURCES += \
     actions/lc_actiondrawlinepolygon3.cpp \
     main/lc_application.cpp \
     ui/forms/LC_DlgParabola.cpp \
+    ui/forms/lc_actionoptionswidgetbase.cpp \
+    ui/forms/lc_infodist2options.cpp \
     ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
@@ -457,7 +472,8 @@ SOURCES += \
     ui/lc_quickinfopointsdata.cpp \
     ui/lc_quickinfowidget.cpp \
     ui/lc_quickinfowidgetoptions.cpp \
-    ui/lc_quickinfowidgetoptionsdialog.cpp
+    ui/lc_quickinfowidgetoptionsdialog.cpp\
+    actions/lc_actiondimlinearbase.cpp
 
 
 # ################################################################################
@@ -966,6 +982,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/LC_DlgParabola.ui \
     ui/forms/lc_circlebyarcoptions.ui \
     ui/forms/lc_crossoptions.ui \
+    ui/forms/lc_infodist2options.ui \
     ui/forms/lc_lineanglereloptions.ui \
     ui/forms/lc_linejoinoptions.ui \
     ui/forms/lc_linefrompointtolineoptions.ui \

@@ -418,8 +418,8 @@ public:
      * @param right Help text for the right mouse button.
 	 */
 	virtual void updateMouseWidget(const QString& = QString(),
-								   const QString& = QString())=0;
-    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
+								   const QString& = QString(), const Qt::KeyboardModifiers modifiers = Qt::NoModifier)=0;
+//    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**
      * This virtual method must be overwritten if the graphic view has

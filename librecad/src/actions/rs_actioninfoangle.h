@@ -35,8 +35,8 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionInfoAngle : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionInfoAngle:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -47,23 +47,22 @@ public:
     };
 
 public:
-    RS_ActionInfoAngle(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionInfoAngle(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
     ~RS_ActionInfoAngle() override;
-
-	void init(int status) override;
-	void trigger() override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    void init(int status) override;
+    void trigger() override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    RS_Entity* entity1 = nullptr;
-
-    RS_Entity* entity2 = nullptr;
-
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    RS_Entity *entity1 = nullptr;
+    RS_Entity *entity2 = nullptr;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

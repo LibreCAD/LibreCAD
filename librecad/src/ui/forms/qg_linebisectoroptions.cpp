@@ -35,10 +35,9 @@
  *  Constructs a QG_LineBisectorOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineBisectorOptions::QG_LineBisectorOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_LineBisectorOptions{})
-{
+QG_LineBisectorOptions::QG_LineBisectorOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineBisector, "/Draw", "/LineBisector")
+	, ui(new Ui::Ui_LineBisectorOptions{}){
 	ui->setupUi(this);
 }
 
@@ -51,52 +50,53 @@ QG_LineBisectorOptions::~QG_LineBisectorOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LineBisectorOptions::languageChange()
-{
+void QG_LineBisectorOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_LineBisectorOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/LineBisectorLength", ui->leLength->text());
-	RS_SETTINGS->writeEntry("/LineBisectorNumber", ui->sbNumber->text());
-    RS_SETTINGS->endGroup();
+void QG_LineBisectorOptions::doSaveSettings(){
+    save("Length", ui->leLength->text());
+    save("Number", ui->sbNumber->text());
 }
 
-void QG_LineBisectorOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionDrawLineBisector) {
-		action = static_cast<RS_ActionDrawLineBisector*>(a);
+void QG_LineBisectorOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-        QString sl;
-        QString sn;
-        if (update) {
-            sl = QString("%1").arg(action->getLength());
-            sn = QString("%1").arg(action->getNumber());
-        } else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sl = RS_SETTINGS->readEntry("/LineBisectorLength", "1.0");
-            sn = RS_SETTINGS->readEntry("/LineBisectorNumber", "1");
-            RS_SETTINGS->endGroup();
-        }
-		ui->leLength->setText(sl);
-		ui->sbNumber->setValue(sn.toInt());
+    action = dynamic_cast<RS_ActionDrawLineBisector *>(a);
+
+    QString length;
+    int number;
+    if (update){
+        length = fromDouble(action->getLength());
+        number = action->getNumber();
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LineBisectorOptions::setAction: wrong action type");
-		action = nullptr;
+        length = load("Length", "1.0");
+        number = loadInt("Number", 1);
+    }
+    setLengthToActionAndView(length);
+    setNumberToActionAndView(number);
+}
+
+void QG_LineBisectorOptions::on_sbNumber_valueChanged(int number){
+    setNumberToActionAndView(number);
+}
+
+void QG_LineBisectorOptions::on_leLength_editingFinished(){
+    setLengthToActionAndView(ui->leLength->text());
+}
+
+void QG_LineBisectorOptions::setLengthToActionAndView(QString val){
+    double len;
+    if (toDouble(val, len, 1.0, false)){
+        action->setLength(len);
+        ui->leLength->setText(fromDouble(len));
     }
 }
 
-void QG_LineBisectorOptions::updateLength(const QString& l) {
-    if (action) {
-        action->setLength(RS_Math::eval(l));
-        saveSettings();
-    }
+void QG_LineBisectorOptions::setNumberToActionAndView(int number){
+    action->setNumber(number);
+    ui->sbNumber->setValue(number);
 }
 
-void QG_LineBisectorOptions::updateNumber(int n) {
-    if (action) {
-        action->setNumber(n);
-        saveSettings();
-    }
-}
+
+
+

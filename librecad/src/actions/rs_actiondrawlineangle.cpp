@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondrawlineangle.h"
@@ -36,64 +36,51 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "rs_settings.h"
-
-
+#include "qg_lineangleoptions.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineAngle::Points {
-	/**
-	 * Line data defined so far.
-	 */
-	RS_LineData data;
-	/**
-	 * Position.
-	 */
-	RS_Vector pos;
-	/**
-	 * Line angle.
-	 */
-	double angle;
-	/**
-	 * Line length.
-	 */
-	double length{1.};
-	/**
-	 * Is the angle fixed?
-	 */
-	bool fixedAngle;
-	/**
-	 * Snap point (start, middle, end).
-	 */
-	int snpPoint{SNAP_START};
+/**
+ * Line data defined so far.
+ */
+    RS_LineData data;
+/**
+ * Position.
+ */
+    RS_Vector pos;
+/**
+ * Line angle.
+ */
+    double angle;
+/**
+ * Line length.
+ */
+    double length{1.};
+/**
+ * Is the angle fixed?
+ */
+    bool fixedAngle;
+/**
+ * Snap point (start, middle, end).
+ */
+    int snpPoint{SNAP_START};
 };
 
-RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(RS_EntityContainer& container,
-        RS_GraphicView& graphicView,
-        double angle,
-        bool fixedAngle, RS2::ActionType actionType)
-        :RS_PreviewActionInterface("Draw lines with given angle",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-{
+RS_ActionDrawLineAngle::RS_ActionDrawLineAngle(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView,
+    double angle,
+    bool fixedAngle, RS2::ActionType actionType)
+    :RS_PreviewActionInterface("Draw lines with given angle",
+                               container, graphicView), pPoints(std::make_unique<Points>()){
 
-    this->actionType=actionType;
-	pPoints->angle = angle;
-	pPoints->fixedAngle = fixedAngle;
-
-    RS_DIALOGFACTORY->requestOptions(this, true,false);
+    this->actionType = actionType;
+    pPoints->angle = angle;
+    pPoints->fixedAngle = fixedAngle;
     reset();
 }
 
-
-
-RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() {
-    RS_SETTINGS->beginGroup("/Draw");
-    if (!hasFixedAngle()) {
-        RS_SETTINGS->writeEntry("/LineAngleAngle", RS_Math::rad2deg(getAngle()));
-    }
-    RS_SETTINGS->writeEntry("/LineAngleLength", getLength());
-    RS_SETTINGS->writeEntry("/LineAngleSnapPoint", getSnapPoint());
-    RS_SETTINGS->endGroup();
-}
+RS_ActionDrawLineAngle::~RS_ActionDrawLineAngle() = default;
 
 
 void RS_ActionDrawLineAngle::reset() {
@@ -102,7 +89,6 @@ void RS_ActionDrawLineAngle::reset() {
 
 void RS_ActionDrawLineAngle::init(int status) {
     RS_PreviewActionInterface::init(status);
-
     reset();
 }
 
@@ -115,18 +101,14 @@ void RS_ActionDrawLineAngle::trigger() {
     line->setPenToActive();
     container->addEntity(line);
 
-    // upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(line);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(line);
+
     if (!persistRelativeZero){
         RS_Vector &newRelZero = pPoints->data.startpoint;
         if (pPoints->snpPoint == SNAP_MIDDLE){ // snap to middle
             newRelZero = (pPoints->data.startpoint + pPoints->data.endpoint)*0.5;
         }
-        graphicView->moveRelativeZero(newRelZero);
+        moveRelativeZero(newRelZero);
     }
     persistRelativeZero = false;
     graphicView->redraw(RS2::RedrawDrawing);
@@ -138,18 +120,13 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent begin");
 
     if (getStatus()==SetPos) {
-        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
         RS_Vector position = snapPoint(e);
-        if (shiftPressed){
-            RS_Vector relZero = graphicView->getRelativeZero();
-            if (relZero.valid){
-                position = graphicView->getRelativeZero();
-            }
-        }
+        position = getRelZeroAwarePoint(e, position);
         pPoints->pos = position;
         deletePreview();
         preparePreview();
-        preview->addEntity(new RS_Line(preview.get(),pPoints->data));
+        previewLine(pPoints->data.startpoint, pPoints->data.endpoint);
+        previewRefSelectablePoint(position);
         drawPreview();
     }
 
@@ -170,8 +147,7 @@ void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
                     persistRelativeZero = true;
                 }
             }
-            RS_CoordinateEvent ce(position);
-            coordinateEvent(&ce);
+            fireCoordinateEvent(position);
         }
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
@@ -179,14 +155,14 @@ void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionDrawLineAngle::preparePreview() {
+void RS_ActionDrawLineAngle::preparePreview(){
     RS_Vector p1, p2;
     // End:
+    double angleRad = RS_Math::deg2rad(pPoints->angle);
     if (pPoints->snpPoint == SNAP_END){
-        p2.setPolar(-pPoints->length, pPoints->angle);
+        p2.setPolar(-pPoints->length, angleRad);
     } else {
-        p2.setPolar(pPoints->length, pPoints->angle);
+        p2.setPolar(pPoints->length, angleRad);
     }
 
     // Middle:
@@ -200,17 +176,17 @@ void RS_ActionDrawLineAngle::preparePreview() {
     pPoints->data = {p1, p2};
 }
 
-void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
+void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent *e){
+    if (!e) return;
 
     switch (getStatus()) {
-    case SetPos:
-		pPoints->pos = e->getCoordinate();
-        trigger();
-        break;
-
-    default:
-        break;
+        case SetPos:{
+            pPoints->pos = e->getCoordinate();
+            trigger();
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -218,141 +194,124 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-    case SetPos:
-		if (!pPoints->fixedAngle && checkCommand("angle", c)) {
-            deletePreview();
-            setStatus(SetAngle);
-        } else if (checkCommand("length", c)) {
-            deletePreview();
-            setStatus(SetLength);
+        case SetPos: {
+            if (!pPoints->fixedAngle && checkCommand("angle", c)){
+                deletePreview();
+                setStatus(SetAngle);
+            } else if (checkCommand("length", c)){
+                deletePreview();
+                setStatus(SetLength);
+            }
+            break;
         }
-        break;
-
-    case SetAngle: {
+        case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->angle = RS_Math::deg2rad(a);
+                pPoints->angle = a;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(SetPos);
+            break;
         }
-        break;
-
-    case SetLength: {
+        case SetLength: {
             bool ok;
             double l = RS_Math::eval(c, &ok);
-            if (ok) {
+            if (ok){
                 e->accept();
-				pPoints->length = l;
+                pPoints->length = l;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(SetPos);
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionDrawLineAngle::setSnapPoint(int sp) {
-	pPoints->snpPoint = sp;
+void RS_ActionDrawLineAngle::setSnapPoint(int sp){
+    pPoints->snpPoint = sp;
 }
 
 int RS_ActionDrawLineAngle::getSnapPoint() const{
-	return pPoints->snpPoint;
+    return pPoints->snpPoint;
 }
 
-void RS_ActionDrawLineAngle::setAngle(double a) {
-	pPoints->angle = a;
+void RS_ActionDrawLineAngle::setAngle(double a){
+    pPoints->angle = a;
 }
 
 double RS_ActionDrawLineAngle::getAngle() const{
-	return pPoints->angle;
+    return pPoints->angle;
 }
 
-void RS_ActionDrawLineAngle::setLength(double l) {
-	pPoints->length = l;
+void RS_ActionDrawLineAngle::setLength(double l){
+    pPoints->length = l;
 }
 
 double RS_ActionDrawLineAngle::getLength() const{
-	return pPoints->length;
+    return pPoints->length;
 }
 
 bool RS_ActionDrawLineAngle::hasFixedAngle() const{
-	switch(rtti()){
-	case RS2::ActionDrawLineHorizontal:
-	case RS2::ActionDrawLineVertical:
-		return true;
-	default:
-		return false;
-	}
+    switch (rtti()) {
+        case RS2::ActionDrawLineHorizontal:
+        case RS2::ActionDrawLineVertical:
+            return true;
+        default:
+            return false;
+    }
 }
 
-QStringList RS_ActionDrawLineAngle::getAvailableCommands() {
+QStringList RS_ActionDrawLineAngle::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetPos:
-		if (!pPoints->fixedAngle) {
-            cmd += command("angle");
-        }
-        cmd += command("length");
-        break;
-    default:
-        break;
+        case SetPos:
+            if (!pPoints->fixedAngle){
+                cmd += command("angle");
+            }
+            cmd += command("length");
+            break;
+        default:
+            break;
     }
-
     return cmd;
 }
 
-
 void RS_ActionDrawLineAngle::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetPos:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify position"),
-                                            tr("Cancel"));
-        break;
-
-    case SetAngle:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter angle:"), tr("Back"));
-        break;
-
-    case SetLength:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter length:"), tr("Back"));
-        break;
-
-    default:
-        break;
+        case SetPos:
+            updateMouseWidgetTRCancel("Specify position", Qt::ShiftModifier);
+            break;
+        case SetAngle:
+            updateMouseWidgetTRBack("Enter angle:");
+            break;
+        case SetLength:
+            updateMouseWidgetTRBack("Enter length:");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
-void RS_ActionDrawLineAngle::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true,true);
-}
-
-void RS_ActionDrawLineAngle::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionDrawLineAngle::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
+void RS_ActionDrawLineAngle::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_LineAngleOptions>();
+}
 // EOF

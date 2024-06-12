@@ -68,7 +68,7 @@ void RS_ActionModifyMoveRotate::trigger() {
 
     finish(false);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent *e){
@@ -107,8 +107,7 @@ void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionModifyMoveRotate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         init(getStatus()-1);
@@ -221,25 +220,22 @@ double RS_ActionModifyMoveRotate::getAngle() const{
 void RS_ActionModifyMoveRotate::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetReferencePoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify reference point", Qt::ShiftModifier);
             break;
         case SetTargetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify target point");
             break;
         case SetAngle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter rotation angle:"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Enter rotation angle:");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionModifyMoveRotate::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

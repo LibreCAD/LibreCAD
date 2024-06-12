@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLine;
@@ -35,26 +36,23 @@ namespace Ui {
 class Ui_LineOptions;
 }
 
-class QG_LineOptions : public QWidget
+class QG_LineOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_LineOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LineOptions();
+    QG_LineOptions();
+    ~QG_LineOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a );
     virtual void close();
     virtual void undo();
     virtual void redo();
-
+    void languageChange() override;
 protected:
     RS_ActionDrawLine* action;
-
-protected slots:
-    virtual void languageChange();
-
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 private:
 	std::unique_ptr<Ui::Ui_LineOptions> ui;
 };

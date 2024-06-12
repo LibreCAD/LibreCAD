@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondrawlineparallelthrough.h"
@@ -35,18 +35,19 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"
+#include "qg_lineparallelthroughoptions.h"
+#include "rs_actioninterface.h"
 
 RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
 		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
 		,coord(new RS_Vector{})
-		,lastStatus(SetEntity)
-{
+		,lastStatus(SetEntity){
 	actionType=RS2::ActionDrawLineParallelThrough;
 	m_SnapDistance=1.;
 }
-// fixme - add support of symmetrix mode for parallel (both sides)
+
 RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
 
 void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
@@ -63,9 +64,7 @@ void RS_ActionDrawLineParallelThrough::trigger(){
 
     if (entity){
         RS_Creation creation(container, graphicView);
-        RS_Entity *e = creation.createParallelThrough(*coord,
-                                                      number,
-                                                      entity);
+        RS_Entity *e = creation.createParallelThrough(*coord,number,entity, symmetric);
 
         if (!e){
             RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger:"
@@ -82,29 +81,31 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
         case SetEntity: {
             entity = catchEntity(e, RS2::ResolveAll);
             if (entity != nullptr){
-
-			            RS_Creation creation(nullptr, nullptr, false);
-                const RS_Vector &artificialCoordinates = *coord + RS_Vector(100, 100, 0);
-                RS_Entity* en = creation.createParallelThrough(artificialCoordinates,
-                                                               number,
-                                                               entity);
-               if (en != nullptr){
-                   addToHighlights(entity);
-                   delete en;
-               }
+                highlightHover(entity);
+                RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+                previewRefPoint(nearest);
             }
             break;
         }
         case SetPos: {
-            *coord = snapPoint(e);
-            //RS_Vector(graphicView->toGraphX(e->x()),
-            //                  graphicView->toGraphY(e->y()));
+            *coord = getFreeSnapAwarePoint(e, snapPoint(e));
+
             deletePreview();
-            addToHighlights(entity);
+            highlightSelected(entity);
             RS_Creation creation(preview.get(), nullptr, false);
-            creation.createParallelThrough(*coord,
-                                           number,
-                                           entity);
+            auto en = creation.createParallelThrough(*coord, number, entity, symmetric);
+            if (en != nullptr){
+               RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+               moveRelativeZero(nearest); // fixme - should we restore original relzero?
+               previewRefPoint(nearest);
+               previewRefLine(nearest, *coord);
+
+               if (symmetric && isLine(entity)){
+                   RS_Vector otherPoint = coord->mirror(entity->getStartpoint(), entity->getEndpoint());
+                   previewRefPoint(otherPoint);
+                   previewRefLine(nearest, otherPoint);
+               }
+            }
 
             drawPreview();
             break;
@@ -123,24 +124,19 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
             case SetEntity:
                 entity = catchEntity(e, RS2::ResolveAll);
                 if (entity){
-//                    entity->setHighlighted(true);
-//                    graphicView->drawEntity(entity);
                     setStatus(SetPos);
                 }
                 break;
             case SetPos: {
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
-            }
+                fireCoordinateEventForSnap(e);
                 break;
+            }
             default:
                 break;
         }
     } else if (e->button() == Qt::RightButton){
         deletePreview();
         if (entity){
-//            entity->setHighlighted(false);
-//            graphicView->drawEntity(entity);
             entity = nullptr;
         }
         init(getStatus() - 1);
@@ -148,7 +144,7 @@ void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
 }
 
 void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e){
+    if (e == nullptr){
         return;
     }
 
@@ -168,35 +164,18 @@ void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionDrawLineParallelThrough::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select entity"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Select entity");
             break;
-
         case SetPos:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify through point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify through point", Qt::ShiftModifier);
             break;
-
         case SetNumber:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Number:"), tr("Back"));
+            updateMouseWidgetTRBack("Number:");
             break;
-
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
-}
-
-void RS_ActionDrawLineParallelThrough::showOptions(){
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-    updateMouseButtonHints();
-}
-
-void RS_ActionDrawLineParallelThrough::hideOptions(){
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
 }
 
 void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
@@ -226,13 +205,12 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
                 if (n > 0 && n < 100){
                     number = n;
                 } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid number. "
-                                                        "Try 1..99"));
+                    commandMessageTR("Not a valid number. Try 1..99");
                 }
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -258,15 +236,14 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands(){
 void RS_ActionDrawLineParallelThrough::updateMouseCursor(){
     switch (getStatus()) {
         case SetEntity:
-            graphicView->setMouseCursor(RS2::SelectCursor);
+            setMouseCursor(RS2::SelectCursor);
             break;
         case SetNumber:
         case SetPos:
-            graphicView->setMouseCursor(RS2::CadCursor);
+            setMouseCursor(RS2::CadCursor);
             break;
     }
 }
-
 
 int RS_ActionDrawLineParallelThrough::getNumber() const{
 	return number;
@@ -274,6 +251,10 @@ int RS_ActionDrawLineParallelThrough::getNumber() const{
 
 void RS_ActionDrawLineParallelThrough::setNumber(int n) {
 	number = n;
+}
+
+void RS_ActionDrawLineParallelThrough::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_LineParallelThroughOptions>();
 }
 
 // EOF

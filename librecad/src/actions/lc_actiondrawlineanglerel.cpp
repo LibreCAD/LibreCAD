@@ -167,7 +167,7 @@ void LC_ActionDrawLineAngleRel::doFinish([[maybe_unused]]bool updateTB){
 void LC_ActionDrawLineAngleRel::doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint){
         switch (status) {
             case SetLine:{ // line selection state
-                RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
+                RS_Entity* en = catchModifiableEntity(e, enTypeList);
                 if (en != nullptr) {
                     auto* line = dynamic_cast<RS_Line *>(en);
                     // determine where tick line should be snapped on original line
@@ -217,14 +217,16 @@ bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_un
  * @param list
  * @param status
  */
+
+//fixme - divide & intersection points (as for liine from point to entity)
 void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status) {
         case SetLine:{ // line select state
-            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            RS_Entity* en = catchModifiableEntity(e, enTypeList);
             if (en != nullptr){
                 auto* line = dynamic_cast<RS_Line *>(en);
 
-                addToHighlights(line);
+                highlightHover(line);
 
                 // determine snap point
                 RS_Vector nearestPoint = LC_LineMath::getNearestPointOnLine(line, snap, true);
@@ -235,8 +237,19 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
                 TickData* data = prepareLineData(line, tickSnapPosition, tickEnd, alternativeActionMode);
 
                 // create line and add it to preview
+                // todo - createLine()
                 auto *previewLine = new RS_Line{container, data->tickLineData};
                 list << previewLine;
+
+                // add reference points
+                if (lineSnapMode == LINE_SNAP_FREE){
+                    createRefSelectablePoint(data->tickSnapPosition, list);
+                }
+                else{
+                    createRefPoint(data->tickSnapPosition, list);
+                }
+                createRefPoint(data->tickLineData.endpoint, list);
+                createRefPoint(data->tickLineData.endpoint, list);
 
                 // don't need temporary data, so delete it
                 delete data;
@@ -245,13 +258,18 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
         }
         case SetTickLength: { // tick length setting state
 
-            addToHighlights(tickData->line);
+            highlightSelected(tickData->line);
             // create temporary preview tick data
             TickData* data = prepareLineData( tickData->line, tickData->tickSnapPosition, snap, alternativeActionMode);
 
             // create preview line
             auto *previewLine = new RS_Line{container, data->tickLineData};
             list<< previewLine;
+
+            // add reference points
+            createRefPoint(data->tickSnapPosition, list);
+            createRefPoint(data->tickLineData.endpoint, list);
+            createRefSelectablePoint(data->tickLineData.endpoint, list);
 
             // delete temporary data
             delete data;
@@ -415,12 +433,13 @@ RS2::CursorType LC_ActionDrawLineAngleRel::doGetMouseCursor(int status){
 }
 
 void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
+    bool hasModifiers = (actionType == RS2::ActionDrawLineAngleRel);
     switch (getStatus()) {
         case SetLine:
-            updateMouseWidgetTR("Select base line", "Cancel");
+            updateMouseWidgetTRCancel("Select base line", hasModifiers ? Qt::ShiftModifier : Qt::NoModifier);
             break;
         case SetTickLength:
-            updateMouseWidgetTR("Specify length", "Back");
+            updateMouseWidgetTRBack("Specify length", hasModifiers ? Qt::ShiftModifier : Qt::NoModifier);
             break;
         default:
             updateMouseWidget();

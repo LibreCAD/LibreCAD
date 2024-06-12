@@ -28,6 +28,8 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
+#include "lc_actiondrawlinepolygonbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLinePolygonCenCor;
@@ -35,27 +37,27 @@ namespace Ui {
 class Ui_LinePolygonOptions;
 }
 
-class QG_LinePolygonOptions : public QWidget
+class QG_LinePolygonOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_LinePolygonOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LinePolygonOptions();
+    QG_LinePolygonOptions();
+    ~QG_LinePolygonOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateNumber( int n );
-
+    void on_sbNumber_valueChanged(int number);
+    void languageChange() override;
 protected:
-    RS_ActionDrawLinePolygonCenCor* action;
-
-protected slots:
-    virtual void languageChange();
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
+    QString getSettingsOptionNamePrefix() override;
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
+    LC_ActionDrawLinePolygonBase* action;
+	  std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;
+    void setNumberToActionAndView(int number);
 };
 
 #endif // QG_LINEPOLYGONOPTIONS_H

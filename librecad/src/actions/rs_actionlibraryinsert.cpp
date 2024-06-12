@@ -135,14 +135,11 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEvent(snapPoint(e));
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }
 }
-
-
 
 void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==NULL) {
@@ -279,7 +276,7 @@ void RS_ActionLibraryInsert::setFactor(double f) {
 }
 
 void RS_ActionLibraryInsert::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

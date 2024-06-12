@@ -38,28 +38,25 @@ RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
 	actionType = RS2::ActionBlocksAdd;
 }
 
-
-
-void RS_ActionBlocksAdd::trigger() {
+void RS_ActionBlocksAdd::trigger(){
     RS_DEBUG->print("adding block");
-    if (graphic) {
-		RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList) {
-			RS_BlockData d = 
-				RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
-			if (d.isValid()) {
+    if (graphic){
+        RS_BlockList *blockList = graphic->getBlockList();
+        if (blockList){
+            RS_BlockData d =
+                RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
+            if (d.isValid()){
                 // Block cannot contain blocks.
-                if (container->rtti() == RS2::EntityBlock) {
+                if (container->is(RS2::EntityBlock)){
                     graphic->addBlock(new RS_Block(container->getParent(), d));
                 } else {
                     graphic->addBlock(new RS_Block(container, d));
                 }
-			}
-		}
+            }
+        }
     }
     finish(false);
 }
-
 
 
 void RS_ActionBlocksAdd::init(int status) {

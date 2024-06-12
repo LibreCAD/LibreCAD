@@ -53,38 +53,36 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 
 RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
 
+// fixme - remove
 QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
 	//tr("Intersection Manually")
-    QAction* action = new QAction(tr("I&ntersection Manually"), NULL);
+    QAction* action = new QAction(tr("I&ntersection Manually"), nullptr);
     //action->zetStatusTip(tr("Snap to intersection points manually"));
 	action->setIcon(QIcon(":/extui/snapintersectionm.png"));
     return action;
 }
 
-
-void RS_ActionSnapIntersectionManual::init(int status) {
+void RS_ActionSnapIntersectionManual::init(int status){
     RS_ActionInterface::init(status);
-	snapMode.clear();
+    snapMode.clear();
 }
 
-
-
-void RS_ActionSnapIntersectionManual::trigger() {
+void RS_ActionSnapIntersectionManual::trigger(){
 
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::trigger()");
 
     if (entity2 && entity2->isAtomic() &&
-            entity1 && entity1->isAtomic()) {
+        entity1 && entity1->isAtomic()){
 
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
         entity2 = NULL;
         entity1 = NULL;
-        if (predecessor) {
-			RS_Vector ip = sol.getClosest(*coord);
+        if (predecessor){
+            RS_Vector ip = sol.getClosest(*coord);
 
-            if (ip.valid) {
+            if (ip.valid){
                 RS_CoordinateEvent e(ip);
                 predecessor->coordinateEvent(&e);
             }
@@ -93,22 +91,20 @@ void RS_ActionSnapIntersectionManual::trigger() {
     }
 }
 
-
-
-void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent begin");
 
-    RS_Entity* se = catchEntity(e);
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Entity *se = catchEntity(e);
+    RS_Vector mouse = toGraph(e);
 
     switch (getStatus()) {
-    case ChooseEntity1:
-        entity1 = se;
-        break;
+        case ChooseEntity1:
+            entity1 = se;
+            break;
 
-    case ChooseEntity2: {
+        case ChooseEntity2: {
             entity2 = se;
-			*coord = mouse;
+            *coord = mouse;
 
             RS_VectorSolutions sol =
                 RS_Information::getIntersection(entity1, entity2, false);
@@ -118,84 +114,76 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent* e) {
             //    break;
             //}
 
-			RS_Vector ip = sol.getClosest(*coord);
+            RS_Vector ip = sol.getClosest(*coord);
 
-            if (ip.valid) {
+            if (ip.valid){
                 deletePreview();
                 preview->addEntity(
-					new RS_Circle(preview.get(),
-				{ip, graphicView->toGraphDX(4)}));
+                    new RS_Circle(preview.get(),
+                                  {ip, graphicView->toGraphDX(4)}));
                 drawPreview();
 
                 RS_DIALOGFACTORY->updateCoordinateWidget(ip,
-                        ip - graphicView->getRelativeZero());
+                                                         ip - graphicView->getRelativeZero());
 
             }
         }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent end");
 }
 
+void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
 
-
-void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-
-        RS_Vector mouse = graphicView->toGraph(e->position());
-        RS_Entity* se = catchEntity(e);
+        RS_Vector mouse = toGraph(e);
+        RS_Entity *se = catchEntity(e);
 
         switch (getStatus()) {
-        case ChooseEntity1:
-            entity1 = se;
-            if (entity1 && entity1->isAtomic()) {
-                setStatus(ChooseEntity2);
-            }
-            break;
+            case ChooseEntity1:
+                entity1 = se;
+                if (entity1 && entity1->isAtomic()){
+                    setStatus(ChooseEntity2);
+                }
+                break;
 
-        case ChooseEntity2:
-            entity2 = se;
-			*coord = mouse;
-			if (entity2 && entity2->isAtomic() && coord->valid) {
-                trigger();
-            }
-            break;
+            case ChooseEntity2:
+                entity2 = se;
+                *coord = mouse;
+                if (entity2 && entity2->isAtomic() && coord->valid){
+                    trigger();
+                }
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
-
-
 
 void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
     switch (getStatus()) {
     case ChooseEntity1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select first entity"),
-                                            tr("Back"));
+        updateMouseWidgetTRCancel("Select first entity");
         break;
     case ChooseEntity2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select second entity"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Select second entity");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-
-
 void RS_ActionSnapIntersectionManual::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

@@ -32,239 +32,222 @@
 
 class QG_SnapToolBar;
 class RS_Layer;
-
 /**
  * This class can trigger actions (from menus, buttons, ...).
  */
-class QG_ActionHandler : public QObject {
-	Q_OBJECT
+class QG_ActionHandler:public QObject {
+Q_OBJECT
 
 public:
-	QG_ActionHandler(QObject* parent);
-	virtual ~QG_ActionHandler() = default;
-
-	RS_ActionInterface* getCurrentAction();
-	RS_ActionInterface* setCurrentAction(RS2::ActionType id);
-
-	/**
-	 * Kills all running selection actions. Called when a selection action
-	  * is launched to reduce confusion.
-	   */
-	void killSelectActions();
-	/**
-		 * @brief killAllActions kill all actions
-		 */
-	void killAllActions();
-
-	bool keycode(const QString& code);
-	//special handling of actions issued from command line, currently used for snap actions
-	//return true if handled
-	bool commandLineActions(RS2::ActionType id);
-	bool command(const QString& cmd);
-	QStringList getAvailableCommands();
-	RS_SnapMode getSnaps();
-	RS2::SnapRestriction getSnapRestriction();
-    void set_view(RS_GraphicView* graphic_view);
-    void set_document(RS_Document* document);
-    void set_snap_toolbar(QG_SnapToolBar* snap_toolbar);
+    QG_ActionHandler(QObject *parent);
+    virtual ~QG_ActionHandler() = default;
+    RS_ActionInterface *getCurrentAction();
+    RS_ActionInterface *setCurrentAction(RS2::ActionType id);
+/**
+ * Kills all running selection actions. Called when a selection action
+  * is launched to reduce confusion.
+   */
+    void killSelectActions();
+/**
+  * @brief killAllActions kill all actions
+  */
+    void killAllActions();
+    bool keycode(const QString &code);
+//special handling of actions issued from command line, currently used for snap actions
+//return true if handled
+    bool commandLineActions(RS2::ActionType id);
+    bool command(const QString &cmd);
+    QStringList getAvailableCommands();
+    RS_SnapMode getSnaps();
+    RS2::SnapRestriction getSnapRestriction();
+    void set_view(RS_GraphicView *graphic_view);
+    void set_document(RS_Document *document);
+    void set_snap_toolbar(QG_SnapToolBar *snap_toolbar);
 
 public slots:
-	/*void slotFileNew();*/
-	void slotFileNewTemplate();
-	void slotFileOpen();
-	/*
-		  void slotFileOpen(const QString& fileName);
-		  void slotFileSave();
-	 */
-	void slotFileSaveAs();
-	void slotFileExportMakerCam();
-	/*
-		 void slotFileClose();
-		 void slotFilePrint();
-	  */
+/*void slotFileNew();*/
+    void slotFileNewTemplate();
+    void slotFileOpen();
+/*
+   void slotFileOpen(const QString& fileName);
+   void slotFileSave();
+ */
+    void slotFileSaveAs();
+    void slotFileExportMakerCam();
+/*
+  void slotFileClose();
+  void slotFilePrint();
+  */
 
-	void slotZoomIn();
-	void slotZoomOut();
-	void slotZoomAuto();
-	void slotZoomWindow();
-	void slotZoomPan();
-	void slotZoomPrevious();
-	void slotZoomRedraw();
-
-	void slotToolRegenerateDimensions();
-
-	void slotEditKillAllActions();
-	void slotEditUndo();
-	void slotEditRedo();
-	void slotEditCut();
-	void slotEditCopy();
-	void slotEditPaste();
-	void slotOrderBottom();
-	void slotOrderLower();
-	void slotOrderRaise();
-	void slotOrderTop();
-
-	void slotSelectSingle();
-	void slotSelectContour();
-	void slotSelectWindow();
-	void slotDeselectWindow();
-	void slotSelectAll();
-	void slotDeselectAll();
-	void slotSelectInvert();
-	void slotSelectIntersected();
-	void slotDeselectIntersected();
-	void slotSelectLayer();
-
-	void slotDrawPoint();
-	void slotDrawLine();
-	void slotDrawLineAngle();
-	void slotDrawLineHorizontal();
-	void slotDrawLineVertical();
-	void slotDrawLineFree();
-	void slotDrawLineHorVert();
-	void slotDrawLineParallel();
-	void slotDrawLineParallelThrough();
-	void slotDrawLineRectangle();
-	void slotDrawLineRectangleRel();
- void slotDrawLineRectangle1Point();
- void slotDrawLineRectangle2Points();
-	void slotDrawLineBisector();
-	void slotDrawLineTangent1();
-	void slotDrawLineTangent2();
-	void slotDrawLineOrthogonal();
-	void slotDrawLineOrthTan();
-	void slotDrawLineRelAngle();
-	void slotDrawLinePolygon();
-	void slotDrawLinePolygon2();
+    void slotZoomIn();
+    void slotZoomOut();
+    void slotZoomAuto();
+    void slotZoomWindow();
+    void slotZoomPan();
+    void slotZoomPrevious();
+    void slotZoomRedraw();
+    void slotToolRegenerateDimensions();
+    void slotEditKillAllActions();
+    void slotEditUndo();
+    void slotEditRedo();
+    void slotEditCut();
+    void slotEditCopy();
+    void slotEditPaste();
+    void slotOrderBottom();
+    void slotOrderLower();
+    void slotOrderRaise();
+    void slotOrderTop();
+    void slotSelectSingle();
+    void slotSelectContour();
+    void slotSelectWindow();
+    void slotDeselectWindow();
+    void slotSelectAll();
+    void slotDeselectAll();
+    void slotSelectInvert();
+    void slotSelectIntersected();
+    void slotDeselectIntersected();
+    void slotSelectLayer();
+    void slotDrawPoint();
+    void slotDrawLine();
+    void slotDrawLineAngle();
+    void slotDrawLineHorizontal();
+    void slotDrawLineVertical();
+    void slotDrawLineFree();
+    void slotDrawLineHorVert();
+    void slotDrawLineParallel();
+    void slotDrawLineParallelThrough();
+    void slotDrawLineRectangle();
+    void slotDrawLineRectangleRel();
+    void slotDrawLineRectangle1Point();
+    void slotDrawLineRectangle2Points();
+    void slotDrawLineBisector();
+    void slotDrawLineTangent1();
+    void slotDrawLineTangent2();
+    void slotDrawLineOrthogonal();
+    void slotDrawLineOrthTan();
+    void slotDrawLineRelAngle();
+    void slotDrawLinePolygon();
+    void slotDrawLinePolygon2();
     void slotDrawLinePolygon3();//added by txmy
- void slotDrawLinePoints();
-	void slotDrawCircle();
- void slotDrawCircleCross();
- void slotDrawLineSnake();
- void slotDrawLineSnakeX();
- void slotDrawLineSnakeY();
- void slotDrawLineOrthogonalRel();
- void slotDrawLineOrthogonalTo();
- void slotDrawLineAngleRel();
- void slotDrawSliceDivideLine();
- void slotDrawSliceDivideCircle();
-	void slotDrawCircleCR();
-	void slotDrawCircle2P();
-	void slotDrawCircle2PR();
-	void slotDrawCircle3P();
-	void slotDrawCircleParallel();
-	void slotDrawCircleInscribe();
-	void slotDrawCircleTan2();
-	void slotDrawCircleTan3();
-	void slotDrawCircleTan1_2P();
-	void slotDrawCircleTan2_1P();
- void slotDrawCircleByArc();
-	void slotDrawArc();
-	void slotDrawArc3P();
-	void slotDrawArcParallel();
-	void slotDrawArcTangential();
-	void slotDrawEllipseAxis();
-	void slotDrawEllipseArcAxis();
-	void slotDrawEllipseFociPoint();
-	void slotDrawEllipse4Points();
+    void slotDrawLinePoints();
+    void slotDrawCircle();
+    void slotDrawCircleCross();
+    void slotDrawLineSnake();
+    void slotDrawLineSnakeX();
+    void slotDrawLineSnakeY();
+    void slotDrawLineOrthogonalRel();
+    void slotDrawLineOrthogonalTo();
+    void slotDrawLineAngleRel();
+    void slotDrawSliceDivideLine();
+    void slotDrawSliceDivideCircle();
+    void slotDrawCircleCR();
+    void slotDrawCircle2P();
+    void slotDrawCircle2PR();
+    void slotDrawCircle3P();
+    void slotDrawCircleParallel();
+    void slotDrawCircleInscribe();
+    void slotDrawCircleTan2();
+    void slotDrawCircleTan3();
+    void slotDrawCircleTan1_2P();
+    void slotDrawCircleTan2_1P();
+    void slotDrawCircleByArc();
+    void slotDrawArc();
+    void slotDrawArc3P();
+    void slotDrawArcParallel();
+    void slotDrawArcTangential();
+    void slotDrawEllipseAxis();
+    void slotDrawEllipseArcAxis();
+    void slotDrawEllipseFociPoint();
+    void slotDrawEllipse4Points();
     void slotDrawEllipseCenter3Points();
-	void slotDrawEllipseInscribe();
+    void slotDrawEllipseInscribe();
     void slotDrawParabola4Points();
     void slotDrawParabolaFD();
     void slotDrawSpline();
-	void slotDrawSplinePoints();
-	void slotDrawMText();
-	void slotDrawText();
-	void slotDrawHatch();
-	void slotDrawImage();
-	void slotDrawPolyline();
-	void slotPolylineAdd();
-	void slotPolylineAppend();
-	void slotPolylineDel();
-	void slotPolylineDelBetween();
-	void slotPolylineTrim();
-	void slotPolylineEquidistant();
-	void slotPolylineSegment();
-
-	void slotDimAligned();
-	void slotDimLinear();
-	void slotDimLinearHor();
-	void slotDimLinearVer();
-	void slotDimRadial();
-	void slotDimDiametric();
-	void slotDimAngular();
-	void slotDimArc();
-	void slotDimLeader();
-
-	void slotModifyAttributes();
-	void slotModifyDelete();
-	void slotModifyDeleteQuick();
-	void slotModifyDeleteFree();
-	void slotModifyMove();
-	void slotModifyScale();
-	void slotModifyRevertDirection();
-	void slotModifyRotate();
-	void slotModifyMirror();
-	void slotModifyMoveRotate();
-	void slotModifyRotate2();
-	void slotModifyEntity();
-	void slotModifyTrim();
-	void slotModifyTrim2();
-	void slotModifyTrimAmount();
-	void slotModifyCut();
-	void slotModifyStretch();
-	void slotModifyBevel();
-	void slotModifyRound();
-	void slotModifyOffset();
-	void slotModifyExplodeText();
-
-	void slotSetSnaps(RS_SnapMode const& s);
-	void slotSnapFree();
-	void slotSnapGrid();
-	void slotSnapEndpoint();
-	void slotSnapOnEntity();
-	void slotSnapCenter();
-	void slotSnapMiddle();
-	void slotSnapDist();
-   void slotSnapMiddleManual();
-	void slotSnapIntersection();
-	void slotSnapIntersectionManual();
-
-	void slotRestrictNothing();
-	void slotRestrictOrthogonal();
-	void slotRestrictHorizontal();
-	void slotRestrictVertical();
-
-	void disableSnaps();
-	void disableRestrictions();
-
-	void slotSetRelativeZero();
-	void slotLockRelativeZero(bool on);
-
-	void slotInfoInside();
-	void slotInfoDist();
-	void slotInfoDist2();
- void slotInfoDist3();
-	void slotInfoAngle();
-	void slotInfoTotalLength();
-	void slotInfoArea();
- void slotEntityInfo();
- void slotPickCoordinates();
-
-	void slotLayersDefreezeAll();
-	void slotLayersFreezeAll();
-	void slotLayersUnlockAll();
-	void slotLayersLockAll();
-	void slotLayersAdd();
-	void slotLayersRemove();
-	void slotLayersEdit();
-	void slotLayersToggleView();
-	void slotLayersToggleLock();
+    void slotDrawSplinePoints();
+    void slotDrawMText();
+    void slotDrawText();
+    void slotDrawHatch();
+    void slotDrawImage();
+    void slotDrawPolyline();
+    void slotPolylineAdd();
+    void slotPolylineAppend();
+    void slotPolylineDel();
+    void slotPolylineDelBetween();
+    void slotPolylineTrim();
+    void slotPolylineEquidistant();
+    void slotPolylineSegment();
+    void slotDimAligned();
+    void slotDimLinear();
+    void slotDimLinearHor();
+    void slotDimLinearVer();
+    void slotDimRadial();
+    void slotDimDiametric();
+    void slotDimAngular();
+    void slotDimArc();
+    void slotDimLeader();
+    void slotModifyAttributes();
+    void slotModifyDelete();
+    void slotModifyDeleteQuick();
+    void slotModifyDeleteFree();
+    void slotModifyMove();
+    void slotModifyScale();
+    void slotModifyRevertDirection();
+    void slotModifyRotate();
+    void slotModifyMirror();
+    void slotModifyMoveRotate();
+    void slotModifyRotate2();
+    void slotModifyEntity();
+    void slotModifyTrim();
+    void slotModifyTrim2();
+    void slotModifyTrimAmount();
+    void slotModifyCut();
+    void slotModifyStretch();
+    void slotModifyBevel();
+    void slotModifyRound();
+    void slotModifyOffset();
+    void slotModifyExplodeText();
+    void slotSetSnaps(RS_SnapMode const &s);
+    void slotSnapFree();
+    void slotSnapGrid();
+    void slotSnapEndpoint();
+    void slotSnapOnEntity();
+    void slotSnapCenter();
+    void slotSnapMiddle();
+    void slotSnapDist();
+    void slotSnapMiddleManual();
+    void slotSnapIntersection();
+    void slotSnapIntersectionManual();
+    void slotRestrictNothing();
+    void slotRestrictOrthogonal();
+    void slotRestrictHorizontal();
+    void slotRestrictVertical();
+    void disableSnaps();
+    void disableRestrictions();
+    void slotSetRelativeZero();
+    void slotLockRelativeZero(bool on);
+    void slotInfoInside();
+    void slotInfoDist();
+    void slotInfoDist2();
+    void slotInfoDist3();
+    void slotInfoAngle();
+    void slotInfoTotalLength();
+    void slotInfoArea();
+    void slotEntityInfo();
+    void slotPickCoordinates();
+    void slotLayersDefreezeAll();
+    void slotLayersFreezeAll();
+    void slotLayersUnlockAll();
+    void slotLayersLockAll();
+    void slotLayersAdd();
+    void slotLayersRemove();
+    void slotLayersEdit();
+    void slotLayersToggleView();
+    void slotLayersToggleLock();
     void slotLayersTogglePrint();
     void slotLayersToggleConstruction();
     void slotLayersExportSelected();
     void slotLayersExportVisible();
-
     void slotBlocksDefreezeAll();
     void slotBlocksFreezeAll();
     void slotBlocksAdd();
@@ -281,28 +264,24 @@ public slots:
     void slotDrawStar();
     void slotModifyBreakDivide();
     void slotModifyLineGap();
-
     void slotOptionsDrawing();
-
-
-    void toggleVisibility(RS_Layer* layer);
-    void toggleLock(RS_Layer* layer);
-    void togglePrint(RS_Layer* layer);
-    void toggleConstruction(RS_Layer* layer);
+    void toggleVisibility(RS_Layer *layer);
+    void toggleLock(RS_Layer *layer);
+    void togglePrint(RS_Layer *layer);
+    void toggleConstruction(RS_Layer *layer);
     void slotRedockWidgets();
-
-  void slotPenPick();
-  void slotPenPickResolved();
-  void slotPenApply();
-  void slotPenCopy();
-  void slotPenSyncFromLayer();
+    void slotPenPick();
+    void slotPenPickResolved();
+    void slotPenApply();
+    void slotPenCopy();
+    void slotPenSyncFromLayer();
 
 private:
     // Type of draw order selected command
     RS2::ActionType orderType{RS2::ActionOrderTop};
-    QG_SnapToolBar* snap_toolbar{nullptr};
-    RS_GraphicView* view{nullptr};
-    RS_Document*    document{nullptr};
+    QG_SnapToolBar *snap_toolbar{nullptr};
+    RS_GraphicView *view{nullptr};
+    RS_Document *document{nullptr};
 };
 
 #endif

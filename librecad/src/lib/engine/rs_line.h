@@ -49,6 +49,10 @@ struct RS_LineData {
         endpoint( point2)
     {}
 
+    void reverse() {
+        std::swap(startpoint, endpoint);
+    }
+
     RS_Vector startpoint;
     RS_Vector endpoint;
 };

@@ -35,6 +35,8 @@
 #include "rs_system.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "lc_defaults.h"
+#include "rs_math.h"
 
 /*
  *  Constructs a QG_DlgOptionsGeneral as a child of 'parent', with the
@@ -77,16 +79,16 @@ void QG_DlgOptionsGeneral::init()
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
     languageList.prepend("en");
-	for(auto const& lang: languageList){
+    for (auto const &lang: languageList) {
 
         RS_DEBUG->print("QG_DlgOptionsGeneral::init: adding %s to combobox",
-						lang.toLatin1().data());
+                        lang.toLatin1().data());
 
-		QString l = RS_SYSTEM->symbolToLanguage(lang);
-		if (!l.isEmpty() && cbLanguage->findData(lang)==-1) {
+        QString l = RS_SYSTEM->symbolToLanguage(lang);
+        if (!l.isEmpty() && cbLanguage->findData(lang) == -1){
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
-			cbLanguage->addItem(l,lang);
-			cbLanguageCmd->addItem(l, lang);
+            cbLanguage->addItem(l, lang);
+            cbLanguageCmd->addItem(l, lang);
         }
     }
 
@@ -94,12 +96,11 @@ void QG_DlgOptionsGeneral::init()
 
     // set current language:
     QString def_lang = "en";
-
     QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
-    cbLanguage->setCurrentIndex( cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)) );
+    cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
 
     QString langCmd = RS_SETTINGS->readEntry("/LanguageCmd", def_lang);
-    cbLanguageCmd->setCurrentIndex( cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)) );
+    cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
 
     // graphic view:
 
@@ -126,29 +127,32 @@ void QG_DlgOptionsGeneral::init()
     bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
     cbVisualizeHovering->setChecked(visualizeHovering);
 
+    bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
+    cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
+
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
-    cbScaleGrid->setChecked(scaleGrid=="1");
+    cbScaleGrid->setChecked(scaleGrid == "1");
     QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
-    cbMinGridSpacing->setCurrentIndex( cbMinGridSpacing->findText(minGridSpacing) );
+    cbMinGridSpacing->setCurrentIndex(cbMinGridSpacing->findText(minGridSpacing));
 
     int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
-    cb_antialiasing->setChecked(checked?true:false);
+    cb_antialiasing->setChecked(checked ? true : false);
 
     checked = RS_SETTINGS->readNumEntry("/UnitlessGrid", 0);
-    cb_unitless_grid->setChecked(checked?true:false);
+    cb_unitless_grid->setChecked(checked ? true : false);
     checked = RS_SETTINGS->readNumEntry("/Autopanning");
-    cb_autopanning->setChecked(checked?true:false);
+    cb_autopanning->setChecked(checked ? true : false);
 
     checked = RS_SETTINGS->readNumEntry("/ScrollBars");
-    scrollbars_check_box->setChecked(checked?true:false);
+    scrollbars_check_box->setChecked(checked ? true : false);
 
     // preview:
-	initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
+    initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
     RS_SETTINGS->endGroup();
 
-    RS_SETTINGS->beginGroup("DefaultColors");
+    RS_SETTINGS->beginGroup("Colors");
     initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", RS_Settings::background));
     initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
     initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
@@ -158,6 +162,8 @@ void QG_DlgOptionsGeneral::init()
     initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
     initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
+    initComboBox(cbPreviewRefColor, RS_SETTINGS->readEntry("/previewReferencesColor", RS_Settings::previewRefColor));
+    initComboBox(cbPreviewRefHighlightColor, RS_SETTINGS->readEntry("/previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
     initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator));
     RS_SETTINGS->endGroup();
 
@@ -172,18 +178,18 @@ void QG_DlgOptionsGeneral::init()
     RS_SETTINGS->endGroup();
 
     // units:
-    for (int i=RS2::None; i<RS2::LastUnit; i++) {
-        if (i!=(int)RS2::None)
-            cbUnit->addItem(RS_Units::unitToString((RS2::Unit)i));
+    for (int i = RS2::None; i < RS2::LastUnit; i++) {
+        if (i != (int) RS2::None)
+            cbUnit->addItem(RS_Units::unitToString((RS2::Unit) i));
     }
     // RVT_PORT cbUnit->listBox()->sort();
-    cbUnit->insertItem( 0, RS_Units::unitToString(RS2::None) );
+    cbUnit->insertItem(0, RS_Units::unitToString(RS2::None));
 
     QString def_unit = "Millimeter";
 
     RS_SETTINGS->beginGroup("/Defaults");
 //    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
-    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data() )) );
+    cbUnit->setCurrentIndex(cbUnit->findText(QObject::tr(RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data())));
     // Auto save timer
     cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
     cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
@@ -193,19 +199,19 @@ void QG_DlgOptionsGeneral::init()
     cbInvertZoomDirection->setChecked(RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0));
     RS_SETTINGS->endGroup();
 
-	//update entities to selected entities to the current active layer
-	RS_SETTINGS->beginGroup("/Modify");
-	auto toActive=RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0);
-	cbToActiveLayer->setChecked(toActive==1);
-	RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
-	RS_SETTINGS->endGroup();
+//update entities to selected entities to the current active layer
+    RS_SETTINGS->beginGroup("/Modify");
+    auto toActive = RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0);
+    cbToActiveLayer->setChecked(toActive == 1);
+    RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked() ? 1 : 0);
+    RS_SETTINGS->endGroup();
 
-	RS_SETTINGS->beginGroup("/CADPreferences");
-	cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
-	RS_SETTINGS->endGroup();
+    RS_SETTINGS->beginGroup("/CADPreferences");
+    cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
+    RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Startup");
-    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash",1)==1);
+    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash", 1) == 1);
     tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
     maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
     left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
@@ -213,8 +219,10 @@ void QG_DlgOptionsGeneral::init()
     cbOpenLastFiles->setChecked(RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 1));
     RS_SETTINGS->endGroup();
 
-	cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
-	cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
+    cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
+    cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
+
+    initReferencePoints();
 
     restartNeeded = false;
 }
@@ -245,22 +253,23 @@ void QG_DlgOptionsGeneral::ok()
     {
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         RS_SETTINGS->beginGroup("/Appearance");
-        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int)cbScaleGrid->isChecked()));
-        RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int)cbHideRelativeZero->isChecked()));
+        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int) cbScaleGrid->isChecked()));
+        RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int) cbHideRelativeZero->isChecked()));
         RS_SETTINGS->writeEntry("/VisualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
+        RS_SETTINGS->writeEntry("/VisualizePreviewRefPoints", QString{cbDisplayRefPoints->isChecked() ? "1" : "0"});
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
-        RS_SETTINGS->writeEntry("/Language",cbLanguage->itemData(cbLanguage->currentIndex()));
-        RS_SETTINGS->writeEntry("/LanguageCmd",cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
+        RS_SETTINGS->writeEntry("/Language", cbLanguage->itemData(cbLanguage->currentIndex()));
+        RS_SETTINGS->writeEntry("/LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
         RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/UnitlessGrid", cb_unitless_grid->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/UnitlessGrid", cb_unitless_grid->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Colors");
@@ -273,6 +282,8 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
         RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
         RS_SETTINGS->writeEntry("/relativeZeroColor", cbRelativeZeroColor->currentText());
+        RS_SETTINGS->writeEntry("/previewReferencesColor", cbPreviewRefColor->currentText());
+        RS_SETTINGS->writeEntry("/previewReferencesHighlightColor", cbPreviewRefHighlightColor->currentText());
         RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
         RS_SETTINGS->endGroup();
 
@@ -287,8 +298,8 @@ void QG_DlgOptionsGeneral::ok()
 
         RS_SETTINGS->beginGroup("/Defaults");
         RS_SETTINGS->writeEntry("/Unit",
-            RS_Units::unitToString( RS_Units::stringToUnit( cbUnit->currentText() ), false/*untr.*/) );
-        RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value() );
+                                RS_Units::unitToString(RS_Units::stringToUnit(cbUnit->currentText()), false/*untr.*/));
+        RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value());
         RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/WheelScrollInvertH", cbWheelScrollInvertH->isChecked() ? 1 : 0);
@@ -298,24 +309,26 @@ void QG_DlgOptionsGeneral::ok()
 
         //update entities to selected entities to the current active layer
         RS_SETTINGS->beginGroup("/Modify");
-        RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked()?1:0);
+        RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
-		RS_SETTINGS->beginGroup("/CADPreferences");
-		RS_SETTINGS->writeEntry("/AutoZoomDrawing", cbAutoZoomDrawing->isChecked() ? 1 : 0);
-		RS_SETTINGS->endGroup();
+        RS_SETTINGS->beginGroup("/CADPreferences");
+        RS_SETTINGS->writeEntry("/AutoZoomDrawing", cbAutoZoomDrawing->isChecked() ? 1 : 0);
+        RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Startup");
-        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked()?1:0);
-        RS_SETTINGS->writeEntry("/OpenLastOpenedFiles", cbOpenLastFiles->isChecked() ? 1: 0);
+        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/OpenLastOpenedFiles", cbOpenLastFiles->isChecked() ? 1 : 0);
         RS_SETTINGS->endGroup();
 
-		RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
-		RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
+
+        saveReferencePoints();
     }
 
 	if (restartNeeded==true) {
@@ -395,6 +408,16 @@ void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked()
     set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
 }
 
+void QG_DlgOptionsGeneral::on_pb_previewRefColor_clicked()
+{
+    set_color(cbPreviewRefColor, QColor(RS_Settings::previewRefColor));
+}
+
+void QG_DlgOptionsGeneral::on_pb_previewRefHighlightColor_clicked()
+{
+    set_color(cbPreviewRefHighlightColor, QColor(RS_Settings::previewRefHighlightColor));
+}
+
 void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
 {
     QMessageBox::StandardButton reply;
@@ -459,4 +482,184 @@ void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
     bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
     auto& appWindow = QC_ApplicationWindow::getAppWindow();
     appWindow->startAutoSave(allowBackup);
+}
+
+void QG_DlgOptionsGeneral::initReferencePoints(){
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    // Points drawing style:
+    int pdmode = RS_SETTINGS->readNumEntry("/RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
+    QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
+    RS_SETTINGS->endGroup();
+
+// Set button checked for the currently selected point style
+    switch(pdmode) {
+        case DXF_FORMAT_PDMode_CentreDot:
+        default:
+            bDot->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreBlank:
+            bBlank->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentrePlus:
+            bPlus->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreCross:
+            bCross->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreTick:
+            bTick->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot):
+            bDotCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross):
+            bCrossCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick):
+            bTickCircle->setChecked(true);
+            break;
+
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot):
+            bDotSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross):
+            bCrossSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick):
+            bTickSquare->setChecked(true);
+            break;
+
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot):
+            bDotCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross):
+            bCrossCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick):
+            bTickCircleSquare->setChecked(true);
+            break;
+    }
+
+// Fill points display size value string, and set button checked for screen-size
+// relative vs. absolute drawing units radio buttons. Negative pdsize => value
+// gives points size as percent of screen size; positive pdsize => value gives
+// points size in absolute drawing units; pdsize == 0 implies points size to be
+// 5% relative to screen size.
+
+    bool ok;
+    double pdsize = RS_Math::eval(pdsizeStr, &ok);
+    if (!ok){
+        pdsize = LC_DEFAULTS_PDSize;
+    }
+    if ( pdsize <= 0.0 )
+        rbRelSize->setChecked(true);
+    else
+        rbAbsSize->setChecked(true);
+
+    lePointSize->setText(QString::number(std::abs(pdsize), 'g', 6));
+
+// Set the appropriate text for the display size value label
+    updateLPtSzUnits();
+}
+
+void QG_DlgOptionsGeneral::updateLPtSzUnits()
+{
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::updateLPtSzUnits, rbRelSize->isChecked() = %d",rbRelSize->isChecked());
+    if ( rbRelSize->isChecked() )
+        lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
+    else
+        lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
+}
+
+void QG_DlgOptionsGeneral::saveReferencePoints(){
+// Points drawing style:
+// Get currently selected point style from which button is checked
+    int pdmode = LC_DEFAULTS_PDMode;
+
+    if (bDot->isChecked())
+        pdmode = DXF_FORMAT_PDMode_CentreDot;
+    else if (bBlank->isChecked())
+        pdmode = DXF_FORMAT_PDMode_CentreBlank;
+    else if (bPlus->isChecked())
+        pdmode = DXF_FORMAT_PDMode_CentrePlus;
+    else if (bCross->isChecked())
+        pdmode = DXF_FORMAT_PDMode_CentreCross;
+    else if (bTick->isChecked())
+        pdmode = DXF_FORMAT_PDMode_CentreTick;
+
+    else if (bDotCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);    else if (bBlankCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank);
+    else if (bPlusCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus);
+    else if (bCrossCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross);
+    else if (bTickCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick);
+
+    else if (bDotSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
+    else if (bBlankSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank);
+    else if (bPlusSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus);
+    else if (bCrossSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross);
+    else if (bTickSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick);
+
+    else if (bDotCircleSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot);
+    else if (bBlankCircleSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank);
+    else if (bPlusCircleSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus);
+    else if (bCrossCircleSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross);
+    else if (bTickCircleSquare->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick);
+
+// Get points display size from the value string and the relative vs. absolute
+// size radio buttons state
+    bool ok;
+    double pdsize = RS_Math::eval(lePointSize->text(), &ok);
+    if (!ok)
+        pdsize = LC_DEFAULTS_PDSize;
+
+    if (pdsize > 0.0 && rbRelSize->isChecked())
+        pdsize = - pdsize;
+
+    QString pdsizeStr = QString::number(pdsize);
+
+    RS_SETTINGS->beginGroup("/Appearance");
+    // Points drawing style:
+    RS_SETTINGS->writeEntry("/RefPointType", pdmode);
+    RS_SETTINGS->writeEntry("/RefPointSize",pdsizeStr);
+    RS_SETTINGS->endGroup();
+
+}
+
+void QG_DlgOptionsGeneral::on_rbRelSize_toggled([[maybe_unused]] bool checked)
+{
+//	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
+    updateLPtSzUnits();
 }

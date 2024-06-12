@@ -31,6 +31,7 @@
 #include <QObject>
 #include <QtCore/QtContainerFwd>
 
+#include "rs.h"
 #include "rs_snapper.h"
 #include "lc_actionoptionswidget.h"
 
@@ -167,6 +168,10 @@ protected:
     virtual void createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
+protected:
+    void setMouseCursor(const RS2::CursorType &cursor);
+    void updateSelectionWidget() const;
+    void updateSelectionWidget(int countSelected, double selectedLength) const;
 };
 
 

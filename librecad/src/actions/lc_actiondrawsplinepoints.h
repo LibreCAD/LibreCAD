@@ -32,52 +32,40 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @author Pavel Krejcir
  */
-class LC_ActionDrawSplinePoints : public RS_ActionDrawSpline
-{
-	Q_OBJECT
+class LC_ActionDrawSplinePoints:public RS_ActionDrawSpline {
+Q_OBJECT
 public:
-	/**
-	* Action States.
-	*/
-	enum Status
-	{
-		SetStartPoint,   /**< Setting the startpoint.  */
-		SetNextPoint      /**< Setting the next point. */
-	};
+/**
+* Action States.
+*/
+    enum Status { // fixme - is it the same as in base action???
+        SetStartPoint,   /**< Setting the startpoint.  */
+        SetNextPoint      /**< Setting the next point. */
+    };
+    LC_ActionDrawSplinePoints(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~LC_ActionDrawSplinePoints() override;
+    void reset();
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void setClosed(bool c) override;
+    bool isClosed() override;
+    void undo() override;
 
-    LC_ActionDrawSplinePoints(RS_EntityContainer& container,
-		RS_GraphicView& graphicView);
-	~LC_ActionDrawSplinePoints() override;
-
-	void reset();
-
-	void init(int status = 0) override;
-	void trigger() override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-
-	void showOptions() override;
-	void hideOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	void setClosed(bool c) override;
-	bool isClosed() override;
-	void undo() override;
     //using degree=2 only
-	void setDegree(int /*deg*/) override{}
+    void setDegree(int /*deg*/) override{}
 
 private:
-	void redo();
-
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    void redo();
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 
 };
 

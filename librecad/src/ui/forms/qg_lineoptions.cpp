@@ -33,8 +33,8 @@
  *  Constructs a QG_LineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineOptions::QG_LineOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_LineOptions::QG_LineOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLine, "","")
 	, ui(new Ui::Ui_LineOptions{})
 {
 	ui->setupUi(this);
@@ -49,19 +49,15 @@ QG_LineOptions::~QG_LineOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LineOptions::languageChange()
-{
+void QG_LineOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_LineOptions::setAction(RS_ActionInterface* a) {
-    if (a && a->rtti()==RS2::ActionDrawLine) {
-		action = static_cast<RS_ActionDrawLine*>(a);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_LineOptions::setAction: wrong action type");
-		action = nullptr;
-    }
+void QG_LineOptions::doSaveSettings(){
+}
+
+void QG_LineOptions::doSetAction(RS_ActionInterface *a, bool update){
+		action = dynamic_cast<RS_ActionDrawLine*>(a);
 }
 
 void QG_LineOptions::close() {

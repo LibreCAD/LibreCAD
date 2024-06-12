@@ -24,16 +24,20 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMouseEvent>
 
 #include "lc_abstractactionwithpreview.h"
-#include "lc_actiondrawslicedivide.h"
 #include "rs_commandevent.h"
 #include "rs_commands.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
+#include "rs_preview.h"
 #include "rs_line.h"
 #include "rs_point.h"
-#include "rs_preview.h"
+#include "lc_refpoint.h"
+#include "lc_refline.h"
+#include "rs_previewactioninterface.h"
+#include "lc_refarc.h"
+#include "rs_actioninterface.h"
 
 /**
  * Utility base class for actions. It includes some basic logic and utilities, that simplifies creation of specific actions
@@ -113,17 +117,6 @@ void LC_AbstractActionWithPreview::init(int status){
 }
 
 /**
- * Utility method for setting relative zero.
- * Further may be used for additional processing.
- * @param zero
- */
-
-void LC_AbstractActionWithPreview::moveRelativeZero(const RS_Vector& zero){
-    graphicView->moveRelativeZero(zero);
-}
-
-
-/**
  * Extension point - defines whether action may be interested on triggering against currently selected entities
  * @param status status on init
  * @return true if may trigger
@@ -160,7 +153,7 @@ void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent*
  * @param e
  */
 void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector mouse = toGraph(e);
     RS_Vector relMouse = mouse - graphicView->getRelativeZero();
     RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
 }
@@ -216,7 +209,7 @@ void LC_AbstractActionWithPreview::trigger(){
             } else {
                 performTrigger();
             }
-            graphicView->redraw(RS2::RedrawDrawing);
+            graphicView->redraw(RS2::RedrawAll);
         }
     }
 
@@ -524,11 +517,14 @@ void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
     deleteHighlights();
     if (doCheckMayDrawPreview(e, status)){ // check whether preview may be drawn according to state etc.
         RS_Vector snap = doGetMouseSnapPoint(e);
-        bool drawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions
-        if (drawPreview){
+        bool shouldDrawPreview = onMouseMove(e, snap, status); // delegate processing to inherited actions
+        if (shouldDrawPreview){
             unHighlightEntity();
             drawPreviewForPoint(e, snap);
             lastSnapPoint = snap; // store snap point for later use (like redraw preview on options change)
+        }
+        else{
+            drawPreview(); // ensure that preview is refreshed if something (like angle snap mark) is there
         }
         graphicView->redraw();
     }
@@ -633,7 +629,7 @@ void LC_AbstractActionWithPreview::drawPreviewForPoint(QMouseEvent *e, RS_Vector
     // adding collected entities to preview
     for (int i =0; i < entitiesForPreview.count(); i++){
         RS_Entity* ent = entitiesForPreview.at(i);
-        preview->addEntity(ent);
+        previewEntity(ent);
     }
     // draw
     drawPreview();
@@ -676,7 +672,7 @@ void LC_AbstractActionWithPreview::updateMouseCursor(){
     int status = getStatus();
     RS2::CursorType cursor = doGetMouseCursor(status);
     if (cursor > 0){
-        graphicView->setMouseCursor(cursor);
+        setMouseCursor(cursor);
     }
 }
 
@@ -724,41 +720,6 @@ void LC_AbstractActionWithPreview::finishAction(){
     updateMouseButtonHints();
     finish(true);
     graphicView->repaint();
-}
-
-/**
- * Just a shortcut for updating mouse widgets with message that should be translated
- * @param left left string (key for tr())
- * @param right right string (key for tr())
- */
-void LC_AbstractActionWithPreview::updateMouseWidgetTR(const char* left, const char* right){
-    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr(right));
-}
-
-/**
- * Shortcut for updating mouse widget by given strings
- * @param left string
- * @param right string
- */
-void LC_AbstractActionWithPreview::updateMouseWidget(const QString& left,
-                                                     const QString& right){
-    RS_DIALOGFACTORY->updateMouseWidget(left, right);
-}
-
-/**
- * Shortcut for displaying command message (translated)
- * @param msg message key for tr()
- */
-void LC_AbstractActionWithPreview::commandMessageTR(const char * msg){
-    RS_DIALOGFACTORY->commandMessage(msg);
-}
-
-/**
- * Shortcut for displaying command message string
- * @param msg string
- */
-void LC_AbstractActionWithPreview::commandMessage(const QString &msg) const{
-    RS_DIALOGFACTORY->commandMessage(msg);
 }
 
 /**
@@ -851,7 +812,7 @@ void LC_AbstractActionWithPreview::applyPenAndLayerBySourceEntity(const RS_Entit
 }
 
 void LC_AbstractActionWithPreview::updateMouseButtonHints(){
-    RS_DIALOGFACTORY->updateMouseWidget();
+    updateMouseWidget();
 }
 
 /**
@@ -866,15 +827,15 @@ bool LC_AbstractActionWithPreview::checkMayExpandEntity(const RS_Entity *e, cons
     bool locked = e->isLocked();
     if (locked){
         if (!entityName.isEmpty()){
-            commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is locked."));
+            commandMessage(entityName + tr(" is not divided as it is locked."));
         }
     } else {
         RS_EntityContainer *pContainer = e->getParent();
         if (pContainer != nullptr){
-            if (pContainer->rtti() == RS2::EntityPolyline){
+            if (pContainer->is(RS2::EntityPolyline)){
                 mayDivide = false;
                 if (!entityName.isEmpty()){
-                    commandMessage(entityName + LC_ActionDrawSliceDivide::tr(" is not divided as it is part of polyline. Expand polyline first."));
+                    commandMessage(entityName + tr(" is not divided as it is part of polyline. Expand polyline first."));
                 }
             } else {
                 mayDivide = true;
@@ -899,6 +860,27 @@ RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QLis
 }
 
 /**
+ * utility method that created reference point
+ * @param coord
+ * @param list
+ * @return
+ */
+void LC_AbstractActionWithPreview::createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
+    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
+        auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+        list << result;
+    }
+}
+
+void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list, bool visibleAlways) const{
+    if (showRefEntitiesOnPreview || visibleAlways){ // fixme - temporary, think about disabling on actions
+        auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+        result->setHighlighted(true);
+        list << result;
+    }
+}
+
+/**
  * Utility method that created line for given coordinate and adds it to the list of entities
  * @param startPoint line start point
  * @param endPoint  line end point
@@ -909,6 +891,30 @@ RS_Line* LC_AbstractActionWithPreview::createLine(const RS_Vector &startPoint, c
     auto *result = new RS_Line(container, startPoint, endPoint);
     list << result;
     return result;
+}
+
+RS_Line* LC_AbstractActionWithPreview::createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const{
+    auto *result = new RS_Line(container, lineData);
+    list << result;
+    return result;
+}
+
+void LC_AbstractActionWithPreview::createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
+    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
+        auto *result = new LC_RefLine(preview.get(), startPoint, endPoint);
+        list << result;
+    }
+}
+
+void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const{
+    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
+        auto *result = new LC_RefArc(preview.get(), data);
+        list << result;
+    }
+}
+
+bool LC_AbstractActionWithPreview::isMouseMove(QMouseEvent *e){
+    return e->type() == QMouseEvent::MouseMove;
 }
 
 

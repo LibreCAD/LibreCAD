@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactionwithpreview.h"
 #include "lc_actiondrawrectangle3points.h"
 #include "lc_rectangle3pointsoptions.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * data that holds corners of rectangle
@@ -88,6 +89,22 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetRelativeZeroAfterTrigger(){
     return zeroCorner;
 }
 
+void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
+    LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
+    if (pPoints->corner1Set){
+        createRefPoint(pPoints->corner1, list);
+
+        if (pPoints->corner2Set){
+            createRefPoint(pPoints->corner2, list);
+            createRefPoint(pPoints->corner4, list);
+            createRefSelectablePoint(snap, list);
+        }
+        else{
+            createRefSelectablePoint(pPoints->corner2, list);
+        }
+    }
+}
+
 /***
  * Central function that calculates resulting shape based on the provided snap point,
  * settings and current state of the action.
@@ -106,7 +123,7 @@ RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snap
         switch (status) {
             case SetWidth:
             case SetPoint2: {
-                calculateCorner2(snapPoint, angleRad);
+                calculateCorner2(snapPoint, angleRad, false);
                 break;
             }
             case SetSize:
@@ -236,14 +253,14 @@ RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snap
 /**
  * calculation of second corner - takes into consideration that base angle may be set
  */
-void LC_ActionDrawRectangle3Points::calculateCorner2(const RS_Vector &snapPoint, double angleRad) const{
+void LC_ActionDrawRectangle3Points::calculateCorner2(const RS_Vector &snapPoint, double angleRad, bool cornerSet) const{
 
     if (baseAngleIsFixed){
         pPoints->corner2 =calculatePossibleEndpointForAngle(snapPoint, pPoints->corner1, angleRad);
     } else {
         pPoints->corner2 = snapPoint;
     }
-    pPoints->corner2Set = true;
+    pPoints->corner2Set = cornerSet;
     pPoints->corner3 = pPoints->corner2;
 }
 
@@ -269,7 +286,7 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(QMouseEvent *e){
             case (SetPoint2):
                 if (!baseAngleIsFixed){
                     // if base angle is not explicitly set, try to make snap to angle
-                    snapped = snapToAngle(snapped, pPoints->corner1);
+                    snapped = getSnapAngleAwarePoint(e, pPoints->corner1, snapped, isMouseMove(e));
                 }
                break;
             case (SetPoint3):{
@@ -277,6 +294,7 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(QMouseEvent *e){
                     // we'll do angle snap, yet related ot the base edge, so we'll calculate an angle 
                     // from corner 1 to corner 2 first
                     double baseAngle = pPoints->corner1.angleTo(pPoints->corner2);
+                    // fixme - add mark
                     snapped = snapToRelativeAngle(baseAngle, snapped, pPoints->corner2);
                 }
                 else{ // draw square
@@ -417,13 +435,13 @@ void LC_ActionDrawRectangle3Points::doProcessCoordinateEvent(const RS_Vector &mo
             break;
         }
         case SetPoint2: {
-            calculateCorner2(mouse, angleRad);
+            calculateCorner2(mouse, angleRad, true);
             moveRelativeZero(mouse);
             setMainStatus(SetPoint3);
             break;
         }
         case SetWidth: {
-            calculateCorner2(mouse, angleRad);
+            calculateCorner2(mouse, angleRad, true);
             moveRelativeZero(mouse);
             setMainStatus(SetHeight);
             break;
@@ -477,7 +495,7 @@ void LC_ActionDrawRectangle3Points::processCommandValue(double value, bool &toMa
             moveRelativeZero(pPoints->corner2);
             deletePreview();
             RS_Polyline *polyline = createPolyline(RS_Vector(false));
-            preview->addEntity(polyline);
+            previewEntity(polyline);
             drawPreview();
             setStatus(SetHeight);
             toMainStatus = false;
@@ -570,25 +588,25 @@ void LC_ActionDrawRectangle3Points::calculateCorner4() const{
 void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetWidth:
-            updateMouseWidgetTR("Specify width","Cancel");
+            updateMouseWidgetTRBack("Specify width");
             break;
         case SetHeight:
-            updateMouseWidgetTR("Specify height","Back");
+            updateMouseWidgetTRBack("Specify height");
             break;
         case SetPoint1:
-            updateMouseWidgetTR("Specify start point","Back");
+            updateMouseWidgetTRBack("Specify start point",Qt::ShiftModifier);
             break;
         case SetPoint2:
-            updateMouseWidgetTR("Specify second point","Back");
+            updateMouseWidgetTRBack("Specify second point",Qt::ShiftModifier);
             break;
         case SetPoint3:
-            updateMouseWidgetTR("Specify third point","Back");
+            updateMouseWidgetTRBack("Specify third point",Qt::ShiftModifier);
             break;
         case SetAngle:
-            updateMouseWidgetTR("Specify angle","Back");
+            updateMouseWidgetTRBack("Specify angle");
             break;
         case SetInnerAngle:
-            updateMouseWidgetTR("Specify inner angle","Back");
+            updateMouseWidgetTRBack("Specify inner angle");
             break;
         default:
             LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(status);

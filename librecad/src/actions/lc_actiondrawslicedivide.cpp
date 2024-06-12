@@ -81,7 +81,7 @@ EntityTypeList LC_ActionDrawSliceDivide::getCatchEntityTypeList() const{
 void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     ticksData.clear();
     EntityTypeList catchEntityTypes = getCatchEntityTypeList();
-    RS_Entity *en = catchEntity(e, catchEntityTypes, RS2::ResolveAll);
+    RS_Entity *en = catchModifiableEntity(e, catchEntityTypes);
     int optionsMode = SELECTION_NONE;
     if (en != nullptr){
         int rtti = en->rtti();
@@ -90,20 +90,20 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
         switch (rtti) {
             case RS2::EntityLine: {
                 auto *lineEntity = dynamic_cast<RS_Line *>(en);
-                addToHighlights(en);
+                highlightHover(en);
                 prepareLineTicks(lineEntity);
                 break;
             }
             case RS2::EntityArc: {
                 auto *arcEntity = dynamic_cast<RS_Arc *>(en);
-                addToHighlights(en);
+                highlightHover(en);
                 prepareArcTicks(arcEntity);
                 optionsMode = SELECTION_ARC;
                 break;
             }
             case RS2::EntityCircle: {
                 auto *circleEntity = dynamic_cast<RS_Circle *>(en);
-                addToHighlights(en);
+                highlightHover(en);
                 prepareCircleTicks(circleEntity);
                 optionsMode = SELECTION_CIRCLE;
                 break;
@@ -122,14 +122,15 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
                 for (uint i = 0; i < createdTicksCount; i++) {
                     TickData tick = ticksData.at(i);
                     if (tick.isVisible){
-                        RS_Entity *tickEntity;
                         if (hasTickLength){ // create preview line for tick with non-zero length
-                            tickEntity = new RS_Line(tick.tickLine.startpoint, tick.tickLine.endpoint);
-                        } else { // if tick length is zero - it is just divide mode, without ticks
-                            // so on preview, we just indicate that we may have divide points
-                            tickEntity = new RS_Point(nullptr, RS_PointData(tick.snapPoint));
+                            auto tickLine = new RS_Line(tick.tickLine.startpoint, tick.tickLine.endpoint);
+                            list << tickLine;
                         }
-                        list << tickEntity;
+                        if (doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
+                            // so on preview, we just indicate that we may have divide points
+                            // even if tick is present - we'd better highlight division points
+                            createRefPoint(tick.snapPoint, list);
+                        }
                     }
                 }
             }
@@ -148,14 +149,14 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
 bool LC_ActionDrawSliceDivide::doCheckMayTrigger(){
     bool result = false;
     if (getStatus() == SetEntity){
-        if (entity != nullptr)        {
+        if (entity != nullptr) {
             int entityRtti = entity->rtti();
             switch (entityRtti) {
                 case RS2::EntityLine:
                     result = actionType == RS2::ActionDrawSliceDivideLine;
                     break;
                 case RS2::EntityArc:
-                case RS2::EntityCircle:{
+                case RS2::EntityCircle: {
                     result = actionType == RS2::ActionDrawSliceDivideCircle;
                     break;
                 }
@@ -237,8 +238,8 @@ void LC_ActionDrawSliceDivide::doOnLeftMouseButtonRelease(QMouseEvent *e, int st
     switch (status) {
         case SetEntity: {
             EntityTypeList catchEntityTypes = getCatchEntityTypeList();
-            RS_Entity *en = catchEntity(e, catchEntityTypes, RS2::ResolveAll);
-            if (en != nullptr){
+            RS_Entity *en = catchModifiableEntity(e, catchEntityTypes);
+            if (en != nullptr && !en->isParentIgnoredOnModifications()){
                 // if we have selected entity, just perform the action
                 entity = en;
                 trigger();
@@ -561,11 +562,13 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
 
 
 void LC_ActionDrawSliceDivide::updateMouseButtonHints(){
+    // todo - actually , if tick angle is 90 degrees, alternative mode is not meaningful, so it's better to adjust more
+    // fine grained shift status there
     if (actionType == RS2::ActionDrawSliceDivideLine){
-        updateMouseWidgetTR("Select line", "Cancel");
+        updateMouseWidgetTRCancel("Select line", Qt::ShiftModifier);
     }
     else{
-        updateMouseWidgetTR("Select circle or arc", "Cancel");
+        updateMouseWidgetTRCancel("Select circle or arc", Qt::ShiftModifier);
     }
 }
 

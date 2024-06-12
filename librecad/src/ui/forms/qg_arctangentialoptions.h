@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawArcTangential;
@@ -35,19 +36,18 @@ namespace Ui {
 class Ui_ArcTangentialOptions;
 }
 
-class QG_ArcTangentialOptions : public QWidget
+class QG_ArcTangentialOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
+
+
 public:
-    QG_ArcTangentialOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    virtual ~QG_ArcTangentialOptions();
+    QG_ArcTangentialOptions();
+    virtual ~QG_ArcTangentialOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateRadius(const QString& s  );
-    virtual void updateAngle(const QString& s  );
-    virtual void updateByRadius(const bool br);
+
     virtual void on_leRadius_editingFinished();
 
     virtual void on_leAngle_editingFinished();
@@ -55,18 +55,20 @@ public slots:
     virtual void on_rbRadius_clicked(bool checked);
 
     virtual void on_rbAngle_clicked(bool checked);
+    void languageChange() override;
 
-
+public:
+    void updateRadius(double d);
+    void updateAngle(double a);
 protected:
     RS_ActionDrawArcTangential* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
-
-private slots:
-
-private:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void setRadiusToActionAndView(const QString& s  );
+    void setAngleToActionAndView(const QString& s  );
+    void setByRadiusToActionAndView(const bool byRadius);
     std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
+
 };
 
 #endif // QG_ARCTANGENTIALOPTIONS_H

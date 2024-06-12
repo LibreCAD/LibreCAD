@@ -40,6 +40,8 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircleCR:public LC_ActionDrawCircleBase {
 Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 public:
     /**
      * Action States.
@@ -61,13 +63,13 @@ public:
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-    void hideOptions() override;
-    void showOptions() override;
+
     void updateMouseButtonHints() override;
     double getRadius() const;
-    bool setRadius(const QString &sr);
-
+    void setRadius(double val);
 protected:
+
+    bool setRadiusStr(const QString &sr) ;
     /**
      * Circle data defined so far.
      */

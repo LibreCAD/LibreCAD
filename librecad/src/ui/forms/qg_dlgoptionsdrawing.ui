@@ -27,7 +27,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="tab1">
       <attribute name="title">
@@ -2811,6 +2811,7 @@
  </tabstops>
  <resources>
   <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>
@@ -3118,4 +3119,14 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>validate()</slot>
+  <slot>updateLengthPrecision()</slot>
+  <slot>updateDimLengthPrecision()</slot>
+  <slot>updateAnglePrecision()</slot>
+  <slot>updateDimAnglePrecision()</slot>
+  <slot>updatePreview()</slot>
+  <slot>updatePaperSize()</slot>
+  <slot>updatePaperPreview()</slot>
+ </slots>
 </ui>

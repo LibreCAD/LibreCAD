@@ -68,7 +68,7 @@ void RS_ActionEditCopy::trigger() {
     finish(false);
     graphicView->killSelectActions();
     //init(getStatus()-1);
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    updateSelectionWidget();
 }
 
 void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
@@ -114,7 +114,7 @@ void RS_ActionEditCopy::updateMouseButtonHints() {
 
 
 void RS_ActionEditCopy::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

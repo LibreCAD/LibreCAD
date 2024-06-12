@@ -93,7 +93,7 @@ void RS_ActionModifyEntity::trigger() {
             }
 
             clone.release();
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+            updateSelectionWidget();
         }
     } else {
         RS_DEBUG->print("RS_ActionModifyEntity::trigger: Entity is NULL\n");
@@ -114,7 +114,7 @@ void RS_ActionModifyEntity::mouseReleaseEvent(QMouseEvent* e) {
 
 
 void RS_ActionModifyEntity::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 void RS_ActionModifyEntity::updateMouseButtonHints() {

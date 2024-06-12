@@ -71,7 +71,7 @@ void RS_ActionPolylineDelBetween::trigger(){
 
     deleteHighlights();
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
 
     graphicView->redraw();
 }
@@ -88,7 +88,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
         case SetPolyline: {
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
-                addToHighlights(polyline);
+                highlightHover(polyline);
             }
             break;
         }
@@ -98,8 +98,8 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
             getSelectedPolylineVertex(e, vertex, segment);
 
             if (vertex.valid){
-                addToHighlights(segment);
-                addPointToPreview(vertex);
+                highlightHover(segment);
+                previewRefSelectablePoint(vertex, true);
             }
             break;
         }
@@ -108,7 +108,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
             RS_Entity *segment;
             getSelectedPolylineVertex(e, vertex, segment);
 
-            addPointToPreview(vertexToDelete);
+            previewRefSelectablePoint(vertexToDelete, true);
 
             if (vertex.valid){
                 // collect segments between points
@@ -116,9 +116,9 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
                 collectEntitiesToRemove(vertexToDelete, vertex, entitiesToRemove);
                 if (!entitiesToRemove.isEmpty()){
                     for (auto er: entitiesToRemove) {
-                        addToHighlights(er);
+                        highlightHover(er);
                     }
-                    addPointToPreview(vertex);
+                    previewRefSelectablePoint(vertex, true);
                     RS_Modification m(*preview, graphicView);
                     m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertex  , true);
                 }
@@ -139,11 +139,9 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
             case SetPolyline:{
                 auto en = catchEntity(e);
                 if (en == nullptr){
-                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-                } else if (en->rtti() != RS2::EntityPolyline){
-
-                    RS_DIALOGFACTORY->commandMessage(
-                        tr("Entity must be a polyline."));
+                    commandMessageTR("No Entity found.");
+                } else if (!isPolyline(en)){
+                    commandMessageTR("Entity must be a polyline.");
                 } else {
                     polylineToModify = dynamic_cast<RS_Polyline *>(en);
                     polylineToModify->setSelected(true);
@@ -155,15 +153,14 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
             }
             case SetVertex1:
                 if (polylineToModify == nullptr){
-                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found.")); // fixme - really? seems not needed check
+                    commandMessageTR("No Entity found."); // fixme - really? seems not needed check
                 } else {
                     RS_Vector vertex;
                     RS_Entity * segment;
                     getSelectedPolylineVertex(e, vertex, segment);
                     if (vertex.valid){
                         if (!polylineToModify->isPointOnEntity(vertex)){ // fixme - is it really needed?
-                            RS_DIALOGFACTORY->commandMessage(
-                                tr("Deleting point is not on entity."));
+                            commandMessageTR("Deleting point is not on entity.");
                         }
                         else{
                             vertexToDelete = vertex;
@@ -171,14 +168,14 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
                         }
                     }
                     else{
-                        RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
+                        commandMessageTR("Deleting point is invalid.");
                     }
                 }
                 break;
             case SetVertex2:
 
                 if (polylineToModify == nullptr){
-                    RS_DIALOGFACTORY->commandMessage(tr("No polyline found.")); // fixme - really needed?
+                    commandMessageTR("No polyline found."); // fixme - really needed?
                 } else{
                     RS_Vector vertex;
                     RS_Entity * segment;
@@ -186,7 +183,7 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
 
                     if (vertex.valid){
                         if (!polylineToModify->isPointOnEntity(vertex)){ // fixme - is it really needed?
-                            RS_DIALOGFACTORY->commandMessage(tr("Deleting point is not on entity."));
+                            commandMessageTR("Deleting point is not on entity.");
                         }
                         else{
                             QList<RS_Entity*> entitiesToRemove;
@@ -197,12 +194,12 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
                                 trigger();
                             }
                             else{
-                                RS_DIALOGFACTORY->commandMessage(tr("At least two segments of polyline should be between selected points."));
+                                commandMessageTR("At least two segments of polyline should be between selected points.");
                             }
                         }
                     }
                     else{
-                        RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
+                        commandMessageTR("Deleting point is invalid.");
                     }
                 }
                 break;
@@ -214,18 +211,17 @@ void RS_ActionPolylineDelBetween::processMouseLeftButtonRelease(QMouseEvent *e, 
 
 void RS_ActionPolylineDelBetween::updateMouseButtonHints() {
         switch (getStatus()) {
-        case SetPolyline:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to delete between two nodes"),
-                                                                                        tr("Cancel"));
+            case SetPolyline:
+                updateMouseWidgetTRCancel("Specify polyline to delete between two nodes");
                 break;
-        case SetVertex1:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first node"),tr("Back"));
+            case SetVertex1:
+                updateMouseWidgetTRBack("Specify first node");
                 break;
-        case SetVertex2:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second node"),tr("Back"));
+            case SetVertex2:
+                updateMouseWidgetTRBack("Specify second node");
                 break;
-        default:
-                RS_DIALOGFACTORY->updateMouseWidget();
+            default:
+                updateMouseWidget();
                 break;
         }
 }

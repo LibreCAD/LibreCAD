@@ -30,65 +30,57 @@
 #include "rs_previewactioninterface.h"
 
 struct RS_RoundData;
-
 /**
  * This action class can handle user events to round corners.
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyRound : public RS_PreviewActionInterface {
-	Q_OBJECT
-	/**
-  * Action States.
-  */
-	enum Status {
-		SetEntity1,   /**< Choosing the 1st entity. */
-		SetEntity2,   /**< Choosing the 2nd entity. */
-		SetRadius,   /**< Setting radius in command line. */
-		SetTrim    /**< Setting trim flag in command line. */
-	};
+class RS_ActionModifyRound:public RS_PreviewActionInterface {
+Q_OBJECT
+/**
+ * Action States.
+ */
+    enum Status {
+        SetEntity1,   /**< Choosing the 1st entity. */
+        SetEntity2,   /**< Choosing the 2nd entity. */
+        SetRadius,   /**< Setting radius in command line. */
+        SetTrim    /**< Setting trim flag in command line. */
+    };
 
 public:
-	RS_ActionModifyRound(RS_EntityContainer& container,
-						 RS_GraphicView& graphicView);
-	~RS_ActionModifyRound() override;
-	
-	void init(int status=0) override;
-	void trigger() override;
+    RS_ActionModifyRound(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionModifyRound() override;
+    void init(int status = 0) override;
+    void trigger() override;
     void finish(bool updateTB = false) override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	
-	void setRadius(double r);
-
-	double getRadius() const;
-
-	void setTrim(bool t);
-
-	bool isTrimOn() const;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+    void setRadius(double r);
+    double getRadius() const;
+    void setTrim(bool t);
+    bool isTrimOn() const;
 
 private:
 
-    bool removeOldFillet(RS_Entity* e, const bool& isPolyline);
-
+    bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
     // update highlight status
-    void unhighlightEntity();
 
-    RS_Entity* entity1 = nullptr;
-    RS_Entity* entity2 = nullptr;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	/** Last status before entering angle. */
+protected:
+    void createOptionsWidget() override;
+
+    void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
+private:
+    RS_Entity *entity1 = nullptr;
+    RS_Entity *entity2 = nullptr;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+/** Last status before entering angle. */
     Status lastStatus = SetEntity1;
 };
 

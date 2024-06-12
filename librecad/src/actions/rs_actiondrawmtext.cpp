@@ -35,14 +35,15 @@
 #include "rs_graphicview.h"
 #include "rs_mtext.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
+#include "qg_mtextoptions.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Draw Text",
 						   container, graphicView)
         ,pos(std::make_unique<RS_Vector>())
-		,textChanged(true)
-{
+		,textChanged(true){
 	actionType=RS2::ActionDrawMText;
 }
 
@@ -54,26 +55,24 @@ void RS_ActionDrawMText::init(int status){
     switch (status) {
         case ShowDialog: {
             reset();
-
             RS_MText tmp(nullptr, *data);
             if (RS_DIALOGFACTORY->requestMTextDialog(&tmp)){
                 data.reset(new RS_MTextData(tmp.getData()));
                 setStatus(SetPos);
-                showOptions();
+                updateOptions();
             } else {
                 hideOptions();
                 finish(true);
             }
-        }
             break;
-
-        case SetPos:
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+        }
+        case SetPos: {
+            updateOptions();
             deletePreview();
             preview->setVisible(true);
             preparePreview();
             break;
-
+        }
         default:
             break;
     }
@@ -101,15 +100,11 @@ void RS_ActionDrawMText::trigger(){
     if (pos->valid){
         deletePreview();
 
-        RS_MText *text = new RS_MText(container, *data);
+        auto *text = new RS_MText(container, *data);
         text->update();
         container->addEntity(text);
 
-        if (document){
-            document->startUndoCycle();
-            document->addUndoable(text);
-            document->endUndoCycle();
-        }
+        addToDocumentUndoable(text);
 
         graphicView->redraw(RS2::RedrawDrawing);
 
@@ -119,10 +114,10 @@ void RS_ActionDrawMText::trigger(){
 }
 
 void RS_ActionDrawMText::preparePreview() {
-	data->insertionPoint = *pos;
-	auto* text = new RS_MText(preview.get(), *data);
+    data->insertionPoint = *pos;
+    auto *text = new RS_MText(preview.get(), *data);
     text->update();
-    preview->addEntity(text);
+    previewEntity(text);
     textChanged = false;
 }
 
@@ -155,8 +150,7 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawMText::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         deletePreview();
         //init(getStatus()-1);
@@ -174,12 +168,11 @@ void RS_ActionDrawMText::coordinateEvent(RS_CoordinateEvent *e){
     switch (getStatus()) {
         case ShowDialog:
             break;
-
-        case SetPos:
+        case SetPos: {
             data->insertionPoint = mouse;
             trigger();
             break;
-
+        }
         default:
             break;
     }
@@ -189,28 +182,27 @@ void RS_ActionDrawMText::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+        commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
 
     switch (getStatus()) {
-        case SetPos:
+        case SetPos: {
             if (checkCommand("text", c)){
                 deletePreview();
                 graphicView->disableCoordinateInput();
                 setStatus(SetText);
             }
             break;
-
+        }
         case SetText: {
             setText(e->getCommand());
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             graphicView->enableCoordinateInput();
             setStatus(SetPos);
-        }
             break;
-
+        }
         default:
             break;
     }
@@ -224,46 +216,32 @@ QStringList RS_ActionDrawMText::getAvailableCommands() {
     return cmd;
 }
 
-void RS_ActionDrawMText::showOptions() {
-    RS_ActionInterface::showOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, true, true);
-}
-
-void RS_ActionDrawMText::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-	RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionDrawMText::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPos:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify insertion point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify insertion point");
             break;
         case ShowDialog:
         case SetText:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Enter text:"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Enter text:");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-void RS_ActionDrawMText::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawMText::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
-void RS_ActionDrawMText::setText(const QString& t) {
-	data->text = t;
+void RS_ActionDrawMText::setText(const QString &t){
+    data->text = t;
     textChanged = true;
 }
 
-QString RS_ActionDrawMText::getText() {
-	return data->text;
+QString RS_ActionDrawMText::getText(){
+    return data->text;
 }
 
 void RS_ActionDrawMText::setAngle(double a){
@@ -271,9 +249,12 @@ void RS_ActionDrawMText::setAngle(double a){
     textChanged = true;
 }
 
-double RS_ActionDrawMText::getAngle() {
-	return data->angle;
+double RS_ActionDrawMText::getAngle(){
+    return data->angle;
 }
 
+void RS_ActionDrawMText::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_MTextOptions>();
+}
 
 // EOFI

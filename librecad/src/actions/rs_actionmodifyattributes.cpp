@@ -74,7 +74,7 @@ void RS_ActionModifyAttributes::trigger() {
 
     graphicView->killSelectActions();
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+    updateSelectionWidget();
     finish(false);
 }
 
@@ -91,10 +91,8 @@ void RS_ActionModifyAttributes::updateMouseButtonHints() {
     }
 }
 
-
-
 void RS_ActionModifyAttributes::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::DelCursor);
+    setMouseCursor(RS2::DelCursor);
 }
 
 // EOF

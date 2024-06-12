@@ -37,7 +37,6 @@ class LC_ActionModifyLineGap:public LC_AbstractActionWithPreview
         SetGapEndPoint
     };
 
-
 public:
     LC_ActionModifyLineGap(RS_EntityContainer &container, RS_GraphicView &graphicView);
 
@@ -118,7 +117,7 @@ protected:
     bool isSetActivePenAndLayerOnTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doFinish(bool updateTB) override;
-    void createPreviewEntities(GapData *data, QList<RS_Entity *> &list) const;
+    void createPreviewEntities(GapData *data, QList<RS_Entity *> &list, bool startPointNoSelected) const;
 };
 
 #endif // LC_ACTIONMODIFYLINEGAP_H

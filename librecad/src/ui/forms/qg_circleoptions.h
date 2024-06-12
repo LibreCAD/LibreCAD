@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawCircleCR;
@@ -35,27 +36,26 @@ namespace Ui {
     class Ui_CircleOptions;
 }
 
-class QG_CircleOptions : public QWidget
+class QG_CircleOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_CircleOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_CircleOptions();
+    QG_CircleOptions();
+    ~QG_CircleOptions() override;
 
 public slots:
-    virtual void setAction(RS_ActionInterface * a, bool update );
-    virtual void updateRadius(const QString& r);
+    virtual void languageChange();
+    void on_leRadius_editingFinished();
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 protected:
     RS_ActionDrawCircleCR* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
-
-private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_CircleOptions> ui;
+    std::unique_ptr<Ui::Ui_CircleOptions> ui;
+    void setRadiusToActionAndVIew(QString val);
 };
 
 #endif // QG_CIRCLEOPTIONS_H

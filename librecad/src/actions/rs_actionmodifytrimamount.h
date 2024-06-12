@@ -29,15 +29,14 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to trim entities by a given
  * amount.
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyTrimAmount : public RS_ActionInterface {
-        Q_OBJECT
+class RS_ActionModifyTrimAmount:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -47,53 +46,44 @@ public:
     };
 
 public:
-    RS_ActionModifyTrimAmount(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyTrimAmount() override;
+    RS_ActionModifyTrimAmount(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionModifyTrimAmount() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
 
-	void init(int status=0) override;
+    double getDistance() const{return distance;}
+    void setDistance(double d){distance = d;}
+    bool isDistanceTotalLength() const{return distanceIsTotalLength;}
+    void setDistanceIsTotalLength(bool on){distanceIsTotalLength = on;}
+    void setSymmetricDistance(bool val){symmetricDistance = val;};
+    bool isSymmetricDistance(){return symmetricDistance;};
 
-	void trigger() override;
-
-	//void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	double getDistance() const {
-		return distance;
-	}
-	bool getByTotal() const {
-		return byTotal ;
-	}
-
-	void setDistance(double d) {
-		distance = d;
-	}
-	void setByTotal(bool on) {
-		byTotal = on;
-	}
+    void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
-    RS_Entity* trimEntity = nullptr;
-	std::unique_ptr<RS_Vector> trimCoord;
+    RS_AtomicEntity *trimEntity = nullptr;
+    std::unique_ptr<RS_Vector> trimCoord;
     double distance = 0.;
-    bool byTotal = false;
-        /**
-         * Commands
-         */
-        /*
-        QString cmdDistance;
-        QString cmdDistance2;
-        QString cmdDistance3;
-        */
+    bool distanceIsTotalLength = false;
+    bool symmetricDistance = false;
+    /**
+     * Commands
+     */
+    /*
+    QString cmdDistance;
+    QString cmdDistance2;
+    QString cmdDistance3;
+    */
+    double determineDistance(const RS_AtomicEntity *e) const;
+protected:
+    void createOptionsWidget() override;
 };
 
 #endif

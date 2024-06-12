@@ -29,6 +29,7 @@
 #define RS_PAINTER_H
 
 #include "rs.h"
+#include "qnamespace.h"
 #include "rs_vector.h"
 
 class RS_Color;

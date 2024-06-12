@@ -61,7 +61,7 @@ public:
     void finish(bool updateTB) override;
 
 private:
-    RS_Entity *polylineToModify = nullptr;
+    RS_Polyline *polylineToModify = nullptr;
     RS_AtomicEntity *Segment1 = nullptr;
     RS_AtomicEntity *Segment2 = nullptr;
 };

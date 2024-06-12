@@ -28,6 +28,7 @@
 #define RS_ACTIONDIMRADIAL_H
 
 #include "rs_actiondimension.h"
+#include "rs_dimradial.h"
 
 struct RS_DimRadialData;
 
@@ -36,47 +37,41 @@ struct RS_DimRadialData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimRadial : public RS_ActionDimension {
-	Q_OBJECT
+class RS_ActionDimRadial:public RS_ActionDimension {
+Q_OBJECT
 private:
     enum Status {
         SetEntity,     /**< Choose entity. */
         SetPos,      /**< Choose point. */
-		SetText        /**< Setting text label in the command line. */
+        SetText        /**< Setting text label in the command line. */
     };
 
 public:
-    RS_ActionDimRadial(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDimRadial() override;
-
-	void reset() override;
-	
-	void trigger() override;
-	void preparePreview();
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
+    RS_ActionDimRadial(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDimRadial() override;
+    void reset() override;
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-	
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-
+    void updateMouseButtonHints() override;
 
 private:
     /** Chosen entity (arc / circle) */
-    RS_Entity* entity = nullptr;
-	/** Chosen position */
-	std::unique_ptr<RS_Vector> pos;
+    RS_Entity *entity = nullptr;
+/** Chosen position */
+    std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
-	std::unique_ptr<RS_DimRadialData> edata;
-	/** Last status before entering text. */
+    std::unique_ptr<RS_DimRadialData> edata;
+/** Last status before entering text. */
     Status lastStatus = SetEntity;
+    RS_DimRadial *createDim(RS_EntityContainer *parent) const;
+    const RS_Vector &getDefinitionPoint() const;
 };
 
 #endif

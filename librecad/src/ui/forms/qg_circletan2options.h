@@ -25,6 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include<memory>
 #include<QWidget>
 
+#include "lc_actionoptionswidgetbase.h"
+
 class RS_ActionInterface;
 class RS_ActionDrawCircleTan2;
 
@@ -32,27 +34,23 @@ namespace Ui {
 class Ui_CircleTan2Options;
 }
 
-class QG_CircleTan2Options : public QWidget
-{
+class QG_CircleTan2Options : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    QG_CircleTan2Options(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_CircleTan2Options();
     ~QG_CircleTan2Options();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateRadius( const QString & l );
+    void languageChange() override;
+    void on_leRadius_editingFinished();
 
 protected:
     RS_ActionDrawCircleTan2* action;
-
-protected slots:
-    virtual void languageChange();
-
-private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_CircleTan2Options> ui;
+    std::unique_ptr<Ui::Ui_CircleTan2Options> ui;
+    void setRadiusToActionAndView(QString val);
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 };
 
 #endif

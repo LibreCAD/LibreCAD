@@ -45,9 +45,13 @@ void LC_ActionModifyLineJoin::init(int status){
  * utility method that catches line based on mouse event
  */
 RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e){
-    RS_Entity *en = catchEntity(e, lineType, RS2::ResolveAll);
+    RS_Entity *en = catchModifiableEntity(e, lineType);
+    if (en != nullptr){
+         int rtti = en->rtti();
+         rtti++;
+    }
     RS_Line *snappedLine = nullptr;
-    if (en && en->rtti() == RS2::EntityLine){
+    if (isLine(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);
     }
     return snappedLine;
@@ -59,7 +63,7 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
     switch (status) {
         case SetLine1: {
             if (snappedLine != nullptr){ // can snap to line
-                highlightEntity(snappedLine); // just highlight line 1
+                highlightHover(snappedLine); // just highlight line 1
             }
             break;
         }
@@ -67,43 +71,67 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
             if (snappedLine == line1){ // don't let to snap to the same line again
                 snappedLine = nullptr;
             }
+            highlightSelected(line1);
             if (snappedLine != nullptr){
-                // here we do not relay on snap point, simply get coordinates from even
-                RS_Vector coord = graphicView->toGraph(e->position());
+                highlightHover(snappedLine);
+                // here we do not rely on snap point, simply get coordinates from event
+                RS_Vector coord = toGraph(e);
                 LC_LineJoinData *lineJoinData = createLineJoinData(snappedLine, coord);
                 if (lineJoinData != nullptr){
                     RS_Polyline *polyline = lineJoinData->polyline;
                     if (polyline != nullptr){
                         list << polyline;
                     }
+
+                    if (!lineJoinData->parallelLines){
+                        RS_Vector &intersectionPoint = lineJoinData->intersectPoint;
+                        createRefPoint(intersectionPoint, list);
+                    }
+
+                    RS_Vector &major1 = lineJoinData->majorPointLine1;
+                    if (major1.valid){
+                        createRefPoint(major1, list);
+                    }
+
+                    RS_Vector &major2 = lineJoinData->majorPointLine2;
+                    if (major2.valid){
+                        createRefPoint(major2, list);
+                    }
+
                     // we don't need line joint data so far
                     delete lineJoinData;
                 }
-            } else {
-                highlightEntity(line1);
             }
             break;
         }
-        case ResolveFirstLineTrim:
+        case ResolveFirstLineTrim: {
             if (snappedLine != line1){
                 // don't let to snap on the other line except line 1 (as we need a point on the line 1 to determine which side from intersection
                 // should survive trim
                 snappedLine = nullptr;
             }
+            highlightSelected(line1);
             if (snappedLine != nullptr){
                 // retrieve current mouse position and recalculate line join data considering that mose position denotes part of line 1 that
                 // will survive trim operation
-                RS_Vector coord = graphicView->toGraph(e->position());
+                RS_Vector coord = toGraph(e);
                 updateLine1TrimData(coord);
 
                 RS_Polyline *polyline = linesJoinData->polyline;
                 if (polyline != nullptr){
                     list << polyline->clone();
+                    if (!linesJoinData->parallelLines){
+                        RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
+                        createRefPoint(intersectionPoint, list);
+                    }
+                    createRefPoint(linesJoinData->majorPointLine1, list);
+                    createRefPoint(linesJoinData->majorPointLine2, list);
                 }
-            } else {
-                highlightEntity(line1);
+//            } else {
+//                highlightEntity(line1);
             }
             break;
+        }
         default:
             break;
     }
@@ -115,6 +143,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
         case SetLine1:
             if (snappedLine != nullptr){ // just store first line and proceed to selection of second line
                 line1 = snappedLine;
+                line1ClickPosition = snapPoint;
                 setStatus(SetLine2);
             } else {
                 commandMessageTR("No line selected");
@@ -126,7 +155,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
             }
             if (snappedLine != nullptr){
                 line2 = snappedLine;
-                RS_Vector snap = graphicView->toGraph(e->position());
+                RS_Vector snap = toGraph(e);
                 LC_LineJoinData *joinData = createLineJoinData(snappedLine, snap);
                 if (joinData != nullptr){
                     // check whether parallel lines were selected
@@ -173,7 +202,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
 
         case ResolveFirstLineTrim:
             if (snappedLine == line1){ // we need trim hint on the first line
-                RS_Vector snap = graphicView->toGraph(e->position());
+                RS_Vector snap = toGraph(e);
                 // update trim data according to selected part of line 1
                 updateLine1TrimData(snap);
                 // check if polyline is built and if it so - trigger action
@@ -332,7 +361,6 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::createLineJoi
 
     if (line1 != nullptr && secondLine != nullptr){
 
-
         // prepare endpoints vectors
         RS_Vector line1Start = line1->getStartpoint();
         RS_Vector line1End = line1->getEndpoint();
@@ -343,7 +371,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::createLineJoi
 
         // determine intersection point for line 1 and given line 2
         if (intersection.valid){// has intersection between lines, proceed them
-            result = proceedNonParallelLines(snapPoint, intersection, line1Start, line1End, line2Start, line2End);
+            result = proceedNonParallelLines(line1ClickPosition, snapPoint, intersection, line1Start, line1End, line2Start, line2End);
 
         } else {// has intersection between lines, proceed them
             result = proceedParallelLinesJoin(line1Start, line1End, line2Start, line2End);
@@ -363,7 +391,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::createLineJoi
  * @return
  */
 LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedNonParallelLines(
-    RS_Vector &snapPoint,
+     RS_Vector& line1ClickPoint, RS_Vector &snapPoint,
     const RS_Vector &intersectPoint,
     const RS_Vector &line1Start, const RS_Vector &line1End,
     const RS_Vector &line2Start, const RS_Vector &line2End){
@@ -377,7 +405,7 @@ LC_ActionModifyLineJoin::LC_LineJoinData *LC_ActionModifyLineJoin::proceedNonPar
 
     // processing of line 1
     // determining how intersection and snap points are located relating to line endpoints
-    LC_PointsDisposition line1Disposition = determine3PointsDisposition(line1Start, line1End, intersectPoint, snapPoint);
+    LC_PointsDisposition line1Disposition = determine3PointsDisposition(line1Start, line1End, intersectPoint, /*snapPoint*/line1ClickPoint);
 
     // determine major point that will be used for drawing of resulting entities.
     // Based on options, major point may be either one of line endpoints or intersection point
@@ -752,13 +780,13 @@ LC_ActionModifyLineJoin::LC_PointsDisposition LC_ActionModifyLineJoin::determine
 void LC_ActionModifyLineJoin::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTR("Select first line", "Back");
+            updateMouseWidgetTRCancel("Select first line");
             break;
         case SetLine2:
-            updateMouseWidgetTR("Select second line", "Back");
+            updateMouseWidgetTRBack("Select second line");
             break;
         case ResolveFirstLineTrim:
-            updateMouseWidgetTR("Select part of first line that should remain after trim", "Back");
+            updateMouseWidgetTRBack("Select part of first line that should remain after trim");
             break;
         default:
             updateMouseWidget();

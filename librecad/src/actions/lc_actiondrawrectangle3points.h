@@ -84,7 +84,7 @@ protected:
     void resetPoints();
     void doResetPoints(const RS_Vector &zero);
     RS_Vector calculatePossibleEndpointForAngle(const RS_Vector &snap, const RS_Vector lineStartPoint, double angle) const;
-    void calculateCorner2(const RS_Vector &snapPoint, double angleRad) const;
+    void calculateCorner2(const RS_Vector &snapPoint, double angleRad, bool cornerSet) const;
     void calculateCorner4() const;
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
     void processCommandValue(double value, bool &toMainStatus) override;
@@ -103,6 +103,7 @@ protected:
     void doUpdateMouseButtonHints(int status) override;
     void calculateCornersBySize(RS_Vector size);
     double getActualInnerAngle() const;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
 };
 
 #endif //LIBRECAD_MASTER_LC_ACTIONDRAWLINERECTANGLEREL_H

@@ -36,8 +36,7 @@ public:
     QG_MouseWidget(QWidget* parent = 0, const char* name = 0, Qt::WindowFlags fl = {});
     ~QG_MouseWidget();
 
-public slots:
-    virtual void setHelp( const QString & left, const QString & right );
+    virtual void setHelp( const QString & left, const QString & right,Qt::KeyboardModifiers modifiers);
 
 protected slots:
     virtual void languageChange();

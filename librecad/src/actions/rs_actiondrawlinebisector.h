@@ -38,6 +38,8 @@ class RS_Line;
  */
 class RS_ActionDrawLineBisector:public RS_PreviewActionInterface {
 Q_OBJECT
+protected:
+    void createOptionsWidget() override;
 private:
     enum Status {
         SetLine1,     /**< Choose the 1st line. */
@@ -57,8 +59,6 @@ public:
     void mouseReleaseEvent(QMouseEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-    void hideOptions() override;
-    void showOptions() override;
     void updateMouseButtonHints() override;
     void updateMouseCursor() override;
     void setLength(double l);

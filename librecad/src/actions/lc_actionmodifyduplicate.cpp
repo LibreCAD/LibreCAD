@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_duplicateoptions.h"
 #include "lc_actionmodifyduplicate.h"
 #include "lc_abstractactionwithpreview.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionModifyDuplicate::LC_ActionModifyDuplicate(RS_EntityContainer &container, RS_GraphicView &graphicView):
     LC_AbstractActionWithPreview("ModifyDuplicate", container, graphicView),
@@ -188,7 +189,7 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
             RS_Entity *en = catchEntity(e, RS2::ResolveNone);
             if (en != nullptr){
                 // highlight original
-                addToHighlights(en);
+                highlightHover(en);
 
                 // handle offset - if it is present, create a clone of snapped entity and display it for preview
                 auto snapForOffset = RS_Vector(false);
@@ -203,19 +204,20 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
         }
         case SetOffsetDirection:{
             if (selectedEntity != nullptr){
-                addToHighlights(selectedEntity);
+                highlightSelected(selectedEntity);
                 auto snapOffset = RS_Vector(false);
 //                if (alternativeActionMode){
                     snapOffset = snap;
 //                }
                 const RS_Vector &center = getEntityCenterPoint(selectedEntity);
-                addReferenceLineToPreview(center, snap);
+                previewRefLine(center, snap);
+                previewRefPoint(center);
                 RS_Vector offset = determineOffset(snapOffset, center);
                 if (offset.valid){
                     RS_Entity *clone = selectedEntity->clone();
                     clone->move(offset);
                     const RS_Vector newCenter = getEntityCenterPoint(clone);
-                    addReferencePointToPreview(newCenter);
+                    previewRefSelectablePoint(newCenter);
                     list << clone;
                 }
             }
@@ -237,10 +239,10 @@ RS_Vector LC_ActionModifyDuplicate::getEntityCenterPoint(const RS_Entity *en) co
 void LC_ActionModifyDuplicate::updateMouseButtonHints(){
     switch (getStatus()){
         case SelectEntity:
-            updateMouseWidgetTR("Select entity to duplicate", "Cancel");
+            updateMouseWidgetTRCancel("Select entity to duplicate", Qt::ShiftModifier);
             break;
         case SetOffsetDirection:
-            updateMouseWidgetTR("Select direction of offset", "Cancel");
+            updateMouseWidgetTRCancel("Select direction of offset", Qt::ShiftModifier);
             break;
         default:
             LC_AbstractActionWithPreview::updateMouseButtonHints();
@@ -258,10 +260,9 @@ RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int s
 RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
     RS_Vector snapped = snapPoint(e);
     // Snapping to angle(15*) if shift key is pressed
-    if (selectedEntity != nullptr){
-        if (alternativeActionMode){
-            snapped = snapToAngle(snapped, getEntityCenterPoint(selectedEntity) /*,45.*/);
-        }
+    if (getStatus() == SetOffsetDirection){
+        // fixme mark
+        snapped = getSnapAngleAwarePoint(e, getEntityCenterPoint(selectedEntity), snapped);
     }
     return snapped;
 }

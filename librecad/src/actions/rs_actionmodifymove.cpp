@@ -49,8 +49,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Move Entities",
 						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-{
+		, pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyMove;
 }
 
@@ -68,66 +67,61 @@ void RS_ActionModifyMove::trigger(){
     RS_Modification m(*container, graphicView);
     m.move(pPoints->data);
 
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
     finish(false);
 }
 
 void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
-    if (getStatus() == SetReferencePoint || getStatus() == SetTargetPoint){
-        RS_Vector mouse = snapPoint(e);
-        switch (getStatus()) {
-            case SetReferencePoint:
-                pPoints->referencePoint = mouse;
-                trySnapToRelZeroCoordinateEvent(e);
-                break;
-
-            case SetTargetPoint:
-                if (pPoints->referencePoint.valid){
-                    if (e->modifiers() & Qt::ShiftModifier){
-                        mouse = snapToAngle(mouse, pPoints->referencePoint);
-                    }
-
-                    pPoints->targetPoint = mouse;
-
-                    deletePreview();
-
-                    addReferencePointToPreview(pPoints->referencePoint);
-                    preview->addSelectionFrom(*container);
-                    preview->move(pPoints->targetPoint - pPoints->referencePoint);
-
-                    addReferencePointToPreview(pPoints->referencePoint);
-
-                    if (e->modifiers() & Qt::ShiftModifier){
-                        addLineToPreview(pPoints->referencePoint, mouse);
-                    }
-                    else{
-                        addReferenceLineToPreview(pPoints->referencePoint, mouse);
-                    }
-                    drawPreview();
-                }
-                break;
-
-            default:
-                break;
+    RS_Vector mouse = snapPoint(e);
+    switch (getStatus()) {
+        case SetReferencePoint: {
+            pPoints->referencePoint = mouse;
+            trySnapToRelZeroCoordinateEvent(e);
+            break;
         }
-    }
+        case SetTargetPoint: {
+            if (pPoints->referencePoint.valid){
+                deletePreview();
+
+                mouse = getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
+                pPoints->targetPoint = mouse;
+
+                preview->addSelectionFrom(*container);
+                preview->move(pPoints->targetPoint - pPoints->referencePoint);
+
+                if (isShift(e)){
+                    previewLine(pPoints->referencePoint, mouse);
+                }
+                previewRefSelectablePoint(mouse);
+                previewRefPoint(pPoints->referencePoint);
+                previewRefLine(pPoints->referencePoint, mouse);
+
+                drawPreview();
+            }
+            break;
+        }
+        case ShowDialog:
+            break;
+        default:
+            break;
+    }    
 
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
 }
 
 void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent *e){
+    int status = getStatus();
     if (e->button() == Qt::LeftButton){
         RS_Vector snapped = snapPoint(e);
-        if ((e->modifiers() & Qt::ShiftModifier) && getStatus() == SetTargetPoint)
-            snapped = snapToAngle(snapped, pPoints->referencePoint);
-
-        RS_CoordinateEvent ce(snapped);
-        coordinateEvent(&ce);
+        if (status == SetTargetPoint){
+            snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
+        }
+        fireCoordinateEvent(snapped);
     } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus() - 1);
+        init(status - 1);
     }
 }
 
@@ -140,26 +134,26 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
-        case SetReferencePoint:
+        case SetReferencePoint: {
             pPoints->referencePoint = pos;
-            graphicView->moveRelativeZero(pPoints->referencePoint);
+            moveRelativeZero(pPoints->referencePoint);
             setStatus(SetTargetPoint);
             break;
-
-        case SetTargetPoint:
+        }
+        case SetTargetPoint: {
             pPoints->targetPoint = pos;
-            graphicView->moveRelativeZero(pPoints->targetPoint);
+            moveRelativeZero(pPoints->targetPoint);
             setStatus(ShowDialog);
             if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
                 if (pPoints->data.number < 0){
                     pPoints->data.number = abs(pPoints->data.number);
-                    RS_DIALOGFACTORY->commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
+                    commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
                 }
                 pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
                 trigger();
             }
             break;
-
+        }
         default:
             break;
     }
@@ -172,22 +166,20 @@ void RS_ActionModifyMove::updateMouseButtonHints(){
             tr("Cancel"));
   break;*/
         case SetReferencePoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify reference point", Qt::ShiftModifier);
             break;
         case SetTargetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify target point", Qt::ShiftModifier);
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionModifyMove::updateMouseCursor(){
-    if (graphicView != NULL){
-        graphicView->setMouseCursor(RS2::CadCursor);
+    if (graphicView != nullptr){
+        setMouseCursor(RS2::CadCursor);
     }
 }
 

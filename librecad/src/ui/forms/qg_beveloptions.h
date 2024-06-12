@@ -27,34 +27,34 @@
 #define QG_BEVELOPTIONS_H
 
 #include<memory>
-#include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionModifyBevel;
 class RS_ActionInterface;
 namespace Ui {
 class Ui_BevelOptions;
 }
-
-class QG_BevelOptions : public QWidget
-{
-    Q_OBJECT
+class QG_BevelOptions:public LC_ActionOptionsWidgetBase {
+Q_OBJECT
 
 public:
-    QG_BevelOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_BevelOptions();
+    QG_BevelOptions();
+    ~QG_BevelOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateData();
+    virtual void languageChange();
+    void on_cbTrim_toggled(bool checked);
+    void on_leLength1_editingFinished();
+    void on_leLength2_editingFinished();
 
 protected:
-    RS_ActionModifyBevel* action;
-	std::unique_ptr<Ui::Ui_BevelOptions> ui;
-
-protected slots:
-    virtual void languageChange();
-	void saveSettings();
-
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    RS_ActionModifyBevel *action;
+    std::unique_ptr<Ui::Ui_BevelOptions> ui;
+    void setLength1ToActionAndView(QString val);
+    void setLength2ToActionAndView(QString val);
+    void setTrimToActionAndView(bool val);
 };
 
 #endif // QG_BEVELOPTIONS_H

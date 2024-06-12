@@ -36,6 +36,9 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "qg_linerelangleoptions.h"
+#include "rs_previewactioninterface.h"
+#include "rs_actioninterface.h"
 
 namespace {
 
@@ -46,14 +49,13 @@ const auto enTypeList = EntityTypeList{RS2::EntityLine, RS2::EntityArc, RS2::Ent
 RS_ActionDrawLineRelAngle::RS_ActionDrawLineRelAngle(
         RS_EntityContainer& container,
         RS_GraphicView& graphicView,
-        double angle,
+        double ang,
         bool fixedAngle)
     :RS_PreviewActionInterface("Draw Lines with relative angles",
                                container, graphicView)
     , pos(std::make_unique<RS_Vector>())
-    , angle(angle)
-    , fixedAngle(fixedAngle)
-{
+    , fixedAngle(fixedAngle){
+    angle = RS_Math::rad2deg(ang);
 }
 
 RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
@@ -61,7 +63,7 @@ RS_ActionDrawLineRelAngle::~RS_ActionDrawLineRelAngle() = default;
 
 RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
     if( fixedAngle &&
-            RS_Math::getAngleDifference(angle, M_PI_2) < RS_TOLERANCE_ANGLE)
+            RS_Math::getAngleDifference(RS_Math::deg2rad(angle), M_PI_2) < RS_TOLERANCE_ANGLE)
         return RS2::ActionDrawLineOrthogonal;
     else
         return RS2::ActionDrawLineRelAngle;
@@ -78,9 +80,10 @@ void RS_ActionDrawLineRelAngle::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
+    double angleRad = RS_Math::deg2rad(angle);
     RS_Line* line = creation.createLineRelAngle(*pos,
                                                 entity,
-                                                angle,
+                                                angleRad,
                                                 length);
     if (line == nullptr)
         LC_LOG(RS_Debug::D_ERROR)<<"RS_ActionDrawLineRelAngle::"<<__func__<<"(): cannot create line";
@@ -91,15 +94,15 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent begin");
     deleteHighlights();
     switch (getStatus()) {
-        case SetEntity:
+        case SetEntity: {
             entity = catchEntity(e, enTypeList, RS2::ResolveAll);
-            if (entity !=nullptr){
-                addToHighlights(entity);
+            if (entity != nullptr){
+                highlightHover(entity);
             }
             break;
-
+        }
         case SetPos: {
-            addToHighlights(entity);
+            highlightSelected(entity);
             //length = graphicView->toGraphDX(graphicView->getWidth());
             //RS_Vector mouse = snapPoint(e);
             RS_Vector snap = snapPoint(e);
@@ -114,10 +117,14 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
 
             RS_Creation creation(preview.get(), nullptr, false);
-            creation.createLineRelAngle(*pos,
-                                        entity,
-                                        angle,
-                                        length);
+            double angleRad = RS_Math::deg2rad(angle);
+            RS_Line* lineToCreate = creation.createLineRelAngle(*pos,entity, angleRad, length);
+
+            if (lineToCreate != nullptr){
+                auto const vp = entity->getNearestPointOnEntity(*pos, false);
+                previewRefPoint(vp);
+                previewRefPoint(lineToCreate->getEndpoint());
+            }
 
             drawPreview();
             break;
@@ -149,8 +156,7 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
             case SetPos: {
                 const RS_Vector& snap = snapPoint(e);
                 RS_Vector position = getRelZeroAwarePoint(e, snap);
-                RS_CoordinateEvent ce(position);
-                coordinateEvent(&ce);
+                fireCoordinateEvent(position);
                 break;
             }
             default:
@@ -167,7 +173,7 @@ void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
 }
 
 void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e){
+    if (e == nullptr){
         return;
     }
 
@@ -193,7 +199,7 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent *e){
 
     switch (getStatus()) {
         case SetEntity:
-        case SetPos:
+        case SetPos: {
             if (!fixedAngle && checkCommand("angle", c)){
                 deletePreview();
                 setStatus(SetAngle);
@@ -202,7 +208,7 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent *e){
                 setStatus(SetLength);
             }
             break;
-
+        }
         case SetAngle: {
             bool ok = false;
             double a = RS_Math::eval(c, &ok);
@@ -210,26 +216,24 @@ void RS_ActionDrawLineRelAngle::commandEvent(RS_CommandEvent *e){
                 e->accept();
                 angle = RS_Math::deg2rad(a);
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(SetPos);
-        }
             break;
-
+        }
         case SetLength: {
             bool ok = false;
             double l = RS_Math::eval(c, &ok);
             if (ok){
                 length = l;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(SetPos);
-        }
             break;
-
+        }
         default:
             break;
     }
@@ -256,36 +260,24 @@ QStringList RS_ActionDrawLineRelAngle::getAvailableCommands(){
 void RS_ActionDrawLineRelAngle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select base entity"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Select base entity");
             break;
         case SetPos:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify position"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Specify position");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
-void RS_ActionDrawLineRelAngle::showOptions() {
-    RS_ActionInterface::showOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionDrawLineRelAngle::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionDrawLineRelAngle::updateMouseCursor(){
     switch (getStatus()) {
-        case SetEntity:
-            graphicView->setMouseCursor(RS2::SelectCursor);
+        case SetEntity: {
+            RS2::CursorType cursor = RS2::SelectCursor;
+            setMouseCursor(cursor);
             break;
+        }
         case SetPos:
             graphicView->setMouseCursor(RS2::CadCursor);
             break;
@@ -294,12 +286,15 @@ void RS_ActionDrawLineRelAngle::updateMouseCursor(){
     }
 }
 
-void RS_ActionDrawLineRelAngle::unhighlightEntity()
-{
+void RS_ActionDrawLineRelAngle::unhighlightEntity(){
     if (entity != nullptr) {
         entity->setHighlighted(false);
         graphicView->drawEntity(entity);
     }
+}
+
+void RS_ActionDrawLineRelAngle::createOptionsWidget(){
+    m_optionWidget = std::make_unique<QG_LineRelAngleOptions>();
 }
 
 // EOF

@@ -33,21 +33,15 @@
 #include "rs_actiondimension.h"
 
 
-class LC_ActionDimArc : public RS_ActionDimension
-{
+class LC_ActionDimArc : public RS_ActionDimension{
     Q_OBJECT
 
 private:
-
-    enum Status
-    {
+    enum Status{
         SetEntity,
         SetPos
     };
-
-
 public:
-
     LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
     ~LC_ActionDimArc() override;
 
@@ -57,23 +51,15 @@ public:
     void mouseMoveEvent(QMouseEvent* e)    override;
     void mouseReleaseEvent(QMouseEvent* e) override;
 
-    void showOptions() override;
-    void hideOptions() override;
-
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e)       override;
 
     QStringList getAvailableCommands() override;
-
     void updateMouseButtonHints() override;
 
-
 private:
-
     RS_Entity* selectedArcEntity = nullptr;
-
     LC_DimArcData dimArcData;
-
     void setRadius(const RS_Vector& selectedPosition);
 };
 #endif //LC_ACTIONDIMARC_H

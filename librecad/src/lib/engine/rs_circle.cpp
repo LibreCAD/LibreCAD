@@ -498,7 +498,7 @@ RS_VectorSolutions RS_Circle::getRefPoints() const
 /**
  * @brief compute nearest endpoint, intersection with X/Y axis at 0, 90, 180 and 270 degree
  *
- * Use getNearestMiddle() method to compute the nearest circle quadrant endpoints
+ * Use getNearestMiddle() method to compute the nearest circle determineQuadrant endpoints
  *
  * @param coord coordinates to compute, e.g. mouse cursor position
  * @param dist double pointer to return distance between mouse pointer and nearest entity point
@@ -588,7 +588,7 @@ RS_Vector RS_Circle::getMiddlePoint(void)const
 }
 
 /**
- * @brief compute middlePoints for each quadrant of a circle
+ * @brief compute middlePoints for each determineQuadrant of a circle
  *
  * 0 middlePoints snaps to axis intersection at 0, 90, 180 and 270 degree (getNearestEndpoint) \n
  * 1 middlePoints snaps to 45, 135, 225 and 315 degree \n
@@ -597,7 +597,7 @@ RS_Vector RS_Circle::getMiddlePoint(void)const
  *
  * @param coord coordinates to compute, e.g. mouse cursor position
  * @param dist double pointer to return distance between mouse pointer and nearest entity point
- * @param middlePoints number of middle points to compute per quadrant (0 for endpoints)
+ * @param middlePoints number of middle points to compute per determineQuadrant (0 for endpoints)
  * @return the nearest of equidistant middle points of the circles quadrants.
  */
 RS_Vector RS_Circle::getNearestMiddle(const RS_Vector& coord,

@@ -169,6 +169,7 @@ bool LC_AbstractActionDrawRectangle::doCheckMayTrigger(){
  */
 void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, [[maybe_unused]]int status){
     RS_Polyline *polyline = createPolyline(snap);
+    // todo - is it really necessary to set attributes there?
     polyline->setLayerToActive();
     polyline->setPenToActive();
     doAddPolylineToListOfEntities(polyline, list, true);
@@ -406,25 +407,25 @@ void LC_AbstractActionDrawRectangle::updateMouseButtonHints() {
     int status = getStatus();
     switch (status) {
         case SetPoint1:
-            updateMouseWidgetTR("Specify insertion point","Cancel");
+            updateMouseWidgetTRCancel("Specify insertion point",Qt::ShiftModifier);
             break;
         case SetAngle:
-            updateMouseWidgetTR("Specify angle","Back");
+            updateMouseWidgetTRBack("Specify angle");
             break;
         case SetSize:
-            updateMouseWidgetTR("Specify size (width, height)","Back");
+            updateMouseWidgetTRBack("Specify size (width, height)");
             break;
         case SetCorners:
-            updateMouseWidgetTR("Specify corners type\n[str|round|bevels]","Back");
+            updateMouseWidgetTRBack("Specify corners type\n[str|round|bevels]");
             break;
         case SetBevels:
-            updateMouseWidgetTR("Specify corner bevel length (x,y)","Back");
+            updateMouseWidgetTRBack("Specify corner bevel length (x,y)");
             break;
         case SetRadius:
-            updateMouseWidgetTR("Specify corner radius","Back");
+            updateMouseWidgetTRBack("Specify corner radius");
             break;
         case SetEdges:
-            updateMouseWidgetTR("Specify edges mode\n[both|hor|vert]","Back");
+            updateMouseWidgetTRBack("Specify edges mode\n[both|hor|vert]");
             break;
         default:
             doUpdateMouseButtonHints(status); // delegate to inherited classes to process additional statuses

@@ -33,6 +33,7 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineHorVert::Points {
 	/**
@@ -46,130 +47,107 @@ struct RS_ActionDrawLineHorVert::Points {
 	RS_Vector p2;
 };
 
-
-
 RS_ActionDrawLineHorVert::RS_ActionDrawLineHorVert(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Draw horizontal/vertical lines",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>())
-{
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_PreviewActionInterface("Draw horizontal/vertical lines",
+                               container, graphicView), pPoints(std::make_unique<Points>()){
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::constructor");
 }
 
-
-
 RS_ActionDrawLineHorVert::~RS_ActionDrawLineHorVert() = default;
 
-void RS_ActionDrawLineHorVert::reset() {
+void RS_ActionDrawLineHorVert::reset(){
     pPoints->data = {};
 }
 
-
-
-void RS_ActionDrawLineHorVert::init(int status) {
+void RS_ActionDrawLineHorVert::init(int status){
     RS_PreviewActionInterface::init(status);
 
     reset();
     RS_DEBUG->print("RS_ActionDrawLineHorVert::init");
 }
 
-
-
-void RS_ActionDrawLineHorVert::trigger() {
+void RS_ActionDrawLineHorVert::trigger(){
     RS_PreviewActionInterface::trigger();
 
-	RS_Line* line = new RS_Line(container, pPoints->data);
+    RS_Line *line = new RS_Line(container, pPoints->data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);
 
-    // upd. undo list:
-    if (document) {
-        document->startUndoCycle();
-        document->addUndoable(line);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(line);
 
-        graphicView->redraw(RS2::RedrawDrawing);
-    graphicView->moveRelativeZero(line->getMiddlePoint());
+    graphicView->redraw(RS2::RedrawDrawing);
+    moveRelativeZero(line->getMiddlePoint());
     RS_DEBUG->print("RS_ActionDrawLineHorVert::trigger():"
                     " line added: %lu", line->getId());
 
 }
 
-
-
-void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
-	if (getStatus()==SetEndpoint && pPoints->p1.valid) {
-		RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
-		RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
+    if (getStatus() == SetEndpoint && pPoints->p1.valid){
+        RS_Vector p2x = RS_Vector(mouse.x, pPoints->p1.y);
+        RS_Vector p2y = RS_Vector(pPoints->p1.x, mouse.y);
         if (mouse.distanceTo(p2y) > mouse.distanceTo(p2x))
-			pPoints->p2 = p2x;
+            pPoints->p2 = p2x;
         else
-			pPoints->p2 = p2y;
+            pPoints->p2 = p2y;
         deletePreview();
-		pPoints->data = {pPoints->p1, pPoints->p2};
-		preview->addEntity(new RS_Line{preview.get(), pPoints->data});
+        pPoints->data = {pPoints->p1, pPoints->p2};
+        previewLine(pPoints->p1, pPoints->p2);
         drawPreview();
     }
 
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
 }
 
-
-
-void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
+void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent *e){
+    int status = getStatus();
+    if (e->button() == Qt::LeftButton){
         RS_Vector mouse = snapPoint(e);
 
-        switch (getStatus()) {
-        case SetStartpoint:
-			pPoints->p1 = mouse;
-            setStatus(SetEndpoint);
-            break;
+        switch (status) {
+            case SetStartpoint:
+                pPoints->p1 = mouse;
+                setStatus(SetEndpoint);
+                break;
 
-        case SetEndpoint:
-			pPoints->p2 = mouse;
-            trigger();
-            setStatus(SetStartpoint);
-            break;
+            case SetEndpoint:
+                pPoints->p2 = mouse;
+                trigger();
+                setStatus(SetStartpoint);
+                break;
 
-        default:
-            break;
+            default:
+                break;
         }
-    } else if (e->button()==Qt::RightButton) {
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(status - 1);
     }
 }
 
-
-
-void RS_ActionDrawLineHorVert::updateMouseButtonHints() {
+void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetStartpoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first point"),
-                                            tr("Cancel"));
-        break;
-    case SetEndpoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second point"),
-                                            tr("Back"));
-        break;
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetStartpoint:
+            updateMouseWidgetTRCancel("Specify first point");
+            break;
+        case SetEndpoint:
+            updateMouseWidgetTRBack("Specify second point");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
-
-void RS_ActionDrawLineHorVert::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionDrawLineHorVert::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

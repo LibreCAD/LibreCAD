@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawLineParallel;
@@ -35,28 +36,26 @@ namespace Ui {
 class Ui_LineParallelOptions;
 }
 
-class QG_LineParallelOptions : public QWidget
-{
+class QG_LineParallelOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    QG_LineParallelOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LineParallelOptions();
+    QG_LineParallelOptions();
+    ~QG_LineParallelOptions() override;
 
 public slots:
-	virtual void setAction(RS_ActionInterface * a, bool update );
-	virtual void updateDist(const QString & d );
-	virtual void updateNumber(int n );
-
+    void languageChange() override;
+    void on_sbNumber_valueChanged(int number);
+    void on_leDist_editingFinished();
 protected:
-    RS_ActionDrawLineParallel* action;
-
-protected slots:
-    virtual void languageChange();
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
+    RS_ActionDrawLineParallel* action;
+	   std::unique_ptr<Ui::Ui_LineParallelOptions> ui;
+    void setDistanceToActionAndView(QString val);
+    void setNumberToActionAndView(int number);
 };
 
 #endif // QG_LINEPARALLELOPTIONS_H

@@ -27,6 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_staroptions.h"
 #include "rs_math.h"
 #include "rs_polyline.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionDrawStar::LC_ActionDrawStar(RS_EntityContainer &container, RS_GraphicView &graphicView)
    :LC_AbstractActionWithPreview("Draw Star", container, graphicView){
@@ -46,6 +47,15 @@ void LC_ActionDrawStar::doInitialSnapToRelativeZero(RS_Vector vector){
 
 bool LC_ActionDrawStar::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status){
     return status != SetCenter;
+}
+
+RS_Vector LC_ActionDrawStar::doGetMouseSnapPoint(QMouseEvent *e){
+    int status = getStatus();
+    RS_Vector snap = LC_AbstractActionWithPreview::doGetMouseSnapPoint(e);
+    if (status == SetOuterPoint || status == SetInnerPoint){
+        snap = getSnapAngleAwarePoint(e, centerPoint, snap, isMouseMove(e));
+    }
+    return snap;
 }
 
 /**
@@ -575,10 +585,10 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
         }
         if (preview && DRAW_JOIN_POINTS_ON_PREVIEW){
             // potential visualization of rounding point
-            createPoint(inner1, list);
-            createPoint(inner2, list);
-            createPoint(outer1, list);
-            createPoint(outer2, list);
+            createRefPoint(inner1, list);
+            createRefPoint(inner2, list);
+            createRefPoint(outer1, list);
+            createRefPoint(outer2, list);
         }
         if (mayDrawOuterRound){ // handle outer rounding
             polyline->addVertex(outer2);
@@ -611,19 +621,19 @@ QStringList LC_ActionDrawStar::getAvailableCommands(){
 void LC_ActionDrawStar::updateMouseButtonHints(){
     switch (getStatus()){
         case SetCenter:
-            updateMouseWidgetTR("Set center point", "Cancel");
+            updateMouseWidgetTRCancel("Set center point", Qt::ShiftModifier);
             break;
         case SetOuterPoint:
-            updateMouseWidgetTR("Set outer point", "Back");
+            updateMouseWidgetTRBack("Set outer point", Qt::ShiftModifier);
             break;
         case SetInnerPoint:
-            updateMouseWidgetTR("Set inner point", "Back");
+            updateMouseWidgetTRBack("Set inner point", Qt::ShiftModifier);
             break;
         case SetRadiuses:
-            updateMouseWidgetTR("Set rounding radiuses (outer, inner)", "Back");
+            updateMouseWidgetTRBack("Set rounding radiuses (outer, inner)");
             break;
         case SetRays:
-            updateMouseWidgetTR("Set rays number", "Back");
+            updateMouseWidgetTRBack("Set rays number");
             break;
         default:
             LC_AbstractActionWithPreview::updateMouseButtonHints();

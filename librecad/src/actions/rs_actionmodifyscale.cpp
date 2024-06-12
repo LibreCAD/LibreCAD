@@ -84,7 +84,7 @@ void RS_ActionModifyScale::trigger() {
         RS_Modification m(*container, graphicView);
         m.scale(pPoints->data);
 
-        RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+        updateSelectionWidget();
     }
 }
 
@@ -120,7 +120,7 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
 {
     if (!pPoints->data.isotropicScaling)
         return snapPoint(e);
-    RS_Vector mouse = graphicView->toGraph(e->position());
+    RS_Vector mouse = toGraph(e);
     // project mouse to the line (center, source)
     RS_Line centerSourceLine{nullptr, {pPoints->data.referencePoint, pPoints->sourcePoint}};
     RS_Vector projected = centerSourceLine.getNearestPointOnEntity(mouse, false);
@@ -149,8 +149,7 @@ void RS_ActionModifyScale::showPreview()
 void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         if (getStatus() != ShowDialog){
-            RS_CoordinateEvent ce(snapPoint(e));
-            coordinateEvent(&ce);
+            fireCoordinateEventForSnap(e);
         }
     } else if (e->button()==Qt::RightButton && getStatus() != SetSourcePoint) {
         deletePreview();
@@ -221,26 +220,23 @@ void RS_ActionModifyScale::updateMouseButtonHints() {
                                            tr("Cancel"));
             break;*/
     case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify scale center"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify scale center", Qt::ShiftModifier);
         break;
         // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
     case SetSourcePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify reference point");
         break;
     case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify target point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify target point");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
 void RS_ActionModifyScale::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

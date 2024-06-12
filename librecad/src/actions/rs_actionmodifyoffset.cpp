@@ -33,51 +33,46 @@
 #include "rs_modification.h"
 #include "rs_preview.h"
 
-RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer& container,
-                                             RS_GraphicView& graphicView)
+RS_ActionModifyOffset::RS_ActionModifyOffset(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("Modify Offset",
-							   container, graphicView)
-	,data(new RS_OffsetData())
-{
-	actionType=RS2::ActionModifyOffset;
+                               container, graphicView), data(new RS_OffsetData()){
+    actionType = RS2::ActionModifyOffset;
 
-	data->distance=0.;
-	data->number=1;
-	data->useCurrentAttributes = true;
-	data->useCurrentLayer = true;
+    data->distance = 0.;
+    data->number = 1;
+    data->useCurrentAttributes = true;
+    data->useCurrentLayer = true;
 }
 
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
-void RS_ActionModifyOffset::init(int status) {
+void RS_ActionModifyOffset::init(int status){
     RS_ActionInterface::init(status);
     //finish, if nothing selected
-    if(container->countSelected()==0) finish();
+    if (container->countSelected() == 0) finish();
 
 }
 
-void RS_ActionModifyOffset::trigger() {
+void RS_ActionModifyOffset::trigger(){
     RS_Modification m(*container, graphicView);
-	m.offset(*data);
-	RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),
-											container->totalSelectedLength());
-	finish(false);
+    m.offset(*data);
+    updateSelectionWidget();
+    finish(false);
 }
 
-
-
-void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent *e){
 //    RS_DEBUG->print("RS_ActionModifyOffset::mouseMoveEvent begin");
-	data->coord=snapPoint(e);
+    data->coord = snapPoint(e);
 
-
-	RS_EntityContainer ec(nullptr,true);
-	for(auto en: *container){
-        if(en->isSelected()) ec.addEntity(en->clone());
+    RS_EntityContainer ec(nullptr, true);
+    for (auto en: *container) {
+        if (en->isSelected()) ec.addEntity(en->clone());
     }
-    if(ec.isEmpty()) return;
-	RS_Modification m(ec, nullptr, false);
-	m.offset(*data);
+    if (ec.isEmpty()) return;
+    RS_Modification m(ec, nullptr, false);
+    m.offset(*data);
 
     deletePreview();
     preview->addSelectionFrom(ec);
@@ -85,40 +80,40 @@ void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent* e) {
 
 }
 
-void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-            trigger();
-    } else if (e->button()==Qt::RightButton) {
+void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
+        trigger();
+    } else if (e->button() == Qt::RightButton){
         deletePreview();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
-void RS_ActionModifyOffset::updateMouseButtonHints() {
-	switch (getStatus()) {
-	case SetPosition:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Specify direction of offset"), tr("Back"));
-		break;
+void RS_ActionModifyOffset::updateMouseButtonHints(){
+    switch (getStatus()) {
+        case SetPosition:
+            updateMouseWidgetTRBack("Specify direction of offset");
+            break;
 
-	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-		break;
-	}
+        default:
+            updateMouseWidget();
+            break;
+    }
 }
 
-void RS_ActionModifyOffset::showOptions() {
+void RS_ActionModifyOffset::showOptions(){
     RS_ActionInterface::showOptions();
-	RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
+    RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
 }
 
-void RS_ActionModifyOffset::hideOptions() {
+void RS_ActionModifyOffset::hideOptions(){
     RS_ActionInterface::hideOptions();
 
-	RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
+    RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
 }
 
-void RS_ActionModifyOffset::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+void RS_ActionModifyOffset::updateMouseCursor(){
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

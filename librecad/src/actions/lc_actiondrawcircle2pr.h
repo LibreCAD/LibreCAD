@@ -29,8 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  * @author Dongxu Li
  */
-class LC_ActionDrawCircle2PR : public RS_ActionDrawCircleCR {
-	Q_OBJECT
+class LC_ActionDrawCircle2PR:public RS_ActionDrawCircleCR {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -42,27 +42,23 @@ public:
     };
 
 public:
-    LC_ActionDrawCircle2PR(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-	~LC_ActionDrawCircle2PR() override;
-
-    void reset();
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-    bool preparePreview(const RS_Vector& mouse);
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
- void mouseReleaseEvent(QMouseEvent *e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
-	void updateMouseButtonHints() override;
+    LC_ActionDrawCircle2PR(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~LC_ActionDrawCircle2PR() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    bool preparePreview(const RS_Vector &mouse, RS_Vector& altCenter);
+    void reset();
 };
 
 #endif

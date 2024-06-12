@@ -34,89 +34,69 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
   *
   *@Author Dongxu Li
  */
-QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui{new Ui::PolylineEquidistantOptions{}}
-{
-	ui->setupUi(this);
+QG_PolylineEquidistantOptions::QG_PolylineEquidistantOptions()
+    :LC_ActionOptionsWidgetBase(RS2::ActionPolylineEquidistant, "/Draw", "/PolylineEquidistant"),
+    ui{new Ui::PolylineEquidistantOptions{}}{
+    ui->setupUi(this);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_PolylineEquidistantOptions::~QG_PolylineEquidistantOptions()
-{
-    saveOptions();
-}
+QG_PolylineEquidistantOptions::~QG_PolylineEquidistantOptions() = default;
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_PolylineEquidistantOptions::languageChange()
-{
-	ui->retranslateUi(this);
+void QG_PolylineEquidistantOptions::languageChange(){
+    ui->retranslateUi(this);
 }
 
-void QG_PolylineEquidistantOptions::setAction(RS_ActionInterface* a, bool update) {
-	if (a && a->rtti()==RS2::ActionPolylineEquidistant) {
-		action = static_cast<RS_ActionPolylineEquidistant*>(a);
+void QG_PolylineEquidistantOptions::doSetAction(RS_ActionInterface *a, bool update){
 
-        QString sd;
-        QString sn;
+    action = dynamic_cast<RS_ActionPolylineEquidistant *>(a);
 
-        // settings from action:
-        if (update) {
-            sd = QString("%1").arg(action->getDist());
-            sn = QString("%1").arg(action->getNumber());
-        }
-        // settings from config file:
-        else {
-            RS_SETTINGS->beginGroup("/Draw");
-            sd = RS_SETTINGS->readEntry("/PolylineEquidistantDist", "10.0");
-            sn = RS_SETTINGS->readEntry("/PolylineEquidistantCopies", "1");
-            RS_SETTINGS->endGroup();
-        }
+    QString distance;
+    int number;
 
-		ui->leDist->setText(sd);
-		ui->leNumber->setText(sn);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_PolylineEquidistantOptions::setAction: wrong action type");
-		this->action = nullptr;
+    // settings from action:
+    if (update){
+        distance = fromDouble(action->getDist());
+        number = action->getNumber();
+    }
+    else {
+        distance = load("Dist", "10.0");
+        number = loadInt("Copies", 1);
+    }
+
+    setDistanceToActionAndView(distance);
+    setNumberToActionAndView(number);
+}
+
+void QG_PolylineEquidistantOptions::doSaveSettings(){
+    save("Dist", ui->leDist->text());
+    save("Copies", ui->sbNumber->value());
+}
+
+void QG_PolylineEquidistantOptions::on_sbNumber_valueChanged(int number){
+    setNumberToActionAndView(number);
+}
+
+void QG_PolylineEquidistantOptions::on_leDist_editingFinished(){
+    setDistanceToActionAndView(ui->leDist->text());
+}
+
+void QG_PolylineEquidistantOptions::setNumberToActionAndView(int number){
+    action->setNumber(number);
+    ui->sbNumber->setValue(number);
+}
+
+void QG_PolylineEquidistantOptions::setDistanceToActionAndView(QString strVal){
+    double val;
+    if (toDouble(strVal, val, 10.0, false)){
+        action->setDist(val);
+        ui->leDist->setText(fromDouble(val));
     }
 }
 
-void QG_PolylineEquidistantOptions::saveOptions() {
-    RS_SETTINGS->beginGroup("/Draw");
-//    std::cout<<"QG_PolylineEquidistantOptions::saveOptions(): saving /PolylineEquidistantDist="<<qPrintable(leDist->text())<<std::endl;
-	RS_SETTINGS->writeEntry("/PolylineEquidistantDist", ui->leDist->text());
-	RS_SETTINGS->writeEntry("/PolylineEquidistantCopies", ui->leNumber->text());
-    RS_SETTINGS->endGroup();
-}
-
-void QG_PolylineEquidistantOptions::updateDist() {
-	if (action) {
-		const QString& l = ui->leDist->text();
-        bool ok;
-		double dist=RS_Math::eval(l, &ok);
-		if (!ok)
-            dist=10.;
-
-		ui->leDist->setText(QString::number(dist, 'g', 3));
-		action->setDist(dist);
-    }
-}
-
-void QG_PolylineEquidistantOptions::updateNumber() {
-	if (action) {
-		const QString& l = ui->leNumber->text();
-		bool ok;
-		unsigned i=static_cast<unsigned>(RS_Math::eval(l,&ok)+0.5);
-        if (!ok || 0 == i || 100 < i) {
-			i=1;
-        }
-		ui->leNumber->setText(QString::number(i));
-		action->setNumber(i);
-	}
-}

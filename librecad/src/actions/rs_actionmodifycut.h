@@ -27,15 +27,15 @@
 #ifndef RS_ACTIONMODIFYCUT_H
 #define RS_ACTIONMODIFYCUT_H
 
-#include "rs_actioninterface.h"
 
+#include "rs_previewactioninterface.h"
 
 /**
  * This action class can handle user events to divide entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyCut : public RS_ActionInterface {
+class RS_ActionModifyCut : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
     /**
@@ -57,6 +57,7 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
+    void finish(bool updateTB) override;
 
 private:
     RS_Entity* cutEntity = nullptr;

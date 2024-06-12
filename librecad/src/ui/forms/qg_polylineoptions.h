@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawPolyline;
@@ -35,32 +36,36 @@ namespace Ui {
 class Ui_PolylineOptions;
 }
 
-class QG_PolylineOptions : public QWidget
+class QG_PolylineOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_PolylineOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_PolylineOptions();
     ~QG_PolylineOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
+
     virtual void close();
     virtual void undo();
-    virtual void updateRadius( const QString & s );
-    virtual void updateAngle( const QString & s );
-    virtual void updateDirection( bool );
-    virtual void updateMode( int m );
+    virtual void setModeToActionAndView(int m );
+    void on_leAngle_editingFinished();
+    void on_leRadius_editingFinished();
+    void on_rbNeg_toggled(bool checked);
 
 protected:
     RS_ActionDrawPolyline* action;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 
 protected slots:
-    virtual void languageChange();
+    void languageChange() override;
 
 private:
-    void destroy();
-	std::unique_ptr<Ui::Ui_PolylineOptions> ui;
+	   std::unique_ptr<Ui::Ui_PolylineOptions> ui;
+    void setReversedToActionAndView(bool reversed);
+    void setAngleToActionAndView(const QString &strVal);
+    void setRadiusToActionAndView(const QString &strVal);
 };
 
 #endif // QG_POLYLINEOPTIONS_H

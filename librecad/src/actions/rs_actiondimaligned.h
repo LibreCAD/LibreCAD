@@ -28,6 +28,7 @@
 #define RS_ACTIONDIMALIGNED_H
 
 #include "rs_actiondimension.h"
+#include "lc_actiondimlinearbase.h"
 
 struct RS_DimAlignedData;
 
@@ -37,49 +38,31 @@ struct RS_DimAlignedData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimAligned : public RS_ActionDimension {
-        Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetExtPoint1,    /**< Setting the 1st ext point.  */
-        SetExtPoint2,    /**< Setting the 2nd ext point. */
-        SetDefPoint,     /**< Setting the common def point */
-        SetText          /**< Setting the text label in command line */
-    };
+class RS_ActionDimAligned:public LC_ActionDimLinearBase {
+Q_OBJECT
 
 public:
-    RS_ActionDimAligned(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionDimAligned() override;
-
-	void reset() override;
-
-	void trigger() override;
-        void preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-		void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseButtonHints() override;
-
+    RS_ActionDimAligned(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDimAligned() override;
+    void reset() override;
+    void preparePreview() override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
 protected:
-		/**
-	 * Aligned dimension data.
-	 */
-		std::unique_ptr<RS_DimAlignedData> edata;
-
-		/** Last status before entering text. */
-        Status lastStatus = SetExtPoint1;
+/**
+* Aligned dimension data.
+*/
+    std::unique_ptr<RS_DimAlignedData> edata;
+/** Last status before entering text. */
+    Status lastStatus = SetExtPoint1;
+    void setExtensionPoint1(RS_Vector p);
+    void setExtensionPoint2(RS_Vector p);
+    RS_Entity *createDim(RS_EntityContainer* parent) override;
+    RS_Vector getExtensionPoint1() override;
+    RS_Vector getExtensionPoint2() override;
+    double getDimAngle() override;
 };
 
 #endif

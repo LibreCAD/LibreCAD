@@ -352,13 +352,13 @@ void RS_DimAngular::updateDim(bool autoText /*= false*/)
     double angle1 {textPos.angleTo( dimCenter) - M_PI_2};
 
     // rotate text so it's readable from the bottom or right (ISO)
-    // quadrant 1 & 4
+    // determineQuadrant 1 & 4
     if (angle1 > M_PI_2 * 3.0 + 0.001
         || angle1 < M_PI_2 + 0.001) {
         distV.setPolar( av.gap(), angle1 + M_PI_2);
         textAngle = angle1;
     }
-    // quadrant 2 & 3
+    // determineQuadrant 2 & 3
     else {
         distV.setPolar( av.gap(), angle1 - M_PI_2);
         textAngle = angle1 + M_PI;

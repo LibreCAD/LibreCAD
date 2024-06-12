@@ -35,6 +35,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactiondrawline.h"
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
+#include "rs_previewactioninterface.h"
 
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
     RS_EntityContainer &container,
@@ -138,6 +139,9 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]QMouseEven
             break;
     }
     createEntities(possibleEndPoint, list);
+    createRefPoint(pPoints->data.startpoint, list);
+    createRefSelectablePoint(possibleEndPoint, list);
+
 }
 
 RS_Vector LC_ActionDrawLineSnake::doGetRelativeZeroAfterTrigger(){
@@ -422,7 +426,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
 
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTR("Specify first point","Cancel");
+            updateMouseWidgetTRCancel("Specify first point",Qt::ShiftModifier);
             break;
         case SetDirection:
             msg += "/";
@@ -456,7 +460,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
                 msg += "/";
                 msg += getCommand("x");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"));
+                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"), Qt::ShiftModifier);
             }
             break;
         }
@@ -488,7 +492,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             break;
         }
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }

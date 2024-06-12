@@ -88,9 +88,7 @@ void RS_ActionSelectWindow::trigger(){
             bool cross = (pPoints->v1.x > pPoints->v2.x);
             RS_Selection s(*container, graphicView);
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
-
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
-
+            updateSelectionWidget();
             init();
         }
     }
@@ -101,7 +99,7 @@ void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
     snapFree(e);
     drawSnapper();
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
-        pPoints->v2 = graphicView->toGraph(e->position());
+        pPoints->v2 = toGraph(e);
         deletePreview();
         auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
         preview->addEntity(ob);
@@ -134,7 +132,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case SetCorner1:
-            pPoints->v1 = graphicView->toGraph(e->position());
+            pPoints->v1 = toGraph(e);
             setStatus(SetCorner2);
             break;
 
@@ -168,19 +166,19 @@ void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionSelectWindow::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCorner1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag for the selection window"), tr("Cancel"));
+        updateMouseWidgetTRCancel("Click and drag for the selection window");
         break;
     case SetCorner2:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second edge"), tr("Back"));
+        updateMouseWidgetTRBack("Choose second edge");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
 void RS_ActionSelectWindow::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 enum RS2::EntityType RS_ActionSelectWindow::getTypeToSelect(){

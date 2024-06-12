@@ -28,6 +28,7 @@
 
 #include<memory>
 #include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawSpline;
@@ -35,30 +36,32 @@ namespace Ui {
 class Ui_SplineOptions;
 }
 
-class QG_SplineOptions : public QWidget
+class QG_SplineOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_SplineOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_SplineOptions();
     ~QG_SplineOptions();
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void setClosed( bool c );
-    virtual void undo();
-    virtual void setDegree( const QString & deg );
+    void onClosedClicked(bool value);
+    void undo();
+    void onDegreeIndexChanged(int index);
+    void languageChange() override;
+
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 protected:
     RS_ActionDrawSpline* action;
-//    LC_ActionDrawSplinePoints* action1;
-
-protected slots:
-    virtual void languageChange();
 
 private:
-	void saveSettings();
 	std::unique_ptr<Ui::Ui_SplineOptions> ui;
+    void setClosedToActionAndView(bool closed);
+    void setDegreeToActionAndView(int degree);
 };
 
 #endif // QG_SPLINEOPTIONS_H

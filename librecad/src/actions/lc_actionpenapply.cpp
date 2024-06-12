@@ -173,7 +173,7 @@ void LC_ActionPenApply::updateMouseButtonHints(){
             break;
         case ApplyToEntity:
             RS_DIALOGFACTORY->updateMouseWidget(tr("Specify entity to apply pen"),
-                                                tr("Cancel"));
+                                                tr("Cancel"), Qt::ShiftModifier);
             break;
         default:
             RS_ActionInterface::updateMouseButtonHints();
@@ -181,7 +181,7 @@ void LC_ActionPenApply::updateMouseButtonHints(){
 }
 
 void LC_ActionPenApply::updateMouseCursor(){
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 

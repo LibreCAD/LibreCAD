@@ -115,16 +115,16 @@ void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionZoomPan::updateMouseButtonHints()
 {
     switch (getStatus()) {
-            case SetPanStart:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag to pan zoom"),
-											tr("Cancel"));
-                break;
-            case SetPanning:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Zoom panning"),
-											tr("Cancel"));
-                break;
-           default:
-		RS_DIALOGFACTORY->updateMouseWidget();
+        case SetPanStart:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag to pan zoom"),
+                                                tr("Cancel"));
+            break;
+        case SetPanning:
+            RS_DIALOGFACTORY->updateMouseWidget(tr("Zoom panning"),
+                                                tr("Cancel"));
+            break;
+        default:
+            RS_DIALOGFACTORY->updateMouseWidget();
     }
 }
 
@@ -132,10 +132,10 @@ void RS_ActionZoomPan::updateMouseButtonHints()
 void RS_ActionZoomPan::updateMouseCursor() {
     switch (getStatus()){
     case SetPanStart:
-        graphicView->setMouseCursor(RS2::OpenHandCursor);
+        setMouseCursor(RS2::OpenHandCursor);
         break;
     case SetPanning:
-        graphicView->setMouseCursor(RS2::ClosedHandCursor);
+        setMouseCursor(RS2::ClosedHandCursor);
         break;
     default:
         break;

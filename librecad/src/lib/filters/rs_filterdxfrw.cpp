@@ -1190,18 +1190,18 @@ void RS_FilterDXFRW::addHatch(const DRW_Hatch *data) {
                     else { //convert angle to parameter
                         ang1 = atan(tan(ang1)/e2->ratio);
                         ang2 = atan(tan(ang2)/e2->ratio);
-                        if (ang1 < 0){//quadrant 2 & 4
+                        if (ang1 < 0){//determineQuadrant 2 & 4
                             ang1 +=M_PI;
-                            if (e2->staparam > M_PI) //quadrant 4
+                            if (e2->staparam > M_PI) //determineQuadrant 4
                                 ang1 +=M_PI;
-                        } else if (e2->staparam > M_PI){//3 quadrant
+                        } else if (e2->staparam > M_PI){//3 determineQuadrant
                             ang1 +=M_PI;
                         }
-                        if (ang2 < 0){//quadrant 2 & 4
+                        if (ang2 < 0){//determineQuadrant 2 & 4
                             ang2 +=M_PI;
-                            if (e2->endparam > M_PI) //quadrant 4
+                            if (e2->endparam > M_PI) //determineQuadrant 4
                                 ang2 +=M_PI;
-                        } else if (e2->endparam > M_PI){//3 quadrant
+                        } else if (e2->endparam > M_PI){//3 determineQuadrant
                             ang2 +=M_PI;
                         }
                     }

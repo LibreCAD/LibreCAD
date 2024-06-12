@@ -53,6 +53,12 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
     lLeftButton->setText("");
     lRightButton->setText("");
     lMousePixmap->setPixmap( QPixmap(":/icons/mouse.svg").scaled( height, height));
+
+    // fixme modifiers setup
+
+    gridLayout->setAlignment(btnCtrl,Qt::AlignCenter);
+//    gridLayout->setAlignment(btnShift,Qt::AlignTop);
+    gridLayout->setAlignment(btnShift,Qt::AlignCenter);
 }
 
 /*
@@ -72,7 +78,15 @@ void QG_MouseWidget::languageChange()
     retranslateUi(this);
 }
 
-void QG_MouseWidget::setHelp(const QString& left, const QString& right) {
+
+
+
+void QG_MouseWidget::setHelp(const QString& left, const QString& right, Qt::KeyboardModifiers modifiers) {
+    bool shiftModifier = modifiers & Qt::ShiftModifier;
+    bool ctrlModifier = modifiers & Qt::ControlModifier || modifiers & Qt::MetaModifier;
+    // fixme - more intellijent indication
+    btnShift->setVisible(shiftModifier);
+    btnCtrl->setVisible(ctrlModifier);
     lLeftButton->setText(left);
     lRightButton->setText(right);
 }

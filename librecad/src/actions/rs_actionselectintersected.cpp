@@ -68,12 +68,9 @@ void RS_ActionSelectIntersected::trigger(){
 
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
-
             RS_Selection s(*container, graphicView);
             s.selectIntersected(pPoints->v1, pPoints->v2, select);
-
-            RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
-
+            updateSelectionWidget();
             init();
         }
     }
@@ -84,7 +81,7 @@ void RS_ActionSelectIntersected::mouseMoveEvent(QMouseEvent *e){
     if (getStatus() == SetPoint2 && pPoints->v1.valid){
         pPoints->v2 = snap;
         deletePreview();
-        preview->addEntity(new RS_Line{preview.get(), pPoints->v1, pPoints->v2});
+        previewLine(pPoints->v1, pPoints->v2);
         // todo - of course, ideally it will be also to highlight entities that will be selected...
         // however, calculating of intersections as it is currently is may be quite costly operation for mouse move
         // todo - review preview for selected entities after indexing
@@ -127,19 +124,19 @@ void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent *e){
 void RS_ActionSelectIntersected::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose first point of intersection line"), tr("Cancel"));
+            updateMouseWidgetTRCancel("Choose first point of intersection line");
             break;
         case SetPoint2:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Choose second point of intersection line"), tr("Back"));
+            updateMouseWidgetTRBack("Choose second point of intersection line");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionSelectIntersected::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::SelectCursor);
+    setMouseCursor(RS2::SelectCursor);
 }
 
 // EOF

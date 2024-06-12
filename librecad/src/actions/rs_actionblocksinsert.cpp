@@ -38,6 +38,7 @@
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
 
 /**
  * Constructor.
@@ -68,7 +69,7 @@ void RS_ActionBlocksInsert::init(int status) {
         if (block) {
             QString blockName = block->getName();
             data->name = blockName;
-            if (document->rtti() == RS2::EntityBlock) {
+            if (document->is(RS2::EntityBlock)) {
                 QString parentBlockName = ((RS_Block*)(document))->getName();
                 if (parentBlockName == blockName) {
                     RS_DIALOGFACTORY->commandMessage(tr("Block cannot contain an insert of itself."));
@@ -150,8 +151,7 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
 
 void RS_ActionBlocksInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
+        fireCoordinateEventForSnap(e);
     } else if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
     }
@@ -174,8 +174,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
@@ -214,7 +213,7 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             if (ok) {
 				data->angle = RS_Math::deg2rad(a);
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
@@ -377,44 +376,35 @@ void RS_ActionBlocksInsert::hideOptions() {
 
 void RS_ActionBlocksInsert::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
-        break;
-    case SetAngle:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter angle:"),
-                                            "");
-        break;
-    case SetFactor:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter factor:"),
-                                            "");
-        break;
-    case SetColumns:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter columns:"),
-                                            "");
-        break;
-    case SetRows:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter rows:"),
-                                            "");
-        break;
-    case SetColumnSpacing:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter column spacing:"),
-                                            "");
-        break;
-    case SetRowSpacing:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter row spacing:"),
-                                            "");
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case SetTargetPoint:
+            updateMouseWidgetTRCancel("Specify reference point");
+            break;
+        case SetAngle:
+            updateMouseWidgetTR("Enter angle:", "");
+            break;
+        case SetFactor:
+            updateMouseWidgetTR("Enter factor:", "");
+            break;
+        case SetColumns:
+            updateMouseWidgetTR("Enter columns:", "");
+            break;
+        case SetRows:
+            updateMouseWidgetTR("Enter rows:", "");
+            break;
+        case SetColumnSpacing:
+            updateMouseWidgetTR("Enter column spacing:", "");
+            break;
+        case SetRowSpacing:
+            updateMouseWidgetTR("Enter row spacing:", "");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
-
-
 void RS_ActionBlocksInsert::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+    setMouseCursor(RS2::CadCursor);
 }
 
 // EOF

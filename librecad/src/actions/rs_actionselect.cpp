@@ -140,9 +140,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
 void RS_ActionSelect::updateMouseCursor() {
     if(graphicView){
         if(isFinished()){
-            graphicView->setMouseCursor(RS2::ArrowCursor);
+            setMouseCursor(RS2::ArrowCursor);
         }else{
-            graphicView->setMouseCursor(RS2::SelectCursor);
+            setMouseCursor(RS2::SelectCursor);
         }
     }
 }

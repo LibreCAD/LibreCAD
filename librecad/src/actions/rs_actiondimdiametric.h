@@ -30,6 +30,7 @@
 #include <memory>
 
 #include "rs_actiondimension.h"
+#include "rs_dimdiametric.h"
 
 struct RS_DimDiametricData;
 
@@ -38,46 +39,40 @@ struct RS_DimDiametricData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimDiametric : public RS_ActionDimension {
-	Q_OBJECT
+class RS_ActionDimDiametric:public RS_ActionDimension {
+Q_OBJECT
 private:
     enum Status {
         SetEntity,     /**< Choose entity. */
         SetPos,        /**< Choose point. */
-		SetText        /**< Setting text label in the command line. */
+        SetText        /**< Setting text label in the command line. */
     };
 
 public:
-    RS_ActionDimDiametric(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionDimDiametric() override;
-
-	void reset() override;
-	
-	void trigger() override;
-	void preparePreview();
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void hideOptions() override;
-	void showOptions() override;
-	
-	void updateMouseButtonHints() override;
+    RS_ActionDimDiametric(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDimDiametric() override;
+    void reset() override;
+    void trigger() override;
+    void preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
 
 private:
     /** Chosen entity (arc / circle) */
-    RS_Entity* entity = nullptr;
-	/** Chosen position */
-	std::unique_ptr<RS_Vector> pos;
+    RS_Entity *entity = nullptr;
+/** Chosen position */
+    std::unique_ptr<RS_Vector> pos;
     /** Data of new dimension */
-	std::unique_ptr<RS_DimDiametricData> edata;
-	/** Last status before entering text. */
+    std::unique_ptr<RS_DimDiametricData> edata;
+/** Last status before entering text. */
     Status lastStatus = SetEntity;
+    RS_DimDiametric *createDim(RS_EntityContainer *parent) const;
 };
 
 #endif

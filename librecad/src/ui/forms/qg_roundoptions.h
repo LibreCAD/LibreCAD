@@ -26,36 +26,37 @@
 #ifndef QG_ROUNDOPTIONS_H
 #define QG_ROUNDOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+#include <memory>
+#include <QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionModifyRound;
+
 namespace Ui {
 class Ui_RoundOptions;
 }
 
-class QG_RoundOptions : public QWidget
-{
-    Q_OBJECT
+class QG_RoundOptions : public LC_ActionOptionsWidgetBase {
+Q_OBJECT
 
 public:
-    QG_RoundOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_RoundOptions();
+QG_RoundOptions();
+~QG_RoundOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateData();
+void languageChange() override;
+void on_cbTrim_toggled(bool checked);
+void on_leRadius_editingFinished();
 
 protected:
-    RS_ActionModifyRound* action = nullptr;
-
-protected slots:
-    virtual void languageChange();
-
+RS_ActionModifyRound* action = nullptr;
+void doSetAction(RS_ActionInterface *a, bool update) override;
+void doSaveSettings() override;
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_RoundOptions> ui;
+std::unique_ptr<Ui::Ui_RoundOptions> ui;
+void setTrimToActionAndView(bool checked);
+void setRadiusToActionAndView(QString val);
 };
 
 #endif // QG_ROUNDOPTIONS_H

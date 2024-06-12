@@ -35,6 +35,8 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
+#include "rs_actioninterface.h"
+
 // fixme - add reference points
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
@@ -58,12 +60,7 @@ void RS_ActionDrawLineTangent1::trigger(){
         newEntity->setPenToActive();
         container->addEntity(newEntity);
 
-        // upd. undo list:
-        if (document){
-            document->startUndoCycle();
-            document->addUndoable(newEntity);
-            document->endUndoCycle();
-        }
+        addToDocumentUndoable(newEntity);
 
         graphicView->redraw(RS2::RedrawDrawing);
 
@@ -79,7 +76,7 @@ void RS_ActionDrawLineTangent1::trigger(){
 void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent begin");
 
-    RS_Vector mouse{graphicView->toGraph(e->position())};
+    RS_Vector mouse{toGraph(e)};
 
     switch (getStatus()) {
         case SetPoint: {
@@ -95,15 +92,20 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                        en->rtti() == RS2::EntityParabola ||
                        en->rtti() == RS2::EntitySplinePoints)){
 
-                // fixme - it worth to rework and show all possible solutions (all tangents) - this will be more consistent with RS_ActionDrawLineTangent2 approach
-                RS_Creation creation(nullptr, nullptr);
-                tangent.reset(creation.createTangent1(mouse,
-                                            *point,
-                                            en));
 
-                if (tangent){
-                    addToHighlights(en);
-                    preview->addEntity(tangent->clone());
+                RS_Vector tangentPoint;
+                RS_Vector altTangentPoint;
+                RS_Creation creation(nullptr, nullptr);
+
+                auto *tangentLine = creation.createTangent1(mouse, *point, en, tangentPoint, altTangentPoint);
+                tangent.reset(tangentLine);
+
+                if (tangentLine != nullptr){
+                    highlightHover(en);
+                    previewEntity(tangent->clone());
+                    previewRefPoint(*point);
+                    previewRefSelectablePoint(tangentPoint, true);
+                    previewRefSelectablePoint(altTangentPoint, true);
                 }
             }
             drawHighlights();
@@ -125,11 +127,9 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
     } else {
         switch (getStatus()) {
             case SetPoint: {
-                RS_CoordinateEvent ce(snapPoint(e));
-                coordinateEvent(&ce);
-            }
+                fireCoordinateEventForSnap(e);
                 break;
-
+            }
             case SetCircle:
                 if (tangent){
                     trigger();
@@ -144,7 +144,7 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
     switch (getStatus()) {
         case SetPoint:
             *point = e->getCoordinate();
-            graphicView->moveRelativeZero(*point);
+            moveRelativeZero(*point);
             setStatus(SetCircle);
             break;
 
@@ -156,15 +156,13 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPoint:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify point", Qt::ShiftModifier);
             break;
         case SetCircle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select circle, arc or ellipse"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Select circle, arc or ellipse");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
@@ -172,10 +170,10 @@ void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
 void RS_ActionDrawLineTangent1::updateMouseCursor(){
     switch (getStatus()){
         case SetPoint:
-            graphicView->setMouseCursor(RS2::CadCursor);
+            setMouseCursor(RS2::CadCursor);
             break;
         case SetCircle:
-            graphicView->setMouseCursor(RS2::SelectCursor);
+            setMouseCursor(RS2::SelectCursor);
             break;
     }
 }

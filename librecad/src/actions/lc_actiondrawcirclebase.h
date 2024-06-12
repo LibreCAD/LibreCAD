@@ -14,8 +14,8 @@ public:
     void init(int status = 0) override;
 protected:
     virtual void reset();
-    bool drawCreationPointsOnPreview = true; // fixme - move to options?
     bool moveRelPointAtCenterAfterTrigger = true; // fixme - move to options
+    void previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises = false, RS_Vector mouse=RS_Vector(false));
 };
 
 #endif // LC_ACTIONDRAWCIRCLEBASE_H

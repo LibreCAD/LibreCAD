@@ -36,50 +36,39 @@ struct RS_DimensionData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimension : public RS_PreviewActionInterface {
-    Q_OBJECT
+class RS_ActionDimension:public RS_PreviewActionInterface {
+Q_OBJECT
+
 public:
-    RS_ActionDimension(const char* name,
-                       RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-	~RS_ActionDimension() override;
-
-	virtual void reset();
-
-	void init(int status=0) override;
-
-	void hideOptions() override;
-	void showOptions() override;
-
-	void updateMouseCursor() override;
+    RS_ActionDimension(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~RS_ActionDimension() override;
+    virtual void reset();
+    void init(int status = 0) override;
+    void updateMouseCursor() override;
 //    void updateToolBar() override;
 
-	QString getText() const;
-	
-	void setText(const QString& t);
-
-	const QString& getLabel() const;
-	void setLabel(const QString& t);
-	const QString& getTol1() const;
-	void setTol1(const QString& t);
-	const QString& getTol2() const;
-	void setTol2(const QString& t);
-	bool getDiameter() const;
-	void setDiameter(bool d);
-
+    QString getText() const;
+    void setText(const QString &t);
+    const QString &getLabel() const;
+    void setLabel(const QString &t);
+    const QString &getTol1() const;
+    void setTol1(const QString &t);
+    const QString &getTol2() const;
+    void setTol2(const QString &t);
+    bool getDiameter() const;
+    void setDiameter(bool d);
     static bool isDimensionAction(RS2::ActionType type);
 
 protected:
     /**
      * Generic dimension data.
      */
-	std::unique_ptr<RS_DimensionData> data;
-
+    std::unique_ptr<RS_DimensionData> data;
     QString label;
     QString tol1;
     QString tol2;
     bool diameter = false;
-
+    void createOptionsWidget() override;
     /**
      * Commands.
      */

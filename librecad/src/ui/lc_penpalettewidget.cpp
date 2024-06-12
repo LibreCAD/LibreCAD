@@ -184,6 +184,8 @@ void LC_PenPaletteWidget::initTableView(){
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
 
+    tableView->setStyleSheet("background-color: white;");
+
     connect(tableView, &QTableView::clicked, this, &LC_PenPaletteWidget::onTableClicked);
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_PenPaletteWidget::onTableViewContextMenuInvoked);
     connect( tableView->selectionModel(), &QItemSelectionModel::selectionChanged,

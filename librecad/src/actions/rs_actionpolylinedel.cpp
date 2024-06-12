@@ -62,7 +62,7 @@ void RS_ActionPolylineDel::trigger(){
         vertexToDelete = RS_Vector(false);
         deleteHighlights();
     }
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    updateSelectionWidget();
     graphicView->redraw();
 }
 
@@ -76,7 +76,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
         case SetPolyline: {
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
             if (polyline != nullptr){
-                addToHighlights(polyline);
+                highlightHover(polyline);
             }
             break;
         }
@@ -87,8 +87,8 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
             getSelectedPolylineVertex(e, vertex, segment);
 
             if (vertex.valid){
-                addToHighlights(segment);
-                addReferencePointToPreview(vertex);
+                highlightHover(segment);
+                previewRefSelectablePoint(vertex, true);
                 RS_Modification m(*preview, graphicView);
                 m.deletePolylineNode(*polylineToModify, vertex, true);
             }
@@ -108,9 +108,9 @@ void RS_ActionPolylineDel::processMouseLeftButtonRelease(QMouseEvent *e, int sta
         case SetPolyline: {
             auto en = catchEntity(e);
             if (en == nullptr){
-                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else if (en->rtti() != RS2::EntityPolyline){
-                RS_DIALOGFACTORY->commandMessage(tr("Entity must be a polyline."));
+                commandMessageTR("No Entity found.");
+            } else if (!isPolyline(en)){
+                commandMessageTR("Entity must be a polyline.");
             } else {
                 snapPoint(e);
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
@@ -123,14 +123,14 @@ void RS_ActionPolylineDel::processMouseLeftButtonRelease(QMouseEvent *e, int sta
         }
         case SetVertex1: {
             if (polylineToModify == nullptr){
-                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                commandMessageTR("No Entity found.");
             } else {
                 RS_Vector vertex;
                 RS_Entity * segment;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid){
                     if (!polylineToModify->isPointOnEntity(vertex)){
-                        RS_DIALOGFACTORY->commandMessage(tr("Deleting point is not on entity."));
+                        commandMessageTR("Deleting point is not on entity.");
                     }
                     else{
                         vertexToDelete = vertex;
@@ -139,9 +139,8 @@ void RS_ActionPolylineDel::processMouseLeftButtonRelease(QMouseEvent *e, int sta
                     }
                 }
                 else{
-                    RS_DIALOGFACTORY->commandMessage(tr("Deleting point is invalid."));
+                    commandMessageTR("Deleting point is invalid.");
                 }
-
             }
             break;
         }
@@ -150,19 +149,17 @@ void RS_ActionPolylineDel::processMouseLeftButtonRelease(QMouseEvent *e, int sta
     }
 }
 
-void RS_ActionPolylineDel::updateMouseButtonHints() {
+void RS_ActionPolylineDel::updateMouseButtonHints(){
     switch (getStatus()) {
-    case SetPolyline:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify polyline to delete node"),
-                                            tr("Cancel"));
-                break;
-    case SetVertex1:
-                RS_DIALOGFACTORY->updateMouseWidget(tr("Specify deleting node's point"),
-                                            tr("Back"));
-                break;
-    default:
-                RS_DIALOGFACTORY->updateMouseWidget();
-                break;
+        case SetPolyline:
+            updateMouseWidgetTRCancel("Specify polyline to delete node");
+            break;
+        case SetVertex1:
+            updateMouseWidgetTRBack("Specify deleting node's point");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 // EOF

@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
+#include "rs_actioninterface.h"
 
 namespace{
 auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
@@ -63,22 +64,14 @@ void RS_ActionDrawLineOrthTan::trigger(){
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
-//    if (circle)
-//        circle->setHighlighted(false);
     circle = nullptr;
-//    graphicView->redraw(RS2::RedrawDrawing);
     RS_Entity *newEntity = new RS_Line(container,
                                        tangent->getData());
     newEntity->setLayerToActive();
     newEntity->setPenToActive();
     container->addEntity(newEntity);
 
-// upd. undo list:
-    if (document){
-        document->startUndoCycle();
-        document->addUndoable(newEntity);
-        document->endUndoCycle();
-    }
+    addToDocumentUndoable(newEntity);
 
     graphicView->redraw(RS2::RedrawDrawing);
 
@@ -89,34 +82,38 @@ void RS_ActionDrawLineOrthTan::trigger(){
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineOrthTan::mouseMoveEvent begin");
     e->accept();
-    RS_Vector mouse{graphicView->toGraph(e->position())};
+
+    snapPoint(e);
 
     deleteHighlights();
     switch (getStatus()) {
         case SetLine: {
-            RS_Entity *en = catchEntity(e, RS2::EntityLine);
+            RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
             if (en != nullptr){
-                addToHighlights(en);
+                highlightHover(en);
             }
             break;
         }
         case SetCircle: {
-            addToHighlights(normal);
+            RS_Vector mouse{toGraph(e)};
+            highlightSelected(normal);
             deletePreview();
             RS_Entity *en = catchEntity(e, circleList, RS2::ResolveAll);
             if (en != nullptr){
-//                if (circle)
-//                    circle->setHighlighted(false);
                 circle = en;
-                addToHighlights(en);
-//                circle->setHighlighted(true);
-//                graphicView->redraw(RS2::RedrawDrawing);
+                highlightHover(en);
                 deletePreview();
+                RS_Vector alternativeTangentPoint;
                 RS_Creation creation(preview.get(), graphicView, false);
                 tangent = creation.createLineOrthTan(mouse,
                                                      normal,
-                                                     circle);
-                preview->addEntity(tangent);
+                                                     circle, alternativeTangentPoint);
+                if (tangent != nullptr){
+                    previewEntity(tangent);
+                    previewRefSelectablePoint(alternativeTangentPoint, true);
+                    previewRefSelectablePoint(tangent->getEndpoint(), true);
+                    previewRefPoint(tangent->getStartpoint());
+                }
             }
             drawPreview();
         }
@@ -128,15 +125,10 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionDrawLineOrthTan::clearLines(){
-//    for (RS_Entity *p: {(RS_Entity *) normal, circle}) {
-//        if (p){
-//            p->setHighlighted(false);
-//            graphicView->drawEntity(p);
-//        }
-//    }
     if (circle) circle = nullptr;
     deletePreview();
 }
+
 
 void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::RightButton){
@@ -149,19 +141,13 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
     } else {
         switch (getStatus()) {
             case SetLine: {
-                RS_Entity *en = catchEntity(e, RS2::EntityLine);
+                RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
                 if (en != nullptr){
                     if (en->getLength() < RS_TOLERANCE){
                         //ignore lines not long enough
                         break;
                     }
-//                    if (normal){
-//                        normal->setHighlighted(false);
-//                        graphicView->drawEntity(normal);
-//                    }
                     normal = dynamic_cast<RS_Line *>(en);
-//                    normal->setHighlighted(true);
-//                    graphicView->drawEntity(normal);
                     setStatus(SetCircle);
                 }
             }
@@ -179,27 +165,26 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
     }
 }
 
+
 void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select a line"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Select a line");
             break;
         case SetCircle:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Select circle, arc or ellipse"),
-                                                tr("Back"));
+            updateMouseWidgetTRBack("Select circle, arc or ellipse");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
             break;
     }
 }
 
 void RS_ActionDrawLineOrthTan::updateMouseCursor(){
     if (isFinished()){
-        graphicView->setMouseCursor(RS2::ArrowCursor);
+        setMouseCursor(RS2::ArrowCursor);
     } else {
-        graphicView->setMouseCursor(RS2::SelectCursor);
+        setMouseCursor(RS2::SelectCursor);
     }
 }
 

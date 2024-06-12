@@ -902,6 +902,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["ModifyLineJoin"] = action;
 
     action = new QAction(tr("Duplicate"), agm->modify);
+    action->setShortcuts(QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::SHIFT| Qt::Key_D) << QKeySequence(Qt::META | Qt::SHIFT| Qt::Key_D));
     action->setIcon(QIcon(":/icons/duplicate.svg"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotModifyDuplicate()));
@@ -924,14 +925,14 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     a_map["InfoDist"] = action;
 
     action = new QAction(tr("&Distance Entity to Point"), agm->info);
-    action->setIcon(QIcon(":/icons/distance_point_to_entity.svg"));
+    action->setIcon(QIcon(":/icons/distance_entity_to_point.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotInfoDist2()));
     action->setObjectName("InfoDist2");
     a_map["InfoDist2"] = action;
 
     action = new QAction(tr("&Distance Point to Entity"), agm->info);
-    action->setIcon(QIcon(":/icons/distance_entity_to_point.svg"));
+    action->setIcon(QIcon(":/icons/distance_point_to_entity.svg"));
     connect(action, SIGNAL(triggered()),
             action_handler, SLOT(slotInfoDist3()));
     action->setObjectName("InfoDist3");
@@ -1324,7 +1325,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action = new QAction(tr("&Draft"), agm->view);
     action->setIcon(QIcon(":/icons/draft.svg"));
     action->setCheckable(true);
-    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode")));
+    action->setShortcut(QKeySequence(tr("Ctrl+D", "Toggle Draft Mode"))); // fixme - it's better to replace to something different.... ctrl+d is rather for duplicate
     connect(action, SIGNAL(toggled(bool)), main_window, SLOT(slotViewDraft(bool)));
     connect(main_window, SIGNAL(draftChanged(bool)), action, SLOT(setChecked(bool)));
     action->setObjectName("ViewDraft");

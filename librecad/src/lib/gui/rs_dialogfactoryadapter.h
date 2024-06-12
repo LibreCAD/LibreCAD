@@ -72,9 +72,9 @@ public:
 	bool requestOptionsMakerCamDialog() override {return false;}
 	QString requestFileSaveAsDialog(const QString&, const QString&, const QString&, QString*) override {return {};}
 	void updateCoordinateWidget(const RS_Vector& , const RS_Vector& , bool =false) override {}
-	void updateMouseWidget(const QString&, const QString&) override{}
+	void updateMouseWidget(const QString&, const QString&, const Qt::KeyboardModifiers modifiers) override{}
 	void updateSelectionWidget(int, double) override {}
-    void updateArcTangentialOptions(double, bool) override{}
+//    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
         void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
