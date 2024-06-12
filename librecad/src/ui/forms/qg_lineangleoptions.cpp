@@ -98,6 +98,7 @@ void QG_LineAngleOptions::doSetAction(RS_ActionInterface *a, bool update){
         }
 
         ui->leAngle->setVisible(!angleIsFixed);
+        ui->lAngle->setVisible(!angleIsFixed);
     
         if (!angleIsFixed){
             setAngleToActionAndView(angle);
