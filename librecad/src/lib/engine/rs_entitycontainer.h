@@ -228,7 +228,9 @@ public:
 	 */
 	QList<RS_Entity *>::const_iterator begin() const;
 	QList<RS_Entity *>::const_iterator end() const;
-	QList<RS_Entity *>::iterator begin() ;
+    QList<RS_Entity *>::const_iterator cbegin() const;
+    QList<RS_Entity *>::const_iterator cend() const;
+    QList<RS_Entity *>::iterator begin() ;
 	QList<RS_Entity *>::iterator end() ;
 	//! \{
 	//! first and last without resolving into children, assume the container is

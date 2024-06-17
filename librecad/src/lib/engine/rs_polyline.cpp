@@ -28,11 +28,12 @@
 #include<cmath>
 #include<iostream>
 
+#include <QObject>
 
 #include "qc_applicationwindow.h"
 #include "rs_arc.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h".h"
+#include "rs_dialogfactory.h"
 #include "rs_document.h"
 #include "rs_graphicview.h"
 #include "rs_information.h"
@@ -660,7 +661,7 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
 void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
 
     if (containsArc() && !RS_Math::equal(factor.x, factor.y)) {
-        RS_DIALOGFACTORY->commandMessage(tr("Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results"));
+        RS_DIALOGFACTORY->commandMessage(QObject::tr("Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results"));
     }
     RS_EntityContainer::scale(center, factor);
     data.startpoint.scale(center, factor);

@@ -1961,6 +1961,16 @@ QList<RS_Entity *>::const_iterator RS_EntityContainer::end() const
     return entities.end();
 }
 
+QList<RS_Entity *>::const_iterator RS_EntityContainer::cbegin() const
+{
+    return entities.cbegin();
+}
+
+QList<RS_Entity *>::const_iterator RS_EntityContainer::cend() const
+{
+    return entities.cend();
+}
+
 QList<RS_Entity *>::iterator RS_EntityContainer::begin()
 {
     return entities.begin();
