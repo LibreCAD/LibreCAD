@@ -220,11 +220,11 @@ void RS_MText::update() {
   // For every letter:
   for (decltype(data.text.length()) i = 0; i < data.text.length(); ++i) {
     // Handle \F not followed by {<codePage>}
-    if (data.text.midRef(i).startsWith(R"(\F)") &&
-        data.text.midRef(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
+    if (data.text.mid(i).startsWith(R"(\F)") &&
+        data.text.mid(i).indexOf(R"(^\\[Ff]\{[\d\w]*\})") != 0) {
       addLetter(*oneLine, data.text.at(i), *font, letterSpace, letterPos);
       continue;
-    } else if (data.text.midRef(i).startsWith(R"(\\)")) {
+    } else if (data.text.mid(i).startsWith(R"(\\)")) {
       // Allow escape '\', needed to support "\S" and "\P" in string
       // "\S" is used for super/subscripts
       // "\P" is used to start a new line
@@ -254,7 +254,7 @@ void RS_MText::update() {
       if (static_cast<int>(data.text.length()) <= i) {
         continue;
       }
-      int ch{data.text.at(i).unicode()};
+      std::uint32_t ch{data.text.toUcs4().at(i)};
       switch (ch) {
       case 'P':
         updateAddLine(oneLine, lineCounter++);
@@ -274,7 +274,7 @@ void RS_MText::update() {
           continue;
         }
 
-        int j{data.text.indexOf('}', i)};
+        qsizetype j{data.text.indexOf('}', i)};
         if (j > i) {
           QString fontName = data.text.mid(i + 1, j - i - 1);
 
@@ -363,17 +363,38 @@ void RS_MText::update() {
     } // outer switch (data.text.at(i).unicode())
   }   // for (i) loop
 
-  double tt{updateAddLine(oneLine, lineCounter)};
-  if (RS_MTextData::VABottom == data.valign) {
-    RS_Vector ot = RS_Vector{0.0, -tt}.rotate(data.angle);
-    RS_EntityContainer::move(ot);
-  }
-
   usedTextHeight -=
-      data.height * data.lineSpacingFactor * 5.0 / 3.0 - data.height;
-  forcedCalculateBorders();
+          data.height * data.lineSpacingFactor * 5.0 / 3.0 - data.height;
 
+  updateAddLine(oneLine, lineCounter);
+
+  alignVertically();
   RS_DEBUG->print("RS_MText::update: OK");
+}
+
+void RS_MText::alignVertically()
+{
+    // Vertical Align:
+
+    switch (data.valign) {
+    case RS_MTextData::VATop:
+        // no change
+        break;
+
+    case RS_MTextData::VAMiddle:
+        RS_EntityContainer::move({0., 0.5 * usedTextHeight});
+      break;
+
+    case RS_MTextData::VABottom:
+        RS_EntityContainer::move({0., usedTextHeight});
+      break;
+
+    default:
+        LC_ERR<<__func__<<"(): line "<<__LINE__<<": invalid Invalid RS_MText::VAlign="<<data.valign;
+      break;
+    }
+    RS_EntityContainer::rotate(data.insertionPoint, data.angle);
+    forcedCalculateBorders();
 }
 
 /**
@@ -401,7 +422,9 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
   LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x
          << ", " << letterPosition.y << ")";
 
-  if (letterSpace.x < 0)
+  // adjust for right-to-left text: letter position start from the right
+  bool righToLeft = std::signbit(letterSpace.x);
+  if (righToLeft)
     letterPosition.x += letterSpace.x;
   RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
                   RS_Vector(0.0, 0.0), font.getLetterList(), RS2::NoUpdate);
@@ -412,12 +435,19 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
   letterEntity->update();
   letterEntity->forcedCalculateBorders();
 
-  RS_Vector letterWidth{letterEntity->getMax().x - letterEntity->getMin().x,
-                        0.};
+  // Add spacing, if the font is actually wider than word spacing
+  double actualWidth = letterEntity->getMax().x - letterEntity->getMin().x;
+  if (actualWidth > font.getWordSpacing() + RS_TOLERANCE) {
+      actualWidth = font.getWordSpacing() + std::ceil((actualWidth - font.getWordSpacing())/std::abs(letterSpace.x)) * std::abs(letterSpace.x);
+  } else {
+      actualWidth = font.getWordSpacing() ;
+  }
+
+  RS_Vector letterWidth = {actualWidth, 0.};
   letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
 
   oneLine.addEntity(letterEntity);
-  if (letterSpace.x < 0)
+  if (righToLeft)
     letterEntity->move({letterWidth.x, 0.});
 
   // next letter position:
@@ -455,60 +485,26 @@ double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
   // RS_DEBUG->print("RS_MText::updateAddLine: width 2: %f",
   // textLine->getSize().x);
 
-  // Move to correct line position:
-  textLine->move(
-      RS_Vector(0.0, -9.0 * lineCounter * data.lineSpacingFactor * ls));
-
-  if (!RS_EntityContainer::autoUpdateBorders) {
-    // only update borders when needed
-    textLine->forcedCalculateBorders();
-  }
-  RS_Vector textSize = textLine->getSize();
-
-  RS_DEBUG->print("RS_MText::updateAddLine: width 2: %f", textSize.x);
-
-  // Horizontal Align:
-  if (data.drawingDirection == RS_MTextData::RightToLeft)
-      textSize.x = - textSize.x;
-  switch (data.halign) {
-  case RS_MTextData::HACenter:
-    RS_DEBUG->print("RS_MText::updateAddLine: move by: %f", -textSize.x / 2.0);
-    textLine->move(RS_Vector(-textSize.x / 2.0, 0.0));
-    break;
-
-  case RS_MTextData::HARight:
-      if (data.drawingDirection != RS_MTextData::RightToLeft)
-          textLine->move(RS_Vector(textSize.x, 0.0));
-    break;
-
-  default:
-      if (data.drawingDirection == RS_MTextData::RightToLeft)
-          textLine->move(RS_Vector(-textSize.x, 0.0));
-    break;
-  }
-
-  // Vertical Align:
-  double vSize = getNumberOfLines() * 9.0 * data.lineSpacingFactor * ls -
-                 (9.0 * data.lineSpacingFactor * ls - 9.0);
-
-  switch (data.valign) {
-  case RS_MTextData::VAMiddle:
-    textLine->move(RS_Vector(0.0, vSize / 2.0));
-    break;
-
-  case RS_MTextData::VABottom:
-    textLine->move(RS_Vector(0.0, vSize));
-    break;
-
-  default:
-    break;
-  }
-
   // Scale:
-  textLine->scale(RS_Vector(0.0, 0.0),
+  textLine->scale(RS_Vector{0., 0.},
                   RS_Vector(data.height / 9.0, data.height / 9.0));
 
   textLine->forcedCalculateBorders();
+
+  // Horizontal Align:
+  switch (data.halign) {
+  case RS_MTextData::HACenter:
+      textLine->move(RS_Vector{-0.5 * (textLine->getMin().x + textLine->getMax().x), 0.});
+    break;
+
+  case RS_MTextData::HARight:
+      textLine->move(RS_Vector{- textLine->getMax().x, 0.});
+    break;
+
+  default:
+      textLine->move(RS_Vector{- textLine->getMin().x, 0.});
+    break;
+  }
 
   // Update actual text size (before rotating, after scaling!):
   if (textLine->getSize().x > usedTextWidth) {
@@ -520,11 +516,11 @@ double RS_MText::updateAddLine(RS_EntityContainer *textLine, int lineCounter) {
   // Gets the distance over text base-line (before rotating, after scaling!):
   double textTail = textLine->getMin().y;
 
-  // Rotate:
-  textLine->rotate(RS_Vector(0.0, 0.0), data.angle);
-
   // Move:
-  textLine->move(data.insertionPoint);
+  textLine->move(data.insertionPoint + RS_Vector{0., -data.height * lineCounter * data.lineSpacingFactor * ls});
+  // Rotate:
+  // textLine->rotate(data.insertionPoint, data.angle);
+
   textLine->setPen(RS_Pen(RS2::FlagInvalid));
   textLine->setLayer(nullptr);
   textLine->forcedCalculateBorders();
