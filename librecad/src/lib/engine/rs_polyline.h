@@ -29,7 +29,6 @@
 
 #include <memory>
 
-
 #include "rs_entitycontainer.h"
 
 
@@ -138,6 +137,12 @@ public:
 	void moveRef(const RS_Vector& ref, const RS_Vector& offset) override;
 	void revertDirection() override;
 
+    /**
+     * @brief containsArc whether the polyline contains an arc segment
+     * @return true - if the polyline contains any circular arc
+     */
+    bool containsArc() const;
+
 
 	void draw(RS_Painter* painter, RS_GraphicView* view,
 					  double& patternOffset) override;
@@ -153,7 +158,7 @@ protected:
     RS_Entity* closingEntity = nullptr;
     double nextBulge = 0.;
 
-    private:
+private:
 
         RS_Vector highlightedVertex;
 };
