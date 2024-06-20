@@ -50,6 +50,8 @@
 #include <QTimer>
 #include <QtSvg>
 
+#include "rs_actionblockssave.h"
+
 #include <boost/version.hpp>
 
 
@@ -655,17 +657,24 @@ int QC_ApplicationWindow::showCloseDialog(QC_MDIWindow * w, bool showSaveAll)
  */
 void QC_ApplicationWindow::enableFileActions(QC_MDIWindow* w)
 {
-	if (!w || w->getDocument()->getFilename().isEmpty()) {
-		a_map["FileSave"]->setText(tr("&Save"));
-		a_map["FileSaveAs"]->setText(tr("Save &as..."));
-	}
-	else {
-		QString name = format_filename_caption(w->getDocument()->getFilename());
-		a_map["FileSave"]->setText(tr("&Save %1").arg(name));
-		a_map["FileSaveAs"]->setText(tr("Save %1 &as...").arg(name));
-	}
-	a_map["FileSave"]->setEnabled(w);
-	a_map["FileSaveAs"]->setEnabled(w);
+   if (windowIsInBlockMode) {
+      a_map["FileSave"]->setText(tr("&Save"));
+	   a_map["FileSaveAs"]->setText(tr("Save &active block to file"));
+      a_map["FileSave"]->setEnabled(false);
+   } else {
+	   if (!w || w->getDocument()->getFilename().isEmpty()) {
+		   a_map["FileSave"]->setText(tr("&Save"));
+		   a_map["FileSaveAs"]->setText(tr("Save &as..."));
+	   }
+	   else {
+		   QString name = format_filename_caption(w->getDocument()->getFilename());
+		   a_map["FileSave"]->setText(tr("&Save %1").arg(name));
+		   a_map["FileSaveAs"]->setText(tr("Save %1 &as...").arg(name));
+	   }
+      a_map["FileSave"]->setEnabled(w);
+   }
+
+   a_map["FileSaveAs"]->setEnabled(w);
 	a_map["FileSaveAll"]->setEnabled(w && window_list.count() > 1);
 	a_map["FileExportMakerCam"]->setEnabled(w);
 	a_map["FilePrintPDF"]->setEnabled(w);
@@ -1048,6 +1057,11 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     activedMdiSubWindow=w;
 
     QC_MDIWindow* m = qobject_cast<QC_MDIWindow*>(w);
+    if (w->windowTitle().contains("Block")) {
+        windowIsInBlockMode = true;
+    } else {
+        windowIsInBlockMode = false;
+    }
     enableFileActions(m);
 
     RS_Units::setCurrentDrawingUnits(m->getDocument()->getGraphic()->getUnit());
@@ -2028,14 +2042,23 @@ void QC_ApplicationWindow::slotFileSave() {
 }
 
 
-
 /**
  * Menu file -> save as.
  */
 void QC_ApplicationWindow::slotFileSaveAs() {
-    RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
-	if (doSave(getMDIWindow(), true))
-		recentFiles->updateRecentFilesMenu();
+   RS_DEBUG->print("QC_ApplicationWindow::slotFileSaveAs()");
+   if (windowIsInBlockMode) {
+     RS_ActionInterface* a = new RS_ActionBlocksSave(*getDocument(), *getGraphicView());
+     const QString currentWindowTitle     = getMDIWindow()->windowTitle();
+     const int editingBlockNameStartIndex = currentWindowTitle.indexOf("'")     + 1;
+     const int editingBlockNameEndIndex   = currentWindowTitle.lastIndexOf("'") - 1;
+     const int editingBlockNameLength = editingBlockNameEndIndex - editingBlockNameStartIndex + 1;
+     getDocument()->getBlockList()->activate(currentWindowTitle.mid(editingBlockNameStartIndex, editingBlockNameLength));
+     getGraphicView()->setCurrentAction(a);
+   } else {
+	  if (doSave(getMDIWindow(), true))
+		  recentFiles->updateRecentFilesMenu();
+   }
 }
 
 bool QC_ApplicationWindow::slotFileSaveAll()
