@@ -78,8 +78,9 @@ void RS_ActionBlocksRemove::trigger() {
 					if (e->rtti()==RS2::EntityInsert) {
 						RS_Insert* ins = (RS_Insert*)e;
 						if (ins->getName()==block->getName() && !ins->isUndone()) {
-                            document->addUndoable(ins);
+                            document->removeUndoable(ins);
                             ins->setUndoState(true);
+                            ins->reparent(NULL);
 							done = false;
 							break;
 						}
@@ -97,9 +98,26 @@ void RS_ActionBlocksRemove::trigger() {
 		// close all windows that are editing this block:
 		RS_DIALOGFACTORY->closeEditBlockWindow(block);
 
-        // Now remove block from the block list, but do not delete:
-        block->setUndoState(true);
-        document->addUndoable(block);
+      // Now remove block from the block list, but do not delete:
+      const int maximumBlockNameSize = 10;
+      const int numberOfCharsAZ = 26;
+      const int lowerCaseAsciiA = 97;
+      bool randomBlockNameFound = false;
+      while (!randomBlockNameFound) {
+          QString randomBlockName("");
+
+          for (int i = 0; i < maximumBlockNameSize; i++) {
+              const int randomNumber = (rand() % numberOfCharsAZ) + lowerCaseAsciiA;
+              randomBlockName = randomBlockName.append(QChar(randomNumber));
+          }
+          randomBlockName = block->getName().append("_").append(randomBlockName);
+
+          if (bl->rename(block, randomBlockName)) {
+             randomBlockNameFound = true;
+          }
+      }
+      block->setUndoState(true);
+      document->removeUndoable(block);
     }
     document->endUndoCycle();
 
