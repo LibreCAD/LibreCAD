@@ -293,8 +293,9 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     cbDimGap->setEditText(QString("%1").arg(dimgap));
 
     // dimension arrow size:
-    double dimasz = graphic->getVariableDouble("$DIMASZ",
-                                               RS_Units::convert(2.5, RS2::Millimeter, unit));
+    double dimasz = graphic->getVariableDouble("$DIMASZ", RS_Units::convert(2.5, RS2::Millimeter, unit)) 
+                  - RS_TOLERANCE;
+
     //RLZ    cbDimAsz->setCurrentText(QString("%1").arg(dimasz));
     cbDimAsz->setEditText(QString("%1").arg(dimasz));
     // dimension tick size:
@@ -588,7 +589,7 @@ void QG_DlgOptionsDrawing::validate() {
         ok1 = ok1 || ok2;
 
         graphic->addVariable("$DIMASZ",
-                             RS_Math::eval(cbDimAsz->currentText()), 40);
+                             RS_Math::eval(cbDimAsz->currentText()) + RS_TOLERANCE, 40);
         //dimension tick size, 0 for no tick
         graphic->addVariable("$DIMTSZ",
                              RS_Math::eval(cbDimTsz->currentText()), 40);
