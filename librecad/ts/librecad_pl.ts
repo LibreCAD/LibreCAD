@@ -24,18 +24,18 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Lista rozwijana</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Zapisz</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Punkty splajnu</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -59,14 +59,14 @@
     </message>
     <message>
         <source>Points on Spline</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Punkty na splajnie</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Wybierz łuk</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -74,7 +74,7 @@
     </message>
     <message>
         <source>Specify dimension arc location</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Określ punkt pomiaru kąta</translation>
     </message>
 </context>
 <context>
@@ -82,11 +82,12 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>Promień=%1 jest za mały dla wybranych punktów
+Odległość między punktami=%2 jest większa niż średnica=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz jeden z dwóch możliwych środków</translation>
     </message>
     <message>
         <source>Specify first point</source>
@@ -94,34 +95,34 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished">Anuluj</translation>
+        <translation>Anuluj</translation>
     </message>
     <message>
         <source>Specify second point</source>
-        <translation type="unfinished">Wskaż drugi punkt</translation>
+        <translation>Wskaż drugi punkt</translation>
     </message>
     <message>
         <source>Back</source>
-        <translation type="unfinished">Wstecz</translation>
+        <translation>Wstecz</translation>
     </message>
     <message>
         <source>Select circle center</source>
-        <translation type="unfinished"></translation>
+        <translation>Wybierz środek</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished">Wskaż środek</translation>
+        <translation>Wskaż centrum</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Określ styczną</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished">Wprowadź liczbę:</translation>
+        <translation>Wprowadź liczbę:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -156,22 +157,22 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Nie można anulować: zdefiniowano za mało elementów.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Anulowanie nie jest możliwe: nie ma czego przywracać.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished">&amp;Okno powiększenia</translation>
+        <translation>&amp;Okno Powiększenie</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Powiększenie &amp;Przesunięcie</translation>
     </message>
     <message>
         <source>Select Entity</source>
@@ -207,7 +208,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;2 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;2 Punkty</translation>
     </message>
     <message>
         <source>&amp;Angle</source>
@@ -227,7 +228,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Parallel</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Równoległa</translation>
     </message>
     <message>
         <source>Parallel through point</source>
@@ -251,11 +252,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczna &amp;prostopadła</translation>
     </message>
     <message>
         <source>Orthogonal</source>
-        <translation type="unfinished">Prostopadła</translation>
+        <translation>Prostokątny</translation>
     </message>
     <message>
         <source>Relative angle</source>
@@ -275,7 +276,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Center, &amp;Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Środek, &amp;kąt</translation>
     </message>
     <message>
         <source>2 Points</source>
@@ -283,11 +284,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 Punkty, kąt</translation>
     </message>
     <message>
         <source>3 Points</source>
-        <translation type="unfinished"></translation>
+        <translation>3 Punkty</translation>
     </message>
     <message>
         <source>&amp;Concentric</source>
@@ -295,28 +296,28 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Wpisane &amp;okrąg</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Styczna do 2 okręgów, Promień</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczna do 2 okręgów , 1 Punkt</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczna do 3 okręgów</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>Styczna, 2 P&amp;unkty</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Środek, punkt, narożniki</translation>
     </message>
     <message>
         <source>&amp;3 Points</source>
@@ -324,7 +325,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Łuk &amp;Styczna</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -332,15 +333,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Ellipse &amp;Arc (Axis)</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa &amp;Łuk (oś)</translation>
     </message>
     <message>
         <source>Ellipse &amp;Foci Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa &amp;ognisko</translation>
     </message>
     <message>
         <source>Ellipse &amp;4 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Elipsa &amp;4 Punkty</translation>
     </message>
     <message>
         <source>Ellipse Center and &amp;3 Points</source>
