@@ -2,7 +2,7 @@
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
-** Copyright (C) 2012 Dongxu Li (dongxuli2011@gmail.com)
+** Copyright (C) 2024 Dongxu Li (dongxuli2011@gmail.com)
 ** Copyright (C) 2011 R. van Twisk (librecad@rvt.dds.nl)
 ** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
 **
@@ -31,7 +31,7 @@
 #include <QRegularExpression>
 #include <QTextStream>
 
-#include "rs_commandItems.h"
+#include "lc_commandItems.h"
 #include "rs_commands.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
