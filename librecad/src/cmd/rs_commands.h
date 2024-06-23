@@ -31,11 +31,11 @@
 
 #include <map>
 
-#include <QtCore/qcontainerfwd.h>
-
 #include "rs.h"
 
 #define RS_COMMANDS RS_Commands::instance()
+
+class QString;
 
 /**
  * Class which holds all commands for the command line. This
@@ -54,6 +54,9 @@ public:
     static RS_Commands* instance();
 
     QStringList complete(const QString& cmd) const;
+    // The case sensitive version
+    RS2::ActionType commandToAction(const QString& cmd) const;
+    // The case insensitive version
     RS2::ActionType cmdToAction(const QString& cmd, bool verbose = true) const;
     RS2::ActionType keycodeToAction(const QString& code) const;
 
@@ -65,23 +68,22 @@ public:
     static QString msgAvailableCommands();
     void updateAlias();
 
-    // Prefixes for function-, Meta- and Alt- keys.
-    static const char *FnPrefix;
-    static const char *AltPrefix;
-    static const char *MetaPrefix;
-
-private:
-    RS_Commands() ;
     ~RS_Commands()=delete;
     RS_Commands(const RS_Commands &) = delete;
     RS_Commands &operator=(const RS_Commands &) = delete;
     RS_Commands(RS_Commands &&) = delete;
     RS_Commands &operator=(RS_Commands &&) = delete;
 
+private:
+    RS_Commands() ;
+
     std::map<QString, RS2::ActionType> mainCommands;
     std::map<QString, RS2::ActionType> shortCommands;
+    // from action to commands
+    std::map<RS2::ActionType, QString> m_actionToCommand;
     // key=english command , value = translated
     std::map<QString, QString> cmdTranslation;
+    std::map<QString, QString> m_revTranslation;
 };
 
 #endif

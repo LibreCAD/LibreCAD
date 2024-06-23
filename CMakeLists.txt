@@ -449,6 +449,7 @@ set(SOURCES
         librecad/src/actions/rs_actionzoomwindow.h
         librecad/src/cmd/rs_commands.cpp
         librecad/src/cmd/rs_commands.h
+	librecad/src/cmd/rs_commandItems.h
         librecad/src/lib/actions/rs_actioninterface.cpp
         librecad/src/lib/actions/rs_actioninterface.h
         librecad/src/lib/actions/rs_preview.cpp
