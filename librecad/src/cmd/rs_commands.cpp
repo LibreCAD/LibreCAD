@@ -180,9 +180,12 @@ void RS_Commands::updateAlias()
     if (aliasName.isEmpty())
         return;
     aliasName += "/librecad.alias";
-    //    qDebug()<<"alias file:\t"<<aliasName;
     QFile f(aliasName);
-    QString line;
+    LC_LOG<<__func__<<"(): Command alias file: "<<aliasName;
+    auto validateCmd = [this](QString cmd) {
+        return mainCommands.count(cmd) == 1 || shortCommands.count(cmd) == 1
+               || cmdTranslation.count(cmd) == 1;
+    };
     std::map<QString, QString> aliasList;
     if (f.exists()) {
 
@@ -195,19 +198,20 @@ void RS_Commands::updateAlias()
             //                while (!ts.atEnd())
             while(!ts.atEnd())
             {
-                line=ts.readLine().trimmed();
+                QString line=ts.readLine().trimmed();
                 if (line.isEmpty() || line.at(0)=='#' )
                     continue;
                 // Read alias
-                QStringList txtList = line.split(QRegularExpression(R"(\s)"),Qt::SkipEmptyParts);
+                static QRegularExpression re(R"(\s)");
+                QStringList txtList = line.split(re,Qt::SkipEmptyParts);
                 if (txtList.size()> 1) {
                     const QString& alias = txtList[0];
                     const QString& cmd = txtList[1];
-                    if (mainCommands.count(cmd) == 1 || shortCommands.count(cmd) == 1) {
+                    if (validateCmd(cmd)) {
                         if (commandToAction(alias) != commandToAction(cmd)) {
                             LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(commandToAction(alias))<<": with "<<alias<<"=" << cmd;
                         } else {
-                            aliasList[alias] = cmd;
+                            aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
                         }
                     } else {
                         LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
@@ -245,8 +249,15 @@ RS2::ActionType RS_Commands::commandToAction(const QString& command) const
         return mainCommands.at(command);
     if (shortCommands.count(command)==1)
         return shortCommands.at(command);
+    if (cmdTranslation.count(command) == 1) {
+        QString translated = cmdTranslation.at(command);
+        if (mainCommands.count(translated) == 1)
+            return mainCommands.at(translated);
+        if (shortCommands.count(translated) == 1)
+            return shortCommands.at(translated);
+    }
     return RS2::ActionNone;
-};
+}
 
 /**
  * Tries to complete the given command (e.g. when tab is pressed).
