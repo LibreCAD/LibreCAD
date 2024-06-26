@@ -465,7 +465,7 @@ A pontok közötti távolság=%2 nagyobb mint az átmérő=%3</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">Át&amp;méretezés</translation>
+        <translation>Át&amp;méretezés</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
@@ -1466,7 +1466,7 @@ Kérjük, ellenőrizze annak létezését és engedélyeit.</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>Rögzített alk&amp;atrészek</translation>
     </message>
     <message>
         <source>Recent Files</source>
@@ -2229,7 +2229,7 @@ Ez rekurzív módon módosítja magának a blokknak az összes entitását.</tra
     </message>
     <message>
         <source>Scale:</source>
-        <translation type="unfinished">Méretezés:</translation>
+        <translation>Átméretezés:</translation>
     </message>
     <message>
         <source>Size (px):</source>
@@ -6599,7 +6599,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>dpi</source>
-        <translation type="unfinished"></translation>
+        <translation>dpi</translation>
     </message>
     <message>
         <source>close</source>
@@ -7050,7 +7050,7 @@ Lecseréli?</translation>
     </message>
     <message>
         <source>cal</source>
-        <translation type="unfinished"></translation>
+        <translation>cal</translation>
     </message>
     <message>
         <source>Calculator mode: On</source>
@@ -10772,7 +10772,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Array:</source>
-        <translation type="unfinished">Tömb:</translation>
+        <translation>Sorrend:</translation>
     </message>
     <message>
         <source>Number of Columns</source>
@@ -10915,7 +10915,7 @@ Ez a blokk nem illeszthető be.</translation>
     <name>Ui_LineParallelOptions</name>
     <message>
         <source>Line Parallel Options</source>
-        <translation type="unfinished">Párhuzamos húzása</translation>
+        <translation>Párhuzamos vonal beállítás</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -10938,7 +10938,7 @@ Ez a blokk nem illeszthető be.</translation>
     <name>Ui_LineParallelThroughOptions</name>
     <message>
         <source>Line Parallel Through Options</source>
-        <translation type="unfinished">Ponton keresztül húzott párhuzamos</translation>
+        <translation>Ponton átmenő párhuzamos beállítása</translation>
     </message>
     <message>
         <source>Number:</source>
@@ -11036,7 +11036,7 @@ Ez a blokk nem illeszthető be.</translation>
     <name>Ui_MoveRotateOptions</name>
     <message>
         <source>Move Rotate Options</source>
-        <translation type="unfinished">Mozgatás és forgatás</translation>
+        <translation>Mozgatás és forgatás beállítása</translation>
     </message>
     <message>
         <source>Angle:</source>
@@ -11133,7 +11133,7 @@ Ez a blokk nem illeszthető be.</translation>
     </message>
     <message>
         <source>Check to trim both edges to the rounding</source>
-        <translation type="unfinished">Elemek levágása a lekerekítésig</translation>
+        <translation>Ellenőriz az éleket a kerekítéséhez</translation>
     </message>
     <message>
         <source>Trim</source>
