@@ -1023,15 +1023,29 @@ RS_Commands::RS_Commands() {
         for(auto const& p0: c0.fullCmdList){
             if(isCollisionFree(cmdTranslation, p0.first, p0.second))
                 cmdTranslation[p0.first]=p0.second;
-            if(isCollisionFree(mainCommands, p0.second, act))
+            if(isCollisionFree(mainCommands, p0.second, act)) {
                 mainCommands[p0.second]=act;
+            }
+        }
+        for(auto const& p0: c0.fullCmdList){
+            if(isCollisionFree(mainCommands, p0.first, act)) {
+                // enable english commands, if no conflict is found
+                mainCommands[p0.first]=act;
+            }
         }
         //add short commands
         for(auto const& p1: c0.shortCmdList){
             if(isCollisionFree(cmdTranslation, p1.first, p1.second))
                 cmdTranslation[p1.first]=p1.second;
-            if(isCollisionFree(shortCommands, p1.second, act))
+            if(isCollisionFree(shortCommands, p1.second, act)) {
                 shortCommands[p1.second]=act;
+            }
+        }
+        for(auto const& p1: c0.shortCmdList){
+            if(isCollisionFree(shortCommands, p1.first, act)) {
+                // enable english short commands, if no conflict is found
+                shortCommands[p1.first]=act;
+            }
         }
     }
 
