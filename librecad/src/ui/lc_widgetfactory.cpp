@@ -64,12 +64,12 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     , ag_manager(agm)
 {
     file_actions
-		<< a_map["FileNew"]
-		<< a_map["FileNewTemplate"]
-		<< a_map["FileOpen"]
-		<< a_map["FileSave"]
-		<< a_map["FileSaveAs"]
-		<< a_map["FileSaveAll"];
+        << a_map["FileNew"]
+        << a_map["FileNewTemplate"]
+        << a_map["FileOpen"]
+        << a_map["FileSave"]
+        << a_map["FileSaveAs"]
+        << a_map["FileSaveAll"];
     line_actions
         << a_map["DrawLine"]
         << a_map["DrawLineAngle"]
@@ -337,8 +337,9 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     if (usePenPallet()) {
         dock_pen_palette = new QDockWidget(main_window);
         dock_pen_palette->setWindowTitle(QC_ApplicationWindow::tr("Pen Palette"));
+        dock_pen_palette->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         dock_pen_palette->setObjectName("pen_palette_dockwidget");
-        pen_palette = new LC_PenPaletteWidget("Layer", dock_pen_palette);
+        pen_palette = new LC_PenPaletteWidget("PenPalette", dock_pen_palette);
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
         connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
@@ -359,6 +360,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         dock_layer_tree = new QDockWidget(main_window);
         dock_layer_tree->setWindowTitle(QC_ApplicationWindow::tr("Layer Tree"));
         dock_layer_tree->setObjectName("layer_tree_dockwidget");
+        dock_layer_tree->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
         layer_tree_widget = new LC_LayerTreeWidget(action_handler, dock_layer_tree, "Layer Tree");
         layer_tree_widget->setFocusPolicy(Qt::NoFocus);
         connect(layer_tree_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
@@ -406,11 +408,11 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_library->resize(240, 400);
 
     QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
-    dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    // dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
-    command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    // command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);

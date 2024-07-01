@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>305</width>
-    <height>200</height>
+    <width>260</width>
+    <height>227</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,6 +20,18 @@
    <enum>QFrame::Raised</enum>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="leftMargin">
+    <number>1</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>1</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
+   </property>
    <item>
     <widget class="QFrame" name="frame_0">
      <property name="frameShape">
@@ -29,6 +41,18 @@
       <enum>QFrame::Raised</enum>
      </property>
      <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <property name="leftMargin">
+       <number>0</number>
+      </property>
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
       <item>
        <widget class="QToolButton" name="add_button">
         <property name="toolTip">
@@ -77,7 +101,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QListWidget" name="fav_list"/>
+    <widget class="QListWidget" name="fav_list">
+     <property name="frameShadow">
+      <enum>QFrame::Plain</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
@@ -89,8 +117,8 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../../res/extui/extui.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections/>
 </ui>
