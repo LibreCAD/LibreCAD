@@ -24,18 +24,18 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Розкривний список</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштування</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки сплайна</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Контрольні точки</translation>
     </message>
     <message>
         <source>Points on Spline</source>
@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть об&apos;єкт дуги</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -82,7 +82,7 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">радіус=%1 занадто малий для вибраних точок відстань між точками=%2 більша за діаметр=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
@@ -94,7 +94,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -117,7 +117,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажіть дотичну</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -156,18 +156,18 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо скасувати: ще не визначено достатньо об’єктів.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо скасувати: Відсутні дії для відновлення.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Збільшити</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -187,11 +187,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір &amp;Контуру</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть об&apos;єкти, що перетинаються</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
@@ -251,7 +251,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична &amp;Ортогональна</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -263,11 +263,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Багат&amp;окутник (цент, кут)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Багат&amp;окутник (кут, кут)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
@@ -283,7 +283,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 точки, радіус</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -291,7 +291,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Концентричний</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
