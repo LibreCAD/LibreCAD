@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>382</width>
-    <height>237</height>
+    <width>358</width>
+    <height>234</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -47,6 +47,9 @@
     <layout class="QVBoxLayout" name="verticalLayout_2">
      <item>
       <layout class="QHBoxLayout" name="horizontalLayout">
+       <property name="spacing">
+        <number>2</number>
+       </property>
        <item>
         <layout class="QHBoxLayout" name="layToFlexible">
          <item>
@@ -189,6 +192,12 @@
        </item>
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout_2">
+         <property name="spacing">
+          <number>2</number>
+         </property>
+         <property name="topMargin">
+          <number>2</number>
+         </property>
          <item>
           <spacer name="horizontalSpacer">
            <property name="orientation">
@@ -256,12 +265,11 @@ p, li { white-space: pre-wrap; }
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/extui/extui.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
   <include location="../../res/ui/ui.qrc"/>
   <include location="../../res/main/main.qrc"/>
+  <include location="../../res/icons/icons.qrc"/>
+  <include location="../../res/icons/icons.qrc"/>
+  <include location="../../res/extui/extui.qrc"/>
  </resources>
  <connections/>
 </ui>

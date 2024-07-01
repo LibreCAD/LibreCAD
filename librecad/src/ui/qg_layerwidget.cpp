@@ -206,7 +206,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
-    layerView->setMinimumHeight(140);
+    // layerView->setMinimumHeight(140);
+    layerView->setMinimumHeight(60);
     QHeaderView *pHeader {layerView->horizontalHeader()};
     pHeader->setMinimumSectionSize( QG_LayerModel::ICONWIDTH + 4);
     pHeader->setStretchLastSection(true);
