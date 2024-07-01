@@ -178,7 +178,7 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
  */
 QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    auto *layButtons = new QHBoxLayout;
-    auto *layButtons = new LC_FlexLayout(  );
+    auto *layButtons = new LC_FlexLayout(0,5,5);
     QToolButton *but;
 //    const QSize minButSize(28, 28);
 
