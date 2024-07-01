@@ -49,7 +49,7 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     ui->setupUi(this);
 
     // support flexible layout for buttons and small size displays
-    auto *layButtonsFlex = new LC_FlexLayout(2, 6, 6);
+    auto *layButtonsFlex = new LC_FlexLayout(0, 5, 5);
     layButtonsFlex->fillFromLayout(ui->layToFlexible);
     int buttonsPosition = ui->horizontalLayout->indexOf(ui->layToFlexible);
     QLayoutItem *pItem = ui->horizontalLayout->takeAt(buttonsPosition);

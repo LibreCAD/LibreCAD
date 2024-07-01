@@ -196,7 +196,7 @@
           <number>2</number>
          </property>
          <property name="topMargin">
-          <number>2</number>
+          <number>0</number>
          </property>
          <item>
           <spacer name="horizontalSpacer">

@@ -83,27 +83,29 @@ LC_PenPaletteWidget::LC_PenPaletteWidget(const QString& title, QWidget* parent) 
     setupUi(this);
 
     // make buttons flexible
-    auto *layButtonsFlex = new LC_FlexLayout(2, 6, 6);
+    auto *layButtonsFlex = new LC_FlexLayout(0, 5, 5);
     layButtonsFlex->fillFromLayout(layButtons);
     int buttonsPosition = gridLayout->indexOf(layButtons);
     QLayoutItem *pItem = gridLayout->takeAt(buttonsPosition);
     delete pItem;
 
     int settingsWidgetPosition = gridLayout->indexOf(tbSettings);
-    QLayoutItem *pLayoutItem = gridLayout->takeAt(settingsWidgetPosition);
-    delete pLayoutItem;
+//     int settingsWidgetPosition = gridLayout->indexOf(laySettings);
+     QLayoutItem *pLayoutItem = gridLayout->takeAt(settingsWidgetPosition);
+     delete pLayoutItem;
 
     gridLayout->addLayout(layButtonsFlex, 0, 0, 1, 1);
     gridLayout->addWidget(tbSettings, 0,1,1,1);
-    gridLayout->setAlignment(tbSettings,Qt::AlignTop);
+   //  gridLayout->addLayout(laySettings, 0,1,1,1);
+   gridLayout->setAlignment(tbSettings,Qt::AlignTop);
 
     // make controls flexible
 
-    auto *layPenColorFlex = new LC_FlexLayout(2, 6, 6, 45);
+    auto *layPenColorFlex = new LC_FlexLayout(0, 5, 5, 45);
     layPenColorFlex->fillFromLayout(layPenColor);
     layPenColorFlex->fillFromLayout(layTypeWidth);
     layPenColorFlex->setSoftBreakItems({2, 4, 6});
-    layPenColorFlex->setFullWidthItems({1});
+    layPenColorFlex->setFullWidthItems({1,3,5,7});
     gridLayout->addLayout(layPenColorFlex,4,0,1, 2);
 
     setWindowTitle(title);
