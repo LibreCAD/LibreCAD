@@ -37,6 +37,7 @@
 #include <QLineEdit>
 #include <QContextMenuEvent>
 
+#include "lc_flexlayout.h"
 #include "qg_actionhandler.h"
 #include "qg_blockwidget.h"
 #include "rs_blocklist.h"
@@ -152,77 +153,80 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     blockView->horizontalHeader()->hide();
 
     QVBoxLayout* lay = new QVBoxLayout(this);
-    lay->setSpacing ( 0 );
+    lay->setSpacing ( 2 );
     lay->setContentsMargins(2, 2, 2, 2);
 
-    QHBoxLayout* layButtons = new QHBoxLayout();
-    QHBoxLayout* layButtons2 = new QHBoxLayout();
+    auto *layButtons = new LC_FlexLayout(0,5,5);
+
+    // QHBoxLayout* layButtons = new QHBoxLayout();
+    // QHBoxLayout* layButtons2 = new QHBoxLayout();
     QToolButton* but;
     const QSize button_size(28,28);
     // show all blocks:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Show all blocks"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksDefreezeAll);
     layButtons->addWidget(but);
     // hide all blocks:
     but = new QToolButton(this);
     but->setIcon( QIcon(":/icons/invisible.svg") );
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Hide all blocks"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksFreezeAll);
     layButtons->addWidget(but);
     // create block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/create_block.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Create Block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksCreate);
     layButtons->addWidget(but);
     // add block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Add an empty block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAdd);
     layButtons->addWidget(but);
     // remove block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Remove block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksRemove);
     layButtons->addWidget(but);
     // edit attributes:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Rename the active block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksAttributes);
-    layButtons2->addWidget(but);
+      // layButtons2->addWidget(but);
+    layButtons->addWidget(but);
     // edit block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/properties.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Edit the active block\n"
                           "in a separate window"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksEdit);
-    layButtons2->addWidget(but);
+    layButtons->addWidget(but);
     // save block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/save.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("save the active block to a file"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksSave);
-    layButtons2->addWidget(but);
+    layButtons->addWidget(but);
     // insert block:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/insert_active_block.svg"));
-    but->setMinimumSize(button_size);
+    // but->setMinimumSize(button_size);
     but->setToolTip(tr("Insert the active block"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotBlocksInsert);
-    layButtons2->addWidget(but);
+    layButtons->addWidget(but);
 
     // lineEdit to filter block list with RegEx
     matchBlockName = new QLineEdit(this);
@@ -234,7 +238,7 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
 
     lay->addWidget(matchBlockName);
     lay->addLayout(layButtons);
-    lay->addLayout(layButtons2);
+    // lay->addLayout(layButtons2);
     lay->addWidget(blockView);
 
     connect(blockView, &QTableView::clicked, this, &QG_BlockWidget::slotActivated);
