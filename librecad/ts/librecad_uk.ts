@@ -412,7 +412,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="unfinished">&amp;Лінійний</translation>
+        <translation>&amp;Лінійний</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
@@ -444,7 +444,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити довільну криву</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
@@ -452,11 +452,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished">Звернути напрямок</translation>
+        <translation>Змінити напрямок</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
@@ -464,15 +464,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Масштабувати</translation>
+        <translation>&amp;Масштабувати</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Дзеркало</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Обертати навколо &amp;двох</translation>
+        <translation>Обертати навколо &amp;двох</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
@@ -480,7 +480,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Підрізання</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
@@ -488,31 +488,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished">&amp;Поділ</translation>
+        <translation>&amp;Поділ</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Витягнути</translation>
+        <translation>&amp;Витягнути</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Фаска</translation>
+        <translation>&amp;Фаска</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>Закруглення</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">&amp;Розбити текст на букви</translation>
+        <translation type="unfinished">&amp;Розбити текст на літери</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished">Точка всередині контуру</translation>
+        <translation>Точка всередині контуру</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">&amp;Відстань від точки до точки</translation>
+        <translation>&amp;Відстань від точки до точки</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
@@ -528,15 +528,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished">&amp;Полігональна область</translation>
+        <translation type="unfinished">&amp;Багатокутна область</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">Вказівник &amp;вибору</translation>
+        <translation type="unfinished">Вказівник &amp;вибраного</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Скасувати</translation>
+        <translation>&amp;Скасувати</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -556,7 +556,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished">на задній план</translation>
+        <translation type="unfinished">на тло</translation>
     </message>
     <message>
         <source>lower after entity</source>
@@ -596,7 +596,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути &amp;конструкційний шар</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -608,7 +608,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Перейменувати блок</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
@@ -636,11 +636,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">На&amp;лаштування програми</translation>
+        <translation>На&amp;лаштування програми</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поточні налаштування &amp;креслення</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
@@ -648,11 +648,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Вибр&amp;ати усе</translation>
+        <translation type="unfinished">Вибр&amp;ати все</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Скасувати ви&amp;бір усіх об’єктів</translation>
+        <translation type="unfinished">Скасувати ви&amp;бір об’єктів</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -664,19 +664,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">На&amp;близити</translation>
+        <translation type="unfinished">Збільшити масштаб</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Від&amp;далити</translation>
+        <translation type="unfinished">Зменшити масштаб</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Автоматичний масштаб</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished">Попередній &amp;вигляд</translation>
+        <translation>Попередній &amp;вигляд</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
@@ -684,11 +684,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Новий</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">Новий за &amp;шаблоном</translation>
+        <translation>Новий за &amp;шаблоном</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -696,7 +696,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Зберегти</translation>
+        <translation>&amp;Зберегти</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -704,57 +704,57 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Експортувати як зображенн</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Зачинити</translation>
+        <translation>&amp;Зачинити</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Друк…</translation>
+        <translation>&amp;Друк…</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт у PDF</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Попередній перегляд</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Вихід</translation>
+        <translation>&amp;Вихід</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished">&amp;Блок</translation>
+        <translation>&amp;Блок</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Повноекранний режим</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Сіткове поле</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished">&amp;Чернетка</translation>
+        <translation>&amp;Чернетка</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">&amp;Рядок стану</translation>
+        <translation>&amp;Рядок стану</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
