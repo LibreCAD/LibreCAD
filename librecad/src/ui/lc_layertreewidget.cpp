@@ -112,7 +112,9 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setSelectionMode(QAbstractItemView::NoSelection);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setFocusPolicy(Qt::NoFocus);
-    treeView->setMinimumHeight(140);
+    treeView->setMinimumHeight(60);
+    //treeView->setMinimumHeight(140);
+
 
     treeView->setDragDropMode(QAbstractItemView::InternalMove);
     treeView->setDragEnabled(true);
@@ -299,9 +301,9 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    layButtons->addStretch(10);
 
     // add separator line
-    auto *vFrame = new QFrame;
-    vFrame->setFrameShape(QFrame::VLine);
-    layButtons->addWidget(vFrame);
+    // auto *vFrame = new QFrame;
+    // vFrame->setFrameShape(QFrame::VLine);
+    // layButtons->addWidget(vFrame);
 
     // rename layer:
     but = new QToolButton(this);

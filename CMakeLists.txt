@@ -4,7 +4,8 @@ project(LibreCAD)
 set(CMAKE_CXX_STANDARD 17)
 
 #set(MIN_GW_PATH_PREFIX "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
-set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
+set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
