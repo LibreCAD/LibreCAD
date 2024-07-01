@@ -112,7 +112,9 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setSelectionMode(QAbstractItemView::NoSelection);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setFocusPolicy(Qt::NoFocus);
-    treeView->setMinimumHeight(140);
+    treeView->setMinimumHeight(65);
+    //treeView->setMinimumHeight(140);
+
 
     treeView->setDragDropMode(QAbstractItemView::InternalMove);
     treeView->setDragEnabled(true);
@@ -122,6 +124,8 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setExpandsOnDoubleClick(false);
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
+
+    // treeView->setStyleSheet("background-color: white;");
 
     connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(QPoint)));
     connect(treeView, &QTreeView::clicked, this, &LC_LayerTreeWidget::slotTreeClicked);
@@ -156,10 +160,10 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
     layFiltering->addWidget(matchModeCheckBox);
 
     // settings button
-    const QSize minButSize(28, 28);
+    // const QSize minButSize(28, 28);
     auto* but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/settings.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Settings"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::invokeSettingsDialog);
     layFiltering->addWidget(but);
@@ -176,12 +180,12 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    auto *layButtons = new QHBoxLayout;
     auto *layButtons = new LC_FlexLayout(  );
     QToolButton *but;
-    const QSize minButSize(28, 28);
+//    const QSize minButSize(28, 28);
 
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showAllLayers);
     layButtons->addWidget(but);
@@ -189,7 +193,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/invisible.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::hideAllLayers);
     layButtons->addWidget(but);
@@ -197,7 +201,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // toggle secondary layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_vertical.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show Secondary Layers"));
     but->setCheckable(true);
     but->setChecked(true); // visible by default
@@ -208,7 +212,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // Visible only active
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/select_all.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show Active Layer Only"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::showActiveLayerOnly);
     layButtons->addWidget(but);
@@ -218,7 +222,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // expand all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/order.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Expand All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::expandAllLayers);
     layButtons->addWidget(but);
@@ -227,7 +231,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // collapse all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/upmost.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Collapse All"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseAllLayers);
     layButtons->addWidget(but/*, 10*/);
@@ -236,7 +240,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // expand all layers
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_aligned.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Collapse Secondary"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::collapseSecondaryLayers);
     layButtons->addWidget(but);
@@ -247,7 +251,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // unlock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/unlocked.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Unlock all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::unlockAllLayers);
     layButtons->addWidget(but);
@@ -255,7 +259,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // lock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/locked.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Lock all layers"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::lockAllLayers);
     layButtons->addWidget(but);
@@ -263,7 +267,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::addLayer);
     layButtons->addWidget(but);
@@ -271,7 +275,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // add dimensional layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/dim_horizontal.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add dimensions Layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::addDimensionalLayerForActiveLayer);
 
@@ -281,7 +285,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove layer"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::removeActiveLayers);
     layButtons->addWidget(but);
@@ -289,7 +293,7 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::editActiveLayer);
     layButtons->addWidget(but);
@@ -297,14 +301,14 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    layButtons->addStretch(10);
 
     // add separator line
-    auto *vFrame = new QFrame;
-    vFrame->setFrameShape(QFrame::VLine);
-    layButtons->addWidget(vFrame);
+    // auto *vFrame = new QFrame;
+    // vFrame->setFrameShape(QFrame::VLine);
+    // layButtons->addWidget(vFrame);
 
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/down.svg"));
-    but->setMinimumSize(minButSize);
+//    but->setMinimumSize(minButSize);
     but->setToolTip(tr("Flat List Mode)"));
     but->setCheckable(true);
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::toggleFlatView);

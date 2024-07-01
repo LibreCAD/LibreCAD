@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>404</width>
-    <height>246</height>
+    <width>339</width>
+    <height>224</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+   <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
@@ -22,6 +22,18 @@
   <layout class="QGridLayout" name="gridLayout">
    <property name="sizeConstraint">
     <enum>QLayout::SetDefaultConstraint</enum>
+   </property>
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>2</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>2</number>
    </property>
    <item row="8" column="0" colspan="2">
     <widget class="Line" name="line">
@@ -477,12 +489,11 @@
   </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/extui/extui.qrc"/>
+  <include location="../../res/ui/ui.qrc"/>
   <include location="../../res/actions/actions.qrc"/>
   <include location="../../res/icons/icons.qrc"/>
   <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/icons/icons.qrc"/>
-  <include location="../../res/ui/ui.qrc"/>
+  <include location="../../res/extui/extui.qrc"/>
  </resources>
  <connections/>
 </ui>

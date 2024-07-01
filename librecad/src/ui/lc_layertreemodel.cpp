@@ -876,7 +876,7 @@ QVariant LC_LayerTreeModel::data ( const QModelIndex & index, int role ) const {
             }
             else if (layerItem->isActiveLayer()){
                 return options->activeLayerBgColor;
-            }
+            }            
         }
         break;
 
