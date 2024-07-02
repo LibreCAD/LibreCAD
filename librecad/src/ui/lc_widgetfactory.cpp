@@ -64,12 +64,12 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     , ag_manager(agm)
 {
     file_actions
-        << a_map["FileNew"]
-        << a_map["FileNewTemplate"]
-        << a_map["FileOpen"]
-        << a_map["FileSave"]
-        << a_map["FileSaveAs"]
-        << a_map["FileSaveAll"];
+		<< a_map["FileNew"]
+		<< a_map["FileNewTemplate"]
+		<< a_map["FileOpen"]
+		<< a_map["FileSave"]
+		<< a_map["FileSaveAs"]
+		<< a_map["FileSaveAll"];
     line_actions
         << a_map["DrawLine"]
         << a_map["DrawLineAngle"]
@@ -406,11 +406,11 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     dock_library->resize(240, 400);
 
     QDockWidget* dock_command = new QDockWidget(tr("Command line"), main_window);
-    // dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    dock_command->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     dock_command->setObjectName("command_dockwidget");
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
-    // command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
+    command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
     connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
@@ -484,7 +484,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler)
     snap_toolbar->setSizePolicy(toolBarPolicy);
     snap_toolbar->setObjectName("snap_toolbar" );
     action_handler->set_snap_toolbar(snap_toolbar);
-    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps,
+    connect( main_window,  &QC_ApplicationWindow::signalEnableRelativeZeroSnaps, 
              snap_toolbar, &QG_SnapToolBar::slotEnableRelativeZeroSnaps);
 
     pen_toolbar = new QG_PenToolBar(QC_ApplicationWindow::tr("Pen"), main_window);
@@ -693,14 +693,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu = new QMenu(QC_ApplicationWindow::tr("&File"), menu_bar);
     file_menu->setObjectName("File");
     file_menu->setTearOffEnabled(true);
-    file_menu->addAction(a_map["FileNew"]);
-    file_menu->addAction(a_map["FileNewTemplate"]);
-    file_menu->addAction(a_map["FileOpen"]);
-    file_menu->addSeparator();
-    file_menu->addAction(a_map["FileSave"]);
-    file_menu->addAction(a_map["FileSaveAs"]);
-    file_menu->addAction(a_map["FileSaveAll"]);
-    file_menu->addSeparator();
+	file_menu->addAction(a_map["FileNew"]);
+	file_menu->addAction(a_map["FileNewTemplate"]);
+	file_menu->addAction(a_map["FileOpen"]);
+	file_menu->addSeparator();
+	file_menu->addAction(a_map["FileSave"]);
+	file_menu->addAction(a_map["FileSaveAs"]);
+	file_menu->addAction(a_map["FileSaveAll"]);
+	file_menu->addSeparator();
     sub_menu = file_menu->addMenu(QIcon(":/icons/import.svg"), QC_ApplicationWindow::tr("Import"));
     sub_menu->setObjectName("Import");
     sub_menu->addAction(a_map["DrawImage"]);
@@ -715,7 +715,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     file_menu->addAction(a_map["FilePrintPreview"]);
     file_menu->addSeparator();
     file_menu->addAction(a_map["FileClose"]);
-    file_menu->addAction(a_map["FileCloseAll"]);
+	file_menu->addAction(a_map["FileCloseAll"]);
     file_menu->addAction(a_map["FileQuit"]);
     file_menu->addSeparator();
 
