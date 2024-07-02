@@ -557,7 +557,7 @@ Odległość między punktami=%2 jest większa niż średnica=%3</translation>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>przenieś w dół</translation>
     </message>
     <message>
         <source>lower after entity</source>
