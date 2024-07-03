@@ -144,6 +144,14 @@ struct RS_BevelData
     bool trim = false;
 };
 
+struct LC_TrimResult{
+    bool result = false;
+    RS_Entity* trimmed1 = nullptr;
+    RS_Entity* trimmed2 = nullptr;
+    RS_Vector intersection1;
+    RS_Vector intersection2;
+};
+
 struct LC_BevelResult{
     RS_Line* bevel = nullptr;
     bool polyline = false;
@@ -277,10 +285,10 @@ public:
     bool mirror(RS_MirrorData &data);
     bool moveRotate(RS_MoveRotateData &data);
     bool rotate2(RS_Rotate2Data &data);
-    bool trim(
+    LC_TrimResult trim(
         const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
         const RS_Vector &limitCoord, RS_Entity *limitEntity,
-        bool both);
+        bool both, bool forPreview = false);
     RS_Entity* trimAmount(const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
                           double dist, bool trimBoth, bool &trimStart, bool &trimEnd, bool forPreview = false);
     bool offset(const RS_OffsetData &data);
@@ -344,6 +352,8 @@ protected:
     RS_Document *document = nullptr;
     RS_GraphicView *graphicView = nullptr;
     bool handleUndo = false;
+
+    void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;
 };
 
 #endif

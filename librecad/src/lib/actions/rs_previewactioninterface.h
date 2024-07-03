@@ -37,6 +37,7 @@
 #include "rs_arc.h"
 #include "rs_ellipse.h"
 #include "lc_defaults.h"
+#include "lc_refellipse.h"
 
 struct RS_CircleData;
 /**
@@ -109,6 +110,8 @@ protected:
     void previewRefSelectablePoint(const RS_Vector &coord, bool alwaysVisible = false);
     void previewRefPoints(const std::vector<RS_Vector>& points);
     void previewRefLines(const std::vector<RS_LineData>& points);
+    RS_Arc *previewRefArc(const RS_ArcData &arcData);
+    LC_RefEllipse *previewRefEllipse(const RS_EllipseData &arcData);
     void initRefEntitiesMetrics();
     void highlightHover(RS_Entity *e);
     void highlightSelected(RS_Entity *e, bool enable=true);
@@ -124,7 +127,6 @@ protected:
     static bool isControl(const QMouseEvent *e);
     static bool isShift(const QMouseEvent *e);
     bool addToDocumentUndoable(RS_Undoable* e) const;
-    RS_Arc *previewRefArc(const RS_ArcData &arcData);
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const RS2::EntityType &enType);

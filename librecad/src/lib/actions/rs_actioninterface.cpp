@@ -384,7 +384,7 @@ int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
 void RS_ActionInterface::updateSelectionWidget() const{
     updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
-void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
+void RS_ActionInterface::updateSelectionWidget([[maybe_unused]]int countSelected, [[maybe_unused]]double selectedLength) const{
     RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
 }
 

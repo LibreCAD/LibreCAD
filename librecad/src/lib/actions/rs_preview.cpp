@@ -70,6 +70,7 @@ void RS_Preview::addEntity(RS_Entity* entity) {
         case RS2::EntityRefPoint:
         case RS2::EntityRefLine:
         case RS2::EntityRefCircle:
+        case RS2::EntityRefEllipse:
         case RS2::EntityRefArc: {
             refEntity = true;
             break;

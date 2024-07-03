@@ -165,7 +165,8 @@ namespace RS2 {
         EntityRefPoint,
         EntityRefLine,
         EntityRefArc,
-        EntityRefCircle
+        EntityRefCircle,
+        EntityRefEllipse,
     };
 
 

@@ -988,12 +988,12 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter,RS_Entity *e, do
     // todo - therefore, review this later
             int rtti = e->rtti();
             switch (rtti) {
+                case RS2::EntityRefEllipse:
                 case RS2::EntityRefPoint:
                 case RS2::EntityRefLine:
                 case RS2::EntityRefCircle:
                 case RS2::EntityRefArc: {
                     // fixme - if not ref point are enabled, draw as transparent?
-                    // fixme - where to disable ref points?
                     RS_Pen pen = e->getPen(true);
                     if (e->isHighlighted()){
                         pen.setColor(m_colorData->previewReferenceHighlightedEntitiesColor);

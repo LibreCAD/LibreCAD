@@ -89,7 +89,7 @@ namespace {
  */
     RS_Block *addNewBlock(const QString &name, RS_Graphic &graphic){
         RS_BlockData db = RS_BlockData(name, {0.0, 0.0}, false);
-        RS_Block *b = new RS_Block(&graphic, db);
+        auto *b = new RS_Block(&graphic, db);
         b->reparent(&graphic);
         graphic.addBlock(b);
         return b;
@@ -103,7 +103,7 @@ namespace {
             return RS_Information::getIntersection(&trimEntity, &limitEntity, false);
         }
         if (limitEntity.isContainer()){
-            auto ec = static_cast<const RS_EntityContainer *>(&limitEntity);
+            auto ec = dynamic_cast<const RS_EntityContainer *>(&limitEntity);
 
             for (RS_Entity *e = ec->firstEntity(RS2::ResolveAll); e != nullptr;
                  e = ec->nextEntity(RS2::ResolveAll)) {
@@ -2316,30 +2316,34 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList)
  *    trim entity will be trimmed.
  * @param limitEntity Entity to which the trim entity will be trimmed.
  * @param both true: Trim both entities. false: trim trimEntity only.
+ * @param forPreview true: used in preview, no entities are added to the document.
+ *
  */
-bool RS_Modification::trim(const RS_Vector& trimCoord,
+LC_TrimResult RS_Modification::trim(const RS_Vector& trimCoord,
                            RS_AtomicEntity* trimEntity,
                            const RS_Vector& limitCoord,
                            RS_Entity* limitEntity,
-                           bool both) {
+                           bool both,
+                           bool forPreview) {
 
+    LC_TrimResult result;
     if (trimEntity == nullptr || limitEntity == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::trim: At least one entity is nullptr");
-        return false;
+        return result;
     }
 
     if (both && !limitEntity->isAtomic()) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::trim: limitEntity is not atomic");
     }
-    if(trimEntity->isLocked()|| !trimEntity->isVisible()) return false;
+    if(trimEntity->isLocked()|| !trimEntity->isVisible()) return result;
 
     RS_VectorSolutions sol = findIntersection(*trimEntity, *limitEntity);
 
 //if intersection are in start or end point can't trim/extend in this point, remove from solution. sf.net #3537053
     if (trimEntity->rtti()==RS2::EntityLine){
-        RS_Line *lin = (RS_Line *)trimEntity;
+        auto *lin = dynamic_cast<RS_Line *>(trimEntity);
         for (unsigned int i=0; i< sol.size(); i++) {
             RS_Vector v = sol.at(i);
             if (v == lin->getStartpoint())
@@ -2350,7 +2354,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
     }
 
 	if (!sol.hasValid()) {
-        return both ? trim( limitCoord, (RS_AtomicEntity*)limitEntity, trimCoord, trimEntity, false) : false;
+        return both ? trim( limitCoord, (RS_AtomicEntity*)limitEntity, trimCoord, trimEntity, false, forPreview) : result;
     }
 
 	RS_AtomicEntity* trimmed1 = nullptr;
@@ -2358,7 +2362,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     if (trimEntity->rtti()==RS2::EntityCircle) {
         // convert a circle into a trimmable arc, need to start from intersections
-        trimmed1 = trimCircle(static_cast<RS_Circle*>(trimEntity), trimCoord, sol);
+        trimmed1 = trimCircle(dynamic_cast<RS_Circle*>(trimEntity), trimCoord, sol);
     } else {
         trimmed1 = (RS_AtomicEntity*)trimEntity->clone();
         trimmed1->setHighlighted(false);
@@ -2366,7 +2370,7 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
 
     // trim trim entity
 	size_t ind = 0;
-    RS_Vector is, is2;
+    RS_Vector is(false), is2(false);
 
     //RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
     if ( trimEntity->trimmable() ) {
@@ -2383,85 +2387,99 @@ bool RS_Modification::trim(const RS_Vector& trimCoord,
         RS_DEBUG->print("RS_Modification::trim: is2: %f/%f", is2.x, is2.y);
 
     }
-
-    // remove trim entity from view:
-    if (graphicView) {
-        graphicView->deleteEntity(trimEntity);
+    if (!forPreview) {
+        // remove trim entity from view:
+        if (graphicView) {
+            graphicView->deleteEntity(trimEntity);
+        }
     }
 
     // remove limit entity from view:
     bool trimBoth= both && !limitEntity->isLocked() && limitEntity->isVisible();
     if (trimBoth) {
         trimmed2 = (RS_AtomicEntity*)limitEntity->clone();
-        trimmed2->setHighlighted(false);
-        if (graphicView) {
-            graphicView->deleteEntity(limitEntity);
+        if (!forPreview) {
+            trimmed2->setHighlighted(false);
+            if (graphicView) {
+                graphicView->deleteEntity(limitEntity);
+            }
         }
     }
 
-    RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
-    switch (ending) {
-    case RS2::EndingStart:
-        trimmed1->trimStartpoint(is);
-        break;
-    case RS2::EndingEnd:
-        trimmed1->trimEndpoint(is);
-        break;
-    default:
-        break;
-    }
+    trimEnding(trimCoord, trimmed1, is);
+
+
 
     // trim limit entity:
     if (trimBoth) {
-        if ( trimmed2->trimmable())
+        if ( trimmed2->trimmable()) {
             is2 = trimmed2->prepareTrim(limitCoord, sol);
-         else
+        }
+        else {
             is2 = sol.getClosest(trimCoord);
-
-        RS2::Ending ending = trimmed2->getTrimPoint(limitCoord, is2);
-
-        switch (ending) {
-        case RS2::EndingStart:
-            trimmed2->trimStartpoint(is2);
-            break;
-        case RS2::EndingEnd:
-            trimmed2->trimEndpoint(is2);
-            break;
-        default:
-            break;
         }
+
+        trimEnding(limitCoord, trimmed2, is2);
     }
 
-    // add new trimmed trim entity:
-    container->addEntity(trimmed1);
-    if (graphicView) {
-        graphicView->drawEntity(trimmed1);
-    }
-
-    // add new trimmed limit entity:
-    if (trimBoth) {
-        container->addEntity(trimmed2);
+    if (!forPreview) {
+        // add new trimmed trim entity:
+        container->addEntity(trimmed1);
         if (graphicView) {
-            graphicView->drawEntity(trimmed2);
+            graphicView->drawEntity(trimmed1);
         }
-    }
 
-    if (handleUndo) {
-        LC_UndoSection undo( document);
-
-        undo.addUndoable(trimmed1);
-        trimEntity->setUndoState(true);
-        undo.addUndoable(trimEntity);
+        // add new trimmed limit entity:
         if (trimBoth) {
-            undo.addUndoable(trimmed2);
-            limitEntity->setUndoState(true);
-            undo.addUndoable(limitEntity);
+            container->addEntity(trimmed2);
+            if (graphicView) {
+                graphicView->drawEntity(trimmed2);
+            }
         }
     }
+    if (!forPreview) {
+        if (handleUndo) {
+            LC_UndoSection undo(document);
 
-    return true;
+            undo.addUndoable(trimmed1);
+            trimEntity->setUndoState(true);
+            undo.addUndoable(trimEntity);
+            if (trimBoth) {
+                undo.addUndoable(trimmed2);
+                limitEntity->setUndoState(true);
+                undo.addUndoable(limitEntity);
+            }
+        }
+    }
+    result.result = true;
+    result.trimmed1 = trimmed1;
+    result.trimmed2 = trimmed2;
+    result.intersection1 = is;
+    result.intersection2 = is2;
+
+    if (trimmed1->isArc()){
+        result.intersection1 = trimmed1->getStartpoint();
+        result.intersection2 = trimmed1->getEndpoint();
+    }
+
+    return result;
 }
 
+void RS_Modification::trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const {
+    RS2::Ending ending = trimmed1->getTrimPoint(trimCoord, is);
+    switch (ending) {
+        case RS2::EndingStart: {
+            trimmed1->trimStartpoint(is);
+            break;
+        }
+        case RS2::EndingEnd: {
+            trimmed1->trimEndpoint(is);
+            break;
+        }
+        default:
+            break;
+    }
+}
 
 
 /**

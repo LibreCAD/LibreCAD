@@ -166,6 +166,7 @@ HEADERS += \
     lib/engine/lc_parabola.h \
     lib/engine/lc_refarc.h \
     lib/engine/lc_refcircle.h \
+    lib/engine/lc_refellipse.h \
     lib/engine/lc_refline.h \
     lib/engine/lc_refpoint.h \
     lib/engine/rs.h \
@@ -346,6 +347,7 @@ SOURCES += \
     lib/engine/lc_parabola.cpp \
     lib/engine/lc_refarc.cpp \
     lib/engine/lc_refcircle.cpp \
+    lib/engine/lc_refellipse.cpp \
     lib/engine/lc_refline.cpp \
     lib/engine/lc_refpoint.cpp \
     lib/engine/rs_arc.cpp \

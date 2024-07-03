@@ -33,7 +33,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
+
 
 // fixme do cleanup
 struct RS_ActionDrawEllipseInscribe::Points {
@@ -123,7 +123,7 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
     }
 
     RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
-    bool shouldIgnore = false;
+   // bool shouldIgnore = false;
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);
         bool uniqueLine = true;
