@@ -26,6 +26,7 @@
 
 #include <QAction>
 #include <QFile>
+#include <QTextStream>
 
 #include "lc_makercamsvg.h"
 #include "lc_xmlwriterqxmlstreamwriter.h"
