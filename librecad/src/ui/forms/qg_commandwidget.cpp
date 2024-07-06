@@ -7,7 +7,7 @@
 **
 **
 ** This file may be distributed and/or modified under the terms of the
-** GNU General Public License version 2 as published by the Free Software 
+** GNU General Public License version 2 as published by the Free Software
 ** Foundation and appearing in the file gpl-2.0.txt included in the
 ** packaging of this file.
 **
@@ -15,12 +15,12 @@
 ** but WITHOUT ANY WARRANTY; without even the implied warranty of
 ** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 ** GNU General Public License for more details.
-** 
+**
 ** You should have received a copy of the GNU General Public License
 ** along with this program; if not, write to the Free Software
 ** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
 **
-** This copyright notice MUST APPEAR in all copies of the script!  
+** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
 #include "qg_commandwidget.h"
@@ -152,8 +152,13 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
         }
 
         this->setFocus();
-        QApplication::postEvent(leCommand, e->clone());
         e->accept();
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
+        auto* newEvent = e->clone();
+#else
+        auto* newEvent = new QKeyEvent(*e);
+#endif
+        QApplication::postEvent(leCommand, newEvent);
 
         return true;
     }
@@ -178,11 +183,6 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
         lCommand->setText(tr("Command:"));
     }
     leCommand->setText("");
-}
-
-void QG_CommandWidget::setInput(const QString& cmd) {
-    leCommand->setText(cmd);
-    leCommand->setFocus();
 }
 
 void QG_CommandWidget::appendHistory(const QString& msg) {
