@@ -134,6 +134,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
             if (!hasFocus() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
                 // do not take focus here
                 spacePressed();
+                e->accept();
                 return true;
             }
             break;
@@ -150,12 +151,9 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
             return false;
         }
 
-        event->accept();
         this->setFocus();
-
-        auto* keyEvent = static_cast<QKeyEvent*>(event);
-        QKeyEvent * newEvent = new QKeyEvent(keyEvent->type(), keyEvent->key(), Qt::ShiftModifier);
-        QApplication::postEvent(leCommand, newEvent);
+        QApplication::postEvent(leCommand, e->clone());
+        e->accept();
 
         return true;
     }
@@ -180,6 +178,11 @@ void QG_CommandWidget::setCommand(const QString& cmd) {
         lCommand->setText(tr("Command:"));
     }
     leCommand->setText("");
+}
+
+void QG_CommandWidget::setInput(const QString& cmd) {
+    leCommand->setText(cmd);
+    leCommand->setFocus();
 }
 
 void QG_CommandWidget::appendHistory(const QString& msg) {
