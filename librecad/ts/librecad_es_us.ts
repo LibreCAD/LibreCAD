@@ -31,37 +31,37 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Agregar a favoritos</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished"></translation>
+        <translation>...</translation>
     </message>
 </context>
 <context>
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Marco</translation>
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Cuadro de grupo</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Colección</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Puntos de la curva</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -8776,8 +8776,8 @@ This action can NOT be undone.</source>
     <message>
         <source>%1 already exists.
 Do you want to replace it?</source>
-        <translation>%1 ya existe;
-¿quiere reemplazarlo? </translation>
+        <translation>Ya existe %1.
+¿quiere reemplazarlo?</translation>
     </message>
     <message>
         <source>Yes</source>
