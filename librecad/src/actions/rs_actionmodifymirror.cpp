@@ -35,6 +35,7 @@
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "lc_modifymirroroptions.h"
 
 struct RS_ActionModifyMirror::Points {
     RS_MirrorData data;
@@ -51,6 +52,8 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
 }
 
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
+
+void createOptionsWidget();
 
 void RS_ActionModifyMirror::init(int status) {
     RS_ActionInterface::init(status);
@@ -172,6 +175,10 @@ void RS_ActionModifyMirror::updateMouseButtonHints(){
 
 void RS_ActionModifyMirror::updateMouseCursor() {
     setMouseCursor(RS2::CadCursor);
+}
+
+void RS_ActionModifyMirror::createOptionsWidget(){
+    m_optionWidget = std::make_unique<LC_ModifyMirrorOptions>();
 }
 
 // EOF

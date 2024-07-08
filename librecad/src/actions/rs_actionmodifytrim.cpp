@@ -121,12 +121,12 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
                         trimInvalid = false;
                         highlightHover(se);
                         previewRefPoint(trimResult.intersection1);
-                        previewRefEntity(trimResult.trimmed1);
+                        previewRefTrimmedEntity(trimResult.trimmed1, se);
                         if (trimResult.intersection2.valid) {
                             previewRefPoint(trimResult.intersection2);
                         }
                         if (both) {
-                            previewRefEntity(trimResult.trimmed2);
+                            previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
                         }
                     }
                 }
@@ -215,32 +215,54 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
 void RS_ActionModifyTrim::updateMouseCursor() {
     setMouseCursor(RS2::SelectCursor);
 }
-
-void RS_ActionModifyTrim::previewRefEntity(RS_Entity *ent) {
-    int rtti = ent->rtti();
+// fixme - review and complete to show trimmed part!!! not remanining one
+void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity* original) {
+    int rtti = trimmed->rtti();
     switch (rtti){
         case RS2::EntityLine:{
-            auto* line = dynamic_cast<RS_Line *>(ent);
-            previewRefLine(line->getStartpoint(), line->getEndpoint());
+            auto* line = dynamic_cast<RS_Line *>(trimmed);
+
+            RS_Vector start = original->getStartpoint();
+            RS_Vector startTrimmed = trimmed->getStartpoint();
+            RS_Vector end = original->getEndpoint();
+            RS_Vector endTrimmed = trimmed->getEndpoint();
+            bool sameStart = start == startTrimmed;
+            bool sameEnd = end == endTrimmed;
+
+            if (!sameStart){
+                end = startTrimmed;
+            }
+            if (!sameEnd){
+                start = endTrimmed;
+            }
+            previewRefLine(start, end);
             break;
         }
         case RS2::EntityArc:{
-            auto* arc = dynamic_cast<RS_Arc *>(ent);
-            previewRefArc(arc->getData());
+            auto* arc = dynamic_cast<RS_Arc *>(trimmed);
+            RS_ArcData data = arc->getData();
+            data.reversed = !data.reversed;
+            previewRefArc(data);
             break;
         }
         case RS2::EntityCircle:{
-            auto* circle = dynamic_cast<RS_Circle*>(ent);
-            previewRefCircle(circle->getCenter(), circle->getRadius());
+            // that's really strange case - not trimmed circle??? 
+//            auto* circle = dynamic_cast<RS_Circle*>(trimmed);
+//            previewRefCircle(circle->getCenter(), circle->getRadius());
             break;
         }
         case RS2::EntityEllipse:{
-            auto* ellipse = dynamic_cast<RS_Ellipse *>(ent);
-            previewRefEllipse(ellipse->getData());
+            auto* ellipse = dynamic_cast<RS_Ellipse *>(trimmed);
+            auto data = ellipse->getData();
+            data.reversed = !data.reversed;
+            previewRefEllipse(data);
             break;
         }
+        case RS2::EntityParabola:{
+            // fixme - check trimming of parabola and drawing part that will be trimmed
+        }
         default:{
-            previewEntity(ent);
+            previewEntity(trimmed);
             RS_DEBUG->print("RS_ActionModifyTrim::unhandled trimmed entity type");
         }
     }

@@ -268,6 +268,7 @@ HEADERS += \
     main/lc_application.h \
     ui/forms/lc_actionoptionswidgetbase.h \
     ui/forms/lc_infodist2options.h \
+    ui/forms/lc_modifymirroroptions.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
@@ -439,6 +440,7 @@ SOURCES += \
     ui/forms/LC_DlgParabola.cpp \
     ui/forms/lc_actionoptionswidgetbase.cpp \
     ui/forms/lc_infodist2options.cpp \
+    ui/forms/lc_modifymirroroptions.cpp \
     ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
@@ -991,6 +993,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_linepointsoptions.ui \
     ui/forms/lc_modifybreakdivideoptions.ui \
     ui/forms/lc_modifygapoptions.ui \
+    ui/forms/lc_modifymirroroptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \

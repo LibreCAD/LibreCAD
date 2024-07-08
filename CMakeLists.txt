@@ -1057,6 +1057,7 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawlinepolygonbase.h
         librecad/src/actions/lc_actiondrawlinepolygonbase.cpp
         librecad/src/lib/engine/lc_refellipse.cpp
+        librecad/src/ui/forms/lc_modifymirroroptions.cpp
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

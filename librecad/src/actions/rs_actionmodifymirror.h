@@ -67,6 +67,9 @@ public:
 	void updateMouseButtonHints() override;
 	void updateMouseCursor() override;
 
+protected:
+    void createOptionsWidget() override;
+
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;

@@ -30,7 +30,7 @@
 #include "rs_actionmodifyrevertdirection.h"
 #include "rs_debug.h"
 #include "rs_modification.h"
-
+// fixme - PREVIEW rework
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
 	:RS_ActionInterface("Revert direction", container, graphicView)
 {

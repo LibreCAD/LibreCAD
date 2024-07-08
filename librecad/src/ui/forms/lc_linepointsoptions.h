@@ -42,7 +42,7 @@ protected:
     void languageChange() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
+    QString getSettingsOptionNamePrefix() override;
 protected slots:
     void onPointsCountValueChanged(int value);
     void onEdgePointsModeIndexChanged(int index);
@@ -51,7 +51,6 @@ protected slots:
     void onWithinLineClicked(bool value);
     void onDistanceEditingFinished();
     void onAngleEditingFinished();
-    QString getSettingsOptionNamePrefix() override;
 
 private:
     Ui::LC_LinePointsOptions *ui = nullptr;

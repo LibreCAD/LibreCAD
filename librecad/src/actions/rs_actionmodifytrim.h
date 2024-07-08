@@ -68,7 +68,7 @@ private:
 	std::unique_ptr<Points> pPoints;
     bool both = false;
 
-    void previewRefEntity(RS_Entity *pEntity);
+    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity* original);
 };
 
 #endif
