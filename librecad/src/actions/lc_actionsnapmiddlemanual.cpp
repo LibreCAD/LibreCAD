@@ -93,6 +93,7 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
 
     if (getStatus() == SetEndPoint){
+        // fixme - review, draw mark
         /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
         if (e->modifiers() & Qt::ShiftModifier){
             mouse = snapToAngle(mouse, m_pPoints->startPoint, 15.0);
@@ -121,7 +122,7 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
 void LC_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
         RS_Vector snapped = snapPoint(e);
-
+// fixme - review, draw mark
         /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
         if ((e->modifiers() & Qt::ShiftModifier) && (getStatus() == SetEndPoint)){
             snapped = snapToAngle(snapped, m_pPoints->startPoint, 15.0);
@@ -255,7 +256,7 @@ void LC_ActionSnapMiddleManual::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Specify start point");
             break;
         case SetEndPoint:
-            updateMouseWidgetTRBack("Specify end point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify end point", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

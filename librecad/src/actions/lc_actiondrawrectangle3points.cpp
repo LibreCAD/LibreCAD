@@ -594,13 +594,13 @@ void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
             updateMouseWidgetTRBack("Specify height");
             break;
         case SetPoint1:
-            updateMouseWidgetTRBack("Specify start point",Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify start point",MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point",Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify second point", baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
-            updateMouseWidgetTRBack("Specify third point",Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify third point",MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle:
             updateMouseWidgetTRBack("Specify angle");

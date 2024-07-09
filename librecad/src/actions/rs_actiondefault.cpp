@@ -48,6 +48,7 @@ struct RS_ActionDefault::Points {
     // Number of temporary entities for glowing effects
     unsigned nHighLightDuplicates = 0;
     RS_Entity *highlightedEntity = nullptr;
+    RS_Entity* refMovingEntity = nullptr;
 };
 namespace {
 
@@ -89,6 +90,7 @@ RS_ActionDefault::RS_ActionDefault(
 }
 
 RS_ActionDefault::~RS_ActionDefault() = default;
+
 
 void RS_ActionDefault::init(int status){
     RS_DEBUG->print("RS_ActionDefault::init");
@@ -201,101 +203,159 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
 void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
     RS_Vector mouse = toGraph(e);
-    RS_Vector relMouse = mouse - graphicView->getRelativeZero();
 
-    RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
+    updateCoordinateWidgetByRelZero(mouse);
 
     // clear any existing hovering
     clearHighLighting();
 
     switch (getStatus()) {
-        case Neutral:
+        case Neutral: {
             deleteSnapper();
             highlightHoveredEntities(e);
             break;
-        case Dragging:
-            //v2 = graphicView->toGraph(e->position());
+        }
+        case Dragging:{
             pPoints->v2 = mouse;
 
             if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
                 // look for reference points to drag:
                 double dist;
-                RS_Vector ref = container->getNearestSelectedRef(pPoints->v1, &dist);
+                RS_EntityContainer::RefInfo refInfo = container->getNearestSelectedRefInfo(pPoints->v1, &dist);
+                RS_Vector ref = refInfo.ref;
                 if (ref.valid == true && graphicView->toGuiDX(dist) < 8){
-                    RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
-                                    "moving reference point");
-                    setStatus(MovingRef);
+                    RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: moving reference point");
+                    pPoints->refMovingEntity = refInfo.entity;
                     pPoints->v1 = ref;
                     moveRelativeZero(pPoints->v1);
+                    setStatus(MovingRef);
                 } else {
                     // test for an entity to drag:
                     RS_Entity *en = catchEntity(pPoints->v1);
                     if (en && en->isSelected()){
-                        RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: "
-                                        "moving entity");
-                        setStatus(Moving);
+                        RS_DEBUG->print("RS_ActionDefault::mouseMoveEvent: moving entity");
                         RS_Vector vp = en->getNearestRef(pPoints->v1);
-                        if (vp.valid) pPoints->v1 = vp;
-
-                        //graphicView->moveRelativeZero(v1);
+                        if (vp.valid) {
+                            pPoints->v1 = vp;
+                        }
+                        graphicView->moveRelativeZero(pPoints->v1);
+                        setStatus(Moving);
                     }
-
-                        // no entity found. start area selection:
+                    // no entity found. start area selection:
                     else {
                         setStatus(SetCorner2);
                     }
                 }
             }
             break;
-
+        }
         case MovingRef: {
-            pPoints->v2 = snapPoint(e);
-            RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
-
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                // fixme - use more relaxing angle snap
-                mouse = snapToAngle(mouse, pPoints->v1);
-                pPoints->v2 = mouse;
-            }
-
-            //fixme - add more restrictive mode for line - that will allows do lengthing by mouse + CTRL
+            mouse = snapPoint(e);
 
             deletePreview();
-            preview->addSelectionFrom(*container);
-            preview->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+            deleteHighlights();
 
-            if (shiftPressed){
-                previewLine(pPoints->v1, mouse);
-                previewRefLine(pPoints->v1, mouse);
+            // additional processing for moving endpoint of lines and arcs
+            bool ctrlPressed = isControl(e);
+            bool addClone = true;
+
+            RS_Entity *revMovingEntity = pPoints->refMovingEntity;
+            RS2::EntityType type = revMovingEntity->rtti();
+            switch (type) {
+                case RS2::EntityLine: {
+                    auto *refMovingLine = dynamic_cast<RS_Line *>(revMovingEntity);
+                    RS_Vector basePoint;
+                    if (refMovingLine->getStartpoint() == pPoints->v1){
+                        basePoint = refMovingLine->getEndpoint();
+                    }
+                    else {
+                        basePoint = refMovingLine->getStartpoint();
+                    }
+                    mouse = getSnapAngleAwarePoint(e, basePoint, mouse, true);
+                    if (ctrlPressed){ // - if CTRL pressed, move endpoint with saving current angle of line
+                        RS_ConstructionLine constructionLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(refMovingLine->getStartpoint(),
+                                                                                                                    refMovingLine->getEndpoint()));
+                        RS_Vector newEndpoint = constructionLine.getNearestPointOnEntity(mouse, false);
+                        pPoints->v2 = newEndpoint;
+                    }
+                    else{
+                        pPoints->v2 = mouse;
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
+                case RS2::EntityArc: {
+                    auto *refMovingArc = dynamic_cast<RS_Arc *>(revMovingEntity);
+                    mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, true);
+                    if (ctrlPressed){ // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
+                        if (refMovingArc->getStartpoint() == pPoints->v1){
+                            auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
+                            clone->trimStartpoint(mouse);
+                            pPoints->v2 = clone->getStartpoint();
+                            preview->addEntity(clone);
+                            addClone = false;
+                        } else if (refMovingArc->getEndpoint() == pPoints->v1){
+                            auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
+                            clone->trimEndpoint(mouse);
+                            pPoints->v2 = clone->getEndpoint();
+                            preview->addEntity(clone);
+                            addClone = false;
+                        }
+                        else{ // center
+                            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                            previewRefLine(pPoints->v2, pPoints->v1);
+                        }
+                        if (!addClone){
+                            previewRefLine(refMovingArc->getCenter(), pPoints->v2);
+                            previewRefPoint(refMovingArc->getCenter());
+                        }
+                    }
+                    else{
+                        pPoints->v2 = mouse;
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
+                    break;
+                }
+                default: {
+                    pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                    previewRefLine(pPoints->v2, pPoints->v1);
+                    break;
+                }
             }
 
+            updateCoordinateWidgetByRelZero(pPoints->v2);
+
+            if (addClone){
+                preview->addCloneOf(revMovingEntity);
+                preview->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+            }
+            previewRefSelectablePoint(pPoints->v2);
+            previewRefPoint(pPoints->v1);
+
             drawPreview();
+            drawHighlights();
             break;
         }
         case Moving: {
-            pPoints->v2 = snapPoint(e);
-            RS_DIALOGFACTORY->updateCoordinateWidget(pPoints->v2, pPoints->v2 - graphicView->getRelativeZero());
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            if (shiftPressed){
-                mouse = snapToAngle(mouse, pPoints->v1);
-                pPoints->v2 = mouse;
-            }
-
             deletePreview();
+            mouse = snapPoint(e);
+            pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+            updateCoordinateWidgetByRelZero(pPoints->v2);
+
             preview->addSelectionFrom(*container);
             preview->move(pPoints->v2 - pPoints->v1);
 
-            if (shiftPressed){
-                auto *line = new RS_Line(pPoints->v1, mouse);
-                preview->addEntity(line);
-                line->setSelected(true);
-            }
+            auto *line = new RS_Line(pPoints->v1, pPoints->v2);
+            preview->addEntity(line);
+            previewRefLine(pPoints->v1, pPoints->v2);
+            previewRefPoint(pPoints->v1);
+            previewRefSelectablePoint(pPoints->v2);
+            line->setSelected(true);
 
             drawPreview();
             break;
         }
-        case SetCorner2:
+        case SetCorner2: {
             if (pPoints->v1.valid){
                 pPoints->v2 = mouse;
 
@@ -308,6 +368,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 drawPreview();
             }
             break;
+        }
         case Panning: {
             RS_Vector const vTarget{e->position()};
             RS_Vector const v01 = vTarget - pPoints->v1;
@@ -315,9 +376,8 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 graphicView->zoomPan((int) v01.x, (int) v01.y);
                 pPoints->v1 = vTarget;
             }
-        }
             break;
-
+        }
         default:
             break;
     }
@@ -335,9 +395,8 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                     pPoints->v1 = toGraph(e);
                     setStatus(Dragging);
                 }
-            }
                 break;
-
+            }
             case Moving: {
                 pPoints->v2 = snapPoint(e);
                 if (e->modifiers() & Qt::ShiftModifier){
@@ -351,7 +410,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 data.useCurrentAttributes = false;
                 data.offset = pPoints->v2 - pPoints->v1;
                 m.move(data);
-                setStatus(Neutral);
+                goToNeutralStatus();
                 updateSelectionWidget();
                 deleteSnapper();
                 break;
@@ -368,7 +427,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 data.offset = pPoints->v2 - pPoints->v1;
                 m.moveRef(data);
                 //container->moveSelectedRef(v1, v2-v2);
-                setStatus(Neutral);
+                goToNeutralStatus();
                 updateSelectionWidget();
                 break;
             }
@@ -377,7 +436,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
         }
     } else if (e->button() == Qt::RightButton){
         //cleanup
-        setStatus(Neutral);
+        goToNeutralStatus();
         e->accept();
     }
 }
@@ -399,12 +458,11 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
 
                     s.selectSingle(en);
 
-                    RS_DIALOGFACTORY->updateSelectionWidget(
-                        container->countSelected(), container->totalSelectedLength());
+                    updateSelectionWidget();
 
                     e->accept();
 
-                    setStatus(Neutral);
+                    goToNeutralStatus();
                 } else {
                     setStatus(SetCorner2);
                 }
@@ -424,17 +482,16 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
                 bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
                 s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
-                RS_DIALOGFACTORY->updateSelectionWidget(
-                    container->countSelected(), container->totalSelectedLength());
+                updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 
-                setStatus(Neutral);
+                goToNeutralStatus();
                 e->accept();
                 //}
             }
                 break;
 
             case Panning:
-                setStatus(Neutral);
+                goToNeutralStatus();
                 break;
 
             default:
@@ -443,9 +500,18 @@ void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
         }
     } else if (e->button() == Qt::RightButton){
         //cleanup
-        setStatus(Neutral);
+        goToNeutralStatus();
         e->accept();
     }
+}
+
+void RS_ActionDefault::goToNeutralStatus(){
+    this->deletePreview();
+    this->deleteHighlights();
+    this->drawPreview();
+    this->drawHighlights();
+    this->setStatus(Neutral);
+
 }
 
 void RS_ActionDefault::commandEvent(RS_CommandEvent *e){
@@ -474,19 +540,38 @@ QStringList RS_ActionDefault::getAvailableCommands(){
 
 void RS_ActionDefault::updateMouseButtonHints(){
     switch (getStatus()) {
-        case Moving:
-        case MovingRef:
-            updateMouseWidget("", "", Qt::ShiftModifier);
+        case Moving:{
+            updateMouseWidgetTRCancel("Set new position", MOD_SHIFT_ANGLE_SNAP);
             break;
-        case Neutral:
+        }
+        case MovingRef: {
+            LC_ModifiersInfo modifiers;
+            RS2::EntityType rtti = pPoints->refMovingEntity->rtti();
+            switch (rtti){
+                case RS2::EntityLine:
+                    modifiers =  LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Lengthen Line");
+                    break;
+                case RS2::EntityArc:
+                    modifiers =  LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Lengthen Arc");
+                    break;
+                default:
+                    modifiers = MOD_SHIFT_ANGLE_SNAP;
+            }
+            updateMouseWidgetTR("Set new ref position", "", modifiers);
+            break;
+        }
+        case Neutral: {
             updateMouseWidget();
             break;
-        case SetCorner2:
+        }
+        case SetCorner2: {
             updateMouseWidgetTRBack("Choose second edge");
             break;
-        default:
+        }
+        default: {
             updateMouseWidget();
             break;
+        }
     }
 }
 

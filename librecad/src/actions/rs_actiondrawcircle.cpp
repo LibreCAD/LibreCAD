@@ -158,7 +158,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
             updateMouseWidgetTRBack("Specify point on circle");

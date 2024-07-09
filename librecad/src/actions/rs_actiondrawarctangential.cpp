@@ -263,7 +263,7 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
         break;
     case SetEndAngle:
         if(byRadius) {
-            updateMouseWidgetTRBack("Specify end angle", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify end angle", MOD_SHIFT_ANGLE_SNAP);
         } else {
             updateMouseWidgetTRBack("Specify end point");
         }

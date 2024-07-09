@@ -220,7 +220,7 @@ void RS_ActionModifyScale::updateMouseButtonHints() {
                                            tr("Cancel"));
             break;*/
     case SetReferencePoint:
-        updateMouseWidgetTRCancel("Specify scale center", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify scale center",MOD_SHIFT_RELATIVE_ZERO);
         break;
         // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
     case SetSourcePoint:

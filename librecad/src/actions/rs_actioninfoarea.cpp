@@ -174,10 +174,10 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoArea::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFirstPoint:
-        updateMouseWidgetTRCancel("Specify first point of polygon", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify first point of polygon", MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetNextPoint:
-        updateMouseWidgetTRCancel("Specify next point of polygon", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify next point of polygon", MOD_SHIFT_ANGLE_SNAP);
         break;
     default:
         updateMouseWidget();

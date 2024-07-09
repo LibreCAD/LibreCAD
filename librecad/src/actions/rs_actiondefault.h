@@ -93,6 +93,7 @@ protected:
     void checkSupportOfQuickEntityInfo();
     void clearQuickInfoWidget();
     void updateQuickInfoWidget(RS_Entity *pEntity);
+    void goToNeutralStatus();
 private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);

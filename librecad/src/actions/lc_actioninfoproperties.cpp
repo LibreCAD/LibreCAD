@@ -86,9 +86,7 @@ void LC_ActionInfoProperties::mouseMoveEvent(QMouseEvent* e) {
 
 void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e){
     RS_Vector mouse = toGraph(e);
-    RS_Vector relMouse = mouse - graphicView->getRelativeZero();
-
-    RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
+    updateCoordinateWidgetByRelZero(mouse);
 
     // clear any existing hovering
     clearHighLighting();

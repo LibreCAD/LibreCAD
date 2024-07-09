@@ -50,7 +50,7 @@ public:
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint,       /**< Setting the target point. */
         ShowDialog,           /**< Showing the options dialog. */
-		SetAngle              /**< Setting angle in command line. */ 
+        SetAngle              /**< Setting angle in command line. */
     };
 
 public:

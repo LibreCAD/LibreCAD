@@ -222,7 +222,7 @@ QStringList LC_ActionDrawSplinePoints::getAvailableCommands(){
 void LC_ActionDrawSplinePoints::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify first control point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first control point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";

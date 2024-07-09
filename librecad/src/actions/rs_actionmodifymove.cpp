@@ -26,7 +26,6 @@
 
 #include <cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifymove.h"
@@ -166,10 +165,10 @@ void RS_ActionModifyMove::updateMouseButtonHints(){
             tr("Cancel"));
   break;*/
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Specify reference point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify target point", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

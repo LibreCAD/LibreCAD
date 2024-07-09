@@ -154,7 +154,7 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent *e){
 void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCorner1:
-            updateMouseWidgetTRCancel("Specify first corner", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first corner", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCorner2:
             updateMouseWidgetTRBack("Specify second corner");

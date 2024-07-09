@@ -44,6 +44,11 @@ class RS_EntityContainer : public RS_Entity {
 
 public:
 
+    struct RefInfo{
+        RS_Vector ref;
+        RS_Entity* entity;
+    };
+
 	RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
 	
@@ -177,6 +182,9 @@ public:
 									 double* dist = nullptr) const override;
 	RS_Vector getNearestSelectedRef(const RS_Vector& coord,
 									 double* dist = nullptr) const override;
+
+  RefInfo getNearestSelectedRefInfo(const RS_Vector& coord,
+                                double* dist = nullptr) const;
 
 	double getDistanceToPoint(const RS_Vector& coord,
                                       RS_Entity** entity,

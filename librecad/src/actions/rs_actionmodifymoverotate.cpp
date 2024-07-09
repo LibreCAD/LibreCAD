@@ -145,8 +145,7 @@ void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+       commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
@@ -220,7 +219,7 @@ double RS_ActionModifyMoveRotate::getAngle() const{
 void RS_ActionModifyMoveRotate::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Specify reference point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
             updateMouseWidgetTRBack("Specify target point");

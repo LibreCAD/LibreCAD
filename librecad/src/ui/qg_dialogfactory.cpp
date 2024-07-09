@@ -1740,7 +1740,7 @@ void QG_DialogFactory::updateCoordinateWidget(const RS_Vector& abs,
 
 void QG_DialogFactory::updateMouseWidget(const QString& left,
                                          const QString& right,
-                                         const Qt::KeyboardModifiers modifiers) {
+                                         const LC_ModifiersInfo& modifiers) {
     if (mouseWidget) {
         mouseWidget->setHelp(left, right, modifiers);
     }

@@ -106,7 +106,6 @@ void RS_ActionDrawPolyline::reset(){
 void RS_ActionDrawPolyline::init(int status){
     reset();
     RS_PreviewActionInterface::init(status);
-
 }
 
 void RS_ActionDrawPolyline::trigger() {
@@ -173,18 +172,14 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
-{
-    if (e->button() == Qt::LeftButton)
-    {
-        if (equationSettingOn   || stepSizeSettingOn) return;
+void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent *e){
+    if (e->button() == Qt::LeftButton){
+        if (equationSettingOn || stepSizeSettingOn) return;
 
-        if (startPointSettingOn || endPointSettingOn)
-        {
+        if (startPointSettingOn || endPointSettingOn){
             QString pointNumberString(QString::number(snapPoint(e).x));
 
-            if (e->modifiers() == Qt::ControlModifier)
-            {
+            if (e->modifiers() == Qt::ControlModifier){
                 pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
             }
 
@@ -194,22 +189,19 @@ void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent* e)
         }
 
         fireCoordinateEventForSnap(e);
-    }
-    else if (e->button() == Qt::RightButton)
-    {
-        if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn)
-        {
-            equationSettingOn   = false;
+    } else if (e->button() == Qt::RightButton){
+        if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
+            equationSettingOn = false;
             startPointSettingOn = false;
-            endPointSettingOn   = false;
-            stepSizeSettingOn   = false;
+            endPointSettingOn = false;
+            stepSizeSettingOn = false;
             return;
         }
 
         if (getStatus() == SetNextPoint) trigger();
         deletePreview();
         deleteSnapper();
-        init(getStatus()-1);
+        init(getStatus() - 1);
     }
 }
 
@@ -229,7 +221,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        break;
         case Tangential:
             if (pPoints->polyline){
-                lastentity = static_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
+                lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
                 direction = RS_Math::correctAngle(
                     lastentity->getDirection2() + M_PI);
                 line.setStartpoint(pPoints->point);
@@ -627,7 +619,6 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
     drawSnapper();
 }
 
-
 QStringList RS_ActionDrawPolyline::getAvailableCommands() {
     QStringList cmd;
 
@@ -649,21 +640,19 @@ QStringList RS_ActionDrawPolyline::getAvailableCommands() {
     return cmd;
 }
 
-
-
 void RS_ActionDrawPolyline::updateMouseButtonHints()
 {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
 
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first point",  Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first point",  MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";
-            Qt::KeyboardModifiers modifiers = Qt::NoModifier;
+            LC_ModifiersInfo modifiers = MOD_NONE;
             if (m_mode == Line){
-                modifiers = Qt::ShiftModifier;
+                modifiers = MOD_SHIFT_ANGLE_SNAP;
             }
 
             qsizetype size = pPoints->history.size();
@@ -688,7 +677,6 @@ void RS_ActionDrawPolyline::updateMouseButtonHints()
             break;
     }
 }
-
 
 void RS_ActionDrawPolyline::updateMouseCursor() {
     setMouseCursor(RS2::CadCursor);

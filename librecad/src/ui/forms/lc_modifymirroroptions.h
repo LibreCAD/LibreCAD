@@ -17,18 +17,21 @@ public:
     explicit LC_ModifyMirrorOptions(QWidget *parent = nullptr);
     ~LC_ModifyMirrorOptions() override;
 
+public slots:
+    void onMirrorToLineClicked(bool clicked);
+    void languageChange() override;
+
 protected:
     void doSaveSettings() override;
-    void languageChange() override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     QString getSettingsOptionNamePrefix() override;
-
     QString getSettingsGroupName() override;
 
 private:
     Ui::LC_ModifyMirrorOptions *ui = nullptr;
     RS_ActionModifyMirror* action = nullptr;
+    void setMirrorToLineLineToActionAndView(bool line);
 };
 
 #endif // LC_MODIFYMIRROROPTIONS_H

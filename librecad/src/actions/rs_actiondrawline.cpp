@@ -312,7 +312,7 @@ void RS_ActionDrawLine::updateMouseButtonHints()
 {
     switch (getStatus()) {
     case SetStartpoint:
-        updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetEndpoint: {
         QString msg = "";
@@ -334,9 +334,9 @@ void RS_ActionDrawLine::updateMouseButtonHints()
         }
 
         if (pPoints->historyIndex >= 1) {
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"), Qt::ShiftModifier);
+            updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"), MOD_SHIFT_ANGLE_SNAP);
         } else {
-            updateMouseWidgetTRBack("Specify next point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify next point", MOD_SHIFT_ANGLE_SNAP);
         }
         break;
     }

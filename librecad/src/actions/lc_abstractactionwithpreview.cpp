@@ -154,8 +154,7 @@ void LC_AbstractActionWithPreview::updateSnapperAndCoordinateWidget(QMouseEvent*
  */
 void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* e){
     RS_Vector mouse = toGraph(e);
-    RS_Vector relMouse = mouse - graphicView->getRelativeZero();
-    RS_DIALOGFACTORY->updateCoordinateWidget(mouse, relMouse);
+    updateCoordinateWidgetByRelZero(mouse);
 }
 
 

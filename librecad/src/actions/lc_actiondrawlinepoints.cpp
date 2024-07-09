@@ -487,10 +487,10 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
     QString msg;
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify First Point",Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify First Point",MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint:
-            updateMouseWidgetTRBack("Specify Second Point\nor [number|x|y|angle|p|edges|distance]",Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify Second Point\nor [number|x|y|angle|p|edges|distance]",MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetDirection:
             updateMouseWidgetTRBack("Specify line direction\n[x|y|angle|p|distance]");
@@ -521,7 +521,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
                 msg += "|" + getCommand("x");
                 msg += "|" + getCommand("y");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), Qt::ShiftModifier);
+                updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
         }

@@ -169,7 +169,7 @@ void RS_ActionModifyStretch::updateMouseButtonHints(){
             updateMouseWidgetTRBack("Specify second corner");
             break;
         case SetReferencePoint:
-            updateMouseWidgetTRBack("Specify reference point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
             updateMouseWidgetTRBack("Specify target point");

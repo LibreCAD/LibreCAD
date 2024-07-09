@@ -34,6 +34,7 @@
 #include "rs.h"
 #include "rs_snapper.h"
 #include "lc_actionoptionswidget.h"
+#include "lc_modifiersinfo.h"
 
 class RS_CommandEvent;
 class RS_CoordinateEvent;
@@ -172,6 +173,16 @@ protected:
     void setMouseCursor(const RS2::CursorType &cursor);
     void updateSelectionWidget() const;
     void updateSelectionWidget(int countSelected, double selectedLength) const;
+
+    // simplified mouse widget and command message operations
+    void updateMouseWidgetTR(const char* left,const char* right,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+    void updateMouseWidgetTRBack(const char* left,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+
+    void updateMouseWidgetTRCancel(const char* left,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+    void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
+    void commandMessageTR(const char*);
+    void commandMessage(const QString &msg) const;
+
 };
 
 

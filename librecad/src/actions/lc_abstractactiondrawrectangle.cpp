@@ -407,7 +407,7 @@ void LC_AbstractActionDrawRectangle::updateMouseButtonHints() {
     int status = getStatus();
     switch (status) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify insertion point",Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify insertion point",MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
             updateMouseWidgetTRBack("Specify angle");

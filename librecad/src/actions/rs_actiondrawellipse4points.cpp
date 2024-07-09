@@ -286,10 +286,10 @@ QStringList RS_ActionDrawEllipse4Points::getAvailableCommands() {
 void RS_ActionDrawEllipse4Points::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify the first point on ellipse", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify the first point on ellipse", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify the second point on ellipse", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify the second point on ellipse", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
             updateMouseWidgetTRBack("Specify the third point on ellipse");

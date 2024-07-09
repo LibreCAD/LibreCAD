@@ -42,8 +42,8 @@ struct RS_MirrorData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyMirror : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionModifyMirror:public RS_PreviewActionInterface {
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -51,28 +51,35 @@ public:
     enum Status {
         SetAxisPoint1,    /**< Setting the 1st point of the axis. */
         SetAxisPoint2,    /**< Setting the 2nd point of the axis. */
-        ShowDialog        /**< Showing the options dialog. */
+        ShowDialog,        /**< Showing the options dialog. */
     };
 
 public:
-    RS_ActionModifyMirror(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyMirror() override;
-	
-	void init(int status=0) override;
-	void trigger() override;
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+    RS_ActionModifyMirror(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionModifyMirror() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void updateMouseCursor() override;
+
+    bool isMirrorToExistingLine(){return mirrorToExistingLine;};
+    void setMirrorToExistingLine(bool value);
 
 protected:
     void createOptionsWidget() override;
 
+    void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
+    void showOptionsAndTrigger();
+
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    bool mirrorToExistingLine;
 };
 
 #endif

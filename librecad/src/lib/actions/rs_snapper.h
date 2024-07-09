@@ -229,6 +229,10 @@ protected:
 
     const RS_Vector toGraph(const QMouseEvent *e) const;
 
+    void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false);
+    void updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat=false);
+    void updateCoordinateWidgetFormat();
+
 private:
     struct ImpData;
     std::unique_ptr<ImpData> pImpData;

@@ -224,13 +224,13 @@ QStringList RS_ActionDrawArc3P::getAvailableCommands() {
 void RS_ActionDrawArc3P::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
-        updateMouseWidgetTRCancel("Specify startpoint or [center]", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify startpoint or [center]", MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetPoint2:
-        updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
+        updateMouseWidgetTRBack("Specify second point", MOD_SHIFT_ANGLE_SNAP);
         break;
     case SetPoint3:
-        updateMouseWidgetTRBack("Specify endpoint", Qt::ShiftModifier);
+        updateMouseWidgetTRBack("Specify endpoint", MOD_SHIFT_ANGLE_SNAP);
         break;
     default:
         updateMouseWidget();

@@ -156,7 +156,7 @@ void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPoint:
-            updateMouseWidgetTRCancel("Specify point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCircle:
             updateMouseWidgetTRBack("Select circle, arc or ellipse");

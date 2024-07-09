@@ -28,6 +28,7 @@
 #define QG_DIALOGFACTORY_H
 
 #include "rs_dialogfactoryinterface.h"
+#include "lc_modifiersinfo.h"
 
 class QG_PolylineEquidistantOptions;
 class QG_SnapMiddleOptions;
@@ -234,7 +235,7 @@ public:
 	 * \param right mouse hint for right button
 	 */
 	void updateMouseWidget(const QString& left=QString(),
-								   const QString& right=QString(), const Qt::KeyboardModifiers modifiers = Qt::NoModifier) override;
+								   const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
 	void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
 	void commandMessage(const QString& message) override;
  void command(const QString& message) override;

@@ -123,8 +123,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
                                   {ip, graphicView->toGraphDX(4)}));
                 drawPreview();
 
-                RS_DIALOGFACTORY->updateCoordinateWidget(ip,
-                                                         ip - graphicView->getRelativeZero());
+                updateCoordinateWidgetByRelZero(ip);
 
             }
         }

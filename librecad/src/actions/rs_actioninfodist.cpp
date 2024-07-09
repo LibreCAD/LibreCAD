@@ -162,10 +162,10 @@ void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoDist::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify first point of distance", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first point of distance", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point of distance", Qt::ShiftModifier | Qt::ControlModifier);
+            updateMouseWidgetTRBack("Specify second point of distance", LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Don't move relative zero"));
             break;
         default:
             updateMouseWidget();

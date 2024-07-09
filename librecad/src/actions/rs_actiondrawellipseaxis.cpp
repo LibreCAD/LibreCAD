@@ -353,19 +353,19 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify ellipse center", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify ellipse center", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetMajor:
-            updateMouseWidgetTRBack("Specify endpoint of major axis", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify endpoint of major axis", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetMinor:
             updateMouseWidgetTRBack("Specify endpoint or length of minor axis:");
             break;
         case SetAngle1:
-            updateMouseWidgetTRBack("Specify start angle", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify start angle", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle2:
-            updateMouseWidgetTRBack("Specify end angle", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify end angle", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

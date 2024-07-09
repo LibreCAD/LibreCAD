@@ -142,6 +142,7 @@ HEADERS += \
     actions/lc_actionmodifybreakdivide.h \
     actions/lc_actionmodifyduplicate.h \
     actions/lc_actionmodifylinegap.h \
+    actions/lc_actionmodifyselectionbase.h \
     actions/lc_actionpenapply.h \
     actions/lc_actionpenpick.h \
     actions/lc_actionpensyncactivebylayer.h \
@@ -156,6 +157,7 @@ HEADERS += \
     actions/lc_actionmodifylinejoin.h \
     actions/lc_actionpolylinedeletebase.h \
     lib/actions/lc_highlight.h \
+    lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
     lib/actions/rs_preview.h \
     lib/actions/rs_previewactioninterface.h \
@@ -332,12 +334,14 @@ SOURCES += \
     actions/lc_actionmodifybreakdivide.cpp \
     actions/lc_actionmodifyduplicate.cpp \
     actions/lc_actionmodifylinegap.cpp \
+    actions/lc_actionmodifyselectionbase.cpp \
     actions/lc_actionpenapply.cpp \
     actions/lc_actionpenpick.cpp \
     actions/lc_actionpensyncactivebylayer.cpp \
     actions/lc_actionmodifylinejoin.cpp \
     actions/lc_actionpolylinedeletebase.cpp \
     lib/actions/lc_highlight.cpp \
+    lib/actions/lc_modifiersinfo.cpp \
     lib/actions/rs_actioninterface.cpp \
     lib/actions/rs_preview.cpp \
     lib/actions/rs_previewactioninterface.cpp \

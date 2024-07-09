@@ -40,12 +40,9 @@ RS_ActionSelect::RS_ActionSelect(QG_ActionHandler* a_handler,
 	:RS_ActionInterface("Select Entities", container, graphicView)
     ,action_handler(a_handler)
     ,nextAction(nextAction)
-    , entityTypeList(std::move(allowedEntityTypes))
-{
+    , entityTypeList(std::move(allowedEntityTypes)){
     setActionType(RS2::ActionSelect);
 }
-
-
 
 void RS_ActionSelect::init(int status) {
     RS_ActionInterface::init(status);
@@ -54,7 +51,6 @@ void RS_ActionSelect::init(int status) {
                     new RS_ActionSelectSingle(*container, *graphicView, this, entityTypeList));
     }
     deleteSnapper();
-
 }
 
 void RS_ActionSelect::resume(){
@@ -68,74 +64,72 @@ void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-int RS_ActionSelect::countSelected() {
-        int ret=container->countSelected();
-		if (ret==0) {
-            RS_DIALOGFACTORY->commandMessage(tr("No entity selected!"));
-        }
-        return ret;
+int RS_ActionSelect::countSelected(){
+    int ret = container->countSelected();
+    if (ret == 0){
+        commandMessageTR("No entity selected!");
+    }
+    return ret;
 }
 
 void RS_ActionSelect::updateMouseButtonHints() {
     switch(nextAction) {
-    case RS2::ActionModifyAttributesNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to modify attributes"), tr("Cancel"));
-        break;
-    case RS2::ActionOrderNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select entities to order"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyDeleteNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to delete"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyDeleteQuick:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to delete immediately"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyMoveNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move"), tr("Cancel"));
-        break;
-    case RS2::ActionEditCopyNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to copy"), tr("Cancel"));
-        break;
-    case RS2::ActionEditCutNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to cut"), tr("Cancel"));
-        break;
-	case RS2::ActionModifyRevertDirectionNoSelect:
-		RS_DIALOGFACTORY->updateMouseWidget(tr("Select to revert direction"), tr("Cancel"));
-		break;
-	case RS2::ActionModifyRotateNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to rotate"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyScaleNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to scale"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyMirrorNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to mirror"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyMoveRotateNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to move and rotate"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyOffsetNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create offset"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyRotate2NoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select for two axis rotation"), tr("Cancel"));
-        break;
-    case RS2::ActionModifyExplodeTextNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to explode text"), tr("Cancel"));
-        break;
-    case RS2::ActionBlocksExplodeNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to explode block"), tr("Cancel"));
-        break;
-    case RS2::ActionBlocksCreateNoSelect:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Select to create block"), tr("Cancel"));
-        break;
+        case RS2::ActionModifyAttributesNoSelect:
+            updateMouseWidgetTRCancel("Select to modify attributes");
+            break;
+        case RS2::ActionOrderNoSelect:
+            updateMouseWidgetTRCancel("Select entities to order");
+            break;
+        case RS2::ActionModifyDeleteNoSelect:
+            updateMouseWidgetTRCancel("Select to delete");
+            break;
+        case RS2::ActionModifyDeleteQuick:
+            updateMouseWidgetTRCancel("Select to delete immediately");
+            break;
+        case RS2::ActionModifyMoveNoSelect:
+            updateMouseWidgetTRCancel("Select to move");
+            break;
+        case RS2::ActionEditCopyNoSelect:
+            updateMouseWidgetTRCancel("Select to copy");
+            break;
+        case RS2::ActionEditCutNoSelect:
+            updateMouseWidgetTRCancel("Select to cut");
+            break;
+        case RS2::ActionModifyRevertDirectionNoSelect:
+            updateMouseWidgetTRCancel("Select to revert direction");
+            break;
+        case RS2::ActionModifyRotateNoSelect:
+            updateMouseWidgetTRCancel("Select to rotate");
+            break;
+        case RS2::ActionModifyScaleNoSelect:
+            updateMouseWidgetTRCancel("Select to scale");
+            break;
+        case RS2::ActionModifyMirrorNoSelect:
+            updateMouseWidgetTRCancel("Select to mirror");
+            break;
+        case RS2::ActionModifyMoveRotateNoSelect:
+            updateMouseWidgetTRCancel("Select to move and rotate");
+            break;
+        case RS2::ActionModifyOffsetNoSelect:
+            updateMouseWidgetTRCancel("Select to create offset");
+            break;
+        case RS2::ActionModifyRotate2NoSelect:
+            updateMouseWidgetTRCancel("Select for two axis rotation");
+            break;
+        case RS2::ActionModifyExplodeTextNoSelect:
+            updateMouseWidgetTRCancel("Select to explode text");
+            break;
+        case RS2::ActionBlocksExplodeNoSelect:
+            updateMouseWidgetTRCancel("Select to explode block");
+            break;
+        case RS2::ActionBlocksCreateNoSelect:
+            updateMouseWidgetTRCancel("Select to create block");
+            break;
 
-    default:
-        RS_DIALOGFACTORY->updateMouseWidget(tr(""), tr(""));
+        default:
+            updateMouseWidgetTR("","");
     }
 }
-
 
 void RS_ActionSelect::updateMouseCursor() {
     if(graphicView){
@@ -149,8 +143,7 @@ void RS_ActionSelect::updateMouseCursor() {
 
 void RS_ActionSelect::keyPressEvent(QKeyEvent* e)
 {
-    if (e->key()==Qt::Key_Enter && countSelected() > 0)
-    {
+    if (e->key()==Qt::Key_Enter && countSelected() > 0)    {
         finish();
         action_handler->setCurrentAction(nextAction);
     }

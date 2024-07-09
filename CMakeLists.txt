@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 #set(MIN_GW_PATH_PREFIX "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
-set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
+set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
+#set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
@@ -1058,6 +1060,12 @@ add_executable(LibreCAD
         librecad/src/actions/lc_actiondrawlinepolygonbase.cpp
         librecad/src/lib/engine/lc_refellipse.cpp
         librecad/src/ui/forms/lc_modifymirroroptions.cpp
+        librecad/src/actions/lc_actionmodifyselectionbase.h
+        librecad/src/actions/lc_actionmodifyselectionbase.cpp
+        librecad/src/lib/actions/lc_modifiersinfo.h
+        librecad/src/lib/actions/lc_modifiersinfo.cpp
+        librecad/src/lib/actions/lc_modifiersinfo.h
+        librecad/src/lib/actions/lc_modifiersinfo.h
         #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

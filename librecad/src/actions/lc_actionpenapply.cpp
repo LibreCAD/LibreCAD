@@ -168,12 +168,10 @@ void LC_ActionPenApply::mouseReleaseEvent(QMouseEvent *e){
 void LC_ActionPenApply::updateMouseButtonHints(){
     switch (getStatus()) {
         case (SelectEntity):
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify entity to pick the pen"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Specify entity to pick the pen");
             break;
         case ApplyToEntity:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Specify entity to apply pen"),
-                                                tr("Cancel"), Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify entity to apply pen", copyMode? LC_ModifiersInfo::SHIFT("Apply Resolved Pen") : MOD_NONE);
             break;
         default:
             RS_ActionInterface::updateMouseButtonHints();

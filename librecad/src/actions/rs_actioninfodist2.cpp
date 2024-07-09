@@ -264,14 +264,14 @@ void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoDist2::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Specify entity", Qt::ControlModifier);
+            updateMouseWidgetTRCancel("Specify entity", LC_ModifiersInfo::CTRL("Resolve ALL entities"));
             break;
         case SetPoint: {
             Qt::KeyboardModifiers modifiers = Qt::ShiftModifier;
             if (selectionMode == FIRST_IS_ENTITY){
                 modifiers = modifiers | Qt::ControlModifier;
             }
-            updateMouseWidgetTRCancel("Specify point", modifiers);
+            updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         }
         default:

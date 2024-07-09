@@ -137,10 +137,10 @@ void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCorner:
-            updateMouseWidgetTRBack("Specify a corner", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify a corner", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetNumber:
             updateMouseWidgetTRBack("Enter number:");

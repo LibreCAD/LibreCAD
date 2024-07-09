@@ -426,7 +426,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
 
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify first point",Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first point",MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetDirection:
             msg += "/";
@@ -460,7 +460,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
                 msg += "/";
                 msg += getCommand("x");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"), Qt::ShiftModifier);
+                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
         }
@@ -608,7 +608,7 @@ void LC_ActionDrawLineSnake::polyline(){
     if (en != nullptr){
         finishAction();
         addHistory(HA_Polyline, pPoints->data.startpoint, pPoints->data.endpoint, pPoints->startOffset);
-        RS_ActionPolylineSegment *polylineSegmentAction = new RS_ActionPolylineSegment(*container, *graphicView, en);
+        auto *polylineSegmentAction = new RS_ActionPolylineSegment(*container, *graphicView, en);
         graphicView->setCurrentAction(polylineSegmentAction);
     }
 }

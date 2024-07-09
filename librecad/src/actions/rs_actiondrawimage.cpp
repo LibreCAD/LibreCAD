@@ -46,6 +46,8 @@ struct RS_ActionDrawImage::ImageData {
 	QImage img;
 };
 
+// fixme - correct options widget ownership!!!
+
 /**
  * Constructor.
  */
@@ -54,8 +56,7 @@ RS_ActionDrawImage::RS_ActionDrawImage(RS_EntityContainer& container,
     :RS_PreviewActionInterface("Image",
                                container, graphicView)
     , pImg(std::make_unique<ImageData>())
-	, lastStatus(ShowDialog)
-{
+	, lastStatus(ShowDialog){
 	actionType=RS2::ActionDrawImage;
 }
 
@@ -279,7 +280,7 @@ void RS_ActionDrawImage::hideOptions(){
 void RS_ActionDrawImage::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Specify reference point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
             updateMouseWidgetTR("Enter angle:", "");

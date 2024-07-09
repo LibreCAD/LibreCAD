@@ -621,13 +621,13 @@ QStringList LC_ActionDrawStar::getAvailableCommands(){
 void LC_ActionDrawStar::updateMouseButtonHints(){
     switch (getStatus()){
         case SetCenter:
-            updateMouseWidgetTRCancel("Set center point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Set center point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetOuterPoint:
-            updateMouseWidgetTRBack("Set outer point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Set outer point", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetInnerPoint:
-            updateMouseWidgetTRBack("Set inner point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Set inner point", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetRadiuses:
             updateMouseWidgetTRBack("Set rounding radiuses (outer, inner)");

@@ -265,7 +265,7 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
 void RS_ActionDrawSpline::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first control point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first control point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";

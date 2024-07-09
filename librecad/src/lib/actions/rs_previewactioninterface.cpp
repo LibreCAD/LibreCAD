@@ -379,60 +379,6 @@ RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePointAlt(const QMouseEvent 
     return mouse;
 }
 
-// fixme/todo - add methods that will provide action an ability to set hint for specific key modifier in mouse widget...
-
-/**
- * Just a shortcut for updating mouse widgets with message that should be translated
- * @param left left string (key for tr())
- * @param right right string (key for tr())
- */
-void RS_PreviewActionInterface::updateMouseWidgetTR(const char* left, const char* right, const Qt::KeyboardModifiers modifiers){
-    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr(right), modifiers);
-}
-
-/**
- * Just a shortcut for updating mouse widgets with message that should be translated
- * @param left left string (key for tr())
- * @param right right string (key for tr())
- */
-void RS_PreviewActionInterface::updateMouseWidgetTRBack(const char* left, const Qt::KeyboardModifiers modifiers){
-    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr("Back"), modifiers);
-}
-
-/**
- * Just a shortcut for updating mouse widgets with message that should be translated
- * @param left left string (key for tr())
- * @param right right string (key for tr())
- */
-void RS_PreviewActionInterface::updateMouseWidgetTRCancel(const char* left, const Qt::KeyboardModifiers modifiers){
-    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr("Cancel"), modifiers);
-}
-
-/**
- * Shortcut for updating mouse widget by given strings
- * @param left string
- * @param right string
- */
-void RS_PreviewActionInterface::updateMouseWidget(const QString& left,const QString& right, const Qt::KeyboardModifiers modifiers){
-    RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
-}
-
-/**
- * Shortcut for displaying command message (translated)
- * @param msg message key for tr()
- */
-void RS_PreviewActionInterface::commandMessageTR(const char * msg){
-    RS_DIALOGFACTORY->commandMessage(msg);
-}
-
-/**
- * Shortcut for displaying command message string
- * @param msg string
- */
-void RS_PreviewActionInterface::commandMessage(const QString &msg) const{
-    RS_DIALOGFACTORY->commandMessage(msg);
-}
-
 void RS_PreviewActionInterface::initRefEntitiesMetrics(){
     RS_SETTINGS->beginGroup("/Appearance");
     // Points drawing style:
@@ -477,7 +423,7 @@ bool RS_PreviewActionInterface::isControl(const QMouseEvent *e){
 }
 
 bool RS_PreviewActionInterface::isShift(const QMouseEvent *e){
-      return  e->modifiers() & Qt::ShiftModifier;;
+      return  e->modifiers() & Qt::ShiftModifier;
 }
 
 bool RS_PreviewActionInterface::addToDocumentUndoable(RS_Undoable *e) const{

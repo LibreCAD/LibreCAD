@@ -257,7 +257,7 @@ void RS_ActionDimDiametric::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Select arc or circle entity");
             break;
         case SetPos:
-            updateMouseWidgetTRCancel("Specify dimension line location", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify dimension line location", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetText:
             updateMouseWidgetTR("Enter dimension text:", "");

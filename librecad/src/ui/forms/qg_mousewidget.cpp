@@ -29,14 +29,14 @@
 #include <QSettings>
 
 #include "rs_settings.h"
+#include "lc_modifiersinfo.h"
 
 /*
  *  Constructs a QG_MouseWidget as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
 QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-{
+    : QWidget(parent, fl){
     setObjectName(name);
     setupUi(this);
 
@@ -56,16 +56,22 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
 
     // fixme modifiers setup
 
-    gridLayout->setAlignment(btnCtrl,Qt::AlignCenter);
-//    gridLayout->setAlignment(btnShift,Qt::AlignTop);
-    gridLayout->setAlignment(btnShift,Qt::AlignCenter);
+    int halfHeight = height/2 - 3;
+    lblCtrl->setMinimumHeight(halfHeight);
+    lblCtrl->setMaximumHeight(halfHeight);
+    lblShift->setMinimumHeight(halfHeight);
+    lblShift->setMaximumHeight(halfHeight);
+
+    lblShift->setPixmap(QPixmap(":/icons/state-shift_yes.svg").scaled(halfHeight, halfHeight));
+    lblCtrl->setPixmap(QPixmap(":/icons/state_ctrl_yes.svg").scaled(halfHeight, halfHeight));
+//    gridLayout->setAlignment(lblCtrl,Qt::AlignCenter);
+//    gridLayout->setAlignment(lblShift,Qt::AlignCenter);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_MouseWidget::~QG_MouseWidget()
-{
+QG_MouseWidget::~QG_MouseWidget(){
     // no need to delete child widgets, Qt does it all for us
 }
 
@@ -73,20 +79,29 @@ QG_MouseWidget::~QG_MouseWidget()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_MouseWidget::languageChange()
-{
+void QG_MouseWidget::languageChange(){
     retranslateUi(this);
 }
 
+void QG_MouseWidget::setHelp(const QString& left, const QString& right, const LC_ModifiersInfo& modifiersInfo) const {
 
+    const char* shiftMsg = modifiersInfo.getShiftMessage();
+    setupModifier(lblShift, shiftMsg);
 
+    const char* ctrlMessage = modifiersInfo.getCtrlMessage();
+    setupModifier(lblCtrl, ctrlMessage);
 
-void QG_MouseWidget::setHelp(const QString& left, const QString& right, Qt::KeyboardModifiers modifiers) {
-    bool shiftModifier = modifiers & Qt::ShiftModifier;
-    bool ctrlModifier = modifiers & Qt::ControlModifier || modifiers & Qt::MetaModifier;
-    // fixme - more intellijent indication
-    btnShift->setVisible(shiftModifier);
-    btnCtrl->setVisible(ctrlModifier);
     lLeftButton->setText(left);
     lRightButton->setText(right);
+}
+
+void QG_MouseWidget::setupModifier(QLabel *btn, const char *helpMsg) const{
+    if (helpMsg != nullptr){
+        btn->setVisible(true);
+        btn->setToolTip(tr(helpMsg));
+    }
+    else {
+        btn->setVisible(false);
+        btn->setToolTip("");
+    }
 }

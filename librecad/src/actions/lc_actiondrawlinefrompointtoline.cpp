@@ -314,10 +314,10 @@ RS_Line *LC_ActionDrawLineFromPointToLine::createLineFromPointToTarget(RS_Line *
 void LC_ActionDrawLineFromPointToLine::updateMouseButtonHints(){
     switch (getStatus()){
         case SetPoint:
-            updateMouseWidgetTRCancel("Select Initial Point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Select Initial Point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SelectLine:
-            updateMouseWidgetTRBack("Select Line", (orthogonalMode && (sizeMode == SIZE_INTERSECTION))? Qt::NoModifier : Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Select Line", (orthogonalMode && (sizeMode == SIZE_INTERSECTION))? MOD_NONE : MOD_SHIFT_MIRROR_ANGLE);
             break;
         default:
             break;

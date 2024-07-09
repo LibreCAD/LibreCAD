@@ -384,10 +384,69 @@ int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
 void RS_ActionInterface::updateSelectionWidget() const{
     updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
-void RS_ActionInterface::updateSelectionWidget([[maybe_unused]]int countSelected, [[maybe_unused]]double selectedLength) const{
-    RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(),container->totalSelectedLength());
+void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
+    // fixme - review and fix
+    RS_DIALOGFACTORY->updateSelectionWidget(countSelected,selectedLength);
 }
 
 void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
     graphicView->setMouseCursor(cursor);
 }
+
+// fixme/todo - add methods that will provide action an ability to set hint for specific key modifier in mouse widget...
+
+/**
+ * Just a shortcut for updating mouse widgets with message that should be translated
+ * @param left left string (key for tr())
+ * @param right right string (key for tr())
+ */
+void RS_ActionInterface::updateMouseWidgetTR(const char* left, const char* right, const LC_ModifiersInfo& modifiers){
+    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr(right), modifiers);
+}
+
+/**
+ * Just a shortcut for updating mouse widgets with message that should be translated
+ * @param left left string (key for tr())
+ * @param right right string (key for tr())
+ */
+void RS_ActionInterface::updateMouseWidgetTRBack(const char* left, const LC_ModifiersInfo& modifiers){
+    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr("Back"), modifiers);
+}
+
+/**
+ * Just a shortcut for updating mouse widgets with message that should be translated
+ * @param left left string (key for tr())
+ * @param right right string (key for tr())
+ */
+void RS_ActionInterface::updateMouseWidgetTRCancel(const char* left, const LC_ModifiersInfo& modifiers){
+    RS_DIALOGFACTORY->updateMouseWidget(tr(left),tr("Cancel"), modifiers);
+}
+
+/**
+ * Shortcut for updating mouse widget by given strings
+ * @param left string
+ * @param right string
+ */
+void RS_ActionInterface::updateMouseWidget(const QString& left,const QString& right, const LC_ModifiersInfo& modifiers){
+    RS_DIALOGFACTORY->updateMouseWidget(left, right, modifiers);
+}
+
+/**
+ * Shortcut for displaying command message (translated)
+ * @param msg message key for tr()
+ */
+void RS_ActionInterface::commandMessageTR(const char * msg){
+    RS_DIALOGFACTORY->commandMessage(msg);
+}
+
+/**
+ * Shortcut for displaying command message string
+ * @param msg string
+ */
+void RS_ActionInterface::commandMessage(const QString &msg) const{
+    RS_DIALOGFACTORY->commandMessage(msg);
+}
+
+
+
+

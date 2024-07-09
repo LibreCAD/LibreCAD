@@ -70,7 +70,7 @@ void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::LeftButton){
-       RS_Vector snap = snapPoint(e);
+        RS_Vector snap = snapPoint(e);
         snap = getFreeSnapAwarePointAlt(e, snap);
         fireCoordinateEvent(snap);
     } else if (e->button() == Qt::RightButton){
@@ -93,8 +93,7 @@ void RS_ActionDrawPoint::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 }
@@ -106,7 +105,9 @@ QStringList RS_ActionDrawPoint::getAvailableCommands(){
 void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel("Specify location", Qt::ShiftModifier | Qt::ControlModifier);
+            updateMouseWidgetTRCancel("Specify location",
+                                      LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO,
+                                                                       LC_ModifiersInfo::MSG_FREE_SNAP));
             break;
         default:
             updateMouseWidget();
@@ -117,5 +118,3 @@ void RS_ActionDrawPoint::updateMouseButtonHints(){
 void RS_ActionDrawPoint::updateMouseCursor(){
     setMouseCursor(RS2::CadCursor);
 }
-
-// EOF

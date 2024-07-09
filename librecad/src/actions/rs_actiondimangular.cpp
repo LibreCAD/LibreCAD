@@ -248,7 +248,7 @@ void RS_ActionDimAngular::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Select second line");
             break;
         case SetPos:
-            updateMouseWidgetTRCancel("Specify dimension arc line location", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify dimension arc line location", MOD_SHIFT_FREE_SNAP);
             break;
         case SetText:
             updateMouseWidgetTR("Enter dimension text:", "");

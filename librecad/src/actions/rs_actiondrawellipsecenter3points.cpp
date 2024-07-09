@@ -266,7 +266,7 @@ QStringList RS_ActionDrawEllipseCenter3Points::getAvailableCommands() {
 void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify the center of ellipse", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify the center of ellipse", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint1:
             updateMouseWidgetTRCancel("Specify the first point on ellipse");

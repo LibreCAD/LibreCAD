@@ -172,7 +172,6 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
         return;
     }
     switch (getStatus()) {
-      
         case SetReferencePoint: {
             if (selectRefPointFirst){
                 originalReferencePoint = e->getCoordinate();
@@ -207,7 +206,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
                     moveRelativeZero(data->center);
                     setStatus(SetTargetPoint);
                 } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Rotation center is too close to reference point."));
+                   commandMessageTR("Rotation center is too close to reference point.");
                 }
                 break;
             }
@@ -245,9 +244,16 @@ void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent *e){
         if (status == SelectEntity){
             auto en = catchEntity(e);
             if (en != nullptr){
-                en->setSelected(true);
+                bool selectedOld = en->isSelected();
+                bool selected = !selectedOld;
+                en->setSelected(selected);
                 graphicView->drawEntity(en);
-                selectedCount++;
+                if (selected){
+                    selectedCount++;
+                }
+                else{
+                    selectedCount--;
+                }
             }
         }
         else if (status == SetTargetPoint){
@@ -282,8 +288,6 @@ void RS_ActionModifyRotate::finish(bool updateTB){
     RS_PreviewActionInterface::finish(updateTB);
 }
 
-
-
 void RS_ActionModifyRotate::keyPressEvent(QKeyEvent* e)
 {
     if (getStatus() == SelectEntity){
@@ -309,13 +313,13 @@ void RS_ActionModifyRotate::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Select to rotate");
             break;
         case SetCenterPoint:
-            updateMouseWidgetTRBack("Specify rotation center", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify rotation center", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetReferencePoint:
             updateMouseWidgetTRBack("Specify reference point");
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point to rotate to", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify target point to rotate to", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

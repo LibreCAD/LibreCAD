@@ -216,10 +216,10 @@ void RS_ActionDimLeader::commandEvent(RS_CommandEvent *e){
 void RS_ActionDimLeader::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify target point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify target point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetEndpoint:
-            updateMouseWidgetTR("Specify next point","Finish", Qt::ShiftModifier);
+            updateMouseWidgetTR("Specify next point","Finish", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

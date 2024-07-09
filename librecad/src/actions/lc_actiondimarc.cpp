@@ -213,7 +213,7 @@ void LC_ActionDimArc::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Select arc entity");
             break;
         case SetPos:
-            updateMouseWidgetTRBack("Specify dimension arc location", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify dimension arc location",MOD_SHIFT_FREE_SNAP);
             break;
         default:
             updateMouseWidget();

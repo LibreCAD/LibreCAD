@@ -255,10 +255,10 @@ QStringList LC_ActionDrawCircle2PR::getAvailableCommands(){
 void LC_ActionDrawCircle2PR::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify second point", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SelectCenter:
             updateMouseWidgetTRBack("Select circle center");

@@ -293,7 +293,7 @@ QStringList RS_ActionDrawLineAngle::getAvailableCommands(){
 void RS_ActionDrawLineAngle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPos:
-            updateMouseWidgetTRCancel("Specify position", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify position", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
             updateMouseWidgetTRBack("Enter angle:");

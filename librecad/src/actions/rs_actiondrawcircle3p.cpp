@@ -199,10 +199,10 @@ void RS_ActionDrawCircle3P::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionDrawCircle3P::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify first point", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first point",MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify second point", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
             updateMouseWidgetTRBack("Specify third point");

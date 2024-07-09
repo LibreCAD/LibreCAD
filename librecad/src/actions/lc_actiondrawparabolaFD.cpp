@@ -286,7 +286,7 @@ QStringList LC_ActionDrawParabolaFD::getAvailableCommands() {
 void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFocus:
-        updateMouseWidgetTRCancel("Specify the focus of parabola", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify the focus of parabola", MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetDirectrix:
         updateMouseWidgetTRBack("Specify the directrix of parabola");

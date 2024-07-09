@@ -89,14 +89,7 @@ protected:
     RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark = false);
     RS_Vector getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const;
     RS_Vector getFreeSnapAwarePointAlt(const QMouseEvent *e, const RS_Vector &pos) const;
-    // simplified mouse widget and command message operations
-    void updateMouseWidgetTR(const char* left,const char* right,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-    void updateMouseWidgetTRBack(const char* left,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
 
-    void updateMouseWidgetTRCancel(const char* left,Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-    void updateMouseWidget(const QString& = QString(),const QString& = QString(), Qt::KeyboardModifiers modifiers = Qt::NoModifier);
-    void commandMessageTR(const char*);
-    void commandMessage(const QString &msg) const;
     void previewEntity(RS_Entity *en);
     RS_Circle* previewCircle(const RS_CircleData& circleData);
     RS_Arc *previewArc(const RS_ArcData &arcData);

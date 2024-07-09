@@ -51,12 +51,12 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
 
 void RS_ActionDrawLineParallelThrough::finish(bool updateTB){
-	if(entity){
-		entity->setHighlighted(false);
-		graphicView->drawEntity(entity);
-		entity=nullptr;
-	}
-	RS_PreviewActionInterface::finish(updateTB);
+    if(entity){
+        entity->setHighlighted(false);
+        graphicView->drawEntity(entity);
+        entity=nullptr;
+    }
+    RS_PreviewActionInterface::finish(updateTB);
 }
 
 void RS_ActionDrawLineParallelThrough::trigger(){
@@ -67,8 +67,7 @@ void RS_ActionDrawLineParallelThrough::trigger(){
         RS_Entity *e = creation.createParallelThrough(*coord,number,entity, symmetric);
 
         if (!e){
-            RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger:"
-                            " No parallels added\n");
+            RS_DEBUG->print("RS_ActionDrawLineParallelThrough::trigger: No parallels added\n");
         }
     }
 }
@@ -167,7 +166,7 @@ void RS_ActionDrawLineParallelThrough::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Select entity");
             break;
         case SetPos:
-            updateMouseWidgetTRBack("Specify through point", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify through point", MOD_SHIFT_FREE_SNAP);
             break;
         case SetNumber:
             updateMouseWidgetTRBack("Number:");
@@ -182,8 +181,7 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 

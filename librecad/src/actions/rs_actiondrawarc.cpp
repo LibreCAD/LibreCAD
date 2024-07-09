@@ -406,19 +406,19 @@ QStringList RS_ActionDrawArc::getAvailableCommands() {
 void RS_ActionDrawArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify center", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
-            updateMouseWidgetTRBack("Specify radius", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify radius", MOD_SHIFT_FREE_SNAP);
             break;
         case SetAngle1:
-            updateMouseWidgetTRBack("Specify start angle:", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify start angle:", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle2:
-            updateMouseWidgetTRBack("Specify end angle or [angle/chordlen]", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify end angle or [angle/chordlen]", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetIncAngle:
-            updateMouseWidgetTRBack("Specify included angle:");
+            updateMouseWidgetTRBack("Specify included angle:", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetChordLength:
             updateMouseWidgetTRBack("Specify chord length:");

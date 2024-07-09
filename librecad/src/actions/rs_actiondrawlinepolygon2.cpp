@@ -180,10 +180,10 @@ void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCorner1:
-            updateMouseWidgetTRCancel("Specify first corner", Qt::ShiftModifier);
+            updateMouseWidgetTRCancel("Specify first corner", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack("Specify second corner", Qt::ShiftModifier);
+            updateMouseWidgetTRBack("Specify second corner", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetNumber:
             updateMouseWidgetTRBack("Number:");
@@ -198,8 +198,7 @@ void RS_ActionDrawLinePolygonCorCor::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands()  + getAvailableCommands().join(", "));
         return;
     }
 

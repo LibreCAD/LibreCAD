@@ -29,6 +29,7 @@
 #define RS_DIALOGFACTORYINTERFACE_H
 
 #include "rs.h"
+#include "lc_modifiersinfo.h"
 #include <QString>
 
 class QWidget;
@@ -418,7 +419,7 @@ public:
      * @param right Help text for the right mouse button.
 	 */
 	virtual void updateMouseWidget(const QString& = QString(),
-								   const QString& = QString(), const Qt::KeyboardModifiers modifiers = Qt::NoModifier)=0;
+								   const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE())=0;
 //    virtual void updateArcTangentialOptions(double d, bool byRadius)=0;
 
     /**

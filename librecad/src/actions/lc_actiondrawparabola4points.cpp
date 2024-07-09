@@ -265,7 +265,7 @@ QStringList LC_ActionDrawParabola4Points::getAvailableCommands() {
 void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
-        updateMouseWidgetTRCancel("Specify the first point on parabola", Qt::ShiftModifier);
+        updateMouseWidgetTRCancel("Specify the first point on parabola", MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetPoint2:
         updateMouseWidgetTRBack("Specify the second point on parabola");

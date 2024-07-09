@@ -410,22 +410,17 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
 
 
 /**manually set snapPoint*/
-RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot)
-{
+RS_Vector RS_Snapper::snapPoint(const RS_Vector& coord, bool setSpot){
     if(coord.valid){
-		pImpData->snapSpot=coord;
-		if(setSpot) pImpData->snapCoord = coord;
-		drawSnapper();
-		RS_DIALOGFACTORY->updateCoordinateWidget(
-					pImpData->snapCoord,
-					pImpData->snapCoord - graphicView->getRelativeZero());
+        pImpData->snapSpot=coord;
+        if(setSpot) pImpData->snapCoord = coord;
+        drawSnapper();
+        updateCoordinateWidgetByRelZero(pImpData->snapCoord);
     }
     return coord;
 }
 
-
-double RS_Snapper::getSnapRange() const
-{
+double RS_Snapper::getSnapRange() const{
     // issue #1631: redefine this method to the minimum graph distance to allow "Snap Free"
     // When the closest of any other snapping point is beyond this distance, free snapping is used.
     constexpr double Min_Snap_Factor = 0.25;
@@ -463,8 +458,6 @@ RS_Vector RS_Snapper::snapFree(const RS_Vector& coord) {
     return coord;
 }
 
-
-
 /**
  * Snaps to the closest endpoint.
  *
@@ -478,8 +471,6 @@ RS_Vector RS_Snapper::snapEndpoint(const RS_Vector& coord) {
 										nullptr/*, &keyEntity*/);
     return vec;
 }
-
-
 
 /**
  * Snaps to a grid point.
@@ -497,8 +488,6 @@ RS_Vector RS_Snapper::snapGrid(const RS_Vector& coord) {
     return  graphicView->getGrid()->snapGrid(coord);
 }
 
-
-
 /**
  * Snaps to a point on an entity.
  *
@@ -512,8 +501,6 @@ RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
     return vec;
 }
 
-
-
 /**
  * Snaps to the closest center.
  *
@@ -521,13 +508,11 @@ RS_Vector RS_Snapper::snapOnEntity(const RS_Vector& coord) {
  * @return The coordinates of the point or an invalid vector.
  */
 RS_Vector RS_Snapper::snapCenter(const RS_Vector& coord) {
-	RS_Vector vec{};
+    RS_Vector vec{};
 
-	vec = container->getNearestCenter(coord, nullptr);
+    vec = container->getNearestCenter(coord, nullptr);
     return vec;
 }
-
-
 
 /**
  * Snaps to the closest middle.
@@ -539,7 +524,6 @@ RS_Vector RS_Snapper::snapMiddle(const RS_Vector& coord) {
 //std::cout<<"RS_Snapper::snapMiddle(): middlePoints="<<middlePoints<<std::endl;
 	return container->getNearestMiddle(coord,static_cast<double *>(nullptr),middlePoints);
 }
-
 
 
 /**
@@ -1092,3 +1076,15 @@ const RS_Vector RS_Snapper::toGraph(const QMouseEvent* e) const{
     return result;
 }
 
+void RS_Snapper::updateCoordinateWidgetFormat(){
+    RS_DIALOGFACTORY->updateCoordinateWidget(RS_Vector(0.0,0.0),
+                                             RS_Vector(0.0,0.0), true);
+}
+
+void RS_Snapper::updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat){
+    RS_DIALOGFACTORY->updateCoordinateWidget(abs, rel, updateFormat);
+}
+
+void RS_Snapper::updateCoordinateWidgetByRelZero(const RS_Vector& abs, bool updateFormat){
+    RS_DIALOGFACTORY->updateCoordinateWidget(abs, abs - graphicView->getRelativeZero(), updateFormat);
+}

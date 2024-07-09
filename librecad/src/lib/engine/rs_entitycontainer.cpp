@@ -1458,11 +1458,18 @@ RS_Vector RS_EntityContainer::getNearestRef(const RS_Vector& coord,
 
 RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
                                                     double* dist) const{
+    RefInfo info = getNearestSelectedRefInfo(coord, dist);
+    return info.ref;
+}
 
+RS_EntityContainer::RefInfo RS_EntityContainer::getNearestSelectedRefInfo(const RS_Vector& coord,
+                                               double* dist) const {
     double minDist = RS_MAXDOUBLE;  // minimum measured distance
     double curDist;                 // currently measured distance
+    RefInfo result;
     RS_Vector closestPoint(false);  // closest found endpoint
     RS_Vector point;                // endpoint found
+    RS_Entity* closestPointEntity = nullptr;
 
     for(auto en: entities){
 
@@ -1470,6 +1477,7 @@ RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
             point = en->getNearestSelectedRef(coord, &curDist);
             if (point.valid && curDist<minDist) {
                 closestPoint = point;
+                closestPointEntity = en;
                 minDist = curDist;
                 if (dist) {
                     *dist = minDist;
@@ -1478,7 +1486,10 @@ RS_Vector RS_EntityContainer::getNearestSelectedRef(const RS_Vector& coord,
         }
     }
 
-    return closestPoint;
+    result.ref = closestPoint;
+    result.entity = closestPointEntity;
+
+    return result;
 }
 
 
