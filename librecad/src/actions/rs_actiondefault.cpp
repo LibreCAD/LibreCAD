@@ -273,8 +273,9 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     mouse = getSnapAngleAwarePoint(e, basePoint, mouse, true);
                     if (ctrlPressed){ // - if CTRL pressed, move endpoint with saving current angle of line
-                        RS_ConstructionLine constructionLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(refMovingLine->getStartpoint(),
-                                                                                                                    refMovingLine->getEndpoint()));
+                        RS_ConstructionLine constructionLine = RS_ConstructionLine(nullptr,
+                            RS_ConstructionLineData(refMovingLine->getStartpoint(),
+                                refMovingLine->getEndpoint()));
                         RS_Vector newEndpoint = constructionLine.getNearestPointOnEntity(mouse, false);
                         pPoints->v2 = newEndpoint;
                     }
@@ -286,19 +287,21 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 }
                 case RS2::EntityArc: {
                     auto *refMovingArc = dynamic_cast<RS_Arc *>(revMovingEntity);
-                    mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, true);
+                    auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
+
                     if (ctrlPressed){ // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
+                        mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, true);
                         if (refMovingArc->getStartpoint() == pPoints->v1){
-                            auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
                             clone->trimStartpoint(mouse);
                             pPoints->v2 = clone->getStartpoint();
                             preview->addEntity(clone);
+                            previewRefPoint(clone->getCenter());
                             addClone = false;
                         } else if (refMovingArc->getEndpoint() == pPoints->v1){
-                            auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
                             clone->trimEndpoint(mouse);
                             pPoints->v2 = clone->getEndpoint();
                             preview->addEntity(clone);
+                            previewRefPoint(clone->getCenter());
                             addClone = false;
                         }
                         else{ // center
@@ -311,8 +314,13 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                         }
                     }
                     else{
+                        mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
                         pPoints->v2 = mouse;
                         previewRefLine(pPoints->v2, pPoints->v1);
+                        clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                        previewRefPoint(clone->getCenter());
+                        preview->addEntity(clone);
+                        addClone = false;
                     }
                     break;
                 }
@@ -325,9 +333,11 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
+
             if (addClone){
-                preview->addCloneOf(revMovingEntity);
-                preview->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                RS_Entity* clone = revMovingEntity->clone();
+                clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                preview->addEntity(clone);
             }
             previewRefSelectablePoint(pPoints->v2);
             previewRefPoint(pPoints->v1);
@@ -416,6 +426,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 break;
             }
             case MovingRef: {
+                /*
                 pPoints->v2 = snapPoint(e);
                 if (e->modifiers() & Qt::ShiftModifier){
                     pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1);
@@ -426,7 +437,96 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                 data.ref = pPoints->v1;
                 data.offset = pPoints->v2 - pPoints->v1;
                 m.moveRef(data);
-                //container->moveSelectedRef(v1, v2-v2);
+                */
+
+                RS_Vector mouse = snapPoint(e);
+
+                deletePreview();
+
+                // additional processing for moving endpoint of lines and arcs
+                bool ctrlPressed = isControl(e);
+                bool moveRefOnClone = true;
+
+                RS_Entity *refMovingEntity = pPoints->refMovingEntity;
+                RS_Entity *clone = refMovingEntity->clone();
+                RS2::EntityType type = refMovingEntity->rtti();
+                switch (type) {
+                    case RS2::EntityLine: {
+                        auto *refMovingLine = dynamic_cast<RS_Line *>(refMovingEntity);
+                        RS_Vector basePoint;
+                        if (refMovingLine->getStartpoint() == pPoints->v1) {
+                            basePoint = refMovingLine->getEndpoint();
+                        } else {
+                            basePoint = refMovingLine->getStartpoint();
+                        }
+                        mouse = getSnapAngleAwarePoint(e, basePoint, mouse, false);
+                        if (ctrlPressed) {
+                            // - if CTRL pressed, move endpoint with saving current angle of line
+                            RS_ConstructionLine constructionLine = RS_ConstructionLine(nullptr,
+                                RS_ConstructionLineData(refMovingLine->getStartpoint(),
+                                                        refMovingLine->getEndpoint()));
+                            RS_Vector newEndpoint = constructionLine.getNearestPointOnEntity(mouse, false);
+                            pPoints->v2 = newEndpoint;
+                        } else {
+                            pPoints->v2 = mouse;
+                        }
+                        break;
+                    }
+                    case RS2::EntityArc: {
+                        auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
+                        auto *arcClone = dynamic_cast<RS_Arc *>(clone);
+
+                        if (ctrlPressed) {
+                            // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
+                            mouse = getSnapAngleAwarePoint(e, refMovingArc->getCenter(), mouse, false);
+                            if (refMovingArc->getStartpoint() == pPoints->v1) {
+                                arcClone->trimStartpoint(mouse);
+                                pPoints->v2 = arcClone->getStartpoint();
+
+                                moveRefOnClone = false;
+                            } else if (refMovingArc->getEndpoint() == pPoints->v1) {
+                                arcClone->trimEndpoint(mouse);
+                                pPoints->v2 = arcClone->getEndpoint();
+                                moveRefOnClone = false;
+                            } else {
+                                // center
+                                pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
+                            }
+                        } else {
+                            mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, false);
+                            pPoints->v2 = mouse;
+                            arcClone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                            moveRefOnClone = false;
+                        }
+                        break;
+                    }
+                    default: {
+                        pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, false);
+                        break;
+                    }
+                }
+
+                if (moveRefOnClone) {
+                    clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
+                }
+
+                if (document) {
+                    document->startUndoCycle();
+
+                    clone->setSelected(true);
+
+                    clone->setLayer(refMovingEntity->getLayer());
+                    clone->setPen(refMovingEntity->getPen());
+                    container->addEntity(clone);
+                    document->addUndoable(clone);
+
+                    // delete and add this into undo
+                    deleteEntityUndoable(refMovingEntity);
+
+                    document->endUndoCycle();
+                }
+                graphicView->redraw();
+
                 goToNeutralStatus();
                 updateSelectionWidget();
                 break;
