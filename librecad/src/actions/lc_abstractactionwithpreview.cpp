@@ -450,16 +450,6 @@ bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]QMouseE
     return true;
 }
 
-/**
- * Just utility method for deleting given entity from drawing
- * @param entity entity to delete
- */
-void LC_AbstractActionWithPreview::deleteEntityUndoable(RS_Entity *entity){
-    // delete and add this into undo
-    graphicView->deleteEntity(entity);
-    entity->changeUndoState();
-    document->addUndoable(entity);
-}
 
 /**
  * Utility method to highlighting provided entity. That entity will be also stored for further un-highlighting.

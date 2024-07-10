@@ -190,7 +190,6 @@ protected:
     void highlightEntityExplicit(RS_Entity *en, bool highlight);
 
     void drawPreviewForLastPoint();
-    void deleteEntityUndoable(RS_Entity *entity);
 
     virtual void checkPreSnapToRelativeZero(int status, QMouseEvent *pEvent);
     virtual bool doCheckMouseEventValidForInitialSnap(QMouseEvent *e);

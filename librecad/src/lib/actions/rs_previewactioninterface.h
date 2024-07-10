@@ -66,7 +66,7 @@ public:
     void drawHighlights();
     void addToHighlights(RS_Entity *e, bool enable = true);
 
-private:
+
 
 protected:
     /**
@@ -124,6 +124,7 @@ protected:
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const RS2::EntityType &enType);
     RS_Entity *catchModifiableEntity(RS_Vector &coord, const RS2::EntityType &enType);
+    void deleteEntityUndoable(RS_Entity *entity);
 };
 
 #endif

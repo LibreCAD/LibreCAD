@@ -467,3 +467,13 @@ RS_Entity* RS_PreviewActionInterface::catchModifiableEntity(RS_Vector& coord, co
     }
 }
 
+/**
+ * Just utility method for deleting given entity from drawing - should be called within undo cycle
+ * @param entity entity to delete
+ */
+void RS_PreviewActionInterface::deleteEntityUndoable(RS_Entity *entity){
+    // delete and add this into undo
+    graphicView->deleteEntity(entity);
+    entity->changeUndoState();
+    document->addUndoable(entity);
+}
