@@ -68,7 +68,7 @@ public:
 	void showOptions() override;
 	void hideOptions() override;
 
-	void updateMouseCursor() override;
+
 
     void center();
     void fit();
@@ -85,7 +85,8 @@ public:
 
     void setOption(std::unique_ptr<QG_PrintPreviewOptions> option);
     std::unique_ptr<QG_PrintPreviewOptions>& getOption();
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 
     bool hasOptions = false;

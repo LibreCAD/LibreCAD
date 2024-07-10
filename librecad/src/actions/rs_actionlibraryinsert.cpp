@@ -57,28 +57,23 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
 
 QAction* RS_ActionLibraryInsert::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-   QAction* action = new QAction(tr("Insert Library Object"), NULL);
+   QAction* action = new QAction(tr("Insert Library Object"), nullptr);
     return action;
 }
-
 
 void RS_ActionLibraryInsert::init(int status) {
     RS_PreviewActionInterface::init(status);
 
     reset();
-
 }
-
-
 
 void RS_ActionLibraryInsert::setFile(const QString& file) {
 	pPoints->data.file = file;
 
 	if (!pPoints->prev.open(file, RS2::FormatUnknown)) {
-        RS_DIALOGFACTORY->commandMessage(tr("Cannot open file '%1'").arg(file));
+        commandMessage(tr("Cannot open file '%1'").arg(file));
     }
 }
-
 
 void RS_ActionLibraryInsert::reset() {
 
@@ -87,18 +82,14 @@ void RS_ActionLibraryInsert::reset() {
 	pPoints->data.angle = 0.0;
 }
 
-
-
 void RS_ActionLibraryInsert::trigger() {
     deletePreview();
 
     RS_Creation creation(container, graphicView);
 	creation.createLibraryInsert(pPoints->data);
 
-	graphicView->redraw(RS2::RedrawDrawing); 
-
+	graphicView->redraw(RS2::RedrawDrawing);
 }
-
 
 void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
@@ -131,8 +122,6 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         fireCoordinateEvent(snapPoint(e));
@@ -150,14 +139,11 @@ void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
     trigger();
 }
 
-
-
 void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
@@ -180,7 +166,7 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
             if (ok) {
 				pPoints->data.angle = RS_Math::deg2rad(a);
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessage(tr("Not a valid expression"));
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
@@ -205,8 +191,6 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
     }
 }
 
-
-
 QStringList RS_ActionLibraryInsert::getAvailableCommands() {
     QStringList cmd;
 
@@ -223,38 +207,30 @@ QStringList RS_ActionLibraryInsert::getAvailableCommands() {
     return cmd;
 }
 
-
+// fixme - options ownership!!
 void RS_ActionLibraryInsert::showOptions() {
     RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
 void RS_ActionLibraryInsert::hideOptions() {
     RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
 
 void RS_ActionLibraryInsert::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetTargetPoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify reference point");
         break;
     case SetAngle:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter angle:"),
-                                            "");
+        updateMouseWidgetTR("Enter angle:","");
         break;
     case SetFactor:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Enter factor:"),
-                                            "");
+        updateMouseWidgetTR("Enter factor:","");
         break;
     default:
-		RS_DIALOGFACTORY->updateMouseWidget();
+		updateMouseWidget();
         break;
     }
 }
@@ -275,8 +251,8 @@ void RS_ActionLibraryInsert::setFactor(double f) {
 	pPoints->data.factor = f;
 }
 
-void RS_ActionLibraryInsert::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionLibraryInsert::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

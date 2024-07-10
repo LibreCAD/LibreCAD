@@ -64,8 +64,8 @@ public:
 	QStringList getAvailableCommands() override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	std::unique_ptr<RS_Rotate2Data> data;
 };

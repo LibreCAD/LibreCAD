@@ -45,9 +45,7 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void finish(bool updateTB) override;
-
 private:
     /**
      * flag that indicates whether pen from entity should be resolved
@@ -59,6 +57,8 @@ private:
     RS_Entity *highlightedEntity;
     void applyPenToPenToolBar(RS_Entity* entity);
     void removeHighlighting();
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONPENPICK_H

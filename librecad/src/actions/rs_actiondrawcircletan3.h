@@ -62,9 +62,8 @@ public:
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-//protected:
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     struct Points;
     RS_Entity *catchCircle(QMouseEvent *e);

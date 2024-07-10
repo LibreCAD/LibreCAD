@@ -19,68 +19,54 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
-
 #ifndef RS_ACTIONDRAWCIRCLETAN1_2P_H
 #define RS_ACTIONDRAWCIRCLETAN1_2P_H
-
-
 #include "lc_actiondrawcirclebase.h"
-
 class RS_AtomicEntity;
 struct RS_CircleData;
-
 /**
  * Draw tangential circle passing 2 points
  *
  * @author Dongxu Li
  */
-class RS_ActionDrawCircleTan1_2P : public LC_ActionDrawCircleBase {
-        Q_OBJECT
+class RS_ActionDrawCircleTan1_2P:public LC_ActionDrawCircleBase {
+    Q_OBJECT
     /**
      * Action States.
      */
     enum Status {
-        SetCircle1=0,   //  Setting the First Circle.  */
-        SetPoint1=1,   //  Setting the First Point.  */
-        SetPoint2=2,   //  Setting the Second Point.  */
-        SetCenter   //  Setting the internal or external tangent circle's center.  */
+        SetCircle1 = 0, //  Setting the First Circle.  */
+        SetPoint1 = 1, //  Setting the First Point.  */
+        SetPoint2 = 2, //  Setting the Second Point.  */
+        SetCenter //  Setting the internal or external tangent circle's center.  */
     };
 
 public:
-    RS_ActionDrawCircleTan1_2P(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan1_2P() override;
-
-	void init(int status=0) override;
-
-	void trigger() override;
-	bool getCenters();
-	bool preparePreview();
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-			void coordinateEvent(RS_CoordinateEvent* e) override;
-//        void commandEvent(RS_CommandEvent* e) override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-//    void showOptions() override;
-//    void hideOptions() override;
-//    void setRadius(const double& r);
-	double getRadius() const;
-
+    RS_ActionDrawCircleTan1_2P(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawCircleTan1_2P() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    bool getCenters();
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    //        void commandEvent(RS_CommandEvent* e) override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+    //    void setRadius(const double& r);
+    double getRadius() const;
 
 protected:
-    RS_Entity* catchCircle(QMouseEvent* e);
-    RS_AtomicEntity* baseEntity = nullptr;
+    RS_Entity *catchCircle(QMouseEvent *e);
+    RS_AtomicEntity *baseEntity = nullptr;
+    RS2::CursorType doGetMouseCursor(int status) override;
 
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-
- RS_Vector getTangentPoint(RS_Vector& creatingCircleCenter,bool fromOriginalCircle) const;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS_Vector getTangentPoint(RS_Vector &creatingCircleCenter, bool fromOriginalCircle) const;
 };
-
 #endif

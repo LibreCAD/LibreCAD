@@ -172,8 +172,6 @@ void RS_ActionInfoDist::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionInfoDist::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionInfoDist::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-// EOF

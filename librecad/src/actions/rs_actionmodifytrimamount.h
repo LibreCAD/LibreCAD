@@ -56,7 +56,6 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 
     double getDistance() const{return distance;}
     void setDistance(double d){distance = d;}
@@ -84,6 +83,7 @@ private:
     double determineDistance(const RS_AtomicEntity *e) const;
 protected:
     void createOptionsWidget() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

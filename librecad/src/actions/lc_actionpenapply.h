@@ -44,9 +44,7 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void finish(bool updateTB) override;
-
 private:
     // entity that might be used as source for pen applying
     RS_Entity* srcEntity;
@@ -57,6 +55,8 @@ private:
 
     // controls whether pen should be copied from source entity or applied from pen toolbar
     bool copyMode;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONPENAPPLY_H

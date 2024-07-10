@@ -35,40 +35,40 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyTrim : public RS_PreviewActionInterface {
+class RS_ActionModifyTrim:public RS_PreviewActionInterface {
         Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseLimitEntity,     /**< Choosing the limiting entity. */
-        ChooseTrimEntity       /**< Choosing the entity to trim. */
-    };
 
 public:
-    RS_ActionModifyTrim(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView,
-                        bool both=false);
-	~RS_ActionModifyTrim() override;
+        /**
+         * Action States.
+         */
+        enum Status {
+                ChooseLimitEntity, /**< Choosing the limiting entity. */
+                ChooseTrimEntity /**< Choosing the entity to trim. */
+        };
 
-	void init(int status=0) override;
-	void finish(bool updateTB=true) override;
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+public:
+        RS_ActionModifyTrim(
+                RS_EntityContainer &container,
+                RS_GraphicView &graphicView,
+                bool both = false);
+        ~RS_ActionModifyTrim() override;
+        void init(int status = 0) override;
+        void finish(bool updateTB = true) override;
+        void trigger() override;
+        void mouseMoveEvent(QMouseEvent *e) override;
+        void mouseReleaseEvent(QMouseEvent *e) override;
+        void updateMouseButtonHints() override;
 
+protected:
+        RS2::CursorType doGetMouseCursor(int status) override;
 
 private:
-    RS_AtomicEntity* trimEntity = nullptr;
-    RS_Entity* limitEntity = nullptr;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-    bool both = false;
-
-    void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity* original);
+        RS_AtomicEntity *trimEntity = nullptr;
+        RS_Entity *limitEntity = nullptr;
+        struct Points;
+        std::unique_ptr<Points> pPoints;
+        bool both = false;
+        void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
 };
-
 #endif

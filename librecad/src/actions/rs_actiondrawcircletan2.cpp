@@ -280,8 +280,8 @@ void RS_ActionDrawCircleTan2::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawCircleTan2::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawCircleTan2::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 double RS_ActionDrawCircleTan2::getRadius() const{

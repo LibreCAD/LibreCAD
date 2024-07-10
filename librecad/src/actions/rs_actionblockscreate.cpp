@@ -141,8 +141,6 @@ void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-
-
 void RS_ActionBlocksCreate::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetReferencePoint:
@@ -154,9 +152,8 @@ void RS_ActionBlocksCreate::updateMouseButtonHints() {
     }
 }
 
-
-void RS_ActionBlocksCreate::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionBlocksCreate::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

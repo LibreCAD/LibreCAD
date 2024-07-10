@@ -204,9 +204,8 @@ void RS_ActionInfoAngle::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionInfoAngle::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionInfoAngle::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 // EOF

@@ -504,9 +504,8 @@ void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
             break;
     }
 }
-
-void RS_ActionDrawCircleTan3::updateMouseCursor() {
-	  setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawCircleTan3::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 RS_Vector RS_ActionDrawCircleTan3::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle){

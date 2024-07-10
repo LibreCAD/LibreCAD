@@ -30,11 +30,8 @@
 #include "rs_commands.h"
 #include <QApplication>
 #include <QMouseEvent>
-#include "rs_dimaligned.h"
 #include "rs_constructionline.h"
-#include "rs_commandevent.h"
 #include "rs_arc.h"
-#include "rs_modification.h"
 #include "rs_math.h"
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"
@@ -85,7 +82,6 @@ RS_PreviewActionInterface::~RS_PreviewActionInterface() {
     deletePreview();
     deleteHighlights();
 }
-
 
 void RS_PreviewActionInterface::init(int status) {
     deletePreview();

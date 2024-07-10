@@ -68,7 +68,6 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setSnapPoint(int sp);
     int getSnapPoint() const;
     void setAngle(double a);
@@ -80,6 +79,7 @@ protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool persistRelativeZero = false;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

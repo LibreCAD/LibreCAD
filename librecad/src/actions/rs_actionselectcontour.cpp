@@ -74,9 +74,6 @@ void RS_ActionSelectContour::mouseReleaseEvent(QMouseEvent* e) {
         trigger();
     }
 }
-
-void RS_ActionSelectContour::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionSelectContour::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

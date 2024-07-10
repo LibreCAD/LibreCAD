@@ -221,9 +221,6 @@ void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent *e){
 void RS_ActionDrawHatch::updateMouseButtonHints() {
 	 updateMouseWidget();
 }
-
-void RS_ActionDrawHatch::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawHatch::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

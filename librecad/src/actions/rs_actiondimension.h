@@ -44,7 +44,6 @@ public:
     ~RS_ActionDimension() override;
     virtual void reset();
     void init(int status = 0) override;
-    void updateMouseCursor() override;
 //    void updateToolBar() override;
 
     QString getText() const;
@@ -76,6 +75,8 @@ protected:
       QString cmdText;
       QString cmdText2;
     */
+
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

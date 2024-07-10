@@ -28,7 +28,7 @@
 
 #include "rs_actionselectsingle.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_graphicview.h"
 #include "rs_selection.h"
 
@@ -110,25 +110,23 @@ void RS_ActionSelectSingle::keyPressEvent(QKeyEvent *e){
     }
 }
 
-void RS_ActionSelectSingle::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::RightButton){
-        finish();
-        if (actionSelect->rtti() == RS2::ActionSelect)
-            actionSelect->finish();
-        else
-            actionSelect->mouseReleaseEvent(e);
-    } else {
-        en = catchEntity(e, entityTypeList);
-        trigger();
-    }
+void RS_ActionSelectSingle::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
+    en = catchEntity(e, entityTypeList);
+    trigger();
 }
 
-void RS_ActionSelectSingle::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+void RS_ActionSelectSingle::mouseRightButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    finish();
+    if (actionSelect->rtti() == RS2::ActionSelect)
+        actionSelect->finish();
+    else
+        actionSelect->mouseReleaseEvent(e);
+}
+
+RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 enum RS2::EntityType RS_ActionSelectSingle::getTypeToSelect(){
     return typeToSelect;
 }
-
-// EOF

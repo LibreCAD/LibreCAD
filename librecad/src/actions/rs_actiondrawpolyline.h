@@ -84,8 +84,6 @@ public:
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-
     void close();
     void undo();
 
@@ -113,7 +111,7 @@ protected:
     SegmentMode m_mode{};
     int m_reversed = 1;
     bool m_calculatedSegment = false;
-
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

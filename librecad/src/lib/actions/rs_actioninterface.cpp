@@ -63,8 +63,7 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
     , finished{false}
     , graphic{container.getGraphic()}
     , document{container.getDocument()}
-    , actionType{actionType}
-{
+    , actionType{actionType}{
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\"", name);
 
@@ -128,8 +127,6 @@ void RS_ActionInterface::init(int status)
 
     }
 }
-
-
 /**
  * Called when the mouse moves and this is the current action.
  * This function can be overwritten by the implementing action.
@@ -143,6 +140,7 @@ void RS_ActionInterface::mouseMoveEvent(QMouseEvent*) {}
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
+// fixme - add default implementation
 void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
 
 /**
@@ -151,7 +149,17 @@ void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::mouseReleaseEvent(QMouseEvent*) {}
+void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
+    Qt::MouseButton button = e->button();
+    if (button == Qt::LeftButton){
+        mouseLeftButtonReleaseEvent(status, e);
+    } else if (button == Qt::RightButton){
+        mouseRightButtonReleaseEvent(status, e);
+    }
+}
+
+void RS_ActionInterface::mouseLeftButtonReleaseEvent(int status, QMouseEvent* e){}
+void RS_ActionInterface::mouseRightButtonReleaseEvent(int status, QMouseEvent* e){}
 
 /**
  * Called when a key is pressed and this is the current action.
@@ -236,8 +244,24 @@ void RS_ActionInterface::updateMouseButtonHints() {}
 
 /**
  * Should be overwritten to set the mouse cursor for this action.
+ * Default implementation for the base method. Simply ask appropriate method for cursor and sets it.
  */
-void RS_ActionInterface::updateMouseCursor() {}
+void RS_ActionInterface::updateMouseCursor(){
+    int status = getStatus();
+    RS2::CursorType cursor = doGetMouseCursor(status);
+    if (cursor != RS2::NoCursorChange){
+        setMouseCursor(cursor);
+    }
+}
+
+/**
+ * Returns cursor for the given state. Default implementation returns CadCursor, inherited actions may add more sophisticated processing.
+ * @param status status of the action
+ * @return cursor
+ */
+RS2::CursorType RS_ActionInterface::doGetMouseCursor([[maybe_unused]]int status){
+    return RS2::NoCursorChange;
+}
 
 /**
  * @return true, if the action is finished and can be deleted.
@@ -390,7 +414,9 @@ void RS_ActionInterface::updateSelectionWidget(int countSelected, double selecte
 }
 
 void RS_ActionInterface::setMouseCursor(const RS2::CursorType &cursor){
-    graphicView->setMouseCursor(cursor);
+    if (graphicView != nullptr) {
+        graphicView->setMouseCursor(cursor);
+    }
 }
 
 // fixme/todo - add methods that will provide action an ability to set hint for specific key modifier in mouse widget...
@@ -446,7 +472,3 @@ void RS_ActionInterface::commandMessageTR(const char * msg){
 void RS_ActionInterface::commandMessage(const QString &msg) const{
     RS_DIALOGFACTORY->commandMessage(msg);
 }
-
-
-
-

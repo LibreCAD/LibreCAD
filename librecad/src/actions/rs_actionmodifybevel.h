@@ -67,7 +67,6 @@ public:
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 
     void setLength1(double l1);
     double getLength1() const;
@@ -91,5 +90,6 @@ private:
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
 protected:
     void createOptionsWidget() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 #endif

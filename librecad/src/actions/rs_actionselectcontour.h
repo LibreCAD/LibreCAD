@@ -42,9 +42,9 @@ public:
         RS_GraphicView &graphicView);
     void trigger() override;
     void mouseReleaseEvent(QMouseEvent *e) override;
-    void updateMouseCursor() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     RS_Entity *en = nullptr;
 };

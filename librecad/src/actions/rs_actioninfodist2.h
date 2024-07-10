@@ -66,8 +66,6 @@ public:
     void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-
     bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
 
@@ -84,6 +82,7 @@ protected:
     RS_Vector entityNearestPoint = RS_Vector{false};
     void restoreRelZero();
     RS_Vector obtainNearestPointOnEntity(const RS_Vector &snap) const;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

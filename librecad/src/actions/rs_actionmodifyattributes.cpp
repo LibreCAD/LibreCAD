@@ -43,14 +43,10 @@ RS_ActionModifyAttributes::RS_ActionModifyAttributes(
 	actionType=RS2::ActionModifyAttributes;
 }
 
-
 void RS_ActionModifyAttributes::init(int status) {
     RS_ActionInterface::init(status);
-
     trigger();
 }
-
-
 
 void RS_ActionModifyAttributes::trigger() {
 
@@ -78,21 +74,19 @@ void RS_ActionModifyAttributes::trigger() {
     finish(false);
 }
 
-
-
 void RS_ActionModifyAttributes::updateMouseButtonHints() {
     switch (getStatus()) {
         //case Acknowledge:
         //RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"), tr("Cancel"));
         //break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-void RS_ActionModifyAttributes::updateMouseCursor() {
-    setMouseCursor(RS2::DelCursor);
+RS2::CursorType RS_ActionModifyAttributes::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::DelCursor;
 }
 
 // EOF

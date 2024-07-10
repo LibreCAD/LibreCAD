@@ -60,10 +60,10 @@ public:
     void trigger() override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void mouseMoveEvent(QMouseEvent *event) override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
-
 //! create polyline from segments
 //! @param useSelected only create from selected entities
     RS_Polyline* convertPolyline(RS_EntityContainer* cnt, RS_Entity *selectedEntity, bool useSelected = false, bool createOnly=false);

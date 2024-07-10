@@ -402,9 +402,8 @@ void RS_ActionBlocksInsert::updateMouseButtonHints() {
             break;
     }
 }
-
-void RS_ActionBlocksInsert::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionBlocksInsert::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

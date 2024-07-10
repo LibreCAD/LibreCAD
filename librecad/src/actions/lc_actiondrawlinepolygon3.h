@@ -37,7 +37,8 @@
  */
 class LC_ActionDrawLinePolygonCenTan : public LC_ActionDrawLinePolygonBase {
     Q_OBJECT
-    enum Status {
+
+  enum Status {
         SetCenter,    /**< Setting center. */
         SetTangent,    /**< Setting tangent. */
         SetNumber     /**< Setting number in the command line. */
@@ -51,13 +52,15 @@ public:
     void trigger() override;
 
     void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
 
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

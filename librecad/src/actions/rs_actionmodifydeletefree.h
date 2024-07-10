@@ -26,7 +26,6 @@
 
 #ifndef RS_ACTIONMODIFYDELETEFREE_H
 #define RS_ACTIONMODIFYDELETEFREE_H
-
 #include "rs_actioninterface.h"
 
 class RS_Polyline;
@@ -36,22 +35,26 @@ class RS_Polyline;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyDeleteFree : public RS_ActionInterface {
+class RS_ActionModifyDeleteFree:public RS_ActionInterface {
 	Q_OBJECT
-public:
-    RS_ActionModifyDeleteFree(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-	~RS_ActionModifyDeleteFree() override;
 
-	void init(int status=0) override;
+public:
+	RS_ActionModifyDeleteFree(
+		RS_EntityContainer &container,
+		RS_GraphicView &graphicView);
+	~RS_ActionModifyDeleteFree() override;
+	void init(int status = 0) override;
 	void trigger() override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
 
+protected:
+	void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e) override;
+	void mouseRightButtonReleaseEvent(int status, QMouseEvent * e) override;
+
 private:
-    RS_Polyline* polyline = nullptr;
-    RS_Entity* e1 = nullptr;
-    RS_Entity* e2 = nullptr;
+	RS_Polyline *polyline = nullptr;
+	RS_Entity *e1 = nullptr;
+	RS_Entity *e2 = nullptr;
 	struct Points;
 	std::unique_ptr<Points> pPoints;
 };

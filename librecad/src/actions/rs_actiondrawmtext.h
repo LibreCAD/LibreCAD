@@ -65,12 +65,12 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setText(const QString &t);
     QString getText();
     void setAngle(double a);
     double getAngle();
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     std::unique_ptr<RS_MTextData> data;
     //RS_Text* text;

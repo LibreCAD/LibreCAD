@@ -365,9 +365,8 @@ bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polylin
     }
     return pointOnRightSide;
 }
-
-void RS_ActionPolylineEquidistant::updateMouseCursor() {
-   setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionPolylineEquidistant::doGetMouseCursor([[maybe_unused]] int status){
+   return RS2::SelectCursor;
 }
 
 void RS_ActionPolylineEquidistant::updateMouseButtonHints(){

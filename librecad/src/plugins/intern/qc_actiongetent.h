@@ -64,18 +64,19 @@ public:
 
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-    void updateMouseCursor() override;
 
     void setMessage(QString msg);
     bool isCompleted() const {return completed;}
     Plugin_Entity *getSelected(Doc_plugin_interface* d);
 
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent * e) override;
 private:
     bool completed;
     QString message;
     RS_Entity* en;
-
 };
 
 #endif

@@ -29,7 +29,6 @@
 #include <QPointF>
 #include <QMouseEvent>
 #include "rs_snapper.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_coordinateevent.h"
@@ -59,12 +58,10 @@ QC_ActionGetPoint::~QC_ActionGetPoint() = default;
 
 
 void QC_ActionGetPoint::trigger() {
-
     RS_DEBUG->print("QC_ActionGetPoint::trigger()");
     completed = true;
     updateMouseButtonHints();
 }
-
 
 void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
@@ -116,37 +113,28 @@ void QC_ActionGetPoint::coordinateEvent(RS_CoordinateEvent* e) {
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
     if (!completed)
-		RS_DIALOGFACTORY->updateMouseWidget(pPoints->message, tr("Cancel"));
+		updateMouseWidget(pPoints->message, tr("Cancel"));
     else
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
 }
 
-
-void QC_ActionGetPoint::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
 	pPoints->referencePoint.x = basepoint->x();
 	pPoints->referencePoint.y = basepoint->y();
     setTargetPoint = true;
 }
 
-
 void QC_ActionGetPoint::setMessage(QString msg){
 	pPoints->message = msg;
 }
 
-
-void QC_ActionGetPoint::getPoint(QPointF *point)
-{
+void QC_ActionGetPoint::getPoint(QPointF *point){
     if (pPoints)
     {
         point->setX(pPoints->targetPoint.x);
         point->setY(pPoints->targetPoint.y);
     }
-
 }
-
-// EOF

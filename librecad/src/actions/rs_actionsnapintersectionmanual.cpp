@@ -77,8 +77,8 @@ void RS_ActionSnapIntersectionManual::trigger(){
         RS_VectorSolutions sol =
             RS_Information::getIntersection(entity1, entity2, false);
 
-        entity2 = NULL;
-        entity1 = NULL;
+        entity2 = nullptr;
+        entity1 = nullptr;
         if (predecessor){
             RS_Vector ip = sol.getClosest(*coord);
 
@@ -169,20 +169,17 @@ void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent *e){
 
 void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
     switch (getStatus()) {
-    case ChooseEntity1:
-        updateMouseWidgetTRCancel("Select first entity");
-        break;
-    case ChooseEntity2:
-        updateMouseWidgetTRBack("Select second entity");
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case ChooseEntity1:
+            updateMouseWidgetTRCancel("Select first entity");
+            break;
+        case ChooseEntity2:
+            updateMouseWidgetTRBack("Select second entity");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
-
-void RS_ActionSnapIntersectionManual::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionSnapIntersectionManual::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

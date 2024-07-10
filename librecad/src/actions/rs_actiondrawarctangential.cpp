@@ -275,9 +275,8 @@ void RS_ActionDrawArcTangential::updateMouseButtonHints() {
 }
 
 // fixme - add suport of commands
-
-void RS_ActionDrawArcTangential::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawArcTangential::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 void RS_ActionDrawArcTangential::setRadius(double r){

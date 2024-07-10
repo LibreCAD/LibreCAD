@@ -44,13 +44,15 @@ public:
 
 	void trigger() override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseCursor() override;
     void updateMouseButtonHints() override;
     void setEntity(RS_Entity* en) {
         this->en=en;
     }
     // display the entity as selected
     void setDisplaySelected(bool selected);
+
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 
 private:
     RS_Entity* en = nullptr;

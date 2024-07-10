@@ -44,8 +44,7 @@ RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities Freehand",
 					container, graphicView)
-		, pPoints(std::make_unique<Points>())
-{
+		, pPoints(std::make_unique<Points>()){
 	init();
 }
 
@@ -61,25 +60,22 @@ void RS_ActionModifyDeleteFree::init(int status) {
     s->snapOnEntity = true;
 }
 
-
-
-void RS_ActionModifyDeleteFree::trigger() {
+void RS_ActionModifyDeleteFree::trigger(){
     if (e1 && e2) {
-        RS_EntityContainer* parent = e2->getParent();
+        RS_EntityContainer *parent = e2->getParent();
         if (parent) {
-            if (parent->rtti()==RS2::EntityPolyline) {
-                if(parent->getId() == polyline->getId()) {
-
+            if (parent->rtti() == RS2::EntityPolyline) {
+                if (parent->getId() == polyline->getId()) {
                     // deletes whole polyline on screen:
-                    graphicView->deleteEntity((RS_Entity*)polyline);
+                    graphicView->deleteEntity((RS_Entity *) polyline);
 
                     // splits up the polyline in the container:
-                    RS_Polyline* pl1 = nullptr;
-                    RS_Polyline* pl2 = nullptr;
+                    RS_Polyline *pl1 = nullptr;
+                    RS_Polyline *pl2 = nullptr;
                     RS_Modification m(*container);
                     m.splitPolyline(*polyline,
-									*e1, pPoints->v1,
-									*e2, pPoints->v2,
+                                    *e1, pPoints->v1,
+                                    *e2, pPoints->v2,
                                     &pl1, &pl2);
 
                     if (document) {
@@ -91,87 +87,78 @@ void RS_ActionModifyDeleteFree::trigger() {
                     }
 
                     // draws the new polylines on the screen:
-                                        graphicView->redraw(RS2::RedrawDrawing);
+                    graphicView->redraw(RS2::RedrawDrawing);
 
                     init();
 
                     updateSelectionWidget();
                 } else {
-                                RS_DIALOGFACTORY->commandMessage(tr("Entities not in the same polyline."));
+                    commandMessageTR("Entities not in the same polyline.");
                 }
             } else {
-                        RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is not a polyline"));
+                commandMessageTR("Parent of second entity is not a polyline");
             }
         } else {
-				RS_DIALOGFACTORY->commandMessage(tr("Parent of second entity is nullptr"));
+            commandMessageTR("Parent of second entity is nullptr");
         }
     } else {
-		RS_DIALOGFACTORY->commandMessage(tr("One of the chosen entities is nullptr"));
+        commandMessageTR("One of the chosen entities is nullptr");
     }
 }
 
-
-
-void RS_ActionModifyDeleteFree::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-
-        switch (getStatus()) {
+// fixme - add constants for statuses
+void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e){
+    switch (status) {
         case 0: {
-				pPoints->v1 = snapPoint(e);
-                e1 = getKeyEntity();
-                if (e1) {
-                    RS_EntityContainer* parent = e1->getParent();
-                    if (parent) {
-                        if (parent->rtti()==RS2::EntityPolyline) {
-                            polyline = (RS_Polyline*)parent;
-                            setStatus(1);
-                        } else {
-                                                RS_DIALOGFACTORY->commandMessage(
-                                                                tr("Parent of first entity is not a polyline"));
-                        }
+            pPoints->v1 = snapPoint(e);
+            e1 = getKeyEntity();
+            if (e1) {
+                RS_EntityContainer *parent = e1->getParent();
+                if (parent) {
+                    if (parent->rtti() == RS2::EntityPolyline) {
+                        polyline = dynamic_cast<RS_Polyline *>(parent);
+                        setStatus(1);
                     } else {
-                                        RS_DIALOGFACTORY->commandMessage(
-														tr("Parent of first entity is nullptr"));
+                        commandMessageTR("Parent of first entity is not a polyline");
                     }
                 } else {
-                                RS_DIALOGFACTORY->commandMessage(
-												tr("First entity is nullptr"));
+                    commandMessageTR("Parent of first entity is nullptr");
                 }
-            }
-            break;
-
-        case 1: {
-				pPoints->v2 = snapPoint(e);
-                e2 = getKeyEntity();
-
-                if (e2) {
-                    trigger();
-                } else {
-								RS_DIALOGFACTORY->commandMessage(tr("Second entity is nullptr"));
-                }
+            } else {
+                commandMessageTR("First entity is nullptr");
             }
             break;
         }
+        case 1: {
+            pPoints->v2 = snapPoint(e);
+            e2 = getKeyEntity();
+
+            if (e2) {
+                trigger();
+            } else {
+                commandMessageTR("Second entity is nullptr");
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 
-
+void RS_ActionModifyDeleteFree::mouseRightButtonReleaseEvent(int status, QMouseEvent *mouse_event){
+    init(getStatus() - 1);
+}
 
 void RS_ActionModifyDeleteFree::updateMouseButtonHints() {
     switch (getStatus()) {
     case 0:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify first break point "
-                                               "on a polyline"), tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify first break point on a polyline");
         break;
     case 1:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify second break point "
-                                               "on the same polyline"),
-                                            tr("Back"));
+        updateMouseWidgetTRBack("Specify second break point on the same polyline");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }

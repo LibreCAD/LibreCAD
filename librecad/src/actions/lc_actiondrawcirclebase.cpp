@@ -16,13 +16,13 @@ LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityCont
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 
-void LC_ActionDrawCircleBase::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
+void LC_ActionDrawCircleBase::mouseLeftButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void LC_ActionDrawCircleBase::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 void LC_ActionDrawCircleBase::init(int status) {
@@ -33,8 +33,8 @@ void LC_ActionDrawCircleBase::init(int status) {
 
 // fixme - resume method - re-read from options
 
-void LC_ActionDrawCircleBase::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+ RS2::CursorType LC_ActionDrawCircleBase::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void LC_ActionDrawCircleBase::reset(){

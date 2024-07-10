@@ -101,6 +101,7 @@ void RS_ActionModifyOffset::updateMouseButtonHints(){
     }
 }
 
+// fixme - options ownership
 void RS_ActionModifyOffset::showOptions(){
     RS_ActionInterface::showOptions();
     RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
@@ -112,9 +113,6 @@ void RS_ActionModifyOffset::hideOptions(){
     RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
 }
 
-void RS_ActionModifyOffset::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionModifyOffset::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF
-

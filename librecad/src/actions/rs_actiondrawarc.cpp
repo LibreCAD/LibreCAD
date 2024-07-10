@@ -87,8 +87,6 @@ void RS_ActionDrawArc::trigger(){
     RS_DEBUG->print("RS_ActionDrawArc::trigger(): arc added: %lu", arc->getId());
 }
 
-
-
 void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawArc::mouseMoveEvent begin");
 
@@ -136,14 +134,9 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             data->angle2 = data->center.angleTo(mouse);
             auto arc = previewArc(*data);
-
-//            previewRefPoint(data->center);
-//            previewRefPoint(arc->getStartpoint());
-
             previewRefPoints({data->center, arc->getStartpoint()});
             previewRefSelectablePoint(arc->getEndpoint());
             previewRefLine(data->center, mouse);
-
             drawPreview();
             break;
         }
@@ -429,8 +422,8 @@ void RS_ActionDrawArc::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawArc::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawArc::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 bool RS_ActionDrawArc::isReversed() const{

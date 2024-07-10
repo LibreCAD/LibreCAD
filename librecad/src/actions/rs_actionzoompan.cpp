@@ -29,7 +29,6 @@
 #include <QMouseEvent>
 
 #include "rs_actionzoompan.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
 RS_ActionZoomPan::RS_ActionZoomPan(RS_EntityContainer& container,
@@ -47,8 +46,6 @@ void RS_ActionZoomPan::init(int status) {
     updateMouseButtonHints();
 }
 
-
-
 void RS_ActionZoomPan::trigger() {
     /*if (v1.valid && v2.valid) {
         graphicView->zoomPan(v2-v1);
@@ -59,12 +56,10 @@ void RS_ActionZoomPan::trigger() {
         x1 = x2;
         y1 = y2;
     }
-    if(getStatus()==SetPanEnd)
-    {
+    if(getStatus()==SetPanEnd)    {
         finish(false);
     }
 }
-
 
 void RS_ActionZoomPan::finish(bool updateTB) {
     RS_ActionInterface::finish(updateTB);
@@ -72,19 +67,17 @@ void RS_ActionZoomPan::finish(bool updateTB) {
     graphicView->redraw();
 }
 
-
-void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent* e) {
+void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
     //v2 = snapPoint(e);
     x2 = e->position().x();
     y2 = e->position().y();
     //if (getStatus()==1 && graphicView->toGuiDX((v2-v1).magnitude())>10) {
-    if (getStatus()==SetPanning ) {
-            if (std::abs(x2-x1)>7 || std::abs(y2-y1)>7) {
-        trigger();
-            }
+    if (getStatus() == SetPanning) {
+        if (std::abs(x2 - x1) > 7 || std::abs(y2 - y1) > 7) {
+            trigger();
+        }
     }
 }
-
 
 void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::MiddleButton ||
@@ -96,8 +89,6 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
         graphicView->setPanning(true);
     }
 }
-
-
 
 void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
 	switch (e->button()) {
@@ -116,31 +107,23 @@ void RS_ActionZoomPan::updateMouseButtonHints()
 {
     switch (getStatus()) {
         case SetPanStart:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Click and drag to pan zoom"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Click and drag to pan zoom");
             break;
         case SetPanning:
-            RS_DIALOGFACTORY->updateMouseWidget(tr("Zoom panning"),
-                                                tr("Cancel"));
+            updateMouseWidgetTRCancel("Zoom panning");
             break;
         default:
-            RS_DIALOGFACTORY->updateMouseWidget();
+            updateMouseWidget();
     }
 }
 
-
-void RS_ActionZoomPan::updateMouseCursor() {
-    switch (getStatus()){
-    case SetPanStart:
-        setMouseCursor(RS2::OpenHandCursor);
-        break;
-    case SetPanning:
-        setMouseCursor(RS2::ClosedHandCursor);
-        break;
-    default:
-        break;
+RS2::CursorType RS_ActionZoomPan::doGetMouseCursor([[maybe_unused]] int status){
+    switch (status) {
+        case SetPanStart:
+            return RS2::OpenHandCursor;
+        case SetPanning:
+            return RS2::ClosedHandCursor;
+        default:
+            return RS2::NoCursorChange;
     }
 }
-
-
-// EOF

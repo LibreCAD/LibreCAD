@@ -329,10 +329,9 @@ void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent *e){
             case ChooseEntity:
                 targetEntity = catchEntity(e, entityType);
                 if (targetEntity == nullptr){
-                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                    commandMessageTR("No Entity found.");
                 } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
-                    RS_DIALOGFACTORY->commandMessage(
-                        tr("Entity can not be a closed polyline."));
+                    commandMessageTR("Entity can not be a closed polyline.");
                 } else {
                     //TODO, verify topology of selected
 //                    targetEntity->setHighlighted(true);
@@ -376,9 +375,6 @@ void RS_ActionPolylineSegment::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionPolylineSegment::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionPolylineSegment::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

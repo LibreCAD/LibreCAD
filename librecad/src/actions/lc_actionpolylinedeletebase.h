@@ -5,12 +5,11 @@
 
 class LC_ActionPolylineDeleteBase:public RS_PreviewActionInterface {
     Q_OBJECT
-    void mouseReleaseEvent(QMouseEvent *e) override;
-    void updateMouseCursor() override;
 
 public:
     LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionPolylineDeleteBase() override = default;
+    void mouseReleaseEvent(QMouseEvent *e) override;
 
 protected:
     /**
@@ -31,6 +30,7 @@ protected:
     void finish(bool updateTB) override;
     void processMouseRightButtonRelease();
     void clean();
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONPOLYLINEDELETEBASE_H

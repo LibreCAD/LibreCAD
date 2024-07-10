@@ -35,8 +35,8 @@ void LC_ActionPolylineDeleteBase::mouseReleaseEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionPolylineDeleteBase::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType LC_ActionPolylineDeleteBase::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 void LC_ActionPolylineDeleteBase::finish(bool updateTB){

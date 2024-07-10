@@ -20,11 +20,9 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
 #include <vector>
 
 #include <QAction>
-#include <QMouseEvent>
 
 #include "rs_actiondrawellipseinscribe.h"
 #include "rs_debug.h"
@@ -33,7 +31,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-
 
 // fixme do cleanup
 struct RS_ActionDrawEllipseInscribe::Points {
@@ -321,15 +318,12 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
         case SetLine1:
             updateMouseWidgetTRCancel("Specify the first line");
             break;
-
         case SetLine2:
             updateMouseWidgetTRBack("Specify the second line");
             break;
-
         case SetLine3:
             updateMouseWidgetTRBack("Specify the third line");
             break;
-
         case SetLine4:
             updateMouseWidgetTRBack("Specify the fourth line");
             break;
@@ -339,8 +333,8 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawEllipseInscribe::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawEllipseInscribe::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 // EOF

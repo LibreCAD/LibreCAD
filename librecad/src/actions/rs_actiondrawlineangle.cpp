@@ -306,9 +306,8 @@ void RS_ActionDrawLineAngle::updateMouseButtonHints() {
             break;
     }
 }
-
-void RS_ActionDrawLineAngle::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawLineAngle::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionDrawLineAngle::createOptionsWidget(){

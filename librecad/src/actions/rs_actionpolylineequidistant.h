@@ -53,7 +53,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 
     void setDist(const double &d){dist = d;}
     double getDist() const{return dist;}
@@ -72,6 +71,7 @@ private:
     bool isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const;
 protected:
     void createOptionsWidget() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

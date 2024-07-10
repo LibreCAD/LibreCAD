@@ -875,7 +875,8 @@ namespace RS2 {
         DelCursor,            /**< DelCursor - cursor for choosing entities */
         SelectCursor,         /**< SelectCursor - for selecting single entities */
         MagnifierCursor,      /**< MagnifierCursor - a magnifying glass. */
-        MovingHandCursor      /**< Moving hand - a little flat hand. */
+        MovingHandCursor,      /**< Moving hand - a little flat hand. */
+        NoCursorChange        /**< special value to indicate that no cursor change is requested. */
     };
 
     /**

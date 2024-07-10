@@ -230,9 +230,8 @@ void RS_ActionDrawMText::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDrawMText::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawMText::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionDrawMText::setText(const QString &t){

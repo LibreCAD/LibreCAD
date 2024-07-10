@@ -304,11 +304,8 @@ void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
         break;
     }
 }
-
-
-
-void LC_ActionDrawParabolaFD::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType LC_ActionDrawParabolaFD::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

@@ -58,10 +58,9 @@ public:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void coordinateEvent(RS_CoordinateEvent* e) override;
-
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
     void showPreview();
     void findFactor();

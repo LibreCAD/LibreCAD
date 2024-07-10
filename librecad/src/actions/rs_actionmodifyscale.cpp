@@ -234,9 +234,6 @@ void RS_ActionModifyScale::updateMouseButtonHints() {
         break;
     }
 }
-
-void RS_ActionModifyScale::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionModifyScale::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

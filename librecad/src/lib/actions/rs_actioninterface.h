@@ -70,7 +70,6 @@ public:
     virtual void init(int status=0);
     virtual void mouseMoveEvent(QMouseEvent*);
     virtual void mousePressEvent(QMouseEvent*);
-
     virtual void mouseReleaseEvent(QMouseEvent*);
     virtual void keyPressEvent(QKeyEvent* e);
     virtual void keyReleaseEvent(QKeyEvent* e);
@@ -169,7 +168,8 @@ protected:
     virtual void createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
-protected:
+
+    virtual RS2::CursorType doGetMouseCursor(int status);
     void setMouseCursor(const RS2::CursorType &cursor);
     void updateSelectionWidget() const;
     void updateSelectionWidget(int countSelected, double selectedLength) const;
@@ -182,6 +182,9 @@ protected:
     void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
     void commandMessageTR(const char*);
     void commandMessage(const QString &msg) const;
+
+    virtual void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e);
+    virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);
 
 };
 

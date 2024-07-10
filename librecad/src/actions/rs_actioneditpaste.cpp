@@ -54,11 +54,9 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
 
 RS_ActionEditPaste::~RS_ActionEditPaste() = default;
 
-
 void RS_ActionEditPaste::init(int status) {
     RS_PreviewActionInterface::init(status);
 }
-
 
 void RS_ActionEditPaste::trigger() {
     deletePreview();
@@ -70,7 +68,6 @@ void RS_ActionEditPaste::trigger() {
 
     finish(false);
 }
-
 
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
@@ -95,7 +92,6 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-
 void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         RS_CoordinateEvent ce(snapPoint(e));
@@ -105,14 +101,12 @@ void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
 	if (e==nullptr) return;
 
 	*targetPoint = e->getCoordinate();
     trigger();
 }
-
 
 void RS_ActionEditPaste::updateMouseButtonHints() {
     switch (getStatus()) {
@@ -124,9 +118,7 @@ void RS_ActionEditPaste::updateMouseButtonHints() {
         break;
     }
 }
-
-
-void RS_ActionEditPaste::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionEditPaste::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 // EOF

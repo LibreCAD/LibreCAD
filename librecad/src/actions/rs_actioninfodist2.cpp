@@ -279,9 +279,8 @@ void RS_ActionInfoDist2::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionInfoDist2::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionInfoDist2::createOptionsWidget(){

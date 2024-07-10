@@ -151,17 +151,13 @@ void RS_ActionModifyCut::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionModifyCut::updateMouseCursor(){
-    switch (getStatus()) {
+RS2::CursorType RS_ActionModifyCut::doGetMouseCursor([[maybe_unused]] int status){
+    switch (status) {
         case ChooseCutEntity:
-            setMouseCursor(RS2::SelectCursor);
-            break;
+            return RS2::SelectCursor;
         case SetCutCoord:
-            setMouseCursor(RS2::CadCursor);
-            break;
+            return RS2::CadCursor;
         default:
-            break;
+            return RS2::NoCursorChange;
     }
 }
-
-// EOF

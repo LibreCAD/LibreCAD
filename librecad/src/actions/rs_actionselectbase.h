@@ -43,7 +43,8 @@ public:
                         RS_GraphicView& graphicView);
 
 	void keyReleaseEvent(QKeyEvent* e) override;
-	void updateMouseCursor() override;
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

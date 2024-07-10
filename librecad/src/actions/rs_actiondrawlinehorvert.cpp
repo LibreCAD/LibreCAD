@@ -145,9 +145,8 @@ void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDrawLineHorVert::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawLineHorVert::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

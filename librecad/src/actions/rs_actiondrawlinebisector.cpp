@@ -208,8 +208,7 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
 
@@ -273,7 +272,6 @@ QStringList RS_ActionDrawLineBisector::getAvailableCommands(){
         default:
             break;
     }
-
     return cmd;
 }
 
@@ -300,9 +298,8 @@ void RS_ActionDrawLineBisector::updateMouseButtonHints(){
 void RS_ActionDrawLineBisector::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LineBisectorOptions>();
 }
-
-void RS_ActionDrawLineBisector::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawLineBisector::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 // EOF

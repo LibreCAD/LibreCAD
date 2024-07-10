@@ -253,9 +253,6 @@ void RS_ActionDrawLineTangent2::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDrawLineTangent2::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawLineTangent2::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

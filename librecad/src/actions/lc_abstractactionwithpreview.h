@@ -50,7 +50,6 @@ public:
     void finish(bool updateTB) override;
     void coordinateEvent(RS_CoordinateEvent *event) override;
     void trigger() override;
-    void updateMouseCursor() override;
     void updateMouseButtonHints() override;
     /**
    * Mode that controls where from apply pen
@@ -153,7 +152,7 @@ protected:
     virtual void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
     virtual bool doCheckMayTrigger();
     virtual void doAfterTrigger();
-    virtual RS2::CursorType doGetMouseCursor(int status);
+    RS2::CursorType doGetMouseCursor(int status) override;
     virtual RS_Vector doGetRelativeZeroAfterTrigger();
     virtual int doGetStatusForInitialSnapToRelativeZero();
     virtual void doInitialSnapToRelativeZero(RS_Vector relZero);

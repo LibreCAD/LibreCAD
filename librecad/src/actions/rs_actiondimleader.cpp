@@ -226,9 +226,8 @@ void RS_ActionDimLeader::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDimLeader::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDimLeader::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

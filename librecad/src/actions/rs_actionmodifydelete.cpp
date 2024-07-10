@@ -33,8 +33,6 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-
-
 RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Delete Entities",
@@ -42,14 +40,10 @@ RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
 	actionType=RS2::ActionModifyDelete;
 }
 
-
 void RS_ActionModifyDelete::init(int status) {
     RS_ActionInterface::init(status);
-
     trigger();
 }
-
-
 
 void RS_ActionModifyDelete::trigger() {
 
@@ -63,8 +57,6 @@ void RS_ActionModifyDelete::trigger() {
     updateSelectionWidget();
 }
 
-
-
 void RS_ActionModifyDelete::updateMouseButtonHints() {
 	switch (getStatus()) {
 	//case Acknowledge:
@@ -72,15 +64,11 @@ void RS_ActionModifyDelete::updateMouseButtonHints() {
 	//	tr("Cancel"));
 	//    break;
 	default:
-		RS_DIALOGFACTORY->updateMouseWidget();
+	 updateMouseWidget();
 		break;
 	}
 }
 
-
-
-void RS_ActionModifyDelete::updateMouseCursor() {
-    setMouseCursor(RS2::DelCursor);
+RS2::CursorType RS_ActionModifyDelete::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::DelCursor;
 }
-
-// EOF

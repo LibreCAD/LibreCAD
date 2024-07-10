@@ -25,7 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionorder.h"
@@ -33,15 +32,12 @@
 #include "rs_debug.h"
 #include "rs_graphicview.h"
 
-
-
 RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
         RS_GraphicView& graphicView, RS2::ActionType type)
         :RS_PreviewActionInterface("Sort Entities",
 						   container, graphicView)
 		,targetEntity(nullptr)
-		,orderType(type)
-{
+		,orderType(type){
 	actionType=RS2::ActionOrderBottom;
 }
 
@@ -70,67 +66,64 @@ void RS_ActionOrder::trigger() {
         graphicView->drawEntity(targetEntity);
 
         switch (orderType) {
-        case RS2::ActionOrderLower:
-            index = document->findEntity(targetEntity);
-            document->moveEntity(index, entList);
-            break;
-        case RS2::ActionOrderRaise:
-            index = document->findEntity(targetEntity)+1;
-            document->moveEntity(index, entList);
-            break;
-        default:
-            break;
+            case RS2::ActionOrderLower:
+                index = document->findEntity(targetEntity);
+                document->moveEntity(index, entList);
+                break;
+            case RS2::ActionOrderRaise:
+                index = document->findEntity(targetEntity) + 1;
+                document->moveEntity(index, entList);
+                break;
+            default:
+                break;
         }
 		targetEntity = nullptr;
     } else {
         switch (orderType) {
-        case RS2::ActionOrderBottom:
-            document->moveEntity(-1, entList);
-            break;
-        case RS2::ActionOrderTop:
-            document->moveEntity(document->count()+1, entList);
-            break;
-        default:
-            break;
+            case RS2::ActionOrderBottom:
+                document->moveEntity(-1, entList);
+                break;
+            case RS2::ActionOrderTop:
+                document->moveEntity(document->count() + 1, entList);
+                break;
+            default:
+                break;
         }
     }
     setStatus(getStatus()-1);
 }
 
-
-
 void RS_ActionOrder::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent begin");
 
     switch (getStatus()) {
-    case ChooseEntity:
-        snapFree(e);
-        break;
-    default:
-        break;
+        case ChooseEntity:
+            snapFree(e);
+            break;
+        default:
+            break;
     }
 
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-
-
 void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
-        case ChooseEntity:
-            targetEntity = catchEntity(e);
-			if (!targetEntity) {
-                RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
-            } else {
-                targetEntity->setHighlighted(true);
-                graphicView->drawEntity(targetEntity);
-                graphicView->redraw();
-                trigger();
+            case ChooseEntity: {
+                targetEntity = catchEntity(e);
+                if (!targetEntity) {
+                    commandMessageTR("No Entity found.");
+                } else {
+                    targetEntity->setHighlighted(true);
+                    graphicView->drawEntity(targetEntity);
+                    graphicView->redraw();
+                    trigger();
+                }
+                break;
             }
-            break;
-        default:
-            break;
+            default:
+                break;
         }
     } else if (e->button()==Qt::RightButton) {
         deleteSnapper();
@@ -147,20 +140,13 @@ void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionOrder::updateMouseButtonHints() {
     switch (getStatus()) {
     case ChooseEntity:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Choose entity for order"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Choose entity for order");
         break;
     default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+		updateMouseWidget();
     }
 }
 
-
-
-void RS_ActionOrder::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionOrder::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-
-// EOF

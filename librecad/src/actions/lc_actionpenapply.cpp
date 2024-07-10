@@ -177,9 +177,8 @@ void LC_ActionPenApply::updateMouseButtonHints(){
             RS_ActionInterface::updateMouseButtonHints();
     }
 }
-
-void LC_ActionPenApply::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType LC_ActionPenApply::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 

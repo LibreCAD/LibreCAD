@@ -23,30 +23,28 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-
-
 #include <QAction>
 #include <QMouseEvent>
-
 #include "rs_actionsetrelativezero.h"
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 
-RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Set the relative Zero",
-                           container, graphicView)
-    , pt(std::make_unique<RS_Vector>()){
-	actionType=RS2::ActionSetRelativeZero;
+RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    : RS_PreviewActionInterface("Set the relative Zero",
+                                container, graphicView)
+      , pt(std::make_unique<RS_Vector>()){
+    actionType = RS2::ActionSetRelativeZero;
 }
 
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
 
 QAction *RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject * /*parent*/){
-/* RVT_PORT    QAction* action = new QAction(tr("Set Relative Zero"), tr("&Set Relative Zero"),
-								  QKeySequence(), nullptr); */
-    QAction *action = new QAction(tr("Set &Relative Zero"), nullptr);
+    /* RVT_PORT    QAction* action = new QAction(tr("Set Relative Zero"), tr("&Set Relative Zero"),
+              QKeySequence(), nullptr); */
+    auto action = new QAction(tr("Set &Relative Zero"), nullptr);
     //action->zetStatusTip(tr("Set position of the Relative Zero point"));
     action->setIcon(QIcon(":/extui/relzeromove.png"));
     return action;
@@ -54,7 +52,7 @@ QAction *RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QOb
 
 void RS_ActionSetRelativeZero::trigger(){
     bool wasLocked = graphicView->isRelativeZeroLocked();
-    if (pt->valid){
+    if (pt->valid) {
         graphicView->lockRelativeZero(false);
         moveRelativeZero(*pt);
         graphicView->lockRelativeZero(wasLocked);
@@ -67,7 +65,7 @@ void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::RightButton){
+    if (e->button() == Qt::RightButton) {
         init(getStatus() - 1);
     } else {
         fireCoordinateEventForSnap(e);
@@ -93,8 +91,6 @@ void RS_ActionSetRelativeZero::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionSetRelativeZero::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionSetRelativeZero::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

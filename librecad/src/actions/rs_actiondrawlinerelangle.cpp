@@ -271,18 +271,14 @@ void RS_ActionDrawLineRelAngle::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawLineRelAngle::updateMouseCursor(){
-    switch (getStatus()) {
-        case SetEntity: {
-            RS2::CursorType cursor = RS2::SelectCursor;
-            setMouseCursor(cursor);
-            break;
-        }
+RS2::CursorType RS_ActionDrawLineRelAngle::doGetMouseCursor([[maybe_unused]] int status){
+    switch (status) {
+        case SetEntity:
+            return RS2::SelectCursor;
         case SetPos:
-            graphicView->setMouseCursor(RS2::CadCursor);
-            break;
+            return RS2::CadCursor;
         default:
-            break;
+            return RS2::NoCursorChange;
     }
 }
 

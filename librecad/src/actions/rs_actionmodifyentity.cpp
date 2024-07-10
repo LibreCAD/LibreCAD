@@ -100,8 +100,6 @@ void RS_ActionModifyEntity::trigger() {
     }
 }
 
-
-
 void RS_ActionModifyEntity::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
@@ -111,14 +109,12 @@ void RS_ActionModifyEntity::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
-void RS_ActionModifyEntity::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 void RS_ActionModifyEntity::updateMouseButtonHints() {
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Click on entity to modify"), tr("Cancel"));
+    updateMouseWidgetTRCancel("Click on entity to modify");
 }
 
 // EOF

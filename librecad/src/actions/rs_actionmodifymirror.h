@@ -65,7 +65,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 
     bool isMirrorToExistingLine(){return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
@@ -75,7 +74,7 @@ protected:
 
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
-
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

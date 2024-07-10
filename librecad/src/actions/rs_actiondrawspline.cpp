@@ -288,8 +288,8 @@ void RS_ActionDrawSpline::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawSpline::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawSpline::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 /*

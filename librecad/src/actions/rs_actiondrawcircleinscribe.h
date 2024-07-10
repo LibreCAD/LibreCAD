@@ -59,7 +59,6 @@ public:
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 private:
 
     bool preparePreview(RS_Line *en);
@@ -71,6 +70,8 @@ private:
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool valid = false;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

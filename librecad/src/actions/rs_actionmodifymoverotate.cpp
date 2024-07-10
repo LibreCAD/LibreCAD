@@ -232,9 +232,6 @@ void RS_ActionModifyMoveRotate::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionModifyMoveRotate::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

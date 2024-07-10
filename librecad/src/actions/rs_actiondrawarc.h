@@ -67,7 +67,6 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     bool isReversed() const;
     void setReversed(bool r) const;
 
@@ -85,6 +84,7 @@ protected:
 */
     void snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const;
     void createOptionsWidget() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

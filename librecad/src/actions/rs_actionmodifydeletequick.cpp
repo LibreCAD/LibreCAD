@@ -40,8 +40,7 @@ RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
     RS_GraphicView& graphicView)
         :RS_ActionInterface("Quick Delete Entities",
 					container, graphicView)
-		,en(nullptr)
-{
+		,en(nullptr){
 	actionType=RS2::ActionModifyDeleteQuick;
 }
 
@@ -74,8 +73,6 @@ void RS_ActionModifyDeleteQuick::trigger() {
     }
 }
 
-
-
 void RS_ActionModifyDeleteQuick::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::RightButton) {
         init(getStatus()-1);
@@ -85,22 +82,19 @@ void RS_ActionModifyDeleteQuick::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
     switch (getStatus()) {
     case 0:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entity to delete"),
-                                       tr("Cancel"));
+        updateMouseWidgetTRCancel("Pick entity to delete");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-void RS_ActionModifyDeleteQuick::updateMouseCursor() {
-    setMouseCursor(RS2::DelCursor);
+RS2::CursorType RS_ActionModifyDeleteQuick::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::DelCursor;
 }
 
 // EOF

@@ -76,7 +76,6 @@ void RS_ActionDrawLineOrthTan::trigger(){
     graphicView->redraw(RS2::RedrawDrawing);
 
     setStatus(SetCircle);
-
 }
 
 void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
@@ -129,7 +128,6 @@ void RS_ActionDrawLineOrthTan::clearLines(){
     deletePreview();
 }
 
-
 void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
     if (e->button() == Qt::RightButton){
         clearLines();
@@ -165,7 +163,6 @@ void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
     }
 }
 
-
 void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine:
@@ -179,13 +176,6 @@ void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDrawLineOrthTan::updateMouseCursor(){
-    if (isFinished()){
-        setMouseCursor(RS2::ArrowCursor);
-    } else {
-        setMouseCursor(RS2::SelectCursor);
-    }
+RS2::CursorType RS_ActionDrawLineOrthTan::doGetMouseCursor([[maybe_unused]] int status){
+    return isFinished() ? RS2::ArrowCursor : RS2::SelectCursor;
 }
-
-// EOF

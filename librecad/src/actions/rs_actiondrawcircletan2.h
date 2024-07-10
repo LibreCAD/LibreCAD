@@ -61,7 +61,6 @@ public:
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setRadius(double);
     double getRadius() const;
 
@@ -69,6 +68,7 @@ protected:
     RS_Entity *catchCircle(QMouseEvent *e);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle);
     void createOptionsWidget() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

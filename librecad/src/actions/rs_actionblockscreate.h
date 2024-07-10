@@ -59,17 +59,15 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 
 	void coordinateEvent(RS_CoordinateEvent* e) override;
-	//void commandEvent(RS_CommandEvent* e) override;
+	 //void commandEvent(RS_CommandEvent* e) override;
 		//QStringList getAvailableCommands() override;
 
 		//void showOptions() override;
 		//void hideOptions() override;
-
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
 protected:
 	std::unique_ptr<RS_Vector> referencePoint;
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

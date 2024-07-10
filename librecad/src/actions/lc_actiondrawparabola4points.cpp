@@ -135,6 +135,8 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
     return pPoints->valid;
 }
 
+
+
 void LC_ActionDrawParabola4Points::mouseReleaseEvent(QMouseEvent* e) {
     // Proceed to next status
     if (e->button()==Qt::LeftButton) {
@@ -284,11 +286,8 @@ void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
         break;
     }
 }
-
-
-
-void LC_ActionDrawParabola4Points::updateMouseCursor() {
-    graphicView->setMouseCursor(RS2::CadCursor);
+RS2::CursorType LC_ActionDrawParabola4Points::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 // EOF

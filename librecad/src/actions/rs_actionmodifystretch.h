@@ -61,8 +61,8 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;

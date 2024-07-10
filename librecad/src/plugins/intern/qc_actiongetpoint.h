@@ -53,14 +53,13 @@ public:
      void coordinateEvent(RS_CoordinateEvent* e ) override;
 
      void updateMouseButtonHints() override;
-     void updateMouseCursor() override;
-
-    void getPoint(QPointF *point);
+     void getPoint(QPointF *point);
     void setBasepoint(QPointF* basepoint);
     void setMessage(QString msg);
     bool isCompleted(){return completed;}
     bool wasCanceled(){return canceled;}
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
     bool canceled;
 	bool completed;

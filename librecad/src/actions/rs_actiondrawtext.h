@@ -66,12 +66,12 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setText(const QString &t);
     const QString &getText() const;
     void setAngle(double a);
     double getAngle() const;
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

@@ -105,17 +105,17 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void LC_ActionDrawLinePolygonCenTan::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector coord = snapPoint(e);
-        if (getStatus()==SetTangent){
-            coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
-        }
-        fireCoordinateEvent(coord);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+void LC_ActionDrawLinePolygonCenTan::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector coord = snapPoint(e);
+    if (status ==SetTangent){
+        coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
     }
+    fireCoordinateEvent(coord);
+}
+
+void LC_ActionDrawLinePolygonCenTan::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void LC_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {

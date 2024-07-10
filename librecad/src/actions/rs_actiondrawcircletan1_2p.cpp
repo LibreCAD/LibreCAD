@@ -453,15 +453,14 @@ void RS_ActionDrawCircleTan1_2P::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawCircleTan1_2P::updateMouseCursor(){
-    switch (getStatus()) {
+RS2::CursorType RS_ActionDrawCircleTan1_2P::doGetMouseCursor(int status){
+    switch (status) {
         case SetCircle1:
         case SetCenter:
-            setMouseCursor(RS2::SelectCursor);
-            break;
+            return RS2::SelectCursor;
         case SetPoint1:
         case SetPoint2:
-            setMouseCursor(RS2::CadCursor);
+            return RS2::CadCursor;
             break;
     }
 }

@@ -56,9 +56,9 @@ public:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 	void setShowArea(bool s);
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	std::unique_ptr<RS_HatchData> data;
 	bool m_bShowArea{true};

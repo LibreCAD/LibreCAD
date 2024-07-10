@@ -102,19 +102,15 @@ void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionEditCopy::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetReferencePoint:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify reference point"),
-                                            tr("Cancel"));
+        updateMouseWidgetTRCancel("Specify reference point");
         break;
     default:
-        RS_DIALOGFACTORY->updateMouseWidget();
+        updateMouseWidget();
         break;
     }
 }
 
-
-
-void RS_ActionEditCopy::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionEditCopy::doGetMouseCursor([[maybe_unused]]int status){
+    return RS2::CadCursor;
 }
-
 // EOF

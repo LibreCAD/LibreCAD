@@ -677,9 +677,8 @@ void RS_ActionDrawPolyline::updateMouseButtonHints()
             break;
     }
 }
-
-void RS_ActionDrawPolyline::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawPolyline::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionDrawPolyline::close(){

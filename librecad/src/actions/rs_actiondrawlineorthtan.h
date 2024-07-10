@@ -52,7 +52,6 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 
 private:
 	void clearLines();
@@ -62,6 +61,7 @@ private:
     RS_Line* tangent = nullptr; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle = nullptr;
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

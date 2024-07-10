@@ -55,9 +55,9 @@ public:
     void updateMouseButtonHints() override;
     void init(int status) override;
     void finish(bool updateTB) override;
-    void updateMouseCursor() override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
-
     void cleanup();
     void preparePreview(QMouseEvent *e);
     void clearHighlighted();

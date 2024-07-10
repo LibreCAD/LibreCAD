@@ -227,19 +227,17 @@ QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands(){
         default:
             break;
     }
-
     return cmd;
 }
-
-void RS_ActionDrawLineParallelThrough::updateMouseCursor(){
-    switch (getStatus()) {
+RS2::CursorType RS_ActionDrawLineParallelThrough::doGetMouseCursor([[maybe_unused]] int status){
+    switch (status) {
         case SetEntity:
-            setMouseCursor(RS2::SelectCursor);
-            break;
+            return RS2::SelectCursor;
         case SetNumber:
         case SetPos:
-            setMouseCursor(RS2::CadCursor);
-            break;
+            return RS2::CadCursor;
+        default:
+            return RS2::NoCursorChange;
     }
 }
 
@@ -254,5 +252,3 @@ void RS_ActionDrawLineParallelThrough::setNumber(int n) {
 void RS_ActionDrawLineParallelThrough::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LineParallelThroughOptions>();
 }
-
-// EOF

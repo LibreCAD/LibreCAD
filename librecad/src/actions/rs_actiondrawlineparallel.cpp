@@ -211,8 +211,8 @@ QStringList RS_ActionDrawLineParallel::getAvailableCommands() {
     return cmd;
 }
 
-void RS_ActionDrawLineParallel::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 void RS_ActionDrawLineParallel::createOptionsWidget(){

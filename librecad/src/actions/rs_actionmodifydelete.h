@@ -52,7 +52,8 @@ public:
 	void init(int status=0) override;
 	void trigger() override;
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

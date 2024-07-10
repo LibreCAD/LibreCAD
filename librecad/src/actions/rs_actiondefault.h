@@ -78,8 +78,6 @@ public:
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
-
     // clear temporary entities for highlighting
     void clearHighLighting();
     enum RS2::EntityType getTypeToSelect();
@@ -94,11 +92,13 @@ protected:
     void clearQuickInfoWidget();
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
+
 };
 
 #endif

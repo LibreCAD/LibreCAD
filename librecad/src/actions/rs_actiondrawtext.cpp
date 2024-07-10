@@ -258,9 +258,8 @@ void RS_ActionDrawText::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionDrawText::updateMouseCursor(){
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionDrawText::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionDrawText::setText(const QString &t){
@@ -284,6 +283,3 @@ double RS_ActionDrawText::getAngle() const{
 void RS_ActionDrawText::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_TextOptions>();
 }
-
-
-// EOF

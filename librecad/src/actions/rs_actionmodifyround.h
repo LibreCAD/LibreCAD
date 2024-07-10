@@ -60,7 +60,6 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setRadius(double r);
     double getRadius() const;
     void setTrim(bool t);
@@ -73,8 +72,8 @@ private:
 
 protected:
     void createOptionsWidget() override;
-
     void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;

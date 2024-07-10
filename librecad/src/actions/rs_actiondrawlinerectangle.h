@@ -59,11 +59,10 @@ public:
 	void commandEvent(RS_CommandEvent* e) override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
 protected:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

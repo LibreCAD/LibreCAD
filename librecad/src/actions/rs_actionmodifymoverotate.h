@@ -73,11 +73,11 @@ public:
 	void showOptions() override;
 	
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 
 	void setAngle(double a);
 	double getAngle() const;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;

@@ -60,11 +60,12 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
-    void updateMouseCursor() override;
     int getNumber() const;
     void setNumber(int n);
     bool isSymmetric(){return symmetric;};
     void setSymmetric(bool value){symmetric = value;};
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;

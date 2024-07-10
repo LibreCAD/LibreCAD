@@ -11,14 +11,12 @@ public:
 
     int getNumber() const{return number;}
     void setNumber(int n) {number = n;}
-
-    void updateMouseCursor() override;
-
 protected:
     /** Number of edges. */
     int number = 0;
     void createOptionsWidget() override;
     void parseNumber(RS_CommandEvent *e, const QString &c);
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif // LC_ACTIONDRAWLINEPOLYGONBASE_H

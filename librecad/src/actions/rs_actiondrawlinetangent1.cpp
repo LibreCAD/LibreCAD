@@ -120,7 +120,6 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
-
     if (e->button() == Qt::RightButton){
         deletePreview();
         init(getStatus() - 1);
@@ -135,6 +134,8 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
                     trigger();
                 }
                 break;
+            default:
+                break;
         }
     }
 }
@@ -142,12 +143,12 @@ void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
 void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
     if (!e) return;
     switch (getStatus()) {
-        case SetPoint:
+        case SetPoint: {
             *point = e->getCoordinate();
             moveRelativeZero(*point);
             setStatus(SetCircle);
             break;
-
+        }
         default:
             break;
     }
@@ -167,14 +168,14 @@ void RS_ActionDrawLineTangent1::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionDrawLineTangent1::updateMouseCursor(){
-    switch (getStatus()){
+RS2::CursorType RS_ActionDrawLineTangent1::doGetMouseCursor([[maybe_unused]] int status){
+    switch (status){
         case SetPoint:
-            setMouseCursor(RS2::CadCursor);
-            break;
+            return RS2::CadCursor;
         case SetCircle:
-            setMouseCursor(RS2::SelectCursor);
-            break;
+            return RS2::SelectCursor;
+        default:
+            return RS2::NoCursorChange;
     }
 }
 

@@ -134,10 +134,9 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent *e){
             case ChooseEntity: {
                 auto en = catchEntity(e);
                 if (en == nullptr){
-                    RS_DIALOGFACTORY->commandMessage(tr("No Entity found."));
+                    commandMessageTR("No Entity found.");
                 } else if (en->rtti() != RS2::EntityPolyline){
-                    RS_DIALOGFACTORY->commandMessage(
-                        tr("Entity must be a polyline."));
+                    commandMessageTR("Entity must be a polyline.");
                 } else {
                     polylineToModify = dynamic_cast<RS_Polyline *>(en);
                     polylineToModify->setSelected(true);
@@ -154,7 +153,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent *e){
                     setStatus(SetSegment2);
                 }
                 else{
-                    RS_DIALOGFACTORY->commandMessage(tr("First segment should be on selected polyline."));
+                    commandMessageTR("First segment should be on selected polyline.");
                 }
                 break;
             }
@@ -166,7 +165,7 @@ void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent *e){
                     trigger();
                 }
                 else{
-                    RS_DIALOGFACTORY->commandMessage(tr("Second segment should be on selected polyline and not equal to first one."));
+                    commandMessageTR("Second segment should be on selected polyline and not equal to first one.");
                 }
                 break;
             }
@@ -211,9 +210,6 @@ void RS_ActionPolylineTrim::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionPolylineTrim::updateMouseCursor() {
-        setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionPolylineTrim::doGetMouseCursor([[maybe_unused]] int status){
+     return RS2::SelectCursor;
 }
-
-// EOF

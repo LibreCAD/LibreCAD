@@ -60,12 +60,12 @@ public:
     void updateMouseButtonHints() override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseCursor() override;
     double getDistance() const;
     void setDistance(double d);
     int getNumber() const;
     void setNumber(int n);
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;

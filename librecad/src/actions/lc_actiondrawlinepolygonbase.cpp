@@ -30,6 +30,6 @@ void LC_ActionDrawLinePolygonBase::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LinePolygonOptions>();
 }
 
-void LC_ActionDrawLinePolygonBase::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType LC_ActionDrawLinePolygonBase::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }

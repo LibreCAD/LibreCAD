@@ -108,9 +108,8 @@ void LC_ActionPenPick::updateMouseButtonHints(){
     RS_DIALOGFACTORY->updateMouseWidget(tr("Specify entity to pick the pen"),
                                         tr("Cancel"));
 }
-
-void LC_ActionPenPick::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType LC_ActionPenPick::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 /**

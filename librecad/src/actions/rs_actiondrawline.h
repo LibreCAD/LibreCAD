@@ -75,7 +75,6 @@ public:
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
 
     void close();
@@ -87,6 +86,7 @@ protected:
     struct History;
     struct Points;
     std::unique_ptr<Points> pPoints;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

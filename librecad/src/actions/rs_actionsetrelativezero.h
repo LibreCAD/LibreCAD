@@ -55,8 +55,8 @@ public:
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	std::unique_ptr<RS_Vector> pt;
 };

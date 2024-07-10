@@ -49,8 +49,6 @@ public:
     void trigger() override;
 
     void mouseMoveEvent(QMouseEvent* e)    override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e)       override;
 
@@ -61,5 +59,9 @@ private:
     RS_Entity* selectedArcEntity = nullptr;
     LC_DimArcData dimArcData;
     void setRadius(const RS_Vector& selectedPosition);
+
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 #endif //LC_ACTIONDIMARC_H

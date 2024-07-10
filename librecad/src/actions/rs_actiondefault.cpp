@@ -675,20 +675,17 @@ void RS_ActionDefault::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDefault::updateMouseCursor(){
-    switch (getStatus()) {
+RS2::CursorType RS_ActionDefault::doGetMouseCursor(int status){
+    switch (status) {
         case Neutral:
-            setMouseCursor(RS2::ArrowCursor);
-            break;
+            return RS2::ArrowCursor;
         case Moving:
         case MovingRef:
-            setMouseCursor(RS2::SelectCursor);
-            break;
+            return RS2::SelectCursor;
         case Panning:
-            setMouseCursor(RS2::ClosedHandCursor);
-            break;
+            return RS2::ClosedHandCursor;
         default:
-            break;
+            return RS2::NoCursorChange;
     }
 }
 

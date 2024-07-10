@@ -42,8 +42,7 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Info Area",
                                container, graphicView)
-    , ia(std::make_unique<RS_InfoArea>())
-{
+    , ia(std::make_unique<RS_InfoArea>()){
 	actionType=RS2::ActionInfoArea;
 }
 
@@ -185,8 +184,6 @@ void RS_ActionInfoArea::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionInfoArea::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionInfoArea::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

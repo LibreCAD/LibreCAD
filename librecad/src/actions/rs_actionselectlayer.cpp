@@ -68,8 +68,6 @@ void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionSelectLayer::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionSelectLayer::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

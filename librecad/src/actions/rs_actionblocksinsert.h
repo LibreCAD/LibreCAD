@@ -23,93 +23,70 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
 #ifndef RS_ACTIONBLOCKSINSERT_H
 #define RS_ACTIONBLOCKSINSERT_H
-
 #include "rs_previewactioninterface.h"
 #include "rs_insert.h"
-
 class RS_Block;
 struct RS_InsertData;
-
 /**
  * This action class can handle user events for inserting blocks into the
  * current drawing.
  *
  * @author Andrew Mustun
  */
-class RS_ActionBlocksInsert : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionBlocksInsert:public RS_PreviewActionInterface {
+    Q_OBJECT
+
 public:
     /**
      * Action States.
      */
-	enum Status {
-		SetUndefined = -1, /**< Setting undefined for initialisation. */
-		SetTargetPoint = 0,/**< Setting the reference point. */
-		SetAngle,          /**< Setting angle in the command line. */
-		SetFactor,         /**< Setting factor in the command line. */
-		SetColumns,        /**< Setting columns in the command line. */
-		SetRows,           /**< Setting rows in the command line. */
-		SetColumnSpacing,  /**< Setting column spacing in the command line. */
-		SetRowSpacing      /**< Setting row spacing in the command line. */
+    enum Status {
+        SetUndefined = -1, /**< Setting undefined for initialisation. */
+        SetTargetPoint = 0, /**< Setting the reference point. */
+        SetAngle, /**< Setting angle in the command line. */
+        SetFactor, /**< Setting factor in the command line. */
+        SetColumns, /**< Setting columns in the command line. */
+        SetRows, /**< Setting rows in the command line. */
+        SetColumnSpacing, /**< Setting column spacing in the command line. */
+        SetRowSpacing /**< Setting row spacing in the command line. */
     };
 
 public:
-    RS_ActionBlocksInsert(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionBlocksInsert() override;
-
-	void init(int status=0) override;
-
-	void reset();
-
-	void trigger() override;
-
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
-
-	void showOptions() override;
-	void hideOptions() override;
-
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-	double getAngle() const;
-
-	void setAngle(double a);
-
-	double getFactor() const;
-
-	void setFactor(double f);
-
-	int getColumns() const;
-
-	void setColumns(int c);
-	
-	int getRows() const;
-
-	void setRows(int r);
-
-	double getColumnSpacing() const;
-
-	void setColumnSpacing(double cs);
-	
-	double getRowSpacing() const;
-
-	void setRowSpacing(double rs);
+    RS_ActionBlocksInsert(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionBlocksInsert() override;
+    void init(int status = 0) override;
+    void reset();
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    void mouseReleaseEvent(QMouseEvent *e) override;
+    void coordinateEvent(RS_CoordinateEvent *e) override;
+    void commandEvent(RS_CommandEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void showOptions() override;
+    void hideOptions() override;
+    void updateMouseButtonHints() override;
+    double getAngle() const;
+    void setAngle(double a);
+    double getFactor() const;
+    void setFactor(double f);
+    int getColumns() const;
+    void setColumns(int c);
+    int getRows() const;
+    void setRows(int r);
+    double getColumnSpacing() const;
+    void setColumnSpacing(double cs);
+    double getRowSpacing() const;
+    void setRowSpacing(double rs);
 
 protected:
-    RS_Block* block = nullptr;
-	std::unique_ptr<RS_InsertData> data;
-	
-	/** Last status before entering option. */
+    RS_Block *block = nullptr;
+    std::unique_ptr<RS_InsertData> data;
+    /** Last status before entering option. */
     Status lastStatus = SetUndefined;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
-
 #endif

@@ -178,7 +178,6 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent *e){
-
     int status = getStatus();
     if (e->button() == Qt::LeftButton){
         switch (status) {
@@ -251,17 +250,14 @@ void RS_ActionModifyTrimAmount::createOptionsWidget(){
 
 void RS_ActionModifyTrimAmount::updateMouseButtonHints() {
     switch (getStatus()) {
-    case ChooseTrimEntity:
-        updateMouseWidgetTRBack("Select line, arc, ellipse or parabola to trim or enter distance:");
-        break;
-    default:
-		     updateMouseWidget();
-        break;
+        case ChooseTrimEntity:
+            updateMouseWidgetTRBack("Select line, arc, ellipse or parabola to trim or enter distance:");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
-
-void RS_ActionModifyTrimAmount::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionModifyTrimAmount::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

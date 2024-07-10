@@ -58,10 +58,8 @@ void RS_ActionSelect::resume(){
     deleteSnapper();
 }
 
-void RS_ActionSelect::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionSelect::mouseRightButtonReleaseEvent(int status, QMouseEvent *e){
+    init(getStatus()-1);
 }
 
 int RS_ActionSelect::countSelected(){
@@ -130,23 +128,13 @@ void RS_ActionSelect::updateMouseButtonHints() {
             updateMouseWidgetTR("","");
     }
 }
-
-void RS_ActionSelect::updateMouseCursor() {
-    if(graphicView){
-        if(isFinished()){
-            setMouseCursor(RS2::ArrowCursor);
-        }else{
-            setMouseCursor(RS2::SelectCursor);
-        }
-    }
+RS2::CursorType RS_ActionSelect::doGetMouseCursor([[maybe_unused]] int status){
+    return isFinished() ? RS2::ArrowCursor : RS2::SelectCursor;
 }
 
-void RS_ActionSelect::keyPressEvent(QKeyEvent* e)
-{
-    if (e->key()==Qt::Key_Enter && countSelected() > 0)    {
+void RS_ActionSelect::keyPressEvent(QKeyEvent* e){
+    if (e->key()==Qt::Key_Enter && countSelected() > 0){
         finish();
         action_handler->setCurrentAction(nextAction);
     }
 }
-
-// EOF

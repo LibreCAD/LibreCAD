@@ -211,11 +211,10 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
             break;
     }
 }
-
-void RS_ActionModifyTrim::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionModifyTrim::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-// fixme - review and complete to show trimmed part!!! not remanining one
+
 void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity* original) {
     int rtti = trimmed->rtti();
     switch (rtti){

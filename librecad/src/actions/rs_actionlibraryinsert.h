@@ -77,7 +77,6 @@ public:
 	void hideOptions() override;
 
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 
 	void setFile(const QString& file);
 
@@ -129,6 +128,7 @@ protected:
 	
 	/** Last status before entering option. */
     Status lastStatus = SetTargetPoint;
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

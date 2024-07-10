@@ -65,14 +65,12 @@ public:
 //        void commandEvent(RS_CommandEvent* e) override;
 	void finish(bool updateTB=true) override;
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
-
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
+	RS2::CursorType doGetMouseCursor(int status) override;
 
 private:
-	struct Points;
+    struct Points;
     std::unique_ptr<Points> pPoints;
 };
 

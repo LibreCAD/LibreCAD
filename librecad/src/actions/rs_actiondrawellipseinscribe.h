@@ -57,7 +57,6 @@ public:
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
 protected:
 
     // 4 points on ellipse
@@ -66,6 +65,8 @@ private:
     void clearLines(bool checkStatus = false);
     struct Points;
     std::unique_ptr<Points> pPoints;
+
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

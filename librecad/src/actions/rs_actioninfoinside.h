@@ -50,8 +50,8 @@ public:
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
 	std::unique_ptr<RS_Vector> pt;
 	std::unique_ptr<RS_EntityContainer> contour;

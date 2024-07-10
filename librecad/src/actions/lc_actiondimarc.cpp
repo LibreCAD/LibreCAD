@@ -122,55 +122,55 @@ void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
 }
 
-void LC_ActionDimArc::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (Qt::LeftButton == e->button()){
-        switch (status) {
-            case SetEntity: {
-                selectedArcEntity = catchEntity(e, RS2::ResolveAll);
+void LC_ActionDimArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity: {
+            selectedArcEntity = catchEntity(e, RS2::ResolveAll);
 
-                if (selectedArcEntity != nullptr){
-                    if (selectedArcEntity->is(RS2::EntityArc)){
-                        dimArcData.centre = selectedArcEntity->getCenter();
-                        dimArcData.arcLength = selectedArcEntity->getLength();
+            if (selectedArcEntity != nullptr){
+                if (selectedArcEntity->is(RS2::EntityArc)){
+                    dimArcData.centre = selectedArcEntity->getCenter();
+                    dimArcData.arcLength = selectedArcEntity->getLength();
 
-                        dimArcData.startAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle1());
-                        dimArcData.endAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
+                    dimArcData.startAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle1());
+                    dimArcData.endAngle = RS_Vector(((RS_Arc *) selectedArcEntity)->getAngle2());
 
-                        data->definitionPoint = selectedArcEntity->getStartpoint();
+                    data->definitionPoint = selectedArcEntity->getStartpoint();
 
-                        if (((RS_Arc *) selectedArcEntity)->isReversed()){
-                            const RS_Vector tempAngle = RS_Vector(dimArcData.startAngle);
+                    if (((RS_Arc *) selectedArcEntity)->isReversed()){
+                        const RS_Vector tempAngle = RS_Vector(dimArcData.startAngle);
 
-                            dimArcData.startAngle = dimArcData.endAngle;
-                            dimArcData.endAngle = tempAngle;
+                        dimArcData.startAngle = dimArcData.endAngle;
+                        dimArcData.endAngle = tempAngle;
 
-                            data->definitionPoint = selectedArcEntity->getEndpoint();
-                        }
-
-                        setStatus(SetPos);
-                    } else {
-                        RS_DEBUG->print(RS_Debug::D_ERROR,
-                                        "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
-
-                        selectedArcEntity = nullptr;
+                        data->definitionPoint = selectedArcEntity->getEndpoint();
                     }
+
+                    setStatus(SetPos);
+                } else {
+                    RS_DEBUG->print(RS_Debug::D_ERROR,
+                                    "LC_ActionDimArc::mouseReleaseEvent: selectedArcEntity is not an arc.");
+
+                    selectedArcEntity = nullptr;
                 }
-                break;
             }
-            case SetPos: {
-                RS_Vector snap = snapPoint(e);
-                snap = getFreeSnapAwarePoint(e, snap);
-                fireCoordinateEvent(snap);
-                break;
-            }
-            default:
-               break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(status - 1);
+        case SetPos: {
+            RS_Vector snap = snapPoint(e);
+            snap = getFreeSnapAwarePoint(e, snap);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        default:
+            break;
     }
+
+}
+
+void LC_ActionDimArc::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent *e){

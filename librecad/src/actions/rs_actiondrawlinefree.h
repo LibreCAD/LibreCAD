@@ -56,11 +56,10 @@ public:
 	void mousePressEvent(QMouseEvent* e) override;
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-
 protected:
 	std::unique_ptr<RS_Vector> vertex;
 	std::unique_ptr<RS_Polyline> polyline;
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

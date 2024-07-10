@@ -55,9 +55,9 @@ public:
     void trigger() override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;

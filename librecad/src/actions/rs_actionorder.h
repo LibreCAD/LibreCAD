@@ -55,9 +55,9 @@ public:
 	void mouseReleaseEvent(QMouseEvent* e) override;
 	
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 //    void updateToolBar() override;
-
+protected:
+	RS2::CursorType doGetMouseCursor(int status) override;
 private:
     RS_Entity* targetEntity = nullptr;
     RS2::ActionType orderType = RS2::ActionNone;

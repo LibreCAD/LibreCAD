@@ -30,7 +30,7 @@
 
 #include "rs_actionzoomwindow.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
+
 #include "rs_graphicview.h"
 #include "rs_preview.h"
 
@@ -145,9 +145,6 @@ void RS_ActionZoomWindow::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionZoomWindow::updateMouseCursor() {
-    setMouseCursor(RS2::MagnifierCursor);
+RS2::CursorType RS_ActionZoomWindow::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::MagnifierCursor;
 }
-
-// EOF

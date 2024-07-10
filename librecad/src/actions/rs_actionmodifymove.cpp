@@ -175,11 +175,6 @@ void RS_ActionModifyMove::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionModifyMove::updateMouseCursor(){
-    if (graphicView != nullptr){
-        setMouseCursor(RS2::CadCursor);
-    }
+RS2::CursorType RS_ActionModifyMove::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
-
-// EOF

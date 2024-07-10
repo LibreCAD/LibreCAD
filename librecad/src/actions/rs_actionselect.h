@@ -31,33 +31,34 @@
 #include "rs_actioninterface.h"
 #include "qg_actionhandler.h"
 
-
 /**
  * This action class can handle user events to select entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelect : public RS_ActionInterface {
-        Q_OBJECT
+class RS_ActionSelect:public RS_ActionInterface {
+Q_OBJECT
+
 public:
 
-    RS_ActionSelect(QG_ActionHandler* a_handler,
-                    RS_EntityContainer& container,
-                    RS_GraphicView& graphicView,
-                    RS2::ActionType nextAction,
-                    QList<RS2::EntityType> allowedEntityTypes={});
+    RS_ActionSelect(
+        QG_ActionHandler *a_handler,
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        RS2::ActionType nextAction,
+        QList<RS2::EntityType> allowedEntityTypes = {});
 
-	void init(int status) override;
-	void resume() override;
-	//void keyPressEvent(QKeyEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
-	int countSelected();
-	void keyPressEvent(QKeyEvent* e) override;
-
+    void init(int status) override;
+    void resume() override;
+//void keyPressEvent(QKeyEvent* e) override;
+    void updateMouseButtonHints() override;
+    int countSelected();
+    void keyPressEvent(QKeyEvent *e) override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
-    QG_ActionHandler* action_handler = nullptr;
+    QG_ActionHandler *action_handler = nullptr;
     RS2::ActionType nextAction = RS2::ActionNone;
     QList<RS2::EntityType> const entityTypeList;
 };

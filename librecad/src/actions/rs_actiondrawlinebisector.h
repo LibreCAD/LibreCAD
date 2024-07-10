@@ -60,12 +60,12 @@ public:
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void setLength(double l);
     double getLength() const;
     void setNumber(int n);
     int getNumber() const;
-
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     /** Closest bisector. */
     RS_Line *bisector = nullptr;

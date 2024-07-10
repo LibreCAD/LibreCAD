@@ -69,7 +69,7 @@ public:
 //	void hideOptions() override;
 
 	void updateMouseButtonHints() override;
-//  void updateMouseCursor() override;
+
 //	void updateToolBar() override;
 //	void close();
     void undo();

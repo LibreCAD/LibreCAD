@@ -654,16 +654,7 @@ void LC_AbstractActionWithPreview::drawPreviewForLastPoint(){
 void LC_AbstractActionWithPreview::doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, [[maybe_unused]]RS_Vector &snap, [[maybe_unused]]QList<RS_Entity *> &list, [[maybe_unused]]int status){}
 
 
-/**
- * Default implementation for the base method. Simply ask appropriate method for cursor and sets it.
- */
-void LC_AbstractActionWithPreview::updateMouseCursor(){
-    int status = getStatus();
-    RS2::CursorType cursor = doGetMouseCursor(status);
-    if (cursor > 0){
-        setMouseCursor(cursor);
-    }
-}
+
 
 /**
  * Returns cursor for the given state. Default implementation returns CadCursor, inherited actions may add more sophisticated processing.

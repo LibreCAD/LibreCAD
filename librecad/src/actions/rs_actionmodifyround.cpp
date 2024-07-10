@@ -440,8 +440,6 @@ void RS_ActionModifyRound::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_RoundOptions>();
 }
 
-void RS_ActionModifyRound::updateMouseCursor(){
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionModifyRound::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
-
-// EOF

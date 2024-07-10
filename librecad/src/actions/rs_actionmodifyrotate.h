@@ -61,10 +61,11 @@ public:
     void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-    void updateMouseCursor() override;
     void keyPressEvent(QKeyEvent *e) override;
     void finish(bool updateTB) override;
     void keyReleaseEvent(QKeyEvent *e) override;
+protected:
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
     int selectedCount = 0;
     bool selectRefPointFirst = true;

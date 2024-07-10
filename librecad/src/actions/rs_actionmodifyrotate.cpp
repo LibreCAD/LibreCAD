@@ -326,15 +326,10 @@ void RS_ActionModifyRotate::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionModifyRotate::updateMouseCursor(){
-    if (graphicView){
-        if (getStatus() == SelectEntity){
-            setMouseCursor(RS2::SelectCursor);
-        } else {
-            setMouseCursor(RS2::CadCursor);
-        }
+RS2::CursorType RS_ActionModifyRotate::doGetMouseCursor([[maybe_unused]] int status){
+    if (status == SelectEntity) {
+        return RS2::SelectCursor;
+    } else {
+        return RS2::CadCursor;
     }
 }
-
-// EOF

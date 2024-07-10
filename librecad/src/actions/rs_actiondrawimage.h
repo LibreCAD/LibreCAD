@@ -75,23 +75,15 @@ public:
 
 	void showOptions() override;
 	void hideOptions() override;
-
 	void updateMouseButtonHints() override;
-	void updateMouseCursor() override;
 //    void updateToolBar() override;
 
 	double getAngle() const;
-
 	void setAngle(double a) const;
-
 	double getFactor() const;
-
 	void setFactor(double f) const;
-
 	double dpiToScale(double dpi) const;
-
 	double scaleToDpi(double scale) const;
-
 
 protected:
 	struct ImageData;
@@ -99,6 +91,8 @@ protected:
 	
 	/** Last status before entering option. */
     Status lastStatus = ShowDialog;
+
+	RS2::CursorType doGetMouseCursor(int status) override;
 };
 
 #endif

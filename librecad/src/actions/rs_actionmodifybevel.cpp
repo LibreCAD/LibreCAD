@@ -372,9 +372,8 @@ void RS_ActionModifyBevel::updateMouseButtonHints() {
             break;
     }
 }
-
-void RS_ActionModifyBevel::updateMouseCursor() {
-    setMouseCursor(RS2::SelectCursor);
+RS2::CursorType RS_ActionModifyBevel::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::SelectCursor;
 }
 
 void RS_ActionModifyBevel::createOptionsWidget(){

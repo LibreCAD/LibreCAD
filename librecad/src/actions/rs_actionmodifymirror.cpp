@@ -201,9 +201,8 @@ void RS_ActionModifyMirror::updateMouseButtonHints(){
             break;
     }
 }
-
-void RS_ActionModifyMirror::updateMouseCursor() {
-    setMouseCursor(RS2::CadCursor);
+RS2::CursorType RS_ActionModifyMirror::doGetMouseCursor([[maybe_unused]] int status){
+    return RS2::CadCursor;
 }
 
 void RS_ActionModifyMirror::createOptionsWidget(){
