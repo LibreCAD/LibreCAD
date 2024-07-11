@@ -47,7 +47,6 @@ struct LC_ActionSnapMiddleManual::Points {
 
     RS_Vector startPoint{false};
     RS_Vector endPoint{false};
-
     RS_Pen currentAppPen{};
 };
 
@@ -68,8 +67,7 @@ struct LC_ActionSnapMiddleManual::Points {
 
 LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual(
     RS_EntityContainer &container,
-    RS_GraphicView &graphicView, RS_Pen input_currentAppPen)
-    :
+    RS_GraphicView &graphicView, RS_Pen input_currentAppPen):
     RS_PreviewActionInterface("Snap Middle Manual", container, graphicView, RS2::ActionSnapMiddleManual),
     m_pPoints{std::make_unique<Points>(input_currentAppPen)}{
     RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");
@@ -93,16 +91,13 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
 
     if (getStatus() == SetEndPoint){
-        // fixme - review, draw mark
         /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
-        if (e->modifiers() & Qt::ShiftModifier){
-            mouse = snapToAngle(mouse, m_pPoints->startPoint, 15.0);
-        }
+        mouse = getSnapAngleAwarePoint(e, m_pPoints->startPoint, mouse,true);
 
         deletePreview();
 
         // fixme - review, most probably pen and layer not needed and this may be replaced by referenceLine
-        RS_Line *line = new RS_Line(preview.get(), m_pPoints->startPoint, mouse);
+        auto *line = new RS_Line(preview.get(), m_pPoints->startPoint, mouse);
 
         previewEntity(line);
         line->setLayerToActive();
@@ -119,30 +114,25 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionSnapMiddleManual::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_Vector snapped = snapPoint(e);
-// fixme - review, draw mark
-        /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
-        if ((e->modifiers() & Qt::ShiftModifier) && (getStatus() == SetEndPoint)){
-            snapped = snapToAngle(snapped, m_pPoints->startPoint, 15.0);
+void LC_ActionSnapMiddleManual::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snapped = snapPoint(e);
+    snapped = getSnapAngleAwarePoint(e, m_pPoints->startPoint, snapped);
+    fireCoordinateEvent(snapped);
+}
+
+void LC_ActionSnapMiddleManual::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+
+    switch (getStatus()) {
+        case SetPercentage:
+        case SetStartPoint: {
+            finish();
+            signalUnsetSnapMiddleManual();
+            break;
         }
-
-        fireCoordinateEvent(snapped);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-
-        switch (getStatus()) {
-            case SetPercentage:
-            case SetStartPoint:
-                finish();
-                signalUnsetSnapMiddleManual();
-                break;
-
-            default:
-                setStatus(SetPercentage);
-                init(getStatus());
-        }
+        default:
+            setStatus(SetPercentage);
+            init(getStatus());
     }
 }
 

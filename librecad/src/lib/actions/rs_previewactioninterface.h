@@ -66,8 +66,6 @@ public:
     void drawHighlights();
     void addToHighlights(RS_Entity *e, bool enable = true);
 
-
-
 protected:
     /**
      * Preview that holds the entities to be previewed.

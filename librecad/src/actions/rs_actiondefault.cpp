@@ -411,9 +411,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
             }
             case Moving: {
                 pPoints->v2 = snapPoint(e);
-                if (e->modifiers() & Qt::ShiftModifier){
-                    pPoints->v2 = snapToAngle(pPoints->v2, pPoints->v1);
-                }
+                pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, pPoints->v2);
                 deletePreview();
                 RS_Modification m(*container, graphicView);
                 RS_MoveData data;
@@ -461,7 +459,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
                         } else {
                             basePoint = refMovingLine->getStartpoint();
                         }
-                        mouse = getSnapAngleAwarePoint(e, basePoint, mouse, false);
+                        mouse = getSnapAngleAwarePoint(e, basePoint, mouse);
                         if (ctrlPressed) {
                             // - if CTRL pressed, move endpoint with saving current angle of line
                             RS_ConstructionLine constructionLine = RS_ConstructionLine(nullptr,

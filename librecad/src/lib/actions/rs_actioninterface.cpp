@@ -35,6 +35,7 @@
 #include "rs_entitycontainer.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
+#include "rs_settings.h"
 
 /**
  * Constructor.
@@ -76,6 +77,8 @@ RS_ActionInterface::RS_ActionInterface(const char *name,
 
     // document pointer will be used for undo / redo
     document = container.getDocument();
+
+    updateSnapAngleStep();
 
     RS_DEBUG->print("RS_ActionInterface::RS_ActionInterface: Setting up action: \"%s\": OK", name);
 }
@@ -316,6 +319,7 @@ void RS_ActionInterface::suspend() {
 void RS_ActionInterface::resume() {
     updateMouseCursor();
     updateMouseButtonHints();
+    updateSnapAngleStep();
     RS_Snapper::resume();
 }
 
@@ -471,4 +475,24 @@ void RS_ActionInterface::commandMessageTR(const char * msg){
  */
 void RS_ActionInterface::commandMessage(const QString &msg) const{
     RS_DIALOGFACTORY->commandMessage(msg);
+}
+
+void RS_ActionInterface::updateSnapAngleStep() {
+    int stepType = RS_SETTINGS->readNumEntry("/AngleSnapStep", 3);
+    switch (stepType){
+        case 0:
+            snapToAngleStep = 1.0;
+            break;
+        case 1:
+            snapToAngleStep = 3.0;
+            break;
+        case 2:
+            snapToAngleStep = 5.0;
+            break;
+        case 3:
+            snapToAngleStep = 15.0;
+            break;
+        default:
+            snapToAngleStep = 15.0;
+    }
 }

@@ -1,4 +1,4 @@
-/****************************************************************************
+    /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -197,6 +197,8 @@ void QG_DlgOptionsGeneral::init()
     cbWheelScrollInvertH->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0));
     cbWheelScrollInvertV->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0));
     cbInvertZoomDirection->setChecked(RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0));
+    cbAngleSnap ->setCurrentIndex(RS_SETTINGS->readNumEntry("/AngleSnapStep", 3));
+
     RS_SETTINGS->endGroup();
 
 //update entities to selected entities to the current active layer
@@ -305,6 +307,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/WheelScrollInvertH", cbWheelScrollInvertH->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/WheelScrollInvertV", cbWheelScrollInvertV->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/InvertZoomDirection", cbInvertZoomDirection->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/AngleSnapStep", cbAngleSnap ->currentIndex());
         RS_SETTINGS->endGroup();
 
         //update entities to selected entities to the current active layer

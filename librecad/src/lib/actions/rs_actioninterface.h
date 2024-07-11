@@ -165,6 +165,8 @@ protected:
 
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
 
+    double snapToAngleStep = 15.0;
+
     virtual void createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
@@ -186,6 +188,7 @@ protected:
     virtual void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e);
     virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);
 
+    void updateSnapAngleStep();
 };
 
 

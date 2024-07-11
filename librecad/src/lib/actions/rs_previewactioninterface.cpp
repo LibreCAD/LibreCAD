@@ -256,7 +256,7 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e
     if (isShift(e)){
         RS_Vector freePosition  = toGraph(e); // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
         if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){ // todo -  with this condition, snap to angle will not work... yet double calc!
-            result = snapToAngle(freePosition, basepoint);
+            result = snapToAngle(freePosition, basepoint, snapToAngleStep);
             if (drawMark){
                 previewSnapAngleMark(basepoint, result);
             }
