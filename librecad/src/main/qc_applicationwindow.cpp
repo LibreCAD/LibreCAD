@@ -3767,7 +3767,7 @@ void QC_ApplicationWindow::changeEvent([[maybe_unused]] QEvent* event)
     // author: ravas
     // returning to LC via Command+Tab won't always activate a subwindow #821
 
-    #if defined(Q_OS_OSX)
+    #if defined(Q_OS_MACOS)
         if (event->type() == QEvent::ActivationChange)
         {
             if (isActiveWindow())
