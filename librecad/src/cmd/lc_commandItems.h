@@ -960,7 +960,7 @@ std::vector<std::pair<QString, QString>> g_transList={
         {"angle",QObject::tr("angle")},
         {"dpi",QObject::tr("dpi")},
         {"close",QObject::tr("close")},
-        {"chord length",QObject::tr("chord length")},
+        {"chordlen",QObject::tr("chordlen")},
         {"columns",QObject::tr("columns")},
         {"columnspacing",QObject::tr("columnspacing")},
         {"equation",QObject::tr("equation")},
@@ -1058,9 +1058,9 @@ std::vector<std::pair<QString, QString>> g_transList={
         {QObject::tr("cen", "center"),"center"},
         {QObject::tr("ce", "center"),"center"},
 
-        {QObject::tr("chord length"),"chord length"},
+        {QObject::tr("chordlen"),"chordlen"},
         //    {QObject::tr("length", "chord length"),"chord length"},
-        {QObject::tr("cl", "chord length"),"chord length"},
+        {QObject::tr("cl", "chordlen"),"chordlen"},
 
         {QObject::tr("close"),"close"},
         {QObject::tr("c", "close"),"close"},
