@@ -71,6 +71,7 @@ private:
     std::unique_ptr<Points> pPoints;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool select = false;
+    bool selectIntersecting = false;
 };
 
 #endif

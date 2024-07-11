@@ -75,6 +75,7 @@ RS_ActionSelectWindow::~RS_ActionSelectWindow() = default;
 void RS_ActionSelectWindow::init(int status) {
     RS_PreviewActionInterface::init(status);
     pPoints = std::make_unique<Points>();
+    selectIntersecting = false;
     //snapMode.clear();
     //snapMode.restriction = RS2::RestrictNothing;
 }
@@ -85,7 +86,7 @@ void RS_ActionSelectWindow::trigger(){
     if (pPoints->v1.valid && pPoints->v2.valid){
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 10){
 
-            bool cross = (pPoints->v1.x > pPoints->v2.x);
+            bool cross = (pPoints->v1.x > pPoints->v2.x) || selectIntersecting;
             RS_Selection s(*container, graphicView);
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
             updateSelectionWidget();
@@ -95,11 +96,11 @@ void RS_ActionSelectWindow::trigger(){
 }
 
 void RS_ActionSelectWindow::mouseMoveEvent(QMouseEvent* e) {
-    snapPoint(e);
-    snapFree(e);
     drawSnapper();
+    RS_Vector snapped = toGraph(e);
+    updateCoordinateWidgetByRelZero(snapped);
     if (getStatus()==SetCorner2 && pPoints->v1.valid) {
-        pPoints->v2 = toGraph(e);
+        pPoints->v2 = snapped;
         deletePreview();
         auto* ob=new RS_OverlayBox(preview.get(), RS_OverlayBoxData(pPoints->v1, pPoints->v2));
         preview->addEntity(ob);
@@ -135,7 +136,6 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
             pPoints->v1 = toGraph(e);
             setStatus(SetCorner2);
             break;
-
         default:
             break;
         }
@@ -148,7 +148,8 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
 void RS_ActionSelectWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
-        pPoints->v2 = snapFree(e);
+        pPoints->v2 = toGraph(e);
+        selectIntersecting = isShift(e);
         trigger();
     }
 }
@@ -163,15 +164,15 @@ void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, QMouseEvent
 
 void RS_ActionSelectWindow::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetCorner1:
-        updateMouseWidgetTRCancel("Click and drag for the selection window");
-        break;
-    case SetCorner2:
-        updateMouseWidgetTRBack("Choose second edge");
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetCorner1:
+            updateMouseWidgetTRCancel("Click and drag for the selection window");
+            break;
+        case SetCorner2:
+            updateMouseWidgetTRBack("Choose second edge", LC_ModifiersInfo::SHIFT("Select Intersecting"));
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 RS2::CursorType RS_ActionSelectWindow::doGetMouseCursor([[maybe_unused]] int status){
