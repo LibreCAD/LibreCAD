@@ -639,7 +639,9 @@ void RS_Polyline::rotate(const RS_Vector& center, const RS_Vector& angleVector) 
 
 
 void RS_Polyline::scale(const RS_Vector& center, const RS_Vector& factor) {
-
+    // fixme - Umgh.... is it really nice design to mix UI logic to entity? It seems that the check and message should be outside of this....
+    // todo - it seems that either proper scaling is needed, or at least message should be moved to the place of invocation (that might be tough)
+    // fixme - check this
     if (containsArc() && !RS_Math::equal(factor.x, factor.y)) {
         RS_DIALOGFACTORY->commandMessage(QObject::tr("Polyline contains arc segments, and scaling by different xy-factors will generate incorrect results"));
     }
