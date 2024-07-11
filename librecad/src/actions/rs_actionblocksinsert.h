@@ -62,7 +62,6 @@ public:
     void reset();
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
@@ -81,12 +80,13 @@ public:
     void setColumnSpacing(double cs);
     double getRowSpacing() const;
     void setRowSpacing(double rs);
-
 protected:
     RS_Block *block = nullptr;
     std::unique_ptr<RS_InsertData> data;
     /** Last status before entering option. */
     Status lastStatus = SetUndefined;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 #endif

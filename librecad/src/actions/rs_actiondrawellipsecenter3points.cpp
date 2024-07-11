@@ -152,17 +152,13 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseCenter3Points::mouseReleaseEvent(QMouseEvent* e) {
-    // Proceed to next status
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    }
+void RS_ActionDrawEllipseCenter3Points::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
 
-    // Return to last status:
-    else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
+void RS_ActionDrawEllipseCenter3Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status -1);
 }
 
 void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent *e){

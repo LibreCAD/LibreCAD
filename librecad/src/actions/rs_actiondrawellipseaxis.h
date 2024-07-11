@@ -37,7 +37,8 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawEllipseAxis : public LC_ActionDrawCircleBase {
-	Q_OBJECT
+Q_OBJECT
+
 public:
     /**
      * Action States.
@@ -54,21 +55,19 @@ public:
     RS_ActionDrawEllipseAxis(RS_EntityContainer& container,
                              RS_GraphicView& graphicView,
                              bool isArc);
-	~RS_ActionDrawEllipseAxis() override;
-
-	void init(int status=0) override;
-	
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
- void mouseReleaseEvent(QMouseEvent *e) override;
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	void updateMouseButtonHints() override;
+    ~RS_ActionDrawEllipseAxis() override;
+    void init(int status=0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
+    void updateMouseButtonHints() override;
 
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

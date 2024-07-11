@@ -91,20 +91,19 @@ void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
 }
 
 void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
-	switch (e->button()) {
-	case Qt::MiddleButton:
-	case Qt::RightButton:
-		setStatus(SetPanEnd);
-		break;
-	default:
-		setStatus(SetPanStart);
-	}
-	trigger();
+    switch (e->button()) {
+        case Qt::MiddleButton:
+        case Qt::RightButton:
+            setStatus(SetPanEnd);
+            break;
+        default:
+            setStatus(SetPanStart);
+    }
+    trigger();
     //RS_DEBUG->print("RS_ActionZoomPan::mousePressEvent(): %f %f", v1.x, v1.y);
 }
 
-void RS_ActionZoomPan::updateMouseButtonHints()
-{
+void RS_ActionZoomPan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPanStart:
             updateMouseWidgetTRCancel("Click and drag to pan zoom");

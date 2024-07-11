@@ -36,7 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineRectangle : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -49,20 +49,19 @@ public:
 public:
     RS_ActionDrawLineRectangle(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
-	~RS_ActionDrawLineRectangle() override;
+    ~RS_ActionDrawLineRectangle() override;
 
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
-	RS2::CursorType doGetMouseCursor(int status) override;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

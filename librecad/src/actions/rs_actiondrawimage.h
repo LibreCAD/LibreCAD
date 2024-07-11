@@ -39,7 +39,7 @@ class QImage;
  * @author Andrew Mustun
  */
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
     /**
      * Action States.
      */
@@ -49,50 +49,50 @@ class RS_ActionDrawImage : public RS_PreviewActionInterface {
         SetAngle,          /**< Setting angle in the command line. */
         SetFactor,          /**< Setting factor in the command line. */
         SetDPI              /**< Setting dpi in the command line. */
-		//SetColumns,        /**< Setting columns in the command line. */
-		//SetRows,           /**< Setting rows in the command line. */
-		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
-		//SetRowSpacing      /**< Setting row spacing in the command line. */
+//SetColumns,        /**< Setting columns in the command line. */
+//SetRows,           /**< Setting rows in the command line. */
+//SetColumnSpacing,  /**< Setting column spacing in the command line. */
+//SetRowSpacing      /**< Setting row spacing in the command line. */
     };
 
 public:
     RS_ActionDrawImage(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionDrawImage() override;
-	
-	void init(int status=0) override;
+                       RS_GraphicView& graphicView);
+    ~RS_ActionDrawImage() override;
 
-	void reset();
+    void init(int status=0) override;
 
-	void trigger() override;
+    void reset();
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void trigger() override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void showOptions() override;
-	void hideOptions() override;
-	void updateMouseButtonHints() override;
+    void showOptions() override;
+    void hideOptions() override;
+    void updateMouseButtonHints() override;
 //    void updateToolBar() override;
 
-	double getAngle() const;
-	void setAngle(double a) const;
-	double getFactor() const;
-	void setFactor(double f) const;
-	double dpiToScale(double dpi) const;
-	double scaleToDpi(double scale) const;
+    double getAngle() const;
+    void setAngle(double a) const;
+    double getFactor() const;
+    void setFactor(double f) const;
+    double dpiToScale(double dpi) const;
+    double scaleToDpi(double scale) const;
 
 protected:
-	struct ImageData;
-	std::unique_ptr<ImageData> pImg;
-	
-	/** Last status before entering option. */
+    struct ImageData;
+    std::unique_ptr<ImageData> pImg;
+
+/** Last status before entering option. */
     Status lastStatus = ShowDialog;
 
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

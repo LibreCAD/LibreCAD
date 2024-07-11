@@ -59,7 +59,6 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
     void setRadius(double r);
@@ -97,6 +96,8 @@ protected:
     void createOptionsWidget() override;
     void updateOptionsAngle(double angle);
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

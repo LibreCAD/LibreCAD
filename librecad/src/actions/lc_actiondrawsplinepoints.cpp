@@ -126,16 +126,17 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawSplinePoints::mouseMoveEvent end");
 }
 
-void LC_ActionDrawSplinePoints::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        fireCoordinateEventForSnap(e);
-    } else if (e->button() == Qt::RightButton){
-        if (getStatus() == SetNextPoint && pPoints->spline.get()){
-            trigger();
-        }
-        init(getStatus() - 1);
-    }
+void LC_ActionDrawSplinePoints::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
 }
+
+void LC_ActionDrawSplinePoints::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    if (status == SetNextPoint && pPoints->spline.get()){
+        trigger();
+    }
+    init(status - 1);
+}
+
 
 void LC_ActionDrawSplinePoints::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr) return;

@@ -72,7 +72,6 @@ public:
 
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
 
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
@@ -93,6 +92,11 @@ protected:
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
+
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
 private:
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);

@@ -64,12 +64,12 @@ void RS_ActionSetRelativeZero::mouseMoveEvent(QMouseEvent *e){
     snapPoint(e);
 }
 
-void RS_ActionSetRelativeZero::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::RightButton) {
-        init(getStatus() - 1);
-    } else {
-        fireCoordinateEventForSnap(e);
-    }
+void RS_ActionSetRelativeZero::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionSetRelativeZero::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    init(status - 1);
 }
 
 void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent *e){

@@ -68,14 +68,14 @@ void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
     };
 }
 
-void RS_ActionDrawPoint::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_Vector snap = snapPoint(e);
-        snap = getFreeSnapAwarePointAlt(e, snap);
-        fireCoordinateEvent(snap);
-    } else if (e->button() == Qt::RightButton){
-        init(getStatus() - 1);
-    }
+void RS_ActionDrawPoint::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    snap = getFreeSnapAwarePointAlt(e, snap);
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionDrawPoint::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(getStatus() - 1);
 }
 
 void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){

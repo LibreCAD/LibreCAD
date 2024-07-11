@@ -50,16 +50,12 @@ public:
         QList<RS2::EntityType> entityTypeList = {});
     void trigger() override;
     void keyPressEvent(QKeyEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     enum RS2::EntityType getTypeToSelect();
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
 private:
     const QList<RS2::EntityType> entityTypeList;
     RS_Entity *en = nullptr;

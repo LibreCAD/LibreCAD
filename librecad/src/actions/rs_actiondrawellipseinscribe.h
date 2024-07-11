@@ -51,21 +51,21 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
+
 //        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
 protected:
-
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     void clearLines(bool checkStatus = false);
     struct Points;
     std::unique_ptr<Points> pPoints;
-
     RS2::CursorType doGetMouseCursor(int status) override;
 };
 

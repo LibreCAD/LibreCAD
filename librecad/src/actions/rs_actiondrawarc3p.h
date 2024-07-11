@@ -56,7 +56,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     void updateMouseButtonHints() override;
@@ -67,9 +66,10 @@ protected:
      */
     struct Points;
     std::unique_ptr<Points> pPoints;
-
     void reset() override;
     void preparePreview();
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

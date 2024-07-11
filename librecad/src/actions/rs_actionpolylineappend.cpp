@@ -106,49 +106,49 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionPolylineAppend::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        if (getStatus() == SetStartpoint){
-            originalPolyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
-            if (!originalPolyline){
-                commandMessageTR("No Entity found.");
-                return;
-            } else if (!isPolyline(originalPolyline)){
-                commandMessageTR("Entity must be a polyline.");
-                return;
-            } else if (originalPolyline->isClosed()){
-                commandMessageTR("Can not append nodes in a closed polyline.");
-                return;
+void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status == SetStartpoint){
+        originalPolyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
+        if (!originalPolyline){
+            commandMessageTR("No Entity found.");
+            return;
+        } else if (!isPolyline(originalPolyline)){
+            commandMessageTR("Entity must be a polyline.");
+            return;
+        } else if (originalPolyline->isClosed()){
+            commandMessageTR("Can not append nodes in a closed polyline.");
+            return;
+        } else {
+            snapPoint(e);
+            auto *op = static_cast<RS_Polyline *>(originalPolyline);
+            RS_Entity *entFirst = op->firstEntity();
+            RS_Entity *entLast = op->lastEntity();
+            double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
+            RS_Entity *nearestSegment = originalPolyline->getNearestEntity(toGraph(e), &dist, RS2::ResolveNone);
+            getPolyline() = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
+            container->addEntity(getPolyline());
+            prepend = false;
+            if (nearestSegment == entFirst){
+                prepend = true;
+                getPoint() = originalPolyline->getStartpoint();
+            } else if (nearestSegment == entLast){
+                getPoint() = originalPolyline->getEndpoint();
             } else {
-                snapPoint(e);
-                auto *op = static_cast<RS_Polyline *>(originalPolyline);
-                RS_Entity *entFirst = op->firstEntity();
-                RS_Entity *entLast = op->lastEntity();
-                double dist = graphicView->toGraphDX(catchEntityGuiRange) * 0.9;
-                RS_Entity *nearestSegment = originalPolyline->getNearestEntity(toGraph(e), &dist, RS2::ResolveNone);
-                getPolyline() = dynamic_cast<RS_Polyline *>(originalPolyline->clone());
-                container->addEntity(getPolyline());
-                prepend = false;
-                if (nearestSegment == entFirst){
-                    prepend = true;
-                    getPoint() = originalPolyline->getStartpoint();
-                } else if (nearestSegment == entLast){
-                    getPoint() = originalPolyline->getEndpoint();
-                } else {
-                    commandMessageTR("Click somewhere near the beginning or end of existing polyline.");
-                }
+                commandMessageTR("Click somewhere near the beginning or end of existing polyline.");
             }
         }
-        fireCoordinateEventForSnap(e);
-    } else if (e->button() == Qt::RightButton){
-        if (getStatus() == SetNextPoint){
-            trigger();
-        }
+    }
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionPolylineAppend::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status == SetNextPoint){
+        trigger();
+    }
 // deletePreview();
 //clearPreview();
-        deleteSnapper();
-        init(getStatus() - 1);
-    }
+    deleteSnapper();
+    init(status - 1);
 }
 
 void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent *e){

@@ -133,48 +133,46 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
     RS_DEBUG->print("RS_ActionDimAngular::mouseMoveEvent end");
 }
 
-void RS_ActionDimAngular::mouseReleaseEvent(QMouseEvent* e){
-    int status = getStatus();
-    if (Qt::LeftButton == e->button()){
-        const RS_Vector &pos = toGraph(e);
-
-        switch (status) {
-            case SetLine1: {
-                RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
-                if (en != nullptr){
-                    line1 = dynamic_cast<RS_Line *>(en);
-                    click1 = line1->getNearestPointOnEntity(pos);
-                    setStatus(SetLine2);
-                }
-                break;
+void RS_ActionDimAngular::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    const RS_Vector &pos = toGraph(e);
+    switch (status) {
+        case SetLine1: {
+            RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
+            if (en != nullptr){
+                line1 = dynamic_cast<RS_Line *>(en);
+                click1 = line1->getNearestPointOnEntity(pos);
+                setStatus(SetLine2);
             }
-            case SetLine2: {
-                RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
-                if (en != nullptr){
-                    if (en != line1){
-                        line2 = dynamic_cast<RS_Line *>(en);
-                        click2 = line2->getNearestPointOnEntity(pos);
-                        if (setData(click2, true)){
-                            moveRelativeZero(center);
-                            setStatus(SetPos);
-                        }
+            break;
+        }
+        case SetLine2: {
+            RS_Entity *en = catchEntity(e, RS2::EntityLine,RS2::ResolveAll);
+            if (en != nullptr){
+                if (en != line1){
+                    line2 = dynamic_cast<RS_Line *>(en);
+                    click2 = line2->getNearestPointOnEntity(pos);
+                    if (setData(click2, true)){
+                        moveRelativeZero(center);
+                        setStatus(SetPos);
                     }
                 }
-                break;
             }
-            case SetPos: {
-                RS_Vector snap = snapPoint(e);
-                snap = getFreeSnapAwarePoint(e, snap);
-                fireCoordinateEvent(snap);
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (Qt::RightButton == e->button()){
-        deletePreview();
-        init(status - 1);
+        case SetPos: {
+            RS_Vector snap = snapPoint(e);
+            snap = getFreeSnapAwarePoint(e, snap);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionDimAngular::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e){

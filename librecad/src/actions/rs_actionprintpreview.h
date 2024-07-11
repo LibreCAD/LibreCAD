@@ -39,7 +39,7 @@ class QG_PrintPreviewOptions;
  * @author Andrew Mustun
  */
 class RS_ActionPrintPreview : public RS_ActionInterface {
-    Q_OBJECT
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -52,33 +52,31 @@ public:
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionPrintPreview() override;
+    ~RS_ActionPrintPreview() override;
 
-	void init(int status=0) override;
-	void resume() override;
+    void init(int status=0) override;
+    void resume() override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void showOptions() override;
-	void hideOptions() override;
-
-
+    void showOptions() override;
+    void hideOptions() override;
 
     void center();
     void fit();
     bool setScale(double f, bool autoZoom = true);
-	double getScale() const;
+    double getScale() const;
     void printWarning(const QString& s);
     void calcPagesNum();
 
     void setLineWidthScaling(bool state);
-	void setBlackWhite(bool bw);
+    void setBlackWhite(bool bw);
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
@@ -86,13 +84,13 @@ public:
     void setOption(std::unique_ptr<QG_PrintPreviewOptions> option);
     std::unique_ptr<QG_PrintPreviewOptions>& getOption();
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 private:
 
     bool hasOptions = false;
     bool m_bPaperOffset = false;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     std::unique_ptr<QG_PrintPreviewOptions> m_option;
 };
 

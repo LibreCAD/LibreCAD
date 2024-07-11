@@ -51,7 +51,7 @@ public:
 
 protected:
     RS_Vector vertexToDelete2 = RS_Vector(false);
-    void processMouseLeftButtonRelease(QMouseEvent *e, int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);
 };
 

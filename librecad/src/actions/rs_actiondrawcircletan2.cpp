@@ -208,54 +208,53 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan2::mouseReleaseEvent(QMouseEvent *e){
-    // Proceed to next status
-    if (e->button() == Qt::LeftButton){
-
-        switch (getStatus()) {
-            case SetCircle1: {
-                RS_Entity *en = catchCircle(e);
-                if (en != nullptr){
-                    pPoints->circles.resize(SetCircle1); // todo - what for? Why not have fixes size
-                    pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
-                    setStatus(SetCircle2);
-                }
-                break;
+void RS_ActionDrawCircleTan2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetCircle1: {
+            RS_Entity *en = catchCircle(e);
+            if (en != nullptr){
+                pPoints->circles.resize(SetCircle1); // todo - what for? Why not have fixes size
+                pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+                setStatus(SetCircle2);
             }
-            case SetCircle2: {
-                RS_Entity *en = catchCircle(e);
-                if (en != nullptr){
-                    pPoints->circles.resize(getStatus());
-                    if (getCenters(en)){
-                        pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+            break;
+        }
+        case SetCircle2: {
+            RS_Entity *en = catchCircle(e);
+            if (en != nullptr){
+                pPoints->circles.resize(getStatus());
+                if (getCenters(en)){
+                    pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
 //                    pPoints->circles.at(pPoints->circles.size() - 1)->setHighlighted(true);
 //                    graphicView->redraw(RS2::RedrawDrawing);
-                        setStatus(SetCenter);
-                    } else {
-                        RS_DIALOGFACTORY->commandMessage(tr("No common tangential circle for radius '%1'").arg(pPoints->cData.radius));
-                    }
+                    setStatus(SetCenter);
+                } else {
+                    commandMessage(tr("No common tangential circle for radius '%1'").arg(pPoints->cData.radius));
                 }
-                break;
             }
-            case SetCenter:
-                pPoints->coord = toGraph(e);
-                if (preparePreview()) trigger();
-                break;
+            break;
+        }
+        case SetCenter:
+            pPoints->coord = toGraph(e);
+            if (preparePreview()) trigger();
+            break;
 
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        // Return to last status:
-        if (getStatus() > 0){
-//            pPoints->circles[getStatus() - 1]->setHighlighted(false);
-            pPoints->circles.pop_back();
-            graphicView->redraw(RS2::RedrawDrawing);
-            deletePreview();
-        }
-        init(getStatus() - 1);
+        default:
+            break;
     }
 }
+
+void RS_ActionDrawCircleTan2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (getStatus() > 0){
+//            pPoints->circles[getStatus() - 1]->setHighlighted(false);
+        pPoints->circles.pop_back();
+        graphicView->redraw(RS2::RedrawDrawing);
+        deletePreview();
+    }
+    init(status - 1);
+}
+
 
 //void RS_ActionDrawCircleTan2::coordinateEvent(RS_CoordinateEvent* e) {
 

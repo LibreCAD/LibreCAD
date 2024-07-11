@@ -49,7 +49,6 @@ public:
         SetTargetPoint,    /**< Setting the target to rotation to*/
         ShowDialog            /**< Showing the options dialog. */
     };
-
 public:
     RS_ActionModifyRotate(
         RS_EntityContainer &container,
@@ -58,7 +57,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
     void keyPressEvent(QKeyEvent *e) override;
@@ -66,6 +64,8 @@ public:
     void keyReleaseEvent(QKeyEvent *e) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     int selectedCount = 0;
     bool selectRefPointFirst = true;

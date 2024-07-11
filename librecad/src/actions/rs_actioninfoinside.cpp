@@ -38,24 +38,23 @@ RS_ActionInfoInside::RS_ActionInfoInside(RS_EntityContainer& container,
 	:RS_ActionInterface("Info Inside",
                         container, graphicView)
     , pt(std::make_unique<RS_Vector>())
-    ,contour(std::make_unique<RS_EntityContainer>())
-{
-	actionType=RS2::ActionInfoInside;
-	for(auto e: container){
-		if (e->isSelected()) {
-			contour->addEntity(e);
-		}
-	}
+    ,contour(std::make_unique<RS_EntityContainer>()){
+    actionType=RS2::ActionInfoInside;
+    for(auto e: container){
+        if (e->isSelected()) {
+            contour->addEntity(e);
+        }
+    }
 }
 
 RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
-	if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
-        RS_DIALOGFACTORY->commandMessage(tr("Point is inside selected contour."));
+    if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
+        commandMessageTR("Point is inside selected contour.");
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("Point is outside selected contour."));
+        commandMessageTR("Point is outside selected contour.");
     }
     finish(false);
 }
@@ -69,26 +68,27 @@ void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
     }*/
 }
 
-void RS_ActionInfoInside::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-		*pt = snapPoint(e);
-        trigger();
-    }
+void RS_ActionInfoInside::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    *pt = snapPoint(e);
+    trigger();
+
+}
+
+void RS_ActionInfoInside::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(getStatus()-1);
 }
 
 void RS_ActionInfoInside::updateMouseButtonHints() {
     switch (getStatus()) {
-    case 0:
-        RS_DIALOGFACTORY->updateMouseWidget(tr("Specify point"),
-                                            tr("Cancel"));
-        break;
-    default:
-		RS_DIALOGFACTORY->updateMouseWidget();
-        break;
+        case 0:
+            updateMouseWidgetTRCancel("Specify point");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
+
 RS2::CursorType RS_ActionInfoInside::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }

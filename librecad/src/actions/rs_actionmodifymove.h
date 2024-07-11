@@ -37,35 +37,34 @@ struct RS_MoveData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyMove : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
-	/**
-	 * Action States.
-	 */
-	enum Status {
-		SetReferencePoint,    /**< Setting the reference point. */
-		SetTargetPoint,       /**< Setting the target point. */
-		ShowDialog            /**< Showing the options dialog. */
-	};
+/**
+ * Action States.
+ */
+    enum Status {
+        SetReferencePoint,    /**< Setting the reference point. */
+        SetTargetPoint,       /**< Setting the target point. */
+        ShowDialog            /**< Showing the options dialog. */
+    };
 
 public:
-	RS_ActionModifyMove(RS_EntityContainer& container,
-						RS_GraphicView& graphicView);
-	~RS_ActionModifyMove() override;
+    RS_ActionModifyMove(RS_EntityContainer& container,
+                        RS_GraphicView& graphicView);
+    ~RS_ActionModifyMove() override;
 
-	void trigger() override;
+    void trigger() override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

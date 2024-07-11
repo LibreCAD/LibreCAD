@@ -145,37 +145,36 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent end");
 }
 
-void RS_ActionDimDiametric::mouseReleaseEvent(QMouseEvent *e){
-
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetEntity: {
-                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
-                if (en!= nullptr){
-                    if (isArc(en) || isCircle(en)){
-                        entity = en;
-                        const RS_Vector &center = en->getCenter();
-                        moveRelativeZero(center);
-                        setStatus(SetPos);
-                    } else {
-                        commandMessageTR("Not a circle or arc entity");
-                    }
+void RS_ActionDimDiametric::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity: {
+            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            if (en!= nullptr){
+                if (isArc(en) || isCircle(en)){
+                    entity = en;
+                    const RS_Vector &center = en->getCenter();
+                    moveRelativeZero(center);
+                    setStatus(SetPos);
+                } else {
+                    commandMessageTR("Not a circle or arc entity");
                 }
-                break;
             }
-            case SetPos: {
-                RS_Vector snap = snapPoint(e);
-                snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
-                fireCoordinateEvent(snap);
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
+        case SetPos: {
+            RS_Vector snap = snapPoint(e);
+            snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionDimDiametric::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent *e){

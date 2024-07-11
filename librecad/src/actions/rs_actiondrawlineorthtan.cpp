@@ -34,7 +34,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_actioninterface.h"
 
 namespace{
-auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
+    auto circleList={RS2::EntityArc, RS2::EntityCircle, RS2::EntityEllipse, RS2::EntityParabola}; //this holds a list of entity types which supports tangent
 }
 
 /**
@@ -48,8 +48,7 @@ RS_ActionDrawLineOrthTan::RS_ActionDrawLineOrthTan(
     :RS_PreviewActionInterface("Draw Tangent Orthogonal", container, graphicView)
 	,normal(nullptr)
 	,tangent(nullptr)
-	,circle(nullptr)
-{
+	,circle(nullptr){
 	actionType=RS2::ActionDrawLineOrthTan;
 }
 
@@ -128,38 +127,37 @@ void RS_ActionDrawLineOrthTan::clearLines(){
     deletePreview();
 }
 
-void RS_ActionDrawLineOrthTan::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::RightButton){
-        clearLines();
-        if (getStatus() == SetLine){
-            finish(true);
-        } else {
-            init(getStatus() - 1);
-        }
-    } else {
-        switch (getStatus()) {
-            case SetLine: {
-                RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
-                if (en != nullptr){
-                    if (en->getLength() < RS_TOLERANCE){
-                        //ignore lines not long enough
-                        break;
-                    }
-                    normal = dynamic_cast<RS_Line *>(en);
-                    setStatus(SetCircle);
+void RS_ActionDrawLineOrthTan::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetLine: {
+            RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+            if (en != nullptr){
+                if (en->getLength() < RS_TOLERANCE){
+                    //ignore lines not long enough
+                    break;
                 }
+                normal = dynamic_cast<RS_Line *>(en);
+                setStatus(SetCircle);
             }
-                break;
-
-            case SetCircle:
-                if (tangent){
-                    trigger();
-                }
-                break;
-
-            default:
-                break;
+            break;
         }
+        case SetCircle: {
+            if (tangent) {
+                trigger();
+            }
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    clearLines();
+    if (status == SetLine){
+        finish(true);
+    } else {
+        init(status - 1);
     }
 }
 
@@ -176,6 +174,7 @@ void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
             break;
     }
 }
+
 RS2::CursorType RS_ActionDrawLineOrthTan::doGetMouseCursor([[maybe_unused]] int status){
     return isFinished() ? RS2::ArrowCursor : RS2::SelectCursor;
 }

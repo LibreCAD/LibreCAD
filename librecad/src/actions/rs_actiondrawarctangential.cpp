@@ -192,52 +192,52 @@ RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
     return center;
 }
 
-void RS_ActionDrawArcTangential::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        switch (getStatus()) {
+void RS_ActionDrawArcTangential::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        // set base entity:
+        case SetBaseEntity: {
+            RS_Vector coord = toGraph(e);
+            RS_Entity *entity = catchEntity(coord, RS2::ResolveAll);
+            if (entity){
+                if (entity->isAtomic()){
+                    baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
+                    const RS_Vector &startPoint = baseEntity->getStartpoint();
+                    const RS_Vector &endPoint = baseEntity->getEndpoint();
+                    if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)){
+                        isStartPoint = true;
+                        arcStartPoint = startPoint;
 
-            // set base entity:
-            case SetBaseEntity: {
-                RS_Vector coord = toGraph(e);
-                RS_Entity *entity = catchEntity(coord, RS2::ResolveAll);
-                if (entity){
-                    if (entity->isAtomic()){
-                        baseEntity = dynamic_cast<RS_AtomicEntity *>(entity);
-                        const RS_Vector &startPoint = baseEntity->getStartpoint();
-                        const RS_Vector &endPoint = baseEntity->getEndpoint();
-                        if (startPoint.distanceTo(coord) < endPoint.distanceTo(coord)){
-                            isStartPoint = true;
-                            arcStartPoint = startPoint;
-
-                        } else {
-                            isStartPoint = false;
-                            arcStartPoint = endPoint;
-                        }
-                        setStatus(SetEndAngle);
-                        updateMouseButtonHints();
+                    } else {
+                        isStartPoint = false;
+                        arcStartPoint = endPoint;
                     }
+                    setStatus(SetEndAngle);
+                    updateMouseButtonHints();
                 }
-                break;
             }
-            case SetEndAngle: {// set angle (point that defines the angle)
-                if (byRadius){
-                    if (isShift(e)){ // double check for efficiency, eliminate calculations if not needed
-                        RS_Vector center = forecastArcCenter();
-                        point = getSnapAngleAwarePoint(e, center, point);
-                    }
-                }else {
-                    point = getSnapAngleAwarePoint(e, arcStartPoint, point);
-                }
-                fireCoordinateEvent(point);
-                break;
-            }
+            break;
         }
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+        case SetEndAngle: {// set angle (point that defines the angle)
+            if (byRadius){
+                if (isShift(e)){ // double check for efficiency, eliminate calculations if not needed
+                    RS_Vector center = forecastArcCenter();
+                    point = getSnapAngleAwarePoint(e, center, point);
+                }
+            }else {
+                point = getSnapAngleAwarePoint(e, arcStartPoint, point);
+            }
+            fireCoordinateEvent(point);
+            break;
+        }
     }
 }
-// fixme - more intelligent porcessing
+
+void RS_ActionDrawArcTangential::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
+}
+
+// fixme - more intelligent processing
 void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
     if (e==nullptr) {
         return;

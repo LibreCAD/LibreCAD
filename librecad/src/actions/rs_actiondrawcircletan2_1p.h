@@ -49,26 +49,26 @@ public:
 
 public:
     RS_ActionDrawCircleTan2_1P(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-	~RS_ActionDrawCircleTan2_1P() override;
+                               RS_GraphicView& graphicView);
+    ~RS_ActionDrawCircleTan2_1P() override;
 
-	void init(int status=0) override;
+    void init(int status=0) override;
 
-	void trigger() override;
-	bool getCenters();
-	bool preparePreview();
+    void trigger() override;
+    bool getCenters();
+    bool preparePreview();
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
 //        void commandEvent(RS_CommandEvent* e) override;
-	void finish(bool updateTB=true) override;
-	void updateMouseButtonHints() override;
+    void finish(bool updateTB=true) override;
+    void updateMouseButtonHints() override;
 protected:
     RS_Entity* catchCircle(QMouseEvent* e);
-	RS2::CursorType doGetMouseCursor(int status) override;
-
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

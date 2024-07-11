@@ -113,30 +113,29 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     this->previewRefSelectablePoint(mirrorLinePoint2);
 }
 
-void RS_ActionModifyMirror::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        if (mirrorToExistingLine && status == SetAxisPoint1){
-            RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
-            if (en != nullptr){
-                auto line = dynamic_cast<RS_Line *>(en);
-                pPoints->axisPoint1 = line->getStartpoint();
-                pPoints->axisPoint2 = line->getEndpoint();
-                setStatus(ShowDialog);
-                showOptionsAndTrigger();
-            }
+void RS_ActionModifyMirror::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (mirrorToExistingLine && status == SetAxisPoint1){
+        RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
+        if (en != nullptr){
+            auto line = dynamic_cast<RS_Line *>(en);
+            pPoints->axisPoint1 = line->getStartpoint();
+            pPoints->axisPoint2 = line->getEndpoint();
+            setStatus(ShowDialog);
+            showOptionsAndTrigger();
         }
-        else {
-            RS_Vector snapped = snapPoint(e);
-            if (status == SetAxisPoint2){
-                snapped = getSnapAngleAwarePoint(e, pPoints->axisPoint1, snapped);
-            }
-            fireCoordinateEvent(snapped);
-        }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(status - 1);
     }
+    else {
+        RS_Vector snapped = snapPoint(e);
+        if (status == SetAxisPoint2){
+            snapped = getSnapAngleAwarePoint(e, pPoints->axisPoint1, snapped);
+        }
+        fireCoordinateEvent(snapped);
+    }
+}
+
+void RS_ActionModifyMirror::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent *e){

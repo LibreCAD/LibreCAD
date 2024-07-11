@@ -64,15 +64,13 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 		bool isArc)
 	:LC_ActionDrawCircleBase("Draw ellipse with axis",
                                container, graphicView)
-    ,pPoints(std::make_unique<Points>())
-{
+    ,pPoints(std::make_unique<Points>()){
     pPoints->isArc = isArc;
     pPoints->angle2 = isArc ? 2. * M_PI : 0.;
     actionType = isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis;
 }
 
 RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() = default;
-void mouseReleaseEvent(QMouseEvent *e);
 
 void RS_ActionDrawEllipseAxis::init(int status){
     RS_PreviewActionInterface::init(status);
@@ -226,23 +224,22 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
 }
 
-void RS_ActionDrawEllipseAxis::mouseReleaseEvent(QMouseEvent* e) {
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton) {
-        RS_Vector snap = snapPoint(e);
-        switch (status){
-            case SetMajor:
-            case SetAngle1:
-            case SetAngle2:{
-              snap = getSnapAngleAwarePoint(e, pPoints->center, snap);
-              break;
-            }
+void RS_ActionDrawEllipseAxis::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    switch (status){
+        case SetMajor:
+        case SetAngle1:
+        case SetAngle2:{
+            snap = getSnapAngleAwarePoint(e, pPoints->center, snap);
+            break;
         }
-        fireCoordinateEvent(snap);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(status - 1);
     }
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionDrawEllipseAxis::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent *e){
@@ -302,7 +299,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+        commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }
@@ -372,5 +369,3 @@ void RS_ActionDrawEllipseAxis::updateMouseButtonHints(){
             break;
     }
 }
-
-// EOF

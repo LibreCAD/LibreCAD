@@ -165,65 +165,65 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
 }
 
-void RS_ActionInfoDist2::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        switch (status) {
-            case SetEntity: {
-                entity = doCatchEntity(e);
-                if (entity != nullptr){
-                    switch (selectionMode) {
-                        case FIRST_IS_POINT: {
-                            entityNearestPoint = obtainNearestPointOnEntity(point);
-                            trigger();
-                            setStatus(SetPoint);
-                            break;
-                        }
-                        case FIRST_IS_ENTITY: {
-                            setStatus(SetPoint);
-                            break;
-                        }
-                    }
-                }
-                break;
-            }
-            case SetPoint: {
-                RS_Vector snap = snapPoint(e);
-                snap = getRelZeroAwarePoint(e, snap);
+void RS_ActionInfoDist2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity: {
+            entity = doCatchEntity(e);
+            if (entity != nullptr){
                 switch (selectionMode) {
                     case FIRST_IS_POINT: {
-                        point = snap;
-                        moveRelativeZero(point);
-                        setStatus(SetEntity);
+                        entityNearestPoint = obtainNearestPointOnEntity(point);
+                        trigger();
+                        setStatus(SetPoint);
                         break;
                     }
                     case FIRST_IS_ENTITY: {
-                        entityNearestPoint = obtainNearestPointOnEntity(snap);
-                        fireCoordinateEvent(snap);
+                        setStatus(SetPoint);
                         break;
                     }
                 }
             }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        int newStatus = -1;
-        bool firstIsPoint = selectionMode == FIRST_IS_POINT;
-        switch (status) {
-            case SetEntity:
-                newStatus = firstIsPoint ? SetPoint : -1;
-                break;
-            case SetPoint:
-                newStatus = firstIsPoint ? -1 : SetEntity;
-                restoreRelZero();
-                break;
-            default:
-                break;
+        case SetPoint: {
+            RS_Vector snap = snapPoint(e);
+            snap = getRelZeroAwarePoint(e, snap);
+            switch (selectionMode) {
+                case FIRST_IS_POINT: {
+                    point = snap;
+                    moveRelativeZero(point);
+                    setStatus(SetEntity);
+                    break;
+                }
+                case FIRST_IS_ENTITY: {
+                    entityNearestPoint = obtainNearestPointOnEntity(snap);
+                    fireCoordinateEvent(snap);
+                    break;
+                }
+            }
         }
-        setStatus(newStatus);
+        default:
+            break;
     }
+
+}
+
+void RS_ActionInfoDist2::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    int newStatus = -1;
+    bool firstIsPoint = selectionMode == FIRST_IS_POINT;
+    switch (status) {
+        case SetEntity:
+            newStatus = firstIsPoint ? SetPoint : -1;
+            break;
+        case SetPoint:
+            newStatus = firstIsPoint ? -1 : SetEntity;
+            restoreRelZero();
+            break;
+        default:
+            break;
+    }
+    setStatus(newStatus);
 }
 
 RS_Vector RS_ActionInfoDist2::obtainNearestPointOnEntity(const RS_Vector &snap) const{

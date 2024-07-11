@@ -99,21 +99,21 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawLinePolygonCenCor::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector coord = snapPoint(e);
-        if (getStatus() == SetCorner){
-            coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
-        }
-        fireCoordinateEvent(coord);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+void RS_ActionDrawLinePolygonCenCor::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector coord = snapPoint(e);
+    if (status == SetCorner){
+        coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
     }
+    fireCoordinateEvent(coord);
+}
+
+void RS_ActionDrawLinePolygonCenCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e) return;
+    if (e == nullptr) return;
 
     RS_Vector mouse = e->getCoordinate();
 
@@ -155,7 +155,7 @@ void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+        commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }

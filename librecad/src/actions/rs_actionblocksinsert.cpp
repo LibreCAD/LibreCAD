@@ -48,16 +48,12 @@ RS_ActionBlocksInsert::RS_ActionBlocksInsert(RS_EntityContainer& container,
 	:RS_PreviewActionInterface("Blocks Insert",
 							   container, graphicView)
 	,block(nullptr)
-	,lastStatus(SetUndefined)
-{
+	,lastStatus(SetUndefined){
 	actionType = RS2::ActionBlocksInsert;
 	reset();    // init data Member
 }
 
-
-
 RS_ActionBlocksInsert::~RS_ActionBlocksInsert()  = default;
-
 
 void RS_ActionBlocksInsert::init(int status) {
     RS_PreviewActionInterface::init(status);
@@ -72,12 +68,12 @@ void RS_ActionBlocksInsert::init(int status) {
             if (document->is(RS2::EntityBlock)) {
                 QString parentBlockName = ((RS_Block*)(document))->getName();
                 if (parentBlockName == blockName) {
-                    RS_DIALOGFACTORY->commandMessage(tr("Block cannot contain an insert of itself."));
+                    commandMessageTR("Block cannot contain an insert of itself.");
                     finish(false);
                 } else {
                     QStringList bnChain = block->findNestedInsert(parentBlockName);
                     if (!bnChain.empty()) {
-                        RS_DIALOGFACTORY->commandMessage(blockName
+                        commandMessage(blockName
                             + tr(" has nested insert of current block in:\n")
                             + bnChain.join("->")
                             + tr("\nThis block cannot be inserted."));
@@ -91,8 +87,6 @@ void RS_ActionBlocksInsert::init(int status) {
     }
 }
 
-
-
 void RS_ActionBlocksInsert::reset() {
 	data.reset(new RS_InsertData("",
                          RS_Vector(0.0,0.0),
@@ -104,71 +98,62 @@ void RS_ActionBlocksInsert::reset() {
 						 RS2::Update));
 }
 
-
-
 void RS_ActionBlocksInsert::trigger() {
     deletePreview();
 
     //RS_Modification m(*container, graphicView);
-	//m.paste(img->insertionPoint);
+//m.paste(img->insertionPoint);
     //std::cout << *RS_Clipboard::instance();
 
-	if (block) {
+    if (block) {
         RS_Creation creation(container, graphicView);
-		data->updateMode = RS2::Update;
-		creation.createInsert(data.get());
+        data->updateMode = RS2::Update;
+        creation.createInsert(data.get());
     }
 
-	graphicView->redraw(RS2::RedrawDrawing); 
+    graphicView->redraw(RS2::RedrawDrawing);
 
     //finish();
 }
 
-
 void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
-    case SetTargetPoint:
-		data->insertionPoint = snapPoint(e);
+        case SetTargetPoint: {
+            data->insertionPoint = snapPoint(e);
 
-		if (block) {
-            deletePreview();
-            //preview->addAllFrom(*block);
-			//preview->move(data->insertionPoint);
-			RS_Creation creation(preview.get(), nullptr, false);
-			// Create insert as preview only
-			data->updateMode = RS2::PreviewUpdate;
-			creation.createInsert(data.get());
-            drawPreview();
+            if (block) {
+                deletePreview();
+                //preview->addAllFrom(*block);
+//preview->move(data->insertionPoint);
+                RS_Creation creation(preview.get(), nullptr, false);
+// Create insert as preview only
+                data->updateMode = RS2::PreviewUpdate;
+                creation.createInsert(data.get());
+                drawPreview();
+            }
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-
-
-void RS_ActionBlocksInsert::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionBlocksInsert::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
 }
 
-
+void RS_ActionBlocksInsert::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status -1);
+}
 
 void RS_ActionBlocksInsert::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==NULL) {
+    if (e==nullptr) {
         return;
     }
 
-	data->insertionPoint = e->getCoordinate();
+    data->insertionPoint = e->getCoordinate();
     trigger();
 }
-
-
 
 void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();
@@ -179,163 +164,157 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
     }
 
     switch (getStatus()) {
-    case SetTargetPoint:
-        if (checkCommand("angle", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetAngle);
-        } else if (checkCommand("factor", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetFactor);
-        } else if (checkCommand("columns", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetColumns);
-        } else if (checkCommand("rows", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetRows);
-        } else if (checkCommand("columnspacing", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetColumnSpacing);
-        } else if (checkCommand("rowspacing", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetRowSpacing);
+        case SetTargetPoint: {
+            if (checkCommand("angle", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetAngle);
+            } else if (checkCommand("factor", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetFactor);
+            } else if (checkCommand("columns", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetColumns);
+            } else if (checkCommand("rows", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetRows);
+            } else if (checkCommand("columnspacing", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetColumnSpacing);
+            } else if (checkCommand("rowspacing", c)) {
+                deletePreview();
+                lastStatus = (Status) getStatus();
+                setStatus(SetRowSpacing);
+            }
+            break;
         }
-        break;
-
-    case SetAngle: {
+        case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
-				data->angle = RS_Math::deg2rad(a);
+                data->angle = RS_Math::deg2rad(a);
             } else {
                 commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    case SetFactor: {
+        case SetFactor: {
             bool ok;
             double f = RS_Math::eval(c, &ok);
             if (ok) {
                 setFactor(f);
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    case SetColumns: {
+        case SetColumns: {
             bool ok;
             int cols = (int)RS_Math::eval(c, &ok);
             if (ok) {
-				data->cols = cols;
+                data->cols = cols;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    case SetRows: {
+        case SetRows: {
             bool ok;
             int rows = (int)RS_Math::eval(c, &ok);
             if (ok) {
-				data->rows = rows;
+                data->rows = rows;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    case SetColumnSpacing: {
+        case SetColumnSpacing: {
             bool ok;
             double cs = (int)RS_Math::eval(c, &ok);
             if (ok) {
-				data->spacing.x = cs;
+                data->spacing.x = cs;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    case SetRowSpacing: {
+        case SetRowSpacing: {
             bool ok;
             int rs = (int)RS_Math::eval(c, &ok);
             if (ok) {
-				data->spacing.y = rs;
+                data->spacing.y = rs;
             } else {
-                RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
+                commandMessageTR("Not a valid expression");
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
+            break;
         }
-        break;
-
-    default:
-        break;
+        default:
+            break;
     }
 }
 
 double RS_ActionBlocksInsert::getAngle() const {
-	return data->angle;
+    return data->angle;
 }
 
 void RS_ActionBlocksInsert::setAngle(double a) {
-	data->angle = a;
+    data->angle = a;
 }
 
 double RS_ActionBlocksInsert::getFactor() const {
-	return data->scaleFactor.x;
+    return data->scaleFactor.x;
 }
 
 void RS_ActionBlocksInsert::setFactor(double f) {
-	data->scaleFactor = RS_Vector(f, f);
+    data->scaleFactor = RS_Vector(f, f);
 }
 
 int RS_ActionBlocksInsert::getColumns() const {
-	return data->cols;
+    return data->cols;
 }
 
 void RS_ActionBlocksInsert::setColumns(int c) {
-	data->cols = c;
+    data->cols = c;
 }
 
 int RS_ActionBlocksInsert::getRows() const {
-	return data->rows;
+    return data->rows;
 }
 
 void RS_ActionBlocksInsert::setRows(int r) {
-	data->rows = r;
+    data->rows = r;
 }
 
 double RS_ActionBlocksInsert::getColumnSpacing() const {
-	return data->spacing.x;
+    return data->spacing.x;
 }
 
 void RS_ActionBlocksInsert::setColumnSpacing(double cs) {
-	data->spacing.x = cs;
+    data->spacing.x = cs;
 }
 
 double RS_ActionBlocksInsert::getRowSpacing() const {
-	return data->spacing.y;
+    return data->spacing.y;
 }
 
 void RS_ActionBlocksInsert::setRowSpacing(double rs) {
-	data->spacing.y = rs;
+    data->spacing.y = rs;
 }
 
 QStringList RS_ActionBlocksInsert::getAvailableCommands() {
@@ -345,7 +324,6 @@ QStringList RS_ActionBlocksInsert::getAvailableCommands() {
     case SetTargetPoint:
         cmd += command("angle");
         cmd += command("factor");
-        ;
         cmd += command("columns");
         cmd += command("rows");
         cmd += command("columnspacing");
@@ -358,21 +336,16 @@ QStringList RS_ActionBlocksInsert::getAvailableCommands() {
     return cmd;
 }
 
-
+// fixme - options ownership
 void RS_ActionBlocksInsert::showOptions() {
     RS_ActionInterface::showOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, true);
 }
 
-
-
 void RS_ActionBlocksInsert::hideOptions() {
     RS_ActionInterface::hideOptions();
-
     RS_DIALOGFACTORY->requestOptions(this, false);
 }
-
 
 void RS_ActionBlocksInsert::updateMouseButtonHints() {
     switch (getStatus()) {

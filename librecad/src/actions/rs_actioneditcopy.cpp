@@ -45,24 +45,20 @@ RS_ActionEditCopy::RS_ActionEditCopy(bool copy,
         :RS_ActionInterface("Edit Copy",
 					container, graphicView)
 		, copy{copy}
-		, referencePoint{new RS_Vector{}}
-{
+		, referencePoint{new RS_Vector{}}{
 }
 
 RS_ActionEditCopy::~RS_ActionEditCopy() = default;
-
 
 void RS_ActionEditCopy::init(int status) {
     RS_ActionInterface::init(status);
     //trigger();
 }
 
-
-
 void RS_ActionEditCopy::trigger() {
 
     RS_Modification m(*container, graphicView);
-	m.copy(*referencePoint, !copy);
+    m.copy(*referencePoint, !copy);
 
     //graphicView->redraw();
     finish(false);
@@ -78,26 +74,22 @@ void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
 		deleteSnapper();
 }
 
-void RS_ActionEditCopy::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionEditCopy::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_CoordinateEvent ce(snapPoint(e));
+    coordinateEvent(&ce);
 }
 
-
+void RS_ActionEditCopy::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status-1);
+}
 
 void RS_ActionEditCopy::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e)
+    if (e == nullptr)
         return;
 
-	*referencePoint = e->getCoordinate();
+    *referencePoint = e->getCoordinate();
     trigger();
 }
-
-
 
 void RS_ActionEditCopy::updateMouseButtonHints() {
     switch (getStatus()) {

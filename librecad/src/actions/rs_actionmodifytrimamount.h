@@ -52,7 +52,6 @@ public:
     ~RS_ActionModifyTrimAmount() override;
     void init(int status = 0) override;
     void trigger() override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
@@ -63,7 +62,6 @@ public:
     void setDistanceIsTotalLength(bool on){distanceIsTotalLength = on;}
     void setSymmetricDistance(bool val){symmetricDistance = val;};
     bool isSymmetricDistance(){return symmetricDistance;};
-
     void mouseMoveEvent(QMouseEvent *event) override;
 
 private:
@@ -84,6 +82,8 @@ private:
 protected:
     void createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

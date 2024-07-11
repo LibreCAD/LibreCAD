@@ -134,13 +134,13 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDrawImage::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    } else if (e->button()==Qt::RightButton) {
-        //init(getStatus()-1);
-        finish(false);
-    }
+void RS_ActionDrawImage::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionDrawImage::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+    //init(getStatus()-1);
+    finish(false);
 }
 
 void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent *e){

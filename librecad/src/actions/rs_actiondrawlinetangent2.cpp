@@ -169,18 +169,8 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent *e){
+void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     deleteSnapper();
-    if (e->button() == Qt::RightButton){
-        deletePreview();
-        if (getStatus() == SetCircle1){
-            if (m_pPoints->circle1 != nullptr){
-                m_pPoints->circle1 = nullptr;
-            }
-        }
-        init(getStatus() - 1);
-        return;
-    }
     switch (getStatus()) {
         case SetCircle1: {
             m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
@@ -208,6 +198,17 @@ void RS_ActionDrawLineTangent2::mouseReleaseEvent(QMouseEvent *e){
         default:
             break;
     }
+}
+
+void RS_ActionDrawLineTangent2::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deleteSnapper();
+    deletePreview();
+    if (getStatus() == SetCircle1){
+        if (m_pPoints->circle1 != nullptr){
+            m_pPoints->circle1 = nullptr;
+        }
+    }
+    init(getStatus() - 1);
 }
 
 void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){

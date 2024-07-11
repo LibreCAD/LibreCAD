@@ -127,63 +127,63 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
 }
 
 // fixme - complete refactoring
-void RS_ActionPolylineTrim::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_Vector cPoint;
-        switch (getStatus()) {
-            case ChooseEntity: {
-                auto en = catchEntity(e);
-                if (en == nullptr){
-                    commandMessageTR("No Entity found.");
-                } else if (en->rtti() != RS2::EntityPolyline){
-                    commandMessageTR("Entity must be a polyline.");
-                } else {
-                    polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                    polylineToModify->setSelected(true);
-                    graphicView->drawEntity(polylineToModify);
-                    setStatus(SetSegment1);
-                    graphicView->redraw();
-                }
-                break;
-            }
-            case SetSegment1:{
-                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
-                if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic()){
-                    Segment1 = dynamic_cast<RS_AtomicEntity *>(en);
-                    setStatus(SetSegment2);
-                }
-                else{
-                    commandMessageTR("First segment should be on selected polyline.");
-                }
-                break;
-            }
-            case SetSegment2: {
-                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
-                if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic() && en != Segment1){
-                    Segment2 = dynamic_cast<RS_AtomicEntity *>(en);
-                    deleteSnapper();
-                    trigger();
-                }
-                else{
-                    commandMessageTR("Second segment should be on selected polyline and not equal to first one.");
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        deleteSnapper();
-        deletePreview();
-        int newStatus = getStatus() - 1;
-        if (newStatus == ChooseEntity){
-            if (polylineToModify){
-                polylineToModify->setSelected(false);
+void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseEntity: {
+            auto en = catchEntity(e);
+            if (en == nullptr){
+                commandMessageTR("No Entity found.");
+            } else if (en->rtti() != RS2::EntityPolyline){
+                commandMessageTR("Entity must be a polyline.");
+            } else {
+                polylineToModify = dynamic_cast<RS_Polyline *>(en);
+                polylineToModify->setSelected(true);
+                graphicView->drawEntity(polylineToModify);
+                setStatus(SetSegment1);
                 graphicView->redraw();
             }
+            break;
         }
-        setStatus(newStatus);
+        case SetSegment1:{
+            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic()){
+                Segment1 = dynamic_cast<RS_AtomicEntity *>(en);
+                setStatus(SetSegment2);
+            }
+            else{
+                commandMessageTR("First segment should be on selected polyline.");
+            }
+            break;
+        }
+        case SetSegment2: {
+            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            if (en != nullptr &&  en->getParent() == polylineToModify && en->isAtomic() && en != Segment1){
+                Segment2 = dynamic_cast<RS_AtomicEntity *>(en);
+                deleteSnapper();
+                trigger();
+            }
+            else{
+                commandMessageTR("Second segment should be on selected polyline and not equal to first one.");
+            }
+            break;
+        }
+        default:
+            break;
     }
+
+}
+
+void RS_ActionPolylineTrim::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deleteSnapper();
+    deletePreview();
+    int newStatus = status - 1;
+    if (newStatus == ChooseEntity){
+        if (polylineToModify){
+            polylineToModify->setSelected(false);
+            graphicView->redraw();
+        }
+    }
+    setStatus(newStatus);
 }
 
 void RS_ActionPolylineTrim::finish(bool updateTB){

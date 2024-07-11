@@ -50,8 +50,7 @@ RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Rotate Entities",
 							   container, graphicView)
-	,data(new RS_RotateData())
-{
+	,data(new RS_RotateData()){
 	actionType=RS2::ActionModifyRotate;
 }
 
@@ -237,51 +236,50 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionModifyRotate::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Vector snap = snapPoint(e);
-        if (status == SelectEntity){
-            auto en = catchEntity(e);
-            if (en != nullptr){
-                bool selectedOld = en->isSelected();
-                bool selected = !selectedOld;
-                en->setSelected(selected);
-                graphicView->drawEntity(en);
-                if (selected){
-                    selectedCount++;
-                }
-                else{
-                    selectedCount--;
-                }
+void RS_ActionModifyRotate::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    if (status == SelectEntity){
+        auto en = catchEntity(e);
+        if (en != nullptr){
+            bool selectedOld = en->isSelected();
+            bool selected = !selectedOld;
+            en->setSelected(selected);
+            graphicView->drawEntity(en);
+            if (selected){
+                selectedCount++;
+            }
+            else{
+                selectedCount--;
             }
         }
-        else if (status == SetTargetPoint){
-            snap = getSnapAngleAwarePoint(e, data->center, snap);
-        }
-        fireCoordinateEvent(snap);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        int newStatus = -1;
-        switch (status)
-        {
-            case SelectEntity:
-                newStatus = -1;
-                break;
-            case SetReferencePoint:
-                newStatus = selectRefPointFirst ? SelectEntity: SetCenterPoint;
-                break;
-            case SetCenterPoint:
-                newStatus = selectRefPointFirst ? SetReferencePoint: SelectEntity;
-                break;
-            case SetTargetPoint:
-                newStatus = selectRefPointFirst ? SetCenterPoint: SetReferencePoint;
-                break;
-            default:
-                break;
-        }
-        setStatus(newStatus);
     }
+    else if (status == SetTargetPoint){
+        snap = getSnapAngleAwarePoint(e, data->center, snap);
+    }
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionModifyRotate::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    int newStatus = -1;
+    switch (status)
+    {
+        case SelectEntity:
+            newStatus = -1;
+            break;
+        case SetReferencePoint:
+            newStatus = selectRefPointFirst ? SelectEntity: SetCenterPoint;
+            break;
+        case SetCenterPoint:
+            newStatus = selectRefPointFirst ? SetReferencePoint: SelectEntity;
+            break;
+        case SetTargetPoint:
+            newStatus = selectRefPointFirst ? SetCenterPoint: SetReferencePoint;
+            break;
+        default:
+            break;
+    }
+    setStatus(newStatus);
 }
 
 void RS_ActionModifyRotate::finish(bool updateTB){

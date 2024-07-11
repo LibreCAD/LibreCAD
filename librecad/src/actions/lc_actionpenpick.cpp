@@ -27,14 +27,15 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QMouseEvent>
 
 
-LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve):RS_ActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
-   resolveMode  = resolve;
-   if (resolve){
-       actionType = RS2::ActionPenPickResolved;
-   }
-   else{
-       actionType = RS2::ActionPenPick;
-   }
+LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
+    :RS_ActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
+    resolveMode  = resolve;
+    if (resolve){
+        actionType = RS2::ActionPenPickResolved;
+    }
+    else{
+        actionType = RS2::ActionPenPick;
+    }
     highlightedEntity = nullptr;
 }
 
@@ -83,30 +84,30 @@ void LC_ActionPenPick::removeHighlighting(){
     }
 }
 
-void LC_ActionPenPick::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button()==Qt::LeftButton) {
-        if (getStatus() == SelectEntity){
-            // Well, actually, it's possible to use Shift modifier for determining whether pen should be
-            // resolved or not.  However, in UI there are two separate actions for consistency of
-            // UIX with Pen Palette Widget
-            RS_Entity *en = catchEntity(e, RS2::ResolveNone);
-            if (en != nullptr){
-                applyPenToPenToolBar(en);
-                init( getStatus() - 1);
-                finish(true);
-                graphicView->back();
-            }
+void LC_ActionPenPick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status == SelectEntity){
+        // Well, actually, it's possible to use Shift modifier for determining whether pen should be
+        // resolved or not.  However, in UI there are two separate actions for consistency of
+        // UIX with Pen Palette Widget
+        RS_Entity *en = catchEntity(e, RS2::ResolveNone);
+        if (en != nullptr){
+            applyPenToPenToolBar(en);
+            init( getStatus() - 1);
+            finish(true);
+            graphicView->back();
         }
-    } else if (e->button()==Qt::RightButton) {
-        finish(true);
-        init( getStatus() - 1);
     }
     graphicView->redraw();
 }
 
+void LC_ActionPenPick::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    finish(true);
+    init( getStatus() - 1);
+    graphicView->redraw();
+}
+
 void LC_ActionPenPick::updateMouseButtonHints(){
-    RS_DIALOGFACTORY->updateMouseWidget(tr("Specify entity to pick the pen"),
-                                        tr("Cancel"));
+    updateMouseWidgetTRCancel("Specify entity to pick the pen");
 }
 RS2::CursorType LC_ActionPenPick::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;

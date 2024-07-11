@@ -119,25 +119,25 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineTangent1::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
-    } else {
-        switch (getStatus()) {
-            case SetPoint: {
-                fireCoordinateEventForSnap(e);
-                break;
-            }
-            case SetCircle:
-                if (tangent){
-                    trigger();
-                }
-                break;
-            default:
-                break;
+void RS_ActionDrawLineTangent1::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetPoint: {
+            fireCoordinateEventForSnap(e);
+            break;
         }
+        case SetCircle:
+            if (tangent){
+                trigger();
+            }
+            break;
+        default:
+            break;
     }
+}
+
+void RS_ActionDrawLineTangent1::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {

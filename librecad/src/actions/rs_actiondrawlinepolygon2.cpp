@@ -140,17 +140,17 @@ RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter() const{
     return center;
 }
 
-void RS_ActionDrawLinePolygonCorCor::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector coord = snapPoint(e);
-        if (getStatus() == SetCorner2){
-            coord = getSnapAngleAwarePoint(e, pPoints->corner1, coord);
-        }
-        fireCoordinateEvent(coord);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+void RS_ActionDrawLinePolygonCorCor::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector coord = snapPoint(e);
+    if (status == SetCorner2){
+        coord = getSnapAngleAwarePoint(e, pPoints->corner1, coord);
     }
+    fireCoordinateEvent(coord);
+}
+
+void RS_ActionDrawLinePolygonCorCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
@@ -236,7 +236,3 @@ QStringList RS_ActionDrawLinePolygonCorCor::getAvailableCommands() {
     }
     return cmd;
 }
-
-
-
-// EOF

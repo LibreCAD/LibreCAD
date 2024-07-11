@@ -39,7 +39,7 @@ struct RS_OffsetData;
  * @author Dongxu Li
  */
 class RS_ActionModifyOffset : public RS_PreviewActionInterface {
-        Q_OBJECT
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -50,28 +50,29 @@ public:
 
 public:
     RS_ActionModifyOffset(RS_EntityContainer& container,
-                     RS_GraphicView& graphicView);
-	~RS_ActionModifyOffset() override;
+                          RS_GraphicView& graphicView);
+    ~RS_ActionModifyOffset() override;
 
 //    void reset();
 
-	void init(int status=0) override;
-	void trigger() override;
+    void init(int status=0) override;
+    void trigger() override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
 
-	//        void coordinateEvent(RS_CoordinateEvent* e) override;
+//        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
 //    QStringList getAvailableCommands() override;
 
-	void hideOptions() override;
-	void showOptions() override;
+    void hideOptions() override;
+    void showOptions() override;
 
-	void updateMouseButtonHints() override;
+    void updateMouseButtonHints() override;
 protected:
 
-	std::unique_ptr<RS_OffsetData> data;
-	RS2::CursorType doGetMouseCursor(int status) override;
+    std::unique_ptr<RS_OffsetData> data;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 #endif

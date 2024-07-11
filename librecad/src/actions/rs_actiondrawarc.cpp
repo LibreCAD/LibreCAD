@@ -209,47 +209,46 @@ void RS_ActionDrawArc::snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart
     mouse = diameter.getNearestPointOnEntity(mouse, true);
 }
 
-void RS_ActionDrawArc::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Vector mouse = snapPoint(e);
-        bool shouldFireCoordinateEvent = true;
-        switch (status) {
-            case SetRadius: {
-                mouse = getFreeSnapAwarePoint(e, mouse);
-                break;
+void RS_ActionDrawArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = snapPoint(e);
+    bool shouldFireCoordinateEvent = true;
+    switch (status) {
+        case SetRadius: {
+            mouse = getFreeSnapAwarePoint(e, mouse);
+            break;
+        }
+        case SetAngle1:
+        case SetAngle2:
+        case SetIncAngle: {
+            mouse = getSnapAngleAwarePoint(e, data->center, mouse);
+            break;
+        }
+        case SetChordLength: {
+            RS_Vector arcStart;
+            RS_Vector halfCircleArcEnd;
+            snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
+            shouldFireCoordinateEvent = LC_LineMath::isMeaningfulDistance(mouse, arcStart);
+            if (!shouldFireCoordinateEvent){
+                commandMessageTR("Length of chord should be non-zero");
             }
-            case SetAngle1:
-            case SetAngle2:
-            case SetIncAngle: {
-                mouse = getSnapAngleAwarePoint(e, data->center, mouse);
-                break;
-            }
-            case SetChordLength: {
-                RS_Vector arcStart;
-                RS_Vector halfCircleArcEnd;
-                snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
-                shouldFireCoordinateEvent = LC_LineMath::isMeaningfulDistance(mouse, arcStart);
-                if (!shouldFireCoordinateEvent){
-                    commandMessageTR("Length of chord should be non-zero");
-                }
-                break;
-            }
-            default:
-                break;
+            break;
         }
-        if (shouldFireCoordinateEvent){
-            fireCoordinateEvent(mouse);
-        }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        if (status == SetChordLength){
-            moveRelativeZero(data->center);
-            setStatus(SetAngle2);
-        }
-        else{
-            setStatus(status - 1);
-        }
+        default:
+            break;
+    }
+    if (shouldFireCoordinateEvent){
+        fireCoordinateEvent(mouse);
+    }
+}
+
+void RS_ActionDrawArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    if (status == SetChordLength){
+        moveRelativeZero(data->center);
+        setStatus(SetAngle2);
+    }
+    else{
+        setStatus(status - 1);
     }
 }
 

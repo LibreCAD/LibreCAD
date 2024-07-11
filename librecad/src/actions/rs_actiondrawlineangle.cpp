@@ -133,26 +133,26 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineAngle::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        if (getStatus()==SetPos) {
-            bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
-            RS_Vector position = snapPoint(e);
-            // potentially, we could eliminate this and set line position on mouse move and complete action there. however,
-            // it seems explicit set of position on click is more consistent with default behavior of the action?
-            if (shiftPressed){
-                RS_Vector relZero = graphicView->getRelativeZero();
-                if (relZero.valid){
-                    position = graphicView->getRelativeZero();
-                    persistRelativeZero = true;
-                }
+void RS_ActionDrawLineAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status==SetPos) {
+        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        RS_Vector position = snapPoint(e);
+        // potentially, we could eliminate this and set line position on mouse move and complete action there. however,
+        // it seems explicit set of position on click is more consistent with default behavior of the action?
+        if (shiftPressed){
+            RS_Vector relZero = graphicView->getRelativeZero();
+            if (relZero.valid){
+                position = graphicView->getRelativeZero();
+                persistRelativeZero = true;
             }
-            fireCoordinateEvent(position);
         }
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+        fireCoordinateEvent(position);
     }
+}
+
+void RS_ActionDrawLineAngle::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 void RS_ActionDrawLineAngle::preparePreview(){

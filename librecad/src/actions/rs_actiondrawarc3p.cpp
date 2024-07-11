@@ -152,24 +152,23 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDrawArc3P::mouseReleaseEvent(QMouseEvent* e) {
-    int status = getStatus();
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector snap = snapPoint(e);
-        switch (status) {
-            case SetPoint2:
-            case SetPoint3: {
-                snap = getSnapAngleAwarePoint(e, pPoints->point1, snap);
-                break;
-            }
-            default:
-                break;
+void RS_ActionDrawArc3P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    switch (status) {
+        case SetPoint2:
+        case SetPoint3: {
+            snap = getSnapAngleAwarePoint(e, pPoints->point1, snap);
+            break;
         }
-        fireCoordinateEvent(snap);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(status - 1);
+        default:
+            break;
     }
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionDrawArc3P::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawArc3P::coordinateEvent(RS_CoordinateEvent *e){

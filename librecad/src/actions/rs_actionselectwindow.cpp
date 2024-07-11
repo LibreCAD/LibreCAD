@@ -145,22 +145,20 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-
-
-void RS_ActionSelectWindow::mouseReleaseEvent(QMouseEvent* e) {
+void RS_ActionSelectWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
-
-    if (e->button()==Qt::LeftButton) {
-        if (getStatus()==SetCorner2) {
-            pPoints->v2 = snapFree(e);
-            trigger();
-        }
-    } else if (e->button()==Qt::RightButton) {
-        if (getStatus()==SetCorner2) {
-            deletePreview();
-        }
-        init(getStatus()-1);
+    if (status==SetCorner2) {
+        pPoints->v2 = snapFree(e);
+        trigger();
     }
+}
+
+void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
+    if (status==SetCorner2) {
+        deletePreview();
+    }
+    init(status-1);
 }
 
 void RS_ActionSelectWindow::updateMouseButtonHints() {

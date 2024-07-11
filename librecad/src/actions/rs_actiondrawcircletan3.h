@@ -57,13 +57,14 @@ public:
     void trigger() override;
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
 //    void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     RS_Entity *catchCircle(QMouseEvent *e);

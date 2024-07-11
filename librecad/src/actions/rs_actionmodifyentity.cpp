@@ -38,13 +38,11 @@
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
 		:RS_ActionInterface("Modify Entity", container, graphicView)
-		,en(nullptr)
-{
+		,en(nullptr){
 	actionType=RS2::ActionModifyEntity;
 }
 
-void RS_ActionModifyEntity::setDisplaySelected(bool highlighted)
-{
+void RS_ActionModifyEntity::setDisplaySelected(bool highlighted){
     if (en != nullptr) {
         en->setSelected(highlighted);
         graphicView->drawEntity(en);
@@ -74,6 +72,7 @@ void RS_ActionModifyEntity::trigger() {
             clone->setSelected(false);
             graphicView->drawEntity(clone.get());
 
+            // fixme - replace by method
             if (document) {
                 document->startUndoCycle();
 
@@ -100,13 +99,13 @@ void RS_ActionModifyEntity::trigger() {
     }
 }
 
-void RS_ActionModifyEntity::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-        en = catchEntity(e);
-        trigger();
-    }
+void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    en = catchEntity(e);
+    trigger();
+}
+
+void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status-1);
 }
 
 RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){
@@ -116,5 +115,3 @@ RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int sta
 void RS_ActionModifyEntity::updateMouseButtonHints() {
     updateMouseWidgetTRCancel("Click on entity to modify");
 }
-
-// EOF

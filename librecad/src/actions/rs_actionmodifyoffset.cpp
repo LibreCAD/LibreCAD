@@ -52,7 +52,6 @@ void RS_ActionModifyOffset::init(int status){
     RS_ActionInterface::init(status);
     //finish, if nothing selected
     if (container->countSelected() == 0) finish();
-
 }
 
 void RS_ActionModifyOffset::trigger(){
@@ -77,16 +76,15 @@ void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent *e){
     deletePreview();
     preview->addSelectionFrom(ec);
     drawPreview();
-
 }
 
-void RS_ActionModifyOffset::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        trigger();
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
-    }
+void RS_ActionModifyOffset::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    trigger();
+}
+
+void RS_ActionModifyOffset::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionModifyOffset::updateMouseButtonHints(){

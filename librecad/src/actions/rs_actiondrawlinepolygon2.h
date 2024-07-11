@@ -49,7 +49,6 @@ public:
     ~RS_ActionDrawLinePolygonCorCor() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
@@ -61,6 +60,9 @@ private:
 /** Last status before entering text. */
     Status lastStatus = SetCorner1;
     RS_Vector determinePolygonCenter() const;
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

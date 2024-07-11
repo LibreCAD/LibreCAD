@@ -213,42 +213,40 @@ RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan2_1P::mouseReleaseEvent(QMouseEvent *e){
-    // Proceed to next status
-    if (e->button() == Qt::LeftButton){
-
-        switch (getStatus()) {
-            case SetCircle1:
-            case SetCircle2: {
-                pPoints->circles.resize(getStatus());
-                auto en = dynamic_cast<RS_AtomicEntity *>(catchCircle(e));
-                if (en == nullptr) return;
+void RS_ActionDrawCircleTan2_1P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetCircle1:
+        case SetCircle2: {
+            pPoints->circles.resize(status);
+            auto en = dynamic_cast<RS_AtomicEntity *>(catchCircle(e));
+            if (en == nullptr) return;
 //                en->setHighlighted(true);
-                pPoints->circles.push_back(en);
-                graphicView->redraw(RS2::RedrawDrawing);
-                setStatus(getStatus() + 1);
-                break;
-            }
-            case SetPoint: {
-                RS_Vector snapped = snapPoint(e);
-                fireCoordinateEvent(snapped);                ;
-                break;
-            }
-            case SetCenter:
-                pPoints->coord = toGraph(e);
-                if (preparePreview()) trigger();
-                break;
+            pPoints->circles.push_back(en);
+            graphicView->redraw(RS2::RedrawDrawing);
+            setStatus(getStatus() + 1);
+            break;
+        }
+        case SetPoint: {
+            RS_Vector snapped = snapPoint(e);
+            fireCoordinateEvent(snapped);                ;
+            break;
+        }
+        case SetCenter:
+            pPoints->coord = toGraph(e);
+            if (preparePreview()) trigger();
+            break;
 
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        // Return to last status:
-        if (getStatus() > 0){
-            deletePreview();
-        }
-        init(getStatus() - 1);
+        default:
+            break;
     }
+}
+
+void RS_ActionDrawCircleTan2_1P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (status > 0){
+        deletePreview();
+    }
+    init(status - 1);
 }
 
 void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent *e){

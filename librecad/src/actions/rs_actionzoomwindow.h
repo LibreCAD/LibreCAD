@@ -50,7 +50,6 @@ public:
 	void trigger() override;
 	void mouseMoveEvent(QMouseEvent* e) override;
 	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
 	void updateMouseButtonHints() override;
 
 protected:
@@ -58,6 +57,8 @@ protected:
     std::unique_ptr<Points> pPoints;
     bool keepAspectRatio = false;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

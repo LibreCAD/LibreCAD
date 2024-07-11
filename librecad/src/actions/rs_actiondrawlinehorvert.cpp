@@ -106,30 +106,29 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineHorVert::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Vector mouse = snapPoint(e);
+void RS_ActionDrawLineHorVert::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = snapPoint(e);
 
-        switch (status) {
-            case SetStartpoint:
-                pPoints->p1 = mouse;
-                setStatus(SetEndpoint);
-                break;
-
-            case SetEndpoint:
-                pPoints->p2 = mouse;
-                trigger();
-                setStatus(SetStartpoint);
-                break;
-
-            default:
-                break;
+    switch (status) {
+        case SetStartpoint: {
+            pPoints->p1 = mouse;
+            setStatus(SetEndpoint);
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(status - 1);
+        case SetEndpoint: {
+            pPoints->p2 = mouse;
+            trigger();
+            setStatus(SetStartpoint);
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
@@ -148,5 +147,3 @@ void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
 RS2::CursorType RS_ActionDrawLineHorVert::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

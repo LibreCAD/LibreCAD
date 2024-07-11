@@ -59,13 +59,13 @@ void RS_ActionSelectLayer::trigger(){
     }
 }
 
-void RS_ActionSelectLayer::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-        en = catchEntity(e);
-        trigger();
-    }
+void RS_ActionSelectLayer::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    en = catchEntity(e);
+    trigger();
+}
+
+void RS_ActionSelectLayer::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status - 1);
 }
 
 RS2::CursorType RS_ActionSelectLayer::doGetMouseCursor([[maybe_unused]] int status){

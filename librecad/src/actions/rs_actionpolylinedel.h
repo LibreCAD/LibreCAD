@@ -47,7 +47,7 @@ public:
     void updateMouseButtonHints() override;
 
 protected:
-    void processMouseLeftButtonRelease(QMouseEvent *e, int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

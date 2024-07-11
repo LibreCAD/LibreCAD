@@ -62,8 +62,6 @@ public:
     void trigger() override;
 
     void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
@@ -85,6 +83,10 @@ private:
     void lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2);
     int determineQuadrant(const double angle);
     bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
+
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

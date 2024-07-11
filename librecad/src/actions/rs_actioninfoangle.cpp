@@ -161,34 +161,34 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionInfoAngle::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        RS_Vector mouse = toGraph(e);
-        switch (getStatus()) {
-            case SetEntity1:
-                entity1 = catchEntity(e, RS2::ResolveAll);
-                if (isLine(entity1)){
-                    pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
-                    setStatus(SetEntity2);
-                }
-                break;
+void RS_ActionInfoAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = toGraph(e);
+    switch (status) {
+        case SetEntity1:
+            entity1 = catchEntity(e, RS2::ResolveAll);
+            if (isLine(entity1)){
+                pPoints->point1 = entity1->getNearestPointOnEntity(mouse);
+                setStatus(SetEntity2);
+            }
+            break;
 
-            case SetEntity2:
-                entity2 = catchEntity(e, RS2::ResolveAll);
-                if (isLine(entity2)){
-                    pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
-                    trigger();
-                    setStatus(SetEntity1);
-                }
-                break;
+        case SetEntity2:
+            entity2 = catchEntity(e, RS2::ResolveAll);
+            if (isLine(entity2)){
+                pPoints->point2 = entity2->getNearestPointOnEntity(mouse);
+                trigger();
+                setStatus(SetEntity1);
+            }
+            break;
 
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
+        default:
+            break;
     }
+}
+
+void RS_ActionInfoAngle::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(getStatus() - 1);
 }
 
 void RS_ActionInfoAngle::updateMouseButtonHints(){

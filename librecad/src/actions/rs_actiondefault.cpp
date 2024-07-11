@@ -541,68 +541,64 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDefault::mouseReleaseEvent(QMouseEvent *e){
+void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
+    pPoints->v2 = toGraph(e);
+    switch (getStatus()) {
+        case Dragging: {
+            // select single entity:
+            RS_Entity *en = catchEntity(e);
 
-    if (e->button() == Qt::LeftButton){
-        pPoints->v2 = toGraph(e);
-        switch (getStatus()) {
-            case Dragging: {
-                // select single entity:
-                RS_Entity *en = catchEntity(e);
-
-                if (en != nullptr){
-                    deletePreview();
-
-                    RS_Selection s(*container, graphicView);
-
-                    s.selectSingle(en);
-
-                    updateSelectionWidget();
-
-                    e->accept();
-
-                    goToNeutralStatus();
-                } else {
-                    setStatus(SetCorner2);
-                }
-            }
-                break;
-
-            case SetCorner2: {
-                //v2 = snapPoint(e);
-                pPoints->v2 = toGraph(e);
-
-                // select window:
-                //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
+            if (en != nullptr){
                 deletePreview();
 
-                bool cross = (pPoints->v1.x > pPoints->v2.x);
                 RS_Selection s(*container, graphicView);
-                bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
-                s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
-                updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+                s.selectSingle(en);
 
-                goToNeutralStatus();
+                updateSelectionWidget();
+
                 e->accept();
-                //}
-            }
-                break;
 
-            case Panning:
                 goToNeutralStatus();
-                break;
-
-            default:
-                break;
-
+            } else {
+                setStatus(SetCorner2);
+            }
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        //cleanup
-        goToNeutralStatus();
-        e->accept();
+        case SetCorner2: {
+            //v2 = snapPoint(e);
+            pPoints->v2 = toGraph(e);
+
+            // select window:
+            //if (graphicView->toGuiDX(v1.distanceTo(v2))>20) {
+            deletePreview();
+
+            bool cross = (pPoints->v1.x > pPoints->v2.x);
+            RS_Selection s(*container, graphicView);
+            bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
+            s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
+
+            updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+
+            goToNeutralStatus();
+            e->accept();
+            //}
+            break;
+        }
+        case Panning:
+            goToNeutralStatus();
+            break;
+        default:
+            break;
     }
+}
+
+void RS_ActionDefault::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
+    //cleanup
+    goToNeutralStatus();
+    e->accept();
 }
 
 void RS_ActionDefault::goToNeutralStatus(){

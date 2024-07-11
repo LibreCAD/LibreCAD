@@ -137,39 +137,38 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineRelAngle::mouseReleaseEvent(QMouseEvent* e) {
-
-    if (e->button()==Qt::LeftButton) {
-        switch (getStatus()) {
-            case SetEntity: {
-                RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
-                if (en != nullptr){
-                    entity = en;
+void RS_ActionDrawLineRelAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity: {
+            RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
+            if (en != nullptr){
+                entity = en;
 
 //                    entity->setHighlighted(true);
 //                    graphicView->drawEntity(entity);
 
-                    setStatus(SetPos);
-                }
-                break;
+                setStatus(SetPos);
             }
-            case SetPos: {
-                const RS_Vector& snap = snapPoint(e);
-                RS_Vector position = getRelZeroAwarePoint(e, snap);
-                fireCoordinateEvent(position);
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
+        case SetPos: {
+            const RS_Vector& snap = snapPoint(e);
+            RS_Vector position = getRelZeroAwarePoint(e, snap);
+            fireCoordinateEvent(position);
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void RS_ActionDrawLineRelAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
 //        if (entity) {
 //            entity->setHighlighted(false);
 //            graphicView->drawEntity(entity);
 //        }
-        init(getStatus()-1);
-    }
+    init(getStatus()-1);
 }
 
 void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent *e){

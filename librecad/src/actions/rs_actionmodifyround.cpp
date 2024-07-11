@@ -280,38 +280,37 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
     }
 }
 
-void RS_ActionModifyRound::mouseReleaseEvent(QMouseEvent *e){
+void RS_ActionModifyRound::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     RS_Entity *se = catchEntity(e, eType, RS2::ResolveAll);
-
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetEntity1: {
-                if (se && se->isAtomic() &&
-                    RS_Information::isTrimmable(se)){
-                    entity1 = se;
-                    pPoints->coord1 = se->getNearestPointOnEntity(mouse, true);
-                    setStatus(SetEntity2);
-                }
-                break;
+    switch (status) {
+        case SetEntity1: {
+            if (se && se->isAtomic() &&
+                RS_Information::isTrimmable(se)){
+                entity1 = se;
+                pPoints->coord1 = se->getNearestPointOnEntity(mouse, true);
+                setStatus(SetEntity2);
             }
-            case SetEntity2: {
-                if (se && se->isAtomic() &&
-                    RS_Information::isTrimmable(entity1, se)){
-                    entity2 = se;
-                    pPoints->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
-                    //setStatus(ChooseRounding);
-                    trigger();
-                }
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
+        case SetEntity2: {
+            if (se && se->isAtomic() &&
+                RS_Information::isTrimmable(entity1, se)){
+                entity2 = se;
+                pPoints->coord2 = mouse;/* se->getNearestPointOnEntity(mouse, true);*/
+                //setStatus(ChooseRounding);
+                trigger();
+            }
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionModifyRound::commandEvent(RS_CommandEvent *e){

@@ -148,14 +148,14 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
 }
 
-void RS_ActionDrawMText::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        //init(getStatus()-1);
-        finish(false);
-    }
+void RS_ActionDrawMText::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionDrawMText::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    //init(getStatus()-1);
+    finish(false);
 }
 
 void RS_ActionDrawMText::coordinateEvent(RS_CoordinateEvent *e){

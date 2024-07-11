@@ -175,33 +175,33 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineBisector::mouseReleaseEvent(QMouseEvent *e){
-
-    if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
-    } else {
-        RS_Vector mouse = toGraph(e);
-        switch (getStatus()) {
-            case SetLine1: {
-                pPoints->coord1 = mouse;
-                RS_Entity *en = catchEntity(e,enTypeList,RS2::ResolveAll);
-                if (isLine(en)){
-                    line1 = dynamic_cast<RS_Line *>(en);
-                    line2 = nullptr;
-                    setStatus(SetLine2);
-                }
-                break;
+void RS_ActionDrawLineBisector::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = toGraph(e);
+    switch (status) {
+        case SetLine1: {
+            pPoints->coord1 = mouse;
+            RS_Entity *en = catchEntity(e,enTypeList,RS2::ResolveAll);
+            if (isLine(en)){
+                line1 = dynamic_cast<RS_Line *>(en);
+                line2 = nullptr;
+                setStatus(SetLine2);
             }
-            case SetLine2:
-                pPoints->coord2 = mouse;
-                trigger();
-                setStatus(SetLine1);
-                break;
-            default:
-                break;
+            break;
         }
+        case SetLine2:
+            pPoints->coord2 = mouse;
+            trigger();
+            setStatus(SetLine1);
+            break;
+        default:
+            break;
     }
+
+}
+
+void RS_ActionDrawLineBisector::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){

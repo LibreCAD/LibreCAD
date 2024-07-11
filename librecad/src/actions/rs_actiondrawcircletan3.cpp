@@ -369,59 +369,59 @@ RS_Entity *RS_ActionDrawCircleTan3::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan3::mouseReleaseEvent(QMouseEvent *e){
-// Proceed to next status
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetCircle1:
-            case SetCircle2:{
-                RS_Entity *en = catchCircle(e);
-                if (en != nullptr){
-                    pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
-                    for (const RS_AtomicEntity *const pc: pPoints->circles)
-                        if (pc == en) continue;
-                    pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
-                    setStatus(getStatus() + 1);
-                }
-                break;
+void RS_ActionDrawCircleTan3::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetCircle1:
+        case SetCircle2:{
+            RS_Entity *en = catchCircle(e);
+            if (en != nullptr){
+                pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
+                for (const RS_AtomicEntity *const pc: pPoints->circles)
+                    if (pc == en) continue;
+                pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+                setStatus(getStatus() + 1);
             }
-            case SetCircle3: {
-                RS_Entity *en = catchCircle(e);
-                if (en != nullptr){
-                    pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
-                    for (const RS_AtomicEntity *const pc: pPoints->circles)
-                        if (pc == en) continue;
+            break;
+        }
+        case SetCircle3: {
+            RS_Entity *en = catchCircle(e);
+            if (en != nullptr){
+                pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
+                for (const RS_AtomicEntity *const pc: pPoints->circles)
+                    if (pc == en) continue;
 
-                    if (getData(en)){
-                        pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
+                if (getData(en)){
+                    pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
 //                    pPoints->circles.at(pPoints->circles.size() - 1)->setHighlighted(true);
 //                    graphicView->redraw(RS2::RedrawDrawing);
-                        setStatus(getStatus() + 1);
-                    }
-                    else {
-                        commandMessageTR("No common tangential circle for selected entities");
-                    }
+                    setStatus(getStatus() + 1);
                 }
-                break;
+                else {
+                    commandMessageTR("No common tangential circle for selected entities");
+                }
             }
-            case SetCenter:
-                pPoints->coord = toGraph(e);
-                if (preparePreview()) trigger();
-                break;
+            break;
+        }
+        case SetCenter:
+            pPoints->coord = toGraph(e);
+            if (preparePreview()) trigger();
+            break;
 
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-// Return to last status:
-        if (getStatus() > 0){
-            pPoints->circles[getStatus() - 1]->setHighlighted(false);
-            pPoints->circles.pop_back();
-            graphicView->redraw(RS2::RedrawDrawing);
-            deletePreview();
-        }
-        init(getStatus() - 1);
+        default:
+            break;
     }
+
+}
+
+void RS_ActionDrawCircleTan3::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (status > 0){
+        pPoints->circles[getStatus() - 1]->setHighlighted(false);
+        pPoints->circles.pop_back();
+        graphicView->redraw(RS2::RedrawDrawing);
+        deletePreview();
+    }
+    init(getStatus() - 1);
 }
 
 

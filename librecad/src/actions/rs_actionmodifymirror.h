@@ -63,18 +63,16 @@ public:
     void trigger() override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-
     bool isMirrorToExistingLine(){return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
-
 protected:
     void createOptionsWidget() override;
-
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

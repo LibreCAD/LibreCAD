@@ -38,9 +38,9 @@ class RS_Polyline;
 class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {//public RS_PreviewActionInterface {
 	Q_OBJECT
 
-     /**
-      * Action States.
-      */
+    /**
+     * Action States.
+     */
 //	enum Status {
 //     SetPolyline,
 //		   SetStartpoint,   /**< Setting the startpoint.  */
@@ -59,8 +59,6 @@ public:
 	void trigger() override;
 	
 //	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
 	void coordinateEvent(RS_CoordinateEvent* e) override;
 //  void commandEvent(RS_CommandEvent* e) override;
 //	QStringList getAvailableCommands() override;
@@ -74,6 +72,9 @@ public:
 //	void close();
     void undo();
     void mouseMoveEvent(QMouseEvent *e) override;
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 
 private:
 	/**
@@ -106,7 +107,6 @@ private:
 	 * Bulge history (for undo)
 	 */
 //	QList<double> bHistory;
-
 };
 
 #endif

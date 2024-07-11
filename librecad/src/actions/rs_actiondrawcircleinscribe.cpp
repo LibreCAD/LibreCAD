@@ -146,46 +146,44 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
 }
 
-void RS_ActionDrawCircleInscribe::mouseReleaseEvent(QMouseEvent *e){
-    // Proceed to next status
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
-        if (!en) return;
-        if (!(en->isVisible() && isLine(en))) return;
-        for (int i = 0; i < status; i++) {
-            if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
-        }
-
-        pPoints->coord = toGraph(e);
-        auto *line = dynamic_cast<RS_Line *>(en);
-
-        switch (status) {
-            case SetLine1:{
-                pPoints->lines.push_back(line);
-                setStatus(SetLine2);
-                break;
-            }
-            case SetLine2:
-                pPoints->lines.push_back(line);
-                setStatus(SetLine3);
-                break;
-            case SetLine3:
-                if (preparePreview(line)){
-                    trigger();
-                }
-                break;
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        // Return to last status:
-        if (status > 0){
-            pPoints->lines.pop_back();
-            deletePreview();
-        }
-        init(status - 1);
+void RS_ActionDrawCircleInscribe::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+    if (!en) return;
+    if (!(en->isVisible() && isLine(en))) return;
+    for (int i = 0; i < status; i++) {
+        if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
     }
+
+    pPoints->coord = toGraph(e);
+    auto *line = dynamic_cast<RS_Line *>(en);
+
+    switch (status) {
+        case SetLine1:{
+            pPoints->lines.push_back(line);
+            setStatus(SetLine2);
+            break;
+        }
+        case SetLine2:
+            pPoints->lines.push_back(line);
+            setStatus(SetLine3);
+            break;
+        case SetLine3:
+            if (preparePreview(line)){
+                trigger();
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+void RS_ActionDrawCircleInscribe::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (status > 0){
+        pPoints->lines.pop_back();
+        deletePreview();
+    }
+    init(status - 1);
 }
 
 bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){

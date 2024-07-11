@@ -118,12 +118,12 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineParallel::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-        trigger();
-    }
+void RS_ActionDrawLineParallel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    trigger();
+}
+
+void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status-1);
 }
 
 void RS_ActionDrawLineParallel::updateMouseButtonHints(){
@@ -145,7 +145,7 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+        commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }

@@ -129,17 +129,16 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
 }
 
-void RS_ActionInfoArea::mouseReleaseEvent(QMouseEvent* e) {
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton) {
-        RS_Vector snap = snapPoint(e);
-        if (status == SetNextPoint){
-            snap = getSnapAngleAwarePoint(e, ia->back(), snap);
-        }
-        fireCoordinateEvent(snap);
-    } else if (e->button()==Qt::RightButton) {
-        init(status - 1);
+void RS_ActionInfoArea::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    if (status == SetNextPoint){
+        snap = getSnapAngleAwarePoint(e, ia->back(), snap);
     }
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionInfoArea::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status - 1);
 }
 
 void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){

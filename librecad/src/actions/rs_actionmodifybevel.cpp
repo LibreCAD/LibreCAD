@@ -193,61 +193,60 @@ void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, c
     }
 }
 
-void RS_ActionModifyBevel::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Entity *se = catchEntity(e,RS2::EntityLine, RS2::ResolveAllButTextImage);
-        if (se != nullptr){
-            switch (status) {
-                case SetEntity1: {
-                    if (se->isAtomic()){
-                        if (RS_Information::isTrimmable(se)){
-                            entity1 = dynamic_cast<RS_AtomicEntity *>(se);
-                            pPoints->coord1 = entity1->getNearestPointOnEntity(toGraph(e), true);
-                            setStatus(SetEntity2);
-                        } else {
-                            commandMessageTR("Invalid entity selected (non-trimmable).");
-                        }
+void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Entity *se = catchEntity(e,RS2::EntityLine, RS2::ResolveAllButTextImage);
+    if (se != nullptr){
+        switch (status) {
+            case SetEntity1: {
+                if (se->isAtomic()){
+                    if (RS_Information::isTrimmable(se)){
+                        entity1 = dynamic_cast<RS_AtomicEntity *>(se);
+                        pPoints->coord1 = entity1->getNearestPointOnEntity(toGraph(e), true);
+                        setStatus(SetEntity2);
                     } else {
-                        commandMessageTR("Invalid entity selected (non-atomic).");
+                        commandMessageTR("Invalid entity selected (non-trimmable).");
                     }
-                    break;
+                } else {
+                    commandMessageTR("Invalid entity selected (non-atomic).");
                 }
-                case SetEntity2: {
-                    if (se->isAtomic()){
-                       if (RS_Information::isTrimmable(entity1, se)){
-                           entity2 = dynamic_cast<RS_AtomicEntity *>(se);
-                           pPoints->coord2 = toGraph(e);
-                           trigger();
-                       }
-                       else{
-                           commandMessageTR("Invalid entity selected (non-trimmable with first entity).");
-                       }
-                    } else {
-                        commandMessageTR("Invalid entity selected (non-atomic).");
-                    }
-                    break;
-                }
-                default:
-                    break;
+                break;
             }
+            case SetEntity2: {
+                if (se->isAtomic()){
+                    if (RS_Information::isTrimmable(entity1, se)){
+                        entity2 = dynamic_cast<RS_AtomicEntity *>(se);
+                        pPoints->coord2 = toGraph(e);
+                        trigger();
+                    }
+                    else{
+                        commandMessageTR("Invalid entity selected (non-trimmable with first entity).");
+                    }
+                } else {
+                    commandMessageTR("Invalid entity selected (non-atomic).");
+                }
+                break;
+            }
+            default:
+                break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        int newStatus = -1;
-        switch (status){
-            case SetEntity1:
-                break;
-            case SetEntity2:
-                newStatus = SetEntity1;
-                break;
-            case SetLength1:
-            case SetLength2:
-                newStatus = lastStatus;
-                break;
-        }
-        setStatus(newStatus);
     }
+}
+
+void RS_ActionModifyBevel::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    int newStatus = -1;
+    switch (status){
+        case SetEntity1:
+            break;
+        case SetEntity2:
+            newStatus = SetEntity1;
+            break;
+        case SetLength1:
+        case SetLength2:
+            newStatus = lastStatus;
+            break;
+    }
+    setStatus(newStatus);
 }
 
 bool RS_ActionModifyBevel::isEntityAccepted(RS_Entity *en) const{
@@ -262,11 +261,9 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
+        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
         return;
     }
-
     switch (getStatus()) {
         case SetEntity1:
         case SetEntity2: {
@@ -372,6 +369,7 @@ void RS_ActionModifyBevel::updateMouseButtonHints() {
             break;
     }
 }
+
 RS2::CursorType RS_ActionModifyBevel::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
@@ -379,4 +377,3 @@ RS2::CursorType RS_ActionModifyBevel::doGetMouseCursor([[maybe_unused]] int stat
 void RS_ActionModifyBevel::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_BevelOptions>();
 }
-// EOF

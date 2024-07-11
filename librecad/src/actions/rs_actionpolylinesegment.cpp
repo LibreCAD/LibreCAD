@@ -84,7 +84,7 @@ void RS_ActionPolylineSegment::init(int status){
             }
             if (targetEntity){
                 convertPolyline(container, targetEntity, true);
-                RS_DIALOGFACTORY->commandMessage(tr("Polyline created"));
+                commandMessageTR("Polyline created");
                 graphicView->redraw();
                 RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
                 finish(false);
@@ -323,46 +323,35 @@ void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionPolylineSegment::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case ChooseEntity:
-                targetEntity = catchEntity(e, entityType);
-                if (targetEntity == nullptr){
-                    commandMessageTR("No Entity found.");
-                } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
-                    commandMessageTR("Entity can not be a closed polyline.");
-                } else {
-                    //TODO, verify topology of selected
+void RS_ActionPolylineSegment::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseEntity:
+            targetEntity = catchEntity(e, entityType);
+            if (targetEntity == nullptr){
+                commandMessageTR("No Entity found.");
+            } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
+                commandMessageTR("Entity can not be a closed polyline.");
+            } else {
+                //TODO, verify topology of selected
 //                    targetEntity->setHighlighted(true);
 //                    graphicView->drawEntity(targetEntity);
 
 //                setStatus(SetReferencePoint);
-                    graphicView->redraw();
-                    trigger();
-                }
-                break;
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        deleteSnapper();
-        if (targetEntity){
-//            targetEntity->setHighlighted(false);
-//            graphicView->drawEntity(targetEntity);
-            graphicView->redraw();
-        }
-        init(getStatus() - 1);
+                graphicView->redraw();
+                trigger();
+            }
+            break;
+        default:
+            break;
     }
-/*    if (e->button())==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (RS2::qtToRsButtonState(e->button())==RS2::RightButton) {
-        deletePreview();
-        deleteSnapper
-        init(getStatus()-1);
+}
+
+void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deleteSnapper();
+    if (targetEntity){
+         graphicView->redraw();
     }
-*/
+    init(getStatus() - 1);
 }
 
 void RS_ActionPolylineSegment::updateMouseButtonHints(){

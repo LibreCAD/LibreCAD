@@ -48,8 +48,7 @@ RS_ActionEditPaste::RS_ActionEditPaste( RS_EntityContainer& container,
                                         RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Edit Paste",
 						   container, graphicView)
-        , targetPoint(std::make_unique<RS_Vector>())
-{}
+        , targetPoint(std::make_unique<RS_Vector>()){}
 
 
 RS_ActionEditPaste::~RS_ActionEditPaste() = default;
@@ -62,63 +61,62 @@ void RS_ActionEditPaste::trigger() {
     deletePreview();
 
     RS_Modification m(*container, graphicView);
-	m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
+    m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
 
-	graphicView->redraw(RS2::RedrawDrawing); 
+    graphicView->redraw(RS2::RedrawDrawing);
 
     finish(false);
 }
 
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
-    case SetTargetPoint:
-		*targetPoint = snapPoint(e);
+        case SetTargetPoint:
+            *targetPoint = snapPoint(e);
 
-        deletePreview();
-        preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
-		preview->move(*targetPoint);
+            deletePreview();
+            preview->addAllFrom(*RS_CLIPBOARD->getGraphic());
+            preview->move(*targetPoint);
 
-		if (graphic) {
-			RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
-			RS2::Unit targetUnit = graphic->getUnit();
-			double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
-			preview->scale(*targetPoint, {f, f});
-		}
-        drawPreview();
-        break;
+            if (graphic) {
+                RS2::Unit sourceUnit = RS_CLIPBOARD->getGraphic()->getUnit();
+                RS2::Unit targetUnit = graphic->getUnit();
+                double const f = RS_Units::convert(1.0, sourceUnit, targetUnit);
+                preview->scale(*targetPoint, {f, f});
+            }
+            drawPreview();
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
-void RS_ActionEditPaste::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_CoordinateEvent ce(snapPoint(e));
-        coordinateEvent(&ce);
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionEditPaste::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionEditPaste::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(getStatus()-1);
 }
 
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
-	if (e==nullptr) return;
+    if (e==nullptr) return;
 
-	*targetPoint = e->getCoordinate();
+    *targetPoint = e->getCoordinate();
     trigger();
 }
 
 void RS_ActionEditPaste::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetTargetPoint:
-        updateMouseWidgetTRCancel("Set reference point");
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetTargetPoint:
+            updateMouseWidgetTRCancel("Set reference point");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
+
 RS2::CursorType RS_ActionEditPaste::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-// EOF

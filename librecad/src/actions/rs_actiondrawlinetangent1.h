@@ -37,7 +37,7 @@ class RS_Line;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineTangent1 : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 private:
     enum Status {
         SetPoint,     /**< Choose the startpoint. */
@@ -47,30 +47,28 @@ private:
 public:
     RS_ActionDrawLineTangent1(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
-	~RS_ActionDrawLineTangent1() override;
+    ~RS_ActionDrawLineTangent1() override;
 
-	void trigger() override;
-	
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     /** Closest tangent. */
-	std::unique_ptr<RS_Line> tangent;
+    std::unique_ptr<RS_Line> tangent;
     /** Chosen startpoint */
-	std::unique_ptr<RS_Vector> point;
+    std::unique_ptr<RS_Vector> point;
 
     //list of entity types supported by current action
     const EntityTypeList circleType = EntityTypeList{ RS2::EntityArc,
-                RS2::EntityCircle,
-                RS2::EntityEllipse,
-                RS2::EntityParabola,
-                RS2::EntitySplinePoints };
+                                                      RS2::EntityCircle,
+                                                      RS2::EntityEllipse,
+                                                      RS2::EntityParabola,
+                                                      RS2::EntitySplinePoints };
 };
 
 #endif

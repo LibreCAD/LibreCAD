@@ -117,29 +117,30 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineParallelThrough::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetEntity:
-                entity = catchEntity(e, RS2::ResolveAll);
-                if (entity){
-                    setStatus(SetPos);
-                }
-                break;
-            case SetPos: {
-                fireCoordinateEventForSnap(e);
-                break;
+void RS_ActionDrawLineParallelThrough::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity:
+            entity = catchEntity(e, RS2::ResolveAll);
+            if (entity){
+                setStatus(SetPos);
             }
-            default:
-                break;
+            break;
+        case SetPos: {
+            fireCoordinateEventForSnap(e);
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        if (entity){
-            entity = nullptr;
-        }
-        init(getStatus() - 1);
+        default:
+            break;
     }
+
+}
+
+void RS_ActionDrawLineParallelThrough::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    if (entity){
+        entity = nullptr;
+    }
+    init(status - 1);
 }
 
 void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){

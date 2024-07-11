@@ -132,17 +132,17 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawCircle2P::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector coord = snapPoint(e);
-        if (getStatus() == SetPoint2){
-            coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
-        }
-        fireCoordinateEvent(coord);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+void RS_ActionDrawCircle2P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector coord = snapPoint(e);
+    if (status == SetPoint2){
+        coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
     }
+    fireCoordinateEvent(coord);
+}
+
+void RS_ActionDrawCircle2P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {

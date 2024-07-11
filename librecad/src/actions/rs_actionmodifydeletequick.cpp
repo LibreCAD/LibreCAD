@@ -73,13 +73,13 @@ void RS_ActionModifyDeleteQuick::trigger() {
     }
 }
 
-void RS_ActionModifyDeleteQuick::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    } else {
-        en = catchEntity(e);
-        trigger();
-    }
+void RS_ActionModifyDeleteQuick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    en = catchEntity(e);
+    trigger();
+}
+
+void RS_ActionModifyDeleteQuick::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status-1);
 }
 
 void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {

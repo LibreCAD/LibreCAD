@@ -201,21 +201,20 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
     RS_DEBUG->print("RS_ActionDrawHatch::mouseMoveEvent end");
 }
 
-void RS_ActionDrawHatch::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        snapPoint(e);
+void RS_ActionDrawHatch::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    snapPoint(e);
+    switch (status) {
+        case ShowDialog:
+            break;
 
-        switch (getStatus()) {
-            case ShowDialog:
-                break;
-
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        //deletePreview();
-        init(getStatus() - 1);
+        default:
+            break;
     }
+}
+
+void RS_ActionDrawHatch::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    //deletePreview();
+    init(getStatus() - 1);
 }
 
 void RS_ActionDrawHatch::updateMouseButtonHints() {

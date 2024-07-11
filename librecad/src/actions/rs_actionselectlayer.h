@@ -35,16 +35,17 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectLayer : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     RS_ActionSelectLayer(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
+                         RS_GraphicView& graphicView);
 
-	void trigger() override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
+    void trigger() override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     RS_Entity* en = nullptr;
 };

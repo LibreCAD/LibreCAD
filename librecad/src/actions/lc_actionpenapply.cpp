@@ -92,74 +92,75 @@ void LC_ActionPenApply::finish(bool updateTB){
     removeHighlighting();
 }
 
-void LC_ActionPenApply::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button()==Qt::LeftButton) {
-        RS_Entity* en= catchEntity(e, RS2::ResolveNone);
+void LC_ActionPenApply::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Entity* en= catchEntity(e, RS2::ResolveNone);
 
-        if(en != nullptr){
-            switch (getStatus()){
-                case SelectEntity:{
-                    // selection of entity that will be used as source for pen
-                    srcEntity = en;
-                    removeHighlighting();
-                    setStatus(ApplyToEntity);
-                    break;
-                }
-                case ApplyToEntity:{
-                    removeHighlighting();
-                    if (!en->isLocked() && en != srcEntity){
-                        RS_Pen penToApply;
-                        if (copyMode){
-                            // we apply pen from source entity, if Shift is pressed - resolved pen is used.
-                            bool resolvePen = e->modifiers() & Qt::ShiftModifier;
-                            penToApply = srcEntity->getPen(resolvePen);
-
-                        } else {
-                            // we apply active pen from pen toolbar
-                            QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
-                            if (penToolBar != nullptr){
-                                penToApply = penToolBar->getPen();
-                            }
-                        }
-
-                        // do actual modifications
-                        RS_AttributesData data;
-                        data.pen = penToApply;
-                        data.layer = "0";
-                        data.changeColor = true;
-                        data.changeLineType = true;
-                        data.changeWidth = true;
-                        data.changeLayer = false;
-
-                        // this is temporary selection, it is needed as RS_Modification relies on selected entities.
-                        // TODO - should RS_Modification be expanded for support of explicitly provided entities instead of selected ones?
-                        en->setSelected(true);
-
-                         RS_Modification m(*container, graphicView);
-                         m.changeAttributes(data);
-                         graphicView->drawEntity(en);
-                    }
-                    break;
-                }
-            }
-        }
-    } else if (e->button()==Qt::RightButton) {
-        removeHighlighting();
+    if(en != nullptr){
         switch (getStatus()){
-            case (SelectEntity):{
-                init(-1);
+            case SelectEntity:{
+                // selection of entity that will be used as source for pen
+                srcEntity = en;
+                removeHighlighting();
+                setStatus(ApplyToEntity);
                 break;
             }
             case ApplyToEntity:{
-                if (copyMode){
-                    setStatus(SelectEntity);
-                    srcEntity = nullptr;
-                }
-                else{
-                    init(-1);
+                removeHighlighting();
+                if (!en->isLocked() && en != srcEntity){
+                    RS_Pen penToApply;
+                    if (copyMode){
+                        // we apply pen from source entity, if Shift is pressed - resolved pen is used.
+                        bool resolvePen = e->modifiers() & Qt::ShiftModifier;
+                        penToApply = srcEntity->getPen(resolvePen);
+
+                    } else {
+                        // we apply active pen from pen toolbar
+                        QG_PenToolBar *penToolBar = QC_ApplicationWindow::getAppWindow()->getPenToolBar();
+                        if (penToolBar != nullptr){
+                            penToApply = penToolBar->getPen();
+                        }
+                    }
+
+                    // do actual modifications
+                    RS_AttributesData data;
+                    data.pen = penToApply;
+                    data.layer = "0";
+                    data.changeColor = true;
+                    data.changeLineType = true;
+                    data.changeWidth = true;
+                    data.changeLayer = false;
+
+                    // this is temporary selection, it is needed as RS_Modification relies on selected entities.
+                    // TODO - should RS_Modification be expanded for support of explicitly provided entities instead of selected ones?
+                    en->setSelected(true);
+
+                    RS_Modification m(*container, graphicView);
+                    m.changeAttributes(data);
+                    graphicView->drawEntity(en);
                 }
                 break;
             }
+        }
+    }
+    graphicView->redraw();
+}
+
+void LC_ActionPenApply::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    removeHighlighting();
+    switch (getStatus()){
+        case (SelectEntity):{
+            init(-1);
+            break;
+        }
+        case ApplyToEntity:{
+            if (copyMode){
+                setStatus(SelectEntity);
+                srcEntity = nullptr;
+            }
+            else{
+                init(-1);
+            }
+            break;
         }
     }
     graphicView->redraw();

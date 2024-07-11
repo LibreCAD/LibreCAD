@@ -50,7 +50,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
@@ -61,12 +60,14 @@ public:
 
     //using degree=2 only
     void setDegree(int /*deg*/) override{}
-
 private:
     void redo();
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+private:
     struct Points;
     std::unique_ptr<Points> pPoints;
-
 };
 
 #endif

@@ -36,36 +36,36 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyStretch : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-		SetFirstCorner,       /**< Setting first corner of selection. */
-		SetSecondCorner,      /**< Setting second corner of selection. */
+        SetFirstCorner,       /**< Setting first corner of selection. */
+        SetSecondCorner,      /**< Setting second corner of selection. */
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint        /**< Setting the target point. */
     };
 
 public:
     RS_ActionModifyStretch(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyStretch() override;
-	
-	void init(int status=0) override;
-	void trigger() override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void updateMouseButtonHints() override;
+                           RS_GraphicView& graphicView);
+    ~RS_ActionModifyStretch() override;
+
+    void init(int status=0) override;
+    void trigger() override;
+
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

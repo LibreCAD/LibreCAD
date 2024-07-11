@@ -172,37 +172,37 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawPolyline::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        if (equationSettingOn || stepSizeSettingOn) return;
+void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (equationSettingOn || stepSizeSettingOn) return;
 
-        if (startPointSettingOn || endPointSettingOn){
-            QString pointNumberString(QString::number(snapPoint(e).x));
+    if (startPointSettingOn || endPointSettingOn){
+        QString pointNumberString(QString::number(snapPoint(e).x));
 
-            if (e->modifiers() == Qt::ControlModifier){
-                pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
-            }
-
-            RS_CommandEvent equationCommandEventObject(pointNumberString);
-            commandEvent(&equationCommandEventObject);
-            return;
+        if (e->modifiers() == Qt::ControlModifier){
+            pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
         }
 
-        fireCoordinateEventForSnap(e);
-    } else if (e->button() == Qt::RightButton){
-        if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
-            equationSettingOn = false;
-            startPointSettingOn = false;
-            endPointSettingOn = false;
-            stepSizeSettingOn = false;
-            return;
-        }
-
-        if (getStatus() == SetNextPoint) trigger();
-        deletePreview();
-        deleteSnapper();
-        init(getStatus() - 1);
+        RS_CommandEvent equationCommandEventObject(pointNumberString);
+        commandEvent(&equationCommandEventObject);
+        return;
     }
+
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
+        equationSettingOn = false;
+        startPointSettingOn = false;
+        endPointSettingOn = false;
+        stepSizeSettingOn = false;
+        return;
+    }
+
+    if (getStatus() == SetNextPoint) trigger();
+    deletePreview();
+    deleteSnapper();
+    init(getStatus() - 1);
 }
 
 double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){

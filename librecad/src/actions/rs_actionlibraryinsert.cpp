@@ -122,12 +122,12 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionLibraryInsert::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEvent(snapPoint(e));
-    } else if (e->button()==Qt::RightButton) {
-        init(getStatus()-1);
-    }
+void RS_ActionLibraryInsert::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    fireCoordinateEvent(snapPoint(e));
+}
+
+void RS_ActionLibraryInsert::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status - 1);
 }
 
 void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
@@ -135,7 +135,7 @@ void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
         return;
     }
 
-	pPoints->data.insertionPoint = e->getCoordinate();
+    pPoints->data.insertionPoint = e->getCoordinate();
     trigger();
 }
 
@@ -148,32 +148,32 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
     }
 
     switch (getStatus()) {
-    case SetTargetPoint:
-        if (checkCommand("angle", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetAngle);
-        } else if (checkCommand("factor", c)) {
-            deletePreview();
-            lastStatus = (Status)getStatus();
-            setStatus(SetFactor);
-        }
-        break;
+        case SetTargetPoint:
+            if (checkCommand("angle", c)) {
+                deletePreview();
+                lastStatus = (Status)getStatus();
+                setStatus(SetAngle);
+            } else if (checkCommand("factor", c)) {
+                deletePreview();
+                lastStatus = (Status)getStatus();
+                setStatus(SetFactor);
+            }
+            break;
 
-    case SetAngle: {
+        case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
-				pPoints->data.angle = RS_Math::deg2rad(a);
+                pPoints->data.angle = RS_Math::deg2rad(a);
             } else {
                 commandMessage(tr("Not a valid expression"));
             }
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-    case SetFactor: {
+        case SetFactor: {
             bool ok;
             double f = RS_Math::eval(c, &ok);
             if (ok) {
@@ -184,10 +184,10 @@ void RS_ActionLibraryInsert::commandEvent(RS_CommandEvent* e) {
             RS_DIALOGFACTORY->requestOptions(this, true, true);
             setStatus(lastStatus);
         }
-        break;
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
@@ -195,13 +195,12 @@ QStringList RS_ActionLibraryInsert::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetTargetPoint:
-        cmd += command("angle");
-        cmd += command("factor");
-        ;
-        break;
-    default:
-        break;
+        case SetTargetPoint:
+            cmd += command("angle");
+            cmd += command("factor");
+            break;
+        default:
+            break;
     }
 
     return cmd;

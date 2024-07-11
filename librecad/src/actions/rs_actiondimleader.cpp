@@ -133,33 +133,32 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent end");
 }
 
-void RS_ActionDimLeader::mouseReleaseEvent(QMouseEvent* e) {
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton) {
-        RS_Vector snapped = snapPoint(e);
-        switch (status){
-            case SetStartpoint:{
-                break;
-            }
-            case SetEndpoint:{
-                if (!pPoints->points.empty()){
-                    snapped = getSnapAngleAwarePoint(e, pPoints->points.back(), snapped);
-                }
-                break;
-            }
-            default:
-                break;
+void RS_ActionDimLeader::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snapped = snapPoint(e);
+    switch (status){
+        case SetStartpoint:{
+            break;
         }
-        fireCoordinateEvent(snapped);
-    } else if (e->button()==Qt::RightButton) {
-        if (status == SetEndpoint) {
-            trigger();
-            reset();
-            setStatus(SetStartpoint);
-        } else {
-            deletePreview();
-            init(status - 1);
+        case SetEndpoint:{
+            if (!pPoints->points.empty()){
+                snapped = getSnapAngleAwarePoint(e, pPoints->points.back(), snapped);
+            }
+            break;
         }
+        default:
+            break;
+    }
+    fireCoordinateEvent(snapped);
+}
+
+void RS_ActionDimLeader::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    if (status == SetEndpoint) {
+        trigger();
+        reset();
+        setStatus(SetStartpoint);
+    } else {
+        deletePreview();
+        init(status - 1);
     }
 }
 

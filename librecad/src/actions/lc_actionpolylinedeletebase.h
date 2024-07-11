@@ -9,8 +9,6 @@ class LC_ActionPolylineDeleteBase:public RS_PreviewActionInterface {
 public:
     LC_ActionPolylineDeleteBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionPolylineDeleteBase() override = default;
-    void mouseReleaseEvent(QMouseEvent *e) override;
-
 protected:
     /**
    * Action States.
@@ -25,12 +23,11 @@ protected:
     RS_Vector vertexToDelete = RS_Vector(false);
 
     void getSelectedPolylineVertex(QMouseEvent *e, RS_Vector &vertex, RS_Entity *&segment);
-
-    virtual void processMouseLeftButtonRelease(QMouseEvent *e, int status) = 0;
     void finish(bool updateTB) override;
-    void processMouseRightButtonRelease();
     void clean();
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif // LC_ACTIONPOLYLINEDELETEBASE_H

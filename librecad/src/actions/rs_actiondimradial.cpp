@@ -143,39 +143,38 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent *e){
 
 const RS_Vector &RS_ActionDimRadial::getDefinitionPoint() const{return edata->definitionPoint;}
 
-void RS_ActionDimRadial::mouseReleaseEvent(QMouseEvent *e){
-
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case SetEntity: {
-                RS_Entity *en = catchEntity(e, RS2::ResolveAll);
-                if (en != nullptr){
-                    RS2::EntityType rtti = en->rtti();
-                    if (rtti == RS2::EntityArc || rtti == RS2::EntityCircle){
-                        entity = en;
-                        const RS_Vector &center = en->getCenter();
-                        data->definitionPoint = center;
-                        moveRelativeZero(center);
-                        setStatus(SetPos);
-                    } else {
-                        commandMessageTR("Not a circle or arc entity");
-                    }
+void RS_ActionDimRadial::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetEntity: {
+            RS_Entity *en = catchEntity(e, RS2::ResolveAll);
+            if (en != nullptr){
+                RS2::EntityType rtti = en->rtti();
+                if (rtti == RS2::EntityArc || rtti == RS2::EntityCircle){
+                    entity = en;
+                    const RS_Vector &center = en->getCenter();
+                    data->definitionPoint = center;
+                    moveRelativeZero(center);
+                    setStatus(SetPos);
+                } else {
+                    commandMessageTR("Not a circle or arc entity");
                 }
-                break;
             }
-            case SetPos: {
-                RS_Vector snap = snapPoint(e);
-                snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
-                fireCoordinateEvent(snap);
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
+        case SetPos: {
+            RS_Vector snap = snapPoint(e);
+            snap = getSnapAngleAwarePoint(e, entity->getCenter(), snap);
+            fireCoordinateEvent(snap);
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionDimRadial::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent *e){

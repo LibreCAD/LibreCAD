@@ -40,25 +40,24 @@ class RS_Vector;
  * @author Ulf Lehnert
  */
 class RS_ActionSetRelativeZero : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     RS_ActionSetRelativeZero(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
     ~RS_ActionSetRelativeZero() override;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
+    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
 
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
-	std::unique_ptr<RS_Vector> pt;
+    std::unique_ptr<RS_Vector> pt;
 };
 
 #endif

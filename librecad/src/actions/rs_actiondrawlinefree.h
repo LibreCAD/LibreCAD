@@ -38,7 +38,7 @@ class RS_Polyline;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineFree : public RS_PreviewActionInterface {
-    Q_OBJECT
+Q_OBJECT
 public:
     /**
      * Action States.
@@ -49,17 +49,20 @@ public:
     };
     RS_ActionDrawLineFree(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-	~RS_ActionDrawLineFree() override;
+    ~RS_ActionDrawLineFree() override;
 
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
-	std::unique_ptr<RS_Vector> vertex;
-	std::unique_ptr<RS_Polyline> polyline;
-	RS2::CursorType doGetMouseCursor(int status) override;
+    std::unique_ptr<RS_Vector> vertex;
+    std::unique_ptr<RS_Polyline> polyline;
+    RS2::CursorType doGetMouseCursor(int status) override;
+
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

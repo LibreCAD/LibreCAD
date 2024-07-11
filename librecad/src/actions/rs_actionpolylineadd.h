@@ -52,11 +52,12 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     void finish(bool updateTB) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     RS_Polyline *polylineToModify = nullptr;
     RS_Entity *addSegment = nullptr;

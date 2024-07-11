@@ -60,11 +60,12 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void mousePressEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
     enum RS2::EntityType getTypeToSelect();
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

@@ -51,9 +51,7 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-
     void setDist(const double &d){dist = d;}
     double getDist() const{return dist;}
     void setNumber(unsigned n){number = n;}
@@ -62,7 +60,6 @@ public:
 private:
     RS_Entity *calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist);
     RS_Vector calculateIntersection(RS_Entity *first, RS_Entity *last);
-
 private:
     RS_Polyline *originalEntity = nullptr;
     double dist = 0.;
@@ -72,6 +69,8 @@ private:
 protected:
     void createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

@@ -56,7 +56,7 @@ public:
     bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
+
 //        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
@@ -69,6 +69,8 @@ protected:
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle);
     void createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

@@ -110,18 +110,17 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
 }
 
-void RS_ActionModifyMove::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        RS_Vector snapped = snapPoint(e);
-        if (status == SetTargetPoint){
-            snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
-        }
-        fireCoordinateEvent(snapped);
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(status - 1);
+void RS_ActionModifyMove::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snapped = snapPoint(e);
+    if (status == SetTargetPoint){
+        snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
     }
+    fireCoordinateEvent(snapped);
+}
+
+void RS_ActionModifyMove::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){

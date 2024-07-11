@@ -41,12 +41,12 @@
  * Constructor.
  */
 RS_ActionBlocksCreate::RS_ActionBlocksCreate(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Blocks Create",
-						   container, graphicView)
-		,referencePoint(new RS_Vector{})
+                                             RS_GraphicView& graphicView)
+    :RS_PreviewActionInterface("Blocks Create",
+                               container, graphicView)
+    ,referencePoint(new RS_Vector{})
 {
-	actionType=RS2::ActionBlocksCreate;
+    actionType=RS2::ActionBlocksCreate;
 }
 
 RS_ActionBlocksCreate::~RS_ActionBlocksCreate() = default;
@@ -56,27 +56,25 @@ void RS_ActionBlocksCreate::init(int status) {
     RS_PreviewActionInterface::init(status);
 }
 
-
-
 void RS_ActionBlocksCreate::trigger() {
-	if (graphic) {
+    if (graphic) {
         RS_BlockList* blockList = graphic->getBlockList();
-		if (blockList) {
+        if (blockList) {
             RS_BlockData d =
                 RS_DIALOGFACTORY->requestNewBlockDialog(blockList);
 
             if (!d.name.isEmpty()) {
                 RS_Creation creation(container, graphicView);
-				creation.createBlock(&d, *referencePoint, true);
+                creation.createBlock(&d, *referencePoint, true);
 
                 RS_InsertData id(
                     d.name,
-					*referencePoint,
+                    *referencePoint,
                     RS_Vector(1.0,1.0),
                     0.0,
                     1, 1, RS_Vector(0.0,0.0)
                 );
-				creation.createInsert(&id);
+                creation.createInsert(&id);
             }
         }
     }
@@ -89,26 +87,24 @@ void RS_ActionBlocksCreate::trigger() {
     finish(false);
 }
 
-
 void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     snapPoint(e);
 
     switch (getStatus()) {
-    case SetReferencePoint:
-        //data.insertionPoint = snapPoint(e);
-
-		/*if (block) {
-            deletePreview();
-            //preview->addAllFrom(*block);
-            //preview->move(data.insertionPoint);
-				RS_Creation creation(preview, nullptr, false);
-                creation.createInsert(data);
-            drawPreview();
-    }*/
-        break;
-
-    default:
-        break;
+        case SetReferencePoint: {
+            //data.insertionPoint = snapPoint(e);
+/*if (block) {
+          deletePreview();
+          //preview->addAllFrom(*block);
+          //preview->move(data.insertionPoint);
+  RS_Creation creation(preview, nullptr, false);
+              creation.createInsert(data);
+          drawPreview();
+  }*/
+            break;
+        }
+        default:
+            break;
     }
 }
 
@@ -122,38 +118,33 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) {
+    if (e == nullptr) {
         return;
     }
 
     switch (getStatus()) {
-    case SetReferencePoint:
-		*referencePoint = e->getCoordinate();
-        trigger();
-        break;
-
-    default:
-        break;
-
+        case SetReferencePoint: {
+            *referencePoint = e->getCoordinate();
+            trigger();
+            break;
+        }
+        default:
+            break;
     }
 }
 
 void RS_ActionBlocksCreate::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetReferencePoint:
-        updateMouseWidgetTRCancel("Specify reference point");
-        break;
-    default:
-		     updateMouseWidget();
-        break;
+        case SetReferencePoint:
+            updateMouseWidgetTRCancel("Specify reference point");
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 
 RS2::CursorType RS_ActionBlocksCreate::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

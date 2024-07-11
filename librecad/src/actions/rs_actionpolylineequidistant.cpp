@@ -317,35 +317,35 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionPolylineEquidistant::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case ChooseEntity:{
-                RS_Entity *en = catchEntity(e);
-                if (!en){
-                    commandMessageTR("No Entity found.");
-                } else if (en->rtti() != RS2::EntityPolyline){
-                    commandMessageTR("Entity must be a polyline.");
-                } else {
-                    auto polyline = dynamic_cast<RS_Polyline *>(en);
-                    RS_Vector snapPoint = toGraph(e);
-                    bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, snapPoint);
-                    bRightSide = pointOnRightSide;
-                    originalEntity = polyline;
-                    trigger();
-                }
-                break;
+void RS_ActionPolylineEquidistant::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseEntity:{
+            RS_Entity *en = catchEntity(e);
+            if (!en){
+                commandMessageTR("No Entity found.");
+            } else if (en->rtti() != RS2::EntityPolyline){
+                commandMessageTR("Entity must be a polyline.");
+            } else {
+                auto polyline = dynamic_cast<RS_Polyline *>(en);
+                RS_Vector snapPoint = toGraph(e);
+                bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, snapPoint);
+                bRightSide = pointOnRightSide;
+                originalEntity = polyline;
+                trigger();
+            }
+            break;
         }
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        deleteSnapper();
-        if (originalEntity){
-            graphicView->redraw();
-        }
-        init(getStatus() - 1);
+        default:
+            break;
     }
+}
+
+void RS_ActionPolylineEquidistant::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deleteSnapper();
+    if (originalEntity){
+        graphicView->redraw();
+    }
+    init(status - 1);
 }
 
 bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const{
@@ -383,5 +383,3 @@ void RS_ActionPolylineEquidistant::updateMouseButtonHints(){
 void RS_ActionPolylineEquidistant::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_PolylineEquidistantOptions>();
 }
-
-// EOF

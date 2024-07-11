@@ -56,7 +56,6 @@ public:
     void trigger() override;
     void finish(bool updateTB = false) override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
@@ -64,9 +63,7 @@ public:
     double getRadius() const;
     void setTrim(bool t);
     bool isTrimOn() const;
-
 private:
-
     bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
     // update highlight status
 
@@ -74,6 +71,8 @@ protected:
     void createOptionsWidget() override;
     void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;

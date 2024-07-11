@@ -109,54 +109,54 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent end");
 }
 
-void RS_ActionPolylineAdd::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case ChooseSegment: {
-                auto en = catchEntity(e);
-                if (!en){
-                    commandMessageTR("No Entity found.");
-                } else if (!isPolyline(en)){
-                    commandMessageTR("Entity must be a polyline.");
-                } else {
-                    polylineToModify = dynamic_cast<RS_Polyline *>(en);
-                    polylineToModify->setSelected(true);
-                    graphicView->drawEntity(polylineToModify);
-                    setStatus(SetAddCoord);
-                }
-                break;
+void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseSegment: {
+            auto en = catchEntity(e);
+            if (!en){
+                commandMessageTR("No Entity found.");
+            } else if (!isPolyline(en)){
+                commandMessageTR("Entity must be a polyline.");
+            } else {
+                polylineToModify = dynamic_cast<RS_Polyline *>(en);
+                polylineToModify->setSelected(true);
+                graphicView->drawEntity(polylineToModify);
+                setStatus(SetAddCoord);
             }
-            case SetAddCoord: {
-                bool oldSnapOnEntity = snapMode.snapOnEntity;
-                snapMode.snapOnEntity = true;
-                RS_Vector snap = snapPoint(e);
-                snapMode.snapOnEntity = oldSnapOnEntity;
-
-                const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
-                *addCoord = newCoord;
-                if (!polylineToModify){
-                    commandMessageTR("No Entity found.");
-                } else if (!addCoord->valid){
-                    commandMessageTR("Adding point is invalid.");
-                } else {
-                    addSegment = nullptr;
-                    addSegment = catchEntity(newCoord, RS2::ResolveAll);
-                    if (!addSegment){
-                        commandMessageTR("Adding point is not on entity.");
-                        break;
-                    }
-                    deleteSnapper();
-                    trigger();
-                }
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        deleteSnapper();
-        finish(true);
+        case SetAddCoord: {
+            bool oldSnapOnEntity = snapMode.snapOnEntity;
+            snapMode.snapOnEntity = true;
+            RS_Vector snap = snapPoint(e);
+            snapMode.snapOnEntity = oldSnapOnEntity;
+
+            const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
+            *addCoord = newCoord;
+            if (!polylineToModify){
+                commandMessageTR("No Entity found.");
+            } else if (!addCoord->valid){
+                commandMessageTR("Adding point is invalid.");
+            } else {
+                addSegment = nullptr;
+                addSegment = catchEntity(newCoord, RS2::ResolveAll);
+                if (!addSegment){
+                    commandMessageTR("Adding point is not on entity.");
+                    break;
+                }
+                deleteSnapper();
+                trigger();
+            }
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionPolylineAdd::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deleteSnapper();
+    finish(true);
 }
 
 void RS_ActionPolylineAdd::finish(bool updateTB){

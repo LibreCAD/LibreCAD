@@ -47,8 +47,7 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 							   container, graphicView)
 	,entity1(nullptr)
     ,entity2(nullptr)
-    ,coord(std::make_unique<RS_Vector>())
-{
+    ,coord(std::make_unique<RS_Vector>()){
 }
 
 RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
@@ -136,35 +135,34 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent end");
 }
 
-void RS_ActionSnapIntersectionManual::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
+void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = toGraph(e);
+    RS_Entity *se = catchEntity(e);
 
-        RS_Vector mouse = toGraph(e);
-        RS_Entity *se = catchEntity(e);
+    switch (getStatus()) {
+        case ChooseEntity1:
+            entity1 = se;
+            if (entity1 && entity1->isAtomic()){
+                setStatus(ChooseEntity2);
+            }
+            break;
 
-        switch (getStatus()) {
-            case ChooseEntity1:
-                entity1 = se;
-                if (entity1 && entity1->isAtomic()){
-                    setStatus(ChooseEntity2);
-                }
-                break;
+        case ChooseEntity2:
+            entity2 = se;
+            *coord = mouse;
+            if (entity2 && entity2->isAtomic() && coord->valid){
+                trigger();
+            }
+            break;
 
-            case ChooseEntity2:
-                entity2 = se;
-                *coord = mouse;
-                if (entity2 && entity2->isAtomic() && coord->valid){
-                    trigger();
-                }
-                break;
-
-            default:
-                break;
-        }
-    } else if (e->button() == Qt::RightButton){
-        deletePreview();
-        init(getStatus() - 1);
+        default:
+            break;
     }
+}
+
+void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {

@@ -37,16 +37,17 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyDeleteQuick : public RS_ActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     RS_ActionModifyDeleteQuick(RS_EntityContainer& container,
                                RS_GraphicView& graphicView);
 
-	void trigger() override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void updateMouseButtonHints() override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     RS_Entity* en = nullptr;
 };

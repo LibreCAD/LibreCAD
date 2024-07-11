@@ -43,9 +43,9 @@ RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
 
 void RS_ActionOrder::init(int status) {
     RS_ActionInterface::init(status);
-	targetEntity = nullptr;
+    targetEntity = nullptr;
     if (orderType == RS2::ActionOrderBottom ||
-            orderType == RS2::ActionOrderTop) {
+        orderType == RS2::ActionOrderTop) {
         trigger();
     } else
         snapMode.restriction = RS2::RestrictNothing;
@@ -55,14 +55,14 @@ void RS_ActionOrder::trigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-	for(auto e: *container){
+    for(auto e: *container){
         if (e->isSelected())
             entList.append(e);
     }
 
     if (targetEntity) {
-		int index = -1;
-		targetEntity->setHighlighted(false);
+        int index = -1;
+        targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
 
         switch (orderType) {
@@ -77,7 +77,7 @@ void RS_ActionOrder::trigger() {
             default:
                 break;
         }
-		targetEntity = nullptr;
+        targetEntity = nullptr;
     } else {
         switch (orderType) {
             case RS2::ActionOrderBottom:
@@ -107,43 +107,43 @@ void RS_ActionOrder::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-void RS_ActionOrder::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        switch (getStatus()) {
-            case ChooseEntity: {
-                targetEntity = catchEntity(e);
-                if (!targetEntity) {
-                    commandMessageTR("No Entity found.");
-                } else {
-                    targetEntity->setHighlighted(true);
-                    graphicView->drawEntity(targetEntity);
-                    graphicView->redraw();
-                    trigger();
-                }
-                break;
-            }
-            default:
-                break;
-        }
-    } else if (e->button()==Qt::RightButton) {
-        deleteSnapper();
-        if (targetEntity) {
-            targetEntity->setHighlighted(false);
-            graphicView->drawEntity(targetEntity);
+void RS_ActionOrder::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseEntity: {
+            targetEntity = catchEntity(e);
+            if (!targetEntity) {
+                commandMessageTR("No Entity found.");
+            } else {
+                targetEntity->setHighlighted(true);
+                graphicView->drawEntity(targetEntity);
                 graphicView->redraw();
+                trigger();
+            }
+            break;
         }
-        init(getStatus()-1);
+        default:
+            break;
     }
     deleteSnapper();
 }
 
+void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deleteSnapper();
+    if (targetEntity) {
+        targetEntity->setHighlighted(false);
+        graphicView->drawEntity(targetEntity);
+        graphicView->redraw();
+    }
+    init(getStatus()-1);
+}
+
 void RS_ActionOrder::updateMouseButtonHints() {
     switch (getStatus()) {
-    case ChooseEntity:
-        updateMouseWidgetTRCancel("Choose entity for order");
-        break;
-    default:
-		updateMouseWidget();
+        case ChooseEntity:
+            updateMouseWidgetTRCancel("Choose entity for order");
+            break;
+        default:
+            updateMouseWidget();
     }
 }
 

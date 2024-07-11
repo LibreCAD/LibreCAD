@@ -83,7 +83,6 @@ void RS_ActionModifyScale::trigger() {
     if(pPoints->data.factor.valid){
         RS_Modification m(*container, graphicView);
         m.scale(pPoints->data);
-
         updateSelectionWidget();
     }
 }
@@ -146,14 +145,16 @@ void RS_ActionModifyScale::showPreview()
     drawPreview();
 }
 
-void RS_ActionModifyScale::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        if (getStatus() != ShowDialog){
-            fireCoordinateEventForSnap(e);
-        }
-    } else if (e->button()==Qt::RightButton && getStatus() != SetSourcePoint) {
+void RS_ActionModifyScale::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status != ShowDialog){
+        fireCoordinateEventForSnap(e);
+    }
+}
+
+void RS_ActionModifyScale::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status != SetSourcePoint){
         deletePreview();
-        init(getStatus()-1);
+        init(status - 1);
     }
 }
 

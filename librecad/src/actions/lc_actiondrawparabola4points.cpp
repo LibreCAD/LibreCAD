@@ -135,26 +135,21 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
     return pPoints->valid;
 }
 
-
-
-void LC_ActionDrawParabola4Points::mouseReleaseEvent(QMouseEvent* e) {
+void LC_ActionDrawParabola4Points::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     // Proceed to next status
-    if (e->button()==Qt::LeftButton) {
-        const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
-        fireCoordinateEvent(coord);
-    }
-
-    // Return to last status:
-    else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-        pPoints->points.resize(getStatus()+1);
-        if (!pPoints->points.empty()) {
-            moveRelativeZero(pPoints->points.at(getStatus()));
-        }
-    }
+    const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
+    fireCoordinateEvent(coord);
 }
 
+void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    // Return to last status:
+    deletePreview();
+    init(getStatus()-1);
+    pPoints->points.resize(getStatus()+1);
+    if (!pPoints->points.empty()) {
+        moveRelativeZero(pPoints->points.at(getStatus()));
+    }
+}
 
 void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
     if (!e) {

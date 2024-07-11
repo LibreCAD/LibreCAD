@@ -39,8 +39,8 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircle3P:public LC_ActionDrawCircleBase {
 Q_OBJECT
-protected:
-    void reset() override;
+
+
 public:
     /**
      * Action States.
@@ -59,7 +59,6 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 
@@ -69,6 +68,10 @@ protected:
      */
     struct Points;
     std::unique_ptr<Points> pPoints;
+
+    void reset() override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

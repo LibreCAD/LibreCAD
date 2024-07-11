@@ -127,17 +127,17 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
 //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
 }
 
-void RS_ActionDrawEllipse4Points::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        RS_Vector snap = snapPoint(e);
-        if (getStatus() == SetPoint2){
-            snap = getSnapAngleAwarePoint(e, pPoints->points.at(SetPoint1), snap);
-        }
-        fireCoordinateEvent(snap);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
+void RS_ActionDrawEllipse4Points::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snap = snapPoint(e);
+    if (status == SetPoint2){
+        snap = getSnapAngleAwarePoint(e, pPoints->points.at(SetPoint1), snap);
     }
+    fireCoordinateEvent(snap);
+}
+
+void RS_ActionDrawEllipse4Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status-1);
 }
 
 bool RS_ActionDrawEllipse4Points::preparePreview(){

@@ -299,40 +299,37 @@ RS_Entity *RS_ActionDrawCircleTan1_2P::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan1_2P::mouseReleaseEvent(QMouseEvent *e){
-    // Proceed to next status
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-
-        switch (status) {
-            case SetCircle1: {
-                RS_Entity *en = catchCircle(e);
-                if (!en) return;
-                baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
-                graphicView->redraw(RS2::RedrawDrawing);
-                setStatus(status + 1);
-                break;
-            }
-            case SetPoint1:
-            case SetPoint2: {
-                fireCoordinateEventForSnap(e);
-                break;
-            }
-            case SetCenter:
-                pPoints->coord = toGraph(e);
-                if (preparePreview()) trigger();
-                break;
-
-            default:
-                break;
+void RS_ActionDrawCircleTan1_2P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case SetCircle1: {
+            RS_Entity *en = catchCircle(e);
+            if (!en) return;
+            baseEntity = dynamic_cast<RS_AtomicEntity *>(en);
+            graphicView->redraw(RS2::RedrawDrawing);
+            setStatus(status + 1);
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        // Return to last status:
-        if (status > 0){
-            deletePreview();
+        case SetPoint1:
+        case SetPoint2: {
+            fireCoordinateEventForSnap(e);
+            break;
         }
-        init(status - 1);
+        case SetCenter:
+            pPoints->coord = toGraph(e);
+            if (preparePreview()) trigger();
+            break;
+
+        default:
+            break;
     }
+}
+
+void RS_ActionDrawCircleTan1_2P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (status > 0){
+        deletePreview();
+    }
+    init(status - 1);
 }
 
 void RS_ActionDrawCircleTan1_2P::coordinateEvent(RS_CoordinateEvent *e){

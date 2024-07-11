@@ -194,59 +194,54 @@ bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, 
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseInscribe::mouseReleaseEvent(QMouseEvent *e){
-    // Proceed to next status
-    if (e->button() == Qt::LeftButton){
-        RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
+void RS_ActionDrawEllipseInscribe::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
 
-        if (en != nullptr){
-
-            for (int i = 0; i < getStatus(); ++i) {
-                if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
-            }
-            if (en->getParent()){
-                if (en->getParent()->ignoredOnModification()) return;
-            }
-            clearLines(true);
-
-            auto *line = dynamic_cast<RS_Line *>(en);
-            switch (getStatus()) {
-                case SetLine1:
-                case SetLine2:
-                case SetLine3: {
-                    pPoints->lines.push_back(line);
-                    setStatus(getStatus() + 1);
-                    break;
-                }
-                case SetLine4: {
-                    std::vector<RS_Vector> tangent;
-                    tangent.reserve(4);
-                    if (preparePreview(line, tangent)){
-                        pPoints->lines.push_back(line);
-                        trigger();
-                    } else {
-                        if (RS_DIALOGFACTORY){
-                            commandMessageTR("Can not determine uniquely an ellipse");
-                        }
-                    }
-                    break;
-                }
-                default:
-                    break;
-            }
-
+    if (en != nullptr){
+        for (int i = 0; i < getStatus(); ++i) {
+            if (en->getId() == pPoints->lines[i]->getId()) return; //do not pull in the same line again
         }
-    } else if (e->button() == Qt::RightButton){
-        // Return to last status:
-        if (getStatus() > 0){
-            clearLines(true);
+        if (en->getParent()){
+            if (en->getParent()->ignoredOnModification()) return;
+        }
+        clearLines(true);
+
+        auto *line = dynamic_cast<RS_Line *>(en);
+        switch (status) {
+            case SetLine1:
+            case SetLine2:
+            case SetLine3: {
+                pPoints->lines.push_back(line);
+                setStatus(getStatus() + 1);
+                break;
+            }
+            case SetLine4: {
+                std::vector<RS_Vector> tangent;
+                tangent.reserve(4);
+                if (preparePreview(line, tangent)){
+                    pPoints->lines.push_back(line);
+                    trigger();
+                } else {
+                        commandMessageTR("Can not determine uniquely an ellipse");
+                }
+                break;
+            }
+            default:
+                break;
+        }
+    }
+}
+
+void RS_ActionDrawEllipseInscribe::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    // Return to last status:
+    if (status > 0){
+        clearLines(true);
 //            pPoints->lines.back()->setHighlighted(false);
 //            graphicView->drawEntity(pPoints->lines.back());
-            pPoints->lines.pop_back();
-            deletePreview();
-        }
-        init(getStatus() - 1);
+        pPoints->lines.pop_back();
+        deletePreview();
     }
+    init(status - 1);
 }
 
 //void RS_ActionDrawEllipseInscribe::coordinateEvent(RS_CoordinateEvent* e) {

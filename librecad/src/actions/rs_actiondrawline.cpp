@@ -165,30 +165,25 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e)
     }
 }
 
-void RS_ActionDrawLine::mouseReleaseEvent(QMouseEvent* e)
-{
-    if (e->button() == Qt::LeftButton) {
-        RS_Vector snapped = snapPoint(e);
-
-        // Snapping to angle(15*) if shift key is pressed
-
-        if (getStatus() == SetEndpoint ) {
-            snapped = getSnapAngleAwarePoint(e,  pPoints->data.startpoint, snapped);
-        }
-        fireCoordinateEvent(snapped);
+void RS_ActionDrawLine::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector snapped = snapPoint(e);
+    // Snapping to angle(15*) if shift key is pressed
+    if (status == SetEndpoint ) {
+        snapped = getSnapAngleAwarePoint(e,  pPoints->data.startpoint, snapped);
     }
-    else if (e->button() == Qt::RightButton) {
-        deletePreview();
-        switch (getStatus()) {
+    fireCoordinateEvent(snapped);
+}
+
+void RS_ActionDrawLine::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    switch (status) {
         default:
         case SetStartpoint:
-            init( getStatus() - 1);
+            init( status - 1);
             break;
-
         case SetEndpoint:
             next();
             break;
-        }
     }
 }
 

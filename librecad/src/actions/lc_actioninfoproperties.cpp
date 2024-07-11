@@ -70,12 +70,14 @@ void LC_ActionInfoProperties::init(int status){
     }
 }
 
-void LC_ActionInfoProperties::mouseReleaseEvent(QMouseEvent *event){
-    if (event->button()==Qt::LeftButton){
-        // notify widget
-        highlightAndShowEntityInfo(event);
-    }
-    // complete action after entity selection
+void LC_ActionInfoProperties::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    // notify widget
+    highlightAndShowEntityInfo(e);
+    setStatus(-1);
+    finish();
+}
+
+void LC_ActionInfoProperties::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
     setStatus(-1);
     finish();
 }

@@ -28,7 +28,6 @@
 
 #include "rs_actionselectintersected.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
@@ -106,19 +105,20 @@ void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectIntersected::mouseReleaseEvent(QMouseEvent *e){
+void RS_ActionSelectIntersected::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
-    if (e->button() == Qt::RightButton){
-        if (getStatus() == SetPoint2){
-            deletePreview();
-        }
-        init(getStatus() - 1);
-    } else if (e->button() == Qt::LeftButton){
-        if (getStatus() == SetPoint2){
-            pPoints->v2 = snapPoint(e);
-            trigger();
-        }
+    if (status == SetPoint2){
+        pPoints->v2 = snapPoint(e);
+        trigger();
     }
+}
+
+void RS_ActionSelectIntersected::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
+    if (getStatus() == SetPoint2){
+        deletePreview();
+    }
+    init(status - 1);
 }
 
 void RS_ActionSelectIntersected::updateMouseButtonHints(){

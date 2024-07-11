@@ -177,32 +177,32 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionModifyTrimAmount::mouseReleaseEvent(QMouseEvent *e){
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton){
-        switch (status) {
-            case ChooseTrimEntity: {
-                *trimCoord = toGraph(e);
-                RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveNone);
-                if (en == nullptr){
-                    commandMessageTR("No entity found.");
-                }
-                else if (en->isAtomic()){
-                    trimEntity = dynamic_cast<RS_AtomicEntity *>(en);
-                    trigger();
-                }
-                else {
-                    commandMessageTR("The chosen Entity is not an atomic entity or cannot be trimmed.");
-                }
-                break;
+void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseTrimEntity: {
+            *trimCoord = toGraph(e);
+            RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveNone);
+            if (en == nullptr){
+                commandMessageTR("No entity found.");
             }
-            default:
-                break;
+            else if (en->isAtomic()){
+                trimEntity = dynamic_cast<RS_AtomicEntity *>(en);
+                trigger();
+            }
+            else {
+                commandMessageTR("The chosen Entity is not an atomic entity or cannot be trimmed.");
+            }
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        init(status - 1);
+        default:
+            break;
     }
 }
+
+void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status - 1);
+}
+
 // fixme - support for other options via command line (currently only length may be set) (???)
 void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
     QString c = e->getCommand().toLower();

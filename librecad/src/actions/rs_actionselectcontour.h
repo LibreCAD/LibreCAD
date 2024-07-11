@@ -41,10 +41,11 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     void trigger() override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
     RS_Entity *en = nullptr;
 };

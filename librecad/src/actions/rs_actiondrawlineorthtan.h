@@ -34,7 +34,7 @@ class RS_Line;
  * @author Dongxu Li
  */
 class RS_ActionDrawLineOrthTan : public RS_PreviewActionInterface {
-        Q_OBJECT
+Q_OBJECT
 private:
     enum Status {
         SetLine,     /**< Choose the line orthogonal to the tangent line */
@@ -45,23 +45,24 @@ public:
     RS_ActionDrawLineOrthTan(RS_EntityContainer& container,
                              RS_GraphicView& graphicView);
 
-	void trigger() override;
-	void finish(bool updateTB = true) override;
+    void trigger() override;
+    void finish(bool updateTB = true) override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-
-	void updateMouseButtonHints() override;
-
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
 private:
-	void clearLines();
+    void clearLines();
     /** normal to tangent. */
     RS_Line* normal = nullptr; // the select normal line
     /** tangent. */
     RS_Line* tangent = nullptr; //holds the tangent line for preview
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle = nullptr;
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+
+protected:
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

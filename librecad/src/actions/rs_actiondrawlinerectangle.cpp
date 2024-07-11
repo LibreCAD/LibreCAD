@@ -109,13 +109,13 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineRectangle::mouseReleaseEvent(QMouseEvent* e) {
-    if (e->button()==Qt::LeftButton) {
-        fireCoordinateEventForSnap(e);
-    } else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
+void RS_ActionDrawLineRectangle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionDrawLineRectangle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
@@ -145,7 +145,7 @@ void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent *e){
     QString const &c = e->getCommand().toLower();
 
     if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
+        commandMessage(msgAvailableCommands()
                                          + getAvailableCommands().join(", "));
         return;
     }

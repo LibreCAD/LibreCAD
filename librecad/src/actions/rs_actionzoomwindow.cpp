@@ -109,25 +109,25 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionZoomWindow::mouseReleaseEvent(QMouseEvent *e){
+void RS_ActionZoomWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
-
-    if (e->button() == Qt::RightButton){
-        if (getStatus() == SetSecondCorner){
+    if (status == SetSecondCorner){
+        pPoints->v2 = snapFree(e);
+        if (fabs(pPoints->v1.x - pPoints->v2.x) < RS_TOLERANCE
+            || fabs(pPoints->v1.y - pPoints->v2.y) < RS_TOLERANCE){//invalid zoom window
             deletePreview();
+            init(status - 1);
         }
-        init(getStatus() - 1);
-    } else if (e->button() == Qt::LeftButton){
-        if (getStatus() == SetSecondCorner){
-            pPoints->v2 = snapFree(e);
-            if (fabs(pPoints->v1.x - pPoints->v2.x) < RS_TOLERANCE
-                || fabs(pPoints->v1.y - pPoints->v2.y) < RS_TOLERANCE){//invalid zoom window
-                deletePreview();
-                init(getStatus() - 1);
-            }
-            trigger();
-        }
+        trigger();
     }
+}
+
+void RS_ActionZoomWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
+    if (status == SetSecondCorner){
+        deletePreview();
+    }
+    init(status - 1);
 }
 
 void RS_ActionZoomWindow::updateMouseButtonHints(){

@@ -103,38 +103,38 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
-void RS_ActionModifyCut::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        switch (getStatus()) {
-            case ChooseCutEntity: {
-                cutEntity = catchEntity(e);
-                if (cutEntity == nullptr){
-                    commandMessageTR("No Entity found.");
-                } else if (cutEntity->trimmable()){
-                    setStatus(SetCutCoord);
-                } else
-                    commandMessageTR("Entity must be a line, arc, circle, ellipse or interpolation spline.");
-                break;
-            }
-            case SetCutCoord: {
-                RS_Vector snap = snapPoint(e);
-                RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
-                if (LC_LineMath::isNotMeaningfulDistance(cutEntity->getStartpoint(), nearest) ||
-                    LC_LineMath::isNotMeaningfulDistance(cutEntity->getEndpoint(), nearest)){
-                    commandMessageTR("Cutting point may not be entity's endpoint.");
-                } else {
-                    *cutCoord = nearest;
-                    trigger();
-                    deleteSnapper();
-                }
-                break;
-            }
-            default:
-                break;
+void RS_ActionModifyCut::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    switch (status) {
+        case ChooseCutEntity: {
+            cutEntity = catchEntity(e);
+            if (cutEntity == nullptr){
+                commandMessageTR("No Entity found.");
+            } else if (cutEntity->trimmable()){
+                setStatus(SetCutCoord);
+            } else
+                commandMessageTR("Entity must be a line, arc, circle, ellipse or interpolation spline.");
+            break;
         }
-    } else if (e->button() == Qt::RightButton){
-        init(getStatus() - 1);
+        case SetCutCoord: {
+            RS_Vector snap = snapPoint(e);
+            RS_Vector nearest = cutEntity->getNearestPointOnEntity(snap, true);
+            if (LC_LineMath::isNotMeaningfulDistance(cutEntity->getStartpoint(), nearest) ||
+                LC_LineMath::isNotMeaningfulDistance(cutEntity->getEndpoint(), nearest)){
+                commandMessageTR("Cutting point may not be entity's endpoint.");
+            } else {
+                *cutCoord = nearest;
+                trigger();
+                deleteSnapper();
+            }
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionModifyCut::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    init(status - 1);
 }
 
 void RS_ActionModifyCut::updateMouseButtonHints(){

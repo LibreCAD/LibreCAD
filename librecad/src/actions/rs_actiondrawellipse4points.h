@@ -35,6 +35,8 @@ struct RS_EllipseData;
  */
 class RS_ActionDrawEllipse4Points:public LC_ActionDrawCircleBase {
 Q_OBJECT
+
+
 public:
     /**
      * Action States.
@@ -55,16 +57,16 @@ public:
     void trigger() override;
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void mouseReleaseEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-
 protected:
 // 4 points on ellipse
     struct Points;
     std::unique_ptr<Points> pPoints;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 
 #endif

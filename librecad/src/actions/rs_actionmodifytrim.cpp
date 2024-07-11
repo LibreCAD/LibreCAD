@@ -87,6 +87,7 @@ void RS_ActionModifyTrim::trigger() {
         updateSelectionWidget();
     }
 }
+
 // todo - check trim both mode - it seems that limiting entity should be atomic too...
 void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent begin");
@@ -146,40 +147,39 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
-void RS_ActionModifyTrim::mouseReleaseEvent(QMouseEvent *e) {
-    int status = getStatus();
-    if (e->button() == Qt::LeftButton) {
-        RS_Vector mouse = toGraph(e);
-        switch (status) {
-            case ChooseLimitEntity: {
-                RS_Entity *se = catchEntity(e, RS2::ResolveAllButTextImage);
-                if (se != nullptr) {
-                    limitEntity = se;
-                    if (limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
-                        pPoints->limitCoord = mouse;
-                        setStatus(ChooseTrimEntity);
-                    }
+void RS_ActionModifyTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    RS_Vector mouse = toGraph(e);
+    switch (status) {
+        case ChooseLimitEntity: {
+            RS_Entity *se = catchEntity(e, RS2::ResolveAllButTextImage);
+            if (se != nullptr) {
+                limitEntity = se;
+                if (limitEntity->rtti() != RS2::EntityPolyline/*&& limitEntity->isAtomic()*/) {
+                    pPoints->limitCoord = mouse;
+                    setStatus(ChooseTrimEntity);
                 }
-                break;
             }
-            case ChooseTrimEntity: {
-                RS_Entity *se = catchEntity(e, RS2::ResolveNone);
-                if (se != nullptr) {
-                    if (se->isAtomic() && se != limitEntity) {
-                        pPoints->trimCoord = mouse;
-                        trimEntity = dynamic_cast<RS_AtomicEntity *>(se);
-                        trigger();
-                    }
-                }
-                break;
-            }
-            default:
-                break;
+            break;
         }
-    } else if (e->button() == Qt::RightButton) {
-        deletePreview();
-        init(status - 1);
+        case ChooseTrimEntity: {
+            RS_Entity *se = catchEntity(e, RS2::ResolveNone);
+            if (se != nullptr) {
+                if (se->isAtomic() && se != limitEntity) {
+                    pPoints->trimCoord = mouse;
+                    trimEntity = dynamic_cast<RS_AtomicEntity *>(se);
+                    trigger();
+                }
+            }
+            break;
+        }
+        default:
+            break;
     }
+}
+
+void RS_ActionModifyTrim::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    deletePreview();
+    init(status - 1);
 }
 
 //void RS_ActionModifyTrim::finish(bool updateTB) {

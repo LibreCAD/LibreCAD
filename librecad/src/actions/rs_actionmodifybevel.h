@@ -59,15 +59,10 @@ public:
     void init(int status) override;
     void trigger() override;
     void finish(bool updateTB = false) override;
-
     void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
-
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
-
     void updateMouseButtonHints() override;
-
     void setLength1(double l1);
     double getLength1() const;
     void setLength2(double l2);
@@ -91,5 +86,7 @@ private:
 protected:
     void createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 #endif

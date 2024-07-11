@@ -145,20 +145,20 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawSpline::mouseReleaseEvent(QMouseEvent *e){
-    if (e->button() == Qt::LeftButton){
-        fireCoordinateEventForSnap(e);
-    } else if (e->button() == Qt::RightButton){
-        if (getStatus() == SetNextPoint && pPoints->spline){
-            const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
-            bool isClosed = pPoints->spline->isClosed();
-            // Issue #1689: allow closed splines by 3 control points
-            if (nPoints > size_t(pPoints->spline->getDegree()) || (isClosed && nPoints == 3))
-                trigger();
-        }
-        deletePreview();
-        init(getStatus() - 1);
+void RS_ActionDrawSpline::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+    fireCoordinateEventForSnap(e);
+}
+
+void RS_ActionDrawSpline::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+    if (status == SetNextPoint && pPoints->spline){
+        const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
+        bool isClosed = pPoints->spline->isClosed();
+        // Issue #1689: allow closed splines by 3 control points
+        if (nPoints > size_t(pPoints->spline->getDegree()) || (isClosed && nPoints == 3))
+            trigger();
     }
+    deletePreview();
+    init(status - 1);
 }
 
 void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent *e){
