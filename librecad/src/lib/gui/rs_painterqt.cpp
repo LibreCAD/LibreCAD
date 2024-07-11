@@ -104,41 +104,59 @@ Qt::PenStyle rsToQtLineType(RS2::LineType t) {
 // to the desirable
 QPainterPath getEllipticArcClipping(const RS_Vector& origin,
                                 double radius1, double radius2,
-                                double angle, double angle1, double angle2)
+                                double angle, double angle1, double angle2, double width)
 {
 
     // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
     // Create a QPainterPath to clip the complete ellipse to draw an arc.
     // Get a point on ellipse by the elliptic angle
-    auto getP = [&origin, &radius1, &radius2, &angle](double a) {
-        auto point = origin + RS_Vector{a}.scale({radius1, -radius2});
+    const auto getP = [&origin, &radius1, &radius2, &angle](double a) {
+        auto point = origin + RS_Vector{a}.scale({radius1, - radius2});
         point.rotate(origin, -angle);
         return point;
+    };
+    const auto getN = [&radius1, &radius2, &angle](double a) {
+        RS_Vector normal = RS_Vector{a}.scale({radius2, -radius1});
+        normal.rotate(-angle).normalize();
+        return normal;
     };
     RS_Vector p1 = getP(angle1);
     RS_Vector p2 = getP(angle2);
     // Find a direction vector along the two end points of the arc
-    auto dp = p2 - p1;
-    dp /= dp.magnitude();
+    auto dp = (p2 - p1).normalized();
     // Find a point on the arc
     RS_Vector p3 = getP((angle1+angle2)*0.5) - p1;
     // Find a direction normal to the line p1-p2
     p3 -= dp * p3.dotP(dp);
-    // the QPainterPath should
+    // the QPainterPath should be larger
     double ellipseSize = 2.0 * std::max(radius1, radius2);
+    // make the vector larger than the ellipse size in any direction
     p3 *= ellipseSize/p3.magnitude();
 
-    // makes the path larger
+    // the inner points
+    const double thickness = width/2. + 1.;
+    // normal directions
+    RS_Vector n1 = getN(angle1) * thickness;
+    RS_Vector n2 = getN(angle2) * thickness;
+    RS_Vector p1inner = p1 - n1;
+    RS_Vector p2inner = p2 - n2;
+    // the outer points
+    RS_Vector p1outer = p1 + n1;
+    RS_Vector p2outer = p2 + n2;
+    // make the vector larger than the ellipse size in any direction
     dp *= ellipseSize;
-    p1 -= dp;
-    p2 += dp;
+    // The path goes to inner points, and cut the arc along normal directions
+    // from outer points, the path extends to cover the whole ellipse size
+    // The outer points will include the ellipse middle point.
+    std::vector<RS_Vector> vertices = {{
+        p1inner, p1outer, p1outer - dp, p1outer - dp + p3,
+        p2outer + dp + p3, p2outer + dp, p2outer, p2inner
+    }};
 
     QPainterPath path;
-    path.moveTo(p1.x, p1.y);
-    path.lineTo(p1.x+p3.x, p1.y+p3.y);
-    path.lineTo(p2.x+p3.x, p2.y+p3.y);
-    path.lineTo(p2.x, p2.y);
-    path.lineTo(p1.x, p1.y);
+    path.moveTo(vertices.back().x, vertices.back().y);
+    for(const auto& vertex: vertices)
+        path.lineTo(vertex.x, vertex.y);
     return path;
 }
 
@@ -695,7 +713,8 @@ void RS_PainterQt::drawEllipse(const RS_Vector& cp,
         // Elliptic arc: QPainter doesn't support drawing an elliptic arc natively.
         // Create a QPainterPath to clip the complete ellipse to draw an arc.
         QPainterPath path = getEllipticArcClipping({double(toScreenX(cp.x)), double(toScreenY(cp.y))}
-                                               , radius1, radius2, angle, a1, a2);
+                                               , radius1, radius2, angle, a1, a2,
+                                                   QPainter::pen().widthF());
         setClipping(true);
         setClipPath(path);
     }
