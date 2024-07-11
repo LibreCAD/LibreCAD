@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(LibreCAD)
+project(LibreCAD VERSION 2.2.2)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -12,32 +12,34 @@ set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
 #set(CMAKE_PREFIX_PATH "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
-#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
 set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 
-#set(Qt5_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5")
 set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
-#set(Qt5Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Core")
 set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
-set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
-#set(Qt5Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt5Svg")
 set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
-
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-set(CMAKE_AUTOUIC_OPTIONS --connections string)
-set(CMAKE_AUTOMOC ON)
-set(CMAKE_AUTOUIC ON)
-set(CMAKE_AUTORCC ON)
+#set(CMAKE_AUTOUIC_OPTIONS --connections string)
+#set(CMAKE_AUTOMOC ON)
+#set(CMAKE_AUTOUIC ON)
+#set(CMAKE_AUTORCC ON)
 
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
-#find_package(Qt5 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
-find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport SVG REQUIRED)
+
+find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat REQUIRED)
+find_package(Qt5 COMPONENTS Widgets REQUIRED)
+qt_standard_project_setup()
+
 find_package(Boost REQUIRED COMPONENTS)
 
+#set(CMAKE_AUTOMOC ON)
+#set(CMAKE_AUTOUIC OFF)
+#set(CMAKE_AUTORCC ON)
+
 #qt5_wrap_cpp(plugins/asciifile.cpp)
+
 
 include_directories(${MIN_GW_PATH_PREFIX}\\include\\QtSvg)
 
@@ -86,7 +88,7 @@ include_directories(librecad/src/ui/generic)
 #include_directories(plugins/sameprop)
 #include_directories(plugins/sample)
 
-add_executable(LibreCAD
+set(SOURCES
         librecad/res/actions/actions.qrc
         librecad/res/extui/extui.qrc
         librecad/res/ui/ui.qrc
@@ -455,6 +457,7 @@ add_executable(LibreCAD
         librecad/src/actions/rs_actionzoomwindow.h
         librecad/src/cmd/rs_commands.cpp
         librecad/src/cmd/rs_commands.h
+	librecad/src/cmd/lc_commandItems.h
         librecad/src/lib/actions/rs_actioninterface.cpp
         librecad/src/lib/actions/rs_actioninterface.h
         librecad/src/lib/actions/rs_preview.cpp
@@ -660,8 +663,8 @@ add_executable(LibreCAD
         librecad/src/main/console_dxf2png.h
         librecad/src/main/doc_plugin_interface.cpp
         librecad/src/main/doc_plugin_interface.h
-        librecad/src/main/emu_c99.cpp
-        librecad/src/main/emu_c99.h
+	#librecad/src/main/emu_c99.cpp
+	#librecad/src/main/emu_c99.h
 #        librecad/src/main/helpbrowser.cpp
 #        librecad/src/main/helpbrowser.h
         librecad/src/main/lc_application.cpp
@@ -1093,5 +1096,127 @@ add_executable(LibreCAD
 )
 
 
+#qt5_wrap_cpp(TARGET LibreCAD ${SOURCES})
+
+qt5_wrap_ui(SOURCES
+./librecad/src/ui/forms/lc_dlgsplinepoints.ui
+./librecad/src/ui/forms/qg_beveloptions.ui
+./librecad/src/ui/forms/qg_circleoptions.ui
+./librecad/src/ui/forms/qg_circletan2options.ui
+./librecad/src/ui/forms/qg_dimensionlabeleditor.ui
+./librecad/src/ui/forms/qg_dimoptions.ui
+./librecad/src/ui/forms/qg_dlgattributes.ui
+./librecad/src/ui/forms/qg_dlgcircle.ui
+./librecad/src/ui/forms/qg_dlgdimension.ui
+./librecad/src/ui/forms/qg_dlgdimlinear.ui
+./librecad/src/ui/forms/qg_dlgimageoptions.ui
+./librecad/src/ui/forms/qg_dlginitial.ui
+./librecad/src/ui/forms/qg_dlginsert.ui
+./librecad/src/ui/forms/qg_dlgmirror.ui
+./librecad/src/ui/forms/qg_dlgmove.ui
+./librecad/src/ui/forms/qg_dlgmoverotate.ui
+./librecad/src/ui/forms/qg_dlgoptionsvariables.ui
+./librecad/src/ui/forms/qg_dlgpoint.ui
+./librecad/src/ui/forms/qg_dlgpolyline.ui
+./librecad/src/ui/forms/qg_dlgrotate.ui
+./librecad/src/ui/forms/qg_dlgrotate2.ui
+./librecad/src/ui/forms/qg_exitdialog.ui
+./librecad/src/ui/forms/qg_imageoptions.ui
+./librecad/src/ui/forms/qg_layerdialog.ui
+./librecad/src/ui/forms/qg_libraryinsertoptions.ui
+./librecad/src/ui/forms/qg_linebisectoroptions.ui
+./librecad/src/ui/forms/qg_lineoptions.ui
+./librecad/src/ui/forms/qg_lineparalleloptions.ui
+./librecad/src/ui/forms/qg_lineparallelthroughoptions.ui
+./librecad/src/ui/forms/qg_linepolygon2options.ui
+./librecad/src/ui/forms/qg_linepolygonoptions.ui
+./librecad/src/ui/forms/qg_linerelangleoptions.ui
+./librecad/src/ui/forms/qg_modifyoffsetoptions.ui
+./librecad/src/ui/forms/qg_moverotateoptions.ui
+./librecad/src/ui/forms/qg_mtextoptions.ui
+./librecad/src/ui/forms/qg_polylineequidistantoptions.ui
+./librecad/src/ui/forms/qg_polylineoptions.ui
+./librecad/src/ui/forms/qg_roundoptions.ui
+./librecad/src/ui/forms/qg_snapdistoptions.ui
+./librecad/src/ui/forms/qg_snapmiddleoptions.ui
+./librecad/src/ui/forms/qg_splineoptions.ui
+./librecad/src/ui/forms/qg_textoptions.ui
+./librecad/src/ui/forms/qg_trimamountoptions.ui
+./librecad/src/ui/forms/qg_snaptoolbar.ui
+./librecad/src/ui/forms/qg_printpreviewoptions.ui
+./librecad/src/ui/forms/qg_insertoptions.ui
+./librecad/src/ui/forms/qg_blockdialog.ui
+./librecad/src/ui/forms/LC_DlgParabola.ui
+./librecad/src/ui/forms/lc_circlebyarcoptions.ui
+./librecad/src/ui/forms/lc_crossoptions.ui
+./librecad/src/ui/forms/lc_duplicateoptions.ui
+./librecad/src/ui/forms/lc_layerdialog_ex.ui
+./librecad/src/ui/forms/lc_layertreeoptionsdialog.ui
+./librecad/src/ui/forms/lc_lineanglereloptions.ui
+./librecad/src/ui/forms/lc_linefrompointtolineoptions.ui
+./librecad/src/ui/forms/lc_linejoinoptions.ui
+./librecad/src/ui/forms/lc_lineoptions.ui
+./librecad/src/ui/forms/lc_linepointsoptions.ui
+./librecad/src/ui/forms/lc_modifybreakdivideoptions.ui
+./librecad/src/ui/forms/lc_modifygapoptions.ui
+./librecad/src/ui/forms/lc_rectangle1pointoptions.ui
+./librecad/src/ui/forms/lc_rectangle2pointsoptions.ui
+./librecad/src/ui/forms/lc_rectangle3pointsoptions.ui
+./librecad/src/ui/forms/lc_slicedivideoptions.ui
+./librecad/src/ui/forms/lc_staroptions.ui
+./librecad/src/ui/forms/lc_widgetoptionsdialog.ui
+./librecad/src/ui/forms/qg_activelayername.ui
+./librecad/src/ui/forms/qg_arcoptions.ui
+./librecad/src/ui/forms/qg_arctangentialoptions.ui
+./librecad/src/ui/forms/qg_commandwidget.ui
+./librecad/src/ui/forms/qg_coordinatewidget.ui
+./librecad/src/ui/forms/qg_dimlinearoptions.ui
+./librecad/src/ui/forms/qg_dlgarc.ui
+./librecad/src/ui/forms/qg_dlgellipse.ui
+./librecad/src/ui/forms/qg_dlghatch.ui
+./librecad/src/ui/forms/qg_dlgimage.ui
+./librecad/src/ui/forms/qg_dlgline.ui
+./librecad/src/ui/forms/qg_dlgmtext.ui
+./librecad/src/ui/forms/qg_dlgoptionsdrawing.ui
+./librecad/src/ui/forms/qg_dlgoptionsgeneral.ui
+./librecad/src/ui/forms/qg_dlgoptionsmakercam.ui
+./librecad/src/ui/forms/qg_dlgscale.ui
+./librecad/src/ui/forms/qg_dlgspline.ui
+./librecad/src/ui/forms/qg_dlgtext.ui
+./librecad/src/ui/forms/qg_lineangleoptions.ui
+./librecad/src/ui/forms/qg_mousewidget.ui
+./librecad/src/ui/forms/qg_selectionwidget.ui
+./librecad/src/ui/forms/qg_widgetpen.ui
+./librecad/src/ui/generic/colorwizard.ui
+./librecad/src/ui/generic/comboboxoption.ui
+./librecad/src/ui/generic/customtoolbarcreator.ui
+./librecad/src/ui/generic/customwidgetcreator.ui
+./librecad/src/ui/generic/textfileviewer.ui
+./librecad/src/ui/generic/widgetcreator.ui
+./librecad/src/ui/lc_deviceoptions.ui
+./librecad/src/ui/lc_penpaletteoptionsdialog.ui
+./librecad/src/ui/lc_penpalettewidget.ui
+./librecad/src/ui/lc_quickinfowidget.ui
+./librecad/src/ui/lc_quickinfowidgetoptionsdialog.ui)
+
+qt_add_executable(librecad
+	${SOURCES})
+
+#add_executable(LibreCAD ${SOURCES})
+target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
+
+set_target_properties(librecad PROPERTIES
+	WIN32_EXECUTABLE ON
+	MACOSX_BUNDLE ON
+       	AUTOUIC_OPTIONS "--connections pmf")
+#set_property(TARGET LibreCAD PROPERTY AUTOUIC_OPTIONS "--connections pmf")
+
+#set(autouic_options
+#  --connections pmf
+#)
+
+#set_property(TARGET LibreCAD APPEND PROPERTY
+#  INTERFACE_AUTOUIC_OPTIONS ${autouic_options}
+#)
 #target_link_libraries(LibreCAD Qt5::Core Qt5::Widgets Qt5::Gui Qt5::PrintSupport Qt5::Svg)
-target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
+#target_link_libraries(LibreCAD Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)

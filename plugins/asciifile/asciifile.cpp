@@ -42,9 +42,8 @@ QString AsciiFile::name() const
  }
 
 void AsciiFile::execComm(Document_Interface *doc,
-                             QWidget *parent, QString cmd)
+                             QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(cmd);
     dibPunto pdt(parent);
     int result = pdt.exec();
     if (result == QDialog::Accepted)

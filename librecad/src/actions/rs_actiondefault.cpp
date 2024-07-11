@@ -45,11 +45,10 @@
 struct RS_ActionDefault::Points {
     RS_Vector v1;
     RS_Vector v2;
-    // Number of temporary entities for glowing effects
-    unsigned nHighLightDuplicates = 0;
     RS_Entity *highlightedEntity = nullptr;
     RS_Entity* refMovingEntity = nullptr;
 };
+
 namespace {
 
 // Glowing effects on Mouse hover
@@ -172,10 +171,13 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
     const double hoverToleranceFactor = (entity->rtti() == RS2::EntityEllipse)
                                         ? hoverToleranceFactor1
                                         : hoverToleranceFactor2;
+
     const double hoverTolerance{hoverToleranceFactor / graphicView->getFactor().magnitude()};
+
     double hoverTolerance_adjusted = ((entity->rtti() != RS2::EntityEllipse) && (hoverTolerance < minimumHoverTolerance))
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
+
     double screenTolerance = graphicView->toGraphDX(0.01 * std::min(graphicView->getWidth(), graphicView->getHeight()));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
@@ -666,7 +668,6 @@ void RS_ActionDefault::updateMouseButtonHints(){
         }
         default: {
             updateMouseWidget();
-            break;
         }
     }
 }

@@ -134,6 +134,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
             if (!hasFocus() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
                 // do not take focus here
                 spacePressed();
+                e->accept();
                 return true;
             }
             break;
@@ -151,11 +152,8 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
         }
 
         this->setFocus();
-
-        auto* keyEvent = static_cast<QKeyEvent*>(event);
-        QKeyEvent * newEvent = new QKeyEvent(keyEvent->type(), keyEvent->key(), Qt::ShiftModifier);
-        QApplication::postEvent(leCommand, newEvent);
-        event->accept();
+        QApplication::postEvent(leCommand, e->clone());
+        e->accept();
 
         return true;
     }

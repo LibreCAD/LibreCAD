@@ -112,7 +112,9 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
     treeView->setSelectionMode(QAbstractItemView::NoSelection);
     treeView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     treeView->setFocusPolicy(Qt::NoFocus);
-    treeView->setMinimumHeight(140);
+    treeView->setMinimumHeight(65);
+    //treeView->setMinimumHeight(140);
+
 
     treeView->setDragDropMode(QAbstractItemView::InternalMove);
     treeView->setDragEnabled(true);
@@ -123,7 +125,7 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    treeView->setStyleSheet("background-color: white;");
+    // treeView->setStyleSheet("background-color: white;");
 
     connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(QPoint)));
     connect(treeView, &QTreeView::clicked, this, &LC_LayerTreeWidget::slotTreeClicked);
@@ -158,10 +160,10 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
     layFiltering->addWidget(matchModeCheckBox);
 
     // settings button
-    const QSize minButSize(28, 28);
+    // const QSize minButSize(28, 28);
     auto* but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/settings.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Settings"));
     connect(but, &QToolButton::clicked, this, &LC_LayerTreeWidget::invokeSettingsDialog);
     layFiltering->addWidget(but);
@@ -176,7 +178,7 @@ QLayout *LC_LayerTreeWidget::initFilterAndSettingsSection(){
  */
 QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    auto *layButtons = new QHBoxLayout;
-    auto *layButtons = new LC_FlexLayout(  );
+    auto *layButtons = new LC_FlexLayout(0,5,5);
     QToolButton *but;
 //    const QSize minButSize(28, 28);
 
@@ -299,9 +301,9 @@ QLayout *LC_LayerTreeWidget::initButtonsBar(){
 //    layButtons->addStretch(10);
 
     // add separator line
-    auto *vFrame = new QFrame;
-    vFrame->setFrameShape(QFrame::VLine);
-    layButtons->addWidget(vFrame);
+    // auto *vFrame = new QFrame;
+    // vFrame->setFrameShape(QFrame::VLine);
+    // layButtons->addWidget(vFrame);
 
     // rename layer:
     but = new QToolButton(this);

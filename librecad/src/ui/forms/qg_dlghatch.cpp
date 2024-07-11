@@ -59,10 +59,6 @@ void QG_DlgHatch::languageChange()
 }
 
 void QG_DlgHatch::init() {
-	pattern=nullptr;
-	hatch = nullptr;
-    isNew = false;
-
     preview = std::make_unique<RS_EntityContainer>();
     gvPreview->setContainer(preview.get());
     gvPreview->setBorders(15,15,15,15);
@@ -117,7 +113,7 @@ void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
         leScale->setText(s);
         s.setNum(RS_Math::rad2deg(hatch->getAngle()));
         leAngle->setText(s);
-        leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
+        showArea();
     }
 }
 
@@ -128,9 +124,21 @@ void QG_DlgHatch::updateHatch() {
         hatch->setScale(RS_Math::eval(leScale->text()));
         hatch->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
         if (!isNew)
-            leHatchArea->setText(QString::number(hatch->getTotalArea(), 'g', 10));
+            showArea();
     }
 }
+
+void QG_DlgHatch::showArea()
+{
+    double area = hatch->getTotalArea();
+    if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
+        QString number = QString::number(hatch->getTotalArea(), 'g', 10);
+        leHatchArea->setText(number);
+    } else {
+        leHatchArea->setText({});
+    }
+}
+
 
 void QG_DlgHatch::setPattern(const QString& p) {
     if (!RS_PATTERNLIST->contains(p)) {
@@ -141,31 +149,31 @@ void QG_DlgHatch::setPattern(const QString& p) {
 }
 
 void QG_DlgHatch::resizeEvent ( QResizeEvent * ) {
-	updatePreview();
+    updatePreview();
 }
 
 void QG_DlgHatch::updatePreview() {
-	if (preview==nullptr) {
+    if (preview==nullptr) {
         return;
     }
-	if (hatch==nullptr || !cbEnablePreview->isChecked()) {
+    if (hatch==nullptr || !cbEnablePreview->isChecked()) {
         preview->clear();
         gvPreview->zoomAuto();
         return;
     }
-	pattern = cbPattern->getPattern();
-	if (pattern->countDeep()==0)
-		return;
+    pattern = cbPattern->getPattern();
+    if (pattern->countDeep()==0)
+        return;
 
     QString patName = cbPattern->currentText();
     bool isSolid = cbSolid->isChecked();
     double scale = RS_Math::eval(leScale->text(), 1.0);
     double angle = RS_Math::deg2rad(RS_Math::eval(leAngle->text(), 0.0));
-	double prevSize = 100.0;
+    double prevSize = 100.0;
     if (pattern) {
         pattern->calculateBorders();
-		prevSize = std::max(prevSize, pattern->getSize().magnitude());
-	}
+        prevSize = std::max(prevSize, pattern->getSize().magnitude());
+    }
 
     preview->clear();
 
@@ -175,7 +183,7 @@ void QG_DlgHatch::updatePreview() {
 
     RS_EntityContainer* loop = new RS_EntityContainer(prevHatch);
     loop->setPen(RS_Pen(RS2::FlagInvalid));
-	loop->addRectangle({0., 0.}, {prevSize,prevSize});
+    loop->addRectangle({0., 0.}, {prevSize,prevSize});
     prevHatch->addEntity(loop);
     preview->addEntity(prevHatch);
     if (!isSolid) {

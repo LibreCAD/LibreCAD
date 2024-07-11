@@ -7,7 +7,7 @@ on:
 
 jobs:
   BuildLinux:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-20.04
     outputs:
       output1: ${{ steps.artifact-upload-step.outputs.artifact-id }}
     steps:
@@ -23,25 +23,25 @@ jobs:
 
       - name: Qt6 path
         run: |
+          find ${{github.workspace}}/../Qt -type f -iname "*.so"
           ls -l ${{github.workspace}}/../Qt
-          find ${{github.workspace}}/../Qt -type f -iname "libqt6*svg*.so"
 
       - name: Install Qt and dependencies
         run: |
           sudo apt-get -y update
-          sudo apt-get -qq install qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+          sudo apt-get -qq install qtchooser libgl-dev libxcb-cursor0 libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
           sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
           sudo rm -rf /usr/local/lib/android
           find /home/runner/work/LibreCAD/Qt/6.6.3 -iname "libqt*svg*"
 
       - name: Install Clang
         run: |
-          sudo apt-get -qq install clang-15 clang-tools-15
+          sudo apt-get -qq install clang-10 clang-tools-10
 
       - name: Build and analyze
         run: |
           export CC=g++
-          export ANALYZE="scan-build-15 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
+          export ANALYZE="scan-build-10 -o out --use-cc=/usr/bin/clang++ --use-analyzer=/usr/bin/clang++ "
           ${ANALYZE}qmake6 -r librecad.pro CONFIG+=debug_and_release PREFIX=/usr
           ${ANALYZE}make release -j$(nproc)
 

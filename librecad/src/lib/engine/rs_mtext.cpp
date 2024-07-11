@@ -374,20 +374,19 @@ void RS_MText::update() {
 
 void RS_MText::alignVertically()
 {
-    forcedCalculateBorders();
-
     // Vertical Align:
 
     switch (data.valign) {
     case RS_MTextData::VATop:
-        RS_EntityContainer::move({0., data.insertionPoint.y - getMax().y});
-      break;
+        // no change
+        break;
+
     case RS_MTextData::VAMiddle:
-        RS_EntityContainer::move({0., data.insertionPoint.y - 0.5 * (getMin().y + getMax().y)});
+        RS_EntityContainer::move({0., 0.5 * usedTextHeight});
       break;
 
     case RS_MTextData::VABottom:
-        RS_EntityContainer::move({0., data.insertionPoint.y - getMin().y});
+        RS_EntityContainer::move({0., usedTextHeight});
       break;
 
     default:
@@ -423,7 +422,9 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
   LC_LOG << "RS_MText::update: insert a letter at pos:(" << letterPosition.x
          << ", " << letterPosition.y << ")";
 
-  if (letterSpace.x < 0)
+  // adjust for right-to-left text: letter position start from the right
+  bool righToLeft = std::signbit(letterSpace.x);
+  if (righToLeft)
     letterPosition.x += letterSpace.x;
   RS_InsertData d(letterText, letterPosition, RS_Vector(1.0, 1.0), 0.0, 1, 1,
                   RS_Vector(0.0, 0.0), font.getLetterList(), RS2::NoUpdate);
@@ -434,12 +435,19 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
   letterEntity->update();
   letterEntity->forcedCalculateBorders();
 
-  RS_Vector letterWidth{letterEntity->getMax().x - letterEntity->getMin().x,
-                        0.};
+  // Add spacing, if the font is actually wider than word spacing
+  double actualWidth = letterEntity->getMax().x - letterEntity->getMin().x;
+  if (actualWidth > font.getWordSpacing() + RS_TOLERANCE) {
+      actualWidth = font.getWordSpacing() + std::ceil((actualWidth - font.getWordSpacing())/std::abs(letterSpace.x)) * std::abs(letterSpace.x);
+  } else {
+      actualWidth = font.getWordSpacing() ;
+  }
+
+  RS_Vector letterWidth = {actualWidth, 0.};
   letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
 
   oneLine.addEntity(letterEntity);
-  if (letterSpace.x < 0)
+  if (righToLeft)
     letterEntity->move({letterWidth.x, 0.});
 
   // next letter position:

@@ -29,7 +29,6 @@
 
 #include <memory>
 
-
 #include "rs_entitycontainer.h"
 
 

@@ -38,11 +38,8 @@ PluginCapabilities plot::getCapabilities() const
     return pluginCapabilities;
 }
 
-void plot::execComm(Document_Interface *doc, QWidget *parent, QString cmd)
+void plot::execComm([[maybe_unused]] Document_Interface *doc, QWidget *parent, [[maybe_unused]] QString cmd)
 {
-    Q_UNUSED(doc);
-    Q_UNUSED(cmd);
-
     QString equation1;
     QString equation2;
     QString startValue;

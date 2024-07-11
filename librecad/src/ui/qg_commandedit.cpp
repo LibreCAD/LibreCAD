@@ -26,18 +26,24 @@
 
 #include "qg_commandedit.h"
 
-#include <QKeyEvent>
-#include <QRegularExpression>
-#include <QFile>
-#include <QTextStream>
 #include <QApplication>
 #include <QClipboard>
+#include <QFile>
+#include <QKeyEvent>
+#include <QRegularExpression>
+#include <QTextStream>
 
 #include "rs_commands.h"
 #include "rs_math.h"
 #include "rs_settings.h"
-#include "rs_settings.h"
 
+namespace {
+// Limits for command file reading
+// limit for the number of lines read together
+constexpr unsigned g_maxLinesToRead = 10240;
+// the maximum line length allowed
+constexpr unsigned g_maxLineLength = 4096;
+}
 
 /**
  * Default Constructor. You must call init manually if you choose
@@ -188,7 +194,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
 
 void QG_CommandEdit::evaluateExpression(QString input)
 {
-    QRegularExpression regex(R"~(([\d\.]+)deg|d)~");
+    static QRegularExpression regex(R"~(([\d\.]+)deg|d)~");
     input.replace(regex, R"~(\1*pi/180)~");
     bool ok = true;
     double result = RS_Math::eval(input, &ok);
@@ -252,7 +258,7 @@ void QG_CommandEdit::processInput(QString input)
 QString QG_CommandEdit::filterCliCal(const QString& cmd)
 {
     QString str=cmd.trimmed();
-    const QRegularExpression calCmd(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
+    static const QRegularExpression calCmd(R"(^\s*(cal|calculate)\s?)", QRegularExpression::CaseInsensitiveOption);
     QRegularExpressionMatch match = calCmd.match(str);
     if(!(match.hasMatch()
          || str.startsWith(QObject::tr("cal ","command to trigger cli calculator"), Qt::CaseInsensitive)
@@ -263,7 +269,8 @@ QString QG_CommandEdit::filterCliCal(const QString& cmd)
     int index = match.capturedEnd(0);
     bool spaceFound=(index>=0);
     str=str.mid(index);
-    index=str.indexOf(QRegularExpression(R"(\S)"));
+    static QRegularExpression reSpace(R"(\S)");
+    index=str.indexOf(reSpace);
     if(!(spaceFound && index>=0))
         return cmd;
     str=str.mid(index);
@@ -369,19 +376,41 @@ void QG_CommandEdit::processVariable(QString input)
 void QG_CommandEdit::readCommandFile(const QString& path)
 {
     // author: ravas
-
     QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
-    QTextStream txt_stream(&file);
-    QString line;
-    while (!txt_stream.atEnd())
-    {
-        line = txt_stream.readLine();
-        line.remove(" ");
-        if (!line.startsWith("#"))
-            processInput(line);
+    // keep the pos of the read part
+    size_t pos = 0;
+    bool ended = false;
+    while (!ended) {
+        if (!file.isOpen())
+        {
+            if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                break;
+            file.skip(pos);
+        }
+
+        // read lines to buffer and close the file immediately
+        QTextStream txt_stream(&file);
+        QStringList lines;
+        for(unsigned i=0; i < g_maxLinesToRead; ++i) {
+            if (txt_stream.atEnd())
+                break;
+            lines << txt_stream.readLine(g_maxLineLength);
+        }
+        ended = txt_stream.atEnd();
+        pos = txt_stream.pos();
+
+        // Issue #1803: close the file to avoid blocking command loading
+        file.close();
+
+        // Process the commands while the file is closed
+        for (QString line: lines) {
+            line.remove(" ");
+            if (!line.startsWith("#"))
+                processInput(line);
+        }
     }
 }
 

@@ -55,12 +55,13 @@ protected slots:
     virtual void languageChange();
 
 private:
+    void init();
+    void showArea();
     std::unique_ptr<RS_EntityContainer> preview;
-    bool isNew = false;
     std::shared_ptr<RS_Pattern> pattern;
     RS_Hatch* hatch = nullptr;
+    bool isNew = false;
 
-    void init();
 
 };
 

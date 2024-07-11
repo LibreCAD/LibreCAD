@@ -27,6 +27,7 @@
 #define QG_PRINTPREVIEWOPTIONS_H
 
 #include<memory>
+
 #include<QWidget>
 
 class RS_ActionInterface;
@@ -52,12 +53,12 @@ public slots:
     virtual void setBlackWhite(bool on);
     virtual void fit();
     virtual void scale(const QString& s);
-    virtual void scale(double factor);
+    virtual void scaleByFactor(double factor);
     virtual void updateScaleBox();
     virtual void updateScaleBox(double f);
     /** print scale fixed to saved value **/
     virtual void setScaleFixed(bool fixed);
-//    virtual void updateScaleBox(const QString& s);
+    //    virtual void updateScaleBox(const QString& s);
     virtual void calcPagesNum();
 
 protected:
@@ -67,8 +68,9 @@ protected slots:
     virtual void languageChange();
 
 private:
-	void init();
-	void saveSettings();
+    void init();
+    void initGuiActions();
+    void saveSettings();
     void updateScaleBox(const QString& text);
     QStringList imperialScales;
     QStringList metricScales;
@@ -76,7 +78,7 @@ private:
     bool scaleLineWidth = false;
     bool blackWhiteDisabled = true;
     int defaultScales = 1;
-	std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
+    std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
 };
 
 #endif // QG_PRINTPREVIEWOPTIONS_H

@@ -51,15 +51,14 @@ struct RS_ActionPrintPreview::Points {
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
-						container, graphicView)
-	, hasOptions(false)
-	, m_bPaperOffset(false)
-	, pPoints(std::make_unique<Points>())
+                        container, graphicView, RS2::ActionFilePrintPreview)
+    , pPoints(std::make_unique<Points>())
 {
-    actionType=RS2::ActionFilePrintPreview;
     RS_SETTINGS->beginGroup("/PrintPreview");
     bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
     RS_SETTINGS->endGroup();
+    if (!fixed)
+        fit();
     setPaperScaleFixed(fixed);
     showOptions();
 }
@@ -75,20 +74,20 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
     case Moving:
 		pPoints->v2 = toGraph(e);
-		// if Shift is pressed the paper moves only horizontally
-		if (e->modifiers() & Qt::ShiftModifier)
-			pPoints->v2.y = pPoints->v1.y;
-		// if Ctrl is pressed the paper moves only vertically
-		if (e->modifiers() & Qt::ControlModifier)
-			pPoints->v2.x = pPoints->v1.x;
+        // if Shift is pressed the paper moves only horizontally
+        if (e->modifiers() & Qt::ShiftModifier)
+            pPoints->v2.y = pPoints->v1.y;
+        // if Ctrl is pressed the paper moves only vertically
+        if (e->modifiers() & Qt::ControlModifier)
+            pPoints->v2.x = pPoints->v1.x;
         if (graphic) {
             RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
             double scale = graphic->getPaperScale();
 
-			graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
+            graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
         }
-		pPoints->v1 = pPoints->v2;
+        pPoints->v1 = pPoints->v2;
         graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
         break;
 
@@ -102,7 +101,7 @@ void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
         case Neutral:
-			pPoints->v1 = graphicView->toGraph(e->position());
+            pPoints->v1 = graphicView->toGraph(e->position());
             setStatus(Moving);
             break;
 
@@ -128,7 +127,7 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
     RS_Vector mouse = e->getCoordinate();
-//    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
+    //    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
 
     if(m_bPaperOffset) {
         commandMessage(tr("Printout offset in paper coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
@@ -136,8 +135,8 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
     }else
         commandMessage(tr("Printout offset in graph coordinates by (%1, %2)").arg(mouse.x).arg(mouse.y));
 
-//    RS_DIALOGFACTORY->commandMessage(tr("old insertion base (%1, %2)").arg(pinsbase.x).arg(pinsbase.y));
-//    RS_DIALOGFACTORY->commandMessage(tr("new insertion base (%1, %2)").arg((pinsbase-mouse).x).arg((pinsbase-mouse).y));
+    //    RS_DIALOGFACTORY->commandMessage(tr("old insertion base (%1, %2)").arg(pinsbase.x).arg(pinsbase.y));
+    //    RS_DIALOGFACTORY->commandMessage(tr("new insertion base (%1, %2)").arg((pinsbase-mouse).x).arg((pinsbase-mouse).y));
 
     graphic->setPaperInsertionBase(pinsbase-mouse);
     graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
@@ -145,18 +144,18 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
 
 void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
     QString c = e->getCommand().trimmed().toLower();
-//    qDebug()<<"cmd="<<c;
-	if (checkCommand("blackwhite", c)) {
-		setBlackWhite(true);
-		commandMessageTR("Printout in Black/White");
-		e->accept();
-		return;
-	} else if (checkCommand("color", c)) {
-		setBlackWhite(false);
-		commandMessageTR("Printout in color");
-		e->accept();
-		return;
-	} else if (checkCommand("graphoffset", c)) {
+    //    qDebug()<<"cmd="<<c;
+    if (checkCommand("blackwhite", c)) {
+        setBlackWhite(true);
+        commandMessageTR("Printout in Black/White");
+        e->accept();
+        return;
+    } else if (checkCommand("color", c)) {
+        setBlackWhite(false);
+        commandMessageTR("Printout in color");
+        e->accept();
+        return;
+    } else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
         RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
         e->accept();
@@ -180,7 +179,7 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
             commandMessageTR("Printout offset ignores relative zero. Ignoring '@'");
             c.remove(0, 1);
         }
-//        qDebug()<<"offset by absolute coordinate: ";
+        //        qDebug()<<"offset by absolute coordinate: ";
 
         const int commaPos = c.indexOf(',');
         bool ok1, ok2;
@@ -198,9 +197,9 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
 
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
-	cmd +=command("blackwhite");
-	cmd +=command("color");
-	cmd +=command("graphoffset");
+    cmd +=command("blackwhite");
+    cmd +=command("color");
+    cmd +=command("graphoffset");
     cmd +=command("paperoffset");
     cmd +=command("help");
     return cmd;
@@ -217,7 +216,7 @@ void RS_ActionPrintPreview::printWarning(const QString& s) {
 
 void RS_ActionPrintPreview::showOptions() {
     RS_ActionInterface::showOptions();
-	if (!isFinished()) {
+    if (!isFinished()) {
         RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
         hasOptions=true;
     }
@@ -249,18 +248,18 @@ void RS_ActionPrintPreview::center() {
 
 void RS_ActionPrintPreview::fit() {
     if (graphic) {
-        RS_Vector&& paperSize=RS_Units::convert(graphic->getPaperSize(),
-                                                RS2::Millimeter, getUnit());
+        RS_Vector paperSize=RS_Units::convert(graphic->getPaperSize(),
+                                              RS2::Millimeter, getUnit());
 
-        if(fabs(paperSize.x)<10.|| fabs(paperSize.y)<10.)
+        if(std::abs(paperSize.x)<10.|| std::abs(paperSize.y)<10.)
             printWarning("Warning:: Paper size less than 10mm."
                          " Paper is too small for fitting to page\n"
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
-		if ( graphic->fitToPage()==false) {
+        if ( graphic->fitToPage()==false) {
             commandMessageTR("RS_ActionPrintPreview::fit(): Invalid paper size");
         }
-        //        if(fabs(f0-graphic->getPaperScale())>RS_TOLERANCE){
+        //        if(std::abs(f0-graphic->getPaperScale())>RS_TOLERANCE){
         //only zoomPage when scale changed
         //        }
         graphic->centerToPage();
@@ -273,9 +272,17 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
         if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
+        auto pinBase = graphic->getPaperInsertionBase();
+        double oldScale = graphic->getPaperScale();
+
         graphic->setPaperScale(f);
-//        graphic->centerToPage();
-        if(autoZoom) graphicView->zoomPage();
+
+        // changing scale around the drawing center
+        pinBase += graphic->getSize()*(oldScale - f)*0.5;
+        graphic->setPaperInsertionBase(pinBase);
+
+        if(autoZoom)
+            graphicView->zoomPage();
         graphicView->redraw();
         return true;
     }

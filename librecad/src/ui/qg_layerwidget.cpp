@@ -206,7 +206,8 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setSelectionMode(QAbstractItemView::ExtendedSelection);
     layerView->setEditTriggers(QAbstractItemView::NoEditTriggers);
     layerView->setFocusPolicy(Qt::NoFocus);
-    layerView->setMinimumHeight(140);
+    // layerView->setMinimumHeight(140);
+    layerView->setMinimumHeight(60);
     QHeaderView *pHeader {layerView->horizontalHeader()};
     pHeader->setMinimumSectionSize( QG_LayerModel::ICONWIDTH + 4);
     pHeader->setStretchLastSection(true);
@@ -228,49 +229,49 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Show all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersDefreezeAll);
     layButtons->addWidget(but);
     // hide all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/invisible.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Hide all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersFreezeAll);
     layButtons->addWidget(but);
     // unlock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/unlocked.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Unlock all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersUnlockAll);
     layButtons->addWidget(but);
     // lock all layers:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/locked.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Lock all layers"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersLockAll);
     layButtons->addWidget(but);
     // add layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/add.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Add a layer"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersAdd);
     layButtons->addWidget(but);
     // remove layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/remove.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Remove layer"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersRemove);
     layButtons->addWidget(but);
     // rename layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/rename_active_block.svg"));
-    but->setMinimumSize(minButSize);
+    // but->setMinimumSize(minButSize);
     but->setToolTip(tr("Modify layer attributes / rename"));
     connect(but, &QToolButton::clicked, actionHandler, &QG_ActionHandler::slotLayersEdit);
     layButtons->addWidget(but);

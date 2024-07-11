@@ -25,6 +25,10 @@
 **********************************************************************/
 #include<cmath>
 
+#include <QComboBox>
+#include <QLineEdit>
+#include <QPushButton>
+
 #include "qg_printpreviewoptions.h"
 #include "rs_actionprintpreview.h"
 #include "rs_debug.h"
@@ -126,6 +130,24 @@ void QG_PrintPreviewOptions::init() {
     RS_SETTINGS->endGroup();
     //make sure user scale is accepted
     ui->cbScale->setInsertPolicy(QComboBox::InsertAtTop);
+    // Connect ui actions
+    initGuiActions();
+}
+
+void QG_PrintPreviewOptions::initGuiActions() {
+    connect(ui->cFixed, &QCheckBox::clicked, this, &QG_PrintPreviewOptions::setScaleFixed);
+    connect(ui->bScaleLineWidth, &QPushButton::toggled, this, &QG_PrintPreviewOptions::setLineWidthScaling);
+    connect(ui->bBlackWhite, &QPushButton::toggled, this, &QG_PrintPreviewOptions::setBlackWhite);
+    connect(ui->cbScale->lineEdit(), &QLineEdit::editingFinished, [this](){
+        scale(ui->cbScale->currentText());
+    });
+    connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](int index){
+        scale(ui->cbScale->itemText(index));
+    });
+    connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::fit);
+    connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::center);
+    connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::calcPagesNum);
+
 }
 
 void QG_PrintPreviewOptions::saveSettings() {
@@ -177,11 +199,12 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
             }else{
                 double currScale = action->getScale();
                 if(  currScale > RS_TOLERANCE)
-                    scale (currScale);
+                    scaleByFactor (currScale);
                 else
                     fit();
                 updateScaleBox();
                 setScaleFixed(false);
+                updateScaleBox(action->getScale());
             }
         }else{
             double f=action->getScale();
@@ -255,7 +278,7 @@ void QG_PrintPreviewOptions::fit() {
 }
 
 
-void QG_PrintPreviewOptions::scale(double factor) {
+void QG_PrintPreviewOptions::scaleByFactor(double factor) {
     if (updateDisabled)
         return;
     double f=std::abs(factor); // do we need negative factor at all?
@@ -334,7 +357,7 @@ void QG_PrintPreviewOptions::updateScaleBox(double f){
     for(i=0;i<ui->cbScale->count();i++){
         QString s=ui->cbScale->itemText(i);
         int i0 = s.indexOf(':');
-        bool ok1,ok2;
+        bool ok1 = false,ok2 = false;
         double n = s.left(i0).toDouble(&ok1);
         double d = s.mid(i0+1).toDouble(&ok2);
         if(! (ok1 && ok2)|| std::abs(d)<RS_TOLERANCE) continue;

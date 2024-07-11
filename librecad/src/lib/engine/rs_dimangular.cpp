@@ -292,9 +292,8 @@ void RS_DimAngular::arrow(const RS_Vector& point,
  *
  * @param autoText Automatically reposition the text label
  */
-void RS_DimAngular::updateDim(bool autoText /*= false*/)
+void RS_DimAngular::updateDim([[maybe_unused]] bool autoText /*= false*/)
 {
-    Q_UNUSED( autoText)
     RS_DEBUG->print("RS_DimAngular::update");
 
     clear();

@@ -31,7 +31,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@main
       with:
         fetch-depth: 0
 
@@ -43,7 +43,7 @@ jobs:
     - name: Install Qt and dependencies
       run: |
         sudo apt-get -y update
-        sudo apt-get -qq install qt6-base-dev qt6-base-dev-tools qt6-declarative-dev qmake6 libqt6svg6 libqt6svg6-dev qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
+        sudo apt-get -qq install qtchooser libgl-dev libmuparser-dev libboost-dev librsvg2-bin libfreetype6-dev libicu-dev pkg-config libfuse2
         sudo ln -snf /usr/lib/x86_64-linux-gnu/qtchooser/qt5.conf /usr/lib/x86_64-linux-gnu/qtchooser/default.conf
         sudo rm -rf /usr/local/lib/android
 
@@ -53,7 +53,7 @@ jobs:
 
     # Initializes the CodeQL tools for scanning.
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v2
+      uses: github/codeql-action/init@v3
       with:
         languages: ${{ matrix.language }}
         # If you wish to specify custom queries, you can do so here or in a config file.
@@ -71,6 +71,6 @@ jobs:
         make release -j$(nproc)
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v2
+      uses: github/codeql-action/analyze@v3
       with:
         category: "/language:${{matrix.language}}"

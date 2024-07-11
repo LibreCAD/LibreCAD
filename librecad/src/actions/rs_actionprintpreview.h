@@ -54,7 +54,7 @@ public:
                           RS_GraphicView& graphicView);
     ~RS_ActionPrintPreview() override;
 
-    void init(int status=0) override;
+    void init(int status=Neutral) override;
     void resume() override;
 
     void mouseMoveEvent(QMouseEvent* e) override;
@@ -87,11 +87,11 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
 private:
 
-    bool hasOptions = false;
-    bool m_bPaperOffset = false;
     struct Points;
     std::unique_ptr<Points> pPoints;
     std::unique_ptr<QG_PrintPreviewOptions> m_option;
+    bool hasOptions = false;
+    bool m_bPaperOffset = false;
 };
 
 #endif
