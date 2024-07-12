@@ -143,9 +143,7 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             RS_Vector altCenter;
             if (preparePreview(mouse, altCenter)){
                 if (data->center.valid){
-                    auto *circle = new RS_Circle(preview.get(), *data);
-                    previewEntity(circle);
-
+                    previewCircle(*data);
                     previewRefSelectablePoint(data->center, true);
                     previewRefSelectablePoint(altCenter, true);
                 }
@@ -168,10 +166,9 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                 }
                 if (!existing){
                     deletePreview();
+                    previewCircle(*data);
                     previewRefSelectablePoint(data->center, true);
                     previewRefSelectablePoint(altCenter, true);
-                    auto *circle = new RS_Circle(preview.get(), *data);
-                    previewEntity(circle);
                     previewRefPoint(pPoints->point1);
                     previewRefPoint(pPoints->point2);
                     previewRefLine(pPoints->point1, pPoints->point2);

@@ -168,7 +168,7 @@ void RS_ActionDrawLineRelAngle::mouseRightButtonReleaseEvent(int status, [[maybe
 //            entity->setHighlighted(false);
 //            graphicView->drawEntity(entity);
 //        }
-    init(getStatus()-1);
+    init(status-1);
 }
 
 void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent *e){

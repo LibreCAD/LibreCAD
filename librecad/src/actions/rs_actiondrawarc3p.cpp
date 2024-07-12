@@ -166,7 +166,7 @@ void RS_ActionDrawArc3P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawArc3P::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawArc3P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

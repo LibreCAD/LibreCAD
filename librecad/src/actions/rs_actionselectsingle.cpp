@@ -61,7 +61,7 @@ void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
     selectionMouseMove(event);
 }
 
-void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, bool escape) {
+void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]]bool escape) {
     finish(false);
     actionSelect->keyPressEvent(e);
 }

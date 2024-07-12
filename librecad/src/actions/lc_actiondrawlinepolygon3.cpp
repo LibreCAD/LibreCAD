@@ -113,7 +113,7 @@ void LC_ActionDrawLinePolygonCenTan::mouseLeftButtonReleaseEvent(int status, QMo
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawLinePolygonCenTan::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDrawLinePolygonCenTan::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

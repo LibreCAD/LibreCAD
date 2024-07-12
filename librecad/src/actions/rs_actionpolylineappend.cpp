@@ -141,7 +141,7 @@ void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEven
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionPolylineAppend::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineAppend::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status == SetNextPoint){
         trigger();
     }

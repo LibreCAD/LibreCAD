@@ -105,11 +105,11 @@ void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMoveRotate::mouseMoveEvent end");
 }
 
-void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status-1);
 }

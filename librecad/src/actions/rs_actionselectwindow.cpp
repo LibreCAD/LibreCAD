@@ -154,7 +154,7 @@ void RS_ActionSelectWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     }
 }
 
-void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         deletePreview();

@@ -127,14 +127,14 @@ void RS_ActionOrder::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     deleteSnapper();
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     if (targetEntity) {
         targetEntity->setHighlighted(false);
         graphicView->drawEntity(targetEntity);
         graphicView->redraw();
     }
-    init(getStatus()-1);
+    init(status-1);
 }
 
 void RS_ActionOrder::updateMouseButtonHints() {

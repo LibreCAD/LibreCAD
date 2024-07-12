@@ -150,7 +150,7 @@ void RS_ActionDrawLineAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent
     }
 }
 
-void RS_ActionDrawLineAngle::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status-1);
 }

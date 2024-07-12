@@ -133,7 +133,7 @@ void RS_ActionModifyMirror::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     }
 }
 
-void RS_ActionModifyMirror::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMirror::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

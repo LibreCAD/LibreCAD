@@ -73,12 +73,12 @@ void RS_ActionModifyDeleteQuick::trigger() {
     }
 }
 
-void RS_ActionModifyDeleteQuick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyDeleteQuick::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     en = catchEntity(e);
     trigger();
 }
 
-void RS_ActionModifyDeleteQuick::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyDeleteQuick::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     init(status-1);
 }
 

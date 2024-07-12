@@ -50,7 +50,7 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     RS_Entity *entityToSelect = nullptr;
     const QList<RS2::EntityType> catchForSelectionEntityTypes;
-    virtual bool isEntityAllowedToSelect(RS_Entity *ent) const { return true; };
+    virtual bool isEntityAllowedToSelect([[maybe_unused]]RS_Entity *ent) const { return true; };
     void selectEntity();
     RS_Entity *selectionMouseMove(QMouseEvent *event);
     virtual void selectionFinishedByKey(QKeyEvent *e, bool escape) = 0;

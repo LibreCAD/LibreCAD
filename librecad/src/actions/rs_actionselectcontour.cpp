@@ -66,12 +66,12 @@ void RS_ActionSelectContour::trigger(){
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }
 
-void RS_ActionSelectContour::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSelectContour::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
     en = catchEntity(e);
     trigger();
 }
 
-void RS_ActionSelectContour::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSelectContour::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     init(status - 1);
 }
 RS2::CursorType RS_ActionSelectContour::doGetMouseCursor([[maybe_unused]] int status){

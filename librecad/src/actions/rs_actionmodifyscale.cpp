@@ -151,7 +151,7 @@ void RS_ActionModifyScale::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionModifyScale::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyScale::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status != SetSourcePoint){
         deletePreview();
         init(status - 1);

@@ -78,11 +78,11 @@ void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent *e){
     drawPreview();
 }
 
-void RS_ActionModifyOffset::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyOffset::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     trigger();
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyOffset::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

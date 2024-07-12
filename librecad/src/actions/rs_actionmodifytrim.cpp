@@ -30,10 +30,8 @@
 
 #include "rs_actionmodifytrim.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_circle.h"
 
 struct RS_ActionModifyTrim::Points {
     RS_Vector limitCoord;
@@ -71,7 +69,7 @@ void RS_ActionModifyTrim::trigger() {
         limitEntity /* && limitEntity->isAtomic()*/) {
 
         RS_Modification m(*container, graphicView);
-        LC_TrimResult trimResult =  m.trim(pPoints->trimCoord,  trimEntity,
+        [[maybe_unused]] LC_TrimResult trimResult =  m.trim(pPoints->trimCoord,  trimEntity,
                pPoints->limitCoord, /*(RS_AtomicEntity*)*/limitEntity,
                both);
 
@@ -177,7 +175,7 @@ void RS_ActionModifyTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
     }
 }
 
-void RS_ActionModifyTrim::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyTrim::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }
@@ -219,8 +217,6 @@ void RS_ActionModifyTrim::previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity*
     int rtti = trimmed->rtti();
     switch (rtti){
         case RS2::EntityLine:{
-            auto* line = dynamic_cast<RS_Line *>(trimmed);
-
             RS_Vector start = original->getStartpoint();
             RS_Vector startTrimmed = trimmed->getStartpoint();
             RS_Vector end = original->getEndpoint();

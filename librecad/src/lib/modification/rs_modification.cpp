@@ -1503,7 +1503,6 @@ RS_Polyline *RS_Modification::deletePolylineNodesBetween(
     int i = 0;
     double bulge = 0.0;
 
-    bool shouldRemove = false;
     for (auto e: polyline) {
 
         RS_DEBUG->print("RS_Modification::deletePolylineNodesBetween: entity: %d", i++);

@@ -25,8 +25,6 @@
 **********************************************************************/
 #include "qg_linepolygonoptions.h"
 
-#include "rs_actiondrawlinepolygon.h"
-#include "rs_settings.h"
 #include "ui_qg_linepolygonoptions.h"
 #include "rs_debug.h"
 
@@ -68,8 +66,7 @@ QString QG_LinePolygonOptions::getSettingsOptionNamePrefix(){
         case RS2::ActionDrawLinePolygonCenCor:
             return "/LinePolygon";
         case RS2::ActionDrawLinePolygonCenTan:
-            return "/LinePolygon3";
-            break;
+            return "/LinePolygon3";            
         case RS2::ActionDrawLinePolygonCorCor:
             return "/LinePolygon2";
         default:

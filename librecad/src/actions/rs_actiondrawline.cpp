@@ -174,7 +174,7 @@ void RS_ActionDrawLine::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionDrawLine::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLine::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     switch (status) {
         default:

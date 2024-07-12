@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actioninfoproperties.h"
 #include "lc_quickinfowidget.h"
 #include "qc_applicationwindow.h"
-#include "rs_dialogfactory.h"
 
 namespace {
 
@@ -70,14 +69,14 @@ void LC_ActionInfoProperties::init(int status){
     }
 }
 
-void LC_ActionInfoProperties::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionInfoProperties::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     // notify widget
     highlightAndShowEntityInfo(e);
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionInfoProperties::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     setStatus(-1);
     finish();
 }

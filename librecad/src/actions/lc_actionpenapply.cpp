@@ -92,7 +92,7 @@ void LC_ActionPenApply::finish(bool updateTB){
     removeHighlighting();
 }
 
-void LC_ActionPenApply::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     RS_Entity* en= catchEntity(e, RS2::ResolveNone);
 
     if(en != nullptr){
@@ -145,9 +145,9 @@ void LC_ActionPenApply::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     graphicView->redraw();
 }
 
-void LC_ActionPenApply::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionPenApply::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     removeHighlighting();
-    switch (getStatus()){
+    switch (status){
         case (SelectEntity):{
             init(-1);
             break;

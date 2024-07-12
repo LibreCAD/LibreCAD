@@ -232,7 +232,7 @@ void RS_ActionDrawArcTangential::mouseLeftButtonReleaseEvent(int status, QMouseE
     }
 }
 
-void RS_ActionDrawArcTangential::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawArcTangential::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status-1);
 }

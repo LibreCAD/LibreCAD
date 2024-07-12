@@ -46,9 +46,8 @@ struct RS_ActionDrawEllipse4Points::Points {
 RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)
-	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", container,
-                               graphicView)
-    , pPoints(std::make_unique<Points>()){
+	:LC_ActionDrawCircleBase("Draw ellipse from 4 points", container,graphicView)
+    ,pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionDrawEllipse4Points;
 }
 
@@ -185,7 +184,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
 }
 
 void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e){
+    if (e == nullptr){
         return;
     }
     RS_Vector mouse = e->getCoordinate();
@@ -218,7 +217,6 @@ void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent *e){
             break;
     }
 }
-
 //fixme, support command line
 
 /*
@@ -278,7 +276,6 @@ void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
 }
 */
 
-
 QStringList RS_ActionDrawEllipse4Points::getAvailableCommands() {
 	return {};
 }
@@ -302,6 +299,3 @@ void RS_ActionDrawEllipse4Points::updateMouseButtonHints(){
             break;
     }
 }
-
-
-// EOF

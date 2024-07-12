@@ -114,11 +114,11 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
 }
 
-void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionModifyStretch::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyStretch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

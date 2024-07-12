@@ -19,7 +19,7 @@ RS2::EntityType LC_RefPoint::rtti() const{
     return RS2::EntityRefPoint;
 }
 
-void LC_RefPoint::draw(RS_Painter *painter, RS_GraphicView *view, double &patternOffset){
+void LC_RefPoint::draw(RS_Painter *painter, RS_GraphicView *view, [[maybe_unused]]double &patternOffset){
     if (painter == nullptr || view == nullptr){
         return;
     }

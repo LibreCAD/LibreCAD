@@ -31,14 +31,12 @@
 #include "rs_actiondefault.h"
 #include "rs_commandevent.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_overlaybox.h"
 #include "rs_preview.h"
 #include "rs_selection.h"
-#include "rs_settings.h"
 #include "rs_units.h"
 #include "rs_actioninterface.h"
 
@@ -544,7 +542,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
 void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     pPoints->v2 = toGraph(e);
-    switch (getStatus()) {
+    switch (status) {
         case Dragging: {
             // select single entity:
             RS_Entity *en = catchEntity(e);
@@ -594,7 +592,7 @@ void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionDefault::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDefault::mouseRightButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     //cleanup
     goToNeutralStatus();

@@ -161,8 +161,8 @@ void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
     }
 }
 
-void RS_ActionInterface::mouseLeftButtonReleaseEvent(int status, QMouseEvent* e){}
-void RS_ActionInterface::mouseRightButtonReleaseEvent(int status, QMouseEvent* e){}
+void RS_ActionInterface::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 
 /**
  * Called when a key is pressed and this is the current action.

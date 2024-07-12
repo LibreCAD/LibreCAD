@@ -171,11 +171,11 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
 
 void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     deleteSnapper();
-    switch (getStatus()) {
+    switch (status) {
         case SetCircle1: {
             m_pPoints->circle1 = catchEntity(e, circleType, RS2::ResolveAll);
             if (!m_pPoints->circle1) return;
-            init(getStatus() + 1);
+            init(status + 1);
             break;
         }
         case SetCircle2: {
@@ -184,7 +184,7 @@ void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEv
                 if (m_pPoints->tangents.size() == 1){
                     trigger();
                 } else {
-                    init(getStatus() + 1);
+                    init(status + 1);
                     preparePreview(e);
                 }
             }
@@ -200,15 +200,15 @@ void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionDrawLineTangent2::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineTangent2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     deletePreview();
-    if (getStatus() == SetCircle1){
+    if (status == SetCircle1){
         if (m_pPoints->circle1 != nullptr){
             m_pPoints->circle1 = nullptr;
         }
     }
-    init(getStatus() - 1);
+    init(status - 1);
 }
 
 void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){

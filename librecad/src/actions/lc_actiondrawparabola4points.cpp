@@ -118,7 +118,7 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
         for(const auto& pd: pPoints->pData) {
             if (!pd.valid)
                 continue;
-            auto* l = new RS_Line{preview.get(), pd.GetAxis()};
+            auto* l = previewLine(pd.GetAxis());
             double ds0 = RS_MAXDOUBLE;
             l->getNearestPointOnEntity(mouse, false, &ds0);
             previewEntity(l);
@@ -135,13 +135,13 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
     return pPoints->valid;
 }
 
-void LC_ActionDrawParabola4Points::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     // Proceed to next status
     const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     deletePreview();
     init(getStatus()-1);

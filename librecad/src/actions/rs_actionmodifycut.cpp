@@ -133,7 +133,7 @@ void RS_ActionModifyCut::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionModifyCut::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyCut::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     init(status - 1);
 }
 

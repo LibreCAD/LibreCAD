@@ -340,7 +340,7 @@ void RS_ActionPolylineEquidistant::mouseLeftButtonReleaseEvent(int status, QMous
     }
 }
 
-void RS_ActionPolylineEquidistant::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineEquidistant::mouseRightButtonReleaseEvent(int status,[[maybe_unused]]  QMouseEvent *e) {
     deleteSnapper();
     if (originalEntity){
         graphicView->redraw();

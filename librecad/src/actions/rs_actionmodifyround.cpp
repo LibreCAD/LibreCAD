@@ -308,7 +308,7 @@ void RS_ActionModifyRound::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

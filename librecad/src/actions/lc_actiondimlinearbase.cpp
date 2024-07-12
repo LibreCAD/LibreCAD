@@ -20,17 +20,14 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include "rs_previewactioninterface.h"
 #include "rs_dimaligned.h"
-#include "rs_preview.h"
 #include "rs_math.h"
 #include "rs_graphicview.h"
 #include "rs_dimlinear.h"
-#include "rs_dialogfactory.h"
 #include "rs_debug.h"
+#include "rs_preview.h"
 #include "rs_coordinateevent.h"
 #include "rs_constructionline.h"
-#include "rs_commandevent.h"
 #include <QMouseEvent>
 #include "lc_actiondimlinearbase.h"
 
@@ -85,8 +82,8 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 previewRefSelectablePoint(mouse);
 
                 drawPreview();
-                break;
             }
+            break;
         }
         case SetDefPoint:{
             const RS_Vector &extPoint1 = getExtensionPoint1();
@@ -134,11 +131,10 @@ void LC_ActionDimLinearBase::mouseLeftButtonReleaseEvent(int status, QMouseEvent
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDimLinearBase::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDimLinearBase::mouseRightButtonReleaseEvent(int status,[[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }
-
 
 void LC_ActionDimLinearBase::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr){

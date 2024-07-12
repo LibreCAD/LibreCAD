@@ -35,10 +35,10 @@
  *  Constructs a QG_LineParallelOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LineParallelOptions::QG_LineParallelOptions()
-    : LC_ActionOptionsWidgetBase(RS2::ActionDrawLineParallel, "/Draw", "/LineParallel")
-	, ui(new Ui::Ui_LineParallelOptions{}){
-	ui->setupUi(this);
+QG_LineParallelOptions::QG_LineParallelOptions(RS2::ActionType actionType)
+    :LC_ActionOptionsWidgetBase(actionType, "/Draw", "/LineParallel"),
+     ui(new Ui::Ui_LineParallelOptions{}) {
+    ui->setupUi(this);
 }
 
 /*
@@ -50,48 +50,54 @@ QG_LineParallelOptions::~QG_LineParallelOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LineParallelOptions::languageChange(){
-	ui->retranslateUi(this);
+void QG_LineParallelOptions::languageChange() {
+    ui->retranslateUi(this);
 }
 
-void QG_LineParallelOptions::doSaveSettings(){
-	save("Distance", ui->leDist->text());
-	save("Number", ui->sbNumber->text());
+bool QG_LineParallelOptions::checkActionRttiValid(RS2::ActionType actionType) {
+    return actionType == RS2::ActionDrawLineParallel ||
+           actionType == RS2::ActionDrawCircleParallel ||
+           actionType == RS2::ActionDrawArcParallel;
 }
 
-void QG_LineParallelOptions::doSetAction(RS_ActionInterface *a, bool update){
-        action = dynamic_cast<RS_ActionDrawLineParallel *>(a);
-        QString distance;
-        int copiesNumber;
-        if (update) {
-            distance = fromDouble(action->getDistance());
-            copiesNumber = action->getNumber();
-        } else {
-            distance = load("Distance", "1.0");
-            copiesNumber = loadInt("Number", 1);
-        }
-
-        setDistanceToActionAndView(distance);
-        setNumberToActionAndView(copiesNumber);
+void QG_LineParallelOptions::doSaveSettings() {
+    save("Distance", ui->leDist->text());
+    save("Number", ui->sbNumber->text());
 }
 
-void QG_LineParallelOptions::on_sbNumber_valueChanged(int number){
+void QG_LineParallelOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionDrawLineParallel *>(a);
+    QString distance;
+    int copiesNumber;
+    if (update) {
+        distance = fromDouble(action->getDistance());
+        copiesNumber = action->getNumber();
+    } else {
+        distance = load("Distance", "1.0");
+        copiesNumber = loadInt("Number", 1);
+    }
+
+    setDistanceToActionAndView(distance);
+    setNumberToActionAndView(copiesNumber);
+}
+
+void QG_LineParallelOptions::on_sbNumber_valueChanged(int number) {
     setNumberToActionAndView(number);
 }
 
-void QG_LineParallelOptions::on_leDist_editingFinished(){
+void QG_LineParallelOptions::on_leDist_editingFinished() {
     setDistanceToActionAndView(ui->leDist->text());
 }
 
-void QG_LineParallelOptions::setDistanceToActionAndView(QString val){
+void QG_LineParallelOptions::setDistanceToActionAndView(QString val) {
     double distance;
-    if (toDouble(val, distance, 1.0, false)){
+    if (toDouble(val, distance, 1.0, false)) {
         action->setDistance(distance);
         ui->leDist->setText(fromDouble(distance));
     }
 }
 
-void QG_LineParallelOptions::setNumberToActionAndView(int number){
+void QG_LineParallelOptions::setNumberToActionAndView(int number) {
     action->setNumber(number);
     ui->sbNumber->setValue(number);
 }

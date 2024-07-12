@@ -152,7 +152,7 @@ void RS_ActionDrawMText::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawMText::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawMText::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     //init(getStatus()-1);
     finish(false);

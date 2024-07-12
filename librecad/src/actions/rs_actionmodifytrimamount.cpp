@@ -199,7 +199,7 @@ void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     init(status - 1);
 }
 

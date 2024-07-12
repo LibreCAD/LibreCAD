@@ -199,7 +199,7 @@ void RS_ActionDrawLineBisector::mouseLeftButtonReleaseEvent(int status, QMouseEv
 
 }
 
-void RS_ActionDrawLineBisector::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineBisector::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

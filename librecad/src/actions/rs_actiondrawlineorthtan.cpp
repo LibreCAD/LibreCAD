@@ -152,7 +152,7 @@ void RS_ActionDrawLineOrthTan::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     clearLines();
     if (status == SetLine){
         finish(true);

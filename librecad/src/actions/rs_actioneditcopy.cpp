@@ -74,12 +74,12 @@ void RS_ActionEditCopy::mouseMoveEvent(QMouseEvent* e) {
 		deleteSnapper();
 }
 
-void RS_ActionEditCopy::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionEditCopy::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     RS_CoordinateEvent ce(snapPoint(e));
     coordinateEvent(&ce);
 }
 
-void RS_ActionEditCopy::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionEditCopy::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     init(status-1);
 }
 

@@ -99,12 +99,12 @@ void RS_ActionModifyEntity::trigger() {
     }
 }
 
-void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     en = catchEntity(e);
     trigger();
 }
 
-void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     init(status-1);
 }
 

@@ -126,7 +126,7 @@ void RS_ActionDrawLineHorVert::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

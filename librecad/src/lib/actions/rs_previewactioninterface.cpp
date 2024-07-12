@@ -234,6 +234,12 @@ void RS_PreviewActionInterface::previewRefLine(const RS_Vector &start, const RS_
     }
 }
 
+RS_Line* RS_PreviewActionInterface::previewLine(const RS_LineData& data){
+    auto *line = new RS_Line(this->preview.get(),data);
+    this->preview->addEntity(line);
+    return line;
+}
+
 RS_Line* RS_PreviewActionInterface::previewLine(const RS_Vector &start, const RS_Vector &end){
     auto *line = new RS_Line(this->preview.get(), start, end);
     this->preview->addEntity(line);

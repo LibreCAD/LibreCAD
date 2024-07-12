@@ -40,7 +40,7 @@ class QG_LineParallelOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    QG_LineParallelOptions();
+    QG_LineParallelOptions(RS2::ActionType actionType);
     ~QG_LineParallelOptions() override;
 
 public slots:
@@ -50,6 +50,8 @@ public slots:
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
+
+    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 private:
     RS_ActionDrawLineParallel* action;

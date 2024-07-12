@@ -459,6 +459,8 @@ RS2::CursorType RS_ActionDrawCircleTan1_2P::doGetMouseCursor(int status){
         case SetPoint2:
             return RS2::CadCursor;
             break;
+        default:
+            return RS2::NoCursorChange;
     }
 }
 

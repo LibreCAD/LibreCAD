@@ -97,9 +97,7 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
         deletePreview();
 
         // fixme - review, most probably pen and layer not needed and this may be replaced by referenceLine
-        auto *line = new RS_Line(preview.get(), m_pPoints->startPoint, mouse);
-
-        previewEntity(line);
+        auto *line = previewLine(m_pPoints->startPoint, mouse);
         line->setLayerToActive();
         line->setPenToActive();
 
@@ -114,20 +112,20 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionSnapMiddleManual::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionSnapMiddleManual::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     snapped = getSnapAngleAwarePoint(e, m_pPoints->startPoint, snapped);
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionSnapMiddleManual::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionSnapMiddleManual::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
 
-    switch (getStatus()) {
+    switch (status) {
         case SetPercentage:
         case SetStartPoint: {
             finish();
-            signalUnsetSnapMiddleManual();
+            emit signalUnsetSnapMiddleManual();
             break;
         }
         default:

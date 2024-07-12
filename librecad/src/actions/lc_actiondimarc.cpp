@@ -168,7 +168,7 @@ void LC_ActionDimArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
 
 }
 
-void LC_ActionDimArc::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDimArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

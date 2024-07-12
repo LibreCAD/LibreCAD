@@ -139,7 +139,7 @@ void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QM
     RS_Vector mouse = toGraph(e);
     RS_Entity *se = catchEntity(e);
 
-    switch (getStatus()) {
+    switch (status) {
         case ChooseEntity1:
             entity1 = se;
             if (entity1 && entity1->isAtomic()){
@@ -160,7 +160,7 @@ void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QM
     }
 }
 
-void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

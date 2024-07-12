@@ -68,14 +68,14 @@ void RS_ActionInfoInside::mouseMoveEvent(QMouseEvent* e) {
     }*/
 }
 
-void RS_ActionInfoInside::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoInside::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     *pt = snapPoint(e);
     trigger();
 
 }
 
-void RS_ActionInfoInside::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
-    init(getStatus()-1);
+void RS_ActionInfoInside::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    init(status-1);
 }
 
 void RS_ActionInfoInside::updateMouseButtonHints() {

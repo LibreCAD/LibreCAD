@@ -232,7 +232,7 @@ void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionModifyBevel::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyBevel::mouseRightButtonReleaseEvent(int status,[[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     switch (status){

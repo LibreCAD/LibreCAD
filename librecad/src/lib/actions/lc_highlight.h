@@ -8,7 +8,7 @@ class LC_Highlight: public RS_EntityContainer{
 
 public:
     LC_Highlight();
-    void addEntity(RS_Entity *entity) override {};
+    void addEntity([[maybe_unused]]RS_Entity *entity) override {};
     void addEntity(RS_Entity *entity, bool selected = false);
     bool removeEntity(RS_Entity *entity) override;
     void clear() override;

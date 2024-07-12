@@ -154,7 +154,7 @@ void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionPolylineAdd::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineAdd::mouseRightButtonReleaseEvent([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     finish(true);
 }

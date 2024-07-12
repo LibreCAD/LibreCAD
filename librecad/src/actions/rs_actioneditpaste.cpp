@@ -91,12 +91,12 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionEditPaste::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionEditPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditPaste::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
-    init(getStatus()-1);
+void RS_ActionEditPaste::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    init(status-1);
 }
 
 void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {

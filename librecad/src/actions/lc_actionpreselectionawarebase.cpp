@@ -14,7 +14,7 @@ void LC_ActionPreSelectionAwareBase::init(int status) {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::selectionFinishedByKey(QKeyEvent *e, bool escape) {
+void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKeyEvent *e, bool escape) {
     if (escape){
         finish(false);
     }
@@ -67,14 +67,14 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::selectionCompleted(bool singleEntity) {}
+void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity) {}
 
-void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected(int status) {
+void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
     updateMouseWidget();
 }
 
-void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent) {}
 
-void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {}
+void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent) {}
 
-void LC_ActionPreSelectionAwareBase::mouseMoveEventSelected(QMouseEvent *e) {}
+void LC_ActionPreSelectionAwareBase::mouseMoveEventSelected([[maybe_unused]]QMouseEvent *e) {}

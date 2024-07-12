@@ -1,22 +1,14 @@
-#include "rs_preview.h"
 #include "rs_ellipse.h"
-#include "rs_point.h"
-#include "rs_dialogfactory.h"
-#include "rs_debug.h"
-#include "rs_circle.h"
-#include "rs_actiondrawellipsecenter3points.h"
 #include <QMouseEvent>
-#include "rs_coordinateevent.h"
 #include "rs_graphicview.h"
 #include "lc_actiondrawcirclebase.h"
-#include "rs_actioninterface.h"
 
 LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView)
     :RS_PreviewActionInterface(name,container, graphicView){}
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 
-void LC_ActionDrawCircleBase::mouseLeftButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawCircleBase::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 

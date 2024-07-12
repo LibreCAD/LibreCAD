@@ -129,7 +129,7 @@ void RS_ActionInfoDist::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     }
 }
 
-void RS_ActionInfoDist::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoDist::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

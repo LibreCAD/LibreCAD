@@ -56,7 +56,7 @@ void QG_LineOptions::languageChange(){
 void QG_LineOptions::doSaveSettings(){
 }
 
-void QG_LineOptions::doSetAction(RS_ActionInterface *a, bool update){
+void QG_LineOptions::doSetAction(RS_ActionInterface *a, [[maybe_unused]]bool update){
 		action = dynamic_cast<RS_ActionDrawLine*>(a);
 }
 

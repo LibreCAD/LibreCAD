@@ -27,12 +27,10 @@
 #include <QMouseEvent>
 
 #include "rs_actionpolylinedelbetween.h"
-#include "rs_atomicentity.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_preview.h"
 #include "rs_modification.h"
+#include "rs_preview.h"
 #include "rs_polyline.h"
 
 RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& container,
@@ -149,7 +147,7 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
             }
             break;
         }
-        case SetVertex1:
+        case SetVertex1:{
             if (polylineToModify == nullptr){
                 commandMessageTR("No Entity found."); // fixme - really? seems not needed check
             } else {
@@ -170,8 +168,9 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
                 }
             }
             break;
+        }
         case SetVertex2:
-
+        {
             if (polylineToModify == nullptr){
                 commandMessageTR("No polyline found."); // fixme - really needed?
             } else{
@@ -201,7 +200,7 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
                 }
             }
             break;
-
+        }
         default:
             break;
     }
@@ -227,7 +226,7 @@ void RS_ActionPolylineDelBetween::updateMouseButtonHints() {
 void RS_ActionPolylineDelBetween::collectEntitiesToRemove(RS_Vector first, RS_Vector second, QList<RS_Entity *> &list){
     if (first.distanceTo(second) > RS_TOLERANCE){
         bool found = false;
-        for (int i = 0; i < polylineToModify->count(); i++){
+        for (unsigned int i = 0; i < polylineToModify->count(); i++){
             RS_Entity* en = polylineToModify->entityAt(i);
             RS_Vector start = en->getStartpoint();
 

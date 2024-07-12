@@ -346,12 +346,12 @@ void RS_ActionPolylineSegment::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status,[[maybe_unused]]  QMouseEvent *e) {
     deleteSnapper();
     if (targetEntity){
          graphicView->redraw();
     }
-    init(getStatus() - 1);
+    init(status - 1);
 }
 
 void RS_ActionPolylineSegment::updateMouseButtonHints(){

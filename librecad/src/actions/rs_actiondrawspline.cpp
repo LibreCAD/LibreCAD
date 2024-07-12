@@ -145,11 +145,11 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawSpline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawSpline::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawSpline::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawSpline::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawSpline::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status == SetNextPoint && pPoints->spline){
         const size_t nPoints = pPoints->spline->getNumberOfControlPoints();
         bool isClosed = pPoints->spline->isClosed();

@@ -118,11 +118,11 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineParallel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallel::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     trigger();
 }
 
-void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     init(status-1);
 }
 
@@ -216,7 +216,7 @@ RS2::CursorType RS_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int
 }
 
 void RS_ActionDrawLineParallel::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineParallelOptions>();
+    m_optionWidget = std::make_unique<QG_LineParallelOptions>(actionType);
 }
 
 // EOF

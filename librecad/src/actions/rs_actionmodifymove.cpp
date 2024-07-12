@@ -118,7 +118,7 @@ void RS_ActionModifyMove::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMove::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }

@@ -186,9 +186,9 @@ void RS_ActionInfoAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionInfoAngle::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(getStatus() - 1);
+    init(status - 1);
 }
 
 void RS_ActionInfoAngle::updateMouseButtonHints(){

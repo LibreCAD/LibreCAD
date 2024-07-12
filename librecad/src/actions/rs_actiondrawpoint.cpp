@@ -68,14 +68,14 @@ void RS_ActionDrawPoint::mouseMoveEvent(QMouseEvent *e){
     };
 }
 
-void RS_ActionDrawPoint::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawPoint::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     snap = getFreeSnapAwarePointAlt(e, snap);
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawPoint::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
-    init(getStatus() - 1);
+void RS_ActionDrawPoint::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+    init(status - 1);
 }
 
 void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){

@@ -96,6 +96,7 @@ protected:
     RS_Ellipse *previewEllipse(const RS_EllipseData &ellipseData);
     void previewPoint(const RS_Vector &coord);
     RS_Line* previewLine(const RS_Vector &start, const RS_Vector &end);
+    RS_Line* previewLine(const RS_LineData &data);
     void previewRefLine(const RS_Vector &start, const RS_Vector &end);
     void previewRefPoint(const RS_Vector &coord, bool alwaysVisible = false);
     RS_Arc* previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);

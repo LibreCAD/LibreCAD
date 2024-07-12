@@ -172,7 +172,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     if (equationSettingOn || stepSizeSettingOn) return;
 
     if (startPointSettingOn || endPointSettingOn){
@@ -190,7 +190,7 @@ void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
         equationSettingOn = false;
         startPointSettingOn = false;
@@ -199,10 +199,10 @@ void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, QMouseEvent
         return;
     }
 
-    if (getStatus() == SetNextPoint) trigger();
+    if (status == SetNextPoint) trigger();
     deletePreview();
     deleteSnapper();
-    init(getStatus() - 1);
+    init(status - 1);
 }
 
 double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){

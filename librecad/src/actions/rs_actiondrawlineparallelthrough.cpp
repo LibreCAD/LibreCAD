@@ -135,7 +135,7 @@ void RS_ActionDrawLineParallelThrough::mouseLeftButtonReleaseEvent(int status, Q
 
 }
 
-void RS_ActionDrawLineParallelThrough::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     if (entity){
         entity = nullptr;

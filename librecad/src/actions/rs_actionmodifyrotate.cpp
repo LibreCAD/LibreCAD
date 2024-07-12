@@ -259,7 +259,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionModifyRotate::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyRotate::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     switch (status)
