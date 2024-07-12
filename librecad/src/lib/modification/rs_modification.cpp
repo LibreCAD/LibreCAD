@@ -284,28 +284,28 @@ void RS_Modification::revertDirection() {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::revertDirection");
 
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::revertDirection: no valid container");
-		return;
-	}
+        return;
+    }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
     bool invalidContainer {true};
     for(auto e: *container) {
-		if (e && e->isSelected()) {
-			RS_Entity* ec = e->clone();
-			ec->revertDirection();
-			addList.push_back(ec);
+        if (e && e->isSelected()) {
+            RS_Entity* ec = e->clone();
+            ec->revertDirection();
+            addList.push_back(ec);
             invalidContainer = false;
         }
-	}
+    }
     if (invalidContainer) {
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::revertDirection: no valid container is selected");
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
     deselectOriginals(true);
-	addNewEntities(addList);
+    addNewEntities(addList);
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::revertDirection: OK");
 }
@@ -3350,7 +3350,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
             if (e->isContainer()) {
 
                 // add entities from container:
-                RS_EntityContainer* ec = (RS_EntityContainer*)e;
+                auto* ec = (RS_EntityContainer*)e;
                 //ec->setSelected(false);
 
                 // iterate and explode container:

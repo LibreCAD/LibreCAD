@@ -62,6 +62,9 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
     connect(cbAutoBackup, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 
+    connect(cbVisualizeHovering, &QCheckBox::stateChanged,
+            this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
+
 }
 
 /*
@@ -127,8 +130,13 @@ void QG_DlgOptionsGeneral::init()
     bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
     cbVisualizeHovering->setChecked(visualizeHovering);
 
+    bool visualizeHoveringRefPoints = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1);
+    cbShowRefPointsOnHovering->setChecked(visualizeHoveringRefPoints);
+    cbShowRefPointsOnHovering->setEnabled(visualizeHovering);
+
     bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
     cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
+
 
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
@@ -258,6 +266,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int) cbScaleGrid->isChecked()));
         RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int) cbHideRelativeZero->isChecked()));
         RS_SETTINGS->writeEntry("/VisualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
+        RS_SETTINGS->writeEntry("/VisualizeHoveringRefPoints", QString{cbShowRefPointsOnHovering->isChecked() ? "1" : "0"});
         RS_SETTINGS->writeEntry("/VisualizePreviewRefPoints", QString{cbDisplayRefPoints->isChecked() ? "1" : "0"});
         RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
         RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
@@ -480,7 +489,11 @@ void QG_DlgOptionsGeneral::setLibraryPath()
     }
 }
 
-void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
+ void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
+     cbShowRefPointsOnHovering->setEnabled(cbVisualizeHovering->isChecked());
+ }
+
+    void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
 {
     bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
     auto& appWindow = QC_ApplicationWindow::getAppWindow();

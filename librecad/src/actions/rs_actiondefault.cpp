@@ -153,11 +153,10 @@ void RS_ActionDefault::keyReleaseEvent(QKeyEvent *e){
    - by Melwyn Francis Carlo <carlo.melwyn@outlook.com>
 */
 void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
-    clearHighLighting();
+//    clearHighLighting();
 
     bool shouldShowQuickInfoWidget = allowEntityQuickInfoAuto || (event->modifiers() & (Qt::ControlModifier | Qt::MetaModifier) && allowEntityQuickInfoForCTRL);
-    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    bool showHighlightEntity = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0 || shouldShowQuickInfoWidget;
+    bool showHighlightEntity = highlightEntitiesOnHover || shouldShowQuickInfoWidget;
     if (!showHighlightEntity)
         return;
 
@@ -215,6 +214,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
         case Neutral: {
             deleteSnapper();
             highlightHoveredEntities(e);
+            drawHighlights();
             break;
         }
         case Dragging:{
@@ -579,7 +579,7 @@ void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
             bool select = (e->modifiers() & Qt::ShiftModifier) == 0;
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
 
-            updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+            updateSelectionWidget();
 
             goToNeutralStatus();
             e->accept();
@@ -607,7 +607,6 @@ void RS_ActionDefault::goToNeutralStatus(){
     this->drawPreview();
     this->drawHighlights();
     this->setStatus(Neutral);
-
 }
 
 void RS_ActionDefault::commandEvent(RS_CommandEvent *e){
@@ -685,12 +684,7 @@ RS2::CursorType RS_ActionDefault::doGetMouseCursor(int status){
 }
 
 void RS_ActionDefault::clearHighLighting(){
-    auto *hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
-    if (hContainer->count() == 0)
-        return;
-    hContainer->clear();
-    pPoints->highlightedEntity = nullptr;
-    graphicView->redraw(RS2::RedrawOverlay);
+    deleteHighlights();
     clearQuickInfoWidget();
 }
 
@@ -708,20 +702,7 @@ void RS_ActionDefault::suspend(){
 void RS_ActionDefault::highlightEntity(RS_Entity *entity){
     if (!allowMouseOverGlowing(entity))
         return;
-
-    // The container for highlighting effects
-    auto hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
-    hContainer->clear();
-
-    pPoints->highlightedEntity = entity;
-
-    RS_Entity *duplicatedEntity = pPoints->highlightedEntity->clone();
-
-    duplicatedEntity->reparent(hContainer);
-    duplicatedEntity->setHighlighted(true);
-    hContainer->addEntity(duplicatedEntity);
-
-    graphicView->redraw(RS2::RedrawOverlay);
+    highlightHover(entity);
 }
 
 RS2::EntityType RS_ActionDefault::getTypeToSelect(){

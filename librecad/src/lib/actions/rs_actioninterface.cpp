@@ -413,7 +413,6 @@ void RS_ActionInterface::updateSelectionWidget() const{
     updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{
-    // fixme - review and fix
     RS_DIALOGFACTORY->updateSelectionWidget(countSelected,selectedLength);
 }
 

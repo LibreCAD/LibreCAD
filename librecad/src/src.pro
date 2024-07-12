@@ -156,6 +156,7 @@ HEADERS += \
     actions/lc_actiondrawslicedivide.h \
     actions/lc_actionmodifylinejoin.h \
     actions/lc_actionpolylinedeletebase.h \
+    actions/lc_actionpreselectionawarebase.h \
     lib/actions/lc_highlight.h \
     lib/actions/lc_modifiersinfo.h \
     lib/actions/rs_actioninterface.h \
@@ -340,6 +341,7 @@ SOURCES += \
     actions/lc_actionpensyncactivebylayer.cpp \
     actions/lc_actionmodifylinejoin.cpp \
     actions/lc_actionpolylinedeletebase.cpp \
+    actions/lc_actionpreselectionawarebase.cpp \
     lib/actions/lc_highlight.cpp \
     lib/actions/lc_modifiersinfo.cpp \
     lib/actions/rs_actioninterface.cpp \

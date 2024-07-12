@@ -974,11 +974,11 @@ void RS_GraphicView::drawLayer2(RS_Painter *painter)
 
 
 void RS_GraphicView::drawLayer3(RS_Painter *painter) {
-	// drawing zero points:
-	if (!isPrintPreview()) {
-		drawRelativeZero(painter);
-		drawOverlay(painter);
-	}
+// drawing zero points:
+    if (!isPrintPreview()) {
+        drawRelativeZero(painter);
+        drawOverlay(painter);
+    }
 }
 
 
@@ -1009,7 +1009,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter,RS_Entity *e, do
                     break;
                 }
                 default: {
-                setPenForEntity(painter, e, patternOffset);
+                  setPenForEntity(painter, e, patternOffset, true);
                 }
             }
 //        }
@@ -1038,7 +1038,7 @@ void RS_GraphicView::setPenForOverlayEntity(RS_Painter *painter,RS_Entity *e, do
  *	Returns:			void
  */
 
-void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& patternOffset)
+void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& patternOffset, bool inOverlay)
 {
 	if (draftMode) {
         painter->setPen(RS_Pen(m_colorData->foreground,
@@ -1108,23 +1108,23 @@ void RS_GraphicView::setPenForEntity(RS_Painter *painter,RS_Entity *e, double& p
 
     if (!isPrinting() && !isPrintPreview())
     {
-        // this entity is selected:
-        if (e->isSelected()) {
-            pen.setLineType(RS2::DashLineTiny);
-            pen.setWidth(RS2::Width00);
-            pen.setColor(m_colorData->selectedColor);
-        }
-
-        // this entity is highlighted:
-        if (e->isHighlighted()) {
-            // Glowing effects on mouse hovering: use the "selected" color
-            if (e->getParent() == overlayEntities[RS2::OverlayEffects])
-            {
+        if (inOverlay || inOverlayDrawing){
+            if (e->isHighlighted()){    // Glowing effects on mouse hovering: use the "selected" color
                 // for glowing effects on mouse hovering, draw solid lines
                 pen.setColor(m_colorData->selectedColor);
                 pen.setLineType(RS2::SolidLine);
-            } else {
-                pen.setColor(m_colorData->highlightedColor);
+            }
+        }
+        else{
+            // this entity is selected:
+            if (e->isSelected()) {
+                pen.setLineType(RS2::DashLineTiny);
+                pen.setWidth(RS2::Width00);
+                pen.setColor(m_colorData->selectedColor);
+            }
+            // this entity is highlighted:
+            if (e->isHighlighted()) {
+               pen.setColor(m_colorData->highlightedColor);
             }
         }
 
@@ -1202,7 +1202,7 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
     }
 
 	// set pen (color):
-    setPenForEntity(painter, e, patternOffset);
+    setPenForEntity(painter, e, patternOffset, false);
 
 	//RS_DEBUG->print("draw plain");
 	if (isDraftMode()) {
@@ -1228,30 +1228,34 @@ void RS_GraphicView::drawEntity(RS_Painter *painter, RS_Entity* e, double& patte
 	// draw reference points:
 	if (e->isSelected() && !(isPrinting() || isPrintPreview())) {
 		if (!e->isParentSelected()) {
-			RS_VectorSolutions const& s = e->getRefPoints();
-
-			for (size_t i=0; i<s.getNumber(); ++i) {
-				int sz = -1;
-                RS_Color col = m_colorData->handleColor;
-				if (i == 0) {
-                    col = m_colorData->startHandleColor;
-				}
-				else if (i == s.getNumber() - 1) {
-                    col = m_colorData->endHandleColor;
-				}
-				if (getDeleteMode()) {
-                    painter->drawHandle(toGui(s.get(i)), m_colorData->background, sz);
-				} else {
-					painter->drawHandle(toGui(s.get(i)), col, sz);
-				}
-			}
-		}
+      drawEntityReferencePoints(painter, e);
+  }
 	}
 
 	//RS_DEBUG->print("draw plain OK");
 
 
 	//RS_DEBUG->print("RS_GraphicView::drawEntity() end");
+}
+
+void RS_GraphicView::drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const {
+    RS_VectorSolutions const& s = e->getRefPoints();
+
+    for (size_t i=0; i<s.getNumber(); ++i) {
+        int sz = -1;
+                    RS_Color col = this->m_colorData->handleColor;
+        if (i == 0) {
+                        col = this->m_colorData->startHandleColor;
+        }
+        else if (i == s.getNumber() - 1) {
+                        col = this->m_colorData->endHandleColor;
+        }
+        if (this->getDeleteMode()) {
+                        painter->drawHandle(this->toGui(s.get(i)), this->m_colorData->background, sz);
+        } else {
+        painter->drawHandle(this->toGui(s.get(i)), col, sz);
+        }
+    }
 }
 
 
@@ -1584,8 +1588,7 @@ void RS_GraphicView::drawMetaGrid(RS_Painter *painter) {
 
 }
 
-void RS_GraphicView::drawDraftSign(RS_Painter *painter)
-{
+void RS_GraphicView::drawDraftSign(RS_Painter *painter){
     const QString draftSign = tr("Draft");
     QRect boundingRect{0, 0, 64, 64};
     for (int i = 1; i <= 4; ++i) {
@@ -1600,24 +1603,30 @@ void RS_GraphicView::drawDraftSign(RS_Painter *painter)
 void RS_GraphicView::drawOverlay(RS_Painter *painter)
 {
     double patternOffset(0.);
-
-    foreach (auto ec, overlayEntities)
-    {
-        foreach (auto e, ec->getEntityList())
-        {
+    // todo - using flag is ugly, yet needed for proper drawing of containers (like dimensions or texts) that are in overlays
+    // while draw for container is performed, the pen is resolved as sub-entities of containers as they are in normal drawing...
+    // todo - review support of overlays and pens for entities for later
+    inOverlayDrawing = true;
+    foreach (auto ec, overlayEntities){
+        foreach (auto e, ec->getEntityList()){
             setPenForOverlayEntity(painter, e, patternOffset);
+            bool selected = e->isSelected();
+            // within overlays, we use temporary entities (clones), os it's safe to modify selection state
+            e->setSelected(false);
             e->draw(painter, this, patternOffset);
+            if (selected){
+                drawEntityReferencePoints(painter, e);
+            }
         }
     }
+    inOverlayDrawing = false;
 }
 
-RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const
-{
+RS2::SnapRestriction RS_GraphicView::getSnapRestriction() const{
 	return defaultSnapRes;
 }
 
-RS_SnapMode RS_GraphicView::getDefaultSnapMode() const
-{
+RS_SnapMode RS_GraphicView::getDefaultSnapMode() const{
     return *defaultSnapMode;
 }
 
@@ -1626,9 +1635,9 @@ RS_SnapMode RS_GraphicView::getDefaultSnapMode() const
  */
 void RS_GraphicView::setDefaultSnapMode(RS_SnapMode sm) {
     *defaultSnapMode = sm;
-	if (eventHandler) {
-		eventHandler->setSnapMode(sm);
-	}
+    if (eventHandler) {
+        eventHandler->setSnapMode(sm);
+    }
 }
 
 /**

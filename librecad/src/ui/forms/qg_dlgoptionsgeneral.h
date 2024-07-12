@@ -47,6 +47,7 @@ public slots:
     virtual void setRestartNeeded();
     virtual void ok();
     void onAutoBackupChanged(int state);
+    void on_cbVisualizeHoveringClicked();
 
 protected slots:
     void languageChange();

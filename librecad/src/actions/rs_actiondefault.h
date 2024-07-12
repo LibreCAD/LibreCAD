@@ -37,6 +37,8 @@
  *
  * @author Andrew Mustun
  */
+//todo - support of moving by keyboard
+//todo - joint move of endpoint ref? So if moving ref will move refs for adjusent entities
 class RS_ActionDefault : public RS_PreviewActionInterface {
     Q_OBJECT
 
@@ -92,17 +94,12 @@ protected:
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
 private:
-
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-
 };
 
 #endif

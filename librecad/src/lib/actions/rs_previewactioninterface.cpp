@@ -164,13 +164,18 @@ void RS_PreviewActionInterface::drawHighlights(){
     graphicView->redraw(RS2::RedrawOverlay);
 }
 
-void RS_PreviewActionInterface::highlightHover(RS_Entity* e){
-      highlight->addEntity(e);
+void RS_PreviewActionInterface::highlightHoverWithRefPoints(RS_Entity* e, bool value){
+    highlight->addEntity(e, value);
 }
+
+void RS_PreviewActionInterface::highlightHover(RS_Entity* e){
+    highlight->addEntity(e, highlightEntitiesRefPointsOnHover);
+}
+
 
 void RS_PreviewActionInterface::highlightSelected(RS_Entity *e, bool enable){
     if (enable){
-        highlight->addEntity(e);
+        highlight->addEntity(e, false);
     }
     else{
         highlight ->removeEntity(e);
@@ -179,7 +184,7 @@ void RS_PreviewActionInterface::highlightSelected(RS_Entity *e, bool enable){
 
 void RS_PreviewActionInterface::addToHighlights(RS_Entity *e, bool enable){
     if (enable){
-        highlight->addEntity(e);
+        highlight->addEntity(e, false);
     }
     else{
         highlight ->removeEntity(e);
@@ -382,6 +387,8 @@ void RS_PreviewActionInterface::initRefEntitiesMetrics(){
     QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
 
     showRefEntitiesOnPreview = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
+    highlightEntitiesOnHover = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
+    highlightEntitiesRefPointsOnHover = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1) != 0;
 
     bool ok;
     refPointSize = RS_Math::eval(pdsizeStr, &ok);

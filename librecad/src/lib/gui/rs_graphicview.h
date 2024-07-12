@@ -243,7 +243,7 @@ public:
     virtual void drawEntity(RS_Entity *e);
     virtual void drawEntityPlain(RS_Painter *painter, RS_Entity *e);
     virtual void drawEntityPlain(RS_Painter *painter, RS_Entity *e, double &patternOffset);
-    virtual void setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
+    virtual void setPenForEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset, bool inOverlay);
     virtual void setPenForOverlayEntity(RS_Painter *painter, RS_Entity *e, double &patternOffset);
     virtual void drawEntityHighlighted(RS_Entity *e, bool highlighted = true);
     virtual RS_Vector getMousePosition() const = 0;
@@ -371,6 +371,8 @@ protected:
     bool deleteMode = false;
     LC_Rect view_rect;
 
+    void drawEntityReferencePoints(RS_Painter *painter, const RS_Entity *e) const;
+
 private:
 
     bool zoomFrozen = false;
@@ -400,6 +402,7 @@ private:
     bool m_bIsCleanUp = false;
     bool panning = false;
     bool scaleLineWidth = false;
+    bool inOverlayDrawing = false;
     RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 
 signals:

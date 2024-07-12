@@ -78,6 +78,8 @@ protected:
     double refPointSize = 2.0;
     int refPointMode = DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot);
     bool showRefEntitiesOnPreview = false;
+    bool highlightEntitiesOnHover = false;
+    bool highlightEntitiesRefPointsOnHover = false;
 //    /**
 //     * Current offset of the preview.
 //     */
@@ -105,6 +107,7 @@ protected:
     LC_RefEllipse *previewRefEllipse(const RS_EllipseData &arcData);
     void initRefEntitiesMetrics();
     void highlightHover(RS_Entity *e);
+    void highlightHoverWithRefPoints(RS_Entity* e, bool value);
     void highlightSelected(RS_Entity *e, bool enable=true);
     virtual void moveRelativeZero(const RS_Vector &zero);
     bool is(RS_Entity* e, RS2::EntityType type) const;

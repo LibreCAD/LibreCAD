@@ -3,7 +3,7 @@
 
 LC_Highlight::LC_Highlight()= default;
 
-void LC_Highlight::addEntity(RS_Entity* entity) {
+void LC_Highlight::addEntity(RS_Entity* entity, bool selected) {
     if (entity == nullptr || entity->isUndone()) {
         return;
     }
@@ -12,6 +12,9 @@ void LC_Highlight::addEntity(RS_Entity* entity) {
     duplicatedEntity->setPen(pen);
 
     duplicatedEntity->setHighlighted(true);
+    if (selected) {
+        duplicatedEntity->setSelected(true);
+    }
 
     entitiesMap.insert(entity, duplicatedEntity);
 //    entity->setTransparent(true);
