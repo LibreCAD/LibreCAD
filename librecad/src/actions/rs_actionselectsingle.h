@@ -29,13 +29,14 @@
 
 #include <QList>
 #include "rs_previewactioninterface.h"
+#include "rs_actionselectbase.h"
 
 /**
  * This action class can handle user events to select entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectSingle:public RS_PreviewActionInterface {
+class RS_ActionSelectSingle:public RS_ActionSelectBase {
 Q_OBJECT
 public:
     RS_ActionSelectSingle(
@@ -49,7 +50,6 @@ public:
         RS_ActionInterface *actionSelect = nullptr,
         QList<RS2::EntityType> entityTypeList = {});
     void trigger() override;
-    void keyPressEvent(QKeyEvent *e) override;
     enum RS2::EntityType getTypeToSelect();
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
@@ -57,11 +57,10 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 private:
-    const QList<RS2::EntityType> entityTypeList;
-    RS_Entity *en = nullptr;
-    RS_ActionInterface *actionSelect = nullptr;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
-    bool isEntityAllowedToSelect(RS_Entity* ent) const;
+    RS_ActionInterface *actionSelect = nullptr;
+    bool isEntityAllowedToSelect(RS_Entity* ent) const override;
+    void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
 };
 
 #endif

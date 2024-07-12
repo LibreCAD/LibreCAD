@@ -28,6 +28,7 @@
 #define RS_ACTIONMODIFYREVERTDIRECTION_H
 
 #include "rs_actioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
 
 /**
@@ -35,14 +36,19 @@
  *
  * @author Robert Lichtenberger
  */
-class RS_ActionModifyRevertDirection : public RS_ActionInterface {
-	Q_OBJECT
+class RS_ActionModifyRevertDirection : public LC_ActionPreSelectionAwareBase {
+Q_OBJECT
 public:
-	RS_ActionModifyRevertDirection(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+    RS_ActionModifyRevertDirection(RS_EntityContainer& container,
+                                   RS_GraphicView& graphicView);
 
-	void init(int status=0) override;
-	void trigger() override;
+    void trigger() override;
+protected:
+    void updateMouseButtonHintsForSelection() override;
+    void selectionCompleted(bool singleEntity) override;
+    bool isEntityAllowedToSelect(RS_Entity *ent) const override;
+
+    bool isShowRefPointsOnHighlight() override;
 };
 
 #endif

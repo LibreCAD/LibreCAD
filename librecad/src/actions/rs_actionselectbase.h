@@ -27,24 +27,35 @@
 #ifndef RS_ACTIONSELECTBASE_H
 #define RS_ACTIONSELECTBASE_H
 
-#include "rs_actioninterface.h"
-
+#include "rs_previewactioninterface.h"
 
 /**
  * This class is the base class to all select actions.
  *
  * @author Andrew Mustun
  */
-class RS_ActionSelectBase : public RS_ActionInterface {
-	Q_OBJECT
-public:
-    RS_ActionSelectBase(const char* name,
-                        RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
+class RS_ActionSelectBase:public RS_PreviewActionInterface {
+Q_OBJECT
 
-	void keyReleaseEvent(QKeyEvent* e) override;
+public:
+    RS_ActionSelectBase(
+        const char *name,
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView,
+        QList<RS2::EntityType> entityTypeList = {});
+
+    void keyReleaseEvent(QKeyEvent *e) override;
+    void keyPressEvent(QKeyEvent *e) override;
 protected:
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    RS_Entity *entityToSelect = nullptr;
+    const QList<RS2::EntityType> catchForSelectionEntityTypes;
+    virtual bool isEntityAllowedToSelect(RS_Entity *ent) const { return true; };
+    void selectEntity();
+    RS_Entity *selectionMouseMove(QMouseEvent *event);
+    virtual void selectionFinishedByKey(QKeyEvent *e, bool escape) = 0;
+    virtual bool isShowRefPointsOnHighlight();
+    void deselectAll();
 };
 
 #endif

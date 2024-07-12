@@ -24,30 +24,58 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionmodifyrevertdirection.h"
 #include "rs_debug.h"
+#include "rs_document.h"
 #include "rs_modification.h"
-// fixme - PREVIEW rework
+#include "rs_selection.h"
+
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
-	:RS_ActionInterface("Revert direction", container, graphicView)
-{
+	:LC_ActionPreSelectionAwareBase("Revert direction", container, graphicView,{}){
 }
 
 void RS_ActionModifyRevertDirection::trigger() {
-	RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
+    RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
 
-	RS_Modification m(*container, graphicView);
-	m.revertDirection();
-	finish(false);
+    RS_Modification m(*container, graphicView);
+    m.revertDirection();
 }
 
+bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {
+    return true;
+}
 
-void RS_ActionModifyRevertDirection::init(int status) {
-    RS_ActionInterface::init(status);
+void RS_ActionModifyRevertDirection::selectionCompleted(bool singleEntity) {
     trigger();
+    if (singleEntity){
+        deselectAll();
+    }
+    else{
+        finish(false);
+    }
+    updateSelectionWidget();
 }
 
-// EOF
+void RS_ActionModifyRevertDirection::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to revert direction", LC_ModifiersInfo::CTRL("Revert after selection"));
+}
+
+bool RS_ActionModifyRevertDirection::isEntityAllowedToSelect(RS_Entity *ent) const {
+    if (ent->isContainer()){ // todo - check this, it seems not all containers are properly supported
+        return true;
+    }
+    else{
+        int rtti = ent->rtti();
+        switch (rtti){
+            case RS2::EntityParabola:
+            case RS2::EntityPolyline:
+            case RS2::EntityLine:
+            case  RS2::EntityContainer:
+            case  RS2::EntityArc:
+            case  RS2::EntitySplinePoints:
+                return true;
+            default:
+                return false;
+        }
+    }
+}

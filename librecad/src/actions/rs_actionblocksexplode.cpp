@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionblocksexplode.h"
 #include "rs_modification.h"
 
@@ -34,24 +32,31 @@
  */
 RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Blocks Explode",
+        :LC_ActionPreSelectionAwareBase("Blocks Explode",
                            container, graphicView) {
 	actionType=RS2::ActionBlocksExplode;
 }
 
-void RS_ActionBlocksExplode::init(int status) {
-    RS_PreviewActionInterface::init(status);
-
+void RS_ActionBlocksExplode::selectionCompleted(bool singleEntity) {
     trigger();
-    finish(false);
+    if (singleEntity){
+        deselectAll();
+    }
+    else{
+       finish(false);
+    }
+    updateSelectionWidget();
 }
-
-
 
 void RS_ActionBlocksExplode::trigger() {
     RS_Modification m(*container, graphicView);
     m.explode();
 }
 
+bool RS_ActionBlocksExplode::isEntityAllowedToSelect(RS_Entity *ent) const {
+    return ent->isContainer();
+}
 
-// EOF
+void RS_ActionBlocksExplode::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to explode container (Enter to complete)", LC_ModifiersInfo::CTRL("Select and explode"));
+}

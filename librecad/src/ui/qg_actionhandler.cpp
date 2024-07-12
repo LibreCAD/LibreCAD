@@ -744,11 +744,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionModifyMove(*document, *view);
         break;
 	case RS2::ActionModifyRevertDirection:
-		if(!document->countSelected()){
-			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRevertDirectionNoSelect);
-			break;
-		}
-		// fall-through
+//		if(!document->countSelected()){
+//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRevertDirectionNoSelect);
+//			break;
+//		}
+//		// fall-through
 	case RS2::ActionModifyRevertDirectionNoSelect:
 		a = new RS_ActionModifyRevertDirection(*document, *view);
 		break;
@@ -1054,10 +1054,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         a = new RS_ActionBlocksCreate(*document, *view);
         break;
 	case RS2::ActionBlocksExplode:
-		if(!document->countSelected(true, {RS2::EntityBlock})){
-			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksExplodeNoSelect);
-			break;
-		}
+//		if(!document->countSelected(true, {RS2::EntityBlock})){
+//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksExplodeNoSelect);
+//			break;
+//		}
         // fall-through
     case RS2::ActionBlocksExplodeNoSelect:
         a = new RS_ActionBlocksExplode(*document, *view);

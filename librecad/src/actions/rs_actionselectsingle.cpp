@@ -36,19 +36,17 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(RS_EntityContainer& container,
 											 RS_GraphicView& graphicView,
 											 RS_ActionInterface* action_select,
                                              QList<RS2::EntityType> entityTypeList)
-    :RS_PreviewActionInterface("Select Entities", container, graphicView)
-    ,entityTypeList(std::move(entityTypeList))
-    ,actionSelect(action_select)
-{
+    :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
+    ,actionSelect(action_select){
     actionType = RS2::ActionSelectSingle;
 }
+
 RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
                                              RS_EntityContainer& container,
                                              RS_GraphicView& graphicView,
                                              RS_ActionInterface* action_select,
                                              QList<RS2::EntityType> entityTypeList)
-    :RS_PreviewActionInterface("Select Entities", container, graphicView)
-    ,entityTypeList(std::move(entityTypeList))
+    :RS_ActionSelectBase("Select Entities", container, graphicView, entityTypeList)
     ,actionSelect(action_select),
     typeToSelect(typeToSelect)
 {
@@ -56,63 +54,23 @@ RS_ActionSelectSingle::RS_ActionSelectSingle(enum RS2::EntityType typeToSelect,
 }
 
 void RS_ActionSelectSingle::trigger(){
-    if (en != nullptr){
-        bool typeMatch = isEntityAllowedToSelect(en);
-        if (typeMatch){
-            RS_Selection s(*container, graphicView);
-
-            if (getTypeToSelect() == RS2::EntityType::EntityUnknown ||
-                (getTypeToSelect() != RS2::EntityType::EntityUnknown && en->rtti() == getTypeToSelect())){
-                s.selectSingle(en);
-            } else {
-                return;
-            }
-
-            updateSelectionWidget();
-        }
-    }
-    else {
-        RS_DEBUG->print("RS_ActionSelectSingle::trigger: Entity is NULL\n");
-    }
-    en = nullptr;
+    selectEntity();
 }
 
 void RS_ActionSelectSingle::mouseMoveEvent(QMouseEvent *event){
-    snapPoint(event);
-    deleteHighlights();
-    auto ent = catchEntity(event, entityTypeList);
-    if (ent != nullptr){
-        bool typeMatch = isEntityAllowedToSelect(ent);
-        if (typeMatch){
-            highlightHover(ent);
-        }
-    }
-    drawHighlights();
+    selectionMouseMove(event);
 }
 
-bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity* ent) const{
-    bool typeMatch{true};
-    if (!entityTypeList.empty()){
-        typeMatch = std::find(entityTypeList.begin(), entityTypeList.end(), ent->rtti()) != entityTypeList.end();
-    }
-    return typeMatch;
-}
-
-void RS_ActionSelectSingle::keyPressEvent(QKeyEvent *e){
-    if (e->key() == Qt::Key_Escape){
-        finish(false);
-        actionSelect->keyPressEvent(e);
-    }
-
-    if (container->countSelected() > 0 && e->key() == Qt::Key_Enter){
-        finish(false);
-        actionSelect->keyPressEvent(e);
-    }
+void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, bool escape) {
+    finish(false);
+    actionSelect->keyPressEvent(e);
 }
 
 void RS_ActionSelectSingle::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
-    en = catchEntity(e, entityTypeList);
-    trigger();
+    entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
+    if (entityToSelect != nullptr){
+       trigger();
+    }
 }
 
 void RS_ActionSelectSingle::mouseRightButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
@@ -130,3 +88,11 @@ RS2::CursorType RS_ActionSelectSingle::doGetMouseCursor([[maybe_unused]] int sta
 enum RS2::EntityType RS_ActionSelectSingle::getTypeToSelect(){
     return typeToSelect;
 }
+
+bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity *ent) const {
+    if (typeToSelect == RS2::EntityType::EntityUnknown)
+        return true;
+    else
+        return ent ->rtti() == typeToSelect;
+}
+
