@@ -9,7 +9,8 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
 
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
-    if (document->countSelected() > 0){
+    unsigned int selectedCount = document->countSelected(false, catchForSelectionEntityTypes);
+    if (selectedCount> 0){
         selectionCompleted(false);
     }
 }

@@ -3286,13 +3286,7 @@ static void update_exploded_children_recursively(
         bool resolveLayer,
         bool resolvePen) {
 
-    if (!ec) {
-        return;
-    }
-    if (!e) {
-        return;
-    }
-    if (!clone) {
+    if (ec == nullptr || e == nullptr || clone == nullptr) {
         return;
     }
 
@@ -3316,7 +3310,7 @@ static void update_exploded_children_recursively(
         // that in mind when writing code below this block.
         ec = (RS_EntityContainer*) clone;
         for (e = ec->firstEntity(rl); e; e = ec->nextEntity(rl)) {
-            if (e) {
+            if (e != nullptr) {
                 // Run the same code for every children recursively
                 update_exploded_children_recursively(ec, clone, e,
                         rl, resolveLayer, resolvePen);
@@ -3332,20 +3326,20 @@ static void update_exploded_children_recursively(
  */
 bool RS_Modification::explode(const bool remove /*= true*/)
 {
-    if (!container) {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::explode: no valid container for addinge entities");
         return false;
     }
-	if (container->isLocked() || ! container->isVisible()) return false;
+    if (container->isLocked() || ! container->isVisible()) return false;
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
     for(auto e: *container){
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 
-        if (e && e->isSelected()) {
+        if (e != nullptr && e->isSelected()) {
             if (e->isContainer()) {
 
                 // add entities from container:
@@ -3360,44 +3354,44 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                 bool resolveLayer;
 
                 switch (ec->rtti()) {
-                case RS2::EntityMText:
-                case RS2::EntityText:
-                case RS2::EntityHatch:
-                case RS2::EntityPolyline:
-                    rl = RS2::ResolveAll;
-                    resolveLayer = true;
-                    resolvePen = true;
-                    break;
+                    case RS2::EntityMText:
+                    case RS2::EntityText:
+                    case RS2::EntityHatch:
+                    case RS2::EntityPolyline:
+                        rl = RS2::ResolveAll;
+                        resolveLayer = true;
+                        resolvePen = true;
+                        break;
 
-                case RS2::EntityInsert:
-                    resolvePen = false;
-                    resolveLayer = false;
-                    rl = RS2::ResolveNone;
-                    break;
+                    case RS2::EntityInsert:
+                        resolvePen = false;
+                        resolveLayer = false;
+                        rl = RS2::ResolveNone;
+                        break;
 
-                case RS2::EntityDimAligned:
-                case RS2::EntityDimLinear:
-                case RS2::EntityDimRadial:
-                case RS2::EntityDimDiametric:
-                case RS2::EntityDimAngular:
-                case RS2::EntityDimLeader:
-                case RS2::EntityDimArc:
-                    rl = RS2::ResolveNone;
-                    resolveLayer = true;
-                    resolvePen = false;
-                    break;
+                    case RS2::EntityDimAligned:
+                    case RS2::EntityDimLinear:
+                    case RS2::EntityDimRadial:
+                    case RS2::EntityDimDiametric:
+                    case RS2::EntityDimAngular:
+                    case RS2::EntityDimLeader:
+                    case RS2::EntityDimArc:
+                        rl = RS2::ResolveNone;
+                        resolveLayer = true;
+                        resolvePen = false;
+                        break;
 
-                default:
-                    rl = RS2::ResolveAll;
-                    resolveLayer = true;
-                    resolvePen = false;
-                    break;
+                    default:
+                        rl = RS2::ResolveAll;
+                        resolveLayer = true;
+                        resolvePen = false;
+                        break;
                 }
 
                 for (RS_Entity* e2 = ec->firstEntity(rl); e2;
-                        e2 = ec->nextEntity(rl)) {
+                     e2 = ec->nextEntity(rl)) {
 
-                    if (e2) {
+                    if (e2 != nullptr) {
                         RS_Entity* clone = e2->clone();
                         clone->setSelected(false);
                         clone->reparent(container);
@@ -3409,7 +3403,7 @@ bool RS_Modification::explode(const bool remove /*= true*/)
                         // even those (below the tree) which are not direct
                         // subjects to the current explode() call.
                         update_exploded_children_recursively(ec, e2, clone,
-                                rl, resolveLayer, resolvePen);
+                                                             rl, resolveLayer, resolvePen);
 /*
                         if (resolveLayer) {
                             clone->setLayer(ec->getLayer());
@@ -3444,27 +3438,25 @@ bool RS_Modification::explode(const bool remove /*= true*/)
     return true;
 }
 
-
-
 bool RS_Modification::explodeTextIntoLetters() {
-	if (!container) {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "RS_Modification::explodeTextIntoLetters: no valid container for addinge entities");
+                        "RS_Modification::explodeTextIntoLetters: no valid container for adding entities");
         return false;
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
-	for(auto e: *container){
-        if (e && e->isSelected()) {
+    for(auto e: *container){
+        if (e != nullptr && e->isSelected()) {
             if (e->rtti()==RS2::EntityMText) {
                 // add letters of text:
-                RS_MText* text = (RS_MText*)e;
+                auto text = dynamic_cast<RS_MText *>(e);
                 explodeTextIntoLetters(text, addList);
             } else if (e->rtti()==RS2::EntityText) {
                 // add letters of text:
-                RS_Text* text = (RS_Text*)e;
+                auto text = dynamic_cast<RS_Text *>(e);
                 explodeTextIntoLetters(text, addList);
             } else {
                 e->setSelected(false);
@@ -3479,19 +3471,18 @@ bool RS_Modification::explodeTextIntoLetters() {
     return true;
 }
 
-
 bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Entity*>& addList) {
 
-	if (!text) {
+    if (text == nullptr) {
         return false;
     }
 
     if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though lines:
-	for(auto e2: *text){
+    for(auto e2: *text){
 
-		if (!e2) {
+        if (e2 == nullptr) {
             break;
         }
 
@@ -3499,42 +3490,39 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Enti
         // text lines:
         if (e2->rtti()==RS2::EntityContainer) {
 
-            RS_EntityContainer* line = (RS_EntityContainer*)e2;
+            auto line = dynamic_cast<RS_EntityContainer *>(e2);
 
             // iterate though letters:
-			for(auto e3: *line){
+            for(auto e3: *line){
 
-				if (!e3) {
+                if (e3 == nullptr) {
                     break;
                 }
 
-                // super / sub texts:
-                if (e3->rtti()==RS2::EntityMText) {
-                    explodeTextIntoLetters((RS_MText*)e3, addList);
+                if (e3->rtti()==RS2::EntityMText) { // super / sub texts:
+                    auto e3MText = dynamic_cast<RS_MText *>(e3);
+                    explodeTextIntoLetters(e3MText, addList);
                 }
+                else if (e3->rtti()==RS2::EntityInsert) {    // normal letters:
+                    auto letter = dynamic_cast<RS_Insert *>(e3);
 
-                // normal letters:
-                else if (e3->rtti()==RS2::EntityInsert) {
-
-                    RS_Insert* letter = (RS_Insert*)e3;
-
-                    RS_MText* tl = new RS_MText(
+                    auto tl = new RS_MText(
                         container,
                         RS_MTextData(letter->getInsertionPoint(),
-                                    text->getHeight(),
-                                    100.0,
-                                    RS_MTextData::VABottom, RS_MTextData::HALeft,
-                                    RS_MTextData::LeftToRight, RS_MTextData::Exact,
-                                    1.0,
-                                    letter->getName(),
-                                    text->getStyle(),
-                                    letter->getAngle(),
-                                    RS2::Update));
+                                     text->getHeight(),
+                                     100.0,
+                                     RS_MTextData::VABottom, RS_MTextData::HALeft,
+                                     RS_MTextData::LeftToRight, RS_MTextData::Exact,
+                                     1.0,
+                                     letter->getName(),
+                                     text->getStyle(),
+                                     letter->getAngle(),
+                                     RS2::Update));
 
                     tl->setLayer(text->getLayer());
                     tl->setPen(text->getPen());
 
-					addList.push_back(tl);
+                    addList.push_back(tl);
                     tl->update();
                 }
             }
@@ -3546,39 +3534,39 @@ bool RS_Modification::explodeTextIntoLetters(RS_MText* text, std::vector<RS_Enti
 
 bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entity*>& addList) {
 
-	if (!text) {
+    if (text == nullptr) {
         return false;
     }
 
     if(text->isLocked() || ! text->isVisible()) return false;
 
     // iterate though letters:
-	for(auto e2: *text){
+    for(auto e2: *text){
 
-		if (!e2) {
+        if (e2 == nullptr) {
             break;
         }
 
         if (e2->rtti()==RS2::EntityInsert) {
 
-            RS_Insert* letter = (RS_Insert*)e2;
+            auto letter = dynamic_cast<RS_Insert *>(e2);
 
-            RS_Text* tl = new RS_Text(
-                        container,
-                        RS_TextData(letter->getInsertionPoint(),
-                                    letter->getInsertionPoint(),
-                                    text->getHeight(),
-                                    text->getWidthRel(), RS_TextData::VABaseline,
-                                    RS_TextData::HALeft, RS_TextData::None, /*text->getTextGeneration(),*/
-                                    letter->getName(),
-                                    text->getStyle(),
-                                    letter->getAngle(),
-                                    RS2::Update));
+            auto tl = new RS_Text(
+                container,
+                RS_TextData(letter->getInsertionPoint(),
+                            letter->getInsertionPoint(),
+                            text->getHeight(),
+                            text->getWidthRel(), RS_TextData::VABaseline,
+                            RS_TextData::HALeft, RS_TextData::None, /*text->getTextGeneration(),*/
+                            letter->getName(),
+                            text->getStyle(),
+                            letter->getAngle(),
+                            RS2::Update));
 
             tl->setLayer(text->getLayer());
             tl->setPen(text->getPen());
 
-			addList.push_back(tl);
+            addList.push_back(tl);
             tl->update();
         }
     }
@@ -3586,29 +3574,28 @@ bool RS_Modification::explodeTextIntoLetters(RS_Text* text, std::vector<RS_Entit
     return true;
 }
 
-
 /**
  * Moves all reference points of selected entities with the given data.
  */
 bool RS_Modification::moveRef(RS_MoveRefData& data) {
-	if (!container) {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::moveRef: no valid container");
         return false;
     }
     if(container->isLocked() || ! container->isVisible()) return false;
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
     // Create new entities
-	for(auto e: *container){
-		if (e && e->isSelected()) {
+    for(auto e: *container){
+        if (e != nullptr && e->isSelected()) {
             RS_Entity* ec = e->clone();
 
             ec->moveRef(data.ref, data.offset);
             // since 2.0.4.0: keep it selected
             ec->setSelected(true);
-			addList.push_back(ec);
+            addList.push_back(ec);
         }
     }
 
@@ -3618,5 +3605,3 @@ bool RS_Modification::moveRef(RS_MoveRefData& data) {
 
     return true;
 }
-
-// EOF

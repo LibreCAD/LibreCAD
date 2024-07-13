@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONMODIFYEXPLODETEXT_H
 #define RS_ACTIONMODIFYEXPLODETEXT_H
 
-#include "rs_previewactioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
 /**
  * This action class can handle user events for exploding blocks and
@@ -35,16 +35,17 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyExplodeText : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionModifyExplodeText : public LC_ActionPreSelectionAwareBase {
+Q_OBJECT
+
 public:
     RS_ActionModifyExplodeText(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyExplodeText() override;
-	
-	void init(int status=0) override;
-
-	void trigger() override;
+                               RS_GraphicView& graphicView);
+    ~RS_ActionModifyExplodeText() override;
+    void trigger() override;
+protected:
+    void updateMouseButtonHintsForSelection() override;
+    void selectionCompleted(bool singleEntity) override;
 };
 
 #endif

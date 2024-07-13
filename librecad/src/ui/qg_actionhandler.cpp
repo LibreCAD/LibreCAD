@@ -716,9 +716,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyAttributes(*document, *view);
             break;
         case RS2::ActionModifyDelete:
-            a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyDeleteNoSelect);
-            break;
-        case RS2::ActionModifyDeleteNoSelect:
             a = new RS_ActionModifyDelete(*document, *view);
             break;
         case RS2::ActionModifyDeleteQuick:
@@ -737,12 +734,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyMove(*document, *view);
             break;
         case RS2::ActionModifyRevertDirection:
-//		if(!document->countSelected()){
-//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRevertDirectionNoSelect);
-//			break;
-//		}
-//		// fall-through
-        case RS2::ActionModifyRevertDirectionNoSelect:
             a = new RS_ActionModifyRevertDirection(*document, *view);
             break;
         case RS2::ActionModifyRotate:
@@ -829,12 +820,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyOffset(*document, *view);
             break;
         case RS2::ActionModifyExplodeText:
-            if(!document->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
+          /*  if(!document->countSelected(false, {RS2::EntityText, RS2::EntityMText})){
                 a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyExplodeTextNoSelect);
                 break;
             }
             // fall-through
-        case RS2::ActionModifyExplodeTextNoSelect:
+*/
             a = new RS_ActionModifyExplodeText(*document, *view);
             break;
 
@@ -1047,16 +1038,8 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionBlocksCreate(*document, *view);
             break;
         case RS2::ActionBlocksExplode:
-//		if(!document->countSelected(true, {RS2::EntityBlock})){
-//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionBlocksExplodeNoSelect);
-//			break;
-//		}
-            // fall-through
-        case RS2::ActionBlocksExplodeNoSelect:
             a = new RS_ActionBlocksExplode(*document, *view);
             break;
-
-
             // library browser:
             //
         case RS2::ActionLibraryInsert:
@@ -1787,7 +1770,7 @@ void QG_ActionHandler::slotModifyDelete() {
 
 void QG_ActionHandler::slotModifyDeleteQuick() {
     //setCurrentAction(RS2::ActionModifyDeleteQuick);
-    setCurrentAction(RS2::ActionModifyDeleteNoSelect);
+    setCurrentAction(RS2::ActionModifyDelete);
 }
 
 void QG_ActionHandler::slotModifyDeleteFree() {

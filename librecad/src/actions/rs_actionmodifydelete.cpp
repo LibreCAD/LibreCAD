@@ -24,49 +24,34 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionmodifydelete.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Delete Entities",
-					container, graphicView) {
-	actionType=RS2::ActionModifyDelete;
-}
-
-void RS_ActionModifyDelete::init(int status) {
-    RS_ActionInterface::init(status);
-    trigger();
+RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer &container,RS_GraphicView& graphicView)
+    :LC_ActionPreSelectionAwareBase("Delete Entities",container, graphicView) {
+    actionType=RS2::ActionModifyDelete;
 }
 
 void RS_ActionModifyDelete::trigger() {
-
     RS_DEBUG->print("RS_ActionModifyDelete::trigger()");
-
     RS_Modification m(*container, graphicView);
     m.remove();
+}
 
-    finish(false);
-
+void RS_ActionModifyDelete::selectionCompleted(bool singleEntity) {
+    trigger();
+    if (singleEntity) {
+        deselectAll();
+    } else {
+        finish(false);
+    }
     updateSelectionWidget();
 }
 
-void RS_ActionModifyDelete::updateMouseButtonHints() {
-	switch (getStatus()) {
-	//case Acknowledge:
-	//    RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"),
-	//	tr("Cancel"));
-	//    break;
-	default:
-	 updateMouseWidget();
-		break;
-	}
+void RS_ActionModifyDelete::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to delete",LC_ModifiersInfo::CTRL("Delete immediately after selection"));
 }
 
 RS2::CursorType RS_ActionModifyDelete::doGetMouseCursor([[maybe_unused]] int status){

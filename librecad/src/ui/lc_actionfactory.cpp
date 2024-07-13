@@ -711,12 +711,12 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     action->setObjectName("ModifyDelete");
     a_map["ModifyDelete"] = action;
 
-    action = new QAction(tr("Delete Freehand"), agm->modify);
+   /* action = new QAction(tr("Delete Freehand"), agm->modify);
     action->setIcon(QIcon(":/icons/delete_freehand.svg"));
     connect(action, SIGNAL(triggered()),
     action_handler, SLOT(slotModifyDeleteFree()));
     action->setObjectName("ModifyDeleteFree");
-    a_map["ModifyDeleteFree"] = action;
+    a_map["ModifyDeleteFree"] = action;*/
 
     action = new QAction(tr("&Move / Copy"), agm->modify);
     action->setIcon(QIcon(":/icons/move_copy.svg"));

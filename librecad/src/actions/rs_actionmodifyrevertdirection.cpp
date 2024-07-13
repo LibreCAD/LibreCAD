@@ -28,10 +28,10 @@
 #include "rs_debug.h"
 #include "rs_document.h"
 #include "rs_modification.h"
-#include "rs_selection.h"
 
 RS_ActionModifyRevertDirection::RS_ActionModifyRevertDirection(RS_EntityContainer& container, RS_GraphicView& graphicView)
 	:LC_ActionPreSelectionAwareBase("Revert direction", container, graphicView,{}){
+    actionType = RS2::ActionModifyRevertDirection;
 }
 
 void RS_ActionModifyRevertDirection::trigger() {
@@ -51,13 +51,13 @@ void RS_ActionModifyRevertDirection::selectionCompleted(bool singleEntity) {
         deselectAll();
     }
     else{
-        finish(false);
+        setStatus(-1);
     }
     updateSelectionWidget();
 }
 
 void RS_ActionModifyRevertDirection::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to revert direction", LC_ModifiersInfo::CTRL("Revert after selection"));
+    updateMouseWidgetTRCancel("Select to revert direction", LC_ModifiersInfo::CTRL("Revert immediately after selection"));
 }
 
 bool RS_ActionModifyRevertDirection::isEntityAllowedToSelect(RS_Entity *ent) const {

@@ -27,15 +27,15 @@
 #ifndef RS_ACTIONMODIFYDELETE_H
 #define RS_ACTIONMODIFYDELETE_H
 
-#include "rs_actioninterface.h"
 
+#include "lc_actionpreselectionawarebase.h"
 
 /**
  * This action class can handle user events to delete entities.
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyDelete : public RS_ActionInterface {
+class RS_ActionModifyDelete : public LC_ActionPreSelectionAwareBase {
 	Q_OBJECT
 public:
     /**
@@ -48,12 +48,11 @@ public:
 public:
     RS_ActionModifyDelete(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
-
-	void init(int status=0) override;
-	void trigger() override;
-	void updateMouseButtonHints() override;
+    void trigger() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHintsForSelection() override;
+    void selectionCompleted(bool singleEntity) override;
 };
 
 #endif

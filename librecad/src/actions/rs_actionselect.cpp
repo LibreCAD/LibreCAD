@@ -78,9 +78,6 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionOrderNoSelect:
             updateMouseWidgetTRCancel("Select entities to order");
             break;
-        case RS2::ActionModifyDeleteNoSelect:
-            updateMouseWidgetTRCancel("Select to delete");
-            break;
         case RS2::ActionModifyDeleteQuick:
             updateMouseWidgetTRCancel("Select to delete immediately");
             break;
@@ -92,9 +89,6 @@ void RS_ActionSelect::updateMouseButtonHints() {
             break;
         case RS2::ActionEditCutNoSelect:
             updateMouseWidgetTRCancel("Select to cut");
-            break;
-        case RS2::ActionModifyRevertDirectionNoSelect:
-            updateMouseWidgetTRCancel("Select to revert direction");
             break;
         case RS2::ActionModifyRotateNoSelect:
             updateMouseWidgetTRCancel("Select to rotate");
@@ -113,12 +107,6 @@ void RS_ActionSelect::updateMouseButtonHints() {
             break;
         case RS2::ActionModifyRotate2NoSelect:
             updateMouseWidgetTRCancel("Select for two axis rotation");
-            break;
-        case RS2::ActionModifyExplodeTextNoSelect:
-            updateMouseWidgetTRCancel("Select to explode text");
-            break;
-        case RS2::ActionBlocksExplodeNoSelect:
-            updateMouseWidgetTRCancel("Select to explode block");
             break;
         case RS2::ActionBlocksCreateNoSelect:
             updateMouseWidgetTRCancel("Select to create block");

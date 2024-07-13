@@ -197,7 +197,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["ModifyAttributes"]
             << a_map["ModifyExplodeText"]
             << a_map["BlocksExplode"]
-            << a_map["ModifyDeleteQuick"];
+            << a_map["ModifyDelete"];
+//            << a_map["ModifyDeleteFree"]
+//            << a_map["ModifyDeleteQuick"];
 
     order_actions
             << a_map["OrderTop"]

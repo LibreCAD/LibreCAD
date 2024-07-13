@@ -334,7 +334,6 @@ namespace RS2 {
         ActionModifyAttributes,
         ActionModifyAttributesNoSelect,
         ActionModifyDelete,
-        ActionModifyDeleteNoSelect,
         ActionModifyDeleteQuick,
         ActionModifyDeleteFree,
         ActionModifyMove,
@@ -347,8 +346,7 @@ namespace RS2 {
         ActionModifyMirrorNoSelect,
         ActionModifyMoveRotate,
         ActionModifyMoveRotateNoSelect,
-		ActionModifyRevertDirection,
-		ActionModifyRevertDirectionNoSelect,
+        ActionModifyRevertDirection,
         ActionModifyRotate2,
         ActionModifyRotate2NoSelect,
         ActionModifyEntity,
@@ -423,12 +421,9 @@ namespace RS2 {
         ActionBlocksCreate,
         ActionBlocksCreateNoSelect,
         ActionBlocksExplode,
-        ActionBlocksExplodeNoSelect,
         ActionBlocksImport,
 
         ActionModifyExplodeText,
-        ActionModifyExplodeTextNoSelect,
-
         ActionLibraryInsert,
 
         ActionOptionsGeneral,

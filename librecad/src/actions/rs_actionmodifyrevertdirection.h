@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONMODIFYREVERTDIRECTION_H
 #define RS_ACTIONMODIFYREVERTDIRECTION_H
 
-#include "rs_actioninterface.h"
 #include "lc_actionpreselectionawarebase.h"
 
 

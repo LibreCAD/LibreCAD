@@ -35,29 +35,30 @@
  */
 RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Blocks Explode",
-                           container, graphicView) {
+        :LC_ActionPreSelectionAwareBase("Explode Text",
+                           container, graphicView, {RS2::EntityMText, RS2::EntityText}) {
 	actionType=RS2::ActionModifyExplodeText;
 }
 
-
-
 RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
-
-void RS_ActionModifyExplodeText::init(int status) {
-    RS_PreviewActionInterface::init(status);
-
+void RS_ActionModifyExplodeText::selectionCompleted(bool singleEntity) {
     trigger();
-    finish(false);
+    if (singleEntity){
+        deselectAll();
+    }
+    else{
+        setStatus(-1);
+        finish(true);
+    }
+    updateSelectionWidget();
 }
-
-
 
 void RS_ActionModifyExplodeText::trigger() {
     RS_Modification m(*container, graphicView);
     m.explodeTextIntoLetters();
 }
 
-
-// EOF
+void RS_ActionModifyExplodeText::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to explode text", LC_ModifiersInfo::CTRL("Explode immediately after selection"));
+}
