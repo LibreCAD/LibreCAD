@@ -38,14 +38,9 @@
 RS_ActionModifyAttributes::RS_ActionModifyAttributes(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_ActionInterface("Change Attributes",
+        :LC_ActionPreSelectionAwareBase("Change Attributes",
 					container, graphicView) {
-	actionType=RS2::ActionModifyAttributes;
-}
-
-void RS_ActionModifyAttributes::init(int status) {
-    RS_ActionInterface::init(status);
-    trigger();
+	 actionType=RS2::ActionModifyAttributes;
 }
 
 void RS_ActionModifyAttributes::trigger() {
@@ -67,26 +62,9 @@ void RS_ActionModifyAttributes::trigger() {
             m.changeAttributes(data);
         }
     }
-
-    graphicView->killSelectActions();
-
-    updateSelectionWidget();
-    finish(false);
+//    graphicView->killSelectActions();
 }
 
-void RS_ActionModifyAttributes::updateMouseButtonHints() {
-    switch (getStatus()) {
-        //case Acknowledge:
-        //RS_DIALOGFACTORY->updateMouseWidget(tr("Acknowledge"), tr("Cancel"));
-        //break;
-    default:
-        updateMouseWidget();
-        break;
-    }
+void RS_ActionModifyAttributes::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to modify attributes", LC_ModifiersInfo::CTRL("Modify attributes immediately after selecting"));
 }
-
-RS2::CursorType RS_ActionModifyAttributes::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::DelCursor;
-}
-
-// EOF

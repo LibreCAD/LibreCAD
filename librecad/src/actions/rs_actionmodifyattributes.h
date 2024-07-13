@@ -27,8 +27,7 @@
 #ifndef RS_ACTIONMODIFYATTRIBUTES_H
 #define RS_ACTIONMODIFYATTRIBUTES_H
 
-#include "rs_actioninterface.h"
-
+#include "lc_actionpreselectionawarebase.h"
 
 /**
  * This action class can handle user events to change the attributes of
@@ -36,8 +35,9 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyAttributes : public RS_ActionInterface {
-	Q_OBJECT
+class RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
+Q_OBJECT
+
 public:
     /**
      * Action States.
@@ -45,16 +45,12 @@ public:
     enum Status {
         Acknowledge    /**< Acknowledge or cancel. */
     };
-
 public:
     RS_ActionModifyAttributes(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-
-	void init(int status=0) override;
-	void trigger() override;
-	void updateMouseButtonHints() override;
+                              RS_GraphicView& graphicView);
+    void trigger() override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHintsForSelection() override;
 };
 
 #endif

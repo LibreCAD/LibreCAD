@@ -332,7 +332,6 @@ namespace RS2 {
         ActionDimLeader,
 
         ActionModifyAttributes,
-        ActionModifyAttributesNoSelect,
         ActionModifyDelete,
         ActionModifyDeleteQuick,
         ActionModifyDeleteFree,

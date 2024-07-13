@@ -37,7 +37,7 @@
 
 RS_ActionModifyEntity::RS_ActionModifyEntity(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-		:RS_ActionInterface("Modify Entity", container, graphicView)
+		:RS_PreviewActionInterface("Modify Entity", container, graphicView)
 		,en(nullptr){
 	actionType=RS2::ActionModifyEntity;
 }
@@ -66,20 +66,15 @@ void RS_ActionModifyEntity::trigger() {
         if (RS_DIALOGFACTORY->requestModifyEntityDialog(clone.get())) {
             container->addEntity(clone.get());
 
-            graphicView->deleteEntity(en);
             en->setSelected(false);
 
             clone->setSelected(false);
             graphicView->drawEntity(clone.get());
 
-            // fixme - replace by method
             if (document) {
                 document->startUndoCycle();
-
                 document->addUndoable(clone.get());
-                en->setUndoState(true);
-                document->addUndoable(en);
-
+                deleteEntityUndoable(en);
                 document->endUndoCycle();
             }
 
@@ -99,9 +94,20 @@ void RS_ActionModifyEntity::trigger() {
     }
 }
 
+void RS_ActionModifyEntity::mouseMoveEvent(QMouseEvent *e) {
+    RS_Entity* entity = catchEntity(e);
+    deleteHighlights();
+    if (entity != nullptr){
+        highlightHoverWithRefPoints(entity, true);
+    }
+    drawHighlights();
+}
+
 void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
     en = catchEntity(e);
-    trigger();
+    if (en != nullptr) {
+        trigger();
+    }
 }
 
 void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {

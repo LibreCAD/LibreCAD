@@ -27,7 +27,7 @@
 #ifndef RS_ACTIONMODIFYENTITY_H
 #define RS_ACTIONMODIFYENTITY_H
 
-#include "rs_actioninterface.h"
+#include "rs_previewactioninterface.h"
 
 class RS_Entity;
 
@@ -36,7 +36,7 @@ class RS_Entity;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyEntity : public RS_ActionInterface {
+class RS_ActionModifyEntity : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
     RS_ActionModifyEntity(RS_EntityContainer& container,
@@ -49,6 +49,9 @@ public:
     }
     // display the entity as selected
     void setDisplaySelected(bool selected);
+
+    void mouseMoveEvent(QMouseEvent *event) override;
+
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;

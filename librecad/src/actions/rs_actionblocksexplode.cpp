@@ -37,16 +37,6 @@ RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
 	actionType=RS2::ActionBlocksExplode;
 }
 
-void RS_ActionBlocksExplode::selectionCompleted(bool singleEntity) {
-    trigger();
-    if (singleEntity){
-        deselectAll();
-    }
-    else{
-       finish(false);
-    }
-    updateSelectionWidget();
-}
 
 void RS_ActionBlocksExplode::trigger() {
     RS_Modification m(*container, graphicView);

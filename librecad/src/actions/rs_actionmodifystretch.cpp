@@ -34,6 +34,7 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "lc_modifystretchoptions.h"
 
 struct RS_ActionModifyStretch::Points {
 	RS_Vector firstCorner;
@@ -46,13 +47,12 @@ RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 											   RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Stretch Entities",
 							   container, graphicView)
-	, pPoints(std::make_unique<Points>())
-{
+	, pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyStretch;
 }
 
 void RS_ActionModifyStretch::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 }
 
 RS_ActionModifyStretch::~RS_ActionModifyStretch() = default;
@@ -66,9 +66,13 @@ void RS_ActionModifyStretch::trigger(){
     RS_Modification m(*container, graphicView);
     m.stretch(pPoints->firstCorner,
               pPoints->secondCorner,
-              pPoints->targetPoint - pPoints->referencePoint);
-
-    setStatus(SetFirstCorner);
+              pPoints->targetPoint - pPoints->referencePoint, removeOriginals);
+    if (removeOriginals) {
+        setStatus(SetFirstCorner);
+    }
+    else{
+        setStatus(SetTargetPoint);
+    }
 
     updateSelectionWidget();
 }
@@ -78,35 +82,42 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
 
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-        case SetFirstCorner:
+        case SetFirstCorner:{
             break;
-
-        case SetSecondCorner:
-            if (pPoints->firstCorner.valid){
+        }
+        case SetSecondCorner: {
+            if (pPoints->firstCorner.valid) {
                 pPoints->secondCorner = snapPoint(e);
                 deletePreview();
-                preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
+                previewStretchRect(false);
                 drawPreview();
             }
             break;
-
-        case SetReferencePoint:
+        }
+        case SetReferencePoint: {
+            deletePreview();
+            previewStretchRect(true);
             trySnapToRelZeroCoordinateEvent(e);
+            drawPreview();
             break;
-
-        case SetTargetPoint:
-            if (pPoints->referencePoint.valid){
+        }
+        case SetTargetPoint: {
+            if (pPoints->referencePoint.valid) {
+                deletePreview();
+                mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
 
-                deletePreview();
                 preview->addStretchablesFrom(*container, pPoints->firstCorner, pPoints->secondCorner);
                 //preview->move(targetPoint-referencePoint);
                 preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
                                  pPoints->targetPoint - pPoints->referencePoint);
+                previewRefPoint(pPoints->referencePoint);
+                previewRefSelectablePoint(pPoints->targetPoint);
+                previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
                 drawPreview();
             }
             break;
-
+        }
         default:
             break;
     }
@@ -114,47 +125,74 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyStretch::mouseMoveEvent end");
 }
 
-void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
-    fireCoordinateEventForSnap(e);
+void RS_ActionModifyStretch::previewStretchRect(bool selected) {
+    if (showRefEntitiesOnPreview){
+        RS_Vector v0 = pPoints->firstCorner;
+        RS_Vector v1 = pPoints->secondCorner;
+        previewRefLine(v0, {v1.x, v0.y});
+        previewRefLine({v1.x, v0.y}, v1);
+        previewRefLine(v1, {v0.x, v1.y});
+        previewRefLine({v0.x, v1.y}, v0);
+        previewRefPoint(v0);
+        if (selected){
+            previewRefPoint(v1);
+        }
+        else{
+            previewRefSelectablePoint(v1);
+        }
+    }
+    else{
+        preview->addRectangle(pPoints->firstCorner, pPoints->secondCorner);
+    }
 }
 
+void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    if (status == SetTargetPoint){
+        RS_Vector mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, snapPoint(e));
+        fireCoordinateEvent(mouse);
+    }
+    else {
+        fireCoordinateEventForSnap(e);
+    }
+}
+// fixme - default back - remove as well as from other actions
 void RS_ActionModifyStretch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     init(status - 1);
 }
 
 void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == NULL){
+    if (e == nullptr){
         return;
     }
 
     RS_Vector mouse = e->getCoordinate();
 
     switch (getStatus()) {
-        case SetFirstCorner:
+        case SetFirstCorner: {
             pPoints->firstCorner = mouse;
             setStatus(SetSecondCorner);
             break;
-
-        case SetSecondCorner:
+        }
+        case SetSecondCorner: {
             pPoints->secondCorner = mouse;
             deletePreview();
             setStatus(SetReferencePoint);
             break;
-
-        case SetReferencePoint:
+        }
+        case SetReferencePoint: {
             pPoints->referencePoint = mouse;
             moveRelativeZero(pPoints->referencePoint);
             setStatus(SetTargetPoint);
             break;
-
-        case SetTargetPoint:
+        }
+        case SetTargetPoint: {
             pPoints->targetPoint = mouse;
             moveRelativeZero(pPoints->targetPoint);
             trigger();
             //finish();
             break;
-
+        }
         default:
             break;
     }
@@ -172,7 +210,7 @@ void RS_ActionModifyStretch::updateMouseButtonHints(){
             updateMouseWidgetTRBack("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point");
+            updateMouseWidgetTRBack("Specify target point", MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();
@@ -181,4 +219,8 @@ void RS_ActionModifyStretch::updateMouseButtonHints(){
 }
 RS2::CursorType RS_ActionModifyStretch::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
+}
+
+void RS_ActionModifyStretch::createOptionsWidget() {
+    m_optionWidget = std::make_unique<LC_ModifyStretchOptions>();
 }

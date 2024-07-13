@@ -44,9 +44,7 @@ public:
     void trigger() override;
 protected:
     void updateMouseButtonHintsForSelection() override;
-    void selectionCompleted(bool singleEntity) override;
     bool isEntityAllowedToSelect(RS_Entity *ent) const override;
-
     bool isShowRefPointsOnHighlight() override;
 };
 

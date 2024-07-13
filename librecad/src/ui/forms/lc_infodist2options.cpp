@@ -3,8 +3,7 @@
 
 LC_InfoDist2Options::LC_InfoDist2Options(QWidget *parent)
     : LC_ActionOptionsWidget(parent)
-    , ui(new Ui::LC_InfoDist2Options)
-{
+    , ui(new Ui::LC_InfoDist2Options){
     ui->setupUi(this);
     connect(ui->cbOnEntity, &QCheckBox::clicked, this, &LC_InfoDist2Options::onOnEntityClicked);
 }
@@ -17,14 +16,13 @@ LC_InfoDist2Options::~LC_InfoDist2Options(){
 void LC_InfoDist2Options::doSetAction(RS_ActionInterface *a, bool update){
     action = dynamic_cast<RS_ActionInfoDist2 *>(a);
 
-    bool onEntity = true;
+    bool onEntity;
     if (update){
         onEntity = action->isUseNearestPointOnEntity();
     } else {
         onEntity = loadBool("NearestIsOnEntity", true);
     }
     setOnEntitySnapToActionAndView(onEntity);
-
 }
 
 QString LC_InfoDist2Options::getSettingsOptionNamePrefix(){

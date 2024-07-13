@@ -45,7 +45,6 @@ public:
     void trigger() override;
 protected:
     void updateMouseButtonHintsForSelection() override;
-    void selectionCompleted(bool singleEntity) override;
 };
 
 #endif

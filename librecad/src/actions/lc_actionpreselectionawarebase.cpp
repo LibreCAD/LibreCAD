@@ -68,7 +68,16 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity) {}
+void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity) {
+    trigger();
+    if (singleEntity){
+        deselectAll();
+    }
+    else{
+        setStatus(-1);
+    }
+    updateSelectionWidget();
+}
 
 void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
     updateMouseWidget();

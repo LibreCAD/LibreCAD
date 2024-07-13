@@ -42,18 +42,6 @@ RS_ActionModifyExplodeText::RS_ActionModifyExplodeText(RS_EntityContainer& conta
 
 RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
-void RS_ActionModifyExplodeText::selectionCompleted(bool singleEntity) {
-    trigger();
-    if (singleEntity){
-        deselectAll();
-    }
-    else{
-        setStatus(-1);
-        finish(true);
-    }
-    updateSelectionWidget();
-}
-
 void RS_ActionModifyExplodeText::trigger() {
     RS_Modification m(*container, graphicView);
     m.explodeTextIntoLetters();

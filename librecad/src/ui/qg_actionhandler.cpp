@@ -705,14 +705,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new LC_ActionModifyLineGap(*document, *view);
             break;
         }
-
         case RS2::ActionModifyAttributes:
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyAttributesNoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionModifyAttributesNoSelect:
             a = new RS_ActionModifyAttributes(*document, *view);
             break;
         case RS2::ActionModifyDelete:

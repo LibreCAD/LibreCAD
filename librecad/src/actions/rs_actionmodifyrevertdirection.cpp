@@ -45,17 +45,6 @@ bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {
     return true;
 }
 
-void RS_ActionModifyRevertDirection::selectionCompleted(bool singleEntity) {
-    trigger();
-    if (singleEntity){
-        deselectAll();
-    }
-    else{
-        setStatus(-1);
-    }
-    updateSelectionWidget();
-}
-
 void RS_ActionModifyRevertDirection::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select to revert direction", LC_ModifiersInfo::CTRL("Revert immediately after selection"));
 }

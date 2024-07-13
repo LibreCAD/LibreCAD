@@ -315,16 +315,14 @@ void RS_Modification::revertDirection() {
 /**
  * Changes the attributes of all selected
  */
-bool RS_Modification::changeAttributes(RS_AttributesData& data)
-{
+bool RS_Modification::changeAttributes(RS_AttributesData& data){
     return changeAttributes(data, container);
 }
 
 bool RS_Modification::changeAttributes(
     RS_AttributesData& data,
-    RS_EntityContainer* cont)
-{
-    if (!cont) {
+    RS_EntityContainer* cont){
+    if (cont == nullptr) {
         return false;
     }
 
@@ -332,51 +330,53 @@ bool RS_Modification::changeAttributes(
     QList<RS_Entity*> clones;
     QSet<RS_Block*> blocks;
 
+    // todo - all entities cycle for retrieveing selected entities - most probably we should have separate container for selected entities for efficiency
+    // fixme - better selection support via separate container
     for (auto en: *cont) {
-        if (!en) continue;
-        if (!en->isSelected()) continue;
+        if (en != nullptr &&  en->isSelected()) {
 
-        if (data.applyBlockDeep && en->rtti() == RS2::EntityInsert) {
-            RS_Block* bl = static_cast<RS_Insert*>(en)->getBlockForInsert();
-            blocks << bl;
+            if (data.applyBlockDeep && en->rtti() == RS2::EntityInsert) {
+                RS_Block *bl = dynamic_cast<RS_Insert *>(en)->getBlockForInsert();
+                blocks << bl;
+            }
+
+            RS_Entity *cl = en->clone();
+            RS_Pen pen = cl->getPen(false);
+
+            if (data.changeLayer) {
+                cl->setLayer(data.layer);
+            }
+
+            if (data.changeColor) {
+                pen.setColor(data.pen.getColor());
+            }
+            if (data.changeLineType) {
+                pen.setLineType(data.pen.getLineType());
+            }
+            if (data.changeWidth) {
+                pen.setWidth(data.pen.getWidth());
+            }
+            cl->setPen(pen);
+
+            if (graphicView) {
+                graphicView->deleteEntity(en);
+            }
+
+            en->setSelected(false);
+            cl->setSelected(false);
+
+            clones << cl;
+
+            if (graphic != nullptr) {
+                en->setUndoState(true);
+                graphic->addUndoable(en);
+            }
         }
-
-        RS_Entity* cl = en->clone();
-        RS_Pen pen = cl->getPen(false);
-
-        if (data.changeLayer==true) {
-            cl->setLayer(data.layer);
-        }
-
-        if (data.changeColor==true) {
-            pen.setColor(data.pen.getColor());
-        }
-        if (data.changeLineType==true) {
-            pen.setLineType(data.pen.getLineType());
-        }
-        if (data.changeWidth==true) {
-            pen.setWidth(data.pen.getWidth());
-        }
-        cl->setPen(pen);
-
-        if (graphicView) {
-            graphicView->deleteEntity(en);
-        }
-
-        en->setSelected(false);
-        cl->setSelected(false);
-
-        clones << cl;
-
-        if (!graphic) continue;
-
-        en->setUndoState(true);
-        graphic->addUndoable(en);
     }
 
     for (auto bl: blocks.values()) {
         for (auto en: *bl) {
-            if (!en) continue;
+            if (en == nullptr) continue;
             en->setSelected(true);
         }
         changeAttributes(data, (RS_EntityContainer*)bl);
@@ -385,16 +385,16 @@ bool RS_Modification::changeAttributes(
     for (auto cl: clones) {
         cont->addEntity(cl);
 
-        if (graphicView) {;
+        if (graphicView != nullptr) {;
             graphicView->drawEntity(cl);
         }
 
-        if (graphic) {
+        if (graphic != nullptr) {
             graphic->addUndoable(cl);
         }
     }
 
-    if (graphic) {
+    if (graphic != nullptr) {
         graphic->updateInserts();
     }
 
@@ -2259,8 +2259,7 @@ void RS_Modification::deselectOriginals(bool remove)
 
             if (selected) {
                 e->setSelected(false);
-                if (remove
-                   ) {
+                if (remove) {
                     //if (graphicView) {
                     //    graphicView->deleteEntity(e);
                     //}
@@ -2702,7 +2701,8 @@ bool RS_Modification::cut(const RS_Vector& cutCoord,
  */
 bool RS_Modification::stretch(const RS_Vector& firstCorner,
                               const RS_Vector& secondCorner,
-                              const RS_Vector& offset) {
+                              const RS_Vector& offset,
+                              bool removeOriginals) {
 
     if (!offset.valid) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -2710,27 +2710,29 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
-	// Create new entities
-	for(auto e: *container){
-		if (e &&
-                e->isVisible() &&
-                !e->isLocked() ) {
+// Create new entities
+    for(auto e: *container){
+        if (e &&
+            e->isVisible() &&
+            !e->isLocked() ) {
 //            &&
             if (  (e->isInWindow(firstCorner, secondCorner) ||
-                    e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
+                   e->hasEndpointsWithinWindow(firstCorner, secondCorner))) {
 
                 RS_Entity* ec = e->clone();
                 ec->stretch(firstCorner, secondCorner, offset);
-				addList.push_back(ec);
+                addList.push_back(ec);
                 e->setSelected(true);
             }
         }
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(true);
+    if (removeOriginals) { // todo - so far, it seems better to stay with
+        deselectOriginals(true);
+    }
     addNewEntities(addList);
 
     return true;

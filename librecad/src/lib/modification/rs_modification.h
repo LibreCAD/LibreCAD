@@ -296,7 +296,8 @@ public:
     bool stretch(
         const RS_Vector &firstCorner,
         const RS_Vector &secondCorner,
-        const RS_Vector &offset);
+        const RS_Vector &offset,
+        bool removeOriginals);
     LC_BevelResult* bevel(
         const RS_Vector &coord1, RS_AtomicEntity *entity1,
         const RS_Vector &coord2, RS_AtomicEntity *entity2,

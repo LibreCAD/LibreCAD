@@ -72,9 +72,6 @@ int RS_ActionSelect::countSelected(){
 
 void RS_ActionSelect::updateMouseButtonHints() {
     switch(nextAction) {
-        case RS2::ActionModifyAttributesNoSelect:
-            updateMouseWidgetTRCancel("Select to modify attributes");
-            break;
         case RS2::ActionOrderNoSelect:
             updateMouseWidgetTRCancel("Select entities to order");
             break;
