@@ -253,7 +253,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../list/list.cpp" line="169"/>
         <source>OVERLAYBOX</source>
-        <translation type="unfinished"></translation>
+        <translation>กล่องซ้อนทับ</translation>
     </message>
     <message>
         <location filename="../list/list.cpp" line="172"/>
@@ -467,7 +467,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>Space in Columns</source>
-        <translation type="unfinished"></translation>
+        <translation>จัดคอลัมน์ด้วยช่องว่าง</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
@@ -512,22 +512,22 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Point Elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>ระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="248"/>
         <source>Draw point elevation</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดป้ายระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Point Code</source>
-        <translation type="unfinished"></translation>
+        <translation>ชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="249"/>
         <source>Draw point code</source>
-        <translation type="unfinished"></translation>
+        <translation>วาดชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="263"/>
@@ -547,57 +547,57 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="305"/>
         <source>Point 2D layer is empty</source>
-        <translation>ชั้นงานจุด 2 มิติว่างเปล่า</translation>
+        <translation>ไม่ได้ป้อนชั้นงานจุด 2 มิติ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="308"/>
         <source>Point 3D layer is empty</source>
-        <translation>ชั้นงานจุด 3 มิติว่างเปล่า</translation>
+        <translation>ไม่ได้ป้อนชั้นงานจุด 3 มิติ</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="311"/>
         <source>Point elevation layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนชั้นงานของป้ายระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="312"/>
         <source>Point elevation height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนความสูงของป้ายระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="313"/>
         <source>Point elevation separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนช่องไฟของป้ายระดับความสูงของจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="316"/>
         <source>Point number layer is empty</source>
-        <translation>ชั้นงานของหมายเลขประจำจุดว่างเปล่า</translation>
+        <translation>ไม่ได้ป้อนชั้นงานของหมายเลขประจำจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="317"/>
         <source>Point number height is empty</source>
-        <translation>ความสูงของหมายเลขประจำจุดว่างเปล่า</translation>
+        <translation>ไม่ได้ป้อนความสูงของหมายเลขประจำจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="318"/>
         <source>Point number separation is empty</source>
-        <translation>ช่องไฟของหมายเลขประจำจุดว่างเปล่า</translation>
+        <translation>ไม่ได้ป้อนช่องไฟของหมายเลขประจำจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="321"/>
         <source>Point code layer is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนชั้นงานของชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="322"/>
         <source>Point code height is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนความสูงของชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="323"/>
         <source>Point code separation is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>ไม่ได้ป้อนช่องไฟของชื่อจุด</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="359"/>
