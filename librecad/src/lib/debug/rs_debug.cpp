@@ -43,7 +43,7 @@ FILE *s_logStream = nullptr;
 // The implementation to delegate methods to QTextStream
 struct RS_Debug::LogStream::StreamImpl : public QTextStream {
     StreamImpl(RS_Debug::RS_DebugLevel level) :
-#if QT_VERSION >= QT_CHECK_VERSION(6, 0, 0)
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
         QTextStream{&m_string, QBaseIODevice::WriteOnly}
 #else
         QTextStream{&m_string, QIODevice::WriteOnly}
