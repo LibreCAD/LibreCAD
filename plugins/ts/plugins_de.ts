@@ -616,7 +616,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
         <location filename="../divide/divide.cpp" line="35"/>
         <location filename="../divide/divide.cpp" line="42"/>
         <source>Divide</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen</translation>
     </message>
     <message>
         <location filename="../divide/divide.cpp" line="56"/>
@@ -788,7 +788,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="48"/>
         <source>Divide - </source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen - </translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="69"/>
@@ -808,7 +808,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="85"/>
         <source>Divide at</source>
-        <translation type="unfinished"></translation>
+        <translation>Teilen bei</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="92"/>
@@ -818,7 +818,7 @@ erste Basis, zweite Basis, erstes Ziel, zweites Ziel.</translation>
     <message>
         <location filename="../divide/dividedlg.cpp" line="115"/>
         <source>places</source>
-        <translation type="unfinished"></translation>
+        <translation>Orte</translation>
     </message>
     <message>
         <location filename="../divide/dividedlg.cpp" line="126"/>
