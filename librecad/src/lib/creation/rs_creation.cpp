@@ -1005,7 +1005,7 @@ RS_Block* RS_Creation::createBlock(const RS_BlockData* data,
     }
 
     // copy entities into a block
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - iterating all entities for selection
         //for (unsigned i=0; i<container->count(); ++i) {
         //RS_Entity* e = container->entityAt(i);
 

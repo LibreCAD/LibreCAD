@@ -279,7 +279,7 @@ public:
 
 public:
     void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
-    bool move(RS_MoveData &data);
+    bool move(RS_MoveData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
     bool rotate(RS_RotateData &data);
     bool scale(RS_ScaleData &data);
     bool mirror(RS_MirrorData &data);

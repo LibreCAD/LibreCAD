@@ -273,6 +273,7 @@ HEADERS += \
     ui/forms/lc_infodist2options.h \
     ui/forms/lc_modifymirroroptions.h \
     ui/forms/lc_modifystretchoptions.h \
+    ui/forms/lc_moveoptions.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
     ui/forms/lc_linepointsoptions.h \
@@ -449,6 +450,7 @@ SOURCES += \
     ui/forms/lc_infodist2options.cpp \
     ui/forms/lc_modifymirroroptions.cpp \
     ui/forms/lc_modifystretchoptions.cpp \
+    ui/forms/lc_moveoptions.cpp \
     ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
     ui/forms/lc_linepointsoptions.cpp \
@@ -1004,6 +1006,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_modifygapoptions.ui \
     ui/forms/lc_modifymirroroptions.ui \
     ui/forms/lc_modifystretchoptions.ui \
+    ui/forms/lc_moveoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \

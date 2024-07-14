@@ -718,12 +718,12 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyDeleteFree(*document, *view);
             break;
         case RS2::ActionModifyMove:
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveNoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionModifyMoveNoSelect:
+//            if(!document->countSelected()){
+//                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveNoSelect);
+//                break;
+//            }
+//            // fall-through
+//        case RS2::ActionModifyMoveNoSelect:
             a = new RS_ActionModifyMove(*document, *view);
             break;
         case RS2::ActionModifyRevertDirection:

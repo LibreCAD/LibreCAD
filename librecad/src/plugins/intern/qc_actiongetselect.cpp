@@ -106,7 +106,7 @@ void QC_ActionGetSelect::getSelected(QList<Plug_Entity *> *se, Doc_plugin_interf
 }
 
 void QC_ActionGetSelect::unselectEntities(){
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - iterating all entities for selection
 
         if (e->isSelected()) {
             e->setSelected(false);

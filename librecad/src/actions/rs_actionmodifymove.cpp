@@ -36,6 +36,7 @@
 #include "rs_line.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "lc_moveoptions.h"
 
 
 struct RS_ActionModifyMove::Points {
@@ -46,7 +47,7 @@ struct RS_ActionModifyMove::Points {
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Move Entities",
+        :LC_ActionPreSelectionAwareBase("Move Entities",
 						   container, graphicView)
 		, pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyMove;
@@ -55,7 +56,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
 
-// fixme - selection of entities as part of action
+
 // fixme - options widget
 // fixme - get rid of options dialog?
 // fixme - multiple copies on preview support (for consistency with other actions)
@@ -70,7 +71,7 @@ void RS_ActionModifyMove::trigger(){
     finish(false);
 }
 
-void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
+void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent begin");
 
     RS_Vector mouse = snapPoint(e);
@@ -87,8 +88,15 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
                 mouse = getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
 
-                preview->addSelectionFrom(*container);
-                preview->move(pPoints->targetPoint - pPoints->referencePoint);
+              /*  preview->addSelectionFrom(*container);
+                preview->move(pPoints->targetPoint - pPoints->referencePoint);*/
+
+                RS_Modification m(*container, graphicView, false);
+
+                RS_MoveData data = pPoints->data;
+                data.number = 2;
+                data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                m.move(data, true, preview.get());
 
                 if (isShift(e)){
                     previewLine(pPoints->referencePoint, mouse);
@@ -110,7 +118,7 @@ void RS_ActionModifyMove::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyMove::mouseMoveEvent end");
 }
 
-void RS_ActionModifyMove::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     if (status == SetTargetPoint){
         snapped = getSnapAngleAwarePoint(e, pPoints->referencePoint, snapped);
@@ -118,9 +126,19 @@ void RS_ActionModifyMove::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
     deletePreview();
-    init(status - 1);
+    if (status == SetReferencePoint){
+        if (selectionComplete) {
+            selectionComplete = false;
+        }
+        else{
+            init(status - 1);
+        }
+    }
+    else{
+        init(status - 1);
+    }
 }
 
 void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
@@ -141,7 +159,7 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
         case SetTargetPoint: {
             pPoints->targetPoint = pos;
             moveRelativeZero(pPoints->targetPoint);
-            setStatus(ShowDialog);
+            setStatus(ShowDialog); // todo - hm... what for?
             if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
                 if (pPoints->data.number < 0){
                     pPoints->data.number = abs(pPoints->data.number);
@@ -150,6 +168,9 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
                 pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
                 trigger();
             }
+            else{
+                setStatus(SetTargetPoint);
+            }
             break;
         }
         default:
@@ -157,12 +178,8 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionModifyMove::updateMouseButtonHints(){
-    switch (getStatus()) {
-/*case Select:
-  RS_DIALOGFACTORY->updateMouseWidget(tr("Pick entities to move"),
-            tr("Cancel"));
-  break;*/
+void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
+    switch (status) {
         case SetReferencePoint:
             updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
             break;
@@ -174,6 +191,29 @@ void RS_ActionModifyMove::updateMouseButtonHints(){
             break;
     }
 }
-RS2::CursorType RS_ActionModifyMove::doGetMouseCursor([[maybe_unused]] int status){
+
+void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to move", LC_ModifiersInfo::CTRL("Move immediately after selection"));
+}
+
+void RS_ActionModifyMove::selectionCompleted(bool singleEntity) {
+    setSelectionComplete(isAllowTriggerOnEmptySelection());
+    updateMouseButtonHints();
+//    if (selectionComplete) {
+//        trigger();
+//        if (singleEntity) {
+//            deselectAll();
+//        } else {
+//            setStatus(-1);
+//        }
+//        updateSelectionWidget();
+//    }
+}
+
+RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected(int status) {
     return RS2::CadCursor;
+}
+
+void RS_ActionModifyMove::createOptionsWidget() {
+    m_optionWidget = std::make_unique<LC_MoveOptions>();
 }

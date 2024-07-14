@@ -78,9 +78,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionModifyDeleteQuick:
             updateMouseWidgetTRCancel("Select to delete immediately");
             break;
-        case RS2::ActionModifyMoveNoSelect:
-            updateMouseWidgetTRCancel("Select to move");
-            break;
+//        case RS2::ActionModifyMoveNoSelect:
+//            updateMouseWidgetTRCancel("Select to move");
+//            break;
         case RS2::ActionEditCopyNoSelect:
             updateMouseWidgetTRCancel("Select to copy");
             break;

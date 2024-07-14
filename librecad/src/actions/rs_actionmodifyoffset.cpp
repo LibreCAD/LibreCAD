@@ -205,5 +205,5 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select lines, polylines, circles or arcs to create offset");
+    updateMouseWidgetTRCancel("Select lines, polylines, circles or arcs to create offset",LC_ModifiersInfo::CTRL("Offset immediately after selection"));
 }

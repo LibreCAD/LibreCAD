@@ -55,7 +55,7 @@ void RS_ActionOrder::trigger() {
     RS_DEBUG->print("RS_ActionOrder::trigger()");
 
     QList<RS_Entity *> entList;
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - iterating all entities for selection
         if (e->isSelected())
             entList.append(e);
     }
