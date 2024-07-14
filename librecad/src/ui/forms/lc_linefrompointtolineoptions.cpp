@@ -25,8 +25,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 
-LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_LineFromPointToLineOptions::LC_LineFromPointToLineOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawLineFromPointToLine, "/Draw", "/LinePointToLine"),
     action(nullptr),
     ui(new Ui::LC_LineFromPointToLineOptions){
     ui->setupUi(this);
@@ -48,9 +48,6 @@ void LC_LineFromPointToLineOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-QString LC_LineFromPointToLineOptions::getSettingsOptionNamePrefix(){
-    return "/LinePointToLine";
-}
 
 void LC_LineFromPointToLineOptions::doSaveSettings(){
     save("Orthogonal", ui->cbOrthogonal->isChecked());
@@ -110,10 +107,6 @@ void LC_LineFromPointToLineOptions::onOrthogonalClicked(bool value){
     if (action != nullptr){
         setOrthogonalToActionAndView(value);
     }
-}
-
-bool LC_LineFromPointToLineOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawLineFromPointToLine;
 }
 
 void LC_LineFromPointToLineOptions::onAngleEditingFinished(){

@@ -33,7 +33,7 @@
 class RS_ActionInterface;
 class RS_ActionModifyTrimAmount;
 namespace Ui {
-class Ui_TrimAmountOptions;
+    class Ui_TrimAmountOptions;
 }
 class QG_TrimAmountOptions:public LC_ActionOptionsWidgetBase {
 Q_OBJECT
@@ -44,7 +44,6 @@ public:
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
 public slots:
     void languageChange() override;
     void on_cbTotalLength_toggled(bool checked);

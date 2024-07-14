@@ -23,27 +23,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE3POINTSOPTIONS_H
 #define LC_RECTANGLE3POINTSOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actiondrawrectangle3points.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_Rectangle3PointsOptions;
 }
 
-class LC_Rectangle3PointsOptions : public LC_ActionOptionsWidget
-{
+class LC_Rectangle3PointsOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-
-
 public:
-    explicit LC_Rectangle3PointsOptions(QWidget *parent = nullptr);
+    explicit LC_Rectangle3PointsOptions();
     ~LC_Rectangle3PointsOptions() override;
     void doSaveSettings() override;
-    void languageChange() override;
 protected slots:
+    void languageChange() override;
     void onAngleEditingFinished();
     void onCornersIndexChanged(int index);
     void onLenYEditingFinished();
@@ -56,11 +50,11 @@ protected slots:
     void onInnerAngleFixedClicked(bool value);
     void onBaseAngleFixedClicked(bool value);
     void onEdgesIndexChanged(int index);
-    QString getSettingsOptionNamePrefix() override;
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     LC_ActionDrawRectangle3Points* action;
     Ui::LC_Rectangle3PointsOptions *ui;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
     void setSnapToCornerArcCenter(bool value);
     void setUsePolylineToActionAndView(bool value);
     void setRadiusToActionAnView(const QString& value);

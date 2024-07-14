@@ -22,35 +22,30 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEJOINOPTIONS_H
 #define LC_LINEJOINOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actionmodifylinejoin.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_LineJoinOptions;
 }
 
-class LC_LineJoinOptions : public LC_ActionOptionsWidget {
+class LC_LineJoinOptions : public LC_ActionOptionsWidgetBase {
 Q_OBJECT
 
 public:
-    explicit LC_LineJoinOptions(QWidget *parent = nullptr);
+    explicit LC_LineJoinOptions();
     ~LC_LineJoinOptions() override;
 
 protected slots:
-
     void languageChange() override;
     void doSetAction( RS_ActionInterface * a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
     void onUsePolylineClicked(bool value);
-
     void onAttributesSourceIndexChanged(int index);
     void onEdgeModelLine1IndexChanged(int index);
     void onEdgeModelLine2IndexChanged(int index);
     void onRemoveOriginalsClicked(bool value);
 protected:
     void doSaveSettings() override;
-    QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_LineJoinOptions *ui;
     LC_ActionModifyLineJoin *action;

@@ -434,5 +434,5 @@ void LC_ActionModifyLineGap::doFinish([[maybe_unused]]bool updateTB){
 }
 
 void LC_ActionModifyLineGap::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_ModifyGapOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_ModifyGapOptions>();
 }

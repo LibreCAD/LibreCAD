@@ -22,9 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEFROMPOINTTOLINEOPTIONS_H
 #define LC_LINEFROMPOINTTOLINEOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actiondrawlinefrompointtoline.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_LineFromPointToLineOptions;
@@ -32,27 +31,23 @@ class LC_LineFromPointToLineOptions;
 /**
  * UI options for LC_ActionDrawLineFromPointToLine
  */
-class LC_LineFromPointToLineOptions :public LC_ActionOptionsWidget
+class LC_LineFromPointToLineOptions :public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 public:
-    explicit LC_LineFromPointToLineOptions(QWidget *parent = nullptr);
+    explicit LC_LineFromPointToLineOptions();
     ~LC_LineFromPointToLineOptions() override;
-
-protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-    void doSaveSettings() override;
-    void languageChange() override;
 protected slots:
+    void languageChange() override;
     void onAngleEditingFinished();
     void onLengthEditingFinished();
     void onEndOffsetEditingFinished();
     void onSnapModeIndexChanged(int index);
     void onSizeModeIndexChanged(int index);
     void onOrthogonalClicked(bool value);
-    QString getSettingsOptionNamePrefix() override;
-
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 private:
     LC_ActionDrawLineFromPointToLine* action;
     Ui::LC_LineFromPointToLineOptions *ui;

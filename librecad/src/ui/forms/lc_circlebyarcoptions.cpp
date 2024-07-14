@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_circlebyarcoptions.h"
 #include "ui_lc_circlebyarcoptions.h"
 
-LC_CircleByArcOptions::LC_CircleByArcOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_CircleByArcOptions::LC_CircleByArcOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawCircleByArc, "/Draw","/CircleByArc"),
     ui(new Ui::LC_CircleByArcOptions),
     action(nullptr)
 {
@@ -81,14 +81,6 @@ void LC_CircleByArcOptions::onLayerModeIndexChanged(int mode){
     if (action != nullptr){
         setLayerModeToActionAndeView(mode);
     }
-}
-
-QString LC_CircleByArcOptions::getSettingsOptionNamePrefix(){
-    return "/CircleByArc";
-}
-
-bool LC_CircleByArcOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawCircleByArc;
 }
 
 void LC_CircleByArcOptions::languageChange(){

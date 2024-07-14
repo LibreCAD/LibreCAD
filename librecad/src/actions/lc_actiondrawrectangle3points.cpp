@@ -615,5 +615,5 @@ void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
 }
 
 void LC_ActionDrawRectangle3Points::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_Rectangle3PointsOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_Rectangle3PointsOptions>();
 }

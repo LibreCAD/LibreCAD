@@ -50,9 +50,7 @@ public slots:
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
-
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 private:
     RS_ActionDrawLineParallel* action;
 	   std::unique_ptr<Ui::Ui_LineParallelOptions> ui;

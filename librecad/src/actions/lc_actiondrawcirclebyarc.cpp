@@ -233,7 +233,7 @@ RS2::CursorType LC_ActionDrawCircleByArc::doGetMouseCursor([[maybe_unused]]int s
 }
 
 void LC_ActionDrawCircleByArc::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_CircleByArcOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_CircleByArcOptions>();
 }
 
 void LC_ActionDrawCircleByArc::setReplaceArcByCircle(bool value){

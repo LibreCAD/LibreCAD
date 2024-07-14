@@ -41,18 +41,15 @@ Q_OBJECT
 public:
     QG_LineParallelThroughOptions();
     ~QG_LineParallelThroughOptions() override;
-
-protected:
-    void doSaveSettings() override;
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    RS_ActionDrawLineParallelThrough *action;
-
 protected slots:
     void on_cbSymmetric_toggled(bool checked);
     void on_sbNumber_valueChanged(int number);
     virtual void languageChange() override;
-
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
+    RS_ActionDrawLineParallelThrough *action;
     std::unique_ptr<Ui::Ui_LineParallelThroughOptions> ui;
     void setCopyNumberToActionAndView(int number);
     void setSymmetricToActionAndView(bool symmetric);

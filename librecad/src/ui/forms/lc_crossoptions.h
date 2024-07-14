@@ -22,20 +22,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_CROSSOPTIONS_H
 #define LC_CROSSOPTIONS_H
 
-#include <QWidget>
 #include "lc_actiondrawcross.h"
-#include "lc_actionoptionswidget.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_CrossOptions;
 }
 
-class LC_CrossOptions : public LC_ActionOptionsWidget
-{
+class LC_CrossOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
-    explicit LC_CrossOptions(QWidget *parent = nullptr);
+    explicit LC_CrossOptions();
     ~LC_CrossOptions() override;
 
 public slots:
@@ -47,8 +44,6 @@ public slots:
 protected:
     void doSaveSettings() override;
     void doSetAction( RS_ActionInterface * a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-    QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_CrossOptions *ui;
     LC_ActionDrawCross* action = nullptr;

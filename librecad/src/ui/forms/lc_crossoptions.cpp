@@ -25,11 +25,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_math.h"
 
-LC_CrossOptions::LC_CrossOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_CrossOptions::LC_CrossOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawCross, "/Draw", "/Cross"),
     ui(new Ui::LC_CrossOptions),
-    action(nullptr)
-{
+    action(nullptr){
     ui->setupUi(this);
 
     connect(ui->leX, &QLineEdit::editingFinished, this, &LC_CrossOptions::onXEditingFinished);
@@ -41,10 +40,6 @@ LC_CrossOptions::LC_CrossOptions(QWidget *parent) :
 LC_CrossOptions::~LC_CrossOptions(){
     delete ui;
     action = nullptr;
-}
-
-bool LC_CrossOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType ==RS2::ActionDrawCross;
 }
 
 void LC_CrossOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -69,10 +64,6 @@ void LC_CrossOptions::doSetAction(RS_ActionInterface *a, bool update){
     setYToActionAndView(y);
     setAngleToActionAndView(angle);
     setModeToActionAndView(mode);
-}
-
-QString LC_CrossOptions::getSettingsOptionNamePrefix(){
-    return "/Cross";
 }
 
 void LC_CrossOptions::doSaveSettings(){

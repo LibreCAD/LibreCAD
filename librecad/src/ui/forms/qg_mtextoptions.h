@@ -42,12 +42,10 @@ class QG_MTextOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_MTextOptions();
     ~QG_MTextOptions() override;
-
 public slots:
     void updateText();
     void updateAngle();
     void languageChange() override;
-
 protected:
     RS_ActionDrawMText* action;
 	   std::unique_ptr<Ui::Ui_MTextOptions> ui;

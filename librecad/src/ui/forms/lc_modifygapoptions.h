@@ -22,28 +22,22 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_MODIFYGAPOPTIONS_H
 #define LC_MODIFYGAPOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actionmodifylinegap.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_ModifyGapOptions;
 }
 
-class LC_ModifyGapOptions :public LC_ActionOptionsWidget
-{
+class LC_ModifyGapOptions :public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    explicit LC_ModifyGapOptions(QWidget *parent = nullptr);
+    explicit LC_ModifyGapOptions();
     ~LC_ModifyGapOptions() override;
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-    QString getSettingsGroupName() override;
-    QString getSettingsOptionNamePrefix() override;
 protected slots:
     void languageChange() override;
     void onFreeGapClicked(bool val);

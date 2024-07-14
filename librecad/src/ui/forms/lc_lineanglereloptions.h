@@ -30,14 +30,11 @@ namespace Ui {
 class LC_LineAngleRelOptions;
 }
 
-class LC_LineAngleRelOptions : public LC_ActionOptionsWidget
-{
+class LC_LineAngleRelOptions : public LC_ActionOptionsWidget{
     Q_OBJECT
-
 public:
-    explicit LC_LineAngleRelOptions(QWidget *parent = nullptr);
+    explicit LC_LineAngleRelOptions();
     ~LC_LineAngleRelOptions() override;
-
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
 protected slots:
@@ -50,8 +47,8 @@ protected slots:
     void onAngleRelatedClicked(bool clicked);
     void onDivideClicked(bool clicked);
     void onFreeLengthClicked(bool clicked);
-protected:
     void languageChange() override;
+protected:
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     void doSaveSettings() override;
     QString getSettingsOptionNamePrefix() override;

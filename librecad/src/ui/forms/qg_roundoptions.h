@@ -34,29 +34,27 @@ class RS_ActionInterface;
 class RS_ActionModifyRound;
 
 namespace Ui {
-class Ui_RoundOptions;
+    class Ui_RoundOptions;
 }
 
 class QG_RoundOptions : public LC_ActionOptionsWidgetBase {
 Q_OBJECT
-
 public:
-QG_RoundOptions();
-~QG_RoundOptions() override;
+    QG_RoundOptions();
+    ~QG_RoundOptions() override;
 
 public slots:
-void languageChange() override;
-void on_cbTrim_toggled(bool checked);
-void on_leRadius_editingFinished();
-
+    void languageChange() override;
+    void on_cbTrim_toggled(bool checked);
+    void on_leRadius_editingFinished();
 protected:
-RS_ActionModifyRound* action = nullptr;
-void doSetAction(RS_ActionInterface *a, bool update) override;
-void doSaveSettings() override;
+    RS_ActionModifyRound* action = nullptr;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 private:
-std::unique_ptr<Ui::Ui_RoundOptions> ui;
-void setTrimToActionAndView(bool checked);
-void setRadiusToActionAndView(QString val);
+    std::unique_ptr<Ui::Ui_RoundOptions> ui;
+    void setTrimToActionAndView(bool checked);
+    void setRadiusToActionAndView(QString val);
 };
 
 #endif // QG_ROUNDOPTIONS_H

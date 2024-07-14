@@ -11,8 +11,8 @@
  *  Constructs a QG_LineOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-LC_LineOptions::LC_LineOptions(QWidget* parent, Qt::WindowFlags fl)
-    : LC_ActionOptionsWidget(parent, fl)
+LC_LineOptions::LC_LineOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionDrawSnakeLine, "/Draw","/LineSnake")
     , ui(new Ui::Ui_LineOptionsRel{})
 {
     ui->setupUi(this);
@@ -38,10 +38,6 @@ LC_LineOptions::~LC_LineOptions(){
  */
 void LC_LineOptions::languageChange(){
     ui->retranslateUi(this);
-}
-
-QString LC_LineOptions::getSettingsOptionNamePrefix(){
-    return "/LineSnake";
 }
 
 void LC_LineOptions::doSaveSettings(){
@@ -152,10 +148,6 @@ void LC_LineOptions::start() {
     if (action) {
         action->setNewStartPointState();
     }
-}
-
-bool LC_LineOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawSnakeLine;
 }
 
 void LC_LineOptions::setXDirectionToActionAndView(bool value){

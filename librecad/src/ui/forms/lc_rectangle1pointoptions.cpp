@@ -27,8 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_rectangle1pointoptions.h"
 
 
-LC_Rectangle1PointOptions::LC_Rectangle1PointOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_Rectangle1PointOptions::LC_Rectangle1PointOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle1Point, "/Draw","/Rectangle1Point"),
     ui(new Ui::LC_Rectangle1PointOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -55,15 +55,7 @@ LC_Rectangle1PointOptions::~LC_Rectangle1PointOptions(){
     action = nullptr;
 }
 
-bool LC_Rectangle1PointOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType ==RS2::ActionDrawRectangle1Point;
-}
-
-QString LC_Rectangle1PointOptions::getSettingsOptionNamePrefix(){
-    return "/Rectangle1Point";
-}
-
-void LC_Rectangle1PointOptions::doSaveSettings(){    
+void LC_Rectangle1PointOptions::doSaveSettings(){
     save("Width", ui->leWidth->text());
    save("Height", ui->leHeight->text());
    save("Angle", ui->leAngle->text());

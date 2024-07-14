@@ -36,22 +36,19 @@ namespace Ui {
 class Ui_LineRelAngleOptions;
 }
 
-class QG_LineRelAngleOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_LineRelAngleOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_LineRelAngleOptions();
     ~QG_LineRelAngleOptions() override;
-
 public slots:
     void languageChange() override;
+    void on_leLength_editingFinished();
+    void on_leAngle_editingFinished();
+protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-    void on_leLength_editingFinished();
-    void on_leAngle_editingFinished();
-
 private:
     RS_ActionDrawLineRelAngle* action = nullptr;
    	std::unique_ptr<Ui::Ui_LineRelAngleOptions> ui;

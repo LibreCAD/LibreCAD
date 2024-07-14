@@ -45,7 +45,7 @@ public:
     ~QG_LineOptions() override;
 
 public slots:
-    virtual void close();
+    virtual void close(); // fixme - rename
     virtual void undo();
     virtual void redo();
     void languageChange() override;
@@ -54,7 +54,7 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
 private:
-	std::unique_ptr<Ui::Ui_LineOptions> ui;
+    std::unique_ptr<Ui::Ui_LineOptions> ui;
 };
 
 #endif // QG_LINEOPTIONS_H

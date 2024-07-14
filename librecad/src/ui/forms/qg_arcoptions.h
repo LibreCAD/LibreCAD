@@ -46,16 +46,14 @@ public:
 
 public slots:
     void onDirectionChanged(bool);
+    void languageChange() override;
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-public:
-    void languageChange() override;
 protected:
     RS_ActionDrawArc* action = nullptr;
 	   std::unique_ptr<Ui::Ui_ArcOptions> ui;
     void setReversedToActionAndView(bool reversed);
-
 };
 
 #endif // QG_ARCOPTIONS_H

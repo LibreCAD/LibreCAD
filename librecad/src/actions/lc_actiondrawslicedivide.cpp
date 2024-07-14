@@ -560,7 +560,6 @@ void LC_ActionDrawSliceDivide::prepareTickData(RS_Vector &tickSnapPosition, RS_E
     tickLineData.endpoint = tickLineData.startpoint.relative(actualTickLength, actualTickAngle);
 }
 
-
 void LC_ActionDrawSliceDivide::updateMouseButtonHints(){
     // todo - actually , if tick angle is 90 degrees, alternative mode is not meaningful, so it's better to adjust more
     // fine grained shift status there
@@ -576,7 +575,6 @@ RS2::CursorType LC_ActionDrawSliceDivide::doGetMouseCursor([[maybe_unused]]int s
     return RS2::SelectCursor;
 }
 
-
 void LC_ActionDrawSliceDivide::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_SliceDivideOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_SliceDivideOptions>();
 }

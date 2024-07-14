@@ -23,21 +23,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE1POINTOPTIONS_H
 #define LC_RECTANGLE1POINTOPTIONS_H
 
-#include <QWidget>
-#include "rs_actioninterface.h"
 #include "lc_actiondrawrectangle1point.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_Rectangle1PointOptions;
 }
 
-class LC_Rectangle1PointOptions :public LC_ActionOptionsWidget {
+class LC_Rectangle1PointOptions :public LC_ActionOptionsWidgetBase {
     Q_OBJECT
 
 public:
-    explicit LC_Rectangle1PointOptions(QWidget *parent = nullptr);
+    explicit LC_Rectangle1PointOptions();
     ~LC_Rectangle1PointOptions() override;
-
 
 public slots:
     void onCornersIndexChanged(int index);
@@ -53,18 +51,12 @@ public slots:
     void onInnerSizeClicked(bool value);
     void onEdgesIndexChanged(int index);
     void onBaseAngleFixedClicked(bool value);
-
-protected slots:
     void languageChange() override;
-    void doSetAction( RS_ActionInterface * a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 protected:
+    void doSetAction( RS_ActionInterface * a, bool update) override;
     void doSaveSettings() override;
-    QString getSettingsOptionNamePrefix() override;
 private:
     Ui::LC_Rectangle1PointOptions *ui;
-
     LC_ActionDrawRectangle1Point *action;
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(const QString& value);

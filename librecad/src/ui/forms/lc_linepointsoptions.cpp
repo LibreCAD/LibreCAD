@@ -25,7 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_math.h"
 
 LC_LinePointsOptions::LC_LinePointsOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawLinePoints, "/Draw", "/LinePoints"),
     ui(new Ui::LC_LinePointsOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -43,10 +43,6 @@ LC_LinePointsOptions::LC_LinePointsOptions(QWidget *parent) :
 LC_LinePointsOptions::~LC_LinePointsOptions(){
     delete ui;
     action = nullptr;
-}
-
-QString LC_LinePointsOptions::getSettingsOptionNamePrefix(){
-    return "/LinePoints";
 }
 
 void LC_LinePointsOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -108,10 +104,6 @@ void LC_LinePointsOptions::onPointsCountValueChanged(int value){
 
 void LC_LinePointsOptions::languageChange(){
     ui->retranslateUi(this);
-}
-
-bool LC_LinePointsOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawLinePoints;
 }
 
 void LC_LinePointsOptions::setPointsCountActionAndView(int val){

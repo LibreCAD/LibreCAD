@@ -927,5 +927,5 @@ void LC_ActionModifyBreakDivide::updateMouseButtonHints(){
 }
 
 void LC_ActionModifyBreakDivide::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_ModifyBreakDivideOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_ModifyBreakDivideOptions>();
 }

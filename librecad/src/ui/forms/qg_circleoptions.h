@@ -36,14 +36,11 @@ namespace Ui {
     class Ui_CircleOptions;
 }
 
-class QG_CircleOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_CircleOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_CircleOptions();
     ~QG_CircleOptions() override;
-
 public slots:
     virtual void languageChange();
     void on_leRadius_editingFinished();
@@ -51,7 +48,6 @@ protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 protected:
     RS_ActionDrawCircleCR* action = nullptr;
     std::unique_ptr<Ui::Ui_CircleOptions> ui;

@@ -41,7 +41,6 @@ Q_OBJECT
 public:
     QG_LineAngleOptions();
     ~QG_LineAngleOptions() override;
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

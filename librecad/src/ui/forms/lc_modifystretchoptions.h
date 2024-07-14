@@ -16,7 +16,6 @@ class LC_ModifyStretchOptions : public LC_ActionOptionsWidgetBase {
 public:
     explicit LC_ModifyStretchOptions();
     ~LC_ModifyStretchOptions() override;
-
 protected slots:
     void languageChange() override;
     void onKeepOriginalsClicked(bool val);

@@ -22,16 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_LINEPOINTSOPTIONS_H
 #define LC_LINEPOINTSOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
+#include "lc_actionoptionswidgetbase.h"
 #include "lc_actiondrawlinepoints.h"
 
 namespace Ui {
 class LC_LinePointsOptions;
 }
 
-class LC_LinePointsOptions : public LC_ActionOptionsWidget
-{
+class LC_LinePointsOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
@@ -39,11 +37,9 @@ public:
     ~LC_LinePointsOptions() override;
 protected:
     void doSaveSettings() override;
-    void languageChange() override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-    QString getSettingsOptionNamePrefix() override;
 protected slots:
+    void languageChange() override;
     void onPointsCountValueChanged(int value);
     void onEdgePointsModeIndexChanged(int index);
     void onFixedDistanceClicked(bool value);
@@ -51,7 +47,6 @@ protected slots:
     void onWithinLineClicked(bool value);
     void onDistanceEditingFinished();
     void onAngleEditingFinished();
-
 private:
     Ui::LC_LinePointsOptions *ui = nullptr;
     LC_ActionDrawLinePoints* action = nullptr;

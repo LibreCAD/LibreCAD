@@ -36,21 +36,18 @@ namespace Ui {
 class Ui_LineBisectorOptions;
 }
 
-class QG_LineBisectorOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_LineBisectorOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_LineBisectorOptions();
     ~QG_LineBisectorOptions() override;
 public slots:
-
     void languageChange() override;
-    void doSaveSettings() override;
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-
     void on_sbNumber_valueChanged(int number);
     void on_leLength_editingFinished();
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     RS_ActionDrawLineBisector* action;
     std::unique_ptr<Ui::Ui_LineBisectorOptions> ui;

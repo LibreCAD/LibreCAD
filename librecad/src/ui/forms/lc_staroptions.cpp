@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_staroptions.h"
 #include "ui_lc_staroptions.h"
 
-LC_StarOptions::LC_StarOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_StarOptions::LC_StarOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawStar, "/Draw","/Star"),
     ui(new Ui::LC_StarOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -45,8 +45,8 @@ LC_StarOptions::~LC_StarOptions(){
     delete ui;
 }
 
-QString LC_StarOptions::getSettingsOptionNamePrefix(){
-    return "/Star";
+void LC_StarOptions::languageChange() {
+    ui->retranslateUi(this);
 }
 
 void LC_StarOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -131,10 +131,6 @@ void LC_StarOptions::onNumberChanged(int value){
     if (action != nullptr){
         setNumberToModelAndView(value);
     }
-}
-
-bool LC_StarOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return RS2::ActionDrawStar == actionType;
 }
 
 void LC_StarOptions::setRadiusOuterToModelAndView(const QString& value){

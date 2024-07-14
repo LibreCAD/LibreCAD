@@ -33,34 +33,26 @@
 class RS_ActionInterface;
 class RS_ActionDrawPolyline;
 namespace Ui {
-class Ui_PolylineOptions;
+    class Ui_PolylineOptions;
 }
 
-class QG_PolylineOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_PolylineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_PolylineOptions();
     ~QG_PolylineOptions();
-
 public slots:
-
-    virtual void close();
+    virtual void close(); // fixme - rename
     virtual void undo();
     virtual void setModeToActionAndView(int m );
     void on_leAngle_editingFinished();
     void on_leRadius_editingFinished();
     void on_rbNeg_toggled(bool checked);
-
+    void languageChange() override;
 protected:
     RS_ActionDrawPolyline* action;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
-protected slots:
-    void languageChange() override;
-
 private:
 	   std::unique_ptr<Ui::Ui_PolylineOptions> ui;
     void setReversedToActionAndView(bool reversed);

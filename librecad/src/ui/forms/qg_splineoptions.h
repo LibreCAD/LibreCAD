@@ -33,31 +33,26 @@
 class RS_ActionInterface;
 class RS_ActionDrawSpline;
 namespace Ui {
-class Ui_SplineOptions;
+    class Ui_SplineOptions;
 }
 
-class QG_SplineOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_SplineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
     QG_SplineOptions();
     ~QG_SplineOptions();
-
 public slots:
     void onClosedClicked(bool value);
     void undo();
     void onDegreeIndexChanged(int index);
     void languageChange() override;
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 protected:
     RS_ActionDrawSpline* action;
-
 private:
 	std::unique_ptr<Ui::Ui_SplineOptions> ui;
     void setClosedToActionAndView(bool closed);

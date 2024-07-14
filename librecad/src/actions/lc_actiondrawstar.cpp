@@ -34,7 +34,6 @@ LC_ActionDrawStar::LC_ActionDrawStar(RS_EntityContainer &container, RS_GraphicVi
    actionType = RS2::ActionDrawStar;
 }
 
-
 int LC_ActionDrawStar::doGetStatusForInitialSnapToRelativeZero(){
     return SetCenter; // we'll snap center to relative zero if center is not set
 }
@@ -137,8 +136,8 @@ void LC_ActionDrawStar::onCoordinateEvent(const RS_Vector &coord, bool isZero, i
         default:
             break;
     }
-
 }
+
 /**
  * Commands processing
  * @param e
@@ -617,7 +616,6 @@ QStringList LC_ActionDrawStar::getAvailableCommands(){
     return cmd;
 }
 
-
 void LC_ActionDrawStar::updateMouseButtonHints(){
     switch (getStatus()){
         case SetCenter:
@@ -645,7 +643,6 @@ void LC_ActionDrawStar::setRadiusOuter(double d){
    outerRadius = d;
    drawPreviewForLastPoint();
 }
-
 
 void LC_ActionDrawStar::setRadiusInner(double d){
   innerRadius = d;
@@ -676,9 +673,8 @@ void LC_ActionDrawStar::setSymmetric(bool value){
    drawPreviewForLastPoint();
 }
 
-
 void LC_ActionDrawStar::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_StarOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_StarOptions>();
 }
 
 

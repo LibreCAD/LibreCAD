@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_modifybreakdivideoptions.h"
 #include "ui_lc_modifybreakdivideoptions.h"
 
-LC_ModifyBreakDivideOptions::LC_ModifyBreakDivideOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_ModifyBreakDivideOptions::LC_ModifyBreakDivideOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyBreakDivide, "/Modify", "/BreakDivide"),
     ui(new Ui::LC_ModifyBreakDivideOptions)
 {
     ui->setupUi(this);
@@ -53,21 +53,9 @@ void LC_ModifyBreakDivideOptions::doSetAction(RS_ActionInterface *a, bool update
     setRemoveSelectedToActionAndView(removeSelected);
 }
 
-QString LC_ModifyBreakDivideOptions::getSettingsGroupName(){
-    return "/Modify";
-}
-
-QString LC_ModifyBreakDivideOptions::getSettingsOptionNamePrefix(){
-    return "/BreakDivide";
-}
-
 void LC_ModifyBreakDivideOptions::doSaveSettings(){
     save("RemoveSegments", ui->cbRemoveSegments->isChecked());
     save("RemoveSelected", ui->cbRemoveSelected->isChecked());
-}
-
-bool LC_ModifyBreakDivideOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionModifyBreakDivide;
 }
 
 void LC_ModifyBreakDivideOptions::onRemoveSegmentsClicked(bool clicked){

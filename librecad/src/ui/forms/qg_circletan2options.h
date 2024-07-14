@@ -40,11 +40,9 @@ class QG_CircleTan2Options : public LC_ActionOptionsWidgetBase{
 public:
     QG_CircleTan2Options();
     ~QG_CircleTan2Options();
-
 public slots:
     void languageChange() override;
     void on_leRadius_editingFinished();
-
 protected:
     RS_ActionDrawCircleTan2* action;
     std::unique_ptr<Ui::Ui_CircleTan2Options> ui;

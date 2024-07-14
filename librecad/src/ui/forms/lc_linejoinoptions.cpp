@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_linejoinoptions.h"
 
 
-LC_LineJoinOptions::LC_LineJoinOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_LineJoinOptions::LC_LineJoinOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineJoin, "/Modify", "/LineJoin"),
     ui(new Ui::LC_LineJoinOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -44,10 +44,6 @@ LC_LineJoinOptions::~LC_LineJoinOptions(){
 
 void LC_LineJoinOptions::languageChange(){
     ui->retranslateUi(this);
-}
-
-QString LC_LineJoinOptions::getSettingsOptionNamePrefix(){
-    return "/LineJoin";
 }
 
 void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -79,7 +75,6 @@ void LC_LineJoinOptions::doSetAction(RS_ActionInterface *a, bool update){
     setAttributesSourceToActionAndView(attributesSource);
     setEdgeModeLine1ToActionAndView(line1EdgeMode);
     setEdgeModeLine2ToActionAndView(line2EdgeMode);
-
 }
 
 void LC_LineJoinOptions::doSaveSettings(){    
@@ -90,16 +85,12 @@ void LC_LineJoinOptions::doSaveSettings(){
     save("Line2EdgeMode", ui->cbLine2EdgeMode->currentIndex());
 }
 
-bool LC_LineJoinOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionModifyLineJoin;
-}
-
 void LC_LineJoinOptions::onUsePolylineClicked(bool value){
     if (action != nullptr){
         setUsePolylineToActionAndView(value);
     }
-
 }
+
 void LC_LineJoinOptions::onRemoveOriginalsClicked(bool value){
     if (action != nullptr){
         setRemoveOriginalsToActionAndView(value);

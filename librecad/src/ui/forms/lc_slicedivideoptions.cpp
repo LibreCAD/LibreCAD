@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_slicedivideoptions.h"
 #include "ui_lc_slicedivideoptions.h"
 
-LC_SliceDivideOptions::LC_SliceDivideOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_SliceDivideOptions::LC_SliceDivideOptions() :
+    LC_ActionOptionsWidget(nullptr),
     ui(new Ui::LC_SliceDivideOptions),
     action(nullptr){
     ui->setupUi(this);

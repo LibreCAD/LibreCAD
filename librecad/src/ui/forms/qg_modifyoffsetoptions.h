@@ -39,14 +39,11 @@ namespace Ui {
 class Ui_ModifyOffsetOptions;
 }
 
-class QG_ModifyOffsetOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_ModifyOffsetOptions : public LC_ActionOptionsWidgetBase{
 Q_OBJECT
-
 public:
     QG_ModifyOffsetOptions();
     ~QG_ModifyOffsetOptions() override;
-
 protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;

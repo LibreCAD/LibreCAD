@@ -33,19 +33,15 @@
 class RS_ActionInterface;
 class RS_ActionDrawText;
 namespace Ui {
-class Ui_TextOptions;
+    class Ui_TextOptions;
 }
 
-class QG_TextOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_TextOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
     QG_TextOptions();
     ~QG_TextOptions() override;
-
 public slots:
-
     virtual void updateText();
     virtual void updateAngle();
     void languageChange() override;

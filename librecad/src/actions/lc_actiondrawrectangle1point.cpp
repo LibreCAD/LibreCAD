@@ -398,5 +398,5 @@ void LC_ActionDrawRectangle1Point::setSizeInner(bool value){
 }
 
 void LC_ActionDrawRectangle1Point::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>(nullptr);
+    m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>();
 }

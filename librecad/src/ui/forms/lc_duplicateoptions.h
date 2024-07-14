@@ -22,25 +22,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_DUPLICATEOPTIONS_H
 #define LC_DUPLICATEOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actionmodifyduplicate.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_DuplicateOptions;
 }
 
-class LC_DuplicateOptions : public LC_ActionOptionsWidget
-{
+class LC_DuplicateOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    void doSaveSettings() override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 public:
-    explicit LC_DuplicateOptions(QWidget *parent = nullptr);
-    ~LC_DuplicateOptions();
+    explicit LC_DuplicateOptions();
+    ~LC_DuplicateOptions() override;
 
 protected slots:
     void onOffsetXEditingFinished();
@@ -48,8 +42,10 @@ protected slots:
     void onInPlaceClicked(bool value);
     void onPenModeIndexChanged(int mode);
     void onLayerModeIndexChanged(int mode);
-    QString getSettingsGroupName() override;
-    QString getSettingsOptionNamePrefix() override;
+    void languageChange() override;
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 private:
     Ui::LC_DuplicateOptions *ui;
     LC_ActionModifyDuplicate * action;

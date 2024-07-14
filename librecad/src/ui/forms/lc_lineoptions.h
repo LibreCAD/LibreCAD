@@ -1,9 +1,8 @@
 #ifndef LC_LINEOPTIONS_H
 #define LC_LINEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
 #include <lc_actiondrawlinesnake.h>
+#include "lc_actionoptionswidgetbase.h"
 
 //class RS_ActionInterface;
 
@@ -12,13 +11,12 @@ namespace Ui {
 class Ui_LineOptionsRel;
 }
 
-class LC_LineOptions : public LC_ActionOptionsWidget
-{
+class LC_LineOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    LC_LineOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~LC_LineOptions();
+    LC_LineOptions();
+    ~LC_LineOptions() override;
 
 public slots:
     virtual void closeLine();
@@ -26,9 +24,6 @@ public slots:
     virtual void redo();
     virtual void polyline();
     virtual void start();
-protected:
-    LC_ActionDrawLineSnake* action;
-    void doSetAction(RS_ActionInterface *a, bool update) override;
 protected slots:
     void onAngleClicked(bool value);
     void onXClicked(bool value);
@@ -37,10 +32,10 @@ protected slots:
     void onSetAngle();
     void onAngleRelativeClicked(bool value);
     void languageChange() override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-    QString getSettingsOptionNamePrefix() override;
+protected:
+    LC_ActionDrawLineSnake* action;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
     void doSaveSettings() override;
-
 private:
     Ui::Ui_LineOptionsRel* ui;
     bool inUpdateCycle = false;

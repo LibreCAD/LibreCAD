@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_modifygapoptions.h"
 #include "ui_lc_modifygapoptions.h"
 
-LC_ModifyGapOptions::LC_ModifyGapOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_ModifyGapOptions::LC_ModifyGapOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyLineGap, "/Modify", "/LineGap"),
     ui(new Ui::LC_ModifyGapOptions)
 {
     ui->setupUi(this);
@@ -37,10 +37,6 @@ LC_ModifyGapOptions::LC_ModifyGapOptions(QWidget *parent) :
 
 LC_ModifyGapOptions::~LC_ModifyGapOptions(){
     delete ui;
-}
-
-bool LC_ModifyGapOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionModifyLineGap;
 }
 
 void LC_ModifyGapOptions::doSetAction(RS_ActionInterface *a, bool update){
@@ -79,14 +75,6 @@ void LC_ModifyGapOptions::doSaveSettings(){
     save("LineSnap", ui->cbLineSnap->currentIndex());
     save("SnapDistance", ui->leDistance->text());
     save("GapSnap", ui->cbGapSnap->currentIndex());
-}
-
-QString LC_ModifyGapOptions::getSettingsGroupName(){
-    return "/Modify";
-}
-
-QString LC_ModifyGapOptions::getSettingsOptionNamePrefix(){
-    return "/LineGap";
 }
 
 void LC_ModifyGapOptions::languageChange(){

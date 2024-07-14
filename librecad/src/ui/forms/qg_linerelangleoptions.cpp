@@ -33,20 +33,18 @@
 #include "ui_qg_linerelangleoptions.h"
 
 namespace {
-
-
 // format a number with specified digits after point
-QString formatNumber(double value, int precision = 8)
-{
-    precision = std::max(precision, 0);
-    precision = std::min(precision, 16);
-    LC_ERR<<"value: "<<value;
-    QString text = QString("%1").arg(value, 0, 'f', precision);
-    LC_ERR<<"value: "<<text;
-    text = RS_Dimension::stripZerosLinear(text, 12);
-    LC_ERR<<"value: "<<text;
-    return text;
-}
+    QString formatNumber(double value, int precision = 8)
+    {
+        precision = std::max(precision, 0);
+        precision = std::min(precision, 16);
+        LC_ERR<<"value: "<<value;
+        QString text = QString("%1").arg(value, 0, 'f', precision);
+        LC_ERR<<"value: "<<text;
+        text = RS_Dimension::stripZerosLinear(text, 12);
+        LC_ERR<<"value: "<<text;
+        return text;
+    }
 }
 
 /*
@@ -54,7 +52,8 @@ QString formatNumber(double value, int precision = 8)
  *  name 'name' and widget flags set to 'f'.
  */
 QG_LineRelAngleOptions::QG_LineRelAngleOptions()
-    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/LineRelAngleAngle"), ui(std::make_unique<Ui::Ui_LineRelAngleOptions>()){
+    :LC_ActionOptionsWidgetBase(RS2::ActionNone, "/Draw", "/LineRelAngleAngle"),
+     ui(std::make_unique<Ui::Ui_LineRelAngleOptions>()){
     ui->setupUi(this);
 }
 

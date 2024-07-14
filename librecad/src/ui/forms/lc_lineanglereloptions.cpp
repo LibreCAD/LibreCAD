@@ -26,8 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_lineanglereloptions.h"
 
 
-LC_LineAngleRelOptions::LC_LineAngleRelOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),
+LC_LineAngleRelOptions::LC_LineAngleRelOptions() :
+    LC_ActionOptionsWidget(nullptr),
     ui(std::make_unique<Ui::LC_LineAngleRelOptions>())
 {
     ui->setupUi(this);

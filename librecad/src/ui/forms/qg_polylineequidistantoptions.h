@@ -31,7 +31,7 @@ class RS_ActionInterface;
 class RS_ActionDrawLineRelAngle;
 class RS_ActionPolylineEquidistant;
 namespace Ui {
-class PolylineEquidistantOptions;
+    class PolylineEquidistantOptions;
 }
 /*
   * Create option widget used to draw equidistant polylines
@@ -41,7 +41,6 @@ class PolylineEquidistantOptions;
 
 class QG_PolylineEquidistantOptions:public LC_ActionOptionsWidgetBase {
 Q_OBJECT
-
 public:
     QG_PolylineEquidistantOptions();
     ~QG_PolylineEquidistantOptions();
@@ -53,13 +52,10 @@ public slots:
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
 private:
-
     RS_ActionPolylineEquidistant *action;
     std::unique_ptr<Ui::PolylineEquidistantOptions> ui;
     void setNumberToActionAndView(int number);
     void setDistanceToActionAndView(QString strVal);
 };
-
 #endif // QG_POLYLINEEQUIDISTANTOPTIONS_H

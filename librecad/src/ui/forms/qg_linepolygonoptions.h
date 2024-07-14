@@ -37,14 +37,12 @@ namespace Ui {
 class Ui_LinePolygonOptions;
 }
 
-class QG_LinePolygonOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_LinePolygonOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
     QG_LinePolygonOptions();
     ~QG_LinePolygonOptions() override;
-
 public slots:
     void on_sbNumber_valueChanged(int number);
     void languageChange() override;
@@ -53,7 +51,6 @@ protected:
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
     QString getSettingsOptionNamePrefix() override;
-
 private:
     LC_ActionDrawLinePolygonBase* action;
 	  std::unique_ptr<Ui::Ui_LinePolygonOptions> ui;

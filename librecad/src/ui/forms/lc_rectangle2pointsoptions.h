@@ -22,20 +22,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_RECTANGLE2POINTSOPTIONS_H
 #define LC_RECTANGLE2POINTSOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actiondrawrectangle2points.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_Rectangle2PointsOptions;
 }
 
-class LC_Rectangle2PointsOptions : public LC_ActionOptionsWidget
-{
+class LC_Rectangle2PointsOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    explicit LC_Rectangle2PointsOptions(QWidget *parent = nullptr);
+    explicit LC_Rectangle2PointsOptions();
     ~LC_Rectangle2PointsOptions() override;
 
 public slots:
@@ -50,16 +48,11 @@ public slots:
     void onUsePolylineClicked(bool value);
     void onSnapToCornerArcCenterClicked(bool value);
     void onBaseAngleFixedClicked(bool value);
-
-protected slots:
     void languageChange() override;
+protected:
     void doSetAction( RS_ActionInterface * a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
-    QString getSettingsOptionNamePrefix() override;
     void doSaveSettings() override;
-
 private:
-    LC_ActionDrawRectangle2Points *action;
     void setAngleToActionAndView(const QString &val);
     void setLenYToActionAnView(const QString& value);
     void setLenXToActionAnView(const QString& value);
@@ -70,9 +63,8 @@ private:
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenter(bool value);
     void setBaseAngleFixedToActionAndView(bool angle);
-
-private:
     Ui::LC_Rectangle2PointsOptions *ui;
+    LC_ActionDrawRectangle2Points *action;
     void setEdgesModeToActionAndView(int index);
 };
 

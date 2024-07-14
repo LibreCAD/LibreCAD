@@ -22,8 +22,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_duplicateoptions.h"
 #include "ui_lc_duplicateoptions.h"
 
-LC_DuplicateOptions::LC_DuplicateOptions(QWidget *parent):
-    LC_ActionOptionsWidget(parent),
+LC_DuplicateOptions::LC_DuplicateOptions():
+    LC_ActionOptionsWidgetBase(RS2::ActionModifyDuplicate, "/Modify","/Duplicate"),
     ui(new Ui::LC_DuplicateOptions),
     action(nullptr){
     ui->setupUi(this);
@@ -39,12 +39,8 @@ LC_DuplicateOptions::~LC_DuplicateOptions(){
     action = nullptr;
 }
 
-QString LC_DuplicateOptions::getSettingsGroupName(){
-    return "/Modify";
-}
-
-QString LC_DuplicateOptions::getSettingsOptionNamePrefix(){
-    return "/Duplicate";
+void LC_DuplicateOptions::languageChange() {
+    ui->retranslateUi(this);
 }
 
 void LC_DuplicateOptions::doSaveSettings(){
@@ -82,10 +78,6 @@ void LC_DuplicateOptions::doSetAction(RS_ActionInterface *a, bool update){
     setInPlaceDuplicateToActionAndView(inplace);
     setPenModeToActionAndView(penMode);
     setLayerModeToActionAndeView(layerMode);
-}
-
-bool LC_DuplicateOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionModifyDuplicate;
 }
 
 void LC_DuplicateOptions::onOffsetXEditingFinished(){

@@ -22,22 +22,18 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_STAROPTIONS_H
 #define LC_STAROPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actiondrawstar.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_StarOptions;
 }
 
-class LC_StarOptions  :public LC_ActionOptionsWidget {
+class LC_StarOptions  :public LC_ActionOptionsWidgetBase {
     Q_OBJECT
-protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 public:
-    explicit LC_StarOptions(QWidget *parent = nullptr);
+    explicit LC_StarOptions();
     ~LC_StarOptions() override;
 
 protected slots:
@@ -49,8 +45,9 @@ protected slots:
     void onPolylineClicked(bool value);
     void onNumberChanged(int value);
     void doSaveSettings() override;
-    QString getSettingsOptionNamePrefix() override;
-
+    void languageChange() override;
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
     Ui::LC_StarOptions *ui;
     LC_ActionDrawStar* action;

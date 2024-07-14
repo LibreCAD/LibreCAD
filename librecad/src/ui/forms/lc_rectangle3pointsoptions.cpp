@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "ui_lc_rectangle3pointsoptions.h"
 #include "rs_math.h"
 
-LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),    
+LC_Rectangle3PointsOptions::LC_Rectangle3PointsOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle3Points, "/Draw", "/Rectangle3Points"),
     action(nullptr),
     ui(new Ui::LC_Rectangle3PointsOptions){
     ui->setupUi(this);
@@ -50,14 +50,6 @@ LC_Rectangle3PointsOptions::~LC_Rectangle3PointsOptions(){
 
 void LC_Rectangle3PointsOptions::languageChange(){
     ui->retranslateUi(this);
-}
-
-bool LC_Rectangle3PointsOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawRectangle3Points;
-}
-
-QString LC_Rectangle3PointsOptions::getSettingsOptionNamePrefix(){
-    return "/Rectangle3Points";
 }
 
 void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update){

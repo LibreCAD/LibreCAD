@@ -39,24 +39,15 @@ class Ui_ArcTangentialOptions;
 class QG_ArcTangentialOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
-
-
-
 public:
     QG_ArcTangentialOptions();
-    virtual ~QG_ArcTangentialOptions() override;
-
+    ~QG_ArcTangentialOptions() override;
 public slots:
-
     virtual void on_leRadius_editingFinished();
-
     virtual void on_leAngle_editingFinished();
-
     virtual void on_rbRadius_clicked(bool checked);
-
     virtual void on_rbAngle_clicked(bool checked);
     void languageChange() override;
-
 public:
     void updateRadius(double d);
     void updateAngle(double a);
@@ -68,7 +59,6 @@ protected:
     void setAngleToActionAndView(const QString& s  );
     void setByRadiusToActionAndView(const bool byRadius);
     std::unique_ptr<Ui::Ui_ArcTangentialOptions> ui;
-
 };
 
 #endif // QG_ARCTANGENTIALOPTIONS_H

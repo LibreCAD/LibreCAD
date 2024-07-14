@@ -42,7 +42,6 @@ class QG_DimOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_DimOptions();
     ~QG_DimOptions() override;
-
 public slots:
     void updateLabel();
     void insertSign( const QString & c );
@@ -50,13 +49,11 @@ public slots:
     void on_leAngle_editingFinished();
     void on_bHor_clicked();
     void on_bVer_clicked();
-
 protected:
     void updateAngle( const QString& a );
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
     bool checkActionRttiValid(RS2::ActionType actionType) override;
-
 private:
     RS_ActionDimension* action = nullptr;
     std::unique_ptr<Ui::Ui_DimOptions> ui;

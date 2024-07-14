@@ -24,8 +24,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_settings.h"
 #include "rs_math.h"
 
-LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions(QWidget *parent) :
-    LC_ActionOptionsWidget(parent),    
+LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions() :
+    LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle2Points, "/Draw", "/Rectangle2Points"),
     action(nullptr),
     ui(new Ui::LC_Rectangle2PointsOptions){
     ui->setupUi(this);
@@ -51,14 +51,6 @@ LC_Rectangle2PointsOptions::~LC_Rectangle2PointsOptions(){
 
 void LC_Rectangle2PointsOptions::languageChange(){
     ui->retranslateUi(this);
-}
-
-bool LC_Rectangle2PointsOptions::checkActionRttiValid(RS2::ActionType actionType){
-    return actionType == RS2::ActionDrawRectangle2Points;
-}
-
-QString LC_Rectangle2PointsOptions::getSettingsOptionNamePrefix(){
-    return "/Rectangle2Points";
 }
 
 void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update){

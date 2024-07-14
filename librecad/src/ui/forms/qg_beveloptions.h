@@ -40,13 +40,11 @@ Q_OBJECT
 public:
     QG_BevelOptions();
     ~QG_BevelOptions() override;
-
 public slots:
     virtual void languageChange();
     void on_cbTrim_toggled(bool checked);
     void on_leLength1_editingFinished();
     void on_leLength2_editingFinished();
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;

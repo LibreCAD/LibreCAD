@@ -24,33 +24,26 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_MODIFYBREAKOUTOPTIONS_H
 #define LC_MODIFYBREAKOUTOPTIONS_H
 
-#include <QWidget>
-#include "lc_actionoptionswidget.h"
 #include "lc_actionmodifybreakdivide.h"
+#include "lc_actionoptionswidgetbase.h"
 
 namespace Ui {
 class LC_ModifyBreakDivideOptions;
 }
 
-class LC_ModifyBreakDivideOptions :public LC_ActionOptionsWidget
-{
+class LC_ModifyBreakDivideOptions :public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-protected:
-    void doSetAction(RS_ActionInterface *a, bool update) override;
-    void doSaveSettings() override;
-    bool checkActionRttiValid(RS2::ActionType actionType) override;
 
 public:
-    explicit LC_ModifyBreakDivideOptions(QWidget *parent = nullptr);
+    explicit LC_ModifyBreakDivideOptions();
     ~LC_ModifyBreakDivideOptions() override;
-
 protected slots:
     void onRemoveSegmentsClicked(bool value);
     void onRemoveSelectedClicked(bool value);
-    QString getSettingsGroupName() override;
-    QString getSettingsOptionNamePrefix() override;
     void languageChange() override;
-
+protected:
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
 private:
     Ui::LC_ModifyBreakDivideOptions *ui;
     LC_ActionModifyBreakDivide* action;

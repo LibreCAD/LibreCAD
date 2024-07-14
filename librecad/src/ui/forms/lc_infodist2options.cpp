@@ -1,8 +1,8 @@
 #include "lc_infodist2options.h"
 #include "ui_lc_infodist2options.h"
 
-LC_InfoDist2Options::LC_InfoDist2Options(QWidget *parent)
-    : LC_ActionOptionsWidget(parent)
+LC_InfoDist2Options::LC_InfoDist2Options()
+    : LC_ActionOptionsWidget(nullptr)
     , ui(new Ui::LC_InfoDist2Options){
     ui->setupUi(this);
     connect(ui->cbOnEntity, &QCheckBox::clicked, this, &LC_InfoDist2Options::onOnEntityClicked);

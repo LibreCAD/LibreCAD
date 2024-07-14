@@ -35,7 +35,7 @@ class LC_SliceDivideOptions : public LC_ActionOptionsWidget
     Q_OBJECT
 
 public:
-    explicit LC_SliceDivideOptions(QWidget *parent = nullptr);
+    explicit LC_SliceDivideOptions();
     ~LC_SliceDivideOptions() override;
     void updateUI(int mode) override;
 
