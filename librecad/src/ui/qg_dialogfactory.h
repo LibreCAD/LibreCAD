@@ -137,51 +137,6 @@ public:
 protected:
 	void requestPrintPreviewOptions(RS_ActionInterface* action,
 											bool on, bool update);
-//	void requestLineOptions(RS_ActionInterface* action,
-//									bool on);
-//	void requestPolylineOptions(RS_ActionInterface* action,
-//										bool on, bool update);
-//	void requestPolylineEquidistantOptions(RS_ActionInterface* action, bool on, bool update=false);
-//	void requestLineAngleOptions(RS_ActionInterface* action,
-//										 bool on, bool update);
-//	void requestLineRelAngleOptions(RS_ActionInterface* action,
-//											bool on, bool update);
-	/*void requestLineParallelOptions(RS_ActionInterface* action,
-											bool on, bool update);*/
-//	void requestLineParallelThroughOptions(RS_ActionInterface* action,
-//												   bool on, bool update);
-//	void requestLineBisectorOptions(RS_ActionInterface* action,
-//											bool on, bool update);
-//	void requestLinePolygonOptions(RS_ActionInterface* action,
-//										   bool on, bool update);
-//	void requestLinePolygon2Options(RS_ActionInterface* action,
-//											bool on, bool update);
-
-//	void requestArcOptions(RS_ActionInterface* action,
-//								   bool on, bool update);
-
-// void requestArcTangentialOptions(RS_ActionInterface* action,
-//											 bool on, bool update);
-
-//	void requestCircleOptions(RS_ActionInterface* action,
-//									  bool on, bool update);
-
-//	void requestCircleTan2Options(RS_ActionInterface* action,
-//										  bool on, bool update);
-
-	/*void requestSplineOptions(RS_ActionInterface* action,
-									  bool on, bool update);*/
-
-	/*void requestMTextOptions(RS_ActionInterface* action,
-									 bool on, bool update);*/
-
-//	void requestTextOptions(RS_ActionInterface* action,
-//									bool on, bool update);
-
-//	void requestDimensionOptions(RS_ActionInterface* action,
-//										 bool on, bool update);
-//	void requestDimLinearOptions(RS_ActionInterface* action,
-//										 bool on, bool update);
 
 	void requestInsertOptions(RS_ActionInterface* action,
 									  bool on, bool update);
@@ -192,10 +147,6 @@ protected:
 										  bool on, bool update);*/
 	void requestMoveRotateOptions(RS_ActionInterface* action,
 										  bool on, bool update);
-	/*void requestBevelOptions(RS_ActionInterface* action,
-									 bool on, bool update);*/
-//	void requestRoundOptions(RS_ActionInterface* action,
-//									 bool on, bool update);
 	void requestLibraryInsertOptions(RS_ActionInterface* action,
 											 bool on, bool update);
 
@@ -215,7 +166,6 @@ public:
 	bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
 	bool requestModifyEntityDialog(RS_Entity* entity) override;
-	void requestModifyOffsetOptions(double& dist, bool on) override;
 	bool requestMTextDialog(RS_MText* text) override;
 	bool requestTextDialog(RS_Text* text) override;
 	bool requestHatchDialog(RS_Hatch* hatch) override;
@@ -258,15 +208,11 @@ protected:
     QG_SelectionWidget* selectionWidget = nullptr;
 	//! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
-	//! Pointer to arcTangential Option widge
-//    QG_ArcTangentialOptions* arcTangentialOptions = nullptr;
-//    QG_PolylineEquidistantOptions* polylineEquidistantOptions = nullptr;
 private:
 	// pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
     QG_SnapDistOptions* snapDistOptions = nullptr;
-    QG_ModifyOffsetOptions* modifyOffsetOptions = nullptr;
-//    QG_LineAngleOptions* m_pLineAngleOptions = nullptr;
+
 };
 
 #endif

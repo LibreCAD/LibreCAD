@@ -30,6 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #define RS_ACTIONMODIFYOFFSET_H
 
 #include "rs_previewactioninterface.h"
+#include "lc_actionpreselectionawarebase.h"
 
 struct RS_OffsetData;
 
@@ -38,13 +39,14 @@ struct RS_OffsetData;
  *
  * @author Dongxu Li
  */
-class RS_ActionModifyOffset : public RS_PreviewActionInterface {
+class RS_ActionModifyOffset : public LC_ActionPreSelectionAwareBase {
 Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
+        SetReferencePoint,
         SetPosition       /**< Setting the direction of offset*/
     };
 
@@ -52,27 +54,24 @@ public:
     RS_ActionModifyOffset(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionModifyOffset() override;
-
-//    void reset();
-
-    void init(int status=0) override;
     void trigger() override;
 
-    void mouseMoveEvent(QMouseEvent* e) override;
-
-//        void coordinateEvent(RS_CoordinateEvent* e) override;
-//    void commandEvent(RS_CommandEvent* e) override;
-//    QStringList getAvailableCommands() override;
-
-    void hideOptions() override;
-    void showOptions() override;
-
-    void updateMouseButtonHints() override;
+    double getDistance();
+    void setDistance(double distance);
+    bool isFixedDistance() {return distanceIsFixed;};
+    void setDistanceFixed(bool value);
 protected:
-
+    bool distanceIsFixed = true;
+    RS_Vector referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> data;
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void createOptionsWidget() override;
+    void selectionCompleted(bool singleEntity) override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+
+    bool isAllowTriggerOnEmptySelection() override;
 };
 #endif

@@ -1291,27 +1291,27 @@ void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
 /**
  * Shows a widget for offset options.
  */
-void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
-    if(!on) {
-        if (modifyOffsetOptions) {
-            modifyOffsetOptions->hide();
-            modifyOffsetOptions->deleteLater();
-            modifyOffsetOptions = nullptr;
-        }
-        return;
-    }
-    if (optionWidget ) {
-        if (!modifyOffsetOptions) {
-            modifyOffsetOptions = new QG_ModifyOffsetOptions(optionWidget);
-            optionWidget->addWidget(modifyOffsetOptions);
-            modifyOffsetOptions->setDist(dist);
-        }else {
-            modifyOffsetOptions->setDist(dist,false);
-        }
-        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
-        modifyOffsetOptions->show();
-    }
-}
+//void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
+//    if(!on) {
+//        if (modifyOffsetOptions) {
+//            modifyOffsetOptions->hide();
+//            modifyOffsetOptions->deleteLater();
+//            modifyOffsetOptions = nullptr;
+//        }
+//        return;
+//    }
+//    if (optionWidget ) {
+//        if (!modifyOffsetOptions) {
+//            modifyOffsetOptions = new QG_ModifyOffsetOptions(optionWidget);
+//            optionWidget->addWidget(modifyOffsetOptions);
+//            modifyOffsetOptions->setDist(dist);
+//        }else {
+//            modifyOffsetOptions->setDist(dist,false);
+//        }
+//        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
+//        modifyOffsetOptions->show();
+//    }
+//}
 
 
 

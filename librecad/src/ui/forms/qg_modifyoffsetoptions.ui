@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>112</width>
-    <height>22</height>
+    <width>140</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,20 +18,23 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>100</width>
-    <height>22</height>
+    <width>0</width>
+    <height>0</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>140</width>
-    <height>26</height>
+    <width>16777215</width>
+    <height>16777215</height>
    </size>
   </property>
   <property name="windowTitle">
    <string>Modify Offset Options</string>
   </property>
   <layout class="QHBoxLayout">
+   <property name="spacing">
+    <number>3</number>
+   </property>
    <property name="leftMargin">
     <number>1</number>
    </property>
@@ -45,25 +48,22 @@
     <number>1</number>
    </property>
    <item>
-    <widget class="QLabel" name="lDist">
+    <widget class="QCheckBox" name="cbFixedDistance">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
      <property name="text">
-      <string>Distance:</string>
-     </property>
-     <property name="wordWrap">
-      <bool>false</bool>
+      <string>Fixed Distance</string>
      </property>
     </widget>
    </item>
    <item>
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
@@ -74,20 +74,17 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>
@@ -111,4 +108,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateDist(QString)</slot>
+ </slots>
 </ui>

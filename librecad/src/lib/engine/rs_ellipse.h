@@ -51,11 +51,11 @@ struct RS_EllipseData {
     double angle2 = 0.;
     //! Reversed (cw) flag
     bool reversed = false;
-
-
 };
 
 std::ostream& operator << (std::ostream& os, const RS_EllipseData& ed);
+
+// fixme - add support of offset operation for ellipse entity!
 
 /**
  * Class for an ellipse entity. All angles are in Rad.

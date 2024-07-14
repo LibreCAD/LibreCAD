@@ -592,17 +592,30 @@ void RS_Arc::moveEndpoint(const RS_Vector& pos) {
   *Author: Dongxu Li
   */
 bool RS_Arc::offset(const RS_Vector& coord, const double& distance) {
-    double r0(coord.distanceTo(getCenter()));
-    if(r0 > getRadius()){
-        //external
-        r0 = getRadius()+ fabs(distance);
-    }else{
-        r0 = getRadius()- fabs(distance);
-        if(r0<RS_TOLERANCE) {
+  /*  bool increase = coord.x > 0;
+    double newRadius;
+    if (increase){
+        newRadius = getRadius() + std::abs(distance);
+    }
+    else{
+        newRadius = getRadius() - std::abs(distance);
+        if(newRadius < RS_TOLERANCE) {
             return false;
         }
     }
-    setRadius(r0);
+    */
+    double dist(coord.distanceTo(getCenter()));
+    double newRadius;
+    if(dist> getRadius()){
+        //external
+        newRadius = getRadius()+ fabs(distance);
+    }else{
+        newRadius = getRadius()- fabs(distance);
+        if(newRadius<RS_TOLERANCE) {
+            return false;
+        }
+    }
+    setRadius(newRadius);
     calculateBorders();
     return true;
 }

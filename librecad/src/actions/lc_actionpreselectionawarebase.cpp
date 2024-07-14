@@ -4,15 +4,21 @@
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
-    const QList<RS2::EntityType> &entityTypeList)
-    :RS_ActionSelectBase(name, container, graphicView, entityTypeList) {}
+    const QList<RS2::EntityType> &entityTypeList, const bool countSelectionDeep)
+    :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
+    countDeep(countSelectionDeep){}
 
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
-    unsigned int selectedCount = document->countSelected(false, catchForSelectionEntityTypes);
+    unsigned int selectedCount = countSelectedEntities();
     if (selectedCount> 0){
         selectionCompleted(false);
     }
+}
+
+unsigned int LC_ActionPreSelectionAwareBase::countSelectedEntities() {
+    unsigned int selectedCount = document->countSelected(countDeep, catchForSelectionEntityTypes);
+    return selectedCount;
 }
 
 void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKeyEvent *e, bool escape) {
@@ -20,7 +26,6 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
         finish(false);
     }
     else{
-        selectionComplete = true;
         selectionCompleted(false);
     }
 }
@@ -69,14 +74,29 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
 }
 
 void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity) {
-    trigger();
-    if (singleEntity){
-        deselectAll();
+    setSelectionComplete(isAllowTriggerOnEmptySelection());
+    updateMouseButtonHints();
+    if (selectionComplete) {
+        trigger();
+        if (singleEntity) {
+            deselectAll();
+        } else {
+            setStatus(-1);
+        }
+        updateSelectionWidget();
+    }
+}
+
+void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelection) {
+    unsigned int selectedCount = countSelectedEntities();
+    bool proceed = selectedCount > 0 || allowEmptySelection;
+    if (proceed) {
+        selectionComplete = true;
+        updateMouseButtonHintsForSelected(getStatus());
     }
     else{
-        setStatus(-1);
+        commandMessageTR("No valid entities selected, select them first");
     }
-    updateSelectionWidget();
 }
 
 void LC_ActionPreSelectionAwareBase::updateMouseButtonHintsForSelected([[maybe_unused]]int status) {
@@ -88,3 +108,16 @@ void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEventSelected([[maybe
 void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEventSelected([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *pEvent) {}
 
 void LC_ActionPreSelectionAwareBase::mouseMoveEventSelected([[maybe_unused]]QMouseEvent *e) {}
+
+RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursor(int status) {
+    if (selectionComplete){
+        return doGetMouseCursorSelected(status);
+    }
+    else {
+        return RS_ActionSelectBase::doGetMouseCursor(status);
+    }
+}
+
+RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected(int status) {
+    return RS2::CadCursor;
+}

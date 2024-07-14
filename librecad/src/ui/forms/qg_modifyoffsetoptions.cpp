@@ -29,18 +29,16 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "qg_modifyoffsetoptions.h"
 
 #include "rs_math.h"
-#include "rs_settings.h"
 #include "ui_qg_modifyoffsetoptions.h"
+#include "rs_actionmodifyoffset.h"
 
 /*
- *  Constructs a QG_ModifyOffsetOptions as a child of 'parent', with the
- *  name 'name' and widget flags set to 'f'.
+ *  Constructs a QG_ModifyOffsetOptions
  */
-QG_ModifyOffsetOptions::QG_ModifyOffsetOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_ModifyOffsetOptions{})
-{
-	ui->setupUi(this);
+QG_ModifyOffsetOptions::QG_ModifyOffsetOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyOffset, "/Draw", "/ModifyOffset")
+    , ui(new Ui::Ui_ModifyOffsetOptions{}){
+    ui->setupUi(this);
 }
 
 /*
@@ -52,37 +50,50 @@ QG_ModifyOffsetOptions::~QG_ModifyOffsetOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_ModifyOffsetOptions::languageChange()
-{
-	ui->retranslateUi(this);
+void QG_ModifyOffsetOptions::languageChange(){
+    ui->retranslateUi(this);
 }
 
-void QG_ModifyOffsetOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
-	RS_SETTINGS->writeEntry("/ModifyOffsetDistance", ui->leDist->text());
-    RS_SETTINGS->endGroup();
+void QG_ModifyOffsetOptions::doSaveSettings() {
+    save("Distance", ui->leDist->text());
+    save("DistanceFixed", ui->cbFixedDistance->isChecked());
 }
 
-void QG_ModifyOffsetOptions::setDist(double& d, bool initial) {
-    dist = &d;
-        bool ok;
-    if(initial) {
-        RS_SETTINGS->beginGroup("/Draw");
-        QString r = RS_SETTINGS->readEntry("/ModifyOffsetDistance", "1.0");
-        RS_SETTINGS->endGroup();
+void QG_ModifyOffsetOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionModifyOffset *>(a);
 
-		ui->leDist->setText(r);
-        *dist=RS_Math::eval(r,&ok);
-		if (!ok) *dist=1.;
+    QString dist;
+    bool distanceFixed;
+    bool ok;
+    if (update) {
+        dist = fromDouble(action->getDistance());
+        distanceFixed = action->isFixedDistance();
     } else {
-		*dist=RS_Math::eval(ui->leDist->text(),&ok);
-		if (!ok) *dist=1.;
+        dist = load("Distance", "1.0");
+        distanceFixed = loadBool("DistanceFixed", true);
     }
+    setDistanceToActionAndView(dist);
+    setDistanceFixedToActionAndView(distanceFixed);
 }
 
-void QG_ModifyOffsetOptions::updateDist(const QString& d) {
-    if (dist) {
-        *dist=RS_Math::eval(d);
-        saveSettings();
+void QG_ModifyOffsetOptions::on_leDist_editingFinished() {
+    setDistanceToActionAndView(ui->leDist->text());
+}
+
+void QG_ModifyOffsetOptions::on_cbFixedDistance_clicked(bool val) {
+setDistanceFixedToActionAndView(val);
+        }
+
+void QG_ModifyOffsetOptions::setDistanceFixedToActionAndView(bool val) {
+    action->setDistanceFixed(val);
+    ui->leDist->setEnabled(val);
+    ui->cbFixedDistance->setChecked(val);
+}
+
+void QG_ModifyOffsetOptions::setDistanceToActionAndView(QString val) {
+    double distance;
+    if (toDouble(val, distance, 1.0, false)) {
+        action->setDistance(distance);
+        ui->leDist->setText(fromDouble(distance));
     }
 }

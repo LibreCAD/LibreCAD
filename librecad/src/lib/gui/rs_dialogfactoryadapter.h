@@ -55,7 +55,6 @@ public:
 	void requestOptions(RS_ActionInterface*, bool, bool) override{}
 	void requestSnapDistOptions(double& , bool) override {}
 	void requestSnapMiddleOptions(int& , bool) override {}
-	void requestModifyOffsetOptions(double& , bool) override {}
 	bool requestAttributesDialog(RS_AttributesData&, RS_LayerList&) override{return false;}
 	bool requestMoveDialog(RS_MoveData&) override {return false;}
 	bool requestRotateDialog(RS_RotateData&) override {return false;}

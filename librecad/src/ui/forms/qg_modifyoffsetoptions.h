@@ -29,39 +29,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef QG_MODIFYOFFSETOPTIONS_H
 #define QG_MODIFYOFFSETOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
-class RS_ActionDrawModifyOffset;
+class RS_ActionModifyOffset;
+
 namespace Ui {
 class Ui_ModifyOffsetOptions;
 }
 
-class QG_ModifyOffsetOptions : public QWidget
+class QG_ModifyOffsetOptions : public LC_ActionOptionsWidgetBase
 {
-    Q_OBJECT
+Q_OBJECT
 
 public:
-    QG_ModifyOffsetOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_ModifyOffsetOptions();
-
-public slots:
-//    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateDist( const QString & d );
-    virtual void setDist( double& d , bool initial=true);
+    QG_ModifyOffsetOptions();
+    ~QG_ModifyOffsetOptions() override;
 
 protected:
-//    RS_ActionModifyOffset* action;
-    double* dist;
-
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void doSaveSettings() override;
+    void setDistanceToActionAndView(QString qString);
+    void setDistanceFixedToActionAndView(bool val);
 protected slots:
-    virtual void languageChange();
-
+    void languageChange() override;
+    void on_leDist_editingFinished();
+    void on_cbFixedDistance_clicked(bool val);
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_ModifyOffsetOptions> ui;
+    std::unique_ptr<Ui::Ui_ModifyOffsetOptions> ui;
+    RS_ActionModifyOffset* action = nullptr;
 };
 
 #endif
-//EOF

@@ -32,12 +32,17 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 #include "rs_preview.h"
+#include "qg_modifyoffsetoptions.h"
+#include "rs_debug.h"
 
 RS_ActionModifyOffset::RS_ActionModifyOffset(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :RS_PreviewActionInterface("Modify Offset",
-                               container, graphicView), data(new RS_OffsetData()){
+    :LC_ActionPreSelectionAwareBase("Modify Offset",
+                               container, graphicView,
+                               {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
+                               true),
+                               data(new RS_OffsetData()){
     actionType = RS2::ActionModifyOffset;
 
     data->distance = 0.;
@@ -46,13 +51,17 @@ RS_ActionModifyOffset::RS_ActionModifyOffset(
     data->useCurrentLayer = true;
 }
 
+// fixme - support remove originals mode
+// fixme - number of copies support
+// fixme - support attributes support
+// todo - basically, it seems that this action should be re-thought in general. There are several limitations (say,
+// todo - some entities like ellipse or splines do not support offset.
+// todo - also, it seems that it's related to parallel/equidistant polyline actions...
+// todo - so probably either this action should be reworked, or existing actions should be extended to support
+// todo - selection and better offset operations...
+
 RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
-void RS_ActionModifyOffset::init(int status){
-    RS_ActionInterface::init(status);
-    //finish, if nothing selected
-    if (container->countSelected() == 0) finish();
-}
 
 void RS_ActionModifyOffset::trigger(){
     RS_Modification m(*container, graphicView);
@@ -61,56 +70,140 @@ void RS_ActionModifyOffset::trigger(){
     finish(false);
 }
 
-void RS_ActionModifyOffset::mouseMoveEvent(QMouseEvent *e){
+void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
 //    RS_DEBUG->print("RS_ActionModifyOffset::mouseMoveEvent begin");
-    data->coord = snapPoint(e);
 
+    RS_Vector mouse = snapPoint(e);
+    deletePreview();
+//            mouse = getSnapAngleAwarePoint(e, referencePoint, mouse, true);
     RS_EntityContainer ec(nullptr, true);
     for (auto en: *container) {
         if (en->isSelected()) ec.addEntity(en->clone());
     }
     if (ec.isEmpty()) return;
-    RS_Modification m(ec, nullptr, false);
-    m.offset(*data);
 
-    deletePreview();
-    preview->addSelectionFrom(ec);
+//            data->number = 2;
+    switch (getStatus()){
+        case SetReferencePoint:{
+            data->coord = getRelZeroAwarePoint(e, mouse);
+            RS_Modification m(ec, nullptr, false);
+            m.offset(*data);
+            preview->addSelectionFrom(ec);
+            break;
+        }
+        case SetPosition:{
+            data->coord = referencePoint;
+//            data->coord = mouse;
+            RS_Vector offset = mouse - referencePoint;
+            if (!distanceIsFixed){
+                data->distance = offset.magnitude();
+            }
+            LC_ERR << "Offset " << offset.x << " - " << offset.y << " Dist:" << data->distance;
+            RS_Modification m(ec, nullptr, false);
+            m.offset(*data);
+
+            preview->addSelectionFrom(ec);
+
+
+            previewRefPoint(referencePoint);
+            previewRefSelectablePoint(mouse);
+            previewRefLine(referencePoint, mouse);
+            break;
+        }
+        default:
+            break;
+    }
     drawPreview();
 }
-
-void RS_ActionModifyOffset::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
-    trigger();
+void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
+    switch (status){
+        case SetReferencePoint:{
+            referencePoint = getRelZeroAwarePoint(e, snapPoint(e)); // fixme relpoint support
+            data->coord = referencePoint;
+            if (!distanceIsFixed){
+                moveRelativeZero(referencePoint);
+            }
+            if (distanceIsFixed){
+                trigger();
+            }
+            else{
+              setStatus(SetPosition);
+            }
+            break;
+        }
+        case SetPosition:{
+           trigger();
+           break;
+        }
+        default:
+            break;
+    }
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyOffset::createOptionsWidget() {
+    m_optionWidget = std::make_unique<QG_ModifyOffsetOptions>();
+}
+
+double RS_ActionModifyOffset::getDistance() {
+    return data->distance;
+}
+
+void RS_ActionModifyOffset::setDistance(double distance) {
+    data->distance = distance;
+}
+
+void RS_ActionModifyOffset::setDistanceFixed(bool value) {
+    distanceIsFixed = value;
+    if (!value){
+        if (getStatus() == SetPosition){
+            setStatus(SetReferencePoint);
+        }
+    }
+}
+
+bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
+    return false;
+}
+
+void RS_ActionModifyOffset::selectionCompleted(bool singleEntity) {
+    setSelectionComplete(isAllowTriggerOnEmptySelection());
+    updateMouseButtonHints();
+}
+
+void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
     deletePreview();
-    init(status - 1);
+    if (status == SetReferencePoint){
+        if (selectionComplete) {
+            selectionComplete = false;
+        }
+        else{
+            init(status - 1);
+        }
+    }
+    else{
+        init(status - 1);
+    }
 }
 
-void RS_ActionModifyOffset::updateMouseButtonHints(){
-    switch (getStatus()) {
+void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
+    switch (status) {
+        case SetReferencePoint:
+            if (distanceIsFixed){
+                updateMouseWidgetTRBack("Specify direction of offset");
+            }
+            else {
+                updateMouseWidgetTRBack("Specify reference point for direction of offset");
+            }
+            break;
         case SetPosition:
             updateMouseWidgetTRBack("Specify direction of offset");
             break;
-
         default:
             updateMouseWidget();
             break;
     }
 }
 
-// fixme - options ownership
-void RS_ActionModifyOffset::showOptions(){
-    RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, true);
-}
-
-void RS_ActionModifyOffset::hideOptions(){
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestModifyOffsetOptions(data->distance, false);
-}
-
-RS2::CursorType RS_ActionModifyOffset::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::CadCursor;
+void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select lines, polylines, circles or arcs to create offset");
 }

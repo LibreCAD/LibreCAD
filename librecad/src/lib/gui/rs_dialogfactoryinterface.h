@@ -263,13 +263,7 @@ public:
      */
     virtual void requestSnapDistOptions(double& dist, bool on) = 0;
     virtual void requestSnapMiddleOptions(int& middlePoints, bool on) = 0;
-    /**
-      *This virtual method must overwritten and must present
-      * a widget for actionmodifyoffset distance
-      * @dist, distance of offset
-      * @on, to create the widget if true, and to delete the widget if false
-      */
-    virtual void requestModifyOffsetOptions(double& dist, bool on) = 0;
+
 
     /**
      * This virtual method must be overwritten and must present

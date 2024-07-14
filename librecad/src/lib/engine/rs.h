@@ -357,7 +357,6 @@ namespace RS2 {
         ActionModifyBevel,
         ActionModifyRound,
         ActionModifyOffset,
-        ActionModifyOffsetNoSelect,
         ActionModifyLineJoin,
         ActionModifyDuplicate,
         ActionModifyBreakDivide,

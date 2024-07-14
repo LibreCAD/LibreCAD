@@ -1900,26 +1900,24 @@ bool RS_Modification::move(RS_MoveData& data) {
  *@Author: Dongxu Li
  */
 bool RS_Modification::offset(const RS_OffsetData& data) {
-	if (!container) {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::offset: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
     // Create new entities
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1);
-            num++) {
+    for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
         // too slow:
-		for(auto e: *container){
-			if (e && e->isSelected()) {
-                RS_Entity* ec = e->clone();
-				//highlight is used by trim actions. do not carry over flag
-				ec->setHighlighted(false);
+        for(auto e: *container){ // fixme - iterative over all entities in container for checking selected
+            if (e != nullptr && e->isSelected()) {
+                auto ec = e->clone();
+                //highlight is used by trim actions. do not carry over flag
+                ec->setHighlighted(false);
 
-				if (!ec->offset(data.coord, num*data.distance)) {
+                if (!ec->offset(data.coord, num*data.distance)) {
                     delete ec;
                     continue;
                 }
@@ -1930,11 +1928,12 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
                     ec->setPenToActive();
                 }
                 if (ec->rtti()==RS2::EntityInsert) {
-					static_cast<RS_Insert*>(ec)->update();
+                    auto* insert = dynamic_cast<RS_Insert *>(ec);
+                    insert->update();
                 }
                 // since 2.0.4.0: keep selection
                 ec->setSelected(true);
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
@@ -1959,10 +1958,8 @@ bool RS_Modification::rotate(RS_RotateData &data){
     std::vector<RS_Entity *> addList;
 
     // Create new entities
-    for (int num = 1;
-         num <= data.number || (data.number == 0 && num <= 1);
-         num++) {
-        for (auto e: *container) {
+    for (int num = 1; num <= data.number || (data.number == 0 && num <= 1); num++) {
+        for (auto e: *container) { //  fixme - iterating over all entities in container for selection
             //for (unsigned i=0; i<container->count(); ++i) {
             //RS_Entity* e = container->entityAt(i);
 

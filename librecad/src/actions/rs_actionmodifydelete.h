@@ -50,7 +50,7 @@ public:
                           RS_GraphicView& graphicView);
     void trigger() override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
     void updateMouseButtonHintsForSelection() override;
     void selectionCompleted(bool singleEntity) override;
 };

@@ -99,9 +99,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionModifyMoveRotateNoSelect:
             updateMouseWidgetTRCancel("Select to move and rotate");
             break;
-        case RS2::ActionModifyOffsetNoSelect:
+        /*case RS2::ActionModifyOffsetNoSelect:
             updateMouseWidgetTRCancel("Select to create offset");
-            break;
+            break;*/
         case RS2::ActionModifyRotate2NoSelect:
             updateMouseWidgetTRCancel("Select for two axis rotation");
             break;
