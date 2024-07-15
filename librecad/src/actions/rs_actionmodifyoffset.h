@@ -29,8 +29,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONMODIFYOFFSET_H
 #define RS_ACTIONMODIFYOFFSET_H
 
-#include "rs_previewactioninterface.h"
-#include "lc_actionpreselectionawarebase.h"
+
+#include "lc_actionmodifybase.h"
 
 struct RS_OffsetData;
 
@@ -39,7 +39,7 @@ struct RS_OffsetData;
  *
  * @author Dongxu Li
  */
-class RS_ActionModifyOffset : public LC_ActionPreSelectionAwareBase {
+class RS_ActionModifyOffset : public LC_ActionModifyBase {
 Q_OBJECT
 public:
     /**
@@ -72,5 +72,7 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
+
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
 };
 #endif

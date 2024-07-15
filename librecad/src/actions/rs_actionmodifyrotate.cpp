@@ -108,7 +108,7 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
                 previewRefPoint(mouse);
                 drawPreview();
             } else {
-                preview->addSelectionFrom(*container);
+                preview-> addSelectionFrom(*container); // fixme - check
                 RS_Vector center = (preview->getMin() + preview->getMax()) / 2;
                 previewRefLine(data->center, mouse);
                 previewRefLine(data->center, center);
@@ -125,7 +125,7 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
                 drawPreview();
             } else {
                 trySnapToRelZeroCoordinateEvent(e);
-                preview->addSelectionFrom(*container);
+                preview->addSelectionFrom(*container); // fixme - check
                 RS_Vector center = (preview->getMin() + preview->getMax()) / 2;
                 deletePreview();
                 previewRefLine(center, mouse);
@@ -137,7 +137,7 @@ void RS_ActionModifyRotate::mouseMoveEvent(QMouseEvent *e){
             if (!mouse.valid) return;
             deletePreview();
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
-            preview->addSelectionFrom(*container);
+            preview->addSelectionFrom(*container); // fixme - check
             double rotationAngle = RS_Math::correctAngle((mouse - data->center).angle() - data->angle);
             preview->rotate(data->center, rotationAngle);
 

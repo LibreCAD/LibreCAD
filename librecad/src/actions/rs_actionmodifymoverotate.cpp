@@ -90,7 +90,7 @@ void RS_ActionModifyMoveRotate::mouseMoveEvent(QMouseEvent *e){
                     pPoints->data.offset = pPoints->targetPoint - pPoints->data.referencePoint;
 
                     deletePreview();
-                    preview->addSelectionFrom(*container);
+                    preview->addSelectionFrom(*container);// fixme - check
                     preview->rotate(pPoints->data.referencePoint, pPoints->data.angle);
                     preview->move(pPoints->data.offset);
                     drawPreview();

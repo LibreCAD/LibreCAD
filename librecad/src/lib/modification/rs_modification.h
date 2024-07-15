@@ -273,7 +273,7 @@ public:
         bool both, bool forPreview = false);
     RS_Entity* trimAmount(const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
                           double dist, bool trimBoth, bool &trimStart, bool &trimEnd, bool forPreview = false);
-    bool offset(const RS_OffsetData &data);
+    bool offset(const RS_OffsetData &data, bool previewOny = false, RS_EntityContainer* previewContainer = nullptr);
     bool cut(const RS_Vector &cutCoord, RS_AtomicEntity *cutEntity);
     bool stretch(
         const RS_Vector &firstCorner,

@@ -130,7 +130,7 @@ RS_Vector RS_ActionModifyScale::getTargetPoint(QMouseEvent* e)
 void RS_ActionModifyScale::showPreview()
 {
     deletePreview();
-    preview->addSelectionFrom(*container);
+    preview->addSelectionFrom(*container); // fixme - check
     findFactor();
 
     // RS_Modification only considers selected

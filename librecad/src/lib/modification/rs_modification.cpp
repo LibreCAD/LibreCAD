@@ -1909,7 +1909,7 @@ bool RS_Modification::move(RS_MoveData& data, bool previewOnly, RS_EntityContain
  *
  *@Author: Dongxu Li
  */
-bool RS_Modification::offset(const RS_OffsetData& data) {
+bool RS_Modification::offset(const RS_OffsetData& data, bool previewOnly, RS_EntityContainer* previewContainer) {
     if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::offset: no valid container");
@@ -1918,11 +1918,21 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
 
     std::vector<RS_Entity*> addList;
 
+    int numberOfCopies = data.number;
+    if (!data.multipleCopies){
+        numberOfCopies = 1;
+    }
+    else{
+        if (numberOfCopies < 1){
+            numberOfCopies = 1;
+        }
+    }
+
     // Create new entities
     // too slow:
     for(auto e: *container){ // fixme - iterative over all entities in container for checking selected
         if (e != nullptr && e->isSelected()) {
-            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
+            for (int num=1; num<= numberOfCopies; num++) {
                 auto ec = e->clone();
                 //highlight is used by trim actions. do not carry over flag
                 ec->setHighlighted(false);
@@ -1949,8 +1959,17 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
+    if (previewOnly){
+        for (RS_Entity *e: addList) {
+            if (e != nullptr) {
+                previewContainer->addEntity(e);
+            }
+        }
+    }
+    else {
+        deselectOriginals(!data.keepOriginals);
+        addNewEntities(addList);
+    }
 
     return true;
 }

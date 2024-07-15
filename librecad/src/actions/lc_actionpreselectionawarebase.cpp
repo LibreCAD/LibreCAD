@@ -89,7 +89,7 @@ void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool sin
 }
 
 void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelection) {
-    unsigned int selectedCount = countSelectedEntities();
+        unsigned int selectedCount = countSelectedEntities();
     bool proceed = selectedCount > 0 || allowEmptySelection;
     if (proceed) {
         selectionComplete = true;

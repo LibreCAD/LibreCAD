@@ -38,7 +38,7 @@
 RS_ActionModifyOffset::RS_ActionModifyOffset(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
-    :LC_ActionPreSelectionAwareBase("Modify Offset",
+    :LC_ActionModifyBase("Modify Offset",
                                container, graphicView,
                                {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
                                true),
@@ -75,20 +75,17 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
 
     RS_Vector mouse = snapPoint(e);
     deletePreview();
-//            mouse = getSnapAngleAwarePoint(e, referencePoint, mouse, true);
     RS_EntityContainer ec(nullptr, true);
     for (auto en: *container) {
         if (en->isSelected()) ec.addEntity(en->clone());
     }
     if (ec.isEmpty()) return;
 
-//            data->number = 2;
     switch (getStatus()){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
             RS_Modification m(ec, nullptr, false);
-            m.offset(*data);
-            preview->addSelectionFrom(ec);
+            m.offset(*data, true, preview.get());
             break;
         }
         case SetPosition:{
@@ -98,12 +95,9 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
             if (!distanceIsFixed){
                 data->distance = offset.magnitude();
             }
-            LC_ERR << "Offset " << offset.x << " - " << offset.y << " Dist:" << data->distance;
+//            LC_ERR << "Offset " << offset.x << " - " << offset.y << " Dist:" << data->distance;
             RS_Modification m(ec, nullptr, false);
-            m.offset(*data);
-
-            preview->addSelectionFrom(ec);
-
+            m.offset(*data, true, preview.get());
 
             previewRefPoint(referencePoint);
             previewRefSelectablePoint(mouse);
@@ -118,7 +112,7 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
 void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
-            referencePoint = getRelZeroAwarePoint(e, snapPoint(e)); // fixme relpoint support
+            referencePoint = getRelZeroAwarePoint(e, snapPoint(e));
             data->coord = referencePoint;
             if (!distanceIsFixed){
                 moveRelativeZero(referencePoint);
@@ -206,4 +200,8 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
 
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select lines, polylines, circles or arcs to create offset",LC_ModifiersInfo::CTRL("Offset immediately after selection"));
+}
+
+LC_ModifyOperationFlags* RS_ActionModifyOffset::getModifyOperationFlags() {
+    return data.get();
 }

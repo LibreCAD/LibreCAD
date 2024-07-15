@@ -100,7 +100,7 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
 }
 
 void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2){
-    this->preview->addSelectionFrom(*this->container);
+    this->preview->addSelectionFrom(*this->container); // fixme - check
     this->preview->mirror(mirrorLinePoint1, mirrorLinePoint2);
     this->previewLine(mirrorLinePoint1, mirrorLinePoint2);
     this->previewRefLine(mirrorLinePoint1, mirrorLinePoint2);
