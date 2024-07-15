@@ -436,8 +436,6 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     bool invalidContainer {true};
 	// copy entities / layers / blocks
 	for(auto e: *container){
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
         if (e && e->isSelected()) {
             copyEntity(e, ref, cut);
             invalidContainer = false;
@@ -560,8 +558,6 @@ void RS_Modification::copyLayers(RS_Entity* e) {
             return;
         }
         for(auto e2: *b) {
-            //for (unsigned i=0; i<b->count(); ++i) {
-            //RS_Entity* e2 = b->entityAt(i);
             copyLayers(e2);
         }
     } else {
@@ -1149,7 +1145,7 @@ void RS_Modification::deleteLineNode(RS_Line* line, const RS_Vector& node)
     if (node == line->getEndpoint()) nodeIsStartPoint = false;
 
 
-    for (unsigned int i = 0; i < document->count(); i++)
+    for (unsigned int i = 0; i < document->count(); i++) // fixme - iterating over all entities
     {
         if (document->entityAt(i)->rtti() == RS2::EntityLine)
         {
@@ -1855,13 +1851,11 @@ bool RS_Modification::move(RS_MoveData& data, bool previewOnly, RS_EntityContain
 
     std::vector<RS_Entity*> addList;
 
-    // Create new entities
-    for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {  // fixme - change for cycles order
-        // too slow:
-        //for (unsigned i=0; i<container->count(); ++i) {
-//RS_Entity* e = container->entityAt(i);
-        for(auto e: *container){  // fixme - iterate over all entities to get selection, rework
-            if (e && e->isSelected()) {
+    // too slow:
+    for(auto e: *container){  // fixme - iterate over all entities to get selection, rework
+        if (e && e->isSelected()) {
+            // Create new entities
+            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
                 RS_Entity* ec = e->clone();
 
                 ec->move(data.offset*num);
@@ -1914,10 +1908,10 @@ bool RS_Modification::offset(const RS_OffsetData& data) {
     std::vector<RS_Entity*> addList;
 
     // Create new entities
-    for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {  // fixme - change for cycle number
-        // too slow:
-        for(auto e: *container){ // fixme - iterative over all entities in container for checking selected
-            if (e != nullptr && e->isSelected()) {
+    // too slow:
+    for(auto e: *container){ // fixme - iterative over all entities in container for checking selected
+        if (e != nullptr && e->isSelected()) {
+            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
                 auto ec = e->clone();
                 //highlight is used by trim actions. do not carry over flag
                 ec->setHighlighted(false);
@@ -1965,9 +1959,6 @@ bool RS_Modification::rotate(RS_RotateData &data){
     // Create new entities
     for (int num = 1; num <= data.number || (data.number == 0 && num <= 1); num++) {
         for (auto e: *container) { //  fixme - iterating over all entities in container for selection
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-
             if (e && e->isSelected()){
                 RS_Entity *ec = e->clone();
                 ec->setSelected(false);
@@ -1999,51 +1990,44 @@ bool RS_Modification::rotate(RS_RotateData &data){
  * modification.
  */
 bool RS_Modification::scale(RS_ScaleData& data) {
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::scale: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> selectedList,addList;
+    std::vector<RS_Entity*> selectedList,addList;
 
-	for(auto ec: *container){
+    for(auto ec: *container){
         if (ec->isSelected() ) {
             if ( !data.isotropicScaling ) {
-                    if ( ec->rtti() == RS2::EntityCircle ) {
-    //non-isotropic scaling, replacing selected circles with ellipses
-                auto* c=static_cast<RS_Circle*>(ec);
-				ec= new RS_Ellipse{container,
-				{c->getCenter(), {c->getRadius(),0.},
-						1.,
-						0., 0., false}};
-            } else if ( ec->rtti() == RS2::EntityArc ) {
-    //non-isotropic scaling, replacing selected arcs with ellipses
-				RS_Arc *c=static_cast<RS_Arc*>(ec);
-				ec= new RS_Ellipse{container,
-								   {c->getCenter(),
-								   {c->getRadius(),0.},
-								   1.0,
-								   c->getAngle1(),
-								   c->getAngle2(),
-								   c->isReversed()}};
+                if ( ec->rtti() == RS2::EntityCircle ) {
+                    //non-isotropic scaling, replacing selected circles with ellipses
+                    auto* c=static_cast<RS_Circle*>(ec);
+                    ec= new RS_Ellipse{container,
+                                       {c->getCenter(), {c->getRadius(),0.},
+                                        1.,
+                                        0., 0., false}};
+                } else if ( ec->rtti() == RS2::EntityArc ) {
+                    //non-isotropic scaling, replacing selected arcs with ellipses
+                    RS_Arc *c=static_cast<RS_Arc*>(ec);
+                    ec= new RS_Ellipse{container,
+                                       {c->getCenter(),
+                                        {c->getRadius(),0.},
+                                        1.0,
+                                        c->getAngle1(),
+                                        c->getAngle2(),
+                                        c->isReversed()}};
+                }
             }
-            }
-			selectedList.push_back(ec);
-
+            selectedList.push_back(ec);
         }
     }
 
     // Create new entities
-    for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {  // fixme - change for cycle number
-
-		for(RS_Entity* e: selectedList) {
-            //for (RS_Entity* e=container->firstEntity();
-            //        e;
-            //        e=container->nextEntity()) {
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-			if (e) {
+    for(RS_Entity* e: selectedList) {
+        if (e != nullptr) {
+            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
@@ -2057,7 +2041,7 @@ bool RS_Modification::scale(RS_ScaleData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
@@ -2089,9 +2073,6 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
             num<=(int)data.copy || (data.copy==false && num<=1);
 			++num) {
 		for(auto e: *container){
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-
             if (e && e->isSelected()) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
@@ -2124,22 +2105,19 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
  * Rotates entities around two centers with the given parameters.
  */
 bool RS_Modification::rotate2(RS_Rotate2Data& data) {
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::rotate2: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
     // Create new entities
-    for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {  // fixme - change for cycle number
 
-		for(auto e: *container){
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
-
-            if (e && e->isSelected()) {
+    for(auto e: *container){
+        if (e && e->isSelected()) { // fixme - iterating over all entities to get selection
+            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
@@ -2157,7 +2135,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
@@ -2175,23 +2153,19 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
  * Moves and rotates entities with the given parameters.
  */
 bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::moveRotate: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
 
     // Create new entities
-    for (int num=1;
-            num<=data.number || (data.number==0 && num<=1); // fixme - change for cycle number
-			++num) {
-		for(auto e: *container){ // fixme - iterating all entities for selection
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* e = container->entityAt(i);
 
-            if (e && e->isSelected()) {
+    for(auto e: *container){ // fixme - iterating all entities for selection
+        if (e && e->isSelected()) {
+            for (int num=1;num<=data.number || (data.number==0 && num<=1); ++num) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
@@ -2207,7 +2181,7 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
@@ -2219,8 +2193,6 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     return true;
 }
 
-
-
 /**
  * Deselects all selected entities and removes them if remove is true;
  *
@@ -2231,10 +2203,6 @@ void RS_Modification::deselectOriginals(bool remove)
     LC_UndoSection undo( document, handleUndo);
 
     for (auto e: *container) {
-
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
-
         if (e) {
             bool selected = false;
 
@@ -3334,8 +3302,6 @@ bool RS_Modification::explode(const bool remove /*= true*/)
     std::vector<RS_Entity*> addList;
 
     for(auto e: *container){ // fixme - iterating all entities for selection
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
 
         if (e != nullptr && e->isSelected()) {
             if (e->isContainer()) {

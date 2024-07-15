@@ -91,9 +91,6 @@ void RS_Selection::selectAll(bool select){
 
 //container->setSelected(select);
     for (auto e: *container) {
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
-
         if (e && e->isVisible()){
             if (graphicView->getTypeToSelect() == RS2::EntityType::EntityUnknown){
                 e->setSelected(select);
@@ -121,8 +118,6 @@ void RS_Selection::invertSelection(){
     }
 
     for (auto e: *container) {
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
 
         if (e && e->isVisible()){
             e->toggleSelected();
@@ -168,8 +163,6 @@ void RS_Selection::selectIntersected(
     bool inters;
 
     for (auto e: *container) { // fixme - iteration over ALL entities, limit area
-        //for (unsigned i=0; i<container->count(); ++i) {
-        //RS_Entity* e = container->entityAt(i);
 
         if (e && e->isVisible()){
 
@@ -248,8 +241,6 @@ void RS_Selection::selectContour(RS_Entity *e){
         found = false;
         // fixme - iterating over all entities of drawing
         for (auto en: *container) {
-            //for (unsigned i=0; i<container->count(); ++i) {
-            //RS_Entity* en = container->entityAt(i);
 
             if (en && en->isVisible() &&
                 en->isAtomic() && en->isSelected() != select &&
