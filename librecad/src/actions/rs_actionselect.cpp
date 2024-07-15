@@ -78,9 +78,6 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionModifyDeleteQuick:
             updateMouseWidgetTRCancel("Select to delete immediately");
             break;
-//        case RS2::ActionModifyMoveNoSelect:
-//            updateMouseWidgetTRCancel("Select to move");
-//            break;
         case RS2::ActionEditCopyNoSelect:
             updateMouseWidgetTRCancel("Select to copy");
             break;
@@ -93,15 +90,9 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionModifyScaleNoSelect:
             updateMouseWidgetTRCancel("Select to scale");
             break;
-        case RS2::ActionModifyMirrorNoSelect:
-            updateMouseWidgetTRCancel("Select to mirror");
-            break;
         case RS2::ActionModifyMoveRotateNoSelect:
             updateMouseWidgetTRCancel("Select to move and rotate");
             break;
-        /*case RS2::ActionModifyOffsetNoSelect:
-            updateMouseWidgetTRCancel("Select to create offset");
-            break;*/
         case RS2::ActionModifyRotate2NoSelect:
             updateMouseWidgetTRCancel("Select for two axis rotation");
             break;

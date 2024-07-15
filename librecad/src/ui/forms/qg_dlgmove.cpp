@@ -38,100 +38,56 @@
  *  true to construct a modal dialog.
  */
 QG_DlgMove::QG_DlgMove(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
+    : QDialog(parent, fl){
     setModal(modal);
     setupUi(this);
-
-    init();
+    connect(cbMultipleCopies, &QCheckBox::clicked, this, &QG_DlgMove::cbMultipleCopiesClicked);
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgMove::~QG_DlgMove()
-{
+QG_DlgMove::~QG_DlgMove(){
     destroy();
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgMove::languageChange()
-{
+void QG_DlgMove::languageChange(){
     retranslateUi(this);
 }
 
-void QG_DlgMove::init() {
-    RS_SETTINGS->beginGroup("/Modify");
-    copies = RS_SETTINGS->readEntry("/MoveCopies", "10");
-    numberMode = RS_SETTINGS->readNumEntry("/MoveMode", 0);
-    useCurrentLayer =
-        (bool)RS_SETTINGS->readNumEntry("/MoveUseCurrentLayer", 0);
-    useCurrentAttributes =
-        (bool)RS_SETTINGS->readNumEntry("/MoveUseCurrentAttributes", 0);
-    RS_SETTINGS->endGroup();
-
-    switch (numberMode) {
-    case 0:
-        rbMove->setChecked(true);
-        break;
-    case 1:
-        rbCopy->setChecked(true);
-        break;
-    case 2:
-        rbMultiCopy->setChecked(true);
-        break;
-    default:
-        break;
-    }
-    leNumber->setText(copies);
-    cbCurrentAttributes->setChecked(useCurrentAttributes);
-    cbCurrentLayer->setChecked(useCurrentLayer);
+void QG_DlgMove::cbMultipleCopiesClicked(bool val) {
+   sbNumber->setEnabled(val);
 }
 
-void QG_DlgMove::destroy() {
-    RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/MoveCopies", leNumber->text());
-    if (rbMove->isChecked()) {
-        numberMode = 0;
-    } else if (rbCopy->isChecked()) {
-        numberMode = 1;
-    } else {
-        numberMode = 2;
-    }
-    RS_SETTINGS->writeEntry("/MoveMode", numberMode);
-    RS_SETTINGS->writeEntry("/MoveUseCurrentLayer",
-                            (int)cbCurrentLayer->isChecked());
-    RS_SETTINGS->writeEntry("/MoveUseCurrentAttributes",
-                            (int)cbCurrentAttributes->isChecked());
-    RS_SETTINGS->endGroup();
+void QG_DlgMove::init() {
+    rbCopy->setChecked(data->keepOriginals);
+    rbMove->setChecked(!data->keepOriginals);
+    cbMultipleCopies -> setChecked(data->multipleCopies);
+
+    sbNumber->setValue(data->number);
+    cbCurrentAttributes->setChecked(data->useCurrentAttributes);
+    cbCurrentLayer->setChecked(data->useCurrentLayer);
+    sbNumber->setEnabled(data->multipleCopies);
 }
 
 void QG_DlgMove::setData(RS_MoveData* d) {
     data = d;
+    init();
 }
 
 void QG_DlgMove::updateData() {
     if (rbMove->isChecked()) {
-        data->number = 0;
+        data->keepOriginals = false;
     } else if (rbCopy->isChecked()) {
-        data->number = 1;
-    } else {
-        bool ok;
-        data->number = static_cast<int>(fabs(RS_Math::eval(leNumber->text(),&ok)));
-		if (!ok || data->number<1 || data->number>100){
-            if(ok && data->number > 100) {
-                data->number=-100;//max number of copies set to 100
-            }else{
-                data->number=-1;
-            }
-            leNumber->setText(QString::number(abs(data->number)));
-        }
+        data->keepOriginals = true;
     }
+    data->number = sbNumber->value();
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
+    data->multipleCopies = cbMultipleCopies->isChecked();
 }
 

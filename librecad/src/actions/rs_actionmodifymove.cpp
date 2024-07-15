@@ -24,10 +24,8 @@
 **
 **********************************************************************/
 
-#include <cmath>
 
 #include <QMouseEvent>
-
 #include "rs_actionmodifymove.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
@@ -47,7 +45,7 @@ struct RS_ActionModifyMove::Points {
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Move Entities",
+        :LC_ActionModifyBase("Move Entities",
 						   container, graphicView)
 		, pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyMove;
@@ -55,11 +53,6 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
 
-
-
-// fixme - options widget
-// fixme - get rid of options dialog?
-// fixme - multiple copies on preview support (for consistency with other actions)
 void RS_ActionModifyMove::trigger(){
 
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
@@ -93,10 +86,8 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
 
                 RS_Modification m(*container, graphicView, false);
 
-                RS_MoveData data = pPoints->data;
-                data.number = 2;
-                data.offset = pPoints->targetPoint - pPoints->referencePoint;
-                m.move(data, true, preview.get());
+                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                m.move(pPoints->data, true, preview.get());
 
                 if (isShift(e)){
                     previewLine(pPoints->referencePoint, mouse);
@@ -147,6 +138,10 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
         return;
     }
 
+    if (!selectionComplete){
+        return;
+    }
+
     RS_Vector pos = e->getCoordinate();
 
     switch (getStatus()) {
@@ -158,18 +153,22 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
         }
         case SetTargetPoint: {
             pPoints->targetPoint = pos;
-            moveRelativeZero(pPoints->targetPoint);
-            setStatus(ShowDialog); // todo - hm... what for?
-            if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
-                if (pPoints->data.number < 0){
-                    pPoints->data.number = abs(pPoints->data.number);
-                    commandMessage(tr("Invalid number of copies, use %1 ").arg(pPoints->data.number));
+            if (isShowModifyActionDialog()){
+                setStatus(ShowDialog); // todo - hm... what for?
+                if (RS_DIALOGFACTORY->requestMoveDialog(pPoints->data)){
+                    updateOptions();
+                    pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                    trigger();
+                    moveRelativeZero(pPoints->targetPoint);
                 }
-                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
-                trigger();
+                else{
+                    setStatus(SetTargetPoint);
+                }
             }
             else{
-                setStatus(SetTargetPoint);
+                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                trigger();
+                moveRelativeZero(pPoints->targetPoint);
             }
             break;
         }
@@ -196,24 +195,14 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select to move", LC_ModifiersInfo::CTRL("Move immediately after selection"));
 }
 
-void RS_ActionModifyMove::selectionCompleted(bool singleEntity) {
-    setSelectionComplete(isAllowTriggerOnEmptySelection());
-    updateMouseButtonHints();
-//    if (selectionComplete) {
-//        trigger();
-//        if (singleEntity) {
-//            deselectAll();
-//        } else {
-//            setStatus(-1);
-//        }
-//        updateSelectionWidget();
-//    }
-}
-
 RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected(int status) {
     return RS2::CadCursor;
 }
 
 void RS_ActionModifyMove::createOptionsWidget() {
     m_optionWidget = std::make_unique<LC_MoveOptions>();
+}
+
+LC_ModifyOperationFlags *RS_ActionModifyMove::getModifyOperationFlags() {
+    return &pPoints->data;
 }

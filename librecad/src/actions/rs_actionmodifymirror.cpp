@@ -45,20 +45,15 @@ struct RS_ActionModifyMirror::Points {
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :RS_PreviewActionInterface("Mirror Entities",
+        :LC_ActionModifyBase("Mirror Entities",
                                    container, graphicView)
         , pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionModifyMirror;
+    mirrorToExistingLine = false;
 }
-
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
-// todo - replace dialog by options?
-// todo - support multiple mirror operation for existing selection if "keep original" is set - so it will be possible to mirror the same selection say over several lines
 
-void RS_ActionModifyMirror::init(int status) {
-    RS_PreviewActionInterface::init(status);
-}
 
 void RS_ActionModifyMirror::trigger() {
 
@@ -70,7 +65,7 @@ void RS_ActionModifyMirror::trigger() {
     updateSelectionWidget();
 }
 
-void RS_ActionModifyMirror::mouseMoveEvent(QMouseEvent *e){
+void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyMirror::mouseMoveEvent begin");
     RS_Vector mouse = snapPoint(e);
     deletePreview();
@@ -113,7 +108,7 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     this->previewRefSelectablePoint(mirrorLinePoint2);
 }
 
-void RS_ActionModifyMirror::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     if (mirrorToExistingLine && status == SetAxisPoint1){
         RS_Entity* en = catchEntity(e, RS2::EntityLine, RS2::ResolveAll);
         if (en != nullptr){
@@ -133,13 +128,28 @@ void RS_ActionModifyMirror::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     }
 }
 
-void RS_ActionModifyMirror::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
     deletePreview();
-    init(status - 1);
+    if (status == SetAxisPoint1){
+        if (selectionComplete) {
+            selectionComplete = false;
+        }
+        else{
+            init(status - 1);
+        }
+    }
+    else{
+        init(status - 1);
+    }
+
 }
 
 void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent *e){
     if (e == nullptr){
+        return;
+    }
+
+    if (!selectionComplete){
         return;
     }
 
@@ -165,25 +175,37 @@ void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent *e){
 }
 
 void RS_ActionModifyMirror::showOptionsAndTrigger(){
-    if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)){
-        pPoints->data.axisPoint1 = pPoints->axisPoint1;
-        pPoints->data.axisPoint2 = pPoints->axisPoint2;
-        deletePreview();
-        trigger();
-        finish(false);
+    if (isShowModifyActionDialog()) {
+        if (RS_DIALOGFACTORY->requestMirrorDialog(pPoints->data)) {
+            updateOptions();
+            doTrigger();
+        } else {
+            if (mirrorToExistingLine) {
+                setStatus(SetAxisPoint1);
+            } else {
+                setStatus(SetAxisPoint2);
+            }
+        }
     }
     else{
-        if (mirrorToExistingLine){
-            setStatus(SetAxisPoint1);
-        }
-        else{
-            setStatus(SetAxisPoint2);
-        }
+        doTrigger();
     }
 }
 
-void RS_ActionModifyMirror::updateMouseButtonHints(){
-    switch (getStatus()) {
+void RS_ActionModifyMirror::doTrigger() {
+    this->pPoints->data.axisPoint1 = this->pPoints->axisPoint1;
+    this->pPoints->data.axisPoint2 = this->pPoints->axisPoint2;
+    this->deletePreview();
+    this->trigger();
+    this->finish(false);
+}
+
+void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {
+    updateMouseWidgetTRCancel("Select to mirror");
+}
+
+void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
+    switch (status) {
         case SetAxisPoint1:
             if (mirrorToExistingLine){
                 updateMouseWidgetTRCancel("Specify mirror line");
@@ -200,9 +222,6 @@ void RS_ActionModifyMirror::updateMouseButtonHints(){
             break;
     }
 }
-RS2::CursorType RS_ActionModifyMirror::doGetMouseCursor([[maybe_unused]] int status){
-    return RS2::CadCursor;
-}
 
 void RS_ActionModifyMirror::createOptionsWidget(){
     m_optionWidget = std::make_unique<LC_ModifyMirrorOptions>();
@@ -213,4 +232,12 @@ void RS_ActionModifyMirror::setMirrorToExistingLine(bool value){
     setStatus(SetAxisPoint1);
 }
 
-// EOF
+RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected(int status) {
+    return RS2::CadCursor;
+}
+
+LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags() {
+    return &pPoints->data;
+}
+
+

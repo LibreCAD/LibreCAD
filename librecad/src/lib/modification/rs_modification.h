@@ -43,13 +43,18 @@ class RS_Document;
 class RS_Graphic;
 class RS_GraphicView;
 
+struct LC_ModifyOperationFlags{
+    bool useCurrentAttributes = false;
+    bool useCurrentLayer = false;
+    bool keepOriginals = false;
+    int number = 0;
+    bool multipleCopies = false;
+};
+
 /**
  * Holds the data needed for move modifications.
  */
-struct RS_MoveData {
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_MoveData : public LC_ModifyOperationFlags{
     RS_Vector offset;
 };
 
@@ -57,10 +62,7 @@ struct RS_MoveData {
 /**
  * Holds the data needed for offset modifications.
  */
-struct RS_OffsetData {
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_OffsetData : public LC_ModifyOperationFlags{
     RS_Vector coord;
     double distance = 0.;
 };
@@ -68,25 +70,17 @@ struct RS_OffsetData {
 /**
  * Holds the data needed for rotation modifications.
  */
-struct RS_RotateData {
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_RotateData : public LC_ModifyOperationFlags{
     RS_Vector center;
     double angle = 0.;
 };
 
-
-
 /**
  * Holds the data needed for scale modifications.
  */
-struct RS_ScaleData {
+struct RS_ScaleData : public LC_ModifyOperationFlags {
     RS_Vector referencePoint;
     RS_Vector factor;
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
     // Find the factor by a source and a target point
     bool isotropicScaling = false;
     bool toFindFactor = false;
@@ -96,10 +90,7 @@ struct RS_ScaleData {
 /**
  * Holds the data needed for mirror modifications.
  */
-struct RS_MirrorData {
-    bool copy = false;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_MirrorData : public LC_ModifyOperationFlags{
     RS_Vector axisPoint1;
     RS_Vector axisPoint2;
 };
@@ -108,24 +99,17 @@ struct RS_MirrorData {
 /**
  * Holds the data needed for move/rotate modifications.
  */
-struct RS_MoveRotateData {
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_MoveRotateData : public LC_ModifyOperationFlags{
     RS_Vector referencePoint;
     RS_Vector offset;
     double angle = 0.;
 };
 
 
-
 /**
  * Holds the data needed for rotation around two centers modifications.
  */
-struct RS_Rotate2Data {
-    int number = 0;
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
+struct RS_Rotate2Data : public LC_ModifyOperationFlags{
     RS_Vector center1;
     RS_Vector center2;
     double angle1 = 0.;
@@ -133,12 +117,10 @@ struct RS_Rotate2Data {
 };
 
 
-
 /**
  * Holds the data needed for beveling modifications.
  */
-struct RS_BevelData
-{
+struct RS_BevelData{
     double length1 = 0.;
     double length2 = 0.;
     bool trim = false;

@@ -80,6 +80,7 @@ void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool sin
         trigger();
         if (singleEntity) {
             deselectAll();
+            selectionComplete = false; // continue with selection, don't finish
         } else {
             setStatus(-1);
         }

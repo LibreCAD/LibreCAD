@@ -36,81 +36,44 @@
  *  true to construct a modal dialog.
  */
 QG_DlgMirror::QG_DlgMirror(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
+    : QDialog(parent, fl){
     setModal(modal);
     setupUi(this);
-
-    init();
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgMirror::~QG_DlgMirror()
-{
+QG_DlgMirror::~QG_DlgMirror(){
     destroy();
-    // no need to delete child widgets, Qt does it all for us
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgMirror::languageChange()
-{
+void QG_DlgMirror::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgMirror::init() {
-    RS_SETTINGS->beginGroup("/Modify");
-    numberMode = RS_SETTINGS->readNumEntry("/MirrorMode", 0);
-    useCurrentLayer =
-        (bool)RS_SETTINGS->readNumEntry("/MirrorUseCurrentLayer", 0);
-    useCurrentAttributes =
-        (bool)RS_SETTINGS->readNumEntry("/MirrorUseCurrentAttributes", 0);
-    RS_SETTINGS->endGroup();
+    rbCopy->setChecked(data->keepOriginals);
+    rbMove->setChecked(!data->keepOriginals);
 
-    switch (numberMode) {
-    case 0:
-        rbMove->setChecked(true);
-        break;
-    case 1:
-        rbCopy->setChecked(true);
-        break;
-    default:
-        break;
-    }
-    cbCurrentAttributes->setChecked(useCurrentAttributes);
-    cbCurrentLayer->setChecked(useCurrentLayer);
-}
-
-void QG_DlgMirror::destroy() {
-    RS_SETTINGS->beginGroup("/Modify");
-    if (rbMove->isChecked()) {
-        numberMode = 0;
-    } else if (rbCopy->isChecked()) {
-        numberMode = 1;
-    } else {
-        numberMode = 2;
-    }
-    RS_SETTINGS->writeEntry("/MirrorMode", numberMode);
-    RS_SETTINGS->writeEntry("/MirrorUseCurrentLayer",
-                            (int)cbCurrentLayer->isChecked());
-    RS_SETTINGS->writeEntry("/MirrorUseCurrentAttributes",
-                            (int)cbCurrentAttributes->isChecked());
-    RS_SETTINGS->endGroup();
+    cbCurrentAttributes->setChecked(data->useCurrentAttributes);
+    cbCurrentLayer->setChecked(data->useCurrentLayer);
 }
 
 void QG_DlgMirror::setData(RS_MirrorData* d) {
     data = d;
+    init();
 }
 
 void QG_DlgMirror::updateData() {
     if (rbMove->isChecked()) {
-        data->copy = false;
+        data->keepOriginals = false;
     } else if (rbCopy->isChecked()) {
-        data->copy = true;
+        data->keepOriginals = true;
     }
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();

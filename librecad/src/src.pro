@@ -139,6 +139,7 @@ HEADERS += \
     actions/lc_actiondrawstar.h \
     actions/lc_actioninfopickcoordinates.h \
     actions/lc_actioninfoproperties.h \
+    actions/lc_actionmodifybase.h \
     actions/lc_actionmodifybreakdivide.h \
     actions/lc_actionmodifyduplicate.h \
     actions/lc_actionmodifylinegap.h \
@@ -334,6 +335,7 @@ SOURCES += \
     actions/lc_actiondrawstar.cpp \
     actions/lc_actioninfopickcoordinates.cpp \
     actions/lc_actioninfoproperties.cpp \
+    actions/lc_actionmodifybase.cpp \
     actions/lc_actionmodifybreakdivide.cpp \
     actions/lc_actionmodifyduplicate.cpp \
     actions/lc_actionmodifylinegap.cpp \

@@ -27,8 +27,7 @@
 #ifndef RS_ACTIONMODIFYMOVE_H
 #define RS_ACTIONMODIFYMOVE_H
 
-
-#include "lc_actionpreselectionawarebase.h"
+#include "lc_actionmodifybase.h"
 
 struct RS_MoveData;
 
@@ -37,8 +36,9 @@ struct RS_MoveData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyMove : public LC_ActionPreSelectionAwareBase {
+class RS_ActionModifyMove : public LC_ActionModifyBase {
 Q_OBJECT
+
 public:
 /**
  * Action States.
@@ -58,15 +58,13 @@ public:
     void coordinateEvent(RS_CoordinateEvent* e) override;
 protected:
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void selectionCompleted(bool singleEntity) override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseMoveEventSelected(QMouseEvent *e) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
-
     void createOptionsWidget() override;
-
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

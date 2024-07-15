@@ -343,8 +343,12 @@ void RS_ActionInterface::updateOptions(){
                 RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
                 m_optionWidget->setAction(this, true);
             } else {
+                m_optionWidget->setAction(this, true);
                 m_optionWidget->show();
             }
+        }
+        else{
+            m_optionWidget->setAction(this, true);
         }
     }
 }

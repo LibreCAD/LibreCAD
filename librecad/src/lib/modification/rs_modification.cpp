@@ -1849,13 +1849,23 @@ bool RS_Modification::move(RS_MoveData& data, bool previewOnly, RS_EntityContain
         return false;
     }
 
+    int numberOfCopies = data.number;
+    if (!data.multipleCopies){
+        numberOfCopies = 1;
+    }
+    else{
+        if (numberOfCopies < 1){
+            numberOfCopies = 1;
+        }
+    }
+
     std::vector<RS_Entity*> addList;
 
     // too slow:
     for(auto e: *container){  // fixme - iterate over all entities to get selection, rework
         if (e && e->isSelected()) {
             // Create new entities
-            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
+            for (int num= 1; num <= numberOfCopies; num++) {
                 RS_Entity* ec = e->clone();
 
                 ec->move(data.offset*num);
@@ -1885,7 +1895,8 @@ bool RS_Modification::move(RS_MoveData& data, bool previewOnly, RS_EntityContain
             }
         }
     } else {
-        deselectOriginals(data.number == 0);
+//        deselectOriginals(data.number == 0);
+        deselectOriginals(!data.keepOriginals);
         addNewEntities(addList);
     }
 
@@ -2060,20 +2071,29 @@ bool RS_Modification::scale(RS_ScaleData& data) {
  * modification.
  */
 bool RS_Modification::mirror(RS_MirrorData& data) {
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::mirror: no valid container");
         return false;
     }
 
-	std::vector<RS_Entity*> addList;
+    std::vector<RS_Entity*> addList;
+
+    int numberOfCopies = data.number;
+    if (!data.multipleCopies){
+        numberOfCopies = 1;
+    }
+    else{
+        if (numberOfCopies < 1 || true){ // fixme - review multiple copies for mirror... offset mirror line?
+            numberOfCopies = 1;
+        }
+    }
 
     // Create new entities
-    for (int num=1;
-            num<=(int)data.copy || (data.copy==false && num<=1);
-			++num) {
-		for(auto e: *container){
-            if (e && e->isSelected()) {
+
+    for(auto e: *container){
+        if (e && e->isSelected()) {
+            for (int num=1; num<=numberOfCopies; ++num) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
@@ -2087,13 +2107,13 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
                 }
-				addList.push_back(ec);
+                addList.push_back(ec);
             }
         }
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.copy==false);
+    deselectOriginals(!data.keepOriginals);
     addNewEntities(addList);
 
     return true;
@@ -2146,8 +2166,6 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
 
     return true;
 }
-
-
 
 /**
  * Moves and rotates entities with the given parameters.

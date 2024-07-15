@@ -20,28 +20,21 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="1">
-    <widget class="QRadioButton" name="rbKeepOriginals">
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbKeepOriginals">
      <property name="text">
       <string>Keep Originals</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="5">
+   <item row="0" column="4">
     <widget class="QCheckBox" name="cbCurrentLayer">
      <property name="text">
       <string>Use Current Layer</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QRadioButton" name="rbDeleteOriginals">
-     <property name="text">
-      <string>Delete Originals</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
+   <item row="0" column="2">
     <widget class="QSpinBox" name="sbNumberOfCopies">
      <property name="minimum">
       <number>1</number>
@@ -51,14 +44,14 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
+   <item row="0" column="3">
     <widget class="QCheckBox" name="cbCurrentAttr">
      <property name="text">
       <string>Use Current Attributes</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="6">
+   <item row="0" column="5">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -71,10 +64,10 @@
      </property>
     </spacer>
    </item>
-   <item row="0" column="2">
-    <widget class="QRadioButton" name="rbMultipleCopies">
+   <item row="0" column="1">
+    <widget class="QCheckBox" name="cbMultipleCopies">
      <property name="text">
-      <string>Multiple copies</string>
+      <string>Multiple Copies</string>
      </property>
     </widget>
    </item>

@@ -55,8 +55,6 @@ private:
     bool useCurrentAttributes = false;
 
     void init();
-    void destroy();
-
 };
 
 #endif // QG_DLGMIRROR_H

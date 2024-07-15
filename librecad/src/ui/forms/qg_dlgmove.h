@@ -42,19 +42,13 @@ public:
 public slots:
     virtual void setData( RS_MoveData * d );
     virtual void updateData();
-
+    void cbMultipleCopiesClicked(bool val);
 protected slots:
     virtual void languageChange();
-
 private:
-    bool useCurrentAttributes = false;
-    bool useCurrentLayer = false;
-    int numberMode = 0;
-    QString copies;
     RS_MoveData* data = nullptr;
-
     void init();
-    void destroy();
+
 
 };
 

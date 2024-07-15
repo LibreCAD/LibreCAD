@@ -17,6 +17,9 @@ public:
 public slots:
     void onMirrorToLineClicked(bool clicked);
     void languageChange() override;
+    void cbKeepOriginalsClicked(bool val);
+    void cbUseCurrentAttributesClicked(bool val);
+    void cbUseCurrentLayerClicked(bool val);
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
@@ -24,6 +27,9 @@ private:
     Ui::LC_ModifyMirrorOptions *ui = nullptr;
     RS_ActionModifyMirror* action = nullptr;
     void setMirrorToLineLineToActionAndView(bool line);
+    void setUseCurrentLayerToActionAndView(bool val);
+    void setUseCurrentAttributesToActionAndView(bool val);
+    void setKeepOriginalsToActionAndView(bool val);
 };
 
 #endif // LC_MODIFYMIRROROPTIONS_H
