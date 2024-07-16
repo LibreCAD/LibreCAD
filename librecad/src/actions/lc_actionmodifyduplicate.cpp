@@ -218,6 +218,11 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                     clone->move(offset);
                     const RS_Vector newCenter = getEntityCenterPoint(clone);
                     previewRefSelectablePoint(newCenter);
+                    RS_EllipseData data = RS_EllipseData();
+                    data.center = center;
+                    data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
+                    data.ratio = std::abs(offsetY / offsetX);
+                    previewRefEllipse(data);
                     list << clone;
                 }
             }
