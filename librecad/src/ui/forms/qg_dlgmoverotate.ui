@@ -6,19 +6,19 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>406</width>
-    <height>237</height>
+    <width>240</width>
+    <height>190</height>
    </rect>
   </property>
   <property name="sizePolicy">
-   <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
     <horstretch>0</horstretch>
     <verstretch>0</verstretch>
    </sizepolicy>
   </property>
   <property name="minimumSize">
    <size>
-    <width>300</width>
+    <width>240</width>
     <height>190</height>
    </size>
   </property>
@@ -46,7 +46,7 @@
        </property>
        <property name="iconSize">
         <size>
-         <width>80</width>
+         <width>110</width>
          <height>80</height>
         </size>
        </property>
@@ -71,6 +71,9 @@
         </widget>
        </item>
        <item>
+        <widget class="QLineEdit" name="leAngle"/>
+       </item>
+       <item>
         <spacer name="spacer13">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -80,14 +83,11 @@
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>41</width>
+           <width>0</width>
            <height>20</height>
           </size>
          </property>
         </spacer>
-       </item>
-       <item>
-        <widget class="QLineEdit" name="leAngle"/>
        </item>
       </layout>
      </item>
@@ -109,6 +109,12 @@
    </item>
    <item row="0" column="0">
     <widget class="QGroupBox" name="bgNumber">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>0</height>
+      </size>
+     </property>
      <property name="title">
       <string>Number of copies</string>
      </property>
@@ -152,26 +158,33 @@
        </widget>
       </item>
       <item>
-       <widget class="QRadioButton" name="rbMultiCopy">
+       <widget class="QCheckBox" name="cbMultiCopy">
+        <property name="text">
+         <string>Multiple Copies</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QSpinBox" name="sbNumber">
         <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
           <horstretch>0</horstretch>
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
         <property name="minimumSize">
          <size>
-          <width>0</width>
-          <height>18</height>
+          <width>80</width>
+          <height>0</height>
          </size>
         </property>
-        <property name="text">
-         <string>&amp;Multiple Copies</string>
+        <property name="minimum">
+         <number>1</number>
+        </property>
+        <property name="maximum">
+         <number>100</number>
         </property>
        </widget>
-      </item>
-      <item>
-       <widget class="QLineEdit" name="leNumber"/>
       </item>
       <item>
        <spacer name="spacer7">
@@ -184,7 +197,7 @@
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>21</height>
+          <height>0</height>
          </size>
         </property>
        </spacer>
@@ -198,9 +211,6 @@
  <tabstops>
   <tabstop>rbMove</tabstop>
   <tabstop>rbCopy</tabstop>
-  <tabstop>rbMultiCopy</tabstop>
-  <tabstop>leNumber</tabstop>
-  <tabstop>leAngle</tabstop>
   <tabstop>cbCurrentAttributes</tabstop>
   <tabstop>cbCurrentLayer</tabstop>
  </tabstops>
@@ -208,54 +218,6 @@
   <include location="../../../res/extui/extui.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>rbMove</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>leNumber</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbCopy</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>leNumber</receiver>
-   <slot>setDisabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>rbMultiCopy</sender>
-   <signal>toggled(bool)</signal>
-   <receiver>leNumber</receiver>
-   <slot>setEnabled(bool)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>buttonBox</sender>
    <signal>accepted()</signal>

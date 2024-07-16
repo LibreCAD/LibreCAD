@@ -26,37 +26,51 @@
 #ifndef QG_MOVEROTATEOPTIONS_H
 #define QG_MOVEROTATEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionModifyMoveRotate;
 
 namespace Ui {
-class Ui_MoveRotateOptions;
+    class Ui_MoveRotateOptions;
 }
 
-class QG_MoveRotateOptions : public QWidget
-{
-    Q_OBJECT
+class QG_MoveRotateOptions : public LC_ActionOptionsWidgetBase{
+Q_OBJECT
 
 public:
-    QG_MoveRotateOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_MoveRotateOptions();
+    QG_MoveRotateOptions();
+    ~QG_MoveRotateOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
     virtual void updateAngle( const QString & a );
 
 protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void setCopiesNumberToActionAndView(int number);
+    void setUseMultipleCopiesToActionAndView(bool copies);
+    void setUseCurrentLayerToActionAndView(bool val);
+    void setUseCurrentAttributesToActionAndView(bool val);
+    void setKeepOriginalsToActionAndView(bool val);
+    void setAngleToActionAndView(QString val);
+    void setFixedAngleToModelAndView(bool val);
+    void setSameAngleForCopiesToActionAndView(bool val);
+protected slots:
+    void languageChange() override;
+    void cbKeepOriginalsClicked(bool val);
+    void cbMultipleCopiesClicked(bool val);
+    void cbUseCurrentAttributesClicked(bool val);
+    void cbUseCurrentLayerClicked(bool val);
+    void cbSameAngleForCopiesClicked(bool val);
+    void cbFixedAngleForClicked(bool val);
+    void on_sbNumberOfCopies_valueChanged(int number);
+    void onAngleEditingFinished();
+private:
+    std::unique_ptr<Ui::Ui_MoveRotateOptions> ui;
     RS_ActionModifyMoveRotate* action;
 
-protected slots:
-    virtual void languageChange();
 
-private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_MoveRotateOptions> ui;
 };
 
 #endif // QG_MOVEROTATEOPTIONS_H

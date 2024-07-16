@@ -35,47 +35,17 @@
  *  Constructs a QG_MoveRotateOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_MoveRotateOptions::QG_MoveRotateOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_MoveRotateOptions{})
-{
+QG_MoveRotateOptions::QG_MoveRotateOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionModifyMoveRotate, "/Modify","/MoveRotate")
+	, ui(new Ui::Ui_MoveRotateOptions{}){
 	ui->setupUi(this);
-}
-
-void QG_MoveRotateOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Modify");
-	RS_SETTINGS->writeEntry("/MoveRotateAngle", ui->leAngle->text());
-    RS_SETTINGS->endGroup();
-}
-
-
-void QG_MoveRotateOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionModifyMoveRotate) {
-		action = static_cast<RS_ActionModifyMoveRotate*>(a);
-
-        QString sa;
-        if (update) {
-            sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-        } else {
-            RS_SETTINGS->beginGroup("/Modify");
-            sa = RS_SETTINGS->readEntry("/MoveRotateAngle", "30");
-            RS_SETTINGS->endGroup();
-            action->setAngle(RS_Math::deg2rad(sa.toDouble()));
-        }
-		ui->leAngle->setText(sa);
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_CircleOptions::setAction: wrong action type");
-		action = nullptr;
-    }
-
-}
-
-void QG_MoveRotateOptions::updateAngle(const QString& a) {
-    if (action) {
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
-        saveSettings();
-    }
+    connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbKeepOriginalsClicked);
+    connect(ui->cbMultipleCopies, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbMultipleCopiesClicked);
+    connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbUseCurrentAttributesClicked);
+    connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbUseCurrentLayerClicked);
+    connect(ui->cbSameAngleForCopies, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbSameAngleForCopiesClicked);
+    connect(ui->cbFixedAngle, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbFixedAngleForClicked);
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_MoveRotateOptions::onAngleEditingFinished);
 }
 
 /*
@@ -87,7 +57,152 @@ QG_MoveRotateOptions::~QG_MoveRotateOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_MoveRotateOptions::languageChange()
-{
-	ui->retranslateUi(this);
+void QG_MoveRotateOptions::languageChange(){
+    ui->retranslateUi(this);
+}
+
+
+void QG_MoveRotateOptions::doSaveSettings() {
+    bool angleIsFixed = ui->cbFixedAngle->isChecked();
+    if (angleIsFixed) {
+        save("Angle", ui->leAngle->text());
+    }
+    save("UseCurrentLayer", ui->cbCurrentLayer->isChecked());
+    save("UseCurrentAttributes", ui->cbCurrentAttr->isChecked());
+    save("KeepOriginals", ui->cbKeepOriginals->isChecked());
+    save("MultipleCopies", ui->cbMultipleCopies->isChecked());
+    save("Copies", ui->sbNumberOfCopies->value());
+    save("FixedAngle", angleIsFixed);
+    save("SameAngleForCopies", ui->cbSameAngleForCopies->isChecked());
+}
+
+void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionModifyMoveRotate*>(a);
+
+    QString angle;
+
+    bool useMultipleCopies;
+    bool keepOriginals;
+    bool useCurrentLayer;
+    bool useCurrentAttributes;
+    int copiesNumber;
+    bool sameAngle;
+    bool angleIsFixed;
+    if (update){
+        useCurrentLayer = action->isUseCurrentLayer();
+        useCurrentAttributes  = action->isUseCurrentAttributes();
+        copiesNumber = action->getCopiesNumber();
+        keepOriginals = action->isKeepOriginals();
+        useMultipleCopies = action->isUseMultipleCopies();
+        sameAngle = action->isUseSameAngleForCopies();
+        angleIsFixed = action->isAngleFixed();
+        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+    }
+    else{
+        useCurrentLayer = loadBool("UseCurrentLayer", false);
+        useCurrentAttributes = loadBool("UseCurrentAttributes", false);
+        keepOriginals = loadBool("KeepOriginals", false);
+        useMultipleCopies = loadBool("MultipleCopies", false);
+        copiesNumber = loadInt("Copies", 1);
+        sameAngle = loadBool("SameAngleForCopies", false);
+        angleIsFixed = loadBool("FixedAngle", true);
+        angle = load("Angle", "30");
+    }
+    setUseMultipleCopiesToActionAndView(useMultipleCopies);
+    setCopiesNumberToActionAndView(copiesNumber);
+    setUseCurrentLayerToActionAndView(useCurrentLayer);
+    setUseCurrentAttributesToActionAndView(useCurrentAttributes);
+    setKeepOriginalsToActionAndView(keepOriginals);
+    setSameAngleForCopiesToActionAndView(sameAngle);
+    setFixedAngleToModelAndView(angleIsFixed);
+    setAngleToActionAndView(angle);
+}
+
+void QG_MoveRotateOptions::setAngleToActionAndView(QString val) {
+    double angle;
+    if (toDoubleAngle(val, angle, 0.0, false)){
+        ui->leAngle->setText(fromDouble(angle));
+        action->setAngle(RS_Math::deg2rad(angle));
+    }
+}
+
+void QG_MoveRotateOptions::updateAngle(const QString& a) {
+    if (action) {
+        action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
+        saveSettings();
+    }
+}
+
+void QG_MoveRotateOptions::setCopiesNumberToActionAndView(int number) {
+    if (number < 1){
+        number = 1;
+    }
+    action->setCopiesNumber(number);
+    ui->sbNumberOfCopies->setValue(number);
+}
+
+void QG_MoveRotateOptions::setUseMultipleCopiesToActionAndView(bool copies) {
+    action->setUseMultipleCopies(copies);
+    ui->cbMultipleCopies->setChecked(copies);
+    ui->sbNumberOfCopies->setEnabled(copies);
+    ui->cbSameAngleForCopies->setEnabled(copies);
+}
+
+void QG_MoveRotateOptions::setUseCurrentLayerToActionAndView(bool val) {
+    action->setUseCurrentLayer(val);
+    ui->cbCurrentLayer->setChecked(val);
+}
+
+void QG_MoveRotateOptions::setUseCurrentAttributesToActionAndView(bool val) {
+    action->setUseCurrentAttributes(val);
+    ui->cbCurrentAttr->setChecked(val);
+}
+
+void QG_MoveRotateOptions::setKeepOriginalsToActionAndView(bool val) {
+    action->setKeepOriginals(val);
+    ui->cbKeepOriginals->setChecked(val);
+}
+
+void QG_MoveRotateOptions::cbKeepOriginalsClicked(bool val) {
+    setKeepOriginalsToActionAndView(val);
+}
+
+void QG_MoveRotateOptions::cbMultipleCopiesClicked(bool val) {
+    setUseMultipleCopiesToActionAndView(val);
+}
+
+void QG_MoveRotateOptions::cbUseCurrentAttributesClicked(bool val) {
+    setUseCurrentAttributesToActionAndView(val);
+}
+
+void QG_MoveRotateOptions::cbUseCurrentLayerClicked(bool val) {
+    setUseCurrentLayerToActionAndView(val);
+}
+
+void QG_MoveRotateOptions::cbSameAngleForCopiesClicked(bool val) {
+    setSameAngleForCopiesToActionAndView(val);
+}
+
+void QG_MoveRotateOptions::cbFixedAngleForClicked(bool val) {
+    setFixedAngleToModelAndView(val);
+}
+
+void QG_MoveRotateOptions::on_sbNumberOfCopies_valueChanged(int number) {
+    setCopiesNumberToActionAndView(number);
+}
+
+void QG_MoveRotateOptions::setFixedAngleToModelAndView(bool val) {
+    ui->leAngle->setEnabled(val);
+    ui->cbFixedAngle->setChecked(val);
+    action->setAngleIsFixed(val);
+}
+
+void QG_MoveRotateOptions::setSameAngleForCopiesToActionAndView(bool val) {
+   action->setUseSameAngleForCopies(val);
+   ui->cbSameAngleForCopies->setChecked(val);
+}
+
+void QG_MoveRotateOptions::onAngleEditingFinished(){
+    const QString &expr = ui->leAngle->text();
+    setAngleToActionAndView(expr);
 }

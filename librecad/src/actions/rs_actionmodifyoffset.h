@@ -65,7 +65,6 @@ protected:
     RS_Vector referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> data;
     void createOptionsWidget() override;
-    void selectionCompleted(bool singleEntity) override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseMoveEventSelected(QMouseEvent *e) override;

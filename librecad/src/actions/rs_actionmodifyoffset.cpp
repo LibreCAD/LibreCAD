@@ -109,6 +109,7 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
     }
     drawPreview();
 }
+
 void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     switch (status){
         case SetReferencePoint:{
@@ -157,11 +158,6 @@ void RS_ActionModifyOffset::setDistanceFixed(bool value) {
 
 bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
     return false;
-}
-
-void RS_ActionModifyOffset::selectionCompleted(bool singleEntity) {
-    setSelectionComplete(isAllowTriggerOnEmptySelection());
-    updateMouseButtonHints();
 }
 
 void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {

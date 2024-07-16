@@ -2189,7 +2189,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
 /**
  * Moves and rotates entities with the given parameters.
  */
-bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
+bool RS_Modification::moveRotate(RS_MoveRotateData& data, bool previewOnly, RS_EntityContainer* previewContainer) {
     if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::moveRotate: no valid container");
@@ -2197,18 +2197,27 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     }
 
     std::vector<RS_Entity*> addList;
-
+    int numberOfCopies = data.number;
+    if (!data.multipleCopies){
+        numberOfCopies = 1;
+    }
+    else{
+        if (numberOfCopies < 1){
+            numberOfCopies = 1;
+        }
+    }
     // Create new entities
 
     for(auto e: *container){ // fixme - iterating all entities for selection
         if (e && e->isSelected()) {
-            for (int num=1;num<=data.number || (data.number==0 && num<=1); ++num) {
+            for (int num=1;num<=numberOfCopies; ++num) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
-                ec->move(data.offset*num);
-                ec->rotate(data.referencePoint + data.offset*num,
-                           data.angle*num);
+                const RS_Vector &offset = data.offset * num;
+                ec->move(offset);
+                double angleForCopy = data.sameAngleForCopies ?  data.angle : data.angle * num;
+                ec->rotate(data.referencePoint + offset, angleForCopy);
                 if (data.useCurrentLayer) {
                     ec->setLayerToActive();
                 }
@@ -2224,8 +2233,17 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data) {
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
+
+    if (previewOnly) {
+        for (RS_Entity *e: addList) {
+            if (e != nullptr) {
+                previewContainer->addEntity(e);
+            }
+        }
+    } else {
+        deselectOriginals(!data.keepOriginals);
+        addNewEntities(addList);
+    }
 
     return true;
 }

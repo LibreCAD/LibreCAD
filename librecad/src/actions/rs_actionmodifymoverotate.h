@@ -27,7 +27,8 @@
 #ifndef RS_ACTIONMODIFYMOVEROTATE_H
 #define RS_ACTIONMODIFYMOVEROTATE_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actionmodifybase.h"
 
 struct RS_MoveRotateData;
 
@@ -40,8 +41,11 @@ struct RS_MoveRotateData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyMoveRotate : public RS_PreviewActionInterface {
+class RS_ActionModifyMoveRotate : public LC_ActionModifyBase {
 Q_OBJECT
+
+
+
 public:
     /**
      * Action States.
@@ -49,8 +53,8 @@ public:
     enum Status {
         SetReferencePoint,    /**< Setting the reference point. */
         SetTargetPoint,       /**< Setting the target point. */
-        ShowDialog,           /**< Showing the options dialog. */
-        SetAngle              /**< Setting angle in command line. */
+        SetAngle,              /**< Setting angle in command line. */
+        ShowDialog           /**< Showing the options dialog. */
     };
 
 public:
@@ -58,32 +62,33 @@ public:
                               RS_GraphicView& graphicView);
     ~RS_ActionModifyMoveRotate() override;
 
-    void init(int status=0) override;
-
     void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
-
-    void hideOptions() override;
-    void showOptions() override;
-
-    void updateMouseButtonHints() override;
-
     void setAngle(double a);
     double getAngle() const;
+    void setUseSameAngleForCopies(bool b);
+    bool isUseSameAngleForCopies();
+    void setAngleIsFixed(bool b);
+    bool isAngleFixed(){return angleIsFixed;};
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    void createOptionsWidget() override;
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void previewRefPointsForMultipleCopies();
+    void doTrigger();
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;
 /** Last status before entering angle. */
     Status lastStatus = SetReferencePoint;
+    bool angleIsFixed = true;
 /**
  * Commands
  */

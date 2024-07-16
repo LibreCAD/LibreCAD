@@ -143,10 +143,6 @@ protected:
 	void requestImageOptions(RS_ActionInterface* action,
 									 bool on, bool update);
 
-	/*void requestTrimAmountOptions(RS_ActionInterface* action,
-										  bool on, bool update);*/
-	void requestMoveRotateOptions(RS_ActionInterface* action,
-										  bool on, bool update);
 	void requestLibraryInsertOptions(RS_ActionInterface* action,
 											 bool on, bool update);
 

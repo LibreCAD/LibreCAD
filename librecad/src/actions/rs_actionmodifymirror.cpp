@@ -193,11 +193,11 @@ void RS_ActionModifyMirror::showOptionsAndTrigger(){
 }
 
 void RS_ActionModifyMirror::doTrigger() {
-    this->pPoints->data.axisPoint1 = this->pPoints->axisPoint1;
-    this->pPoints->data.axisPoint2 = this->pPoints->axisPoint2;
-    this->deletePreview();
-    this->trigger();
-    this->finish(false);
+    pPoints->data.axisPoint1 = pPoints->axisPoint1;
+    pPoints->data.axisPoint2 = pPoints->axisPoint2;
+    deletePreview();
+    trigger();
+    finish(false);
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {

@@ -45,7 +45,7 @@
     </widget>
    </item>
    <item row="0" column="3">
-    <widget class="QCheckBox" name="cbCurrentLayer_2">
+    <widget class="QCheckBox" name="cbCurrentAttr">
      <property name="text">
       <string>Use Current Attributes</string>
      </property>

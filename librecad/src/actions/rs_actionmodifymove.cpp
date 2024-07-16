@@ -46,8 +46,8 @@ struct RS_ActionModifyMove::Points {
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :LC_ActionModifyBase("Move Entities",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>()){
+						   container, graphicView),
+		      pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyMove;
 }
 
@@ -86,7 +86,8 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
 
                 RS_Modification m(*container, graphicView, false);
 
-                pPoints->data.offset = pPoints->targetPoint - pPoints->referencePoint;
+                const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
+                pPoints->data.offset = offset;
                 m.move(pPoints->data, true, preview.get());
 
                 if (isShift(e)){
@@ -95,6 +96,15 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                 previewRefSelectablePoint(mouse);
                 previewRefPoint(pPoints->referencePoint);
                 previewRefLine(pPoints->referencePoint, mouse);
+                
+                if (pPoints->data.multipleCopies){
+                    int numCopies = pPoints->data.number;
+                    if (numCopies > 1){
+                        for (int i = 2; i <= numCopies; i++){
+                            previewRefPoint(pPoints->referencePoint + offset*i);
+                        }
+                    }
+                }
 
                 drawPreview();
             }

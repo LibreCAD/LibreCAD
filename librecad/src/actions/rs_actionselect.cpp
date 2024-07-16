@@ -90,16 +90,12 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionModifyScaleNoSelect:
             updateMouseWidgetTRCancel("Select to scale");
             break;
-        case RS2::ActionModifyMoveRotateNoSelect:
-            updateMouseWidgetTRCancel("Select to move and rotate");
-            break;
         case RS2::ActionModifyRotate2NoSelect:
             updateMouseWidgetTRCancel("Select for two axis rotation");
             break;
         case RS2::ActionBlocksCreateNoSelect:
             updateMouseWidgetTRCancel("Select to create block");
             break;
-
         default:
             updateMouseWidgetTR("","");
     }

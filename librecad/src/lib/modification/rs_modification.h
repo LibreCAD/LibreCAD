@@ -103,6 +103,7 @@ struct RS_MoveRotateData : public LC_ModifyOperationFlags{
     RS_Vector referencePoint;
     RS_Vector offset;
     double angle = 0.;
+    bool sameAngleForCopies = false;
 };
 
 
@@ -265,7 +266,7 @@ public:
     bool rotate(RS_RotateData &data);
     bool scale(RS_ScaleData &data);
     bool mirror(RS_MirrorData &data);
-    bool moveRotate(RS_MoveRotateData &data);
+    bool moveRotate(RS_MoveRotateData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
     bool rotate2(RS_Rotate2Data &data);
     LC_TrimResult trim(
         const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,

@@ -730,8 +730,6 @@ QString QG_DialogFactory::requestImageOpenDialog()
     return strFileName;
 }
 
-
-
 void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
                                       bool on, bool update) {
     RS_DEBUG->print("QG_DialogFactory::requestOptions");
@@ -749,77 +747,6 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
         requestPrintPreviewOptions(action, on, update);
         break;
 
-    /*case RS2::ActionDrawLine:
-        RS_DEBUG->print("QG_DialogFactory::requestOptions: line");
-        requestLineOptions(action, on);
-        RS_DEBUG->print("QG_DialogFactory::requestOptions: line: OK");
-        break;
-*/
-//    case RS2::ActionDrawPolyline:
-//        requestPolylineOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawLineAngle:
-//    case RS2::ActionDrawLineHorizontal:
-//    case RS2::ActionDrawLineVertical:
-//        requestLineAngleOptions(action, on, update);
-//        break;
-
-    /*case RS2::ActionDrawLineParallel:
-        requestLineParallelOptions(action, on, update);
-        break;*/
-
-//    case RS2::ActionDrawLineParallelThrough:
-//        requestLineParallelThroughOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawLineBisector:
-//        requestLineBisectorOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawLineOrthogonal:
-//    case RS2::ActionDrawLineRelAngle:
-//        requestLineRelAngleOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawLinePolygonCenCor:
-//        requestLinePolygonOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawLinePolygonCorCor:
-//        requestLinePolygon2Options(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawArc:
-//        requestArcOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDrawArcTangential:
-//        requestArcTangentialOptions(action, on, update);
-//        break;
-
-    /*case RS2::ActionDrawCircleCR:
-    case RS2::ActionDrawCircle2PR:
-        requestCircleOptions(action, on, update);
-        break;
-*/
-    /*case RS2::ActionDrawCircleTan2:
-        requestCircleTan2Options(action, on, update);
-        break;*/
-
-    /*case RS2::ActionDrawSpline:
-    case RS2::ActionDrawSplinePoints:
-        requestSplineOptions(action, on, update);
-        break;
-*/
-    /*case RS2::ActionDrawMText:
-        requestMTextOptions(action, on, update);
-        break;*/
-
-//    case RS2::ActionDrawText:
-//        requestTextOptions(action, on, update);
-//        break;
-
     case RS2::ActionBlocksInsert:
         requestInsertOptions(action, on, update);
         break;
@@ -827,68 +754,14 @@ void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
     case RS2::ActionDrawImage:
         requestImageOptions(action, on, update);
         break;
-
-//    case RS2::ActionDimAligned:
-//        requestDimensionOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDimLinear:
-//    case RS2::ActionDimLinearVer:
-//    case RS2::ActionDimLinearHor:
-//        requestDimensionOptions(action, on, update);
-//        if (!((RS_ActionDimLinear*)action)->hasFixedAngle()) {
-//            requestDimLinearOptions(action, on, update);
-//        }
-//        break;
-
-//    case RS2::ActionDimRadial:
-//        requestDimensionOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionDimDiametric:
-//        requestDimensionOptions(action, on, update);
-//        break;
-//
-//    case RS2::ActionDimAngular:
-//        requestDimensionOptions(action, on, update);
-//        break;
-//
-//    case RS2::ActionDimArc:
-//        requestDimensionOptions(action, on, update);
-//        break;
-
-/*
-    case RS2::ActionModifyTrimAmount:
-        requestTrimAmountOptions(action, on, update);
-        break;
-*/
-
-    case RS2::ActionModifyMoveRotate:
-        requestMoveRotateOptions(action, on, update);
-        break;
-
-//    case RS2::ActionModifyBevel:
-//        requestBevelOptions(action, on, update);
-//        break;
-
-//    case RS2::ActionModifyRound:
-//        requestRoundOptions(action, on, update);
-//        break;
-
     case RS2::ActionLibraryInsert:
         requestLibraryInsertOptions(action, on, update);
         break;
-//    case RS2::ActionPolylineEquidistant:
-//        requestPolylineEquidistantOptions(action, on, update);
-//        break;
-
     default:
         break;
     }
     RS_DEBUG->print("QG_DialogFactory::requestOptions: OK");
 }
-
-
 
 /**
  * Shows a widget for options for the action: "print preview"
@@ -1245,76 +1118,6 @@ void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
     }
 }
 
-
-
-/**
- * Shows a widget for 'snap to a point with a given distance' options.
- */
-void QG_DialogFactory::requestMoveRotateOptions(RS_ActionInterface* action,
-                                                bool on, bool update) {
-    addOptionWidget<QG_MoveRotateOptions>(optionWidget, action, on, update);
-
-}
-
-
-
-/**
- * Shows a widget for 'trim amount' options.
- */
-//void QG_DialogFactory::requestTrimAmountOptions(RS_ActionInterface* action,
-//                                                bool on, bool update) {
-//    addOptionWidget<QG_TrimAmountOptions>(optionWidget, action, on, update);
-//}
-
-
-
-/**
- * Shows a widget for beveling options.
- */
-//void QG_DialogFactory::requestBevelOptions(RS_ActionInterface* action,
-//                                           bool on, bool update) {
-//    addOptionWidget<QG_BevelOptions>(optionWidget, action, on, update);
-//
-//}
-
-
-
-/**
- * Shows a widget for rounding options.
- */
-/*void QG_DialogFactory::requestRoundOptions(RS_ActionInterface* action,
-                                           bool on, bool update) {
-    addOptionWidget<QG_RoundOptions>(optionWidget, action, on, update);
-}*/
-
-
-/**
- * Shows a widget for offset options.
- */
-//void QG_DialogFactory::requestModifyOffsetOptions(double& dist, bool on) {
-//    if(!on) {
-//        if (modifyOffsetOptions) {
-//            modifyOffsetOptions->hide();
-//            modifyOffsetOptions->deleteLater();
-//            modifyOffsetOptions = nullptr;
-//        }
-//        return;
-//    }
-//    if (optionWidget ) {
-//        if (!modifyOffsetOptions) {
-//            modifyOffsetOptions = new QG_ModifyOffsetOptions(optionWidget);
-//            optionWidget->addWidget(modifyOffsetOptions);
-//            modifyOffsetOptions->setDist(dist);
-//        }else {
-//            modifyOffsetOptions->setDist(dist,false);
-//        }
-//        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
-//        modifyOffsetOptions->show();
-//    }
-//}
-
-
-
 /**
  * Shows a widget for library insert options.
  */
@@ -1323,7 +1126,6 @@ void QG_DialogFactory::requestLibraryInsertOptions(RS_ActionInterface* action,
 
     addOptionWidget<QG_LibraryInsertOptions>(optionWidget, action, on, update);
 }
-
 
 /**
  * Shows attributes options dialog presenting the given data.
@@ -1340,8 +1142,6 @@ bool QG_DialogFactory::requestAttributesDialog(RS_AttributesData& data,
     return false;
 }
 
-
-
 /**
  * Shows move options dialog presenting the given data.
  */
@@ -1354,8 +1154,6 @@ bool QG_DialogFactory::requestMoveDialog(RS_MoveData& data) {
     }
     return false;
 }
-
-
 
 /**
  * Shows rotate options dialog presenting the given data.
@@ -1429,7 +1227,6 @@ bool QG_DialogFactory::requestRotate2Dialog(RS_Rotate2Data& data) {
     }
     return false;
 }
-
 
 
 /**

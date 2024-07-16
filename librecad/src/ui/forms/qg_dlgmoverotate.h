@@ -46,17 +46,15 @@ public slots:
 
 protected slots:
     virtual void languageChange();
-
 private:
     bool useCurrentAttributes = false;
     bool useCurrentLayer = false;
     int numberMode = 0;
-    QString copies;
+    int copies;
     RS_MoveRotateData* data = nullptr;
     QString angle;
 
     void init();
-    void destroy();
 
 };
 
