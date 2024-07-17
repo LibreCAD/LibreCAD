@@ -40,16 +40,9 @@
 #include "lc_parabola.h"
 #include "lc_splinepoints.h"
 #include "qc_applicationwindow.h"
-#include "qg_arcoptions.h"
-#include "qg_arctangentialoptions.h"
-#include "qg_beveloptions.h"
 #include "qg_blockdialog.h"
-#include "qg_circleoptions.h"
-#include "qg_circletan2options.h"
 #include "qg_commandwidget.h"
 #include "qg_coordinatewidget.h"
-#include "qg_dimlinearoptions.h"
-#include "qg_dimoptions.h"
 #include "qg_dlgarc.h"
 #include "qg_dlgattributes.h"
 #include "qg_dlgcircle.h"
@@ -74,52 +67,24 @@
 #include "qg_dlgscale.h"
 #include "qg_dlgspline.h"
 #include "qg_dlgtext.h"
-#include "qg_imageoptions.h"
-#include "qg_insertoptions.h"
 #include "qg_layerdialog.h"
 #include "qg_layerwidget.h"
-#include "qg_libraryinsertoptions.h"
-#include "qg_lineangleoptions.h"
-#include "qg_linebisectoroptions.h"
-#include "qg_lineoptions.h"
-#include "qg_lineparalleloptions.h"
-#include "qg_lineparallelthroughoptions.h"
 #include "qg_linepolygon2options.h"
-#include "qg_linepolygonoptions.h"
-#include "qg_linerelangleoptions.h"
-#include "qg_modifyoffsetoptions.h"
 #include "qg_mousewidget.h"
-#include "qg_moverotateoptions.h"
-#include "qg_mtextoptions.h"
-#include "qg_polylineequidistantoptions.h"
-#include "qg_polylineequidistantoptions.h"
-#include "qg_polylineoptions.h"
-#include "qg_printpreviewoptions.h"
-#include "qg_roundoptions.h"
 #include "qg_selectionwidget.h"
 #include "qg_snapdistoptions.h"
-#include "qg_snapdistoptions.h"
 #include "qg_snapmiddleoptions.h"
-#include "qg_snapmiddleoptions.h"
-#include "qg_splineoptions.h"
-#include "qg_textoptions.h"
-#include "qg_trimamountoptions.h"
-#include "rs_actiondimlinear.h"
 #include "rs_actioninterface.h"
-#include "rs_actionprintpreview.h"
 #include "rs_blocklist.h"
 #include "rs_debug.h"
 #include "rs_dimlinear.h"
-#include "rs_document.h"
 #include "rs_hatch.h"
 #include "rs_patternlist.h"
 #include "rs_settings.h"
 #include "rs_system.h"
 #include "rs_vector.h"
 #include "lc_crossoptions.h"
-#include "lc_lineoptions.h"
 #include "lc_lineanglereloptions.h"
-#include "lc_slicedivideoptions.h"
 #include "lc_rectangle1pointoptions.h"
 
 namespace {
@@ -730,58 +695,6 @@ QString QG_DialogFactory::requestImageOpenDialog()
     return strFileName;
 }
 
-void QG_DialogFactory::requestOptions(RS_ActionInterface* action,
-                                      bool on, bool update) {
-    RS_DEBUG->print("QG_DialogFactory::requestOptions");
-
-    if (!action) {
-        RS_DEBUG->print(RS_Debug::D_WARNING,
-                        "QG_DialogFactory::requestOptions: action is nullptr");
-        return;
-    }
-
-    //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DialogFactory::requestOptions, action %s, on %s, update %s",qPrintable(action->getName()),on?"TRUE":"FALSE",update?"TRUE":"FALSE");
-
-    switch (action->rtti()) {
-    case RS2::ActionFilePrintPreview:
-        requestPrintPreviewOptions(action, on, update);
-        break;
-    default:
-        break;
-    }
-    RS_DEBUG->print("QG_DialogFactory::requestOptions: OK");
-}
-
-/**
- * Shows a widget for options for the action: "print preview"
- */
-void QG_DialogFactory::requestPrintPreviewOptions(RS_ActionInterface* action,
-                                                  bool on, bool update) {
-
-    if (action == nullptr)
-        return;
-    auto previewAction = static_cast<RS_ActionPrintPreview *>(action);
-    std::unique_ptr<QG_PrintPreviewOptions> &printPreviewOptions = previewAction->getOption();
-    if (!on) {
-        if (printPreviewOptions != nullptr) {
-            printPreviewOptions->hide();
-            printPreviewOptions->deleteLater();
-            printPreviewOptions.release();
-        }
-    } else if (optionWidget) {
-        if (printPreviewOptions == nullptr) {
-            printPreviewOptions = std::make_unique<QG_PrintPreviewOptions>(optionWidget);
-            double f = previewAction->getScale();
-            printPreviewOptions->setAction(action, false);
-            if (update)
-                previewAction->setScale(f);
-            optionWidget->addWidget(printPreviewOptions.get());
-        }
-        if (update)
-            printPreviewOptions->setAction(action, update);
-        printPreviewOptions->show();
-    }
-}
 
 /**
  * Shows a widget for 'snap to equidistant middle points ' options.

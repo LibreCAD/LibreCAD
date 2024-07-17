@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 #include "rs_actionblockscreate.h"
 

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawspline.h"
@@ -37,7 +36,6 @@
 #include "rs_point.h"
 #include "rs_preview.h"
 #include "rs_spline.h"
-#include "rs_actioninterface.h"
 #include "qg_splineoptions.h"
 
 struct RS_ActionDrawSpline::Points {
@@ -356,5 +354,3 @@ bool RS_ActionDrawSpline::isClosed(){
 void RS_ActionDrawSpline::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_SplineOptions>();
 }
-
-// EOF

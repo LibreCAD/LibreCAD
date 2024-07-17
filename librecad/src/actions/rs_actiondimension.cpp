@@ -154,5 +154,3 @@ void RS_ActionDimension::setDiameter(bool d){
 void RS_ActionDimension::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_DimOptions>();
 }
-
-// EOF

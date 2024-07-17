@@ -175,7 +175,3 @@ void RS_ActionDimLinear::setExtensionPoint1(RS_Vector p){
 void RS_ActionDimLinear::setExtensionPoint2(RS_Vector p){
     edata->extensionPoint2 = p;
 }
-
-
-
-// EOF

@@ -4082,6 +4082,3 @@ void RS_FilterDXFRW::printDwgError(int le){
     }
 }
 #endif
-
-// EOF
-

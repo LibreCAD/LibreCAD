@@ -73,8 +73,8 @@ void updateCustomRatios(const QString& text)
  *  Constructs a QG_PrintPreviewOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_PrintPreviewOptions::QG_PrintPreviewOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
+QG_PrintPreviewOptions::QG_PrintPreviewOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionFilePrintPreview, "/PrintPreview", "/")
     , defaultScales{0}
     , ui(new Ui::Ui_PrintPreviewOptions{})
 {
@@ -91,8 +91,7 @@ QG_PrintPreviewOptions::~QG_PrintPreviewOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_PrintPreviewOptions::languageChange()
-{
+void QG_PrintPreviewOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
@@ -147,16 +146,13 @@ void QG_PrintPreviewOptions::initGuiActions() {
     connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::fit);
     connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::center);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::calcPagesNum);
-
 }
 
-void QG_PrintPreviewOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/PrintPreview");
-    RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
-    RS_SETTINGS->writeEntry("/ScaleLineWidth", QString(scaleLineWidth?"1":"0"));
-    RS_SETTINGS->writeEntry("/BlackWhiteSet", QString(blackWhiteDisabled?"1":"0"));
-    RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
-    RS_SETTINGS->endGroup();
+void QG_PrintPreviewOptions::doSaveSettings() {
+    save("PrintScaleFixed", updateDisabled);
+    save("ScaleLineWidth", scaleLineWidth);
+    save("BlackWhiteSet", blackWhiteDisabled);
+    save("PrintScaleValue", ui->cbScale->currentText());
 }
 
 /** print scale fixed to saved value **/
@@ -177,10 +173,8 @@ void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
     RS_SETTINGS->endGroup();
 }
 
-void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
-
-    if (a && a->rtti()==RS2::ActionFilePrintPreview) {
-        action = static_cast<RS_ActionPrintPreview*>(a);
+void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
+        action = dynamic_cast<RS_ActionPrintPreview*>(a);
         /** fixed scale **/
         if(update){
             //                        std::cout<<__FILE__<<" : "<<__func__<<" : line "<<__LINE__<<std::endl;
@@ -224,12 +218,6 @@ void QG_PrintPreviewOptions::setAction(RS_ActionInterface* a, bool update) {
         }
         setBlackWhite(blackWhiteDisabled);
         setLineWidthScaling(scaleLineWidth);
-
-    } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR,
-                        "QG_PrintPreviewOptions::setAction: wrong action type");
-        action = nullptr;
-    }
 }
 
 void QG_PrintPreviewOptions::updateData() {
@@ -276,7 +264,6 @@ void QG_PrintPreviewOptions::fit() {
         updateScaleBox();
     }
 }
-
 
 void QG_PrintPreviewOptions::scaleByFactor(double factor) {
     if (updateDisabled)
@@ -414,9 +401,4 @@ void QG_PrintPreviewOptions::calcPagesNum() {
         action->calcPagesNum();
         saveSettings();
     }
-}
-
-RS_ActionInterface* QG_PrintPreviewOptions::getAction() const
-{
-    return action;
 }

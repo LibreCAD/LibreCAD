@@ -24,14 +24,9 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionoptionsdrawing.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
-
 
 RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -42,11 +37,8 @@ RS_ActionOptionsDrawing::RS_ActionOptionsDrawing(RS_EntityContainer& container,
 
 void RS_ActionOptionsDrawing::init(int status) {
     RS_ActionInterface::init(status);
-
     trigger();
 }
-
-
 
 void RS_ActionOptionsDrawing::trigger() {
     if (graphic) {
@@ -57,6 +49,3 @@ void RS_ActionOptionsDrawing::trigger() {
     }
     finish(false);
 }
-
-
-// EOF

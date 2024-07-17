@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actionlayerstogglelock.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -39,8 +37,8 @@ RS_ActionLayersToggleLock::RS_ActionLayersToggleLock(
         RS_GraphicView& graphicView,
         RS_Layer* layer)
     : RS_ActionInterface("Toggle Layer Visibility" ,container, graphicView)
-    , a_layer(layer)
-{}
+    , a_layer(layer){
+}
 
 void RS_ActionLayersToggleLock::trigger() {
     RS_DEBUG->print("toggle layer");
@@ -90,6 +88,3 @@ void RS_ActionLayersToggleLock::deselectEntitiesOnLockedLayer(RS_Layer* layer)
         }
     }
 }
-
-
-// EOF

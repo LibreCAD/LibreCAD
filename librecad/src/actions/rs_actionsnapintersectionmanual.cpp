@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionsnapintersectionmanual.h"
@@ -51,15 +49,6 @@ RS_ActionSnapIntersectionManual::RS_ActionSnapIntersectionManual(
 }
 
 RS_ActionSnapIntersectionManual::~RS_ActionSnapIntersectionManual()=default;
-
-// fixme - remove
-QAction* RS_ActionSnapIntersectionManual::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	//tr("Intersection Manually")
-    QAction* action = new QAction(tr("I&ntersection Manually"), nullptr);
-    //action->zetStatusTip(tr("Snap to intersection points manually"));
-	action->setIcon(QIcon(":/extui/snapintersectionm.png"));
-    return action;
-}
 
 void RS_ActionSnapIntersectionManual::init(int status){
     RS_ActionInterface::init(status);

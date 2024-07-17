@@ -231,7 +231,3 @@ void RS_ActionDrawArc3P::updateMouseButtonHints() {
         break;
     }
 }
-
-
-// EOF
-

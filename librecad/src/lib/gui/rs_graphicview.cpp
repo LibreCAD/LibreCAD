@@ -29,7 +29,6 @@
 #include<cmath>
 
 #include <QApplication>
-#include <QAction>
 #include <QMouseEvent>
 #include <QtAlgorithms>
 #include "rs_graphicview.h"

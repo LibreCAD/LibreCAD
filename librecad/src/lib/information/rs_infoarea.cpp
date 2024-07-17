@@ -145,5 +145,3 @@ const RS_Vector &RS_InfoArea::at(int i) const{
 const RS_Vector &RS_InfoArea::back() const{
     return thePoints.back();
 }
-
-// EOF

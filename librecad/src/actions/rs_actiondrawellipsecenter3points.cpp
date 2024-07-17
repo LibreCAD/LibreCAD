@@ -278,6 +278,3 @@ void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){
             break;
     }
 }
-
-
-// EOF

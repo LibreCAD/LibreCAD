@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actionlayerstoggleconstruction.h"
 
-#include <QAction>
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_graphic.h"
@@ -72,12 +71,10 @@ void LC_ActionLayersToggleConstruction::trigger() {
     finish(false);
 }
 
-
 void LC_ActionLayersToggleConstruction::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
 
 void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
 {
@@ -96,6 +93,3 @@ void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
         }
     }
 }
-
-
-// EOF

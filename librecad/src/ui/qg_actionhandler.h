@@ -285,4 +285,3 @@ private:
 };
 
 #endif
-// EOF

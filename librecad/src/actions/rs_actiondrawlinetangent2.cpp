@@ -26,7 +26,6 @@
 
 #include <vector>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinetangent2.h"

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifyrotate2.h"
@@ -40,8 +38,7 @@ RS_ActionModifyRotate2::RS_ActionModifyRotate2(
     RS_GraphicView& graphicView)
         :RS_PreviewActionInterface("Rotate Entities around two centers",
 						   container, graphicView)
-		,data(new RS_Rotate2Data())
-{
+		,data(new RS_Rotate2Data()){
 	actionType=RS2::ActionModifyRotate2;
 }
 
@@ -49,7 +46,7 @@ RS_ActionModifyRotate2::~RS_ActionModifyRotate2() = default;
 
 
 void RS_ActionModifyRotate2::init(int status) {
-	RS_ActionInterface::init(status);
+    RS_ActionInterface::init(status);
 }
 
 void RS_ActionModifyRotate2::trigger(){

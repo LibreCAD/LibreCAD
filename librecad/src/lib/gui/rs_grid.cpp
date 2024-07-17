@@ -525,10 +525,8 @@ RS_Vector const& RS_Grid::getCellVector() const
 }
 
 void RS_Grid::setCrosshairType(RS2::CrosshairType chType){
-	crosshairType=chType;
+    crosshairType=chType;
 }
 RS2::CrosshairType RS_Grid::getCrosshairType() const{
-	return crosshairType;
+    return crosshairType;
 }
-
-// EOF

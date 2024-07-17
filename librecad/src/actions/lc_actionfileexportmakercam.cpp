@@ -24,7 +24,6 @@
 
 #include "lc_actionfileexportmakercam.h"
 
-#include <QAction>
 #include <QFile>
 #include <QTextStream>
 

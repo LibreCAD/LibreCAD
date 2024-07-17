@@ -309,4 +309,3 @@ RS_Debug::LogStream RS_Debug::Log(RS_DebugLevel level) {
 RS_Debug::LogStream& RS_Debug::LogStream::operator<<(char16_t ch) {
     return *this << QChar(ch);
 }
-// EOF

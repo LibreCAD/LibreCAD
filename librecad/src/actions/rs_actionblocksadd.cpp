@@ -26,11 +26,10 @@
 
 #include "rs_actionblocksadd.h"
 
-#include <QAction>
+
 #include "rs_graphic.h"
 #include "rs_dialogfactory.h"
 #include "rs_debug.h"
-
 
 RS_ActionBlocksAdd::RS_ActionBlocksAdd(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
@@ -63,5 +62,3 @@ void RS_ActionBlocksAdd::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

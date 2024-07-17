@@ -25,7 +25,7 @@
 **********************************************************************/
 #include<vector>
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondimleader.h"
@@ -222,8 +222,7 @@ void RS_ActionDimLeader::updateMouseButtonHints(){
             break;
     }
 }
+
 RS2::CursorType RS_ActionDimLeader::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

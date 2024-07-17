@@ -56,7 +56,7 @@ void RS_ActionDimAligned::reset(){
     edata.reset(new RS_DimAlignedData(RS_Vector(false),
                                       RS_Vector(false)));
     lastStatus = SetExtPoint1;
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
+    updateOptions();
 }
 
 
@@ -131,5 +131,3 @@ void RS_ActionDimAligned::setExtensionPoint1(RS_Vector p){
 void RS_ActionDimAligned::setExtensionPoint2(RS_Vector p){
     edata->extensionPoint2 = p;
 }
-
-// EOF

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlineparallel.h"
@@ -38,7 +37,6 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "qg_lineparalleloptions.h"
-#include "rs_actioninterface.h"
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
@@ -213,5 +211,3 @@ RS2::CursorType RS_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int
 void RS_ActionDrawLineParallel::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LineParallelOptions>(actionType);
 }
-
-// EOF

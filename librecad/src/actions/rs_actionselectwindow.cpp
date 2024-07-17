@@ -182,5 +182,3 @@ RS2::CursorType RS_ActionSelectWindow::doGetMouseCursor([[maybe_unused]] int sta
 enum RS2::EntityType RS_ActionSelectWindow::getTypeToSelect(){
     return typeToSelect;
 }
-
-// EOF

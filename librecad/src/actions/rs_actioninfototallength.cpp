@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actioninfototallength.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -36,8 +34,7 @@
 RS_ActionInfoTotalLength::RS_ActionInfoTotalLength(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Info Total Length",
-					container, graphicView)
-{
+					container, graphicView){
 	actionType=RS2::ActionInfoTotalLength;
 }
 
@@ -49,20 +46,16 @@ void RS_ActionInfoTotalLength::init(int status) {
 void RS_ActionInfoTotalLength::trigger() {
 
     RS_DEBUG->print("RS_ActionInfoTotalLength::trigger()");
-	double l=container->totalSelectedLength();
+    double l=container->totalSelectedLength();
 
-	if (l>0.0) {
-		QString len= RS_Units::formatLinear(l,
-											graphic->getUnit(),
-											graphic->getLinearFormat(), graphic->getLinearPrecision());
-        RS_DIALOGFACTORY->commandMessage(
-            tr("Total Length of selected entities: %1").arg(len));
+    if (l>0.0) {
+        QString len= RS_Units::formatLinear(l,
+                                            graphic->getUnit(),
+                                            graphic->getLinearFormat(), graphic->getLinearPrecision());
+        commandMessage(tr("Total Length of selected entities: %1").arg(len));
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("At least one of the selected "
-                                            "entities cannot be measured."));
+        commandMessageTR("At least one of the selected entities cannot be measured.");
     }
 
     finish(false);
 }
-
-// EOF

@@ -24,12 +24,7 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionfileopen.h"
-
-
 
 RS_ActionFileOpen::RS_ActionFileOpen(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView)
@@ -49,10 +44,7 @@ void RS_ActionFileOpen::trigger() {
     finish(false);
 }
 
-
 void RS_ActionFileOpen::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

@@ -31,21 +31,20 @@
 // -- commandline history (output) widget --
 
 QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
-    QTextEdit(parent)
-{
-	setContextMenuPolicy(Qt::ActionsContextMenu);
+    QTextEdit(parent){
+    setContextMenuPolicy(Qt::ActionsContextMenu);
 
-	m_pCopy = new QAction(tr("&Copy"), this);
-	connect(m_pCopy, SIGNAL(triggered()), this, SLOT(copy()));
-	addAction(m_pCopy);
-	m_pCopy->setVisible(false);
-	//only show "copy" menu item when there's available selection to copy
-	connect(this, SIGNAL(copyAvailable(bool)), m_pCopy, SLOT(setVisible(bool)));
+    m_pCopy = new QAction(tr("&Copy"), this);
+    connect(m_pCopy, SIGNAL(triggered()), this, SLOT(copy()));
+    addAction(m_pCopy);
+    m_pCopy->setVisible(false);
+//only show "copy" menu item when there's available selection to copy
+    connect(this, SIGNAL(copyAvailable(bool)), m_pCopy, SLOT(setVisible(bool)));
 
-	m_pSelectAll = new QAction(tr("Select &All"), this);
-	connect(m_pSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
-	addAction(m_pSelectAll);
-	connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
+    m_pSelectAll = new QAction(tr("Select &All"), this);
+    connect(m_pSelectAll, SIGNAL(triggered()), this, SLOT(selectAll()));
+    addAction(m_pSelectAll);
+    connect(this, SIGNAL(textChanged()), this, SLOT(slotTextChanged()));
 
     QAction* clear = new QAction(tr("Clear"), this);
     connect(clear, SIGNAL(triggered(bool)), this, SLOT(clear()));
@@ -54,18 +53,15 @@ QG_CommandHistory::QG_CommandHistory(QWidget* parent) :
     setStyleSheet("selection-color: white; selection-background-color: green;");
 }
 
-void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event)
-{
+void QG_CommandHistory::mouseReleaseEvent(QMouseEvent* event){
     QTextEdit::mouseReleaseEvent(event);
-	if (event->button() == Qt::LeftButton && m_pCopy->isVisible())
-    {
+    if (event->button() == Qt::LeftButton && m_pCopy->isVisible())    {
         copy();
     }
 }
 
-void QG_CommandHistory::slotTextChanged()
-{
-	//only show the selectAll item when there is text
-	m_pSelectAll->setVisible(! toPlainText().isEmpty());
+void QG_CommandHistory::slotTextChanged(){
+//only show the selectAll item when there is text
+    m_pSelectAll->setVisible(! toPlainText().isEmpty());
 }
 

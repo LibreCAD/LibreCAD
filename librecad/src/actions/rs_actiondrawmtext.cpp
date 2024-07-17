@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondrawmtext.h"
@@ -252,5 +252,3 @@ double RS_ActionDrawMText::getAngle(){
 void RS_ActionDrawMText::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_MTextOptions>();
 }
-
-// EOFI

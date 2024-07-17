@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QAction>
 #include <QApplication>
 
 #include "qc_applicationwindow.h"
@@ -32,20 +31,17 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_insert.h"
 
 
-
 RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
 /*recursive add blocks in graphic*/
 void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
-
-	for(auto e: *in){
-
+    for(auto e: *in){
         if (e->rtti() == RS2::EntityInsert) {
-			RS_Insert * in=static_cast<RS_Insert *>(e);
-			addBlock(in,g);
-			g->addBlock(in->getBlockForInsert());
+            RS_Insert * in=static_cast<RS_Insert *>(e);
+            addBlock(in,g);
+            g->addBlock(in->getBlockForInsert());
         }
     }
 }
@@ -53,7 +49,7 @@ void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
 void RS_ActionBlocksSave::trigger() {
     RS_DEBUG->print("save block to file");
     auto& appWindow = QC_ApplicationWindow::getAppWindow();
-	if(!appWindow) {
+    if(!appWindow) {
         finish(false);
         return;
     }
@@ -61,20 +57,20 @@ void RS_ActionBlocksSave::trigger() {
     if (bList) {
         auto b=bList->getActive();
         if(b) {
-			RS_Graphic g(nullptr);
+            RS_Graphic g(nullptr);
             g.setOwner(false);
             g.getBlockList()->setOwner(false);
 
-           g.clearLayers();
+            g.clearLayers();
 //           g.addLayer(b->getLayer());
             for (RS_Entity* e=b->firstEntity(RS2::ResolveNone);
                  e;
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
                 if (e->rtti() == RS2::EntityInsert) {
-					RS_Insert *in = static_cast<RS_Insert *>(e);
+                    RS_Insert *in = static_cast<RS_Insert *>(e);
                     g.addBlock(in->getBlockForInsert());
-					addBlock(in,&g);
+                    addBlock(in,&g);
                 }
 //           std::cout<<__FILE__<<" : "<<__func__<<" : line: "<<__LINE__<<" : "<<e->rtti()<<std::endl;
 //                g.addLayer(e->getLayer());
@@ -91,8 +87,8 @@ void RS_ActionBlocksSave::trigger() {
 //            g.setModified(true);
             g.saveAs(fn, t);
             QApplication::restoreOverrideCursor();
-		} else
-			RS_DIALOGFACTORY->commandMessage(tr("No block activated to save"));
+        } else
+            commandMessageTR("No block activated to save");
     } else {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_ActionBlocksSave::trigger():  blockList is NULL");

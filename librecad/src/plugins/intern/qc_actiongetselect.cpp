@@ -114,6 +114,3 @@ void QC_ActionGetSelect::unselectEntities(){
     }
     updateSelectionWidget();
 }
-
-
-// EOF

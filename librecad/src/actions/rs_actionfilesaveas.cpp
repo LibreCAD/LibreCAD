@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionfilesaveas.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -46,11 +43,7 @@ void RS_ActionFileSaveAs::trigger() {
     finish(false);
 }
 
-
-
 void RS_ActionFileSaveAs::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

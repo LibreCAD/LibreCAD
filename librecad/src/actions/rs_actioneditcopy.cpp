@@ -25,7 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actioneditcopy.h"
@@ -105,4 +104,3 @@ void RS_ActionEditCopy::updateMouseButtonHints() {
 RS2::CursorType RS_ActionEditCopy::doGetMouseCursor([[maybe_unused]]int status){
     return RS2::CadCursor;
 }
-// EOF

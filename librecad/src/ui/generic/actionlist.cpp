@@ -32,9 +32,7 @@ ActionList::ActionList(QWidget* parent)
     : QListWidget(parent)
 {}
 
-
-void ActionList::addActionItem(QAction* action)
-{
+void ActionList::addActionItem(QAction *action) {
     auto item = new QListWidgetItem;
     item->setText(action->text().remove("&"));
     item->setIcon(action->icon());
@@ -42,28 +40,22 @@ void ActionList::addActionItem(QAction* action)
     addItem(item);
 }
 
-void ActionList::fromActionList(const QList<QAction*>& a_list)
-{
+void ActionList::fromActionList(const QList<QAction *> &a_list) {
     action_list = a_list;
-    foreach (QAction* a, a_list)
-    {
-        addActionItem(a);
-    }
+        foreach (QAction *a, a_list) {
+            addActionItem(a);
+        }
 }
 
-void ActionList::fromActionMap(QMap<QString, QAction*>& a_map)
-{
-    foreach (QAction* a, a_map)
-    {
-        addActionItem(a);
-    }
+void ActionList::fromActionMap(QMap<QString, QAction *> &a_map) {
+        foreach (QAction *a, a_map) {
+            addActionItem(a);
+        }
 }
 
-void ActionList::activateAction(QListWidgetItem* item)
-{
-    foreach (QAction* a, action_list)
-    {
-        if (a->text() == item->text())
-            a->activate(QAction::Trigger);
-    }
+void ActionList::activateAction(QListWidgetItem *item) {
+        foreach (QAction *a, action_list) {
+            if (a->text() == item->text())
+                a->activate(QAction::Trigger);
+        }
 }

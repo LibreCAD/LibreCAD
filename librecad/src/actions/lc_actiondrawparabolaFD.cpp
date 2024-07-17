@@ -20,14 +20,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "lc_actiondrawparabolaFD.h"
 
 #include "lc_parabola.h"
 #include "rs_coordinateevent.h"
-#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
@@ -307,5 +305,3 @@ void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
 RS2::CursorType LC_ActionDrawParabolaFD::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

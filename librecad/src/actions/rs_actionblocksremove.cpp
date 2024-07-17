@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionblocksremove.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -34,14 +32,15 @@
 #include "rs_insert.h"
 
 
-RS_ActionBlocksRemove::RS_ActionBlocksRemove(RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Remove Block", container, graphicView) {}
+RS_ActionBlocksRemove::RS_ActionBlocksRemove(
+    RS_EntityContainer &container,
+    RS_GraphicView &graphicView)
+    :RS_ActionInterface("Remove Block", container, graphicView) {}
 
-void RS_ActionBlocksRemove::trigger(){
+void RS_ActionBlocksRemove::trigger() {
     RS_DEBUG->print("RS_ActionBlocksRemove::trigger");
 
-    if (!(graphic && document)){
+    if (!(graphic && document)) {
         finish(false);
         return;
     }
@@ -50,7 +49,7 @@ void RS_ActionBlocksRemove::trigger(){
     QList<RS_Block *> blocks =
         RS_DIALOGFACTORY->requestSelectedBlocksRemovalDialog(bl);
 
-    if (blocks.isEmpty()){
+    if (blocks.isEmpty()) {
         finish(false);
         return;
     }
@@ -65,7 +64,7 @@ void RS_ActionBlocksRemove::trigger(){
     document->startUndoCycle();
 
     for (auto block: blocks) {
-        if (nullptr == block){
+        if (nullptr == block) {
             continue;
         }
         for (auto cont: containerList) {
@@ -74,9 +73,9 @@ void RS_ActionBlocksRemove::trigger(){
             do {
                 done = true;
                 for (auto e: *cont) {
-                    if (e->is(RS2::EntityInsert)){
+                    if (e->is(RS2::EntityInsert)) {
                         auto *ins = (RS_Insert *) e;
-                        if (ins->getName() == block->getName() && !ins->isUndone()){
+                        if (ins->getName() == block->getName() && !ins->isUndone()) {
                             document->addUndoable(ins);
                             ins->setUndoState(true);
                             done = false;
@@ -89,7 +88,7 @@ void RS_ActionBlocksRemove::trigger(){
 
 // clear selection and active state
         block->selectedInBlockList(false);
-        if (block == bl->getActive()){
+        if (block == bl->getActive()) {
             bl->activate(nullptr);
         }
 
@@ -111,11 +110,7 @@ void RS_ActionBlocksRemove::trigger(){
     updateSelectionWidget();
 }
 
-
-
 void RS_ActionBlocksRemove::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

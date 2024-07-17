@@ -38,16 +38,13 @@
  * @author Ulf Lehnert
  */
 class RS_ActionLockRelativeZero : public RS_ActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
     RS_ActionLockRelativeZero(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView,
-							 bool on);
-
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
-	void init(int status) override;
-	void trigger() override;
+                              RS_GraphicView& graphicView,
+                              bool on);
+    void init(int status) override;
+    void trigger() override;
 
 private:
     bool on = false;

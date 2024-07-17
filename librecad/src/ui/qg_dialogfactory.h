@@ -30,22 +30,15 @@
 #include "rs_dialogfactoryinterface.h"
 #include "lc_modifiersinfo.h"
 
-class QG_PolylineEquidistantOptions;
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
-class QG_ModifyOffsetOptions;
 class QWidget;
-
 class QToolBar;
 class QG_CoordinateWidget;
 class QG_SelectionWidget;
 class QG_MouseWidget;
-class QG_ArcTangentialOptions;
-class QG_PrintPreviewOptions;
-//class PrintPreviewOptions;
 class QG_CommandWidget;
 class RS_Document;
-class QG_LineAngleOptions;
 class RS_Vector;
 
 #define QG_DIALOGFACTORY (RS_DialogFactory::instance()->getFactoryObject())
@@ -129,14 +122,8 @@ public:
 
 	QString requestImageOpenDialog() override;
 
-
-	void requestOptions(RS_ActionInterface* action,
-								bool on, bool update = false) override;
-
- void addOptionsWidget(QWidget * options) override;
+	void addOptionsWidget(QWidget * options) override;
 protected:
-	void requestPrintPreviewOptions(RS_ActionInterface* action,
-											bool on, bool update);
 
 public:
 	void requestSnapDistOptions(double& dist, bool on) override;

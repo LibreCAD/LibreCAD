@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionlayersfreezeall.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -53,5 +50,3 @@ void RS_ActionLayersFreezeAll::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

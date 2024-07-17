@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "qg_layerwidget.h"
 #include "rs_actionlayersedit.h"
 #include "rs_debug.h"
@@ -43,7 +41,7 @@ void RS_ActionLayersEdit::trigger() {
     RS_DEBUG->print("RS_ActionLayersEdit::trigger");
 
     if (graphic) {
-	RS_Layer* layer =
+        RS_Layer* layer =
             RS_DIALOGFACTORY->requestEditLayerDialog(graphic->getLayerList());
 
         if (layer) {
@@ -51,7 +49,7 @@ void RS_ActionLayersEdit::trigger() {
 
             // update updateable entities on the layer that has changed
 
-			for(auto e: *graphic){
+            for(auto e: *graphic){
 
                 RS_Layer* l = e->getLayer();
                 if (l && l->getName()==layer->getName()) {
@@ -64,13 +62,10 @@ void RS_ActionLayersEdit::trigger() {
 
     graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
 
-	graphicView->redraw(RS2::RedrawDrawing); 
-
+    graphicView->redraw(RS2::RedrawDrawing);
 }
 
 void RS_ActionLayersEdit::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

@@ -26,9 +26,7 @@
 #ifndef QG_PRINTPREVIEWOPTIONS_H
 #define QG_PRINTPREVIEWOPTIONS_H
 
-#include<memory>
-
-#include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionPrintPreview;
@@ -36,17 +34,15 @@ namespace Ui {
 class Ui_PrintPreviewOptions;
 }
 
-class QG_PrintPreviewOptions : public QWidget
+class QG_PrintPreviewOptions : public LC_ActionOptionsWidgetBase
 {
     Q_OBJECT
 
 public:
-    QG_PrintPreviewOptions(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
-    ~QG_PrintPreviewOptions();
+    QG_PrintPreviewOptions();
+    ~QG_PrintPreviewOptions() override;
 
-    RS_ActionInterface* getAction() const;
 public slots:
-    virtual void setAction(RS_ActionInterface* a, bool update);
     virtual void updateData();
     virtual void center();
     virtual void setLineWidthScaling(bool state);
@@ -63,18 +59,19 @@ public slots:
 
 protected:
     RS_ActionPrintPreview* action = nullptr;
+    void doSaveSettings() override;
+
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 
 protected slots:
-    virtual void languageChange();
-
+    void languageChange() override;
 private:
     void init();
     void initGuiActions();
-    void saveSettings();
     void updateScaleBox(const QString& text);
     QStringList imperialScales;
     QStringList metricScales;
-    bool updateDisabled{false};
+    bool updateDisabled = false;
     bool scaleLineWidth = false;
     bool blackWhiteDisabled = true;
     int defaultScales = 1;

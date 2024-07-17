@@ -25,7 +25,6 @@
 **********************************************************************/
 #include <iostream>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawhatch.h"

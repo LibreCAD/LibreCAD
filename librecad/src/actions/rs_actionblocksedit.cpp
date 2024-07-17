@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionblocksedit.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -57,8 +55,6 @@ void RS_ActionBlocksEdit::trigger() {
     finish(false);
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_ActionBlocksEdit::trigger(): OK");
 }
-
-
 
 void RS_ActionBlocksEdit::init(int status) {
     RS_ActionInterface::init(status);

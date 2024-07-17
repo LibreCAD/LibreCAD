@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionzoomin.h"
 #include "rs_graphicview.h"
 
@@ -89,5 +87,3 @@ void RS_ActionZoomIn::trigger() {
     }
     finish(false);
 }
-
-// EOF

@@ -25,11 +25,8 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actionzoomredraw.h"
 #include "rs_graphicview.h"
-
 
 /**
  * Constructor.
@@ -47,11 +44,7 @@ void RS_ActionZoomRedraw::init(int status) {
     trigger();
 }
 
-
-
 void RS_ActionZoomRedraw::trigger() {
     graphicView->redraw();
     finish(false);
 }
-
-// EOF

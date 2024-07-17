@@ -178,5 +178,3 @@ RS2::CursorType RS_ActionDrawLineTangent1::doGetMouseCursor([[maybe_unused]] int
             return RS2::NoCursorChange;
     }
 }
-
-// EOF

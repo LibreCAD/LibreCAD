@@ -23,10 +23,6 @@
 ** This copyright notice MUST APPEAR in all copies of the script!  
 **
 **********************************************************************/
-
-
-#include <QAction>
-
 #include "rs_actiontoolregeneratedimensions.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -34,47 +30,39 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
-
-
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Tool Regen Dim",
                     container, graphicView) {}
 
-
 void RS_ActionToolRegenerateDimensions::init(int status) {
     RS_ActionInterface::init(status);
-
     trigger();
 }
-
 
 void RS_ActionToolRegenerateDimensions::trigger() {
 
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
-	int num = 0;
-	for(auto e: *container){
+    int num = 0;
+    for(auto e: *container){
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
-			num++;
-			if (((RS_Dimension*)e)->getLabel()==";;") {
-				((RS_Dimension*)e)->setLabel("");
-			}
+            num++;
+            if (((RS_Dimension*)e)->getLabel()==";;") {
+                ((RS_Dimension*)e)->setLabel("");
+            }
             ((RS_Dimension*)e)->updateDim(true);
         }
     }
 
     if (num>0) {
-    	graphicView->redraw();
-        RS_DIALOGFACTORY->commandMessage(
+        graphicView->redraw();
+        commandMessage(
             tr("Regenerated %1 dimension entities").arg(num));
     } else {
-        RS_DIALOGFACTORY->commandMessage(tr("No dimension entities found"));
+        commandMessageTR("No dimension entities found");
     }
 
     finish(false);
 }
-
-
-// EOF

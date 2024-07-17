@@ -32,18 +32,12 @@ RS_ActionZoomAutoY::RS_ActionZoomAutoY(RS_EntityContainer& container,
                                        RS_GraphicView& graphicView)
         :RS_ActionInterface("Auto zoom Y", container, graphicView) {}
 
-
-
 void RS_ActionZoomAutoY::trigger() {
     graphicView->zoomAutoY(false);
     finish(false);
 }
 
-
-
 void RS_ActionZoomAutoY::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

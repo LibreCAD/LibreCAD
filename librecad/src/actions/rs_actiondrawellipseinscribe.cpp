@@ -22,8 +22,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include <vector>
 
-#include <QAction>
-
 #include "rs_actiondrawellipseinscribe.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -331,5 +329,3 @@ void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
 RS2::CursorType RS_ActionDrawEllipseInscribe::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
-
-// EOF

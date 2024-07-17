@@ -310,4 +310,3 @@ RS2::CursorType RS_ActionDrawLineAngle::doGetMouseCursor([[maybe_unused]] int st
 void RS_ActionDrawLineAngle::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LineAngleOptions>();
 }
-// EOF

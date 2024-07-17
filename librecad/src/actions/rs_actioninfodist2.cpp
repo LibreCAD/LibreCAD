@@ -286,5 +286,3 @@ RS2::CursorType RS_ActionInfoDist2::doGetMouseCursor([[maybe_unused]] int status
 void RS_ActionInfoDist2::createOptionsWidget(){
     m_optionWidget = std::make_unique<LC_InfoDist2Options>();
 }
-
-// EOF

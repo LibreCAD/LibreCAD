@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actionselectinvert.h"
 #include "rs_dialogfactory.h"
 #include "rs_selection.h"
@@ -50,5 +48,3 @@ void RS_ActionSelectInvert::trigger() {
 
     updateSelectionWidget();
 }
-
-// EOF

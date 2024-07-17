@@ -52,8 +52,6 @@ public:
                                     RS_GraphicView& graphicView);
     ~RS_ActionSnapIntersectionManual() override;
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     void init(int status=0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;

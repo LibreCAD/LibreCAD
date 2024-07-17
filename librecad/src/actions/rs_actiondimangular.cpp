@@ -25,8 +25,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondimangular.h"
@@ -56,7 +54,7 @@ void RS_ActionDimAngular::reset(){
                                         RS_Vector( false),
                                         RS_Vector( false),
                                         RS_Vector( false));
-    RS_DIALOGFACTORY->requestOptions( this, true, true);
+    updateOptions();
 }
 
 void RS_ActionDimAngular::trigger(){
@@ -327,7 +325,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
  * @return The determineQuadrant of \p angle, relative to the 1st selection determineQuadrant
  */
 int RS_ActionDimAngular::determineQuadrant(const double angle){
-    if( 1 > angles.size()) {
+    if(angles.empty()) {
         return 0;
     }
 
@@ -415,5 +413,3 @@ bool RS_ActionDimAngular::setData(const RS_Vector &dimPos, const bool calcCenter
     }
     return result;
 }
-
-// EOF

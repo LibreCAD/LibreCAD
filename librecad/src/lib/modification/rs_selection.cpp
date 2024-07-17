@@ -330,5 +330,3 @@ void RS_Selection::selectLayer(const QString &layerName, bool select){
         }
     }
 }
-
-// EOF

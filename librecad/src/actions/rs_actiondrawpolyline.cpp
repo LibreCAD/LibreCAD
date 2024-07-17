@@ -26,7 +26,6 @@
 
 #include <cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include <muParser.h>
@@ -43,7 +42,6 @@
 #include "rs_math.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 #include "qg_polylineoptions.h"
 
 #ifdef EMU_C99
@@ -525,6 +523,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
         setStatus(SetNextPoint);
         return true;
     }
+    return false;
 }
 
 bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
@@ -757,4 +756,3 @@ QList<double> &RS_ActionDrawPolyline::getBHistory() const{
 void RS_ActionDrawPolyline::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_PolylineOptions>();
 }
-// EOF

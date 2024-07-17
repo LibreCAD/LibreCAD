@@ -239,17 +239,7 @@ public:
      */
     virtual QString requestImageOpenDialog() = 0;
 
-    /**
-     * This virtual method must be overwritten and must present
-     * a widget for options for the given action.
-     *
-         * @param action Pointer to the action which needs the options.
-     * @param on true: switch widget on, false: off
-         * @param update true: widget gets data from the action, false:
-         *   widget gets data from config file.
-     */
-    virtual void requestOptions(RS_ActionInterface* action,
-                bool on, bool update = false) = 0;
+
 
     virtual void addOptionsWidget(QWidget * options) = 0;
 

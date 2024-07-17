@@ -194,4 +194,3 @@ QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands(){
 
     return cmd;
 }
-// EOF

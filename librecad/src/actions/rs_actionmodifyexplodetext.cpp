@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionmodifyexplodetext.h"
 #include "rs_modification.h"
 

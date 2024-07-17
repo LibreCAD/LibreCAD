@@ -467,5 +467,3 @@ RS2::CursorType RS_ActionDrawCircleTan1_2P::doGetMouseCursor(int status){
 double RS_ActionDrawCircleTan1_2P::getRadius() const{
     return pPoints->cData.radius;
 }
-
-// EOF

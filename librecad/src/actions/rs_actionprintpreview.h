@@ -65,9 +65,6 @@ public:
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
-    void showOptions() override;
-    void hideOptions() override;
-
     void center();
     void fit();
     bool setScale(double f, bool autoZoom = true);
@@ -80,11 +77,9 @@ public:
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
-
-    void setOption(std::unique_ptr<QG_PrintPreviewOptions> option);
-    std::unique_ptr<QG_PrintPreviewOptions>& getOption();
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
+    void createOptionsWidget() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

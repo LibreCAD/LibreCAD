@@ -53,5 +53,3 @@ QC_GraphicView::QC_GraphicView(RS_Document* doc, QWidget* parent)
 		setDefaultAction(new RS_ActionDefault(*doc, *this));
 	}
 }
-
-// EOF

@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifymirror.h"
@@ -52,7 +51,6 @@ RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
     mirrorToExistingLine = false;
 }
 RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
-
 
 
 void RS_ActionModifyMirror::trigger() {
@@ -141,7 +139,6 @@ void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, QMo
     else{
         init(status - 1);
     }
-
 }
 
 void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent *e){
@@ -239,5 +236,3 @@ RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected(int status) {
 LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags() {
     return &pPoints->data;
 }
-
-

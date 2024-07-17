@@ -431,6 +431,3 @@ void RS_ActionDrawArc::setReversed(bool r) const{
 void RS_ActionDrawArc::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_ArcOptions>();
 }
-
-// EOF
-

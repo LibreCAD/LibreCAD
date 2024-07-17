@@ -39,13 +39,12 @@ RS_Point::RS_Point(RS_EntityContainer* parent,
 }
 
 RS_Entity* RS_Point::clone() const {
-	RS_Point* p = new RS_Point(*this);
+	auto* p = new RS_Point(*this);
 	p->initId();
 	return p;
 }
 
-RS2::EntityType RS_Point::rtti() const
-{
+RS2::EntityType RS_Point::rtti() const{
     return RS2::EntityPoint;
 }
 
@@ -63,44 +62,36 @@ RS_Vector RS_Point::getStartpoint() const
     return data.pos;
 }
 
-RS_Vector RS_Point::getEndpoint() const
-{
+RS_Vector RS_Point::getEndpoint() const {
     return data.pos;
 }
 
-RS_PointData RS_Point::getData() const
-{
+RS_PointData RS_Point::getData() const {
     return data;
 }
 
-RS_Vector RS_Point::getPos() const
-{
+RS_Vector RS_Point::getPos() const {
     return data.pos;
 }
 
-RS_Vector RS_Point::getCenter() const
-{
+RS_Vector RS_Point::getCenter() const {
     return data.pos;
 }
 
-double RS_Point::getRadius() const
-{
+double RS_Point::getRadius() const {
     return 0.;
 }
 
-bool RS_Point::isTangent(const RS_CircleData& circleData) const
-{
-    double const dist=data.pos.distanceTo(circleData.center);
-    return fabs(dist - fabs(circleData.radius))<50.*RS_TOLERANCE;
+bool RS_Point::isTangent(const RS_CircleData &circleData) const {
+    double const dist = data.pos.distanceTo(circleData.center);
+    return fabs(dist - fabs(circleData.radius)) < 50. * RS_TOLERANCE;
 }
 
-void RS_Point::setPos(const RS_Vector& pos)
-{
+void RS_Point::setPos(const RS_Vector &pos) {
     data.pos = pos;
 }
 
 RS_Vector RS_Point::getNearestEndpoint(const RS_Vector& coord, double* dist)const {
-
     if (dist) {
         *dist = data.pos.distanceTo(coord);
     }
@@ -144,7 +135,7 @@ RS_Vector RS_Point::getNearestMiddle(const RS_Vector& coord,
 
 RS_Vector RS_Point::getNearestDist(double /*distance*/,
                                    const RS_Vector& /*coord*/,
-								   double* dist) const{
+                                   double* dist) const{
     if (dist) {
         *dist = RS_MAXDOUBLE;
     }
@@ -191,8 +182,7 @@ void RS_Point::mirror(const RS_Vector& axisPoint1, const RS_Vector& axisPoint2) 
     calculateBorders();
 }
 
-RS_Entity& RS_Point::shear(double k)
-{
+RS_Entity& RS_Point::shear(double k){
     data.pos.shear(k);
     calculateBorders();
     return *this;
@@ -242,10 +232,7 @@ std::ostream& operator << (std::ostream& os, const RS_Point& p) {
     return os;
 }
 
-std::ostream& operator << (std::ostream& os, const RS_PointData& pd)
-{
-        os << "(" << pd.pos << ")";
-        return os;
+std::ostream& operator << (std::ostream& os, const RS_PointData& pd){
+    os << "(" << pd.pos << ")";
+    return os;
 }
-
-// EOF

@@ -162,6 +162,3 @@ void RS_ActionDrawCircle::updateMouseButtonHints() {
             break;
     }
 }
-
-// EOF
-

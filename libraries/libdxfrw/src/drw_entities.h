@@ -1405,6 +1405,3 @@ private:
 //bool haveExtrusion;        /*!< set to true if the entity have extrusion*/
 
 #endif
-
-// EOF
-

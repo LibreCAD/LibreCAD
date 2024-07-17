@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinerectangle.h"
@@ -157,5 +156,3 @@ void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
 RS2::CursorType RS_ActionDrawLineRectangle::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

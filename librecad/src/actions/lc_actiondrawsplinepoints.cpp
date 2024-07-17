@@ -25,20 +25,17 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 #include "lc_actiondrawsplinepoints.h"
-
 #include "lc_splinepoints.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_commands.h"
 #include "rs_commandevent.h"
-#include "rs_point.h"
 #include "rs_coordinateevent.h"
 #include "rs_preview.h"
 #include "rs_debug.h"
-#include "rs_actioninterface.h"
 
 struct LC_ActionDrawSplinePoints::Points {
 	/**
@@ -319,6 +316,3 @@ void LC_ActionDrawSplinePoints::setClosed(bool c){
 bool LC_ActionDrawSplinePoints::isClosed(){
     return pPoints->data.closed;
 }
-
-// EOF
-

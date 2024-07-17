@@ -24,15 +24,12 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifydeletequick.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-
 
 
 RS_ActionModifyDeleteQuick::RS_ActionModifyDeleteQuick(
@@ -96,5 +93,3 @@ void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
 RS2::CursorType RS_ActionModifyDeleteQuick::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::DelCursor;
 }
-
-// EOF

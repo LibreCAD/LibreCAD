@@ -418,6 +418,7 @@ void RS_ActionInterface::setActionType(RS2::ActionType actionType){
 /**
  * Calls checkCommand() from the RS_COMMANDS module.
  */
+// fixme - check for type and string literal
 bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
                                       RS2::ActionType action) {
     return RS_COMMANDS->checkCommand(cmd, str, action);
@@ -426,6 +427,7 @@ bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
 /**
  * Calls command() from the RS_COMMANDS module.
  */
+ // fixme - check for type and string literal
 QString RS_ActionInterface::command(const QString& cmd) {
     return RS_COMMANDS->command(cmd);
 }

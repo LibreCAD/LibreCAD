@@ -25,7 +25,6 @@
 **********************************************************************/
 #include "qg_recentfiles.h"
 
-#include <QAction>
 #include <QActionGroup>
 #include <QFileInfo>
 #include <QMenu>
@@ -65,49 +64,49 @@ void QG_RecentFiles::saveToSettings() const {
  */
 void QG_RecentFiles::add(const QString& filename) {
     RS_DEBUG->print("QG_RecentFiles::add");
-	if(filename.size()>2048){
-		RS_DEBUG->print(RS_Debug::D_ERROR, "QG_RecentFiles::add filename too long at %d\n", filename.size());
-		return;
-	}
+    if(filename.size()>2048){
+        RS_DEBUG->print(RS_Debug::D_ERROR, "QG_RecentFiles::add filename too long at %d\n", filename.size());
+        return;
+    }
 
     // is the file already in the list?
     int i0=files.indexOf(filename);
     if (i0>=0) {
-		if (i0+1==files.size()) return; //do nothing, file already being the last in list
+        if (i0+1==files.size()) return; //do nothing, file already being the last in list
         //move the i0 to the last
-		files.erase(files.begin() + i0);
-		files.push_back(filename);
+        files.erase(files.begin() + i0);
+        files.push_back(filename);
         return;
     }
 
     // append
     //files.push_back(filename);
     files.append(filename);
-	if(files.size() > number)
-		files.erase(files.begin(), files.begin() + files.size() - number);
-	RS_DEBUG->print("QG_RecentFiles::add: OK");
+    if(files.size() > number)
+        files.erase(files.begin(), files.begin() + files.size() - number);
+    RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
 
 QString QG_RecentFiles::get(int i) const{
-	if (i<files.size()) {
-		return files[i];
-	} else {
-		return QString("");
-	}
+    if (i<files.size()) {
+        return files[i];
+    } else {
+        return QString("");
+    }
 }
 
 int QG_RecentFiles::count() const {
-	return files.count();
+    return files.count();
 }
 
 /** @return number of files that can be stored in the list at maximum */
 int QG_RecentFiles::getNumber() const {
-	return number;
+    return number;
 }
 
 int QG_RecentFiles::indexOf(const QString& filename) const{
-	return files.indexOf(filename) ;
+    return files.indexOf(filename) ;
 }
 
 void QG_RecentFiles::addFiles(QMenu* file_menu)
@@ -118,7 +117,7 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
     for (int i=0; i<number; ++i)
     {
         QString filename = RS_SETTINGS->readEntry(QString("/File") +
-                           QString::number(i+1));
+                                                  QString::number(i+1));
         if (QFileInfo(filename).exists()) add(filename);
     }
     RS_SETTINGS->endGroup();
@@ -141,30 +140,30 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
 
 
 void QG_RecentFiles::updateRecentFilesMenu() {
-	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): begin\n");
+    RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): begin\n");
 
-	RS_DEBUG->print("Updating recent file menu...");
-	int numRecentFiles = std::min(count(), getNumber());
+    RS_DEBUG->print("Updating recent file menu...");
+    int numRecentFiles = std::min(count(), getNumber());
 
-	for (int i = 0; i < numRecentFiles; ++i) {
-		//oldest on top
+    for (int i = 0; i < numRecentFiles; ++i) {
+//oldest on top
 //        QString text = tr("&%1 %2").arg(i + 1).arg(recentFiles->get(i));
-		//newest on top
+//newest on top
 
         auto file_path = get(numRecentFiles-i-1);
         if (file_path.length() > 128)
             file_path = "..." + file_path.right(128);
         QString const& text = tr("&%1 %2").arg(i + 1).arg(file_path);
 
-		recentFilesAction[i]->setText(text);
-		//newest on top
-		recentFilesAction[i]->setData(get(numRecentFiles-i-1));
-		recentFilesAction[i]->setVisible(true);
-	}
-	for (int j = numRecentFiles; j < getNumber(); ++j)
-		recentFilesAction[j]->setVisible(false);
+        recentFilesAction[i]->setText(text);
+//newest on top
+        recentFilesAction[i]->setData(get(numRecentFiles-i-1));
+        recentFilesAction[i]->setVisible(true);
+    }
+    for (int j = numRecentFiles; j < getNumber(); ++j)
+        recentFilesAction[j]->setVisible(false);
     saveToSettings();
-	RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
+    RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
 }
 
 

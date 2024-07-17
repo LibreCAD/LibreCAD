@@ -26,7 +26,6 @@
 
 #include<cmath>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "qg_printpreviewoptions.h"
@@ -96,7 +95,6 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-
 void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
@@ -157,7 +155,7 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
         return;
     } else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
-        RS_DIALOGFACTORY->commandMessage(tr("Printout offset in graph coordinates"));
+        commandMessageTR("Printout offset in graph coordinates");
         e->accept();
         return;
     } else if (checkCommand("paperoffset", c)) {
@@ -167,9 +165,9 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
         return;
     }else if (checkCommand("help", c)) {
         commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", ")+tr(": select printout offset coordinates")+
-                                         "\n"+tr("type in offset from command line to offset printout")
-                                         );
+                       + getAvailableCommands().join(", ")+tr(": select printout offset coordinates")+
+                       "\n"+tr("type in offset from command line to offset printout")
+        );
         e->accept();
         return;
     }
@@ -193,8 +191,6 @@ void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
     }
 }
 
-
-
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
     QStringList cmd;
     cmd +=command("blackwhite");
@@ -214,21 +210,6 @@ void RS_ActionPrintPreview::printWarning(const QString& s) {
 	commandMessage(s);
 }
 
-void RS_ActionPrintPreview::showOptions() {
-    RS_ActionInterface::showOptions();
-    if (!isFinished()) {
-        RS_DIALOGFACTORY->requestOptions(this, true,hasOptions);
-        hasOptions=true;
-    }
-}
-
-// fixme - options ownership!!
-
-void RS_ActionPrintPreview::hideOptions() {
-    RS_ActionInterface::hideOptions();
-
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
 RS2::CursorType RS_ActionPrintPreview::doGetMouseCursor([[maybe_unused]] int status){
     switch (status) {
         case Moving:
@@ -352,11 +333,6 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
-void RS_ActionPrintPreview::setOption(std::unique_ptr<QG_PrintPreviewOptions> option){
-    m_option = std::move(option);
+void RS_ActionPrintPreview::createOptionsWidget() {
+    m_optionWidget = std::make_unique<QG_PrintPreviewOptions>();
 }
-
-std::unique_ptr<QG_PrintPreviewOptions>& RS_ActionPrintPreview::getOption(){
-    return m_option;
-}
-// EOF

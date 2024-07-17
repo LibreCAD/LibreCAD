@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "qg_layerwidget.h"
 #include "rs_actionlayersadd.h"
 #include "rs_debug.h"
@@ -38,21 +35,19 @@ RS_ActionLayersAdd::RS_ActionLayersAdd(RS_EntityContainer& container,
         :RS_ActionInterface("Add Layer", container, graphicView) {}
 
 void RS_ActionLayersAdd::trigger() {
-	RS_DEBUG->print("add layer");
+    RS_DEBUG->print("add layer");
 
-	if (graphic) {
-		RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
-					graphic->getLayerList());
-		if (layer)
-			graphic->addLayer(layer);
-		graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
-	}
-	finish(false);
+    if (graphic) {
+        RS_Layer* layer = RS_DIALOGFACTORY->requestNewLayerDialog(
+            graphic->getLayerList());
+        if (layer)
+            graphic->addLayer(layer);
+        graphic->getLayerList()->getLayerWitget()->slotUpdateLayerList();
+    }
+    finish(false);
 }
 
 void RS_ActionLayersAdd::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

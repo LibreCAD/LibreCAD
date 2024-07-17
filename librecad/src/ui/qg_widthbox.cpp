@@ -409,5 +409,3 @@ void QG_WidthBox::slotWidthChanged(int index) {
 
     emit widthChanged(currentWidth);
 }
-
-// EOF

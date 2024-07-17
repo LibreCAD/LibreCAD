@@ -1101,6 +1101,3 @@ void RS_Creation::setEntity(RS_Entity* en) const
         graphicView->drawEntity(en);
     }
 }
-
-
-// EOF

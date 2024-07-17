@@ -24,7 +24,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include<vector>
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_circle.h"
@@ -302,5 +301,3 @@ RS_Vector RS_ActionDrawCircleTan2::getTangentPoint(RS_Vector creatingCircleCente
 void RS_ActionDrawCircleTan2::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_CircleTan2Options>();
 }
-
-// EOF

@@ -23,7 +23,7 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include <QAction>
+
 #include <QMouseEvent>
 #include "rs_actionsetrelativezero.h"
 #include "rs_coordinateevent.h"
@@ -40,15 +40,6 @@ RS_ActionSetRelativeZero::RS_ActionSetRelativeZero(
 }
 
 RS_ActionSetRelativeZero::~RS_ActionSetRelativeZero() = default;
-
-QAction *RS_ActionSetRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject * /*parent*/){
-    /* RVT_PORT    QAction* action = new QAction(tr("Set Relative Zero"), tr("&Set Relative Zero"),
-              QKeySequence(), nullptr); */
-    auto action = new QAction(tr("Set &Relative Zero"), nullptr);
-    //action->zetStatusTip(tr("Set position of the Relative Zero point"));
-    action->setIcon(QIcon(":/extui/relzeromove.png"));
-    return action;
-}
 
 void RS_ActionSetRelativeZero::trigger(){
     bool wasLocked = graphicView->isRelativeZeroLocked();

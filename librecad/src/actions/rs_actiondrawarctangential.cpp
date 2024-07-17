@@ -320,5 +320,3 @@ void RS_ActionDrawArcTangential::updateOptionsAngle(double angle){
         options->updateAngle(angle);
     }
 }
-
-// EOF

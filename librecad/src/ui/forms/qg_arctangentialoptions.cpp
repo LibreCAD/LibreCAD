@@ -24,15 +24,11 @@
 **
 **********************************************************************/
 #include<cmath>
-#include <QAction>
+
 #include "qg_arctangentialoptions.h"
-
 #include "rs_actiondrawarctangential.h"
-
 #include "rs_settings.h"
 #include "rs_math.h"
-#include "rs_debug.h"
-
 #include "ui_qg_arctangentialoptions.h"
 
 #ifdef EMU_C99
@@ -64,7 +60,6 @@ void QG_ArcTangentialOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-
 void QG_ArcTangentialOptions::doSaveSettings(){
     bool byRadius = ui->rbRadius->isChecked();
     save("ByRadius", byRadius);
@@ -94,7 +89,6 @@ void QG_ArcTangentialOptions::doSetAction(RS_ActionInterface *a, bool update){
     setByRadiusToActionAndView(byRadius);
     setRadiusToActionAndView(radius);
     setAngleToActionAndView(angle);
-
 }
 
 void QG_ArcTangentialOptions::setRadiusToActionAndView(const QString& s) {
@@ -151,5 +145,3 @@ void QG_ArcTangentialOptions::updateRadius(double d){
 void QG_ArcTangentialOptions::updateAngle(double d){
     ui->leAngle->setText(fromDouble(d));
 }
-
-

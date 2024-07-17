@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionzoomauto.h"
 #include "rs_graphicview.h"
 
@@ -40,7 +37,6 @@ RS_ActionZoomAuto::RS_ActionZoomAuto(RS_EntityContainer& container,
                                      RS_GraphicView& graphicView,
                                      bool keepAspectRatio)
         :RS_ActionInterface("Auto zoom", container, graphicView) {
-
     this->keepAspectRatio = keepAspectRatio;
 }
 
@@ -49,11 +45,7 @@ void RS_ActionZoomAuto::init(int status) {
     trigger();
 }
 
-
-
 void RS_ActionZoomAuto::trigger() {
     graphicView->zoomAuto(false, keepAspectRatio);
     finish(false);
 }
-
-// EOF

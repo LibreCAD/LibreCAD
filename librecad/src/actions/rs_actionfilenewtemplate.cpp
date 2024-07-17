@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actionfilenewtemplate.h"
 
 
@@ -53,5 +51,3 @@ void RS_ActionFileNewTemplate::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

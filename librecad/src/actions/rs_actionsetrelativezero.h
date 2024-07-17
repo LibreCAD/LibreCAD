@@ -46,8 +46,6 @@ public:
                              RS_GraphicView& graphicView);
     ~RS_ActionSetRelativeZero() override;
 
-    static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void coordinateEvent(RS_CoordinateEvent* e) override;

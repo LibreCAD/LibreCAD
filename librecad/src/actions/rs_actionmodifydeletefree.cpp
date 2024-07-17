@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifydeletefree.h"
@@ -53,9 +51,9 @@ RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
 
 void RS_ActionModifyDeleteFree::init(int status) {
     RS_ActionInterface::init(status);
-	polyline = nullptr;
-	e1 = e2 = nullptr;
-	pPoints.reset(new Points{});
+    polyline = nullptr;
+    e1 = e2 = nullptr;
+    pPoints.reset(new Points{});
     RS_SnapMode *s = getSnapMode();
     s->snapOnEntity = true;
 }
@@ -162,5 +160,3 @@ void RS_ActionModifyDeleteFree::updateMouseButtonHints() {
         break;
     }
 }
-
-// EOF

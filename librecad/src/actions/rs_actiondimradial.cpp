@@ -259,4 +259,3 @@ void RS_ActionDimRadial::updateMouseButtonHints(){
             break;
     }
 }
-// EOF

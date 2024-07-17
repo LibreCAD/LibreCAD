@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionpolylineappend.h"
@@ -220,9 +219,7 @@ void RS_ActionPolylineAppend::updateMouseButtonHints(){
             }
 
             if (getHistory().size() >= 2){
-                RS_DIALOGFACTORY->updateMouseWidget(
-                    tr("Specify next point or [%1]").arg(msg),
-                    tr("Back"));
+                updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"));
             } else {
                 updateMouseWidgetTRBack("Specify next point");
             }
@@ -244,5 +241,3 @@ void RS_ActionPolylineAppend::undo(){
         commandMessageTR("Cannot undo: Not enough entities defined yet.");
     }
 }
-
-// EOF

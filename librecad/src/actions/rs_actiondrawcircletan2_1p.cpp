@@ -359,5 +359,3 @@ RS2::CursorType RS_ActionDrawCircleTan2_1P::doGetMouseCursor([[maybe_unused]] in
             return RS2::ArrowCursor;
     }
 }
-
-// EOF

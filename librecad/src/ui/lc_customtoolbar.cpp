@@ -30,36 +30,32 @@
 #include <QFile>
 #include <QAction>
 
-LC_CustomToolbar::LC_CustomToolbar(QWidget* parent)
-    : QToolBar(parent)
-{
-    QAction* action = new QAction(tr("Add or Remove Action"), parent);
+LC_CustomToolbar::LC_CustomToolbar(QWidget *parent)
+    :QToolBar(parent) {
+    QAction *action = new QAction(tr("Add or Remove Action"), parent);
     action->setShortcut(QKeySequence("F2"));
     action->setIcon(QIcon(":/extui/char_pm.png"));
     connect(action, SIGNAL(triggered()), this, SLOT(slot_add_or_remove_action()));
     addAction(action);
 }
 
-LC_CustomToolbar::~LC_CustomToolbar()
-{
-    if (!file_path.isNull())
-    {
+LC_CustomToolbar::~LC_CustomToolbar() {
+    if (!file_path.isNull()) {
         QFile file(file_path);
         if (!file.open(QIODevice::WriteOnly | QIODevice::Text))
             return;
 
         QTextStream txt_stream(&file);
-        foreach (const QString& token, state_list)
-        {
-            txt_stream << token << "\n";
-        }
+            foreach (const QString &token, state_list) {
+                txt_stream << token << "\n";
+            }
     }
 }
 
-void LC_CustomToolbar::actions_from_file(const QString& path,
-                                         QMap<QString, QAction*>& a_map)
-{
-    QFile file(path);    
+void LC_CustomToolbar::actions_from_file(
+    const QString &path,
+    QMap<QString, QAction *> &a_map) {
+    QFile file(path);
     if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
         return;
 
@@ -67,50 +63,38 @@ void LC_CustomToolbar::actions_from_file(const QString& path,
 
     QTextStream txt_stream(&file);
     QString line;
-    while (!txt_stream.atEnd())
-    {
+    while (!txt_stream.atEnd()) {
         line = txt_stream.readLine();
 
-        if (line == "-")
-        {
+        if (line == "-") {
             addSeparator();
             state_list << line;
-        }
-        else if (a_map.contains(line))
-        {
+        } else if (a_map.contains(line)) {
             addAction(a_map[line]);
             state_list << line;
         }
     }
 }
 
-void LC_CustomToolbar::slot_add_or_remove_action()
-{
-    if (most_recent_action )
-    {
+void LC_CustomToolbar::slot_add_or_remove_action() {
+    if (most_recent_action) {
         QString token = most_recent_action->objectName();
 
-        if (state_list.contains(token))
-        {
+        if (state_list.contains(token)) {
             removeAction(most_recent_action);
             state_list.removeOne(token);
-        }
-        else
-        {
+        } else {
             addAction(most_recent_action);
             state_list << token;
         }
     }
 }
 
-void LC_CustomToolbar::slot_most_recent_action(QAction* q_action)
-{
+void LC_CustomToolbar::slot_most_recent_action(QAction *q_action) {
     most_recent_action = q_action;
 }
 
-
-void LC_CustomToolbar::add_separator()
-{
+void LC_CustomToolbar::add_separator() {
     addSeparator();
     state_list << "-";
 }

@@ -25,7 +25,7 @@
 **********************************************************************/
 
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondrawcircle3p.h"
@@ -212,6 +212,3 @@ void RS_ActionDrawCircle3P::updateMouseButtonHints(){
             break;
     }
 }
-
-// EOF
-

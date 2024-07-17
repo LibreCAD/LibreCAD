@@ -162,4 +162,3 @@ void RS_ActionPolylineDel::updateMouseButtonHints(){
             break;
     }
 }
-// EOF

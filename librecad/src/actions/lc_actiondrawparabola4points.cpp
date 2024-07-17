@@ -18,7 +18,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "lc_actiondrawparabola4points.h"
@@ -26,7 +25,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_parabola.h"
 #include "rs_circle.h"
 #include "rs_coordinateevent.h"
-#include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_line.h"
@@ -284,5 +282,3 @@ void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
 RS2::CursorType LC_ActionDrawParabola4Points::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
-
-// EOF

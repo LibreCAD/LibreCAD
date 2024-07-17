@@ -59,5 +59,3 @@ void RS_ActionZoomScroll::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

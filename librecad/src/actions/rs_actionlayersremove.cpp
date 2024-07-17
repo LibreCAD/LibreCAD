@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "qg_layerwidget.h"
 #include "rs_actionlayersremove.h"
 #include "rs_debug.h"
@@ -63,5 +60,3 @@ void RS_ActionLayersRemove::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

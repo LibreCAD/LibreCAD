@@ -41,8 +41,6 @@ RS_ActionSetSnapMode::RS_ActionSetSnapMode(RS_EntityContainer& container,
     this->snapMode = snapMode;
 }
 
-
-
 void RS_ActionSetSnapMode::trigger() {
     RS_SnapMode s = graphicView->getDefaultSnapMode();
 
@@ -89,11 +87,7 @@ void RS_ActionSetSnapMode::trigger() {
     finish(false);
 }
 
-
-
 void RS_ActionSetSnapMode::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

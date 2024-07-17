@@ -720,4 +720,3 @@ void RS_ActionDefault::updateQuickInfoWidget(RS_Entity *pEntity){
         entityInfoWidget->processEntity(pEntity);
     }
 }
-// EOF

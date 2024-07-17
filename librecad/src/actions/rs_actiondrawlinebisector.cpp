@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinebisector.h"
@@ -295,8 +294,7 @@ void RS_ActionDrawLineBisector::updateMouseButtonHints(){
 void RS_ActionDrawLineBisector::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_LineBisectorOptions>();
 }
+
 RS2::CursorType RS_ActionDrawLineBisector::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
-
-// EOF

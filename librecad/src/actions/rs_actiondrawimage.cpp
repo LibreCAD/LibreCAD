@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
 #include <QImage>
 #include <QMouseEvent>
 
@@ -39,7 +38,6 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "rs_units.h"
-#include "rs_actioninterface.h"
 #include "qg_imageoptions.h"
 
 struct RS_ActionDrawImage::ImageData {

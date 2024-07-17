@@ -24,9 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionlockrelativezero.h"
 #include "rs_graphicview.h"
 
@@ -34,16 +31,9 @@ RS_ActionLockRelativeZero::RS_ActionLockRelativeZero(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView,
     bool on)
-        :RS_ActionInterface("(Un-)lock the relative Zero",
+    :RS_ActionInterface("(Un-)lock the relative Zero",
                     container, graphicView)
-        ,on(on)
-{
-}
-
-QAction* RS_ActionLockRelativeZero::createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/) {
-	QAction* action = new QAction(QIcon(":/extui/relzerolock.png"), tr("(Un-)&Lock Relative Zero"),  nullptr);
-	action->setCheckable(true);
-    return action;
+        ,on(on){
 }
 
 void RS_ActionLockRelativeZero::init(int status) {
@@ -55,5 +45,3 @@ void RS_ActionLockRelativeZero::init(int status) {
 void RS_ActionLockRelativeZero::trigger() {
     graphicView->lockRelativeZero(on);
 }
-
-// EOF

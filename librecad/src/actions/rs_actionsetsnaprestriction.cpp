@@ -43,19 +43,13 @@ RS_ActionSetSnapRestriction::RS_ActionSetSnapRestriction(
     this->snapRes = snapRes;
 }
 
-
-
 void RS_ActionSetSnapRestriction::trigger() {
     graphicView->setSnapRestriction(snapRes);
 	
     finish(false);
 }
 
-
-
 void RS_ActionSetSnapRestriction::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

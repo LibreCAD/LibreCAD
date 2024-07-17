@@ -24,38 +24,31 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionblocksfreezeall.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 
 RS_ActionBlocksFreezeAll::RS_ActionBlocksFreezeAll(bool freeze,
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
-        :RS_ActionInterface("Freeze all Blocks",
-                    container, graphicView) {
+                                                   RS_EntityContainer& container,
+                                                   RS_GraphicView& graphicView)
+    :RS_ActionInterface("Freeze all Blocks",
+                        container, graphicView) {
 
     this->freeze = freeze;
 }
-
 
 void RS_ActionBlocksFreezeAll::trigger() {
     RS_DEBUG->print("RS_ActionBlocksFreezeAll::trigger");
     if (graphic) {
         graphic->freezeAllBlocks(freeze);
     }
-        graphicView->redraw(RS2::RedrawDrawing);
+    graphicView->redraw(RS2::RedrawDrawing);
 
     finish(false);
 }
-
-
 
 void RS_ActionBlocksFreezeAll::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

@@ -40,4 +40,3 @@ namespace RS_Utility {
 }
 
 #endif
-// EOF

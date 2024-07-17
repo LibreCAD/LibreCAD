@@ -520,5 +520,3 @@ RS_Vector RS_ActionDrawCircleTan3::getTangentPoint(RS_Vector creatingCircleCente
         return creatingCircleCenter + RS_Vector::polar(creatingCircleRadius, creatingCircleCenter.angleTo(circleCenter));
     }
 }
-
-// EOF

@@ -28,14 +28,10 @@
 ** This file was changed in 2016 by ravas. See ChangeLogs/r-a-v-a-s.txt
 ****************************************************************************/
 
-
-#include <QAction>
-
 #include "rs_actionlayerstoggleview.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
 #include "rs_layer.h"
-
 
 RS_ActionLayersToggleView::RS_ActionLayersToggleView(
                                 RS_EntityContainer& container,
@@ -71,5 +67,3 @@ void RS_ActionLayersToggleView::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

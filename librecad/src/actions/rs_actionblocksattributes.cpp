@@ -26,7 +26,6 @@
 
 #include "rs_actionblocksattributes.h"
 
-#include <QAction>
 #include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 #include "rs_graphic.h"
@@ -88,5 +87,3 @@ void RS_ActionBlocksAttributes::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

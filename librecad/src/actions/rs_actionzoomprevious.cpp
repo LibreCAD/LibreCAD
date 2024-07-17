@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actionzoomprevious.h"
 #include "rs_graphicview.h"
 
@@ -40,17 +38,12 @@ RS_ActionZoomPrevious::RS_ActionZoomPrevious(RS_EntityContainer& container,
 
 }
 
-
 void RS_ActionZoomPrevious::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
 
-
-
 void RS_ActionZoomPrevious::trigger() {
     graphicView->zoomPrevious();
     finish(false);
 }
-
-// EOF

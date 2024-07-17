@@ -3384,6 +3384,3 @@ bool RS_FilterJWW::isVariableTwoDimensional(const QString& var) {
                 return false;
         }
 }
-
-// EOF
-

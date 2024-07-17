@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QAction>
-
 #include "rs_actionblockstoggleview.h"
 #include "rs_block.h"
 #include "rs_debug.h"
@@ -62,11 +60,7 @@ void RS_ActionBlocksToggleView::trigger() {
     finish(false);
 }
 
-
-
 void RS_ActionBlocksToggleView::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-// EOF

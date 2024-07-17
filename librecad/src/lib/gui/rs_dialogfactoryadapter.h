@@ -52,7 +52,6 @@ public:
 	void requestEditBlockWindow(RS_BlockList*) override{}
 	void closeEditBlockWindow(RS_Block*) override {}
 	QString requestImageOpenDialog() override {return {};}
-	void requestOptions(RS_ActionInterface*, bool, bool) override{}
 	void requestSnapDistOptions(double& , bool) override {}
 	void requestSnapMiddleOptions(int& , bool) override {}
 	bool requestAttributesDialog(RS_AttributesData&, RS_LayerList&) override{return false;}

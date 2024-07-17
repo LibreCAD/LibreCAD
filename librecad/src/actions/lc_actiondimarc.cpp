@@ -58,7 +58,7 @@ void LC_ActionDimArc::reset(){
 
     selectedArcEntity = nullptr;
 
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
+    updateOptions();
 }
 
 void LC_ActionDimArc::trigger(){
@@ -192,7 +192,7 @@ void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent *e){
 bool LC_ActionDimArc::doProcessCommand([[maybe_unused]]int status, const QString& c){
     // fixme - support other commands
     bool accept = false;
-    if (checkCommand(QStringLiteral ("exit"), c)){
+    if (checkCommand("exit", c)){
         init(-1);
         accept = true;
     }

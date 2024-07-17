@@ -21,10 +21,6 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
 
-
-
-#include <QAction>
-
 #include "rs_actionlayerstoggleprint.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
@@ -68,12 +64,10 @@ void RS_ActionLayersTogglePrint::trigger() {
     finish(false);
 }
 
-
 void RS_ActionLayersTogglePrint::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
 
 void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
 {
@@ -92,6 +86,3 @@ void RS_ActionLayersTogglePrint::deselectEntities(RS_Layer* layer)
         }
     }
 }
-
-
-// EOF

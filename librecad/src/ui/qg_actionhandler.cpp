@@ -2210,5 +2210,3 @@ void QG_ActionHandler::slotRedockWidgets()
 void QG_ActionHandler::slotDrawLinePoints(){
     setCurrentAction(RS2::ActionDrawLinePoints);
 }
-// EOF
-

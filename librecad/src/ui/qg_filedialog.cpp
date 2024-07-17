@@ -516,6 +516,3 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
 
     return fn;
 }
-
-// EOF
-

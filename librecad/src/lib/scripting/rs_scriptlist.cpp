@@ -41,7 +41,6 @@ RS_ScriptList::RS_ScriptList() {
     //activeScript = NULL;
 }
 
-
 /**
  * Initializes the script list by creating RS_Script 
  * objects, one for each script that could be found.
@@ -70,7 +69,6 @@ void RS_ScriptList::init() {
     //scripts.append(f);
 }
 
-
 /**
  * Removes all scripts in the scriptlist.
  */
@@ -78,8 +76,6 @@ void RS_ScriptList::clearScripts() {
     while (!scripts.isEmpty())
         delete scripts.takeFirst();
 }
-
-
 
 /**
  * Removes a script from the list.
@@ -105,8 +101,6 @@ void RS_ScriptList::removeScript(RS_Script* script) {
     // now it's safe to delete the script
     //delete script;
 }
-
-
 
 /**
  * @return Pointer to the script with the given name or
@@ -134,8 +128,6 @@ RS_Script* RS_ScriptList::requestScript(const QString& name) {
     return foundScript;
 }
 
-
-
 /**
  * @return Pointer to the script with the given name or
  * \p NULL if no such script was found.
@@ -155,6 +147,3 @@ bool RS_ScriptList::test() {
 
     return true;
 }
-
-
-// EOF

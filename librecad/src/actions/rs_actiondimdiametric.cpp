@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actiondimdiametric.h"
@@ -61,7 +61,7 @@ void RS_ActionDimDiametric::reset(){
     *edata = {{}, 0.0};
     entity = nullptr;
     *pos = {};
-    RS_DIALOGFACTORY->requestOptions(this, true, true);
+    updateOptions();
 }
 
 void RS_ActionDimDiametric::trigger(){
@@ -81,8 +81,7 @@ void RS_ActionDimDiametric::trigger(){
         RS_Snapper::finish();
 
     } else {
-        RS_DEBUG->print("RS_ActionDimDiametric::trigger:"
-                        " Entity is nullptr\n");
+        RS_DEBUG->print("RS_ActionDimDiametric::trigger: Entity is nullptr\n");
     }
 }
 
@@ -259,5 +258,3 @@ void RS_ActionDimDiametric::updateMouseButtonHints(){
             break;
     }
 }
-
-// EOF

@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-
-#include <QAction>
 #include <QMouseEvent>
 
 #include "rs_actionmodifytrim.h"
@@ -37,7 +35,6 @@ struct RS_ActionModifyTrim::Points {
     RS_Vector limitCoord;
     RS_Vector trimCoord;
 };
-
 
 /**
  * @param both Trim both entities.

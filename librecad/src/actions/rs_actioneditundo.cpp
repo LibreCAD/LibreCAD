@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QAction>
-
 #include "rs_actioneditundo.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphic.h"
@@ -42,16 +40,13 @@ RS_ActionEditUndo::RS_ActionEditUndo(bool undo,
                                      RS_GraphicView& graphicView)
         :RS_ActionInterface("Edit Undo",
 					container, graphicView)
-		, undo(undo)
-{
+		, undo(undo){
 }
 
 void RS_ActionEditUndo::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-
-
 
 void RS_ActionEditUndo::trigger()
 {
@@ -61,13 +56,13 @@ void RS_ActionEditUndo::trigger()
         return;
     }
 
-	if (undo) {
-		if(!document->undo())
-			RS_DIALOGFACTORY->commandMessage(tr("Nothing to undo!"));
-	} else {
-		if(!document->redo())
-			RS_DIALOGFACTORY->commandMessage(tr("Nothing to redo!"));
-	}
+    if (undo) {
+        if(!document->undo())
+            commandMessageTR("Nothing to undo!");
+    } else {
+        if(!document->redo())
+            commandMessageTR("Nothing to redo!");
+    }
 
     graphic->addBlockNotification();
     graphic->setModified(true);
@@ -76,4 +71,3 @@ void RS_ActionEditUndo::trigger()
     finish(false);
     updateSelectionWidget();
 }
-// EOF
