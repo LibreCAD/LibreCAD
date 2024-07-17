@@ -116,11 +116,11 @@ public:
     {}
 
     /**
-     * @brief getP - get an elliptic point for a given elliptic angle
+     * @brief getEllipsePoint - get an elliptic point for a given elliptic angle
      * @param a - double, an elliptic angle
      * @return RS_Vector - the elliptic point for the given angle
      */
-    RS_Vector getP(double a) const  {
+    RS_Vector getEllipsePoint(double a) const  {
         auto point = m_origin + RS_Vector{a}.scale({m_radius1, - m_radius2});
         point.rotate(m_origin, -m_angle);
         return point;
@@ -133,7 +133,7 @@ public:
      */
     QPointF getPointF(double a) const
     {
-        auto p = getP(a);
+        auto p = getEllipsePoint(a);
         return {p.x, p.y};
     };
 
@@ -163,12 +163,12 @@ public:
     // Create a QPainterPath to clip the complete ellipse to draw an arc.
     // Get a point on ellipse by the elliptic angle
 
-        RS_Vector p1 = getP(angle1);
-        RS_Vector p2 = getP(angle2);
+        RS_Vector p1 = getEllipsePoint(angle1);
+        RS_Vector p2 = getEllipsePoint(angle2);
         // Find a direction vector along the two end points of the arc
         auto dp = (p2 - p1).normalized();
         // Find a point on the arc
-        RS_Vector p3 = getP((angle1+angle2)*0.5) - p1;
+        RS_Vector p3 = getEllipsePoint((angle1+angle2)*0.5) - p1;
         // Find a direction normal to the line p1-p2
         p3 -= dp * p3.dotP(dp);
         // the QPainterPath should be larger
