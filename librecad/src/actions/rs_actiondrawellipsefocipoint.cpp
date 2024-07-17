@@ -197,31 +197,27 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawEllipseFociPoint::commandEvent(RS_CommandEvent *e){
-    QString cmd = e->getCommand().toLower();
+QString RS_ActionDrawEllipseFociPoint::getAdditionalHelpMessage() {
+    return tr("specify a point on ellipse, or total distance to foci");
+}
 
-    if (checkCommand("help", cmd)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(": ") +
-                                         tr("specify a point on ellipse, or total distance to foci")
-        );
-        e->accept();
-        return;
-    }
+bool RS_ActionDrawEllipseFociPoint::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
 
-    if (getStatus() == SetPoint){
+    if (status == SetPoint){
         bool ok;
-        double a = RS_Math::eval(cmd, &ok);
+        double a = RS_Math::eval(c, &ok);
         if (ok){
             pPoints->d = 0.5 * fabs(a);
+            accept = true;
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
                 trigger();
             } else
-                RS_DIALOGFACTORY->commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
+                commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
         } else
-            RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-
+            commandMessageTR("Not a valid expression");
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {

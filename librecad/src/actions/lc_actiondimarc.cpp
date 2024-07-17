@@ -189,17 +189,14 @@ void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void LC_ActionDimArc::commandEvent(RS_CommandEvent *e){
-    QString inputCommand(e->getCommand().toLower());
-
-    if (checkCommand(QStringLiteral ("help"), inputCommand)){
-        commandMessage(getAvailableCommands().join(", "));
-        return;
-    }
-    if (checkCommand(QStringLiteral ("exit"), inputCommand)){
+bool LC_ActionDimArc::doProcessCommand([[maybe_unused]]int status, const QString& c){
+    // fixme - support other commands
+    bool accept = false;
+    if (checkCommand(QStringLiteral ("exit"), c)){
         init(-1);
-        return;
+        accept = true;
     }
+    return accept;
 }
 
 QStringList LC_ActionDimArc::getAvailableCommands(){

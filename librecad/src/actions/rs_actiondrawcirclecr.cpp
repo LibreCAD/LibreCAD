@@ -127,19 +127,14 @@ void RS_ActionDrawCircleCR::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawCircleCR::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetCenter: {
             if (checkCommand("radius", c)){
                 deletePreview();
                 setStatus(SetRadius);
+                accept = true;
             }
             break;
         }
@@ -149,7 +144,7 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent *e){
             double r = RS_Math::eval(c, &ok);
             if (ok && r > RS_TOLERANCE){
                 data->radius = r;
-                e->accept();
+                accept = true;
                 trigger();
             } else {
                 commandMessageTR("Not a valid expression");
@@ -160,6 +155,7 @@ void RS_ActionDrawCircleCR::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 bool RS_ActionDrawCircleCR::setRadiusStr(const QString &sr){
@@ -176,14 +172,11 @@ bool RS_ActionDrawCircleCR::setRadiusStr(const QString &sr){
     } else {
         data->radius = r;
     }
-
     return ok;
 }
 
-
 QStringList RS_ActionDrawCircleCR::getAvailableCommands(){
     QStringList cmd;
-
     switch (getStatus()) {
         case SetCenter:
             cmd += command("radius");
@@ -191,7 +184,6 @@ QStringList RS_ActionDrawCircleCR::getAvailableCommands(){
         default:
             break;
     }
-
     return cmd;
 }
 
@@ -220,4 +212,3 @@ double RS_ActionDrawCircleCR::getRadius() const{
 void RS_ActionDrawCircleCR::createOptionsWidget(){
     m_optionWidget = std::make_unique<QG_CircleOptions>();
 }
-// EOF

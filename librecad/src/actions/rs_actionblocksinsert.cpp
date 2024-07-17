@@ -24,7 +24,7 @@
 **
 **********************************************************************/
 
-#include <QAction>
+
 #include <QMouseEvent>
 
 #include "rs_actionblocksinsert.h"
@@ -32,13 +32,13 @@
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_creation.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_insert.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
+#include "qg_insertoptions.h"
+
 
 /**
  * Constructor.
@@ -155,40 +155,40 @@ void RS_ActionBlocksInsert::coordinateEvent(RS_CoordinateEvent* e) {
     trigger();
 }
 
-void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetTargetPoint: {
             if (checkCommand("angle", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetAngle);
+                accept= true;
             } else if (checkCommand("factor", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetFactor);
+                accept= true;
             } else if (checkCommand("columns", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetColumns);
+                accept= true;
             } else if (checkCommand("rows", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetRows);
+                accept= true;
             } else if (checkCommand("columnspacing", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
+                accept= true;
                 setStatus(SetColumnSpacing);
             } else if (checkCommand("rowspacing", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetRowSpacing);
+                accept= true;
             }
             break;
         }
@@ -196,11 +196,12 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok) {
+                accept= true;
                 data->angle = RS_Math::deg2rad(a);
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -209,10 +210,11 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             double f = RS_Math::eval(c, &ok);
             if (ok) {
                 setFactor(f);
+                accept= true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -221,10 +223,11 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             int cols = (int)RS_Math::eval(c, &ok);
             if (ok) {
                 data->cols = cols;
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -233,10 +236,11 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             int rows = (int)RS_Math::eval(c, &ok);
             if (ok) {
                 data->rows = rows;
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -245,10 +249,11 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             double cs = (int)RS_Math::eval(c, &ok);
             if (ok) {
                 data->spacing.x = cs;
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -257,16 +262,18 @@ void RS_ActionBlocksInsert::commandEvent(RS_CommandEvent* e) {
             int rs = (int)RS_Math::eval(c, &ok);
             if (ok) {
                 data->spacing.y = rs;
+                accept  = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 double RS_ActionBlocksInsert::getAngle() const {
@@ -336,17 +343,6 @@ QStringList RS_ActionBlocksInsert::getAvailableCommands() {
     return cmd;
 }
 
-// fixme - options ownership
-void RS_ActionBlocksInsert::showOptions() {
-    RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionBlocksInsert::hideOptions() {
-    RS_ActionInterface::hideOptions();
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionBlocksInsert::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetTargetPoint:
@@ -379,4 +375,6 @@ RS2::CursorType RS_ActionBlocksInsert::doGetMouseCursor([[maybe_unused]] int sta
     return RS2::CadCursor;
 }
 
-// EOF
+void RS_ActionBlocksInsert::createOptionsWidget() {
+    m_optionWidget = std::make_unique<QG_InsertOptions>();
+}

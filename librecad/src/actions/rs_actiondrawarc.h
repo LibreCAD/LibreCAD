@@ -63,7 +63,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     bool isReversed() const;
@@ -86,6 +85,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

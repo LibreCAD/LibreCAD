@@ -121,56 +121,7 @@
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_ImageOptions</receiver>
-   <slot>updateData()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>57</x>
-     <y>21</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leDPI</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_ImageOptions</receiver>
-   <slot>updateDPI()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>223</x>
-     <y>21</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leFactor</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_ImageOptions</receiver>
-   <slot>updateFactor()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>149</x>
-     <y>6</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>171</x>
-     <y>53</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateFactor()</slot>
  </slots>

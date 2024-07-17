@@ -194,29 +194,23 @@ void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e){
     }
 }
 
-void RS_ActionDimAngular::commandEvent(RS_CommandEvent* e){
-    QString c( e->getCommand().toLower());
-
-    if (checkCommand( QStringLiteral( "help"), c)) {
-        commandMessage( msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDimAngular::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
     // setting new text label:
     if (SetText == getStatus()) {
         setText( c);
         updateOptions();
         graphicView->enableCoordinateInput();
         setStatus( lastStatus);
-        return;
+        accept = true;
     }
-
-    // command: text
-    if (checkCommand( QStringLiteral( "text"), c)) {
-        lastStatus = static_cast<Status>(getStatus());
+    else if (checkCommand( "text", c)) { // command: text
+        lastStatus = static_cast<Status>(status);
         graphicView->disableCoordinateInput();
         setStatus( SetText);
+        accept = true;
     }
+    return accept;
 }
 
 QStringList RS_ActionDimAngular::getAvailableCommands(){

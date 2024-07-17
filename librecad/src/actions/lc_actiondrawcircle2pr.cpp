@@ -235,13 +235,9 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void LC_ActionDrawCircle2PR::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
+bool LC_ActionDrawCircle2PR::doProcessCommand([[maybe_unused]]int status, const QString& c){
+    // fixme - support commands
+    return false;
 }
 
 QStringList LC_ActionDrawCircle2PR::getAvailableCommands(){

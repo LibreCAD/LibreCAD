@@ -163,12 +163,12 @@ protected:
 
     void createShapeData(const RS_Vector &snapPoint);
     virtual void processCommandValue(double value, bool &toMainStatus) = 0;
-    virtual bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) = 0;
+    virtual bool processCustomCommand(int status, const QString &command, bool &toMainStatus) = 0;
     virtual void doProcessCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
     virtual void doUpdateMouseButtonHints(int status);
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
     void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
-    bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    bool doProcessCommand(int status, const QString &c) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
     void stateUpdated(bool toMainStatus);

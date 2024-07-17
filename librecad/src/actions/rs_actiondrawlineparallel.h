@@ -56,9 +56,7 @@ public:
     ~RS_ActionDrawLineParallel() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-
     void updateMouseButtonHints() override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     double getDistance() const;
     void setDistance(double d);
@@ -68,6 +66,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
 private:
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;

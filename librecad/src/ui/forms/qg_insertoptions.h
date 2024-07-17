@@ -26,36 +26,42 @@
 #ifndef QG_INSERTOPTIONS_H
 #define QG_INSERTOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionBlocksInsert;
 namespace Ui {
-class Ui_InsertOptions;
+    class Ui_InsertOptions;
 }
 
-class QG_InsertOptions : public QWidget
-{
+class QG_InsertOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    QG_InsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_InsertOptions();
-
-public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateData();
-
-protected:
-    RS_ActionBlocksInsert* action;
+    QG_InsertOptions();
+    ~QG_InsertOptions() override;
 
 protected slots:
-    virtual void languageChange();
+    void languageChange() override;
+    void on_leAngle_editingFinished();
+    void on_leFactor_editingFinished();
+    void on_leColumnSpacing_editingFinished();
+    void on_leRowSpacing_editingFinished();
+    void on_sbRows_valueChanged(int number);
+    void on_sbColumns_valueChanged(int number);
+protected:
+    RS_ActionBlocksInsert* action;
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_InsertOptions> ui;
+	 std::unique_ptr<Ui::Ui_InsertOptions> ui;
+    void setAngleToActionAndView(QString val);
+    void setFactorToActionAndView(QString val);
+    void setColumnSpacingActionAndView(QString val);
+    void setRowSpacingToActionAndView(QString val);
+    void setColumnsToActionAndView(int columns);
+    void setRowsToActionAndView(int rows);
 };
 
 #endif // QG_INSERTOPTIONS_H

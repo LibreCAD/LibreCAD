@@ -202,34 +202,30 @@ void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawText::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawText::doProcessCommand(int status, const QString &c) {
+    bool accept = true;
+    switch (status) {
         case SetPos: {
             if (checkCommand("text", c)){
                 deletePreview();
                 graphicView->disableCoordinateInput();
                 setStatus(SetText);
+                accept = true;
             }
             break;
         }
         case SetText: {
-            setText(e->getCommand());
+            setText(c);
             updateOptions();
             graphicView->enableCoordinateInput();
             setStatus(SetPos);
+            accept = true;
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawText::getAvailableCommands(){

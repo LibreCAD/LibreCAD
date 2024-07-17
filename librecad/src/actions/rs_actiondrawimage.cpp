@@ -40,6 +40,7 @@
 #include "rs_preview.h"
 #include "rs_units.h"
 #include "rs_actioninterface.h"
+#include "qg_imageoptions.h"
 
 struct RS_ActionDrawImage::ImageData {
 	RS_ImageData data;
@@ -152,29 +153,25 @@ void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent *e){
     trigger();
 }
 
-void RS_ActionDrawImage::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetTargetPoint: {
             if (checkCommand("angle", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetAngle);
+                accept = true;
             } else if (checkCommand("factor", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetFactor);
+                accept = true;
             } else if (checkCommand("dpi", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetDPI);
+                accept = true;
             }
             break;
         }
@@ -183,10 +180,11 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent *e){
             double a = RS_Math::eval(c, &ok);
             if (ok){
                 setAngle(RS_Math::deg2rad(a));
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -195,10 +193,11 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent *e){
             double f = RS_Math::eval(c, &ok);
             if (ok){
                 setFactor(f);
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
@@ -208,16 +207,18 @@ void RS_ActionDrawImage::commandEvent(RS_CommandEvent *e){
 
             if (ok){
                 setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 double RS_ActionDrawImage::getAngle() const{
@@ -267,16 +268,6 @@ QStringList RS_ActionDrawImage::getAvailableCommands(){
     return cmd;
 }
 
-void RS_ActionDrawImage::showOptions(){
-    RS_ActionInterface::showOptions();
-    RS_DIALOGFACTORY->requestOptions(this, true);
-}
-
-void RS_ActionDrawImage::hideOptions(){
-    RS_ActionInterface::hideOptions();
-    RS_DIALOGFACTORY->requestOptions(this, false);
-}
-
 void RS_ActionDrawImage::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetTargetPoint:
@@ -297,4 +288,6 @@ void RS_ActionDrawImage::updateMouseButtonHints(){
     }
 }
 
-// EOF
+void RS_ActionDrawImage::createOptionsWidget() {
+    m_optionWidget = std::make_unique<QG_ImageOptions>();
+}

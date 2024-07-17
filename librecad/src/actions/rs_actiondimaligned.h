@@ -48,7 +48,6 @@ public:
     ~RS_ActionDimAligned() override;
     void reset() override;
     void preparePreview() override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
 protected:
 /**
@@ -63,6 +62,8 @@ protected:
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;
     double getDimAngle() override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

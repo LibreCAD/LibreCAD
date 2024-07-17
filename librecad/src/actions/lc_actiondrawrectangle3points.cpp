@@ -525,7 +525,7 @@ double LC_ActionDrawRectangle3Points::getActualInnerAngle() const{
     return result;
 }
 
-bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]RS_CommandEvent *e, const QString &command, bool &toMainStatus){
+bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]int status, const QString &command, bool &toMainStatus){
     bool result = true;
     if (checkCommand("pos",command)){ // setting start point
         resetPoints();

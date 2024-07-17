@@ -266,7 +266,7 @@ void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
     }
 }
 
-bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c, bool &toMainStatus){
+bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]int status, const QString &c, bool &toMainStatus){
     bool result = true;
     if (checkCommand("width",c)){ //initiates entering width
         setStatus(SetWidth);
@@ -289,7 +289,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         toMainStatus = false;
     }
     else if (checkCommand("topl",c)){  // top-left position of snap
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_LEFT;
         }
         else {
@@ -297,7 +297,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("top",c)){ // middle of top edge position of snap
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP;
         }
         else {
@@ -305,7 +305,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("topr",c)){ // top-right corner snap
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_TOP_RIGHT;
         }
         else {
@@ -313,7 +313,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("left",c)){ // middle of left edge snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_LEFT;
         }
         else {
@@ -321,7 +321,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("middle",c)){ // center of rect snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_MIDDLE;
         }
         else {
@@ -329,7 +329,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("right",c)){ // middle of right edge snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_RIGHT;
         }
         else {
@@ -337,7 +337,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("bottoml",c)){ // bottom-left corner snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_LEFT;
         }
         else {
@@ -345,7 +345,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("bottom",c)){ // middle of bottom edge snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM;
         }
         else {
@@ -353,7 +353,7 @@ bool LC_ActionDrawRectangle1Point::processCustomCommand([[maybe_unused]]RS_Comma
         }
     }
     else if (checkCommand("bottomr",c)){ // bottom-right corner snap position
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_BOTTOM_RIGHT;
         }
         else {

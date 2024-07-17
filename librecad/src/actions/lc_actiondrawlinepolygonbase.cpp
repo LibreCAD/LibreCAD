@@ -9,20 +9,18 @@ LC_ActionDrawLinePolygonBase::LC_ActionDrawLinePolygonBase( const char *name, RS
 
 LC_ActionDrawLinePolygonBase::~LC_ActionDrawLinePolygonBase() = default;
 
-void LC_ActionDrawLinePolygonBase::parseNumber(RS_CommandEvent *e, const QString &c){
-    int result;
+bool LC_ActionDrawLinePolygonBase::parseNumber(const QString &c){
     bool ok;
     int n = c.toInt(&ok);
     if (ok){
-        e->accept();
         if (n > 0 && n < 10000){ // fixme - check range to conform to UI
-            result = n;
+            number = n;
         } else
             commandMessageTR("Not a valid number. Try 1..9999");
     } else {
         commandMessageTR("Not a valid expression");
     }
-    number = result;
+    return ok;
 }
 
 

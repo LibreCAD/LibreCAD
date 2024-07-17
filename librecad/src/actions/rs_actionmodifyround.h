@@ -56,7 +56,6 @@ public:
     void trigger() override;
     void finish(bool updateTB = false) override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setRadius(double r);
@@ -73,6 +72,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
 private:
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;

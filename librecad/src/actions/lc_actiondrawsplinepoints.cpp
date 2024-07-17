@@ -169,31 +169,27 @@ void LC_ActionDrawSplinePoints::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void LC_ActionDrawSplinePoints::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    switch (getStatus()) {
+bool LC_ActionDrawSplinePoints::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetStartPoint:
-            if (checkCommand("help", c)){
-                commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-                return;
-            }
             break;
         case SetNextPoint:
             if (checkCommand("undo", c)){
                 undo();
                 updateMouseButtonHints();
-                return;
+                accept = true;
             }
-            if (checkCommand("redo", c)){
+            else if (checkCommand("redo", c)){
                 redo();
                 updateMouseButtonHints();
-                return;
+                accept = true;
             }
             break;
         default:
             break;
     }
+    return accept;
 }
 
 QStringList LC_ActionDrawSplinePoints::getAvailableCommands(){

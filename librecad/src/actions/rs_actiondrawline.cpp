@@ -234,48 +234,37 @@ void RS_ActionDrawLine::coordinateEvent(RS_CoordinateEvent* e)
     RS_DEBUG->print("RS_ActionDrawLine::coordinateEvent: OK");
 }
 
-void RS_ActionDrawLine::commandEvent(RS_CommandEvent* e)
-{
+bool RS_ActionDrawLine::doProcessCommand(int status, const QString &c) {
     RS_DEBUG->print("RS_ActionDrawLine::commandEvent");
 
-    QString c = e->getCommand().toLower();
-
-    switch (getStatus()) {
-    case SetStartpoint:
-        if (checkCommand( "help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-            e->accept();
-            return;
-        }
-        break;
-
-    case SetEndpoint:
-        if (checkCommand( "close", c)) {
-            close();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-
-        if (checkCommand( "undo", c)) {
-            undo();
-            e->accept();
-            updateMouseButtonHints();
-            return;
-        }
-        break;
-
-    default:
-        return;
-    }
+    bool accept = false;
 
     if (checkCommand( "redo", c)) {
         redo();
-        e->accept();
+        accept = true;
         updateMouseButtonHints();
     }
+    else {
+        switch (status) {
+            case SetStartpoint:
+                break;
+            case SetEndpoint:
+                if (checkCommand("close", c)) {
+                    close();
+                    updateMouseButtonHints();
+                    accept = true;
+                } else if (checkCommand("undo", c)) {
+                    undo();
+                    updateMouseButtonHints();
+                    accept = true;
+                }
+                break;
+            default:
+                break;
+        }
+    }
     RS_DEBUG->print("RS_ActionDrawLine::commandEvent: OK");
+    return accept;
 }
 
 QStringList RS_ActionDrawLine::getAvailableCommands()

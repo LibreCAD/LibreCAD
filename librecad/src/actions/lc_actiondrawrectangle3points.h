@@ -88,7 +88,7 @@ protected:
     void calculateCorner4() const;
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
     void processCommandValue(double value, bool &toMainStatus) override;
-    bool processCustomCommand(RS_CommandEvent *e, const QString &command, bool &toMainStatus) override;
+    bool processCustomCommand(int status, const QString &command, bool &toMainStatus) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;

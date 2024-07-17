@@ -26,8 +26,7 @@
 #ifndef QG_LIBRARYINSERTOPTIONS_H
 #define QG_LIBRARYINSERTOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionLibraryInsert;
@@ -35,27 +34,24 @@ namespace Ui {
 class Ui_LibraryInsertOptions;
 }
 
-class QG_LibraryInsertOptions : public QWidget
-{
-    Q_OBJECT
+class QG_LibraryInsertOptions : public LC_ActionOptionsWidgetBase{
+Q_OBJECT
 
 public:
-    QG_LibraryInsertOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_LibraryInsertOptions();
-
-public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateData();
-
-protected:
-    RS_ActionLibraryInsert* action;
-
+    QG_LibraryInsertOptions();
+    ~QG_LibraryInsertOptions() override;
 protected slots:
-    virtual void languageChange();
-
+    void languageChange() override;
+    void on_leAngle_editingFinished();
+    void on_leFactor_editingFinished();
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_LibraryInsertOptions> ui;
+    std::unique_ptr<Ui::Ui_LibraryInsertOptions> ui;
+    RS_ActionLibraryInsert* action;
+    void setAngleToActionAndView(QString val);
+    void setFactorToActionAndView(QString val);
 };
 
 #endif // QG_LIBRARYINSERTOPTIONS_H

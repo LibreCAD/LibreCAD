@@ -144,12 +144,9 @@ void LC_ActionDrawStar::onCoordinateEvent(const RS_Vector &coord, bool isZero, i
  * @param c
  * @return
  */
-bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QString &c){
     bool processed = true;
-    if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-    }
-    else if (checkCommand("nopoly",c)){ // don't create polyline
+    if (checkCommand("nopoly",c)){ // don't create polyline
         createPolyline = false;
         updateOptions();
     }

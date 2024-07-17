@@ -63,11 +63,8 @@ public:
 
     void mouseMoveEvent(QMouseEvent* e) override;
     void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
-
     void updateMouseButtonHints() override;
-
 private:
     RS_Line*     line1 = nullptr;                          ///< 1st chosen line
     RS_Line*     line2 = nullptr;                          ///< 2nd chosen line
@@ -87,6 +84,8 @@ private:
 protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

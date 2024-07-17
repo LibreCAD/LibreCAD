@@ -291,7 +291,7 @@ void LC_ActionDrawRectangle2Points::processCommandValue([[maybe_unused]]double v
     // no additional processing there
 }
 
-bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c, bool &toMainStatus){
+bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]int status, const QString &c, bool &toMainStatus){
     bool result = true;
     if (checkCommand("snap1",c)){ // starts entering of snap mode for point 1
         setStatus(SetPoint1Snap);
@@ -302,7 +302,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_Comm
         toMainStatus = false;
     }
     else if (checkCommand("corner",c)){ // value for corner mode
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_CORNER;
         }else if (getStatus() == SetPoint2Snap){
             secondPointSnapMode = SNAP_CORNER;
@@ -312,7 +312,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_Comm
         }
     }
     else if (checkCommand("mid-vert",c)){ // value for corner mode
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_EDGE_VERT;
         }else if (getStatus() == SetPoint2Snap){
             secondPointSnapMode = SNAP_EDGE_VERT;
@@ -322,7 +322,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_Comm
         }
     }
     else if (checkCommand("mid-hor",c)){ // value for corner mode
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_EDGE_HOR;
         }else if (getStatus() == SetPoint2Snap){
             secondPointSnapMode = SNAP_EDGE_HOR;
@@ -332,7 +332,7 @@ bool LC_ActionDrawRectangle2Points::processCustomCommand([[maybe_unused]]RS_Comm
         }
     }
     else if (checkCommand("middle",c)){ // value for corner mode
-        if (getStatus() == SetPoint1Snap){
+        if (status == SetPoint1Snap){
             insertionPointSnapMode = SNAP_MIDDLE;
         }else if (getStatus() == SetPoint2Snap){
             secondPointSnapMode = SNAP_MIDDLE;

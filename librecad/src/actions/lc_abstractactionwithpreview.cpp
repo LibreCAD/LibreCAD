@@ -336,29 +336,6 @@ void LC_AbstractActionWithPreview::finish(bool updateTB){
  */
 void LC_AbstractActionWithPreview::doFinish([[maybe_unused]]bool updateTB){}
 
-
-/**
- * default implementation that simply prepares command and handle accepting event.
- * Actual processing is delegated to inherited method
- * @param e
- */
-void LC_AbstractActionWithPreview::commandEvent(RS_CommandEvent *e){
-    QString const &c = e->getCommand().toLower().trimmed();
-    bool accept = doProcessCommand(e, c);
-    if (accept){
-        e->accept();
-    }
-}
-/**
- * Method should be overridden in inherited actions to process command. Should return true if command event should be accepted.
- * @param e original command event
- * @param c command
- * @return true if event should be accepted, false otherwise
- */
-bool LC_AbstractActionWithPreview::doProcessCommand([[maybe_unused]]RS_CommandEvent *e, [[maybe_unused]]const QString &c){
-    return false;
-}
-
 /**
  * Generic processing of mouse release for simplification of inherited classes
  * Method checks whether shift is pressed, and checks which button is released.

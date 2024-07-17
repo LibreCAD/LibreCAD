@@ -295,21 +295,14 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
     switch (getStatus()) {
         case SetMinor: {
             bool ok;
             double m = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->ratio = m / pPoints->m_vMajorP.magnitude();
                 if (!pPoints->isArc){
                     trigger();
@@ -324,7 +317,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else
@@ -335,7 +328,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else
@@ -345,6 +338,7 @@ void RS_ActionDrawEllipseAxis::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints(){

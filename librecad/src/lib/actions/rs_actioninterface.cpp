@@ -29,6 +29,7 @@
 #include "rs.h"
 #include "rs_actioninterface.h"
 #include "rs_commands.h"
+#include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
@@ -193,10 +194,38 @@ void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent*) {}
  * Called when a command from the command line is launched.
  * and this is the current action.
  * This function can be overwritten by the implementing action.
- * The default implementation does nothing.
- */
-void RS_ActionInterface::commandEvent(RS_CommandEvent*) {
+* default implementation  simply prepares command and handle accepting event.
+* Actual processing is delegated to inherited method
+* @param e
+*/
+void RS_ActionInterface::commandEvent(RS_CommandEvent* e) {
+    QString c = prepareCommand(e);
+    if (!c.isEmpty()) {
+        if (checkCommand("help", c)) {
+            const QStringList &list = getAvailableCommands();
+            if (list.isEmpty()) {
+                commandMessage(msgAvailableCommands() + list.join(", ") + getAdditionalHelpMessage());
+            } else {
+                // fixme - need some indication that commands are not supported
+            }
+            e->accept();
+        } else {
+            bool accept = doProcessCommand(getStatus(), c);
+            if (accept) {
+                e->accept();
+            }
+        }
+    }
 }
+
+QString RS_ActionInterface::prepareCommand(RS_CommandEvent *e) const {
+    QString const &c = e->getCommand().toLower().trimmed();
+    return c;
+}
+
+QString RS_ActionInterface::getAdditionalHelpMessage() {return {};}
+
+bool RS_ActionInterface::doProcessCommand([[maybe_unused]]int status, [[maybe_unused]]const QString &command) {return false;}
 
 /**
  * Must be implemented to return the currently available commands

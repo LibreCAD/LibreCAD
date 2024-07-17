@@ -57,11 +57,13 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
     void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

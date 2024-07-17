@@ -302,93 +302,88 @@ void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawArc::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
     if (checkCommand("reversed", c)){
-        e->accept();
+        accept = true;
         setReversed(!isReversed());
-
         updateOptions();
-        return;
     }
-
-    switch (getStatus()) {
-
-        case SetRadius: {
-            bool ok;
-            double r = RS_Math::eval(c, &ok);
-            if (ok){
-                data->radius = r;
-                setStatus(SetAngle1);
-                e->accept();
-            } else
-                commandMessageTR("Not a valid expression");
-            break;
-        }
-        case SetAngle1: {
-            bool ok = false;
-            double a = RS_Math::eval(c, &ok);
-            if (ok){
-                data->angle1 = RS_Math::deg2rad(a);
-                e->accept();
-                setStatus(SetAngle2);
-            } else
-                commandMessageTR("Not a valid expression");
-            break;
-        }
-        case SetAngle2: {
-            if (checkCommand("angle", c)){
-                setStatus(SetIncAngle);
-            } else if (checkCommand("chordlen", c)){
-                RS_Vector arcStart = data->center + RS_Vector::polar(data->radius, data->angle1);
-                moveRelativeZero(arcStart);
-                setStatus(SetChordLength);
-            } else {
+    else {
+        switch (status) {
+            case SetRadius: {
+                bool ok;
+                double r = RS_Math::eval(c, &ok);
+                if (ok) {
+                    data->radius = r;
+                    setStatus(SetAngle1);
+                    accept = true;
+                } else
+                    commandMessageTR("Not a valid expression");
+                break;
+            }
+            case SetAngle1: {
                 bool ok = false;
                 double a = RS_Math::eval(c, &ok);
-                if (ok){
-                    data->angle2 = RS_Math::deg2rad(a);
-                    e->accept();
+                if (ok) {
+                    data->angle1 = RS_Math::deg2rad(a);
+                    accept = true;
+                    setStatus(SetAngle2);
+                } else
+                    commandMessageTR("Not a valid expression");
+                break;
+            }
+            case SetAngle2: {
+                if (checkCommand("angle", c)) {
+                    setStatus(SetIncAngle);
+                    accept = true;
+                } else if (checkCommand("chordlen", c)) {
+                    RS_Vector arcStart = data->center + RS_Vector::polar(data->radius, data->angle1);
+                    moveRelativeZero(arcStart);
+                    setStatus(SetChordLength);
+                    accept = true;
+                } else {
+                    bool ok = false;
+                    double a = RS_Math::eval(c, &ok);
+                    if (ok) {
+                        data->angle2 = RS_Math::deg2rad(a);
+                        accept = true;
+                        trigger();
+                    } else
+                        commandMessageTR("Not a valid expression");
+                }
+                break;
+            }
+            case SetIncAngle: {
+                bool ok = false;
+                double a = RS_Math::eval(c, &ok);
+                if (ok) {
+                    data->angle2 = data->angle1 + RS_Math::deg2rad(a);
+                    accept = true;
                     trigger();
                 } else
                     commandMessageTR("Not a valid expression");
+                break;
             }
-            break;
-        }
-        case SetIncAngle: {
-            bool ok = false;
-            double a = RS_Math::eval(c, &ok);
-            if (ok){
-                data->angle2 = data->angle1 + RS_Math::deg2rad(a);
-                e->accept();
-                trigger();
-            } else
-                commandMessageTR("Not a valid expression");
-            break;
-        }
-        case SetChordLength: {
-            bool ok = false;
-            double l = RS_Math::eval(c, &ok);
-            if (ok){
-                if (fabs(l / (2 * data->radius)) <= 1.0){
-                    data->angle2 = data->angle1 + asin(l / (2 * data->radius)) * 2;
-                    trigger();
+            case SetChordLength: {
+                bool ok = false;
+                double l = RS_Math::eval(c, &ok);
+                if (ok) {
+                    accept = true;
+                    if (fabs(l / (2 * data->radius)) <= 1.0) {
+                        data->angle2 = data->angle1 + asin(l / (2 * data->radius)) * 2;
+                        trigger();
+                    } else
+                        commandMessageTR("Not a valid chord length");
                 } else
-                    commandMessageTR("Not a valid chord length");
-                e->accept();
-            } else
-                commandMessageTR("Not a valid expression");
-            break;
+                    commandMessageTR("Not a valid expression");
+                break;
+            }
+            default:
+                break;
         }
-        default:
-            break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawArc::getAvailableCommands() {

@@ -73,8 +73,8 @@ public:
 
 protected:
     void createOptionsWidget() override;
-    bool doProceedCommand(RS_CommandEvent *pEvent, const QString &qString) override;
-    bool doProcessCommandValue(RS_CommandEvent *e, const QString &c) override;
+    bool doProceedCommand(int status, const QString &qString) override;
+    bool doProcessCommandValue(int status, const QString &c) override;
     const RS_Vector& getStartPointForAngleSnap() const override;
     void doBack(QMouseEvent *pEvent, int status) override;
     bool isStartPointValid() const override;

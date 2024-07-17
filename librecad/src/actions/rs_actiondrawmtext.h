@@ -61,7 +61,6 @@ public:
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setText(const QString &t);
@@ -72,6 +71,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
 private:
     std::unique_ptr<RS_MTextData> data;
     //RS_Text* text;

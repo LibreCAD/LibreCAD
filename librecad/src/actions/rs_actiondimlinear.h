@@ -60,7 +60,6 @@ public:
     ~RS_ActionDimLinear() override;
     void reset() override;
     void preparePreview() override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
 //    void showOptions() override;
     double getAngle() const;
@@ -84,6 +83,8 @@ protected:
     void setExtensionPoint1(RS_Vector p) override;
     void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

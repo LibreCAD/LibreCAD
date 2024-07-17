@@ -178,34 +178,31 @@ void RS_ActionDrawMText::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawMText::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
+bool RS_ActionDrawMText::doProcessCommand(int status, const QString &c) {
+    bool accept = true;
 
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+    switch (status) {
         case SetPos: {
             if (checkCommand("text", c)){
                 deletePreview();
                 graphicView->disableCoordinateInput();
                 setStatus(SetText);
+                accept = true;
             }
             break;
         }
         case SetText: {
-            setText(e->getCommand());
+            setText(c);
             updateOptions();
             graphicView->enableCoordinateInput();
             setStatus(SetPos);
+            accept = true;
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawMText::getAvailableCommands() {

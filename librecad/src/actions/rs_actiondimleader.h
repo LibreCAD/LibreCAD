@@ -48,7 +48,6 @@ public:
         SetStartpoint,   /**< Setting the startpoint.  */
         SetEndpoint      /**< Setting the endpoint. */
     };
-
 public:
     RS_ActionDimLeader(
         RS_EntityContainer &container,
@@ -60,7 +59,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void keyPressEvent(QKeyEvent *) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
     /**
@@ -75,6 +73,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

@@ -193,36 +193,29 @@ void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDimRadial::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDimRadial::doProcessCommand(int status, const QString &c) {
+    bool accept = true;
     // setting new text label:
-    int status = getStatus();
+
+    // fixme - check logic, restructure if possible
     if (status == SetText){
         setText(c);
         updateOptions();
         graphicView->enableCoordinateInput();
         setStatus(lastStatus);
-        return;
+        accept = true;
     }
-
-    // command: text
-    if (checkCommand("text", c)){
+    else if (checkCommand("text", c)) { // command: text
         lastStatus = (Status) status;
         graphicView->disableCoordinateInput();
         setStatus(SetText);
+        accept = true;
     }
-
-    // setting angle
-    if (status == SetPos){
+    else if (status == SetPos) { // setting angle
         bool ok;
         double a = RS_Math::eval(c, &ok);
-        if (ok){
+        if (ok) {
+            accept = true;
             pos->setPolar(1.0, RS_Math::deg2rad(a));
             *pos += data->definitionPoint;
             trigger();
@@ -231,8 +224,9 @@ void RS_ActionDimRadial::commandEvent(RS_CommandEvent *e){
         } else {
             commandMessageTR("Not a valid expression");
         }
-        return;
     }
+
+    return accept;
 }
 
 QStringList RS_ActionDimRadial::getAvailableCommands(){

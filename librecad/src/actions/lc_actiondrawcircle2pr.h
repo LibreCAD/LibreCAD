@@ -50,18 +50,17 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool preparePreview(const RS_Vector &mouse, RS_Vector& altCenter);
-    void reset();
+    void reset() override;
 
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command)  override;
 };
 
 #endif

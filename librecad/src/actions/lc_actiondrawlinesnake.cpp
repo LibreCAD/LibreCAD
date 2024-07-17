@@ -296,7 +296,7 @@ void LC_ActionDrawLineSnake::completeLineSegment(bool close){
     updateMouseButtonHints();
 }
 
-bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]int status, const QString &c){
     bool result = true;
     if (checkCommand("close", c)){
         close();
@@ -323,9 +323,9 @@ bool LC_ActionDrawLineSnake::doProceedCommand([[maybe_unused]]RS_CommandEvent *e
     return result;
 }
 
-bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c){
     bool result = true;
-    switch (getStatus()) {
+    switch (status) {
         case SetDirection:
             break;
         case SetDistance: {
@@ -359,7 +359,7 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(RS_CommandEvent *e, const QSt
         }
         case SetAngle: {
             // entering angle value
-            result = processAngleValueInput(e, c);
+            result = processAngleValueInput(c);
             break;
         }
     }

@@ -99,14 +99,11 @@ bool LC_AbstractActionDrawLine::doCheckMayDrawPreview([[maybe_unused]]QMouseEven
  * @param c
  * @return
  */
-bool LC_AbstractActionDrawLine::doProcessCommand(RS_CommandEvent *e, const QString &c){
+bool LC_AbstractActionDrawLine::doProcessCommand(int status, const QString &c){
     bool accept = true;
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-    }
+
     // line by X coordinate
-    else if (checkCommand("x", c)){
+    if (checkCommand("x", c)){
        setSetXDirectionState();
     }
     // line by Y coordinate
@@ -121,10 +118,10 @@ bool LC_AbstractActionDrawLine::doProcessCommand(RS_CommandEvent *e, const QStri
     else if (checkCommand("angle", c)){
         setSetAngleState(false);
     }
-    else if (doProceedCommand(e, c)){ // delegate other commands to inherited actions
+    else if (doProceedCommand(status, c)){ // delegate other commands to inherited actions
        // intentionally does nothing, processing is withing method call
     }
-    else if (doProcessCommandValue(e, c)){ // if we're here, it means that this is some input value - delegate it to inherited action
+    else if (doProcessCommandValue(status, c)){ // if we're here, it means that this is some input value - delegate it to inherited action
         // intentionally does nothing
     }
     else{
@@ -139,7 +136,7 @@ bool LC_AbstractActionDrawLine::doProcessCommand(RS_CommandEvent *e, const QStri
  * @param c command string
  * @return true if command is processed, false if not and further processing is needed (or command invalid)
  */
-bool LC_AbstractActionDrawLine::doProceedCommand([[maybe_unused]]RS_CommandEvent *e, [[maybe_unused]]const QString &c){
+bool LC_AbstractActionDrawLine::doProceedCommand([[maybe_unused]]int status, [[maybe_unused]]const QString &c){
     return false;
 }
 
@@ -149,7 +146,7 @@ bool LC_AbstractActionDrawLine::doProceedCommand([[maybe_unused]]RS_CommandEvent
  * @param c command input
  * @return true if value is processed, false if value in not processed (invalid input or so)
  */
-bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]]RS_CommandEvent *e, [[maybe_unused]]const QString &c){
+bool LC_AbstractActionDrawLine::doProcessCommandValue([[maybe_unused]]int status, [[maybe_unused]]const QString &c){
     return false;
 }
 
@@ -241,7 +238,7 @@ double LC_AbstractActionDrawLine::getAngle(){
     return angle;
 }
 
-bool LC_AbstractActionDrawLine::processAngleValueInput([[maybe_unused]]RS_CommandEvent *e, const QString &c){
+bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
     bool ok = false;
     double value = RS_Math::eval(c, &ok);
     if (ok){

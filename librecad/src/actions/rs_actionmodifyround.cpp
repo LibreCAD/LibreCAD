@@ -313,39 +313,36 @@ void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, [[maybe_unus
     init(status - 1);
 }
 
-void RS_ActionModifyRound::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage( msgAvailableCommands() +  getAvailableCommands().join(", "));
-        return;
-    }
+bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
 
     switch (getStatus()) {
         case SetEntity1:
         case SetEntity2: {
             if (checkCommand("radius", c)){
-                e->accept();
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetRadius);
+                accept = true;
             } else if (checkCommand("trim", c)){
-                e->accept();
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetTrim);
                 pPoints->data.trim = !pPoints->data.trim;
                 updateOptions();
+                accept = true;
             } else {
                 bool ok;
                 double r = RS_Math::eval(c, &ok);
                 if (ok && r > 1.0e-10){
-                    e->accept();
+                    accept = true;
                     pPoints->data.radius = r;
-                } else
-                    commandMessageTR("Not a valid expression");
-                updateOptions();
 
+                } else {
+                    commandMessageTR("Not a valid expression");
+                }
+                // fixme - should we allow change status for invalid input?
+                updateOptions();
                 setStatus(lastStatus);
             }
             break;
@@ -354,7 +351,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent *e){
             bool ok;
             double r = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->data.radius = r;
             } else {
                 commandMessageTR("Not a valid expression");
@@ -380,6 +377,7 @@ void RS_ActionModifyRound::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionModifyRound::getAvailableCommands(){

@@ -61,15 +61,16 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
-
     void updateMouseButtonHints() override;
     double getRadius() const;
     void setRadius(double val);
 protected:
 
     bool setRadiusStr(const QString &sr) ;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
     /**
      * Circle data defined so far.
      */

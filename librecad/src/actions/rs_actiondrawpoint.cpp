@@ -89,19 +89,6 @@ void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){
     trigger();
 }
 
-void RS_ActionDrawPoint::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-}
-
-QStringList RS_ActionDrawPoint::getAvailableCommands(){
-    return {};
-}
-
 void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:

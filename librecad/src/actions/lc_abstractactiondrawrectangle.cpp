@@ -246,14 +246,11 @@ double LC_AbstractActionDrawRectangle::getActualBaseAngle() const{
  * @param c command
  * @return true if command is processed, false if additional processing is needed
  */
-bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const QString &c){
+bool LC_AbstractActionDrawRectangle::doProcessCommand(int status, const QString &c){
     bool processed = true;
     bool toMainStatus = true;
 
-    if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-    }
-    else if (checkCommand("angle",c)){ // initiates entering of base angle of rect (angle from corner1 to corner2)
+    if (checkCommand("angle",c)){ // initiates entering of base angle of rect (angle from corner1 to corner2)
         setStatus(SetAngle);
         toMainStatus = false;
     }
@@ -262,7 +259,7 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         toMainStatus = false;
     }
     else if (checkCommand("bevels",c)){ // initiates entering of bevels or setting bevels corners mode
-        if (getStatus() == SetCorners){
+        if (status == SetCorners){
             cornersDrawMode = CORNER_BEVEL;
             updateOptions();
         }
@@ -284,13 +281,13 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         toMainStatus = false;
     }
     else if (checkCommand("str",c)){  // straight corners mode (no rounding, not bevel)
-        if (getStatus() == SetCorners){
+        if (status == SetCorners){
             cornersDrawMode = CORNER_STRAIGHT;
             updateOptions();
         }
     }
     else if (checkCommand("round",c)){ // rounded corners mode
-        if (getStatus() == SetCorners){
+        if (status == SetCorners){
             cornersDrawMode = CORNER_RADIUS;
             updateOptions();
         }
@@ -300,7 +297,7 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         toMainStatus = false;
     }
     else if (checkCommand("both", c)){ // all edges are drawn
-        if (getStatus() == SetEdges){
+        if (status == SetEdges){
             edgesDrawMode = EDGES_BOTH;
             cornersDrawMode = CORNER_STRAIGHT;
             updateOptions();
@@ -308,7 +305,7 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         }
     }
     else if (checkCommand("hor", c)){  // only horizontal edges are drawn
-        if (getStatus() == SetEdges){
+        if (status == SetEdges){
             edgesDrawMode = EDGES_HOR;
             cornersDrawMode = CORNER_STRAIGHT;
             updateOptions();
@@ -316,21 +313,21 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(RS_CommandEvent *e, const 
         }
     }
     else if (checkCommand("vert", c)){ // only vertical edges are drawn
-        if (getStatus() == SetEdges){
+        if (status == SetEdges){
             edgesDrawMode = EDGES_VERT;
             cornersDrawMode = CORNER_STRAIGHT;
             updateOptions();
             restoreMainStatus();
         }
     }
-    else if (processCustomCommand(e,c, toMainStatus)){ // delegate processing to inherited class
+    else if (processCustomCommand(status,c, toMainStatus)){ // delegate processing to inherited class
         // intentionally do nothing
     }
     else{ // process entered value
         bool ok = false;
         double value = RS_Math::eval(c, &ok);
         if (ok){
-            switch (getStatus()) {
+            switch (status) {
                 case SetAngle: {
                     angle = LC_LineMath::getMeaningfulAngle(value);
                     baseAngleIsFixed = true;

@@ -190,22 +190,18 @@ void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetPos: {
             if (!pPoints->fixedAngle && checkCommand("angle", c)){
                 deletePreview();
                 setStatus(SetAngle);
+                accept = true;
             } else if (checkCommand("length", c)){
                 deletePreview();
                 setStatus(SetLength);
+                accept = true;
             }
             break;
         }
@@ -213,7 +209,7 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->angle = a;
             } else {
                 commandMessageTR("Not a valid expression");
@@ -226,7 +222,7 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
             bool ok;
             double l = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->length = l;
             } else {
                 commandMessageTR("Not a valid expression");
@@ -238,6 +234,7 @@ void RS_ActionDrawLineAngle::commandEvent(RS_CommandEvent* e) {
         default:
             break;
     }
+    return accept;
 }
 
 void RS_ActionDrawLineAngle::setSnapPoint(int sp){

@@ -311,9 +311,9 @@ bool LC_ActionDrawLinePoints::isNonZeroLine(const RS_Vector &possiblePoint) cons
  * @param c command
  * @return true if command is processed, false - if additional processing is needed
  */
-bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]int status, const QString &c){
     bool result = true;
-    bool edgeStatus = getStatus() == SetEdge;
+    bool edgeStatus = status == SetEdge;
     if (checkCommand("edge_none", c)){        //specifies no points in line edges
         updateEdgePointsMode(DRAW_EDGE_NONE);
     }
@@ -382,9 +382,9 @@ bool LC_ActionDrawLinePoints::doProceedCommand([[maybe_unused]]RS_CommandEvent *
  * @param c
  * @return
  */
-bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QString &c){
+bool LC_ActionDrawLinePoints::doProcessCommandValue(int status, const QString &c){
     bool result = true;
-    switch (getStatus()) {
+    switch (status) {
         case SetDirection:
             // processed earlier
             break;
@@ -444,7 +444,7 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(RS_CommandEvent *e, const QS
             break;
         }
         case SetAngle: { // process angle value
-            processAngleValueInput(e, c);
+            processAngleValueInput( c);
             break;
         }
     }

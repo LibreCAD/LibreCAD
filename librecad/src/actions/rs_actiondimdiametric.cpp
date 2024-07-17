@@ -193,35 +193,28 @@ void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDimDiametric::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDimDiametric::doProcessCommand(int status, const QString &c) {
+    // fixme - check whether the code is duplicated with other dim actions
+    bool accept = false;
     // setting new text label:
     if (getStatus() == SetText){
         setText(c);
         updateOptions();
         graphicView->enableCoordinateInput();
         setStatus(lastStatus);
-        return;
+        accept = true;
     }
-
-    // command: text
-    if (checkCommand("text", c)){
+    else if (checkCommand("text", c)){ // command: text
         lastStatus = (Status) getStatus();
         graphicView->disableCoordinateInput();
         setStatus(SetText);
+        accept = true;
     }
-
-    // setting angle
-    if (getStatus() == SetPos){
+    else if (getStatus() == SetPos){// setting angle
         bool ok;
         double a = RS_Math::eval(c, &ok);
         if (ok){
+            accept = true;
             pos->setPolar(1.0, RS_Math::deg2rad(a));
             *pos += data->definitionPoint;
             trigger();
@@ -230,8 +223,8 @@ void RS_ActionDimDiametric::commandEvent(RS_CommandEvent *e){
         } else {
             commandMessageTR("Not a valid expression");
         }
-        return;
     }
+    return accept;
 }
 
 QStringList RS_ActionDimDiametric::getAvailableCommands(){

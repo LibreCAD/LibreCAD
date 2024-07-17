@@ -178,21 +178,17 @@ void RS_ActionDrawLineParallelThrough::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
+bool RS_ActionDrawLineParallelThrough::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
 
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+    switch (status) {
         case SetEntity:
         case SetPos: {
             if (checkCommand("number", c)){
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetNumber);
+                accept = true;
             }
             break;
         }
@@ -200,7 +196,7 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
             bool ok;
             int n = c.toInt(&ok);
             if (ok){
-                e->accept();
+                accept = true;
                 if (n > 0 && n < 100){
                     number = n;
                 } else {
@@ -216,6 +212,7 @@ void RS_ActionDrawLineParallelThrough::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawLineParallelThrough::getAvailableCommands(){

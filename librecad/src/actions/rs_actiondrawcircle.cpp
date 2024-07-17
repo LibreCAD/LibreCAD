@@ -130,22 +130,15 @@ void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawCircle::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetRadius: {
             bool ok = false;
             double r = RS_Math::eval(c, &ok);
             if (ok && r > RS_TOLERANCE){
                 data->radius = r;
-                e->accept();
+                accept = true;
                 trigger();
             } else
                 commandMessageTR("Not a valid expression");
@@ -153,6 +146,7 @@ void RS_ActionDrawCircle::commandEvent(RS_CommandEvent* e) {
         default:
             break;
     }
+    return accept;
 }
 
 void RS_ActionDrawCircle::updateMouseButtonHints() {

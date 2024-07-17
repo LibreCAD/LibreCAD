@@ -64,7 +64,6 @@ public:
     bool isSymmetric() const{return symmetric;};
     void setSymmetric(bool value);
     QStringList getAvailableCommands() override;
-
 protected:
     void createOptionsWidget() override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
@@ -75,7 +74,7 @@ protected:
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
-    bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    bool doProcessCommand(int status, const QString &c) override;
     void doBack(QMouseEvent *pEvent, int status) override;
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
 

@@ -141,30 +141,25 @@ void RS_ActionDrawLineParallel::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetEntity: {
             // fixme = rework support of throught for simpler UX - add this to UI, probably combine two actions into same implementation
             if (checkCommand("through", c)){
                 finish(false);
+                accept = true;
                 graphicView->setCurrentAction(
                     new RS_ActionDrawLineParallelThrough(*container,
                                                          *graphicView));
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);
+                accept = true;
             } else {
                 bool ok;
                 double d = RS_Math::eval(c, &ok);
-                if (ok) e->accept();
+                accept = true;
                 if (ok && d > 1.0e-10){
                     distance = d;
                 } else {
@@ -180,7 +175,7 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
             bool ok;
             int n = c.toInt(&ok);
             if (ok){
-                e->accept();
+                accept = true;
                 if (n > 0 && n < 100){
                     number = n;
                 } else
@@ -195,11 +190,11 @@ void RS_ActionDrawLineParallel::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawLineParallel::getAvailableCommands() {
     QStringList cmd;
-
     switch (getStatus()) {
     case SetEntity:
         cmd += command("number");

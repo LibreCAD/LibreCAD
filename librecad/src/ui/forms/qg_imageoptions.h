@@ -26,8 +26,8 @@
 #ifndef QG_IMAGEOPTIONS_H
 #define QG_IMAGEOPTIONS_H
 
-#include<memory>
-#include<QWidget>
+
+#include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawImage;
@@ -35,29 +35,28 @@ namespace Ui {
 class Ui_ImageOptions;
 }
 
-class QG_ImageOptions : public QWidget
-{
+class QG_ImageOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
-
 public:
-    QG_ImageOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
-    ~QG_ImageOptions();
+    QG_ImageOptions();
+    ~QG_ImageOptions() override;
 
 public slots:
-    virtual void setAction( RS_ActionInterface * a, bool update );
-    virtual void updateData();
-    virtual void updateDPI();
-    virtual void updateFactor();
-
+    void languageChange() override;
+    void onAngleEditingFinished();
+    void onDpiEditingFinished();
+    void onFactorEditingFinished();
 protected:
     RS_ActionDrawImage* action;
 
-protected slots:
-    virtual void languageChange();
-
 private:
-	void saveSettings();
 	std::unique_ptr<Ui::Ui_ImageOptions> ui;
+
+protected:
+    void doSaveSettings() override;
+    void doSetAction(RS_ActionInterface *a, bool update) override;
+    void setAngleToActionAndView(QString val);
+    void setFactorToActionAndView(QString qString);
 };
 
 #endif // QG_IMAGEOPTIONS_H

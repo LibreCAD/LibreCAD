@@ -138,14 +138,6 @@ protected:
 	void requestPrintPreviewOptions(RS_ActionInterface* action,
 											bool on, bool update);
 
-	void requestInsertOptions(RS_ActionInterface* action,
-									  bool on, bool update);
-	void requestImageOptions(RS_ActionInterface* action,
-									 bool on, bool update);
-
-	void requestLibraryInsertOptions(RS_ActionInterface* action,
-											 bool on, bool update);
-
 public:
 	void requestSnapDistOptions(double& dist, bool on) override;
 	void requestSnapMiddleOptions(int& middlePoints, bool on) override;
@@ -187,8 +179,6 @@ public:
  void command(const QString& message) override;
 
 	static QString extToFormat(const QString& ext);
-// void updateArcTangentialOptions(double d, bool byRadius) override;
-
  void displayBlockName(const QString& blockName, const bool& display) override;
 
 protected:
@@ -208,7 +198,6 @@ private:
 	// pointers to snap option widgets
     QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
     QG_SnapDistOptions* snapDistOptions = nullptr;
-
 };
 
 #endif

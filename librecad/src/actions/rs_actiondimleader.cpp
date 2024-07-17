@@ -195,21 +195,18 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDimLeader::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
+bool RS_ActionDimLeader::doProcessCommand(int status, const QString &c) {
     // enter to finish
+    bool accept = false;
+    // fixme - EMPTY COMMAND!!! change to enter processing?
     if (c == ""){
         trigger();
         reset();
         setStatus(SetStartpoint);
+        accept = true;
         //finish();
     }
+    return accept;
 }
 
 void RS_ActionDimLeader::updateMouseButtonHints(){

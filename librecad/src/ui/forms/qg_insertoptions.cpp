@@ -36,10 +36,9 @@
  *  Constructs a QG_InsertOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_InsertOptions::QG_InsertOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_InsertOptions{})
-{
+QG_InsertOptions::QG_InsertOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionBlocksInsert, "/Insert", "/Insert")
+	, ui(new Ui::Ui_InsertOptions{}){
 	ui->setupUi(this);
 }
 
@@ -52,70 +51,103 @@ QG_InsertOptions::~QG_InsertOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_InsertOptions::languageChange()
-{
+void QG_InsertOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_InsertOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Insert");
-	RS_SETTINGS->writeEntry("/InsertAngle", ui->leAngle->text());
-	RS_SETTINGS->writeEntry("/InsertFactor", ui->leFactor->text());
-	RS_SETTINGS->writeEntry("/InsertColumns", ui->sbColumns->text());
-	RS_SETTINGS->writeEntry("/InsertRows", ui->sbRows->text());
-	RS_SETTINGS->writeEntry("/InsertColumnSpacing", ui->leColumnSpacing->text());
-	RS_SETTINGS->writeEntry("/InsertRowSpacing", ui->leRowSpacing->text());
-    RS_SETTINGS->endGroup();
+void QG_InsertOptions::doSaveSettings() {
+    save("Angle", ui->leAngle->text());
+    save("Factor", ui->leFactor->text());
+    save("Columns", ui->sbColumns->text());
+    save("Rows", ui->sbRows->text());
+    save("ColumnSpacing", ui->leColumnSpacing->text());
+    save("RowSpacing", ui->leRowSpacing->text());
 }
 
-void QG_InsertOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionBlocksInsert) {
-		action = static_cast<RS_ActionBlocksInsert*>(a);
+void QG_InsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionBlocksInsert*>(a);
 
-        QString sAngle;
-        QString sFactor;
-	QString sColumns;
-    	QString sRows;
-        QString sColumnSpacing;
-        QString sRowSpacing;
-        if (update) {
-            sAngle = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-            sFactor = QString("%1").arg(action->getFactor());
-            sColumns = QString("%1").arg(action->getColumns());
-            sRows = QString("%1").arg(action->getRows());
-            sColumnSpacing = QString("%1").arg(action->getColumnSpacing());
-            sRowSpacing = QString("%1").arg(action->getRowSpacing());
-        } else {
-            RS_SETTINGS->beginGroup("/Insert");
-            sAngle = RS_SETTINGS->readEntry("/InsertAngle", "0.0");
-            sFactor = RS_SETTINGS->readEntry("/InsertFactor", "1.0");
-            sColumns = RS_SETTINGS->readEntry("/InsertColumns", "1");
-            sRows = RS_SETTINGS->readEntry("/InsertRows", "1");
-            sColumnSpacing = RS_SETTINGS->readEntry("/InsertColumnSpacing", "1.0");
-            sRowSpacing = RS_SETTINGS->readEntry("/InsertRowSpacing", "1.0");
-            RS_SETTINGS->endGroup();
-        }
-	ui->leAngle->setText(sAngle);
-	ui->leFactor->setText(sFactor);
-		ui->sbColumns->setValue(sColumns.toInt());
-		ui->sbRows->setValue(sRows.toInt());
-		ui->leColumnSpacing->setText(sColumnSpacing);
-		ui->leRowSpacing->setText(sRowSpacing);
+    QString angle;
+    QString factor;
+    int columns;
+    int rows;
+    QString columnSpacing;
+    QString rowSpacing;
+    if (update) {
+        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        factor = fromDouble(action->getFactor());
+        columns = action->getColumns();
+        rows = action->getRows();
+        columnSpacing = fromDouble(action->getColumnSpacing());
+        rowSpacing = fromDouble(action->getRowSpacing());
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_InsertOptions::setAction: wrong action type");
-		action = nullptr;
+        angle = load("Angle", "0.0");
+        factor = load("Factor", "1.0");
+        columns = loadInt("Columns", 1);
+        rows = loadInt("Rows", 1);
+        columnSpacing = load("ColumnSpacing", "1.0");
+        rowSpacing = load("RowSpacing", "1.0");
     }
+    setAngleToActionAndView(angle);
+    setFactorToActionAndView(factor);
+    setColumnsToActionAndView(columns);
+    setRowsToActionAndView(rows);
+    setColumnSpacingActionAndView(columnSpacing);
+    setRowSpacingToActionAndView(rowSpacing);
 }
 
-void QG_InsertOptions::updateData() {
-    if (action) {
-		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
-		action->setFactor(RS_Math::eval(ui->leFactor->text()));
-		action->setColumns(ui->sbColumns->value());
-		action->setRows(ui->sbRows->value());
-		action->setColumnSpacing(RS_Math::eval(ui->leColumnSpacing->text()));
-		action->setRowSpacing(RS_Math::eval(ui->leRowSpacing->text()));
-        saveSettings();
-    }
+// fixme - use proper string to double conversions
+
+void QG_InsertOptions::setRowSpacingToActionAndView(QString val) {
+    ui->leRowSpacing->setText(val);
+    action->setRowSpacing(RS_Math::eval(val));
+}
+
+void QG_InsertOptions::setColumnSpacingActionAndView(QString val) {
+    ui->leColumnSpacing->setText(val);
+    action->setColumnSpacing(RS_Math::eval(val));
+}
+
+void QG_InsertOptions::setColumnsToActionAndView(int columns) {
+    action->setColumns(columns);
+    ui->sbColumns->setValue(columns);
+}
+
+void QG_InsertOptions::setRowsToActionAndView(int rows) {
+    ui->sbRows->setValue(rows);
+    action->setRows(rows);
+}
+
+void QG_InsertOptions::setFactorToActionAndView(QString val) {
+    ui->leFactor->setText(val);
+    action->setFactor(RS_Math::eval(val));
+}
+
+void QG_InsertOptions::setAngleToActionAndView(QString val) {
+    ui->leAngle->setText(val);
+    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
+}
+
+void QG_InsertOptions::on_leAngle_editingFinished(){
+    setAngleToActionAndView(ui->leAngle->text());
+}
+
+void QG_InsertOptions::on_leFactor_editingFinished(){
+    setAngleToActionAndView(ui->leFactor->text());
+}
+
+void QG_InsertOptions::on_leColumnSpacing_editingFinished() {
+    setColumnSpacingActionAndView(ui->leColumnSpacing->text());
+}
+
+void QG_InsertOptions::on_leRowSpacing_editingFinished() {
+    setRowSpacingToActionAndView(ui->leRowSpacing->text());
+}
+
+void QG_InsertOptions::on_sbRows_valueChanged(int number) {
+    setRowsToActionAndView(ui->sbRows->value());
+}
+
+void QG_InsertOptions::on_sbColumns_valueChanged(int number) {
+    setColumnsToActionAndView(ui->sbColumns->value());
 }

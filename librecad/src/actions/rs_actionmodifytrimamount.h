@@ -52,10 +52,8 @@ public:
     ~RS_ActionModifyTrimAmount() override;
     void init(int status = 0) override;
     void trigger() override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-
     double getDistance() const{return distance;}
     void setDistance(double d){distance = d;}
     bool isDistanceTotalLength() const{return distanceIsTotalLength;}
@@ -84,6 +82,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+
+    bool doProcessCommand(int status, const QString &command) override;
 };
 
 #endif

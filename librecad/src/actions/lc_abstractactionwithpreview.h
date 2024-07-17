@@ -46,7 +46,6 @@ public:
     void init(int status) override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
-    void commandEvent(RS_CommandEvent *event) override;
     void finish(bool updateTB) override;
     void coordinateEvent(RS_CoordinateEvent *event) override;
     void trigger() override;
@@ -124,7 +123,6 @@ protected:
      * @return true if we need preview
      */
     virtual bool doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, int status);
-    virtual bool doProcessCommand([[maybe_unused]]RS_CommandEvent *e, const QString &c);
     /**
      * method for handling
      * @param e

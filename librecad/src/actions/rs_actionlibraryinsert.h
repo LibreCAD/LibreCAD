@@ -39,85 +39,79 @@
  * @author Andrew Mustun
  */
 class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
-	Q_OBJECT
+Q_OBJECT
     /**
      * Action States.
      */
     enum Status {
         SetTargetPoint,    /**< Setting the reference point. */
-		SetAngle,          /**< Setting angle in the command line. */
-		SetFactor          /**< Setting factor in the command line. */
-		//SetColumns,        /**< Setting columns in the command line. */
-		//SetRows,           /**< Setting rows in the command line. */
-		//SetColumnSpacing,  /**< Setting column spacing in the command line. */
-		//SetRowSpacing      /**< Setting row spacing in the command line. */
+        SetAngle,          /**< Setting angle in the command line. */
+        SetFactor          /**< Setting factor in the command line. */
+//SetColumns,        /**< Setting columns in the command line. */
+//SetRows,           /**< Setting rows in the command line. */
+//SetColumnSpacing,  /**< Setting column spacing in the command line. */
+//SetRowSpacing      /**< Setting row spacing in the command line. */
     };
 
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionLibraryInsert() override;
+                           RS_GraphicView& graphicView);
+    ~RS_ActionLibraryInsert() override;
 
-	static QAction* createGUIAction(RS2::ActionType /*type*/, QObject* /*parent*/);
-	
-	void init(int status=0) override;
+    void init(int status=0) override;
 
-	void reset();
+    void reset();
 
-	void trigger() override;
+    void trigger() override;
 
-	void mouseMoveEvent(QMouseEvent* e) override;
+    void mouseMoveEvent(QMouseEvent* e) override;
 
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-		QStringList getAvailableCommands() override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+    QStringList getAvailableCommands() override;
 
-	void showOptions() override;
-	void hideOptions() override;
+    void updateMouseButtonHints() override;
 
-	void updateMouseButtonHints() override;
+    void setFile(const QString& file);
 
-	void setFile(const QString& file);
+    double getAngle() const;
 
-	double getAngle() const;
+    void setAngle(double a);
 
-	void setAngle(double a);
+    double getFactor() const;
 
-	double getFactor() const;
+    void setFactor(double f);
 
-	void setFactor(double f);
+/*int getColumns() {
+ return data.cols;
+}
 
-	/*int getColumns() {
-		return data.cols;
-	}
+void setColumns(int c) {
+ data.cols = c;
+}
 
-	void setColumns(int c) {
-		data.cols = c;
-	}
-	
-	int getRows() {
-		return data.rows;
-	}
+int getRows() {
+ return data.rows;
+}
 
-	void setRows(int r) {
-		data.rows = r;
-	}
+void setRows(int r) {
+ data.rows = r;
+}
 
-	double getColumnSpacing() {
-		return data.spacing.x;
-	}
+double getColumnSpacing() {
+ return data.spacing.x;
+}
 
-	void setColumnSpacing(double cs) {
-		data.spacing.x = cs;
-	}
-	
-	double getRowSpacing() {
-		return data.spacing.y;
-	}
+void setColumnSpacing(double cs) {
+ data.spacing.x = cs;
+}
 
-	void setRowSpacing(double rs) {
-		data.spacing.y = rs;
-	}*/
+double getRowSpacing() {
+ return data.spacing.y;
+}
+
+void setRowSpacing(double rs) {
+ data.spacing.y = rs;
+}*/
 
 protected:
 //RS_Block* block;
@@ -130,6 +124,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    void createOptionsWidget() override;
 };
 
 #endif

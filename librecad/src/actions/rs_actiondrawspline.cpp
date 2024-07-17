@@ -213,15 +213,10 @@ void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawSpline::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    switch (getStatus()) {
+bool RS_ActionDrawSpline::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetStartpoint: {
-            if (checkCommand("help", c)){
-                commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-                return;
-            }
             break;
         }
         case SetNextPoint: {
@@ -230,17 +225,17 @@ void RS_ActionDrawSpline::commandEvent(RS_CommandEvent *e){
                 updateMouseButtonHints();
                 return;
             }*/
-
             if (checkCommand("undo", c)){
                 undo();
                 updateMouseButtonHints();
-                return;
+                accept = true;
             }
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawSpline::getAvailableCommands(){

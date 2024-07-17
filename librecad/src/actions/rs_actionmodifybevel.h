@@ -60,7 +60,6 @@ public:
     void trigger() override;
     void finish(bool updateTB = false) override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setLength1(double l1);
@@ -69,9 +68,7 @@ public:
     double getLength2() const;
     void setTrim(bool t);
     bool isTrimOn() const;
-
 private:
-
     RS_AtomicEntity* entity1 = nullptr;
     RS_AtomicEntity* entity2 = nullptr;
     struct Points;
@@ -81,12 +78,12 @@ private:
 
     bool isEntityAccepted(RS_Entity *en) const;
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
-
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
 protected:
     void createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
 };
 #endif

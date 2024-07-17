@@ -36,10 +36,9 @@
  *  Constructs a QG_LibraryInsertOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_LibraryInsertOptions::QG_LibraryInsertOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_LibraryInsertOptions{})
-{
+QG_LibraryInsertOptions::QG_LibraryInsertOptions()
+    : LC_ActionOptionsWidgetBase(RS2::ActionLibraryInsert, "/LibraryInsert", "/LibraryInsert")
+	, ui(new Ui::Ui_LibraryInsertOptions{}){
 	ui->setupUi(this);
 }
 
@@ -52,46 +51,45 @@ QG_LibraryInsertOptions::~QG_LibraryInsertOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_LibraryInsertOptions::languageChange()
-{
+void QG_LibraryInsertOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
-void QG_LibraryInsertOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/LibraryInsert");
-	RS_SETTINGS->writeEntry("/LibraryInsertAngle", ui->leAngle->text());
-	RS_SETTINGS->writeEntry("/LibraryInsertFactor", ui->leFactor->text());
-    RS_SETTINGS->endGroup();
+void QG_LibraryInsertOptions::doSaveSettings() {
+	save("Angle", ui->leAngle->text());
+	save("Factor", ui->leFactor->text());
 }
 
-void QG_LibraryInsertOptions::setAction(RS_ActionInterface* a, bool update) {
-    if (a && a->rtti()==RS2::ActionLibraryInsert) {
-		action = static_cast<RS_ActionLibraryInsert*>(a);
+void QG_LibraryInsertOptions::doSetAction(RS_ActionInterface *a, bool update) {
+    action = dynamic_cast<RS_ActionLibraryInsert*>(a);
 
-        QString sAngle;
-        QString sFactor;
-        if (update) {
-            sAngle = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
-            sFactor = QString("%1").arg(action->getFactor());
-        } else {
-            RS_SETTINGS->beginGroup("/LibraryInsert");
-            sAngle = RS_SETTINGS->readEntry("/LibraryInsertAngle", "0.0");
-            sFactor = RS_SETTINGS->readEntry("/LibraryInsertFactor", "1.0");
-            RS_SETTINGS->endGroup();
-        }
-	ui->leAngle->setText(sAngle);
-	ui->leFactor->setText(sFactor);
+    QString angle;
+    QString factor;
+    if (update) {
+        angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
+        factor = fromDouble(action->getFactor());
     } else {
-        RS_DEBUG->print(RS_Debug::D_ERROR, 
-			"QG_LibraryInsertOptions::setAction: wrong action type");
-		action = nullptr;
+        angle = load("Angle", "0.0");
+        factor = load("Factor", "1.0");
     }
+    setAngleToActionAndView(angle);
+    setFactorToActionAndView(factor);
 }
 
-void QG_LibraryInsertOptions::updateData() {
-    if (action) {
-		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
-		action->setFactor(RS_Math::eval(ui->leFactor->text()));
-        saveSettings();
-    }
+void QG_LibraryInsertOptions::setAngleToActionAndView(QString val) {
+    ui->leAngle->setText(val);
+    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
+}
+
+void QG_LibraryInsertOptions::setFactorToActionAndView(QString val) {
+    ui->leFactor->setText(val);
+    action->setFactor(RS_Math::eval(val));
+}
+
+void QG_LibraryInsertOptions::on_leAngle_editingFinished() {
+    setAngleToActionAndView(ui->leAngle->text());
+}
+
+void QG_LibraryInsertOptions::on_leFactor_editingFinished() {
+    setFactorToActionAndView(ui->leFactor->text());
 }

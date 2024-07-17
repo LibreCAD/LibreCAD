@@ -194,33 +194,31 @@ void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionDrawLinePolygonCorCor::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()  + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawLinePolygonCorCor::doProcessCommand(int status, const QString & c){
+    bool accept = false;
+    switch (status) {
         case SetCorner1:
         case SetCorner2: {
             if (checkCommand("number", c)){
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetNumber);
+                accept = true;
             }
             break;
         }
         case SetNumber: {
-            parseNumber(e, c);
-            updateOptions();
-            setStatus(lastStatus);
+            accept = parseNumber(c);
+            if (accept) {
+                updateOptions();
+                setStatus(lastStatus);
+            }
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawLinePolygonCorCor::getAvailableCommands() {

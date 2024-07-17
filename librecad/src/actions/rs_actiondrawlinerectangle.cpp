@@ -141,16 +141,6 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
     }
 }
 
-void RS_ActionDrawLineRectangle::commandEvent(RS_CommandEvent *e){
-    QString const &c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-}
-
 void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCorner1:

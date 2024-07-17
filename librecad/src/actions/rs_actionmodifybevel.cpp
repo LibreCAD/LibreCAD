@@ -257,27 +257,25 @@ bool RS_ActionModifyBevel::areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2)
     return en2 != nullptr && en2 != en1 && en2->isAtomic() && RS_Information::isTrimmable(en1,en2);
 }
 
-void RS_ActionModifyBevel::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-    switch (getStatus()) {
+bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetEntity1:
         case SetEntity2: {
             if (checkCommand("length1", c)){
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetLength1);
+                accept = true;
             } else if (checkCommand("length2", c)){
                 deletePreview();
                 lastStatus = (Status) getStatus();
                 setStatus(SetLength2);
+                accept = true;
             } else if (checkCommand("trim", c)){
                 pPoints->data.trim = !pPoints->data.trim;
                 updateOptions();
+                accept = true;
             }
             break;
         }
@@ -285,7 +283,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent *e){
             bool ok;
             double l = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->data.length1 = l;
             } else {
                 commandMessageTR("Not a valid expression");
@@ -299,6 +297,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent *e){
             double l = RS_Math::eval(c, &ok);
             if (ok){
                 pPoints->data.length2 = l;
+                accept = true;
             } else {
                 commandMessageTR("Not a valid expression");
             }
@@ -309,6 +308,7 @@ void RS_ActionModifyBevel::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 void RS_ActionModifyBevel::setLength1(double l1){

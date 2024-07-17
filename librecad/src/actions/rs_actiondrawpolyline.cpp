@@ -406,48 +406,48 @@ bool RS_ActionDrawPolyline::isReversed() const{
     return m_reversed == -1;
 }
 
-void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent *e){
+QString RS_ActionDrawPolyline::prepareCommand(RS_CommandEvent *e) const {
     QString c = e->getCommand().toLower().replace(" ", "");
+    return c;
+}
 
-    switch (getStatus()) {
+bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
+
+    bool accept = false;
+    switch (status) {
         case SetStartpoint: {
-            if (checkCommand("help", c)){
-                commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-                return;
-            }
             if (checkCommand("close", c)){
-                e->accept();
                 close();
-                return;
+                accept = true;
             }
             break;
         }
         case SetNextPoint: {
             if (checkCommand("undo", c)){
                 undo();
-                e->accept();
                 updateMouseButtonHints();
-                return;
+                accept = true;
             }
-            if (checkCommand("close", c)){
-                e->accept();
+            else if (checkCommand("close", c)){
                 close();
-                return;
+                accept = true;
             }
             break;
         }
         default:
             break;
     }
-
-    if ((m_mode == Line) && (checkCommand(tr("equation"), c))){
-        updateMouseWidgetTRBack("Enter an equation, f(x)");
-        equationSettingOn = true;
-        e->accept();
-        return;
+    if (accept) {
+        return accept;
     }
 
-    if (equationSettingOn){
+    if ((m_mode == Line) && (checkCommand(tr("equation"), c))) {
+        updateMouseWidgetTRBack("Enter an equation, f(x)");
+        equationSettingOn = true;
+        return true;
+    }
+
+    if (equationSettingOn) {
         equationSettingOn = false;
 
         shiftX = false;
@@ -462,7 +462,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent *e){
 
             const double parseTestValue = m_muParserObject->Eval();
 
-            if (parseTestValue){ /* This is to counter the 'unused variable' warning. */ }
+            if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
 
             updateMouseWidgetTRBack("Enter the start point x");
 
@@ -475,20 +475,21 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent *e){
             updateMouseButtonHints();
         }
 
-        e->accept();
-        return;
+
+        return true;
     }
 
-    if (startPointSettingOn){
-        if (getPlottingX(c, startPointX)){
+
+    if (startPointSettingOn) {
+        if (getPlottingX(c, startPointX)) {
             endPointSettingOn = true;
             startPointSettingOn = false;
             shiftY = false;
             updateMouseWidgetTRBack("Enter the end point x");
         }
-        e->accept();
-        return;
+        return true;
     }
+
 
     if (endPointSettingOn){
         if (getPlottingX(c, endPointX) && std::abs(endPointX - startPointX) > RS_TOLERANCE){
@@ -496,8 +497,7 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent *e){
             stepSizeSettingOn = true;
             updateMouseWidgetTRBack("Enter number of polylines");
         }
-        e->accept();
-        return;
+        return true;
     }
 
     if (stepSizeSettingOn){
@@ -515,21 +515,19 @@ void RS_ActionDrawPolyline::commandEvent(RS_CommandEvent *e){
             commandMessageTR("The step size entered is invalid.");
             updateMouseButtonHints();
 
-            e->accept();
-            return;
+            return true;
         }
 
         drawEquation(numberOfPolylines);
 
         updateMouseButtonHints();
 
-        e->accept();
         setStatus(SetNextPoint);
+        return true;
     }
 }
 
-bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x)
-{
+bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
     try {
         bool isRelative = false;
 
@@ -554,8 +552,7 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x)
     return true;
 }
 
-void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
-{
+void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines) {
     deleteSnapper();
     const double stepSize = (endPointX - startPointX) / numberOfPolylines;
 
@@ -567,8 +564,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
     if (shiftX || shiftY)
         equationX = 0.0;
 
-    if (getStatus() == SetStartpoint)
-    {
+    if (getStatus() == SetStartpoint) {
         pPoints->point = RS_Vector(startPointX, m_muParserObject->Eval());
         if (shiftY)
             pPoints->point.y += startPointY;
@@ -580,17 +576,15 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
 
         setStatus(SetNextPoint);
 
-        plottingX  += stepSize;
+        plottingX += stepSize;
         equationX += stepSize;
     }
 
-    for(int i=0; i<= numberOfPolylines; ++i)
-    {
-        pPoints->point = RS_Vector(plottingX , m_muParserObject->Eval());
+    for (int i = 0; i <= numberOfPolylines; ++i) {
+        pPoints->point = RS_Vector(plottingX, m_muParserObject->Eval());
         pPoints->history.append(pPoints->point);
 
-        if (pPoints->polyline == nullptr)
-        {
+        if (pPoints->polyline == nullptr) {
             pPoints->polyline = new RS_Polyline(container, pPoints->data);
             pPoints->polyline->addVertex(pPoints->start, 0.0);
         }
@@ -598,8 +592,7 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
         pPoints->polyline->addVertex(pPoints->point, 0.0);
         pPoints->polyline->setEndpoint(pPoints->point);
 
-        if (pPoints->polyline->count() == 1)
-        {
+        if (pPoints->polyline->count() == 1) {
             pPoints->polyline->setLayerToActive();
             pPoints->polyline->setPenToActive();
             container->addEntity(pPoints->polyline);
@@ -612,10 +605,10 @@ void RS_ActionDrawPolyline::drawEquation(int numberOfPolylines)
     graphicView->drawEntity(pPoints->polyline);
 
 
-    plottingX  -= stepSize;
+    plottingX -= stepSize;
     equationX -= stepSize;
 
-    moveRelativeZero(RS_Vector(plottingX , m_muParserObject->Eval()));
+    moveRelativeZero(RS_Vector(plottingX, m_muParserObject->Eval()));
     drawSnapper();
 }
 
@@ -640,28 +633,27 @@ QStringList RS_ActionDrawPolyline::getAvailableCommands() {
     return cmd;
 }
 
-void RS_ActionDrawPolyline::updateMouseButtonHints()
-{
+void RS_ActionDrawPolyline::updateMouseButtonHints() {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
 
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first point",  MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";
             LC_ModifiersInfo modifiers = MOD_NONE;
-            if (m_mode == Line){
+            if (m_mode == Line) {
                 modifiers = MOD_SHIFT_ANGLE_SNAP;
             }
 
             qsizetype size = pPoints->history.size();
-            if (size >= 3){
+            if (size >= 3) {
                 msg += command("close");
                 msg += "/";
             }
 
-            if (size >= 2){
+            if (size >= 2) {
                 msg += command("undo");
 
                 updateMouseWidget(
@@ -677,6 +669,7 @@ void RS_ActionDrawPolyline::updateMouseButtonHints()
             break;
     }
 }
+
 RS2::CursorType RS_ActionDrawPolyline::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }

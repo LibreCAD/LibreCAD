@@ -63,7 +63,7 @@ public:
     bool isAngleRelative();
     void setAngleIsRelative(bool value);
     virtual bool mayStart();
-    bool doProcessCommand(RS_CommandEvent *e, const QString &c) override;
+    bool doProcessCommand(int status, const QString &c) override;
 
 protected:
     double angle = 0.0; // fixed angle for line
@@ -72,9 +72,9 @@ protected:
     int primaryDirection = DIRECTION_NONE; // major direction of line - used for subsequent lines
 
     void setSetAngleState(bool relative);
-    virtual bool processAngleValueInput(RS_CommandEvent *e, const QString &c);
-    virtual bool doProceedCommand(RS_CommandEvent *pEvent, const QString &qString);
-    virtual bool doProcessCommandValue(RS_CommandEvent *e, const QString &c);
+    virtual bool processAngleValueInput(const QString &c);
+    virtual bool doProceedCommand(int status, const QString &qString);
+    virtual bool doProcessCommandValue(int status, const QString &c);
     virtual const RS_Vector& getStartPointForAngleSnap() const = 0;
     virtual bool isStartPointValid() const;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapped) override;

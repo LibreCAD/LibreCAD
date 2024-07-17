@@ -189,6 +189,15 @@ protected:
     virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);
 
     void updateSnapAngleStep();
+    /**
+ * Method should be overridden in inherited actions to process command. Should return true if command event should be accepted.
+ * @param status status
+ * @param c command
+ * @return true if event should be accepted, false otherwise
+ */
+    virtual bool doProcessCommand([[maybe_unused]]int status, const QString &command);
+    virtual QString getAdditionalHelpMessage();
+    virtual QString prepareCommand(RS_CommandEvent *e) const;
 };
 
 

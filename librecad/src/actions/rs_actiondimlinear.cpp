@@ -90,46 +90,44 @@ bool RS_ActionDimLinear::hasFixedAngle() const{
     return fixedAngle;
 }
 
-void RS_ActionDimLinear::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-    // fixme - create basic method for this
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetText: {
             setText(c);
             updateOptions();
             graphicView->enableCoordinateInput();
             setStatus(lastStatus);
+            accept = true;
             break;
         }
         case SetAngle: {
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok){
+                accept = true;
                 setAngle(RS_Math::deg2rad(a));
             } else {
                 commandMessageTR("Not a valid expression");
             }
             updateOptions();
             setStatus(lastStatus);
-            break;        }
-
+            break;
+        }
         default:
             lastStatus = (Status) getStatus();
             deletePreview();
             if (checkCommand("text", c)){
                 graphicView->disableCoordinateInput();
                 setStatus(SetText);
-                return;
+                accept = true;
             } else if (!fixedAngle && (checkCommand("angle", c))){
                 setStatus(SetAngle);
+                accept = true;
             }
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDimLinear::getAvailableCommands(){

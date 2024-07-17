@@ -86,7 +86,6 @@ public:
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
 private:
-
     struct Points;
     std::unique_ptr<Points> pPoints;
     std::unique_ptr<QG_PrintPreviewOptions> m_option;

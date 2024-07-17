@@ -200,20 +200,15 @@ void RS_ActionDrawArc3P::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-void RS_ActionDrawArc3P::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    if (RS_COMMANDS->checkCommand("center", c, rtti())) {
+bool RS_ActionDrawArc3P::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    if (checkCommand("center", c, rtti())) {
+        accept = true;
         finish(false);
-        graphicView->setCurrentAction(
-            new RS_ActionDrawArc(*container, *graphicView));
+        // fixme - review why this action is called
+        graphicView->setCurrentAction(new RS_ActionDrawArc(*container, *graphicView));
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawArc3P::getAvailableCommands() {

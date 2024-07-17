@@ -52,7 +52,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void commandEvent(RS_CommandEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 protected:
@@ -60,10 +59,11 @@ protected:
     std::unique_ptr<Points> pPoints;
 private:
     double findRatio() const;
-
 protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    QString getAdditionalHelpMessage() override;
 };
 
 #endif

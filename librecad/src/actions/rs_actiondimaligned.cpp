@@ -72,30 +72,27 @@ RS_Entity *RS_ActionDimAligned::createDim(RS_EntityContainer* parent){
     return dim;
 }
 
-void RS_ActionDimAligned::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDimAligned::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetText: {
+            accept = true;
             setText(c);
-            RS_DIALOGFACTORY->requestOptions(this, true, true);
+            updateOptions();
             setStatus(lastStatus);
             graphicView->enableCoordinateInput();
             break;
         }
         default:
             if (checkCommand("text", c)){
+                accept = true;
                 lastStatus = (Status) getStatus();
                 graphicView->disableCoordinateInput();
                 setStatus(SetText);
             }
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDimAligned::getAvailableCommands(){

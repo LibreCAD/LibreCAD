@@ -204,25 +204,19 @@ void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, [[maybe
 }
 
 // fixme - support for other options via command line (currently only length may be set) (???)
-void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    int status = getStatus();
+bool RS_ActionModifyTrimAmount::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
     switch (status) {
         case ChooseTrimEntity: {
             bool ok;
             double d = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 distance = d;
             } else {
                 commandMessageTR("Not a valid expression");
             }
+            // fixme - should we allow change status for invalid input?
             updateOptions();
             setStatus(ChooseTrimEntity);
             break;
@@ -230,6 +224,7 @@ void RS_ActionModifyTrimAmount::commandEvent(RS_CommandEvent* e) {
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionModifyTrimAmount::getAvailableCommands() {

@@ -231,22 +231,17 @@ void RS_ActionModifyMoveRotate::doTrigger() {
     }
 }
 
-void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetReferencePoint:
         case SetTargetPoint: {
             // RVT_PORT changed from if (c==checkCommand("angle", c)) {
             if (checkCommand("angle", c)) {
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetAngle);
+                accept = true;
             }
             break;
         }
@@ -254,7 +249,7 @@ void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent *e){
             bool ok;
             double a = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 pPoints->data.angle = RS_Math::deg2rad(a);
                 if (angleIsFixed) {
                     updateOptions();
@@ -276,6 +271,7 @@ void RS_ActionModifyMoveRotate::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){

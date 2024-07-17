@@ -64,7 +64,6 @@ public:
 
     void trigger() override;
     void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
     void setAngle(double a);
     double getAngle() const;
@@ -83,6 +82,7 @@ protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void previewRefPointsForMultipleCopies();
     void doTrigger();
+    bool doProcessCommand(int status, const QString &command) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

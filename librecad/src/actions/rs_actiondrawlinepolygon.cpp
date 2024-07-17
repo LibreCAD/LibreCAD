@@ -151,34 +151,32 @@ void RS_ActionDrawLinePolygonCenCor::updateMouseButtonHints() {
     }
 }
 
-void RS_ActionDrawLinePolygonCenCor::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands()
-                                         + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+// fixme - move to base polygon action?
+bool RS_ActionDrawLinePolygonCenCor::doProcessCommand(int status, const QString &c) {
+    bool accept = false;
+    switch (status) {
         case SetCenter:
         case SetCorner: {
             if (checkCommand("number", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetNumber);
+                accept = true;
             }
             break;
         }
         case SetNumber: {
-            parseNumber(e, c);
-            updateOptions();
-            setStatus(lastStatus);
+            accept = parseNumber(c);
+            if (accept){
+                updateOptions();
+                setStatus(lastStatus);
+            }
             break;
         }
         default:
             break;
     }
+    return accept;
 }
 
 

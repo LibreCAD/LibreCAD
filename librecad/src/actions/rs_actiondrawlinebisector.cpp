@@ -204,24 +204,20 @@ void RS_ActionDrawLineBisector::mouseRightButtonReleaseEvent(int status, [[maybe
     init(status - 1);
 }
 
-void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)){
-        commandMessage(msgAvailableCommands() + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
+bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
+   bool accept = false;
+    switch (status) {
         case SetLine1:
         case SetLine2: {
-            lastStatus = (Status) getStatus();
+            lastStatus = (Status) status;
             if (checkCommand("length", c)){
                 deletePreview();
                 setStatus(SetLength);
+                accept = true;
             } else if (checkCommand("number", c)){
                 deletePreview();
                 setStatus(SetNumber);
+                accept = true;
             }
             break;
         }
@@ -229,7 +225,7 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
             bool ok;
             double l = RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept = true;
                 length = l;
             } else {
                 commandMessageTR("Not a valid expression");
@@ -242,7 +238,7 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
             bool ok;
             int n = (int) RS_Math::eval(c, &ok);
             if (ok){
-                e->accept();
+                accept= true;
                 if (n > 0 && n <= 200)
                     number = n;
                 else
@@ -258,6 +254,7 @@ void RS_ActionDrawLineBisector::commandEvent(RS_CommandEvent *e){
         default:
             break;
     }
+    return accept;
 }
 
 QStringList RS_ActionDrawLineBisector::getAvailableCommands(){
