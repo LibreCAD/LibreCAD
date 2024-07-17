@@ -38,8 +38,6 @@ class RS_Line;
  */
 class RS_ActionDrawLineBisector:public RS_PreviewActionInterface {
 Q_OBJECT
-protected:
-    void createOptionsWidget() override;
 private:
     enum Status {
         SetLine1,     /**< Choose the 1st line. */
@@ -47,8 +45,8 @@ private:
         SetLength,    /**< Set length in command line. */
         SetNumber     /**< Set number in command line. */
     };
-
 public:
+
     RS_ActionDrawLineBisector(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -66,9 +64,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     /** Closest bisector. */
     RS_Line *bisector = nullptr;

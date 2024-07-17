@@ -220,8 +220,8 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
     }
 }
 
-void RS_ActionModifyMirror::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_ModifyMirrorOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){
+    return new LC_ModifyMirrorOptions();
 }
 
 void RS_ActionModifyMirror::setMirrorToExistingLine(bool value){

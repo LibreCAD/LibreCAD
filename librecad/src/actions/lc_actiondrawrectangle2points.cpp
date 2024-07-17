@@ -408,8 +408,8 @@ QStringList LC_ActionDrawRectangle2Points::getAvailableCommands() {
     return cmd;
 }
 
-void LC_ActionDrawRectangle2Points::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_Rectangle2PointsOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawRectangle2Points::createOptionsWidget(){
+    return new LC_Rectangle2PointsOptions();
 }
 
 bool LC_ActionDrawRectangle2Points::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *pEvent, [[maybe_unused]]int status){

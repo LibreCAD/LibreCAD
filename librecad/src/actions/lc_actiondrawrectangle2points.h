@@ -65,7 +65,7 @@ protected:
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(int status, const QString &command, bool &toMainStatus) override;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
     void doAfterTrigger() override;
     void doUpdateMouseButtonHints(int status) override;

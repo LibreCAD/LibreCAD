@@ -380,6 +380,6 @@ void RS_ActionPolylineEquidistant::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionPolylineEquidistant::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_PolylineEquidistantOptions>();
+LC_ActionOptionsWidget* RS_ActionPolylineEquidistant::createOptionsWidget(){
+    return new QG_PolylineEquidistantOptions();
 }

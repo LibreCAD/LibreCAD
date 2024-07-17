@@ -39,8 +39,6 @@ class RS_Spline;
  */
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
 	Q_OBJECT
-protected:
-    void createOptionsWidget() override;
     /**
      * Action States.
      */
@@ -48,8 +46,8 @@ protected:
         SetStartpoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
 	};
-
 public:
+
     RS_ActionDrawSpline(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -62,22 +60,22 @@ public:
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 //    void updateToolBar() override;
-
 //void close();
     virtual void undo();
+
     virtual void setDegree(int deg);
     int getDegree();
     virtual void setClosed(bool c);
     virtual bool isClosed();
-
 protected:
+
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 
 #endif

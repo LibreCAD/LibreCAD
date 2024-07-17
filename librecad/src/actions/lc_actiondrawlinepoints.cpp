@@ -447,6 +447,8 @@ bool LC_ActionDrawLinePoints::doProcessCommandValue(int status, const QString &c
             processAngleValueInput( c);
             break;
         }
+        default:
+            break;
     }
     return result;
 }
@@ -579,7 +581,7 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
 /**
  * options for the action
  */
-void LC_ActionDrawLinePoints::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LinePointsOptions>(nullptr);
+LC_ActionOptionsWidget* LC_ActionDrawLinePoints::createOptionsWidget(){
+    return new LC_LinePointsOptions();
 }
 

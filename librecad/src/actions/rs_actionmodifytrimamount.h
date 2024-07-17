@@ -78,11 +78,10 @@ private:
     */
     double determineDistance(const RS_AtomicEntity *e) const;
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
 };
 

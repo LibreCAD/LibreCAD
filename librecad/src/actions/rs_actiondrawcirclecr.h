@@ -40,8 +40,6 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircleCR:public LC_ActionDrawCircleBase {
 Q_OBJECT
-protected:
-    void createOptionsWidget() override;
 public:
     /**
      * Action States.
@@ -50,8 +48,8 @@ public:
         SetCenter,         /**< Setting the center point. */
         SetRadius          /**< Setting radius in command line. */
     };
-
 public:
+
     RS_ActionDrawCircleCR(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -66,9 +64,8 @@ public:
     double getRadius() const;
     void setRadius(double val);
 protected:
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool setRadiusStr(const QString &sr) ;
-
     bool doProcessCommand(int status, const QString &command) override;
 
     /**

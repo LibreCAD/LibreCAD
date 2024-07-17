@@ -575,6 +575,6 @@ RS2::CursorType LC_ActionDrawSliceDivide::doGetMouseCursor([[maybe_unused]]int s
     return RS2::SelectCursor;
 }
 
-void LC_ActionDrawSliceDivide::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_SliceDivideOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawSliceDivide::createOptionsWidget(){
+    return new LC_SliceDivideOptions();
 }

@@ -56,8 +56,7 @@ public:
     void setLayerMode(int mode){layerMode = mode;};
     int getLayerMode() const{return layerMode;}
 protected:
-
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;

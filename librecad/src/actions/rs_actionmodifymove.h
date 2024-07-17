@@ -63,7 +63,7 @@ protected:
     void mouseMoveEventSelected(QMouseEvent *e) override;
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
 private:
     struct Points;

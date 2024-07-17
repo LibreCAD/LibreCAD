@@ -195,7 +195,7 @@ private:
     void doCreateArcSegments(RS_Entity *pArc, const RS_Vector &center, double radius, bool reversed, QList<RS_Entity *> &list);
     bool checkShouldDivideEntity(const RS_Entity *entity, const QString &entityName) const;
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doAfterTrigger() override;

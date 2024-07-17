@@ -38,8 +38,6 @@ struct RS_TextData;
  */
 class RS_ActionDrawText : public RS_PreviewActionInterface {
 Q_OBJECT
-protected:
-    void createOptionsWidget() override;
 public:
 /**
  * Action States.
@@ -50,8 +48,8 @@ public:
         SetSecPos,            /**< Setting the second point for aligned of fit text. */
         SetText               /**< Setting the text in the command line. */
     };
-
 public:
+
     RS_ActionDrawText(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -72,9 +70,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

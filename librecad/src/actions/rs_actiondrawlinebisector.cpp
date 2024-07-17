@@ -291,8 +291,8 @@ void RS_ActionDrawLineBisector::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawLineBisector::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineBisectorOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawLineBisector::createOptionsWidget(){
+    return new QG_LineBisectorOptions();
 }
 
 RS2::CursorType RS_ActionDrawLineBisector::doGetMouseCursor([[maybe_unused]] int status){

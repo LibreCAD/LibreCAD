@@ -670,8 +670,6 @@ void LC_ActionDrawStar::setSymmetric(bool value){
    drawPreviewForLastPoint();
 }
 
-void LC_ActionDrawStar::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_StarOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawStar::createOptionsWidget(){
+    return new LC_StarOptions();
 }
-
-

@@ -14,7 +14,7 @@ public:
 protected:
     /** Number of edges. */
     int number = 0;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool parseNumber(const QString &c);
     RS2::CursorType doGetMouseCursor(int status) override;
 };

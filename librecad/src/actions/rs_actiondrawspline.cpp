@@ -351,6 +351,6 @@ bool RS_ActionDrawSpline::isClosed(){
     return pPoints->data.closed;
 }
 
-void RS_ActionDrawSpline::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_SplineOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawSpline::createOptionsWidget(){
+    return new QG_SplineOptions();
 }

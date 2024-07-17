@@ -208,6 +208,6 @@ RS2::CursorType RS_ActionDrawLineParallel::doGetMouseCursor([[maybe_unused]] int
     return RS2::SelectCursor;
 }
 
-void RS_ActionDrawLineParallel::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineParallelOptions>(actionType);
+LC_ActionOptionsWidget* RS_ActionDrawLineParallel::createOptionsWidget(){
+    return new QG_LineParallelOptions(actionType);
 }

@@ -286,6 +286,6 @@ void RS_ActionDrawImage::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionDrawImage::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_ImageOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawImage::createOptionsWidget() {
+    return new QG_ImageOptions();
 }

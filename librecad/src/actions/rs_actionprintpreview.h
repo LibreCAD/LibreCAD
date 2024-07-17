@@ -79,7 +79,7 @@ public:
     bool getPaperScaleFixed();
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

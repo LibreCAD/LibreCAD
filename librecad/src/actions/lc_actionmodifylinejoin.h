@@ -72,7 +72,7 @@ public:
     int getAttributesSource() const{return attributesSource;};
 
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doBack(QMouseEvent *pEvent, int status) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS2::CursorType doGetMouseCursor(int status) override;

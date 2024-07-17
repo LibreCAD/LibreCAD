@@ -93,7 +93,7 @@ private:
     RS_Vector forecastArcCenter() const;
     void updateOptionsRadius(double radius);
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateOptionsAngle(double angle);
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;

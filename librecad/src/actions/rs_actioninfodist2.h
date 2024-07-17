@@ -75,7 +75,7 @@ private:
     RS_Entity *doCatchEntity(QMouseEvent *e);
     bool nearestPointShouldBeOnEntity = true;
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS_Vector savedRelZero = RS_Vector{false};
     RS_Vector entityNearestPoint = RS_Vector{false};
     void restoreRelZero();

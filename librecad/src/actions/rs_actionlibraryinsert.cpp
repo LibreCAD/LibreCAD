@@ -230,6 +230,6 @@ RS2::CursorType RS_ActionLibraryInsert::doGetMouseCursor([[maybe_unused]] int st
     return RS2::CadCursor;
 }
 
-void RS_ActionLibraryInsert::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_LibraryInsertOptions>();
+LC_ActionOptionsWidget* RS_ActionLibraryInsert::createOptionsWidget() {
+    return new QG_LibraryInsertOptions();
 }

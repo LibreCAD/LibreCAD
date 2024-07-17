@@ -374,6 +374,6 @@ RS2::CursorType RS_ActionModifyBevel::doGetMouseCursor([[maybe_unused]] int stat
     return RS2::SelectCursor;
 }
 
-void RS_ActionModifyBevel::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_BevelOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyBevel::createOptionsWidget(){
+    return new QG_BevelOptions();
 }

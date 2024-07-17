@@ -254,8 +254,8 @@ void LC_ActionModifyDuplicate::updateMouseButtonHints(){
     }
 }
 
-void LC_ActionModifyDuplicate::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_DuplicateOptions>();
+LC_ActionOptionsWidget* LC_ActionModifyDuplicate::createOptionsWidget(){
+    return new LC_DuplicateOptions();
 }
 
 RS2::CursorType LC_ActionModifyDuplicate::doGetMouseCursor([[maybe_unused]]int status){

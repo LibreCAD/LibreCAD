@@ -671,8 +671,6 @@ RS_Vector LC_ActionDrawLineSnake::calculateAngleEndpoint(const RS_Vector &snap){
     return possibleEndPoint;
 }
 
-void LC_ActionDrawLineSnake::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LineOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawLineSnake::createOptionsWidget(){
+    return new LC_LineOptions();
 }
-
-

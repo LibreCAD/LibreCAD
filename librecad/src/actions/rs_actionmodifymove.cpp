@@ -209,8 +209,8 @@ RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected(int status) {
     return RS2::CadCursor;
 }
 
-void RS_ActionModifyMove::createOptionsWidget() {
-    m_optionWidget = std::make_unique<LC_MoveOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyMove::createOptionsWidget() {
+    return new LC_MoveOptions();
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMove::getModifyOperationFlags() {

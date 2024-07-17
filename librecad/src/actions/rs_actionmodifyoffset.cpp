@@ -135,8 +135,8 @@ void RS_ActionModifyOffset::mouseLeftButtonReleaseEventSelected(int status, QMou
     }
 }
 
-void RS_ActionModifyOffset::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_ModifyOffsetOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyOffset::createOptionsWidget() {
+    return new QG_ModifyOffsetOptions();
 }
 
 double RS_ActionModifyOffset::getDistance() {

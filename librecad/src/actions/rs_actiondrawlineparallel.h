@@ -38,8 +38,6 @@ class RS_Vector;
  */
 class RS_ActionDrawLineParallel:public RS_PreviewActionInterface {
 Q_OBJECT
-protected:
-    void createOptionsWidget() override;
 private:
     // fixme - why no possibility to set distance via command line?
     enum Status {
@@ -48,8 +46,8 @@ private:
         SetNumber     /**< Setting number in the command line. */
 //SetThrough     /**< Setting a point for the parallel to go through. */
     };
-
 public:
+
     RS_ActionDrawLineParallel(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -66,9 +64,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;

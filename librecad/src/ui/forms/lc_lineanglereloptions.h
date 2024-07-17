@@ -25,6 +25,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <memory>
 
 #include "lc_actiondrawlineanglerel.h"
+#include "lc_actionoptionswidget.h"
 
 namespace Ui {
 class LC_LineAngleRelOptions;

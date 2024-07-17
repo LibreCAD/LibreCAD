@@ -446,7 +446,7 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionDrawLineAngleRel::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LineAngleRelOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawLineAngleRel::createOptionsWidget(){
+    return new LC_LineAngleRelOptions();
 }
 

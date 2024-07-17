@@ -98,7 +98,7 @@ public:
     void setCrossMode(int i) {crossSizeMode = i;};
 
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool doCheckMayTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;

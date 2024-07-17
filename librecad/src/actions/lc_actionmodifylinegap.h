@@ -106,7 +106,7 @@ protected:
      */
     GapData* gapData = nullptr;
 
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     RS_Vector obtainLineSnapPointForMode(const RS_Line *targetLine, const RS_Vector &snap) const;
     GapData *prepareGapData(RS_Line *line, const RS_Vector &snap, const RS_Vector &startPoint) const;

@@ -33,7 +33,6 @@
 
 #include "rs.h"
 #include "rs_snapper.h"
-#include "lc_actionoptionswidget.h"
 #include "lc_modifiersinfo.h"
 
 class RS_CommandEvent;
@@ -43,6 +42,7 @@ class RS_Document;
 class QAction;
 class QKeyEvent;
 class QString;
+class LC_ActionOptionsWidget;
 
 /**
  * This is the interface that must be implemented for all
@@ -167,7 +167,7 @@ protected:
 
     double snapToAngleStep = 15.0;
 
-    virtual void createOptionsWidget();
+    virtual LC_ActionOptionsWidget* createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
 

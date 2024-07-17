@@ -286,6 +286,6 @@ void RS_ActionDrawLineRelAngle::unhighlightEntity(){
     }
 }
 
-void RS_ActionDrawLineRelAngle::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineRelAngleOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawLineRelAngle::createOptionsWidget(){
+    return new QG_LineRelAngleOptions();
 }

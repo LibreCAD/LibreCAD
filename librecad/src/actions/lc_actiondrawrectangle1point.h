@@ -72,8 +72,7 @@ protected:
 
     static const std::vector<RS_Vector> snapPoints;
 
-    void createOptionsWidget() override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void processCommandValue(double value, bool &toMainStatus) override;

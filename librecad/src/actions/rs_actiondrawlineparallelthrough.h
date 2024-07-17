@@ -39,15 +39,13 @@ class RS_Vector;
  */
 class RS_ActionDrawLineParallelThrough:public RS_PreviewActionInterface {
 Q_OBJECT
-protected:
-    void createOptionsWidget() override;
     enum Status {
         SetEntity,    /**< Choose original entity. */
         SetPos,       /**< Setting point for this parallel to go through. */
         SetNumber     /**< Setting number in the command line. */
     };
-
 public:
+
     RS_ActionDrawLineParallelThrough(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -66,9 +64,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;

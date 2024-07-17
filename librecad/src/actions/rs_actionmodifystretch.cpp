@@ -220,6 +220,6 @@ RS2::CursorType RS_ActionModifyStretch::doGetMouseCursor([[maybe_unused]] int st
     return RS2::CadCursor;
 }
 
-void RS_ActionModifyStretch::createOptionsWidget() {
-    m_optionWidget = std::make_unique<LC_ModifyStretchOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyStretch::createOptionsWidget() {
+    return new LC_ModifyStretchOptions();
 }

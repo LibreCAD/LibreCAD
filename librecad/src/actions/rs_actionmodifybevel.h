@@ -80,7 +80,7 @@ private:
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;

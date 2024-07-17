@@ -247,6 +247,6 @@ void RS_ActionDrawLineParallelThrough::setNumber(int n) {
 	number = n;
 }
 
-void RS_ActionDrawLineParallelThrough::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineParallelThroughOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawLineParallelThrough::createOptionsWidget(){
+    return new QG_LineParallelThroughOptions();
 }

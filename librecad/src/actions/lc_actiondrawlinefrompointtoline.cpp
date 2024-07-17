@@ -324,8 +324,8 @@ void LC_ActionDrawLineFromPointToLine::updateMouseButtonHints(){
     }
 }
 
-void LC_ActionDrawLineFromPointToLine::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LineFromPointToLineOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawLineFromPointToLine::createOptionsWidget(){
+    return new LC_LineFromPointToLineOptions();
 }
 
 RS2::CursorType LC_ActionDrawLineFromPointToLine::doGetMouseCursor([[maybe_unused]]int status){

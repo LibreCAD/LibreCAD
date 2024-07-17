@@ -926,6 +926,6 @@ void LC_ActionModifyBreakDivide::updateMouseButtonHints(){
     updateMouseWidgetTRCancel("Select line, arc or circle");
 }
 
-void LC_ActionModifyBreakDivide::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_ModifyBreakDivideOptions>();
+LC_ActionOptionsWidget* LC_ActionModifyBreakDivide::createOptionsWidget(){
+    return new LC_ModifyBreakDivideOptions();
 }

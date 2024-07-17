@@ -333,6 +333,6 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
-void RS_ActionPrintPreview::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_PrintPreviewOptions>();
+LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
+    return new QG_PrintPreviewOptions();
 }

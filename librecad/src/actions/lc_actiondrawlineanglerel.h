@@ -137,7 +137,7 @@ private:
     RS_Vector obtainLineSnapPointForMode(RS_Line* targetLine, RS_Vector& snap) const;
     TickData* prepareLineData(RS_Line* targetLine, const RS_Vector& tickSnapPosition, const RS_Vector& tickEndPosition, bool alternateAngle);
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;

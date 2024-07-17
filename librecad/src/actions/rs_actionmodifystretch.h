@@ -66,9 +66,7 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     void previewStretchRect(bool selected);
-
-    void createOptionsWidget() override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

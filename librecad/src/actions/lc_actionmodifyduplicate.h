@@ -54,7 +54,7 @@ protected:
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doAfterTrigger() override;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;

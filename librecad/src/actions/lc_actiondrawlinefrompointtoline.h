@@ -78,7 +78,7 @@ public:
     double getEndOffset() const{return endOffset;}
     void updateMouseButtonHints() override;
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;

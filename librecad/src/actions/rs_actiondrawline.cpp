@@ -442,6 +442,6 @@ void RS_ActionDrawLine::redo()
     }
 }
 
-void RS_ActionDrawLine::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LineOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawLine::createOptionsWidget(){
+    return new QG_LineOptions();
 }

@@ -92,7 +92,7 @@ protected:
 
     bool doProcessCommand(int status, const QString &command) override;
 
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 
 #endif

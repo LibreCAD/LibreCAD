@@ -288,8 +288,8 @@ QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){
     return cmd;
 }
 
-void RS_ActionModifyMoveRotate::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_MoveRotateOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyMoveRotate::createOptionsWidget() {
+    return new QG_MoveRotateOptions();
 }
 
 void RS_ActionModifyMoveRotate::setAngle(double a){

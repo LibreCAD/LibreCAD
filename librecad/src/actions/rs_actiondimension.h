@@ -67,7 +67,7 @@ protected:
     QString tol1;
     QString tol2;
     bool diameter = false;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     /**
      * Commands.
      */

@@ -34,8 +34,7 @@ namespace Ui {
 class Ui_PrintPreviewOptions;
 }
 
-class QG_PrintPreviewOptions : public LC_ActionOptionsWidgetBase
-{
+class QG_PrintPreviewOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
@@ -43,24 +42,21 @@ public:
     ~QG_PrintPreviewOptions() override;
 
 public slots:
-    virtual void updateData();
-    virtual void center();
-    virtual void setLineWidthScaling(bool state);
-    virtual void setBlackWhite(bool on);
-    virtual void fit();
-    virtual void scale(const QString& s);
-    virtual void scaleByFactor(double factor);
-    virtual void updateScaleBox();
-    virtual void updateScaleBox(double f);
+    void onCenterClicked();
+    void onScaleLineClicked(bool state);
+    void onBlackWhiteClicked(bool on);
+    void onFitClicked();
+    void scale(const QString& s);
+    void scaleByFactor(double factor);
+    void updateScaleBox();
+    void updateScaleBox(double f);
     /** print scale fixed to saved value **/
-    virtual void setScaleFixed(bool fixed);
-    //    virtual void updateScaleBox(const QString& s);
-    virtual void calcPagesNum();
+    void onScaleClicked(bool fixed);
+    void calcPagesNum();
 
 protected:
     RS_ActionPrintPreview* action = nullptr;
     void doSaveSettings() override;
-
     void doSetAction(RS_ActionInterface *a, bool update) override;
 
 protected slots:
@@ -68,7 +64,6 @@ protected slots:
 private:
     void init();
     void initGuiActions();
-    void updateScaleBox(const QString& text);
     QStringList imperialScales;
     QStringList metricScales;
     bool updateDisabled = false;

@@ -102,7 +102,7 @@ protected:
     RS_Vector& getPoint() const;
     RS_Vector& getStart() const;
     RS_PolylineData& getData() const;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     double m_radius = 0.;
     double m_angle = 0.;
     SegmentMode m_mode{};
@@ -111,11 +111,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
     QString prepareCommand(RS_CommandEvent *e) const override;
-
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

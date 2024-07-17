@@ -209,6 +209,6 @@ double RS_ActionDrawCircleCR::getRadius() const{
     return data->radius;
 }
 
-void RS_ActionDrawCircleCR::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_CircleOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawCircleCR::createOptionsWidget(){
+    return new QG_CircleOptions();
 }

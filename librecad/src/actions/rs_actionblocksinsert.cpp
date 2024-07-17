@@ -94,7 +94,7 @@ void RS_ActionBlocksInsert::reset() {
                          0.0,
                          1, 1,
                          RS_Vector(1.0,1.0),
-                         NULL,
+                         nullptr,
 						 RS2::Update));
 }
 
@@ -375,6 +375,6 @@ RS2::CursorType RS_ActionBlocksInsert::doGetMouseCursor([[maybe_unused]] int sta
     return RS2::CadCursor;
 }
 
-void RS_ActionBlocksInsert::createOptionsWidget() {
-    m_optionWidget = std::make_unique<QG_InsertOptions>();
+LC_ActionOptionsWidget* RS_ActionBlocksInsert::createOptionsWidget() {
+    return new QG_InsertOptions();
 }

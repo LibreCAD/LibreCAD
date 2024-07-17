@@ -37,8 +37,6 @@
  */
 class RS_ActionDrawLineAngle : public RS_PreviewActionInterface {
 	Q_OBJECT
-protected:
-    void createOptionsWidget() override;
 public:
     /**
      * Action States.
@@ -80,7 +78,7 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doProcessCommand(int status, const QString &command) override;
 };
 

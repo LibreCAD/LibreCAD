@@ -794,8 +794,8 @@ void LC_ActionModifyLineJoin::updateMouseButtonHints(){
     }
 }
 
-void LC_ActionModifyLineJoin::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_LineJoinOptions>();
+LC_ActionOptionsWidget* LC_ActionModifyLineJoin::createOptionsWidget(){
+    return new LC_LineJoinOptions();
 }
 
 RS2::CursorType LC_ActionModifyLineJoin::doGetMouseCursor([[maybe_unused]]int status){

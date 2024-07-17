@@ -24,8 +24,8 @@ bool LC_ActionDrawLinePolygonBase::parseNumber(const QString &c){
 }
 
 
-void LC_ActionDrawLinePolygonBase::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_LinePolygonOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawLinePolygonBase::createOptionsWidget(){
+    return new QG_LinePolygonOptions();
 }
 
 RS2::CursorType LC_ActionDrawLinePolygonBase::doGetMouseCursor([[maybe_unused]] int status){

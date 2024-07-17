@@ -239,8 +239,8 @@ QStringList RS_ActionModifyTrimAmount::getAvailableCommands() {
     return cmd;
 }
 
-void RS_ActionModifyTrimAmount::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_TrimAmountOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyTrimAmount::createOptionsWidget(){
+    return new QG_TrimAmountOptions();
 }
 
 void RS_ActionModifyTrimAmount::updateMouseButtonHints() {

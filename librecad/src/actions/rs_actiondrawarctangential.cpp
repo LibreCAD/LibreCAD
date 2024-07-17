@@ -303,8 +303,8 @@ void RS_ActionDrawArcTangential::setAngle(double angle) {
     angleLength = angle;
 }
 
-void RS_ActionDrawArcTangential::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_ArcTangentialOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawArcTangential::createOptionsWidget(){
+    return new QG_ArcTangentialOptions();
 }
 
 void RS_ActionDrawArcTangential::updateOptionsRadius(double radius){

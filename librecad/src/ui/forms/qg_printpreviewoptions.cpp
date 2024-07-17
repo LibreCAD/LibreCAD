@@ -40,35 +40,31 @@ namespace {
 const int Max_Custom_ratios = 5;
 const double Max_print_ratio = 1e6;
 
-QStringList readCustomRatios()
-{
-    auto guard=RS_SETTINGS->beginGroupGuard("/PrintPreview");
-    QStringList ratios;
-    for(unsigned i=0; i<Max_Custom_ratios; ++i)
-    {
-        QString ratio = RS_SETTINGS->readEntry(QString("/CustomScale%1").arg(i));
-        if (ratio.isEmpty())
-            break;
-        ratios.push_back(ratio);
+    QStringList readCustomRatios() {
+        auto guard = RS_SETTINGS->beginGroupGuard("/PrintPreview");
+        QStringList ratios;
+        for (unsigned i = 0; i < Max_Custom_ratios; ++i) {
+            QString ratio = RS_SETTINGS->readEntry(QString("/CustomScale%1").arg(i));
+            if (ratio.isEmpty())
+                break;
+            ratios.push_back(ratio);
+        }
+        return ratios;
     }
-    return ratios;
-}
-void updateCustomRatios(const QString& text)
-{
-    LC_LOG<<": : "<<text;
-    QStringList ratios = readCustomRatios();
-    ratios.push_back(text);
-    if (ratios.size() > Max_Custom_ratios)
-        ratios.pop_front();
-    auto guard=RS_SETTINGS->beginGroupGuard("/PrintPreview");
-    for(int i =0; i < ratios.size(); ++i)
-    {
-        RS_SETTINGS->writeEntry(QString("/CustomScale%1").arg(i), ratios[i]);
+
+    void updateCustomRatios(const QString &text) {
+        LC_LOG << ": : " << text;
+        QStringList ratios = readCustomRatios();
+        ratios.push_back(text);
+        if (ratios.size() > Max_Custom_ratios)
+            ratios.pop_front();
+        auto guard = RS_SETTINGS->beginGroupGuard("/PrintPreview");
+        for (int i = 0; i < ratios.size(); ++i) {
+            RS_SETTINGS->writeEntry(QString("/CustomScale%1").arg(i), ratios[i]);
+        }
     }
 }
 
-
-}
 /*
  *  Constructs a QG_PrintPreviewOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
@@ -134,17 +130,17 @@ void QG_PrintPreviewOptions::init() {
 }
 
 void QG_PrintPreviewOptions::initGuiActions() {
-    connect(ui->cFixed, &QCheckBox::clicked, this, &QG_PrintPreviewOptions::setScaleFixed);
-    connect(ui->bScaleLineWidth, &QPushButton::toggled, this, &QG_PrintPreviewOptions::setLineWidthScaling);
-    connect(ui->bBlackWhite, &QPushButton::toggled, this, &QG_PrintPreviewOptions::setBlackWhite);
+    connect(ui->cFixed, &QCheckBox::clicked, this, &QG_PrintPreviewOptions::onScaleClicked);
+    connect(ui->bScaleLineWidth, &QPushButton::toggled, this, &QG_PrintPreviewOptions::onScaleLineClicked);
+    connect(ui->bBlackWhite, &QPushButton::toggled, this, &QG_PrintPreviewOptions::onBlackWhiteClicked);
     connect(ui->cbScale->lineEdit(), &QLineEdit::editingFinished, [this](){
         scale(ui->cbScale->currentText());
     });
     connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](int index){
         scale(ui->cbScale->itemText(index));
     });
-    connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::fit);
-    connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::center);
+    connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onFitClicked);
+    connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onCenterClicked);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::calcPagesNum);
 }
 
@@ -156,10 +152,9 @@ void QG_PrintPreviewOptions::doSaveSettings() {
 }
 
 /** print scale fixed to saved value **/
-void QG_PrintPreviewOptions::setScaleFixed(bool fixed)
+void QG_PrintPreviewOptions::onScaleClicked(bool fixed)
 {
-    if (action != nullptr)
-        action->setPaperScaleFixed(fixed);
+    action->setPaperScaleFixed(fixed);
     updateDisabled=fixed;
     ui->cbScale->setDisabled(fixed);
     ui->bFit->setVisible(!fixed);
@@ -189,15 +184,15 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
                     scale(s);
                 }
                 updateDisabled=true;
-                setScaleFixed(true);
+                onScaleClicked(true);
             }else{
                 double currScale = action->getScale();
                 if(  currScale > RS_TOLERANCE)
                     scaleByFactor (currScale);
                 else
-                    fit();
+                    onFitClicked();
                 updateScaleBox();
-                setScaleFixed(false);
+                onScaleClicked(false);
                 updateScaleBox(action->getScale());
             }
         }else{
@@ -214,28 +209,20 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
             defaultScales=ui->cbScale->count();
             updateScaleBox(f);
             updateDisabled = btmp;
-            setScaleFixed(updateDisabled);
+            onScaleClicked(updateDisabled);
         }
-        setBlackWhite(blackWhiteDisabled);
-        setLineWidthScaling(scaleLineWidth);
+    onBlackWhiteClicked(blackWhiteDisabled);
+    onScaleLineClicked(scaleLineWidth);
 }
 
-void QG_PrintPreviewOptions::updateData() {
-    if (action) {
-        /*
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(leAngle->text())));
-        action->setFactor(RS_Math::eval(leFactor->text()));
-        */
-    }
-}
 
-void QG_PrintPreviewOptions::center() {
+void QG_PrintPreviewOptions::onCenterClicked() {
     if (action) {
         action->center();
     }
 }
 
-void QG_PrintPreviewOptions::setLineWidthScaling(bool state) {
+void QG_PrintPreviewOptions::onScaleLineClicked(bool state) {
     if (action) {
         if(ui->bScaleLineWidth->isChecked() != state) {
             ui->bScaleLineWidth->setChecked(state);
@@ -245,7 +232,7 @@ void QG_PrintPreviewOptions::setLineWidthScaling(bool state) {
     }
 }
 
-void QG_PrintPreviewOptions::setBlackWhite(bool on) {
+void QG_PrintPreviewOptions::onBlackWhiteClicked(bool on) {
     if (action) {
         if(ui->bBlackWhite->isChecked() != on) {
             ui->bBlackWhite->setChecked(on);
@@ -256,7 +243,7 @@ void QG_PrintPreviewOptions::setBlackWhite(bool on) {
     }
 }
 
-void QG_PrintPreviewOptions::fit() {
+void QG_PrintPreviewOptions::onFitClicked() {
     if(updateDisabled)
         return;
     if (action) {
@@ -325,11 +312,6 @@ void QG_PrintPreviewOptions::scale(const QString& s0) {
     }
 }
 
-void QG_PrintPreviewOptions::updateScaleBox([[maybe_unused]] const QString& text)
-{
-
-}
-
 //update the scalebox to
 void QG_PrintPreviewOptions::updateScaleBox(){
     if (action != nullptr) {
@@ -376,25 +358,6 @@ void QG_PrintPreviewOptions::updateScaleBox(double f){
         updateCustomRatios(ui->cbScale->currentText());
     //    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): new: "<<qPrintable(ui->cbScale->currentText())<<std::endl;
 }
-
-//void QG_PrintPreviewOptions::updateScaleBox(const QString& s) {
-//    if(ui->cbScale->count()>defaultScales) std::cout<<"ui->cbScale->last()="<<qPrintable(ui->cbScale->itemText(defaultScales))<<std::endl;
-//    std::cout<<"void QG_PrintPreviewOptions::updateScaleBox(QString) s="<<qPrintable(s)<<std::endl;
-//    int index=ui->cbScale->findText(s);
-//    std::cout<<"QG_PrintPreviewOptions::updateScaleBox(): ui->cbScale->findText(s)="<<index<<std::endl;
-//    //add the current sccale, bug#343794
-//    if(index>=defaultScales){
-//        index=defaultScales;
-//        ui->cbScale->setItemText(defaultScales,s);
-//    }else{
-//        if(index<0){
-//            ui->cbScale->addItem(s);
-//            index=ui->cbScale->count() -1;
-//        }
-//    }
-
-//    ui->cbScale->setCurrentIndex(index);
-//}
 
 void QG_PrintPreviewOptions::calcPagesNum() {
     if (action) {

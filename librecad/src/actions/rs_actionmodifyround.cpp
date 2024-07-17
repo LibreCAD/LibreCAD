@@ -432,8 +432,8 @@ void RS_ActionModifyRound::updateMouseButtonHints(){
     }
 }
 
-void RS_ActionModifyRound::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_RoundOptions>();
+LC_ActionOptionsWidget* RS_ActionModifyRound::createOptionsWidget(){
+    return new QG_RoundOptions();
 }
 
 RS2::CursorType RS_ActionModifyRound::doGetMouseCursor([[maybe_unused]] int status){

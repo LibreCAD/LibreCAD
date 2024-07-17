@@ -65,7 +65,7 @@ public:
     void setSymmetric(bool value);
     QStringList getAvailableCommands() override;
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;

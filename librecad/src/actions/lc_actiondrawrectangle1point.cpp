@@ -397,6 +397,6 @@ void LC_ActionDrawRectangle1Point::setSizeInner(bool value){
     drawPreviewForLastPoint();
 }
 
-void LC_ActionDrawRectangle1Point::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_Rectangle1PointOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawRectangle1Point::createOptionsWidget(){
+    return new LC_Rectangle1PointOptions();
 }

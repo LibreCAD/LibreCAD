@@ -22,12 +22,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_SLICEDIVIDEOPTIONS_H
 #define LC_SLICEDIVIDEOPTIONS_H
 
-#include <QWidget>
-#include "rs_actioninterface.h"
 #include "lc_actiondrawslicedivide.h"
+#include "lc_actionoptionswidget.h"
 
 namespace Ui {
-class LC_SliceDivideOptions;
+    class LC_SliceDivideOptions;
 }
 
 class LC_SliceDivideOptions : public LC_ActionOptionsWidget

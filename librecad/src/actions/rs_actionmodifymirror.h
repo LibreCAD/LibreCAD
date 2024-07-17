@@ -64,7 +64,7 @@ public:
     bool isMirrorToExistingLine(){return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursorSelected(int status) override;

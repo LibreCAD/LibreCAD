@@ -298,6 +298,6 @@ RS_Vector RS_ActionDrawCircleTan2::getTangentPoint(RS_Vector creatingCircleCente
     }
 }
 
-void RS_ActionDrawCircleTan2::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_CircleTan2Options>();
+LC_ActionOptionsWidget* RS_ActionDrawCircleTan2::createOptionsWidget(){
+    return new QG_CircleTan2Options();
 }

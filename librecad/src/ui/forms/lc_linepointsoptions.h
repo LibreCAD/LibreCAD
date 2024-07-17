@@ -33,7 +33,7 @@ class LC_LinePointsOptions : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    explicit LC_LinePointsOptions(QWidget *parent = nullptr);
+    explicit LC_LinePointsOptions();
     ~LC_LinePointsOptions() override;
 protected:
     void doSaveSettings() override;

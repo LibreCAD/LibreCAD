@@ -298,6 +298,6 @@ RS2::CursorType LC_ActionDrawCross::doGetMouseCursor([[maybe_unused]]int status)
   return RS2::SelectCursor;
 }
 
-void LC_ActionDrawCross::createOptionsWidget(){
-    m_optionWidget = std::make_unique<LC_CrossOptions>();
+LC_ActionOptionsWidget* LC_ActionDrawCross::createOptionsWidget(){
+    return new LC_CrossOptions();
 }

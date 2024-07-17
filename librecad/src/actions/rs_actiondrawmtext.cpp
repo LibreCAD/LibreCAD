@@ -249,6 +249,6 @@ double RS_ActionDrawMText::getAngle(){
     return data->angle;
 }
 
-void RS_ActionDrawMText::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_MTextOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawMText::createOptionsWidget(){
+    return new QG_MTextOptions();
 }

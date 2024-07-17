@@ -72,7 +72,7 @@ public:
     QStringList getAvailableCommands() override;
 
 protected:
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doProceedCommand(int status, const QString &qString) override;
     bool doProcessCommandValue(int status, const QString &c) override;
     const RS_Vector& getStartPointForAngleSnap() const override;

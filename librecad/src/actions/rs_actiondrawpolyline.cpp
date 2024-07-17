@@ -753,6 +753,6 @@ QList<double> &RS_ActionDrawPolyline::getBHistory() const{
     return pPoints->bHistory;
 }
 
-void RS_ActionDrawPolyline::createOptionsWidget(){
-    m_optionWidget = std::make_unique<QG_PolylineOptions>();
+LC_ActionOptionsWidget* RS_ActionDrawPolyline::createOptionsWidget(){
+    return new QG_PolylineOptions();
 }

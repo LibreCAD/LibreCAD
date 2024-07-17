@@ -37,6 +37,7 @@
 #include "rs_graphic.h"
 #include "rs_graphicview.h"
 #include "rs_settings.h"
+#include "lc_actionoptionswidget.h"
 
 /**
  * Constructor.
@@ -364,7 +365,10 @@ void RS_ActionInterface::hideOptions() {
 
 void RS_ActionInterface::updateOptions(){
     if (m_optionWidget == nullptr){
-        createOptionsWidget();
+        LC_ActionOptionsWidget* widget = createOptionsWidget();
+        if (widget != nullptr){
+            m_optionWidget.reset(widget);
+        }
     }
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
@@ -394,7 +398,10 @@ void RS_ActionInterface::updateOptionsUI(int mode){
 void RS_ActionInterface::showOptions() {
     RS_Snapper::showOptions();
     if (m_optionWidget == nullptr){
-        createOptionsWidget();
+        LC_ActionOptionsWidget* widget = createOptionsWidget();
+        if (widget != nullptr){
+            m_optionWidget.reset(widget);
+        }
     }
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
@@ -408,7 +415,8 @@ void RS_ActionInterface::showOptions() {
     }
 }
 
-void RS_ActionInterface::createOptionsWidget(){
+LC_ActionOptionsWidget* RS_ActionInterface::createOptionsWidget(){
+    return nullptr;
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){

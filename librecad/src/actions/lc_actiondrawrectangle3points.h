@@ -97,7 +97,7 @@ protected:
     void doProcessCoordinateEvent(const RS_Vector &vector, bool zero, int status) override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void doFinish(bool updateTB) override;
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void doUpdateMouseButtonHints(int status) override;

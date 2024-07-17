@@ -113,7 +113,7 @@ protected:
     QVector<RS_Vector>  collectAllIntersectionsWithEntity(RS_Entity *entity);
     void addPointsFromSolutionToList(RS_VectorSolutions &sol, QVector<RS_Vector> &result) const;
     LineSegmentData *findLineSegmentEdges(RS_Line *line, RS_Vector &snap, QVector<RS_Vector> intersections);
-    void createOptionsWidget() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
     void createEntitiesForLine(RS_Line *line, RS_Vector &snap, QList<RS_Entity *> &list, bool preview);
     void createEntitiesForCircle(RS_Circle *circle, RS_Vector &vector, QList<RS_Entity *> &list, bool preview);
     void createEntitiesForArc(RS_Arc *arc, RS_Vector &snap, QList<RS_Entity *> &list, bool preview);

@@ -24,7 +24,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_settings.h"
 #include "rs_math.h"
 
-LC_LinePointsOptions::LC_LinePointsOptions(QWidget *parent) :
+LC_LinePointsOptions::LC_LinePointsOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawLinePoints, "/Draw", "/LinePoints"),
     ui(new Ui::LC_LinePointsOptions),
     action(nullptr){
