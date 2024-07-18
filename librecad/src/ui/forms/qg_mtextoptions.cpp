@@ -61,12 +61,15 @@ void QG_MTextOptions::setAction(RS_ActionInterface* a, bool update) {
 
         QString st;
         QString sa;
+        QString ss;
         if (update) {
             st = action->getText();
             sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
+            ss = QString("%1").arg(action->getHeight());
         } else {
             st = "";
             sa = "0.0";
+            ss = "0.0";
         }
 
 /*#if defined(OOPL_VERSION) && defined(Q_WS_WIN)
@@ -81,6 +84,7 @@ void QG_MTextOptions::setAction(RS_ActionInterface* a, bool update) {
 		ui->teText->setText(st);
 //#endif
 		ui->leAngle->setText(sa);
+        ui->leHeight->setText(ss);
     } else {
         RS_DEBUG->print(RS_Debug::D_ERROR,
 			"QG_TextOptions::setAction: wrong action type");
@@ -107,5 +111,11 @@ void QG_MTextOptions::updateText() {
 void QG_MTextOptions::updateAngle() {
     if (action) {
 		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
+    }
+}
+
+void QG_MTextOptions::updateHeight() {
+    if (action) {
+        action->setHeight(RS_Math::eval(ui->leHeight->text()));
     }
 }

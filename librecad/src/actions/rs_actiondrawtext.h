@@ -80,6 +80,9 @@ public:
 	void setAngle(double a);
 	double getAngle() const;
 
+	void setHeight(double h);
+	double getHeight() const;
+
 private:
 	struct Points;
 	std::unique_ptr<Points> pPoints;
