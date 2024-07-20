@@ -851,7 +851,7 @@ LC_ActionModifyBreakDivide::CircleSegmentData* LC_ActionModifyBreakDivide::findC
             // right angles are more than 0.
             // With such approach, we detect boundaries of snap segment by finding two intersections points
             // from each part of circle with minimal angle to snap point.
-            double vA = RS_Math::correctAngle2(angleToIntersection - snapAngle);
+            double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
             bool left = vA < 0;
 
@@ -880,7 +880,7 @@ LC_ActionModifyBreakDivide::CircleSegmentData* LC_ActionModifyBreakDivide::findC
                 if (angleToIntersection == leftAngle){
                     continue;
                 }
-                double vA = RS_Math::correctAngle2(angleToIntersection - snapAngle);
+                double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
                 if (vA > maxRight){
                     maxRight = vA;
@@ -901,7 +901,7 @@ LC_ActionModifyBreakDivide::CircleSegmentData* LC_ActionModifyBreakDivide::findC
                 if (angleToIntersection == rightAngle){
                     continue;
                 }
-                double vA = RS_Math::correctAngle2(angleToIntersection - snapAngle);
+                double vA = RS_Math::correctAnglePlusMinusPi(angleToIntersection - snapAngle);
 
                 if (vA < minLeft){
                     minLeft = vA;

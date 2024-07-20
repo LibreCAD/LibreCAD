@@ -4,33 +4,34 @@ project(LibreCAD VERSION 2.2.2)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-#set(MIN_GW_PATH_PREFIX "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(MIN_GW_PATH_PREFIX "d:\\Qt\\QT6\\6.7.0\\mingw_64")
 #set(MIN_GW_PATH_PREFIX "c:\\DevTools\\QT\\6.7.2\\mingw_64")
 set(BOOST_DIR "c:\\Local\\boost_1_84_0")
 set(Boost_INCLUDE_DIR "c:\\Local\\boost_1_84_0")
 
-#set(CMAKE_PREFIX_PATH "d:\\Qt\\Qt5.14.2\\5.14.2\\mingw73_32")
-set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
+#set(CMAKE_PREFIX_PATH "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 
 set(Qt6_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6")
 set(Qt6Core_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Core")
 set(Qt6Svg_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6Svg")
+set(Qt6CoreTools_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\Qt6CoreTools")
+set(Qt6Gui_DIR "${MIN_GW_PATH_PREFIX}\\lib\\cmake\\QtGui")
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#set(CMAKE_AUTOUIC_OPTIONS --connections string)
-#set(CMAKE_AUTOMOC ON)
-#set(CMAKE_AUTOUIC ON)
-#set(CMAKE_AUTORCC ON)
+set(CMAKE_AUTOUIC_OPTIONS --connections string)
+
+set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
+set(CMAKE_AUTORCC ON)
 
 add_compile_definitions(DWGSUPPORT)
 add_compile_definitions(MUPARSER_STATIC)
 
 
 find_package(Qt6 COMPONENTS Gui Core Widgets PrintSupport Svg Core5Compat REQUIRED)
-find_package(Qt5 COMPONENTS Widgets REQUIRED)
-qt_standard_project_setup()
+#find_package(Qt5 COMPONENTS Widgets REQUIRED)
+#qt_standard_project_setup()
 
 find_package(Boost REQUIRED COMPONENTS)
 
@@ -1069,7 +1070,17 @@ set(SOURCES
         librecad/src/lib/actions/lc_modifiersinfo.cpp
         librecad/src/lib/actions/lc_modifiersinfo.h
         librecad/src/lib/actions/lc_modifiersinfo.h
-        #        plugins/align/align.cpp
+		librecad/src/actions/lc_actionpreselectionawarebase.h
+		librecad/src/actions/lc_actionpreselectionawarebase.cpp
+		librecad/src/ui/forms/lc_modifystretchoptions.cpp
+		librecad/src/ui/forms/lc_modifystretchoptions.h
+		librecad/src/ui/forms/lc_moveoptions.cpp
+		librecad/src/ui/forms/lc_moveoptions.h
+		librecad/src/actions/lc_actionmodifybase.cpp
+		librecad/src/actions/lc_actionmodifybase.h
+		librecad/src/ui/lc_actionfactorybase.h
+		librecad/src/ui/lc_actionfactorybase.cpp
+		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
 #        plugins/asciifile/asciifile.h
@@ -1097,8 +1108,8 @@ set(SOURCES
 
 
 #qt5_wrap_cpp(TARGET LibreCAD ${SOURCES})
-
-qt5_wrap_ui(SOURCES
+#[[
+qt6_wrap_ui(SOURCES
 ./librecad/src/ui/forms/lc_dlgsplinepoints.ui
 ./librecad/src/ui/forms/qg_beveloptions.ui
 ./librecad/src/ui/forms/qg_circleoptions.ui
@@ -1198,21 +1209,23 @@ qt5_wrap_ui(SOURCES
 ./librecad/src/ui/lc_penpalettewidget.ui
 ./librecad/src/ui/lc_quickinfowidget.ui
 ./librecad/src/ui/lc_quickinfowidgetoptionsdialog.ui)
-
+]]
 qt_add_executable(librecad
 	${SOURCES})
 
 #add_executable(LibreCAD ${SOURCES})
 target_link_libraries(librecad PRIVATE Qt6::Core Qt6::Widgets Qt6::Gui Qt6::PrintSupport Qt6::Svg)
 
-set_target_properties(librecad PROPERTIES
-	WIN32_EXECUTABLE ON
-	MACOSX_BUNDLE ON
-       	AUTOUIC_OPTIONS "--connections pmf")
-#set_property(TARGET LibreCAD PROPERTY AUTOUIC_OPTIONS "--connections pmf")
+#set_target_properties(librecad PROPERTIES
+#	WIN32_EXECUTABLE ON
+#	MACOSX_BUNDLE ON
+#   AUTOUIC_OPTIONS "--connections string")
+set_property(TARGET librecad PROPERTY AUTOUIC_OPTIONS --connections string)
+
+set(CMAKE_AUTOUIC_OPTIONS --connections string)
 
 #set(autouic_options
-#  --connections pmf
+#		--connections string
 #)
 
 #set_property(TARGET LibreCAD APPEND PROPERTY

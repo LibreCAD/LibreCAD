@@ -498,104 +498,6 @@ void RS_PainterQt::drawLine(const RS_Vector& p1, const RS_Vector& p2)
                        toScreenX(p1.x), toScreenY(p1.y));
 }*/
 
-
-/**
- * Draws an arc which starts / ends exactly at the given coordinates.
- *
- * @param cx center in x
- * @param cy center in y
- * @param radius Radius
- * @param a1 Angle 1 in rad
- * @param a2 Angle 2 in rad
- * @param x1 startpoint x
- * @param y1 startpoint y
- * @param x2 endpoint x
- * @param y2 endpoint y
- * @param reversed true: clockwise, false: counterclockwise
- */
-void RS_PainterQt::drawArc(const RS_Vector& cp, double radius,
-                           double a1, double a2,
-                           const RS_Vector& p1, const RS_Vector& p2,
-                           bool reversed) {
-    /*
-    QPainter::drawArc(cx-radius, cy-radius,
-                      2*radius, 2*radius,
-                      a1*16, (a2-a1)*16);
-    */
-
-    if(radius<=0.5) {
-        drawGridPoint(cp);
-    } else {
-        int   cix;            // Next point on circle
-        int   ciy;            //
-        double aStep;         // Angle Step (rad)
-        double a;             // Current Angle (rad)
-        double linStep;       // linear step (pixels)
-
-        if (drawingMode==RS2::ModePreview) {
-            linStep = 20.0;
-        } else {
-            linStep = 6.0;
-        }
-
-        if (std::abs(linStep/radius)<=1.0) {
-            aStep=std::asin(linStep/radius);
-        } else {
-            aStep=1.0;
-        }
-
-        if (aStep<0.05) {
-            aStep = 0.05;
-        }
-
-        if(!reversed) {
-            // Arc Counterclockwise:
-            if(a1>a2-1.0e-10) {
-                a2+=2*M_PI;
-            }
-            //moveTo(toScreenX(p1.x), toScreenY(p1.y));
-            QPolygon pa;
-            int i=0;
-            pa.resize(i+1);
-            pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
-            for(a=a1+aStep; a<=a2; a+=aStep) {
-                cix = toScreenX(cp.x+std::cos(a)*radius);
-                ciy = toScreenY(cp.y-std::sin(a)*radius);
-                //lineTo(cix, ciy);
-                pa.resize(i+1);
-                pa.setPoint(i++, cix, ciy);
-            }
-            //lineTo(toScreenX(p2.x), toScreenY(p2.y));
-            pa.resize(i+1);
-            pa.setPoint(i++, toScreenX(p2.x), toScreenY(p2.y));
-            QPainter::drawPolyline(pa);
-        } else {
-            // Arc Clockwise:
-            if(a1<a2+1.0e-10) {
-                a2-=2*M_PI;
-            }
-            QPolygon pa;
-            int i=0;
-            pa.resize(i+1);
-            pa.setPoint(i++, toScreenX(p1.x), toScreenY(p1.y));
-            //moveTo(toScreenX(p1.x), toScreenY(p1.y));
-            for(a=a1-aStep; a>=a2; a-=aStep) {
-                cix = toScreenX(cp.x+std::cos(a)*radius);
-                ciy = toScreenY(cp.y-std::sin(a)*radius);
-                //lineTo(cix, ciy);
-                pa.resize(i+1);
-                pa.setPoint(i++, cix, ciy);
-            }
-            //lineTo(toScreenX(p2.x), toScreenY(p2.y));
-            pa.resize(i+1);
-            pa.setPoint(i++, toScreenX(p2.x), toScreenY(p2.y));
-            QPainter::drawPolyline(pa);
-        }
-    }
-}
-
-
-
 /**
  * Draws an arc.
  *
@@ -610,31 +512,27 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
                             double radius,
                             double a1, 
                             double a2,
-                            [[maybe_unused]] bool reversed)
+                            bool reversed)
 {
-    if (radius <= 0.5)
-    {
+
+    PainterGuard painterGuard{*this};
+
+    if(radius<=0.5) {
         drawGridPoint(cp);
-    }
-    else
-    {
-        // RAII style: setting and restoring QPen dashPattern
-        PainterGuard painterGuard{*this};
+    } else {
+        auto toQPointF = [](const RS_Vector& vp) -> QPointF{
+            return {vp.x, vp.y};
+        };
+        QPointF qCenter = toQPointF(cp);
+        QPointF qSize = toQPointF({radius, radius});
+        QRectF circleRect{qCenter - qSize, qCenter + qSize};
+        double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
+        double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
 
-        if (reversed)
-            std::swap(a1, a2);
-
-        // shift a1 to the range of 0 to 2 pi, by a difference of multiplier of 2 pi
-        a1 = M_PI + std::remainder(a1 - M_PI, 2. * M_PI);
-        // shift a2 - a1 to the range of 0 to 2 pi
-        a2 = a1+ M_PI + std::remainder(a2 - a1 - M_PI, 2. * M_PI);
-
-        QPainter::drawArc( toScreenX(cp.x - radius), 
-                           toScreenY(cp.y - radius), 
-                           2.0 * radius, 
-                           2.0 * radius, 
-                           a1  * 16.0 * 180.0 / M_PI, 
-                       (a2-a1) * 16.0 * 180.0 / M_PI);
+        QPainterPath path;
+        path.arcMoveTo(circleRect, startAngle);
+        path.arcTo(circleRect, startAngle, angularLength);
+        drawPath(path);
     }
 }
 

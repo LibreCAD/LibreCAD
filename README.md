@@ -33,7 +33,7 @@ $ librecad dxf2svg foo.dxf
 - [Milestones](https://github.com/LibreCAD/LibreCAD/milestones)
 
 ## libdxfrw
-[libdxfrw](https://sourceforge.net/projects/libdxfrw/) is an associated project that allows LibreCAD to read DXF and DWG files.
+[libdxfrw](https://github.com/LibreCAD/libdxfrw) is an associated project that allows LibreCAD to read DXF and DWG files.
 
 #
 **Requests and Bug reports**

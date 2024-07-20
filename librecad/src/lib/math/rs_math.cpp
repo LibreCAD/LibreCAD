@@ -175,24 +175,16 @@ double RS_Math::correctAngle(double a) {
 /**
  * Corrects the given angle to the range of -PI to +PI.
  */
-double RS_Math::correctAngle2(double a) {
+double RS_Math::correctAnglePlusMinusPi(double a) {
     return std::remainder(a, m_piX2);
 }
 
 /**
  * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
  */
-double RS_Math::correctAngleU(double a) {
+double RS_Math::correctAngle0ToPi(double a) {
     return std::abs(std::remainder(a, m_piX2));
 }
-
-/**
- * Returns the given angle as an Unsigned Angle in the range of 0 to +PI.
- */
-double RS_Math::correctAngle3(double a) {
-    return std::remainder(a, m_halfPI);
-}
-
 
 
 /**
@@ -200,13 +192,14 @@ double RS_Math::correctAngle3(double a) {
  *         Always positive and less than 2*pi.
  */
 double RS_Math::getAngleDifference(double a1, double a2, bool reversed) {
-    if(reversed) std::swap(a1, a2);
+    if (reversed)
+        std::swap(a1, a2);
     return correctAngle(a2 - a1);
 }
 
 double RS_Math::getAngleDifferenceU(double a1, double a2)
 {
-    return correctAngleU(a1 - a2);
+    return correctAngle0ToPi(a1 - a2);
 }
 
 
