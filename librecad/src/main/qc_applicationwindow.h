@@ -330,6 +330,8 @@ public:
 
     // activates window with given filename of drawing, if any
     void activateWindowWithFile(QString &fileName);
+    void updateActionsAndWidgetsForPrintPreview(bool printPreviewOn);
+    void enableWidget(QWidget* w, bool enable);
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -461,6 +463,9 @@ private:
     // --- Strings ---
     QString style_sheet_path;
 
+    QList<QAction*> actionsToDisableInPrintPreview;
+
+    void enableWidgets(bool enable);
 };
 
 #ifdef _WINDOWS

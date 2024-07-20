@@ -55,6 +55,7 @@ namespace {
     }
 } // namespace
 
+// fixme - refactor
 LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
                                    QMap<QString, QAction*>& action_map,
                                    LC_ActionGroupManager* agm)
@@ -129,7 +130,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawEllipseArcAxis"]
             << a_map["DrawLineFree"];
 
-    ellipse_actions
+    curve_actions
             << a_map["DrawEllipseAxis"]
             << a_map["DrawEllipseFociPoint"]
             << a_map["DrawEllipse4Points"]
@@ -252,6 +253,25 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         << a_map["PenApply"]
         << a_map["PenCopy"];
 
+    actionsToDisableInPrintPreview.append(line_actions);
+    actionsToDisableInPrintPreview.append(circle_actions);
+    actionsToDisableInPrintPreview.append(curve_actions);
+    actionsToDisableInPrintPreview.append(ellipse_actions);
+    actionsToDisableInPrintPreview.append(polyline_actions);
+    actionsToDisableInPrintPreview.append(select_actions);
+    actionsToDisableInPrintPreview.append(dimension_actions);
+    actionsToDisableInPrintPreview.append(modify_actions);
+    actionsToDisableInPrintPreview.append(order_actions);
+    actionsToDisableInPrintPreview.append(info_actions);
+    actionsToDisableInPrintPreview.append(block_actions);
+    actionsToDisableInPrintPreview.append(pen_actions);
+
+    actionsToDisableInPrintPreview.append( a_map["EditCut"]);
+    actionsToDisableInPrintPreview.append( a_map["EditCopy"]);
+    actionsToDisableInPrintPreview.append( a_map["EditPaste"]);
+    actionsToDisableInPrintPreview.append( a_map["ViewGrid"]);
+    actionsToDisableInPrintPreview.append( a_map["ModifyDeleteQuick"]);
+    actionsToDisableInPrintPreview.append( a_map["EditKillAllActions"]);
 }
 
 
@@ -344,7 +364,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         pen_palette = new LC_PenPaletteWidget("PenPalette", dock_pen_palette);
         pen_palette->setFocusPolicy(Qt::NoFocus);
         connect(pen_palette, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-        connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
+//        connect(main_window, SIGNAL(windowsChanged(bool)), pen_palette, SLOT(setEnabled(bool)));
         dock_pen_palette ->setWidget(pen_palette);
     }
     QDockWidget* dock_layer = new QDockWidget(main_window);
@@ -354,7 +374,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     layer_widget = new QG_LayerWidget(action_handler, dock_layer, "Layer");
     layer_widget->setFocusPolicy(Qt::NoFocus);
     connect(layer_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
+//    connect(main_window, SIGNAL(windowsChanged(bool)), layer_widget, SLOT(setEnabled(bool)));
     dock_layer->setWidget(layer_widget);
 
     QDockWidget* dock_layer_tree = nullptr;
@@ -366,7 +386,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
         layer_tree_widget = new LC_LayerTreeWidget(action_handler, dock_layer_tree, "Layer Tree");
         layer_tree_widget->setFocusPolicy(Qt::NoFocus);
         connect(layer_tree_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-        connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
+//        connect(main_window, SIGNAL(windowsChanged(bool)), layer_tree_widget, SLOT(setEnabled(bool)));
         layer_tree_widget->setVisible(false);
         dock_layer_tree->setWidget(layer_tree_widget);
     }
@@ -381,7 +401,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     quick_info_widget->setFocusPolicy(Qt::NoFocus);
 //    quick_info_widget->setSizePolicy(QSizePolicy::Maximum, QSizePolicy::Maximum);
     connect(quick_info_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-    connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
+//    connect(main_window, SIGNAL(windowsChanged(bool)), quick_info_widget, SLOT(setEnabled(bool)));
     quick_info_widget->setVisible(false);
     dock_quick_info->setWidget(quick_info_widget);
 
@@ -393,7 +413,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     block_widget = new QG_BlockWidget(action_handler, dock_block, "Block");
     block_widget->setFocusPolicy(Qt::NoFocus);
     connect(block_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-    connect(main_window, SIGNAL(windowsChanged(bool)), block_widget, SLOT(setEnabled(bool)));
+//    connect(main_window, SIGNAL(windowsChanged(bool)), block_widget, SLOT(setEnabled(bool)));
     dock_block->setWidget(block_widget);
 
     QDockWidget* dock_library = new QDockWidget(main_window);
@@ -404,8 +424,8 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     library_widget->setActionHandler(action_handler);
     library_widget->setFocusPolicy(Qt::NoFocus);
     connect(library_widget, SIGNAL(escape()), main_window, SLOT(slotFocus()));
-    connect(main_window, SIGNAL(windowsChanged(bool)),
-            (QObject*) library_widget->getInsertButton(), SLOT(setEnabled(bool)));
+//    connect(main_window, SIGNAL(windowsChanged(bool)),
+//            (QObject*) library_widget->getInsertButton(), SLOT(setEnabled(bool)));
     dock_library->setWidget(library_widget);
     dock_library->resize(240, 400);
 
@@ -415,7 +435,7 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler)
     command_widget = new QG_CommandWidget(dock_command, "Command");
     command_widget->setActionHandler(action_handler);
     // command_widget->setSizePolicy(QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding);
-    connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
+//    connect(main_window, SIGNAL(windowsChanged(bool)), command_widget, SLOT(setEnabled(bool)));
     connect(command_widget->leCommand, SIGNAL(escape()), main_window, SLOT(setFocus()));
     dock_command->setWidget(command_widget);
 
@@ -1046,3 +1066,17 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar)
     menu_bar->addMenu(windows_menu);
     menu_bar->addMenu(help_menu);
 }
+// 1049
+
+/*QMenu* LC_WidgetFactory::createCategoryMenu(const char* name, QMenuBar* menu_bar, std::vector){
+    QMenu* result = new QMenu(QC_ApplicationWindow::tr(name), menu_bar);
+    result->setTearOffEnabled(true);
+    return result;
+}
+settings_menu->setObjectName("options_menu");
+
+settings_menu->addAction(a_map["OptionsGeneral"]);
+settings_menu->addAction(a_map["OptionsDrawing"]);
+settings_menu->addAction(a_map["WidgetOptions"]);
+settings_menu->addAction(a_map["DeviceOptions"]);
+settings_menu->addAction(a_map["ReloadStyleSheet"]);*/

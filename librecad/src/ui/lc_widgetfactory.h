@@ -64,6 +64,7 @@ public:
     QMenu* file_menu = nullptr;
     QMenu* windows_menu = nullptr;
 
+    QList<QAction*> actionsToDisableInPrintPreview;
 
 private:
     QC_ApplicationWindow* main_window = nullptr;
@@ -84,6 +85,8 @@ private:
     QList<QAction*> layer_actions;
     QList<QAction*> block_actions;
     QList<QAction*> pen_actions;
+
+
 };
 
 #endif // LC_WIDGETFACTORY_H
