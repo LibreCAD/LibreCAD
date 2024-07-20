@@ -269,13 +269,11 @@ public slots:
     void toggleLock(RS_Layer *layer);
     void togglePrint(RS_Layer *layer);
     void toggleConstruction(RS_Layer *layer);
-    void slotRedockWidgets();
     void slotPenPick(); // fixme - remove
     void slotPenPickResolved(); // fixme - remove
     void slotPenApply(); // fixme - remove
     void slotPenCopy(); // fixme - remove
     void slotPenSyncFromLayer(); // fixme - remove
-
 private:
     // Type of draw order selected command
     RS2::ActionType orderType{RS2::ActionOrderTop};

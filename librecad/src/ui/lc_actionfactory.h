@@ -55,6 +55,7 @@ private:
     void createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createModifyActions(QMap<QString, QAction *> &map, QActionGroup *pGroup);
     void createPenActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createFileActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
@@ -67,6 +68,8 @@ private:
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void setDefaultShortcuts(QMap<QString, QAction *> &map);
+
+    void setupCreatedActions(QMap<QString, QAction *> &map);
 };
 
 #endif

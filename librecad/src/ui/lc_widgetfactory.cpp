@@ -130,7 +130,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
             << a_map["DrawEllipseArcAxis"]
             << a_map["DrawLineFree"];
 
-    curve_actions
+    ellipse_actions
             << a_map["DrawEllipseAxis"]
             << a_map["DrawEllipseFociPoint"]
             << a_map["DrawEllipse4Points"]

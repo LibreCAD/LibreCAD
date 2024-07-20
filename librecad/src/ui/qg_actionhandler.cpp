@@ -2154,12 +2154,7 @@ void QG_ActionHandler::toggleConstruction(RS_Layer* layer){
     view->setCurrentAction(a);
 }
 
-void QG_ActionHandler::slotRedockWidgets() {
-    QList<QDockWidget *> dockwidgets =
-        QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget *>();
-    for (auto *dockwidget: dockwidgets)
-        dockwidget->setFloating(false);
-}
+
 
 void QG_ActionHandler::slotDrawLinePoints() {
     setCurrentAction(RS2::ActionDrawLinePoints);

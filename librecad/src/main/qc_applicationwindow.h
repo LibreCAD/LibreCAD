@@ -211,6 +211,8 @@ public slots:
 
     //void invokeLinkList();
 
+    void slotRedockWidgets();
+
     void toggleFullscreen(bool checked);
 
     void setPreviousZoomEnable(bool enable);

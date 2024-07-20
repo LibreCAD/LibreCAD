@@ -3950,3 +3950,9 @@ void QC_ApplicationWindow::enableWidget(QWidget* w, bool enable){
         }
     }
 }
+
+void QC_ApplicationWindow::slotRedockWidgets() {
+    QList<QDockWidget *> dockwidgets = findChildren<QDockWidget *>();
+    for (auto *dockwidget: dockwidgets)
+        dockwidget->setFloating(false);
+}

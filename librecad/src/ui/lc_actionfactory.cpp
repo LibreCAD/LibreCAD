@@ -61,10 +61,11 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     createInfoActions(a_map, agm->info);
     createViewActions(a_map, agm->view);
     createWidgetActions(a_map, agm->widgets);
+    createFileActions(a_map, agm->file);
 
-        foreach (QAction* value, a_map){
-            value->setCheckable(true);
-        }
+    foreach (QAction* value, a_map){
+       value->setCheckable(true);
+    }
 
     // not checkable actions
     createPenActionsUncheckable(a_map, agm->pen);
@@ -73,81 +74,25 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     createBlockActionsUncheckable(a_map, agm->block);
     createOptionsActionsUncheckable(a_map, agm->options);
     createSelectActionsUncheckable(a_map, agm->select);
-
-//    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
-//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
-//    action->setObjectName("ToolRegenerateDimensions");
-//    a_map["ToolRegenerateDimensions"] = action;
-
     createFileActionsUncheckable(a_map, agm->file);
     createViewActionsUncheckable(a_map, agm->view);
     createWidgetActionsUncheckable(a_map, agm->widgets);
     createEditActionsUncheckable(a_map, agm->edit);
+
+
     setDefaultShortcuts(a_map);
+    setupCreatedActions(a_map);
+
+    //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
+//    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
+//    action->setObjectName("ToolRegenerateDimensions");
+//    a_map["ToolRegenerateDimensions"] = action;
 }
 
 
-void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
-    QList<QKeySequence> commandLineShortcuts;
-    commandLineShortcuts << QKeySequence(Qt::CTRL | Qt::Key_M) << QKeySequence(Qt::Key_Colon);
-    if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
-        commandLineShortcuts << QKeySequence(Qt::Key_Space);
-
-    std::vector<ActionShortCutInfo> shortcutsList = {
-        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
-        {"ModifyDuplicate",QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)<< QKeySequence(Qt::META | Qt::SHIFT | Qt::Key_D)},
-        {"OrderBottom", QKeySequence(Qt::Key_End)},
-        {"OrderLower", QKeySequence(Qt::Key_PageDown)},
-        {"OrderRaise", QKeySequence(Qt::Key_PageUp)},
-        {"OrderTop", QKeySequence(Qt::Key_Home)},
-        {"SelectAll", QKeySequence::SelectAll},
-        // RVT April 29, 2011 - Added esc key to de-select all entities
-        {"DeselectAll", QList<QKeySequence>() << QKeySequence(tr("Ctrl+K"))},
-        {"EditUndo", QKeySequence::Undo},
-        {"EditRedo", QKeySequence::Redo},
-        {"EditCut", QKeySequence::Cut},
-        {"EditCopy", QKeySequence::Copy},
-        {"EditPaste", QKeySequence::Paste},
-        {"ZoomIn", QKeySequence::ZoomIn},
-        {"ZoomOut", QKeySequence::ZoomOut},
-        {"ZoomAuto", QKeySequence(Qt::CTRL | Qt::Key_F)},
-        {"ZoomRedraw", QKeySequence::Refresh},
-        {"OptionsDrawing", QKeySequence::Preferences},
-        {"ReloadStyleSheet", QKeySequence("Ctrl+T")},
-        {"FileClose", QKeySequence::Close},
-        {"FileCloseAll", QKeySequence("Shift+" + QKeySequence(QKeySequence::Close).toString())},
-        {"ViewGrid", QKeySequence(tr("Ctrl+G", "Toggle Grid"))},
-        // fixme - it's better to replace to something different.... ctrl+d is rather for duplicate
-        {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
-        {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
-        {"ModifyDeleteQuick", QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)},
-        {"FileNew", QKeySequence::New},
-        {"FileOpen", QKeySequence::Open},
-        {"FileSave", QKeySequence::Save},
-        {"FileSaveAs", QKeySequence::SaveAs},
-        {"FilePrint", QKeySequence::Print},
-        {"FileQuit", QKeySequence::Quit},
-        {"FocusCommand", commandLineShortcuts},
-#if defined(Q_OS_LINUX)
-        {"Fullscreen", QKeySequence("F11")},
-#else
-        {"Fullscreen", QKeySequence::FullScreen},
-#endif
-    };
-
-    map["FileClose"]->setShortcutContext(Qt::WidgetShortcut);
-
-    QKeySequence shortcut = QKeySequence::SaveAs; //(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
-// only define this shortcut for platforms not already using it for save as
-    if (shortcut != QKeySequence::SaveAs){
-        shortcutsList.push_back({"FileSaveAll", shortcut});
-    }
-
-    assignShortcutsToActions(map, shortcutsList);
-}
 
 void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActionGroup* group){
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DrawPoint",                RS2::ActionDrawPoint,               "&Points",                ":/icons/points.svg"},
         {"DrawLine",                 RS2::ActionDrawLine,                "&2 Points",              ":/icons/line_2p.svg"},
         {"DrawLineAngle",            RS2::ActionDrawLineAngle,           "&Angle",                 ":/icons/line_angle.svg"},
@@ -180,12 +125,11 @@ void LC_ActionFactory::createDrawLineActions(QMap<QString, QAction*>& map, QActi
         {"DrawSliceDivideLine",      RS2::ActionDrawSliceDivideLine,     "Slice/Divide Line",      ":/icons/slice_divide.svg"},
         {"DrawSliceDivideCircle",    RS2::ActionDrawSliceDivideCircle,   "Slice/Divide Circle",    ":/icons/slice_divide_circle.svg"},
         {"DrawLinePoints",           RS2::ActionDrawLinePoints,          "Line of Points",         ":/icons/line_points.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createSelectActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"SelectSingle",        RS2::ActionSelectSingle,        "Select Entity",                 ":/icons/select_entity.svg"},
         {"SelectWindow",        RS2::ActionSelectWindow,        "Select Window",                 ":/icons/select_window.svg"},
         {"DeselectWindow",      RS2::ActionDeselectWindow,      "Deselect Window",               ":/icons/deselect_window.svg"},
@@ -193,12 +137,11 @@ void LC_ActionFactory::createSelectActions(QMap<QString, QAction*>& map, QAction
         {"SelectIntersected",   RS2::ActionSelectIntersected,   "Select Intersected Entities",   ":/icons/select_intersected_entities.svg"},
         {"DeselectIntersected", RS2::ActionDeselectIntersected, "Deselect Intersected Entities", ":/icons/deselect_intersected_entities.svg"},
         {"SelectLayer",         RS2::ActionSelectLayer,         "(De-)Select Layer",             ":/icons/deselect_layer.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DrawCircle",         RS2::ActionDrawCircle,         "Center, &Point",                ":/icons/circle_center_point.svg"},
         {"DrawCircleByArc",    RS2::ActionDrawCircleByArc,    "By Arc",                        ":/icons/circle_by_arc.svg"},
         {"DrawCircleCR",       RS2::ActionDrawCircleCR,       "Center, &Radius",               ":/icons/circle_center_radius.svg"},
@@ -211,39 +154,35 @@ void LC_ActionFactory::createDrawCircleActions(QMap<QString, QAction*>& map, QAc
         {"DrawCircleTan2_1P",  RS2::ActionDrawCircleTan2_1P,  "Tangential 2 Circles, 1 Point", ":/icons/circle_tangential_2circles_point.svg"},
         {"DrawCircleTan3",     RS2::ActionDrawCircleTan3,     "Tangential &3 Circles",         ":/icons/circle_tangential_3entities.svg"},
         {"DrawCircleTan1_2P",  RS2::ActionDrawCircleTan1_2P,  "Tangential, 2 P&oints",         ":/icons/circle_tangential_2points.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawCurveActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DrawArc",             RS2::ActionDrawArc,             "&Center, Point, Angles",    ":/icons/arc_center_point_angle.svg"},
         {"DrawArc3P",           RS2::ActionDrawArc3P,           "&3 Points",                 ":/icons/arc_3_points.svg"},
-        // fixme - why this action is not in list?
-        {"DrawArcParallel",     RS2::ActionDrawArcParallel,     "&Concentric",               ":/icons/arc_concentric.svg"},
+        {"DrawArcParallel",     RS2::ActionDrawArcParallel,     "&Concentric",               ":/icons/arc_concentric.svg"},     // fixme - why this action is not in list?
         {"DrawArcTangential",   RS2::ActionDrawArcTangential,   "Arc &Tangential",           ":/icons/arc_continuation.svg"},
         {"DrawParabola4Points", RS2::ActionDrawParabola4Points, "Para&bola 4 points",        ":/icons/parabola_4_points.svg"},
         {"DrawParabolaFD",      RS2::ActionDrawParabolaFD,      "Parabola &Focus Directrix", ":/icons/parabola_focus_directrix.svg"},
         {"DrawSpline",          RS2::ActionDrawSpline,          "&Spline",                   ":/icons/spline.svg"},
         {"DrawSplinePoints",    RS2::ActionDrawSplinePoints,    "&Spline through points",    ":/icons/spline_points.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawEllipseActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DrawEllipseAxis",          RS2::ActionDrawEllipseAxis,          "&Ellipse (Axis)",              ":/icons/ellipse_axis.svg"},
         {"DrawEllipseArcAxis",       RS2::ActionDrawEllipseArcAxis,       "Ellipse &Arc (Axis)",          ":/icons/ellipse_arc_axis.svg"},
         {"DrawEllipseFociPoint",     RS2::ActionDrawEllipseFociPoint,     "Ellipse &Foci Point",          ":/icons/ellipse_foci_point.svg"},
         {"DrawEllipse4Points",       RS2::ActionDrawEllipse4Points,       "Ellipse &4 Point",             ":/icons/ellipse_4_points.svg"},
         {"DrawEllipseCenter3Points", RS2::ActionDrawEllipseCenter3Points, "Ellipse Center and &3 Points", ":/icons/ellipse_center_3_points.svg"},
         {"DrawEllipseInscribe",      RS2::ActionDrawEllipseInscribe,      "Ellipse &Inscribed",           ":/icons/ellipse_inscribed.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DrawPolyline",        RS2::ActionDrawPolyline,        "&Polyline",                               ":/icons/polylines_polyline.svg"},
         {"PolylineAdd",         RS2::ActionPolylineAdd,         "&Add node",                               ":/icons/insert_node.svg"},
         {"PolylineAppend",      RS2::ActionPolylineAppend,      "A&ppend node",                            ":/icons/append_node.svg"},
@@ -252,23 +191,21 @@ void LC_ActionFactory::createDrawPolylineActions(QMap<QString, QAction *> &map, 
         {"PolylineTrim",        RS2::ActionPolylineTrim,        "&Trim segments",                          ":/icons/trim.svg"},
         {"PolylineEquidistant", RS2::ActionPolylineEquidistant, "Create &Equidistant Polylines",           ":/icons/create_equidistant_polyline.svg"},
         {"PolylineSegment",     RS2::ActionPolylineSegment,     "Create Polyline from Existing &Segments", ":/icons/create_polyline_from_existing_segments.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawOtherActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"ZoomPan",   RS2::ActionZoomPan,   "Zoom &Panning", ":/icons/zoom_pan.svg"},
         {"DrawMText", RS2::ActionDrawMText, "&MText",        ":/icons/mtext.svg"},
         {"DrawText",  RS2::ActionDrawText,  "&Text",         ":/icons/text.svg"},
         {"DrawHatch", RS2::ActionDrawHatch, "&Hatch",        ":/icons/hatch.svg"},
         {"DrawImage", RS2::ActionDrawImage, "Insert &Image", ":/icons/camera.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"DimAligned",   RS2::ActionDimAligned,   "&Aligned",    ":/icons/dim_aligned.svg"},
         {"DimLinear",    RS2::ActionDimLinear,    "&Linear",     ":/icons/dim_linear.svg"},
         {"DimLinearHor", RS2::ActionDimLinearHor, "&Horizontal", ":/icons/dim_horizontal.svg"},
@@ -278,8 +215,7 @@ void LC_ActionFactory::createDrawDimensionsActions(QMap<QString, QAction *> &map
         {"DimAngular",   RS2::ActionDimAngular,   "&Angular",    ":/icons/dim_angular.svg"},
         {"DimArc",       RS2::ActionDimArc,       "&Arc",        ":/icons/dim_arc.svg"},
         {"DimLeader",    RS2::ActionDimLeader,    "&Leader",     ":/icons/dim_leader.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActionGroup *group) {
@@ -289,7 +225,7 @@ void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActio
      action_handler, SLOT(slotModifyDeleteFree()));
      action->setObjectName("ModifyDeleteFree");
      a_map["ModifyDeleteFree"] = action;*/
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group,{
         {"ModifyAttributes",      RS2::ActionModifyAttributes,      "&Attributes",                ":/icons/attributes.svg"},
         {"ModifyDelete",          RS2::ActionModifyDelete,          "&Delete",                    ":/icons/delete.svg"},
         {"ModifyMove",            RS2::ActionModifyMove,            "&Move / Copy",               ":/icons/move_copy.svg"},
@@ -314,39 +250,36 @@ void LC_ActionFactory::createModifyActions(QMap<QString, QAction *> &map, QActio
         {"ModifyLineGap",         RS2::ActionModifyLineGap,         "Line Gap",                   ":/icons/line_gap.svg"},
         {"ModifyLineJoin",        RS2::ActionModifyLineJoin,        "Line Join",                  ":/icons/line_join.svg"},
         {"ModifyDuplicate",       RS2::ActionModifyDuplicate,       "Duplicate",                  ":/icons/duplicate.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createPenActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"PenSyncFromLayer", RS2::ActionPenSyncFromLayer, "Update Current Pen by Active Layer' Pen", ":/extui/back.png"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"PenPick",         RS2::ActionPenPick,         "&Pick Pen From Entity",            ":/extui/selectsingle.png"},
         {"PenPickResolved", RS2::ActionPenPickResolved, "&Pick Pen From Entity (Resolved)", ":/extui/relzeromove.png"},
         {"PenApply",        RS2::ActionPenApply,        "Apply Pen to Entity",              ":/icons/pen_apply.svg"},
         {"PenCopy",         RS2::ActionPenCopy,         "Copy Pen",                         ":/icons/pen_copy.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createOrderActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+
+    createActionHandlerActions(map, group, {
         {"OrderBottom", RS2::ActionOrderBottom, "move to bottom", ":/icons/downmost.svg"},
         {"OrderLower",  RS2::ActionOrderLower, "lower after entity", ":/icons/down.svg"},
         {"OrderRaise",  RS2::ActionOrderRaise, "raise over entity", ":/icons/up.svg"},
         {"OrderTop",    RS2::ActionOrderTop, "move to top", ":/icons/upmost.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createInfoActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"InfoInside",      RS2::ActionInfoInside,          "Point inside contour",               ""},
         {"InfoDist",        RS2::ActionInfoDist,            "&Distance Point to Point",           ":/icons/distance_point_to_point.svg"},
         {"InfoDist2",       RS2::ActionInfoDist2,           "&Distance Entity to Point",          ":/icons/distance_entity_to_point.svg"},
@@ -356,32 +289,23 @@ void LC_ActionFactory::createInfoActions(QMap<QString, QAction*>& map, QActionGr
         {"InfoArea",        RS2::ActionInfoArea,            "Polygonal &Area",                    ":/icons/polygonal_area.svg"},
         {"EntityInfo",      RS2::ActionInfoProperties,      "Entity Properties",                  ":/extui/menuselect.png"},
         {"PickCoordinates", RS2::ActionInfoPickCoordinates, "Collect Coordinates",                ":/extui/menupoint.png"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createViewActions(QMap<QString, QAction*>& map, QActionGroup* group) {
-    std::vector<ActionInfo> actionList = {
-        {"ZoomWindow",RS2::ActionZoomWindow, "&Window Zoom", ":/icons/zoom_window.svg","zoom-select"}};
+    createActionHandlerActions(map, group, {
+        {"ZoomWindow",RS2::ActionZoomWindow, "&Window Zoom", ":/icons/zoom_window.svg","zoom-select"}});
 
-    createActionHandlerActions(map, group, actionList);
-
-    std::vector<ActionInfo> mainWindowactionList = {
+    createMainWindowActions(map, group, {
         {"Fullscreen",    SLOT(toggleFullscreen(bool)),  "&Fullscreen"},
         {"ViewGrid",      SLOT(slotViewGrid(bool)),      "&Grid",  ":/icons/grid.svg"},
         {"ViewDraft",     SLOT(slotViewDraft(bool)),     "&Draft", ":/icons/draft.svg"},
         {"ViewStatusBar", SLOT(slotViewStatusBar(bool)), "&Statusbar"}
-    };
-    createMainWindowActions(map, group, mainWindowactionList, true);
-
-    connect(main_window, SIGNAL(gridChanged(bool)),  map["ViewGrid"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(draftChanged(bool)), map["ViewDraft"], SLOT(setChecked(bool)));
-
-    map["ViewStatusBar"]->setChecked(true);
+    }, true);
 }
 
 void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"LayersDefreezeAll",        RS2::ActionLayersDefreezeAll,        "&Show all layers",           ":/ui/visibleblock.png"},
         {"LayersFreezeAll",          RS2::ActionLayersFreezeAll,          "&Hide all layers",           ":/ui/hiddenblock.png"},
         {"LayersUnlockAll",          RS2::ActionLayersUnlockAll,          "&Unlock all",                ":/ui/unlockedlayer.png"},
@@ -395,12 +319,11 @@ void LC_ActionFactory::createLayerActionsUncheckable(QMap<QString, QAction *> &m
         {"LayersToggleConstruction", RS2::ActionLayersToggleConstruction, "Toggle &Construction Layer", ":/icons/construction_layer.svg"},
         {"LayersExportSelected",     RS2::ActionLayersExportSelected,     "&Export Selected Layer(s)"},
         {"LayersExportVisible",      RS2::ActionLayersExportVisible,      "Export &Visible Layer(s)"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createBlockActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"BlocksDefreezeAll", RS2::ActionBlocksDefreezeAll, "&Show all blocks",         ":/ui/blockdefreeze.png"},
         {"BlocksFreezeAll",   RS2::ActionBlocksFreezeAll,   "&Hide all blocks",         ":/ui/blockfreeze.png"},
         {"BlocksAdd",         RS2::ActionBlocksAdd,         "&Add Block",               ":/icons/add.svg"},
@@ -411,33 +334,30 @@ void LC_ActionFactory::createBlockActionsUncheckable(QMap<QString, QAction *> &m
         {"BlocksInsert",      RS2::ActionBlocksInsert,      "&Insert Block",            ":/icons/insert_active_block.svg"},
         {"BlocksToggleView",  RS2::ActionBlocksToggleView,  "Toggle Block &Visibility", ":/ui/layertoggle.png"},
         {"BlocksCreate",      RS2::ActionBlocksCreate,      "&Create Block",            ":/icons/create_block.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"OptionsDrawing",RS2::ActionOptionsDrawing, "Current &Drawing Preferences", ":/icons/drawing_settings.svg"}
-    };
+    });
 
-    createActionHandlerActions(map, group, actionList);
-
-    connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
-
-    std::vector<ActionInfo> mainWindowactionList = {
+    createMainWindowActions(map, group, {
         {"OptionsGeneral",   SLOT(slotOptionsGeneral()), "&Application Preferences", ":/icons/settings.svg"},
         {"WidgetOptions",    SLOT(widgetOptionsDialog()),    "Widget Options"},
         {"DeviceOptions",    SLOT(showDeviceOptions()),      "Device Options"},
         {"ReloadStyleSheet", SLOT(reloadStyleSheet()),   "Reload Style Sheet"}
-    };
+    });
+}
 
-    createMainWindowActions(map, group, mainWindowactionList);
-
-    map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
+void LC_ActionFactory::createFileActions(QMap<QString, QAction *> &map, QActionGroup *group) {
+    createMainWindowActions(map, group, {
+        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  "Print Pre&view",     ":/icons/print_preview.svg",     "document-print-preview"},
+    });
 }
 
 void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> mainWindowactionList = {
+    createMainWindowActions(map, group, {
         {"FileExport",       SLOT(slotFileExport()),       "&Export as image",   ":/icons/export.svg"},
         {"FileClose", nullptr,                             "&Close",             ":/icons/close.svg"},
         {"FileCloseAll",     SLOT(slotFileCloseAll()),     "Close All",          ":/icons/close_all.svg"},
@@ -448,92 +368,136 @@ void LC_ActionFactory::createFileActionsUncheckable(QMap<QString, QAction *> &ma
         {"FileOpen",         SLOT(slotFileOpen()),         "&Open...",           ":/icons/open.svg",              "document-open"},
         {"FileSave",         SLOT(slotFileSave()),         "&Save",              ":/icons/save.svg",              "document-save"},
         {"FileSaveAs",       SLOT(slotFileSaveAs()),       "Save &as...",        ":/icons/save_as.svg",           "document-save-as"},
-        {"FileSaveAll",      SLOT(slotFileSaveAll()),     "Save A&ll...",       ":/icons/save_all.svg"},
+        {"FileSaveAll",      SLOT(slotFileSaveAll()),      "Save A&ll...",       ":/icons/save_all.svg"},
         {"FilePrint",        SLOT(slotFilePrint()),        "&Print...",          ":/icons/print.svg",             "document-print"},
-        {"FilePrintPreview", SLOT(slotFilePrintPreview(bool)),  "Print Pre&view",     ":/icons/print_preview.svg",     "document-print-preview"},
-        {"FileQuit",         SLOT(slotFileQuit()),          "&Quit",              ":/icons/quit.svg",              "application-exit"},
-    };
-    createMainWindowActions(map, group, mainWindowactionList);
-
-    map["FilePrintPreview"]->setCheckable(true); // fixme = move outside?
-
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrint"], SLOT(setChecked(bool)));
-    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrintPreview"], SLOT(setChecked(bool)));
+        {"FileQuit",         SLOT(slotFileQuit()),         "&Quit",              ":/icons/quit.svg",              "application-exit"},
+    });
 
     createAction_AH("FileExportMakerCam",RS2::ActionFileExportMakerCam,
                     "Export as CA&M/plain SVG...", nullptr, nullptr, group, map);
 }
 
 void LC_ActionFactory::createWidgetActions(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> mainWindowactionList = {
+    createMainWindowActions(map, group, {
         {"LeftDockAreaToggle",        SLOT(toggleLeftDockArea(bool)),        "Left",     ":/icons/dockwidgets_left.svg"},
         {"RightDockAreaToggle",       SLOT(toggleRightDockArea(bool)),       "Right",    ":/icons/dockwidgets_right.svg"},
         {"TopDockAreaToggle",         SLOT(toggleTopDockArea(bool)),         "Top",      ":/icons/dockwidgets_top.svg"},
         {"BottomDockAreaToggle",      SLOT(toggleBottomDockArea(bool)),      "Bottom",   ":/icons/dockwidgets_bottom.svg"},
         {"FloatingDockwidgetsToggle", SLOT(toggleFloatingDockwidgets(bool)), "Floating", ":/icons/dockwidgets_floating.svg"}
-    };
-
-    createMainWindowActions(map, group, mainWindowactionList, true);
-
-//    map["LeftDockAreaToggle"]->setChecked(false);
-    map["RightDockAreaToggle"]->setChecked(true);
-//    map["TopDockAreaToggle"]->setChecked(false);
-//    map["BottomDockAreaToggle"]->setChecked(false);
-//    map["FloatingDockwidgetsToggle"]->setChecked(false);
+    }, true);
 }
 
 void LC_ActionFactory::createWidgetActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    // fixme - restore
-/*    createAction_AH("RedockWidgets",
-                    "Re-dock Widgets", "",
-                    &QG_ActionHandler::slotRedockWidgets, group, map);
-                    */
-    std::vector<ActionInfo> actionList = {
-        {"RedockWidgets",    SLOT(invokeMenuCreator()),    "Re-dock Widgets"},
-    };
-
-    std::vector<ActionInfo> mainWindowactionList = {
-
+    createMainWindowActions(map, group, {
+        {"RedockWidgets",        SLOT(slotRedockWidgets()),    "Re-dock Widgets"},
         {"InvokeMenuCreator",    SLOT(invokeMenuCreator()),    "Menu Creator"},
         {"InvokeToolbarCreator", SLOT(invokeToolbarCreator()), "Toolbar Creator"}
-    };
-
-    createMainWindowActions(map, group, mainWindowactionList);
+    });
 }
 
 void LC_ActionFactory::createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createAction_MW("FocusCommand",SLOT(slotFocusCommandLine()), "Focus on &Command Line", ":/main/editclear.png", nullptr, group, map);
 
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"ZoomIn",       RS2::ActionZoomIn,       "Zoom &In",       ":/icons/zoom_in.svg",       "zoom-in"},
         {"ZoomOut",      RS2::ActionZoomOut,      "Zoom &Out",      ":/icons/zoom_out.svg",      "zoom-out"},
         {"ZoomAuto",     RS2::ActionZoomAuto,     "&Auto Zoom",     ":/icons/zoom_auto.svg",     "zoom-fit-best"},
         {"ZoomPrevious", RS2::ActionZoomPrevious, "Previous &View", ":/icons/zoom_previous.svg", "zoom-previous"},
         {"ZoomRedraw",   RS2::ActionZoomRedraw,   "&Redraw",        ":/icons/redraw.svg",        "view-refresh"}
-    };
-
-    createActionHandlerActions(map, group, actionList);
-    map["ZoomPrevious"]->setEnabled(false);
+    });
 }
 
 void LC_ActionFactory::createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
-    std::vector<ActionInfo> actionList = {
+    createActionHandlerActions(map, group, {
         {"SelectAll",    RS2::ActionSelectAll,    "Select &All",      ":/icons/select_all.svg"},
         {"DeselectAll",  RS2::ActionDeselectAll,  "Deselect &all",    ":/icons/deselect_all.svg"},
         {"SelectInvert", RS2::ActionSelectInvert, "Invert Selection", ":/icons/select_inverted.svg"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    });
 }
 
 void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
-    std::vector<ActionInfo> actionList = {
-        {"EditUndo", RS2::ActionEditUndo, "&Undo", ":/icons/undo.svg", "edit-undo"},
-        {"EditRedo", RS2::ActionEditRedo, "&Redo", ":/icons/redo.svg", "edit-redo"},
-        {"EditCut", RS2::ActionEditCut, "Cu&t", ":/icons/cut.svg", "edit-cut"},
-        {"EditCopy", RS2::ActionEditCopy, "&Copy", ":/icons/copy.svg", "edit-copy"},
-        {"EditPaste", RS2::ActionEditPaste, "&Paste", ":/icons/paste.svg", "edit-paste"},
-        {"ModifyDeleteQuick", RS2::ActionModifyDelete, "&Delete selected", ":/icons/delete.svg"},
-        {"EditKillAllActions", RS2::ActionEditKillAllActions, "&Selection pointer", ":/icons/cursor.svg","go-previous-view"}
-    };
-    createActionHandlerActions(map, group, actionList);
+    createActionHandlerActions(map, group, {
+        {"EditUndo",            RS2::ActionEditUndo,            "&Undo",             ":/icons/undo.svg", "edit-undo"},
+        {"EditRedo",            RS2::ActionEditRedo,            "&Redo",             ":/icons/redo.svg", "edit-redo"},
+        {"EditCut",             RS2::ActionEditCut,             "Cu&t",              ":/icons/cut.svg", "edit-cut"},
+        {"EditCopy",            RS2::ActionEditCopy,            "&Copy",             ":/icons/copy.svg", "edit-copy"},
+        {"EditPaste",           RS2::ActionEditPaste,           "&Paste",            ":/icons/paste.svg", "edit-paste"},
+        {"ModifyDeleteQuick",   RS2::ActionModifyDelete,        "&Delete selected",  ":/icons/delete.svg"},
+        {"EditKillAllActions",  RS2::ActionEditKillAllActions,  "&Selection pointer",":/icons/cursor.svg","go-previous-view"}
+    });
 }
+
+void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
+    map["ZoomPrevious"]->setEnabled(false);
+    map["RightDockAreaToggle"]->setChecked(true);
+    map["ViewStatusBar"]->setChecked(true);
+
+    map["OptionsGeneral"]->setMenuRole(QAction::NoRole);
+
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrint"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(printPreviewChanged(bool)), map["FilePrintPreview"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(gridChanged(bool)), map["ViewGrid"], SLOT(setChecked(bool)));
+    connect(main_window, SIGNAL(draftChanged(bool)), map["ViewDraft"], SLOT(setChecked(bool)));
+
+    connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
+}
+
+void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
+    QList<QKeySequence> commandLineShortcuts;
+    commandLineShortcuts << QKeySequence(Qt::CTRL | Qt::Key_M) << QKeySequence(Qt::Key_Colon);
+    if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
+        commandLineShortcuts << QKeySequence(Qt::Key_Space);
+
+    std::vector<ActionShortCutInfo> shortcutsList = {
+        {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
+        {"ModifyDuplicate",QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)<< QKeySequence(Qt::META | Qt::SHIFT | Qt::Key_D)},
+        {"OrderBottom", QKeySequence(Qt::Key_End)},
+        {"OrderLower", QKeySequence(Qt::Key_PageDown)},
+        {"OrderRaise", QKeySequence(Qt::Key_PageUp)},
+        {"OrderTop", QKeySequence(Qt::Key_Home)},
+        {"SelectAll", QKeySequence::SelectAll},
+        // RVT April 29, 2011 - Added esc key to de-select all entities
+        {"DeselectAll", QList<QKeySequence>() << QKeySequence(tr("Ctrl+K"))},
+        {"EditUndo", QKeySequence::Undo},
+        {"EditRedo", QKeySequence::Redo},
+        {"EditCut", QKeySequence::Cut},
+        {"EditCopy", QKeySequence::Copy},
+        {"EditPaste", QKeySequence::Paste},
+        {"ZoomIn", QKeySequence::ZoomIn},
+        {"ZoomOut", QKeySequence::ZoomOut},
+        {"ZoomAuto", QKeySequence(Qt::CTRL | Qt::Key_F)},
+        {"ZoomRedraw", QKeySequence::Refresh},
+        {"OptionsDrawing", QKeySequence::Preferences},
+        {"ReloadStyleSheet", QKeySequence("Ctrl+T")},
+        {"FileClose", QKeySequence::Close},
+        {"FileCloseAll", QKeySequence("Shift+" + QKeySequence(QKeySequence::Close).toString())},
+        {"ViewGrid", QKeySequence(tr("Ctrl+G", "Toggle Grid"))},
+        // todo - it's better to replace to something different.... ctrl+d is rather for duplicate
+        {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
+        {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
+        {"ModifyDeleteQuick", QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)},
+        {"FileNew", QKeySequence::New},
+        {"FileOpen", QKeySequence::Open},
+        {"FileSave", QKeySequence::Save},
+        {"FileSaveAs", QKeySequence::SaveAs},
+        {"FilePrint", QKeySequence::Print},
+        {"FileQuit", QKeySequence::Quit},
+        {"FocusCommand", commandLineShortcuts},
+#if defined(Q_OS_LINUX)
+        {"Fullscreen", QKeySequence("F11")},
+#else
+        {"Fullscreen", QKeySequence::FullScreen},
+#endif
+    };
+
+    map["FileClose"]->setShortcutContext(Qt::WidgetShortcut);
+
+    QKeySequence shortcut = QKeySequence::SaveAs; //(Qt::CTRL + Qt::SHIFT + Qt::Key_S);
+    // only define this shortcut for platforms not already using it for save as
+    if (shortcut != QKeySequence::SaveAs){
+        shortcutsList.push_back({"FileSaveAll", shortcut});
+    }
+
+    assignShortcutsToActions(map, shortcutsList);
+}
+
