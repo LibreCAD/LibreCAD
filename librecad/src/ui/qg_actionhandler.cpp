@@ -202,10 +202,9 @@
 /**
  * Constructor
  */
-QG_ActionHandler::QG_ActionHandler(QObject* parent)
-    :QObject(parent)
-{
-	RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
+QG_ActionHandler::QG_ActionHandler(QObject *parent)
+    :QObject(parent) {
+    RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler");
     RS_DEBUG->print("QG_ActionHandler::QG_ActionHandler: OK");
 }
 
@@ -214,25 +213,22 @@ QG_ActionHandler::QG_ActionHandler(QObject* parent)
   * is launched to reduce confusion.
    */
 void QG_ActionHandler::killSelectActions() {
-
-	if (view) {
+    if (view != nullptr) {
         view->killSelectActions();
     }
 }
 
 void QG_ActionHandler::killAllActions() {
-
-	if (view) {
-		view->killAllActions();
-	}
+    if (view != nullptr) {
+        view->killAllActions();
+    }
 }
 
 /**
  * @return Current action or nullptr.
  */
-RS_ActionInterface* QG_ActionHandler::getCurrentAction() {
-
-	if (view) {
+RS_ActionInterface *QG_ActionHandler::getCurrentAction() {
+    if (view != nullptr) {
         return view->getCurrentAction();
     } else {
         return nullptr;
@@ -301,6 +297,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             }
             break;
         case RS2::ActionEditUndo:
+            //to avoid operation on deleted entities, Undo action invalid all suspended
+            //actions
+            killAllActions();
             a = new RS_ActionEditUndo(true, *document, *view);
             break;
         case RS2::ActionEditRedo:
@@ -718,12 +717,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyDeleteFree(*document, *view);
             break;
         case RS2::ActionModifyMove:
-//            if(!document->countSelected()){
-//                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyMoveNoSelect);
-//                break;
-//            }
-//            // fall-through
-//        case RS2::ActionModifyMoveNoSelect:
             a = new RS_ActionModifyMove(*document, *view);
             break;
         case RS2::ActionModifyRevertDirection:
@@ -789,15 +782,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyRound(*document, *view);
             break;
         case RS2::ActionModifyOffset:
-//        {
-//            auto allowedOffsetTypes=QList<RS2::EntityType>{RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline};
-//            if(!document->countSelected(true, allowedOffsetTypes)){
-//                a = new RS_ActionSelect(this, *document, *view,RS2::ActionModifyOffsetNoSelect, allowedOffsetTypes);
-//                break;
-//            }
-//        }
-//            // fall-through
-//        case RS2::ActionModifyOffsetNoSelect:
             a = new RS_ActionModifyOffset(*document, *view);
             break;
         case RS2::ActionModifyExplodeText:
@@ -1051,8 +1035,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
     return a;
 }
 
-
-
 /**
  * @return Available commands of the application or the current action.
  */
@@ -1073,14 +1055,12 @@ QStringList QG_ActionHandler::getAvailableCommands() {
 RS_SnapMode QG_ActionHandler::getSnaps()
 {
 
-	if (snap_toolbar) {
+    if (snap_toolbar) {
         return snap_toolbar->getSnaps();
     }
     //return a free snap mode
     return RS_SnapMode();
 }
-
-
 
 /**
  * Launches the command represented by the given keycode if possible.
@@ -1134,7 +1114,6 @@ bool QG_ActionHandler::keycode(const QString& code) {
         case RS2::ActionSnapIntersectionManual:
             slotSnapIntersectionManual();
             break;
-
         case RS2::ActionRestrictNothing:
             slotRestrictNothing();
             break;
@@ -1189,7 +1168,6 @@ bool QG_ActionHandler::commandLineActions(RS2::ActionType type){
         case RS2::ActionSnapOnEntity:
             slotSnapOnEntity();
             return true;
-
         case RS2::ActionRestrictNothing:
             slotRestrictNothing();
             return true;
@@ -1282,8 +1260,6 @@ bool QG_ActionHandler::command(const QString& cmd)
 }
 
 
-
-
 //void QG_ActionHandler::slotFileNew() {
 //	setCurrentAction(RS2::ActionFileNew);
 //}
@@ -1355,9 +1331,7 @@ void QG_ActionHandler::slotEditKillAllActions() {
     setCurrentAction(RS2::ActionEditKillAllActions);
 }
 void QG_ActionHandler::slotEditUndo() {
-	//to avoid operation on deleted entities, Undo action invalid all suspended
-	//actions
-	killAllActions();
+
     setCurrentAction(RS2::ActionEditUndo);
 }
 
@@ -1433,9 +1407,9 @@ void QG_ActionHandler::slotSelectLayer() {
     setCurrentAction(RS2::ActionSelectLayer);
 }
 
-void QG_ActionHandler::slotDrawPoint() {
+/*void QG_ActionHandler::slotDrawPoint() {
         setCurrentAction(RS2::ActionDrawPoint);
-}
+}*/
 
 void QG_ActionHandler::slotDrawLine() {
     setCurrentAction(RS2::ActionDrawLine);
@@ -1473,7 +1447,7 @@ void QG_ActionHandler::slotDrawLineRectangle() {
     setCurrentAction(RS2::ActionDrawLineRectangle);
 }
 
-void QG_ActionHandler::slotDrawLineRectangleRel() {
+void QG_ActionHandler::slotDrawLineRectangle3Points() {
     setCurrentAction(RS2::ActionDrawRectangle3Points);
 }
 
@@ -1547,7 +1521,6 @@ void QG_ActionHandler::slotDrawPolyline() {
     setCurrentAction(RS2::ActionDrawPolyline);
 }
 
-
 void QG_ActionHandler::slotPolylineAdd() {
     setCurrentAction(RS2::ActionPolylineAdd);
 }
@@ -1602,7 +1575,6 @@ void QG_ActionHandler::slotDrawCircleCR() {
 void QG_ActionHandler::slotDrawCircleByArc() {
     setCurrentAction(RS2::ActionDrawCircleByArc);
 }
-
 
 void QG_ActionHandler::slotDrawCircle2P() {
     setCurrentAction(RS2::ActionDrawCircle2P);
@@ -1828,13 +1800,13 @@ void QG_ActionHandler::slotModifyExplodeText() {
 void QG_ActionHandler::slotSetSnaps(RS_SnapMode const& s) {
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps()");
 
-	if(snap_toolbar) {
-    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
+    if(snap_toolbar) {
+        RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): set snapToolBar");
         snap_toolbar->setSnaps(s);
     }else{
-    RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is nullptr");
+        RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): snapToolBar is nullptr");
     }
-	if(view) {
+    if(view) {
         view->setDefaultSnapMode(s);
     }
     RS_DEBUG->print("QG_ActionHandler::slotSetSnaps(): ok");
@@ -1859,7 +1831,6 @@ void QG_ActionHandler::slotSnapEndpoint() {
 //    if(snapEndpoint==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapEndpoint = !s.snapEndpoint;
-
     slotSetSnaps(s);
 }
 
@@ -1867,7 +1838,6 @@ void QG_ActionHandler::slotSnapOnEntity() {
 //    if(snapOnEntity==nullptr) return;
     RS_SnapMode s=getSnaps();
     s.snapOnEntity = !s.snapOnEntity;
-
     slotSetSnaps(s);
 }
 
@@ -1882,21 +1852,18 @@ void QG_ActionHandler::slotSnapCenter() {
 void QG_ActionHandler::slotSnapMiddle() {
     RS_SnapMode s=getSnaps();
     s.snapMiddle = !s.snapMiddle;
-
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapDist() {
     RS_SnapMode s=getSnaps();
     s.snapDistance = !s.snapDistance;
-
     slotSetSnaps(s);
 }
 
 void QG_ActionHandler::slotSnapIntersection() {
     RS_SnapMode s=getSnaps();
     s.snapIntersection = !s.snapIntersection;
-
     slotSetSnaps(s);
 }
 
@@ -1911,10 +1878,8 @@ void QG_ActionHandler::slotSnapIntersectionManual() {
     //setCurrentAction(RS2::ActionSnapIntersectionManual);
 }
 
-void QG_ActionHandler::slotSnapMiddleManual()
-{
-    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)
-    {
+void QG_ActionHandler::slotSnapMiddleManual(){
+    if (getCurrentAction()->rtti() == RS2::ActionSnapMiddleManual)    {
         getCurrentAction()->init(-1);
         return;
     }
@@ -1928,7 +1893,6 @@ void QG_ActionHandler::slotSnapMiddleManual()
 }
 
 void QG_ActionHandler::disableSnaps() {
-
     slotSetSnaps(RS_SnapMode());
 }
 
@@ -2071,7 +2035,6 @@ void QG_ActionHandler::slotLayersExportVisible() {
     setCurrentAction(RS2::ActionLayersExportVisible);
 }
 
-
 void QG_ActionHandler::slotBlocksDefreezeAll() {
     setCurrentAction(RS2::ActionBlocksDefreezeAll);
 }
@@ -2136,7 +2099,6 @@ void QG_ActionHandler::slotModifyLineGap() {
     setCurrentAction(RS2::ActionModifyLineGap);
 }
 
-
 void QG_ActionHandler::slotOptionsDrawing() {
     setCurrentAction(RS2::ActionOptionsDrawing);
 }
@@ -2144,7 +2106,6 @@ void QG_ActionHandler::slotOptionsDrawing() {
 void QG_ActionHandler::slotPenPick(){
     setCurrentAction(RS2::ActionPenPick);
 }
-
 
 void QG_ActionHandler::slotPenPickResolved(){
     setCurrentAction(RS2::ActionPenPickResolved);
@@ -2160,53 +2121,46 @@ void QG_ActionHandler::slotPenCopy(){
 
 void QG_ActionHandler::slotPenSyncFromLayer(){
     setCurrentAction(RS2::ActionPenSyncFromLayer);
-//    LC_PenPaletteWidget* penPaletteWidget  = QC_ApplicationWindow::getAppWindow()->getPenPaletteWidget();
-//    penPaletteWidget->updatePenToolbarByActiveLayer();
 }
 
-void QG_ActionHandler::set_view(RS_GraphicView* gview)
-{
+void QG_ActionHandler::set_view(RS_GraphicView* gview){
     view = gview;
 }
-void QG_ActionHandler::set_document(RS_Document* doc)
-{
+
+void QG_ActionHandler::set_document(RS_Document* doc){
     document = doc;
 }
 
-void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb)
-{
+void QG_ActionHandler::set_snap_toolbar(QG_SnapToolBar* snap_tb){
     snap_toolbar = snap_tb;
 }
 
-void QG_ActionHandler::toggleVisibility(RS_Layer* layer)
-{
+void QG_ActionHandler::toggleVisibility(RS_Layer* layer){
     auto a = new RS_ActionLayersToggleView(*document, *view, layer);
     view->setCurrentAction(a);
 }
-void QG_ActionHandler::toggleLock(RS_Layer* layer)
-{
+
+void QG_ActionHandler::toggleLock(RS_Layer* layer){
     auto a = new RS_ActionLayersToggleLock(*document, *view, layer);
     view->setCurrentAction(a);
 }
-void QG_ActionHandler::togglePrint(RS_Layer* layer)
-{
+
+void QG_ActionHandler::togglePrint(RS_Layer* layer){
     auto a = new RS_ActionLayersTogglePrint(*document, *view, layer);
     view->setCurrentAction(a);
 }
-void QG_ActionHandler::toggleConstruction(RS_Layer* layer)
-{
+void QG_ActionHandler::toggleConstruction(RS_Layer* layer){
     auto a = new LC_ActionLayersToggleConstruction(*document, *view, layer);
     view->setCurrentAction(a);
 }
 
-void QG_ActionHandler::slotRedockWidgets()
-{
-    QList<QDockWidget*> dockwidgets =
-            QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget*>();
-    for(auto* dockwidget: dockwidgets)
+void QG_ActionHandler::slotRedockWidgets() {
+    QList<QDockWidget *> dockwidgets =
+        QC_ApplicationWindow::getAppWindow()->findChildren<QDockWidget *>();
+    for (auto *dockwidget: dockwidgets)
         dockwidget->setFloating(false);
 }
 
-void QG_ActionHandler::slotDrawLinePoints(){
+void QG_ActionHandler::slotDrawLinePoints() {
     setCurrentAction(RS2::ActionDrawLinePoints);
 }

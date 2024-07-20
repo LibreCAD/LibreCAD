@@ -92,7 +92,7 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
         }
     }
 
-
+    // fixme - review and probably remove relay (it seems that intention was to use it for #570, yet unsuccessfully
     foreach (auto const& ag, toolGroups()) {
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }

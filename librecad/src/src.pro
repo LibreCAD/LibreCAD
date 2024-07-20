@@ -283,6 +283,7 @@ HEADERS += \
     ui/forms/lc_modifygapoptions.h \
     ui/forms/lc_staroptions.h \
     ui/generic/lc_plaintextedit.h \
+    ui/lc_actionfactorybase.h \
     ui/lc_peninforegistry.h \
     ui/lc_penpalettedata.h \
     ui/lc_penpalettemodel.h \
@@ -460,6 +461,7 @@ SOURCES += \
     ui/forms/lc_modifybreakdivideoptions.cpp \
     ui/forms/lc_modifygapoptions.cpp \
     ui/forms/lc_staroptions.cpp \
+    ui/lc_actionfactorybase.cpp \
     ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
     ui/lc_penpalettemodel.cpp \
