@@ -291,7 +291,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
     double  a2  = (ld2.startpoint - center).angle();
 
     // swap lines if necessary to ensure CCW order
-    if( RS_Math::correctAngle2( a1 - a0) > RS_Math::correctAngle2( a2 - a0)) {
+    if( RS_Math::correctAnglePlusMinusPi( a1 - a0) > RS_Math::correctAnglePlusMinusPi( a2 - a0)) {
         std::swap(ld1, ld2);
         std::swap(a1, a2);
     }
@@ -329,8 +329,8 @@ int RS_ActionDimAngular::determineQuadrant(const double angle){
         return 0;
     }
 
-    double a1 {RS_Math::correctAngle2( angles.at(0) - angle)};
-    double a2 {RS_Math::correctAngle2( angles.at(1) - angle)};
+    double a1 {RS_Math::correctAnglePlusMinusPi( angles.at(0) - angle)};
+    double a2 {RS_Math::correctAnglePlusMinusPi( angles.at(1) - angle)};
 
     int angleQuadrant {0};
     if( 0.0 < a1 && 0.0 < a2) {

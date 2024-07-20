@@ -346,7 +346,7 @@ void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, co
     double radius = graphicView->toGraphDX(radiusInPixels);
     double lineLength = graphicView->toGraphDX(lineInPixels);
     double angle = center.angleTo(refPoint);
-    angle = RS_Math::correctAngle2(angle);
+    angle = RS_Math::correctAnglePlusMinusPi(angle);
     if (LC_LineMath::isMeaningfulAngle(angle)){
         previewRefArc(RS_ArcData(center, radius, 0, angle, false));
         previewRefLine(center, center + RS_Vector::polar(lineLength, angle));
