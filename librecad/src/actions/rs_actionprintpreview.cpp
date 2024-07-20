@@ -71,27 +71,27 @@ void RS_ActionPrintPreview::init(int status) {
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
-    case Moving:
-		pPoints->v2 = toGraph(e);
-        // if Shift is pressed the paper moves only horizontally
-        if (e->modifiers() & Qt::ShiftModifier)
-            pPoints->v2.y = pPoints->v1.y;
-        // if Ctrl is pressed the paper moves only vertically
-        if (e->modifiers() & Qt::ControlModifier)
-            pPoints->v2.x = pPoints->v1.x;
-        if (graphic) {
-            RS_Vector pinsbase = graphic->getPaperInsertionBase();
+        case Moving:
+            pPoints->v2 = toGraph(e);
+            // if Shift is pressed the paper moves only horizontally
+            if (e->modifiers() & Qt::ShiftModifier)
+                pPoints->v2.y = pPoints->v1.y;
+            // if Ctrl is pressed the paper moves only vertically
+            if (e->modifiers() & Qt::ControlModifier)
+                pPoints->v2.x = pPoints->v1.x;
+            if (graphic) {
+                RS_Vector pinsbase = graphic->getPaperInsertionBase();
 
-            double scale = graphic->getPaperScale();
+                double scale = graphic->getPaperScale();
 
-            graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
-        }
-        pPoints->v1 = pPoints->v2;
-        graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
-        break;
+                graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
+            }
+            pPoints->v1 = pPoints->v2;
+            graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
+            break;
 
-    default:
-        break;
+        default:
+            break;
     }
 }
 
