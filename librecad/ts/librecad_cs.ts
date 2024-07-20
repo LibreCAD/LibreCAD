@@ -5,11 +5,11 @@
     <name>ColorWizard</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rám</translation>
     </message>
     <message>
         <source>Add to favorites</source>
-        <translation type="unfinished"></translation>
+        <translation>Přidat do oblíbených</translation>
     </message>
     <message>
         <source>...</source>
@@ -20,7 +20,7 @@
     <name>ComboBoxOption</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation>Rám</translation>
     </message>
     <message>
         <source>GroupBox</source>
@@ -114,7 +114,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     <name>LC_ActionDrawLinePolygonCenTan</name>
     <message>
         <source>Specify center</source>
-        <translation type="unfinished"></translation>
+        <translation>Specifikovat střed</translation>
     </message>
     <message>
         <source>Specify a tangent</source>
@@ -122,7 +122,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Enter number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Zadej číslo:</translation>
     </message>
     <message>
         <source>Not a valid number. Try 1..9999</source>
@@ -176,11 +176,11 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Select Entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Vybrat Entitu</translation>
     </message>
     <message>
         <source>Select Window</source>
-        <translation type="unfinished"></translation>
+        <translation>Vyber Okno</translation>
     </message>
     <message>
         <source>Deselect Window</source>
@@ -220,7 +220,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>Vertical</source>
-        <translation type="unfinished"></translation>
+        <translation>Vertikální</translation>
     </message>
     <message>
         <source>&amp;Freehand Line</source>
@@ -284,7 +284,7 @@ Vzdálenost mezi body=%2 je větší než průměr=%3</translation>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished">2 body, poloměr</translation>
+        <translation>2 body, Poloměr</translation>
     </message>
     <message>
         <source>3 Points</source>
