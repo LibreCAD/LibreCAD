@@ -315,17 +315,17 @@ void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, [[maybe_unus
 bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
     bool accept = false;
 
-    switch (getStatus()) {
+    switch (status) {
         case SetEntity1:
         case SetEntity2: {
             if (checkCommand("radius", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetRadius);
                 accept = true;
             } else if (checkCommand("trim", c)){
                 deletePreview();
-                lastStatus = (Status) getStatus();
+                lastStatus = (Status) status;
                 setStatus(SetTrim);
                 pPoints->data.trim = !pPoints->data.trim;
                 updateOptions();

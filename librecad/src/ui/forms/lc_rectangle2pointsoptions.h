@@ -63,8 +63,8 @@ private:
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenter(bool value);
     void setBaseAngleFixedToActionAndView(bool angle);
-    Ui::LC_Rectangle2PointsOptions *ui;
-    LC_ActionDrawRectangle2Points *action;
+    Ui::LC_Rectangle2PointsOptions *ui = nullptr;
+    LC_ActionDrawRectangle2Points *action = nullptr;
     void setEdgesModeToActionAndView(int index);
 };
 

@@ -195,7 +195,7 @@ void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-bool RS_ActionDimLeader::doProcessCommand(int status, const QString &c) {
+bool RS_ActionDimLeader::doProcessCommand([[maybe_unused]]int status, const QString &c) {
     // enter to finish
     bool accept = false;
     // fixme - EMPTY COMMAND!!! change to enter processing?

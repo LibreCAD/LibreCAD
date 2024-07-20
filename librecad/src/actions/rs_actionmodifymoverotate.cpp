@@ -150,7 +150,7 @@ void RS_ActionModifyMoveRotate::mouseLeftButtonReleaseEventSelected(int status, 
     }
 }
 
-void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     switch (status) {
         case SetReferencePoint: {
@@ -317,7 +317,7 @@ void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelected(int status) {
     }
 }
 
-RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected(int status) {
+RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unused]] int status) {
     return RS2::CadCursor;
 }
 

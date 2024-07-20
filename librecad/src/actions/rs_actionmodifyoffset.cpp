@@ -160,7 +160,7 @@ bool RS_ActionModifyOffset::isAllowTriggerOnEmptySelection() {
     return false;
 }
 
-void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
+void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {

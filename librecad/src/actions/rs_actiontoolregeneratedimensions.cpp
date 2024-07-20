@@ -30,6 +30,7 @@
 #include "rs_graphicview.h"
 #include "rs_information.h"
 
+// fixme - review
 RS_ActionToolRegenerateDimensions::RS_ActionToolRegenerateDimensions(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Tool Regen Dim",

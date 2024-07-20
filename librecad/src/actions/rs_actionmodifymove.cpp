@@ -127,7 +127,7 @@ void RS_ActionModifyMove::mouseLeftButtonReleaseEventSelected(int status, QMouse
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
+void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     if (status == SetReferencePoint){
         if (selectionComplete) {
@@ -205,7 +205,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel("Select to move", LC_ModifiersInfo::CTRL("Move immediately after selection"));
 }
 
-RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected(int status) {
+RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 

@@ -196,7 +196,7 @@ bool RS_ActionDimDiametric::doProcessCommand(int status, const QString &c) {
     // fixme - check whether the code is duplicated with other dim actions
     bool accept = false;
     // setting new text label:
-    if (getStatus() == SetText){
+    if (status == SetText){
         setText(c);
         updateOptions();
         graphicView->enableCoordinateInput();
@@ -204,12 +204,12 @@ bool RS_ActionDimDiametric::doProcessCommand(int status, const QString &c) {
         accept = true;
     }
     else if (checkCommand("text", c)){ // command: text
-        lastStatus = (Status) getStatus();
+        lastStatus = (Status) status;
         graphicView->disableCoordinateInput();
         setStatus(SetText);
         accept = true;
     }
-    else if (getStatus() == SetPos){// setting angle
+    else if (status == SetPos){// setting angle
         bool ok;
         double a = RS_Math::eval(c, &ok);
         if (ok){

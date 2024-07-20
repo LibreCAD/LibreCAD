@@ -235,7 +235,7 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-bool LC_ActionDrawCircle2PR::doProcessCommand([[maybe_unused]]int status, const QString& c){
+bool LC_ActionDrawCircle2PR::doProcessCommand([[maybe_unused]]int status, [[maybe_unused]] const QString& c){
     // fixme - support commands
     return false;
 }

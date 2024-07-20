@@ -5,7 +5,7 @@ LC_ActionModifyBase::LC_ActionModifyBase(const char *name, RS_EntityContainer &c
     const QList<RS2::EntityType> &entityTypeList, bool countSelectionDeep)
     :LC_ActionPreSelectionAwareBase(name, container, graphicView, entityTypeList, countSelectionDeep){}
 
-void LC_ActionModifyBase::selectionCompleted(bool singleEntity) {
+void LC_ActionModifyBase::selectionCompleted([[maybe_unused]] bool singleEntity) {
     setSelectionComplete(isAllowTriggerOnEmptySelection());
     updateMouseButtonHints();
     updateSelectionWidget();

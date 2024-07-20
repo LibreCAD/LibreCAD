@@ -1812,10 +1812,11 @@ void RS_EntityContainer::revertDirection() {
  * @param view
  */
 void RS_EntityContainer::draw(RS_Painter *painter, RS_GraphicView *view, double & /*patternOffset*/) {
-    if (painter == nullptr || view == nullptr)
+    if (painter == nullptr || view == nullptr){
         return;
+    }
 
-        foreach (auto *e, entities)view->drawEntity(painter, e);
+    foreach (auto *e, entities)view->drawEntity(painter, e);
 }
 
 /**

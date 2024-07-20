@@ -200,7 +200,7 @@ void RS_ActionDrawArc3P::coordinateEvent(RS_CoordinateEvent *e){
     }
 }
 
-bool RS_ActionDrawArc3P::doProcessCommand(int status, const QString &c) {
+bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QString &c) {
     bool accept = false;
     if (checkCommand("center", c, rtti())) {
         accept = true;

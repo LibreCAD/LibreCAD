@@ -119,6 +119,6 @@ RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursor(int status) {
     }
 }
 
-RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected(int status) {
+RS2::CursorType LC_ActionPreSelectionAwareBase::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }

@@ -297,7 +297,7 @@ void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent *e){
 
 bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
     bool accept = false;
-    switch (getStatus()) {
+    switch (status) {
         case SetMinor: {
             bool ok;
             double m = RS_Math::eval(c, &ok);

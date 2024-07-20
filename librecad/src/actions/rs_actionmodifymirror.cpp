@@ -126,7 +126,7 @@ void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, QMou
     }
 }
 
-void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) {
+void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     if (status == SetAxisPoint1){
         if (selectionComplete) {
@@ -229,7 +229,7 @@ void RS_ActionModifyMirror::setMirrorToExistingLine(bool value){
     setStatus(SetAxisPoint1);
 }
 
-RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected(int status) {
+RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 
