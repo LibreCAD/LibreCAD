@@ -1080,6 +1080,10 @@ set(SOURCES
 		librecad/src/actions/lc_actionmodifybase.h
 		librecad/src/ui/lc_actionfactorybase.h
 		librecad/src/ui/lc_actionfactorybase.cpp
+        librecad/src/ui/lc_optionswidgetsholder.cpp
+        librecad/src/ui/lc_optionswidgetsholder.h
+		librecad/src/ui/lc_snapoptionswidgetsholder.cpp
+		librecad/src/ui/lc_snapoptionswidgetsholder.h
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
