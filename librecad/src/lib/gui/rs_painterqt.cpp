@@ -519,21 +519,23 @@ void RS_PainterQt::drawArc( const RS_Vector& cp,
 
     if(radius<=0.5) {
         drawGridPoint(cp);
-    } else {
-        auto toQPointF = [](const RS_Vector& vp) -> QPointF{
-            return {vp.x, vp.y};
-        };
-        QPointF qCenter = toQPointF(cp);
-        QPointF qSize = toQPointF({radius, radius});
-        QRectF circleRect{qCenter - qSize, qCenter + qSize};
-        double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
-        double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
-
-        QPainterPath path;
-        path.arcMoveTo(circleRect, startAngle);
-        path.arcTo(circleRect, startAngle, angularLength);
-        drawPath(path);
+        return;
     }
+
+    QPointF qCenter{cp.x, cp.y};
+    QPointF qSize{radius, radius};
+
+    // The rect for the circle
+    QRectF circleRect{qCenter - qSize, qCenter + qSize};
+
+    // angles in degrees
+    double startAngle = RS_Math::rad2deg(reversed ? a2 : a1);
+    double angularLength = RS_Math::rad2deg(RS_Math::getAngleDifference(a1, a2, reversed));
+
+    QPainterPath path;
+    path.arcMoveTo(circleRect, startAngle);
+    path.arcTo(circleRect, startAngle, angularLength);
+    drawPath(path);
 }
 
 

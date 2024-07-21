@@ -2590,7 +2590,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
 
         RS_Vector paperSizeMm = RS_Units::convert(paperSize, graphic->getUnit(), RS2::Millimeter);
         QMarginsF printerMargins = printer.pageLayout().margins();
-        RS_Vector printerSizeMm(printer.widthMM(), printer.heightMM());
+        QRectF paperRect = printer.paperRect(QPrinter::Millimeter);
+        RS_Vector printerSizeMm{paperRect.width(), paperRect.height()};
         if (bStartPrinting
             && (!equalPaperSize(printerSizeMm, paperSizeMm) || !equalMargins(paperMargins))) {
             QMessageBox msgBox(this);
