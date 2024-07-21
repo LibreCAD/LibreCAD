@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>150</width>
+    <width>138</width>
     <height>24</height>
    </rect>
   </property>
@@ -47,7 +47,7 @@
    <item>
     <widget class="QLabel" name="lDist">
      <property name="text">
-      <string>Distance:</string>
+      <string>Snap Distance:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -57,22 +57,6 @@
    <item>
     <widget class="QLineEdit" name="leDist"/>
    </item>
-   <item>
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
-   </item>
   </layout>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
@@ -81,22 +65,8 @@
   <include location="local">rs_settings.h</include>
  </includes>
  <resources/>
- <connections>
-  <connection>
-   <sender>leDist</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_SnapDistOptions</receiver>
-   <slot>updateDist(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
+ <slots>
+  <slot>updateDist(QString)</slot>
+ </slots>
 </ui>

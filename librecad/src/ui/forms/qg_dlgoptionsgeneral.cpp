@@ -125,6 +125,9 @@ void QG_DlgOptionsGeneral::init()
     bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
     cursor_hiding_checkbox->setChecked(cursor_hiding);
 
+    bool showSnapOptionsInSnapToolbar = RS_SETTINGS->readNumEntry("/showSnapOptionsInSnapToolbar", 0);
+    cbShowSnapOptionsInSnapBar->setChecked(showSnapOptionsInSnapToolbar);
+
     bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
     cbHideRelativeZero->setChecked(hideRelativeZero);
     bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
@@ -277,6 +280,7 @@ void QG_DlgOptionsGeneral::ok()
         RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
         RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
         RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
+        RS_SETTINGS->writeEntry("/showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
         RS_SETTINGS->writeEntry("/UnitlessGrid", cb_unitless_grid->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked() ? 1 : 0);

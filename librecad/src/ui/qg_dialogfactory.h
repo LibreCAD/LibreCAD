@@ -29,6 +29,9 @@
 
 #include "rs_dialogfactoryinterface.h"
 #include "lc_modifiersinfo.h"
+#include "lc_optionswidgetsholder.h"
+#include "qg_snaptoolbar.h"
+#include "lc_snapoptionswidgetsholder.h"
 
 class QG_SnapMiddleOptions;
 class QG_SnapDistOptions;
@@ -49,142 +52,148 @@ class RS_Vector;
  */
 class QG_DialogFactory: public RS_DialogFactoryInterface {
 public:
-	QG_DialogFactory(QWidget* parent, QToolBar* ow);
-	~QG_DialogFactory() override;
+    QG_DialogFactory(QWidget* parent, QToolBar* ow, LC_SnapOptionsWidgetsHolder *);
+    ~QG_DialogFactory() override;
 
 protected:
-	/**
-	 * Links factory to a widget that can host tool options.
-	 */
-	void setOptionWidget(QToolBar* ow);
+/**
+ * Links factory to a widget that can host tool options.
+ */
+    void setOptionWidget(QToolBar* ow);
 public:
-	/**
-	 * Links this dialog factory to a coordinate widget.
-	 */
-	void setCoordinateWidget(QG_CoordinateWidget* cw) override{
-		coordinateWidget = cw;
-	}
+/**
+ * Links this dialog factory to a coordinate widget.
+ */
+    void setCoordinateWidget(QG_CoordinateWidget* cw) override{
+        coordinateWidget = cw;
+    }
 
-	/**
-	 * Links this dialog factory to a mouse widget.
-	 */
-	void setMouseWidget(QG_MouseWidget* mw) override{
-		mouseWidget = mw;
-	}
+/**
+ * Links this dialog factory to a mouse widget.
+ */
+    void setMouseWidget(QG_MouseWidget* mw) override{
+        mouseWidget = mw;
+    }
 
-	/**
-	 * Links this dialog factory to a selection widget.
-	 */
-	void setSelectionWidget(QG_SelectionWidget* sw) override{
-		selectionWidget = sw;
-	}
+/**
+ * Links this dialog factory to a selection widget.
+ */
+    void setSelectionWidget(QG_SelectionWidget* sw) override{
+        selectionWidget = sw;
+    }
 
-	/**
-	 * Links this dialog factory to a command widget.
-	 */
-	void setCommandWidget(QG_CommandWidget* cw) override{
-		commandWidget = cw;
-	}
+/**
+ * Links this dialog factory to a command widget.
+ */
+    void setCommandWidget(QG_CommandWidget* cw) override{
+        commandWidget = cw;
+    }
 
-	/**
-	 * @return command widget or nullptr.
-	 */
-	QG_CommandWidget* getCommandWidget() const{
-		return commandWidget;
-	}
+/**
+ * @return command widget or nullptr.
+ */
+    QG_CommandWidget* getCommandWidget() const{
+        return commandWidget;
+    }
 
-	/**
-	 * Links the dialog factory to a main app window.
-	 */
 
-	void requestWarningDialog(const QString& warning) override;
 
-	RS_Layer* requestNewLayerDialog(
-			RS_LayerList* layerList = nullptr) override;
-	RS_Layer* requestLayerRemovalDialog(
-			RS_LayerList* layerList = nullptr) override;
-	QStringList requestSelectedLayersRemovalDialog(
-			RS_LayerList* layerList = nullptr) override;
-	RS_Layer* requestEditLayerDialog(
-			RS_LayerList* layerList = nullptr) override;
+/**
+ * Links the dialog factory to a main app window.
+ */
 
-	RS_BlockData requestNewBlockDialog(RS_BlockList* blockList) override;
-	RS_Block* requestBlockRemovalDialog(
-			RS_BlockList* blockList) override;
-	QList<RS_Block*> requestSelectedBlocksRemovalDialog(
-			RS_BlockList* blockList = nullptr) override;
-	RS_BlockData requestBlockAttributesDialog(
-			RS_BlockList* blockList) override;
-	void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}
-	void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
-	//QString requestFileSaveAsDialog() override;
-	//QString requestFileOpenDialog() override;
+    void requestWarningDialog(const QString& warning) override;
 
-	QString requestImageOpenDialog() override;
+    RS_Layer* requestNewLayerDialog(
+        RS_LayerList* layerList = nullptr) override;
+    RS_Layer* requestLayerRemovalDialog(
+        RS_LayerList* layerList = nullptr) override;
+    QStringList requestSelectedLayersRemovalDialog(
+        RS_LayerList* layerList = nullptr) override;
+    RS_Layer* requestEditLayerDialog(
+        RS_LayerList* layerList = nullptr) override;
 
-	void addOptionsWidget(QWidget * options) override;
+    RS_BlockData requestNewBlockDialog(RS_BlockList* blockList) override;
+    RS_Block* requestBlockRemovalDialog(
+        RS_BlockList* blockList) override;
+    QList<RS_Block*> requestSelectedBlocksRemovalDialog(
+        RS_BlockList* blockList = nullptr) override;
+    RS_BlockData requestBlockAttributesDialog(
+        RS_BlockList* blockList) override;
+    void requestEditBlockWindow(RS_BlockList* /*blockList*/) override{}
+    void closeEditBlockWindow(RS_Block* /*blockList*/) override{}
+//QString requestFileSaveAsDialog() override;
+//QString requestFileOpenDialog() override;
+
+    QString requestImageOpenDialog() override;
+
+    void addOptionsWidget(QWidget * options) override;
+    void removeOptionsWidget(QWidget * options) override;
 protected:
 
 public:
-	void requestSnapDistOptions(double& dist, bool on) override;
-	void requestSnapMiddleOptions(int& middlePoints, bool on) override;
+    void requestSnapDistOptions(double* dist, bool on) override;
+    void requestSnapMiddleOptions(int* middlePoints, bool on) override;
+    void hideSnapOptions() override;
 
 public:
 
-	bool requestAttributesDialog(RS_AttributesData& data,
-										 RS_LayerList& layerList) override;
-	bool requestMoveDialog(RS_MoveData& data) override;
-	bool requestRotateDialog(RS_RotateData& data) override;
-	bool requestScaleDialog(RS_ScaleData& data) override;
-	bool requestMirrorDialog(RS_MirrorData& data) override;
-	bool requestMoveRotateDialog(RS_MoveRotateData& data) override;
-	bool requestRotate2Dialog(RS_Rotate2Data& data) override;
+    bool requestAttributesDialog(RS_AttributesData& data,
+                                 RS_LayerList& layerList) override;
+    bool requestMoveDialog(RS_MoveData& data) override;
+    bool requestRotateDialog(RS_RotateData& data) override;
+    bool requestScaleDialog(RS_ScaleData& data) override;
+    bool requestMirrorDialog(RS_MirrorData& data) override;
+    bool requestMoveRotateDialog(RS_MoveRotateData& data) override;
+    bool requestRotate2Dialog(RS_Rotate2Data& data) override;
 
-	bool requestModifyEntityDialog(RS_Entity* entity) override;
-	bool requestMTextDialog(RS_MText* text) override;
-	bool requestTextDialog(RS_Text* text) override;
-	bool requestHatchDialog(RS_Hatch* hatch) override;
-	void requestOptionsGeneralDialog() override;
-	void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
-	bool requestOptionsMakerCamDialog() override;
+    bool requestModifyEntityDialog(RS_Entity* entity) override;
+    bool requestMTextDialog(RS_MText* text) override;
+    bool requestTextDialog(RS_Text* text) override;
+    bool requestHatchDialog(RS_Hatch* hatch) override;
+    void requestOptionsGeneralDialog() override;
+    void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
+    bool requestOptionsMakerCamDialog() override;
 
-	QString requestFileSaveAsDialog(const QString& caption = QString(),
-											const QString& dir = QString(),
-											const QString& filter = QString(),
-											QString* selectedFilter = 0) override;
+    QString requestFileSaveAsDialog(const QString& caption = QString(),
+                                    const QString& dir = QString(),
+                                    const QString& filter = QString(),
+                                    QString* selectedFilter = 0) override;
 
-	void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) override;
-	/**
-	 * \brief updateMouseWidget Called when an action has a mouse hint.
-	 * \param left mouse hint for left button
-	 * \param right mouse hint for right button
-	 */
-	void updateMouseWidget(const QString& left=QString(),
-								   const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
-	void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
-	void commandMessage(const QString& message) override;
- void command(const QString& message) override;
+    void updateCoordinateWidget(const RS_Vector& abs, const RS_Vector& rel, bool updateFormat=false) override;
+/**
+ * \brief updateMouseWidget Called when an action has a mouse hint.
+ * \param left mouse hint for left button
+ * \param right mouse hint for right button
+ */
+    void updateMouseWidget(const QString& left=QString(),
+                           const QString& right=QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE()) override;
+    void updateSelectionWidget(int num, double length) override;//updated for total number of selected, and total length of selected
+    void commandMessage(const QString& message) override;
+    void command(const QString& message) override;
 
-	static QString extToFormat(const QString& ext);
- void displayBlockName(const QString& blockName, const bool& display) override;
+    static QString extToFormat(const QString& ext);
+    void displayBlockName(const QString& blockName, const bool& display) override;
 
 protected:
-	//! Pointer to the widget which can host dialogs
+//! Pointer to the widget which can host dialogs
     QWidget* parent = nullptr;
-	//! Pointer to the widget which can host individual tool options
+//! Pointer to the widget which can host individual tool options
     QToolBar* optionWidget = nullptr;
-	//! Pointer to the coordinate widget.
+    LC_OptionsWidgetsHolder* optionWidgetHolder = nullptr;
+    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderSnapToolbar = nullptr;
+    LC_SnapOptionsWidgetsHolder * snapOptionsWidgetHolderOptionsToolbar = nullptr;
+    LC_SnapOptionsWidgetsHolder * lastUsedSnapOptionsWidgetHolder = nullptr;
+//! Pointer to the coordinate widget.
     QG_CoordinateWidget* coordinateWidget = nullptr;
-	//! Pointer to the mouse widget.
+//! Pointer to the mouse widget.
     QG_MouseWidget* mouseWidget = nullptr;
-	//! Pointer to the selection widget.
+//! Pointer to the selection widget.
     QG_SelectionWidget* selectionWidget = nullptr;
-	//! Pointer to the command line widget
+//! Pointer to the command line widget
     QG_CommandWidget* commandWidget = nullptr;
-private:
-	// pointers to snap option widgets
-    QG_SnapMiddleOptions* snapMiddleOptions = nullptr;
-    QG_SnapDistOptions* snapDistOptions = nullptr;
+    QG_SnapToolBar* snapToolbar = nullptr;
+    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 };
 
 #endif

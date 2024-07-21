@@ -53,6 +53,8 @@ class LC_ActionOptionsWidget;
  *
  * @author Andrew Mustun
  */
+//fixme - actually, inheritance from snapper is rather bad design... not all actions (say, file open or print-preview) should be
+// inherited from snapper - only ones that really work with drawing should be snap-aware
 class RS_ActionInterface : public QObject, public RS_Snapper {
     Q_OBJECT
 public:
@@ -87,8 +89,8 @@ public:
     virtual void setPredecessor(RS_ActionInterface* pre);
     void suspend() override;
     void resume() override;
-    void hideOptions() override;
-    void showOptions() override;
+    virtual void hideOptions(bool includeSnapOptions = false);
+    virtual void showOptions();
     void setActionType(RS2::ActionType actionType);
     bool checkCommand(const QString& cmd, const QString& str,
                              RS2::ActionType action=RS2::ActionNone);
@@ -184,6 +186,9 @@ protected:
     void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
     void commandMessageTR(const char*);
     void commandMessage(const QString &msg) const;
+
+    static bool isControl(const QMouseEvent *e);
+    static bool isShift(const QMouseEvent *e);
 
     virtual void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e);
     virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);

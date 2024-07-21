@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>LC_SnapOptionsWidgetsHolder</class>
+ <widget class="QWidget" name="LC_SnapOptionsWidgetsHolder">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>38</width>
+    <height>16</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Form</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>2</number>
+   </property>
+   <property name="topMargin">
+    <number>0</number>
+   </property>
+   <property name="rightMargin">
+    <number>2</number>
+   </property>
+   <property name="bottomMargin">
+    <number>0</number>
+   </property>
+   <item row="0" column="0">
+    <widget class="Line" name="lineLeft">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QG_SnapMiddleOptions" name="snapMiddleOptions" native="true"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QG_SnapDistOptions" name="snapDistanceOptions" native="true"/>
+   </item>
+   <item row="0" column="3">
+    <widget class="Line" name="lineRight">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QG_SnapDistOptions</class>
+   <extends>QWidget</extends>
+   <header>qg_snapdistoptions.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>QG_SnapMiddleOptions</class>
+   <extends>QWidget</extends>
+   <header>qg_snapmiddleoptions.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

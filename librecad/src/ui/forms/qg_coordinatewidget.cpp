@@ -81,6 +81,13 @@ void QG_CoordinateWidget::setCoordinates(const RS_Vector& abs,
     setCoordinates(abs.x, abs.y, rel.x, rel.y, updateFormat);
 }
 
+void QG_CoordinateWidget::clearContent(){
+    lCoord1->setText("0 , 0");
+    lCoord2->setText("@  0 , 0");
+    lCoord1b->setText("0 < 0");
+    lCoord2b->setText("@  0 < 0");
+}
+
 
 void QG_CoordinateWidget::setCoordinates(double x, double y,
         double rx, double ry, bool updateFormat) {

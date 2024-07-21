@@ -40,8 +40,8 @@
 
 
 
-QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow) :
-  QG_DialogFactory(parent, ow)
+QC_DialogFactory::QC_DialogFactory(QWidget* parent, QToolBar* ow,  LC_SnapOptionsWidgetsHolder *snapOptionsHolder) :
+  QG_DialogFactory(parent, ow, snapOptionsHolder)
 {}
 
 

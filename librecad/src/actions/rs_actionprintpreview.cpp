@@ -59,37 +59,35 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
     if (!fixed)
         fit();
     setPaperScaleFixed(fixed);
-    showOptions();
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
 
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
-    showOptions();
 }
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
-        case Moving:
+        case Moving: {
             pPoints->v2 = toGraph(e);
             // if Shift is pressed the paper moves only horizontally
-            if (e->modifiers() & Qt::ShiftModifier)
+            if (isShift(e)) {
                 pPoints->v2.y = pPoints->v1.y;
+            }
             // if Ctrl is pressed the paper moves only vertically
-            if (e->modifiers() & Qt::ControlModifier)
+            if (isControl(e)) {
                 pPoints->v2.x = pPoints->v1.x;
+            }
             if (graphic) {
                 RS_Vector pinsbase = graphic->getPaperInsertionBase();
-
                 double scale = graphic->getPaperScale();
-
-                graphic->setPaperInsertionBase(pinsbase-pPoints->v2*scale+pPoints->v1*scale);
+                graphic->setPaperInsertionBase(pinsbase - pPoints->v2 * scale + pPoints->v1 * scale);
             }
             pPoints->v1 = pPoints->v2;
             graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
             break;
-
+        }
         default:
             break;
     }
@@ -98,11 +96,11 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
 void RS_ActionPrintPreview::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         switch (getStatus()) {
-        case Neutral:
-            pPoints->v1 = graphicView->toGraph(e->position());
+        case Neutral: {
+            pPoints->v1 = toGraph(e);
             setStatus(Moving);
             break;
-
+        }
         default:
             break;
         }
@@ -140,55 +138,54 @@ void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
     graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
 }
 
-void RS_ActionPrintPreview::commandEvent(RS_CommandEvent*  e) {
-    QString c = e->getCommand().trimmed().toLower();
+bool RS_ActionPrintPreview::doProcessCommand(int status, const QString &c) {
+    bool accept = true;
     //    qDebug()<<"cmd="<<c;
     if (checkCommand("blackwhite", c)) {
         setBlackWhite(true);
         commandMessageTR("Printout in Black/White");
-        e->accept();
-        return;
     } else if (checkCommand("color", c)) {
         setBlackWhite(false);
         commandMessageTR("Printout in color");
-        e->accept();
-        return;
     } else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
         commandMessageTR("Printout offset in graph coordinates");
-        e->accept();
-        return;
     } else if (checkCommand("paperoffset", c)) {
         m_bPaperOffset=true;
         commandMessageTR("Printout offset in paper coordinates");
-        e->accept();
-        return;
-    }else if (checkCommand("help", c)) {
-        commandMessage(msgAvailableCommands()
-                       + getAvailableCommands().join(", ")+tr(": select printout offset coordinates")+
-                       "\n"+tr("type in offset from command line to offset printout")
-        );
-        e->accept();
-        return;
     }
-    //coordinate event
-    if (c.contains(',')){
-        if(c.startsWith('@')) {
-            commandMessageTR("Printout offset ignores relative zero. Ignoring '@'");
-            c.remove(0, 1);
-        }
-        //        qDebug()<<"offset by absolute coordinate: ";
+    else{
+        //coordinate event
+        if (c.contains(',')){
+            QString coord = c;
+            if(c.startsWith('@')) {
+                commandMessageTR("Printout offset ignores relative zero. Ignoring '@'");
+                coord.remove(0, 1);
+            }
+            //        qDebug()<<"offset by absolute coordinate: ";
 
-        const int commaPos = c.indexOf(',');
-        bool ok1, ok2;
-        double x = RS_Math::eval(c.left(commaPos), &ok1);
-        double y = RS_Math::eval(c.mid(commaPos+1), &ok2);
-        if (ok1 && ok2) {
-            RS_CoordinateEvent ce(RS_Vector(x,y));
-            this->coordinateEvent(&ce);
-            e->accept();
+            const int commaPos = coord.indexOf(',');
+            bool ok1, ok2;
+            double x = RS_Math::eval(coord.left(commaPos), &ok1);
+            double y = RS_Math::eval(coord.mid(commaPos+1), &ok2);
+            if (ok1 && ok2) {
+                RS_CoordinateEvent ce(RS_Vector(x,y));
+                coordinateEvent(&ce);
+            }
+            else{
+                accept = false;
+            }
+        }
+        else{
+            accept = false;
         }
     }
+    return accept;
+}
+
+QString RS_ActionPrintPreview::getAdditionalHelpMessage() {
+    return tr(": select printout offset coordinates")+
+           "\n"+tr("type in offset from command line to offset printout");
 }
 
 QStringList RS_ActionPrintPreview::getAvailableCommands() {
@@ -207,7 +204,7 @@ void RS_ActionPrintPreview::resume() {
 
 //printout warning in command widget
 void RS_ActionPrintPreview::printWarning(const QString& s) {
-	commandMessage(s);
+    commandMessage(s);
 }
 
 RS2::CursorType RS_ActionPrintPreview::doGetMouseCursor([[maybe_unused]] int status){
@@ -293,7 +290,6 @@ void RS_ActionPrintPreview::setBlackWhite(bool bw) {
     graphicView->redraw();
 }
 
-
 RS2::Unit RS_ActionPrintPreview::getUnit() {
     if (graphic) {
         return graphic->getUnit();
@@ -333,6 +329,18 @@ void RS_ActionPrintPreview::calcPagesNum() {
     }
 }
 
+void RS_ActionPrintPreview::updateMouseButtonHints() {
+    updateMouseWidgetTR("Position Paper", "", LC_ModifiersInfo::SHIFT_AND_CTRL("Move Horizontally", "Move Vertically"));
+}
+
 LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
     return new QG_PrintPreviewOptions();
+}
+
+void RS_ActionPrintPreview::showOptions() {
+    RS_ActionInterface::showOptions();
+}
+
+void RS_ActionPrintPreview::hideOptions(bool includeSnap) {
+    RS_ActionInterface::hideOptions(includeSnap);
 }

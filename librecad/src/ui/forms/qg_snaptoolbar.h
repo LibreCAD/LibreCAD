@@ -35,25 +35,26 @@ class LC_ActionGroupManager;
 #include "rs_snapper.h"
 
 #include "ui_qg_snaptoolbar.h"
+#include "lc_snapoptionswidgetsholder.h"
 
 class QG_SnapToolBar : public QToolBar
 {
     Q_OBJECT
-
 public:
     QG_SnapToolBar(QWidget* parent
                  , QG_ActionHandler* ah
                  , LC_ActionGroupManager* agm);
 	~QG_SnapToolBar() = default;
 
-	RS_SnapMode getSnaps ( void ) const;
+    RS_SnapMode getSnaps ( void ) const;
     void saveSnapMode(void );
     virtual void setActionHandler(QG_ActionHandler* ah);
-	bool lockedRelativeZero() const;
+    bool lockedRelativeZero() const;
     void setLockedRelativeZero(bool on);
+    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
 
 public slots:
-	void setSnaps(RS_SnapMode const & s);
+    void setSnaps(RS_SnapMode const & s);
     void slotEnableRelativeZeroSnaps(const bool);
     void slotUnsetSnapMiddleManual();
 
@@ -65,7 +66,7 @@ private slots:
 private:
     QAction* createAction(QString icon, QString tip, QActionGroup* group);
 
-	QG_ActionHandler* actionHandler;
+    QG_ActionHandler* actionHandler;
 
     QAction *snapFree;
     QAction *snapGrid;

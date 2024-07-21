@@ -62,7 +62,6 @@ public:
     void mouseReleaseEvent(QMouseEvent* e) override;
 
     void coordinateEvent(RS_CoordinateEvent* e) override;
-    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
     void center();
@@ -77,9 +76,21 @@ public:
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
     bool getPaperScaleFixed();
+
+    void updateMouseButtonHints() override;
+
+    void showOptions() override;
+
+    void hideOptions(bool invludeSnapOptions) override;
+
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+
+    bool doProcessCommand(int status, const QString &command) override;
+
+    QString getAdditionalHelpMessage() override;
+
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

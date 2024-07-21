@@ -250,8 +250,8 @@ void RS_Snapper::finish() {
 
 void RS_Snapper::setSnapMode(const RS_SnapMode& snapMode) {
     this->snapMode = snapMode;
-    RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
-    RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
+    RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
+    RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
 //std::cout<<"RS_Snapper::setSnapMode(): middlePoints="<<middlePoints<<std::endl;
 }
 
@@ -317,7 +317,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
     if (snapMode.snapMiddle) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapMiddleOptions
-        RS_DIALOGFACTORY->requestSnapMiddleOptions(middlePoints, snapMode.snapMiddle);
+        RS_DIALOGFACTORY->requestSnapMiddleOptions(&middlePoints, snapMode.snapMiddle);
         t = snapMiddle(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -328,7 +328,7 @@ RS_Vector RS_Snapper::snapPoint(QMouseEvent* e)
     if (snapMode.snapDistance) {
         //this is still brutal force
         //todo: accept value from widget QG_SnapDistOptions
-        RS_DIALOGFACTORY->requestSnapDistOptions(m_SnapDistance, snapMode.snapDistance);
+        RS_DIALOGFACTORY->requestSnapDistOptions(&m_SnapDistance, snapMode.snapDistance);
         t = snapDist(mouseCoord);
         double ds2=mouseCoord.squaredTo(t);
         if (ds2 < ds2Min){
@@ -790,16 +790,16 @@ void RS_Snapper::suspend() {
 /**
  * Hides the snapper options. Default implementation does nothing.
  */
-void RS_Snapper::hideOptions() {
-    //not used any more, will be removed
+void RS_Snapper::hideSnapOptions() {
+    RS_DIALOGFACTORY->hideSnapOptions();
 }
 
 /**
  * Shows the snapper options. Default implementation does nothing.
  */
-void RS_Snapper::showOptions() {
+//void RS_Snapper::showOptions() {
     //not used any more, will be removed
-}
+//}
 
 /**
  * Deletes the snapper from the screen.

@@ -204,7 +204,7 @@ void RS_ActionInterface::commandEvent(RS_CommandEvent* e) {
     if (!c.isEmpty()) {
         if (checkCommand("help", c)) {
             const QStringList &list = getAvailableCommands();
-            if (list.isEmpty()) {
+            if (!list.isEmpty()) {
                 commandMessage(msgAvailableCommands() + list.join(", ") + getAdditionalHelpMessage());
             } else {
                 // fixme - need some indication that commands are not supported
@@ -354,12 +354,17 @@ void RS_ActionInterface::resume() {
 }
 
 /**
- * Hides the tool options. Default implementation does nothing.
+ * Hides the tool options.
  */
-void RS_ActionInterface::hideOptions() {
-    RS_Snapper::hideOptions();
+void RS_ActionInterface::hideOptions(bool includeSnapOptions) {
+    if (includeSnapOptions) {
+        hideSnapOptions();
+    }
     if (m_optionWidget != nullptr){
         m_optionWidget->hideOptions();
+        RS_DIALOGFACTORY->removeOptionsWidget(m_optionWidget.get());
+//        m_optionWidget->deleteLater();
+        m_optionWidget.release();
     }
 }
 
@@ -396,7 +401,7 @@ void RS_ActionInterface::updateOptionsUI(int mode){
  * Shows the tool options. Default implementation does nothing.
  */
 void RS_ActionInterface::showOptions() {
-    RS_Snapper::showOptions();
+//    RS_Snapper::showOptions();
     if (m_optionWidget == nullptr){
         LC_ActionOptionsWidget* widget = createOptionsWidget();
         if (widget != nullptr){
@@ -406,6 +411,7 @@ void RS_ActionInterface::showOptions() {
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
             if (m_optionWidget->parent() == nullptr){ // first time created
+//                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
                 RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
                 m_optionWidget->setAction(this);
             } else {
@@ -537,4 +543,12 @@ void RS_ActionInterface::updateSnapAngleStep() {
         default:
             snapToAngleStep = 15.0;
     }
+}
+
+bool RS_ActionInterface::isControl(const QMouseEvent *e){
+    return  e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);
+}
+
+bool RS_ActionInterface::isShift(const QMouseEvent *e){
+    return  e->modifiers() & Qt::ShiftModifier;
 }

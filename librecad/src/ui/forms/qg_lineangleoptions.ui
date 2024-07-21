@@ -196,56 +196,7 @@
  </widget>
  <layoutdefault spacing="6" margin="0"/>
  <resources/>
- <connections>
-  <connection>
-   <sender>leAngle</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LineAngleOptions</receiver>
-   <slot>updateAngle(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>leLength</sender>
-   <signal>textChanged(QString)</signal>
-   <receiver>Ui_LineAngleOptions</receiver>
-   <slot>updateLength(QString)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>cbSnapPoint</sender>
-   <signal>activated(int)</signal>
-   <receiver>Ui_LineAngleOptions</receiver>
-   <slot>updateSnapPoint(int)</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>20</x>
-     <y>20</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
  <slots>
   <slot>updateAngle(QString)</slot>
   <slot>updateLength(QString)</slot>

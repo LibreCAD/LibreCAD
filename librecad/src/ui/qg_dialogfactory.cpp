@@ -69,10 +69,8 @@
 #include "qg_dlgtext.h"
 #include "qg_layerdialog.h"
 #include "qg_layerwidget.h"
-#include "qg_linepolygon2options.h"
 #include "qg_mousewidget.h"
 #include "qg_selectionwidget.h"
-#include "qg_snapdistoptions.h"
 #include "qg_snapmiddleoptions.h"
 #include "rs_actioninterface.h"
 #include "rs_blocklist.h"
@@ -86,55 +84,7 @@
 #include "lc_crossoptions.h"
 #include "lc_lineanglereloptions.h"
 #include "lc_rectangle1pointoptions.h"
-
-namespace {
-
-template<typename T>
-void addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on)
-{
-    LC_LOG<<__func__<<"(): begin";
-    if (toolbar) {
-        static std::unique_ptr<T> option;
-        if (option != nullptr) {
-            option->hide();
-            option->deleteLater();
-            option.release();
-        }
-        if (on) {
-            option = std::make_unique<T>(toolbar);
-            toolbar->addWidget(option.get());
-// looks like it's a bug - why action is set twice?
-//            option->setAction(action);
-            option->setAction(action);
-            option->show();
-        }
-    }
-    LC_LOG<<__func__<<"(): end";
-}
-
-template<typename T>
-T* addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, bool update)
-{
-    LC_LOG<<__func__<<"(): begin";
-    if (toolbar) {
-        static std::unique_ptr<T> option;
-        if (option != nullptr) {
-            option->hide();
-            option->deleteLater();
-            option.release();
-        }
-        if (on) {
-            option = std::make_unique<T>(toolbar);
-            toolbar->addWidget(option.get());
-            option->setAction(action, update);
-            option->show();
-        }
-        return option.get();
-    }
-    LC_LOG<<__func__<<"(): end";
-    return nullptr;
-}
-}
+#include "lc_optionswidgetsholder.h"
 
 //QG_DialogFactory* QG_DialogFactory::uniqueInstance = nullptr;
 
@@ -144,12 +94,12 @@ T* addOptionWidget(QToolBar* toolbar, RS_ActionInterface* action, bool on, bool 
  * @param parent Pointer to parent widget which can host dialogs.
  * @param ow Pointer to widget that can host option widgets.
  */
-QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* ow)
+QG_DialogFactory::QG_DialogFactory(QWidget* parent, QToolBar* optionsToolbar, LC_SnapOptionsWidgetsHolder* snapOptionsHolder)
     : parent(parent)
 {
     RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory");
-
-    setOptionWidget(ow);
+    snapOptionsWidgetHolderSnapToolbar  = snapOptionsHolder;
+    setOptionWidget(optionsToolbar);
     RS_DEBUG->print("QG_DialogFactory::QG_DialogFactory: OK");
 }
 
@@ -165,13 +115,57 @@ QG_DialogFactory::~QG_DialogFactory() {
 void QG_DialogFactory::setOptionWidget(QToolBar* ow) {
     RS_DEBUG->print("QG_DialogFactory::setOptionWidget");
     optionWidget = ow;
+    optionWidgetHolder = new LC_OptionsWidgetsHolder(ow);
+    optionWidget->addWidget(optionWidgetHolder);
+    snapOptionsWidgetHolderOptionsToolbar = optionWidgetHolder->getSnapOptionsHolder();
     RS_DEBUG->print("QG_DialogFactory::setOptionWidget: OK");
 }
 
 void QG_DialogFactory::addOptionsWidget(QWidget * options){
-    optionWidget->addWidget(options);
+    optionWidgetHolder->addOptionsWidget(options);
+    optionWidget->update();
 }
 
+void QG_DialogFactory::removeOptionsWidget(QWidget * options){
+    optionWidgetHolder->removeOptionsWidget(options);
+
+}
+void QG_DialogFactory::hideSnapOptions(){
+    getSnapOptionsHolder()->hideSnapOptions();
+}
+
+LC_SnapOptionsWidgetsHolder* QG_DialogFactory::getSnapOptionsHolder(){
+    LC_SnapOptionsWidgetsHolder* result = nullptr;
+    RS_SETTINGS->beginGroup("/Appearance");
+    bool useSnapToolbar = RS_SETTINGS->readNumEntry("/showSnapOptionsInSnapToolbar", 0) == 1;
+    RS_SETTINGS->endGroup();
+    if (useSnapToolbar){
+        result = snapOptionsWidgetHolderSnapToolbar;
+    }
+    else{
+        result = snapOptionsWidgetHolderOptionsToolbar;
+    }
+    if (lastUsedSnapOptionsWidgetHolder != nullptr && lastUsedSnapOptionsWidgetHolder != result){
+        result->updateBy(lastUsedSnapOptionsWidgetHolder);
+    }
+    lastUsedSnapOptionsWidgetHolder = result;
+
+    return result;
+}
+
+/**
+ * Shows a widget for 'snap to equidistant middle points ' options.
+ */
+void QG_DialogFactory::requestSnapMiddleOptions(int* middlePoints, bool on) {
+    getSnapOptionsHolder()->showSnapMiddleOptions(middlePoints, on);
+}
+
+/**
+ * Shows a widget for 'snap to a point with a given distance' options.
+ */
+void QG_DialogFactory::requestSnapDistOptions(double* dist, bool on) {
+    getSnapOptionsHolder()->showSnapDistOptions(dist, on);
+}
 
 /**
  * Shows a message dialog.
@@ -696,57 +690,6 @@ QString QG_DialogFactory::requestImageOpenDialog()
 }
 
 
-/**
- * Shows a widget for 'snap to equidistant middle points ' options.
- */
-void QG_DialogFactory::requestSnapMiddleOptions(int& middlePoints, bool on) {
-
-    if(!on) {
-        if (snapMiddleOptions) {
-            snapMiddleOptions->hide();
-            snapMiddleOptions->deleteLater();
-            snapMiddleOptions = nullptr;
-        }
-        return;
-    }
-    if (optionWidget ) {
-        if (!snapMiddleOptions) {
-            snapMiddleOptions = new QG_SnapMiddleOptions(middlePoints, optionWidget);
-            optionWidget->addWidget(snapMiddleOptions);
-            snapMiddleOptions->setMiddlePoints(middlePoints);
-        }else{
-            snapMiddleOptions->setMiddlePoints(middlePoints,false);
-        }
-        snapMiddleOptions->show();
-    }
-    //std::cout<<"QG_DialogFactory::requestSnapMiddleOptions(): middlePoints="<<middlePoints<<std::endl;
-}
-
-
-/**
- * Shows a widget for 'snap to a point with a given distance' options.
- */
-void QG_DialogFactory::requestSnapDistOptions(double& dist, bool on) {
-    if(!on) {
-        if (snapDistOptions) {
-            snapDistOptions->hide();
-            snapDistOptions->deleteLater();
-            snapDistOptions = nullptr;
-        }
-        return;
-    }
-    if (optionWidget ) {
-        if (!snapDistOptions) {
-            snapDistOptions = new QG_SnapDistOptions(optionWidget);
-            optionWidget->addWidget(snapDistOptions);
-            snapDistOptions->setDist(dist);
-        }else {
-            snapDistOptions->setDist(dist,false);
-        }
-        //std::cout<<"QG_DialogFactory::requestSnapDistOptions(): dist="<<dist<<std::endl;
-        snapDistOptions->show();
-    }
-}
 
 /**
  * Shows attributes options dialog presenting the given data.
@@ -1036,8 +979,6 @@ bool QG_DialogFactory::requestModifyEntityDialog(RS_Entity* entity) {
     return ret;
 }
 
-
-
 /**
  * Shows a dialog to edit the attributes of the given dimension entity.
  */
@@ -1118,6 +1059,7 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
 void QG_DialogFactory::requestOptionsGeneralDialog() {
     QG_DlgOptionsGeneral dlg(parent);
     dlg.exec();
+    getSnapOptionsHolder(); // as side effect, should update location of snap options
 }
 
 
@@ -1271,5 +1213,6 @@ QString QG_DialogFactory::extToFormat(const QString& ext) {
         return ext.toUpper();
     }
 }
+
 
 

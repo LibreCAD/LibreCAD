@@ -427,14 +427,6 @@ void RS_PreviewActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
     fireCoordinateEvent(snapPoint(e));
 }
 
-bool RS_PreviewActionInterface::isControl(const QMouseEvent *e){
-    return  e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);
-}
-
-bool RS_PreviewActionInterface::isShift(const QMouseEvent *e){
-      return  e->modifiers() & Qt::ShiftModifier;
-}
-
 bool RS_PreviewActionInterface::addToDocumentUndoable(RS_Undoable *e) const{
     // upd. undo list:
     if (document){

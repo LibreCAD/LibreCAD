@@ -52,8 +52,8 @@ public:
 	void requestEditBlockWindow(RS_BlockList*) override{}
 	void closeEditBlockWindow(RS_Block*) override {}
 	QString requestImageOpenDialog() override {return {};}
-	void requestSnapDistOptions(double& , bool) override {}
-	void requestSnapMiddleOptions(int& , bool) override {}
+	void requestSnapDistOptions(double* , bool) override {}
+	void requestSnapMiddleOptions(int* , bool) override {}
 	bool requestAttributesDialog(RS_AttributesData&, RS_LayerList&) override{return false;}
 	bool requestMoveDialog(RS_MoveData&) override {return false;}
 	bool requestRotateDialog(RS_RotateData&) override {return false;}
@@ -74,14 +74,15 @@ public:
 	void updateSelectionWidget(int, double) override {}
 //    void updateArcTangentialOptions(double, bool) override{}
 	void commandMessage(const QString&) override {}
-        void command([[maybe_unused]]const QString& message) override{};
+ void command([[maybe_unused]]const QString& message) override{};
 	void setMouseWidget(QG_MouseWidget*) override {}
 	void setCoordinateWidget(QG_CoordinateWidget* ) override {}
 	void setSelectionWidget(QG_SelectionWidget* ) override {}
 	void setCommandWidget(QG_CommandWidget* ) override {}
 	void displayBlockName(const QString&, const bool&) override {}
-
-	void addOptionsWidget([[maybe_unused]]QWidget * options) override {}
+ void hideSnapOptions() override {};
+ void removeOptionsWidget([[maybe_unused]]QWidget *options) override {}
+ void addOptionsWidget([[maybe_unused]]QWidget * options) override {}
 };
 
 #endif

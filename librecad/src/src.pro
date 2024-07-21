@@ -282,6 +282,7 @@ HEADERS += \
     ui/forms/lc_modifybreakdivideoptions.h \
     ui/forms/lc_modifygapoptions.h \
     ui/forms/lc_staroptions.h \
+    ui/lc_optionswidgetsholder.h \
     ui/generic/lc_plaintextedit.h \
     ui/lc_actionfactorybase.h \
     ui/lc_peninforegistry.h \
@@ -315,7 +316,8 @@ HEADERS += \
     ui/forms/LC_DlgParabola.h \
     ui/lc_quickinfowidgetoptions.h \
     ui/lc_quickinfowidgetoptionsdialog.h\
-    actions/lc_actiondimlinearbase.h
+    actions/lc_actiondimlinearbase.h \
+    ui/lc_snapoptionswidgetsholder.h
 
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
@@ -461,6 +463,7 @@ SOURCES += \
     ui/forms/lc_modifybreakdivideoptions.cpp \
     ui/forms/lc_modifygapoptions.cpp \
     ui/forms/lc_staroptions.cpp \
+    ui/lc_optionswidgetsholder.cpp \
     ui/lc_actionfactorybase.cpp \
     ui/lc_peninforegistry.cpp \
     ui/lc_penpalettedata.cpp \
@@ -491,7 +494,8 @@ SOURCES += \
     ui/lc_quickinfowidget.cpp \
     ui/lc_quickinfowidgetoptions.cpp \
     ui/lc_quickinfowidgetoptionsdialog.cpp\
-    actions/lc_actiondimlinearbase.cpp
+    actions/lc_actiondimlinearbase.cpp \
+    ui/lc_snapoptionswidgetsholder.cpp
 
 
 # ################################################################################
@@ -1087,6 +1091,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/qg_activelayername.ui \
     ui/forms/lc_dlgsplinepoints.ui \
     ui/forms/lc_widgetoptionsdialog.ui \
+    ui/lc_optionswidgetsholder.ui \
     ui/lc_deviceoptions.ui \
     ui/generic/comboboxoption.ui \
     ui/generic/widgetcreator.ui \
@@ -1096,7 +1101,8 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/lc_penpaletteoptionsdialog.ui \
     ui/lc_penpalettewidget.ui \
     ui/lc_quickinfowidget.ui \
-    ui/lc_quickinfowidgetoptionsdialog.ui
+    ui/lc_quickinfowidgetoptionsdialog.ui \
+    ui/lc_snapoptionswidgetsholder.ui
 
 # ################################################################################
 # Main

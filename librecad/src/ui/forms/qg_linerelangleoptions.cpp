@@ -29,7 +29,6 @@
 #include "rs_debug.h"
 #include "rs_dimension.h"
 #include "rs_math.h"
-#include "rs_settings.h"
 #include "ui_qg_linerelangleoptions.h"
 
 namespace {

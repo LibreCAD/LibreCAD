@@ -198,9 +198,9 @@ public:
     virtual void resume(){
         drawSnapper();
     }
-
-    virtual void hideOptions();
-    virtual void showOptions();
+    void hideSnapOptions();
+//    virtual void hideOptions();
+//    virtual void showOptions();
     void drawSnapper();
 
 protected:

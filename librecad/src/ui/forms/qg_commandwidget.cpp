@@ -212,6 +212,8 @@ void QG_CommandWidget::spacePressed() {
     if (actionHandler)
         actionHandler->command({});
 }
+// fixme - review ouptput to command widget
+//fixme - add generic help command (as TAB for empy)
 
 void QG_CommandWidget::tabPressed() {
     if (actionHandler) {

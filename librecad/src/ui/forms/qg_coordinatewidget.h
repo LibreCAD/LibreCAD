@@ -43,6 +43,8 @@ public:
     RS_Vector getAbsoluteCoordinates();
     RS_Vector getRelativeCoordinates();
 
+    void clearContent();
+
 public slots:
     virtual void setGraphic( RS_Graphic * graphic );
     virtual void setCoordinates( const RS_Vector & abs, const RS_Vector & rel, bool updateFormat );

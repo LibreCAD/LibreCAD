@@ -105,33 +105,6 @@
           <string>Graphic View</string>
          </property>
          <layout class="QGridLayout" name="graphic_view_layout">
-          <item row="2" column="0">
-           <widget class="QCheckBox" name="cursor_hiding_checkbox">
-            <property name="text">
-             <string>Hide cursor when snapping</string>
-            </property>
-           </widget>
-          </item>
-          <item row="6" column="0">
-           <widget class="QCheckBox" name="scrollbars_check_box">
-            <property name="text">
-             <string>Scrollbars</string>
-            </property>
-           </widget>
-          </item>
-          <item row="16" column="0">
-           <widget class="QLabel" name="lMinGridSpacing">
-            <property name="text">
-             <string>Minimal Grid Spacing (p&amp;x):</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
-            </property>
-           </widget>
-          </item>
           <item row="0" column="0">
            <widget class="QCheckBox" name="indicator_lines_checkbox">
             <property name="text">
@@ -142,59 +115,7 @@
             </property>
            </widget>
           </item>
-          <item row="8" column="0">
-           <widget class="QCheckBox" name="cbScaleGrid">
-            <property name="text">
-             <string>A&amp;utomatically scale grid</string>
-            </property>
-            <property name="shortcut">
-             <string>Alt+U</string>
-            </property>
-           </widget>
-          </item>
-          <item row="10" column="0">
-           <widget class="QCheckBox" name="cbVisualizeHovering">
-            <property name="toolTip">
-             <string>Visualize the entity under the cursor</string>
-            </property>
-            <property name="text">
-             <string>Highlight entities on mouse hover</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QComboBox" name="indicator_shape_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Circle</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Point</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Square</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="11" column="0">
-           <widget class="QCheckBox" name="cbShowRefPointsOnHovering">
-            <property name="styleSheet">
-             <string notr="true">margin-left:15px</string>
-            </property>
-            <property name="text">
-             <string>Show reference points on hover</string>
-            </property>
-           </widget>
-          </item>
-          <item row="17" column="1">
+          <item row="18" column="1">
            <widget class="QComboBox" name="cbMaxPreview">
             <property name="editable">
              <bool>true</bool>
@@ -231,67 +152,6 @@
             </item>
            </widget>
           </item>
-          <item row="0" column="1">
-           <widget class="QComboBox" name="indicator_lines_combobox">
-            <property name="accessibleDescription">
-             <string notr="true"/>
-            </property>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Crosshair2</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Isometric</string>
-             </property>
-            </item>
-            <item>
-             <property name="text">
-              <string notr="true">Spiderweb</string>
-             </property>
-            </item>
-           </widget>
-          </item>
-          <item row="17" column="0">
-           <widget class="QLabel" name="lMaxPreview">
-            <property name="text">
-             <string>N&amp;umber of preview entities:</string>
-            </property>
-            <property name="wordWrap">
-             <bool>false</bool>
-            </property>
-            <property name="buddy">
-             <cstring>cbMaxPreview</cstring>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
-           <widget class="QCheckBox" name="cb_autopanning">
-            <property name="text">
-             <string>Auto-panning</string>
-            </property>
-           </widget>
-          </item>
-          <item row="5" column="0">
-           <widget class="QCheckBox" name="cb_antialiasing">
-            <property name="text">
-             <string>Anti-aliasing</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QCheckBox" name="cb_unitless_grid">
-            <property name="text">
-             <string>Unitless grid</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QCheckBox" name="indicator_shape_checkbox">
             <property name="text">
@@ -299,7 +159,73 @@
             </property>
            </widget>
           </item>
-          <item row="16" column="1">
+          <item row="10" column="0">
+           <widget class="QCheckBox" name="cbHideRelativeZero">
+            <property name="text">
+             <string>Hide the relative-&amp;zero marker</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+Z</string>
+            </property>
+           </widget>
+          </item>
+          <item row="12" column="0">
+           <widget class="QCheckBox" name="cbShowRefPointsOnHovering">
+            <property name="styleSheet">
+             <string notr="true">margin-left:15px</string>
+            </property>
+            <property name="text">
+             <string>Show reference points on hover</string>
+            </property>
+           </widget>
+          </item>
+          <item row="11" column="0">
+           <widget class="QCheckBox" name="cbVisualizeHovering">
+            <property name="toolTip">
+             <string>Visualize the entity under the cursor</string>
+            </property>
+            <property name="text">
+             <string>Highlight entities on mouse hover</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QCheckBox" name="cb_antialiasing">
+            <property name="text">
+             <string>Anti-aliasing</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QCheckBox" name="cb_unitless_grid">
+            <property name="text">
+             <string>Unitless grid</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QComboBox" name="indicator_shape_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Circle</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Point</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Square</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="17" column="1">
            <widget class="QComboBox" name="cbMinGridSpacing">
             <property name="editable">
              <bool>true</bool>
@@ -346,20 +272,101 @@
             </item>
            </widget>
           </item>
-          <item row="9" column="0">
-           <widget class="QCheckBox" name="cbHideRelativeZero">
+          <item row="17" column="0">
+           <widget class="QLabel" name="lMinGridSpacing">
             <property name="text">
-             <string>Hide the relative-&amp;zero marker</string>
+             <string>Minimal Grid Spacing (p&amp;x):</string>
             </property>
-            <property name="shortcut">
-             <string>Alt+Z</string>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
             </property>
            </widget>
           </item>
-          <item row="15" column="0" colspan="2">
+          <item row="16" column="0" colspan="2">
            <widget class="QCheckBox" name="cbDisplayRefPoints">
             <property name="text">
              <string>Operations preview shows reference points and entities </string>
+            </property>
+           </widget>
+          </item>
+          <item row="9" column="0">
+           <widget class="QCheckBox" name="cbScaleGrid">
+            <property name="text">
+             <string>A&amp;utomatically scale grid</string>
+            </property>
+            <property name="shortcut">
+             <string>Alt+U</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QComboBox" name="indicator_lines_combobox">
+            <property name="accessibleDescription">
+             <string notr="true"/>
+            </property>
+            <item>
+             <property name="text">
+              <string notr="true">Crosshair</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Crosshair2</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Isometric</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string notr="true">Spiderweb</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QCheckBox" name="cursor_hiding_checkbox">
+            <property name="text">
+             <string>Hide cursor when snapping</string>
+            </property>
+           </widget>
+          </item>
+          <item row="5" column="0">
+           <widget class="QCheckBox" name="cb_autopanning">
+            <property name="text">
+             <string>Auto-panning</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QCheckBox" name="scrollbars_check_box">
+            <property name="text">
+             <string>Scrollbars</string>
+            </property>
+           </widget>
+          </item>
+          <item row="18" column="0">
+           <widget class="QLabel" name="lMaxPreview">
+            <property name="text">
+             <string>N&amp;umber of preview entities:</string>
+            </property>
+            <property name="wordWrap">
+             <bool>false</bool>
+            </property>
+            <property name="buddy">
+             <cstring>cbMaxPreview</cstring>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QCheckBox" name="cbShowSnapOptionsInSnapBar">
+            <property name="text">
+             <string>Show snap options in Snap Selection Toolbar</string>
             </property>
            </widget>
           </item>

@@ -34,30 +34,23 @@ class Ui_SnapMiddleOptions;
   * snap to equidistant points on entities
   *@Author: Dongxu Li
   */
-class QG_SnapMiddleOptions : public QWidget
-{
+class QG_SnapMiddleOptions : public QWidget{
     Q_OBJECT
 
 public:
-    QG_SnapMiddleOptions(int& i, QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_SnapMiddleOptions(QWidget* parent);
     ~QG_SnapMiddleOptions();
-
-public slots:
-    virtual void setMiddlePoints(int& i, bool initial=true);
-    virtual void updateMiddlePoints();
-
+    void useMiddlePointsValue(int* i);
+    void doShow();
+    int *getMiddlePointsValue();
 protected:
-    int* middlePoints;
-
+    int* middlePoints = nullptr;
 protected slots:
     virtual void languageChange();
-
-private slots:
     void on_sbMiddlePoints_valueChanged(int arg1);
-
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
+   	void saveSettings();
+	   std::unique_ptr<Ui::Ui_SnapMiddleOptions> ui;
 };
 
 #endif // QG_SNAPMIDDLEOPTIONS_H

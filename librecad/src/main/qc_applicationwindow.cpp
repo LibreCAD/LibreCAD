@@ -366,7 +366,9 @@ QC_ApplicationWindow::QC_ApplicationWindow()
     mdiAreaCAD->installEventFilter(commandWidget);
 
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory");
-    dialogFactory = new QC_DialogFactory(this, optionWidget);
+    LC_SnapOptionsWidgetsHolder *snapOptionsHolder = nullptr;
+    snapOptionsHolder = snapToolBar->getSnapOptionsHolder();
+    dialogFactory = new QC_DialogFactory(this, optionWidget, snapOptionsHolder);
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow: creating dialogFactory: OK");
 
     RS_DEBUG->print("setting dialog factory object");
@@ -1074,6 +1076,10 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         enableWidgets(false);
         enableWidget(layerTreeWidget, false);
         enableWidget(layerWidget, false);
+        enableWidget(commandWidget, false);
+        RS_DIALOGFACTORY->hideSnapOptions();
+        coordinateWidget->clearContent();
+        // todo - check which other widgets in status bar or so should be cleared if no files..
         emit windowsChanged(false);
         activedMdiSubWindow=w;
         return;
@@ -1084,14 +1090,14 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
     }
 
 // kill active actions in previous windows.that will prevent the situation described by issue #1762 with
-// non-finished action started on previous window and still checked action after window switch
+// non-finished action started on previous window and action that is active with UI still checked  after window switch
         foreach (QMdiSubWindow *sw, mdiAreaCAD->subWindowList()) {
             auto *sm = dynamic_cast<QC_MDIWindow *>(sw);
             QG_GraphicView *graphicView = sm->getGraphicView();
             if (graphicView != nullptr) {
                 RS_ActionInterface *ai = graphicView->getCurrentAction();
                 if (ai != nullptr) {
-                    ai->hideOptions();
+                    ai->hideOptions(true);
                     // actually, this is a "brute force" approach for now.
                     // todo - more intelligent approach is for sure to uncheck the action (for action in progress in  old
                     // todo window without killing action and restore the action toggle state on return to that view.
@@ -1184,7 +1190,9 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
         updateActionsAndWidgetsForPrintPreview(printPreview);
 
         if (snapToolBar) {
-            actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+            if (!printPreview) {
+                actionHandler->slotSetSnaps(snapToolBar->getSnaps());
+            }
         } else {
             RS_DEBUG->print(RS_Debug::D_ERROR, "snapToolBar is nullptr\n");
         }
@@ -3930,7 +3938,6 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
     enableWidget(quickInfoWidget, enable);
     enableWidget(blockWidget, enable);
     enableWidget(penToolBar, enable);
-    enableWidget(commandWidget, enable);
     enableWidget(pen_wiz, enable);
     if (libraryWidget != nullptr) {
         enableWidget(libraryWidget->getInsertButton(), enable);
@@ -3940,6 +3947,9 @@ void QC_ApplicationWindow::enableWidgets(bool enable) {
     if (enable){
         enableWidget(layerTreeWidget, enable);
         enableWidget(layerWidget, enable);
+        // command widget should be enabled for print preview as it supports commands...
+        // fixme - command widget should be aware of print preview mode and do not support other commands...
+        enableWidget(commandWidget, enable);
     }
 }
 

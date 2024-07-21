@@ -151,9 +151,15 @@ void QG_PrintPreviewOptions::doSaveSettings() {
     save("PrintScaleValue", ui->cbScale->currentText());
 }
 
+void QG_PrintPreviewOptions::hideOptions() {
+    LC_ActionOptionsWidget::hideOptions();
+    LC_ERR << " PREVIEW - HIDE OPTIONS";
+}
+
+
+
 /** print scale fixed to saved value **/
-void QG_PrintPreviewOptions::onScaleClicked(bool fixed)
-{
+void QG_PrintPreviewOptions::onScaleClicked(bool fixed){
     action->setPaperScaleFixed(fixed);
     updateDisabled=fixed;
     ui->cbScale->setDisabled(fixed);
@@ -161,11 +167,6 @@ void QG_PrintPreviewOptions::onScaleClicked(bool fixed)
     if(ui->cFixed->isChecked() != fixed) {
         ui->cFixed->setChecked(fixed);
     }
-    RS_SETTINGS->beginGroup("/PrintPreview");
-    RS_SETTINGS->writeEntry("/PrintScaleFixed", updateDisabled?1:0);
-    if (fixed)
-        RS_SETTINGS->writeEntry("/PrintScaleValue", ui->cbScale->currentText());
-    RS_SETTINGS->endGroup();
 }
 
 void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -214,7 +215,6 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
     onBlackWhiteClicked(blackWhiteDisabled);
     onScaleLineClicked(scaleLineWidth);
 }
-
 
 void QG_PrintPreviewOptions::onCenterClicked() {
     if (action) {

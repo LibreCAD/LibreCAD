@@ -30,30 +30,27 @@
 #include<QWidget>
 
 namespace Ui {
-class Ui_SnapDistOptions;
+    class Ui_SnapDistOptions;
 }
 
-class QG_SnapDistOptions : public QWidget
-{
-    Q_OBJECT
+class QG_SnapDistOptions : public QWidget{
+Q_OBJECT
 
 public:
-    QG_SnapDistOptions(QWidget* parent = 0, Qt::WindowFlags fl = {});
+    QG_SnapDistOptions(QWidget* parent = nullptr);
     ~QG_SnapDistOptions();
-
-public slots:
-    virtual void setDist( double& d , bool initial=true);
-    virtual void updateDist( const QString & d );
-
+    void useSnapDistanceValue( double* d);
+    void doShow();
+    double *getDistanceValue();
 protected:
     double* dist;
 
 protected slots:
     virtual void languageChange();
-
+    void on_leDist_editingFinished();
 private:
-	void saveSettings();
-	std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
+    void saveSettings();
+    std::unique_ptr<Ui::Ui_SnapDistOptions> ui;
 };
 
 #endif // QG_SNAPDISTOPTIONS_H

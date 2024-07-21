@@ -239,9 +239,9 @@ public:
      */
     virtual QString requestImageOpenDialog() = 0;
 
-
-
     virtual void addOptionsWidget(QWidget * options) = 0;
+    virtual void removeOptionsWidget(QWidget * options)=0;
+
 
     /**
      * This virtual method must be overwritten and must present
@@ -251,8 +251,9 @@ public:
      *             by the presented widget.
      * @param on true: switch widget on, false: off
      */
-    virtual void requestSnapDistOptions(double& dist, bool on) = 0;
-    virtual void requestSnapMiddleOptions(int& middlePoints, bool on) = 0;
+    virtual void requestSnapDistOptions(double* dist, bool on) = 0;
+    virtual void requestSnapMiddleOptions(int* middlePoints, bool on) = 0;
+    virtual void hideSnapOptions()=0;
 
 
     /**
@@ -435,8 +436,8 @@ public:
 	virtual void setCoordinateWidget(QG_CoordinateWidget* ) = 0;
 	virtual void setSelectionWidget(QG_SelectionWidget* ) = 0;
 	virtual void setCommandWidget(QG_CommandWidget* ) = 0;
-
-
 };
+
+
 
 #endif

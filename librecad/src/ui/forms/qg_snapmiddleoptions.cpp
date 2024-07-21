@@ -32,12 +32,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  *
  *@Author: Dongxu Li
  */
-QG_SnapMiddleOptions::QG_SnapMiddleOptions(int& i, QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, middlePoints(&i)
-	, ui(new Ui::Ui_SnapMiddleOptions{})
-{
-	ui->setupUi(this);
+
+QG_SnapMiddleOptions::QG_SnapMiddleOptions(QWidget* parent)
+    : QWidget(parent)
+    , middlePoints(nullptr)
+    , ui(new Ui::Ui_SnapMiddleOptions{}){
+    ui->setupUi(this);
 }
 
 /*
@@ -49,9 +49,8 @@ QG_SnapMiddleOptions::~QG_SnapMiddleOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_SnapMiddleOptions::languageChange()
-{
-	ui->retranslateUi(this);
+void QG_SnapMiddleOptions::languageChange(){
+    ui->retranslateUi(this);
 }
 
 void QG_SnapMiddleOptions::saveSettings() {
@@ -60,37 +59,35 @@ void QG_SnapMiddleOptions::saveSettings() {
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapMiddleOptions::setMiddlePoints( int& i, bool initial) {
-    middlePoints = &i;
-	if (initial) {
+void QG_SnapMiddleOptions::useMiddlePointsValue( int* i) {
+    middlePoints = i;
     RS_SETTINGS->beginGroup("/Snap");
-    *middlePoints=RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
-	if( !(*middlePoints>=1 && *middlePoints<=99)) {
-        *middlePoints=1;
-        RS_SETTINGS->writeEntry("/MiddlePoints", 1);
+    int points =RS_SETTINGS->readNumEntry("/MiddlePoints", 1);
+    if( !(points>=1 && points<=99)) {
+        points =1;
+        RS_SETTINGS->writeEntry("/MiddlePoints", points);
     }
-	ui->sbMiddlePoints->setValue(*middlePoints);
     RS_SETTINGS->endGroup();
-    } else {
-		*middlePoints=ui->sbMiddlePoints->value();
-    }
 
+    ui->sbMiddlePoints->setValue(points);
+    *middlePoints = points;
 }
 
-void QG_SnapMiddleOptions::updateMiddlePoints() {
-	if (middlePoints) {
-		*middlePoints = ui->sbMiddlePoints->value();
-    }
-}
-
-void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i)
-{
-	if (middlePoints) {
-        *middlePoints = i;/*
-    RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/MiddlePoints", *middlePoints);
-    RS_SETTINGS->endGroup();*/
+void QG_SnapMiddleOptions::on_sbMiddlePoints_valueChanged(int i){
+    if (middlePoints) {
+        *middlePoints = i;
         saveSettings();
     }
 }
-//EOF
+
+void QG_SnapMiddleOptions::doShow() {
+    bool requestFocus = !isVisible();
+    show();
+    if (requestFocus){
+        ui->sbMiddlePoints->setFocus();
+    }
+}
+
+int *QG_SnapMiddleOptions::getMiddlePointsValue() {
+    return middlePoints;
+}

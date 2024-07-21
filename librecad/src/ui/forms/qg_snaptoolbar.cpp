@@ -30,21 +30,20 @@
 #include "rs_settings.h"
 #include "qg_actionhandler.h"
 #include "lc_actiongroupmanager.h"
+#include "lc_snapoptionswidgetsholder.h"
 
 namespace {
-QAction* createAction(QWidget* parent, QString img, const QString& text, QActionGroup* group)
-{
-    QAction* action = new QAction(QIcon{img}, text, parent);
-    action->setActionGroup(group);
-    action->setCheckable(true);
-    parent->addAction(action);
-    return action;
+    QAction* createAction(QWidget* parent, QString img, const QString& text, QActionGroup* group){
+        auto* action = new QAction(QIcon{img}, text, parent);
+        action->setActionGroup(group);
+        action->setCheckable(true);
+        parent->addAction(action);
+        return action;
+    }
 }
 
-}
-QAction* QG_SnapToolBar::createAction(QString icon, QString tip, QActionGroup* group)
-{
-    QAction* action = new QAction(QIcon{icon}, tip, this);
+QAction* QG_SnapToolBar::createAction(QString icon, QString tip, QActionGroup* group){
+    auto* action = new QAction(QIcon{icon}, tip, this);
     action->setActionGroup(group);
     action->setCheckable(true);
     connect(action, SIGNAL(triggered()), this, SLOT(actionTriggered()));
@@ -57,9 +56,7 @@ QAction* QG_SnapToolBar::createAction(QString icon, QString tip, QActionGroup* g
  *  name 'name' and widget flags set to 'f'.
  */
 QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionGroupManager* agm)
-	: QToolBar(parent)
-    , actionHandler(ah)
-{
+	: QToolBar(parent), actionHandler(ah){
 
     auto action = ::createAction(this, ":/icons/exclusive.svg", tr("Exclusive Snap Mode"), agm->snap_extras);
     action->setShortcut(QKeySequence(Qt::ALT | Qt::Key_X));
@@ -97,10 +94,9 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     snapIntersection = createAction(":/icons/snap_intersection.svg", tr("Snap Intersection"), agm->snap);
     snapIntersection->setObjectName("SnapIntersection");
 
-    this->addSeparator();
+    addSeparator();
 
-    restrictHorizontal = createAction(":/icons/restr_hor.svg",
-                                     tr("Restrict Horizontal"), agm->restriction);
+    restrictHorizontal = createAction(":/icons/restr_hor.svg",tr("Restrict Horizontal"), agm->restriction);
     restrictHorizontal->setObjectName("RestrictHorizontal");
     restrictVertical = createAction(":/icons/restr_ver.svg",
                                    tr("Restrict Vertical"), agm->restriction);
@@ -118,7 +114,7 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     connect(restrictNothing, SIGNAL(triggered(bool)), this,
             SLOT(slotRestrictNothing(bool)));
 
-    this->addSeparator();
+    addSeparator();
     bRelZero = ::createAction(this, ":/icons/set_rel_zero.svg", tr("Set relative zero position"), agm->other);
     bRelZero->setObjectName("SetRelativeZero");
     connect(bRelZero, SIGNAL(triggered()), actionHandler, SLOT(slotSetRelativeZero()));
@@ -127,19 +123,19 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     bLockRelZero->setObjectName("LockRelativeZero");
     connect(bLockRelZero, SIGNAL(toggled(bool)),actionHandler, SLOT(slotLockRelativeZero(bool)));
     addAction(bLockRelZero);
+
+
     //restore snapMode from saved preferences
     RS_SETTINGS->beginGroup("/Snap");
     setSnaps( RS_SnapMode::fromInt( RS_SETTINGS->readNumEntry( "/SnapMode", 0)));
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapToolBar::slotUnsetSnapMiddleManual()
-{
+void QG_SnapToolBar::slotUnsetSnapMiddleManual(){
     snapMiddleManual->setChecked(false);
 }
 
-void QG_SnapToolBar::saveSnapMode()
-{
+void QG_SnapToolBar::saveSnapMode(){
     //@write default snap mode from prefrences.
     unsigned int snapFlags {RS_SnapMode::toInt( getSnaps())};
     RS_SETTINGS->beginGroup("/Snap");
@@ -148,8 +144,7 @@ void QG_SnapToolBar::saveSnapMode()
     // no need to delete child widgets, Qt does it all for us
 }
 
-void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s )
-{
+void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s ){
 	if(getSnaps()==s) return;
     snapFree->setChecked(s.snapFree);
     snapGrid->setChecked(s.snapGrid);
@@ -165,8 +160,7 @@ void QG_SnapToolBar::setSnaps ( RS_SnapMode const& s )
     restrictNothing->setChecked(s.restriction==RS2::RestrictNothing);
 }
 
-RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const
-{
+RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const{
     RS_SnapMode s;
 
     s.snapFree         = snapFree->isChecked();
@@ -179,32 +173,29 @@ RS_SnapMode QG_SnapToolBar::getSnaps ( void ) const
     s.snapIntersection = snapIntersection->isChecked();
     // removed Restrict Othogonal button
     // todo simplify internal restrict rules
-	int const rH = (restrictHorizontal && restrictHorizontal->isChecked())? 1:0;
-	int const rV = (restrictVertical && restrictVertical->isChecked())? 2: 0;
-	switch (rH + rV) {
-	case 3:
-		s.restriction = RS2::RestrictOrthogonal;
-		break;
-	case 2:
-		s.restriction = RS2::RestrictVertical;
-		break;
-	case 1:
-		s.restriction = RS2::RestrictHorizontal;
-		break;
-	default:
-		s.restriction = RS2::RestrictNothing;
-	}
-
+    int const rH = (restrictHorizontal && restrictHorizontal->isChecked())? 1:0;
+    int const rV = (restrictVertical && restrictVertical->isChecked())? 2: 0;
+    switch (rH + rV) {
+        case 3:
+            s.restriction = RS2::RestrictOrthogonal;
+            break;
+        case 2:
+            s.restriction = RS2::RestrictVertical;
+            break;
+        case 1:
+            s.restriction = RS2::RestrictHorizontal;
+            break;
+        default:
+            s.restriction = RS2::RestrictNothing;
+    }
     return s;
 }
 
-bool QG_SnapToolBar::lockedRelativeZero() const
-{
+bool QG_SnapToolBar::lockedRelativeZero() const{
     return bLockRelZero->isChecked();
 }
 
-void QG_SnapToolBar::setLockedRelativeZero(bool on)
-{
+void QG_SnapToolBar::setLockedRelativeZero(bool on){
     bLockRelZero->setChecked(on);
     bLockRelZero->setToolTip(tr("Relative zero position is %1").arg(on ? tr("locked") : tr("unlocked")));
 }
@@ -215,30 +206,34 @@ void QG_SnapToolBar::setActionHandler(QG_ActionHandler* ah){
 
 /* Slots */
 
-void QG_SnapToolBar::slotRestrictNothing(bool checked)
-{
+void QG_SnapToolBar::slotRestrictNothing(bool checked){
 	if( restrictVertical) restrictVertical->setChecked(!checked);
 	if( restrictHorizontal) restrictHorizontal->setChecked(!checked);
 	if( restrictOrthogonal) restrictOrthogonal->setChecked(!checked);
     actionTriggered();
 }
 
-void QG_SnapToolBar::slotRestrictOrthogonal(bool checked)
-{
+void QG_SnapToolBar::slotRestrictOrthogonal(bool checked){
 	if( restrictVertical) restrictVertical->setChecked(checked);
 	if( restrictHorizontal) restrictHorizontal->setChecked(checked);
 	if( restrictNothing) restrictNothing->setChecked(checked);
     actionTriggered();
 }
 
-void QG_SnapToolBar::slotEnableRelativeZeroSnaps(const bool enabled)
-{
+void QG_SnapToolBar::slotEnableRelativeZeroSnaps(const bool enabled){
     bRelZero->setEnabled(enabled);
     bLockRelZero->setEnabled(enabled);
 }
 
-void QG_SnapToolBar::actionTriggered()
-{
+void QG_SnapToolBar::actionTriggered(){
     actionHandler->slotSetSnaps(getSnaps());
+}
+
+LC_SnapOptionsWidgetsHolder *QG_SnapToolBar::getSnapOptionsHolder() {
+    LC_SnapOptionsWidgetsHolder* snapOptionsHolder = nullptr;
+    snapOptionsHolder = new LC_SnapOptionsWidgetsHolder(this);
+    snapOptionsHolder->setLocatedOnLeft(false);
+    addWidget(snapOptionsHolder);
+    return snapOptionsHolder;
 }
 

@@ -33,10 +33,9 @@
  *  Constructs a QG_SnapDistOptions as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
-QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent, Qt::WindowFlags fl)
-    : QWidget(parent, fl)
-	, ui(new Ui::Ui_SnapDistOptions{})
-{
+QG_SnapDistOptions::QG_SnapDistOptions(QWidget* parent)
+    : QWidget(parent)
+	, ui(new Ui::Ui_SnapDistOptions{}){
 	ui->setupUi(this);
 }
 
@@ -49,41 +48,45 @@ QG_SnapDistOptions::~QG_SnapDistOptions() = default;
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_SnapDistOptions::languageChange()
-{
+void QG_SnapDistOptions::languageChange(){
 	ui->retranslateUi(this);
 }
 
 void QG_SnapDistOptions::saveSettings() {
     RS_SETTINGS->beginGroup("/Snap");
-	RS_SETTINGS->writeEntry("/Distance", ui->leDist->text());
+    RS_SETTINGS->writeEntry("/Distance", ui->leDist->text());
     RS_SETTINGS->endGroup();
 }
 
-void QG_SnapDistOptions::setDist(double& d, bool initial) {
-    dist = &d;
-    if(initial) {
-        RS_SETTINGS->beginGroup("/Snap");
-        QString r = RS_SETTINGS->readEntry("/Distance", "1.0");
-        RS_SETTINGS->endGroup();
-
-		ui->leDist->setText(r);
-        *dist=r.toDouble();
-    } else {
-		*dist=ui->leDist->text().toDouble();
-    }
-}
-
-void QG_SnapDistOptions::updateDist(const QString& d) {
-    if (dist) {
-        *dist = RS_Math::eval(d, 1.0);
-        saveSettings();
-        /*
-        //a brutal force
-        //todo cleanup distance value for rs_snapper
+void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
+    dist = d;
     RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/Distance", d);
+    QString distance = RS_SETTINGS->readEntry("/Distance", "1.0");
     RS_SETTINGS->endGroup();
-    std::cout<<"QG_SnapDistOptions::updateDist(): distance="<<qPrintable(d)<<"\t "<<*dist<<std::endl;*/
+
+    *dist= RS_Math::eval(distance, 1.0);
+    QString value = QString::number(*dist, 'g', 6);
+    ui->leDist->setText(value);
+}
+
+void QG_SnapDistOptions::on_leDist_editingFinished() {
+    if (dist) {
+        QString value = ui->leDist->text();
+        *dist = RS_Math::eval(value, 1.0);
+        value = QString::number(*dist, 'g', 6);
+        ui->leDist->setText(value);
+        saveSettings();
     }
+}
+
+void QG_SnapDistOptions::doShow() {
+    bool requestFocus = !isVisible();
+    show();
+    if (requestFocus){
+        ui->leDist->setFocus();
+    }
+}
+
+double* QG_SnapDistOptions::getDistanceValue() {
+    return dist;
 }
