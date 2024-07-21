@@ -170,9 +170,6 @@ void LC_DimArc::updateDim([[maybe_unused]] bool autoText /* = false */)
 
     calcDimension();
 
-    // general scale (DIMSCALE)
-    double dimscale = getGeneralScale();
-
     RS_Pen pen (getExtensionLineColor(), getExtensionLineWidth(), RS2::LineByBlock);
 
     pen.setWidth (getDimensionLineWidth());

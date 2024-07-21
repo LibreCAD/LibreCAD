@@ -161,7 +161,6 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     // QHBoxLayout* layButtons = new QHBoxLayout();
     // QHBoxLayout* layButtons2 = new QHBoxLayout();
     QToolButton* but;
-    const QSize button_size(28,28);
     // show all blocks:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
