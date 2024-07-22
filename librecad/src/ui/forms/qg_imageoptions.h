@@ -26,13 +26,12 @@
 #ifndef QG_IMAGEOPTIONS_H
 #define QG_IMAGEOPTIONS_H
 
-
 #include "lc_actionoptionswidgetbase.h"
 
 class RS_ActionInterface;
 class RS_ActionDrawImage;
 namespace Ui {
-class Ui_ImageOptions;
+    class Ui_ImageOptions;
 }
 
 class QG_ImageOptions : public LC_ActionOptionsWidgetBase{
@@ -40,23 +39,19 @@ class QG_ImageOptions : public LC_ActionOptionsWidgetBase{
 public:
     QG_ImageOptions();
     ~QG_ImageOptions() override;
-
 public slots:
     void languageChange() override;
     void onAngleEditingFinished();
     void onDpiEditingFinished();
     void onFactorEditingFinished();
-protected:
-    RS_ActionDrawImage* action;
-
 private:
-	std::unique_ptr<Ui::Ui_ImageOptions> ui;
-
+    RS_ActionDrawImage* action = nullptr;
+    std::unique_ptr<Ui::Ui_ImageOptions> ui;
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-    void setAngleToActionAndView(QString val);
-    void setFactorToActionAndView(QString qString);
+    void setAngleToActionAndView(const QString& val);
+    void setFactorToActionAndView(const QString& qString);
+    void setDPIToActionAndView(const QString& val);
 };
-
 #endif // QG_IMAGEOPTIONS_H

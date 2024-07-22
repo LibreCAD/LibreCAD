@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>250</width>
+    <width>339</width>
     <height>24</height>
    </rect>
   </property>
@@ -18,13 +18,13 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>200</width>
+    <width>220</width>
     <height>22</height>
    </size>
   </property>
   <property name="maximumSize">
    <size>
-    <width>250</width>
+    <width>32767</width>
     <height>32767</height>
    </size>
   </property>
@@ -67,7 +67,7 @@
    <item>
     <widget class="QLabel" name="lFactor">
      <property name="text">
-      <string>Factor:</string>
+      <string>Scale Factor:</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -77,10 +77,16 @@
    <item>
     <widget class="QLineEdit" name="leFactor">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
      </property>
      <property name="toolTip">
       <string>Scale Factor</string>
@@ -90,7 +96,7 @@
    <item>
     <widget class="QLabel" name="lDPI">
      <property name="text">
-      <string>DPI</string>
+      <string>DPI:</string>
      </property>
     </widget>
    </item>
@@ -102,20 +108,17 @@
     </widget>
    </item>
    <item>
-    <widget class="Line" name="sep1_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
      </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
-     </property>
-    </widget>
+    </spacer>
    </item>
   </layout>
  </widget>

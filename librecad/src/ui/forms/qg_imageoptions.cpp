@@ -29,7 +29,6 @@
 #include "rs_actiondrawimage.h"
 #include "rs_settings.h"
 #include "rs_math.h"
-#include "rs_debug.h"
 #include "ui_qg_imageoptions.h"
 
 /*
@@ -69,13 +68,12 @@ void QG_ImageOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
     QString sAngle;
     QString sFactor;
-    QString dpi;
     if (update) {
         sAngle = fromDouble(RS_Math::rad2deg(action->getAngle()));
         sFactor = fromDouble(action->getFactor());
     } else {
-        sAngle = load("/ImageAngle", "0.0");
-        sFactor =load("/ImageFactor", "1.0");
+        sAngle = load("Angle", "0.0");
+        sFactor =load("Factor", "1.0");
     }
     setAngleToActionAndView(sAngle);
     setFactorToActionAndView(sFactor);
@@ -86,54 +84,50 @@ void QG_ImageOptions::onAngleEditingFinished() {
 }
 
 void QG_ImageOptions::onDpiEditingFinished() {
-
+    setDPIToActionAndView(ui->leDPI->text());
 }
 
 void QG_ImageOptions::onFactorEditingFinished() {
     setFactorToActionAndView(ui->leFactor->text());
 }
 
-void QG_ImageOptions::setAngleToActionAndView(QString val) {
-    ui->leAngle->setText(val);
-    // fixme - proper conversion
-    action->setAngle(RS_Math::deg2rad(RS_Math::eval(val)));
-
-}
-
-void QG_ImageOptions::setFactorToActionAndView(QString val) {
-    double f = action->dpiToScale(RS_Math::eval(val));
-    ui->leFactor->setText(QString::number(f));
-    action->setFactor(f);
-}
-
-
-/*void QG_ImageOptions::updateData() {
-    if (action) {
-		action->setAngle(RS_Math::deg2rad(RS_Math::eval(ui->leAngle->text())));
-        saveSettings();
+void QG_ImageOptions::setDPIToActionAndView(const QString& val) {
+//    double dpi = RS_Math::eval(val);
+    double dpi;
+    bool ok = toDouble(val, dpi, 72, true);
+    if (ok) {
+        double factor = action->dpiToScale(dpi);
+        ui->leFactor->blockSignals(true);
+        ui->leFactor->setText(QString::number(factor));
+        ui->leFactor->blockSignals(false);
+        action->setFactor(factor);
+        ui->leDPI->blockSignals(true);
+        ui->leDPI->setText(fromDouble(dpi));
+        ui->leDPI->blockSignals(false);
     }
-}*/
-/*
-void QG_ImageOptions::setDPIToActionAndView(QString val) {
-		double f = action->dpiToScale(RS_Math::eval(ui->leDPI->text()));
-		ui->leFactor->blockSignals(true);
-		ui->leFactor->setText(QString::number(f));
-		ui->leFactor->blockSignals(false);
-        action->setFactor(f);
 }
 
-void QG_ImageOptions::updateFactor() {
-
-		double f = RS_Math::eval(ui->leFactor->text());
-        double dpi = action->scaleToDpi(f);
-		ui->leDPI->blockSignals(true);
-		ui->leDPI->setText(QString::number(dpi));
-		ui->leDPI->blockSignals(false);
-        action->setFactor(f);
-
-
+void QG_ImageOptions::setAngleToActionAndView(const QString& val) {
+    double angleDegree = RS_Math::eval(val);
+    action->setAngle(RS_Math::deg2rad(angleDegree));
+    ui->leAngle->setText(val);
 }
-*/
+
+void QG_ImageOptions::setFactorToActionAndView(const QString& val) {
+//    double factor = RS_Math::eval(val);
+    double factor;
+    bool ok = toDouble(val, factor, 1.0, true);
+    if (ok) {
+        double dpi = action->scaleToDpi(factor);
+        ui->leDPI->blockSignals(true);
+        ui->leDPI->setText(QString::number(dpi));
+        ui->leDPI->blockSignals(false);
+        ui->leFactor->blockSignals(true);
+        ui->leFactor->setText(fromDouble(factor));
+        ui->leFactor->blockSignals(false);
+        action->setFactor(factor);
+    }
+}
 
 
 
