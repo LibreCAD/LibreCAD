@@ -1,4 +1,4 @@
-    /****************************************************************************
+/****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
 **
@@ -49,8 +49,7 @@
 int QG_DlgOptionsGeneral::current_tab = 0;
 
 QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
+    : QDialog(parent, fl){
     setModal(modal);
     setupUi(this);
     tabWidget->setCurrentIndex(current_tab);
@@ -59,25 +58,29 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
             this, &QG_DlgOptionsGeneral::setVariableFile);
     connect(fonts_button, &QToolButton::clicked,
             this, &QG_DlgOptionsGeneral::setFontsFolder);
+
+    connect(translation_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setTranslationsFolder);
+
+    connect(hatchpatterns_button, &QToolButton::clicked,
+            this, &QG_DlgOptionsGeneral::setHatchPatternsFolder);
+
     connect(cbAutoBackup, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::onAutoBackupChanged);
 
     connect(cbVisualizeHovering, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
-
 }
 
 /*
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgOptionsGeneral::languageChange()
-{
+void QG_DlgOptionsGeneral::languageChange() {
     retranslateUi(this);
 }
 
-void QG_DlgOptionsGeneral::init()
-{
+void QG_DlgOptionsGeneral::init() {
     // Fill combobox with languages:
     QStringList languageList = RS_SYSTEM->getLanguageList();
     languageList.sort();
@@ -88,7 +91,7 @@ void QG_DlgOptionsGeneral::init()
                         lang.toLatin1().data());
 
         QString l = RS_SYSTEM->symbolToLanguage(lang);
-        if (!l.isEmpty() && cbLanguage->findData(lang) == -1){
+        if (!l.isEmpty() && cbLanguage->findData(lang) == -1) {
             RS_DEBUG->print("QG_DlgOptionsGeneral::init: %s", l.toLatin1().data());
             cbLanguage->addItem(l, lang);
             cbLanguageCmd->addItem(l, lang);
@@ -140,7 +143,6 @@ void QG_DlgOptionsGeneral::init()
     bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
     cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
 
-
     // scale grid:
     QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
     cbScaleGrid->setChecked(scaleGrid == "1");
@@ -174,7 +176,8 @@ void QG_DlgOptionsGeneral::init()
     initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
     initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
     initComboBox(cbPreviewRefColor, RS_SETTINGS->readEntry("/previewReferencesColor", RS_Settings::previewRefColor));
-    initComboBox(cbPreviewRefHighlightColor, RS_SETTINGS->readEntry("/previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
+    initComboBox(cbPreviewRefHighlightColor,
+                 RS_SETTINGS->readEntry("/previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
     initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator));
     RS_SETTINGS->endGroup();
 
@@ -208,7 +211,7 @@ void QG_DlgOptionsGeneral::init()
     cbWheelScrollInvertH->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0));
     cbWheelScrollInvertV->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0));
     cbInvertZoomDirection->setChecked(RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0));
-    cbAngleSnap ->setCurrentIndex(RS_SETTINGS->readNumEntry("/AngleSnapStep", 3));
+    cbAngleSnap->setCurrentIndex(RS_SETTINGS->readNumEntry("/AngleSnapStep", 3));
 
     RS_SETTINGS->endGroup();
 
@@ -240,13 +243,13 @@ void QG_DlgOptionsGeneral::init()
     restartNeeded = false;
 }
 
-void QG_DlgOptionsGeneral::initComboBox(QComboBox* cb, const QString& text) {
-	int idx = cb->findText(text);
-	if( idx < 0) {
-		idx =0;
-		cb->insertItem(idx, text);
-	}
-	cb->setCurrentIndex( idx );
+void QG_DlgOptionsGeneral::initComboBox(QComboBox *cb, const QString &text) {
+    int idx = cb->findText(text);
+    if (idx < 0) {
+        idx = 0;
+        cb->insertItem(idx, text);
+    }
+    cb->setCurrentIndex(idx);
 }
 
 void QG_DlgOptionsGeneral::setRestartNeeded() {
@@ -260,10 +263,8 @@ void QG_DlgOptionsGeneral::setTemplateFile() {
     leTemplate->setText(fileName);
 }
 
-void QG_DlgOptionsGeneral::ok()
-{
-    if (RS_Settings::save_is_allowed)
-    {
+void QG_DlgOptionsGeneral::ok(){
+    if (RS_Settings::save_is_allowed){
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
         RS_SETTINGS->beginGroup("/Appearance");
         RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int) cbScaleGrid->isChecked()));
@@ -347,117 +348,96 @@ void QG_DlgOptionsGeneral::ok()
         saveReferencePoints();
     }
 
-	if (restartNeeded==true) {
-        QMessageBox::warning( this, tr("Preferences"),
-                              tr("Please restart the application to apply all changes."));
+    if (restartNeeded == true) {
+        QMessageBox::warning(this, tr("Preferences"),
+                             tr("Please restart the application to apply all changes."));
     }
     accept();
 }
 
-
-void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index)
-{
+void QG_DlgOptionsGeneral::on_tabWidget_currentChanged(int index){
     current_tab = index;
 }
 
-void QG_DlgOptionsGeneral::set_color(QComboBox* combo, QColor custom)
-{
+void QG_DlgOptionsGeneral::set_color(QComboBox *combo, QColor custom) {
     QColor current = QColor::fromString(combo->lineEdit()->text());
 
     QColorDialog dlg;
-	dlg.setCustomColor(0, custom.rgb());
+    dlg.setCustomColor(0, custom.rgb());
 
     QColor color = dlg.getColor(current, this, "Select Color", QColorDialog::DontUseNativeDialog);
-    if (color.isValid())
-    {
+    if (color.isValid()) {
         combo->lineEdit()->setText(color.name());
     }
 }
 
-void QG_DlgOptionsGeneral::on_pb_background_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_background_clicked() {
     set_color(cbBackgroundColor, QColor(RS_Settings::background));
 }
 
-void QG_DlgOptionsGeneral::on_pb_grid_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_grid_clicked() {
     set_color(cbGridColor, QColor(RS_Settings::grid));
 }
 
-void QG_DlgOptionsGeneral::on_pb_meta_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_meta_clicked() {
     set_color(cbMetaGridColor, QColor(RS_Settings::meta_grid));
 }
 
-void QG_DlgOptionsGeneral::on_pb_selected_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_selected_clicked() {
     set_color(cbSelectedColor, QColor(RS_Settings::select));
 }
 
-void QG_DlgOptionsGeneral::on_pb_highlighted_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_highlighted_clicked() {
     set_color(cbHighlightedColor, QColor(RS_Settings::highlight));
 }
 
-void QG_DlgOptionsGeneral::on_pb_start_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_start_clicked() {
     set_color(cbStartHandleColor, QColor(RS_Settings::start_handle));
 }
 
-void QG_DlgOptionsGeneral::on_pb_handle_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_handle_clicked() {
     set_color(cbHandleColor, QColor(RS_Settings::handle));
 }
 
-void QG_DlgOptionsGeneral::on_pb_end_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_end_clicked() {
     set_color(cbEndHandleColor, QColor(RS_Settings::end_handle));
 }
 
-void QG_DlgOptionsGeneral::on_pb_snap_color_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_snap_color_clicked() {
     set_color(cb_snap_color, QColor(RS_Settings::snap_indicator));
 }
 
-void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_relativeZeroColor_clicked() {
     set_color(cbRelativeZeroColor, QColor(RS_Settings::relativeZeroColor));
 }
 
-void QG_DlgOptionsGeneral::on_pb_previewRefColor_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_previewRefColor_clicked() {
     set_color(cbPreviewRefColor, QColor(RS_Settings::previewRefColor));
 }
 
-void QG_DlgOptionsGeneral::on_pb_previewRefHighlightColor_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_previewRefHighlightColor_clicked() {
     set_color(cbPreviewRefHighlightColor, QColor(RS_Settings::previewRefHighlightColor));
 }
 
-void QG_DlgOptionsGeneral::on_pb_clear_all_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_clear_all_clicked() {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, tr("Clear settings"),
-                                tr("This will also include custom menus and toolbars. Continue?"),
-                                QMessageBox::Yes|QMessageBox::No);
-    if (reply == QMessageBox::Yes)
-    {
-      RS_SETTINGS->clear_all();
-      QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
+                                  tr("This will also include custom menus and toolbars. Continue?"),
+                                  QMessageBox::Yes | QMessageBox::No);
+    if (reply == QMessageBox::Yes) {
+        RS_SETTINGS->clear_all();
+        QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
     }
 }
 
-void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked()
-{
+void QG_DlgOptionsGeneral::on_pb_clear_geometry_clicked() {
     RS_SETTINGS->clear_geometry();
     QMessageBox::information(this, "info", "You must restart LibreCAD to see the changes.");
 }
 
-void QG_DlgOptionsGeneral::setVariableFile()
-{
+void QG_DlgOptionsGeneral::setVariableFile() {
     QString path = QFileDialog::getOpenFileName(this);
-    if (!path.isEmpty())
-    {
+    if (!path.isEmpty()) {
         variablefile_field->setText(QDir::toNativeSeparators(path));
     }
 }
@@ -467,53 +447,75 @@ void QG_DlgOptionsGeneral::setVariableFile()
  * \author ravas
  * \date 2016-286
  */
-void QG_DlgOptionsGeneral::setFontsFolder()
-{
-    QFileDialog dlg(this);
-    dlg.setFileMode(QFileDialog::Directory);
-    dlg.setOption(QFileDialog::ShowDirsOnly);
-
-    if (dlg.exec())
-    {
-        auto dir = dlg.selectedFiles()[0];
-        lePathFonts->setText(QDir::toNativeSeparators(dir));
+void QG_DlgOptionsGeneral::setFontsFolder() {
+    QString folder = selectFolder("Select Fonts Folder");
+    if (folder != nullptr) {
+        lePathFonts->setText(QDir::toNativeSeparators(folder));
     }
 }
 
-void QG_DlgOptionsGeneral::setLibraryPath()
-{
+void QG_DlgOptionsGeneral::setTranslationsFolder() {
+    QString folder = selectFolder("Select Translations Folder");
+    if (folder != nullptr) {
+        lePathTranslations->setText(QDir::toNativeSeparators(folder));
+    }
+}
+
+void QG_DlgOptionsGeneral::setHatchPatternsFolder() {
+    QString folder = selectFolder("Select Hatch Patterns Folder");
+    if (folder != nullptr) {
+        lePathHatch->setText(QDir::toNativeSeparators(folder));
+    }
+}
+
+QString QG_DlgOptionsGeneral::selectFolder(const char* title) {
+    QString folder = nullptr;
+    QFileDialog dlg(this);
+    if (title != nullptr) {
+        QString dlgTitle = tr(title);
+        dlg.setWindowTitle(dlgTitle);
+    }
+    dlg.setFileMode(QFileDialog::Directory);
+    dlg.setOption(QFileDialog::ShowDirsOnly);
+
+    if (dlg.exec()) {
+        folder = dlg.selectedFiles()[0];
+    }
+    return folder;
+}
+
+void QG_DlgOptionsGeneral::setLibraryPath() {
     QG_FileDialog dlg(this);
     dlg.setFileMode(QFileDialog::Directory);
 
-    if (dlg.exec())
-    {
+    if (dlg.exec()) {
         auto dir = dlg.selectedFiles()[0];
         lePathLibrary->setText(QDir::toNativeSeparators(dir));
         setRestartNeeded();
     }
 }
 
- void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
-     cbShowRefPointsOnHovering->setEnabled(cbVisualizeHovering->isChecked());
- }
+void QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked() {
+    cbShowRefPointsOnHovering->setEnabled(cbVisualizeHovering->isChecked());
+}
 
-    void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state)
-{
-    bool allowBackup= cbAutoBackup->checkState() == Qt::Checked;
-    auto& appWindow = QC_ApplicationWindow::getAppWindow();
+void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {
+    bool allowBackup = cbAutoBackup->checkState() == Qt::Checked;
+    auto &appWindow = QC_ApplicationWindow::getAppWindow();
     appWindow->startAutoSave(allowBackup);
 }
 
-void QG_DlgOptionsGeneral::initReferencePoints(){
+void QG_DlgOptionsGeneral::initReferencePoints() {
 
     RS_SETTINGS->beginGroup("/Appearance");
     // Points drawing style:
-    int pdmode = RS_SETTINGS->readNumEntry("/RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
+    int pdmode = RS_SETTINGS->readNumEntry("/RefPointType",
+                                           DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
     QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
     RS_SETTINGS->endGroup();
 
 // Set button checked for the currently selected point style
-    switch(pdmode) {
+    switch (pdmode) {
         case DXF_FORMAT_PDMode_CentreDot:
         default:
             bDot->setChecked(true);
@@ -587,10 +589,10 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
 
     bool ok;
     double pdsize = RS_Math::eval(pdsizeStr, &ok);
-    if (!ok){
+    if (!ok) {
         pdsize = LC_DEFAULTS_PDSize;
     }
-    if ( pdsize <= 0.0 )
+    if (pdsize <= 0.0)
         rbRelSize->setChecked(true);
     else
         rbAbsSize->setChecked(true);
@@ -601,16 +603,15 @@ void QG_DlgOptionsGeneral::initReferencePoints(){
     updateLPtSzUnits();
 }
 
-void QG_DlgOptionsGeneral::updateLPtSzUnits()
-{
+void QG_DlgOptionsGeneral::updateLPtSzUnits() {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::updateLPtSzUnits, rbRelSize->isChecked() = %d",rbRelSize->isChecked());
-    if ( rbRelSize->isChecked() )
+    if (rbRelSize->isChecked())
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Screen %", nullptr));
     else
         lPtSzUnits->setText(QApplication::translate("QG_DlgOptionsDrawing", "Dwg Units", nullptr));
 }
 
-void QG_DlgOptionsGeneral::saveReferencePoints(){
+void QG_DlgOptionsGeneral::saveReferencePoints() {
 // Points drawing style:
 // Get currently selected point style from which button is checked
     int pdmode = LC_DEFAULTS_PDMode;
@@ -627,7 +628,8 @@ void QG_DlgOptionsGeneral::saveReferencePoints(){
         pdmode = DXF_FORMAT_PDMode_CentreTick;
 
     else if (bDotCircle->isChecked())
-        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);    else if (bBlankCircle->isChecked())
+        pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot);
+    else if (bBlankCircle->isChecked())
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank);
     else if (bPlusCircle->isChecked())
         pdmode = DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus);
@@ -666,20 +668,19 @@ void QG_DlgOptionsGeneral::saveReferencePoints(){
         pdsize = LC_DEFAULTS_PDSize;
 
     if (pdsize > 0.0 && rbRelSize->isChecked())
-        pdsize = - pdsize;
+        pdsize = -pdsize;
 
     QString pdsizeStr = QString::number(pdsize);
 
     RS_SETTINGS->beginGroup("/Appearance");
     // Points drawing style:
     RS_SETTINGS->writeEntry("/RefPointType", pdmode);
-    RS_SETTINGS->writeEntry("/RefPointSize",pdsizeStr);
+    RS_SETTINGS->writeEntry("/RefPointSize", pdsizeStr);
     RS_SETTINGS->endGroup();
 
 }
 
-void QG_DlgOptionsGeneral::on_rbRelSize_toggled([[maybe_unused]] bool checked)
-{
+void QG_DlgOptionsGeneral::on_rbRelSize_toggled([[maybe_unused]] bool checked) {
 //	RS_DEBUG->print(RS_Debug::D_ERROR,"QG_DlgOptionsDrawing::on_rbRelSize_toggled, checked = %d",checked);
     updateLPtSzUnits();
 }

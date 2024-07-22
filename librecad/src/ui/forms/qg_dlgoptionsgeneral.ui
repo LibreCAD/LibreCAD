@@ -39,7 +39,7 @@
    <item row="0" column="0">
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tab_1">
       <attribute name="title">
@@ -1090,6 +1090,28 @@
        </item>
        <item row="2" column="3">
         <widget class="QToolButton" name="fonts_button">
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="3">
+        <widget class="QToolButton" name="translation_button">
+         <property name="text">
+          <string/>
+         </property>
+         <property name="icon">
+          <iconset resource="../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="3">
+        <widget class="QToolButton" name="hatchpatterns_button">
+         <property name="text">
+          <string/>
+         </property>
          <property name="icon">
           <iconset resource="../../../res/icons/icons.qrc">
            <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
@@ -2507,9 +2529,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
+  <include location="../../../res/icons/icons.qrc"/>
+  <include location="../../../res/icons/icons.qrc"/>
   <include location="../../../res/ui/ui.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

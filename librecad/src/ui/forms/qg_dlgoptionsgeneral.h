@@ -33,10 +33,8 @@ class QColor;
 class QComboBox;
 class QString;
 
-class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral
-{
+class QG_DlgOptionsGeneral : public QDialog, public Ui::QG_DlgOptionsGeneral{
     Q_OBJECT
-
 public:
     QG_DlgOptionsGeneral(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
     virtual ~QG_DlgOptionsGeneral() = default;
@@ -56,40 +54,25 @@ protected slots:
 
 private slots:
     void on_tabWidget_currentChanged(int index);
-
     void on_pb_background_clicked();
-
     void on_pb_grid_clicked();
-
     void on_pb_meta_clicked();
-
     void on_pb_selected_clicked();
-
     void on_pb_highlighted_clicked();
-
     void on_pb_start_clicked();
-
     void on_pb_handle_clicked();
-
     void on_pb_end_clicked();
-
     void on_pb_clear_all_clicked();
-
     void on_pb_clear_geometry_clicked();
-
     void on_pb_snap_color_clicked();
-
     void on_pb_relativeZeroColor_clicked();
-
     void on_pb_previewRefColor_clicked();
-
     void on_pb_previewRefHighlightColor_clicked();
-
     void on_rbRelSize_toggled(bool checked);
-
     void setVariableFile();
     void setFontsFolder();
-
+    void setTranslationsFolder();
+    void setHatchPatternsFolder();
 private:
     bool restartNeeded=false;
     void init();
@@ -98,6 +81,7 @@ private:
     void initReferencePoints();
     void updateLPtSzUnits();
     void saveReferencePoints();
+    QString selectFolder(const char* title);
 };
 
 #endif // QG_DLGOPTIONSGENERAL_H
