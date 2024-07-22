@@ -487,7 +487,7 @@ void RS_Dimension::updateCreateAlignedTextDimensionLine(const RS_Vector& p1,
         textPos = dimensionLine->getMiddlePoint();
 
         // rotate text so it's readable from the bottom or right (ISO)
-        // determineQuadrant 1 & 4
+        // quadrant 1 & 4
         double const a = corrected?-M_PI_2:M_PI_2;
         RS_Vector distV = RS_Vector::polar(dimgap + dimtxt/2.0, dimAngle1+a);
 

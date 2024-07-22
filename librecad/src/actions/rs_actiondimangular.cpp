@@ -274,7 +274,7 @@ RS_LineData RS_ActionDimAngular::justify(RS_Line* line, const RS_Vector &click){
  * Create a sorted array with angles from the lines intersection point
  * to the starting points and their revers angles.
  * Ensure, that line1 and line2 are in CCW order.
- * Compute an offset for determineQuadrant() method.
+ * Compute an offset for quadrant() method.
  *
  * @param line A selected line for the dimension
  * @param click The click pos which selected the line
@@ -304,7 +304,7 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
     angles.push_back( RS_Math::correctAngle( a2 + M_PI));
     std::sort( angles.begin(), angles.end());
 
-    // find starting quadrant and compute the offset for determineQuadrant() method
+    // find starting quadrant and compute the offset for quadrant() method
     int startQuadrant = 0;
     for( auto angle : angles) {
         if( RS_Math::equal( a1, angle, RS_TOLERANCE_ANGLE)) {
@@ -316,13 +316,13 @@ void RS_ActionDimAngular::lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, R
 }
 
 /**
- * Find the determineQuadrant of \p angle relative to 1st determineQuadrant.
- * When the angle lines are selected, the starting determineQuadrant
+ * Find the quadrant of \p angle relative to 1st quadrant.
+ * When the angle lines are selected, the starting quadrant
  * is shifted to become 0 by \p quadrantOffset.
  * This is the criterion how the angles dimension is drawn.
  *
  * @param angle The angle, e.g. mouse or coordinate position
- * @return The determineQuadrant of \p angle, relative to the 1st selection determineQuadrant
+ * @return The quadrant of \p angle, relative to the 1st selection quadrant
  */
 int RS_ActionDimAngular::determineQuadrant(const double angle){
     if(angles.empty()) {
