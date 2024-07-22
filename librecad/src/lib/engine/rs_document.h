@@ -61,9 +61,7 @@ public:
     /**
      * @return true for all document entities (e.g. Graphics or Blocks).
      */
-    bool isDocument() const override {
-        return true;
-    }
+    bool isDocument() const override {return true;}
 
     /**
      * Removes an entity from the entity container. Implementation
@@ -71,61 +69,49 @@ public:
      */
     void removeUndoable(RS_Undoable* u) override {
         if (u && u->undoRtti()==RS2::UndoableEntity && u->isUndone()) {
-			removeEntity(static_cast<RS_Entity*>(u));
+            removeEntity(static_cast<RS_Entity*>(u));
         }
     }
 
     /**
      * @return Currently active drawing pen.
      */
-    RS_Pen getActivePen() const {
-        return activePen;
-    }
+    RS_Pen getActivePen() const {return activePen;}
 
     /**
      * Sets the currently active drawing pen to p.
      */
-    void setActivePen(const RS_Pen& p) {
-        activePen = p;
-    }
+    void setActivePen(const RS_Pen& p) {activePen = p;}
 
     /**
      * @return File name of the document currently loaded.
      * Note, that the default file name is empty.
      */
-    QString getFilename() const {
-        return filename;
-    }
+    QString getFilename() const {return filename;}
 
     /**
      * @return Auto-save file name of the document currently loaded.
      */
-    QString getAutoSaveFilename() const {
-        return autosaveFilename;
-    }
+    QString getAutoSaveFilename() const {return autosaveFilename;}
 
     /**
      * Sets file name for the document currently loaded.
      */
-    void setFilename(QString fn) {
-        filename = std::move(fn);
-    }
+    void setFilename(QString fn) {filename = std::move(fn);}
 
 	/**
 	 * Sets the documents modified status to 'm'.
 	 */
-    void setModified(bool m) {
-		//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
-		modified = m;
-	}
+    virtual void setModified(bool m) {
+//std::cout << "RS_Document::setModified: %d" << (int)m << std::endl;
+        modified = m;
+    }
 
 	/**
 	 * @retval true The document has been modified since it was last saved.
 	 * @retval false The document has not been modified since it was last saved.
 	 */
-    bool isModified() const {
-        return modified;
-    }
+    virtual bool isModified() const {return modified;}
 
     /**
      * Overwritten to set modified flag when undo cycle finished with undoable(s).
