@@ -225,7 +225,6 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
 
     QHBoxLayout* layButtons = new QHBoxLayout;
     QToolButton* but;
-    const QSize minButSize(28,28);
     // show all layer:
     but = new QToolButton(this);
     but->setIcon(QIcon(":/icons/visible.svg"));
