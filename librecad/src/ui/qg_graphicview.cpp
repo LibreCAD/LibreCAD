@@ -863,28 +863,46 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     RS2::Direction direction = RS2::Up;
 
     // scroll up / down:
-    if (e->modifiers()==Qt::ControlModifier) {
+    int angleDeltaY = e->angleDelta().y(); // delta for VERTICAL mouse wheel
+    int angleDeltaX = e->angleDelta().x(); // delta for HORIZONTAL mouse wheel
+
+    // for zoom, let's use just vertical scrolling, so below we'll rely on AngleDeltaY only.
+    // otherwise, horizontal scroll will not work :(  Basically, that's a side-effect for porting to QT6
+    // so here let's use simpler logic
+    angleDeltaX = angleDeltaY;
+    if (e->modifiers() == Qt::ControlModifier) {
         scroll = true;
-        if (e->angleDelta().y() == 0){
-        //case Qt::Horizontal:
-            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
-        } else {
-        //case Qt::Vertical:
-            direction=(e->angleDelta().y()>0)?RS2::Up : RS2::Down;
-        }
+        direction= (angleDeltaY > 0) ? RS2::Up : RS2::Down;
+    }
+    else if(e->modifiers() == Qt::ShiftModifier){
+        scroll = true;
+        direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
     }
 
+    // fixme - potentially, we can support mouses with two mouse weels later if this will be reasonable.
+    // fixme - however, it looks as a kind of overkill - using on single vertical mouse wheel for scroll seems to be fine//
+/*
+    if (e->modifiers() == Qt::ControlModifier) {
+        scroll = true;
+        if (angleDeltaY == 0){
+        //case Qt::Horizontal:
+            direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
+        } else {
+        //case Qt::Vertical:
+            direction= (angleDeltaY > 0) ? RS2::Up : RS2::Down;
+        }
+    }
     // scroll left / right:
     else if	(e->modifiers()==Qt::ShiftModifier) {
         scroll = true;
-        if (e->angleDelta().y() == 0){
+        if (angleDeltaY == 0){
         //case Qt::Horizontal:
-            direction=(e->angleDelta().x()>0)?RS2::Up : RS2::Down;
+            direction= (angleDeltaX > 0) ? RS2::Up : RS2::Down;
         } else {
         //case Qt::Vertical:
-            direction=(e->angleDelta().x()>0)?RS2::Left : RS2::Right;
+            direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
         }
-    }
+    }*/
 
     if (scroll && scrollbars) {
 		//scroll by scrollbars: issue #479
@@ -896,27 +914,23 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
         int delta = 0;
 
-		switch(direction){
-		case RS2::Left:
-		case RS2::Right:
-            delta = (inv_h) ? -e->angleDelta().x() : e->angleDelta().x();
-			hScrollBar->setValue(hScrollBar->value()+delta);
-			break;
-		default:
-            delta = (inv_v) ? -e->angleDelta().y() : e->angleDelta().y();
-			vScrollBar->setValue(vScrollBar->value()+delta);
-		}
-
-//        setCurrentAction(new RS_ActionZoomScroll(direction,
-//                         *container, *this));
+        switch(direction){
+            case RS2::Left:
+            case RS2::Right:
+                delta = (inv_h) ? -angleDeltaX : angleDeltaX;
+                hScrollBar->setValue(hScrollBar->value()+delta);
+                break;
+            default:
+                delta = (inv_v) ? -angleDeltaY : angleDeltaY;
+                vScrollBar->setValue(vScrollBar->value()+delta);
+        }
     }
-
     // zoom in / out:
     else if (e->modifiers()==0) {
         auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
         bool invZoom = RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1;
 
-        RS2::ZoomDirection zoomDirection = ((e->angleDelta().y() > 0) != invZoom) ? RS2::In : RS2::Out;
+        RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != invZoom) ? RS2::In : RS2::Out;
 
         RS_Vector& zoomCenter = mouse;
 
