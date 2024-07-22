@@ -11,11 +11,12 @@ QAction *LC_ActionFactoryBase::createAction_MW(const char *name, const char *slo
                                            const char *iconName, const char *themeIconName,
                                            QActionGroup *parent, QMap<QString, QAction *> &a_map, bool useToggled) const {
     QAction *action = doCreateAction(a_map, name, text, iconName, themeIconName, parent);
-    if (useToggled) {
-        connect(action, SIGNAL(toggled(bool)), main_window, slot);
-    }
-    else{
-        connect(action, SIGNAL(triggered(bool)), main_window, slot);
+    if (slot != nullptr) {
+        if (useToggled) {
+            connect(action, SIGNAL(toggled(bool)), main_window, slot);
+        } else {
+            connect(action, SIGNAL(triggered(bool)), main_window, slot);
+        }
     }
     return action;
 }
