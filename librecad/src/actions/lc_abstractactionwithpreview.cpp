@@ -345,7 +345,7 @@ void LC_AbstractActionWithPreview::doFinish([[maybe_unused]]bool updateTB){}
  */
 void LC_AbstractActionWithPreview::mouseReleaseEvent(QMouseEvent *e){
     int status = getStatus();
-    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+    bool shiftPressed = isShift(e);
     checkAlternativeActionMode(e, status, shiftPressed);
     Qt::MouseButton button = e->button();
     deletePreview();
@@ -474,7 +474,7 @@ void LC_AbstractActionWithPreview::highlightEntityExplicit(RS_Entity* en, bool h
  */
 void LC_AbstractActionWithPreview::mouseMoveEvent(QMouseEvent *e){
     int status = getStatus();
-    bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+    bool shiftPressed = isShift(e);
     checkAlternativeActionMode(e, status, shiftPressed);
     doMouseMoveStart(status, e);
     checkPreSnapToRelativeZero(status, e);

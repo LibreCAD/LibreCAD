@@ -56,6 +56,9 @@ bool hatchAble(RS_Entity* entity) {
 }
 }
 
+
+// fixme - review hatching and check the possibility to add preview mode!!
+
 RS_ActionDrawHatch::RS_ActionDrawHatch(RS_EntityContainer& container, RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw Hatch", container, graphicView)
     , data{std::make_unique<RS_HatchData>()}

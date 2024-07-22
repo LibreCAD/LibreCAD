@@ -44,7 +44,7 @@ RS_ActionInfoDist::RS_ActionInfoDist(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)
     :RS_PreviewActionInterface("Info Dist", container, graphicView), pPoints(std::make_unique<Points>()){
-    actionType = RS2::ActionInfoDist;
+    actionType = RS2::ActionInfoDistPoint2Point;
 }
 
 RS_ActionInfoDist::~RS_ActionInfoDist() = default;

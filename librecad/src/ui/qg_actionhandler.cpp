@@ -886,13 +886,13 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionInfoInside:
             a = new RS_ActionInfoInside(*document, *view);
             break;
-        case RS2::ActionInfoDist:
+        case RS2::ActionInfoDistPoint2Point:
             a = new RS_ActionInfoDist(*document, *view);
             break;
-        case RS2::ActionInfoDist2:
+        case RS2::ActionInfoDistEntity2Point:
             a = new RS_ActionInfoDist2(*document, *view);
             break;
-        case RS2::ActionInfoDist3:
+        case RS2::ActionInfoDistPoint2Entity:
             a = new RS_ActionInfoDist2(*document, *view, true);
             break;
         case RS2::ActionInfoAngle:
@@ -1952,15 +1952,15 @@ void QG_ActionHandler::slotInfoInside() {
 }
 
 void QG_ActionHandler::slotInfoDist() {
-    setCurrentAction(RS2::ActionInfoDist);
+    setCurrentAction(RS2::ActionInfoDistPoint2Point);
 }
 
 void QG_ActionHandler::slotInfoDist2() {
-    setCurrentAction(RS2::ActionInfoDist2);
+    setCurrentAction(RS2::ActionInfoDistEntity2Point);
 }
 
 void QG_ActionHandler::slotInfoDist3() {
-    setCurrentAction(RS2::ActionInfoDist3);
+    setCurrentAction(RS2::ActionInfoDistPoint2Entity);
 }
 
 void QG_ActionHandler::slotInfoAngle() {

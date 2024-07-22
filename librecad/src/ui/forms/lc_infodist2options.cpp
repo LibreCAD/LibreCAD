@@ -49,5 +49,5 @@ void LC_InfoDist2Options::languageChange(){
 }
 
 bool LC_InfoDist2Options::checkActionRttiValid(RS2::ActionType actionType){
-        return actionType ==RS2::ActionInfoDist2 || actionType ==RS2::ActionInfoDist3;
+        return actionType ==RS2::ActionInfoDistEntity2Point || actionType == RS2::ActionInfoDistPoint2Entity;
 }

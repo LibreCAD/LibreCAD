@@ -380,9 +380,9 @@ namespace RS2 {
         ActionUnlockRelativeZero,
 
         ActionInfoInside,
-        ActionInfoDist,
-        ActionInfoDist2,
-        ActionInfoDist3,
+        ActionInfoDistPoint2Point,
+        ActionInfoDistEntity2Point,
+        ActionInfoDistPoint2Entity,
         ActionInfoAngle,
         ActionInfoTotalLength,
         ActionInfoTotalLengthNoSelect,

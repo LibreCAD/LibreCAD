@@ -81,7 +81,7 @@ void LC_ActionInfoPickCoordinates::doOnLeftMouseButtonRelease([[maybe_unused]]QM
 }
 
 RS_Vector LC_ActionInfoPickCoordinates::doGetMouseSnapPoint(QMouseEvent *e){
-    bool freeSnap = e->modifiers() & Qt::ShiftModifier;
+    bool freeSnap = isShift(e);
     if (freeSnap){ // let free point snap if shift pressed
         return toGraph(e);
     }

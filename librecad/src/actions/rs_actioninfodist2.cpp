@@ -37,7 +37,7 @@
 
 RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer &container, RS_GraphicView &graphicView, bool fromPoint)
     :RS_PreviewActionInterface("Info Dist2", container, graphicView), entity(nullptr){
-    actionType = RS2::ActionInfoDist2;
+    actionType = RS2::ActionInfoDistEntity2Point;
     selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
 }
 
@@ -264,14 +264,16 @@ void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoDist2::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Specify entity", LC_ModifiersInfo::CTRL("Resolve ALL entities"));
+            updateMouseWidgetTRCancel("Specify entity", LC_ModifiersInfo::CTRL("Do not snap to child entities in container"));
             break;
         case SetPoint: {
-            Qt::KeyboardModifiers modifiers = Qt::ShiftModifier;
             if (selectionMode == FIRST_IS_ENTITY){
-                modifiers = modifiers | Qt::ControlModifier;
+                updateMouseWidgetTRCancel("Specify point", LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, "Relative point is on entity"));
             }
-            updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_RELATIVE_ZERO);
+            else{
+                updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_RELATIVE_ZERO);
+            }
+
             break;
         }
         default:

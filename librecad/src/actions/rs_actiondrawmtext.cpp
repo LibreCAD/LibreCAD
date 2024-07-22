@@ -126,7 +126,7 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
 
     if (getStatus() == SetPos){
         RS_Vector mouse = snapPoint(e);
-        bool shiftPressed = e->modifiers() & Qt::ShiftModifier;
+        bool shiftPressed = isShift(e);
         if (shiftPressed){
             RS_Vector relZero = graphicView->getRelativeZero();
             if (relZero.valid){
