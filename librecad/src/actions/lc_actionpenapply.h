@@ -22,14 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONPENAPPLY_H
 #define LC_ACTIONPENAPPLY_H
 
-#include "rs_actioninterface.h"
 #include "rs_pen.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * Action that applies pen (either from pen toolbar or from selected entity) to
  * entity selected by the user.
  */
-class LC_ActionPenApply:public RS_ActionInterface {
+class LC_ActionPenApply:public RS_PreviewActionInterface {
     Q_OBJECT
 public:
     // statuses of action
@@ -47,18 +47,12 @@ public:
 private:
     // entity that might be used as source for pen applying
     RS_Entity* srcEntity;
-    void removeHighlighting();
-
-    // entity that was highlighted
-    RS_Entity* highlightedEntity;
 
     // controls whether pen should be copied from source entity or applied from pen toolbar
     bool copyMode;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 

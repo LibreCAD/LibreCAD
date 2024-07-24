@@ -28,7 +28,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // fixme - revork highlighting for all pen actions to support overlay based highlight
 LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
-    :RS_ActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
+    :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
     resolveMode  = resolve;
     if (resolve){
         actionType = RS2::ActionPenPickResolved;
@@ -36,19 +36,15 @@ LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView
     else{
         actionType = RS2::ActionPenPick;
     }
-    highlightedEntity = nullptr;
 }
 
 void LC_ActionPenPick::init(int status){
-    RS_ActionInterface::init(status);
-    if (status < 0) {
-        removeHighlighting();
-    }
+    RS_PreviewActionInterface::init(status);
 }
 
 void LC_ActionPenPick::trigger(){
-    RS_ActionInterface::trigger();
-    // do nothing, processing is performed on muse click
+    RS_PreviewActionInterface::trigger();
+    // do nothing, processing is performed on mouse click
 }
 
 /**
@@ -56,31 +52,19 @@ void LC_ActionPenPick::trigger(){
  * @param updateTB
  */
 void LC_ActionPenPick::finish(bool updateTB){
-    RS_ActionInterface::finish(updateTB);
-    removeHighlighting();
+    RS_PreviewActionInterface::finish(updateTB);
 }
 
 void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
     if (getStatus() == SelectEntity){
         RS_Entity *en = catchEntity(e, RS2::ResolveNone);
-        removeHighlighting();
+        deleteHighlights();
         if (en != nullptr){
-            en->setHighlighted(true);
-            highlightedEntity = en;
+            highlightHover(en);
             graphicView->drawEntity(en);
             graphicView->redraw();
         }
-    }
-}
-
-/**
- * cleanup of highlighted entity
- */
-void LC_ActionPenPick::removeHighlighting(){
-    if (highlightedEntity != nullptr){
-        highlightedEntity->setHighlighted(false);
-        graphicView->drawEntity(highlightedEntity);
-        highlightedEntity = nullptr;
+        drawHighlights();
     }
 }
 

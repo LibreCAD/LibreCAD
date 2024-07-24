@@ -22,14 +22,14 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef LC_ACTIONPENPICK_H
 #define LC_ACTIONPENPICK_H
 
-#include "rs_actioninterface.h"
 #include "rs_pen.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * Action that picks the pen (resolved or not) from entity selected by the user
  * and applies it to pen toolbar
  */
-class LC_ActionPenPick:public RS_ActionInterface {
+class LC_ActionPenPick:public RS_PreviewActionInterface {
        Q_OBJECT
 public:
 
@@ -50,12 +50,7 @@ private:
      * flag that indicates whether pen from entity should be resolved
      */
     bool resolveMode;
-    /**
-     * entity that was highlighted
-     */
-    RS_Entity *highlightedEntity;
     void applyPenToPenToolBar(RS_Entity* entity);
-    void removeHighlighting();
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;

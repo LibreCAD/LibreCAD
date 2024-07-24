@@ -27,7 +27,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_modification.h"
 #include <QMouseEvent>
 
-LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicView &graphicView, bool copy):RS_ActionInterface(copy? "PenCopy" : "PenApply", container, graphicView){
+LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicView &graphicView, bool copy):
+  RS_PreviewActionInterface(copy? "PenCopy" : "PenApply", container, graphicView){
     copyMode  = copy;
     if (copy){
         actionType = RS2::ActionPenCopy;
@@ -35,7 +36,6 @@ LC_ActionPenApply::LC_ActionPenApply(RS_EntityContainer &container, RS_GraphicVi
     else{
         actionType = RS2::ActionPenApply;
     }
-    highlightedEntity = nullptr;
     srcEntity = nullptr;
 }
 
@@ -43,16 +43,15 @@ void LC_ActionPenApply::init(int status){
     if (status == SelectEntity && !copyMode){
         status = ApplyToEntity;
     }
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     if (status < 0){
         srcEntity = nullptr;
-        removeHighlighting();
     }
 }
 
 void LC_ActionPenApply::trigger(){
-    RS_ActionInterface::trigger();
-    // do nothing, processing is performed on muse click
+    RS_PreviewActionInterface::trigger();
+    // do nothing, processing is performed on mouse click
 }
 
 void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
@@ -60,25 +59,13 @@ void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
         case SelectEntity:
         case ApplyToEntity:
             RS_Entity* en = catchEntity(e, RS2::ResolveNone);
-            removeHighlighting();
+            deleteHighlights();
             if (en != nullptr && en != srcEntity){ // exclude entity we use as source, if any
-                en->setHighlighted(true);
-                highlightedEntity = en;
-                graphicView->drawEntity(en);
+                highlightHover(en);
                 graphicView->redraw();
             }
+            drawHighlights();
             break;
-    }
-}
-
-/**
- * just remove highlighted entity, if any
- */
-void LC_ActionPenApply::removeHighlighting(){
-    if (highlightedEntity != nullptr){
-        highlightedEntity->setHighlighted(false);
-        graphicView->drawEntity(highlightedEntity);
-        highlightedEntity = nullptr;
     }
 }
 
@@ -89,7 +76,6 @@ void LC_ActionPenApply::removeHighlighting(){
 void LC_ActionPenApply::finish(bool updateTB){
     RS_ActionInterface::finish(updateTB);
     srcEntity = nullptr;
-    removeHighlighting();
 }
 
 void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
@@ -100,12 +86,10 @@ void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, 
             case SelectEntity:{
                 // selection of entity that will be used as source for pen
                 srcEntity = en;
-                removeHighlighting();
                 setStatus(ApplyToEntity);
                 break;
             }
             case ApplyToEntity:{
-                removeHighlighting();
                 if (!en->isLocked() && en != srcEntity){
                     RS_Pen penToApply;
                     if (copyMode){
@@ -146,7 +130,6 @@ void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, 
 }
 
 void LC_ActionPenApply::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    removeHighlighting();
     switch (status){
         case (SelectEntity):{
             init(-1);
@@ -172,7 +155,7 @@ void LC_ActionPenApply::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Specify entity to pick the pen");
             break;
         case ApplyToEntity:
-            updateMouseWidgetTRCancel("Specify entity to apply pen", copyMode? LC_ModifiersInfo::SHIFT("Apply Resolved Pen") : MOD_NONE);
+            updateMouseWidgetTRCancel("Specify entity to apply pen", copyMode? MOD_SHIFT("Apply Resolved Pen") : MOD_NONE);
             break;
         default:
             RS_ActionInterface::updateMouseButtonHints();
