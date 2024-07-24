@@ -244,7 +244,7 @@ RS_Vector LC_ActionModifyDuplicate::getEntityCenterPoint(const RS_Entity *en) co
 void LC_ActionModifyDuplicate::updateMouseButtonHints(){
     switch (getStatus()){
         case SelectEntity:
-            updateMouseWidgetTRCancel("Select entity to duplicate", duplicateInplace ? MOD_NONE :  LC_ModifiersInfo::SHIFT("Interactive Offset"));
+            updateMouseWidgetTRCancel("Select entity to duplicate", duplicateInplace ? MOD_NONE :  MOD_SHIFT("Interactive Offset"));
             break;
         case SetOffsetDirection:
             updateMouseWidgetTRCancel("Select direction of offset",MOD_SHIFT_ANGLE_SNAP);

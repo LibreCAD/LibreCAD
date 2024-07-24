@@ -63,5 +63,5 @@ void RS_ActionModifyAttributes::trigger() {
 }
 
 void RS_ActionModifyAttributes::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to modify attributes", LC_ModifiersInfo::CTRL("Modify attributes immediately after selecting"));
+    updateMouseWidgetTRCancel("Select to modify attributes", MOD_CTRL("Modify attributes immediately after selecting"));
 }

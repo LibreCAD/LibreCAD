@@ -202,7 +202,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to move", LC_ModifiersInfo::CTRL("Move immediately after selection"));
+    updateMouseWidgetTRCancel("Select to move", MOD_CTRL("Move immediately after selection"));
 }
 
 RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected([[maybe_unused]]int status) {

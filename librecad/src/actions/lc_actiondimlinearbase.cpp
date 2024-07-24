@@ -264,7 +264,7 @@ void LC_ActionDimLinearBase::updateMouseButtonHints(){
             updateMouseWidgetTRBack("Specify second extension line origin", MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetDefPoint:
-            updateMouseWidgetTRBack("Specify dimension line location", LC_ModifiersInfo::SHIFT("Snap to Adjacent Dim"));
+            updateMouseWidgetTRBack("Specify dimension line location", MOD_SHIFT("Snap to Adjacent Dim"));
             break;
         case SetText:
             updateMouseWidgetTR("Enter dimension text:", "");

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>350</width>
-    <height>37</height>
+    <width>681</width>
+    <height>27</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -39,6 +39,13 @@
     <number>0</number>
    </property>
    <item>
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Scale:</string>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QComboBox" name="cbScale">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Maximum" vsizetype="Fixed">
@@ -59,7 +66,7 @@
       <bool>true</bool>
      </property>
      <property name="insertPolicy">
-      <enum>QComboBox::InsertPolicy::InsertAtTop</enum>
+      <enum>QComboBox::NoInsert</enum>
      </property>
     </widget>
    </item>
@@ -94,7 +101,7 @@
    <item>
     <spacer name="horizontalSpacer">
      <property name="orientation">
-      <enum>Qt::Orientation::Horizontal</enum>
+      <enum>Qt::Horizontal</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
@@ -189,6 +196,26 @@
     </widget>
    </item>
    <item>
+    <widget class="QToolButton" name="bZoomPage">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Zoom to page</string>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="icon">
+      <iconset resource="../../../res/icons/icons.qrc">
+       <normaloff>:/icons/zoom_auto.svg</normaloff>:/icons/zoom_auto.svg</iconset>
+     </property>
+    </widget>
+   </item>
+   <item>
     <widget class="QToolButton" name="bFit">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
@@ -215,45 +242,68 @@
     </widget>
    </item>
    <item>
-    <widget class="QToolButton" name="bCalcPagesNum">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="toolTip">
-      <string>Calculate number of pages needed to contain the drawing</string>
-     </property>
+    <widget class="QCheckBox" name="cbTiledPrint">
      <property name="text">
-      <string/>
-     </property>
-     <property name="icon">
-      <iconset resource="../../../res/icons/icons.qrc">
-       <normaloff>:/icons/multi_pages.svg</normaloff>:/icons/multi_pages.svg</iconset>
-     </property>
-     <property name="iconSize">
-      <size>
-       <width>20</width>
-       <height>20</height>
-      </size>
+      <string>Tiled Print</string>
      </property>
     </widget>
    </item>
    <item>
-    <widget class="Line" name="sep1_2">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::Shape::VLine</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Shadow::Sunken</enum>
-     </property>
+    <widget class="QWidget" name="wTiledPrint" native="true">
+     <layout class="QGridLayout" name="gridLayout">
+      <property name="topMargin">
+       <number>0</number>
+      </property>
+      <property name="bottomMargin">
+       <number>0</number>
+      </property>
+      <item row="0" column="4">
+       <widget class="QLabel" name="label_3">
+        <property name="text">
+         <string>Pages Rows::</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="5">
+       <widget class="QSpinBox" name="sbPagesVertical"/>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Pages Columns:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QSpinBox" name="sbPagessHorizontal"/>
+      </item>
+      <item row="0" column="0">
+       <widget class="QToolButton" name="bCalcPagesNum">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="toolTip">
+         <string>Calculate number of pages needed to contain the drawing</string>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset resource="../../../res/icons/icons.qrc">
+          <normaloff>:/icons/multi_pages.svg</normaloff>:/icons/multi_pages.svg</iconset>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>20</width>
+          <height>20</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

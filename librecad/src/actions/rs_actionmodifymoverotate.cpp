@@ -322,7 +322,7 @@ RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unus
 }
 
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to move and rotate", LC_ModifiersInfo::CTRL("Move and rotate immediately after selection"));
+    updateMouseWidgetTRCancel("Select to move and rotate", MOD_CTRL("Move and rotate immediately after selection"));
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {

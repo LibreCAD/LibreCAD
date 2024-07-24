@@ -92,8 +92,8 @@ void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:
             updateMouseWidgetTRCancel("Specify location",
-                                      LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO,
-                                                                       LC_ModifiersInfo::MSG_FREE_SNAP));
+                                      MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO,
+                                                         LC_ModifiersInfo::MSG_FREE_SNAP));
             break;
         default:
             updateMouseWidget();

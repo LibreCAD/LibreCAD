@@ -98,7 +98,8 @@ public:
     QString msgAvailableCommands();
     // Accessor for drawing keys
     int getGraphicVariableInt(const QString& key, int def) const;
-
+    void commandMessageTR(const char*);
+    void commandMessage(const QString &msg) const;
 private:
     /**
      * Current status of the action. After an action has
@@ -184,8 +185,7 @@ protected:
 
     void updateMouseWidgetTRCancel(const char* left,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
     void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
-    void commandMessageTR(const char*);
-    void commandMessage(const QString &msg) const;
+
 
     static bool isControl(const QMouseEvent *e);
     static bool isShift(const QMouseEvent *e);

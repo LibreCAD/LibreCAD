@@ -272,6 +272,12 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
     actionsToDisableInPrintPreview.append( a_map["ViewGrid"]);
     actionsToDisableInPrintPreview.append( a_map["ModifyDeleteQuick"]);
     actionsToDisableInPrintPreview.append( a_map["EditKillAllActions"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomIn"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomOut"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomAuto"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomPrevious"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomWindow"]);
+    actionsToDisableInPrintPreview.append( a_map["ZoomPan"]);
 }
 
 

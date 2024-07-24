@@ -164,7 +164,7 @@ void RS_ActionInfoDist::updateMouseButtonHints(){
             updateMouseWidgetTRCancel("Specify first point of distance", MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point of distance", LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Don't move relative zero"));
+            updateMouseWidgetTRBack("Specify second point of distance", MOD_SHIFT_AND_CTRL_ANGLE("Don't move relative zero"));
             break;
         default:
             updateMouseWidget();

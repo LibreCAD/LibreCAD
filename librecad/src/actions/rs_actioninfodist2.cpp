@@ -205,7 +205,6 @@ void RS_ActionInfoDist2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
         default:
             break;
     }
-
 }
 
 void RS_ActionInfoDist2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
@@ -264,11 +263,11 @@ void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionInfoDist2::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Specify entity", LC_ModifiersInfo::CTRL("Do not snap to child entities in container"));
+            updateMouseWidgetTRCancel("Specify entity", MOD_CTRL("Do not snap to child entities in container"));
             break;
         case SetPoint: {
             if (selectionMode == FIRST_IS_ENTITY){
-                updateMouseWidgetTRCancel("Specify point", LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, "Relative point is on entity"));
+                updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, "Relative point is on entity"));
             }
             else{
                 updateMouseWidgetTRCancel("Specify point", MOD_SHIFT_RELATIVE_ZERO);

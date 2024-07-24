@@ -642,10 +642,10 @@ void RS_ActionDefault::updateMouseButtonHints(){
             RS2::EntityType rtti = pPoints->refMovingEntity->rtti();
             switch (rtti){
                 case RS2::EntityLine:
-                    modifiers =  LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Lengthen Line");
+                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE( "Lengthen Line");
                     break;
                 case RS2::EntityArc:
-                    modifiers =  LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, "Lengthen Arc");
+                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE( "Lengthen Arc");
                     break;
                 default:
                     modifiers = MOD_SHIFT_ANGLE_SNAP;

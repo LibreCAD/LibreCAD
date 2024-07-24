@@ -168,7 +168,7 @@ void RS_ActionSelectWindow::updateMouseButtonHints() {
             updateMouseWidgetTRCancel("Click and drag for the selection window");
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack("Choose second edge", LC_ModifiersInfo::SHIFT("Select Intersecting"));
+            updateMouseWidgetTRBack("Choose second edge", MOD_SHIFT("Select Intersecting"));
             break;
         default:
             updateMouseWidget();
