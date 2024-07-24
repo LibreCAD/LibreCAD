@@ -40,6 +40,7 @@ QG_SplineOptions::QG_SplineOptions(QWidget* parent, Qt::WindowFlags fl)
 	, ui(new Ui::Ui_SplineOptions{})
 {
 	ui->setupUi(this);
+    connect(ui->cbDegree, &QComboBox::currentTextChanged, this, &QG_SplineOptions::setDegree);
 }
 
 /*
@@ -57,10 +58,9 @@ void QG_SplineOptions::languageChange()
 }
 
 void QG_SplineOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Draw");
+    auto guard = RS_SETTINGS->beginGroupGuard("/Draw");
 	RS_SETTINGS->writeEntry("/SplineDegree", ui->cbDegree->currentText().toInt());
 	RS_SETTINGS->writeEntry("/SplineClosed", (int)ui->cbClosed->isChecked());
-    RS_SETTINGS->endGroup();
 }
 
 void QG_SplineOptions::setAction(RS_ActionInterface* a, bool update)
@@ -119,12 +119,14 @@ void QG_SplineOptions::setClosed(bool c) {
 }
 
 void QG_SplineOptions::undo() {
-    if (action) action->undo();
+    if (action)
+        action->undo();
 }
 
 void QG_SplineOptions::setDegree(const QString& deg) {
     if (action) {
         action->setDegree(deg.toInt());
+        ui->lDegree->setText(deg);
         saveSettings();
     }
 }
