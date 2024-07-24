@@ -4,6 +4,10 @@
 #include <QInternal>
 
 #define MOD_NONE LC_ModifiersInfo::NONE()
+#define MOD_SHIFT(msg) LC_ModifiersInfo::SHIFT(msg)
+#define MOD_CTRL(msg) LC_ModifiersInfo::CTRL(msg)
+#define MOD_SHIFT_AND_CTRL(shiftMsg, ctrlMsg) LC_ModifiersInfo::SHIFT_AND_CTRL(shiftMsg,ctrlMsg)
+#define MOD_SHIFT_AND_CTRL_ANGLE(ctrlMsg) LC_ModifiersInfo::SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP,ctrlMsg)
 #define MOD_SHIFT_ANGLE_SNAP LC_ModifiersInfo::SHIFT_ANGLE_SNAP()
 #define MOD_SHIFT_FREE_SNAP LC_ModifiersInfo::SHIFT_FREE_SNAP()
 #define MOD_SHIFT_MIRROR_ANGLE LC_ModifiersInfo::SHIFT_MIRROR_ANGLE()
