@@ -3912,7 +3912,7 @@ Elija la unidad que desea utilizar para nuevos dibujos y su idioma preferido.&lt
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation>Hornee líneas de guiones / puntos en la ruta SVG</translation>
+        <translation>Transformar líneas discontinuas/punteadas en trayectorias SVG</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
