@@ -112,7 +112,7 @@ bool LC_ActionOptionsWidget::toDouble(const QString& strValue, double &res, doub
  */
 bool LC_ActionOptionsWidget::toDoubleAngle(const QString& strValue, double &res, double notMeaningful, bool positiveOnly){
     bool ok = false;
-    double x =std::abs(RS_Math::eval(strValue, &ok));
+    double x = RS_Math::eval(strValue, &ok);
     if(ok){
         res = LC_LineMath::getMeaningfulAngle(x, notMeaningful);
         if (positiveOnly){
