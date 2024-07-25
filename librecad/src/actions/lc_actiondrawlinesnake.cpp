@@ -487,8 +487,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             msg += getCommand("angle");
             msg += "/";
             msg += getCommand("anglerel");
-            updateMouseWidget(tr("Specify point or [%1]").arg(msg),tr("Back"));
-
+            updateMouseWidget(tr("Specify point or [%1]").arg(msg),tr("Back"), MOD_SHIFT_ANGLE_SNAP);
             break;
         }
         default:
