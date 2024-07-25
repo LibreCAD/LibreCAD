@@ -114,12 +114,12 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
 }
 
 void RS_ActionModifyMoveRotate::previewRefPointsForMultipleCopies() {
-    if (this->pPoints->data.multipleCopies){
-        int numPoints = this->pPoints->data.number;
+    if (pPoints->data.multipleCopies){
+        int numPoints = pPoints->data.number;
         if (numPoints > 1){
             for (int i = 1; i <= numPoints; i++){
-                RS_Vector offset = this->pPoints->data.offset * i;
-                this->previewRefPoint(this->pPoints->data.referencePoint + offset);
+                RS_Vector offset = pPoints->data.offset * i;
+                previewRefPoint(pPoints->data.referencePoint + offset);
             }
         }
     }

@@ -58,8 +58,6 @@ private:
     QString angle1;
 
     void init();
-    void destroy();
-
 };
 
 #endif // QG_DLGROTATE2_H

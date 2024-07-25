@@ -1987,9 +1987,11 @@ bool RS_Modification::rotate(RS_RotateData &data){
     std::vector<RS_Entity *> addList;
 
     // Create new entities
-    for (int num = 1; num <= data.number || (data.number == 0 && num <= 1); num++) {
-        for (auto e: *container) { //  fixme - iterating over all entities in container for selection
-            if (e && e->isSelected()){
+    for (auto e: *container) { //  fixme - iterating over all entities in container for selection
+        if (e && e->isSelected()){
+            for (int num = 1; num <= data.number || (data.number == 0 && num <= 1); num++) {
+
+
                 RS_Entity *ec = e->clone();
                 ec->setSelected(false);
 
@@ -2143,7 +2145,7 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
 /**
  * Rotates entities around two centers with the given parameters.
  */
-bool RS_Modification::rotate2(RS_Rotate2Data& data) {
+bool RS_Modification::rotate2(RS_Rotate2Data& data, bool previewOnly, RS_EntityContainer* previewContainer) {
     if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::rotate2: no valid container");
@@ -2152,24 +2154,40 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
 
     std::vector<RS_Entity*> addList;
 
+    int numberOfCopies = data.number;
+    if (!data.multipleCopies){
+        numberOfCopies = 1;
+    }
+    else{
+        if (numberOfCopies < 1){
+            numberOfCopies = 1;
+        }
+    }
+
     // Create new entities
 
     for(auto e: *container){
         if (e && e->isSelected()) { // fixme - iterating over all entities to get selection
-            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
+            for (int num= 1; num <= numberOfCopies; num++) {
                 RS_Entity* ec = e->clone();
                 ec->setSelected(false);
 
-                ec->rotate(data.center1, data.angle1*num);
-                RS_Vector center2 = data.center2;
-                center2.rotate(data.center1, data.angle1*num);
+                double angle1ForCopy = /*data.sameAngle1ForCopies ?  data.angle1 :*/ data.angle1 * num;
+                double angle2ForCopy = data.sameAngle2ForCopies ?  data.angle2 : data.angle2 * num;
 
-                ec->rotate(center2, data.angle2*num);
-                if (data.useCurrentLayer) {
-                    ec->setLayerToActive();
-                }
-                if (data.useCurrentAttributes) {
-                    ec->setPenToActive();
+                ec->rotate(data.center1, angle1ForCopy);
+
+                RS_Vector center2 = data.center2;
+                center2.rotate(data.center1, angle1ForCopy);
+
+                ec->rotate(center2, angle2ForCopy);
+                if (!previewOnly) {
+                    if (data.useCurrentLayer) {
+                        ec->setLayerToActive();
+                    }
+                    if (data.useCurrentAttributes) {
+                        ec->setPenToActive();
+                    }
                 }
                 if (ec->rtti()==RS2::EntityInsert) {
                     ((RS_Insert*)ec)->update();
@@ -2180,9 +2198,17 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data) {
     }
 
     LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
-
+    if (previewOnly) {
+        for (RS_Entity *e: addList) {
+            if (e != nullptr) {
+                previewContainer->addEntity(e);
+            }
+        }
+    } else {
+//        deselectOriginals(data.number == 0);
+        deselectOriginals(!data.keepOriginals);
+        addNewEntities(addList);
+    }
     return true;
 }
 

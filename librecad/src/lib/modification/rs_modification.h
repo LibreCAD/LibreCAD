@@ -113,8 +113,11 @@ struct RS_MoveRotateData : public LC_ModifyOperationFlags{
 struct RS_Rotate2Data : public LC_ModifyOperationFlags{
     RS_Vector center1;
     RS_Vector center2;
+
     double angle1 = 0.;
     double angle2 = 0.;
+    bool mirrorAngles = false;
+    bool sameAngle2ForCopies = false; // fixme - remove later
 };
 
 
@@ -267,7 +270,7 @@ public:
     bool scale(RS_ScaleData &data);
     bool mirror(RS_MirrorData &data);
     bool moveRotate(RS_MoveRotateData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
-    bool rotate2(RS_Rotate2Data &data);
+    bool rotate2(RS_Rotate2Data &data, bool previewOnly, RS_EntityContainer* previewContainer);
     LC_TrimResult trim(
         const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
         const RS_Vector &limitCoord, RS_Entity *limitEntity,

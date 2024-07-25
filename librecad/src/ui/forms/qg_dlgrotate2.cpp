@@ -37,19 +37,15 @@
  *  true to construct a modal dialog.
  */
 QG_DlgRotate2::QG_DlgRotate2(QWidget* parent, bool modal, Qt::WindowFlags fl)
-    : QDialog(parent, fl)
-{
+    : QDialog(parent, fl){
     setModal(modal);
     setupUi(this);
-
-    init();
 }
 
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgRotate2::~QG_DlgRotate2()
-{
+QG_DlgRotate2::~QG_DlgRotate2(){
     destroy();
     // no need to delete child widgets, Qt does it all for us
 }
@@ -58,81 +54,41 @@ QG_DlgRotate2::~QG_DlgRotate2()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgRotate2::languageChange()
-{
+void QG_DlgRotate2::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgRotate2::init() {
-    RS_SETTINGS->beginGroup("/Modify");
-    copies = RS_SETTINGS->readEntry("/Rotate2Copies", "10");
-    numberMode = RS_SETTINGS->readNumEntry("/Rotate2Mode", 0);
-    useCurrentLayer =
-        (bool)RS_SETTINGS->readNumEntry("/Rotate2UseCurrentLayer", 0);
-    useCurrentAttributes =
-        (bool)RS_SETTINGS->readNumEntry("/MoveRotate2UseCurrentAttributes", 0);
-    angle1 = RS_SETTINGS->readEntry("/Rotate2Angle1", "30.0");
-    angle2 = RS_SETTINGS->readEntry("/Rotate2Angle2", "-30.0");
-    RS_SETTINGS->endGroup();
+    rbCopy->setChecked(data->keepOriginals);
+    rbMove->setChecked(!data->keepOriginals);
+    rbMultiCopy -> setChecked(data->multipleCopies);
 
-    switch (numberMode) {
-    case 0:
-        rbMove->setChecked(true);
-        break;
-    case 1:
-        rbCopy->setChecked(true);
-        break;
-    case 2:
-        rbMultiCopy->setChecked(true);
-        break;
-    default:
-        break;
-    }
-    leNumber->setText(copies);
-    leAngle1->setText(angle1);
-    leAngle2->setText(angle2);
-    cbCurrentAttributes->setChecked(useCurrentAttributes);
-    cbCurrentLayer->setChecked(useCurrentLayer);
-}
+    sbNumber->setValue(data->number);
+    cbCurrentAttributes->setChecked(data->useCurrentAttributes);
+    cbCurrentLayer->setChecked(data->useCurrentLayer);
+    sbNumber->setEnabled(data->multipleCopies);
 
-void QG_DlgRotate2::destroy() {
-    RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/Rotate2Copies", leNumber->text());
-    if (rbMove->isChecked()) {
-        numberMode = 0;
-    } else if (rbCopy->isChecked()) {
-        numberMode = 1;
-    } else {
-        numberMode = 2;
-    }
-    RS_SETTINGS->writeEntry("/Rotate2Mode", numberMode);
-    RS_SETTINGS->writeEntry("/Rotate2Angle1", leAngle1->text());
-    RS_SETTINGS->writeEntry("/Rotate2Angle2", leAngle2->text());
-    RS_SETTINGS->writeEntry("/Rotate2UseCurrentLayer",
-                            (int)cbCurrentLayer->isChecked());
-    RS_SETTINGS->writeEntry("/Rotate2UseCurrentAttributes",
-                            (int)cbCurrentAttributes->isChecked());
-    RS_SETTINGS->endGroup();
+    leAngle1->setText(QString("%1").arg(RS_Math::rad2deg(data->angle1)));
+    leAngle2->setText(QString("%1").arg(RS_Math::rad2deg(data->angle2)));
 }
 
 void QG_DlgRotate2::setData(RS_Rotate2Data* d) {
     data = d;
-
-    //leAngle1->setText(QString("%1").arg(RS_Math::rad2deg(data->angle1)));
-    //leAngle2->setText(QString("%1").arg(RS_Math::rad2deg(data->angle2)));
+    init();
 }
 
 void QG_DlgRotate2::updateData() {
     if (rbMove->isChecked()) {
-        data->number = 0;
+        data->keepOriginals = false;
     } else if (rbCopy->isChecked()) {
-        data->number = 1;
-    } else {
-        data->number = leNumber->text().toInt();
+        data->keepOriginals = true;
     }
-    data->angle1 = RS_Math::deg2rad(RS_Math::eval(leAngle1->text()));
-    data->angle2 = RS_Math::deg2rad(RS_Math::eval(leAngle2->text()));
+
+    data->number = sbNumber->value();
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
+    data->multipleCopies = rbMultiCopy->isChecked();
+    data->angle1 = RS_Math::deg2rad(RS_Math::eval(leAngle1->text()));
+    data->angle2 = RS_Math::deg2rad(RS_Math::eval(leAngle2->text()));
 }
 

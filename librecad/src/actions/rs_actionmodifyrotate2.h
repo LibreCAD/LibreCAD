@@ -27,9 +27,8 @@
 #ifndef RS_ACTIONMODIFYROTATE2_H
 #define RS_ACTIONMODIFYROTATE2_H
 
-#include "rs_previewactioninterface.h"
-
-struct RS_Rotate2Data;
+#include "rs_modification.h"
+#include "lc_actionmodifybase.h"
 
 /**
  * This action class can handle user events to rotate entities around
@@ -37,8 +36,9 @@ struct RS_Rotate2Data;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyRotate2 : public RS_PreviewActionInterface {
-	Q_OBJECT
+class RS_ActionModifyRotate2 : public LC_ActionModifyBase {
+Q_OBJECT
+
 public:
     /**
      * Action States.
@@ -51,23 +51,38 @@ public:
 
 public:
     RS_ActionModifyRotate2(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-	~RS_ActionModifyRotate2() override;
+                           RS_GraphicView& graphicView);
+    ~RS_ActionModifyRotate2() override;
 
-	void init(int status=0) override;
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-	void commandEvent(RS_CommandEvent* e) override;
-	QStringList getAvailableCommands() override;
+    void init(int status=0) override;
+    void trigger() override;
 
-	void updateMouseButtonHints() override;
+    void coordinateEvent(RS_CoordinateEvent* e) override;
+
+    void setAngle1(double d);
+    double getAngle1();
+    void setAngle2(double d);
+    double getAngle2();
+    void setUseSameAngle2ForCopies(bool b);
+    bool isUseSameAngle2ForCopies();
+    bool isMirrorAngles();
+    void setMirrorAngles(bool b);
+
 protected:
-	  RS2::CursorType doGetMouseCursor(int status) override;
-   void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-   void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    bool isAllowTriggerOnEmptySelection() override;
 private:
-	std::unique_ptr<RS_Rotate2Data> data;
+    std::unique_ptr<RS_Rotate2Data> data;
+    void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
+
+    void doTrigger();
 };
 
 #endif

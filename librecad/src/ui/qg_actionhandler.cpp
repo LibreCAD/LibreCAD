@@ -747,12 +747,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyMoveRotate(*document, *view);
             break;
         case RS2::ActionModifyRotate2:
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotate2NoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionModifyRotate2NoSelect:
             a = new RS_ActionModifyRotate2(*document, *view);
             break;
         case RS2::ActionModifyEntity:

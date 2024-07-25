@@ -337,15 +337,21 @@ RS_Arc* RS_PreviewActionInterface::previewRefArc(const RS_Vector &center, const 
 }
 
 
-// fixme - snap to relative angle support!!!
+
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint/*, const RS_Vector &refPoint2*/){
-    // fixme - use field/settings for value,
-    // fixme - enabling/disabling check by settings
+    double angle = center.angleTo(refPoint);
+    previewSnapAngleMark(center, angle);
+
+}
+
+// fixme - snap to relative angle support!!!
+void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, double angle) {// fixme - use field/settings for value,
+// fixme - enabling/disabling check by settings
     int radiusInPixels = 20; // todo - move to settings
     int lineInPixels = radiusInPixels * 2; // todo - move to settings
     double radius = graphicView->toGraphDX(radiusInPixels);
     double lineLength = graphicView->toGraphDX(lineInPixels);
-    double angle = center.angleTo(refPoint);
+
     angle = RS_Math::correctAnglePlusMinusPi(angle);
     if (LC_LineMath::isMeaningfulAngle(angle)){
         previewRefArc(RS_ArcData(center, radius, 0, angle, false));

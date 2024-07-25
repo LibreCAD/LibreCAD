@@ -1084,6 +1084,8 @@ set(SOURCES
         librecad/src/ui/lc_optionswidgetsholder.h
 		librecad/src/ui/lc_snapoptionswidgetsholder.cpp
 		librecad/src/ui/lc_snapoptionswidgetsholder.h
+		librecad/src/ui/forms/lc_rotate2options.cpp
+		librecad/src/ui/forms/lc_rotate2options.h
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
