@@ -552,3 +552,12 @@ bool RS_ActionInterface::isControl(const QMouseEvent *e){
 bool RS_ActionInterface::isShift(const QMouseEvent *e){
     return  e->modifiers() & Qt::ShiftModifier;
 }
+
+void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
+    auto ce = RS_CoordinateEvent(coord);
+    coordinateEvent(&ce);
+}
+
+void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
+    fireCoordinateEvent(snapPoint(e));
+}

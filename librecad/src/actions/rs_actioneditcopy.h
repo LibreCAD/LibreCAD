@@ -27,7 +27,8 @@
 #ifndef RS_ACTIONEDITCOPY_H
 #define RS_ACTIONEDITCOPY_H
 
-#include "rs_actioninterface.h"
+#include "qg_actionhandler.h"
+#include "rs_previewactioninterface.h"
 
 /**
  * This action class can handle user events for copying or cutting entities 
@@ -35,7 +36,7 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionEditCopy : public RS_ActionInterface {
+class RS_ActionEditCopyPaste :public RS_PreviewActionInterface {
 Q_OBJECT
     /**
      * Action States.
@@ -45,10 +46,16 @@ Q_OBJECT
     };
 
 public:
-    RS_ActionEditCopy(bool copy,
-                      RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-    ~RS_ActionEditCopy() override;
+    enum ActionMode{
+        CUT,
+        COPY,
+        PASTE
+    };
+
+    RS_ActionEditCopyPaste(ActionMode mode,
+                           RS_EntityContainer& container,
+                           RS_GraphicView& graphicView);
+    ~RS_ActionEditCopyPaste() override;
 
     void init(int status) override;
     void trigger() override;
@@ -57,8 +64,8 @@ public:
     void updateMouseButtonHints() override;
 protected:
     /** Copy (true) or cut (false) */
-    bool copy = false;
-
+    ActionMode mode;
+    bool invokedWithControl = false;
     std::unique_ptr<RS_Vector> referencePoint;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;

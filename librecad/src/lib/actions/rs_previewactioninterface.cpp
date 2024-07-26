@@ -424,15 +424,6 @@ bool RS_PreviewActionInterface::is(RS_Entity *e, RS2::EntityType type) const{
     return  e != nullptr && e->is(type);
 }
 
-void RS_PreviewActionInterface::fireCoordinateEvent(const RS_Vector &coord){
-    auto ce = RS_CoordinateEvent(coord);
-    coordinateEvent(&ce);
-}
-
-void RS_PreviewActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
-    fireCoordinateEvent(snapPoint(e));
-}
-
 bool RS_PreviewActionInterface::addToDocumentUndoable(RS_Undoable *e) const{
     // upd. undo list:
     if (document){

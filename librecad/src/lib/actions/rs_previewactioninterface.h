@@ -117,8 +117,6 @@ protected:
     bool isCircle(RS_Entity*  e){return is(e, RS2::EntityCircle);};
     bool isArc(RS_Entity*  e){return is(e, RS2::EntityArc);};
     bool isEllipse(RS_Entity*  e){return is(e, RS2::EntityEllipse);};
-    void fireCoordinateEvent(const RS_Vector& coord);
-    void fireCoordinateEventForSnap(QMouseEvent *e);
     bool addToDocumentUndoable(RS_Undoable* e) const;
     void previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint);
     RS_Entity *catchModifiableEntity(QMouseEvent *e, const EntityTypeList &enTypeList);

@@ -203,6 +203,9 @@ protected:
     virtual bool doProcessCommand([[maybe_unused]]int status, const QString &command);
     virtual QString getAdditionalHelpMessage();
     virtual QString prepareCommand(RS_CommandEvent *e) const;
+
+    void fireCoordinateEvent(const RS_Vector& coord);
+    void fireCoordinateEventForSnap(QMouseEvent *e);
 };
 
 

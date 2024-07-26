@@ -312,7 +312,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             }
             // fall-through
         case RS2::ActionEditCutNoSelect:
-            a = new RS_ActionEditCopy(false, *document, *view);
+            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT, *document, *view);
             break;
         case RS2::ActionEditCopy:
             if(!document->countSelected()){
@@ -321,10 +321,11 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             }
             // fall-through
         case RS2::ActionEditCopyNoSelect:
-            a = new RS_ActionEditCopy(true, *document, *view);
+            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY, *document, *view);
             break;
         case RS2::ActionEditPaste:
-            a = new RS_ActionEditPaste(*document, *view);
+              a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::PASTE, *document, *view);
+//            a = new RS_ActionEditPaste(*document, *view);
             break;
         case RS2::ActionOrderBottom:
             orderType = RS2::ActionOrderBottom;
