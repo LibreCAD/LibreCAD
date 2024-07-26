@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QMouseEvent>
 
 #include "rs_actioneditcopy.h"
@@ -89,7 +88,6 @@ void RS_ActionEditCopyPaste::trigger() {
             break;
         }
     }
-
 }
 
 void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {

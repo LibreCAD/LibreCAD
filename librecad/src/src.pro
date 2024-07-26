@@ -137,6 +137,7 @@ HEADERS += \
     actions/lc_actiondrawparabola4points.h \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actiondrawstar.h \
+    actions/lc_actioneditpastetransform.h \
     actions/lc_actioninfopickcoordinates.h \
     actions/lc_actioninfoproperties.h \
     actions/lc_actionmodifybase.h \
@@ -275,6 +276,7 @@ HEADERS += \
     ui/forms/lc_modifymirroroptions.h \
     ui/forms/lc_modifystretchoptions.h \
     ui/forms/lc_moveoptions.h \
+    ui/forms/lc_pastetransformoptions.h \
     ui/forms/lc_rotate2options.h \
     ui/generic/lc_flexlayout.h \
     ui/forms/lc_linefrompointtolineoptions.h \
@@ -337,6 +339,7 @@ SOURCES += \
     actions/lc_actiondrawparabola4points.cpp \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actiondrawstar.cpp \
+    actions/lc_actioneditpastetransform.cpp \
     actions/lc_actioninfopickcoordinates.cpp \
     actions/lc_actioninfoproperties.cpp \
     actions/lc_actionmodifybase.cpp \
@@ -457,6 +460,7 @@ SOURCES += \
     ui/forms/lc_modifymirroroptions.cpp \
     ui/forms/lc_modifystretchoptions.cpp \
     ui/forms/lc_moveoptions.cpp \
+    ui/forms/lc_pastetransformoptions.cpp \
     ui/forms/lc_rotate2options.cpp \
     ui/generic/lc_flexlayout.cpp \
     ui/forms/lc_linefrompointtolineoptions.cpp \
@@ -1017,6 +1021,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_modifymirroroptions.ui \
     ui/forms/lc_modifystretchoptions.ui \
     ui/forms/lc_moveoptions.ui \
+    ui/forms/lc_pastetransformoptions.ui \
     ui/forms/lc_rectangle3pointsoptions.ui \
     ui/forms/lc_rectangle1pointoptions.ui \
     ui/forms/lc_rectangle2pointsoptions.ui \

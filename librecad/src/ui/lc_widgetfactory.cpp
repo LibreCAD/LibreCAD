@@ -269,6 +269,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "EditCut",
         "EditCopy",
         "EditPaste",
+        "EditPasteTransform",
         "ViewGrid",
         "ModifyDeleteQuick",
         "EditKillAllActions",
@@ -432,7 +433,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     file->addAction(a_map["FilePrintPreview"]);
 
     auto *edit = createGenericToolbarTR("Edit", tbPolicy, {
-        "EditKillAllActions", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste"
+        "EditKillAllActions", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste","EditPasteTransform"
     });
 
     auto *order = createGenericToolbarTR("Order", tbPolicy, {
@@ -578,6 +579,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "EditCut",
         "EditCopy",
         "EditPaste",
+        "EditPasteTransform",
         "ModifyDeleteQuick"
     });
 

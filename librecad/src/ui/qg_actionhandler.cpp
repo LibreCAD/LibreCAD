@@ -198,6 +198,7 @@
 #include "lc_actionmodifylinegap.h"
 #include "lc_actioninfoproperties.h"
 #include "lc_actioninfopickcoordinates.h"
+#include "lc_actioneditpastetransform.h"
 
 /**
  * Constructor
@@ -326,6 +327,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionEditPaste:
               a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::PASTE, *document, *view);
 //            a = new RS_ActionEditPaste(*document, *view);
+            break;
+        case RS2::ActionEditPasteTransform:
+            a = new LC_ActionEditPasteTransform(*document, *view);
             break;
         case RS2::ActionOrderBottom:
             orderType = RS2::ActionOrderBottom;

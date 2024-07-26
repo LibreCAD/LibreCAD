@@ -417,13 +417,14 @@ void LC_ActionFactory::createSelectActionsUncheckable(QMap<QString, QAction *> &
 
 void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
     createActionHandlerActions(map, group, {
-        {"EditUndo",            RS2::ActionEditUndo,            "&Undo",             ":/icons/undo.svg", "edit-undo"},
-        {"EditRedo",            RS2::ActionEditRedo,            "&Redo",             ":/icons/redo.svg", "edit-redo"},
-        {"EditCut",             RS2::ActionEditCut,             "Cu&t",              ":/icons/cut.svg", "edit-cut"},
-        {"EditCopy",            RS2::ActionEditCopy,            "&Copy",             ":/icons/copy.svg", "edit-copy"},
-        {"EditPaste",           RS2::ActionEditPaste,           "&Paste",            ":/icons/paste.svg", "edit-paste"},
-        {"ModifyDeleteQuick",   RS2::ActionModifyDelete,        "&Delete selected",  ":/icons/delete.svg"},
-        {"EditKillAllActions",  RS2::ActionEditKillAllActions,  "&Selection pointer",":/icons/cursor.svg","go-previous-view"}
+        {"EditUndo",           RS2::ActionEditUndo,           "&Undo",              ":/icons/undo.svg",            "edit-undo"},
+        {"EditRedo",           RS2::ActionEditRedo,           "&Redo",              ":/icons/redo.svg",            "edit-redo"},
+        {"EditCut",            RS2::ActionEditCut,            "Cu&t",               ":/icons/cut.svg",             "edit-cut"},
+        {"EditCopy",           RS2::ActionEditCopy,           "&Copy",              ":/icons/copy.svg",            "edit-copy"},
+        {"EditPaste",          RS2::ActionEditPaste,          "&Paste",             ":/icons/paste.svg",           "edit-paste"},
+        {"EditPasteTransform", RS2::ActionEditPasteTransform, "&Paste Transform",   ":/icons/paste_transform.svg", "edit-paste"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDelete,       "&Delete selected",   ":/icons/delete.svg"},
+        {"EditKillAllActions", RS2::ActionEditKillAllActions, "&Selection pointer", ":/icons/cursor.svg",          "go-previous-view"}
     });
 }
 

@@ -199,6 +199,7 @@ namespace RS2 {
         ActionEditCopy,
         ActionEditCopyNoSelect,
         ActionEditPaste,
+        ActionEditPasteTransform,
         ActionOrderNoSelect,
         ActionOrderBottom,
         ActionOrderLower,

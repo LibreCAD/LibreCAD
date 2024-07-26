@@ -74,7 +74,7 @@ namespace {
             // graphics from the clipboard need to be scaled. From the part lib not:
             RS2::Unit sourceUnit = source->getUnit();
             RS2::Unit targetUnit = graphic.getUnit();
-            factor = RS_Units::convert(1.0, sourceUnit, targetUnit);
+            factor = RS_Units::convert(factor, sourceUnit, targetUnit);
         }
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::paste: pasting scale factor: %g", factor);
         // scale factor as vector
@@ -673,7 +673,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
     RS_Block* b = addNewBlock(name_new, *graphic);
 
     // create insert object for the paste block
-    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, 0., 1, 1, RS_Vector(0.0,0.0));
+    RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
     RS_Insert* i = new RS_Insert(document, di);
     i->setLayerToActive();
     i->setPenToActive();
