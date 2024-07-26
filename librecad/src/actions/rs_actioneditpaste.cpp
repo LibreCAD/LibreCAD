@@ -63,8 +63,9 @@ void RS_ActionEditPaste::trigger() {
     m.paste(RS_PasteData(*targetPoint, 1.0, 0.0, false, ""));
 
     graphicView->redraw(RS2::RedrawDrawing);
-
-    finish(false);
+    if (finishOnTrigger) {
+       finish(false);
+    }
 }
 
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
@@ -91,6 +92,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
 }
 
 void RS_ActionEditPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+    finishOnTrigger = !isControl(e);
     fireCoordinateEventForSnap(e);
 }
 
@@ -108,7 +110,7 @@ void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionEditPaste::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Set reference point");
+            updateMouseWidgetTRCancel("Set paste reference point", MOD_CTRL("Paste Multiple"));
             break;
         default:
             updateMouseWidget();

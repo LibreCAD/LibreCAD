@@ -59,6 +59,7 @@ public:
     void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
 protected:
+    bool finishOnTrigger = true;
     std::unique_ptr<RS_Vector> targetPoint;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
