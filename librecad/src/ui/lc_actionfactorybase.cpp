@@ -10,7 +10,7 @@ LC_ActionFactoryBase::LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_Acti
 QAction *LC_ActionFactoryBase::createAction_MW(const char *name, const char *slot, const char *text,
                                            const char *iconName, const char *themeIconName,
                                            QActionGroup *parent, QMap<QString, QAction *> &a_map, bool useToggled) const {
-    QAction *action = doCreateAction(a_map, name, text, iconName, themeIconName, parent);
+    QAction *action = doCreateActionTR(a_map, name, text, iconName, themeIconName, parent);
     if (slot != nullptr) {
         if (useToggled) {
             connect(action, SIGNAL(toggled(bool)), main_window, slot);
@@ -25,7 +25,7 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
                                             const char *iconName, const char *themeIconName,
                                             QActionGroup *parent,
                                             QMap<QString, QAction *> &a_map) const{
-    QAction *action = doCreateAction(a_map, name, text, iconName, themeIconName, parent);
+    QAction *action = doCreateActionTR(a_map, name, text, iconName, themeIconName, parent);
     // LC_ERR <<  " ** original action handler" << this->action_handler;
     // well, a bit crazy hacky code to let the lambda properly capture action handler... without local var, class member is not captured
     QG_ActionHandler* capturedHandler = action_handler;
@@ -36,9 +36,9 @@ QAction * LC_ActionFactoryBase::createAction_AH(const char* name, RS2::ActionTyp
     return action;
 }
 
-QAction *LC_ActionFactoryBase::doCreateAction(QMap<QString, QAction *> &a_map, const char* name,
-                                          const char* text, const char *iconName, const char *themeIconName,
-                                          QActionGroup *parent, const char* textDisambiguation) const {
+QAction *LC_ActionFactoryBase::doCreateActionTR(QMap<QString, QAction *> &a_map, const char* name,
+                                                const char* text, const char *iconName, const char *themeIconName,
+                                                QActionGroup *parent, const char* textDisambiguation) const {
     auto* action = new QAction( tr(text, textDisambiguation), parent);
     if (iconName != nullptr) {
         QIcon icon = QIcon(iconName);

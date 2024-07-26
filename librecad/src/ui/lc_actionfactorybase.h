@@ -38,8 +38,8 @@ protected:
     QG_ActionHandler* action_handler = nullptr;
     bool using_theme = false;
 
-    QAction* doCreateAction(QMap<QString, QAction *> &a_map, const char* name, const char* text, const char *iconName,
-                            const char *themeIconName,  QActionGroup *parent, const char* textDisambiguation = nullptr) const;
+    QAction* doCreateActionTR(QMap<QString, QAction *> &a_map, const char* name, const char* text, const char *iconName,
+                              const char *themeIconName, QActionGroup *parent, const char* textDisambiguation = nullptr) const;
 
     QAction *createAction_AH(const char* name, RS2::ActionType actionType, const char* text,
                              const char *iconName, const char *themeIconName,

@@ -295,16 +295,16 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 }
 
 void LC_WidgetFactory::createLeftSidebar(int columns, int icon_size){
-    auto* line = leftDocWidget("Line", line_actions, columns, icon_size);
-    auto* circle = leftDocWidget("Circle", circle_actions, columns, icon_size);
-    auto* curve = leftDocWidget("Curve", curve_actions, columns, icon_size);
-    auto* ellipse = leftDocWidget("Ellipse", ellipse_actions, columns, icon_size);
-    auto* polyline = leftDocWidget("Polyline", polyline_actions, columns, icon_size);
-    auto* select = leftDocWidget("Select", select_actions, columns, icon_size);
-    auto* dimension = leftDocWidget("Dimension", dimension_actions, columns, icon_size);
-    auto* modify = leftDocWidget("Modify", modify_actions, columns, icon_size);
-    auto* info = leftDocWidget("Info", info_actions, columns, icon_size);
-    auto* order = leftDocWidget("Order", order_actions, columns, icon_size);
+    auto* line = leftDocWidgetTR("Line", line_actions, columns, icon_size);
+    auto* circle = leftDocWidgetTR("Circle", circle_actions, columns, icon_size);
+    auto* curve = leftDocWidgetTR("Curve", curve_actions, columns, icon_size);
+    auto* ellipse = leftDocWidgetTR("Ellipse", ellipse_actions, columns, icon_size);
+    auto* polyline = leftDocWidgetTR("Polyline", polyline_actions, columns, icon_size);
+    auto* select = leftDocWidgetTR("Select", select_actions, columns, icon_size);
+    auto* dimension = leftDocWidgetTR("Dimension", dimension_actions, columns, icon_size);
+    auto* modify = leftDocWidgetTR("Modify", modify_actions, columns, icon_size);
+    auto* info = leftDocWidgetTR("Info", info_actions, columns, icon_size);
+    auto* order = leftDocWidgetTR("Order", order_actions, columns, icon_size);
 
     main_window->addDockWidget(Qt::LeftDockWidgetArea, line);
     main_window->tabifyDockWidget(line, polyline);
@@ -426,21 +426,21 @@ void LC_WidgetFactory::createRightSidebar(QG_ActionHandler* action_handler){
 void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto *file = createGenericToolbar("File", tbPolicy, {});
+    auto *file = createGenericToolbarTR("File", tbPolicy, {});
     file->addActions(file_actions);
     file->addAction(a_map["FilePrint"]);
     file->addAction(a_map["FilePrintPreview"]);
 
-    auto *edit = createGenericToolbar("Edit", tbPolicy, {
+    auto *edit = createGenericToolbarTR("Edit", tbPolicy, {
         "EditKillAllActions", "", "EditUndo", "EditRedo", "", "EditCut", "EditCopy", "EditPaste"
     });
 
-    auto *order = createGenericToolbar("Order", tbPolicy, {
+    auto *order = createGenericToolbarTR("Order", tbPolicy, {
         "OrderTop", "OrderBottom", "OrderRaise", "OrderLower"
     });
     order->hide();
 
-    auto *view = createGenericToolbar("View", tbPolicy, {
+    auto *view = createGenericToolbarTR("View", tbPolicy, {
         "ViewGrid", "ViewDraft", "", "ZoomRedraw", "ZoomIn",
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
@@ -459,14 +459,14 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
     pen_toolbar->setObjectName("pen_toolbar");
     pen_toolbar->addActions(pen_actions);
 
-    options_toolbar = createGenericToolbar("Tool Options", tbPolicy, {});
+    options_toolbar = createGenericToolbarTR("Tool Options", tbPolicy, {});
     
-    auto *dockareas = createGenericToolbar("Dock Areas", tbPolicy, {
+    auto *dockareas = createGenericToolbarTR("Dock Areas", tbPolicy, {
         "LeftDockAreaToggle", "RightDockAreaToggle", "TopDockAreaToggle",
         "BottomDockAreaToggle", "FloatingDockwidgetsToggle"
     });
     
-    auto *creators = createGenericToolbar("Creators", tbPolicy, {
+    auto *creators = createGenericToolbarTR("Creators", tbPolicy, {
         "InvokeMenuCreator", "InvokeToolbarCreator"
     });
 
@@ -487,15 +487,15 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
 void LC_WidgetFactory::createCADToolbars(){
     QSizePolicy tbPolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
 
-    auto* line = createGenericToolbarWithActions("Line", tbPolicy, line_actions);
-    auto* circle = createGenericToolbarWithActions("Circle", tbPolicy, circle_actions);
-    auto* curve = createGenericToolbarWithActions("Curve", tbPolicy, curve_actions);
-    auto* ellipse = createGenericToolbarWithActions("Ellipse", tbPolicy, ellipse_actions);
-    auto* polyline = createGenericToolbarWithActions("Polyline", tbPolicy, polyline_actions);
-    auto* select = createGenericToolbarWithActions("Select", tbPolicy, select_actions);
-    auto* dimension = createGenericToolbarWithActions("Dimension", tbPolicy, dimension_actions);
-    auto* modify = createGenericToolbarWithActions("Modify", tbPolicy, modify_actions);
-    auto* info = createGenericToolbarWithActions("Info", tbPolicy, info_actions);
+    auto* line = toolbarWithActionsTR("Line", tbPolicy, line_actions);
+    auto* circle = toolbarWithActionsTR("Circle", tbPolicy, circle_actions);
+    auto* curve = toolbarWithActionsTR("Curve", tbPolicy, curve_actions);
+    auto* ellipse = toolbarWithActionsTR("Ellipse", tbPolicy, ellipse_actions);
+    auto* polyline = toolbarWithActionsTR("Polyline", tbPolicy, polyline_actions);
+    auto* select = toolbarWithActionsTR("Select", tbPolicy, select_actions);
+    auto* dimension = toolbarWithActionsTR("Dimension", tbPolicy, dimension_actions);
+    auto* modify = toolbarWithActionsTR("Modify", tbPolicy, modify_actions);
+    auto* info = toolbarWithActionsTR("Info", tbPolicy, info_actions);
 
     addToBottom(line);
     addToBottom(circle);
@@ -509,19 +509,19 @@ void LC_WidgetFactory::createCADToolbars(){
 }
 
 QToolBar *LC_WidgetFactory::createCategoriesToolbar() {
-    auto *toolbar = createGenericToolbar("Categories",
-                                         QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
+    auto *toolbar = createGenericToolbarTR("Categories",
+                                           QSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding), {});
 
-    toolButton(toolbar, "Lines", ":/icons/line.svg", line_actions);
-    toolButton(toolbar, "Circles", ":/icons/circle.svg", circle_actions);
-    toolButton(toolbar, "Freehand", ":/icons/line_freehand.svg", curve_actions);
-    toolButton(toolbar, "Ellipses", ":/icons/ellipses.svg", ellipse_actions);
-    toolButton(toolbar, "PolyLines", ":/icons/polylines.svg", polyline_actions);
-    toolButton(toolbar, "Select", ":/icons/select.svg", select_actions);
-    toolButton(toolbar, "Dimensions", ":/icons/dim_horizontal.svg", dimension_actions);
-    toolButton(toolbar, "Modify", ":/icons/move_rotate.svg", modify_actions);
-    toolButton(toolbar, "Measure", ":/icons/measure.svg", info_actions);
-    toolButton(toolbar, "Order", ":/icons/order.svg", order_actions);
+    toolButtonTR(toolbar, "Lines", ":/icons/line.svg", line_actions);
+    toolButtonTR(toolbar, "Circles", ":/icons/circle.svg", circle_actions);
+    toolButtonTR(toolbar, "Freehand", ":/icons/line_freehand.svg", curve_actions);
+    toolButtonTR(toolbar, "Ellipses", ":/icons/ellipses.svg", ellipse_actions);
+    toolButtonTR(toolbar, "PolyLines", ":/icons/polylines.svg", polyline_actions);
+    toolButtonTR(toolbar, "Select", ":/icons/select.svg", select_actions);
+    toolButtonTR(toolbar, "Dimensions", ":/icons/dim_horizontal.svg", dimension_actions);
+    toolButtonTR(toolbar, "Modify", ":/icons/move_rotate.svg", modify_actions);
+    toolButtonTR(toolbar, "Measure", ":/icons/measure.svg", info_actions);
+    toolButtonTR(toolbar, "Order", ":/icons/order.svg", order_actions);
 
     addToLeft(toolbar);
     return toolbar;
@@ -539,12 +539,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         ""
     });
 
-    subMenu(file_menu, "Import", ":/icons/import.svg", {
+    subMenuTR(file_menu, "Import", ":/icons/import.svg", {
         "DrawImage",
         "BlocksImport"
     });
 
-    subMenu(file_menu, "Export", ":/icons/export.svg", {
+    subMenuTR(file_menu, "Export", ":/icons/export.svg", {
         "FileExportMakerCam",
         "FilePrintPDF",
         "FileExport"
@@ -581,7 +581,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "ModifyDeleteQuick"
     });
 
-    auto plugins = menu("Pl&ugins", menu_bar);
+    auto plugins = menuTR("Pl&ugins", menu_bar);
 
     auto view = menu("&View", menu_bar, {
         "Fullscreen",
@@ -599,17 +599,17 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     });
 
     // fixme - MTesxt& text - remove from dimensions actions...
-    auto tools = menu("&Tools", menu_bar);
-    subMenuWithActions(tools, "&Line", ":/icons/line.svg", line_actions);
-    subMenuWithActions(tools, "&Circle", ":/icons/circle.svg", circle_actions);
-    subMenuWithActions(tools, "&Curve", ":/icons/line_freehand.svg", curve_actions);
-    subMenuWithActions(tools, "&Ellipse", ":/icons/ellipses.svg", ellipse_actions);
-    subMenuWithActions(tools, "&Polyline", ":/icons/polylines_polyline.svg", polyline_actions);
-    subMenuWithActions(tools, "&Select", ":/icons/select.svg", select_actions);
-    subMenuWithActions(tools, "Dime&nsion", ":/icons/dim_horizontal.svg", dimension_actions);
-    subMenuWithActions(tools, "&Modify", ":/icons/move_rotate.svg", modify_actions);
-    subMenuWithActions(tools, "&Info", ":/icons/measure.svg", info_actions);
-    subMenuWithActions(tools, "&Order", ":/icons/order.svg", order_actions);
+    auto tools = menuTR("&Tools", menu_bar);
+    subMenuWithActionsTR(tools, "&Line", ":/icons/line.svg", line_actions);
+    subMenuWithActionsTR(tools, "&Circle", ":/icons/circle.svg", circle_actions);
+    subMenuWithActionsTR(tools, "&Curve", ":/icons/line_freehand.svg", curve_actions);
+    subMenuWithActionsTR(tools, "&Ellipse", ":/icons/ellipses.svg", ellipse_actions);
+    subMenuWithActionsTR(tools, "&Polyline", ":/icons/polylines_polyline.svg", polyline_actions);
+    subMenuWithActionsTR(tools, "&Select", ":/icons/select.svg", select_actions);
+    subMenuWithActionsTR(tools, "Dime&nsion", ":/icons/dim_horizontal.svg", dimension_actions);
+    subMenuWithActionsTR(tools, "&Modify", ":/icons/move_rotate.svg", modify_actions);
+    subMenuWithActionsTR(tools, "&Info", ":/icons/measure.svg", info_actions);
+    subMenuWithActionsTR(tools, "&Order", ":/icons/order.svg", order_actions);
 
     windows_menu = menu("&Drawings", menu_bar, {
         "Fullscreen" // temp way to show this menu on OS X
@@ -618,17 +618,17 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     connect(windows_menu, SIGNAL(aboutToShow()),
             main_window, SLOT(slotWindowsMenuAboutToShow()));
 
-    auto help = menu("&Help", menu_bar);
+    auto help = menuTR("&Help", menu_bar);
 
-    subMenuWithActions(help, "On&line", nullptr, {
-        urlAction("&Wiki", "https://dokuwiki.librecad.org/"),
-        urlAction("User's &Manual", "https://librecad.readthedocs.io/"),
-        urlAction("&Commands", "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
-        urlAction("&Style Sheets", "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
-        urlAction("Wid&gets", "https://librecad.readthedocs.io/en/latest/ref/menu.html#widgets"),
-        urlAction("&Forum", "https://forum.librecad.org/"),
-        urlAction("Zulip &Chat", "https://librecad.zulipchat.com/"),
-        urlAction("&Release Information", "https://github.com/LibreCAD/LibreCAD/releases")
+    subMenuWithActionsTR(help, "On&line", nullptr, {
+        urlActionTR("&Wiki", "https://dokuwiki.librecad.org/"),
+        urlActionTR("User's &Manual", "https://librecad.readthedocs.io/"),
+        urlActionTR("&Commands", "https://librecad.readthedocs.io/en/latest/ref/tools.html"),
+        urlActionTR("&Style Sheets", "https://librecad.readthedocs.io/en/latest/ref/customize.html#style-sheets"),
+        urlActionTR("Wid&gets", "https://librecad.readthedocs.io/en/latest/ref/menuTR.html#widgets"),
+        urlActionTR("&Forum", "https://forum.librecad.org/"),
+        urlActionTR("Zulip &Chat", "https://librecad.zulipchat.com/"),
+        urlActionTR("&Release Information", "https://github.com/LibreCAD/LibreCAD/releases")
     });
 
     auto help_about = new QAction(QIcon(":/main/librecad.png"), QC_ApplicationWindow::tr("About"), main_window);
@@ -640,11 +640,11 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     help->addSeparator();
     help->addAction(help_about);
     help->addAction(license);
-    help->addAction(urlAction( "&Donate","https://librecad.org/donate.html"));
+    help->addAction(urlActionTR("&Donate", "https://librecad.org/donate.html"));
 
-    auto widgets = menu("Widgets", menu_bar);
+    auto widgets = menuTR("Widgets", menu_bar);
 
-    auto *dockareas = subMenu(widgets, "Dock Areas", nullptr, {
+    auto *dockareas = subMenuTR(widgets, "Dock Areas", nullptr, {
         "LeftDockAreaToggle",
         "RightDockAreaToggle",
         "TopDockAreaToggle",
@@ -652,7 +652,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "FloatingDockwidgetsToggle"
     });
 
-    auto* dockwidgets_menu = doCreateSubMenu(widgets, "Dock Wid&gets", nullptr);
+    auto* dockwidgets_menu = doCreateSubMenuTR(widgets, "Dock Wid&gets", nullptr);
 
     dockwidgets_menu->addSeparator();
 
@@ -664,7 +664,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
             dockwidgets_menu->addAction(dw->toggleViewAction());
     }
 
-    addMenuAction(dockwidgets_menu, "RedockWidgets");
+    addAction(dockwidgets_menu, "RedockWidgets");
 
     dockwidgets_menu->addSeparator();
 
@@ -673,7 +673,7 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
             dockwidgets_menu->addAction(dw->toggleViewAction());
     }
 
-    auto* toolbars = doCreateSubMenu(widgets, "&Toolbars", nullptr);
+    auto* toolbars = doCreateSubMenuTR(widgets, "&Toolbars", nullptr);
 
     QList<QToolBar*> toolbarsList = main_window->findChildren<QToolBar*>();
 
@@ -687,8 +687,8 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     widgets->addMenu(dockwidgets_menu);
     widgets->addMenu(toolbars);
 
-    addMenuAction(widgets, "InvokeMenuCreator");
-    addMenuAction(widgets, "InvokeToolbarCreator");
+    addAction(widgets, "InvokeMenuCreator");
+    addAction(widgets, "InvokeToolbarCreator");
 
     menu_bar->addMenu(file_menu);
     menu_bar->addMenu(settings);
@@ -701,14 +701,14 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
     menu_bar->addMenu(help);
 }
 
-void LC_WidgetFactory::addMenuAction(QMenu* menu, const char* actionName){
+void LC_WidgetFactory::addAction(QMenu* menu, const char* actionName){
     QAction *action = a_map[actionName];
     if (action != nullptr) {
         menu->addAction(action);
     }
 }
 
-QAction* LC_WidgetFactory::urlAction(const char* title, const char* url ){
+QAction* LC_WidgetFactory::urlActionTR(const char* title, const char* url ){
     auto* result    = new QAction( QC_ApplicationWindow::tr( title), main_window);
     connect(result, &QAction::triggered, main_window, [=](){
         QDesktopServices::openUrl( QUrl( url));
@@ -717,7 +717,7 @@ QAction* LC_WidgetFactory::urlAction(const char* title, const char* url ){
 }
 
 QMenu*  LC_WidgetFactory::menu(const char* title, QMenuBar* parent, const std::vector<QString> &actionNames){
-  QMenu* result = menu(title, parent);
+  QMenu* result = menuTR(title, parent);
     addActions(result, actionNames);
     return result;
 }
@@ -736,7 +736,7 @@ void LC_WidgetFactory::addActions(QMenu *result, const std::vector<QString> &act
     }
 }
 
-QMenu*  LC_WidgetFactory::menu(const char* title, QMenuBar* parent){
+QMenu*  LC_WidgetFactory::menuTR(const char* title, QMenuBar* parent){
     auto result =  new QMenu(QC_ApplicationWindow::tr(title), parent);
     QString name(title);
     name.remove(' ');
@@ -746,19 +746,19 @@ QMenu*  LC_WidgetFactory::menu(const char* title, QMenuBar* parent){
     return result;
 }
 
-QMenu*  LC_WidgetFactory::subMenu(QMenu* parent, const char* title, const char* icon, const std::vector<QString> &actionNames){
-    QMenu *result = doCreateSubMenu(parent, title, icon);
+QMenu*  LC_WidgetFactory::subMenuTR(QMenu* parent, const char* title, const char* icon, const std::vector<QString> &actionNames){
+    QMenu *result = doCreateSubMenuTR(parent, title, icon);
     addActions(result, actionNames);
     return result;
 }
 
-QMenu*  LC_WidgetFactory::subMenuWithActions(QMenu* parent, const char* title, const char* icon, const QList<QAction*> &actions){
-    QMenu *sub_menu = doCreateSubMenu(parent, title, icon);
+QMenu*  LC_WidgetFactory::subMenuWithActionsTR(QMenu* parent, const char* title, const char* icon, const QList<QAction*> &actions){
+    QMenu *sub_menu = doCreateSubMenuTR(parent, title, icon);
     sub_menu->addActions(actions);
     return sub_menu;
 }
 
-QMenu *LC_WidgetFactory::doCreateSubMenu(QMenu *parent, const char *title, const char *icon) const {
+QMenu *LC_WidgetFactory::doCreateSubMenuTR(QMenu *parent, const char *title, const char *icon) const {
     auto sub_menu = parent->addMenu(QC_ApplicationWindow::tr(title));
     if (icon != nullptr) {
         sub_menu->setIcon(QIcon(icon));
@@ -771,7 +771,7 @@ QMenu *LC_WidgetFactory::doCreateSubMenu(QMenu *parent, const char *title, const
     return sub_menu;
 }
 
-QToolBar* LC_WidgetFactory::createGenericToolbar(const char* title, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
+QToolBar* LC_WidgetFactory::createGenericToolbarTR(const char* title, QSizePolicy toolBarPolicy, const std::vector<QString> &actionNames){
     auto* result = new QToolBar(QC_ApplicationWindow::tr(title), main_window);
     result->setSizePolicy(toolBarPolicy);
     QString name(title);
@@ -788,7 +788,7 @@ QToolBar* LC_WidgetFactory::createGenericToolbar(const char* title, QSizePolicy 
     return result;
 }
 
-QToolBar* LC_WidgetFactory::createGenericToolbarWithActions(const char* title, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
+QToolBar* LC_WidgetFactory::toolbarWithActionsTR(const char* title, QSizePolicy toolBarPolicy, const QList<QAction*> &actions){
     auto* result = new QToolBar(QC_ApplicationWindow::tr(title), main_window);
     result->setSizePolicy(toolBarPolicy);
     QString name(title);
@@ -805,7 +805,7 @@ void  LC_WidgetFactory::fillActionsList(QList<QAction *> &list, const std::vecto
     }
 }
 
-LC_DockWidget* LC_WidgetFactory::leftDocWidget(const char* title, const QList<QAction*> &actions, int columns, int iconSize){
+LC_DockWidget* LC_WidgetFactory::leftDocWidgetTR(const char* title, const QList<QAction*> &actions, int columns, int iconSize){
     auto* result = new LC_DockWidget(main_window);
     QString name(title);
     result->setObjectName("dock_" + name.toLower());
@@ -815,7 +815,7 @@ LC_DockWidget* LC_WidgetFactory::leftDocWidget(const char* title, const QList<QA
     return result;
 }
 
-QToolButton*LC_WidgetFactory::toolButton(QToolBar* toolbar, const char* tooltip, const char* icon, const QList<QAction*>& actions){
+QToolButton*LC_WidgetFactory::toolButtonTR(QToolBar* toolbar, const char* tooltip, const char* icon, const QList<QAction*>& actions){
     auto * result = new QToolButton;
     result->setPopupMode(QToolButton::InstantPopup);
     result->setIcon(QIcon(icon));
