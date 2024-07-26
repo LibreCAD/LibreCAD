@@ -30,8 +30,9 @@
 #include "qg_actionhandler.h"
 #include "rs_previewactioninterface.h"
 
+// fixme - add disabling of paste actions if clipboard is empty!
 /**
- * This action class can handle user events for copying or cutting entities 
+ * This action class can handle user events for copying,cutting and pasting entities
  * to the clipboard.
  *
  * @author Andrew Mustun
