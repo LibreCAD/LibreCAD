@@ -259,11 +259,11 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
             bool ctrlPressed = isControl(e);
             bool addClone = true;
 
-            RS_Entity *revMovingEntity = pPoints->refMovingEntity;
-            RS2::EntityType type = revMovingEntity->rtti();
+            RS_Entity *refMovingEntity = pPoints->refMovingEntity;
+            RS2::EntityType type = refMovingEntity->rtti();
             switch (type) {
                 case RS2::EntityLine: {
-                    auto *refMovingLine = dynamic_cast<RS_Line *>(revMovingEntity);
+                    auto *refMovingLine = dynamic_cast<RS_Line *>(refMovingEntity);
                     RS_Vector basePoint;
                     if (refMovingLine->getStartpoint() == pPoints->v1){
                         basePoint = refMovingLine->getEndpoint();
@@ -286,7 +286,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     break;
                 }
                 case RS2::EntityArc: {
-                    auto *refMovingArc = dynamic_cast<RS_Arc *>(revMovingEntity);
+                    auto *refMovingArc = dynamic_cast<RS_Arc *>(refMovingEntity);
                     auto *clone = dynamic_cast<RS_Arc *>(refMovingArc->clone());
 
                     if (ctrlPressed){ // for arc, we just correct angle of enpoint without changing the center and radius - if we move endpoint ref
@@ -324,6 +324,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                     }
                     break;
                 }
+                // FIXME - add additional processing for dimensions to ensure snapping of dimension lines (same as for creation of dims)
                 default: {
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
                     previewRefLine(pPoints->v2, pPoints->v1);
@@ -335,7 +336,7 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
 
             if (addClone){
-                RS_Entity* clone = revMovingEntity->clone();
+                RS_Entity* clone = refMovingEntity->clone();
                 clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
                 preview->addEntity(clone);
             }
@@ -607,6 +608,7 @@ void RS_ActionDefault::goToNeutralStatus(){
     this->setStatus(Neutral);
 }
 
+// fixme - review and cleanup
 void RS_ActionDefault::commandEvent(RS_CommandEvent *e){
     QString c = e->getCommand().toLower();
 
