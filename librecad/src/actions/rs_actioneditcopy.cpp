@@ -53,15 +53,20 @@ RS_ActionEditCopyPaste::~RS_ActionEditCopyPaste() = default;
 
 void RS_ActionEditCopyPaste::init(int status) {
     RS_PreviewActionInterface::init(status);
-    //trigger();
+    *referencePoint = RS_Vector(false);
+    if (mode == CUT_QUICK || mode == COPY_QUICK) {
+        trigger();
+    }
 }
 
 void RS_ActionEditCopyPaste::trigger() {
     switch (mode){
         case CUT:
-        case COPY:{
+        case CUT_QUICK:
+        case COPY:
+        case COPY_QUICK:{
             RS_Modification m(*container, graphicView);
-            m.copy(*referencePoint, mode == CUT);
+            m.copy(*referencePoint, mode == CUT || mode == CUT_QUICK);
 
             updateSelectionWidget();
             if (invokedWithControl){
@@ -113,6 +118,8 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
                 drawPreview();
                 break;
             }
+            default:
+                break;
         }
     }
     else
@@ -148,6 +155,8 @@ void RS_ActionEditCopyPaste::updateMouseButtonHints() {
                 updateMouseWidgetTRCancel("Set paste reference point", MOD_CTRL("Paste Multiple"));
                 break;
             }
+            default:
+                break;
         }
         break;
     default:

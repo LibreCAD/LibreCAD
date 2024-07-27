@@ -433,15 +433,47 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     // start undo cycle for the container if we're cutting
     LC_UndoSection undo( document, cut && handleUndo);
 
-    bool invalidContainer {true};
-	// copy entities / layers / blocks
-	for(auto e: *container){
-        if (e && e->isSelected()) {
-            copyEntity(e, ref, cut);
-            invalidContainer = false;
+    bool selectedEntityFound{false};
+    if (ref.valid) { // explicit ref point set
+        // copy entities / layers / blocks
+        for (auto e: *container) {
+            if (e && e->isSelected()) {
+                copyEntity(e, ref, cut);
+                selectedEntityFound = true;
+            }
         }
     }
-    if (invalidContainer) {
+    else{ // no ref-point set
+        std::vector<RS_Entity*> selected;
+        RS_Vector min = RS_Vector(10e10, 10e10,0);
+        RS_Vector max = RS_Vector(-10e10, -10e10,0);
+        // first pass is for determine center point of selection that will be used as ref point
+        for (auto e: *container) {
+            if (e && e->isSelected()) {
+                const RS_Vector &entityMin = e->getMin();
+                const RS_Vector &entityMax = e->getMax();
+
+                min.x = std::min(min.x, entityMin.x);
+                min.y = std::min(min.y, entityMin.y);
+                max.x = std::max(max.x, entityMax.x);
+                max.y = std::max(max.y, entityMax.y);
+                selectedEntityFound = true;
+
+                selected.push_back(e);
+            }
+        }
+        
+        if (selectedEntityFound) {
+            RS_Vector selectionCenter = (min + max) / 2;
+
+            for (auto e: selected) {
+                copyEntity(e, selectionCenter, cut);              
+            }
+
+            selected.clear();
+        }
+    }
+    if (!selectedEntityFound) { // fixme - review, what for? 
         RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::copy: no valid container is selected");
     }
     else {
@@ -674,7 +706,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
 
     // create insert object for the paste block
     RS_InsertData di = RS_InsertData(b->getName(), ip, vfactor, data.angle, 1, 1, RS_Vector(0.0,0.0));
-    RS_Insert* i = new RS_Insert(document, di);
+    auto* i = new RS_Insert(document, di);
     i->setLayerToActive();
     i->setPenToActive();
     i->reparent(document);
@@ -718,7 +750,7 @@ void RS_Modification::paste(const RS_PasteData& data, RS_Graphic* source) {
         // no inserts should be selected except from paste block and insert
         container->setSelected(false);
         i->setSelected(true);
-        explode(false);
+        explode(false, true);
         document->removeEntity(i);
         b->clear();
         // if this call a destructor for the block?
@@ -2328,9 +2360,9 @@ void RS_Modification::deselectOriginals(bool remove)
  *
  * @param addList Entities to add.
  */
-void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList)
+void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList, bool forceUndoable)
 {
-    LC_UndoSection undo( document, handleUndo);
+    LC_UndoSection undo( document, handleUndo || forceUndoable);
 
     for (RS_Entity* e: addList) {
         if (e) {
@@ -3370,8 +3402,9 @@ static void update_exploded_children_recursively(
 /**
  * Removes the selected entity containers and adds the entities in them as
  * new single entities.
+ * @param forceUndoableOperation - flag that indicates that explode should be in undo section regardless of handleUndo flag (for paste transform)
  */
-bool RS_Modification::explode(const bool remove /*= true*/)
+bool RS_Modification::explode(const bool remove /*= true*/,  const bool forceUndoableOperation)
 {
     if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
@@ -3475,9 +3508,9 @@ bool RS_Modification::explode(const bool remove /*= true*/)
         }
     }
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    LC_UndoSection undo( document, handleUndo  || forceUndoableOperation); // bundle remove/add entities in one undoCycle
     deselectOriginals( remove);
-    addNewEntities(addList);
+    addNewEntities(addList, forceUndoableOperation);
     container->updateInserts();
 
     return true;

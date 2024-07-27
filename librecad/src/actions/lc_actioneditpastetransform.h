@@ -80,6 +80,8 @@ public:
     void setArrayAngle(double arrayAngle);
 
     void previewMultipleReferencePoints();
+
+    void init(int status) override;
 };
 
 #endif // LC_ACTIONEDITPASTETRANSFORM_H

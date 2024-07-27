@@ -315,6 +315,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionEditCutNoSelect:
             a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT, *document, *view);
             break;
+        case RS2::ActionEditCutQuick:
+            if(!document->countSelected()){
+                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCutQuickNoSelect);
+                break;
+            }
+            // fall-through
+        case RS2::ActionEditCutQuickNoSelect:
+            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::CUT_QUICK, *document, *view);
+            break;
         case RS2::ActionEditCopy:
             if(!document->countSelected()){
                 a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyNoSelect);
@@ -323,6 +332,15 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             // fall-through
         case RS2::ActionEditCopyNoSelect:
             a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY, *document, *view);
+            break;
+        case RS2::ActionEditCopyQuick:
+            if(!document->countSelected()){
+                a = new RS_ActionSelect(this, *document, *view, RS2::ActionEditCopyQuickNoSelect);
+                break;
+            }
+            // fall-through
+        case RS2::ActionEditCopyQuickNoSelect:
+            a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::COPY_QUICK, *document, *view);
             break;
         case RS2::ActionEditPaste:
               a = new RS_ActionEditCopyPaste(RS_ActionEditCopyPaste::PASTE, *document, *view);

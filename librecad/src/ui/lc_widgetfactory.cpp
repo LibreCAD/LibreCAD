@@ -267,7 +267,9 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
 
     fillActionsList(actionsToDisableInPrintPreview, {
         "EditCut",
+        "EditCutQuick",
         "EditCopy",
+        "EditCopyQuick",
         "EditPaste",
         "EditPasteTransform",
         "ViewGrid",
@@ -580,6 +582,9 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
         "EditCopy",
         "EditPaste",
         "EditPasteTransform",
+        "",
+        "EditCutQuick",
+        "EditCopyQuick",
         "ModifyDeleteQuick"
     });
 

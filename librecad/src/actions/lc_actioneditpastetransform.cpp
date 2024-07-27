@@ -37,10 +37,18 @@ LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(RS_EntityContainer &con
     actionType = RS2::ActionEditPasteTransform;
 }
 
+void LC_ActionEditPasteTransform::init(int status) {
+    RS_PreviewActionInterface::init(status);
+    if (RS_CLIPBOARD->count() == 0){
+        commandMessageTR("Clipboard is empty");
+        finish(false);
+    }
+}
+
 void LC_ActionEditPasteTransform::trigger() {
     deletePreview();
 
-    RS_Modification m(*container, graphicView);
+    RS_Modification m(*container, graphicView, false);
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
@@ -60,6 +68,7 @@ void LC_ActionEditPasteTransform::trigger() {
     RS_Vector xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
     RS_Vector yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
 
+    document->startUndoCycle();
 
     for (int x = 0; x < numX; x++){
         for (int y = 0; y < numY; y++){
@@ -69,6 +78,8 @@ void LC_ActionEditPasteTransform::trigger() {
             m.paste(pasteData);
         }
     }
+
+    document->endUndoCycle();
 
 
     graphicView->redraw(RS2::RedrawDrawing);

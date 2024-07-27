@@ -415,16 +415,18 @@ void LC_ActionFactory::createSelectActionsUncheckable(QMap<QString, QAction *> &
     });
 }
 
-void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group){
+void LC_ActionFactory::createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActionHandlerActions(map, group, {
         {"EditUndo",           RS2::ActionEditUndo,           "&Undo",              ":/icons/undo.svg",            "edit-undo"},
         {"EditRedo",           RS2::ActionEditRedo,           "&Redo",              ":/icons/redo.svg",            "edit-redo"},
         {"EditCut",            RS2::ActionEditCut,            "Cu&t",               ":/icons/cut.svg",             "edit-cut"},
+        {"EditCutQuick",       RS2::ActionEditCutQuick,       "Cut Quic&k",         ":/icons/cut.svg",             "edit-cut"},
         {"EditCopy",           RS2::ActionEditCopy,           "&Copy",              ":/icons/copy.svg",            "edit-copy"},
+        {"EditCopyQuick",      RS2::ActionEditCopyQuick,      "Copy &Quick",        ":/icons/copy.svg",            "edit-copy"},
         {"EditPaste",          RS2::ActionEditPaste,          "&Paste",             ":/icons/paste.svg",           "edit-paste"},
-        {"EditPasteTransform", RS2::ActionEditPasteTransform, "&Paste Transform",   ":/icons/paste_transform.svg", "edit-paste"},
-        {"ModifyDeleteQuick",  RS2::ActionModifyDelete,       "&Delete selected",   ":/icons/delete.svg"},
-        {"EditKillAllActions", RS2::ActionEditKillAllActions, "&Selection pointer", ":/icons/cursor.svg",          "go-previous-view"}
+        {"EditPasteTransform", RS2::ActionEditPasteTransform, "Paste &Transform",   ":/icons/paste_transform.svg", "edit-paste"},
+        {"ModifyDeleteQuick",  RS2::ActionModifyDelete,       "&Delete Selected",   ":/icons/delete.svg"},
+        {"EditKillAllActions", RS2::ActionEditKillAllActions, "&Selection Pointer", ":/icons/cursor.svg",          "go-previous-view"}
     });
 }
 
@@ -462,8 +464,11 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
         {"EditUndo", QKeySequence::Undo},
         {"EditRedo", QKeySequence::Redo},
         {"EditCut", QKeySequence::Cut},
+        {"EditCutQuick", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_X)},
         {"EditCopy", QKeySequence::Copy},
+        {"EditCopyQuick", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_C)},
         {"EditPaste", QKeySequence::Paste},
+        {"EditPasteTransform", QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_V)},
         {"ZoomIn", QKeySequence::ZoomIn},
         {"ZoomOut", QKeySequence::ZoomOut},
         {"ZoomAuto", QKeySequence(Qt::CTRL | Qt::Key_F)},

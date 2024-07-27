@@ -295,7 +295,7 @@ public:
         const RS_Vector &coord2,
         RS_AtomicEntity *entity2,
         RS_RoundData &data);
-    bool explode(const bool remove = true);
+    bool explode(const bool remove = true, const bool forceUndoable = false);
     bool explodeTextIntoLetters();
     bool moveRef(RS_MoveRefData &data);
     void deleteLineNode(RS_Line *polyline, const RS_Vector &node);
@@ -329,7 +329,7 @@ private:
     bool pasteContainer(RS_Entity *entity, RS_EntityContainer *container, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
     bool pasteEntity(RS_Entity *entity, RS_EntityContainer *container);
     void deselectOriginals(bool remove);
-    void addNewEntities(std::vector<RS_Entity *> &addList);
+    void addNewEntities(std::vector<RS_Entity *> &addList, bool forceUndoable = false);
     bool explodeTextIntoLetters(RS_MText *text, std::vector<RS_Entity *> &addList);
     bool explodeTextIntoLetters(RS_Text *text, std::vector<RS_Entity *> &addList);
 

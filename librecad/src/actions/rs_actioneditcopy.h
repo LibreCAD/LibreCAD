@@ -50,6 +50,8 @@ public:
     enum ActionMode{
         CUT,
         COPY,
+        CUT_QUICK,
+        COPY_QUICK,
         PASTE
     };
 
