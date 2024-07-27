@@ -39,6 +39,7 @@ public:
 protected:
     std::unique_ptr<RS_Vector> referencePoint;
     bool invokedWithControl = false;
+    bool sameAngles = false;
 
     struct PasteData{
         double angle = 0.0;
@@ -47,7 +48,6 @@ protected:
         int arrayXCount = 1;
         int arrayYCount = 1;
         RS_Vector arraySpacing = RS_Vector(false);
-        bool  rotateArray = false;
         double arrayAngle = 0.0;
     };
 
@@ -74,13 +74,11 @@ public:
     void setArraySpacingX(double arraySpacing);
     double getArraySpacingY() const;
     void setArraySpacingY(double arraySpacing);
-    bool isRotateArray() const;
-    void setRotateArray(bool rotateArray);
     double getArrayAngle() const;
     void setArrayAngle(double arrayAngle);
-
+    bool isSameAngles() const {return sameAngles;}
+    void setSameAngles(bool val) {sameAngles = val;}
     void previewMultipleReferencePoints();
-
     void init(int status) override;
 };
 

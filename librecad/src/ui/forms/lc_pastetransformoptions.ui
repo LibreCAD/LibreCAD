@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>581</width>
+    <width>639</width>
     <height>22</height>
    </rect>
   </property>
@@ -26,8 +26,8 @@
    <property name="bottomMargin">
     <number>0</number>
    </property>
-   <item row="0" column="9">
-    <widget class="QLineEdit" name="leArraySpacingY">
+   <item row="0" column="8">
+    <widget class="QLineEdit" name="leArraySpacingX">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
        <horstretch>0</horstretch>
@@ -55,80 +55,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="12">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="4">
-    <widget class="QCheckBox" name="cbArray">
-     <property name="text">
-      <string>Array</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="1">
-    <widget class="QLineEdit" name="leAngle">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Rotation angle for pasted entities</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="8">
-    <widget class="QLineEdit" name="leArraySpacingX">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>50</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="7">
     <widget class="QLabel" name="label_3">
      <property name="text">
@@ -136,17 +62,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="10">
-    <widget class="QCheckBox" name="cbArrayAngle">
+   <item row="0" column="12">
+    <widget class="QCheckBox" name="cbSameAngles">
      <property name="text">
-      <string>Array Angle</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
-    <widget class="QSpinBox" name="sbArrayY">
-     <property name="minimum">
-      <number>1</number>
+      <string>Same Angles</string>
      </property>
     </widget>
    </item>
@@ -175,6 +94,87 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="leAngle">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Rotation angle for pasted entities</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="13">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="0" column="4">
+    <widget class="QCheckBox" name="cbArray">
+     <property name="text">
+      <string>Array</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QSpinBox" name="sbArrayY">
+     <property name="minimum">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="9">
+    <widget class="QLineEdit" name="leArraySpacingY">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>50</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Array Angle:</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="11">
     <widget class="QLineEdit" name="leArrayAngle">
      <property name="sizePolicy">
@@ -194,6 +194,13 @@
        <width>50</width>
        <height>16777215</height>
       </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Angle:</string>
      </property>
     </widget>
    </item>

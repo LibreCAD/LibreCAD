@@ -34,9 +34,9 @@ LC_PasteTransformOptions::LC_PasteTransformOptions()
     connect(ui->leArraySpacingY, &QLineEdit::editingFinished, this, &LC_PasteTransformOptions::onArraySpacingYEditingFinished);
     connect(ui->leArrayAngle, &QLineEdit::editingFinished, this, &LC_PasteTransformOptions::onArrayAngleEditingFinished);
     connect(ui->cbArray, &QCheckBox::clicked, this, &LC_PasteTransformOptions::onArrayClicked);
-    connect(ui->cbArrayAngle, &QCheckBox::clicked, this, &LC_PasteTransformOptions::onArrayAngleClicked);
     connect(ui->sbArrayX, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayXCountChanged);
     connect(ui->sbArrayY, &QSpinBox::valueChanged, this, &LC_PasteTransformOptions::onArrayYCountChanged);
+    connect(ui->cbSameAngles, &QCheckBox::clicked, this, &LC_PasteTransformOptions::cbSameAnglesClicked);
 }
 
 LC_PasteTransformOptions::~LC_PasteTransformOptions(){delete ui;}
@@ -50,8 +50,8 @@ void LC_PasteTransformOptions::doSaveSettings() {
     save("ArrayYCount", ui->sbArrayY->value());
     save("ArrayXSpacing", ui->leArraySpacingX->text());
     save("ArrayYSpacing", ui->leArraySpacingY->text());
-    save("ArrayRotate", ui->cbArrayAngle->isChecked());
     save("ArrayAngle", ui->leArrayAngle->text());
+    save("SameAngles", ui->cbSameAngles->isChecked());
 }
 
 void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -63,7 +63,7 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
     int arrayYCount;
     QString arrayXSpacing;
     QString arrayYSpacing;
-    bool arrayRotate;
+    bool sameAngles;
     QString arrayAngle;
     if (update){
         angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
@@ -73,7 +73,7 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
         arrayYCount = action -> getArrayYCount();
         arrayXSpacing  = fromDouble(action->getArraySpacingX());
         arrayYSpacing  = fromDouble(action->getArraySpacingY());
-        arrayRotate = action->isRotateArray();
+        sameAngles = action->isSameAngles();
         arrayAngle = fromDouble(RS_Math::rad2deg(action->getArrayAngle()));
     }
     else{
@@ -84,8 +84,8 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
         arrayYCount = loadInt("ArrayYCount", 1);
         arrayXSpacing  = load("ArrayXSpacing", "10.0");
         arrayYSpacing  = load("ArrayYSpacing", "10.0");
-        arrayRotate = loadBool("ArrayRotate", false);
         arrayAngle = load("ArrayAngle", "0.0");
+        sameAngles = loadBool("SameAngles", false);
     }
 
     setAngleToActionAndView(angle);
@@ -95,8 +95,8 @@ void LC_PasteTransformOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setArrayYCountToActionAndView(arrayYCount);
     setArrayXSpacingToActionAndView(arrayXSpacing);
     setArrayYSpacingToActionAndView(arrayYSpacing);
-    setArrayRotatedToActionAndView(arrayRotate);
     setArrayAngleToActionAndView(arrayAngle);
+    setSameAnglesToActionAndView(sameAngles);
 }
 
 void LC_PasteTransformOptions::setAngleToActionAndView(QString val) {
@@ -122,13 +122,27 @@ void LC_PasteTransformOptions::setIsArrayToActionAndView(bool val) {
     ui->sbArrayY->setEnabled(val);
     ui->leArraySpacingX->setEnabled(val);
     ui->leArraySpacingY->setEnabled(val);
-    ui->cbArrayAngle->setEnabled(val);
+    ui->leArrayAngle->setEnabled(val);
+    ui->cbSameAngles->setEnabled(val);
     if (val){
-        ui->leArrayAngle->setEnabled(ui->cbArrayAngle->isChecked());
+        ui->leAngle->setEnabled(!ui->cbSameAngles->isChecked());
     }
     else{
-        ui->leArrayAngle->setEnabled(false);
+        ui->leAngle->setEnabled(true);
     }
+}
+
+void LC_PasteTransformOptions::setSameAnglesToActionAndView(bool val) {
+    ui->cbSameAngles ->setChecked(val);    
+    if (val) {
+        ui->leAngle->setText(ui->leArrayAngle->text());
+        bool enable = !ui->cbArray->isChecked();
+        ui->leAngle->setEnabled(enable);
+    }
+    else{
+        ui->leAngle->setEnabled(true);
+    }
+    action->setSameAngles(val);
 }
 
 void LC_PasteTransformOptions::setArrayXCountToActionAndView(int count) {
@@ -157,17 +171,15 @@ void LC_PasteTransformOptions::setArrayYSpacingToActionAndView(QString val) {
     }
 }
 
-void LC_PasteTransformOptions::setArrayRotatedToActionAndView(bool val) {
-    ui->cbArrayAngle->setChecked(val);
-    ui->leArrayAngle->setEnabled(val);
-    action->setRotateArray(val);
-}
-
 void LC_PasteTransformOptions::setArrayAngleToActionAndView(QString val) {
     double angle;
     if (toDoubleAngle(val, angle, 0.0, false)){
         action->setArrayAngle(RS_Math::deg2rad(angle));
-        ui->leArrayAngle->setText(fromDouble(angle));
+        const QString &angleStr = fromDouble(angle);
+        ui->leArrayAngle->setText(angleStr);
+        if (ui->cbSameAngles->isChecked()){
+            ui->leAngle->setText(angleStr);
+        }
     }
 }
 
@@ -202,11 +214,10 @@ void LC_PasteTransformOptions::onArrayClicked(bool clicked){
     setIsArrayToActionAndView(clicked);
 }
 
-void LC_PasteTransformOptions::onArrayAngleClicked(bool clicked){
-    setArrayRotatedToActionAndView(clicked);
+void LC_PasteTransformOptions::cbSameAnglesClicked(bool value) {
+    setSameAnglesToActionAndView(value);
 }
 
 void LC_PasteTransformOptions::languageChange() {
     ui->retranslateUi(this);
 }
-

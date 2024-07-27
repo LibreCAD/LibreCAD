@@ -54,19 +54,17 @@ void LC_ActionEditPasteTransform::trigger() {
     int numY = data->arrayYCount;
     double arrayAngle = data->arrayAngle;
 
+    RS_Vector xArrayVector;
+    RS_Vector yArrayVector;
     if (data->arrayCreated){
-        if (!data->rotateArray){
-            arrayAngle = 0;
-        }
+        xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
+        yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
     }
     else{
         numX = 1;
         numY = 1;
         arrayAngle = 0;
     }
-
-    RS_Vector xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
-    RS_Vector yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
 
     document->startUndoCycle();
 
@@ -156,8 +154,6 @@ double LC_ActionEditPasteTransform::getArraySpacingX() const {return data->array
 void LC_ActionEditPasteTransform::setArraySpacingX(double arraySpacing) {data->arraySpacing.x = arraySpacing;}
 double LC_ActionEditPasteTransform::getArraySpacingY() const {return data->arraySpacing.y;}
 void LC_ActionEditPasteTransform::setArraySpacingY(double arraySpacing) {data->arraySpacing.y = arraySpacing;}
-bool LC_ActionEditPasteTransform::isRotateArray() const {return data->rotateArray;}
-void LC_ActionEditPasteTransform::setRotateArray(bool rotateArray) {data->rotateArray = rotateArray;}
 double LC_ActionEditPasteTransform::getArrayAngle() const {return data->arrayAngle;}
 void LC_ActionEditPasteTransform::setArrayAngle(double arrayAngle) {data->arrayAngle = arrayAngle;}
 LC_ActionOptionsWidget *LC_ActionEditPasteTransform::createOptionsWidget() {return new LC_PasteTransformOptions();}
@@ -167,20 +163,19 @@ void LC_ActionEditPasteTransform::previewMultipleReferencePoints() {
     int numY = data->arrayYCount;
     double arrayAngle = data->arrayAngle;
 
-    if (data->arrayCreated){
-        if (!data->rotateArray){
-            arrayAngle = 0;
-        }
+    RS_Vector xArrayVector;
+    RS_Vector yArrayVector;
+    if (data->arrayCreated) {
+        xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
+        yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
     }
     else{
+        xArrayVector = RS_Vector(0,0,0);
+        yArrayVector = RS_Vector(0,0,0);
         numX = 1;
         numY = 1;
         arrayAngle = 0;
     }
-
-    RS_Vector xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
-    RS_Vector yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
-
 
     for (int x = 0; x < numX; x++){
         for (int y = 0; y < numY; y++){

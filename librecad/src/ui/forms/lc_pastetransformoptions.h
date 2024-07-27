@@ -43,10 +43,10 @@ public slots:
     void onArraySpacingXEditingFinished();
     void onArraySpacingYEditingFinished();
     void onArrayClicked(bool clicked);
-    void onArrayAngleClicked(bool clicked);
     void onArrayAngleEditingFinished();
     void onArrayXCountChanged(int value);
     void onArrayYCountChanged(int value);
+    void cbSameAnglesClicked(bool value);
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
@@ -57,13 +57,12 @@ private:
     void setAngleToActionAndView(QString val);
     void setFactorToActionAndView(QString val);
     void setIsArrayToActionAndView(bool val);
+    void setSameAnglesToActionAndView(bool val);
     void setArrayXCountToActionAndView(int count);
     void setArrayYCountToActionAndView(int count);
     void setArrayXSpacingToActionAndView(QString val);
     void setArrayYSpacingToActionAndView(QString val);
-    void setArrayRotatedToActionAndView(bool val);
     void setArrayAngleToActionAndView(QString val);
-
 };
 
 #endif // LC_PASTETRANSFORMOPTIONS_H
