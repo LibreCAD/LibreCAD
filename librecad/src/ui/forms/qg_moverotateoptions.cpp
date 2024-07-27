@@ -38,7 +38,7 @@
 QG_MoveRotateOptions::QG_MoveRotateOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyMoveRotate, "/Modify","/MoveRotate")
 	, ui(new Ui::Ui_MoveRotateOptions{}){
-	ui->setupUi(this);
+    ui->setupUi(this);
     connect(ui->cbKeepOriginals, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbKeepOriginalsClicked);
     connect(ui->cbMultipleCopies, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbMultipleCopiesClicked);
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbUseCurrentAttributesClicked);
@@ -126,13 +126,6 @@ void QG_MoveRotateOptions::setAngleToActionAndView(QString val) {
     }
 }
 
-void QG_MoveRotateOptions::updateAngle(const QString& a) {
-    if (action) {
-        action->setAngle(RS_Math::deg2rad(RS_Math::eval(a)));
-        saveSettings();
-    }
-}
-
 void QG_MoveRotateOptions::setCopiesNumberToActionAndView(int number) {
     if (number < 1){
         number = 1;
@@ -163,6 +156,22 @@ void QG_MoveRotateOptions::setKeepOriginalsToActionAndView(bool val) {
     ui->cbKeepOriginals->setChecked(val);
 }
 
+void QG_MoveRotateOptions::setFixedAngleToModelAndView(bool val) {
+    ui->leAngle->setEnabled(val);
+    ui->cbFixedAngle->setChecked(val);
+    action->setAngleIsFixed(val);
+}
+
+void QG_MoveRotateOptions::setSameAngleForCopiesToActionAndView(bool val) {
+   action->setUseSameAngleForCopies(val);
+   ui->cbSameAngleForCopies->setChecked(val);
+}
+
+void QG_MoveRotateOptions::onAngleEditingFinished(){
+    const QString &expr = ui->leAngle->text();
+    setAngleToActionAndView(expr);
+}
+
 void QG_MoveRotateOptions::cbKeepOriginalsClicked(bool val) {
     setKeepOriginalsToActionAndView(val);
 }
@@ -191,18 +200,3 @@ void QG_MoveRotateOptions::on_sbNumberOfCopies_valueChanged(int number) {
     setCopiesNumberToActionAndView(number);
 }
 
-void QG_MoveRotateOptions::setFixedAngleToModelAndView(bool val) {
-    ui->leAngle->setEnabled(val);
-    ui->cbFixedAngle->setChecked(val);
-    action->setAngleIsFixed(val);
-}
-
-void QG_MoveRotateOptions::setSameAngleForCopiesToActionAndView(bool val) {
-   action->setUseSameAngleForCopies(val);
-   ui->cbSameAngleForCopies->setChecked(val);
-}
-
-void QG_MoveRotateOptions::onAngleEditingFinished(){
-    const QString &expr = ui->leAngle->text();
-    setAngleToActionAndView(expr);
-}

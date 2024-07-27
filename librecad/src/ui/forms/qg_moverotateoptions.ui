@@ -124,7 +124,5 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
- <slots>
-  <slot>updateAngle(QString)</slot>
- </slots>
+ <slots/>
 </ui>

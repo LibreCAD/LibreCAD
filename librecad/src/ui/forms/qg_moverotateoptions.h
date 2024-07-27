@@ -42,9 +42,6 @@ public:
     QG_MoveRotateOptions();
     ~QG_MoveRotateOptions() override;
 
-public slots:
-    virtual void updateAngle( const QString & a );
-
 protected:
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
