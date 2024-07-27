@@ -437,11 +437,11 @@ void RS_MText::addLetter(RS_EntityContainer &oneLine, QChar letter,
 
   // Add spacing, if the font is actually wider than word spacing
   double actualWidth = letterEntity->getMax().x - letterEntity->getMin().x;
-  if (actualWidth > font.getWordSpacing() + RS_TOLERANCE) {
+  if (actualWidth >= font.getWordSpacing() + RS_TOLERANCE) {
       actualWidth = font.getWordSpacing() + std::ceil((actualWidth - font.getWordSpacing())/std::abs(letterSpace.x)) * std::abs(letterSpace.x);
-  } else {
+  }/* else {
       actualWidth = font.getWordSpacing() ;
-  }
+  }*/
 
   RS_Vector letterWidth = {actualWidth, 0.};
   letterWidth.x = std::copysign(letterWidth.x, letterSpace.x);
