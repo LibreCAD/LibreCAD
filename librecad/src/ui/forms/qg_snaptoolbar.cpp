@@ -55,6 +55,8 @@ QAction* QG_SnapToolBar::createAction(QString icon, QString tip, QActionGroup* g
  *  Constructs a QG_Cadhttps://apps.e-signlive.ca/error?error=eyJjb2RlIjo0MDEsIm1lc3NhZ2VLZXkiOiJlcnJvci51bmF1dGhvcmlzZWQuc2Vzc2lvbkV4cGlyZWQiLCJ0ZWNobmljYWwiOiJTZXNzaW9uIGlzIGV4cGlyZWQifQ%3D%3DToolBarSnap as a child of 'parent', with the
  *  name 'name' and widget flags set to 'f'.
  */
+
+// FIXME - MOVE SNAP ACTIONS TO ACTION FACTOR!! So it will be possible to process them in uniform way and assign shortcuts
 QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionGroupManager* agm)
 	: QToolBar(parent), actionHandler(ah){
 

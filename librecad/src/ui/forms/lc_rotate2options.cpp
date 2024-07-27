@@ -32,16 +32,16 @@ LC_Rotate2Options::~LC_Rotate2Options(){
 }
 
 void LC_Rotate2Options::doSaveSettings() {
-    save("Angle1", ui->leAngle1->text());    
-    save("Angle2", ui->leAngle2->text());
-    save("MirrorAngles", ui->cbAnglesMirrored->isChecked());
     save("KeepOriginals", ui->cbKeepOriginals->isChecked());
     save("MultipleCopies", ui->cbMultipleCopies->isChecked());
+    save("UseCurrentLayer",ui->cbCurrentLayer->isChecked());
+    save("UseCurrentAttributes",ui->cbCurrentAttr->isChecked());
+    save("Angle1", ui->leAngle1->text());
+    save("Angle2", ui->leAngle2->text());
+    save("MirrorAngles", ui->cbAnglesMirrored->isChecked());
     save("Copies", ui->sbNumberOfCopies->value());
     save("Angle1", ui->leAngle1->text());
     save("Angle2", ui->leAngle2->text());
-    save("UseCurrentLayer",ui->cbCurrentLayer->isChecked());
-    save("UseCurrentAttributes",ui->cbCurrentAttr->isChecked());
     save("SameAngleForCopies", ui->cbSameAngleForCopies->isChecked());
 }
 
