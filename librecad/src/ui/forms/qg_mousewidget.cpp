@@ -56,11 +56,11 @@ QG_MouseWidget::QG_MouseWidget(QWidget* parent, const char* name, Qt::WindowFlag
 
     // fixme modifiers setup
 
-    int halfHeight = height/2 - 3;
-    lblCtrl->setMinimumHeight(halfHeight);
-    lblCtrl->setMaximumHeight(halfHeight);
-    lblShift->setMinimumHeight(halfHeight);
-    lblShift->setMaximumHeight(halfHeight);
+    int halfHeight = height/2 - 2;
+    lblCtrl->setMinimumSize(halfHeight, halfHeight);
+    lblCtrl->setMaximumSize(halfHeight, halfHeight);
+    lblShift->setMinimumSize(halfHeight, halfHeight);
+    lblShift->setMaximumSize(halfHeight, halfHeight);
 
     lblShift->setPixmap(QPixmap(":/icons/state-shift_yes.svg").scaled(halfHeight, halfHeight));
     lblCtrl->setPixmap(QPixmap(":/icons/state_ctrl_yes.svg").scaled(halfHeight, halfHeight));

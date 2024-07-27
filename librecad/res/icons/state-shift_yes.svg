@@ -1,30 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
-
 <svg
-   width="800px"
+   fill="none"
    height="800px"
    viewBox="0 0 24 24"
-   role="img"
-   aria-labelledby="shiftIconTitle"
-   stroke="#000000"
-   stroke-width="2"
-   stroke-linecap="round"
-   stroke-linejoin="round"
-   fill="none"
-   color="#000000"
+   width="800px"
    version="1.1"
-   id="svg5"
-   sodipodi:docname="state-shift_yes.svg"
+   id="svg323"
+   sodipodi:docname="shift.svg"
    inkscape:version="1.2.2 (732a01da63, 2022-12-09)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <defs
-     id="defs9" />
+     id="defs327">
+    <inkscape:path-effect
+       effect="powerstroke"
+       id="path-effect2424"
+       is_visible="true"
+       lpeversion="1"
+       offset_points="2.0106522,0.20848357"
+       not_jump="true"
+       sort_points="true"
+       interpolator_type="CentripetalCatmullRom"
+       interpolator_beta="0.75"
+       start_linecap_type="round"
+       linejoin_type="spiro"
+       miter_limit="4"
+       scale_width="1"
+       end_linecap_type="round" />
+    <inkscape:path-effect
+       effect="simplify"
+       id="path-effect2422"
+       is_visible="true"
+       lpeversion="1"
+       steps="1"
+       threshold="0.0047745358"
+       smooth_angles="0"
+       helper_size="0"
+       simplify_individual_paths="false"
+       simplify_just_coalesce="false"
+       step="1" />
+    <inkscape:path-effect
+       effect="powerstroke"
+       id="path-effect2417"
+       is_visible="true"
+       lpeversion="1"
+       offset_points="0.8362796,1.1793612"
+       not_jump="true"
+       sort_points="true"
+       interpolator_type="CentripetalCatmullRom"
+       interpolator_beta="0.75"
+       start_linecap_type="round"
+       linejoin_type="spiro"
+       miter_limit="4"
+       scale_width="1"
+       end_linecap_type="round" />
+    <inkscape:path-effect
+       effect="simplify"
+       id="path-effect2415"
+       is_visible="true"
+       lpeversion="1"
+       steps="1"
+       threshold="0.0047745358"
+       smooth_angles="0"
+       helper_size="0"
+       simplify_individual_paths="false"
+       simplify_just_coalesce="false"
+       step="1" />
+  </defs>
   <sodipodi:namedview
-     id="namedview7"
+     id="namedview325"
      pagecolor="#ffffff"
      bordercolor="#000000"
      borderopacity="0.25"
@@ -33,23 +79,34 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      showgrid="false"
-     inkscape:zoom="1.52625"
-     inkscape:cx="371.49877"
-     inkscape:cy="398.6896"
+     inkscape:zoom="0.64"
+     inkscape:cx="1248.4375"
+     inkscape:cy="997.65625"
      inkscape:window-width="3840"
-     inkscape:window-height="2126"
+     inkscape:window-height="2066"
      inkscape:window-x="-11"
      inkscape:window-y="-11"
      inkscape:window-maximized="1"
-     inkscape:current-layer="svg5" />
-  <title
-     id="shiftIconTitle">Shift</title>
+     inkscape:current-layer="svg323" />
   <path
-     d="M5,21 L19,21 L5,21 Z M16,12 L16,17 L8,17 L8,12 L3,12 L12,3 L21,12 L16,12 Z"
-     id="path3" />
+     d="M 4.0873989,0.8653571 H 20.050194 c 1.76325,0 3.192558,1.428099 3.192558,3.18975 V 20.003862 c 0,1.7617 -1.429308,3.189748 -3.192558,3.189748 H 4.0873989 c -1.7632022,0 -3.19255875,-1.428048 -3.19255875,-3.189748 V 4.0551071 c 0,-1.761651 1.42935655,-3.18975 3.19255875,-3.18975 z"
+     stroke="#464455"
+     stroke-linecap="round"
+     stroke-linejoin="round"
+     id="path321"
+     style="stroke-width:1.59559"
+     sodipodi:nodetypes="sssssssss" />
   <path
-     style="fill:#00ff7f;stroke:#000000;stroke-width:6.55201;stroke-opacity:0"
-     d="m 300.0819,463.67338 c 0,-75.7455 0.18071,-71.92285 -3.76868,-79.72178 -2.16007,-4.26555 -9.41132,-11.47763 -13.75094,-13.67668 -7.318,-3.70831 -7.04165,-3.69015 -56.16357,-3.69015 h -45.23426 l 109.41704,-109.41851 109.41704,-109.41851 109.25662,109.25471 109.25661,109.25471 -46.68422,0.3276 c -45.99458,0.32275 -46.73533,0.34856 -50.14447,1.74662 -10.34354,4.24181 -17.65976,12.17339 -20.7091,22.45092 -0.94196,3.17478 -1.05587,11.03884 -1.05587,72.89107 v 69.33235 H 400 300.0819 Z"
-     id="path307"
+     d="M 5.0439799,21.836364 H 19.04398 Z m 11.0000001,-9 v 5 H 8.0439799 v -5 h -5 l 9.0000001,-9.0000004 9,9.0000004 z"
+     id="path3"
+     style="fill:#464455;fill-opacity:1" />
+  <path
+     style="fill:#464455;fill-opacity:1;stroke:#000000;stroke-width:0.3;stroke-opacity:0"
+     d="M 5.7263487,19.29168 18.290959,19.23608"
+     id="path3184" />
+  <path
+     style="fill:#00ff7f;fill-opacity:1;stroke:#000000;stroke-width:15.625;stroke-opacity:0"
+     d="M 119.1604,743.72796 C 92.550296,737.94669 68.776376,716.03739 60.893845,690.03131 57.798132,679.81792 57.763867,676.13161 58.176176,397.65625 L 58.59375,115.625 62.227685,107.06388 C 71.433252,85.376642 89.232419,68.468815 111.38122,60.371835 L 122.65625,56.25 h 279.6875 279.6875 l 10.15625,3.615847 c 19.70444,7.01521 36.14378,20.824655 45.34789,38.093327 9.88685,18.549626 9.30436,-0.452092 9.28288,302.822076 -0.0125,185.75552 -0.55444,279.66571 -1.63903,284.375 -6.61139,28.70641 -33.39599,53.88181 -63.04433,59.25672 -6.40214,1.16063 -93.44055,1.64234 -281.25,1.55656 -222.64288,-0.10168 -273.74652,-0.50829 -281.72451,-2.24157 z M 535.9375,511.71875 v -82.8125 H 618.75 c 45.54688,0 82.8125,-0.52872 82.8125,-1.17492 0,-0.64622 -67.5,-68.67219 -150,-151.16883 l -150,-149.9939 -150,149.9939 c -82.5,82.49664 -150,150.52261 -150,151.16883 0,0.6462 37.26563,1.17492 82.8125,1.17492 h 82.8125 v 82.8125 82.8125 h 134.375 134.375 z"
+     id="path6376"
      transform="scale(0.03)" />
 </svg>
