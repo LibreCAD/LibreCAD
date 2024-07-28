@@ -171,10 +171,16 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
 }
 
 void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+
+    // fixme - correct snap coordinate for line segment drawing!!!!
+    RS_Vector mouse = snapPoint(e);
+    if (status == SetNextPoint && m_mode == Line){
+        mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
+    }
     if (equationSettingOn || stepSizeSettingOn) return;
 
     if (startPointSettingOn || endPointSettingOn){
-        QString pointNumberString(QString::number(snapPoint(e).x));
+        QString pointNumberString(QString::number(snapPoint(e).x)); // fixme - review and check the logic
 
         if (e->modifiers() == Qt::ControlModifier){
             pointNumberString = QString::number(snapPoint(e).x - graphicView->getRelativeZero().x).prepend("@@");
@@ -185,7 +191,7 @@ void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent([[maybe_unused]]int stat
         return;
     }
 
-    fireCoordinateEventForSnap(e);
+    fireCoordinateEvent(mouse);
 }
 
 void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
@@ -194,13 +200,15 @@ void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, [[maybe_unu
         startPointSettingOn = false;
         endPointSettingOn = false;
         stepSizeSettingOn = false;
-        return;
     }
-
-    if (status == SetNextPoint) trigger();
-    deletePreview();
-    deleteSnapper();
-    init(status - 1);
+    else {
+        if (status == SetNextPoint) {
+            trigger();
+        }
+        deletePreview();
+        deleteSnapper();
+        init(status - 1);
+    }
 }
 
 double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
