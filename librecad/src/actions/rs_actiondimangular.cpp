@@ -232,16 +232,16 @@ QStringList RS_ActionDimAngular::getAvailableCommands(){
 void RS_ActionDimAngular::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel("Select first line");
+            updateMouseWidgetTRCancel(tr("Select first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRCancel("Select second line");
+            updateMouseWidgetTRCancel(tr("Select second line"));
             break;
         case SetPos:
-            updateMouseWidgetTRCancel("Specify dimension arc line location", MOD_SHIFT_FREE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify dimension arc line location"), MOD_SHIFT_FREE_SNAP);
             break;
         case SetText:
-            updateMouseWidgetTR("Enter dimension text:", "");
+            updateMouseWidget(tr("Enter dimension text:"));
             break;
         default:
             updateMouseWidget();

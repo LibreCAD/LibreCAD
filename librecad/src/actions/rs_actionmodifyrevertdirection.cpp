@@ -46,7 +46,7 @@ bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {
 }
 
 void RS_ActionModifyRevertDirection::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to revert direction", MOD_CTRL("Revert immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select to revert direction"), MOD_CTRL(tr("Revert immediately after selection")));
 }
 
 bool RS_ActionModifyRevertDirection::isEntityAllowedToSelect(RS_Entity *ent) const {

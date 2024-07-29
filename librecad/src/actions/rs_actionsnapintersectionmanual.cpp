@@ -157,10 +157,10 @@ void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, [
 void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseEntity1:
-            updateMouseWidgetTRCancel("Select first entity");
+            updateMouseWidgetTRCancel(tr("Select first entity"));
             break;
         case ChooseEntity2:
-            updateMouseWidgetTRBack("Select second entity");
+            updateMouseWidgetTRBack(tr("Select second entity"));
             break;
         default:
             updateMouseWidget();

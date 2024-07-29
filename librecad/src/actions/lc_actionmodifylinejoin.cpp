@@ -146,7 +146,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                 line1ClickPosition = snapPoint;
                 setStatus(SetLine2);
             } else {
-                commandMessageTR("No line selected");
+                commandMessage(tr("No line selected"));
             }
             break;
         case SetLine2:
@@ -166,12 +166,12 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                             linesJoinData = joinData;
                             trigger();
                         } else { // truly parallel lines, can't merge them
-                            commandMessageTR("Lines are parallel, can't merge");
+                            commandMessage(tr("Lines are parallel, can't merge"));
                         }
                     } else { // lines may merge with angle
                         if (joinData->areLinesAlreadyIntersected()){
                             // both lines are already crossed, do nothing
-                            commandMessageTR("Lines already intersects, can't merge");
+                            commandMessage(tr("Lines already intersects, can't merge"));
                         } else {
                             // check whether intersection is on the first line.
                             // if it so, and mode for line is EXTEND/TRIM, we need to ask the user
@@ -195,7 +195,7 @@ void LC_ActionModifyLineJoin::doOnLeftMouseButtonRelease(QMouseEvent *e, int sta
                         }
                     }
                 } else {
-                    commandMessageTR("No line selected");
+                    commandMessage(tr("No line selected"));
                 }
             }
             break;
@@ -780,13 +780,13 @@ LC_ActionModifyLineJoin::LC_PointsDisposition LC_ActionModifyLineJoin::determine
 void LC_ActionModifyLineJoin::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel("Select first line");
+            updateMouseWidgetTRCancel(tr("Select first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRBack("Select second line");
+            updateMouseWidgetTRBack(tr("Select second line"));
             break;
         case ResolveFirstLineTrim:
-            updateMouseWidgetTRBack("Select part of first line that should remain after trim");
+            updateMouseWidgetTRBack(tr("Select part of first line that should remain after trim"));
             break;
         default:
             updateMouseWidget();

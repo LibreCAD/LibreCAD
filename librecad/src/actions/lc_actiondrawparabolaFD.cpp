@@ -284,18 +284,18 @@ QStringList LC_ActionDrawParabolaFD::getAvailableCommands() {
 void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetFocus:
-        updateMouseWidgetTRCancel("Specify the focus of parabola", MOD_SHIFT_RELATIVE_ZERO);
+        updateMouseWidgetTRCancel(tr("Specify the focus of parabola"), MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetDirectrix:
-        updateMouseWidgetTRBack("Specify the directrix of parabola");
+        updateMouseWidgetTRBack(tr("Specify the directrix of parabola"));
         break;
 
     case SetStartPoint:
-        updateMouseWidgetTRBack("Specify the start point on parabola");
+        updateMouseWidgetTRBack(tr("Specify the start point on parabola"));
         break;
 
     case SetEndPoint:
-        updateMouseWidgetTRBack("Specify the end point on parabola");
+        updateMouseWidgetTRBack(tr("Specify the end point on parabola"));
         break;
     default:
         updateMouseWidget();

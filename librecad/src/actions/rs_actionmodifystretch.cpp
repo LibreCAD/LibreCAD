@@ -200,16 +200,16 @@ void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionModifyStretch::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetFirstCorner:
-            updateMouseWidgetTRCancel("Specify first corner");
+            updateMouseWidgetTRCancel(tr("Specify first corner"));
             break;
         case SetSecondCorner:
-            updateMouseWidgetTRBack("Specify second corner");
+            updateMouseWidgetTRBack(tr("Specify second corner"));
             break;
         case SetReferencePoint:
-            updateMouseWidgetTRBack("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRBack(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

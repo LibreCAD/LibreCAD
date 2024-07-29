@@ -156,7 +156,7 @@ void RS_ActionDimRadial::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
                     moveRelativeZero(center);
                     setStatus(SetPos);
                 } else {
-                    commandMessageTR("Not a circle or arc entity");
+                    commandMessage(tr("Not a circle or arc entity"));
                 }
             }
             break;
@@ -222,7 +222,7 @@ bool RS_ActionDimRadial::doProcessCommand(int status, const QString &c) {
             reset();
             setStatus(SetEntity);
         } else {
-            commandMessageTR("Not a valid expression");
+            commandMessage(tr("Not a valid expression"));
         }
     }
 
@@ -246,13 +246,13 @@ QStringList RS_ActionDimRadial::getAvailableCommands(){
 void RS_ActionDimRadial::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Select arc or circle entity");
+            updateMouseWidgetTRCancel(tr("Select arc or circle entity"));
             break;
         case SetPos:
-            updateMouseWidgetTRCancel("Specify dimension line position or enter angle:", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify dimension line position or enter angle:"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetText:
-            updateMouseWidgetTR("Enter dimension text:", "");
+            updateMouseWidget(tr("Enter dimension text:"));
             break;
         default:
             updateMouseWidget();

@@ -258,7 +258,7 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
 void RS_ActionDrawSpline::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first control point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first control point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";
@@ -269,9 +269,9 @@ void RS_ActionDrawSpline::updateMouseButtonHints(){
             }
             if (pPoints->history.size() >= 2){
                 msg += command("undo");
-                updateMouseWidget(tr("Specify next control point or [%1]").arg(msg), tr("Back"));
+                updateMouseWidgetTRBack(tr("Specify next control point or [%1]").arg(msg));
             } else {
-                updateMouseWidgetTRBack("Specify next control point");
+                updateMouseWidgetTRBack(tr("Specify next control point"));
             }
         }
             break;
@@ -325,7 +325,7 @@ void RS_ActionDrawSpline::undo(){
 
         }
     } else {
-        commandMessageTR("Cannot undo: Not enough entities defined yet.");
+        commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
 }
 

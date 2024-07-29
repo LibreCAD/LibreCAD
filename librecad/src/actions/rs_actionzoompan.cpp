@@ -37,9 +37,7 @@ void RS_ActionZoomPan::init(int status) {
     RS_ActionInterface::init(status);
     snapMode.clear();
     snapMode.restriction = RS2::RestrictNothing;
-    //v1 = v2 = RS_Vector(false);
     x1 = y1 = x2 = y2 = -1;
-    //graphicView->saveView();
     setStatus(SetPanStart);
     updateMouseButtonHints();
 }
@@ -69,7 +67,6 @@ void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
     //v2 = snapPoint(e);
     x2 = e->position().x();
     y2 = e->position().y();
-    //if (getStatus()==1 && graphicView->toGuiDX((v2-v1).magnitude())>10) {
     if (getStatus() == SetPanning) {
         if (std::abs(x2 - x1) > 7 || std::abs(y2 - y1) > 7) {
             trigger();
@@ -80,7 +77,6 @@ void RS_ActionZoomPan::mouseMoveEvent(QMouseEvent *e){
 void RS_ActionZoomPan::mousePressEvent(QMouseEvent* e) {
     if (e->button()==Qt::MiddleButton ||
             e->button()==Qt::LeftButton) {
-        //v1 = snapPoint(e);
         x1 = e->position().x();
         y1 = e->position().y();
         setStatus(SetPanning);
@@ -104,10 +100,10 @@ void RS_ActionZoomPan::mouseReleaseEvent(QMouseEvent* e) {
 void RS_ActionZoomPan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPanStart:
-            updateMouseWidgetTRCancel("Click and drag to pan zoom");
+            updateMouseWidgetTRCancel(tr("Click and drag to pan zoom"));
             break;
         case SetPanning:
-            updateMouseWidgetTRCancel("Zoom panning");
+            updateMouseWidgetTRCancel(tr("Zoom panning"));
             break;
         default:
             updateMouseWidget();

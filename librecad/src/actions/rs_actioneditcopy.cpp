@@ -148,11 +148,11 @@ void RS_ActionEditCopyPaste::updateMouseButtonHints() {
         switch (mode) {
             case CUT:
             case COPY: {
-                updateMouseWidgetTRCancel("Specify reference point", MOD_CTRL("Paste Immediately"));
+                updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_CTRL(tr("Paste Immediately")));
                 break;
             }
             case PASTE:{
-                updateMouseWidgetTRCancel("Set paste reference point", MOD_CTRL("Paste Multiple"));
+                updateMouseWidgetTRCancel(tr("Set paste reference point"), MOD_CTRL(tr("Paste Multiple")));
                 break;
             }
             default:

@@ -132,9 +132,9 @@ void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
         case ChooseEntity: {
             auto en = catchEntity(e);
             if (en == nullptr){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (en->rtti() != RS2::EntityPolyline){
-                commandMessageTR("Entity must be a polyline.");
+                commandMessage(tr("Entity must be a polyline."));
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
@@ -151,7 +151,7 @@ void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
                 setStatus(SetSegment2);
             }
             else{
-                commandMessageTR("First segment should be on selected polyline.");
+                commandMessage(tr("First segment should be on selected polyline."));
             }
             break;
         }
@@ -163,7 +163,7 @@ void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
                 trigger();
             }
             else{
-                commandMessageTR("Second segment should be on selected polyline and not equal to first one.");
+                commandMessage(tr("Second segment should be on selected polyline and not equal to first one."));
             }
             break;
         }
@@ -197,13 +197,13 @@ void RS_ActionPolylineTrim::finish(bool updateTB){
 void RS_ActionPolylineTrim::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseEntity:
-            updateMouseWidgetTRCancel("Specify polyline to trim");
+            updateMouseWidgetTRCancel(tr("Specify polyline to trim"));
             break;
         case SetSegment1:
-            updateMouseWidgetTRBack("Specify first segment");
+            updateMouseWidgetTRBack(tr("Specify first segment"));
             break;
         case SetSegment2:
-            updateMouseWidgetTRBack("Specify second segment");
+            updateMouseWidgetTRBack(tr("Specify second segment"));
             break;
         default:
             updateMouseWidget();

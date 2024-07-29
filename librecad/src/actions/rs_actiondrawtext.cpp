@@ -239,14 +239,14 @@ QStringList RS_ActionDrawText::getAvailableCommands(){
 void RS_ActionDrawText::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPos:
-            updateMouseWidgetTRCancel("Specify insertion point");
+            updateMouseWidgetTRCancel(tr("Specify insertion point"));
             break;
         case SetSecPos:
-            updateMouseWidgetTRCancel("Specify second point");
+            updateMouseWidgetTRCancel(tr("Specify second point"));
             break;
         case ShowDialog:
         case SetText:
-            updateMouseWidgetTRBack("Enter text:");
+            updateMouseWidgetTRBack(tr("Enter text:"));
             break;
         default:
             updateMouseWidget();

@@ -322,9 +322,9 @@ void RS_ActionPolylineEquidistant::mouseLeftButtonReleaseEvent(int status, QMous
         case ChooseEntity:{
             RS_Entity *en = catchEntity(e);
             if (!en){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (en->rtti() != RS2::EntityPolyline){
-                commandMessageTR("Entity must be a polyline.");
+                commandMessage(tr("Entity must be a polyline."));
             } else {
                 auto polyline = dynamic_cast<RS_Polyline *>(en);
                 RS_Vector snapPoint = toGraph(e);
@@ -372,7 +372,7 @@ RS2::CursorType RS_ActionPolylineEquidistant::doGetMouseCursor([[maybe_unused]] 
 void RS_ActionPolylineEquidistant::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseEntity:
-            updateMouseWidgetTRCancel("Choose the original polyline");
+            updateMouseWidgetTRCancel(tr("Choose the original polyline"));
             break;
         default:
             updateMouseWidget();

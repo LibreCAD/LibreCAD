@@ -58,10 +58,10 @@ void RS_ActionEditUndo::trigger()
 
     if (undo) {
         if(!document->undo())
-            commandMessageTR("Nothing to undo!");
+            commandMessage(tr("Nothing to undo!"));
     } else {
         if(!document->redo())
-            commandMessageTR("Nothing to redo!");
+            commandMessage(tr("Nothing to redo!"));
     }
 
     graphic->addBlockNotification();

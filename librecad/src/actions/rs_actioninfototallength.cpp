@@ -54,7 +54,7 @@ void RS_ActionInfoTotalLength::trigger() {
                                             graphic->getLinearFormat(), graphic->getLinearPrecision());
         commandMessage(tr("Total Length of selected entities: %1").arg(len));
     } else {
-        commandMessageTR("At least one of the selected entities cannot be measured.");
+        commandMessage(tr("At least one of the selected entities cannot be measured."));
     }
 
     finish(false);

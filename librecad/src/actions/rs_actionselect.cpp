@@ -65,7 +65,7 @@ void RS_ActionSelect::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]Q
 int RS_ActionSelect::countSelected(){
     int ret = container->countSelected();
     if (ret == 0){
-        commandMessageTR("No entity selected!");
+        commandMessage(tr("No entity selected!"));
     }
     return ret;
 }
@@ -73,25 +73,25 @@ int RS_ActionSelect::countSelected(){
 void RS_ActionSelect::updateMouseButtonHints() {
     switch(nextAction) {
         case RS2::ActionOrderNoSelect:
-            updateMouseWidgetTRCancel("Select entities to order");
+            updateMouseWidgetTRCancel(tr("Select entities to order"));
             break;
         case RS2::ActionModifyDeleteQuick:
-            updateMouseWidgetTRCancel("Select to delete immediately");
+            updateMouseWidgetTRCancel(tr("Select to delete immediately"));
             break;
         case RS2::ActionEditCopyNoSelect:
-            updateMouseWidgetTRCancel("Select to copy");
+            updateMouseWidgetTRCancel(tr("Select to copy"));
             break;
         case RS2::ActionEditCutNoSelect:
-            updateMouseWidgetTRCancel("Select to cut");
+            updateMouseWidgetTRCancel(tr("Select to cut"));
             break;
         case RS2::ActionModifyRotateNoSelect:
-            updateMouseWidgetTRCancel("Select to rotate");
+            updateMouseWidgetTRCancel(tr("Select to rotate"));
             break;
         case RS2::ActionBlocksCreateNoSelect:
-            updateMouseWidgetTRCancel("Select to create block");
+            updateMouseWidgetTRCancel(tr("Select to create block"));
             break;
         default:
-            updateMouseWidgetTR("","");
+            updateMouseWidget();
     }
 }
 RS2::CursorType RS_ActionSelect::doGetMouseCursor([[maybe_unused]] int status){

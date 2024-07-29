@@ -63,7 +63,7 @@ void RS_ActionPolylineSegment::init(int status){
     if (initWithTarget){
         initWithTarget = false;
         convertPolyline(container, targetEntity, false);
-        commandMessageTR("Polyline created");
+        commandMessage(tr("Polyline created"));
         graphicView->redraw();
         updateSelectionWidget();
         finish(false);
@@ -84,9 +84,9 @@ void RS_ActionPolylineSegment::init(int status){
             }
             if (targetEntity){
                 convertPolyline(container, targetEntity, true);
-                commandMessageTR("Polyline created");
+                commandMessage(tr("Polyline created"));
                 graphicView->redraw();
-                RS_DIALOGFACTORY->updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+                updateSelectionWidget();
                 finish(false);
                 return;
             }
@@ -103,7 +103,7 @@ void RS_ActionPolylineSegment::init(int status){
  *
  * @author Rallaz
  */
-RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed){
+RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed) {
 
     QList<RS_Entity *> entities;
 
@@ -121,7 +121,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
     RS_Entity *e = entities.takeFirst();
 
 //First polyline vertex
-    if (isArc(e)){
+    if (isArc(e)) {
         if (reversed)
             current->setNextBulge(((RS_Arc *) e)->getBulge() * -1);
         else
@@ -130,7 +130,7 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
 
     while (!entities.isEmpty()) {
         e = entities.takeFirst();
-        if (isArc(e)){
+        if (isArc(e)) {
             if (reversed)
                 bulge = ((RS_Arc *) e)->getBulge() * -1;
             else
@@ -328,9 +328,9 @@ void RS_ActionPolylineSegment::mouseLeftButtonReleaseEvent(int status, QMouseEve
         case ChooseEntity:
             targetEntity = catchEntity(e, entityType);
             if (targetEntity == nullptr){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (targetEntity->rtti() == RS2::EntityPolyline && ((RS_Polyline *) targetEntity)->isClosed()){
-                commandMessageTR("Entity can not be a closed polyline.");
+                commandMessage(tr("Entity can not be a closed polyline."));
             } else {
                 //TODO, verify topology of selected
 //                    targetEntity->setHighlighted(true);
@@ -357,7 +357,7 @@ void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status,[[maybe_u
 void RS_ActionPolylineSegment::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseEntity:
-            updateMouseWidgetTRCancel("Choose one of the segments on the original polyline");
+            updateMouseWidgetTRCancel(tr("Choose one of the segments on the original polyline"));
             break;
         default:
             updateMouseWidget();

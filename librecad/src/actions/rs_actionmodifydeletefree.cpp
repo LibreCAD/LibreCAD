@@ -91,16 +91,16 @@ void RS_ActionModifyDeleteFree::trigger(){
 
                     updateSelectionWidget();
                 } else {
-                    commandMessageTR("Entities not in the same polyline.");
+                    commandMessage(tr("Entities not in the same polyline."));
                 }
             } else {
-                commandMessageTR("Parent of second entity is not a polyline");
+                commandMessage(tr("Parent of second entity is not a polyline"));
             }
         } else {
-            commandMessageTR("Parent of second entity is nullptr");
+            commandMessage(tr("Parent of second entity is nullptr"));
         }
     } else {
-        commandMessageTR("One of the chosen entities is nullptr");
+        commandMessage(tr("One of the chosen entities is nullptr"));
     }
 }
 
@@ -117,13 +117,13 @@ void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEv
                         polyline = dynamic_cast<RS_Polyline *>(parent);
                         setStatus(1);
                     } else {
-                        commandMessageTR("Parent of first entity is not a polyline");
+                        commandMessage(tr("Parent of first entity is not a polyline"));
                     }
                 } else {
-                    commandMessageTR("Parent of first entity is nullptr");
+                    commandMessage(tr("Parent of first entity is nullptr"));
                 }
             } else {
-                commandMessageTR("First entity is nullptr");
+                commandMessage(tr("First entity is nullptr"));
             }
             break;
         }
@@ -134,7 +134,7 @@ void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEv
             if (e2) {
                 trigger();
             } else {
-                commandMessageTR("Second entity is nullptr");
+                commandMessage(tr("Second entity is nullptr"));
             }
             break;
         }
@@ -150,10 +150,10 @@ void RS_ActionModifyDeleteFree::mouseRightButtonReleaseEvent(int status, [[maybe
 void RS_ActionModifyDeleteFree::updateMouseButtonHints() {
     switch (getStatus()) {
     case 0:
-        updateMouseWidgetTRCancel("Specify first break point on a polyline");
+        updateMouseWidgetTRCancel(tr("Specify first break point on a polyline"));
         break;
     case 1:
-        updateMouseWidgetTRBack("Specify second break point on the same polyline");
+        updateMouseWidgetTRBack(tr("Specify second break point on the same polyline"));
         break;
     default:
         updateMouseWidget();

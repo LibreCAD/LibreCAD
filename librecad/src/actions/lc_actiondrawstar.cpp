@@ -181,7 +181,7 @@ bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QStri
                         restoreMainStatus();
                     }
                     else{
-                        commandMessageTR("Invalid rays number, should be in range [3..99]");
+                        commandMessage(tr("Invalid rays number, should be in range [3..99]"));
                     }
                     break;
                 }
@@ -189,7 +189,7 @@ bool LC_ActionDrawStar::doProcessCommand([[maybe_unused]]int status, const QStri
         }
         else {
             processed = false;
-            commandMessageTR("Invalid value");
+            commandMessage(tr("Invalid value"));
         }
     }
     return processed;
@@ -616,19 +616,19 @@ QStringList LC_ActionDrawStar::getAvailableCommands(){
 void LC_ActionDrawStar::updateMouseButtonHints(){
     switch (getStatus()){
         case SetCenter:
-            updateMouseWidgetTRCancel("Set center point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Set center point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetOuterPoint:
-            updateMouseWidgetTRBack("Set outer point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Set outer point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetInnerPoint:
-            updateMouseWidgetTRBack("Set inner point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Set inner point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetRadiuses:
-            updateMouseWidgetTRBack("Set rounding radiuses (outer, inner)");
+            updateMouseWidgetTRBack(tr("Set rounding radiuses (outer, inner)"));
             break;
         case SetRays:
-            updateMouseWidgetTRBack("Set rays number");
+            updateMouseWidgetTRBack(tr("Set rays number"));
             break;
         default:
             LC_AbstractActionWithPreview::updateMouseButtonHints();

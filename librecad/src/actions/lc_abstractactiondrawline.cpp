@@ -42,7 +42,7 @@ void LC_AbstractActionDrawLine::setNewStartPointState(){
         setStatus(SetStartPoint);
     }
     else{
-        commandMessageTR("Start point may set in distance or point state only");
+        commandMessage(tr("Start point may set in distance or point state only"));
     }
 }
 

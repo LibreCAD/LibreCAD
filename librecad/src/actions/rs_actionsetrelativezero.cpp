@@ -74,7 +74,7 @@ void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionSetRelativeZero::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel("Set relative Zero");
+            updateMouseWidgetTRCancel(tr("Set relative Zero"));
             break;
         default:
             updateMouseWidget();

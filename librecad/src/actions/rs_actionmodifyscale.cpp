@@ -353,14 +353,14 @@ void RS_ActionModifyScale::determineScaleFactor(RS_ScaleData& data,
 void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel( QT_TR_NOOP("Specify scale center"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, "Snap to center of selection"));
+            updateMouseWidgetTRCancel(tr( "Specify scale center"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO, tr("Snap to center of selection")));
             break;
             // Find the scale factors to scale the pPoints->sourcePoint to pPoints->targetPoint
         case SetSourcePoint:
-            updateMouseWidgetTRCancel("Specify source point", pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify source point"), pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Specify target point", pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Specify target point"), pPoints->data.isotropicScaling ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();
@@ -369,7 +369,7 @@ void RS_ActionModifyScale::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyScale::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to scale", MOD_CTRL("Scale immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select to scale"), MOD_CTRL(tr("Scale immediately after selection")));
 }
 
 LC_ActionOptionsWidget *RS_ActionModifyScale::createOptionsWidget() {

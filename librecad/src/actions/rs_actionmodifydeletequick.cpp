@@ -82,7 +82,7 @@ void RS_ActionModifyDeleteQuick::mouseRightButtonReleaseEvent(int status, [[mayb
 void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
     switch (getStatus()) {
     case 0:
-        updateMouseWidgetTRCancel("Pick entity to delete");
+        updateMouseWidgetTRCancel(tr("Pick entity to delete"));
         break;
     default:
         updateMouseWidget();

@@ -19,7 +19,7 @@ int LC_ActionModifySelectionBase::countSelected() {
     int ret=container->countSelected();
     // fixme - ensure that this is correct place for method
     if (ret==0) {
-        commandMessageTR("No entity selected!");
+        commandMessage(tr("No entity selected!"));
     }
     return ret;
 }

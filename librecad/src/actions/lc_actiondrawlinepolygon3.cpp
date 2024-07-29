@@ -143,13 +143,13 @@ void LC_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
 void LC_ActionDrawLinePolygonCenTan::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetCenter:
-        updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
+        updateMouseWidgetTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetTangent:
-        updateMouseWidgetTRBack("Specify a tangent", MOD_SHIFT_ANGLE_SNAP);
+        updateMouseWidgetTRBack(tr("Specify a tangent"), MOD_SHIFT_ANGLE_SNAP);
         break;
     case SetNumber:
-        updateMouseWidgetTR("Enter number:","");
+        updateMouseWidget(tr("Enter number:"),"");
         break;
     default:
         updateMouseWidget();

@@ -397,7 +397,7 @@ void RS_ActionDrawCircleTan3::mouseLeftButtonReleaseEvent(int status, QMouseEven
                     setStatus(getStatus() + 1);
                 }
                 else {
-                    commandMessageTR("No common tangential circle for selected entities");
+                    commandMessage(tr("No common tangential circle for selected entities"));
                 }
             }
             break;
@@ -488,16 +488,16 @@ void RS_ActionDrawCircleTan3::commandEvent(RS_CommandEvent* e) {
 void RS_ActionDrawCircleTan3::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCircle1:
-            updateMouseWidgetTRCancel("Specify the first line/arc/circle");
+            updateMouseWidgetTRCancel(tr("Specify the first line/arc/circle"));
             break;
         case SetCircle2:
-            updateMouseWidgetTRBack("Specify the second line/arc/circle");
+            updateMouseWidgetTRBack(tr("Specify the second line/arc/circle"));
             break;
         case SetCircle3:
-            updateMouseWidgetTRBack("Specify the third line/arc/circle");
+            updateMouseWidgetTRBack(tr("Specify the third line/arc/circle"));
             break;
         case SetCenter:
-            updateMouseWidgetTRBack("Select the center of the tangent circle");
+            updateMouseWidgetTRBack(tr("Select the center of the tangent circle"));
             break;
         default:
             updateMouseWidget();

@@ -197,21 +197,21 @@ void RS_ActionModifyMirror::doTrigger() {
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to mirror");
+    updateMouseWidgetTRCancel(tr("Select to mirror"));
 }
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetAxisPoint1:
             if (mirrorToExistingLine){
-                updateMouseWidgetTRCancel("Specify mirror line");
+                updateMouseWidgetTRCancel(tr("Specify mirror line"));
             }
             else{
-                updateMouseWidgetTRCancel("Specify first point of mirror line", MOD_SHIFT_RELATIVE_ZERO);
+                updateMouseWidgetTRCancel(tr("Specify first point of mirror line"), MOD_SHIFT_RELATIVE_ZERO);
             }
             break;
         case SetAxisPoint2:
-            updateMouseWidgetTRBack("Specify second point of mirror line", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second point of mirror line"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

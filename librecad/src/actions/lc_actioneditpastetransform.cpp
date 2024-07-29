@@ -40,7 +40,7 @@ LC_ActionEditPasteTransform::LC_ActionEditPasteTransform(RS_EntityContainer &con
 void LC_ActionEditPasteTransform::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (RS_CLIPBOARD->count() == 0){
-        commandMessageTR("Clipboard is empty");
+        commandMessage(tr("Clipboard is empty"));
         finish(false);
     }
 }
@@ -131,7 +131,7 @@ RS2::CursorType LC_ActionEditPasteTransform::doGetMouseCursor(int status) {
 void LC_ActionEditPasteTransform::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Set paste reference point", MOD_CTRL("Paste Multiple"));
+            updateMouseWidgetTRCancel(tr("Set paste reference point"), MOD_CTRL(tr("Paste Multiple")));
             break;
 
         default:

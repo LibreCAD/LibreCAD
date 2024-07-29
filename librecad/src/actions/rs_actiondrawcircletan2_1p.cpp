@@ -330,16 +330,16 @@ void RS_ActionDrawCircleTan2_1P::commandEvent(RS_CommandEvent* e) {
 void RS_ActionDrawCircleTan2_1P::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCircle1:
-            updateMouseWidgetTRCancel("Specify a line/arc/circle");
+            updateMouseWidgetTRCancel(tr("Specify a line/arc/circle"));
             break;
         case SetCircle2:
-            updateMouseWidgetTRBack("Specify the another arc/circle");
+            updateMouseWidgetTRBack(tr("Specify the another arc/circle"));
             break;
         case SetPoint:
-            updateMouseWidgetTRBack("Specify a point on the tangent circle");
+            updateMouseWidgetTRBack(tr("Specify a point on the tangent circle"));
             break;
         case SetCenter:
-            updateMouseWidgetTRBack("Select the center of the tangent circle");
+            updateMouseWidgetTRBack(tr("Select the center of the tangent circle"));
             break;
         default:
             updateMouseWidget();

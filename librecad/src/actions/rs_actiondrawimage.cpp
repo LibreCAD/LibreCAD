@@ -180,7 +180,7 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
                 setAngle(RS_Math::deg2rad(a));
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -193,7 +193,7 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
                 setFactor(f);
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -207,7 +207,7 @@ bool RS_ActionDrawImage::doProcessCommand(int status, const QString &c) {
                 setFactor(RS_Units::dpiToScale(dpi, document->getGraphicUnit()));
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -269,16 +269,16 @@ QStringList RS_ActionDrawImage::getAvailableCommands(){
 void RS_ActionDrawImage::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
-            updateMouseWidgetTR("Enter angle:", "");
+            updateMouseWidget(tr("Enter angle:"));
             break;
         case SetFactor:
-            updateMouseWidgetTR("Enter factor:", "");
+            updateMouseWidget(tr("Enter factor:"));
             break;
         case SetDPI:
-            updateMouseWidgetTR("Enter dpi:", "");
+            updateMouseWidget(tr("Enter dpi:"));
             break;
         default:
             updateMouseWidget();

@@ -636,7 +636,7 @@ QStringList RS_ActionDefault::getAvailableCommands(){
 void RS_ActionDefault::updateMouseButtonHints(){
     switch (getStatus()) {
         case Moving:{
-            updateMouseWidgetTRCancel("Set new position", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRCancel(tr("Set new position"), MOD_SHIFT_ANGLE_SNAP);
             break;
         }
         case MovingRef: {
@@ -644,15 +644,15 @@ void RS_ActionDefault::updateMouseButtonHints(){
             RS2::EntityType rtti = pPoints->refMovingEntity->rtti();
             switch (rtti){
                 case RS2::EntityLine:
-                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE( "Lengthen Line");
+                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Line"));
                     break;
                 case RS2::EntityArc:
-                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE( "Lengthen Arc");
+                    modifiers =  MOD_SHIFT_AND_CTRL_ANGLE(tr("Lengthen Arc"));
                     break;
                 default:
                     modifiers = MOD_SHIFT_ANGLE_SNAP;
             }
-            updateMouseWidgetTR("Set new ref position", "", modifiers);
+            updateMouseWidget(tr("Set new ref position"), "", modifiers);
             break;
         }
         case Neutral: {
@@ -660,7 +660,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case SetCorner2: {
-            updateMouseWidgetTRBack("Choose second edge");
+            updateMouseWidgetTRBack(tr("Choose second edge"));
             break;
         }
         default: {

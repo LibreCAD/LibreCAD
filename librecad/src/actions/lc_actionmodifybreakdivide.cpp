@@ -923,7 +923,7 @@ RS2::CursorType LC_ActionModifyBreakDivide::doGetMouseCursor([[maybe_unused]]int
 }
 
 void LC_ActionModifyBreakDivide::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel("Select line, arc or circle");
+    updateMouseWidgetTRCancel(tr("Select line, arc or circle"));
 }
 
 LC_ActionOptionsWidget* LC_ActionModifyBreakDivide::createOptionsWidget(){

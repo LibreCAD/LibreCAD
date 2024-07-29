@@ -258,19 +258,19 @@ RS_Vector LC_ActionDimLinearBase::adjustByAdjacentDim(RS_Vector mouse, bool forP
 void LC_ActionDimLinearBase::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetExtPoint1:
-            updateMouseWidgetTRCancel("Specify first extension line origin",MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first extension line origin"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetExtPoint2:
-            updateMouseWidgetTRBack("Specify second extension line origin", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second extension line origin"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetDefPoint:
-            updateMouseWidgetTRBack("Specify dimension line location", MOD_SHIFT("Snap to Adjacent Dim"));
+            updateMouseWidgetTRBack(tr("Specify dimension line location"), MOD_SHIFT(tr("Snap to Adjacent Dim")));
             break;
         case SetText:
-            updateMouseWidgetTR("Enter dimension text:", "");
+            updateMouseWidget(tr("Enter dimension text:"));
             break;
         case SetAngle:
-            updateMouseWidgetTR("Enter dimension line angle:", "");
+            updateMouseWidget(tr("Enter dimension line angle:"));
             break;
         default:
             updateMouseWidget();

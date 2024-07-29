@@ -220,7 +220,7 @@ void LC_ActionDrawCircleByArc::coordinateEvent([[maybe_unused]]RS_CoordinateEven
 void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetArc:
-            updateMouseWidgetTRCancel("Select arc or ellipse arc");
+            updateMouseWidgetTRCancel(tr("Select arc or ellipse arc"));
             break;
         default:
             updateMouseWidget();

@@ -145,7 +145,6 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
     }
 }
 
-
 void LC_ActionInfoProperties::clearHighLighting()
 {
     auto* hContainer = graphicView->getOverlayContainer(RS2::OverlayEffects);
@@ -183,7 +182,6 @@ void LC_ActionInfoProperties::updateQuickInfoWidget(RS_Entity *pEntity){
     }
 }
 
-
 void LC_ActionInfoProperties::clearQuickInfoWidget(){
     LC_QuickInfoWidget *entityInfoWidget = QC_ApplicationWindow::getAppWindow()->getEntityInfoWidget();
     if (entityInfoWidget != nullptr){
@@ -192,6 +190,5 @@ void LC_ActionInfoProperties::clearQuickInfoWidget(){
 }
 
 void LC_ActionInfoProperties::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel("Select entity");
+    updateMouseWidgetTRCancel(tr("Select entity"));
 }
-

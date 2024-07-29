@@ -108,9 +108,9 @@ void RS_ActionPolylineDel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
         case SetPolyline: {
             auto en = catchEntity(e);
             if (en == nullptr){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
-                commandMessageTR("Entity must be a polyline.");
+                commandMessage(tr("Entity must be a polyline."));
             } else {
                 snapPoint(e);
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
@@ -123,14 +123,14 @@ void RS_ActionPolylineDel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
         }
         case SetVertex1: {
             if (polylineToModify == nullptr){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else {
                 RS_Vector vertex;
                 RS_Entity * segment;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid){
                     if (!polylineToModify->isPointOnEntity(vertex)){
-                        commandMessageTR("Deleting point is not on entity.");
+                        commandMessage(tr("Deleting point is not on entity."));
                     }
                     else{
                         vertexToDelete = vertex;
@@ -139,7 +139,7 @@ void RS_ActionPolylineDel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
                     }
                 }
                 else{
-                    commandMessageTR("Deleting point is invalid.");
+                    commandMessage(tr("Deleting point is invalid."));
                 }
             }
             break;
@@ -152,10 +152,10 @@ void RS_ActionPolylineDel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
 void RS_ActionPolylineDel::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPolyline:
-            updateMouseWidgetTRCancel("Specify polyline to delete node");
+            updateMouseWidgetTRCancel(tr("Specify polyline to delete node"));
             break;
         case SetVertex1:
-            updateMouseWidgetTRBack("Specify deleting node's point");
+            updateMouseWidgetTRBack(tr("Specify deleting node's point"));
             break;
         default:
             updateMouseWidget();

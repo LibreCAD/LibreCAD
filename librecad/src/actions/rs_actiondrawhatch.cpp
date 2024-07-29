@@ -158,23 +158,23 @@ void RS_ActionDrawHatch::trigger() {
         bool printArea = true;
         switch( hatch->getUpdateError()) {
         case RS_Hatch::HATCH_OK :
-                commandMessageTR("Hatch created successfully.");
+                commandMessage(tr("Hatch created successfully."));
                 break;
             case RS_Hatch::HATCH_INVALID_CONTOUR :
-                commandMessageTR("Hatch Error: Invalid contour found!");
+                commandMessage(tr("Hatch Error: Invalid contour found!"));
                 printArea = false;
                 break;
             case RS_Hatch::HATCH_PATTERN_NOT_FOUND :
-                commandMessageTR("Hatch Error: Pattern not found!");
+                commandMessage(tr("Hatch Error: Pattern not found!"));
                 break;
             case RS_Hatch::HATCH_TOO_SMALL :
-                commandMessageTR("Hatch Error: Contour or pattern too small!");
+                commandMessage(tr("Hatch Error: Contour or pattern too small!"));
                 break;
             case RS_Hatch::HATCH_AREA_TOO_BIG :
-                commandMessageTR("Hatch Error: Contour too big!");
+                commandMessage(tr("Hatch Error: Contour too big!"));
                 break;
             default :
-                commandMessageTR("Hatch Error: Undefined Error!");
+                commandMessage(tr("Hatch Error: Undefined Error!"));
                 printArea = false;
                 break;
         }
@@ -187,7 +187,7 @@ void RS_ActionDrawHatch::trigger() {
 
     } else {
         hatch.reset();
-        commandMessageTR("Invalid hatch area. Please check that the entities chosen form one or more closed contours.");
+        commandMessage(tr("Invalid hatch area. Please check that the entities chosen form one or more closed contours."));
 	}
     //}
 }

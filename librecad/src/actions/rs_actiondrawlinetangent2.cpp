@@ -240,13 +240,13 @@ void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
 void RS_ActionDrawLineTangent2::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCircle1:
-            updateMouseWidgetTRCancel("Select first circle/ellipse/parabola");
+            updateMouseWidgetTRCancel(tr("Select first circle/ellipse/parabola"));
             break;
         case SetCircle2:
-            updateMouseWidgetTRBack("Select second circle/ellipse/parabola");
+            updateMouseWidgetTRBack(tr("Select second circle/ellipse/parabola"));
             break;
         case SelectLine:
-            updateMouseWidgetTRBack("Select the tangent line closest to cursor");
+            updateMouseWidgetTRBack(tr("Select the tangent line closest to cursor"));
             break;
         default:
             updateMouseWidget();

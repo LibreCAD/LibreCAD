@@ -180,13 +180,13 @@ void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCorner1:
-            updateMouseWidgetTRCancel("Specify first corner", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first corner"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack("Specify second corner", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second corner"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetNumber:
-            updateMouseWidgetTRBack("Number:");
+            updateMouseWidgetTRBack(tr("Number:"));
             break;
         default:
             updateMouseWidget();

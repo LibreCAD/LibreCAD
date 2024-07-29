@@ -550,7 +550,7 @@ bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]int sta
             toMainStatus = false;
         }
         else{
-            commandMessageTR("Specify first point first");
+            commandMessage(tr("Specify first point first"));
         }
     }
     else if (checkCommand("height", command)){ // starts entering height value
@@ -559,7 +559,7 @@ bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]int sta
             toMainStatus = false;
         }
         else{
-            commandMessageTR("Specify width or second point first");
+            commandMessage(tr("Specify width or second point first"));
         }
     }
     else if (checkCommand("size", command)){ // starts entering size as (width, height)
@@ -568,7 +568,7 @@ bool LC_ActionDrawRectangle3Points::processCustomCommand([[maybe_unused]]int sta
             toMainStatus = false;
         }
         else{
-            commandMessageTR("Specify first point first");
+            commandMessage(tr("Specify first point first"));
         }
     }
     else{
@@ -588,25 +588,25 @@ void LC_ActionDrawRectangle3Points::calculateCorner4() const{
 void LC_ActionDrawRectangle3Points::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetWidth:
-            updateMouseWidgetTRBack("Specify width");
+            updateMouseWidgetTRBack(tr("Specify width"));
             break;
         case SetHeight:
-            updateMouseWidgetTRBack("Specify height");
+            updateMouseWidgetTRBack(tr("Specify height"));
             break;
         case SetPoint1:
-            updateMouseWidgetTRBack("Specify start point",MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRBack(tr("Specify start point)"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point", baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second point"), baseAngleIsFixed ? MOD_NONE: MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
-            updateMouseWidgetTRBack("Specify third point",MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify third point"),MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle:
-            updateMouseWidgetTRBack("Specify angle");
+            updateMouseWidgetTRBack(tr("Specify angle"));
             break;
         case SetInnerAngle:
-            updateMouseWidgetTRBack("Specify inner angle");
+            updateMouseWidgetTRBack(tr("Specify inner angle"));
             break;
         default:
             LC_AbstractActionDrawRectangle::doUpdateMouseButtonHints(status);

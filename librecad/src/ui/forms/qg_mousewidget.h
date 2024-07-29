@@ -41,7 +41,7 @@ public:
 
 protected slots:
     virtual void languageChange();
-    void setupModifier(QLabel *btn, const char *helpMsg) const;
+    void setupModifier(QLabel *btn, const QString& helpMsg) const;
 };
 
 #endif // QG_MOUSEWIDGET_H

@@ -414,11 +414,11 @@ LC_ActionModifyLineGap::GapData *LC_ActionModifyLineGap::prepareGapData(RS_Line 
  void LC_ActionModifyLineGap::updateMouseButtonHints(){
     switch (getStatus()){
         case SetEntity:{
-            updateMouseWidgetTRCancel("Select line", MOD_SHIFT("Use Alternative Line Endpoint"));
+            updateMouseWidgetTRCancel(tr("Select line"), MOD_SHIFT(tr("Use Alternative Line Endpoint")));
             break;
         }
         case SetGapEndPoint:{
-            updateMouseWidgetTRBack("Select endpoint of gap");
+            updateMouseWidgetTRBack(tr("Select endpoint of gap"));
             break;
         }
     default:

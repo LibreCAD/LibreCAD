@@ -266,13 +266,13 @@ void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel("Specify the first line");
+            updateMouseWidgetTRCancel(tr("Specify the first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRBack("Specify the second line");
+            updateMouseWidgetTRBack(tr("Specify the second line"));
             break;
         case SetLine3:
-            updateMouseWidgetTRBack("Specify the third line");
+            updateMouseWidgetTRBack(tr("Specify the third line"));
             break;
         default:
             updateMouseWidget();

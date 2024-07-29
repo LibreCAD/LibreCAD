@@ -238,13 +238,13 @@ QStringList LC_ActionSnapMiddleManual::getAvailableCommands(){
 void LC_ActionSnapMiddleManual::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPercentage:
-            updateMouseWidgetTRCancel("Specify percentage / start-point");
+            updateMouseWidgetTRCancel(tr("Specify percentage / start-point"));
             break;
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify start point");
+            updateMouseWidgetTRCancel(tr("Specify start point"));
             break;
         case SetEndPoint:
-            updateMouseWidgetTRBack("Specify end point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify end point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

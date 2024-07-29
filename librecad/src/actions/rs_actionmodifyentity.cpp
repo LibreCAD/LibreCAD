@@ -117,5 +117,5 @@ RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int sta
 }
 
 void RS_ActionModifyEntity::updateMouseButtonHints() {
-    updateMouseWidgetTRCancel("Click on entity to modify");
+    updateMouseWidgetTRCancel(tr("Click on entity to modify"));
 }

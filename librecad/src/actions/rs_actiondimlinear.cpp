@@ -108,7 +108,7 @@ bool RS_ActionDimLinear::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 setAngle(RS_Math::deg2rad(a));
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);

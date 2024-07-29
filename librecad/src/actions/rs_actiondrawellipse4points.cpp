@@ -169,7 +169,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
                 } else {
                     pPoints->evalid = false;
                     if (pPoints->m_bUniqueEllipse == false){
-                        commandMessageTR("Can not determine uniquely an ellipse");
+                        commandMessage(tr("Can not determine uniquely an ellipse"));
                         pPoints->m_bUniqueEllipse = true;
                     }
                 }
@@ -282,16 +282,16 @@ QStringList RS_ActionDrawEllipse4Points::getAvailableCommands() {
 void RS_ActionDrawEllipse4Points::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify the first point on ellipse", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify the first point on ellipse"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify the second point on ellipse", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify the second point on ellipse"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint3:
-            updateMouseWidgetTRBack("Specify the third point on ellipse");
+            updateMouseWidgetTRBack(tr("Specify the third point on ellipse"));
             break;
         case SetPoint4:
-            updateMouseWidgetTRBack("Specify the fourth point on ellipse");
+            updateMouseWidgetTRBack(tr("Specify the fourth point on ellipse"));
             break;
         default:
             updateMouseWidget();

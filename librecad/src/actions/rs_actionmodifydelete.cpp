@@ -51,7 +51,7 @@ void RS_ActionModifyDelete::selectionCompleted(bool singleEntity) {
 }
 
 void RS_ActionModifyDelete::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to delete",MOD_CTRL("Delete immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select to delete"),MOD_CTRL(tr("Delete immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyDelete::doGetMouseCursorSelected([[maybe_unused]] int status){

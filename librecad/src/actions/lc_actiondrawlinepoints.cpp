@@ -489,22 +489,22 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
     QString msg;
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify First Point",MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify First Point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint:
-            updateMouseWidgetTRBack("Specify Second Point\nor [number|x|y|angle|p|edges|distance]",MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify Second Point\nor [number|x|y|angle|p|edges|distance]"),MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetDirection:
-            updateMouseWidgetTRBack("Specify line direction\n[x|y|angle|p|distance]");
+            updateMouseWidgetTRBack(tr("Specify line direction\n[x|y|angle|p|distance]"));
             break;
         case SetAngle:
-            updateMouseWidgetTRBack("Specify line direction angle\nor [x|y|p|number|edges|distance]");
+            updateMouseWidgetTRBack(tr("Specify line direction angle\nor [x|y|p|number|edges|distance]"));
             break;
         case SetEdge:
-            updateMouseWidgetTRBack("Specify edge points mode\n[none|start|end|both|distance]");
+            updateMouseWidgetTRBack(tr("Specify edge points mode\n[none|start|end|both|distance]"));
             break;
         case SetFixDistance:
-            updateMouseWidgetTRBack("Specify fixed distance between points\nor[x|y|p|number|edges]");
+            updateMouseWidgetTRBack(tr("Specify fixed distance between points\nor[x|y|p|number|edges]"));
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
@@ -528,7 +528,7 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
             break;
         }
         case SetPointsCount:
-            updateMouseWidgetTRBack("Specify points count");
+            updateMouseWidgetTRBack(tr("Specify points count"));
             break;
         default:
             LC_AbstractActionDrawLine::updateMouseButtonHints();

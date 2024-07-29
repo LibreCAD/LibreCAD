@@ -16,9 +16,9 @@ bool LC_ActionDrawLinePolygonBase::parseNumber(const QString &c){
         if (n > 0 && n < 10000){ // fixme - check range to conform to UI
             number = n;
         } else
-            commandMessageTR("Not a valid number. Try 1..9999");
+            commandMessage(tr("Not a valid number. Try 1..9999"));
     } else {
-        commandMessageTR("Not a valid expression");
+        commandMessage(tr("Not a valid expression"));
     }
     return ok;
 }

@@ -36,13 +36,10 @@
 #include "rs_math.h"
 #include "lc_rotate2options.h"
 
-RS_ActionModifyRotate2::RS_ActionModifyRotate2(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Rotate Entities around two centers",
-						   container, graphicView)
-		,data(new RS_Rotate2Data()){
-	actionType=RS2::ActionModifyRotate2;
+RS_ActionModifyRotate2::RS_ActionModifyRotate2(RS_EntityContainer& container, RS_GraphicView& graphicView)
+    :LC_ActionModifyBase("Rotate Entities around two centers",container, graphicView)
+    ,data(new RS_Rotate2Data()){
+    actionType=RS2::ActionModifyRotate2;
 }
 
 // fixme - The logic of Rotate2 action should be deeply reviewed... this is very old implementation, and for
@@ -166,16 +163,16 @@ void RS_ActionModifyRotate2::doTrigger() {
 }
 
 void RS_ActionModifyRotate2::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select for two axis rotation", MOD_CTRL("Rotate 2 Axis immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select for two axis rotation"), MOD_CTRL(tr("Rotate 2 Axis immediately after selection")));
 }
 
 void RS_ActionModifyRotate2::updateMouseButtonHintsForSelected(int status) {
     switch (getStatus()) {
         case SetReferencePoint1:
-            updateMouseWidgetTRCancel("Specify absolute reference point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify absolute reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetReferencePoint2:
-            updateMouseWidgetTRBack("Specify relative reference point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify relative reference point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

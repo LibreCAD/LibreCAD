@@ -212,7 +212,7 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 pPoints->angle = a;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(SetPos);
@@ -225,7 +225,7 @@ bool RS_ActionDrawLineAngle::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 pPoints->length = l;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(SetPos);
@@ -290,13 +290,13 @@ QStringList RS_ActionDrawLineAngle::getAvailableCommands(){
 void RS_ActionDrawLineAngle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPos:
-            updateMouseWidgetTRCancel("Specify position", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify position"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
-            updateMouseWidgetTRBack("Enter angle:");
+            updateMouseWidgetTRBack(tr("Enter angle:"));
             break;
         case SetLength:
-            updateMouseWidgetTRBack("Enter length:");
+            updateMouseWidgetTRBack(tr("Enter length:"));
             break;
         default:
             updateMouseWidget();

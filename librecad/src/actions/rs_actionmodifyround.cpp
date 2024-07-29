@@ -338,7 +338,7 @@ bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
                     pPoints->data.radius = r;
 
                 } else {
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 }
                 // fixme - should we allow change status for invalid input?
                 updateOptions();
@@ -353,7 +353,7 @@ bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 pPoints->data.radius = r;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -412,15 +412,13 @@ bool RS_ActionModifyRound::isTrimOn() const{
 void RS_ActionModifyRound::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity1:
-            updateMouseWidget(
-                tr("Specify first entity or enter radius <%1>").arg(getRadius()),
-                tr("Back"));
+            updateMouseWidgetTRBack(tr("Specify first entity or enter radius <%1>").arg(getRadius()));
             break;
         case SetEntity2:
-            updateMouseWidgetTRBack("Specify second entity");
+            updateMouseWidgetTRBack(tr("Specify second entity"));
             break;
         case SetRadius:
-            updateMouseWidgetTRCancel("Enter radius:");
+            updateMouseWidgetTRCancel(tr("Enter radius:"));
             break;
             /*case SetTrim:
                         RS_DIALOGFACTORY->updateMouseWidget(tr("Trim on? (yes/no):"),

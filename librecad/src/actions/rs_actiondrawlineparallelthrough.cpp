@@ -164,13 +164,13 @@ void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionDrawLineParallelThrough::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Select entity");
+            updateMouseWidgetTRCancel(tr("Select entity"));
             break;
         case SetPos:
-            updateMouseWidgetTRBack("Specify through point", MOD_SHIFT_FREE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify through point"), MOD_SHIFT_FREE_SNAP);
             break;
         case SetNumber:
-            updateMouseWidgetTRBack("Number:");
+            updateMouseWidgetTRBack(tr("Number:"));
             break;
         default:
             updateMouseWidget();
@@ -200,10 +200,10 @@ bool RS_ActionDrawLineParallelThrough::doProcessCommand(int status, const QStrin
                 if (n > 0 && n < 100){
                     number = n;
                 } else {
-                    commandMessageTR("Not a valid number. Try 1..99");
+                    commandMessage(tr("Not a valid number. Try 1..99"));
                 }
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);

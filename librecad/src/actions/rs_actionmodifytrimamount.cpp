@@ -183,14 +183,14 @@ void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEv
             *trimCoord = toGraph(e);
             RS_Entity* en = catchEntity(e, enTypeList, RS2::ResolveNone);
             if (en == nullptr){
-                commandMessageTR("No entity found.");
+                commandMessage(tr("No entity found."));
             }
             else if (en->isAtomic()){
                 trimEntity = dynamic_cast<RS_AtomicEntity *>(en);
                 trigger();
             }
             else {
-                commandMessageTR("The chosen Entity is not an atomic entity or cannot be trimmed.");
+                commandMessage(tr("The chosen Entity is not an atomic entity or cannot be trimmed."));
             }
             break;
         }
@@ -214,7 +214,7 @@ bool RS_ActionModifyTrimAmount::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 distance = d;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             // fixme - should we allow change status for invalid input?
             updateOptions();
@@ -246,7 +246,7 @@ LC_ActionOptionsWidget* RS_ActionModifyTrimAmount::createOptionsWidget(){
 void RS_ActionModifyTrimAmount::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseTrimEntity:
-            updateMouseWidgetTRBack("Select line, arc, ellipse or parabola to trim or enter distance:");
+            updateMouseWidgetTRBack(tr("Select line, arc, ellipse or parabola to trim or enter distance:"));
             break;
         default:
             updateMouseWidget();

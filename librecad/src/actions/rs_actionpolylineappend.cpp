@@ -109,13 +109,13 @@ void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEven
     if (status == SetStartpoint){
         originalPolyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
         if (!originalPolyline){
-            commandMessageTR("No Entity found.");
+            commandMessage(tr("No Entity found."));
             return;
         } else if (!isPolyline(originalPolyline)){
-            commandMessageTR("Entity must be a polyline.");
+            commandMessage(tr("Entity must be a polyline."));
             return;
         } else if (originalPolyline->isClosed()){
-            commandMessageTR("Can not append nodes in a closed polyline.");
+            commandMessage(tr("Can not append nodes in a closed polyline."));
             return;
         } else {
             snapPoint(e);
@@ -133,7 +133,7 @@ void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEven
             } else if (nearestSegment == entLast){
                 getPoint() = originalPolyline->getEndpoint();
             } else {
-                commandMessageTR("Click somewhere near the beginning or end of existing polyline.");
+                commandMessage(tr("Click somewhere near the beginning or end of existing polyline."));
             }
         }
     }
@@ -205,7 +205,7 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionPolylineAppend::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify the polyline somewhere near the beginning or end point");
+            updateMouseWidgetTRCancel(tr("Specify the polyline somewhere near the beginning or end point"));
             break;
         case SetNextPoint: {
             QString msg = "";
@@ -219,9 +219,9 @@ void RS_ActionPolylineAppend::updateMouseButtonHints(){
             }
 
             if (getHistory().size() >= 2){
-                updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"));
+                updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg));
             } else {
-                updateMouseWidgetTRBack("Specify next point");
+                updateMouseWidgetTRBack(tr("Specify next point"));
             }
             break;
         }
@@ -238,6 +238,6 @@ void RS_ActionPolylineAppend::undo(){
         deletePreview();
         getPoint() = getHistory().last();
     } else {
-        commandMessageTR("Cannot undo: Not enough entities defined yet.");
+        commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
 }

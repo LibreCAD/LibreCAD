@@ -229,7 +229,7 @@ void RS_ActionDrawArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
             snapMouseToDiameter(mouse, arcStart, halfCircleArcEnd);
             shouldFireCoordinateEvent = LC_LineMath::isMeaningfulDistance(mouse, arcStart);
             if (!shouldFireCoordinateEvent){
-                commandMessageTR("Length of chord should be non-zero");
+                commandMessage(tr("Length of chord should be non-zero"));
             }
             break;
         }
@@ -319,7 +319,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                     setStatus(SetAngle1);
                     accept = true;
                 } else
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 break;
             }
             case SetAngle1: {
@@ -330,7 +330,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                     accept = true;
                     setStatus(SetAngle2);
                 } else
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 break;
             }
             case SetAngle2: {
@@ -350,7 +350,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                         accept = true;
                         trigger();
                     } else
-                        commandMessageTR("Not a valid expression");
+                        commandMessage(tr("Not a valid expression"));
                 }
                 break;
             }
@@ -362,7 +362,7 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                     accept = true;
                     trigger();
                 } else
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 break;
             }
             case SetChordLength: {
@@ -374,9 +374,9 @@ bool RS_ActionDrawArc::doProcessCommand(int status, const QString &c) {
                         data->angle2 = data->angle1 + asin(l / (2 * data->radius)) * 2;
                         trigger();
                     } else
-                        commandMessageTR("Not a valid chord length");
+                        commandMessage(tr("Not a valid chord length"));
                 } else
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 break;
             }
             default:
@@ -393,22 +393,22 @@ QStringList RS_ActionDrawArc::getAvailableCommands() {
 void RS_ActionDrawArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
-            updateMouseWidgetTRBack("Specify radius", MOD_SHIFT_FREE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify radius"), MOD_SHIFT_FREE_SNAP);
             break;
         case SetAngle1:
-            updateMouseWidgetTRBack("Specify start angle:", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify start angle:"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle2:
-            updateMouseWidgetTRBack("Specify end angle or [angle/chordlen]", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify end angle or [angle/chordlen]"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetIncAngle:
-            updateMouseWidgetTRBack("Specify included angle:", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify included angle:"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetChordLength:
-            updateMouseWidgetTRBack("Specify chord length:");
+            updateMouseWidgetTRBack(tr("Specify chord length:"));
             break;
         default:
             updateMouseWidget();

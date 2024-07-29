@@ -91,7 +91,7 @@ void LC_ActionPenPick::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]
 }
 
 void LC_ActionPenPick::updateMouseButtonHints(){
-    updateMouseWidgetTRCancel("Specify entity to pick the pen");
+    updateMouseWidgetTRCancel(tr("Specify entity to pick the pen"));
 }
 RS2::CursorType LC_ActionPenPick::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;

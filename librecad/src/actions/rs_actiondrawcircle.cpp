@@ -141,7 +141,7 @@ bool RS_ActionDrawCircle::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 trigger();
             } else
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
         }
         default:
             break;
@@ -152,10 +152,10 @@ bool RS_ActionDrawCircle::doProcessCommand(int status, const QString &c) {
 void RS_ActionDrawCircle::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify center", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetRadius:
-            updateMouseWidgetTRBack("Specify point on circle");
+            updateMouseWidgetTRBack(tr("Specify point on circle"));
             break;
         default:
             updateMouseWidget();

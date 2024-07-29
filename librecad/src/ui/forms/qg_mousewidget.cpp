@@ -85,20 +85,20 @@ void QG_MouseWidget::languageChange(){
 
 void QG_MouseWidget::setHelp(const QString& left, const QString& right, const LC_ModifiersInfo& modifiersInfo) const {
 
-    const char* shiftMsg = modifiersInfo.getShiftMessage();
+    const QString &shiftMsg = modifiersInfo.getShiftMessage();
     setupModifier(lblShift, shiftMsg);
 
-    const char* ctrlMessage = modifiersInfo.getCtrlMessage();
+    const QString &ctrlMessage = modifiersInfo.getCtrlMessage();
     setupModifier(lblCtrl, ctrlMessage);
 
     lLeftButton->setText(left);
     lRightButton->setText(right);
 }
 
-void QG_MouseWidget::setupModifier(QLabel *btn, const char *helpMsg) const{
+void QG_MouseWidget::setupModifier(QLabel *btn, const QString& helpMsg) const{
     if (helpMsg != nullptr){
         btn->setVisible(true);
-        btn->setToolTip(tr(helpMsg));
+        btn->setToolTip(helpMsg);
     }
     else {
         btn->setVisible(false);

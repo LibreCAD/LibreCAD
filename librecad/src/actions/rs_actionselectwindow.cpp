@@ -165,10 +165,10 @@ void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unu
 void RS_ActionSelectWindow::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetCorner1:
-            updateMouseWidgetTRCancel("Click and drag for the selection window");
+            updateMouseWidgetTRCancel(tr("Click and drag for the selection window"));
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack("Choose second edge", MOD_SHIFT("Select Intersecting"));
+            updateMouseWidgetTRBack(tr("Choose second edge"), MOD_SHIFT(tr("Select Intersecting")));
             break;
         default:
             updateMouseWidget();

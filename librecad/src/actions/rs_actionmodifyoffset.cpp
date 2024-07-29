@@ -35,14 +35,11 @@
 #include "qg_modifyoffsetoptions.h"
 #include "rs_debug.h"
 
-RS_ActionModifyOffset::RS_ActionModifyOffset(
-    RS_EntityContainer &container,
-    RS_GraphicView &graphicView)
-    :LC_ActionModifyBase("Modify Offset",
-                               container, graphicView,
-                               {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
-                               true),
-                               data(new RS_OffsetData()){
+RS_ActionModifyOffset::RS_ActionModifyOffset(RS_EntityContainer &container,RS_GraphicView &graphicView)
+    :LC_ActionModifyBase("Modify Offset",container, graphicView,
+                         {RS2::EntityArc, RS2::EntityCircle, RS2::EntityLine, RS2::EntityPolyline},
+                         true)
+    , data(new RS_OffsetData()){
     actionType = RS2::ActionModifyOffset;
 
     data->distance = 0.;
@@ -179,14 +176,14 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
             if (distanceIsFixed){
-                updateMouseWidgetTRBack("Specify direction of offset");
+                updateMouseWidgetTRBack(tr("Specify direction of offset"));
             }
             else {
-                updateMouseWidgetTRBack("Specify reference point for direction of offset");
+                updateMouseWidgetTRBack(tr("Specify reference point for direction of offset"));
             }
             break;
         case SetPosition:
-            updateMouseWidgetTRBack("Specify direction of offset");
+            updateMouseWidgetTRBack(tr("Specify direction of offset"));
             break;
         default:
             updateMouseWidget();
@@ -195,7 +192,7 @@ void RS_ActionModifyOffset::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyOffset::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select lines, polylines, circles or arcs to create offset",MOD_CTRL("Offset immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select lines, polylines, circles or arcs to create offset"),MOD_CTRL(tr("Offset immediately after selection")));
 }
 
 LC_ModifyOperationFlags* RS_ActionModifyOffset::getModifyOperationFlags() {

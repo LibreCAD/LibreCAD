@@ -197,7 +197,7 @@ void LC_AbstractActionDrawRectangle::onCoordinateEvent(const RS_Vector &coord, b
                 updateOptions();
                 restoreMainStatus();
             } else {
-                commandMessageTR("Invalid Angle");
+                commandMessage(tr("Invalid Angle"));
                 updateMouseButtonHints();
             }
             break;
@@ -208,7 +208,7 @@ void LC_AbstractActionDrawRectangle::onCoordinateEvent(const RS_Vector &coord, b
                 restoreMainStatus();
             }
             else{
-                commandMessageTR("Invalid radius");
+                commandMessage(tr("Invalid radius"));
                 updateMouseButtonHints();
             }
             break;
@@ -348,7 +348,7 @@ bool LC_AbstractActionDrawRectangle::doProcessCommand(int status, const QString 
         }
         else {
             processed = false;
-            commandMessageTR("Invalid value");
+            commandMessage(tr("Invalid value"));
         }
     }
     if (processed){
@@ -404,25 +404,25 @@ void LC_AbstractActionDrawRectangle::updateMouseButtonHints() {
     int status = getStatus();
     switch (status) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify insertion point",MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify insertion point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetAngle:
-            updateMouseWidgetTRBack("Specify angle");
+            updateMouseWidgetTRBack(tr("Specify angle"));
             break;
         case SetSize:
-            updateMouseWidgetTRBack("Specify size (width, height)");
+            updateMouseWidgetTRBack(tr("Specify size (width, height)"));
             break;
         case SetCorners:
-            updateMouseWidgetTRBack("Specify corners type\n[str|round|bevels]");
+            updateMouseWidgetTRBack(tr("Specify corners type\n[str|round|bevels]"));
             break;
         case SetBevels:
-            updateMouseWidgetTRBack("Specify corner bevel length (x,y)");
+            updateMouseWidgetTRBack(tr("Specify corner bevel length (x,y)"));
             break;
         case SetRadius:
-            updateMouseWidgetTRBack("Specify corner radius");
+            updateMouseWidgetTRBack(tr("Specify corner radius"));
             break;
         case SetEdges:
-            updateMouseWidgetTRBack("Specify edges mode\n[both|hor|vert]");
+            updateMouseWidgetTRBack(tr("Specify edges mode\n[both|hor|vert]"));
             break;
         default:
             doUpdateMouseButtonHints(status); // delegate to inherited classes to process additional statuses

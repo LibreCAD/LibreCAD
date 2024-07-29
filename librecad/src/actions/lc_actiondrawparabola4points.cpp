@@ -260,19 +260,19 @@ QStringList LC_ActionDrawParabola4Points::getAvailableCommands() {
 void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetPoint1:
-        updateMouseWidgetTRCancel("Specify the first point on parabola", MOD_SHIFT_RELATIVE_ZERO);
+        updateMouseWidgetTRCancel(tr("Specify the first point on parabola"), MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetPoint2:
-        updateMouseWidgetTRBack("Specify the second point on parabola");
+        updateMouseWidgetTRBack(tr("Specify the second point on parabola"));
         break;
     case SetPoint3:
-        updateMouseWidgetTRBack("Specify the third point on parabola");
+        updateMouseWidgetTRBack(tr("Specify the third point on parabola"));
         break;
     case SetPoint4:
-        updateMouseWidgetTRBack("Specify the fourth point on parabola");
+        updateMouseWidgetTRBack(tr("Specify the fourth point on parabola"));
         break;
     case SetAxis:
-        updateMouseWidgetTRBack("Specify the Axis on parabola");
+        updateMouseWidgetTRBack(tr("Specify the Axis on parabola"));
         break;
     default:
         updateMouseWidget();

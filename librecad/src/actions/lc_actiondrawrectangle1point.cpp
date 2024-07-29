@@ -249,16 +249,16 @@ QStringList LC_ActionDrawRectangle1Point::getAvailableCommands() {
 void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
     switch (status) {
         case SetHeight:
-            updateMouseWidgetTRBack("Specify height");
+            updateMouseWidgetTRBack(tr("Specify height"));
             break;
         case SetWidth:
-            updateMouseWidgetTRBack("Specify width");
+            updateMouseWidgetTRBack(tr("Specify width"));
             break;
         case SetSize:
-            updateMouseWidgetTRBack("Specify size (width, height)");
+            updateMouseWidgetTRBack(tr("Specify size (width, height))"));
             break;
         case SetPoint1Snap:
-            updateMouseWidgetTRBack("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]");
+            updateMouseWidgetTRBack(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"));
             break;
         default:
             updateMouseWidget();

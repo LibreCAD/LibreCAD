@@ -164,10 +164,10 @@ void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, [[maybe_
 void RS_ActionDrawLineOrthTan::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine:
-            updateMouseWidgetTRCancel("Select a line");
+            updateMouseWidgetTRCancel(tr("Select a line"));
             break;
         case SetCircle:
-            updateMouseWidgetTRBack("Select circle, arc or ellipse");
+            updateMouseWidgetTRBack(tr("Select circle, arc or ellipse"));
             break;
         default:
             updateMouseWidget();

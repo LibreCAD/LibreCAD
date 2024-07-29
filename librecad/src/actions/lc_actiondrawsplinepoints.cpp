@@ -216,7 +216,7 @@ QStringList LC_ActionDrawSplinePoints::getAvailableCommands(){
 void LC_ActionDrawSplinePoints::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify first control point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first control point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetNextPoint: {
             QString msg = "";
@@ -235,7 +235,7 @@ void LC_ActionDrawSplinePoints::updateMouseButtonHints(){
             if (pPoints->data.splinePoints.size() > 0){
                 updateMouseWidget(tr("Specify next control point or [%1]").arg(msg),tr("Back"));
             } else {
-                updateMouseWidgetTRBack("Specify next control point");
+                updateMouseWidgetTRBack(tr("Specify next control point"));
             }
             break;
         }
@@ -267,7 +267,7 @@ void RS_ActionDrawSplinePoints::close() {
 
 void LC_ActionDrawSplinePoints::undo(){
     if (!pPoints->spline.get()){
-        commandMessageTR("Cannot undo: Not enough entities defined yet.");
+        commandMessage(tr("Cannot undo: Not enough entities defined yet."));
         return;
     }
 
@@ -286,7 +286,7 @@ void LC_ActionDrawSplinePoints::undo(){
         graphicView->redraw(RS2::RedrawDrawing);
         drawPreview();
     } else {
-        commandMessageTR("Cannot undo: Not enough entities defined yet.");
+        commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
 }
 
@@ -302,7 +302,7 @@ void LC_ActionDrawSplinePoints::redo(){
         moveRelativeZero(v);
         graphicView->redraw(RS2::RedrawDrawing);
     } else {
-        commandMessageTR("Cannot undo: Nothing could be redone.");
+        commandMessage(tr("Cannot undo: Nothing could be redone."));
     }
 }
 

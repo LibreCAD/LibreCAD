@@ -45,9 +45,8 @@ struct RS_ActionModifyMove::Points {
 
 RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Move Entities",
-						   container, graphicView),
-		      pPoints(std::make_unique<Points>()){
+        :LC_ActionModifyBase("Move Entities",container, graphicView)
+        ,pPoints(std::make_unique<Points>()){
 	actionType=RS2::ActionModifyMove;
 }
 
@@ -190,10 +189,10 @@ void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify target point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();
@@ -202,7 +201,7 @@ void RS_ActionModifyMove::updateMouseButtonHintsForSelected(int status) {
 }
 
 void RS_ActionModifyMove::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to move", MOD_CTRL("Move immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select to move"), MOD_CTRL(tr("Move immediately after selection")));
 }
 
 RS2::CursorType RS_ActionModifyMove::doGetMouseCursorSelected([[maybe_unused]]int status) {

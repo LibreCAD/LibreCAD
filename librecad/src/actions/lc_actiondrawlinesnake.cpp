@@ -426,7 +426,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
 
     switch (getStatus()) {
         case SetStartPoint:
-            updateMouseWidgetTRCancel("Specify first point",MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first point"),MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetDirection:
             msg += "/";
@@ -435,7 +435,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             msg += getCommand("angle");
             msg += "/";
             msg += getCommand("anglerel");
-            updateMouseWidget(tr("Specify direction (x or y) or [%1]").arg(msg),tr("Back"));
+            updateMouseWidgetTRBack(tr("Specify direction (x or y) or [%1]").arg(msg));
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
@@ -449,18 +449,17 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             if (toX){
                 msg += "/";
                 msg += getCommand("y");
-                updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("X"), msg),
-                                                    tr("Back"));
+                updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("X"), msg));
             } else if (toY){
                 msg += "/";
                 msg += getCommand("x");
-                updateMouseWidget(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg),tr("Back"));
+                updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg));
             }
             else if (direction == DIRECTION_ANGLE){
                 msg += "/";
                 msg += getCommand("x");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
-                updateMouseWidget(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
+                updateMouseWidgetTRBack(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg), MOD_SHIFT_MIRROR_ANGLE);
             }
             break;
         }
@@ -475,7 +474,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             msg += getCommand("angle");
             msg += "/";
             msg += getCommand("anglerel");
-            updateMouseWidget(tr("Specify angle or [%2]").arg(msg),tr("Back"));
+            updateMouseWidgetTRBack(tr("Specify angle or [%2]").arg(msg));
             break;
         }
         case SetPoint: {
@@ -487,7 +486,7 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             msg += getCommand("angle");
             msg += "/";
             msg += getCommand("anglerel");
-            updateMouseWidget(tr("Specify point or [%1]").arg(msg),tr("Back"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify point or [%1]").arg(msg), MOD_SHIFT_ANGLE_SNAP);
             break;
         }
         default:
@@ -536,7 +535,7 @@ void LC_ActionDrawLineSnake::undo(){
         h = pPoints->history.at(pPoints->index());
         pPoints->startOffset = h.startOffset;
     } else {
-        commandMessageTR("Cannot undo: Begin of history reached");
+        commandMessage(tr("Cannot undo: Begin of history reached"));
     }
 }
 
@@ -573,7 +572,7 @@ void LC_ActionDrawLineSnake::redo(){
                 break;
         }
     } else {
-        commandMessageTR("Cannot redo: End of history reached");
+        commandMessage(tr("Cannot redo: End of history reached"));
     }
 }
 

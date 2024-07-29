@@ -127,11 +127,10 @@ void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, [[maybe
 void RS_ActionDrawLineParallel::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidget(tr("Specify Distance <%1> or select entity or [%2]").arg(distance).arg(command("through")),
-                tr("Cancel"));
+            updateMouseWidgetTRCancel(tr("Specify Distance <%1> or select entity or [%2]").arg(distance).arg(command("through")));
             break;
         case SetNumber:
-            updateMouseWidgetTR("Enter number:", "");
+            updateMouseWidget(tr("Enter number:"));
             break;
         default:
             updateMouseWidget();
@@ -161,7 +160,7 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 if (ok && d > 1.0e-10){
                     distance = d;
                 } else {
-                    commandMessageTR("Not a valid expression");
+                    commandMessage(tr("Not a valid expression"));
                 }
                 updateOptions();
                 updateMouseButtonHints();
@@ -177,9 +176,9 @@ bool RS_ActionDrawLineParallel::doProcessCommand(int status, const QString &c) {
                 if (n > 0 && n < 100){
                     number = n;
                 } else
-                    commandMessageTR("Not a valid number. Try 1..99");
+                    commandMessage(tr("Not a valid number. Try 1..99"));
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(SetEntity);

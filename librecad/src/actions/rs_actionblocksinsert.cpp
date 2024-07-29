@@ -68,7 +68,7 @@ void RS_ActionBlocksInsert::init(int status) {
             if (document->is(RS2::EntityBlock)) {
                 QString parentBlockName = ((RS_Block*)(document))->getName();
                 if (parentBlockName == blockName) {
-                    commandMessageTR("Block cannot contain an insert of itself.");
+                    commandMessage(tr("Block cannot contain an insert of itself."));
                     finish(false);
                 } else {
                     QStringList bnChain = block->findNestedInsert(parentBlockName);
@@ -199,7 +199,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 accept= true;
                 data->angle = RS_Math::deg2rad(a);
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -212,7 +212,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 setFactor(f);
                 accept= true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -225,7 +225,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 data->cols = cols;
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -238,7 +238,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 data->rows = rows;
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -251,7 +251,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 data->spacing.x = cs;
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -264,7 +264,7 @@ bool RS_ActionBlocksInsert::doProcessCommand(int status, const QString &c) {
                 data->spacing.y = rs;
                 accept  = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -346,25 +346,25 @@ QStringList RS_ActionBlocksInsert::getAvailableCommands() {
 void RS_ActionBlocksInsert::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Specify reference point");
+            updateMouseWidgetTRCancel(tr("Specify reference point"));
             break;
         case SetAngle:
-            updateMouseWidgetTR("Enter angle:", "");
+            updateMouseWidget(tr("Enter angle:"));
             break;
         case SetFactor:
-            updateMouseWidgetTR("Enter factor:", "");
+            updateMouseWidget(tr("Enter factor:"));
             break;
         case SetColumns:
-            updateMouseWidgetTR("Enter columns:", "");
+            updateMouseWidget(tr("Enter columns:"));
             break;
         case SetRows:
-            updateMouseWidgetTR("Enter rows:", "");
+            updateMouseWidget(tr("Enter rows:"));
             break;
         case SetColumnSpacing:
-            updateMouseWidgetTR("Enter column spacing:", "");
+            updateMouseWidget(tr("Enter column spacing:"));
             break;
         case SetRowSpacing:
-            updateMouseWidgetTR("Enter row spacing:", "");
+            updateMouseWidget(tr("Enter row spacing:"));
             break;
         default:
             updateMouseWidget();

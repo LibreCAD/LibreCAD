@@ -110,7 +110,7 @@ void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionEditPaste::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Set paste reference point", MOD_CTRL("Paste Multiple"));
+            updateMouseWidgetTRCancel(tr("Set paste reference point"), MOD_CTRL("Paste Multiple"));
             break;
         default:
             updateMouseWidget();

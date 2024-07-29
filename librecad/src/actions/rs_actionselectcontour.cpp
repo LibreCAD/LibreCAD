@@ -61,7 +61,7 @@ void RS_ActionSelectContour::trigger(){
             s.selectContour(en);
             updateSelectionWidget();
         } else
-           commandMessageTR("Entity must be an Atomic Entity.");
+           commandMessage(tr("Entity must be an Atomic Entity."));
     } else
         RS_DEBUG->print("RS_ActionSelectContour::trigger: Entity is NULL\n");
 }

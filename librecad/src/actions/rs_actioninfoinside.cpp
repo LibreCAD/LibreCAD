@@ -50,9 +50,9 @@ RS_ActionInfoInside::~RS_ActionInfoInside() = default;
 void RS_ActionInfoInside::trigger() {
     bool onContour = false;
     if (RS_Information::isPointInsideContour(*pt, contour.get(), &onContour)) {
-        commandMessageTR("Point is inside selected contour.");
+        commandMessage(tr("Point is inside selected contour."));
     } else {
-        commandMessageTR("Point is outside selected contour.");
+        commandMessage(tr("Point is outside selected contour."));
     }
     finish(false);
 }
@@ -78,7 +78,7 @@ void RS_ActionInfoInside::mouseRightButtonReleaseEvent(int status, [[maybe_unuse
 void RS_ActionInfoInside::updateMouseButtonHints() {
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel("Specify point");
+            updateMouseWidgetTRCancel(tr("Specify point"));
             break;
         default:
             updateMouseWidget();

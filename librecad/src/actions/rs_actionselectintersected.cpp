@@ -124,10 +124,10 @@ void RS_ActionSelectIntersected::mouseRightButtonReleaseEvent(int status, [[mayb
 void RS_ActionSelectIntersected::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Choose first point of intersection line");
+            updateMouseWidgetTRCancel(tr("Choose first point of intersection line"));
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Choose second point of intersection line");
+            updateMouseWidgetTRBack(tr("Choose second point of intersection line"));
             break;
         default:
             updateMouseWidget();

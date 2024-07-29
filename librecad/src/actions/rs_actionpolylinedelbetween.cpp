@@ -135,9 +135,9 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
         case SetPolyline:{
             auto en = catchEntity(e);
             if (en == nullptr){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
-                commandMessageTR("Entity must be a polyline.");
+                commandMessage(tr("Entity must be a polyline."));
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
@@ -149,14 +149,14 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
         }
         case SetVertex1:{
             if (polylineToModify == nullptr){
-                commandMessageTR("No Entity found."); // fixme - really? seems not needed check
+                commandMessage(tr("No Entity found.")); // fixme - really? seems not needed check
             } else {
                 RS_Vector vertex;
                 RS_Entity * segment;
                 getSelectedPolylineVertex(e, vertex, segment);
                 if (vertex.valid){
                     if (!polylineToModify->isPointOnEntity(vertex)){ // fixme - is it really needed?
-                        commandMessageTR("Deleting point is not on entity.");
+                        commandMessage(tr("Deleting point is not on entity."));
                     }
                     else{
                         vertexToDelete = vertex;
@@ -164,7 +164,7 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
                     }
                 }
                 else{
-                    commandMessageTR("Deleting point is invalid.");
+                    commandMessage(tr("Deleting point is invalid."));
                 }
             }
             break;
@@ -172,7 +172,7 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
         case SetVertex2:
         {
             if (polylineToModify == nullptr){
-                commandMessageTR("No polyline found."); // fixme - really needed?
+                commandMessage(tr("No polyline found.")); // fixme - really needed?
             } else{
                 RS_Vector vertex;
                 RS_Entity * segment;
@@ -180,7 +180,7 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
 
                 if (vertex.valid){
                     if (!polylineToModify->isPointOnEntity(vertex)){ // fixme - is it really needed?
-                        commandMessageTR("Deleting point is not on entity.");
+                        commandMessage(tr("Deleting point is not on entity."));
                     }
                     else{
                         QList<RS_Entity*> entitiesToRemove;
@@ -191,12 +191,12 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
                             trigger();
                         }
                         else{
-                            commandMessageTR("At least two segments of polyline should be between selected points.");
+                            commandMessage(tr("At least two segments of polyline should be between selected points."));
                         }
                     }
                 }
                 else{
-                    commandMessageTR("Deleting point is invalid.");
+                    commandMessage(tr("Deleting point is invalid."));
                 }
             }
             break;
@@ -209,13 +209,13 @@ void RS_ActionPolylineDelBetween::mouseLeftButtonReleaseEvent(int status, QMouse
 void RS_ActionPolylineDelBetween::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetPolyline:
-            updateMouseWidgetTRCancel("Specify polyline to delete between two nodes");
+            updateMouseWidgetTRCancel(tr("Specify polyline to delete between two nodes"));
             break;
         case SetVertex1:
-            updateMouseWidgetTRBack("Specify first node");
+            updateMouseWidgetTRBack(tr("Specify first node"));
             break;
         case SetVertex2:
-            updateMouseWidgetTRBack("Specify second node");
+            updateMouseWidgetTRBack(tr("Specify second node"));
             break;
         default:
             updateMouseWidget();

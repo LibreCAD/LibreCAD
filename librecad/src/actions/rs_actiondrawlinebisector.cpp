@@ -227,7 +227,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 length = l;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -244,7 +244,7 @@ bool RS_ActionDrawLineBisector::doProcessCommand(int status, const QString &c) {
                     commandMessage(
                         tr("Number sector lines not in range: ", "number of bisector to create must be in [1, 200]") + QString::number(n));
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -274,16 +274,16 @@ QStringList RS_ActionDrawLineBisector::getAvailableCommands(){
 void RS_ActionDrawLineBisector::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel("Select first line");
+            updateMouseWidgetTRCancel(tr("Select first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRBack("Select second line");
+            updateMouseWidgetTRBack(tr("Select second line"));
             break;
         case SetLength:
-            updateMouseWidgetTRBack("Enter bisector length:");
+            updateMouseWidgetTRBack(tr("Enter bisector length:"));
             break;
         case SetNumber:
-            updateMouseWidgetTRBack("Enter number of bisectors:");
+            updateMouseWidgetTRBack(tr("Enter number of bisectors:"));
             break;
         default:
             updateMouseWidget();

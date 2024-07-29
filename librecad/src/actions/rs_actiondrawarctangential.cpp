@@ -259,13 +259,13 @@ void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawArcTangential::updateMouseButtonHints() {
     switch (getStatus()) {
     case SetBaseEntity:
-        updateMouseWidgetTRCancel("Specify base entity");
+        updateMouseWidgetTRCancel(tr("Specify base entity"));
         break;
     case SetEndAngle:
         if(byRadius) {
-            updateMouseWidgetTRBack("Specify end angle", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify end angle"), MOD_SHIFT_ANGLE_SNAP);
         } else {
-            updateMouseWidgetTRBack("Specify end point");
+            updateMouseWidgetTRBack(tr("Specify end point"));
         }
         break;
     default:

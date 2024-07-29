@@ -153,7 +153,7 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
                 pPoints->data.angle = RS_Math::deg2rad(a);
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -166,7 +166,7 @@ bool RS_ActionLibraryInsert::doProcessCommand(int status, const QString &c) {
                 setFactor(f);
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -196,13 +196,13 @@ QStringList RS_ActionLibraryInsert::getAvailableCommands() {
 void RS_ActionLibraryInsert::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetTargetPoint:
-            updateMouseWidgetTRCancel("Specify reference point");
+            updateMouseWidgetTRCancel(tr("Specify reference point"));
             break;
         case SetAngle:
-            updateMouseWidgetTR("Enter angle:","");
+            updateMouseWidget(tr("Enter angle:"));
             break;
         case SetFactor:
-            updateMouseWidgetTR("Enter factor:","");
+            updateMouseWidget(tr("Enter factor:"));
             break;
         default:
             updateMouseWidget();

@@ -91,7 +91,7 @@ void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){
 void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case 0:
-            updateMouseWidgetTRCancel("Specify location",
+            updateMouseWidgetTRCancel(tr("Specify location"),
                                       MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO,
                                                          LC_ModifiersInfo::MSG_FREE_SNAP));
             break;

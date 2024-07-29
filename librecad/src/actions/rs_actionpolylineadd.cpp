@@ -114,9 +114,9 @@ void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
         case ChooseSegment: {
             auto en = catchEntity(e);
             if (!en){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (!isPolyline(en)){
-                commandMessageTR("Entity must be a polyline.");
+                commandMessage(tr("Entity must be a polyline."));
             } else {
                 polylineToModify = dynamic_cast<RS_Polyline *>(en);
                 polylineToModify->setSelected(true);
@@ -134,14 +134,14 @@ void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
             const RS_Vector newCoord = polylineToModify->getNearestPointOnEntity(snap, true);
             *addCoord = newCoord;
             if (!polylineToModify){
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else if (!addCoord->valid){
-                commandMessageTR("Adding point is invalid.");
+                commandMessage(tr("Adding point is invalid."));
             } else {
                 addSegment = nullptr;
                 addSegment = catchEntity(newCoord, RS2::ResolveAll);
                 if (!addSegment){
-                    commandMessageTR("Adding point is not on entity.");
+                    commandMessage(tr("Adding point is not on entity."));
                     break;
                 }
                 deleteSnapper();
@@ -174,10 +174,10 @@ void RS_ActionPolylineAdd::finish(bool updateTB){
 void RS_ActionPolylineAdd::updateMouseButtonHints(){
     switch (getStatus()) {
         case ChooseSegment:
-            updateMouseWidgetTRCancel("Specify polyline to add nodes");
+            updateMouseWidgetTRCancel(tr("Specify polyline to add nodes"));
             break;
         case SetAddCoord:
-            updateMouseWidgetTRBack("Specify adding node's point");
+            updateMouseWidgetTRBack(tr("Specify adding node's point"));
             break;
         default:
             updateMouseWidget();

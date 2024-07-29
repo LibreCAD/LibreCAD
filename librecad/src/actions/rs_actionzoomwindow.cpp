@@ -134,10 +134,10 @@ void RS_ActionZoomWindow::updateMouseButtonHints(){
 
     switch (getStatus()) {
         case SetFirstCorner:
-            updateMouseWidgetTRCancel("Specify first edge");
+            updateMouseWidgetTRCancel(tr("Specify first edge"));
             break;
         case SetSecondCorner:
-            updateMouseWidgetTRBack("Specify second edge");
+            updateMouseWidgetTRBack(tr("Specify second edge"));
             break;
         default:
             updateMouseWidget();

@@ -130,7 +130,7 @@ void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelecti
         updateMouseButtonHintsForSelected(getStatus());
     }
     else{
-        commandMessageTR("No valid entities selected, select them first");
+        commandMessage(tr("No valid entities selected, select them first"));
     }
 }
 

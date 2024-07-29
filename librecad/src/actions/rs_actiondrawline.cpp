@@ -296,7 +296,7 @@ void RS_ActionDrawLine::updateMouseButtonHints()
 {
     switch (getStatus()) {
     case SetStartpoint:
-        updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
+        updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
         break;
     case SetEndpoint: {
         QString msg = "";
@@ -318,9 +318,9 @@ void RS_ActionDrawLine::updateMouseButtonHints()
         }
 
         if (pPoints->historyIndex >= 1) {
-            updateMouseWidget(tr("Specify next point or [%1]").arg(msg),tr("Back"), MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg), MOD_SHIFT_ANGLE_SNAP);
         } else {
-            updateMouseWidgetTRBack("Specify next point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify next point"), MOD_SHIFT_ANGLE_SNAP);
         }
         break;
     }
@@ -350,8 +350,8 @@ void RS_ActionDrawLine::close()
         }
     }
     else {
-        commandMessageTR("Cannot close sequence of lines: "
-                         "Not enough entities defined yet, or already closed.");
+        commandMessage(tr("Cannot close sequence of lines: "
+                         "Not enough entities defined yet, or already closed."));
     }
 }
 
@@ -404,7 +404,7 @@ void RS_ActionDrawLine::undo()
         pPoints->startOffset = h.startOffset;
     }
     else {
-       commandMessageTR("Cannot undo: Begin of history reached");
+       commandMessage(tr("Cannot undo: Begin of history reached"));
     }
 }
 
@@ -438,7 +438,7 @@ void RS_ActionDrawLine::redo()
         }
     }
     else {
-        commandMessageTR("Cannot redo: End of history reached");
+        commandMessage(tr("Cannot redo: End of history reached"));
     }
 }
 

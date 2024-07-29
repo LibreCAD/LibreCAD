@@ -214,7 +214,7 @@ bool RS_ActionDrawEllipseFociPoint::doProcessCommand(int status, const QString &
             } else
                 commandMessage(tr("Total distance %1 is smaller than distance between foci").arg(fabs(a)));
         } else
-            commandMessageTR("Not a valid expression");
+            commandMessage(tr("Not a valid expression"));
     }
     return accept;
 }
@@ -226,13 +226,13 @@ QStringList RS_ActionDrawEllipseFociPoint::getAvailableCommands() {
 void RS_ActionDrawEllipseFociPoint::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetFocus1:
-            updateMouseWidgetTRCancel("Specify first focus of ellipse", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first focus of ellipse"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetFocus2:
-            updateMouseWidgetTRBack("Specify second focus of ellipse", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second focus of ellipse"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetPoint:
-            updateMouseWidgetTRBack("Specify a point on ellipse or total distance to foci");
+            updateMouseWidgetTRBack(tr("Specify a point on ellipse or total distance to foci"));
             break;
         default:
             updateMouseWidget();

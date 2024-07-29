@@ -137,7 +137,7 @@ void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionBlocksCreate::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Specify reference point");
+            updateMouseWidgetTRCancel(tr("Specify reference point"));
             break;
         default:
             updateMouseWidget();

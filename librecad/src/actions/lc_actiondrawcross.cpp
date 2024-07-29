@@ -281,7 +281,7 @@ void LC_ActionDrawCross::coordinateEvent([[maybe_unused]]RS_CoordinateEvent *e){
 void LC_ActionDrawCross::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Select circle, arc or ellipse");
+            updateMouseWidgetTRCancel(tr("Select circle, arc or ellipse"));
             break;
         default:
             updateMouseWidget();

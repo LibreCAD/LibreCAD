@@ -110,7 +110,7 @@ void RS_ActionInfoAngle::trigger(){
 
             }
         } else {
-            commandMessageTR("Lines are parallel");
+            commandMessage(tr("Lines are parallel"));
         }
     }
 }
@@ -194,10 +194,10 @@ void RS_ActionInfoAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused
 void RS_ActionInfoAngle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity1:
-            updateMouseWidgetTRCancel("Specify first line");
+            updateMouseWidgetTRCancel(tr("Specify first line"));
             break;
         case SetEntity2:
-            updateMouseWidgetTRBack("Specify second line");
+            updateMouseWidgetTRBack(tr("Specify second line"));
             break;
         default:
             updateMouseWidget();

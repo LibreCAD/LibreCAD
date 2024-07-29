@@ -133,10 +133,10 @@ void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, [[maybe_
 void RS_ActionDrawLineHorVert::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first point");
+            updateMouseWidgetTRCancel(tr("Specify first point"));
             break;
         case SetEndpoint:
-            updateMouseWidgetTRBack("Specify second point");
+            updateMouseWidgetTRBack(tr("Specify second point"));
             break;
         default:
             updateMouseWidget();

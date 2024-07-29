@@ -42,13 +42,11 @@ struct RS_ActionModifyMoveRotate::Points {
 	RS_Vector targetPoint{false};
 };
 
-RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(
-    RS_EntityContainer& container,
-    RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Move and Rotate Entities",
-						   container, graphicView)
-		, pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionModifyMoveRotate;
+RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(RS_EntityContainer& container,
+                                                     RS_GraphicView& graphicView)
+    :LC_ActionModifyBase("Move and Rotate Entities",container, graphicView)
+    , pPoints(std::make_unique<Points>()){
+    actionType=RS2::ActionModifyMoveRotate;
 }
 
 RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
@@ -263,7 +261,7 @@ bool RS_ActionModifyMoveRotate::doProcessCommand(int status, const QString &c) {
                     setStatus(lastStatus);
                 }
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             break;
         }
@@ -303,13 +301,13 @@ double RS_ActionModifyMoveRotate::getAngle() const{
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
         case SetReferencePoint:
-            updateMouseWidgetTRCancel("Specify reference point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point");
+            updateMouseWidgetTRBack(tr("Specify target point"));
             break;
         case SetAngle:
-            updateMouseWidgetTRBack("Enter rotation angle:");
+            updateMouseWidgetTRBack(tr("Enter rotation angle:"));
             break;
         default:
             updateMouseWidget();
@@ -322,7 +320,7 @@ RS2::CursorType RS_ActionModifyMoveRotate::doGetMouseCursorSelected([[maybe_unus
 }
 
 void RS_ActionModifyMoveRotate::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to move and rotate", MOD_CTRL("Move and rotate immediately after selection"));
+    updateMouseWidgetTRCancel(tr("Select to move and rotate"), MOD_CTRL(tr("Move and rotate immediately after selection")));
 }
 
 LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {

@@ -42,7 +42,7 @@ RS_ActionOrder::RS_ActionOrder(RS_EntityContainer& container,
 }
 
 void RS_ActionOrder::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     targetEntity = nullptr;
     if (orderType == RS2::ActionOrderBottom ||
         orderType == RS2::ActionOrderTop) {
@@ -112,7 +112,7 @@ void RS_ActionOrder::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
         case ChooseEntity: {
             targetEntity = catchEntity(e);
             if (!targetEntity) {
-                commandMessageTR("No Entity found.");
+                commandMessage(tr("No Entity found."));
             } else {
                 targetEntity->setHighlighted(true);
                 graphicView->drawEntity(targetEntity);
@@ -140,7 +140,7 @@ void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] Q
 void RS_ActionOrder::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseEntity:
-            updateMouseWidgetTRCancel("Choose entity for order");
+            updateMouseWidgetTRCancel(tr("Choose entity for order"));
             break;
         default:
             updateMouseWidget();

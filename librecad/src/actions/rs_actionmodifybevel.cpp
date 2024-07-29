@@ -80,10 +80,10 @@ void RS_ActionModifyBevel::trigger(){
                 case LC_BevelResult::OK:
                     break;
                 case LC_BevelResult::ERR_NO_INTERSECTION:
-                    commandMessageTR("Selected lines are parallel");
+                    commandMessage(tr("Selected lines are parallel"));
                     break;
                 case LC_BevelResult::ERR_NOT_THE_SAME_POLYLINE:
-                    commandMessageTR("Selected lines are not children of the same polyline");
+                    commandMessage(tr("Selected lines are not children of the same polyline"));
                     break;
             }
         }
@@ -204,10 +204,10 @@ void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
                         pPoints->coord1 = entity1->getNearestPointOnEntity(toGraph(e), true);
                         setStatus(SetEntity2);
                     } else {
-                        commandMessageTR("Invalid entity selected (non-trimmable).");
+                        commandMessage(tr("Invalid entity selected (non-trimmable)."));
                     }
                 } else {
-                    commandMessageTR("Invalid entity selected (non-atomic).");
+                    commandMessage(tr("Invalid entity selected (non-atomic)."));
                 }
                 break;
             }
@@ -219,10 +219,10 @@ void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
                         trigger();
                     }
                     else{
-                        commandMessageTR("Invalid entity selected (non-trimmable with first entity).");
+                        commandMessage(tr("Invalid entity selected (non-trimmable with first entity)."));
                     }
                 } else {
-                    commandMessageTR("Invalid entity selected (non-atomic).");
+                    commandMessage(tr("Invalid entity selected (non-atomic)."));
                 }
                 break;
             }
@@ -286,7 +286,7 @@ bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
                 accept = true;
                 pPoints->data.length1 = l;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -299,7 +299,7 @@ bool RS_ActionModifyBevel::doProcessCommand(int status, const QString &c) {
                 pPoints->data.length2 = l;
                 accept = true;
             } else {
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             }
             updateOptions();
             setStatus(lastStatus);
@@ -353,16 +353,16 @@ QStringList RS_ActionModifyBevel::getAvailableCommands(){
 void RS_ActionModifyBevel::updateMouseButtonHints() {
     switch (getStatus()) {
         case SetEntity1:
-            updateMouseWidgetTRCancel("Select first entity");
+            updateMouseWidgetTRCancel(tr("Select first entity"));
             break;
         case SetEntity2:
-            updateMouseWidgetTRBack("Select second entity");
+            updateMouseWidgetTRBack(tr("Select second entity"));
             break;
         case SetLength1:
-            updateMouseWidgetTRBack("Enter length 1:");
+            updateMouseWidgetTRBack(tr("Enter length 1:"));
             break;
         case SetLength2:
-            updateMouseWidgetTRBack("Enter length 2:");
+            updateMouseWidgetTRBack(tr("Enter length 2:"));
             break;
         default:
             updateMouseWidget();

@@ -207,10 +207,10 @@ QStringList LC_ActionDimArc::getAvailableCommands(){
 void LC_ActionDimArc::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetEntity:
-            updateMouseWidgetTRCancel("Select arc entity");
+            updateMouseWidgetTRCancel(tr("Select arc entity"));
             break;
         case SetPos:
-            updateMouseWidgetTRBack("Specify dimension arc location",MOD_SHIFT_FREE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify dimension arc location"),MOD_SHIFT_FREE_SNAP);
             break;
         default:
             updateMouseWidget();

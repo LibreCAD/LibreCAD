@@ -435,10 +435,10 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
     bool hasModifiers = (actionType == RS2::ActionDrawLineAngleRel);
     switch (getStatus()) {
         case SetLine:
-            updateMouseWidgetTRCancel("Select base line", hasModifiers ? MOD_SHIFT_MIRROR_ANGLE : MOD_NONE);
+            updateMouseWidgetTRCancel(tr("Select base line"), hasModifiers ? MOD_SHIFT_MIRROR_ANGLE : MOD_NONE);
             break;
         case SetTickLength:
-            updateMouseWidgetTRBack("Specify length", hasModifiers ? MOD_SHIFT_MIRROR_ANGLE : MOD_NONE);
+            updateMouseWidgetTRBack(tr("Specify length"), hasModifiers ? MOD_SHIFT_MIRROR_ANGLE : MOD_NONE);
             break;
         default:
             updateMouseWidget();

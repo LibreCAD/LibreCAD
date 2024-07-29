@@ -205,7 +205,7 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
                     moveRelativeZero(data->center);
                     setStatus(SetTargetPoint);
                 } else {
-                   commandMessageTR("Rotation center is too close to reference point.");
+                   commandMessage(tr("Rotation center is too close to reference point."));
                 }
                 break;
             }
@@ -308,16 +308,16 @@ void RS_ActionModifyRotate::keyReleaseEvent(QKeyEvent *e){
 void RS_ActionModifyRotate::updateMouseButtonHints(){
     switch (getStatus()) {
         case SelectEntity:
-            updateMouseWidgetTRCancel("Select to rotate");
+            updateMouseWidgetTRCancel(tr("Select to rotate"));
             break;
         case SetCenterPoint:
-            updateMouseWidgetTRBack("Specify rotation center", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRBack(tr("Specify rotation center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetReferencePoint:
-            updateMouseWidgetTRBack("Specify reference point");
+            updateMouseWidgetTRBack(tr("Specify reference point"));
             break;
         case SetTargetPoint:
-            updateMouseWidgetTRBack("Specify target point to rotate to", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify target point to rotate to"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

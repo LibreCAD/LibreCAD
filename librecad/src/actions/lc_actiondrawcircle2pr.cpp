@@ -227,7 +227,7 @@ void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
             if (showPreview || data->isValid())
                 trigger();
             else
-                commandMessageTR("Select from two possible circle centers");
+                commandMessage(tr("Select from two possible circle centers"));
             break;
         }
         default:
@@ -248,13 +248,13 @@ QStringList LC_ActionDrawCircle2PR::getAvailableCommands(){
 void LC_ActionDrawCircle2PR::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetPoint1:
-            updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetPoint2:
-            updateMouseWidgetTRBack("Specify second point", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify second point"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SelectCenter:
-            updateMouseWidgetTRBack("Select circle center");
+            updateMouseWidgetTRBack(tr("Select circle center"));
             break;
         default:
             updateMouseWidget();

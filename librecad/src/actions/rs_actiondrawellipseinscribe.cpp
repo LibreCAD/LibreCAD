@@ -220,7 +220,7 @@ void RS_ActionDrawEllipseInscribe::mouseLeftButtonReleaseEvent(int status, QMous
                     pPoints->lines.push_back(line);
                     trigger();
                 } else {
-                        commandMessageTR("Can not determine uniquely an ellipse");
+                        commandMessage(tr("Can not determine uniquely an ellipse"));
                 }
                 break;
             }
@@ -309,16 +309,16 @@ QStringList RS_ActionDrawEllipseInscribe::getAvailableCommands() {
 void RS_ActionDrawEllipseInscribe::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:
-            updateMouseWidgetTRCancel("Specify the first line");
+            updateMouseWidgetTRCancel(tr("Specify the first line"));
             break;
         case SetLine2:
-            updateMouseWidgetTRBack("Specify the second line");
+            updateMouseWidgetTRBack(tr("Specify the second line"));
             break;
         case SetLine3:
-            updateMouseWidgetTRBack("Specify the third line");
+            updateMouseWidgetTRBack(tr("Specify the third line"));
             break;
         case SetLine4:
-            updateMouseWidgetTRBack("Specify the fourth line");
+            updateMouseWidgetTRBack(tr("Specify the fourth line"));
             break;
         default:
             updateMouseWidget();

@@ -48,5 +48,5 @@ bool RS_ActionBlocksExplode::isEntityAllowedToSelect(RS_Entity *ent) const {
 }
 
 void RS_ActionBlocksExplode::updateMouseButtonHintsForSelection() {
-    updateMouseWidgetTRCancel("Select to explode container (Enter to complete)", MOD_CTRL("Select and explode"));
+    updateMouseWidgetTRCancel(tr("Select to explode container (Enter to complete)"), MOD_CTRL(tr("Select and explode")));
 }

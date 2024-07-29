@@ -333,7 +333,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
                 startPointX = mouse.x;
                 startPointY = mouse.y;
                 shiftY = true;
-                updateMouseWidgetTRBack("Enter the end point x"); // fixme - check if this is correct
+                updateMouseWidgetTRBack(tr("Enter the end point x")); // fixme - check if this is correct
             }
             drawSnapper();
             moveRelativeZero(mouse);
@@ -368,7 +368,7 @@ void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
                 stepSizeSettingOn = true;
                 endPointX = mouse.x;
                 endPointY = mouse.y;
-                updateMouseWidgetTRBack("Enter number of polylines"); // fixme - check if this is correct
+                updateMouseWidgetTRBack(tr("Enter number of polylines")); // fixme - check if this is correct
             }
             drawSnapper();
             moveRelativeZero(mouse);
@@ -448,7 +448,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
     }
 
     if ((m_mode == Line) && (checkCommand(tr("equation"), c))) {
-        updateMouseWidgetTRBack("Enter an equation, f(x)");
+        updateMouseWidgetTRBack(tr("Enter an equation, f(x)"));
         equationSettingOn = true;
         return true;
     }
@@ -470,14 +470,14 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
 
             if (parseTestValue) { /* This is to counter the 'unused variable' warning. */ }
 
-            updateMouseWidgetTRBack("Enter the start point x");
+            updateMouseWidgetTRBack(tr("Enter the start point x"));
 
             startPointSettingOn = true;
 
             pPoints->equation = c;
         }
         catch (...) {
-            commandMessageTR("The entered x is invalid.");
+            commandMessage(tr("The entered x is invalid."));
             updateMouseButtonHints();
         }
 
@@ -491,7 +491,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
             endPointSettingOn = true;
             startPointSettingOn = false;
             shiftY = false;
-            updateMouseWidgetTRBack("Enter the end point x");
+            updateMouseWidgetTRBack(tr("Enter the end point x"));
         }
         return true;
     }
@@ -501,7 +501,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
         if (getPlottingX(c, endPointX) && std::abs(endPointX - startPointX) > RS_TOLERANCE){
             endPointSettingOn = false;
             stepSizeSettingOn = true;
-            updateMouseWidgetTRBack("Enter number of polylines");
+            updateMouseWidgetTRBack(tr("Enter number of polylines"));
         }
         return true;
     }
@@ -518,7 +518,7 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
             if (numberOfPolylines <= 0) throw -1;
         }
         catch (...) {
-            commandMessageTR("The step size entered is invalid.");
+            commandMessage(tr("The step size entered is invalid."));
             updateMouseButtonHints();
 
             return true;
@@ -551,7 +551,7 @@ bool RS_ActionDrawPolyline::getPlottingX(QString command, double& x){
         endPointSettingOn = true;
     }
     catch (...) {
-        commandMessageTR("The value x entered is invalid.");
+        commandMessage(tr("The value x entered is invalid."));
         updateMouseButtonHints();
         return false;
     }
@@ -644,9 +644,10 @@ void RS_ActionDrawPolyline::updateMouseButtonHints() {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn) return;
 
     switch (getStatus()) {
-        case SetStartpoint:
-            updateMouseWidgetTRCancel("Specify first point", MOD_SHIFT_RELATIVE_ZERO);
+        case SetStartpoint: {
+            updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
+        }
         case SetNextPoint: {
             QString msg = "";
             LC_ModifiersInfo modifiers = MOD_NONE;
@@ -663,14 +664,12 @@ void RS_ActionDrawPolyline::updateMouseButtonHints() {
             if (size >= 2) {
                 msg += command("undo");
 
-                updateMouseWidget(
-                    tr("Specify next point or [%1]").arg(msg),
-                    tr("Back"), modifiers);
+                updateMouseWidgetTRBack(tr("Specify next point or [%1]").arg(msg), modifiers);
             } else {
-                updateMouseWidgetTRBack("Specify next point", modifiers);
+                updateMouseWidgetTRBack(tr("Specify next point"), modifiers);
             }
-        }
             break;
+        }
         default:
             updateMouseWidget();
             break;
@@ -694,7 +693,7 @@ void RS_ActionDrawPolyline::close(){
         setStatus(SetStartpoint);
         moveRelativeZero(pPoints->start);
     } else {
-        commandMessageTR("Cannot close sequence of lines: Not enough entities defined yet.");
+        commandMessage(tr("Cannot close sequence of lines: Not enough entities defined yet."));
     }
 }
 
@@ -719,7 +718,7 @@ void RS_ActionDrawPolyline::undo(){
             graphicView->drawEntity(pPoints->polyline);
         }
     } else {
-        commandMessageTR("Cannot undo: Not enough entities defined yet.");
+        commandMessage(tr("Cannot undo: Not enough entities defined yet."));
     }
 }
 

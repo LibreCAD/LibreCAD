@@ -310,7 +310,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
                     setStatus(SetAngle1);
                 }
             } else
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             break;
         }
         case SetAngle1: {
@@ -321,7 +321,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
                 pPoints->angle1 = RS_Math::deg2rad(a);
                 setStatus(SetAngle2);
             } else
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             break;
         }
         case SetAngle2: {
@@ -332,7 +332,7 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
                 pPoints->angle2 = RS_Math::deg2rad(a);
                 trigger();
             } else
-                commandMessageTR("Not a valid expression");
+                commandMessage(tr("Not a valid expression"));
             break;
         }
         default:
@@ -344,19 +344,19 @@ bool RS_ActionDrawEllipseAxis::doProcessCommand(int status, const QString &c) {
 void RS_ActionDrawEllipseAxis::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCenter:
-            updateMouseWidgetTRCancel("Specify ellipse center", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify ellipse center"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetMajor:
-            updateMouseWidgetTRBack("Specify endpoint of major axis", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify endpoint of major axis"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetMinor:
-            updateMouseWidgetTRBack("Specify endpoint or length of minor axis:");
+            updateMouseWidgetTRBack(tr("Specify endpoint or length of minor axis:"));
             break;
         case SetAngle1:
-            updateMouseWidgetTRBack("Specify start angle", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify start angle"), MOD_SHIFT_ANGLE_SNAP);
             break;
         case SetAngle2:
-            updateMouseWidgetTRBack("Specify end angle", MOD_SHIFT_ANGLE_SNAP);
+            updateMouseWidgetTRBack(tr("Specify end angle"), MOD_SHIFT_ANGLE_SNAP);
             break;
         default:
             updateMouseWidget();

@@ -143,10 +143,10 @@ void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
 void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetCorner1:
-            updateMouseWidgetTRCancel("Specify first corner", MOD_SHIFT_RELATIVE_ZERO);
+            updateMouseWidgetTRCancel(tr("Specify first corner"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         case SetCorner2:
-            updateMouseWidgetTRBack("Specify second corner");
+            updateMouseWidgetTRBack(tr("Specify second corner"));
             break;
         default:
             updateMouseWidget();

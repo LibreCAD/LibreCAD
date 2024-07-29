@@ -189,16 +189,16 @@ void RS_ActionModifyTrim::updateMouseButtonHints() {
     switch (getStatus()) {
         case ChooseLimitEntity:
             if (both) {
-                updateMouseWidgetTRCancel("Select first trim entity");
+                updateMouseWidgetTRCancel(tr("Select first trim entity"));
             } else {
-                updateMouseWidgetTRBack("Select limiting entity");
+                updateMouseWidgetTRBack(tr("Select limiting entity"));
             }
             break;
         case ChooseTrimEntity:
             if (both) {
-                updateMouseWidgetTRCancel("Select second trim entity");
+                updateMouseWidgetTRCancel(tr("Select second trim entity"));
             } else {
-                updateMouseWidgetTRBack("Select entity to trim");
+                updateMouseWidgetTRBack(tr("Select entity to trim"));
             }
             break;
         default:

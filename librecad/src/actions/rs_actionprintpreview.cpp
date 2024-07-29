@@ -143,23 +143,27 @@ bool RS_ActionPrintPreview::doProcessCommand(int status, const QString &c) {
     //    qDebug()<<"cmd="<<c;
     if (checkCommand("blackwhite", c)) {
         setBlackWhite(true);
-        commandMessageTR("Printout in Black/White");
+        commandMessage(tr("Printout in Black/White"));
+        updateOptions();
     } else if (checkCommand("color", c)) {
         setBlackWhite(false);
-        commandMessageTR("Printout in color");
+        commandMessage(tr("Printout in color"));
+        updateOptions();
     } else if (checkCommand("graphoffset", c)) {
         m_bPaperOffset=false;
-        commandMessageTR("Printout offset in graph coordinates");
+        commandMessage(tr("Printout offset in graph coordinates"));
+        updateOptions();
     } else if (checkCommand("paperoffset", c)) {
         m_bPaperOffset=true;
-        commandMessageTR("Printout offset in paper coordinates");
+        commandMessage(tr("Printout offset in paper coordinates"));
+        updateOptions();
     }
     else{
         //coordinate event
         if (c.contains(',')){
             QString coord = c;
             if(c.startsWith('@')) {
-                commandMessageTR("Printout offset ignores relative zero. Ignoring '@'");
+                commandMessage(tr("Printout offset ignores relative zero. Ignoring '@'"));
                 coord.remove(0, 1);
             }
             //        qDebug()<<"offset by absolute coordinate: ";
@@ -235,7 +239,7 @@ void RS_ActionPrintPreview::fit() {
                          "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
         if ( graphic->fitToPage()==false) {
-            commandMessageTR("RS_ActionPrintPreview::fit(): Invalid paper size");
+            commandMessage(tr("RS_ActionPrintPreview::fit(): Invalid paper size"));
         }
         //        if(std::abs(f0-graphic->getPaperScale())>RS_TOLERANCE){
         //only zoomPage when scale changed
@@ -317,8 +321,8 @@ void RS_ActionPrintPreview::calcPagesNum() {
         int pX = ceil(graphicSize.x / printArea.x);
         int pY = ceil(graphicSize.y / printArea.y);
 
-        if ( pX > 99 || pY > 99) {
-            commandMessageTR("RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.");
+        if ( pX > 99 || pY > 99) { // fixme - why such limit? Why hardcoded?
+            commandMessage(tr("Limit of pages has been exceeded."));
             return;
         }
 
