@@ -206,6 +206,14 @@ void RS_PreviewActionInterface::previewRefSelectablePoint(const RS_Vector &coord
     }
 }
 
+void RS_PreviewActionInterface::previewRefSelectableLine(const RS_Vector &start, const RS_Vector &end){
+    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
+        auto *line = new LC_RefLine(this->preview.get(), start, end);
+        line->setHighlighted(true);
+        preview->addEntity(line);
+    }
+}
+
 void RS_PreviewActionInterface::previewPoint(const RS_Vector &coord){
     auto *point = new RS_Point(this->preview.get(), coord);
     preview->addEntity(point);

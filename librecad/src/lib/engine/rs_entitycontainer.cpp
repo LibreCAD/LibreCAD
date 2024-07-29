@@ -505,11 +505,27 @@ unsigned RS_EntityContainer::countSelected(bool deep, QList<RS2::EntityType> con
             if (!types.size() || type.count(t->rtti()))
                 c++;
 
-        if (t->isContainer())
-            c += dynamic_cast<RS_EntityContainer *>(t)->countSelected(deep);
+        if (t->isContainer()) 
+            c += dynamic_cast<RS_EntityContainer *>(t)->countSelected(deep); // fixme - hm... - what about entity types there? and deep flag?
     }
 
     return c;
+}
+
+void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool deep, QList<RS2::EntityType> const &types) {    
+    std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
+
+    for (RS_Entity *e: entities) {
+        if (e->isSelected())
+            if (types.empty() || type.count(e->rtti()))
+                collect.push_back(e);
+
+        if (e->isContainer()) {
+            auto *container = dynamic_cast<RS_EntityContainer *>(e);
+            container->collectSelected(collect, false); // todo - check whether we need deep and types?
+        }
+    }
+    
 }
 
 /**

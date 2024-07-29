@@ -31,8 +31,7 @@
 
 struct RS_ScaleData;
 
-class QG_DlgScale : public QDialog, public Ui::QG_DlgScale
-{
+class QG_DlgScale : public QDialog, public Ui::QG_DlgScale{
     Q_OBJECT
 
 public:
@@ -40,33 +39,18 @@ public:
     virtual ~QG_DlgScale();
 
 public slots:
-    virtual void setData( RS_ScaleData * d );
-    virtual void updateData();
-
+    void setData( RS_ScaleData * d );
+    void updateData();
 protected slots:
     virtual void languageChange();
-
 private slots:
-
-    virtual void onIsotropicToggled(bool checked);
-
-    virtual void onFactorXChanged(const QString &arg1);
-    virtual void onFactorYChanged(const QString &arg1);
-    virtual void onFactorByPoints();
-
+    void onIsotropicToggled(bool checked);
+    void onFactorXChanged(const QString &arg1);
+    void onFactorByPoints();
+    void onMultipleCopiesClicked();
 private:
-    QString scaleFactorX;
-    QString scaleFactorY;
     RS_ScaleData* data = nullptr;
-    QString copies;
-    bool isotropic = false;
-    int numberMode = 0;
-    bool useCurrentLayer = false;
-    bool useCurrentAttributes = false;
-
     void init();
-    void destroy();
-
 };
 
 #endif // QG_DLGSCALE_H

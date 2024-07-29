@@ -44,8 +44,7 @@ struct RS_ActionModifyMirror::Points {
 
 RS_ActionModifyMirror::RS_ActionModifyMirror(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
-        :LC_ActionModifyBase("Mirror Entities",
-                                   container, graphicView)
+        :LC_ActionModifyBase("Mirror Entities",container, graphicView)
         , pPoints(std::make_unique<Points>()){
     actionType=RS2::ActionModifyMirror;
     mirrorToExistingLine = false;

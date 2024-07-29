@@ -131,6 +131,7 @@ public:
 	* @param types if is not empty, only counts by types listed
 	*/
     virtual unsigned countSelected(bool deep=true, QList<RS2::EntityType> const& types = {});
+    virtual void collectSelected(std::vector<RS_Entity*> &collect, bool deep, QList<RS2::EntityType> const &types = {});
     virtual double totalSelectedLength();
 
     /**

@@ -1090,6 +1090,9 @@ set(SOURCES
 		librecad/src/actions/lc_actioneditpastetransform.h
 		librecad/src/ui/forms/lc_pastetransformoptions.cpp
 		librecad/src/ui/forms/lc_pastetransformoptions.cpp
+		librecad/src/ui/forms/lc_modifyscaleoptions.h
+		librecad/src/ui/forms/lc_modifyscaleoptions.cpp
+		librecad/src/ui/forms/lc_modifyscaleoptions.h
 		#        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp

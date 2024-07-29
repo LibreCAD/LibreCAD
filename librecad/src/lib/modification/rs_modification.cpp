@@ -403,8 +403,6 @@ bool RS_Modification::changeAttributes(
     return true;
 }
 
-
-
 /**
  * Copies all selected entities from the given container to the clipboard.
  * Layers and blocks that are needed are also copied if the container is
@@ -418,7 +416,7 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
 
     RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy");
 
-	if (!container) {
+    if (!container) {
         RS_DEBUG->print(RS_Debug::D_ERROR, "RS_Modification::copy: no valid container");
         return;
     }
@@ -434,53 +432,56 @@ void RS_Modification::copy(const RS_Vector& ref, const bool cut) {
     LC_UndoSection undo( document, cut && handleUndo);
 
     bool selectedEntityFound{false};
-    if (ref.valid) { // explicit ref point set
-        // copy entities / layers / blocks
-        for (auto e: *container) {
-            if (e && e->isSelected()) {
-                copyEntity(e, ref, cut);
-                selectedEntityFound = true;
-            }
+    std::vector<RS_Entity *> selected;
+    collectSelectedEntities(selected);
+
+    selectedEntityFound = !selected.empty();
+    if (selectedEntityFound) {
+        RS_Vector refPoint;
+
+        if (ref.valid) {
+            refPoint = ref;
+        } else { // no ref-point set, determine center of selection
+            RS_BoundData bound = getBoundingRect(selected);
+            refPoint =  bound.getCenter();
         }
-    }
-    else{ // no ref-point set
-        std::vector<RS_Entity*> selected;
-        RS_Vector min = RS_Vector(10e10, 10e10,0);
-        RS_Vector max = RS_Vector(-10e10, -10e10,0);
-        // first pass is for determine center point of selection that will be used as ref point
-        for (auto e: *container) {
-            if (e && e->isSelected()) {
-                const RS_Vector &entityMin = e->getMin();
-                const RS_Vector &entityMax = e->getMax();
 
-                min.x = std::min(min.x, entityMin.x);
-                min.y = std::min(min.y, entityMin.y);
-                max.x = std::max(max.x, entityMax.x);
-                max.y = std::max(max.y, entityMax.y);
-                selectedEntityFound = true;
-
-                selected.push_back(e);
-            }
+        for (auto e: selected) {
+            copyEntity(e, refPoint, cut);
         }
-        
-        if (selectedEntityFound) {
-            RS_Vector selectionCenter = (min + max) / 2;
-
-            for (auto e: selected) {
-                copyEntity(e, selectionCenter, cut);              
-            }
-
-            selected.clear();
-        }
-    }
-    if (!selectedEntityFound) { // fixme - review, what for? 
-        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::copy: no valid container is selected");
-    }
-    else {
+        selected.clear();
         RS_DEBUG->print(RS_Debug::D_DEBUGGING, "RS_Modification::copy: OK");
+    }
+    else{ // fixme - review, what for?
+        RS_DEBUG->print(RS_Debug::D_WARNING, "RS_Modification::copy: no valid container is selected");
     }
 }
 
+ void RS_Modification::collectSelectedEntities(std::vector<RS_Entity *> &selected) const{
+    for (auto e: *container) {
+        if (e && e->isSelected()) {
+            selected.push_back(e);
+        }
+    }
+}
+
+RS_BoundData RS_Modification::getBoundingRect(std::vector<RS_Entity *> &selected)  {
+    RS_Vector selectionCenter;
+    RS_Vector min = RS_Vector(10e10, 10e10,0);
+    RS_Vector max = RS_Vector(-10e10, -10e10,0);
+    for (auto e: selected) {
+        const RS_Vector &entityMin = e->getMin();
+        const RS_Vector &entityMax = e->getMax();
+
+        min.x = std::min(min.x, entityMin.x);
+        min.y = std::min(min.y, entityMin.y);
+        max.x = std::max(max.x, entityMax.x);
+        max.y = std::max(max.y, entityMax.y);
+    }
+
+    RS_BoundData result(min, max);
+    return result;
+}
 
 
 /**
@@ -1881,16 +1882,7 @@ bool RS_Modification::move(RS_MoveData& data, bool previewOnly, RS_EntityContain
         return false;
     }
 
-    int numberOfCopies = data.number;
-    if (!data.multipleCopies){
-        numberOfCopies = 1;
-    }
-    else{
-        if (numberOfCopies < 1){
-            numberOfCopies = 1;
-        }
-    }
-
+    int numberOfCopies = data.obtainNumberOfCopies();
     std::vector<RS_Entity*> addList;
 
     // too slow:
@@ -1950,15 +1942,7 @@ bool RS_Modification::offset(const RS_OffsetData& data, bool previewOnly, RS_Ent
 
     std::vector<RS_Entity*> addList;
 
-    int numberOfCopies = data.number;
-    if (!data.multipleCopies){
-        numberOfCopies = 1;
-    }
-    else{
-        if (numberOfCopies < 1){
-            numberOfCopies = 1;
-        }
-    }
+    int numberOfCopies = data.obtainNumberOfCopies();
 
     // Create new entities
     // too slow:
@@ -2053,68 +2037,80 @@ bool RS_Modification::rotate(RS_RotateData &data){
  * Moves all selected entities with the given data for the scale
  * modification.
  */
-bool RS_Modification::scale(RS_ScaleData& data) {
-    if (!container) {
+bool RS_Modification::scale(RS_ScaleData& data, bool forPreviewOnly) {
+    if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::scale: no valid container");
         return false;
     }
+    
+    std::vector<RS_Entity*> selectedEntities;
+    container->collectSelected(selectedEntities, false);
+    scale(data, selectedEntities, forPreviewOnly);
+    return true;
+}
 
+bool RS_Modification::scale(RS_ScaleData& data, const std::vector<RS_Entity*> &entitiesToScale, bool forPreviewOnly) {
     std::vector<RS_Entity*> selectedList,addList;
 
-    for(auto ec: *container){
-        if (ec->isSelected() ) {
-            if ( !data.isotropicScaling ) {
-                if ( ec->rtti() == RS2::EntityCircle ) {
-                    //non-isotropic scaling, replacing selected circles with ellipses
-                    auto* c=static_cast<RS_Circle*>(ec);
-                    ec= new RS_Ellipse{container,
-                                       {c->getCenter(), {c->getRadius(),0.},
-                                        1.,
-                                        0., 0., false}};
-                } else if ( ec->rtti() == RS2::EntityArc ) {
-                    //non-isotropic scaling, replacing selected arcs with ellipses
-                    RS_Arc *c=static_cast<RS_Arc*>(ec);
-                    ec= new RS_Ellipse{container,
-                                       {c->getCenter(),
-                                        {c->getRadius(),0.},
-                                        1.0,
-                                        c->getAngle1(),
-                                        c->getAngle2(),
-                                        c->isReversed()}};
-                }
+    for(auto ec: entitiesToScale){
+        if ( !data.isotropicScaling ) {
+            RS2::EntityType rtti = ec->rtti();
+            if (rtti == RS2::EntityCircle ) {
+                //non-isotropic scaling, replacing selected circles with ellipses
+                auto* c=dynamic_cast<RS_Circle*>(ec);
+                ec= new RS_Ellipse{container,
+                                   {c->getCenter(), {c->getRadius(),0.},
+                                    1.,
+                                    0., 0., false}};
+            } else if (rtti == RS2::EntityArc ) {
+                //non-isotropic scaling, replacing selected arcs with ellipses
+                auto *c=dynamic_cast<RS_Arc*>(ec);
+                ec= new RS_Ellipse{container,
+                                   {c->getCenter(),
+                                    {c->getRadius(),0.},
+                                    1.0,
+                                    c->getAngle1(),
+                                    c->getAngle2(),
+                                    c->isReversed()}};
             }
-            selectedList.push_back(ec);
         }
+        selectedList.push_back(ec);
     }
+
+    int numberOfCopies = data.obtainNumberOfCopies();
 
     // Create new entities
     for(RS_Entity* e: selectedList) {
         if (e != nullptr) {
-            for (int num=1; num<=data.number || (data.number==0 && num<=1); num++) {
-                RS_Entity* ec = e->clone();
+            for (int num= 1; num <= numberOfCopies; num++) {
+                auto ec = e->clone();
                 ec->setSelected(false);
 
                 ec->scale(data.referencePoint, RS_Math::pow(data.factor, num));
-                if (data.useCurrentLayer) {
-                    ec->setLayerToActive();
+
+                if (!forPreviewOnly) {
+                    if (data.useCurrentLayer) {
+                        ec->setLayerToActive();
+                    }
+                    if (data.useCurrentAttributes) {
+                        ec->setPenToActive();
+                    }
                 }
-                if (data.useCurrentAttributes) {
-                    ec->setPenToActive();
-                }
+                
                 if (ec->rtti()==RS2::EntityInsert) {
-                    ((RS_Insert*)ec)->update();
+                    auto insert = dynamic_cast<RS_Insert *>(ec);
+                    insert->update();
                 }
                 addList.push_back(ec);
             }
         }
     }
+    selectedList.clear();
+    deleteOriginalAndAddNewEntities(addList, forPreviewOnly, !data.keepOriginals);
+    addList.clear();
 
-    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number==0);
-    addNewEntities(addList);
-
-    return true;
+    return true; 
 }
 
 
@@ -2132,15 +2128,8 @@ bool RS_Modification::mirror(RS_MirrorData& data) {
 
     std::vector<RS_Entity*> addList;
 
-    int numberOfCopies = data.number;
-    if (!data.multipleCopies){
-        numberOfCopies = 1;
-    }
-    else{
-        if (numberOfCopies < 1 || true){ // fixme - review multiple copies for mirror... offset mirror line?
-            numberOfCopies = 1;
-        }
-    }
+//    int numberOfCopies = obtainNumberOfCopies(data);
+    int numberOfCopies = 1; // fixme - think about support of multiple copies.... may it be be something like moving the central point of selection? Like mirror+move?
 
     // Create new entities
 
@@ -2186,15 +2175,7 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, bool previewOnly, RS_EntityC
 
     std::vector<RS_Entity*> addList;
 
-    int numberOfCopies = data.number;
-    if (!data.multipleCopies){
-        numberOfCopies = 1;
-    }
-    else{
-        if (numberOfCopies < 1){
-            numberOfCopies = 1;
-        }
-    }
+    int numberOfCopies = data.obtainNumberOfCopies();
 
     // Create new entities
 
@@ -2237,12 +2218,27 @@ bool RS_Modification::rotate2(RS_Rotate2Data& data, bool previewOnly, RS_EntityC
             }
         }
     } else {
-//        deselectOriginals(data.number == 0);
         deselectOriginals(!data.keepOriginals);
         addNewEntities(addList);
     }
     return true;
 }
+
+void RS_Modification::deleteOriginalAndAddNewEntities(const std::vector<RS_Entity*> &addList, bool addOnly, bool deleteOriginals, bool forceUndoable){
+    LC_UndoSection undo( document, handleUndo); // bundle remove/add entities in one undoCycle
+    if (addOnly) {
+        for (RS_Entity *e: addList) {
+            if (e != nullptr) {
+                container->addEntity(e);
+            }
+        }
+    } else {
+        deselectOriginals(deleteOriginals);
+        addNewEntities(addList, forceUndoable);
+    }
+}
+
+
 
 /**
  * Moves and rotates entities with the given parameters.
@@ -2255,15 +2251,9 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data, bool previewOnly, RS_E
     }
 
     std::vector<RS_Entity*> addList;
-    int numberOfCopies = data.number;
-    if (!data.multipleCopies){
-        numberOfCopies = 1;
-    }
-    else{
-        if (numberOfCopies < 1){
-            numberOfCopies = 1;
-        }
-    }
+
+    int numberOfCopies = data.obtainNumberOfCopies();
+
     // Create new entities
 
     for(auto e: *container){ // fixme - iterating all entities for selection
@@ -2311,48 +2301,21 @@ bool RS_Modification::moveRotate(RS_MoveRotateData& data, bool previewOnly, RS_E
  *
  * @param remove true: Remove entities.
  */
-void RS_Modification::deselectOriginals(bool remove)
-{
-    LC_UndoSection undo( document, handleUndo);
+void RS_Modification::deselectOriginals(bool remove) {
+    LC_UndoSection undo(document, handleUndo);
 
     for (auto e: *container) {
-        if (e) {
-            bool selected = false;
-
-            /*
-                  if (e->isAtomic()) {
-                      RS_AtomicEntity* ae = (RS_AtomicEntity*)e;
-                      if (ae->isStartpointSelected() ||
-                              ae->isEndpointSelected()) {
-
-                          selected = true;
-                      }
-                  }
-            */
-
+        if (e != nullptr) {
             if (e->isSelected()) {
-                selected = true;
-            }
-
-            if (selected) {
                 e->setSelected(false);
                 if (remove) {
-                    //if (graphicView) {
-                    //    graphicView->deleteEntity(e);
-                    //}
                     e->changeUndoState();
                     undo.addUndoable(e);
-                } else {
-                    //if (graphicView) {
-                    //    graphicView->drawEntity(e);
-                    //}
                 }
             }
         }
     }
 }
-
-
 
 /**
  * Adds the given entities to the container and draws the entities if
@@ -2360,7 +2323,7 @@ void RS_Modification::deselectOriginals(bool remove)
  *
  * @param addList Entities to add.
  */
-void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList, bool forceUndoable)
+void RS_Modification::addNewEntities(const std::vector<RS_Entity*>& addList, bool forceUndoable)
 {
     LC_UndoSection undo( document, handleUndo || forceUndoable);
 
@@ -2373,7 +2336,7 @@ void RS_Modification::addNewEntities(std::vector<RS_Entity*>& addList, bool forc
 
     container->calculateBorders();
 
-    if (graphicView) {
+    if (graphicView) { // fixme - remove
         graphicView->redraw(RS2::RedrawDrawing);
     }
 }

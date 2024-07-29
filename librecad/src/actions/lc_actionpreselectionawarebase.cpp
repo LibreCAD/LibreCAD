@@ -1,6 +1,27 @@
+/****************************************************************************
+**
+* Abstract base class for actions that operates with selected entities
+
+Copyright (C) 2024 LibreCAD.org
+Copyright (C) 2024 sand1024
+
+This program is free software; you can redistribute it and/or
+modify it under the terms of the GNU General Public License
+as published by the Free Software Foundation; either version 2
+of the License, or (at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program; if not, write to the Free Software
+Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+**********************************************************************/
+
 #include "lc_actionpreselectionawarebase.h"
 #include "rs_document.h"
-
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
@@ -8,21 +29,34 @@ LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     :RS_ActionSelectBase(name, container, graphicView, entityTypeList),
     countDeep(countSelectionDeep){}
 
+LC_ActionPreSelectionAwareBase::~LC_ActionPreSelectionAwareBase() {
+    selectedEntities.clear();
+}
+
 void LC_ActionPreSelectionAwareBase::init(int status) {
     RS_PreviewActionInterface::init(status);
-    unsigned int selectedCount = countSelectedEntities();
-    if (selectedCount> 0){
-        selectionCompleted(false);
+    if (status < 0){
+        selectedEntities.clear();
+    }
+    else{
+        unsigned int selectedCount = countSelectedEntities();
+        if (selectedCount> 0){
+            selectionCompleted(false);
+        }
     }
 }
 
 unsigned int LC_ActionPreSelectionAwareBase::countSelectedEntities() {
-    unsigned int selectedCount = document->countSelected(countDeep, catchForSelectionEntityTypes);
+//    unsigned int selectedCount = document->countSelected(countDeep, catchForSelectionEntityTypes);
+    selectedEntities.clear();
+    document->collectSelected(selectedEntities, countDeep, catchForSelectionEntityTypes);
+    unsigned int selectedCount = selectedEntities.size();
     return selectedCount;
 }
 
 void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKeyEvent *e, bool escape) {
     if (escape){
+        selectedEntities.clear();
         finish(false);
     }
     else{
@@ -48,9 +82,9 @@ void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEvent(int status, QMo
 void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
     if (selectionComplete) {
         mouseRightButtonReleaseEventSelected(status, e);
-        // fixme - return to selection mode before finish
     }
     else{
+        selectedEntities.clear();
         finish(false);
     }
 }
@@ -89,7 +123,7 @@ void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool sin
 }
 
 void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelection) {
-        unsigned int selectedCount = countSelectedEntities();
+    unsigned int selectedCount = countSelectedEntities();
     bool proceed = selectedCount > 0 || allowEmptySelection;
     if (proceed) {
         selectionComplete = true;

@@ -49,6 +49,19 @@ struct LC_ModifyOperationFlags{
     bool keepOriginals = false;
     int number = 0;
     bool multipleCopies = false;
+
+    int obtainNumberOfCopies() const {
+        int numberOfCopies = number;
+        if (!multipleCopies){
+            numberOfCopies = 1;
+        }
+        else{
+            if (numberOfCopies < 1){
+                numberOfCopies = 1;
+            }
+        }
+        return numberOfCopies;
+    }
 };
 
 /**
@@ -56,6 +69,20 @@ struct LC_ModifyOperationFlags{
  */
 struct RS_MoveData : public LC_ModifyOperationFlags{
     RS_Vector offset;
+};
+
+struct RS_BoundData{
+    RS_BoundData(const RS_Vector &left, const RS_Vector &top) {
+        min = left;
+        max = top;
+    }
+
+    RS_Vector min;
+    RS_Vector max;
+
+    RS_Vector getCenter(){
+        return (min+max)/2;
+    }
 };
 
 
@@ -80,9 +107,9 @@ struct RS_RotateData : public LC_ModifyOperationFlags{
  */
 struct RS_ScaleData : public LC_ModifyOperationFlags {
     RS_Vector referencePoint;
-    RS_Vector factor;
+    RS_Vector factor = RS_Vector(1.1,1.0,0.0);
     // Find the factor by a source and a target point
-    bool isotropicScaling = false;
+    bool isotropicScaling = true;
     bool toFindFactor = false;
 };
 
@@ -267,7 +294,8 @@ public:
     void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
     bool move(RS_MoveData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
     bool rotate(RS_RotateData &data);
-    bool scale(RS_ScaleData &data);
+    bool scale(RS_ScaleData &data, bool forPreviewOnly = false);
+    bool scale(RS_ScaleData &data, const std::vector<RS_Entity *> &selectedEntities, bool forPreviewOnly);
     bool mirror(RS_MirrorData &data);
     bool moveRotate(RS_MoveRotateData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
     bool rotate2(RS_Rotate2Data &data, bool previewOnly, RS_EntityContainer* previewContainer);
@@ -320,7 +348,8 @@ public:
         RS_AtomicEntity &segment1,
         RS_AtomicEntity &segment2,
         bool createOnly);
-
+    static RS_BoundData getBoundingRect(std::vector<RS_Entity *> &selected); // todo - probably it should be located in other utility class..
+    void collectSelectedEntities(std::vector<RS_Entity *> &entitiesList) const;
 private:
     void copyEntity(RS_Entity *e, const RS_Vector &ref, bool cut);
     void copyLayers(RS_Entity *e);
@@ -329,7 +358,7 @@ private:
     bool pasteContainer(RS_Entity *entity, RS_EntityContainer *container, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
     bool pasteEntity(RS_Entity *entity, RS_EntityContainer *container);
     void deselectOriginals(bool remove);
-    void addNewEntities(std::vector<RS_Entity *> &addList, bool forceUndoable = false);
+    void addNewEntities(const std::vector<RS_Entity *> &addList, bool forceUndoable = false);
     bool explodeTextIntoLetters(RS_MText *text, std::vector<RS_Entity *> &addList);
     bool explodeTextIntoLetters(RS_Text *text, std::vector<RS_Entity *> &addList);
 
@@ -341,6 +370,9 @@ protected:
     bool handleUndo = false;
 
     void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;
+
+    void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity *> &addList,
+                                         bool addOnly, bool deleteOriginals, bool forceUndoable = false);
 };
 
 #endif

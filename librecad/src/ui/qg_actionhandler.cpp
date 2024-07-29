@@ -755,12 +755,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyRotate(*document, *view);
             break;
         case RS2::ActionModifyScale:
-            if(!document->countSelected()){
-                a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyScaleNoSelect);
-                break;
-            }
-            // fall-through
-        case RS2::ActionModifyScaleNoSelect:
             a = new RS_ActionModifyScale(*document, *view);
             break;
         case RS2::ActionModifyMirror:
