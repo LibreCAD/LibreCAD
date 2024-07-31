@@ -30,6 +30,9 @@
 
 #include <QObject>
 #include <QtCore/QtContainerFwd>
+#include <QKeyEvent>
+#include <QInputEvent>
+#include <QMouseEvent>
 
 #include "rs.h"
 #include "rs_snapper.h"
@@ -40,7 +43,6 @@ class RS_CoordinateEvent;
 class RS_Graphic;
 class RS_Document;
 class QAction;
-class QKeyEvent;
 class QString;
 class LC_ActionOptionsWidget;
 
@@ -62,7 +64,7 @@ public:
                        RS_EntityContainer& container,
                        RS_GraphicView& graphicView,
                        RS2::ActionType actionType = RS2::ActionNone);
-	   virtual ~RS_ActionInterface();
+	   ~RS_ActionInterface() override;
 
     virtual RS2::ActionType rtti() const;
 
@@ -79,7 +81,7 @@ public:
     virtual void commandEvent(RS_CommandEvent*);
     virtual QStringList getAvailableCommands();
     virtual void setStatus(int status);
-    virtual int getStatus() const;
+    int getStatus() const;
     virtual void trigger();
     virtual void updateMouseButtonHints();
     virtual void updateMouseCursor();
@@ -128,41 +130,16 @@ protected:
     RS_Graphic *graphic = nullptr;
 
     /**
-         * Pointer to the document (graphic or block) or NULL.
-         */
+    * Pointer to the document (graphic or block) or NULL.
+    */
+
     RS_Document *document = nullptr;
-
-    /**
-     * Pointer to the default mouse cursor for this action or NULL.
-     */
-    //RS2::CursorType cursor;
-
     /**
      * Predecessor of this action or NULL.
      */
     RS_ActionInterface* predecessor = nullptr;
 
-    /**
-     * String prepended to the help text for currently available commands.
-     */
-    //static QString msgAvailableCommands;
 
-    /**
-     * Command used for showing help for every action.
-     */
-    //static QString cmdHelp;
-
-    /**
-     * Command for answering yes to a question.
-     */
-    //static QString cmdYes;
-    //static QString cmdYes2;
-
-     /**
-     * Command for answering no to a question.
-     */
-    //static QString cmdNo;
-    //static QString cmdNo2;
     RS2::ActionType actionType = RS2::ActionNone;
 
     std::unique_ptr<LC_ActionOptionsWidget> m_optionWidget;
@@ -184,8 +161,8 @@ protected:
     void updateMouseWidget(const QString& = QString(),const QString& = QString(), const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
 
 
-    static bool isControl(const QMouseEvent *e);
-    static bool isShift(const QMouseEvent *e);
+    static bool isControl(const QInputEvent *e);
+    static bool isShift(const QInputEvent *e);
 
     virtual void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e);
     virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);

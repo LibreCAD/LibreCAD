@@ -1993,45 +1993,52 @@ bool RS_Modification::offset(const RS_OffsetData& data, bool previewOnly, RS_Ent
 /**
  * Rotates all selected entities with the given data for the rotation.
  */
-bool RS_Modification::rotate(RS_RotateData &data){
+bool RS_Modification::rotate(RS_RotateData &data, bool forPreviewOnly){
     if (!container){
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::rotate: no valid container");
         return false;
     }
 
+    std::vector<RS_Entity*> selectedEntities;
+    container->collectSelected(selectedEntities, false);
+    return rotate(data, selectedEntities, forPreviewOnly);
+}
+
+bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> &entitiesToRotate, bool forPreviewOnly) {
     std::vector<RS_Entity *> addList;
-
     // Create new entities
-    for (auto e: *container) { //  fixme - iterating over all entities in container for selection
-        if (e && e->isSelected()){
-            for (int num = 1; num <= data.number || (data.number == 0 && num <= 1); num++) {
+
+    int numberOfCopies = data.obtainNumberOfCopies();
+    for (auto e: entitiesToRotate) {
+        for (int num = 1; num <= numberOfCopies; num++) {
+
+            RS_Entity *ec = e->clone();
+            ec->setSelected(false);
+
+            double rotationAngle = data.angle * num;
+            ec->rotate(data.center, rotationAngle);
 
 
-                RS_Entity *ec = e->clone();
-                ec->setSelected(false);
-
-                ec->rotate(data.center, data.angle * num);
-                if (data.useCurrentLayer){
-                    ec->setLayerToActive();
-                }
-                if (data.useCurrentAttributes){
-                    ec->setPenToActive();
-                }
-                if (ec->rtti() == RS2::EntityInsert){
-                    ((RS_Insert *) ec)->update();
-                }
-                addList.push_back(ec);
+            if (data.useCurrentLayer) {
+                ec->setLayerToActive();
             }
+            if (data.useCurrentAttributes) {
+                ec->setPenToActive();
+            }
+            if (ec->rtti() == RS2::EntityInsert) {
+                ((RS_Insert *) ec)->update();
+            }
+            addList.push_back(ec);
         }
     }
 
-    LC_UndoSection undo(document, handleUndo); // bundle remove/add entities in one undoCycle
-    deselectOriginals(data.number == 0);
-    addNewEntities(addList);
-
+    deleteOriginalAndAddNewEntities(addList, forPreviewOnly, !data.keepOriginals);
+    addList.clear();
+    
     return true;
 }
+
 
 /**
  * Moves all selected entities with the given data for the scale

@@ -274,6 +274,7 @@ HEADERS += \
     ui/forms/lc_actionoptionswidgetbase.h \
     ui/forms/lc_infodist2options.h \
     ui/forms/lc_modifymirroroptions.h \
+    ui/forms/lc_modifyrotateoptions.h \
     ui/forms/lc_modifyscaleoptions.h \
     ui/forms/lc_modifystretchoptions.h \
     ui/forms/lc_moveoptions.h \
@@ -459,6 +460,7 @@ SOURCES += \
     ui/forms/lc_actionoptionswidgetbase.cpp \
     ui/forms/lc_infodist2options.cpp \
     ui/forms/lc_modifymirroroptions.cpp \
+    ui/forms/lc_modifyrotateoptions.cpp \
     ui/forms/lc_modifyscaleoptions.cpp \
     ui/forms/lc_modifystretchoptions.cpp \
     ui/forms/lc_moveoptions.cpp \
@@ -1021,6 +1023,7 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/forms/lc_modifybreakdivideoptions.ui \
     ui/forms/lc_modifygapoptions.ui \
     ui/forms/lc_modifymirroroptions.ui \
+    ui/forms/lc_modifyrotateoptions.ui \
     ui/forms/lc_modifyscaleoptions.ui \
     ui/forms/lc_modifystretchoptions.ui \
     ui/forms/lc_moveoptions.ui \

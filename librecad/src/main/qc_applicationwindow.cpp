@@ -3226,6 +3226,14 @@ void QC_ApplicationWindow::keyPressEvent(QKeyEvent* e)
 
     default:
         e->ignore();
+// fixme - temporary test code, check regressions and move to method
+// fixme me - add proper support for keyboard in view (scroll, zoom) and actions (default action - move by keyboards)
+// fixme - as well as focusing options widget if there is action
+//            RS_GraphicView* graphicView = getGraphicView();
+//            if (graphicView) {
+//                graphicView->keyPressEvent(e);
+//            }
+            // fixme - tmp-end
         RS_DEBUG->print("QC_ApplicationWindow::KeyPressEvent: IGNORED");
         break;
     }

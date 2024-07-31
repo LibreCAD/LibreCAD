@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include <QKeyEvent>
 
 #include "rs.h"
 #include "rs_actioninterface.h"
@@ -531,11 +530,11 @@ void RS_ActionInterface::updateSnapAngleStep() {
     }
 }
 
-bool RS_ActionInterface::isControl(const QMouseEvent *e){
+bool RS_ActionInterface::isControl(const QInputEvent *e){
     return  e->modifiers() & (Qt::ControlModifier | Qt::MetaModifier);
 }
 
-bool RS_ActionInterface::isShift(const QMouseEvent *e){
+bool RS_ActionInterface::isShift(const QInputEvent *e){
     return  e->modifiers() & Qt::ShiftModifier;
 }
 

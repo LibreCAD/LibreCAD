@@ -360,6 +360,14 @@ void RS_GraphicView::enter() {
 	}
 }
 
+void keyPressEvent(QKeyEvent *event);
+
+void RS_GraphicView::keyPressEvent(QKeyEvent *event)  {
+    if (eventHandler && eventHandler->hasAction()) {
+        eventHandler->keyPressEvent(event);
+    }
+}
+
 /**
  * Called by the actual GUI class which implements a command line.
  */

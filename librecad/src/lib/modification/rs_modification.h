@@ -99,7 +99,10 @@ struct RS_OffsetData : public LC_ModifyOperationFlags{
  */
 struct RS_RotateData : public LC_ModifyOperationFlags{
     RS_Vector center;
+    RS_Vector refPoint;
     double angle = 0.;
+    double secondAngle = 0.0;
+    bool twoRotations = false;
 };
 
 /**
@@ -293,7 +296,8 @@ public:
 public:
     void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
     bool move(RS_MoveData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
-    bool rotate(RS_RotateData &data);
+    bool rotate(RS_RotateData &data, bool forPreviewOnly = false);
+    bool rotate(RS_RotateData &data, const std::vector<RS_Entity *> &selectedEntities, bool forPreviewOnly);
     bool scale(RS_ScaleData &data, bool forPreviewOnly = false);
     bool scale(RS_ScaleData &data, const std::vector<RS_Entity *> &selectedEntities, bool forPreviewOnly);
     bool mirror(RS_MirrorData &data);

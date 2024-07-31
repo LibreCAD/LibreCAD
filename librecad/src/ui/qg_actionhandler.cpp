@@ -746,12 +746,6 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionModifyRevertDirection(*document, *view);
             break;
         case RS2::ActionModifyRotate:
-//		if(!document->countSelected()){
-//			a = new RS_ActionSelect(this, *document, *view, RS2::ActionModifyRotateNoSelect);
-//			break;
-//		}
-//        // fall-through
-        case RS2::ActionModifyRotateNoSelect:
             a = new RS_ActionModifyRotate(*document, *view);
             break;
         case RS2::ActionModifyScale:

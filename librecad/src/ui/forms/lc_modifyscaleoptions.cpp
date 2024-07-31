@@ -23,7 +23,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_modifyscaleoptions.h"
 #include "ui_lc_modifyscaleoptions.h"
 
-LC_ModifyScaleOptions::LC_ModifyScaleOptions(QWidget *parent)
+LC_ModifyScaleOptions::LC_ModifyScaleOptions()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyScale, "/Modify", "/Scale")
     , ui(new Ui::LC_ModifyScaleOptions){
     ui->setupUi(this);

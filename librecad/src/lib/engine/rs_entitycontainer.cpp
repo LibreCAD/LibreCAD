@@ -516,16 +516,17 @@ void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool 
     std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
 
     for (RS_Entity *e: entities) {
-        if (e->isSelected())
-            if (types.empty() || type.count(e->rtti()))
-                collect.push_back(e);
+        if (e != nullptr) {
+            if (e->isSelected())
+                if (types.empty() || type.count(e->rtti()))
+                    collect.push_back(e);
 
-        if (e->isContainer()) {
-            auto *container = dynamic_cast<RS_EntityContainer *>(e);
-            container->collectSelected(collect, false); // todo - check whether we need deep and types?
+            if (e->isContainer()) {
+                auto *container = dynamic_cast<RS_EntityContainer *>(e);
+                container->collectSelected(collect, false); // todo - check whether we need deep and types?
+            }
         }
     }
-    
 }
 
 /**

@@ -27,7 +27,8 @@
 #ifndef RS_ACTIONMODIFYROTATE_H
 #define RS_ACTIONMODIFYROTATE_H
 
-#include "rs_previewactioninterface.h"
+
+#include "lc_actionmodifybase.h"
 
 struct RS_RotateData;
 
@@ -36,18 +37,16 @@ struct RS_RotateData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionModifyRotate:public RS_PreviewActionInterface {
+class RS_ActionModifyRotate: public LC_ActionModifyBase {
 Q_OBJECT
 public:
     /**
      * Action States.
      */
     enum Status {
-        SelectEntity,
         SetReferencePoint,    /**< Setting the reference point. */
         SetCenterPoint,    /**< Setting the rotation center */
         SetTargetPoint,    /**< Setting the target to rotation to*/
-        ShowDialog            /**< Showing the options dialog. */
     };
 public:
     RS_ActionModifyRotate(
@@ -56,22 +55,38 @@ public:
     ~RS_ActionModifyRotate() override;
     void init(int status = 0) override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
-    void updateMouseButtonHints() override;
-    void keyPressEvent(QKeyEvent *e) override;
-    void finish(bool updateTB) override;
-    void keyReleaseEvent(QKeyEvent *e) override;
+    double getAngle();
+    void setAngle(double angle);
+    void setFreeAngle(bool enable);
+    bool isFreeAngle() {return freeAngle;};
+    double getRefPointAngle();
+    void setRefPointAngle(double angle);
+    void setFreeRefPointAngle(bool value);
+    bool isFreeRefPointAngle(){return freeRefPointAngle;};
+    bool isRotateAlsoAroundReferencePoint();
+    void setRotateAlsoAroundReferencePoint(bool value);
+    double getCurrentAngle(){return currentAngle;}
+
+    void keyPressEvent(QKeyEvent *e) override;;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void selectionCompleted(bool singleEntity) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
+    void tryTrigger();
 private:
-    int selectedCount = 0;
     bool selectRefPointFirst = true;
+    bool freeAngle = false;
+    bool freeRefPointAngle = false;
     std::unique_ptr<RS_RotateData> data;
-    RS_Vector originalReferencePoint = RS_Vector(false);
-    void finishSelection(bool refPointFirst);
+    double currentAngle = 0.0;
+    void previewRotationCircleAndPoints(const RS_Vector &center, double angle);
 };
 
 #endif

@@ -342,7 +342,6 @@ namespace RS2 {
         ActionModifyDeleteFree,
         ActionModifyMove,
         ActionModifyRotate,
-        ActionModifyRotateNoSelect,
         ActionModifyScale,
         ActionModifyMirror,
         ActionModifyMoveRotate,

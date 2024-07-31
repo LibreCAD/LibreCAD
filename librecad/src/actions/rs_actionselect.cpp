@@ -84,9 +84,6 @@ void RS_ActionSelect::updateMouseButtonHints() {
         case RS2::ActionEditCutNoSelect:
             updateMouseWidgetTRCancel(tr("Select to cut"));
             break;
-        case RS2::ActionModifyRotateNoSelect:
-            updateMouseWidgetTRCancel(tr("Select to rotate"));
-            break;
         case RS2::ActionBlocksCreateNoSelect:
             updateMouseWidgetTRCancel(tr("Select to create block"));
             break;

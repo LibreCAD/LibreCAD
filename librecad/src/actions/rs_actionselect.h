@@ -40,7 +40,6 @@ class RS_ActionSelect:public RS_ActionInterface {
 Q_OBJECT
 
 public:
-
     RS_ActionSelect(
         QG_ActionHandler *a_handler,
         RS_EntityContainer &container,
