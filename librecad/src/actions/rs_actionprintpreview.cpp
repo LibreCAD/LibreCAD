@@ -38,6 +38,7 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
+#include "rs_debug.h"
 
 struct RS_ActionPrintPreview::Points {
 	RS_Vector v1;
@@ -63,6 +64,8 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
 
+void zoomToPage();
+
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
 }
@@ -83,6 +86,10 @@ void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
                 RS_Vector pinsbase = graphic->getPaperInsertionBase();
                 double scale = graphic->getPaperScale();
                 graphic->setPaperInsertionBase(pinsbase - pPoints->v2 * scale + pPoints->v1 * scale);
+                
+                //fixme - remove debug code
+//                const RS_Vector &pib = graphic->getPaperInsertionBase();
+//                LC_ERR << "PIB:" <<  pib.x << " , " << pib.y;
             }
             pPoints->v1 = pPoints->v2;
             graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
@@ -228,6 +235,16 @@ void RS_ActionPrintPreview::center() {
     }
 }
 
+void RS_ActionPrintPreview::zoomToPage(){
+    if (graphic) {
+        graphicView->zoomPageEx();
+        RS_Vector paperInsertionBase = graphic->getPaperInsertionBase();
+//        graphicView->setOffsetX(-(int)paperInsertionBase.x);
+//        graphicView->setOffsetY(-(int)graphic->getMarginBottom());
+//        graphicView->redraw();
+    }
+}
+
 void RS_ActionPrintPreview::fit() {
     if (graphic) {
         RS_Vector paperSize=RS_Units::convert(graphic->getPaperSize(),
@@ -236,10 +253,13 @@ void RS_ActionPrintPreview::fit() {
         if(std::abs(paperSize.x)<10.|| std::abs(paperSize.y)<10.)
             printWarning("Warning:: Paper size less than 10mm."
                          " Paper is too small for fitting to page\n"
-                         "Please set paper size by Menu: Edit->Current Drawing Preferences->Paper");
+                         "Please set paper size by Menu: Options->Current Drawing Preferences->Paper");
         //        double f0=graphic->getPaperScale();
         if ( graphic->fitToPage()==false) {
             commandMessage(tr("RS_ActionPrintPreview::fit(): Invalid paper size"));
+        }
+        else{
+            graphic->setPagesNum(1,1);
         }
         //        if(std::abs(f0-graphic->getPaperScale())>RS_TOLERANCE){
         //only zoomPage when scale changed
@@ -261,7 +281,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 
         // changing scale around the drawing center
         pinBase += graphic->getSize()*(oldScale - f)*0.5;
-        graphic->setPaperInsertionBase(pinBase);
+//        graphic->setPaperInsertionBase(pinBase);
 
         if(autoZoom)
             graphicView->zoomPage();
@@ -279,9 +299,17 @@ double RS_ActionPrintPreview::getScale() const{
     return ret;
 }
 
+bool RS_ActionPrintPreview::isLineWidthScaling(){
+    return graphicView->getLineWidthScaling();
+}
+
 void RS_ActionPrintPreview::setLineWidthScaling(bool state) {
     graphicView->setLineWidthScaling(state);
     graphicView->redraw();
+}
+
+bool RS_ActionPrintPreview::isBlackWhite() {
+    return graphicView->getDrawingMode() == RS2::ModeBW;
 }
 
 void RS_ActionPrintPreview::setBlackWhite(bool bw) {
@@ -309,7 +337,7 @@ void RS_ActionPrintPreview::setPaperScaleFixed(bool fixed){
 }
 
 /** get paperscale fixed */
-bool RS_ActionPrintPreview::getPaperScaleFixed(){
+bool RS_ActionPrintPreview::isPaperScaleFixed(){
     return graphic->getPaperScaleFixed();
 }
 
@@ -330,11 +358,12 @@ void RS_ActionPrintPreview::calcPagesNum() {
         graphic->centerToPage();
         graphicView->zoomPage();
         graphicView->redraw();
+        updateOptions();
     }
 }
 
 void RS_ActionPrintPreview::updateMouseButtonHints() {
-    updateMouseWidgetTR("Position Paper", "", LC_ModifiersInfo::SHIFT_AND_CTRL("Move Horizontally", "Move Vertically"));
+    updateMouseWidget(tr("Position Paper"), "", MOD_SHIFT_AND_CTRL(tr("Move Horizontally"), tr("Move Vertically")));
 }
 
 LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
@@ -347,4 +376,12 @@ void RS_ActionPrintPreview::showOptions() {
 
 void RS_ActionPrintPreview::hideOptions(bool includeSnap) {
     RS_ActionInterface::hideOptions(includeSnap);
+}
+
+int RS_ActionPrintPreview::getPagesNumHorizontal() {
+    return graphic->getPagesNumHoriz();
+}
+
+int RS_ActionPrintPreview::getPagesNumVertical() {
+    return graphic->getPagesNumVert();
 }

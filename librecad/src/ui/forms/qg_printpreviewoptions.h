@@ -43,36 +43,35 @@ public:
 
 public slots:
     void onCenterClicked();
+    void onZoomToPageClicked();
     void onScaleLineClicked(bool state);
     void onBlackWhiteClicked(bool on);
     void onFitClicked();
-    void scale(const QString& s);
-    void scaleByFactor(double factor);
-    void updateScaleBox();
-    void updateScaleBox(double f);
+    void scale(const QString& newScale, bool force = false);
+    void updateScaleBox(double factor);
     /** print scale fixed to saved value **/
-    void onScaleClicked(bool fixed);
-    void calcPagesNum();
-
+    void onScaleFixedClicked(bool fixed);
+    void onCalcPagesNumClicked();
     void hideOptions() override;
-
 protected:
     RS_ActionPrintPreview* action = nullptr;
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
-
 protected slots:
     void languageChange() override;
 private:
     void init();
-    void initGuiActions();
-    QStringList imperialScales;
-    QStringList metricScales;
-    bool updateDisabled = false;
-    bool scaleLineWidth = false;
-    bool blackWhiteDisabled = true;
-    int defaultScales = 1;
+    int defaultScalesStartIndex = 1;
     std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
+    bool isUseImperialScales();
+    void initializeScaleBoxItems();
+    double parseScaleString(const QString &scaleText, bool& parseOk) const;
+    bool addScaleToScaleCombobox(const QString &scaleString);
+    void addScalesToCombobox(QStringList &scales);
+    void setScaleFixedToUI(bool fixed);
+    void setScaleLineToUI(bool state);
+    QStringList readCustomRatios(bool metric);
+    void saveCustomRatios();
 };
 
 #endif // QG_PRINTPREVIEWOPTIONS_H

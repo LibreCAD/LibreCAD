@@ -879,7 +879,9 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
     }
 
-    // fixme - potentially, we can support mouses with two mouse weels later if this will be reasonable.
+
+
+    // fixme - potentially, we can support mouses with two mouse wheels later if this will be reasonable.
     // fixme - however, it looks as a kind of overkill - using on single vertical mouse wheel for scroll seems to be fine//
 /*
     if (e->modifiers() == Qt::ControlModifier) {
@@ -933,8 +935,18 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != invZoom) ? RS2::In : RS2::Out;
 
         RS_Vector& zoomCenter = mouse;
+        // todo - well, actually this is one-shot action... and it will lead to full action processing chain in action handler
+        // todo - are we REALLY need it there? alternatively, zoom may be part of this class)
 
-        setCurrentAction(new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter, zoomFactor));
+        auto zoomAction = new RS_ActionZoomIn(*container, *this, zoomDirection, RS2::Both, &zoomCenter,
+                                              zoomFactor);
+        if (isPrintPreview()) { // small optimization for print-preview, so options will not be recreated
+            zoomAction->trigger();
+            delete zoomAction;
+        }
+        else{
+            setCurrentAction(zoomAction);
+        }
     }
     redraw();
 

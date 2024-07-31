@@ -189,6 +189,7 @@ public:
     int getOffsetY() const;
     void centerOffsetX();
     void centerOffsetY();
+    void centerOffsets(const RS_Vector &min, const RS_Vector &size, double factor);
     void centerX(double x);
     void centerY(double y);
 /**
@@ -232,6 +233,7 @@ public:
     virtual void zoomPan(int dx, int dy);
     virtual void zoomScroll(RS2::Direction direction);
     virtual void zoomPage();
+    void zoomPageEx();
     virtual void drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2);
     virtual void drawLayer1(RS_Painter *painter);
     virtual void drawLayer2(RS_Painter *painter);

@@ -200,26 +200,52 @@ RS2::CrosshairType RS_GraphicView::getCrosshairType() const{
  * Centers the drawing in x-direction.
  */
 void RS_GraphicView::centerOffsetX() {
-	if (container && !zoomFrozen) {
-		offsetX = (int)(((getWidth()-borderLeft-borderRight)
-						 - (container->getSize().x*factor.x))/2.0
-						- (container->getMin().x*factor.x)) + borderLeft;
-	}
+    if (container && !zoomFrozen) {
+        offsetX = (int)(((getWidth()-borderLeft-borderRight)
+                         - (container->getSize().x*factor.x))/2.0
+                        - (container->getMin().x*factor.x)) + borderLeft;
+    }
 }
 
+void RS_GraphicView::centerOffsets(const RS_Vector &topRight, const RS_Vector &size, double factor) {
+    if (container && !zoomFrozen) {
+//        LC_ERR << "GV SIZ:" <<  getWidth() << " , " << getHeight();
+//        LC_ERR << "GV POS:" <<  getWidth() << " , " << getHeight();
 
+        RS_Graphic* graphic = container->getGraphic();
+        double paperScale = graphic->getPaperScale();
+
+        RS_Vector min = -topRight;
+        double factorX = 1/*paperScale - factor*/;
+
+        RS_Vector sizeScaled = size*factor;
+
+        int visibleWidth = getWidth() - borderLeft - borderRight;
+        int newOffsetX = (int) ((visibleWidth - sizeScaled.x) /2.0  - (min.x*factorX) ) + borderLeft ;
+        offsetX = newOffsetX;
+
+
+        int visibleHeight = getHeight() - borderTop - borderBottom;
+        int newOffsetY = (int) ((visibleHeight - sizeScaled.y) / 2.0 - (min.y*factorX) ) + borderBottom ;
+        offsetY = newOffsetY;
+
+        LC_ERR << "NEW OFFSET:" <<  newOffsetX << " , " << newOffsetY;
+
+//        offsetX = 0;
+//        offsetY = 0;
+    }
+}
 
 /**
  * Centers the drawing in y-direction.
  */
 void RS_GraphicView::centerOffsetY() {
-	if (container && !zoomFrozen) {
-		offsetY = (int)((getHeight()-borderTop-borderBottom
-						 - (container->getSize().y*factor.y))/2.0
-						- (container->getMin().y*factor.y)) + borderBottom;
-	}
+    if (container && !zoomFrozen) {
+        offsetY = (int)((getHeight()-borderTop-borderBottom
+                         - (container->getSize().y*factor.y))/2.0
+                        - (container->getMin().y*factor.y)) + borderBottom;
+    }
 }
-
 
 
 /**
@@ -839,54 +865,116 @@ void RS_GraphicView::zoomScroll(RS2::Direction direction) {
  */
 void RS_GraphicView::zoomPage() {
 
-	RS_DEBUG->print("RS_GraphicView::zoomPage");
-	if (!container) {
-		return;
-	}
+    RS_DEBUG->print("RS_GraphicView::zoomPage");
+    if (!container) {
+        return;
+    }
 
-	RS_Graphic* graphic = container->getGraphic();
-	if (!graphic) {
-		return;
-	}
+    RS_Graphic* graphic = container->getGraphic();
+    if (!graphic) {
+        return;
+    }
 
-	RS_Vector s = graphic->getPrintAreaSize()/graphic->getPaperScale();
+    RS_Vector s = graphic->getPrintAreaSize()/graphic->getPaperScale();
 
-	double fx, fy;
+    double fx, fy;
 
-	if (s.x>RS_TOLERANCE) {
-		fx = (getWidth()-borderLeft-borderRight) / s.x;
-	} else {
-		fx = 1.0;
-	}
+    if (s.x>RS_TOLERANCE) {
+        fx = (getWidth()-borderLeft-borderRight) / s.x;
+    } else {
+        fx = 1.0;
+    }
 
-	if (s.y>RS_TOLERANCE) {
-		fy = (getHeight()-borderTop-borderBottom) / s.y;
-	} else {
-		fy = 1.0;
-	}
+    if (s.y>RS_TOLERANCE) {
+        fy = (getHeight()-borderTop-borderBottom) / s.y;
+    } else {
+        fy = 1.0;
+    }
 
-	RS_DEBUG->print("f: %f/%f", fx, fy);
+    RS_DEBUG->print("f: %f/%f", fx, fy);
 
-	fx = fy = std::min(fx, fy);
+    fx = fy = std::min(fx, fy);
 
-	RS_DEBUG->print("f: %f/%f", fx, fy);
+    RS_DEBUG->print("f: %f/%f", fx, fy);
 
-	if (fx<RS_TOLERANCE) {
-		fx=fy=1.0;
-	}
+    if (fx<RS_TOLERANCE) {
+        fx=fy=1.0;
+    }
 
-	setFactorX(fx);
-	setFactorY(fy);
+    setFactorX(fx);
+    setFactorY(fy);
 
-	RS_DEBUG->print("f: %f/%f", fx, fy);
+    RS_DEBUG->print("f: %f/%f", fx, fy);
 
-	centerOffsetX();
-	centerOffsetY();
-	adjustOffsetControls();
-	adjustZoomControls();
-	//    updateGrid();
+    centerOffsetX();
+    centerOffsetY();
+    // fixme - remove debug code
+    LC_ERR << "Normal Zoom " << offsetX << " , " << offsetY << " Factor: " << fx;;
+    adjustOffsetControls();
+    adjustZoomControls();
+//    updateGrid();
 
-	redraw();
+    redraw();
+}
+
+void RS_GraphicView::zoomPageEx() {
+
+    RS_DEBUG->print("RS_GraphicView::zoomPage");
+    if (!container) {
+        return;
+    }
+
+    RS_Graphic* graphic = container->getGraphic();
+    if (!graphic) {
+        return;
+    }
+
+    const RS_Vector &printAreaSize = graphic->getPrintAreaSize();
+    double paperScale = graphic->getPaperScale();
+    RS_Vector s = printAreaSize / paperScale;
+
+    double fx, fy;
+
+    if (s.x>RS_TOLERANCE) {
+        fx = (getWidth()-borderLeft-borderRight) / s.x;
+    } else {
+        fx = 1.0;
+    }
+
+    if (s.y>RS_TOLERANCE) {
+        fy = (getHeight()-borderTop-borderBottom) / s.y;
+    } else {
+        fy = 1.0;
+    }
+
+    RS_DEBUG->print("f: %f/%f", fx, fy);
+
+    fx = fy = std::min(fx, fy);
+
+    RS_DEBUG->print("f: %f/%f", fx, fy);
+
+    if (fx<RS_TOLERANCE) {
+        fx=fy=1.0;
+    }
+
+    setFactorX(fx);
+    setFactorY(fy);
+
+    RS_DEBUG->print("f: %f/%f", fx, fy);
+
+    const RS_Vector &paperInsertionBase = graphic->getPaperInsertionBase();
+    centerOffsets((paperInsertionBase), printAreaSize, fx);
+
+// fixme - remove debug code
+    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx;
+    LC_ERR << "PIB:" <<  paperInsertionBase.x << " , " << paperInsertionBase.y;
+//    centerOffsetX();
+//    centerOffsetY();
+    adjustOffsetControls();
+    adjustZoomControls();
+//    updateGrid();
+
+    redraw();
 }
 
 
@@ -913,38 +1001,35 @@ void RS_GraphicView::drawWindow_DEPRECATED(RS_Vector v1, RS_Vector v2) {
  */
 void RS_GraphicView::drawLayer1(RS_Painter *painter) {
 
-	// drawing paper border:
-	if (isPrintPreview()) {
-		drawPaper(painter);
-	}
+// drawing paper border:
+    if (isPrintPreview()) {
+        drawPaper(painter);
+    } else {// drawing meta grid:
 
-	// drawing meta grid:
-	if (!isPrintPreview()) {
-
-		//increase grid point size on for DPI>96
-		auto dpiX = int(qApp->screens().front()->logicalDotsPerInch());
+//increase grid point size on for DPI>96
+        auto dpiX = int(qApp->screens().front()->logicalDotsPerInch());
         const bool isHiDpi = dpiX > 96;
-		//        DEBUG_HEADER
-		//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
-		const RS_Pen penSaved=painter->getPen();
-        if(isHiDpi) {
-			RS_Pen pen=penSaved;
-			pen.setWidth(RS2::Width01);
-			painter->setPen(pen);
-		}
+//        DEBUG_HEADER
+//        RS_DEBUG->print(RS_Debug::D_ERROR, "dpiX=%d\n",dpiX);
+        const RS_Pen penSaved = painter->getPen();
+        if (isHiDpi) {
+            RS_Pen pen = penSaved;
+            pen.setWidth(RS2::Width01);
+            painter->setPen(pen);
+        }
 
-		//only drawGrid updates the grid layout (updatePointArray())
-		drawMetaGrid(painter);
-		//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
-		//bug# 3430258
-		drawGrid(painter);
+//only drawGrid updates the grid layout (updatePointArray())
+        drawMetaGrid(painter);
+//draw grid after metaGrid to avoid overwriting grid points by metaGrid lines
+//bug# 3430258
+        drawGrid(painter);
 
-        if(isDraftMode())
+        if (isDraftMode())
             drawDraftSign(painter);
 
-        if(isHiDpi)
+        if (isHiDpi)
             painter->setPen(penSaved);
-	}
+    }
 }
 
 
@@ -1391,7 +1476,6 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
 }
 
 
-
 /**
  * Draws the paper border (for print previews).
  * This function can ONLY be called from within a paintEvent because it will
@@ -1401,80 +1485,93 @@ void RS_GraphicView::drawRelativeZero(RS_Painter *painter) {
  */
 void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
-	if (!container) {
-		return;
-	}
+    if (!container) {
+        return;
+    }
 
-	RS_Graphic* graphic = container->getGraphic();
-	if (graphic->getPaperScale()<1.0e-6) {
-		return;
-	}
+    RS_Graphic *graphic = container->getGraphic();
+    if (graphic->getPaperScale() < 1.0e-6) {
+        return;
+    }
 
-	// draw paper:
-	// RVT_PORT rewritten from     painter->setPen(Qt::gray);
-	painter->setPen(QColor(Qt::gray));
+// draw paper:
+// RVT_PORT rewritten from     painter->setPen(Qt::gray);
+    painter->setPen(QColor(Qt::gray));
 
-	RS_Vector pinsbase = graphic->getPaperInsertionBase();
-	RS_Vector printAreaSize = graphic->getPrintAreaSize();
-	double scale = graphic->getPaperScale();
+    RS_Vector pinsbase = graphic->getPaperInsertionBase();
+    RS_Vector printAreaSize = graphic->getPrintAreaSize();
+    double scale = graphic->getPaperScale();
 
-	RS_Vector v1 = toGui((RS_Vector(0,0)-pinsbase)/scale);
-	RS_Vector v2 = toGui((printAreaSize-pinsbase)/scale);
+    RS_Vector v1 = toGui(( RS_Vector(0, 0) - pinsbase) / scale);
+    RS_Vector v2 = toGui((printAreaSize - pinsbase) / scale);
 
-	int marginLeft = (int)(graphic->getMarginLeftInUnits() * factor.x / scale);
-	int marginTop = (int)(graphic->getMarginTopInUnits() * factor.y / scale);
-	int marginRight = (int)(graphic->getMarginRightInUnits() * factor.x / scale);
-	int marginBottom = (int)(graphic->getMarginBottomInUnits() * factor.y / scale);
+    int marginLeft = (int) (graphic->getMarginLeftInUnits() * factor.x / scale);
+    int marginTop = (int) (graphic->getMarginTopInUnits() * factor.y / scale);
+    int marginRight = (int) (graphic->getMarginRightInUnits() * factor.x / scale);
+    int marginBottom = (int) (graphic->getMarginBottomInUnits() * factor.y / scale);
 
-	int printAreaW = (int)(v2.x-v1.x);
-	int printAreaH = (int)(v2.y-v1.y);
+    int printAreaW = (int) (v2.x - v1.x);
+    int printAreaH = (int) (v2.y - v1.y);
 
-	int paperX1 = (int)v1.x;
-	int paperY1 = (int)v1.y;
-	// Don't show margins between neighbor pages.
-	int paperW = printAreaW + marginLeft + marginRight;
-	int paperH = printAreaH - marginTop - marginBottom;
+    int paperX1 = (int) v1.x;
+    int paperY1 = (int) v1.y;
+// Don't show margins between neighbor pages.
+    int paperW = printAreaW + marginLeft + marginRight;
+    int paperH = printAreaH - marginTop - marginBottom;
 
-	int numX = graphic->getPagesNumHoriz();
-	int numY = graphic->getPagesNumVert();
+    int numX = graphic->getPagesNumHoriz();
+    int numY = graphic->getPagesNumVert();
 
-	// gray background:
-	painter->fillRect(0,0, getWidth(), getHeight(),
-					  RS_Color(200,200,200));
+// gray background:
+    painter->fillRect(0, 0, getWidth(), getHeight(),
+                      RS_Color(200, 200, 200));
 
-	// shadow:
-	painter->fillRect(paperX1+6, paperY1+6, paperW, paperH,
-					  RS_Color(64,64,64));
+// shadow:
+    painter->fillRect(paperX1 + 6, paperY1 + 6, paperW, paperH,
+                      RS_Color(64, 64, 64));
 
-	// border:
-	painter->fillRect(paperX1, paperY1, paperW, paperH,
-					  RS_Color(64,64,64));
+// border:
+    painter->fillRect(paperX1, paperY1, paperW, paperH,
+                      RS_Color(64, 64, 64));
 
-	// paper:
-	painter->fillRect(paperX1+1, paperY1-1, paperW-2, paperH+2,
-					  RS_Color(180,180,180));
+// paper:
+    painter->fillRect(paperX1 + 1, paperY1 - 1, paperW - 2, paperH + 2,
+                      RS_Color(180, 180, 180));
 
-	// print area:
-	painter->fillRect(paperX1+1+marginLeft, paperY1-1-marginBottom,
-					  printAreaW-2, printAreaH+2,
-					  RS_Color(255,255,255));
+// print area:
+    painter->fillRect(paperX1 + 1 + marginLeft, paperY1 - 1 - marginBottom,
+                      printAreaW - 2, printAreaH + 2,
+                      RS_Color(255, 255, 255));
 
-	// don't paint boundaries if zoom is to small
-    if (qMin(std::abs(printAreaW/numX), std::abs(printAreaH/numY)) > 2) {
-		// boundaries between pages:
-		for (int pX = 1; pX < numX; pX++) {
-			double offset = ((double)printAreaW*pX)/numX;
-			painter->fillRect(paperX1+marginLeft+offset, paperY1,
-							  1, paperH,
-							  RS_Color(64,64,64));
-		}
-		for (int pY = 1; pY < numY; pY++) {
-			double offset = ((double)printAreaH*pY)/numY;
-			painter->fillRect(paperX1, paperY1-marginBottom+offset,
-							  paperW, 1,
-							  RS_Color(64,64,64));
-		}
-	}
+// don't paint boundaries if zoom is to small
+    if (qMin(std::abs(printAreaW / numX), std::abs(printAreaH / numY)) > 2) {
+// boundaries between pages:
+        for (int pX = 1; pX < numX; pX++) {
+            double offset = ((double) printAreaW * pX) / numX;
+            painter->fillRect(paperX1 + marginLeft + offset, paperY1,
+                              1, paperH,
+                              RS_Color(64, 64, 64));
+        }
+        for (int pY = 1; pY < numY; pY++) {
+            double offset = ((double) printAreaH * pY) / numY;
+            painter->fillRect(paperX1, paperY1 - marginBottom + offset,
+                              paperW, 1,
+                              RS_Color(64, 64, 64));
+        }
+    }
+
+
+    // fixme - remove debug code
+    const RS_Vector &zero = RS_Vector(0, 0);
+    RS_Vector zeroGui = toGui(RS_Vector(zero)/scale);
+    painter->fillRect(zeroGui.x-5, zeroGui.y-5, 10, 10,
+                      RS_Color(255, 0, 0));
+
+    RS_Vector pinsBaseGui = toGui(-RS_Vector(pinsbase)/scale);
+
+    painter->fillRect(pinsBaseGui.x-5, pinsBaseGui.y-5, 10, 10,
+                      RS_Color(0, 255, 0));
+
 }
 
 
@@ -1506,11 +1603,7 @@ void RS_GraphicView::drawGrid(RS_Painter *painter) {
 	//       .arg(grid->getMetaSpacing());
 
 	updateGridStatusWidget(info);
-
-
 }
-
-
 
 /**
  * Draws the meta grid.
@@ -1602,9 +1695,9 @@ void RS_GraphicView::drawDraftSign(RS_Painter *painter){
 void RS_GraphicView::drawOverlay(RS_Painter *painter)
 {
     double patternOffset(0.);
-    // todo - using flag is ugly, yet needed for proper drawing of containers (like dimensions or texts) that are in overlays
+    // todo - using inOverlayDrawing flag is ugly, yet needed for proper drawing of containers (like dimensions or texts) that are in overlays
     // while draw for container is performed, the pen is resolved as sub-entities of containers as they are in normal drawing...
-    // todo - review support of overlays and pens for entities for later
+    // fixme  - review support of overlays and pens for entities for later
     inOverlayDrawing = true;
     foreach (auto ec, overlayEntities){
         foreach (auto e, ec->getEntityList()){
@@ -1666,16 +1759,12 @@ double RS_GraphicView::toGuiX(double x) const{
 	return x*factor.x + offsetX;
 }
 
-
-
 /**
  * Translates a real coordinate in Y to a screen coordinate Y.
  */
 double RS_GraphicView::toGuiY(double y) const{
 	return -y*factor.y + getHeight() - offsetY;
 }
-
-
 
 /**
  * Translates a real coordinate distance to a screen coordinate distance.
@@ -1684,16 +1773,12 @@ double RS_GraphicView::toGuiDX(double d) const{
 	return d*factor.x;
 }
 
-
-
 /**
  * Translates a real coordinate distance to a screen coordinate distance.
  */
 double RS_GraphicView::toGuiDY(double d) const{
 	return d*factor.y;
 }
-
-
 
 /**
  * Translates a vector in screen coordinates to a vector in real coordinates.
@@ -1703,21 +1788,17 @@ RS_Vector RS_GraphicView::toGraph(const RS_Vector& v) const{
 					 toGraphY(RS_Math::round(v.y)));
 }
 
-
-
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(const QPointF& position) const
-{
+RS_Vector RS_GraphicView::toGraph(const QPointF& position) const{
     return toGraph(position.x(), position.y());
 }
 
 /**
  * Translates two screen coordinates to a vector in real coordinates.
  */
-RS_Vector RS_GraphicView::toGraph(int x, int y) const
-{
+RS_Vector RS_GraphicView::toGraph(int x, int y) const{
     return RS_Vector(toGraphX(x), toGraphY(y));
 }
 
@@ -1728,16 +1809,12 @@ double RS_GraphicView::toGraphX(int x) const{
 	return (x - offsetX)/factor.x;
 }
 
-
-
 /**
  * Translates a screen coordinate in Y to a real coordinate Y.
  */
 double RS_GraphicView::toGraphY(int y) const{
 	return -(y - getHeight() + offsetY)/factor.y;
 }
-
-
 
 /**
  * Translates a screen coordinate distance to a real coordinate distance.
@@ -1746,15 +1823,12 @@ double RS_GraphicView::toGraphDX(int d) const{
 	return d/factor.x;
 }
 
-
-
 /**
  * Translates a screen coordinate distance to a real coordinate distance.
  */
 double RS_GraphicView::toGraphDY(int d) const{
 	return d/factor.y;
 }
-
 
 /**
  * Sets the relative zero coordinate (if not locked)
@@ -1766,8 +1840,6 @@ void RS_GraphicView::setRelativeZero(const RS_Vector& pos) {
         emit relative_zero_changed(pos);
 	}
 }
-
-
 
 /**
  * Sets the relative zero coordinate, deletes the old position
@@ -1783,18 +1855,19 @@ void RS_GraphicView::moveRelativeZero(const RS_Vector& pos) {
  * which require Graphic for their drawing.
  * todo - potentially, for usage in preview and overlay, it's better to have separate point entity that will not require variables and will not depend on settings - and so will use own drawing?
  */
-class OverlayEntityContainer:public RS_EntityContainer{
+class OverlayEntityContainer:public RS_EntityContainer {
 public:
-    OverlayEntityContainer(RS_Graphic* g):RS_EntityContainer(nullptr){
+    OverlayEntityContainer(RS_Graphic *g):RS_EntityContainer(nullptr) {
         graphic = g;
     }
 
-    RS_Graphic *getGraphic() const override{
+    RS_Graphic *getGraphic() const override {
         return graphic;
     }
 
-    RS_Graphic* graphic;
+    RS_Graphic *graphic;
 };
+
 void isRelativeZeroHidden();
 void setPreviewReferenceEntitiesColor(const RS_Color &c);
 void setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c);
@@ -1802,8 +1875,7 @@ void setPreviewReferenceHighlightedEntitiesColor(const RS_Color &c);
 /**
  * Gets the specified overlay container.
  */
-RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position)
-{
+RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics position){
     if (overlayEntities[position]) {
         return overlayEntities[position];
     }
@@ -1817,7 +1889,7 @@ RS_EntityContainer* RS_GraphicView::getOverlayContainer(RS2::OverlayGraphics pos
         overlayEntities[position]->setOwner(true);
     }
 
-	return overlayEntities[position];
+    return overlayEntities[position];
 
 }
 
@@ -1840,7 +1912,6 @@ void RS_GraphicView::setBackground(const RS_Color& bg) {
         m_colorData->foreground = RS_Color(255,255,255);
     }
 }
-
 
 RS_Color RS_GraphicView::getBackground() const{
     return m_colorData->background;
@@ -2018,14 +2089,12 @@ void RS_GraphicView::setPreviewReferenceHighlightedEntitiesColor(const RS_Color&
 }
 
 /* Sets the color for the relative-zero marker. */
-void RS_GraphicView::setRelativeZeroColor(const RS_Color& c)
-{
+void RS_GraphicView::setRelativeZeroColor(const RS_Color& c){
     m_colorData->relativeZeroColor = c;
 }
 
 /* Sets the hidden state for the relative-zero marker. */
-void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden)
-{
+void RS_GraphicView::setRelativeZeroHiddenState(bool isHidden){
     m_colorData->hideRelativeZero = isHidden;
 }
 

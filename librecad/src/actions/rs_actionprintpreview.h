@@ -40,6 +40,9 @@ class QG_PrintPreviewOptions;
  */
 class RS_ActionPrintPreview : public RS_ActionInterface {
 Q_OBJECT
+
+
+
 public:
     /**
      * Action States.
@@ -65,23 +68,27 @@ public:
     QStringList getAvailableCommands() override;
 
     void center();
+    void zoomToPage();
     void fit();
     bool setScale(double f, bool autoZoom = true);
     double getScale() const;
     void printWarning(const QString& s);
     void calcPagesNum();
-
+    bool isLineWidthScaling();
     void setLineWidthScaling(bool state);
     void setBlackWhite(bool bw);
+    bool isBlackWhite();
+
     RS2::Unit getUnit();
     void setPaperScaleFixed(bool fixed);
-    bool getPaperScaleFixed();
+    bool isPaperScaleFixed();
 
     void updateMouseButtonHints() override;
-
     void showOptions() override;
-
     void hideOptions(bool invludeSnapOptions) override;
+
+    int getPagesNumHorizontal();
+    int getPagesNumVertical();
 
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
