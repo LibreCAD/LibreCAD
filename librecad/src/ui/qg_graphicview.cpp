@@ -572,6 +572,15 @@ void QG_GraphicView::addEditEntityEntry(QMouseEvent* event, QMenu& contextMenu)
     connect(action, &QAction::triggered, this, [this, insert, entity](){
         launchEditProperty(*this, insert != nullptr ? insert : entity);
     });
+
+    // Add "Activate Layer" for the current entity
+    if (getGraphic()->getActiveLayer() == entity->getLayer() || entity->getLayer() == nullptr)
+        return;
+    action = new QAction(tr("Activate Layer"), &contextMenu);
+    contextMenu.addAction(action);
+    connect(action, &QAction::triggered, this, [this, entity]() {
+        this->getGraphic()->activateLayer(entity->getLayer(), true);
+    });
 }
 
 void QG_GraphicView::mouseMoveEvent(QMouseEvent* event)
