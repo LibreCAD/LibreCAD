@@ -1583,11 +1583,11 @@ Ikus ea dagoen eta baimenak.</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Antolatu</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Maximizatuta</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
