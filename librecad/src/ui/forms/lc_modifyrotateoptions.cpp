@@ -36,9 +36,12 @@ LC_ModifyRotateOptions::LC_ModifyRotateOptions()
     connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::cbFreeAngleClicked);
     connect(ui->cbFreeRefAngle, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::cbFreeRefAngleClicked);
     connect(ui->cbTwoRotations, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::onTwoRotationsClicked);
-    connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_ModifyRotateOptions::onAngleEditingFinished);
-    connect(ui->leRefPointAngle, &QLineEdit::editingFinished, this,&LC_ModifyRotateOptions::onRefPointAngleEditingFinished);
+    connect(ui->cbAbsoluteRefAngle, &QCheckBox::clicked, this, &LC_ModifyRotateOptions::onAbsoluteRefAngleClicked);
+
     connect(ui->sbNumberOfCopies, &QSpinBox::valueChanged, this, &LC_ModifyRotateOptions::onCopiesNumberValueChanged);
+
+    connect(ui->leAngle, &QLineEdit::editingFinished, this, &LC_ModifyRotateOptions::onAngleEditingFinished);
+    connect(ui->leAngle2, &QLineEdit::editingFinished, this,&LC_ModifyRotateOptions::onRefPointAngleEditingFinished);
 }
 
 LC_ModifyRotateOptions::~LC_ModifyRotateOptions(){
@@ -54,26 +57,51 @@ void LC_ModifyRotateOptions::doSaveSettings() {
     save("Angle", ui->leAngle->text());
     save("AngleIsFree", ui->cbFreeAngle->isChecked());
     save("TwoRotations",     ui->cbTwoRotations->isChecked());
-    save("AngleRef", ui->leRefPointAngle->text());
+    save("AngleRef", ui->leAngle2->text());
     save("AngleRefIsFree", ui->cbFreeRefAngle->isChecked());
+    save("AngleRefIsAbsolute", ui->cbAbsoluteRefAngle->isChecked());
 }
 
 void LC_ModifyRotateOptions::updateUI(int mode) {
-    if (mode == 0) { // update on SetTargetPoint
-        QString angle = fromDouble(RS_Math::rad2deg(action->getCurrentAngle()));
-        QString angle2 = fromDouble(RS_Math::rad2deg(action->getRefPointAngle()));
+    switch (mode){
+        case UPDATE_ANGLE: {  // update on SetTargetPoint
+            QString angle = fromDouble(RS_Math::rad2deg(action->getCurrentAngle()));
 
-        ui->leAngle->blockSignals(true);
-        ui->leRefPointAngle->blockSignals(true);
+            ui->leAngle->blockSignals(true);
+            ui->leAngle->setText(angle);
+            ui->leAngle->blockSignals(false);
 
-        ui->leAngle->setText(angle);
-        ui->leAngle->blockSignals(false);
+            ui->leAngle->update();
+            break;
+        }
+        case DISABLE_SECOND_ROTATION:{
+            allowSecondRotationUI(false);
+            break;
+        }
+        case ENABLE_SECOND_ROTATION:{
+            allowSecondRotationUI(true);
+            break;
+        }
+        case UPDATE_ANGLE2: {  // update on SetTargetPoint
+            QString angle2 = fromDouble(RS_Math::rad2deg(action->getCurrentAngle2()));
 
-        ui->leAngle->update();
+            ui->leAngle2->blockSignals(true);
+            ui->leAngle2->setText(angle2);
+            ui->leAngle2->blockSignals(false);
+
+            ui->leAngle2->update();
+            break;
+        }
+        default:
+            break;
     }
-    else{
-        // do nothing
-    }
+}
+
+void LC_ModifyRotateOptions::allowSecondRotationUI(bool enable) {
+    ui->leAngle2->setEnabled(enable && !ui->cbFreeRefAngle->isChecked());
+    ui->cbTwoRotations->setEnabled(enable);
+    ui->cbFreeRefAngle->setEnabled(enable);
+    ui->cbAbsoluteRefAngle->setEnabled(enable);
 }
 
 void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
@@ -89,6 +117,7 @@ void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
     bool freeAngle;
     bool freeRefAngle;
+    bool absoluteRefAngle;
     bool twoRotations;
 
     if (update){
@@ -101,6 +130,7 @@ void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
         twoRotations = action->isRotateAlsoAroundReferencePoint();
         freeAngle = action->isFreeAngle();
         freeRefAngle = action->isFreeRefPointAngle();
+        absoluteRefAngle = action->isRefPointAngleAbsolute();
         angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
         angle2 = fromDouble(RS_Math::rad2deg(action->getRefPointAngle()));
     }
@@ -113,7 +143,8 @@ void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
 
         twoRotations = loadBool("TwoRotations", false);
         freeAngle = loadBool("AngleIsFree", true);
-        freeRefAngle = loadBool("AnglerefIsFree", false);
+        freeRefAngle = loadBool("AngleRefIsFree", false);
+        absoluteRefAngle = loadBool("AngleRefIsAbsolute", false);
         angle = load("Angle", "0.0");
         angle2= load("AngleRef", "0.0");
     }
@@ -123,11 +154,13 @@ void LC_ModifyRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setUseCurrentAttributesToActionAndView(useCurrentAttributes);
     setKeepOriginalsToActionAndView(keepOriginals);
 
-    setTwoRotationsToActionAndView(twoRotations);
-    setFreeAngleToActionAndView(freeAngle);
-    setFreeRefAngleToActionAndView(freeRefAngle);
     setAngleToActionAndView(angle);
+    setFreeAngleToActionAndView(freeAngle);
+
+    setFreeRefAngleToActionAndView(freeRefAngle);
     setRefPointAngleToActionAndView(angle2);
+    setAbsoluteRefAngleToActionAndView(absoluteRefAngle);
+    setTwoRotationsToActionAndView(twoRotations);
 }
 
 void LC_ModifyRotateOptions::setUseMultipleCopiesToActionAndView(bool copies) {
@@ -160,10 +193,10 @@ void LC_ModifyRotateOptions::setCopiesNumberToActionAndView(int number) {
 }
 
 void LC_ModifyRotateOptions::setTwoRotationsToActionAndView(bool val) {
+    allowSecondRotationUI(val);
+    ui->cbTwoRotations->setEnabled(true);
     ui->cbTwoRotations->setChecked(val);
     action->setRotateAlsoAroundReferencePoint(val);
-    ui->leRefPointAngle->setEnabled(val);
-    ui->cbFreeRefAngle->setEnabled(val);
 }
 
 void LC_ModifyRotateOptions::setFreeAngleToActionAndView(bool val) {
@@ -179,27 +212,34 @@ void LC_ModifyRotateOptions::setFreeAngleToActionAndView(bool val) {
     }
 }
 
+void LC_ModifyRotateOptions::setAbsoluteRefAngleToActionAndView(bool checked){
+    ui->cbAbsoluteRefAngle->setChecked(checked);
+    action->setRefPointAngleAbsolute(checked);
+}
+
 void LC_ModifyRotateOptions::setFreeRefAngleToActionAndView(bool checked) {
     ui->cbFreeRefAngle->setChecked(checked);
-    ui->leRefPointAngle->setEnabled(!checked);
+    if (ui->cbTwoRotations->isChecked()) {
+        ui->leAngle2->setEnabled(!checked);
+    }
     action->setFreeRefPointAngle(checked);
 }
 
 void LC_ModifyRotateOptions::setAngleToActionAndView(QString val) {
-    double factor;
-    if (toDoubleAngle(val, factor, 0.0, false)) {
-        const QString &factorStr = fromDouble(factor);
+    double angle;
+    if (toDoubleAngle(val, angle, 0.0, false)) {
+        const QString &factorStr = fromDouble(angle);
         ui->leAngle->setText(factorStr);
-        action->setAngle(factor);
+        action->setAngle(RS_Math::deg2rad(angle));
     }
 }
 
 void LC_ModifyRotateOptions::setRefPointAngleToActionAndView(QString val) {
-    double factor;
-    if (toDoubleAngle(val, factor, 0.0, false)) {
-        const QString &factorStr = fromDouble(factor);
-        ui->leRefPointAngle->setText(factorStr);
-        action->setRefPointAngle(factor);
+    double angle;
+    if (toDoubleAngle(val, angle, 0.0, false)) {
+        const QString &factorStr = fromDouble(angle);
+        ui->leAngle2->setText(factorStr);
+        action->setRefPointAngle(RS_Math::deg2rad(angle));
     }
 }
 
@@ -227,6 +267,10 @@ void LC_ModifyRotateOptions::cbFreeRefAngleClicked(bool val) {
     setFreeRefAngleToActionAndView(val);
 }
 
+void LC_ModifyRotateOptions::onAbsoluteRefAngleClicked(bool val){
+    setAbsoluteRefAngleToActionAndView(val);
+}
+
 void LC_ModifyRotateOptions::onTwoRotationsClicked(bool val) {
     setTwoRotationsToActionAndView(val);
 }
@@ -236,7 +280,7 @@ void LC_ModifyRotateOptions::onAngleEditingFinished() {
 }
 
 void LC_ModifyRotateOptions::onRefPointAngleEditingFinished() {
-    setRefPointAngleToActionAndView(ui->leRefPointAngle->text());
+    setRefPointAngleToActionAndView(ui->leAngle2->text());
 }
 
 void LC_ModifyRotateOptions::onCopiesNumberValueChanged(int value) {

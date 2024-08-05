@@ -36,7 +36,15 @@ Q_OBJECT
 
 public:
     explicit LC_ModifyRotateOptions();
-    ~LC_ModifyRotateOptions();
+    ~LC_ModifyRotateOptions() override;
+
+    enum UpdateMode{
+        UPDATE_ANGLE,
+        DISABLE_SECOND_ROTATION,
+        ENABLE_SECOND_ROTATION,
+        UPDATE_ANGLE2
+    };
+    void updateUI(int mode) override;
 public slots:
     void languageChange() override;
     void cbKeepOriginalsClicked(bool val);
@@ -46,11 +54,12 @@ public slots:
     void cbFreeAngleClicked(bool val);
     void cbFreeRefAngleClicked(bool val);
     void onTwoRotationsClicked(bool val);
+    void onAbsoluteRefAngleClicked(bool val);
     void onAngleEditingFinished();
     void onRefPointAngleEditingFinished();
     void onCopiesNumberValueChanged(int value);
-    void updateUI(int mode) override;
 protected:
+
     void doSaveSettings() override;
     void doSetAction(RS_ActionInterface *a, bool update) override;
 private:
@@ -63,10 +72,10 @@ private:
     void setCopiesNumberToActionAndView(int number);
     void setFreeAngleToActionAndView(bool val);
     void setFreeRefAngleToActionAndView(bool val);
+    void setAbsoluteRefAngleToActionAndView(bool val);
     void setTwoRotationsToActionAndView(bool val);
     void setAngleToActionAndView(QString val);
     void setRefPointAngleToActionAndView(QString val);
+    void allowSecondRotationUI(bool enable);
 };
-
-
 #endif // LC_MODIFYROTATEOPTIONS_H

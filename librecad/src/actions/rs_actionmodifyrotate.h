@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONMODIFYROTATE_H
 #define RS_ACTIONMODIFYROTATE_H
 
-
 #include "lc_actionmodifybase.h"
 
 struct RS_RotateData;
@@ -47,28 +46,31 @@ public:
         SetReferencePoint,    /**< Setting the reference point. */
         SetCenterPoint,    /**< Setting the rotation center */
         SetTargetPoint,    /**< Setting the target to rotation to*/
+        SetTargetPoint2ndRotation,    /**< Setting the target to rotation around ref point*/
     };
 public:
     RS_ActionModifyRotate(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionModifyRotate() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void coordinateEvent(RS_CoordinateEvent *e) override;
     double getAngle();
     void setAngle(double angle);
     void setFreeAngle(bool enable);
-    bool isFreeAngle() {return freeAngle;};
+    bool isFreeAngle() const {return freeAngle;};
     double getRefPointAngle();
     void setRefPointAngle(double angle);
     void setFreeRefPointAngle(bool value);
-    bool isFreeRefPointAngle(){return freeRefPointAngle;};
+    bool isFreeRefPointAngle() const{return freeRefPointAngle;};
+    bool isRefPointAngleAbsolute();
+    void setRefPointAngleAbsolute(bool val);
     bool isRotateAlsoAroundReferencePoint();
     void setRotateAlsoAroundReferencePoint(bool value);
     double getCurrentAngle(){return currentAngle;}
-
-    void keyPressEvent(QKeyEvent *e) override;;
+    double getCurrentAngle2(){return currentAngle2;};
+    void keyPressEvent(QKeyEvent *e) override;
 protected:
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
@@ -81,12 +83,15 @@ protected:
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void tryTrigger();
 private:
+    // fixme - sand -  review whether it's practical to select rotation center first... it's less convenient
+    // support of old mode, most probably it should be removed and one selection mode should remain
     bool selectRefPointFirst = true;
     bool freeAngle = false;
     bool freeRefPointAngle = false;
     std::unique_ptr<RS_RotateData> data;
     double currentAngle = 0.0;
-    void previewRotationCircleAndPoints(const RS_Vector &center, double angle);
+    double currentAngle2 = 0.0;
+    void previewRotationCircleAndPoints(const RS_Vector &center,const RS_Vector &refPoint, double angle);
 };
 
 #endif

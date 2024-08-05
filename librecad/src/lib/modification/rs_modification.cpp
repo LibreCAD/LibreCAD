@@ -49,6 +49,7 @@
 #include "rs_units.h"
 #include "lc_splinepoints.h"
 #include "lc_undosection.h"
+#include "lc_linemath.h"
 
 #ifdef EMU_C99
 #include "emu_c99.h"
@@ -2019,12 +2020,29 @@ bool RS_Modification::rotate(RS_RotateData& data, const std::vector<RS_Entity*> 
             double rotationAngle = data.angle * num;
             ec->rotate(data.center, rotationAngle);
 
-
-            if (data.useCurrentLayer) {
-                ec->setLayerToActive();
+            bool rotateTwice = data.twoRotations;
+            double distance = data.refPoint.distanceTo(data.center);
+            if (distance < RS_TOLERANCE){
+                rotateTwice = false;
             }
-            if (data.useCurrentAttributes) {
-                ec->setPenToActive();
+
+            if (rotateTwice) {
+                RS_Vector rotatedRefPoint = data.refPoint;
+                rotatedRefPoint.rotate(data.center, rotationAngle);
+
+                double secondRotationAngle = data.secondAngle;
+                if (data.secondAngleIsAbsolute){
+                    secondRotationAngle -= rotationAngle;
+                }
+                ec->rotate(rotatedRefPoint, secondRotationAngle);
+            }
+            if (!forPreviewOnly) {
+                if (data.useCurrentLayer) {
+                    ec->setLayerToActive();
+                }
+                if (data.useCurrentAttributes) {
+                    ec->setPenToActive();
+                }
             }
             if (ec->rtti() == RS2::EntityInsert) {
                 ((RS_Insert *) ec)->update();

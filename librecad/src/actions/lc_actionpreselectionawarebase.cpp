@@ -60,7 +60,9 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
         finish(false);
     }
     else{
-        selectionCompleted(false);
+        if (!selectionComplete) {
+            selectionCompleted(false);
+        }
     }
 }
 

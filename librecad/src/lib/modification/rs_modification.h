@@ -102,6 +102,7 @@ struct RS_RotateData : public LC_ModifyOperationFlags{
     RS_Vector refPoint;
     double angle = 0.;
     double secondAngle = 0.0;
+    bool secondAngleIsAbsolute = false;
     bool twoRotations = false;
 };
 
