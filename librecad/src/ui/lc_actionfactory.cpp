@@ -282,13 +282,14 @@ void LC_ActionFactory::createInfoActions(QMap<QString, QAction*>& map, QActionGr
     createActionHandlerActions(map, group, {
         {"InfoInside",      RS2::ActionInfoInside,           "Point inside contour",               ""},
         {"InfoDist",        RS2::ActionInfoDistPoint2Point,  "&Distance Point to Point",           ":/icons/distance_point_to_point.svg"},
-        {"InfoDist2",       RS2::ActionInfoDistEntity2Point, "&Distance Entity to Point",          ":/icons/distance_entity_to_point.svg"},
-        {"InfoDist3",       RS2::ActionInfoDistPoint2Entity, "&Distance Point to Entity",          ":/icons/distance_point_to_entity.svg"},
+        {"InfoDist2",       RS2::ActionInfoDistEntity2Point, "Distance &Entity to Point",          ":/icons/distance_entity_to_point.svg"},
+        {"InfoDist3",       RS2::ActionInfoDistPoint2Entity, "Distance &Point to Entity",          ":/icons/distance_point_to_entity.svg"},
         {"InfoAngle",       RS2::ActionInfoAngle,            "An&gle between two lines",           ":/icons/angle_line_to_line.svg"},
-        {"InfoTotalLength", RS2::ActionInfoTotalLength,      "&Total length of selected entities", ":/icons/total_length_selected_entities.svg"},
+        {"InfoTotalLength", RS2::ActionInfoTotalLength,      "Total &length of selected entities", ":/icons/total_length_selected_entities.svg"},
         {"InfoArea",        RS2::ActionInfoArea,             "Polygonal &Area",                    ":/icons/polygonal_area.svg"},
-        {"EntityInfo",      RS2::ActionInfoProperties,       "Entity Properties",                  ":/extui/menuselect.png"},
-        {"PickCoordinates", RS2::ActionInfoPickCoordinates,  "Collect Coordinates",                ":/extui/menupoint.png"}
+        {"EntityInfo",      RS2::ActionInfoProperties,       "Entity Pro&perties",                 ":/extui/menuselect.png"},
+        {"PickCoordinates", RS2::ActionInfoPickCoordinates,  "Collect &Coordinates",               ":/extui/menupoint.png"},
+        {"InfoAngle3Points", RS2::ActionInfoAngle3Points,     "Ang&le between 3 points",            ":/icons/angle_3_points.svg"}
     });
 }
 
@@ -506,4 +507,3 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
 
     assignShortcutsToActions(map, shortcutsList);
 }
-

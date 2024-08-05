@@ -391,6 +391,7 @@ namespace RS2 {
         ActionInfoArea,
         ActionInfoProperties,
         ActionInfoPickCoordinates,
+        ActionInfoAngle3Points,
 
         ActionLayersDefreezeAll,
         ActionLayersFreezeAll,

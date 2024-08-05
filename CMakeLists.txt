@@ -808,8 +808,6 @@ set(SOURCES
         librecad/src/ui/forms/qg_insertoptions.h
         librecad/src/ui/forms/qg_layerdialog.cpp
         librecad/src/ui/forms/qg_layerdialog.h
-#        librecad/src/ui/forms/lc_layerdialog_ex.cpp
-#        librecad/src/ui/forms/lc_layerdialog_ex.h
         librecad/src/ui/forms/lc_layerdialog_ex.cpp
         librecad/src/ui/forms/lc_layerdialog_ex.h
         librecad/src/ui/forms/qg_libraryinsertoptions.cpp
@@ -1094,7 +1092,11 @@ set(SOURCES
 		librecad/src/ui/forms/lc_modifyscaleoptions.cpp
 		librecad/src/ui/forms/lc_modifyscaleoptions.h
 		librecad/src/ui/forms/lc_modifyrotateoptions.cpp
-		#        plugins/align/align.cpp
+        librecad/src/actions/lc_actioninfo3pointsangle.h
+        librecad/src/actions/lc_actioninfo3pointsangle.cpp
+        librecad/src/actions/lc_actioninfo3pointsangle.cpp
+        librecad/src/actions/lc_actioninfo3pointsangle.cpp
+        #        plugins/align/align.cpp
 #        plugins/align/align.h
 #        plugins/asciifile/asciifile.cpp
 #        plugins/asciifile/asciifile.h

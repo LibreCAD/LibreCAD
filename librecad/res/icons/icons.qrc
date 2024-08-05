@@ -255,5 +255,6 @@
         <file>state-shift_yes.svg</file>
         <file>state_ctrl_yes.svg</file>
         <file>paste_transform.svg</file>
+        <file>angle_3_points.svg</file>
     </qresource>
 </RCC>

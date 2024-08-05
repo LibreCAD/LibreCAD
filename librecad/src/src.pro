@@ -138,6 +138,7 @@ HEADERS += \
     actions/lc_actiondrawparabolaFD.h \
     actions/lc_actiondrawstar.h \
     actions/lc_actioneditpastetransform.h \
+    actions/lc_actioninfo3pointsangle.h \
     actions/lc_actioninfopickcoordinates.h \
     actions/lc_actioninfoproperties.h \
     actions/lc_actionmodifybase.h \
@@ -342,6 +343,7 @@ SOURCES += \
     actions/lc_actiondrawparabolaFD.cpp \
     actions/lc_actiondrawstar.cpp \
     actions/lc_actioneditpastetransform.cpp \
+    actions/lc_actioninfo3pointsangle.cpp \
     actions/lc_actioninfopickcoordinates.cpp \
     actions/lc_actioninfoproperties.cpp \
     actions/lc_actionmodifybase.cpp \

@@ -62,7 +62,7 @@ RS_ActionInfoAngle::RS_ActionInfoAngle(RS_EntityContainer& container,
 RS_ActionInfoAngle::~RS_ActionInfoAngle() = default;
 
 void RS_ActionInfoAngle::init(int status){
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 }
 
 void RS_ActionInfoAngle::trigger(){

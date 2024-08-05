@@ -222,6 +222,7 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "InfoDist2",
         "InfoDist3",
         "InfoAngle",
+        "InfoAngle3Points",
         "InfoTotalLength",
         "InfoArea",
         "EntityInfo"

@@ -199,6 +199,7 @@
 #include "lc_actioninfoproperties.h"
 #include "lc_actioninfopickcoordinates.h"
 #include "lc_actioneditpastetransform.h"
+#include "lc_actioninfo3pointsangle.h"
 
 /**
  * Constructor
@@ -902,6 +903,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionInfoAngle:
             a = new RS_ActionInfoAngle(*document, *view);
+            break;
+         case RS2::ActionInfoAngle3Points:
+            a = new LC_ActionInfo3PointsAngle(*document, *view);
             break;
         case RS2::ActionInfoTotalLength:
             if(!document->countSelected()){

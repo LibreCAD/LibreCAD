@@ -188,7 +188,17 @@ void RS_ActionInterface::keyReleaseEvent(QKeyEvent* e) {
  * This function can be overwritten by the implementing action.
  * The default implementation does nothing.
  */
-void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent*) {}
+void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
+    if (e == nullptr){
+        return;
+    }
+
+    RS_Vector pos = e->getCoordinate();
+    if (!pos.valid){
+        return;
+    }
+    doProcessCoordinateEvent(getStatus(), pos);
+}
 
 /**
  * Called when a command from the command line is launched.
@@ -546,3 +556,5 @@ void RS_ActionInterface::fireCoordinateEvent(const RS_Vector &coord){
 void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
     fireCoordinateEvent(snapPoint(e));
 }
+
+void RS_ActionInterface::doProcessCoordinateEvent(int status, const RS_Vector &pos) {}

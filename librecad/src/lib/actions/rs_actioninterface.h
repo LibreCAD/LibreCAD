@@ -180,6 +180,8 @@ protected:
 
     void fireCoordinateEvent(const RS_Vector& coord);
     void fireCoordinateEventForSnap(QMouseEvent *e);
+
+    virtual void doProcessCoordinateEvent(int status, const RS_Vector& pos);
 };
 
 
