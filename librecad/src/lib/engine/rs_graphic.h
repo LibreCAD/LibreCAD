@@ -65,8 +65,8 @@ public:
     void clearLayers() {layerList.clear();}
     unsigned countLayers() const {return layerList.count();}
     RS_Layer* layerAt(unsigned i) {return layerList.at(i);}
-    void activateLayer(const QString& name) {layerList.activate(name);}
-    void activateLayer(RS_Layer* layer) {layerList.activate(layer);}
+    void activateLayer(const QString& name, bool notify = false) {layerList.activate(name, notify);}
+    void activateLayer(RS_Layer* layer, bool notify = false) {layerList.activate(layer, notify);}
     RS_Layer* getActiveLayer() {return layerList.getActive();}
     virtual void addLayer(RS_Layer* layer) {layerList.add(layer);}
     void addEntity(RS_Entity* entity) override;
