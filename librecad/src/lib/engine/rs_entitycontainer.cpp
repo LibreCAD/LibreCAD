@@ -537,7 +537,7 @@ RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool
 
     for (RS_Entity *e: entities) {
         if (e != nullptr) {
-            if (e->isSelected() &&  e->isVisible() ) {
+            if (e->isSelected()) {
                 if (types.empty() || type.count(e->rtti())) {
                     result.count ++;
                     double entityLength = e->getLength();

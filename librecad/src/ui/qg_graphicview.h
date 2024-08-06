@@ -32,6 +32,7 @@
 #include "rs_blocklistlistener.h"
 #include "rs_graphicview.h"
 #include "rs_layerlistlistener.h"
+#include "rs_dialogfactory.h"
 
 class QGridLayout;
 class QLabel;
@@ -74,9 +75,13 @@ public:
 	void layerRemoved(RS_Layer*) override{
         redraw(RS2::RedrawDrawing); 
     }
-	void layerToggled(RS_Layer*) override{
-        redraw(RS2::RedrawDrawing); 
+
+    void layerToggled(RS_Layer*) override{
+        const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+        RS_DIALOGFACTORY->updateSelectionWidget(info.count, info.length);
+        redraw(RS2::RedrawDrawing);
     }
+
 	void layerActivated(RS_Layer *) override;
     /**
      * @brief setOffset

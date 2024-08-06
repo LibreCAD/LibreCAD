@@ -175,7 +175,7 @@ bool RS_Entity::toggleSelected() {
  */
 bool RS_Entity::isSelected() const {
 	//bug 557, Selected entities in invisible layers are deleted
-	return isVisible() && getFlag(RS2::FlagSelected);
+	return getFlag(RS2::FlagSelected) && isVisible();
 }
 
 
@@ -1157,4 +1157,3 @@ std::ostream& operator << (std::ostream& os, RS_Entity& e) {
 bool RS_Entity::isParentIgnoredOnModifications() const {
      return parent != nullptr && parent->ignoredOnModification();
 }
-
