@@ -55,7 +55,7 @@ void RS_ActionModifyMove::trigger(){
     RS_DEBUG->print("RS_ActionModifyMove::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.move(pPoints->data);
+    m.move(pPoints->data, selectedEntities, false, false);
 
     updateSelectionWidget();
     finish(false);
@@ -78,14 +78,11 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->referencePoint, mouse, true);
                 pPoints->targetPoint = mouse;
 
-              /*  preview->addSelectionFrom(*container);
-                preview->move(pPoints->targetPoint - pPoints->referencePoint);*/
-
-                RS_Modification m(*container, graphicView, false);
-
                 const RS_Vector &offset = pPoints->targetPoint - pPoints->referencePoint;
                 pPoints->data.offset = offset;
-                m.move(pPoints->data, true, preview.get());
+
+                RS_Modification m(*preview, graphicView, false);
+                m.move(pPoints->data, selectedEntities, true, false);
 
                 if (isShift(e)){
                     previewLine(pPoints->referencePoint, mouse);

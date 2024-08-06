@@ -49,6 +49,11 @@ public:
         RS_Entity* entity;
     };
 
+    struct LC_SelectionInfo{
+        unsigned count = 0;
+        double length = 0.0;
+    };
+
     RS_EntityContainer(RS_EntityContainer* parent=nullptr, bool owner=true);
     //RS_EntityContainer(const RS_EntityContainer& ec);
 
@@ -113,7 +118,6 @@ public:
     virtual RS_Entity* prevEntity(RS2::ResolveLevel level=RS2::ResolveNone) const;
     virtual RS_Entity* entityAt(int index);
     virtual void setEntityAt(int index,RS_Entity* en);
-//RLZ unused	virtual int entityAt();
     virtual int findEntity(RS_Entity const* const entity);
     virtual void clear();
 
@@ -133,6 +137,7 @@ public:
     virtual unsigned countSelected(bool deep=true, QList<RS2::EntityType> const& types = {});
     virtual void collectSelected(std::vector<RS_Entity*> &collect, bool deep, QList<RS2::EntityType> const &types = {});
     virtual double totalSelectedLength();
+    LC_SelectionInfo getSelectionInfo(/*bool deep, */QList<RS2::EntityType> const& types = {});
 
     /**
      * Enables / disables automatic update of borders on entity removals

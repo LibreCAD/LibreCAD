@@ -56,7 +56,7 @@ void RS_ActionModifyMirror::trigger() {
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.mirror(pPoints->data);
+    m.mirror(pPoints->data, selectedEntities, false);
 
     updateSelectionWidget();
 }
@@ -96,8 +96,13 @@ void RS_ActionModifyMirror::mouseMoveEventSelected(QMouseEvent *e) {
 }
 
 void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2){
-    this->preview->addSelectionFrom(*this->container); // fixme - check
-    this->preview->mirror(mirrorLinePoint1, mirrorLinePoint2);
+
+    RS_Modification m(*preview, graphicView, false);
+    RS_MirrorData tmpData;
+    tmpData.axisPoint1 = mirrorLinePoint1;
+    tmpData.axisPoint2 = mirrorLinePoint2;
+    m.mirror(tmpData, selectedEntities, true);
+
     this->previewLine(mirrorLinePoint1, mirrorLinePoint2);
     this->previewRefLine(mirrorLinePoint1, mirrorLinePoint2);
     this->previewRefPoint(mirrorLinePoint1);

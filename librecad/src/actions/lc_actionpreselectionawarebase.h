@@ -42,7 +42,7 @@ protected:
     void selectionFinishedByKey(QKeyEvent *e, bool escape) override;
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
-    virtual void selectionCompleted(bool singleEntity);
+    virtual void selectionCompleted(bool singleEntity, bool fromInit);
     virtual void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent);
     virtual void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent);
     virtual void mouseMoveEventSelected(QMouseEvent *e);
@@ -53,7 +53,7 @@ protected:
     virtual RS2::CursorType doGetMouseCursorSelected(int status);
 
     unsigned int countSelectedEntities();
-    void setSelectionComplete(bool allowEmptySelection);
+    void setSelectionComplete(bool allowEmptySelection, bool fromInit);
     virtual bool isAllowTriggerOnEmptySelection(){return true;};
     void updateMouseButtonHints() override;
 };

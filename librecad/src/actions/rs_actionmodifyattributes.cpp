@@ -31,17 +31,14 @@
 #include "rs_graphicview.h"
 #include "rs_modification.h"
 
-
 RS_ActionModifyAttributes::RS_ActionModifyAttributes(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :LC_ActionPreSelectionAwareBase("Change Attributes",
-					container, graphicView) {
-	 actionType=RS2::ActionModifyAttributes;
+    :LC_ActionPreSelectionAwareBase("Change Attributes",container, graphicView) {
+    actionType=RS2::ActionModifyAttributes;
 }
 
 void RS_ActionModifyAttributes::trigger() {
-
     RS_DEBUG->print("RS_ActionModifyAttributes::trigger()");
 
     RS_AttributesData data;
@@ -53,10 +50,9 @@ void RS_ActionModifyAttributes::trigger() {
     data.changeLayer = false;
 
     if (graphic) {
-        if (RS_DIALOGFACTORY->requestAttributesDialog(data,
-                *graphic->getLayerList())) {
+        if (RS_DIALOGFACTORY->requestAttributesDialog(data,*graphic->getLayerList())) {
             RS_Modification m(*container, graphicView);
-            m.changeAttributes(data);
+            m.changeAttributes(data, selectedEntities, container);
         }
     }
 //    graphicView->killSelectActions();

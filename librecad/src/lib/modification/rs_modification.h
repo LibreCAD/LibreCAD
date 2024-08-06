@@ -289,21 +289,26 @@ public:
         RS_GraphicView *graphicView = nullptr,
         bool handleUndo = true);
     void remove();
+    void remove(const std::vector<RS_Entity*> &entitiesList);
     void revertDirection();
+    void revertDirection(const std::vector<RS_Entity*> &entitiesList);
     bool changeAttributes(RS_AttributesData &data);
+    bool changeAttributes(RS_AttributesData& data, const std::vector<RS_Entity*> &entitiesList,RS_EntityContainer *container);
     bool changeAttributes(RS_AttributesData &data, RS_EntityContainer *container);
     void copy(const RS_Vector &ref, const bool cut);
-
-public:
     void paste(const RS_PasteData &data, RS_Graphic *source = nullptr);
     bool move(RS_MoveData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
+    bool move(RS_MoveData& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
     bool rotate(RS_RotateData &data, bool forPreviewOnly = false);
-    bool rotate(RS_RotateData &data, const std::vector<RS_Entity *> &selectedEntities, bool forPreviewOnly);
+    bool rotate(RS_RotateData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly);
     bool scale(RS_ScaleData &data, bool forPreviewOnly = false);
-    bool scale(RS_ScaleData &data, const std::vector<RS_Entity *> &selectedEntities, bool forPreviewOnly);
+    bool scale(RS_ScaleData &data, const std::vector<RS_Entity *> &entitiesList, bool forPreviewOnly);
     bool mirror(RS_MirrorData &data);
+    bool mirror(RS_MirrorData &data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly);
     bool moveRotate(RS_MoveRotateData &data, bool previewOnly = false, RS_EntityContainer* previewContainer = nullptr);
-    bool rotate2(RS_Rotate2Data &data, bool previewOnly, RS_EntityContainer* previewContainer);
+    bool moveRotate(RS_MoveRotateData &data, const std::vector<RS_Entity*> &entitiesList, bool previewOnly = false);
+    bool rotate2(RS_Rotate2Data &data, bool forPreviewOnly);
+    bool rotate2(RS_Rotate2Data& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly);
     LC_TrimResult trim(
         const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
         const RS_Vector &limitCoord, RS_Entity *limitEntity,
@@ -311,6 +316,7 @@ public:
     RS_Entity* trimAmount(const RS_Vector &trimCoord, RS_AtomicEntity *trimEntity,
                           double dist, bool trimBoth, bool &trimStart, bool &trimEnd, bool forPreview = false);
     bool offset(const RS_OffsetData &data, bool previewOny = false, RS_EntityContainer* previewContainer = nullptr);
+    bool offset(const RS_OffsetData& data, const std::vector<RS_Entity*> &entitiesList, bool forPreviewOnly, bool keepSelected);
     bool cut(const RS_Vector &cutCoord, RS_AtomicEntity *cutEntity);
     bool stretch(
         const RS_Vector &firstCorner,
@@ -329,7 +335,9 @@ public:
         RS_AtomicEntity *entity2,
         RS_RoundData &data);
     bool explode(const bool remove = true, const bool forceUndoable = false);
+    bool explode(const std::vector<RS_Entity*> &entitiesList, const bool remove = true, const bool forceUndoableOperation = false);
     bool explodeTextIntoLetters();
+    bool explodeTextIntoLetters(const std::vector<RS_Entity*> &entitiesList);
     bool moveRef(RS_MoveRefData &data);
     void deleteLineNode(RS_Line *polyline, const RS_Vector &node);
     bool splitPolyline(
@@ -360,9 +368,10 @@ private:
     void copyLayers(RS_Entity *e);
     void copyBlocks(RS_Entity *e);
     bool pasteLayers(RS_Graphic *source);
-    bool pasteContainer(RS_Entity *entity, RS_EntityContainer *container, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
-    bool pasteEntity(RS_Entity *entity, RS_EntityContainer *container);
+    bool pasteContainer(RS_Entity *entity, RS_EntityContainer *containerToPaste, QHash<QString, QString> blocksDict, RS_Vector insertionPoint);
+    bool pasteEntity(RS_Entity *entity, RS_EntityContainer *containerToPaste);
     void deselectOriginals(bool remove);
+    void deselectOriginals(const std::vector<RS_Entity*> &entitiesList, bool remove);
     void addNewEntities(const std::vector<RS_Entity *> &addList, bool forceUndoable = false);
     bool explodeTextIntoLetters(RS_MText *text, std::vector<RS_Entity *> &addList);
     bool explodeTextIntoLetters(RS_Text *text, std::vector<RS_Entity *> &addList);
@@ -376,7 +385,7 @@ protected:
 
     void trimEnding(const RS_Vector &trimCoord, RS_AtomicEntity *trimmed1, const RS_Vector &is) const;
 
-    void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity *> &addList,
+    void deleteOriginalAndAddNewEntities(const std::vector<RS_Entity *> &addList, const std::vector<RS_Entity*> &originalEntities,
                                          bool addOnly, bool deleteOriginals, bool forceUndoable = false);
 };
 

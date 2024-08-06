@@ -62,7 +62,7 @@ RS_ActionModifyOffset::~RS_ActionModifyOffset() = default;
 
 void RS_ActionModifyOffset::trigger(){
     RS_Modification m(*container, graphicView);
-    m.offset(*data);
+    m.offset(*data, selectedEntities, false, true);
     updateSelectionWidget();
     finish(false);
 }
@@ -81,8 +81,8 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
     switch (getStatus()){
         case SetReferencePoint:{
             data->coord = getRelZeroAwarePoint(e, mouse);
-            RS_Modification m(ec, nullptr, false);
-            m.offset(*data, true, preview.get());
+            RS_Modification m(*preview, nullptr, false);
+            m.offset(*data, selectedEntities, true, false);
             break;
         }
         case SetPosition:{
@@ -93,8 +93,8 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
                 data->distance = offset.magnitude();
             }
 //            LC_ERR << "Offset " << offset.x << " - " << offset.y << " Dist:" << data->distance;
-            RS_Modification m(ec, nullptr, false);
-            m.offset(*data, true, preview.get());
+            RS_Modification m(*preview, nullptr, false);
+            m.offset(*data, selectedEntities, true, false);
 
             previewRefPoint(referencePoint);
             previewRefSelectablePoint(mouse);

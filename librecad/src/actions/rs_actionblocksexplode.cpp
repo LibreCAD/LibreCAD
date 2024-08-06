@@ -34,13 +34,13 @@ RS_ActionBlocksExplode::RS_ActionBlocksExplode(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :LC_ActionPreSelectionAwareBase("Blocks Explode",
                            container, graphicView) {
-	actionType=RS2::ActionBlocksExplode;
+    actionType=RS2::ActionBlocksExplode;
 }
 
 
 void RS_ActionBlocksExplode::trigger() {
     RS_Modification m(*container, graphicView);
-    m.explode();
+    m.explode(selectedEntities);
 }
 
 bool RS_ActionBlocksExplode::isEntityAllowedToSelect(RS_Entity *ent) const {

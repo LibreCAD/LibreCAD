@@ -56,7 +56,7 @@ void RS_ActionModifyRotate2::trigger(){
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
 
     RS_Modification m(*container, graphicView);
-    m.rotate2(*data, false, nullptr);
+    m.rotate2(*data, selectedEntities,false);
 
     finish(false);
 
@@ -81,8 +81,8 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
                 previewRefLine(data->center1, mouse);
                 data->center2 = mouse;
 
-                RS_Modification m(*container, graphicView, false);
-                m.rotate2(*data, true, preview.get());
+                RS_Modification m(*preview, graphicView, false);
+                m.rotate2(*data, selectedEntities, true);
                 previewRefPointsForMultipleCopies(mouse);
             }
             break;

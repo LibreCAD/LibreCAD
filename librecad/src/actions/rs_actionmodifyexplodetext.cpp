@@ -41,7 +41,7 @@ RS_ActionModifyExplodeText::~RS_ActionModifyExplodeText() = default;
 
 void RS_ActionModifyExplodeText::trigger() {
     RS_Modification m(*container, graphicView);
-    m.explodeTextIntoLetters();
+    m.explodeTextIntoLetters(selectedEntities);
 }
 
 void RS_ActionModifyExplodeText::updateMouseButtonHintsForSelection() {

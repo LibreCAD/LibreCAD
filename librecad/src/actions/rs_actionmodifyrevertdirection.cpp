@@ -38,7 +38,7 @@ void RS_ActionModifyRevertDirection::trigger() {
     RS_DEBUG->print("RS_ActionModifyRevertDirection::trigger");
 
     RS_Modification m(*container, graphicView);
-    m.revertDirection();
+    m.revertDirection(selectedEntities);
 }
 
 bool RS_ActionModifyRevertDirection::isShowRefPointsOnHighlight() {

@@ -22,6 +22,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 #include "lc_actionpreselectionawarebase.h"
 #include "rs_document.h"
+#include "rs_debug.h"
 
 LC_ActionPreSelectionAwareBase::LC_ActionPreSelectionAwareBase(
     const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView,
@@ -39,18 +40,20 @@ void LC_ActionPreSelectionAwareBase::init(int status) {
         selectedEntities.clear();
     }
     else{
-        unsigned int selectedCount = countSelectedEntities();
-        if (selectedCount> 0){
-            selectionCompleted(false);
+        if (!selectionComplete) {
+            unsigned int selectedCount = countSelectedEntities();
+            if (selectedCount > 0) {
+                selectionCompleted(false, true);
+            }
         }
     }
 }
 
 unsigned int LC_ActionPreSelectionAwareBase::countSelectedEntities() {
-//    unsigned int selectedCount = document->countSelected(countDeep, catchForSelectionEntityTypes);
     selectedEntities.clear();
     document->collectSelected(selectedEntities, countDeep, catchForSelectionEntityTypes);
     unsigned int selectedCount = selectedEntities.size();
+//    LC_ERR << " Selected Count: " << selectedCount;
     return selectedCount;
 }
 
@@ -61,7 +64,7 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
     }
     else{
         if (!selectionComplete) {
-            selectionCompleted(false);
+            selectionCompleted(false,false);
         }
     }
 }
@@ -75,7 +78,7 @@ void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouse
         if (entityToSelect != nullptr){
             selectEntity();
             if (isControl(e)){
-                selectionCompleted(true);
+                selectionCompleted(true, false);
             }
         }
     }
@@ -109,8 +112,8 @@ void LC_ActionPreSelectionAwareBase::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity) {
-    setSelectionComplete(isAllowTriggerOnEmptySelection());
+void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool singleEntity, bool fromInit) {
+    setSelectionComplete(isAllowTriggerOnEmptySelection(), fromInit);
     updateMouseButtonHints();
     if (selectionComplete) {
         trigger();
@@ -124,8 +127,14 @@ void LC_ActionPreSelectionAwareBase::selectionCompleted([[maybe_unused]]bool sin
     }
 }
 
-void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelection) {
-    unsigned int selectedCount = countSelectedEntities();
+void LC_ActionPreSelectionAwareBase::setSelectionComplete(bool allowEmptySelection, bool fromInit) {
+    unsigned int selectedCount;
+    if (fromInit) {
+       selectedCount = selectedEntities.size();
+    }
+    else{
+        selectedCount = countSelectedEntities();
+    }
     bool proceed = selectedCount > 0 || allowEmptySelection;
     if (proceed) {
         selectionComplete = true;

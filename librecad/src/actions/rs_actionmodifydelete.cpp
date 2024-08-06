@@ -37,10 +37,10 @@ RS_ActionModifyDelete::RS_ActionModifyDelete(RS_EntityContainer &container,RS_Gr
 void RS_ActionModifyDelete::trigger() {
     RS_DEBUG->print("RS_ActionModifyDelete::trigger()");
     RS_Modification m(*container, graphicView);
-    m.remove();
+    m.remove(selectedEntities);
 }
 
-void RS_ActionModifyDelete::selectionCompleted(bool singleEntity) {
+void RS_ActionModifyDelete::selectionCompleted(bool singleEntity, bool fromInit) {
     trigger();
     if (singleEntity) {
         deselectAll();

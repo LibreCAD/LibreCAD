@@ -421,7 +421,6 @@ void RS_ActionInterface::updateOptionsUI(int mode){
  * Shows the tool options. Default implementation does nothing.
  */
 void RS_ActionInterface::showOptions() {
-//    RS_Snapper::showOptions();
     if (m_optionWidget == nullptr){
         LC_ActionOptionsWidget* widget = createOptionsWidget();
         if (widget != nullptr){
@@ -431,7 +430,6 @@ void RS_ActionInterface::showOptions() {
     if (m_optionWidget != nullptr){
         if (!m_optionWidget->isVisible()){
             if (m_optionWidget->parent() == nullptr){ // first time created
-//                RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
                 RS_DIALOGFACTORY->addOptionsWidget(m_optionWidget.get());
                 m_optionWidget->setAction(this);
             } else {
@@ -446,7 +444,7 @@ LC_ActionOptionsWidget* RS_ActionInterface::createOptionsWidget(){
 }
 
 void RS_ActionInterface::setActionType(RS2::ActionType actionType){
-	this->actionType=actionType;
+    this->actionType=actionType;
 }
 
 /**
@@ -479,7 +477,9 @@ int RS_ActionInterface::getGraphicVariableInt(const QString& key, int def) const
 }
 
 void RS_ActionInterface::updateSelectionWidget() const{
-    updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
+    const RS_EntityContainer::LC_SelectionInfo &info = container->getSelectionInfo();
+    updateSelectionWidget(info.count, info.length);
+//    updateSelectionWidget(container->countSelected(), container->totalSelectedLength());
 }
 
 void RS_ActionInterface::updateSelectionWidget(int countSelected, double selectedLength) const{

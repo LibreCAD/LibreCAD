@@ -517,16 +517,39 @@ void RS_EntityContainer::collectSelected(std::vector<RS_Entity*> &collect, bool 
 
     for (RS_Entity *e: entities) {
         if (e != nullptr) {
-            if (e->isSelected())
-                if (types.empty() || type.count(e->rtti()))
+            if (e->isSelected()) {
+                if (types.empty() || type.count(e->rtti())) {
                     collect.push_back(e);
-
-            if (e->isContainer()) {
-                auto *container = dynamic_cast<RS_EntityContainer *>(e);
-                container->collectSelected(collect, false); // todo - check whether we need deep and types?
+                }
+                if (deep && e->isContainer()) {
+                    auto *container = dynamic_cast<RS_EntityContainer *>(e);
+                    container->collectSelected(collect, false); // todo - check whether we need deep and types?
+                }
             }
         }
     }
+}
+
+RS_EntityContainer::LC_SelectionInfo RS_EntityContainer::getSelectionInfo(/*bool deep, */const QList<RS2::EntityType> &types) {
+    LC_SelectionInfo result;
+
+    std::set<RS2::EntityType> type{types.cbegin(), types.cend()};
+
+    for (RS_Entity *e: entities) {
+        if (e != nullptr) {
+            if (e->isSelected() &&  e->isVisible() ) {
+                if (types.empty() || type.count(e->rtti())) {
+                    result.count ++;
+                    double entityLength = e->getLength();
+                    if (entityLength >= 0.) {
+                        result.length += entityLength;
+                    }
+                }
+            }
+        }
+    }
+
+    return result;
 }
 
 /**

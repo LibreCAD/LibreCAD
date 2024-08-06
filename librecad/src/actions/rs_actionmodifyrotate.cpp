@@ -54,8 +54,8 @@ void RS_ActionModifyRotate::init(int status) {
     LC_ActionPreSelectionAwareBase::init(status);
 }
 
-void RS_ActionModifyRotate::selectionCompleted(bool singleEntity) {
-    LC_ActionModifyBase::selectionCompleted(singleEntity);
+void RS_ActionModifyRotate::selectionCompleted(bool singleEntity, bool fromInit) {
+    LC_ActionModifyBase::selectionCompleted(singleEntity, fromInit);
     if (selectRefPointFirst){
         setStatus(SetReferencePoint);
     }
