@@ -1915,7 +1915,7 @@ Please check the permissions.</source>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="517"/>
         <source> , please check the filename and permissions.</source>
-        <translation>，請檢查檔案名和權限。</translation>
+        <translation> ，請檢查檔案名和權限。</translation>
     </message>
     <message>
         <location filename="../src/main/qc_applicationwindow.cpp" line="2912"/>
