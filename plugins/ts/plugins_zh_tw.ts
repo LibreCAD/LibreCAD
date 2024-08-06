@@ -472,7 +472,7 @@ first base, second base, first target, second target.</source>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="235"/>
         <source>*.odb for Psion 2</source>
-        <translation> *.odb Psion 2 格式</translation>
+        <translation>*.odb Psion 2 格式</translation>
     </message>
     <message>
         <location filename="../asciifile/asciifile.cpp" line="237"/>
