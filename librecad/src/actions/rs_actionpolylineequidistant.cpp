@@ -345,7 +345,7 @@ void RS_ActionPolylineEquidistant::mouseRightButtonReleaseEvent(int status,[[may
     if (originalEntity){
         graphicView->redraw();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 bool RS_ActionPolylineEquidistant::isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const{

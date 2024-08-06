@@ -36,8 +36,8 @@
 #include "rs_units.h"
 
 struct RS_ActionInfoDist::Points {
-	RS_Vector point1;
-	RS_Vector point2;
+    RS_Vector point1;
+    RS_Vector point2;
 };
 
 RS_ActionInfoDist::RS_ActionInfoDist(
@@ -131,30 +131,27 @@ void RS_ActionInfoDist::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
 
 void RS_ActionInfoDist::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionInfoDist::coordinateEvent(RS_CoordinateEvent *e){
-    if (e != nullptr){
-        RS_Vector mouse = e->getCoordinate();
-        switch (getStatus()) {
-            case SetPoint1: {
-                pPoints->point1 = mouse;
-                setStatus(SetPoint2);
-                break;
-            }
-            case SetPoint2: {
-                if (pPoints->point1.valid){
-                    pPoints->point2 = mouse;
-                    deletePreview();
-                    trigger();
-                    setStatus(SetPoint1);
-                }
-                break;
-            }
-            default:
-                break;
+void RS_ActionInfoDist::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetPoint1: {
+            pPoints->point1 = mouse;
+            setStatus(SetPoint2);
+            break;
         }
+        case SetPoint2: {
+            if (pPoints->point1.valid){
+                pPoints->point2 = mouse;
+                deletePreview();
+                trigger();
+                setStatus(SetPoint1);
+            }
+            break;
+        }
+        default:
+            break;
     }
 }
 

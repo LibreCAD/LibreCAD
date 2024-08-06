@@ -50,15 +50,6 @@ class RS_Pen;
 class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface{
 Q_OBJECT
 public:
-
-    /* Action states */
-    enum Status
-    {
-        SetPercentage,   /* Setting the percentage */
-        SetStartPoint,   /* Setting the startpoint */
-        SetEndPoint      /* Setting the endpoint   */
-    };
-
     LC_ActionSnapMiddleManual( RS_EntityContainer& container,
                                RS_GraphicView& graphicView, RS_Pen input_currentAppPen);
 
@@ -67,18 +58,23 @@ public:
     void init(int status = SetPercentage)   override;
 
     void mouseMoveEvent    (QMouseEvent* e) override;
-    void coordinateEvent (RS_CoordinateEvent* e) override;
     void commandEvent    (RS_CommandEvent*    e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 signals:
     void signalUnsetSnapMiddleManual();
-
 protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /* Action states */
+    enum Status
+    {
+        SetPercentage,   /* Setting the percentage */
+        SetStartPoint,   /* Setting the startpoint */
+        SetEndPoint      /* Setting the endpoint   */
+    };
     struct Points;
     std::unique_ptr<Points> m_pPoints;
-};
 
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+};

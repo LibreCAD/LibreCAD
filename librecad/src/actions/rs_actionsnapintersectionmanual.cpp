@@ -151,7 +151,7 @@ void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QM
 
 void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionSnapIntersectionManual::updateMouseButtonHints() {

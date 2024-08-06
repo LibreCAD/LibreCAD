@@ -152,7 +152,7 @@ void RS_ActionDrawLineAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent
 
 void RS_ActionDrawLineAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionDrawLineAngle::preparePreview(){
@@ -176,12 +176,10 @@ void RS_ActionDrawLineAngle::preparePreview(){
     pPoints->data = {p1, p2};
 }
 
-void RS_ActionDrawLineAngle::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-
-    switch (getStatus()) {
+void RS_ActionDrawLineAngle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetPos:{
-            pPoints->pos = e->getCoordinate();
+            pPoints->pos = pos;
             trigger();
             break;
         }

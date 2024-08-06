@@ -40,10 +40,10 @@
 #include "rs_actioninterface.h"
 
 struct RS_ActionDrawLinePolygonCorCor::Points {
-	/** 1st corner */
-	RS_Vector corner1;
-	/** 2nd corner */
-	RS_Vector corner2;
+/** 1st corner */
+    RS_Vector corner1;
+/** 2nd corner */
+    RS_Vector corner2;
 };
 
 // fixme - support creation of polygone as polyline
@@ -150,46 +150,23 @@ void RS_ActionDrawLinePolygonCorCor::mouseLeftButtonReleaseEvent(int status, QMo
 
 void RS_ActionDrawLinePolygonCorCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLinePolygonCorCor::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-        case SetCorner1:
+void RS_ActionDrawLinePolygonCorCor::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetCorner1: {
             pPoints->corner1 = mouse;
             setStatus(SetCorner2);
             moveRelativeZero(mouse);
             break;
-
-        case SetCorner2:
+        }
+        case SetCorner2: {
             pPoints->corner2 = mouse;
             trigger();
             break;
-
+        }
         default:
-            break;
-    }
-}
-
-void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
-    switch (getStatus()) {
-        case SetCorner1:
-            updateMouseWidgetTRCancel(tr("Specify first corner"), MOD_SHIFT_RELATIVE_ZERO);
-            break;
-        case SetCorner2:
-            updateMouseWidgetTRBack(tr("Specify second corner"), MOD_SHIFT_ANGLE_SNAP);
-            break;
-        case SetNumber:
-            updateMouseWidgetTRBack(tr("Number:"));
-            break;
-        default:
-            updateMouseWidget();
             break;
     }
 }
@@ -225,12 +202,29 @@ QStringList RS_ActionDrawLinePolygonCorCor::getAvailableCommands() {
     QStringList cmd;
 
     switch (getStatus()) {
-    case SetCorner1:
-    case SetCorner2:
-        cmd += command("number");
-        break;
-    default:
-        break;
+        case SetCorner1:
+        case SetCorner2:
+            cmd += command("number");
+            break;
+        default:
+            break;
     }
     return cmd;
+}
+
+void RS_ActionDrawLinePolygonCorCor::updateMouseButtonHints() {
+    switch (getStatus()) {
+        case SetCorner1:
+            updateMouseWidgetTRCancel(tr("Specify first corner"), MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        case SetCorner2:
+            updateMouseWidgetTRBack(tr("Specify second corner"), MOD_SHIFT_ANGLE_SNAP);
+            break;
+        case SetNumber:
+            updateMouseWidgetTRBack(tr("Number:"));
+            break;
+        default:
+            updateMouseWidget();
+            break;
+    }
 }

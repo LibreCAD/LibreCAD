@@ -74,7 +74,7 @@ void RS_ActionZoomWindow::trigger(){
         //deleteSnapper();
         if (graphicView->toGuiDX(pPoints->v1.distanceTo(pPoints->v2)) > 5){
             graphicView->zoomWindow(pPoints->v1, pPoints->v2, keepAspectRatio);
-            init();
+            init(SetFirstCorner);
         }
     }
 }
@@ -115,7 +115,7 @@ void RS_ActionZoomWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
         if (fabs(pPoints->v1.x - pPoints->v2.x) < RS_TOLERANCE
             || fabs(pPoints->v1.y - pPoints->v2.y) < RS_TOLERANCE){//invalid zoom window
             deletePreview();
-            init(status - 1);
+            initPrevious(status);
         }
         trigger();
     }
@@ -126,7 +126,7 @@ void RS_ActionZoomWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unuse
     if (status == SetSecondCorner){
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionZoomWindow::updateMouseButtonHints(){

@@ -41,7 +41,7 @@ RS_ActionInfoDist2::RS_ActionInfoDist2(RS_EntityContainer &container, RS_Graphic
     selectionMode = fromPoint ? FIRST_IS_POINT : FIRST_IS_ENTITY;
 }
 
-RS_ActionInfoDist2::~RS_ActionInfoDist2(){}
+RS_ActionInfoDist2::~RS_ActionInfoDist2()= default;
 
 void RS_ActionInfoDist2::init(int status){
     RS_PreviewActionInterface::init(status);
@@ -212,13 +212,15 @@ void RS_ActionInfoDist2::mouseRightButtonReleaseEvent(int status, [[maybe_unused
     int newStatus = -1;
     bool firstIsPoint = selectionMode == FIRST_IS_POINT;
     switch (status) {
-        case SetEntity:
+        case SetEntity: {
             newStatus = firstIsPoint ? SetPoint : -1;
             break;
-        case SetPoint:
+        }
+        case SetPoint: {
             newStatus = firstIsPoint ? -1 : SetEntity;
             restoreRelZero();
             break;
+        }
         default:
             break;
     }
@@ -237,14 +239,9 @@ RS_Entity *RS_ActionInfoDist2::doCatchEntity(QMouseEvent *e){
     return catchEntity(e, level);
 }
 
-void RS_ActionInfoDist2::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    int status = getStatus();
+void RS_ActionInfoDist2::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     if (status == SetPoint){
-        point = e->getCoordinate();
+        point = pos;
         moveRelativeZero(point);
         switch (selectionMode) {
             case FIRST_IS_POINT: {

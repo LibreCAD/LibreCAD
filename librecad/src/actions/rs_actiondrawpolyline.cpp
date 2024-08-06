@@ -138,13 +138,14 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     double bulge = solveBulge(mouse);
     int status = getStatus();
     switch (status) {
-        case SetStartpoint:
+        case SetStartpoint: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
+        }
         case SetNextPoint: {
             deleteHighlights();
             deletePreview();
-            if (m_mode == Line){                 
+            if (m_mode == Line){
                 mouse = getSnapAngleAwarePoint(e, pPoints->point, mouse, true);
             }
             if (pPoints->point.valid){
@@ -207,7 +208,7 @@ void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, [[maybe_unu
         }
         deletePreview();
         deleteSnapper();
-        init(status - 1);
+        initPrevious(status);
     }
 }
 
@@ -260,11 +261,10 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //            b=0;
 //        break;
             // fall-through
-        case TanRad:
+        case TanRad: {
             if (pPoints->polyline){
-                lastentity = static_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
-                direction = RS_Math::correctAngle(
-                    lastentity->getDirection2() + M_PI);
+                lastentity = dynamic_cast<RS_AtomicEntity *>(pPoints->polyline->lastEntity());
+                direction = RS_Math::correctAngle(lastentity->getDirection2() + M_PI);
                 suc = arc.createFrom2PDirectionRadius(pPoints->point, mouse,
                                                       direction, m_radius);
                 if (suc){
@@ -280,13 +280,14 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
 //        else
 //          b=0;
             break;
+        }
 /*     case TanAng:
         b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;
      case TanRadAng:
         b = std::tan(Reversed*m_angle*M_PI/720.0);
         break;*/
-        case Ang:
+        case Ang: {
             b = std::tan(m_reversed * m_angle * M_PI / 720.0);
             suc = arc.createFrom2PBulge(pPoints->point, mouse, b);
             if (suc)
@@ -294,6 +295,7 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
             else
                 b = 0;
             break;
+        }
         default:
             break;
             /*     case RadAngEndp:
@@ -305,17 +307,13 @@ double RS_ActionDrawPolyline::solveBulge(const RS_Vector &mouse){
     return b;
 }
 
-void RS_ActionDrawPolyline::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
+void RS_ActionDrawPolyline::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    RS_Vector mouse = pos;
     double bulge = solveBulge(mouse);
     if (m_calculatedSegment)
         mouse = pPoints->calculatedEndpoint;
 
-    switch (getStatus()) {
+    switch (status) {
         case SetStartpoint: {
             if (!startPointSettingOn){
                 //	data.startpoint = mouse;
@@ -480,11 +478,8 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
             commandMessage(tr("The entered x is invalid."));
             updateMouseButtonHints();
         }
-
-
         return true;
     }
-
 
     if (startPointSettingOn) {
         if (getPlottingX(c, startPointX)) {
@@ -495,7 +490,6 @@ bool RS_ActionDrawPolyline::doProcessCommand(int status, const QString &c) {
         }
         return true;
     }
-
 
     if (endPointSettingOn){
         if (getPlottingX(c, endPointX) && std::abs(endPointX - startPointX) > RS_TOLERANCE){
@@ -722,7 +716,7 @@ void RS_ActionDrawPolyline::undo(){
     }
 }
 
-void RS_ActionDrawPolyline::setParserExpression(QString expression){
+void RS_ActionDrawPolyline::setParserExpression(const QString& expression){
     if (m_muParserObject == nullptr){
         m_muParserObject = std::make_unique<mu::Parser>();
         m_muParserObject->DefineConst(_T("e"), M_E);

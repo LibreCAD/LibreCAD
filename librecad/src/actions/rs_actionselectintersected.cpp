@@ -118,7 +118,7 @@ void RS_ActionSelectIntersected::mouseRightButtonReleaseEvent(int status, [[mayb
     if (getStatus() == SetPoint2){
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionSelectIntersected::updateMouseButtonHints(){

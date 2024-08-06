@@ -19,11 +19,15 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 **********************************************************************/
+
 #ifndef RS_ACTIONDRAWCIRCLETAN1_2P_H
 #define RS_ACTIONDRAWCIRCLETAN1_2P_H
+
 #include "lc_actiondrawcirclebase.h"
+
 class RS_AtomicEntity;
 struct RS_CircleData;
+
 /**
  * Draw tangential circle passing 2 points
  *
@@ -31,16 +35,6 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircleTan1_2P:public LC_ActionDrawCircleBase {
     Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCircle1 = 0, //  Setting the First Circle.  */
-        SetPoint1 = 1, //  Setting the First Point.  */
-        SetPoint2 = 2, //  Setting the Second Point.  */
-        SetCenter //  Setting the internal or external tangent circle's center.  */
-    };
-
 public:
     RS_ActionDrawCircleTan1_2P(
         RS_EntityContainer &container,
@@ -51,22 +45,30 @@ public:
     bool getCenters();
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     //        void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
     //    void setRadius(const double& r);
     double getRadius() const;
-
 protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetCircle1 = 0, //  Setting the First Circle.  */
+        SetPoint1 = 1, //  Setting the First Point.  */
+        SetPoint2 = 2, //  Setting the Second Point.  */
+        SetCenter //  Setting the internal or external tangent circle's center.  */
+    };
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
     RS_Entity *catchCircle(QMouseEvent *e);
     RS_AtomicEntity *baseEntity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     RS_Vector getTangentPoint(RS_Vector &creatingCircleCenter, bool fromOriginalCircle) const;
 };
 #endif

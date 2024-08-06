@@ -424,13 +424,6 @@ void RS_ActionDrawCircleTan3::mouseRightButtonReleaseEvent(int status, [[maybe_u
     init(getStatus() - 1);
 }
 
-
-//void RS_ActionDrawCircleTan3::coordinateEvent(RS_CoordinateEvent* e) {
-
-//}
-
-//fixme, support command line
-
 /*
 void RS_ActionDrawCircleTan3::commandEvent(RS_CommandEvent* e) {
 	QString c = e->getCommand().toLower();

@@ -121,7 +121,7 @@ void RS_ActionDrawLineParallel::mouseLeftButtonReleaseEvent([[maybe_unused]]int 
 }
 
 void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionDrawLineParallel::updateMouseButtonHints(){

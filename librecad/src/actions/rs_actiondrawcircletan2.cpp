@@ -251,15 +251,8 @@ void RS_ActionDrawCircleTan2::mouseRightButtonReleaseEvent(int status, [[maybe_u
         graphicView->redraw(RS2::RedrawDrawing);
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
-
-
-//void RS_ActionDrawCircleTan2::coordinateEvent(RS_CoordinateEvent* e) {
-
-//}
-
-//fixme, support command line
 
 void RS_ActionDrawCircleTan2::updateMouseButtonHints(){
     switch (getStatus()) {

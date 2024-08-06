@@ -86,7 +86,7 @@ void LC_ActionPenPick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
 
 void LC_ActionPenPick::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     finish(true);
-    init( status - 1);
+    initPrevious(status);
     graphicView->redraw();
 }
 

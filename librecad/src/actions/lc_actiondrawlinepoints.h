@@ -29,29 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 class LC_ActionDrawLinePoints :public LC_AbstractActionDrawLine {
     Q_OBJECT
-
-public:
-
-    /**
-     * Controls how to handle points on edges of the line
-     */
-    enum {
-        DRAW_EDGE_NONE, // no points in line's  edges
-        DRAW_EDGE_BOTH, // each edge of line has point
-        DRAW_EDGE_START, // point in added in start point of line, no point in endpoint
-        DRAW_EDGE_END // point is created in end point of line, no point in start point
-    };
-
-    /**
-     * statuses of action (in addition of ones defined in base class)
-     */
-    enum{
-        SetPointsCount = LAST,
-        SetEdge = LAST + 1,
-        SetFixDistance = LAST+2
-    };
-
-
 public:
     LC_ActionDrawLinePoints(RS_EntityContainer &container,RS_GraphicView &graphicView);
     ~LC_ActionDrawLinePoints() override;
@@ -72,23 +49,29 @@ public:
     QStringList getAvailableCommands() override;
 
 protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    bool doProceedCommand(int status, const QString &qString) override;
-    bool doProcessCommandValue(int status, const QString &c) override;
-    const RS_Vector& getStartPointForAngleSnap() const override;
-    void doBack(QMouseEvent *pEvent, int status) override;
-    bool isStartPointValid() const override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
-    bool doCheckMayTrigger() override;
-    void doAfterTrigger() override;
-    RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doSetStartPoint(RS_Vector vector) override;
-private:
+
     /**
-     * amount of points to create
+     * Controls how to handle points on edges of the line
      */
+    enum {
+        DRAW_EDGE_NONE, // no points in line's  edges
+        DRAW_EDGE_BOTH, // each edge of line has point
+        DRAW_EDGE_START, // point in added in start point of line, no point in endpoint
+        DRAW_EDGE_END // point is created in end point of line, no point in start point
+    };
+
+    /**
+     * statuses of action (in addition of ones defined in base class)
+     */
+    enum{
+        SetPointsCount = LAST,
+        SetEdge = LAST + 1,
+        SetFixDistance = LAST+2
+    };
+
+    /**
+ * amount of points to create
+ */
     int pointsCount = 0;
     /**
      * how to handle points on edges
@@ -128,12 +111,26 @@ private:
      */
     double fixedDistance = false;
 
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    bool doProceedCommand(int status, const QString &qString) override;
+    bool doProcessCommandValue(int status, const QString &c) override;
+    const RS_Vector& getStartPointForAngleSnap() const override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    bool isStartPointValid() const override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool doCheckMayTrigger() override;
+    void doAfterTrigger() override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doSetStartPoint(RS_Vector vector) override;
+
     void createPoints(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList);
     void updatePointsCount(int count);
     void setMajorStatus();
     void updateEdgePointsMode(int mode);
     bool isNonZeroLine(const RS_Vector &possiblePoint) const;
     RS_Vector getPossibleEndPointForAngle(const RS_Vector &snap);
-};
 
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+};
 #endif // LC_ACTIONDRAWLINEPOINTS_H

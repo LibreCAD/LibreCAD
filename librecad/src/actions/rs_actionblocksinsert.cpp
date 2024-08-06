@@ -143,15 +143,11 @@ void RS_ActionBlocksInsert::mouseLeftButtonReleaseEvent([[maybe_unused]]int stat
 }
 
 void RS_ActionBlocksInsert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status -1);
+    initPrevious(status);
 }
 
-void RS_ActionBlocksInsert::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
-        return;
-    }
-
-    data->insertionPoint = e->getCoordinate();
+void RS_ActionBlocksInsert::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    data->insertionPoint = pos;
     trigger();
 }
 

@@ -35,8 +35,23 @@ struct RS_CircleData;
  * @author Dongxu Li
  */
 class RS_ActionDrawCircleTan2_1P : public LC_ActionDrawCircleBase {
-        Q_OBJECT
+    Q_OBJECT
 public:
+    RS_ActionDrawCircleTan2_1P(RS_EntityContainer& container,
+                               RS_GraphicView& graphicView);
+    ~RS_ActionDrawCircleTan2_1P() override;
+
+    void init(int status) override;
+
+    void trigger() override;
+    bool getCenters();
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent* e) override;
+
+//        void commandEvent(RS_CommandEvent* e) override;
+    void finish(bool updateTB=true) override;
+    void updateMouseButtonHints() override;
+protected:
     /**
      * Action States.
      */
@@ -46,32 +61,12 @@ public:
         SetPoint=2,   //  Setting point on the desired circle.  */
         SetCenter
     };
-
-public:
-    RS_ActionDrawCircleTan2_1P(RS_EntityContainer& container,
-                               RS_GraphicView& graphicView);
-    ~RS_ActionDrawCircleTan2_1P() override;
-
-    void init(int status=0) override;
-
-    void trigger() override;
-    bool getCenters();
-    bool preparePreview();
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-//        void commandEvent(RS_CommandEvent* e) override;
-    void finish(bool updateTB=true) override;
-    void updateMouseButtonHints() override;
-protected:
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     RS_Entity* catchCircle(QMouseEvent* e);
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

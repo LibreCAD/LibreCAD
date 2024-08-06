@@ -29,9 +29,39 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
     Q_OBJECT
-
-
 public:
+    LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
+    ~LC_ActionDrawLineSnake() override;
+    void updateMouseButtonHints() override;
+
+    void init(int status) override;
+
+    void close();
+    void next();
+    void undo();
+    void redo();
+    void polyline();;
+    bool mayClose();
+    bool mayUndo() const;
+    bool mayStart() override;
+    bool mayRedo();
+    QStringList getAvailableCommands() override;
+protected:
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    bool doProceedCommand(int status, const QString &qString) override;
+    bool doProcessCommandValue(int status, const QString &c) override;
+    const RS_Vector& getStartPointForAngleSnap() const override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    bool isStartPointValid() const override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doSetStartPoint(RS_Vector vector) override;
+    bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
+
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+
+private:
     /// History Actions
     enum HistoryAction {
         HA_SetStartpoint,   ///< Setting the start point
@@ -89,38 +119,6 @@ public:
         size_t index(const int offset = 0);
     };
 
-
-    LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
-    ~LC_ActionDrawLineSnake() override;
-    void updateMouseButtonHints() override;
-
-    void init(int status) override;
-
-    void close();
-    void next();
-    void undo();
-    void redo();
-    void polyline();;
-    bool mayClose();
-    bool mayUndo() const;
-    bool mayStart() override;
-    bool mayRedo();
-    QStringList getAvailableCommands() override;
-
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    bool doProceedCommand(int status, const QString &qString) override;
-    bool doProcessCommandValue(int status, const QString &c) override;
-    const RS_Vector& getStartPointForAngleSnap() const override;
-    void doBack(QMouseEvent *pEvent, int status) override;
-    bool isStartPointValid() const override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
-    RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doSetStartPoint(RS_Vector vector) override;
-    bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
-private:
     /**
      * points data
      */

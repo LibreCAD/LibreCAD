@@ -37,13 +37,7 @@ class RS_Line;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineTangent1 : public RS_PreviewActionInterface {
-Q_OBJECT
-private:
-    enum Status {
-        SetPoint,     /**< Choose the startpoint. */
-        SetCircle      /**< Choose the circle / arc. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawLineTangent1(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
@@ -51,13 +45,18 @@ public:
 
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 private:
+    enum Status {
+        SetPoint,     /**< Choose the startpoint. */
+        SetCircle      /**< Choose the circle / arc. */
+    };
+
     /** Closest tangent. */
     std::unique_ptr<RS_Line> tangent;
     /** Chosen startpoint */
@@ -70,5 +69,4 @@ private:
                                                       RS2::EntityParabola,
                                                       RS2::EntitySplinePoints };
 };
-
 #endif

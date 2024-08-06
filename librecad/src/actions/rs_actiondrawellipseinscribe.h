@@ -31,8 +31,19 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Dongxu Li
  */
 class RS_ActionDrawEllipseInscribe:public LC_ActionDrawCircleBase {
-Q_OBJECT
+    Q_OBJECT
 public:
+    RS_ActionDrawEllipseInscribe(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionDrawEllipseInscribe() override;
+    void init(int status = 0) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent *e) override;
+    QStringList getAvailableCommands() override;
+    void finish(bool updateTB = true) override;
+    void updateMouseButtonHints() override;
+protected:
     /**
      * Action States.
      */
@@ -43,30 +54,13 @@ public:
         SetLine4   //  Setting the Last Line.  */
     };
 
-public:
-    RS_ActionDrawEllipseInscribe(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
-    ~RS_ActionDrawEllipseInscribe() override;
-    void init(int status = 0) override;
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent *e) override;
-
-//        void coordinateEvent(RS_CoordinateEvent* e) override;
-//    void commandEvent(RS_CommandEvent* e) override;
-    QStringList getAvailableCommands() override;
-    void finish(bool updateTB = true) override;
-    void updateMouseButtonHints() override;
-protected:
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
     void clearLines(bool checkStatus = false);
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    RS2::CursorType doGetMouseCursor(int status) override;
 };
-
 #endif

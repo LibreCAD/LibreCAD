@@ -38,15 +38,7 @@ class RS_Line;
  */
 class RS_ActionDrawLineBisector:public RS_PreviewActionInterface {
 Q_OBJECT
-private:
-    enum Status {
-        SetLine1,     /**< Choose the 1st line. */
-        SetLine2,     /**< Choose the 2nd line. */
-        SetLength,    /**< Set length in command line. */
-        SetNumber     /**< Set number in command line. */
-    };
 public:
-
     RS_ActionDrawLineBisector(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -61,12 +53,13 @@ public:
     void setNumber(int n);
     int getNumber() const;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-private:
+    enum Status {
+        SetLine1,     /**< Choose the 1st line. */
+        SetLine2,     /**< Choose the 2nd line. */
+        SetLength,    /**< Set length in command line. */
+        SetNumber     /**< Set number in command line. */
+    };
+
     /** Closest bisector. */
     RS_Line *bisector = nullptr;
     /** First chosen entity */
@@ -75,12 +68,17 @@ private:
     RS_Line *line2 = nullptr;
     /** Length of the bisector. */
     double length = 0.;
-/** Number of bisectors to create. */
+    /** Number of bisectors to create. */
     int number = 0;
     struct Points;
     std::unique_ptr<Points> pPoints;
-/** Last status before entering length or number. */
+    /** Last status before entering length or number. */
     Status lastStatus = SetLine1;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+};
 #endif

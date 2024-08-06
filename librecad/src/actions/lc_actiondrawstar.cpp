@@ -88,10 +88,10 @@ void LC_ActionDrawStar::doBack(QMouseEvent *pEvent, int status){
  * @param snapPoint
  */
 void LC_ActionDrawStar::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
-    onCoordinateEvent(snapPoint, false, status);
+    onCoordinateEvent(status, false, snapPoint);
 }
 
-void LC_ActionDrawStar::onCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
+void LC_ActionDrawStar::onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) {
     switch (status){
         case SetCenter: // setting center of star
            centerPoint = coord;

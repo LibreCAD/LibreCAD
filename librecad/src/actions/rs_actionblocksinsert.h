@@ -37,21 +37,6 @@ struct RS_InsertData;
  */
 class RS_ActionBlocksInsert:public RS_PreviewActionInterface {
     Q_OBJECT
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetUndefined = -1, /**< Setting undefined for initialisation. */
-        SetTargetPoint = 0, /**< Setting the reference point. */
-        SetAngle, /**< Setting angle in the command line. */
-        SetFactor, /**< Setting factor in the command line. */
-        SetColumns, /**< Setting columns in the command line. */
-        SetRows, /**< Setting rows in the command line. */
-        SetColumnSpacing, /**< Setting column spacing in the command line. */
-        SetRowSpacing /**< Setting row spacing in the command line. */
-    };
 public:
     RS_ActionBlocksInsert(
         RS_EntityContainer &container,
@@ -61,7 +46,6 @@ public:
     void reset();
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     double getAngle() const;
@@ -77,6 +61,20 @@ public:
     double getRowSpacing() const;
     void setRowSpacing(double rs);
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetUndefined = -1, /**< Setting undefined for initialisation. */
+        SetTargetPoint = 0, /**< Setting the reference point. */
+        SetAngle, /**< Setting angle in the command line. */
+        SetFactor, /**< Setting factor in the command line. */
+        SetColumns, /**< Setting columns in the command line. */
+        SetRows, /**< Setting rows in the command line. */
+        SetColumnSpacing, /**< Setting column spacing in the command line. */
+        SetRowSpacing /**< Setting row spacing in the command line. */
+    };
+
     RS_Block *block = nullptr;
     std::unique_ptr<RS_InsertData> data;
     /** Last status before entering option. */
@@ -85,7 +83,7 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
-
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif

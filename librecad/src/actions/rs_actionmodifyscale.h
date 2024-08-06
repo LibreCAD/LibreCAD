@@ -30,32 +30,20 @@
 #include "rs_previewactioninterface.h"
 #include "lc_actionmodifybase.h"
 
-
 /**
  * This action class can handle user events to move entities.
  *
  * @author Andrew Mustun
  */
 class RS_ActionModifyScale : public LC_ActionModifyBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        SetSourcePoint,         /**< Set the source point to find scaling factor */
-        SetTargetPoint,        /**< Set the target point to scale the source point to */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyScale(RS_EntityContainer& container,
                          RS_GraphicView& graphicView);
     ~RS_ActionModifyScale() override;
 
-    void init(int status=0) override;
+    void init(int status) override;
     void trigger() override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     bool isIsotropicScaling();
     void setIsotropicScaling(bool enable);
     double getFactorX();
@@ -65,14 +53,22 @@ public:
     bool isExplicitFactor();
     void setExplicitFactor(bool val);
     QStringList getAvailableCommands() override;
-private:
-    void showPreview();
-    void findFactor();
-    // set scaling target point to support isotropic or xy-scaling
-    RS_Vector getTargetPoint(QMouseEvent* e);
+protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetReferencePoint,    /**< Setting the reference point. */
+        SetSourcePoint,         /**< Set the source point to find scaling factor */
+        SetTargetPoint,        /**< Set the target point to scale the source point to */
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
-protected:
+    // set scaling target point to support isotropic or xy-scaling
+    RS_Vector getTargetPoint(QMouseEvent* e);
+    void findFactor();
+    void showPreview();
     void showPreview(RS_ScaleData &previewData);
     void determineScaleFactor(RS_ScaleData& data, const RS_Vector &reference, const RS_Vector &source, const RS_Vector &target);
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
@@ -82,8 +78,9 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
-    LC_ActionOptionsWidget *createOptionsWidget() override;
     bool doProcessCommand(int status, const QString &command) override;
     void tryTrigger();
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
 #endif

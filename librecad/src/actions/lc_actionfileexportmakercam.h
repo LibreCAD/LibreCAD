@@ -34,7 +34,7 @@ class LC_ActionFileExportMakerCam : public RS_ActionInterface {
 public:
     LC_ActionFileExportMakerCam(RS_EntityContainer& container, RS_GraphicView& graphicView);
 
-    void init(int status=0) override;
+    void init(int status) override;
     void trigger() override;
 
     // helper function to generate SVG

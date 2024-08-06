@@ -54,7 +54,9 @@ RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 void RS_ActionDrawEllipse4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
-	if(getStatus() == SetPoint1) pPoints->points.clear();
+    if(getStatus() == SetPoint1) {
+        pPoints->points.clear();
+    }
 }
 
 void RS_ActionDrawEllipse4Points::trigger(){
@@ -103,20 +105,24 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
     pPoints->points.set(status, mouse);
     if (preparePreview()){
         switch (status) {
-            case SetPoint2:
+            case SetPoint2: {
                 break;
-            case SetPoint3:
+            }
+            case SetPoint3: {
                 if (pPoints->valid){
                     previewCircle(pPoints->cData);
 
                     previewRefPoint(pPoints->cData.center);
                 }
                 break;
-            case SetPoint4:
-                if (pPoints->evalid){
+            }
+            case SetPoint4: {
+                if (pPoints->evalid) {
                     auto ellipse = previewEllipse(pPoints->eData);
                     previewEllipseReferencePoints(ellipse, true);
                 }
+                break;
+            }
             default:
                 break;
         }
@@ -135,7 +141,7 @@ void RS_ActionDrawEllipse4Points::mouseLeftButtonReleaseEvent(int status, QMouse
 
 void RS_ActionDrawEllipse4Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
 bool RS_ActionDrawEllipse4Points::preparePreview(){
@@ -182,12 +188,7 @@ bool RS_ActionDrawEllipse4Points::preparePreview(){
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipse4Points::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-    int status = getStatus();
+void RS_ActionDrawEllipse4Points::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     pPoints->points.alloc(status + 1);
     pPoints->points.set(status, mouse);
 

@@ -37,17 +37,7 @@ struct RS_RotateData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyRotate: public LC_ActionModifyBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        SetCenterPoint,    /**< Setting the rotation center */
-        SetTargetPoint,    /**< Setting the target to rotation to*/
-        SetTargetPoint2ndRotation,    /**< Setting the target to rotation around ref point*/
-    };
+    Q_OBJECT
 public:
     RS_ActionModifyRotate(
         RS_EntityContainer &container,
@@ -55,7 +45,6 @@ public:
     ~RS_ActionModifyRotate() override;
     void init(int status) override;
     void trigger() override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     double getAngle();
     void setAngle(double angle);
     void setFreeAngle(bool enable);
@@ -72,17 +61,15 @@ public:
     double getCurrentAngle2(){return currentAngle2;};
     void keyPressEvent(QKeyEvent *e) override;
 protected:
-    LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
-    void updateMouseButtonHintsForSelection() override;
-    void updateMouseButtonHintsForSelected(int status) override;
-    RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void selectionCompleted(bool singleEntity) override;
-    LC_ActionOptionsWidget *createOptionsWidget() override;
-    void tryTrigger();
-private:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetReferencePoint,    /**< Setting the reference point. */
+        SetCenterPoint,    /**< Setting the rotation center */
+        SetTargetPoint,    /**< Setting the target to rotation to*/
+        SetTargetPoint2ndRotation,    /**< Setting the target to rotation around ref point*/
+    };
     // fixme - sand -  review whether it's practical to select rotation center first... it's less convenient
     // support of old mode, most probably it should be removed and one selection mode should remain
     bool selectRefPointFirst = true;
@@ -91,7 +78,19 @@ private:
     std::unique_ptr<RS_RotateData> data;
     double currentAngle = 0.0;
     double currentAngle2 = 0.0;
+
     void previewRotationCircleAndPoints(const RS_Vector &center,const RS_Vector &refPoint, double angle);
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void selectionCompleted(bool singleEntity) override;
+    void tryTrigger();
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
 
 #endif

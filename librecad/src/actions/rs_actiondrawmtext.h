@@ -37,16 +37,7 @@ struct RS_MTextData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawMText:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ShowDialog,           /**< Showing the text dialog. */
-        SetPos,               /**< Setting the position. */
-        SetText               /**< Setting the text in the command line. */
-    };
+    Q_OBJECT
 public:
 
     RS_ActionDrawMText(
@@ -58,7 +49,6 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setText(const QString &t);
@@ -66,16 +56,24 @@ public:
     void setAngle(double a);
     double getAngle();
 protected:
+    /**
+    * Action States.
+    */
+    enum Status {
+        ShowDialog,           /**< Showing the text dialog. */
+        SetPos,               /**< Setting the position. */
+        SetText               /**< Setting the text in the command line. */
+    };
+    std::unique_ptr<RS_MTextData> data;
+    //RS_Text* text;
+    std::unique_ptr<RS_Vector> pos;
+    bool textChanged = false;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
-private:
-    std::unique_ptr<RS_MTextData> data;
-    //RS_Text* text;
-    std::unique_ptr<RS_Vector> pos;
-    bool textChanged = false;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

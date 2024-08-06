@@ -38,8 +38,8 @@
 #include "qg_moverotateoptions.h"
 
 struct RS_ActionModifyMoveRotate::Points {
-	RS_MoveRotateData data;
-	RS_Vector targetPoint{false};
+    RS_MoveRotateData data;
+    RS_Vector targetPoint{false};
 };
 
 RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(RS_EntityContainer& container,
@@ -50,7 +50,6 @@ RS_ActionModifyMoveRotate::RS_ActionModifyMoveRotate(RS_EntityContainer& contain
 }
 
 RS_ActionModifyMoveRotate::~RS_ActionModifyMoveRotate() = default;
-
 
 void RS_ActionModifyMoveRotate::trigger() {
 
@@ -155,7 +154,7 @@ void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status,
             if (selectionComplete) {
                 selectionComplete = false;
             } else {
-                init(status - 1);
+                initPrevious(status);
             }
             break;
         }
@@ -174,13 +173,8 @@ void RS_ActionModifyMoveRotate::mouseRightButtonReleaseEventSelected(int status,
     }
 }
 
-
-void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    RS_Vector pos = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionModifyMoveRotate::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = pos;
             moveRelativeZero(pos);
@@ -201,13 +195,14 @@ void RS_ActionModifyMoveRotate::coordinateEvent(RS_CoordinateEvent *e){
             }
             break;
         }
-        case SetAngle:
+        case SetAngle: {
             if (pPoints->targetPoint.valid){
                 double angle = pPoints->targetPoint.angleTo(pos);
                 pPoints->data.angle = angle;
                 doTrigger();
             }
             break;
+        }
         default:
             break;
     }
@@ -286,10 +281,6 @@ QStringList RS_ActionModifyMoveRotate::getAvailableCommands(){
     return cmd;
 }
 
-LC_ActionOptionsWidget* RS_ActionModifyMoveRotate::createOptionsWidget() {
-    return new QG_MoveRotateOptions();
-}
-
 void RS_ActionModifyMoveRotate::setAngle(double a){
     pPoints->data.angle = a;
 }
@@ -328,10 +319,10 @@ LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {
 }
 
 void RS_ActionModifyMoveRotate::setAngleIsFixed(bool b) {
-  angleIsFixed = b;
-  if (angleIsFixed && getStatus() == SetAngle){
-      setStatus(SetTargetPoint);
-  }
+    angleIsFixed = b;
+    if (angleIsFixed && getStatus() == SetAngle){
+        setStatus(SetTargetPoint);
+    }
 }
 
 void RS_ActionModifyMoveRotate::setUseSameAngleForCopies(bool b) {
@@ -340,4 +331,8 @@ void RS_ActionModifyMoveRotate::setUseSameAngleForCopies(bool b) {
 
 bool RS_ActionModifyMoveRotate::isUseSameAngleForCopies() {
     return pPoints->data.sameAngleForCopies;
+}
+
+LC_ActionOptionsWidget* RS_ActionModifyMoveRotate::createOptionsWidget() {
+    return new QG_MoveRotateOptions();
 }

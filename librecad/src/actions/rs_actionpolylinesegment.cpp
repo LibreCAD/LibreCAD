@@ -351,7 +351,7 @@ void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status,[[maybe_u
     if (targetEntity){
          graphicView->redraw();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionPolylineSegment::updateMouseButtonHints(){

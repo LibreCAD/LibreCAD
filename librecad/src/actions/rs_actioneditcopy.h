@@ -38,14 +38,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionEditCopyPaste :public RS_PreviewActionInterface {
-Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint    /**< Setting the reference point. */
-    };
-
+    Q_OBJECT
 public:
     enum ActionMode{
         CUT,
@@ -63,9 +56,15 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+  * Action States.
+  */
+    enum Status {
+        SetReferencePoint    /**< Setting the reference point. */
+    };
+
     /** Copy (true) or cut (false) */
     ActionMode mode;
     bool invokedWithControl = false;
@@ -73,6 +72,6 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

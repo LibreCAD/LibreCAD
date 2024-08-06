@@ -309,7 +309,7 @@ void RS_ActionModifyRound::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
 
 void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
 bool RS_ActionModifyRound::doProcessCommand(int status, const QString &c) {

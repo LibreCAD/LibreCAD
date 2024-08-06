@@ -173,20 +173,18 @@ void RS_ActionDimDiametric::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
 
 void RS_ActionDimDiametric::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDimDiametric::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    switch (getStatus()) {
-        case SetPos:
-            *pos = e->getCoordinate();
+void RS_ActionDimDiametric::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
+    switch (status) {
+        case SetPos: {
+            *pos = coord;
             trigger();
             reset();
             setStatus(SetEntity);
             break;
-
+        }
         default:
             break;
     }

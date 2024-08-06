@@ -109,7 +109,7 @@ void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent([[maybe_unused]]int stat
 }
 
 void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
 RS2::CursorType RS_ActionModifyEntity::doGetMouseCursor([[maybe_unused]] int status){

@@ -38,8 +38,19 @@
  * @author Ulf Lehnert
  */
 class RS_ActionDrawLineHorVert : public RS_PreviewActionInterface {
-Q_OBJECT
+    Q_OBJECT
 public:
+    RS_ActionDrawLineHorVert(RS_EntityContainer& container,
+                             RS_GraphicView& graphicView);
+    ~RS_ActionDrawLineHorVert() override;
+
+    void reset();
+
+    void init(int status) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
+protected:
     /**
      * Action States.
      */
@@ -48,23 +59,10 @@ public:
         SetEndpoint       /**< Setting the 2nd point. */
     };
 
-public:
-    RS_ActionDrawLineHorVert(RS_EntityContainer& container,
-                             RS_GraphicView& graphicView);
-    ~RS_ActionDrawLineHorVert() override;
-
-    void reset();
-
-    void init(int status=0) override;
-    void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
-protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
-
 #endif

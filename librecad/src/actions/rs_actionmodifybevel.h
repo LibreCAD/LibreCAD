@@ -41,16 +41,6 @@ class RS_Entity;
  */
 class RS_ActionModifyBevel : public RS_PreviewActionInterface {
     Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetEntity1,      /**< Choosing the 1st entity. */
-        SetEntity2,      /**< Choosing the 2nd entity. */
-        SetLength1,      /**< Setting length 1 in command line. */
-        SetLength2       /**< Setting length 2 in command line. */
-    };
-
 public:
     RS_ActionModifyBevel(RS_EntityContainer& container,
                          RS_GraphicView& graphicView);
@@ -68,7 +58,16 @@ public:
     double getLength2() const;
     void setTrim(bool t);
     bool isTrimOn() const;
-private:
+protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetEntity1,      /**< Choosing the 1st entity. */
+        SetEntity2,      /**< Choosing the 2nd entity. */
+        SetLength1,      /**< Setting length 1 in command line. */
+        SetLength2       /**< Setting length 2 in command line. */
+    };
     RS_AtomicEntity* entity1 = nullptr;
     RS_AtomicEntity* entity2 = nullptr;
     struct Points;
@@ -79,11 +78,10 @@ private:
     bool isEntityAccepted(RS_Entity *en) const;
     bool areBothEntityAccepted(RS_Entity *en1, RS_Entity *en2) const;
     void previewLineModifications(const RS_Entity *original, const RS_Entity *trimmed, bool trimOnStart);
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif

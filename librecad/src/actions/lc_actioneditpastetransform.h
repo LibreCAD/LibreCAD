@@ -1,24 +1,25 @@
-/****************************************************************************
-**
-* Action performs pasting of copied entities with transformation of the them
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
 
-Copyright (C) 2024 LibreCAD.org
-Copyright (C) 2024 sand1024
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
 
-This program is free software; you can redistribute it and/or
-modify it under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2
-of the License, or (at your option) any later version.
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License
-along with this program; if not, write to the Free Software
-Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-**********************************************************************/
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
+
 #ifndef LC_ACTIONEDITPASTETRANSFORM_H
 #define LC_ACTIONEDITPASTETRANSFORM_H
 
@@ -26,17 +27,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionEditPasteTransform :public RS_PreviewActionInterface{
 Q_OBJECT
-   enum Status{
-       SetReferencePoint
-};
 public:
     LC_ActionEditPasteTransform(RS_EntityContainer& container,
                                 RS_GraphicView& graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
     void updateMouseButtonHints() override;
+    void init(int status) override;
     void trigger() override;
-
+    void setAngle(double value);
+    double getFactor() const;
+    void setFactor(double factor);
+    bool isArrayCreated() const;
+    void setArrayCreated(bool arrayCreated);
+    int getArrayXCount() const;
+    void setArrayXCount(int arrayXCount);
+    int getArrayYCount() const;
+    void setArrayYCount(int arrayYCount);
+    double getArraySpacingX() const;
+    void setArraySpacingX(double arraySpacing);
+    double getArraySpacingY() const;
+    void setArraySpacingY(double arraySpacing);
+    double getArrayAngle() const;
+    void setArrayAngle(double arrayAngle);
+    bool isSameAngles() const {return sameAngles;}
+    void setSameAngles(bool val) {sameAngles = val;}
+    double getAngle() const;
 protected:
+    enum Status{
+        SetReferencePoint
+    };
+
     std::unique_ptr<RS_Vector> referencePoint;
     bool invokedWithControl = false;
     bool sameAngles = false;
@@ -57,29 +77,7 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
-
-public:
-    void coordinateEvent(RS_CoordinateEvent *event) override;
-    double getAngle() const;
-    void setAngle(double value);
-    double getFactor() const;
-    void setFactor(double factor);
-    bool isArrayCreated() const;
-    void setArrayCreated(bool arrayCreated);
-    int getArrayXCount() const;
-    void setArrayXCount(int arrayXCount);
-    int getArrayYCount() const;
-    void setArrayYCount(int arrayYCount);
-    double getArraySpacingX() const;
-    void setArraySpacingX(double arraySpacing);
-    double getArraySpacingY() const;
-    void setArraySpacingY(double arraySpacing);
-    double getArrayAngle() const;
-    void setArrayAngle(double arrayAngle);
-    bool isSameAngles() const {return sameAngles;}
-    void setSameAngles(bool val) {sameAngles = val;}
     void previewMultipleReferencePoints();
-    void init(int status) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif // LC_ACTIONEDITPASTETRANSFORM_H

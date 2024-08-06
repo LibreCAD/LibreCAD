@@ -71,7 +71,7 @@ public:
     void setName(const char* _name);
     QString getName();
 
-    virtual void init(int status=0);
+    virtual void init(int status);
     virtual void mouseMoveEvent(QMouseEvent*);
     virtual void mousePressEvent(QMouseEvent*);
     virtual void mouseReleaseEvent(QMouseEvent*);
@@ -181,7 +181,8 @@ protected:
     void fireCoordinateEvent(const RS_Vector& coord);
     void fireCoordinateEventForSnap(QMouseEvent *e);
 
-    virtual void doProcessCoordinateEvent(int status, const RS_Vector& pos);
+    virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
+    void initPrevious(int status);
 };
 
 

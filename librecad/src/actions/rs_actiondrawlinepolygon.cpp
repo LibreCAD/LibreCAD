@@ -37,10 +37,10 @@
 #include "rs_preview.h"
 
 struct RS_ActionDrawLinePolygonCenCor::Points {
-	/** Center of polygon */
-	RS_Vector center;
-	/** Edge */
-	RS_Vector corner;
+/** Center of polygon */
+    RS_Vector center;
+/** Edge */
+    RS_Vector corner;
 };
 
 // fixme - support creation of polygone as polyline
@@ -55,10 +55,8 @@ RS_ActionDrawLinePolygonCenCor::RS_ActionDrawLinePolygonCenCor(
 
 RS_ActionDrawLinePolygonCenCor::~RS_ActionDrawLinePolygonCenCor() = default;
 
-
 void RS_ActionDrawLinePolygonCenCor::trigger() {
     RS_PreviewActionInterface::trigger();
-
     deletePreview();
 
     RS_Creation creation(container, graphicView);
@@ -109,15 +107,11 @@ void RS_ActionDrawLinePolygonCenCor::mouseLeftButtonReleaseEvent(int status, QMo
 
 void RS_ActionDrawLinePolygonCenCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLinePolygonCenCor::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e == nullptr) return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawLinePolygonCenCor::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetCenter: {
             pPoints->center = mouse;
             setStatus(SetCorner);
@@ -178,7 +172,6 @@ bool RS_ActionDrawLinePolygonCenCor::doProcessCommand(int status, const QString 
     }
     return accept;
 }
-
 
 QStringList RS_ActionDrawLinePolygonCenCor::getAvailableCommands(){
     QStringList cmd;

@@ -36,17 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyTrim:public RS_PreviewActionInterface {
-Q_OBJECT
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseLimitEntity, /**< Choosing the limiting entity. */
-        ChooseTrimEntity /**< Choosing the entity to trim. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyTrim(
         RS_EntityContainer &container,
@@ -59,15 +49,23 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+     * Action States.
+     */
+    enum Status {
+        ChooseLimitEntity, /**< Choosing the limiting entity. */
+        ChooseTrimEntity /**< Choosing the entity to trim. */
+    };
+
     RS_AtomicEntity *trimEntity = nullptr;
     RS_Entity *limitEntity = nullptr;
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool both = false;
     void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
+
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
 #endif

@@ -40,14 +40,7 @@ class RS_Vector;
  * @author Andrew Mustun
  */
 class RS_ActionPolylineSegment:public RS_PreviewActionInterface {
-Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseEntity = 0 /**< Choosing one of the polyline segments. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionPolylineSegment(
         RS_EntityContainer &container,
@@ -61,16 +54,22 @@ public:
     void updateMouseButtonHints() override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-//! create polyline from segments
+    /**
+     * Action States.
+     */
+    enum Status {
+        ChooseEntity = 0 /**< Choosing one of the polyline segments. */
+    };
+
+    //! create polyline from segments
 //! @param useSelected only create from selected entities
     RS_Polyline* convertPolyline(RS_EntityContainer* cnt, RS_Entity *selectedEntity, bool useSelected = false, bool createOnly=false);
     RS_Vector appendPol(RS_Polyline *current, RS_Polyline *toAdd, bool reversed);
     RS_Entity *targetEntity = nullptr;
     bool initWithTarget{false};
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

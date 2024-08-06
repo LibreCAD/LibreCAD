@@ -32,18 +32,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * Utility base class for actions that draw a line
  */
 class LC_AbstractActionDrawLine:public LC_AbstractActionWithPreview {
-
+    Q_OBJECT
 public:
-    // action statuses
-    enum Status {
-        SetStartPoint,
-        SetDirection,
-        SetDistance,
-        SetPoint,
-        SetAngle,
-        LAST
-    };
-
     // direction in which line should be drawn
     enum Direction{
         DIRECTION_NONE, DIRECTION_X, DIRECTION_Y, DIRECTION_POINT, DIRECTION_ANGLE
@@ -64,8 +54,18 @@ public:
     void setAngleIsRelative(bool value);
     virtual bool mayStart();
     bool doProcessCommand(int status, const QString &c) override;
-
 protected:
+    // action statuses
+    enum Status {
+        SetStartPoint,
+        SetDirection,
+        SetDistance,
+        SetPoint,
+        SetAngle,
+        LAST
+    };
+
+
     double angle = 0.0; // fixed angle for line
     bool angleIsRelative = true; // is angle relative to previous segment (if any)
     int direction = DIRECTION_NONE; // current line direction
@@ -85,5 +85,4 @@ protected:
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void setStatusForValidStartPoint(int newStatus);
 };
-
 #endif //LIBRECAD_LC_ABSTRACTACTIONDRAWLINE_H

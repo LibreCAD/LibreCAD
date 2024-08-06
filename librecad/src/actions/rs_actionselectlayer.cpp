@@ -65,7 +65,7 @@ void RS_ActionSelectLayer::mouseLeftButtonReleaseEvent([[maybe_unused]] int stat
 }
 
 void RS_ActionSelectLayer::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
 RS2::CursorType RS_ActionSelectLayer::doGetMouseCursor([[maybe_unused]] int status){

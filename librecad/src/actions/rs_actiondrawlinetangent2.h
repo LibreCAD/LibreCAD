@@ -36,14 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineTangent2:public RS_PreviewActionInterface {
-Q_OBJECT
-private:
-    enum Status {
-        SetCircle1,     /**< Choose the startpoint. */
-        SetCircle2,     /**< Choose the circle / arc. */
-        SelectLine      /**<Choose the tangent*/
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawLineTangent2(
         RS_EntityContainer &container,
@@ -55,15 +48,19 @@ public:
     void init(int status) override;
     void finish(bool updateTB) override;
 protected:
+    enum Status {
+        SetCircle1,     /**< Choose the startpoint. */
+        SetCircle2,     /**< Choose the circle / arc. */
+        SelectLine      /**<Choose the tangent*/
+    };
+
+    void cleanup();
+    void preparePreview(QMouseEvent *e);
+    struct Points;
+    std::unique_ptr<Points> m_pPoints;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    void cleanup();
-    void preparePreview(QMouseEvent *e);
-    void clearHighlighted();
-    struct Points;
-    std::unique_ptr<Points> m_pPoints;
 };
-
 #endif

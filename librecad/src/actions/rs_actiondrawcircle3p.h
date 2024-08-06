@@ -39,18 +39,6 @@ struct RS_CircleData;
  */
 class RS_ActionDrawCircle3P:public LC_ActionDrawCircleBase {
 Q_OBJECT
-
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
-        SetPoint2,       /**< Setting the 2nd point. */
-        SetPoint3        /**< Setting the 3rd point. */
-    };
-
 public:
     RS_ActionDrawCircle3P(
         RS_EntityContainer &container,
@@ -59,10 +47,17 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint2,       /**< Setting the 2nd point. */
+        SetPoint3        /**< Setting the 3rd point. */
+    };
+
     /**
      * Circle data defined so far.
      */
@@ -72,6 +67,6 @@ protected:
     void reset() override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

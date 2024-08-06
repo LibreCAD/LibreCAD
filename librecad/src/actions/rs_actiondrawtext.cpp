@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QMouseEvent>
 
 #include "rs_actiondrawtext.h"
@@ -49,7 +48,7 @@ RS_ActionDrawText::RS_ActionDrawText(RS_EntityContainer& container,
 						   container, graphicView)
 		, pPoints(std::make_unique<Points>())
 		,textChanged(true){
-	actionType=RS2::ActionDrawText;
+    actionType=RS2::ActionDrawText;
 }
 
 RS_ActionDrawText::~RS_ActionDrawText() = default;
@@ -98,7 +97,6 @@ void RS_ActionDrawText::reset(){
 }
 
 void RS_ActionDrawText::trigger(){
-
     RS_DEBUG->print("RS_ActionDrawText::trigger()");
 
     if (pPoints->pos.valid){
@@ -170,33 +168,26 @@ void RS_ActionDrawText::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, 
 
 void RS_ActionDrawText::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    //init(getStatus()-1);
     finish(false);
 }
 
-void RS_ActionDrawText::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawText::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case ShowDialog:
             break;
-
-        case SetPos:
+        case SetPos: {
             data->insertionPoint = mouse;
             if (data->halign == RS_TextData::HAFit || data->halign == RS_TextData::HAAligned)
                 setStatus(SetSecPos);
             else
                 trigger();
             break;
-
-        case SetSecPos:
+        }
+        case SetSecPos: {
             data->secondPoint = mouse;
             trigger();
             break;
-
+        }
         default:
             break;
     }

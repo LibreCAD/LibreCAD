@@ -34,15 +34,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionPolylineEquidistant:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-/**
- * Action States.
- */
-    enum Status {
-        ChooseEntity   /**< Choosing the original polyline. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionPolylineEquidistant(
         RS_EntityContainer &container,
@@ -56,21 +48,26 @@ public:
     double getDist() const{return dist;}
     void setNumber(unsigned n){number = n;}
     int getNumber() const{return number;}
-    void makeContour(RS_Polyline *originalPolyline, bool contourOnRightSide, QList<RS_Polyline *> &createdPolylines);
-private:
-    RS_Entity *calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist);
-    RS_Vector calculateIntersection(RS_Entity *first, RS_Entity *last);
-private:
+protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        ChooseEntity   /**< Choosing the original polyline. */
+    };
+
     RS_Polyline *originalEntity = nullptr;
     double dist = 0.;
     int number = 0;
     bool bRightSide = false;
+
+    RS_Entity *calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist);
+    RS_Vector calculateIntersection(RS_Entity *first, RS_Entity *last);
+    void makeContour(RS_Polyline *originalPolyline, bool contourOnRightSide, QList<RS_Polyline *> &createdPolylines);
     bool isPointOnRightSideOfPolyline(const RS_Polyline *polyline, const RS_Vector &snapPoint) const;
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

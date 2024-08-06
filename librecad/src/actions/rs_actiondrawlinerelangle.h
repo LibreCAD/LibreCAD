@@ -39,15 +39,7 @@ class RS_Vector;
  */
 // fixme - add line snap mode (start/end, middle)
 class RS_ActionDrawLineRelAngle:public RS_PreviewActionInterface {
-Q_OBJECT
-private:
-    enum Status {
-        SetEntity,     /**< Choose entity. */
-        SetPos,        /**< Choose position. */
-        SetAngle,      /**< Set angle in console. */
-        SetLength      /**< Set length in console. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawLineRelAngle(
         RS_EntityContainer &container,
@@ -59,7 +51,6 @@ public:
     void finish(bool updateTB = true) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 
@@ -68,7 +59,13 @@ public:
     void setLength(double l){length = l;}
     double getLength() const{return length;}
     bool hasFixedAngle() const{return fixedAngle;}
-private:
+protected:
+    enum Status {
+        SetEntity,     /**< Choose entity. */
+        SetPos,        /**< Choose position. */
+        SetAngle,      /**< Set angle in console. */
+        SetLength      /**< Set length in console. */
+    };
     /** Chosen entity */
     RS_Entity *entity = nullptr;
     /** Chosen position */
@@ -85,14 +82,12 @@ private:
      * Is the angle fixed?
      */
     bool fixedAngle = false;
-    void unhighlightEntity();
-protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif

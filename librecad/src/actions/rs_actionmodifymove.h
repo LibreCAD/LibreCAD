@@ -37,10 +37,14 @@ struct RS_MoveData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyMove : public LC_ActionModifyBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-/**
+    RS_ActionModifyMove(RS_EntityContainer& container,
+                        RS_GraphicView& graphicView);
+    ~RS_ActionModifyMove() override;
+    void trigger() override;
+protected:
+    /**
  * Action States.
  */
     enum Status {
@@ -48,15 +52,8 @@ public:
         SetTargetPoint,       /**< Setting the target point. */
         ShowDialog            /**< Showing the options dialog. */
     };
-
-public:
-    RS_ActionModifyMove(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-    ~RS_ActionModifyMove() override;
-
-    void trigger() override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-protected:
+    struct Points;
+    std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
@@ -65,9 +62,6 @@ protected:
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

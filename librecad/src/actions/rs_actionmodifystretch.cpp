@@ -36,10 +36,10 @@
 #include "lc_modifystretchoptions.h"
 
 struct RS_ActionModifyStretch::Points {
-	RS_Vector firstCorner;
-	RS_Vector secondCorner;
-	RS_Vector referencePoint;
-	RS_Vector targetPoint;
+    RS_Vector firstCorner;
+    RS_Vector secondCorner;
+    RS_Vector referencePoint;
+    RS_Vector targetPoint;
 };
 
 RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
@@ -47,7 +47,7 @@ RS_ActionModifyStretch::RS_ActionModifyStretch(RS_EntityContainer& container,
 	:RS_PreviewActionInterface("Stretch Entities",
 							   container, graphicView)
 	, pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionModifyStretch;
+    actionType=RS2::ActionModifyStretch;
 }
 
 void RS_ActionModifyStretch::init(int status) {
@@ -157,17 +157,11 @@ void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int sta
 // fixme - default back - remove as well as from other actions
 void RS_ActionModifyStretch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionModifyStretch::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionModifyStretch::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetFirstCorner: {
             pPoints->firstCorner = mouse;
             setStatus(SetSecondCorner);

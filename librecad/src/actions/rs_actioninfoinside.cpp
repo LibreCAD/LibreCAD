@@ -72,7 +72,7 @@ void RS_ActionInfoInside::mouseLeftButtonReleaseEvent([[maybe_unused]]int status
 }
 
 void RS_ActionInfoInside::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionInfoInside::updateMouseButtonHints() {

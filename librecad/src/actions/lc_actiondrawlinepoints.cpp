@@ -230,7 +230,7 @@ const RS_Vector& LC_ActionDrawLinePoints::getStartPointForAngleSnap() const {
     return startpoint;
 }
 
-void LC_ActionDrawLinePoints::  onCoordinateEvent(const RS_Vector &mouse, [[maybe_unused]]bool isZero, int status){
+void LC_ActionDrawLinePoints::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetDistance:
             switch (direction) {
@@ -250,13 +250,14 @@ void LC_ActionDrawLinePoints::  onCoordinateEvent(const RS_Vector &mouse, [[mayb
                     }
                     break;
                 }
-                case DIRECTION_ANGLE:{ // calculate end point in given angle direction
+                case DIRECTION_ANGLE: { // calculate end point in given angle direction
                     RS_Vector possiblePoint = getPossibleEndPointForAngle(mouse);
-                    if (isNonZeroLine(possiblePoint)){
+                    if (isNonZeroLine(possiblePoint)) {
                         endpoint = possiblePoint;
                         trigger();
                     }
-                    break;                }
+                    break;
+                }
                 default:
                     break;
             }
@@ -270,13 +271,14 @@ void LC_ActionDrawLinePoints::  onCoordinateEvent(const RS_Vector &mouse, [[mayb
             break;
         }
         case SetDirection:
-        case SetPoint: // set end to provided point
-            if (isNonZeroLine(mouse)){
+        case SetPoint: { // set end to provided point
+            if (isNonZeroLine(mouse)) {
                 // refuse zero length lines
                 endpoint = mouse;
                 trigger();
             }
             break;
+        }
         case SetStartPoint:{ // setup start point of line
             startpoint = mouse;
             point1Set = true;
@@ -584,4 +586,3 @@ void LC_ActionDrawLinePoints::setMajorStatus(){
 LC_ActionOptionsWidget* LC_ActionDrawLinePoints::createOptionsWidget(){
     return new LC_LinePointsOptions();
 }
-

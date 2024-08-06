@@ -39,16 +39,7 @@ class RS_InfoArea;
  * @author Andrew Mustun
  */
 class RS_ActionInfoArea:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetFirstPoint,    /**< Setting the 1st point of the polygon. */
-        SetNextPoint      /**< Setting a next point. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionInfoArea(
         RS_EntityContainer &container,
@@ -57,16 +48,22 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void display();//display results from current polygon
-
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetFirstPoint,    /**< Setting the 1st point of the polygon. */
+        SetNextPoint      /**< Setting a next point. */
+    };
+
+    std::unique_ptr<RS_InfoArea> ia;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    std::unique_ptr<RS_InfoArea> ia;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

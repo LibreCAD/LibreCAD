@@ -70,7 +70,6 @@ RS2::ActionType RS_ActionDrawLineRelAngle::rtti() const{
 }
 
 void RS_ActionDrawLineRelAngle::finish(bool updateTB) {
-//    unhighlightEntity();
     RS_PreviewActionInterface::finish(updateTB);
 }
 
@@ -143,10 +142,6 @@ void RS_ActionDrawLineRelAngle::mouseLeftButtonReleaseEvent(int status, QMouseEv
             RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
             if (en != nullptr){
                 entity = en;
-
-//                    entity->setHighlighted(true);
-//                    graphicView->drawEntity(entity);
-
                 setStatus(SetPos);
             }
             break;
@@ -164,24 +159,16 @@ void RS_ActionDrawLineRelAngle::mouseLeftButtonReleaseEvent(int status, QMouseEv
 
 void RS_ActionDrawLineRelAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-//        if (entity) {
-//            entity->setHighlighted(false);
-//            graphicView->drawEntity(entity);
-//        }
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLineRelAngle::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    switch (getStatus()) {
-        case SetPos:
-            *pos = e->getCoordinate();
+void RS_ActionDrawLineRelAngle::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &coord) {
+    switch (status) {
+        case SetPos: {
+            *pos = coord;
             trigger();
             break;
-
+        }
         default:
             break;
     }
@@ -241,12 +228,13 @@ QStringList RS_ActionDrawLineRelAngle::getAvailableCommands(){
 
     switch (getStatus()) {
         case SetPos:
-        case SetLength:
+        case SetLength: {
             if (!fixedAngle){
                 cmd += command("angle");
             }
             cmd += command("length");
             break;
+        }
         default:
             break;
     }
@@ -276,13 +264,6 @@ RS2::CursorType RS_ActionDrawLineRelAngle::doGetMouseCursor([[maybe_unused]] int
             return RS2::CadCursor;
         default:
             return RS2::NoCursorChange;
-    }
-}
-
-void RS_ActionDrawLineRelAngle::unhighlightEntity(){
-    if (entity != nullptr) {
-        entity->setHighlighted(false);
-        graphicView->drawEntity(entity);
     }
 }
 

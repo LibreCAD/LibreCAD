@@ -26,20 +26,42 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactionwithpreview.h"
 
 class LC_AbstractActionDrawRectangle:public LC_AbstractActionWithPreview {
-Q_OBJECT
-
+    Q_OBJECT
 public:
-    LC_AbstractActionDrawRectangle(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_AbstractActionDrawRectangle() override;
-
     /**
-     * defines modes for drawing rect corners
-     */
+* defines modes for drawing rect corners
+*/
     enum {
         CORNER_STRAIGHT, // plain rect
         CORNER_RADIUS,  // rounded corners
         CORNER_BEVEL // bevels
     };
+
+    LC_AbstractActionDrawRectangle(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
+    ~LC_AbstractActionDrawRectangle() override;
+
+    void updateMouseButtonHints() override;
+    bool isUsePolyline() const{return usePolyline;};
+    void setUsePolyline(bool value){usePolyline = value;};
+    void setRadius(double radius);
+    double getRadius() const{return radius;};
+    void setLengthX(double value);
+    double getLengthX() const{return bevelX;};
+    void setLengthY(double value);
+    double getLengthY() const{return bevelY;};
+    void setAngle(double angle);
+    double getAngle() const{return angle;}
+    void setCornersMode(int value);
+    int getCornersMode() const{return cornersDrawMode;};
+    void setInsertionPointSnapMode(int value);
+    int getInsertionPointSnapMode() const{return insertionPointSnapMode;};
+    void setSnapToCornerArcCenter(bool b);
+    bool isSnapToCornerArcCenter() const {return snapToCornerArcCenter;};
+    void setEdgesDrawMode(int mode){edgesDrawMode = mode;};
+    int getEdgesDrawMode() const{return edgesDrawMode;};
+    void setBaseAngleFixed(bool val) {baseAngleIsFixed = val;};
+    bool isBaseAngleFixed() const {return baseAngleIsFixed;}
+protected:
 
     /**
      * Defines how edges should be drawn
@@ -71,30 +93,6 @@ public:
         LAST_BASE_STATUS [[maybe_unused]]
     };
 
-
-    void updateMouseButtonHints() override;
-    bool isUsePolyline() const{return usePolyline;};
-    void setUsePolyline(bool value){usePolyline = value;};
-    void setRadius(double radius);
-    double getRadius() const{return radius;};
-    void setLengthX(double value);
-    double getLengthX() const{return bevelX;};
-    void setLengthY(double value);
-    double getLengthY() const{return bevelY;};
-    void setAngle(double angle);
-    double getAngle() const{return angle;}
-    void setCornersMode(int value);
-    int getCornersMode() const{return cornersDrawMode;};
-    void setInsertionPointSnapMode(int value);
-    int getInsertionPointSnapMode() const{return insertionPointSnapMode;};
-    void setSnapToCornerArcCenter(bool b);
-    bool isSnapToCornerArcCenter() const {return snapToCornerArcCenter;};
-    void setEdgesDrawMode(int mode){edgesDrawMode = mode;};
-    int getEdgesDrawMode() const{return edgesDrawMode;};
-    void setBaseAngleFixed(bool val) {baseAngleIsFixed = val;};
-    bool isBaseAngleFixed() const {return baseAngleIsFixed;}
-
-protected:
     /**
      * should resulting rect be polyline or not
      */
@@ -167,7 +165,6 @@ protected:
     virtual void doProcessCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
     virtual void doUpdateMouseButtonHints(int status);
     virtual void doAddPolylineToListOfEntities(RS_Polyline *polyline, QList<RS_Entity *> &list, bool preview);
-    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
     bool doProcessCommand(int status, const QString &c) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     static void normalizeCorners(RS_Vector &bottomLeftCorner, RS_Vector &bottomRightCorner, RS_Vector &topRightCorner, RS_Vector &topLeftCorner);
@@ -179,6 +176,7 @@ protected:
     void doBack(QMouseEvent *pEvent, int status) override;
     bool doCheckPolylineEntityAllowedInTrigger(int index) const;
     double getActualBaseAngle() const;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif // LC_ABSTRACTACTIONDRAWRECTANGLE_H

@@ -35,13 +35,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionDrawLinePolygonCorCor:public LC_ActionDrawLinePolygonBase {
-Q_OBJECT
-    enum Status {
-        SetCorner1,    /**< Setting center 1. */
-        SetCorner2,    /**< Setting corner 2. */
-        SetNumber      /**< Setting number in the command line. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawLinePolygonCorCor(
         RS_EntityContainer &container,
@@ -50,18 +44,24 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
-private:
+
+protected:
+    enum Status {
+        SetCorner1,    /**< Setting center 1. */
+        SetCorner2,    /**< Setting corner 2. */
+        SetNumber      /**< Setting number in the command line. */
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
 /** Last status before entering text. */
     Status lastStatus = SetCorner1;
     RS_Vector determinePolygonCenter() const;
-protected:
+
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString & command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 
 #endif

@@ -1,6 +1,6 @@
 /****************************************************************************
 **
-* Angle for 3 points action
+* Angle between 3 points action
 
 Copyright (C) 2024 LibreCAD.org
 Copyright (C) 2024 sand1024
@@ -109,7 +109,7 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
     drawPreview();
 }
 
-void LC_ActionInfo3PointsAngle::doProcessCoordinateEvent(int status, const RS_Vector &pos) {
+void LC_ActionInfo3PointsAngle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     switch (status){
         case SetPoint1:{
             point1 = pos;

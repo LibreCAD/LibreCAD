@@ -48,7 +48,7 @@ public:
                     double factor = 1.137);
 	~RS_ActionZoomIn() override;
 
-	void init(int status=0) override;
+	void init(int status) override;
 	void trigger() override;
 
 protected:

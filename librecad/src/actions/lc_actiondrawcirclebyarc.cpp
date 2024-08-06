@@ -27,6 +27,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actiondrawcirclebyarc.h"
 #include "lc_circlebyarcoptions.h"
 
+// Command line support - potentially, it's possible to use coordinates for selection of arc - yet it seems it is overkill,
+// selection by mouse is more convenient so do nothing there
+
 LC_ActionDrawCircleByArc::LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView):
     LC_AbstractActionWithPreview("Circle By Arc", container, graphicView){
     actionType = RS2::ActionDrawCircleByArc;
@@ -211,11 +214,6 @@ void LC_ActionDrawCircleByArc::doOnLeftMouseButtonRelease([[maybe_unused]]QMouse
     }
 }
 
-void LC_ActionDrawCircleByArc::coordinateEvent([[maybe_unused]]RS_CoordinateEvent *e){
-//    RS_ActionInterface::coordinateEvent(e);
-// potentially, it's possible to use coordinates for selection of arc - yet it seems it is overkill,
-// selection by mouse is more convenient so do nothing there
-}
 
 void LC_ActionDrawCircleByArc::updateMouseButtonHints(){
     switch (getStatus()) {
@@ -239,7 +237,3 @@ LC_ActionOptionsWidget* LC_ActionDrawCircleByArc::createOptionsWidget(){
 void LC_ActionDrawCircleByArc::setReplaceArcByCircle(bool value){
     replaceArcByCircle = value;
 }
-
-
-
-

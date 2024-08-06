@@ -134,7 +134,7 @@ void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] Q
         graphicView->drawEntity(targetEntity);
         graphicView->redraw();
     }
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionOrder::updateMouseButtonHints() {

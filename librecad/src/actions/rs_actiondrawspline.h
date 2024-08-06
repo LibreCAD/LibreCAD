@@ -38,16 +38,8 @@ class RS_Spline;
  * @author Andrew Mustun
  */
 class RS_ActionDrawSpline : public RS_PreviewActionInterface {
-	Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        SetNextPoint      /**< Setting the next point. */
-	};
+    Q_OBJECT
 public:
-
     RS_ActionDrawSpline(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -56,7 +48,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 //    void updateToolBar() override;
@@ -68,14 +59,20 @@ public:
     virtual void setClosed(bool c);
     virtual bool isClosed();
 protected:
-
+    /**
+      * Action States.
+      */
+    enum Status {
+        SetStartpoint,   /**< Setting the startpoint.  */
+        SetNextPoint      /**< Setting the next point. */
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

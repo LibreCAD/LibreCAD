@@ -31,13 +31,21 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Dongxu Li
  */
 class RS_ActionDrawEllipseCenter3Points : public LC_ActionDrawCircleBase {
-        Q_OBJECT
-
-
+    Q_OBJECT
 public:
+    RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
+                                      RS_GraphicView& graphicView);
+    ~RS_ActionDrawEllipseCenter3Points() override;
+    void init(int status) override;
+    void trigger() override;
+    bool preparePreview();
+    void mouseMoveEvent(QMouseEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+protected:
     /**
-     * Action States.
-     */
+ * Action States.
+ */
     enum Status {
         SetCenter=0,   //  Setting the Center.  */
         SetPoint1=1,   //  Setting the First Point.  */
@@ -45,24 +53,11 @@ public:
         SetPoint3=3   //  Setting the Third Point.  */
     };
 
-public:
-    RS_ActionDrawEllipseCenter3Points(RS_EntityContainer& container,
-                                      RS_GraphicView& graphicView);
-    ~RS_ActionDrawEllipseCenter3Points() override;
-    void init(int status=0) override;
-    void trigger() override;
-    bool preparePreview();
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-//    void commandEvent(RS_CommandEvent* e) override;
-    QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
-protected:
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

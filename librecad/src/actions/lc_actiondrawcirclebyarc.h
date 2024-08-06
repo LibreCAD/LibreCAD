@@ -42,7 +42,6 @@ public:
         SetArc
     };
 
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 
     bool isReplaceArcByCircle() const{return replaceArcByCircle;};

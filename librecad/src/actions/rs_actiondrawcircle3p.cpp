@@ -164,16 +164,11 @@ void RS_ActionDrawCircle3P::mouseLeftButtonReleaseEvent(int status, [[maybe_unus
 
 void RS_ActionDrawCircle3P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawCircle3P::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawCircle3P::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetPoint1: {
             pPoints->point1 = mouse;
             moveRelativeZero(mouse);

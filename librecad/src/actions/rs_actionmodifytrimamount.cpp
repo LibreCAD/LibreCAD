@@ -200,7 +200,7 @@ void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEv
 }
 
 void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
 // fixme - support for other options via command line (currently only length may be set) (???)

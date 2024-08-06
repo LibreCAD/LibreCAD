@@ -64,8 +64,24 @@ struct LC_CrossData {
 
 class LC_ActionDrawCross:public LC_AbstractActionWithPreview {
 Q_OBJECT
-
 public:
+    LC_ActionDrawCross(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~LC_ActionDrawCross() override;
+
+    void updateMouseButtonHints() override;
+
+    double getLenX() const {return lenX;};
+    double getLenY() const {return lenY;};
+    double getCrossAngle() const{return angle;};
+    int getCrossMode() const{return crossSizeMode;};
+
+    void setXLength(double d) {lenX = d;};
+    void setYLength(double d) {lenY = d;};
+    void setCrossAngle(double d) {angle = d;};
+    void setCrossMode(int i) {crossSizeMode = i;};
+protected:
     enum Status {
         SetEntity      /**< Choose the circle / arc. */
     };
@@ -79,38 +95,6 @@ public:
         CROSS_SIZE_PERCENT // cross length is calculated as percentage of shape radius
     };
 
-    LC_ActionDrawCross(
-        RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
-    ~LC_ActionDrawCross() override;
-
-    void coordinateEvent(RS_CoordinateEvent *e) override;
-    void updateMouseButtonHints() override;
-
-    double getLenX() const {return lenX;};
-    double getLenY() const {return lenY;};
-    double getCrossAngle() const{return angle;};
-    int getCrossMode() const{return crossSizeMode;};
-
-    void setXLength(double d) {lenX = d;};
-    void setYLength(double d) {lenY = d;};
-    void setCrossAngle(double d) {angle = d;};
-    void setCrossMode(int i) {crossSizeMode = i;};
-
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
-    bool doCheckMayTrigger() override;
-    RS_Vector doGetRelativeZeroAfterTrigger() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    void doAfterTrigger() override;
-    RS2::CursorType doGetMouseCursor(int status) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
-    bool doCheckMayTriggerOnInit(int status) override;
-    bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
-    void doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entity *> &list) override;
-private:
     /** Chosen entity */
     RS_Entity *entity = nullptr;
     //list of entity types supported by current action
@@ -136,8 +120,20 @@ private:
      */
     double angle = 0.0;
 
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    bool doCheckMayTrigger() override;
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    void doAfterTrigger() override;
+    RS2::CursorType doGetMouseCursor(int status) override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    bool doCheckMayTriggerOnInit(int status) override;
+    bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
+    void doCreateEntitiesOnTrigger(RS_Entity *en, QList<RS_Entity *> &list) override;
     void addCrossDataEntities(QList<RS_Entity *> &list, const LC_CrossData &crossData) const;
     LC_CrossData createCrossDataForEntity(RS_Entity *ent) const;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 
 #endif //LC_ACTIONDRAWCROSS_H

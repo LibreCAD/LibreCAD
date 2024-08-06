@@ -39,17 +39,7 @@ struct RS_CircleData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawCircle2P:public LC_ActionDrawCircleBase {
-Q_OBJECT
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
-        SetPoint2        /**< Setting the 2nd point. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawCircle2P(
         RS_EntityContainer &container,
@@ -59,19 +49,24 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint2        /**< Setting the 2nd point. */
+    };
+
     /**
      * Circle data defined so far.
      */
     std::unique_ptr<RS_CircleData> data;
     struct Points;
     std::unique_ptr<Points> pPoints;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

@@ -36,17 +36,7 @@ struct RS_RoundData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyRound:public RS_PreviewActionInterface {
-Q_OBJECT
-/**
- * Action States.
- */
-    enum Status {
-        SetEntity1,   /**< Choosing the 1st entity. */
-        SetEntity2,   /**< Choosing the 2nd entity. */
-        SetRadius,   /**< Setting radius in command line. */
-        SetTrim    /**< Setting trim flag in command line. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyRound(
         RS_EntityContainer &container,
@@ -62,26 +52,30 @@ public:
     double getRadius() const;
     void setTrim(bool t);
     bool isTrimOn() const;
-private:
-    bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
-    // update highlight status
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetEntity1,   /**< Choosing the 1st entity. */
+        SetEntity2,   /**< Choosing the 2nd entity. */
+        SetRadius,   /**< Setting radius in command line. */
+        SetTrim    /**< Setting trim flag in command line. */
+    };
+
+    RS_Entity *entity1 = nullptr;
+    RS_Entity *entity2 = nullptr;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    /** Last status before entering angle. */
+    Status lastStatus = SetEntity1;
+
+    bool removeOldFillet(RS_Entity *e, const bool &isPolyline);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
-
-private:
-    RS_Entity *entity1 = nullptr;
-    RS_Entity *entity2 = nullptr;
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-/** Last status before entering angle. */
-    Status lastStatus = SetEntity1;
 };
-
 #endif

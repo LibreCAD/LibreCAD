@@ -329,29 +329,28 @@ void RS_ActionDrawCircleTan1_2P::mouseRightButtonReleaseEvent(int status, [[mayb
     if (status > 0){
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawCircleTan1_2P::coordinateEvent(RS_CoordinateEvent *e){
-
-    RS_Vector mouse = e->getCoordinate();
+void RS_ActionDrawCircleTan1_2P::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     pPoints->coord = mouse;
-    int status = getStatus();
     switch (status) {
-
-        case SetPoint1:
+        case SetPoint1: {
             pPoints->points.clear();
             pPoints->points.push_back(mouse);
             setStatus(status + 1);
             break;
-
-        case SetPoint2:
+        }
+        case SetPoint2: {
 //		pPoints->points.reserve(1);
             pPoints->points.push_back(mouse);
-            if (getCenters()){
+            if (getCenters()) {
                 if (pPoints->centers.size() == 1) trigger();
                 else setStatus(status + 1);
             }
+            break;
+        }
+        default:
             break;
     }
 }

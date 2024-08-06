@@ -252,12 +252,8 @@ void RS_ActionDrawArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]
     }
 }
 
-void RS_ActionDrawArc::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetCenter: {
             data->center = mouse;
             moveRelativeZero(mouse);

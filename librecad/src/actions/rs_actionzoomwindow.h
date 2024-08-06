@@ -37,22 +37,22 @@
 class RS_ActionZoomWindow : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
-    enum Status {
-        SetFirstCorner,
-        SetSecondCorner
-    };
     RS_ActionZoomWindow(RS_EntityContainer& container,
                         RS_GraphicView& graphicView,
                         bool keepAspectRatio=true);
     ~RS_ActionZoomWindow() override;
 
-	void init(int status=0) override;
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
-
+    void init(int status) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
+    enum Status {
+        SetFirstCorner,
+        SetSecondCorner
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool keepAspectRatio = false;
@@ -60,5 +60,4 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
-
 #endif

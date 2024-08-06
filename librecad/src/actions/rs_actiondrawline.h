@@ -36,12 +36,24 @@
  *
  * @author Andrew Mustun
  */
-class RS_ActionDrawLine : public RS_PreviewActionInterface
-{
+class RS_ActionDrawLine : public RS_PreviewActionInterface{
     Q_OBJECT
-
-
 public:
+    RS_ActionDrawLine(RS_EntityContainer& container,
+                      RS_GraphicView& graphicView);
+    ~RS_ActionDrawLine() override;
+    void reset();
+    void init(int status) override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+    void close();
+    void next();
+    void undo();
+    void redo();
+
+protected:
     /// Action States
     enum Status {
         SetStartpoint,   ///< Setting the startpoint
@@ -56,38 +68,16 @@ public:
         HA_Next             ///< Start new group of lines
     };
 
-public:
-    RS_ActionDrawLine(RS_EntityContainer& container,
-                      RS_GraphicView& graphicView);
-    ~RS_ActionDrawLine() override;
-
-    void reset();
-
-    void init(int status=0) override;
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    QStringList getAvailableCommands() override;
-
-    void updateMouseButtonHints() override;
-    void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
-
-    void close();
-    void next();
-    void undo();
-    void redo();
-
-protected:
     struct History;
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
+
+    void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

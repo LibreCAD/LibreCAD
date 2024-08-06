@@ -34,29 +34,26 @@
 
 
 class LC_ActionDimArc : public RS_ActionDimension{
-    Q_OBJECT
-
-private:
-    enum Status{
-        SetEntity,
-        SetPos
-    };
+   Q_OBJECT
 public:
     LC_ActionDimArc(RS_EntityContainer& container, RS_GraphicView& graphicView);
     ~LC_ActionDimArc() override;
     void reset()   override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e)    override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
-private:
+protected:
+    enum Status{
+        SetEntity,
+        SetPos
+    };
     RS_Entity* selectedArcEntity = nullptr;
     LC_DimArcData dimArcData;
     void setRadius(const RS_Vector& selectedPosition);
-protected:
     bool doProcessCommand(int status, const QString &command)  override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 #endif //LC_ACTIONDIMARC_H

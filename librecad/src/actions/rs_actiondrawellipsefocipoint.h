@@ -23,7 +23,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #ifndef RS_ACTIONDRAWELLIPSEFOCIPOINT_H
 #define RS_ACTIONDRAWELLIPSEFOCIPOINT_H
 
-
 #include "lc_actiondrawcirclebase.h"
 
 /**
@@ -32,17 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  * @author Dongxu Li
  */
 class RS_ActionDrawEllipseFociPoint:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetFocus1,   //  Setting the first focus.  */
-        SetFocus2,    //  Setting the second focus. */
-        SetPoint    //  Setting a point on ellipse
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawEllipseFociPoint(
         RS_EntityContainer &container,
@@ -51,19 +40,24 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetFocus1,   //  Setting the first focus.  */
+        SetFocus2,    //  Setting the second focus. */
+        SetPoint    //  Setting a point on ellipse
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
-private:
     double findRatio() const;
-protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString getAdditionalHelpMessage() override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

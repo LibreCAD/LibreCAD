@@ -36,15 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyTrimAmount:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseTrimEntity      /**< Choosing the entity to trim. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyTrimAmount(
         RS_EntityContainer &container,
@@ -62,7 +54,14 @@ public:
     bool isSymmetricDistance(){return symmetricDistance;};
     void mouseMoveEvent(QMouseEvent *event) override;
 
-private:
+protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        ChooseTrimEntity      /**< Choosing the entity to trim. */
+    };
+
     RS_AtomicEntity *trimEntity = nullptr;
     std::unique_ptr<RS_Vector> trimCoord;
     double distance = 0.;
@@ -77,12 +76,10 @@ private:
     QString cmdDistance3;
     */
     double determineDistance(const RS_AtomicEntity *e) const;
-protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
 };
-
 #endif

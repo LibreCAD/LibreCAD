@@ -39,7 +39,7 @@ public:
     };
     LC_ActionPenApply(RS_EntityContainer& container,RS_GraphicView& graphicView, bool copy);
 
-    void init(int status=0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;

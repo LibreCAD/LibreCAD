@@ -35,17 +35,7 @@ struct RS_CircleData;
  * @author Dongxu Li
  */
 class RS_ActionDrawCircleTan2:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCircle1,   //  Setting the First Circle.  */
-        SetCircle2,   //  Setting the Second Circle.  */
-        SetCenter   //  select the closest tangential Circle.  */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawCircleTan2(
         RS_EntityContainer &container,
@@ -63,17 +53,24 @@ public:
     void updateMouseButtonHints() override;
     void setRadius(double);
     double getRadius() const;
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetCircle1,   //  Setting the First Circle.  */
+        SetCircle2,   //  Setting the Second Circle.  */
+        SetCenter   //  select the closest tangential Circle.  */
+    };
+
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
     RS_Entity *catchCircle(QMouseEvent *e);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
 };
-
 #endif

@@ -108,7 +108,7 @@ void LC_ActionDrawLineFromPointToLine::doInitialSnapToRelativeZero(RS_Vector zer
 void LC_ActionDrawLineFromPointToLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
     switch (status){
         case (SetPoint):{
-            onCoordinateEvent(snapPoint, false, status);
+            onCoordinateEvent(status, false, snapPoint);
             break;
         }
         case (SelectLine):{
@@ -171,7 +171,7 @@ void LC_ActionDrawLineFromPointToLine::doPreparePreviewEntities([[maybe_unused]]
  * @param isZero
  * @param status
  */
-void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(const RS_Vector &coord, [[maybe_unused]]bool isZero, int status){
+void LC_ActionDrawLineFromPointToLine::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
     if (status == SetPoint){
         startPoint = coord;
         // for simplicity of line selection, remove snap restrictions until we'll select a line

@@ -106,12 +106,12 @@ void RS_ActionDrawCircle2P::preparePreview() {
 void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     switch (getStatus()) {
-        case SetPoint1:
+        case SetPoint1: {
             pPoints->point1 = mouse;
             trySnapToRelZeroCoordinateEvent(e);
             break;
-
-        case SetPoint2:
+        }
+        case SetPoint2: {
             deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
             pPoints->point2 = mouse;
@@ -126,7 +126,7 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             }
             drawPreview();
             break;
-
+        }
         default:
             break;
     }
@@ -142,44 +142,38 @@ void RS_ActionDrawCircle2P::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
 
 void RS_ActionDrawCircle2P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawCircle2P::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-    case SetPoint1: {
-        pPoints->point1 = mouse;
-        moveRelativeZero(mouse);
-        setStatus(SetPoint2);
-        break;
-    }
-    case SetPoint2: {
-        pPoints->point2 = mouse;
-        moveRelativeZero(mouse);
-        trigger();
-        break;
-    }
-    default:
-        break;
+void RS_ActionDrawCircle2P::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetPoint1: {
+            pPoints->point1 = mouse;
+            moveRelativeZero(mouse);
+            setStatus(SetPoint2);
+            break;
+        }
+        case SetPoint2: {
+            pPoints->point2 = mouse;
+            moveRelativeZero(mouse);
+            trigger();
+            break;
+        }
+        default:
+            break;
     }
 }
 
 void RS_ActionDrawCircle2P::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetPoint1:
-        updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
-        break;
-    case SetPoint2:
-        updateMouseWidgetTRBack(tr("Specify second point"), MOD_SHIFT_ANGLE_SNAP);
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetPoint1:
+            updateMouseWidgetTRCancel(tr("Specify first point"), MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        case SetPoint2:
+            updateMouseWidgetTRBack(tr("Specify second point"), MOD_SHIFT_ANGLE_SNAP);
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }

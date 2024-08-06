@@ -40,11 +40,18 @@ struct RS_DimAngularData;
  *
  * @author Andrew Mustun
  */
-class RS_ActionDimAngular : public RS_ActionDimension
-{
+class RS_ActionDimAngular : public RS_ActionDimension{
     Q_OBJECT
-
-private:
+public:
+    RS_ActionDimAngular(RS_EntityContainer& container,
+                        RS_GraphicView& graphicView);
+    ~RS_ActionDimAngular() override;
+    void reset() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+protected:
     enum Status {
         SetLine1,      ///< Choose 1st line
         SetLine2,      ///< Choose 2nd line
@@ -52,20 +59,6 @@ private:
         SetText        ///< Setting text label in console
     };
 
-public:
-    RS_ActionDimAngular(RS_EntityContainer& container,
-                        RS_GraphicView& graphicView);
-    ~RS_ActionDimAngular() override;
-
-    void reset() override;
-
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
-private:
     RS_Line*     line1 = nullptr;                          ///< 1st chosen line
     RS_Line*     line2 = nullptr;                          ///< 2nd chosen line
     RS_Vector   click1;                         ///< 1st click pos
@@ -80,11 +73,9 @@ private:
     void lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2);
     int determineQuadrant(const double angle);
     bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
-
-protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

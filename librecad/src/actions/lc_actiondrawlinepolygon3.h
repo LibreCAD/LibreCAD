@@ -37,34 +37,30 @@
  */
 class LC_ActionDrawLinePolygonCenTan : public LC_ActionDrawLinePolygonBase {
     Q_OBJECT
-
-  enum Status {
+public:
+    LC_ActionDrawLinePolygonCenTan(RS_EntityContainer& container,
+                              RS_GraphicView& graphicView);
+    ~LC_ActionDrawLinePolygonCenTan() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
+    QStringList getAvailableCommands() override;
+protected:
+    enum Status {
         SetCenter,    /**< Setting center. */
         SetTangent,    /**< Setting tangent. */
         SetNumber     /**< Setting number in the command line. */
     };
 
-public:
-    LC_ActionDrawLinePolygonCenTan(RS_EntityContainer& container,
-                              RS_GraphicView& graphicView);
-    ~LC_ActionDrawLinePolygonCenTan() override;
-
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    QStringList getAvailableCommands() override;
-protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-private:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
     /** Last status before entering text. */
     Status lastStatus = SetCenter;
-};
 
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+};
 #endif // LC_ACTIONDRAWLINEPOLYGON3_H

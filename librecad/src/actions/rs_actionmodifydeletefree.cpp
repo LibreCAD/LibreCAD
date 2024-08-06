@@ -144,7 +144,7 @@ void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEv
 }
 
 void RS_ActionModifyDeleteFree::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *mouse_event){
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionModifyDeleteFree::updateMouseButtonHints() {

@@ -38,14 +38,8 @@ class RS_Vector;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineParallelThrough:public RS_PreviewActionInterface {
-Q_OBJECT
-    enum Status {
-        SetEntity,    /**< Choose original entity. */
-        SetPos,       /**< Setting point for this parallel to go through. */
-        SetNumber     /**< Setting number in the command line. */
-    };
+    Q_OBJECT
 public:
-
     RS_ActionDrawLineParallelThrough(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -53,7 +47,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void updateMouseButtonHints() override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
     int getNumber() const;
@@ -61,12 +54,12 @@ public:
     bool isSymmetric(){return symmetric;};
     void setSymmetric(bool value){symmetric = value;};
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-private:
+    enum Status {
+        SetEntity,    /**< Choose original entity. */
+        SetPos,       /**< Setting point for this parallel to go through. */
+        SetNumber     /**< Setting number in the command line. */
+    };
+
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;
 /** Number of parallels. */
@@ -79,6 +72,12 @@ private:
     RS_Entity *entity = nullptr;
 /** Last status before entering length or number. */
     Status lastStatus = SetEntity;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+};
 #endif

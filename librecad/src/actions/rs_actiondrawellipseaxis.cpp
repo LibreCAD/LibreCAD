@@ -73,7 +73,7 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() = default;
 
 void RS_ActionDrawEllipseAxis::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
 
     if (status == SetCenter){
         pPoints->center = {};
@@ -233,20 +233,19 @@ void RS_ActionDrawEllipseAxis::mouseLeftButtonReleaseEvent(int status, QMouseEve
             snap = getSnapAngleAwarePoint(e, pPoints->center, snap);
             break;
         }
+        default:
+            break;
     }
     fireCoordinateEvent(snap);
 }
 
 void RS_ActionDrawEllipseAxis::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawEllipseAxis::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-    RS_Vector const &mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawEllipseAxis::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetCenter: {
             pPoints->center = mouse;
             moveRelativeZero(mouse);

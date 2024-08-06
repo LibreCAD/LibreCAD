@@ -41,20 +41,7 @@ struct RS_CircleData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawCircle : public LC_ActionDrawCircleBase {
-	Q_OBJECT
-
-protected:
-    bool doProcessCommand(int status, const QString &command) override;
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCenter,       /**< Setting the center point. */
-        SetRadius        /**< Setting the radius. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawCircle(
         RS_EntityContainer &container,
@@ -63,14 +50,21 @@ public:
     void reset() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetCenter,       /**< Setting the center point. */
+        SetRadius        /**< Setting the radius. */
+    };
+
     /**
      * Circle data defined so far.
      */
     std::unique_ptr<RS_CircleData> data;
-
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

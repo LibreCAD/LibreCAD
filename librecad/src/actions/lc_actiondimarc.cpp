@@ -170,15 +170,13 @@ void LC_ActionDimArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
 
 void LC_ActionDimArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void LC_ActionDimArc::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    switch (getStatus()) {
+void LC_ActionDimArc::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetPos: {
-            setRadius(e->getCoordinate());
+            setRadius(pos);
             trigger();
             reset();
             setStatus(SetEntity);
@@ -226,4 +224,3 @@ void LC_ActionDimArc::setRadius(const RS_Vector &selectedPosition){
         dimArcData.radius = minimumRadius;
     }
 }
-

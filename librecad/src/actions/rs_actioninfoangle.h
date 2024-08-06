@@ -36,16 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoAngle:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetEntity1,    /**< Setting the 1st entity. */
-        SetEntity2     /**< Setting the 2nd entity. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionInfoAngle(
         RS_EntityContainer &container,
@@ -57,14 +48,20 @@ public:
     void updateMouseButtonHints() override;
     void mouseMoveEvent(QMouseEvent *event) override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+  * Action States.
+  */
+    enum Status {
+        SetEntity1,    /**< Setting the 1st entity. */
+        SetEntity2     /**< Setting the 2nd entity. */
+    };
     RS_Entity *entity1 = nullptr;
     RS_Entity *entity2 = nullptr;
     struct Points;
     std::unique_ptr<Points> pPoints;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

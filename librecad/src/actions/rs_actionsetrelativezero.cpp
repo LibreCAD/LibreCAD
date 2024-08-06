@@ -60,13 +60,11 @@ void RS_ActionSetRelativeZero::mouseLeftButtonReleaseEvent([[maybe_unused]]int s
 }
 
 void RS_ActionSetRelativeZero::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionSetRelativeZero::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    *pt = e->getCoordinate();
+void RS_ActionSetRelativeZero::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    *pt = pos;
     trigger();
     updateMouseButtonHints();
 }

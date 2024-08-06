@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QMouseEvent>
 
 #include "rs_actioneditpaste.h"
@@ -70,7 +69,7 @@ void RS_ActionEditPaste::trigger() {
 
 void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     switch (getStatus()) {
-        case SetTargetPoint:
+        case SetTargetPoint: {
             *targetPoint = snapPoint(e);
 
             deletePreview();
@@ -85,7 +84,7 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
             }
             drawPreview();
             break;
-
+        }
         default:
             break;
     }
@@ -97,13 +96,11 @@ void RS_ActionEditPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
 }
 
 void RS_ActionEditPaste::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionEditPaste::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) return;
-
-    *targetPoint = e->getCoordinate();
+void RS_ActionEditPaste::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    *targetPoint = pos;
     trigger();
 }
 

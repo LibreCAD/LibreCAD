@@ -1,3 +1,4 @@
+
 /****************************************************************************
 **
 ** This file is part of the LibreCAD project, a 2D CAD program
@@ -30,7 +31,6 @@
 #include <memory>
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to measure distances between 
  * two points.
@@ -38,16 +38,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoDist:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPoint1,    /**< Setting the 1st point of the distance. */
-        SetPoint2     /**< Setting the 2nd point of the distance. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionInfoDist(
         RS_EntityContainer &container,
@@ -56,15 +47,21 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+    * Action States.
+    */
+    enum Status {
+        SetPoint1,    /**< Setting the 1st point of the distance. */
+        SetPoint2     /**< Setting the 2nd point of the distance. */
+    };
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

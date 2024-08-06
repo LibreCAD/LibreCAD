@@ -61,7 +61,7 @@ class LC_ActionLayersExport : public RS_ActionInterface
                                RS_LayerList* inputLayersList, 
                                Mode inputExportMode);
 
-        void init(int status=0) override;
+        void init(int status) override;
 
         void trigger() override;
 

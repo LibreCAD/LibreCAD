@@ -40,23 +40,23 @@
 
 struct RS_ActionDrawSpline::Points {
 
-	/**
-	 * Spline data defined so far.
-	 */
-	RS_SplineData data;
-	/**
-	 * Polyline entity we're working on.
-	 */
-	RS_Spline* spline{nullptr};
-	/**
-	 * Point history (for undo)
-	 */
-		QList<RS_Vector> history;
+/**
+ * Spline data defined so far.
+ */
+    RS_SplineData data;
+/**
+ * Polyline entity we're working on.
+ */
+    RS_Spline* spline{nullptr};
+/**
+ * Point history (for undo)
+ */
+    QList<RS_Vector> history;
 
-	/**
-	 * Bulge history (for undo)
-	 */
-		//QList<double> bHistory;
+/**
+ * Bulge history (for undo)
+ */
+//QList<double> bHistory;
 };
 
 RS_ActionDrawSpline::RS_ActionDrawSpline(
@@ -77,7 +77,6 @@ void RS_ActionDrawSpline::reset(){
 
 void RS_ActionDrawSpline::init(int status){
     RS_PreviewActionInterface::init(status);
-
     reset();
 }
 
@@ -114,9 +113,10 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status) {
-        case SetStartpoint:
+        case SetStartpoint: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
+        }
         case SetNextPoint: {
             if (pPoints->spline /*&& point.valid*/){
                 deletePreview();
@@ -156,15 +156,11 @@ void RS_ActionDrawSpline::mouseRightButtonReleaseEvent(int status, [[maybe_unuse
             trigger();
     }
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawSpline::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawSpline::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetStartpoint: {
             //data.startpoint = mouse;
             //point = mouse;
@@ -242,13 +238,14 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
     switch (getStatus()) {
         case SetStartpoint:
             break;
-        case SetNextPoint:
+        case SetNextPoint: {
             if (pPoints->history.size() >= 2){
                 cmd += command("undo");
             } else if (pPoints->history.size() >= 3){
                 cmd += command("close");
             }
             break;
+        }
         default:
             break;
     }
@@ -257,9 +254,10 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
 
 void RS_ActionDrawSpline::updateMouseButtonHints(){
     switch (getStatus()) {
-        case SetStartpoint:
+        case SetStartpoint: {
             updateMouseWidgetTRCancel(tr("Specify first control point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
+        }
         case SetNextPoint: {
             QString msg = "";
 

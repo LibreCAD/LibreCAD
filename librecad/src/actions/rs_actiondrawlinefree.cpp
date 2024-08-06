@@ -125,7 +125,7 @@ void RS_ActionDrawLineFree::mouseRightButtonReleaseEvent(int status, [[maybe_unu
     if (polyline.get()) {
         polyline.reset();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionDrawLineFree::updateMouseButtonHints() {

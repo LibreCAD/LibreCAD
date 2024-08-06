@@ -108,8 +108,6 @@ void RS_ActionBlocksCreate::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-
-
 void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     if (e->button()==Qt::LeftButton) {
         fireCoordinateEventForSnap(e);
@@ -118,14 +116,10 @@ void RS_ActionBlocksCreate::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionBlocksCreate::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e == nullptr) {
-        return;
-    }
-
-    switch (getStatus()) {
+void RS_ActionBlocksCreate::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetReferencePoint: {
-            *referencePoint = e->getCoordinate();
+            *referencePoint = pos;
             trigger();
             break;
         }

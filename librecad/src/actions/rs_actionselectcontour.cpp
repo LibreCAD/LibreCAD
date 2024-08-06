@@ -72,7 +72,7 @@ void RS_ActionSelectContour::mouseLeftButtonReleaseEvent([[maybe_unused]] int st
 }
 
 void RS_ActionSelectContour::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 RS2::CursorType RS_ActionSelectContour::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;

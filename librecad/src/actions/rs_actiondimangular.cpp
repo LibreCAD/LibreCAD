@@ -170,17 +170,13 @@ void RS_ActionDimAngular::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
 
 void RS_ActionDimAngular::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDimAngular::coordinateEvent(RS_CoordinateEvent* e){
-    if (e == nullptr) {
-        return;
-    }
-
-    switch (getStatus()) {
+void RS_ActionDimAngular::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetPos:
-            if (setData(e->getCoordinate())){
+            if (setData(pos)){
                 trigger();
                 reset();
                 setStatus(SetLine1);
@@ -220,11 +216,9 @@ QStringList RS_ActionDimAngular::getAvailableCommands(){
     case SetPos:
         cmd += command( QStringLiteral( "text"));
         break;
-
     default:
         break;
     }
-
     return cmd;
 }
 

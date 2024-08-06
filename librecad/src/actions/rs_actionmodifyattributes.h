@@ -36,21 +36,18 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyAttributes : public LC_ActionPreSelectionAwareBase {
-Q_OBJECT
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        Acknowledge    /**< Acknowledge or cancel. */
-    };
+    Q_OBJECT
 public:
     RS_ActionModifyAttributes(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
     void trigger() override;
 protected:
+    /**
+    * Action States.
+    */
+    enum Status {
+        Acknowledge    /**< Acknowledge or cancel. */
+    };
     void updateMouseButtonHintsForSelection() override;
 };
-
 #endif

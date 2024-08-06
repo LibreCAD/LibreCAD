@@ -39,32 +39,19 @@ class QG_PrintPreviewOptions;
  * @author Andrew Mustun
  */
 class RS_ActionPrintPreview : public RS_ActionInterface {
-Q_OBJECT
-
-
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        Neutral,
-        Moving
-    };
-
+    Q_OBJECT
 public:
     RS_ActionPrintPreview(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionPrintPreview() override;
 
-    void init(int status=Neutral) override;
+    void init(int status) override;
     void resume() override;
 
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
 
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     QStringList getAvailableCommands() override;
 
     void center();
@@ -91,19 +78,23 @@ public:
     int getPagesNumVertical();
 
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-
-    bool doProcessCommand(int status, const QString &command) override;
-
-    QString getAdditionalHelpMessage() override;
-
-private:
+    /**
+    * Action States.
+    */
+    enum Status {
+        Neutral,
+        Moving
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
     std::unique_ptr<QG_PrintPreviewOptions> m_option;
     bool hasOptions = false;
     bool m_bPaperOffset = false;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    QString getAdditionalHelpMessage() override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+};
 #endif

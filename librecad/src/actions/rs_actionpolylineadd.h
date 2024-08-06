@@ -35,15 +35,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionPolylineAdd:public RS_PreviewActionInterface {
-Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseSegment,  /**< Choosing a segment of existing polyline to add node. */
-        SetAddCoord   /**< Setting the reference point. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionPolylineAdd(
         RS_EntityContainer &container,
@@ -55,13 +47,20 @@ public:
     void updateMouseButtonHints() override;
     void finish(bool updateTB) override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+     * Action States.
+     */
+    enum Status {
+        ChooseSegment,  /**< Choosing a segment of existing polyline to add node. */
+        SetAddCoord   /**< Setting the reference point. */
+    };
+
     RS_Polyline *polylineToModify = nullptr;
     RS_Entity *addSegment = nullptr;
     std::unique_ptr<RS_Vector> addCoord;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

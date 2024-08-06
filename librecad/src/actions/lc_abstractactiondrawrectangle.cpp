@@ -180,7 +180,9 @@ void LC_AbstractActionDrawRectangle::doPreparePreviewEntities([[maybe_unused]]QM
  * inherited actions
  * @param coordinate event
  */
-void LC_AbstractActionDrawRectangle::onCoordinateEvent(const RS_Vector &coord, bool isZero, int status){
+
+
+void LC_AbstractActionDrawRectangle::onCoordinateEvent(int status, bool isZero, const RS_Vector &coord) {
     switch (status) {
         case SetBevels:
             // actually, we'll allow zero values there - together with drawing as individual lines, that may
@@ -635,6 +637,3 @@ void LC_AbstractActionDrawRectangle::doBack([[maybe_unused]]QMouseEvent *pEvent,
             break;
     }
 }
-
-
-

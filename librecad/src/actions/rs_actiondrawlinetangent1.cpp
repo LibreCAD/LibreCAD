@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-#include<QAction>
 #include <QMouseEvent>
 
 #include "rs_actiondrawlinetangent1.h"
@@ -35,7 +34,6 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 // fixme - add reference points
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
@@ -43,9 +41,8 @@ RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_GraphicView& graphicView)
 	:RS_PreviewActionInterface("Draw Tangents 1", container, graphicView)
 	,tangent(nullptr)
-	,point(new RS_Vector{})
-{
-	actionType=RS2::ActionDrawLineTangent1;
+	,point(new RS_Vector{}){
+    actionType=RS2::ActionDrawLineTangent1;
 }
 
 RS_ActionDrawLineTangent1::~RS_ActionDrawLineTangent1() = default;
@@ -125,11 +122,12 @@ void RS_ActionDrawLineTangent1::mouseLeftButtonReleaseEvent(int status, QMouseEv
             fireCoordinateEventForSnap(e);
             break;
         }
-        case SetCircle:
+        case SetCircle: {
             if (tangent){
                 trigger();
             }
             break;
+        }
         default:
             break;
     }
@@ -137,14 +135,13 @@ void RS_ActionDrawLineTangent1::mouseLeftButtonReleaseEvent(int status, QMouseEv
 
 void RS_ActionDrawLineTangent1::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLineTangent1::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e) return;
-    switch (getStatus()) {
+void RS_ActionDrawLineTangent1::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetPoint: {
-            *point = e->getCoordinate();
+            *point = pos;
             moveRelativeZero(*point);
             setStatus(SetCircle);
             break;

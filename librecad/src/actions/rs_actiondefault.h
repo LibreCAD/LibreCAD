@@ -43,20 +43,6 @@ class RS_ActionDefault : public RS_PreviewActionInterface {
     Q_OBJECT
 
     using BASE_CLASS = RS_PreviewActionInterface;
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        Neutral,        /**< we don't know what we do yet.  */
-        Dragging,       /**< dragging (either an entity or the
-                                             first part of a selection window) */
-        SetCorner2,     /**< Setting the 2nd corner of a selection window. */
-        Moving,         /**< Moving entities (drag'n'drop) */
-        MovingRef,       /**< Moving a reference point of one or more selected
-                                             entities */
-        Panning /**< view panning triggered by Ctl- mouse dragging */
-    };
 
 public:
     RS_ActionDefault(RS_EntityContainer& container,
@@ -65,7 +51,7 @@ public:
 
     void finish(bool /*updateTB*/ = true ) override{}
 
-    void init(int status=0) override;
+    void init(int status) override;
     void resume() override;
     void suspend() override;
 
@@ -83,9 +69,24 @@ public:
     void clearHighLighting();
     enum RS2::EntityType getTypeToSelect();
 protected:
+    /**
+    * Action States.
+    */
+    enum Status {
+        Neutral,        /**< we don't know what we do yet.  */
+        Dragging,       /**< dragging (either an entity or the
+                                             first part of a selection window) */
+        SetCorner2,     /**< Setting the 2nd corner of a selection window. */
+        Moving,         /**< Moving entities (drag'n'drop) */
+        MovingRef,       /**< Moving a reference point of one or more selected
+                                             entities */
+        Panning /**< view panning triggered by Ctl- mouse dragging */
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::SnapRestriction snapRestriction;
+    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 
     bool allowEntityQuickInfoForCTRL = false;
     bool allowEntityQuickInfoAuto = false;
@@ -96,10 +97,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
-    RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
 };
-
 #endif

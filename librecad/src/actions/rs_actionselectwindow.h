@@ -36,16 +36,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionSelectWindow:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCorner1,     /**< Setting the 1st corner of the window.  */
-        SetCorner2      /**< Setting the 2nd corner of the window. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionSelectWindow(
         RS_EntityContainer &container,
@@ -63,15 +54,22 @@ public:
     void updateMouseButtonHints() override;
     enum RS2::EntityType getTypeToSelect();
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetCorner1,     /**< Setting the 1st corner of the window.  */
+        SetCorner2      /**< Setting the 2nd corner of the window. */
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
     enum RS2::EntityType typeToSelect = RS2::EntityType::EntityUnknown;
     bool select = false;
     bool selectIntersecting = false;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

@@ -33,7 +33,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_modification.h"
-#include "rs_math.h"
 #include "lc_rotate2options.h"
 
 RS_ActionModifyRotate2::RS_ActionModifyRotate2(RS_EntityContainer& container, RS_GraphicView& graphicView)
@@ -54,7 +53,6 @@ void RS_ActionModifyRotate2::init(int status) {
 }
 
 void RS_ActionModifyRotate2::trigger(){
-
     RS_DEBUG->print("RS_ActionModifyRotate2::trigger()");
 
     RS_Modification m(*container, graphicView);
@@ -72,11 +70,11 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
     int status = getStatus();
     deletePreview();
     switch (status) {
-        case SetReferencePoint1:
+        case SetReferencePoint1: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
-
-        case SetReferencePoint2:
+        }
+        case SetReferencePoint2: {
             if (data->center1.valid){
                 mouse = getSnapAngleAwarePoint(e, data->center1, mouse, true);
                 previewRefPoint(data->center1);
@@ -88,7 +86,7 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
                 previewRefPointsForMultipleCopies(mouse);
             }
             break;
-
+        }
         default:
             break;
     }
@@ -100,9 +98,10 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
 void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     switch (status){
-        case SetReferencePoint2:
+        case SetReferencePoint2: {
             snap = getSnapAngleAwarePoint(e, data->center1, snap, false);
             break;
+        }
     }
     fireCoordinateEvent(snap);
 }
@@ -110,25 +109,20 @@ void RS_ActionModifyRotate2::mouseLeftButtonReleaseEventSelected(int status, QMo
 void RS_ActionModifyRotate2::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     switch (status) {
-        case SetReferencePoint2:
+        case SetReferencePoint2: {
             setStatus(SetReferencePoint1);
             break;
-        case SetReferencePoint1:
+        }
+        case SetReferencePoint1: {
             selectionComplete = false;
             break;
+        }
         default:
             break;
     }
 }
 
-void RS_ActionModifyRotate2::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector pos = e->getCoordinate();
-
-    int status = getStatus();
+void RS_ActionModifyRotate2::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetReferencePoint1: {
             data->center1 = pos;

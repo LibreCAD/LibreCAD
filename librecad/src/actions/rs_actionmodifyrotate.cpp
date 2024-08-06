@@ -45,7 +45,7 @@ RS_ActionModifyRotate::RS_ActionModifyRotate(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
     :LC_ActionModifyBase("Rotate Entities",container, graphicView)
 	,data(new RS_RotateData()){
-	actionType=RS2::ActionModifyRotate;
+    actionType=RS2::ActionModifyRotate;
 }
 
 RS_ActionModifyRotate::~RS_ActionModifyRotate() = default;
@@ -239,16 +239,11 @@ void RS_ActionModifyRotate::keyPressEvent(QKeyEvent *e) {
     }
 }
 
-void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector pos = e->getCoordinate();
+void RS_ActionModifyRotate::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     if (!pos.valid){
         return;
     }
-    switch (getStatus()) {
+    switch (status) {
         case SetReferencePoint: {
             if (selectRefPointFirst){
                 data->refPoint = pos;
@@ -349,11 +344,12 @@ void RS_ActionModifyRotate::coordinateEvent(RS_CoordinateEvent *e){
             break;
         }
         case SetTargetPoint2ndRotation:{
-            pos-=data->refPoint;
-            if (pos.squared() < RS_TOLERANCE2){
+            RS_Vector coord = pos;
+            coord-=data->refPoint;
+            if (coord.squared() < RS_TOLERANCE2){
                 data->secondAngle = 0.;//angle not well-defined
             } else {
-                data->secondAngle = RS_Math::correctAngle(pos.angle() - data->secondAngle);
+                data->secondAngle = RS_Math::correctAngle(coord.angle() - data->secondAngle);
             }
             tryTrigger();
             break;

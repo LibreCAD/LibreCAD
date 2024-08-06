@@ -164,11 +164,11 @@ void RS_ActionModifyOffset::mouseRightButtonReleaseEventSelected(int status, [[m
             selectionComplete = false;
         }
         else{
-            init(status - 1);
+            initPrevious(status);
         }
     }
     else{
-        init(status - 1);
+        initPrevious(status);
     }
 }
 

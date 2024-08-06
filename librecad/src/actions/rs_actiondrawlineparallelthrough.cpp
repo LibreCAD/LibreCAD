@@ -44,8 +44,8 @@ RS_ActionDrawLineParallelThrough::RS_ActionDrawLineParallelThrough(
 		:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
 		,coord(new RS_Vector{})
 		,lastStatus(SetEntity){
-	actionType=RS2::ActionDrawLineParallelThrough;
-	m_SnapDistance=1.;
+    actionType=RS2::ActionDrawLineParallelThrough;
+    m_SnapDistance=1.;
 }
 
 RS_ActionDrawLineParallelThrough::~RS_ActionDrawLineParallelThrough() = default;
@@ -140,22 +140,16 @@ void RS_ActionDrawLineParallelThrough::mouseRightButtonReleaseEvent(int status, 
     if (entity){
         entity = nullptr;
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLineParallelThrough::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-        case SetPos:
+void RS_ActionDrawLineParallelThrough::onCoordinateEvent(int status,[[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetPos: {
             *coord = mouse;
             trigger();
             break;
-
+        }
         default:
             break;
     }
@@ -240,11 +234,11 @@ RS2::CursorType RS_ActionDrawLineParallelThrough::doGetMouseCursor([[maybe_unuse
 }
 
 int RS_ActionDrawLineParallelThrough::getNumber() const{
-	return number;
+    return number;
 }
 
 void RS_ActionDrawLineParallelThrough::setNumber(int n) {
-	number = n;
+    number = n;
 }
 
 LC_ActionOptionsWidget* RS_ActionDrawLineParallelThrough::createOptionsWidget(){

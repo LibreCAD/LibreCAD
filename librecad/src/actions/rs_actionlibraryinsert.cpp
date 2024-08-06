@@ -37,8 +37,8 @@
 #include "qg_libraryinsertoptions.h"
 
 struct RS_ActionLibraryInsert::Points {
-	RS_Graphic prev;
-	RS_LibraryInsertData data;
+    RS_Graphic prev;
+    RS_LibraryInsertData data;
 };
 
 /**
@@ -50,7 +50,7 @@ RS_ActionLibraryInsert::RS_ActionLibraryInsert(RS_EntityContainer& container,
 						   container, graphicView)
 		, pPoints(std::make_unique<Points>())
 		,lastStatus(SetTargetPoint){
-	actionType=RS2::ActionLibraryInsert;
+    actionType=RS2::ActionLibraryInsert;
 }
 
 RS_ActionLibraryInsert::~RS_ActionLibraryInsert() = default;
@@ -117,15 +117,11 @@ void RS_ActionLibraryInsert::mouseLeftButtonReleaseEvent([[maybe_unused]]int sta
 }
 
 void RS_ActionLibraryInsert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionLibraryInsert::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
-        return;
-    }
-
-    pPoints->data.insertionPoint = e->getCoordinate();
+void RS_ActionLibraryInsert::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    pPoints->data.insertionPoint = pos;
     trigger();
 }
 
@@ -189,7 +185,6 @@ QStringList RS_ActionLibraryInsert::getAvailableCommands() {
         default:
             break;
     }
-
     return cmd;
 }
 

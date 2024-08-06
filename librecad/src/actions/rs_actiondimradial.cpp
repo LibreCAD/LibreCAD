@@ -44,14 +44,13 @@
 RS_ActionDimRadial::RS_ActionDimRadial(
     RS_EntityContainer& container,
     RS_GraphicView& graphicView)
-        :RS_ActionDimension("Draw Radial Dimensions",
-					container, graphicView)
-        , entity(nullptr)
-        , pos(std::make_unique<RS_Vector>())
-        , edata{ std::make_unique<RS_DimRadialData>()}
-        , lastStatus(SetEntity)
-{
-	actionType=RS2::ActionDimRadial;
+    :RS_ActionDimension("Draw Radial Dimensions",
+                        container, graphicView)
+    , entity(nullptr)
+    , pos(std::make_unique<RS_Vector>())
+    , edata{ std::make_unique<RS_DimRadialData>()}
+    , lastStatus(SetEntity){
+    actionType=RS2::ActionDimRadial;
     reset();
 }
 
@@ -174,15 +173,13 @@ void RS_ActionDimRadial::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
 
 void RS_ActionDimRadial::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDimRadial::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    switch (getStatus()) {
+void RS_ActionDimRadial::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &coord) {
+    switch (status) {
         case SetPos: {
-            *pos = e->getCoordinate();
+            *pos = coord;
             trigger();
             reset();
             setStatus(SetEntity);

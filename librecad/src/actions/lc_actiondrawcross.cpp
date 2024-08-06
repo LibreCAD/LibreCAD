@@ -28,6 +28,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_actiondrawcross.h"
 #include "lc_crossoptions.h"
 
+// todo - it is possible to duplicate UI by commands, but it seems that's not too practical
+// todo - the action should be initiated by mouse anyway, so in order to make the action fully scriptable,
+// todo - it is necessary either have command for entity selection or skip commands for now
+
 /**
  * Simple action that draws a cross located in the center of selected circle, arc, ellipse or ellipse arc.
  * Size and angle of cross is controlled by options.
@@ -269,13 +273,6 @@ void LC_ActionDrawCross::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent 
     if (status == SetEntity){
         trigger(); // just draw cross on click
     }
-}
-
-void LC_ActionDrawCross::coordinateEvent([[maybe_unused]]RS_CoordinateEvent *e){
-//    RS_ActionInterface::coordinateEvent(e);
-// todo - it is possible to duplicate UI by commands, but it seems that's not too practical
-// todo - the action should be initiated by mouse anyway, so in order to make the action fully scriptable,
-// todo - it is necessary either have command for entity selection or skip commands for now
 }
 
 void LC_ActionDrawCross::updateMouseButtonHints(){

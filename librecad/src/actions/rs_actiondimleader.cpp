@@ -158,7 +158,7 @@ void RS_ActionDimLeader::mouseRightButtonReleaseEvent(int status, [[maybe_unused
         setStatus(SetStartpoint);
     } else {
         deletePreview();
-        init(status - 1);
+        initPrevious(status);
     }
 }
 
@@ -170,26 +170,20 @@ void RS_ActionDimLeader::keyPressEvent(QKeyEvent* e) {
     }
 }
 
-void RS_ActionDimLeader::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-        case SetStartpoint:
+void RS_ActionDimLeader::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetStartpoint: {
             pPoints->points.clear();
             pPoints->points.push_back(mouse);
             setStatus(SetEndpoint);
             moveRelativeZero(mouse);
             break;
-
-        case SetEndpoint:
+        }
+        case SetEndpoint: {
             pPoints->points.push_back(mouse);
             moveRelativeZero(mouse);
             break;
-
+        }
         default:
             break;
     }

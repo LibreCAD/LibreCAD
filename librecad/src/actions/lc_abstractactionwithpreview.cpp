@@ -420,7 +420,7 @@ void LC_AbstractActionWithPreview::onRightMouseButtonRelease(QMouseEvent *e, int
  * @param status current status of the action
  */
 void LC_AbstractActionWithPreview::doBack([[maybe_unused]]QMouseEvent *pEvent, int status){
-    init(status - 1);
+    initPrevious(status);
 }
 
 bool LC_AbstractActionWithPreview::doCheckMayDrawPreview([[maybe_unused]]QMouseEvent *event, [[maybe_unused]]int status){
@@ -643,33 +643,6 @@ RS2::CursorType LC_AbstractActionWithPreview::doGetMouseCursor([[maybe_unused]]i
 }
 
 /**
- * Default implementation of coordinate event processing.
- * Performs parameters preparation and delegates actual processing to onCoordinateEvent
- *
- * @param e coordinate event
- */
-void LC_AbstractActionWithPreview::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-    // retrieve coordinates
-    RS_Vector coord = e->getCoordinate();
-    // check whether it's zero - so it might be from "0" shortcut
-    RS_Vector zero = RS_Vector(0, 0, 0);
-    bool isZero = coord == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
-    int status = getStatus();
-    // delegate further processing
-    onCoordinateEvent(coord, isZero, status);
-}
-
-/**
- * Expansion point for coordinate event processing.
- * @param coord coordinate
- * @param isZero true if coordinate is zero (so it's shortcut).
- * @param status current status of the action
- */
-void LC_AbstractActionWithPreview::onCoordinateEvent([[maybe_unused]]const RS_Vector &coord, [[maybe_unused]]bool isZero, [[maybe_unused]]int status){}
-
-
-/**
  * Utility method for finishing action.
  */
 void LC_AbstractActionWithPreview::finishAction(){
@@ -873,5 +846,3 @@ void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS
 bool LC_AbstractActionWithPreview::isMouseMove(QMouseEvent *e){
     return e->type() == QMouseEvent::MouseMove;
 }
-
-

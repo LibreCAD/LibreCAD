@@ -24,7 +24,6 @@
 **
 **********************************************************************/
 
-
 #include <QMouseEvent>
 #include "rs_actionmodifymove.h"
 #include "rs_coordinateevent.h"
@@ -36,7 +35,6 @@
 #include "rs_preview.h"
 #include "lc_moveoptions.h"
 
-
 struct RS_ActionModifyMove::Points {
 	RS_MoveData data;
 	RS_Vector referencePoint;
@@ -47,7 +45,7 @@ RS_ActionModifyMove::RS_ActionModifyMove(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :LC_ActionModifyBase("Move Entities",container, graphicView)
         ,pPoints(std::make_unique<Points>()){
-	actionType=RS2::ActionModifyMove;
+    actionType=RS2::ActionModifyMove;
 }
 
 RS_ActionModifyMove::~RS_ActionModifyMove() = default;
@@ -133,27 +131,19 @@ void RS_ActionModifyMove::mouseRightButtonReleaseEventSelected(int status, [[may
             selectionComplete = false;
         }
         else{
-            init(status - 1);
+            initPrevious(status);
         }
     }
     else{
-        init(status - 1);
+        initPrevious(status);
     }
 }
 
-void RS_ActionModifyMove::coordinateEvent(RS_CoordinateEvent *e){
-
-    if (e == nullptr){
-        return;
-    }
-
+void RS_ActionModifyMove::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     if (!selectionComplete){
         return;
     }
-
-    RS_Vector pos = e->getCoordinate();
-
-    switch (getStatus()) {
+    switch (status) {
         case SetReferencePoint: {
             pPoints->referencePoint = pos;
             moveRelativeZero(pPoints->referencePoint);

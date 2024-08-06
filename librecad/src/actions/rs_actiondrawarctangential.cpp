@@ -234,17 +234,12 @@ void RS_ActionDrawArcTangential::mouseLeftButtonReleaseEvent(int status, QMouseE
 
 void RS_ActionDrawArcTangential::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
 // fixme - more intelligent processing
-void RS_ActionDrawArcTangential::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e==nullptr) {
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawArcTangential::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
     case SetBaseEntity:
         break;
     case SetEndAngle:

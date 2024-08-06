@@ -182,7 +182,7 @@ void RS_ActionDrawCircleInscribe::mouseRightButtonReleaseEvent(int status, [[may
         pPoints->lines.pop_back();
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
@@ -202,12 +202,6 @@ bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
     }
     return valid;
 }
-
-//void RS_ActionDrawCircleInscribe::coordinateEvent(RS_CoordinateEvent* e) {
-
-//}
-
-//fixme, support command line
 
 /*
 void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {

@@ -41,13 +41,6 @@ struct RS_DimDiametricData;
  */
 class RS_ActionDimDiametric:public RS_ActionDimension {
 Q_OBJECT
-private:
-    enum Status {
-        SetEntity,     /**< Choose entity. */
-        SetPos,        /**< Choose point. */
-        SetText        /**< Setting text label in the command line. */
-    };
-
 public:
     RS_ActionDimDiametric(
         RS_EntityContainer &container,
@@ -57,11 +50,15 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
+protected:
+    enum Status {
+        SetEntity,     /**< Choose entity. */
+        SetPos,        /**< Choose point. */
+        SetText        /**< Setting text label in the command line. */
+    };
 
-private:
     /** Chosen entity (arc / circle) */
     RS_Entity *entity = nullptr;
 /** Chosen position */
@@ -70,12 +67,11 @@ private:
     std::unique_ptr<RS_DimDiametricData> edata;
 /** Last status before entering text. */
     Status lastStatus = SetEntity;
+
     RS_DimDiametric *createDim(RS_EntityContainer *parent) const;
-protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

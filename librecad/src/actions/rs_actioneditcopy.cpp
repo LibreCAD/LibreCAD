@@ -132,13 +132,11 @@ void RS_ActionEditCopyPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int sta
 }
 
 void RS_ActionEditCopyPaste::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionEditCopyPaste::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e == nullptr)
-        return;
-    *referencePoint = e->getCoordinate();
+void RS_ActionEditCopyPaste::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    *referencePoint = pos;
     trigger();
 }
 

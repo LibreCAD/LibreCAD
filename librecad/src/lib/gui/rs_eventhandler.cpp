@@ -478,7 +478,7 @@ void RS_EventHandler::setCurrentAction(RS_ActionInterface* action) {
 
     // Initialisation of our new action:
     RS_DEBUG->print("RS_EventHandler::setCurrentAction: init current action");
-    action->init();
+    action->init(0);
     // ## new:
     if (!action->isFinished()) {
         RS_DEBUG->print("RS_EventHandler::setCurrentAction: show options");

@@ -37,16 +37,6 @@
  */
 class RS_ActionDrawLinePolygonCenCor : public LC_ActionDrawLinePolygonBase {
 Q_OBJECT
-
-
-protected:
-
-    enum Status {
-        SetCenter,    /**< Setting center. */
-        SetCorner,    /**< Setting corner. */
-        SetNumber     /**< Setting number in the command line. */
-    };
-
 public:
     RS_ActionDrawLinePolygonCenCor(RS_EntityContainer& container,
                                    RS_GraphicView& graphicView);
@@ -56,21 +46,24 @@ public:
 
     void mouseMoveEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    enum Status {
+        SetCenter,    /**< Setting center. */
+        SetCorner,    /**< Setting corner. */
+        SetNumber     /**< Setting number in the command line. */
+    };
 
-    bool doProcessCommand(int status, const QString &command) override;
-
-private:
     struct Points;
     std::unique_ptr<Points> pPoints;
 /** Number of edges. */
-
 /** Last status before entering text. */
     Status lastStatus = SetCenter;
-};
 
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+
+};
 #endif

@@ -139,30 +139,27 @@ void LC_ActionDrawParabola4Points::mouseLeftButtonReleaseEvent([[maybe_unused]]i
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     deletePreview();
-    init(getStatus()-1);
-    pPoints->points.resize(getStatus()+1);
+    initPrevious(status);
+    status = getStatus();
+    pPoints->points.resize(status+1);
     if (!pPoints->points.empty()) {
-        moveRelativeZero(pPoints->points.at(getStatus()));
+        moveRelativeZero(pPoints->points.at(status));
     }
 }
 
-void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e) {
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-    pPoints->points.resize(getStatus()+1);
-    pPoints->points.set(getStatus(),mouse);
+void LC_ActionDrawParabola4Points::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    pPoints->points.resize(status+1);
+    pPoints->points.set(status,mouse);
 
     switch (getStatus()) {
     case SetPoint1:
     case SetPoint2:
     case SetPoint3:
         moveRelativeZero(mouse);
-        setStatus(getStatus()+1);
+        setStatus(status+1);
         break;
     case SetPoint4:
     {
@@ -179,7 +176,7 @@ void LC_ActionDrawParabola4Points::coordinateEvent(RS_CoordinateEvent* e) {
                 pPoints->data = pPoints->pData.front();
                 trigger();
             } else {
-                setStatus(getStatus()+1);
+                setStatus(status+1);
             }
         }
     }

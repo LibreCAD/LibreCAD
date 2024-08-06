@@ -193,16 +193,13 @@ void LC_ActionDrawCircle2PR::mouseLeftButtonReleaseEvent(int status, [[maybe_unu
 
 void LC_ActionDrawCircle2PR::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void LC_ActionDrawCircle2PR::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-
-    RS_Vector mouse = e->getCoordinate();
+void LC_ActionDrawCircle2PR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     double distance = 0.0;
 
-    switch (getStatus()) {
+    switch (status) {
         case SetPoint1: {
             pPoints->point1 = mouse;
             moveRelativeZero(mouse);

@@ -56,15 +56,14 @@ RS_ActionDrawEllipseFociPoint::RS_ActionDrawEllipseFociPoint(
     RS_GraphicView& graphicView)
         :LC_ActionDrawCircleBase("Draw ellipse by foci and a point",
                            container, graphicView)
-    , pPoints(std::make_unique<Points>())
-{
-	actionType=RS2::ActionDrawEllipseFociPoint;
+    , pPoints(std::make_unique<Points>()){
+    actionType=RS2::ActionDrawEllipseFociPoint;
 }
 
 RS_ActionDrawEllipseFociPoint::~RS_ActionDrawEllipseFociPoint() = default;
 
 void RS_ActionDrawEllipseFociPoint::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
 
     if (status == SetFocus1){
         pPoints->focus1.valid = false;
@@ -78,12 +77,12 @@ double RS_ActionDrawEllipseFociPoint::findRatio() const{
 void RS_ActionDrawEllipseFociPoint::trigger() {
     RS_PreviewActionInterface::trigger();
 
-	auto* ellipse = new RS_Ellipse{container,
-	{pPoints->center,
-			pPoints->major*pPoints->d,
-			findRatio(),
-			0., 0.,false}
-};
+    auto* ellipse = new RS_Ellipse{container,
+                                   {pPoints->center,
+                                    pPoints->major*pPoints->d,
+                                    findRatio(),
+                                    0., 0.,false}
+    };
     ellipse->setLayerToActive();
     ellipse->setPenToActive();
 
@@ -155,23 +154,18 @@ void RS_ActionDrawEllipseFociPoint::mouseLeftButtonReleaseEvent(int status, QMou
 
 void RS_ActionDrawEllipseFociPoint::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status-1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-
+void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (getStatus()) {
-        case SetFocus1:
+        case SetFocus1: {
             moveRelativeZero(mouse);
             pPoints->focus1 = mouse;
             setStatus(SetFocus2);
             break;
-
-        case SetFocus2:
+        }
+        case SetFocus2: {
             pPoints->c = 0.5 * pPoints->focus1.distanceTo(mouse);
             if (pPoints->c > RS_TOLERANCE){
                 pPoints->focus2 = mouse;
@@ -182,7 +176,8 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
                 setStatus(SetPoint);
             }
             break;
-        case SetPoint:
+        }
+        case SetPoint: {
             pPoints->point = mouse;
             pPoints->d = 0.5 * (pPoints->focus1.distanceTo(pPoints->point) + pPoints->focus2.distanceTo(pPoints->point));
             if (pPoints->d > pPoints->c + RS_TOLERANCE){
@@ -190,7 +185,7 @@ void RS_ActionDrawEllipseFociPoint::coordinateEvent(RS_CoordinateEvent *e){
                 trigger();
             }
             break;
-
+        }
         default:
             break;
     }

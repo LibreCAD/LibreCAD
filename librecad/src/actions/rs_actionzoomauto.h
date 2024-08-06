@@ -42,7 +42,7 @@ public:
                       RS_GraphicView& graphicView,
                       bool keepAspectRatio=true);
 
-	void init(int status=0) override;
+	void init(int status) override;
 	void trigger() override;
 
 protected:

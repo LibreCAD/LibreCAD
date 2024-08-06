@@ -38,17 +38,6 @@
 class RS_ActionDrawLineAngle : public RS_PreviewActionInterface {
 	Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPos,       /**< Setting the position.  */
-        SetAngle,     /**< Setting angle in the command line. */
-        SetLength     /**< Setting length in the command line. */
-    };
-    enum SnapMode {
-        SNAP_START, SNAP_MIDDLE, SNAP_END
-    };
     RS_ActionDrawLineAngle(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView,
@@ -61,7 +50,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void preparePreview();
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setSnapPoint(int sp);
@@ -72,6 +60,17 @@ public:
     double getLength() const;
     bool hasFixedAngle() const;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetPos,       /**< Setting the position.  */
+        SetAngle,     /**< Setting angle in the command line. */
+        SetLength     /**< Setting length in the command line. */
+    };
+    enum SnapMode {
+        SNAP_START, SNAP_MIDDLE, SNAP_END
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool persistRelativeZero = false;
@@ -80,7 +79,6 @@ protected:
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif
-

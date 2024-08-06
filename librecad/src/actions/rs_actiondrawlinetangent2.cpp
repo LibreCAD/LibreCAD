@@ -207,7 +207,7 @@ void RS_ActionDrawLineTangent2::mouseRightButtonReleaseEvent(int status, [[maybe
             m_pPoints->circle1 = nullptr;
         }
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){

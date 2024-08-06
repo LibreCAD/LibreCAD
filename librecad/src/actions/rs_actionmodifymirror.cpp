@@ -53,7 +53,6 @@ RS_ActionModifyMirror::~RS_ActionModifyMirror() = default;
 
 
 void RS_ActionModifyMirror::trigger() {
-
     RS_DEBUG->print("RS_ActionModifyMirror::trigger()");
 
     RS_Modification m(*container, graphicView);
@@ -132,39 +131,32 @@ void RS_ActionModifyMirror::mouseRightButtonReleaseEventSelected(int status, [[m
             selectionComplete = false;
         }
         else{
-            init(status - 1);
+            initPrevious(status);
         }
     }
     else{
-        init(status - 1);
+        initPrevious(status);
     }
 }
 
-void RS_ActionModifyMirror::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
+void RS_ActionModifyMirror::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     if (!selectionComplete){
         return;
     }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-        case SetAxisPoint1:
+    switch (status) {
+        case SetAxisPoint1: {
             pPoints->axisPoint1 = mouse;
             setStatus(SetAxisPoint2);
             moveRelativeZero(mouse);
             break;
-
-        case SetAxisPoint2:
+        }
+        case SetAxisPoint2: {
             pPoints->axisPoint2 = mouse;
             setStatus(ShowDialog);
             moveRelativeZero(mouse);
             showOptionsAndTrigger();
             break;
-
+        }
         default:
             break;
     }
@@ -202,7 +194,7 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelection() {
 
 void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
     switch (status) {
-        case SetAxisPoint1:
+        case SetAxisPoint1: {
             if (mirrorToExistingLine){
                 updateMouseWidgetTRCancel(tr("Specify mirror line"));
             }
@@ -210,17 +202,16 @@ void RS_ActionModifyMirror::updateMouseButtonHintsForSelected(int status) {
                 updateMouseWidgetTRCancel(tr("Specify first point of mirror line"), MOD_SHIFT_RELATIVE_ZERO);
             }
             break;
-        case SetAxisPoint2:
+        }
+        case SetAxisPoint2: {
             updateMouseWidgetTRBack(tr("Specify second point of mirror line"), MOD_SHIFT_ANGLE_SNAP);
             break;
-        default:
+        }
+        default: {
             updateMouseWidget();
             break;
+        }
     }
-}
-
-LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){
-    return new LC_ModifyMirrorOptions();
 }
 
 void RS_ActionModifyMirror::setMirrorToExistingLine(bool value){
@@ -234,4 +225,8 @@ RS2::CursorType RS_ActionModifyMirror::doGetMouseCursorSelected([[maybe_unused]]
 
 LC_ModifyOperationFlags *RS_ActionModifyMirror::getModifyOperationFlags() {
     return &pPoints->data;
+}
+
+LC_ActionOptionsWidget* RS_ActionModifyMirror::createOptionsWidget(){
+    return new LC_ModifyMirrorOptions();
 }

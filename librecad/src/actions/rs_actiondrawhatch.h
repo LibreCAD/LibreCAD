@@ -38,32 +38,29 @@ struct RS_HatchData;
  */
 class RS_ActionDrawHatch : public RS_PreviewActionInterface {
 Q_OBJECT
-
-    /**
-     * Action States.
-     */
-    enum Status {
-        ShowDialog           /**< Showing the hatch dialog. */
-    };
-
 public:
     RS_ActionDrawHatch(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     ~RS_ActionDrawHatch();
 
-    void init(int status=0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
 
     void updateMouseButtonHints() override;
     void setShowArea(bool s);
 protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        ShowDialog           /**< Showing the hatch dialog. */
+    };
+    std::unique_ptr<RS_HatchData> data;
+    bool m_bShowArea{true};
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    std::unique_ptr<RS_HatchData> data;
-    bool m_bShowArea{true};
 };
-
 #endif

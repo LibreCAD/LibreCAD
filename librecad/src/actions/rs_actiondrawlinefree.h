@@ -40,13 +40,6 @@ class RS_Polyline;
 class RS_ActionDrawLineFree : public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        Dragging      /**< Setting the endpoint. */
-    };
     RS_ActionDrawLineFree(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
     ~RS_ActionDrawLineFree() override;
@@ -56,13 +49,17 @@ public:
     void mousePressEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetStartpoint,   /**< Setting the startpoint.  */
+        Dragging      /**< Setting the endpoint. */
+    };
     std::unique_ptr<RS_Vector> vertex;
     std::unique_ptr<RS_Polyline> polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
-
 #endif

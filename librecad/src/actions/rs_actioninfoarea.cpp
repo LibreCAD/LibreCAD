@@ -42,7 +42,7 @@ RS_ActionInfoArea::RS_ActionInfoArea(RS_EntityContainer& container,
     :RS_PreviewActionInterface("Info Area",
                                container, graphicView)
     , ia(std::make_unique<RS_InfoArea>()){
-	actionType=RS2::ActionInfoArea;
+    actionType=RS2::ActionInfoArea;
 }
 
 RS_ActionInfoArea::~RS_ActionInfoArea() = default;
@@ -75,16 +75,18 @@ void RS_ActionInfoArea::display(){
         return;
     }
     switch (ia->size()) {
-        case 1:
+        case 1: {
             previewRefSelectablePoint(ia->at(0));
             break;
-        case 2:
+        }
+        case 2: {
             previewLine(ia->at(0), ia->at(1));
             previewRefLine(ia->at(0), ia->at(1));
             previewRefPoint(ia->at(0));
             previewRefSelectablePoint(ia->at(1));
             break;
-        default:
+        }
+        default: {
             for (int i = 0; i < ia->size(); i++) {
                 previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
                 previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
@@ -101,8 +103,9 @@ void RS_ActionInfoArea::display(){
             commandMessage("---\n");
             commandMessage(tr("Circumference: %1").arg(linear));
             commandMessage(tr("Area: %1 %2^2").arg(ia->getArea())
-                                                 .arg(RS_Units::unitToString(graphic->getUnit())));
+                               .arg(RS_Units::unitToString(graphic->getUnit())));
             break;
+        }
     }
     drawPreview();
 }
@@ -113,15 +116,17 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status){
-        case SetFirstPoint:
+        case SetFirstPoint: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
-        case SetNextPoint:
+        }
+        case SetNextPoint: {
             mouse = getSnapAngleAwarePoint(e, ia->back(), mouse); // fixme - delete preview....
             ia->push_back(mouse);
             display();
             ia->pop_back();
             break;
+        }
         default:
             break;
     }
@@ -137,15 +142,10 @@ void RS_ActionInfoArea::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
 }
 
 void RS_ActionInfoArea::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
+void RS_ActionInfoArea::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     if (ia->duplicated(mouse)){
         ia->push_back(mouse);
         commandMessage(tr("Closing Point: %1/%2").arg(mouse.x).arg(mouse.y));
@@ -156,13 +156,15 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
 
     ia->push_back(mouse);
     commandMessage(tr("Point: %1/%2").arg(mouse.x).arg(mouse.y));
-    switch (getStatus()) {
-        case SetFirstPoint:
+    switch (status) {
+        case SetFirstPoint: {
             setStatus(SetNextPoint);
             break;
-        case SetNextPoint:
+        }
+        case SetNextPoint: {
             display();
             break;
+        }
         default:
             break;
     }
@@ -170,15 +172,15 @@ void RS_ActionInfoArea::coordinateEvent(RS_CoordinateEvent *e){
 
 void RS_ActionInfoArea::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetFirstPoint:
-        updateMouseWidgetTRCancel(tr("Specify first point of polygon"), MOD_SHIFT_RELATIVE_ZERO);
-        break;
-    case SetNextPoint:
-        updateMouseWidgetTRCancel(tr("Specify next point of polygon"), MOD_SHIFT_ANGLE_SNAP);
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetFirstPoint:
+            updateMouseWidgetTRCancel(tr("Specify first point of polygon"), MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        case SetNextPoint:
+            updateMouseWidgetTRCancel(tr("Specify next point of polygon"), MOD_SHIFT_ANGLE_SNAP);
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 

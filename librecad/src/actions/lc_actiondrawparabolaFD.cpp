@@ -189,15 +189,9 @@ void LC_ActionDrawParabolaFD::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void LC_ActionDrawParabolaFD::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e) {
-        return;
-    }
-    RS_Vector mouse = e->getCoordinate();
-
+void LC_ActionDrawParabolaFD::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     moveRelativeZero(mouse);
-    switch (getStatus()) {
+    switch (status) {
     case SetFocus:
         pPoints->focus = mouse;
         setStatus(getStatus()+1);
@@ -205,13 +199,12 @@ void LC_ActionDrawParabolaFD::coordinateEvent(RS_CoordinateEvent* e) {
     case SetStartPoint:
         pPoints->SetStart(mouse);
         preparePreview();
-        setStatus(getStatus()+1);
+        setStatus(status+1);
         break;
     case SetEndPoint:
         if(pPoints->SetEnd(mouse))
             trigger();
         break;
-
     default:
         break;
     }

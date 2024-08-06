@@ -174,7 +174,7 @@ void RS_ActionModifyTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
 
 void RS_ActionModifyTrim::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
 //void RS_ActionModifyTrim::finish(bool updateTB) {

@@ -41,14 +41,6 @@ class RS_Leader;
 class RS_ActionDimLeader:public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
-        SetEndpoint      /**< Setting the endpoint. */
-    };
-public:
     RS_ActionDimLeader(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -58,23 +50,24 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void keyPressEvent(QKeyEvent *) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
     /**
-     * Leader entity.
+     * Action States.
      */
-//    RS_Leader *leader = nullptr;
-/**
- * Points set so far.
- */
+    enum Status {
+        SetStartpoint,   /**< Setting the startpoint.  */
+        SetEndpoint      /**< Setting the endpoint. */
+    };
+    /**
+     * Points set so far.
+     */
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

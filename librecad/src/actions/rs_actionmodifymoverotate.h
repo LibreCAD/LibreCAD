@@ -42,28 +42,13 @@ struct RS_MoveRotateData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyMoveRotate : public LC_ActionModifyBase {
-Q_OBJECT
-
-
-
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,    /**< Setting the reference point. */
-        SetTargetPoint,       /**< Setting the target point. */
-        SetAngle,              /**< Setting angle in command line. */
-        ShowDialog           /**< Showing the options dialog. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyMoveRotate(RS_EntityContainer& container,
                               RS_GraphicView& graphicView);
     ~RS_ActionModifyMoveRotate() override;
 
     void trigger() override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     QStringList getAvailableCommands() override;
     void setAngle(double a);
     double getAngle() const;
@@ -72,18 +57,15 @@ public:
     void setAngleIsFixed(bool b);
     bool isAngleFixed(){return angleIsFixed;};
 protected:
-    RS2::CursorType doGetMouseCursorSelected(int status) override;
-    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
-    void mouseMoveEventSelected(QMouseEvent *e) override;
-    void updateMouseButtonHintsForSelection() override;
-    void updateMouseButtonHintsForSelected(int status) override;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    LC_ModifyOperationFlags *getModifyOperationFlags() override;
-    void previewRefPointsForMultipleCopies();
-    void doTrigger();
-    bool doProcessCommand(int status, const QString &command) override;
-private:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetReferencePoint,    /**< Setting the reference point. */
+        SetTargetPoint,       /**< Setting the target point. */
+        SetAngle,              /**< Setting angle in command line. */
+        ShowDialog           /**< Showing the options dialog. */
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
 /** Last status before entering angle. */
@@ -95,6 +77,18 @@ private:
     QString cmdAngle;
     QString cmdAngle2;
     QString cmdAngle3;
-};
 
+    RS2::CursorType doGetMouseCursorSelected(int status) override;
+    void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
+    void mouseMoveEventSelected(QMouseEvent *e) override;
+    void updateMouseButtonHintsForSelection() override;
+    void updateMouseButtonHintsForSelected(int status) override;
+    LC_ModifyOperationFlags *getModifyOperationFlags() override;
+    void previewRefPointsForMultipleCopies();
+    void doTrigger();
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
+};
 #endif

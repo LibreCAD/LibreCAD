@@ -133,17 +133,11 @@ void LC_ActionDimLinearBase::mouseLeftButtonReleaseEvent(int status, QMouseEvent
 
 void LC_ActionDimLinearBase::mouseRightButtonReleaseEvent(int status,[[maybe_unused]] QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void LC_ActionDimLinearBase::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector pos = e->getCoordinate();
-
-    switch (getStatus()) {
+void LC_ActionDimLinearBase::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+    switch (status) {
         case SetExtPoint1:
             setExtensionPoint1(pos);
             moveRelativeZero(pos);

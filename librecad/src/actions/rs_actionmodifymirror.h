@@ -31,7 +31,6 @@
 
 struct RS_MirrorData;
 
-
 // fixme - mirror for specific point (via reference point and distance)?
 // fixme - mirror by selected line
 // fixme - own selection of entities instead of select action
@@ -43,28 +42,27 @@ struct RS_MirrorData;
  * @author Andrew Mustun
  */
 class RS_ActionModifyMirror:public LC_ActionModifyBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetAxisPoint1,    /**< Setting the 1st point of the axis. */
-        SetAxisPoint2,    /**< Setting the 2nd point of the axis. */
-        ShowDialog,        /**< Showing the options dialog. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyMirror(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionModifyMirror() override;
     void trigger() override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     bool isMirrorToExistingLine(){return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
+    /**
+    * Action States.
+    */
+    enum Status {
+        SetAxisPoint1,    /**< Setting the 1st point of the axis. */
+        SetAxisPoint2,    /**< Setting the 2nd point of the axis. */
+        ShowDialog,        /**< Showing the options dialog. */
+    };
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    bool mirrorToExistingLine;
     void previewMirror(const RS_Vector &mirrorLinePoint1, const RS_Vector &mirrorLinePoint2);
     void showOptionsAndTrigger();
     RS2::CursorType doGetMouseCursorSelected(int status) override;
@@ -75,10 +73,7 @@ protected:
     void updateMouseButtonHintsForSelected(int status) override;
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void doTrigger();
-private:
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool mirrorToExistingLine;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

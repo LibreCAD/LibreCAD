@@ -36,21 +36,20 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoTotalLength : public RS_ActionInterface {
-	Q_OBJECT
+Q_OBJECT
 public:
+    RS_ActionInfoTotalLength(RS_EntityContainer& container,
+                             RS_GraphicView& graphicView);
+
+    void init(int status) override;
+    void trigger() override;
+protected:
     /**
      * Action States.
      */
     enum Status {
         Acknowledge    /**< Acknowledge or cancel. */
     };
-
-public:
-    RS_ActionInfoTotalLength(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-
-	void init(int status=0) override;
-	void trigger() override;
 };
 
 #endif

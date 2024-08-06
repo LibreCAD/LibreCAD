@@ -222,7 +222,7 @@ void RS_ActionModifyScale::mouseLeftButtonReleaseEventSelected(int status, QMous
             break;
         }
         case SetSourcePoint: {
-                snapped = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, snapped);
+            snapped = getSnapAngleAwarePoint(e, pPoints->data.referencePoint, snapped);
             break;
         }
         case SetTargetPoint: {
@@ -248,7 +248,7 @@ void RS_ActionModifyScale::mouseRightButtonReleaseEventSelected(int status, [[ma
             break;
         }
         default: {
-            setStatus(status - 1);
+            initPrevious(status);
             break;
         }
     }
@@ -288,13 +288,7 @@ void RS_ActionModifyScale::tryTrigger() {
     }
 }
 
-void RS_ActionModifyScale::coordinateEvent(RS_CoordinateEvent* e) {
-    int status = getStatus();
-    if (e == nullptr) {
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
+void RS_ActionModifyScale::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch(status) {
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
@@ -372,10 +366,6 @@ void RS_ActionModifyScale::updateMouseButtonHintsForSelection() {
     updateMouseWidgetTRCancel(tr("Select to scale"), MOD_CTRL(tr("Scale immediately after selection")));
 }
 
-LC_ActionOptionsWidget *RS_ActionModifyScale::createOptionsWidget() {
-    return new LC_ModifyScaleOptions();
-}
-
 RS2::CursorType RS_ActionModifyScale::doGetMouseCursorSelected([[maybe_unused]] int status){
     return RS2::CadCursor;
 }
@@ -420,4 +410,8 @@ void RS_ActionModifyScale::setExplicitFactor(bool val) {
         }
     }
     pPoints->data.toFindFactor = val;
+}
+
+LC_ActionOptionsWidget *RS_ActionModifyScale::createOptionsWidget() {
+    return new LC_ModifyScaleOptions();
 }

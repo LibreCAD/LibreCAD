@@ -37,17 +37,8 @@ class RS_Vector;
  * @author Andrew Mustun
  */
 class RS_ActionDrawLineParallel:public RS_PreviewActionInterface {
-Q_OBJECT
-private:
-    // fixme - why no possibility to set distance via command line?
-    enum Status {
-        SetEntity,    /**< Choose original entity. */
-//SetDistance,  /**< Setting distance in the command line. */
-        SetNumber     /**< Setting number in the command line. */
-//SetThrough     /**< Setting a point for the parallel to go through. */
-    };
+    Q_OBJECT
 public:
-
     RS_ActionDrawLineParallel(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -61,12 +52,14 @@ public:
     int getNumber() const;
     void setNumber(int n);
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-    bool doProcessCommand(int status, const QString &command) override;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-private:
+    // fixme - why no possibility to set distance via command line?
+    enum Status {
+        SetEntity,    /**< Choose original entity. */
+//SetDistance,  /**< Setting distance in the command line. */
+        SetNumber     /**< Setting number in the command line. */
+//SetThrough     /**< Setting a point for the parallel to go through. */
+    };
+
     /** Closest parallel. */
     RS_Entity *parallel = nullptr;
     /** Distance of the parallel. */
@@ -77,18 +70,10 @@ private:
     std::unique_ptr<RS_Vector> coord;
 /** Original entity. */
     RS_Entity *entity = nullptr;
-	/**
-	 * Commands
-	 */
-	/*
-        QString cmdDistance;
-        QString cmdDistance2;
-        QString cmdDistance3;
-	
-        QString cmdNumber;
-        QString cmdNumber2;
-        QString cmdNumber3;
-	*/
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

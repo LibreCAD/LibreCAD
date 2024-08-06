@@ -94,10 +94,11 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
             }
             break;
         }
-        case SetNextPoint:
+        case SetNextPoint: {
             highlightSelected(originalPolyline);
             RS_ActionDrawPolyline::mouseMoveEvent(e);
             break;
+        }
         default:
             break;
     }
@@ -147,17 +148,11 @@ void RS_ActionPolylineAppend::mouseRightButtonReleaseEvent(int status, [[maybe_u
 // deletePreview();
 //clearPreview();
     deleteSnapper();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionPolylineAppend::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetStartpoint: {
             getHistory().clear();
             getHistory().append(getPoint());
@@ -204,9 +199,10 @@ void RS_ActionPolylineAppend::coordinateEvent(RS_CoordinateEvent *e){
 
 void RS_ActionPolylineAppend::updateMouseButtonHints(){
     switch (getStatus()) {
-        case SetStartpoint:
+        case SetStartpoint: {
             updateMouseWidgetTRCancel(tr("Specify the polyline somewhere near the beginning or end point"));
             break;
+        }
         case SetNextPoint: {
             QString msg = "";
 

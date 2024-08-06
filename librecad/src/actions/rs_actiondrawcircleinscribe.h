@@ -35,17 +35,7 @@ struct RS_CircleData;
  * @author Dongxu Li
  */
 class RS_ActionDrawCircleInscribe:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetLine1,   //  Setting the First Line.  */
-        SetLine2,   //  Setting the Second Line.  */
-        SetLine3   //  Setting the Third Line.  */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawCircleInscribe(
         RS_EntityContainer &container,
@@ -59,20 +49,29 @@ public:
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
-private:
+
+protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetLine1,   //  Setting the First Line.  */
+        SetLine2,   //  Setting the Second Line.  */
+        SetLine3   //  Setting the Third Line.  */
+    };
+
+    struct Points;
+    std::unique_ptr<Points> pPoints;
+    bool valid = false;
+
     bool preparePreview(RS_Line *en);
     /**
 	 * @brief clearLines unset highlighten lines, and clear the vector "lines"
 	 * @param checkStatus keep lines members according to getStatus()
 	 */
     void clearLines(bool checkStatus = false);
-    struct Points;
-    std::unique_ptr<Points> pPoints;
-    bool valid = false;
-protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 };
-
 #endif

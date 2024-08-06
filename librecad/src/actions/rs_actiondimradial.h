@@ -39,13 +39,6 @@ struct RS_DimRadialData;
  */
 class RS_ActionDimRadial:public RS_ActionDimension {
 Q_OBJECT
-private:
-    enum Status {
-        SetEntity,     /**< Choose entity. */
-        SetPos,      /**< Choose point. */
-        SetText        /**< Setting text label in the command line. */
-    };
-
 public:
     RS_ActionDimRadial(
         RS_EntityContainer &container,
@@ -55,11 +48,15 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
+protected:
+    enum Status {
+        SetEntity,     /**< Choose entity. */
+        SetPos,      /**< Choose point. */
+        SetText        /**< Setting text label in the command line. */
+    };
 
-private:
     /** Chosen entity (arc / circle) */
     RS_Entity *entity = nullptr;
 /** Chosen position */
@@ -68,14 +65,12 @@ private:
     std::unique_ptr<RS_DimRadialData> edata;
 /** Last status before entering text. */
     Status lastStatus = SetEntity;
+
     RS_DimRadial *createDim(RS_EntityContainer *parent) const;
     const RS_Vector &getDefinitionPoint() const;
-
-protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

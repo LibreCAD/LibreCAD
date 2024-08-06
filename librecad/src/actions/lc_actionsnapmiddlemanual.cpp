@@ -134,17 +134,10 @@ void LC_ActionSnapMiddleManual::mouseRightButtonReleaseEvent(int status, [[maybe
     }
 }
 
-void LC_ActionSnapMiddleManual::coordinateEvent(RS_CoordinateEvent *e){
+void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     RS_DEBUG->print("LC_ActionSnapMiddleManual::coordinateEvent");
 
-    if (e == nullptr){
-        RS_DEBUG->print("LC_ActionSnapMiddleManual::coordinateEvent: event was nullptr");
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+    switch (status) {
         case SetPercentage:
         case SetStartPoint:
             m_pPoints->startPoint = mouse;
@@ -251,4 +244,3 @@ void LC_ActionSnapMiddleManual::updateMouseButtonHints(){
             break;
     }
 }
-

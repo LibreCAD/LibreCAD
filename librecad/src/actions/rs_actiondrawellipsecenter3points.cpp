@@ -49,15 +49,14 @@ RS_ActionDrawEllipseCenter3Points::RS_ActionDrawEllipseCenter3Points(
     RS_GraphicView& graphicView)
         :LC_ActionDrawCircleBase("Draw ellipse by center and 3 points",
                            container, graphicView)
-    , pPoints(std::make_unique<Points>())
-{
-	actionType=RS2::ActionDrawEllipseCenter3Points;
+    , pPoints(std::make_unique<Points>()){
+    actionType=RS2::ActionDrawEllipseCenter3Points;
 }
 
 RS_ActionDrawEllipseCenter3Points::~RS_ActionDrawEllipseCenter3Points() = default;
 
 void RS_ActionDrawEllipseCenter3Points::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
 
     if (status == SetCenter){
         pPoints->points.clear();
@@ -158,23 +157,22 @@ void RS_ActionDrawEllipseCenter3Points::mouseLeftButtonReleaseEvent([[maybe_unus
 
 void RS_ActionDrawEllipseCenter3Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status -1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent *e){
-    if (!e) return;
-    RS_Vector mouse = e->getCoordinate();
-    pPoints->points.alloc(getStatus() + 1);
-    pPoints->points.set(getStatus(), mouse);
+void RS_ActionDrawEllipseCenter3Points::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    pPoints->points.alloc(status + 1);
+    pPoints->points.set(status, mouse);
 
     switch (getStatus()) {
-        case SetCenter:
+        case SetCenter: {
             moveRelativeZero(mouse);
             setStatus(SetPoint1);
             break;
+        }
         case SetPoint1:
         case SetPoint2:
-            for (int i = 0; i < getStatus() - 1; i++) {
+            for (int i = 0; i < status - 1; i++) {
                 if ((mouse - pPoints->points.get(i)).squared() < RS_TOLERANCE15){
                     return;//refuse to accept points already chosen
                 }
@@ -182,16 +180,16 @@ void RS_ActionDrawEllipseCenter3Points::coordinateEvent(RS_CoordinateEvent *e){
 //                setStatus(getStatus()+1);
 //                break;
             // fall-through
-        case SetPoint3:
+        case SetPoint3: {
             if (preparePreview()){
-                if (getStatus() == SetPoint3){
+                if (status == SetPoint3){
                     trigger();
                 } else {
-                    setStatus(getStatus() + 1);
+                    setStatus(status + 1);
                 }
             }
             break;
-
+        }
         default:
             break;
     }
@@ -256,7 +254,7 @@ void RS_ActionDrawEllipseCenter3Points::commandEvent(RS_CommandEvent* e) {
 */
 
 QStringList RS_ActionDrawEllipseCenter3Points::getAvailableCommands() {
-	return {};
+    return {};
 }
 
 void RS_ActionDrawEllipseCenter3Points::updateMouseButtonHints(){

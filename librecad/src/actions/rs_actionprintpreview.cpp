@@ -38,11 +38,10 @@
 #include "rs_math.h"
 #include "rs_settings.h"
 #include "rs_units.h"
-#include "rs_debug.h"
 
 struct RS_ActionPrintPreview::Points {
-	RS_Vector v1;
-	RS_Vector v2;
+    RS_Vector v1;
+    RS_Vector v2;
 };
 
 /**
@@ -52,8 +51,7 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
     :RS_ActionInterface("Print Preview",
                         container, graphicView, RS2::ActionFilePrintPreview)
-    , pPoints(std::make_unique<Points>())
-{
+    , pPoints(std::make_unique<Points>()){
     RS_SETTINGS->beginGroup("/PrintPreview");
     bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
     RS_SETTINGS->endGroup();
@@ -63,8 +61,6 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 }
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
-
-void zoomToPage();
 
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
@@ -126,10 +122,9 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-
-void RS_ActionPrintPreview::coordinateEvent(RS_CoordinateEvent* e) {
+void RS_ActionPrintPreview::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
-    RS_Vector mouse = e->getCoordinate();
+    RS_Vector mouse = pos;
     //    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
 
     if(m_bPaperOffset) {

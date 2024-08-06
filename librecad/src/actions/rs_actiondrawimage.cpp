@@ -138,16 +138,11 @@ void RS_ActionDrawImage::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
 }
 
 void RS_ActionDrawImage::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
-    //init(getStatus()-1);
     finish(false);
 }
 
-void RS_ActionDrawImage::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    pImg->data.insertionPoint = e->getCoordinate();
+void RS_ActionDrawImage::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    pImg->data.insertionPoint = pos;
     trigger();
 }
 

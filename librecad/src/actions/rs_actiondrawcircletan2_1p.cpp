@@ -162,13 +162,15 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
             }
             break;
         }
-        case SetPoint:
+        case SetPoint: {
             pPoints->coord = coord;
             pPoints->point = pPoints->coord;
             break;
-        case SetCenter:
+        }
+        case SetCenter: {
             pPoints->coord = toGraph(e);
             break;
+        }
         default:
             return;
     }
@@ -178,7 +180,6 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
     deletePreview();
     if (preparePreview()){
-
         for (auto const &vp: pPoints->centers) {
             previewRefSelectablePoint(vp, true);
         }
@@ -231,11 +232,11 @@ void RS_ActionDrawCircleTan2_1P::mouseLeftButtonReleaseEvent(int status, QMouseE
             fireCoordinateEvent(snapped);                ;
             break;
         }
-        case SetCenter:
+        case SetCenter: {
             pPoints->coord = toGraph(e);
             if (preparePreview()) trigger();
             break;
-
+        }
         default:
             break;
     }
@@ -246,29 +247,30 @@ void RS_ActionDrawCircleTan2_1P::mouseRightButtonReleaseEvent(int status, [[mayb
     if (status > 0){
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawCircleTan2_1P::coordinateEvent(RS_CoordinateEvent *e){
-
-    RS_Vector mouse = e->getCoordinate();
-    switch (getStatus()) {
-
-        case SetPoint:
+void RS_ActionDrawCircleTan2_1P::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetPoint: {
             pPoints->point = mouse;
             pPoints->coord = mouse;
             if (getCenters()){
-                if (pPoints->centers.size() == 1) trigger();
-                else setStatus(getStatus() + 1);
+                if (pPoints->centers.size() == 1) {
+                    trigger();
+                }
+                else {
+                    setStatus(getStatus() + 1);
+                }
             }
             break;
+        }
         default:
             break;
 //    case SetCenter:
 //        coord=mouse;
 //        trigger();
     }
-
 }
 
 //fixme, support command line

@@ -47,16 +47,7 @@ struct RS_PolylineData;
 */
 class RS_ActionDrawPolyline : public RS_PreviewActionInterface {
     Q_OBJECT
-
 public:
-    /**
-         * Action States.
-         */
-    enum Status {
-        SetStartpoint, /*  Setting the startpoint.  */
-        SetNextPoint,  /*  Setting the endpoint.    */
-    };
-
     enum SegmentMode {
         Line = 0,
         Tangential = 1,
@@ -77,7 +68,6 @@ public:
     void trigger() override;
 
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
 
     void updateMouseButtonHints() override;
@@ -92,9 +82,15 @@ public:
     double getAngle() const;
     void setReversed(bool c);
     bool isReversed() const;
-
     double solveBulge(const RS_Vector& mouse);
 protected:
+    /**
+            * Action States.
+            */
+    enum Status {
+        SetStartpoint, /*  Setting the startpoint.  */
+        SetNextPoint,  /*  Setting the endpoint.    */
+    };
 
     RS_Polyline*& getPolyline() const;
     QList<RS_Vector>& getHistory() const;
@@ -113,12 +109,13 @@ protected:
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString prepareCommand(RS_CommandEvent *e) const override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;
 
     void drawEquation(int numberOfPolylines);
-    void setParserExpression(QString expression);
+    void setParserExpression(const QString& expression);
     bool getPlottingX(QString command, double& x);
     std::unique_ptr<mu::Parser> m_muParserObject;
 
@@ -133,5 +130,4 @@ private:
     bool stepSizeSettingOn = false;
     bool shiftY = false;
 };
-
 #endif

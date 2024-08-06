@@ -251,12 +251,9 @@ bool LC_AbstractActionDrawLine::processAngleValueInput(const QString &c){
 }
 
 void LC_AbstractActionDrawLine::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapped){
-    onCoordinateEvent(snapped, false, status);
+    onCoordinateEvent(status,  false, snapped);
 }
 
 bool LC_AbstractActionDrawLine::isStartPointValid() const{
     return false;
 }
-
-
-

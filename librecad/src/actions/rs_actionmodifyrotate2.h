@@ -37,9 +37,23 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyRotate2 : public LC_ActionModifyBase {
-Q_OBJECT
-
+    Q_OBJECT
 public:
+    RS_ActionModifyRotate2(RS_EntityContainer& container,
+                           RS_GraphicView& graphicView);
+    ~RS_ActionModifyRotate2() override;
+
+    void init(int status) override;
+    void trigger() override;
+    void setAngle1(double d);
+    double getAngle1();
+    void setAngle2(double d);
+    double getAngle2();
+    void setUseSameAngle2ForCopies(bool b);
+    bool isUseSameAngle2ForCopies();
+    bool isMirrorAngles();
+    void setMirrorAngles(bool b);
+protected:
     /**
      * Action States.
      */
@@ -49,27 +63,9 @@ public:
         ShowDialog             /**< Showing the options dialog. */
     };
 
-public:
-    RS_ActionModifyRotate2(RS_EntityContainer& container,
-                           RS_GraphicView& graphicView);
-    ~RS_ActionModifyRotate2() override;
-
-    void init(int status=0) override;
-    void trigger() override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-
-    void setAngle1(double d);
-    double getAngle1();
-    void setAngle2(double d);
-    double getAngle2();
-    void setUseSameAngle2ForCopies(bool b);
-    bool isUseSameAngle2ForCopies();
-    bool isMirrorAngles();
-    void setMirrorAngles(bool b);
-
-protected:
-    LC_ActionOptionsWidget *createOptionsWidget() override;
+    std::unique_ptr<RS_Rotate2Data> data;
+    void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
+    void doTrigger();
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
@@ -78,11 +74,7 @@ protected:
     void updateMouseButtonHintsForSelected(int status) override;
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
-private:
-    std::unique_ptr<RS_Rotate2Data> data;
-    void previewRefPointsForMultipleCopies(const RS_Vector& mouse);
-
-    void doTrigger();
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget *createOptionsWidget() override;
 };
-
 #endif

@@ -32,16 +32,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawCircle2PR:public RS_ActionDrawCircleCR {
 Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
-        SetPoint2,       /**< Setting the 2nd point. */
-        SelectCenter        /**< select center out of two possibilities. */
-    };
-
-public:
     LC_ActionDrawCircle2PR(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -49,18 +39,25 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint2,       /**< Setting the 2nd point. */
+        SelectCenter        /**< select center out of two possibilities. */
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
     bool preparePreview(const RS_Vector &mouse, RS_Vector& altCenter);
     void reset() override;
-
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command)  override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

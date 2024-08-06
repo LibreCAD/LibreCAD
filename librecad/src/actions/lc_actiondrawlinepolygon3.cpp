@@ -115,15 +115,11 @@ void LC_ActionDrawLinePolygonCenTan::mouseLeftButtonReleaseEvent(int status, QMo
 
 void LC_ActionDrawLinePolygonCenTan::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void LC_ActionDrawLinePolygonCenTan::coordinateEvent(RS_CoordinateEvent* e) {
-    if (!e)  return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void LC_ActionDrawLinePolygonCenTan::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetCenter:
             pPoints->center = mouse;
             setStatus(SetTangent);

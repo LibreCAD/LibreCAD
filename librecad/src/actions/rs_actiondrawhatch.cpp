@@ -218,7 +218,7 @@ void RS_ActionDrawHatch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
 
 void RS_ActionDrawHatch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     //deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
 

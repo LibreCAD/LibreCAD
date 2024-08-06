@@ -40,16 +40,7 @@ struct RS_OffsetData;
  * @author Dongxu Li
  */
 class RS_ActionModifyOffset : public LC_ActionModifyBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetReferencePoint,
-        SetPosition       /**< Setting the direction of offset*/
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyOffset(RS_EntityContainer& container,
                           RS_GraphicView& graphicView);
@@ -61,9 +52,18 @@ public:
     bool isFixedDistance() {return distanceIsFixed;};
     void setDistanceFixed(bool value);
 protected:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetReferencePoint,
+        SetPosition       /**< Setting the direction of offset*/
+    };
+
     bool distanceIsFixed = true;
     RS_Vector referencePoint = RS_Vector(false);
     std::unique_ptr<RS_OffsetData> data;
+
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
     void mouseRightButtonReleaseEventSelected(int status, QMouseEvent *pEvent) override;
@@ -71,7 +71,6 @@ protected:
     void updateMouseButtonHintsForSelection() override;
     void updateMouseButtonHintsForSelected(int status) override;
     bool isAllowTriggerOnEmptySelection() override;
-
     LC_ModifyOperationFlags *getModifyOperationFlags() override;
 };
 #endif

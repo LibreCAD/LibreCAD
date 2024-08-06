@@ -30,26 +30,12 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 // fixme - add snap to angle for outer and inner points
 // fixme - add center point on preview
-class LC_ActionDrawStar:public LC_AbstractActionWithPreview
-{
+class LC_ActionDrawStar:public LC_AbstractActionWithPreview{
    Q_OBJECT
-
 public:
     LC_ActionDrawStar(RS_EntityContainer &container,RS_GraphicView &graphicView);
-    void updateMouseButtonHints() override;
-
-    /**
-     * Action statuses
-     */
-    enum{
-        SetCenter,
-        SetOuterPoint,
-        SetInnerPoint,
-        SetRadiuses,
-        SetRays
-    };
-
     double getRadiusInner() const{return innerRadius;};
+    void updateMouseButtonHints() override;
     void setRadiusInner(double d);
     double getRadiusOuter() const{return outerRadius;};
     void setRadiusOuter(double d);
@@ -65,20 +51,16 @@ public:
     void setSymmetric(bool value);
     QStringList getAvailableCommands() override;
 protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
-    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
-    void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status) override;
-    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
-    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
-    bool doCheckMayTrigger() override;
-    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
-    int doGetStatusForInitialSnapToRelativeZero() override;
-    void doInitialSnapToRelativeZero(RS_Vector vector) override;
-    bool doProcessCommand(int status, const QString &c) override;
-    void doBack(QMouseEvent *pEvent, int status) override;
-    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
-
-private:
+    /**
+ * Action statuses
+ */
+    enum{
+        SetCenter,
+        SetOuterPoint,
+        SetInnerPoint,
+        SetRadiuses,
+        SetRays
+    };
     /**
      * outer point of rays
      */
@@ -122,6 +104,17 @@ private:
 
     void addPolylineToEntitiesList(RS_Polyline *pPolyline, QList<RS_Entity *> &list, bool b);
     RS_Polyline *createShapePolyline(RS_Vector &snap, QList<RS_Entity *> &list, int status, bool preview);
+    void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
+    bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
+    void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+    bool doCheckMayTrigger() override;
+    void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
+    int doGetStatusForInitialSnapToRelativeZero() override;
+    void doInitialSnapToRelativeZero(RS_Vector vector) override;
+    bool doProcessCommand(int status, const QString &c) override;
+    void doBack(QMouseEvent *pEvent, int status) override;
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif // LC_ACTIONDRAWSTAR_H

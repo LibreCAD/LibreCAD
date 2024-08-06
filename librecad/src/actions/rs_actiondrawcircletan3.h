@@ -36,18 +36,7 @@ class RS_AtomicEntity;
  * @author Dongxu Li
  */
 class RS_ActionDrawCircleTan3:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCircle1,   //  Setting the First Circle.  */
-        SetCircle2,   //  Setting the Second Circle.  */
-        SetCircle3,   //  Setting the Third Circle.  */
-        SetCenter   //  select the closest tangential Circle.  */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawCircleTan3(
         RS_EntityContainer &container,
@@ -62,15 +51,23 @@ public:
     void finish(bool updateTB = true) override;
     void updateMouseButtonHints() override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+     * Action States.
+     */
+    enum Status {
+        SetCircle1,   //  Setting the First Circle.  */
+        SetCircle2,   //  Setting the Second Circle.  */
+        SetCircle3,   //  Setting the Third Circle.  */
+        SetCenter   //  select the closest tangential Circle.  */
+    };
     struct Points;
     RS_Entity *catchCircle(QMouseEvent *e);
     std::unique_ptr<Points> pPoints;
     bool getData(RS_Entity *en = nullptr);
     RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *pEntity);
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

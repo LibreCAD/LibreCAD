@@ -157,7 +157,7 @@ void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, [[maybe_
     if (status == SetLine){
         finish(true);
     } else {
-        init(status - 1);
+        initPrevious(status);
     }
 }
 

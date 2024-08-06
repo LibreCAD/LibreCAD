@@ -39,20 +39,7 @@ struct RS_ArcData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawArc:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetCenter,       /**< Setting the center point. */
-        SetRadius,       /**< Setting the radius. */
-        SetAngle1,       /**< Setting the startpoint.  */
-        SetAngle2,       /**< Setting the endpoint. */
-        SetIncAngle,     /**< Setting the included angle. */
-        SetChordLength   /**< Setting carc chord length. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawArc(
         RS_EntityContainer &container,
@@ -62,31 +49,33 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     bool isReversed() const;
     void setReversed(bool r) const;
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetCenter,       /**< Setting the center point. */
+        SetRadius,       /**< Setting the radius. */
+        SetAngle1,       /**< Setting the startpoint.  */
+        SetAngle2,       /**< Setting the endpoint. */
+        SetIncAngle,     /**< Setting the included angle. */
+        SetChordLength   /**< Setting carc chord length. */
+    };
+
     /**
      * Arc data defined so far.
      */
     std::unique_ptr<RS_ArcData> data;
-/**
- * Commands
- */
-    /*QString cmdReversed;
-    QString cmdReversed2;
-    QString cmdReversed3;
-*/
     void snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart, RS_Vector &halfCircleArcEnd) const;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

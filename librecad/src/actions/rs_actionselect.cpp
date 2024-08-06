@@ -59,7 +59,7 @@ void RS_ActionSelect::resume(){
 }
 
 void RS_ActionSelect::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e){
-    init(status-1);
+    initPrevious(status);
 }
 
 int RS_ActionSelect::countSelected(){

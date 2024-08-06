@@ -37,14 +37,14 @@
 #include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineRectangle::Points {
-	/**
-	 * 1st corner.
-	 */
-	RS_Vector corner1;
-	/**
-	 * 2nd corner.
-	 */
-	RS_Vector corner2;
+/**
+ * 1st corner.
+ */
+    RS_Vector corner1;
+/**
+ * 2nd corner.
+ */
+    RS_Vector corner2;
 };
 
 RS_ActionDrawLineRectangle::RS_ActionDrawLineRectangle(
@@ -60,7 +60,7 @@ RS_ActionDrawLineRectangle::~RS_ActionDrawLineRectangle() = default;
 void RS_ActionDrawLineRectangle::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    RS_Polyline *polyline = new RS_Polyline(container);
+    auto *polyline = new RS_Polyline(container);
 
 // create and add rectangle:
     polyline->addVertex(pPoints->corner1);
@@ -114,27 +114,23 @@ void RS_ActionDrawLineRectangle::mouseLeftButtonReleaseEvent([[maybe_unused]]int
 
 void RS_ActionDrawLineRectangle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawLineRectangle::coordinateEvent(RS_CoordinateEvent* e) {
-	if (!e) return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
-        case SetCorner1:
+void RS_ActionDrawLineRectangle::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+    switch (status) {
+        case SetCorner1: {
             pPoints->corner1 = mouse;
             moveRelativeZero(mouse);
             setStatus(SetCorner2);
             break;
-
-        case SetCorner2:
+        }
+        case SetCorner2: {
             pPoints->corner2 = mouse;
             trigger();
             setStatus(SetCorner1);
             break;
-
+        }
         default:
             break;
     }
@@ -153,6 +149,7 @@ void RS_ActionDrawLineRectangle::updateMouseButtonHints(){
             break;
     }
 }
+
 RS2::CursorType RS_ActionDrawLineRectangle::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::CadCursor;
 }

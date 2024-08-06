@@ -27,7 +27,6 @@
 #ifndef RS_ACTIONMODIFYDELETE_H
 #define RS_ACTIONMODIFYDELETE_H
 
-
 #include "lc_actionpreselectionawarebase.h"
 
 /**
@@ -36,23 +35,20 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyDelete : public LC_ActionPreSelectionAwareBase {
-	Q_OBJECT
+    Q_OBJECT
 public:
+    RS_ActionModifyDelete(RS_EntityContainer& container,
+                          RS_GraphicView& graphicView);
+    void trigger() override;
+protected:
     /**
      * Action States.
      */
     enum Status {
         Acknowledge    /**< Acknowledge or cancel. */
     };
-
-public:
-    RS_ActionModifyDelete(RS_EntityContainer& container,
-                          RS_GraphicView& graphicView);
-    void trigger() override;
-protected:
     RS2::CursorType doGetMouseCursorSelected(int status) override;
     void updateMouseButtonHintsForSelection() override;
     void selectionCompleted(bool singleEntity) override;
 };
-
 #endif

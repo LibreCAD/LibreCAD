@@ -37,17 +37,7 @@ class RS_Entity;
  * @author Andrew Mustun
  */
 class RS_ActionPolylineTrim:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseEntity,   /**< Choosing existing polyline to trim. */
-        SetSegment1,    /**< Setting first segment. */
-        SetSegment2       /**< Setting second segment. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionPolylineTrim(
         RS_EntityContainer &container,
@@ -58,13 +48,20 @@ public:
     void updateMouseButtonHints() override;
     void finish(bool updateTB) override;
 protected:
-    RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
+    /**
+     * Action States.
+     */
+    enum Status {
+        ChooseEntity,   /**< Choosing existing polyline to trim. */
+        SetSegment1,    /**< Setting first segment. */
+        SetSegment2       /**< Setting second segment. */
+    };
     RS_Polyline *polylineToModify = nullptr;
     RS_AtomicEntity *Segment1 = nullptr;
     RS_AtomicEntity *Segment2 = nullptr;
-};
 
+    RS2::CursorType doGetMouseCursor(int status) override;
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+};
 #endif

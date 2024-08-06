@@ -36,10 +36,10 @@
 #include "rs_debug.h"
 
 struct QC_ActionGetPoint::Points {
-		RS_MoveData data;
-		RS_Vector referencePoint;
-		RS_Vector targetPoint;
-		QString message;
+    RS_MoveData data;
+    RS_Vector referencePoint;
+    RS_Vector targetPoint;
+    QString message;
 };
 
 QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
@@ -49,8 +49,7 @@ QC_ActionGetPoint::QC_ActionGetPoint(RS_EntityContainer& container,
         , canceled(false)
 		, completed{false}
 		, setTargetPoint{false}
-		, pPoints(std::make_unique<Points>())
-{
+		, pPoints(std::make_unique<Points>()){
     pPoints->targetPoint = RS_Vector(0,0);
 }
 
@@ -66,22 +65,22 @@ void QC_ActionGetPoint::trigger() {
 void QC_ActionGetPoint::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent begin");
 
-        RS_Vector mouse = snapPoint(e);
-        if(setTargetPoint){
-			if (pPoints->referencePoint.valid) {
-				pPoints->targetPoint = mouse;
-                deletePreview();
-				RS_Line *line =new RS_Line{preview.get(),
-						pPoints->referencePoint, mouse};
-                line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
-                preview->addEntity(line);
-                RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");
-                drawPreview();
-                preview->addSelectionFrom(*container);
-            }
-        } else {
-			pPoints->targetPoint = mouse;
+    RS_Vector mouse = snapPoint(e);
+    if(setTargetPoint){
+        if (pPoints->referencePoint.valid) {
+            pPoints->targetPoint = mouse;
+            deletePreview();
+            RS_Line *line =new RS_Line{preview.get(),
+                                       pPoints->referencePoint, mouse};
+            line->setPen(RS_Pen(RS_Color(0,0,0), RS2::Width00, RS2::DotLine ));
+            preview->addEntity(line);
+            RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent: draw preview");
+            drawPreview();
+            preview->addSelectionFrom(*container);
         }
+    } else {
+        pPoints->targetPoint = mouse;
+    }
 
     RS_DEBUG->print("QC_ActionGetPoint::mouseMoveEvent end");
 }
@@ -99,21 +98,16 @@ void QC_ActionGetPoint::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void QC_ActionGetPoint::coordinateEvent(RS_CoordinateEvent* e) {
-
-	if (e==nullptr) return;
-
-    RS_Vector pos = e->getCoordinate();
-
-		pPoints->targetPoint = pos;
-		graphicView->moveRelativeZero(pPoints->targetPoint);
-        trigger();
+void QC_ActionGetPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+    pPoints->targetPoint = pos;
+    graphicView->moveRelativeZero(pPoints->targetPoint);
+    trigger();
 }
 
 
 void QC_ActionGetPoint::updateMouseButtonHints() {
     if (!completed)
-		updateMouseWidget(pPoints->message, tr("Cancel"));
+        updateMouseWidget(pPoints->message, tr("Cancel"));
     else
         updateMouseWidget();
 }
@@ -122,18 +116,17 @@ RS2::CursorType QC_ActionGetPoint::doGetMouseCursor([[maybe_unused]] int status)
     return RS2::CadCursor;
 }
 void QC_ActionGetPoint::setBasepoint(QPointF* basepoint){
-	pPoints->referencePoint.x = basepoint->x();
-	pPoints->referencePoint.y = basepoint->y();
+    pPoints->referencePoint.x = basepoint->x();
+    pPoints->referencePoint.y = basepoint->y();
     setTargetPoint = true;
 }
 
 void QC_ActionGetPoint::setMessage(QString msg){
-	pPoints->message = msg;
+    pPoints->message = msg;
 }
 
 void QC_ActionGetPoint::getPoint(QPointF *point){
-    if (pPoints)
-    {
+    if (pPoints)    {
         point->setX(pPoints->targetPoint.x);
         point->setY(pPoints->targetPoint.y);
     }

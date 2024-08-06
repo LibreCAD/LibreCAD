@@ -104,14 +104,8 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawCircle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawCircle::coordinateEvent(RS_CoordinateEvent* e) {
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawCircle::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetCenter:
             data->center = mouse;
             moveRelativeZero(mouse);

@@ -35,9 +35,23 @@ class RS_Vector;
 class LC_ActionDrawParabola4Points : public RS_PreviewActionInterface {
     Q_OBJECT
 public:
+    LC_ActionDrawParabola4Points(RS_EntityContainer& container,
+                                 RS_GraphicView& graphicView);
+    ~LC_ActionDrawParabola4Points() override;
+
+    void init(int status) override;
+
+    void trigger() override;
+    bool preparePreview(const RS_Vector& mouse);
+
+    void mouseMoveEvent(QMouseEvent* e) override;
+    //    void commandEvent(RS_CommandEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+protected:
     /**
-     * Action States.
-     */
+ * Action States.
+ */
     enum Status {
         SetPoint1 = 0,   //  Setting the First Point.  */
         SetPoint2,   //  Setting the Second Point.  */
@@ -46,29 +60,11 @@ public:
         SetAxis   //  select the axis/orientation  */
     };
 
-public:
-    LC_ActionDrawParabola4Points(RS_EntityContainer& container,
-                                 RS_GraphicView& graphicView);
-    ~LC_ActionDrawParabola4Points() override;
-
-    void init(int status=0) override;
-
-    void trigger() override;
-    bool preparePreview(const RS_Vector& mouse);
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-     void coordinateEvent(RS_CoordinateEvent* e) override;
-    //    void commandEvent(RS_CommandEvent* e) override;
-    QStringList getAvailableCommands() override;
-
-    void updateMouseButtonHints() override;
-
-protected:
     struct Points;
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

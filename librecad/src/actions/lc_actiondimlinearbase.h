@@ -33,7 +33,6 @@ public:
     ~LC_ActionDimLinearBase();
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
 protected:
     /**
@@ -59,6 +58,6 @@ protected:
     virtual RS_Entity *createDim(RS_EntityContainer* parent) = 0;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif //LIBRECAD_LC_ACTIONDIMLINEARBASE_H

@@ -43,7 +43,7 @@ public:
                               RS_GraphicView& graphicView,
                               RS_Layer* layer);
 
-	void init(int status=0) override;
+	void init(int status) override;
 	void trigger() override;
 
 protected:

@@ -26,7 +26,6 @@
 
 
 #include <QMouseEvent>
-
 #include "rs_actiondrawmtext.h"
 #include "rs_commandevent.h"
 #include "rs_coordinateevent.h"
@@ -35,7 +34,6 @@
 #include "rs_graphicview.h"
 #include "rs_mtext.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 #include "qg_mtextoptions.h"
 
 RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
@@ -44,13 +42,13 @@ RS_ActionDrawMText::RS_ActionDrawMText(RS_EntityContainer& container,
 						   container, graphicView)
         ,pos(std::make_unique<RS_Vector>())
 		,textChanged(true){
-	actionType=RS2::ActionDrawMText;
+    actionType=RS2::ActionDrawMText;
 }
 
 RS_ActionDrawMText::~RS_ActionDrawMText() = default;
 
 void RS_ActionDrawMText::init(int status){
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 
     switch (status) {
         case ShowDialog: {
@@ -154,18 +152,11 @@ void RS_ActionDrawMText::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
 
 void RS_ActionDrawMText::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    //init(getStatus()-1);
     finish(false);
 }
 
-void RS_ActionDrawMText::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void RS_ActionDrawMText::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case ShowDialog:
             break;
         case SetPos: {

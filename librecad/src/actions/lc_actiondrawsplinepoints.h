@@ -35,13 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 class LC_ActionDrawSplinePoints:public RS_ActionDrawSpline {
 Q_OBJECT
 public:
-/**
-* Action States.
-*/
-    enum Status { // fixme - is it the same as in base action???
-        SetStartPoint,   /**< Setting the startpoint.  */
-        SetNextPoint      /**< Setting the next point. */
-    };
     LC_ActionDrawSplinePoints(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -50,7 +43,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     QStringList getAvailableCommands() override;
     void updateMouseButtonHints() override;
     void setClosed(bool c) override;
@@ -59,18 +51,22 @@ public:
 
     //using degree=2 only
     void setDegree(int /*deg*/) override{}
-private:
-    void redo();
+
 protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
-    bool doProcessCommand(int status, const QString &command) override;
-
-private:
+    /**
+* Action States.
+*/
+    enum Status { // fixme - is it the same as in base action???
+        SetStartPoint,   /**< Setting the startpoint.  */
+        SetNextPoint      /**< Setting the next point. */
+    };
     struct Points;
     std::unique_ptr<Points> pPoints;
+
+    void redo();
+    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif
-

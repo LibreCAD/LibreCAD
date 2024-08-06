@@ -36,33 +36,31 @@
  * @author Andrew Mustun
  */
 class RS_ActionModifyCut : public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        ChooseCutEntity,      /**< Choosing the entity to cut in two. */
-        SetCutCoord        /**< Choosing the cutting point. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionModifyCut(RS_EntityContainer& container,
                        RS_GraphicView& graphicView);
     ~RS_ActionModifyCut() override;
 
-    void init(int status=0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void updateMouseButtonHints() override;
     void finish(bool updateTB) override;
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        ChooseCutEntity,      /**< Choosing the entity to cut in two. */
+        SetCutCoord        /**< Choosing the cutting point. */
+    };
+    RS_Entity* cutEntity = nullptr;
+    std::unique_ptr<RS_Vector> cutCoord;
+
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-private:
-    RS_Entity* cutEntity = nullptr;
-    std::unique_ptr<RS_Vector> cutCoord;
 };
 
 #endif

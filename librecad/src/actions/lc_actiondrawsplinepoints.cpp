@@ -131,16 +131,11 @@ void LC_ActionDrawSplinePoints::mouseRightButtonReleaseEvent(int status, [[maybe
     if (status == SetNextPoint && pPoints->spline.get()){
         trigger();
     }
-    init(status - 1);
+    initPrevious(status);
 }
 
-
-void LC_ActionDrawSplinePoints::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr) return;
-
-    RS_Vector mouse = e->getCoordinate();
-
-    switch (getStatus()) {
+void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
+    switch (status) {
         case SetStartPoint:
             pPoints->undoBuffer.clear();
             if (!pPoints->spline.get()){

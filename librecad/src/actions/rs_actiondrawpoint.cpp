@@ -32,7 +32,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
 #include "rs_point.h"
-#include "rs_actioninterface.h"
 
 RS_ActionDrawPoint::RS_ActionDrawPoint(
     RS_EntityContainer &container,
@@ -74,27 +73,22 @@ void RS_ActionDrawPoint::mouseLeftButtonReleaseEvent([[maybe_unused]]int status,
 }
 
 void RS_ActionDrawPoint::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status - 1);
+    initPrevious(status);
 }
 
-void RS_ActionDrawPoint::coordinateEvent(RS_CoordinateEvent *e){
-    if (e == nullptr){
-        return;
-    }
-
-    RS_Vector mouse = e->getCoordinate();
-
+void RS_ActionDrawPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     *pt = mouse;
     trigger();
 }
 
 void RS_ActionDrawPoint::updateMouseButtonHints(){
     switch (getStatus()) {
-        case 0:
+        case 0: {
             updateMouseWidgetTRCancel(tr("Specify location"),
                                       MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_REL_ZERO,
                                                          LC_ModifiersInfo::MSG_FREE_SNAP));
             break;
+        }
         default:
             updateMouseWidget();
             break;

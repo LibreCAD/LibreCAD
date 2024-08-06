@@ -41,15 +41,6 @@ struct RS_ArcData;
 class RS_ActionDrawArcTangential:public RS_PreviewActionInterface {
 Q_OBJECT
 public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetBaseEntity,   /**< Setting base entity. */
-        SetEndAngle      /**< Setting end angle. */
-    };
-
-public:
     RS_ActionDrawArcTangential(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
@@ -59,7 +50,6 @@ public:
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
     void setRadius(double r);
     double getRadius() const;
@@ -67,8 +57,15 @@ public:
     double getAngle() const;
     void setByRadius(bool status = true);
     bool getByRadius() const;
-
 protected:
+    /**
+ * Action States.
+ */
+    enum Status {
+        SetBaseEntity,   /**< Setting base entity. */
+        SetEndAngle      /**< Setting end angle. */
+    };
+
     /**
      * Base entity.
      */
@@ -87,17 +84,16 @@ protected:
   * Arc data calculated.
   */
     std::unique_ptr<RS_ArcData> data;
-private:
+
     double angleLength = 0.;
     bool byRadius = false;
     RS_Vector forecastArcCenter() const;
     void updateOptionsRadius(double radius);
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
     void updateOptionsAngle(double angle);
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

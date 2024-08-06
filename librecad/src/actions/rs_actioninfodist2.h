@@ -31,7 +31,6 @@
 
 #include "rs_previewactioninterface.h"
 
-
 /**
  * This action class can handle user events to measure distances between
  * entities and points.
@@ -39,21 +38,7 @@
  * @author Andrew Mustun
  */
 class RS_ActionInfoDist2:public RS_PreviewActionInterface {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetEntity,    /**< Setting the entity. */
-        SetPoint      /**< Setting the point of the distance. */
-    };
-
-    enum Mode{
-        FIRST_IS_ENTITY,
-        FIRST_IS_POINT
-    };
-
+    Q_OBJECT
 public:
     RS_ActionInfoDist2(
         RS_EntityContainer &container,
@@ -63,19 +48,29 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
     bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
     void finish(bool updateTB) override;;
-private:
+protected:
+    /**
+   * Action States.
+   */
+    enum Status {
+        SetEntity,    /**< Setting the entity. */
+        SetPoint      /**< Setting the point of the distance. */
+    };
+
+    enum Mode{
+        FIRST_IS_ENTITY,
+        FIRST_IS_POINT
+    };
     RS_Entity *entity = nullptr;
     RS_Vector point = RS_Vector(false);
     int selectionMode = FIRST_IS_ENTITY;
     RS_Entity *doCatchEntity(QMouseEvent *e);
     bool nearestPointShouldBeOnEntity = true;
-protected:
-    LC_ActionOptionsWidget* createOptionsWidget() override;
+
     RS_Vector savedRelZero = RS_Vector{false};
     RS_Vector entityNearestPoint = RS_Vector{false};
     void restoreRelZero();
@@ -83,6 +78,8 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 
 #endif

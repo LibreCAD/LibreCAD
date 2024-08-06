@@ -37,17 +37,7 @@ struct RS_ArcData;
  * @author Andrew Mustun
  */
 class RS_ActionDrawArc3P:public LC_ActionDrawCircleBase {
-Q_OBJECT
-public:
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetPoint1,       /**< Setting the 1st point. */
-        SetPoint2,       /**< Setting the 2nd point. */
-        SetPoint3        /**< Setting the 3rd point. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionDrawArc3P(
         RS_EntityContainer &container,
@@ -56,10 +46,18 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void coordinateEvent(RS_CoordinateEvent *e) override;
     void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
 protected:
+    /**
+    * Action States.
+    */
+    enum Status {
+        SetPoint1,       /**< Setting the 1st point. */
+        SetPoint2,       /**< Setting the 2nd point. */
+        SetPoint3        /**< Setting the 3rd point. */
+    };
+
     /**
      * Arc data defined so far.
      */
@@ -69,8 +67,7 @@ protected:
     void preparePreview();
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
-
 #endif

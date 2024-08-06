@@ -186,7 +186,7 @@ bool LC_ActionDrawLineSnake::isNonZeroLine(const RS_Vector &possiblePoint) const
     return LC_LineMath::isNonZeroLineLength( pPoints->data.startpoint, possiblePoint);
 }
 
-void LC_ActionDrawLineSnake::onCoordinateEvent(const RS_Vector &mouse, [[maybe_unused]]bool isZero, int status){
+void LC_ActionDrawLineSnake::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetDistance:
             switch (direction) {

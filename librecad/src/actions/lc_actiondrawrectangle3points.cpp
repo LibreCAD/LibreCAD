@@ -340,7 +340,7 @@ void LC_ActionDrawRectangle3Points::doInitialSnapToRelativeZero(RS_Vector zero){
 }
 
 void LC_ActionDrawRectangle3Points::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snapPoint){
-    onCoordinateEvent(snapPoint, false, status);
+    onCoordinateEvent(status, false, snapPoint);
     if (pPoints->corner2Set){ // adjust relative zero for point 2 (for point 3 it will be set on trigger)
         moveRelativeZero(pPoints->corner2);
     }
@@ -382,7 +382,7 @@ void LC_ActionDrawRectangle3Points::init(int status){
 }
 
 void LC_ActionDrawRectangle3Points::resetPoints(){
-      RS_Vector zero = RS_Vector(false);
+      auto zero = RS_Vector(false);
       doResetPoints(zero);
 }
 

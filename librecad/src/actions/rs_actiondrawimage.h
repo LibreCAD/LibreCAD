@@ -40,7 +40,28 @@ class QImage;
  */
 class RS_ActionDrawImage : public RS_PreviewActionInterface {
 Q_OBJECT
-    /**
+public:
+    RS_ActionDrawImage(RS_EntityContainer& container,
+                       RS_GraphicView& graphicView);
+    ~RS_ActionDrawImage() override;
+
+    void init(int status) override;
+    void reset();
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    QStringList getAvailableCommands() override;
+    void updateMouseButtonHints() override;
+//    void updateToolBar() override;
+    double getAngle() const;
+    void setAngle(double a) const;
+    double getFactor() const;
+    void setFactor(double f) const;
+    double dpiToScale(double dpi) const;
+    double scaleToDpi(double scale) const;
+protected:
+    struct ImageData;
+    std::unique_ptr<ImageData> pImg;
+/**
      * Action States.
      */
     enum Status {
@@ -55,34 +76,6 @@ Q_OBJECT
 //SetRowSpacing      /**< Setting row spacing in the command line. */
     };
 
-public:
-    RS_ActionDrawImage(RS_EntityContainer& container,
-                       RS_GraphicView& graphicView);
-    ~RS_ActionDrawImage() override;
-
-    void init(int status=0) override;
-
-    void reset();
-
-    void trigger() override;
-
-    void mouseMoveEvent(QMouseEvent* e) override;
-    void coordinateEvent(RS_CoordinateEvent* e) override;
-    QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
-//    void updateToolBar() override;
-
-    double getAngle() const;
-    void setAngle(double a) const;
-    double getFactor() const;
-    void setFactor(double f) const;
-    double dpiToScale(double dpi) const;
-    double scaleToDpi(double scale) const;
-
-protected:
-    struct ImageData;
-    std::unique_ptr<ImageData> pImg;
-
 /** Last status before entering option. */
     Status lastStatus = ShowDialog;
 
@@ -91,8 +84,7 @@ protected:
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
 
     bool doProcessCommand(int status, const QString &command) override;
-
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

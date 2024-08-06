@@ -118,8 +118,7 @@ void RS_ActionInterface::setName(const char* _name) {
  * @param status The status on which to initiate this action.
  * default is 0 to begin the action.
  */
-void RS_ActionInterface::init(int status)
-{
+void RS_ActionInterface::init(int status){
     setStatus(status);
     if (status>=0) {
         RS_Snapper::init();
@@ -186,19 +185,35 @@ void RS_ActionInterface::keyReleaseEvent(QKeyEvent* e) {
 /**
  * Coordinate event. Triggered usually from a command line.
  * This function can be overwritten by the implementing action.
- * The default implementation does nothing.
+ * The default implementation just checks preconditions and delegates
+ * actual processing to method that may be overwritten for specific
+ * implementation
  */
 void RS_ActionInterface::coordinateEvent(RS_CoordinateEvent* e) {
     if (e == nullptr){
         return;
     }
 
+    // retrieve coordinates
     RS_Vector pos = e->getCoordinate();
     if (!pos.valid){
         return;
     }
-    doProcessCoordinateEvent(getStatus(), pos);
+    // check whether it's zero - so it might be from "0" shortcut
+    RS_Vector zero = RS_Vector(0, 0, 0);
+    bool isZero = pos == zero; // use it to handle "0" shortcut (it is passed as 0,0 vector)
+
+    // delegate further processing
+    onCoordinateEvent(status, isZero, pos);
 }
+
+/**
+ * Expansion point for coordinate event processing.
+ * @param status current status of the action
+ * @param isZero true if coordinate is zero (so it's shortcut).
+ * @param pos coordinate
+ */
+void RS_ActionInterface::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]]bool isZero, [[maybe_unused]]const RS_Vector &pos) {}
 
 /**
  * Called when a command from the command line is launched.
@@ -557,4 +572,6 @@ void RS_ActionInterface::fireCoordinateEventForSnap(QMouseEvent *e){
     fireCoordinateEvent(snapPoint(e));
 }
 
-void RS_ActionInterface::doProcessCoordinateEvent(int status, const RS_Vector &pos) {}
+void RS_ActionInterface::initPrevious(int stat) {
+    init(stat - 1);
+}

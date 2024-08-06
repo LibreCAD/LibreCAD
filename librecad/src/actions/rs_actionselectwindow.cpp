@@ -159,7 +159,7 @@ void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unu
     if (status==SetCorner2) {
         deletePreview();
     }
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionSelectWindow::updateMouseButtonHints() {

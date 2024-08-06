@@ -36,36 +36,34 @@
  * @author Andrew Mustun
  */
 class RS_ActionZoomPan : public RS_ActionInterface {
-	Q_OBJECT
-public:
-      /*
-       ** Action States.
-      */
-     enum Status {
-        SetPanStart,   /**< Setting Start.  */
-        SetPanning,     /**< Setting panning. */
-        SetPanEnd,      /**< Setting End */
-     };
-
+    Q_OBJECT
 public:
     RS_ActionZoomPan(RS_EntityContainer& container,
                      RS_GraphicView& graphicView);
 
-	void init(int status=0) override;
+    void init(int status) override;
     void finish(bool updateTB = true ) override;
-	void trigger() override;
-	void mouseMoveEvent(QMouseEvent* e) override;
-	void mousePressEvent(QMouseEvent* e) override;
-	void mouseReleaseEvent(QMouseEvent* e) override;
-	void updateMouseButtonHints() override;
+    void trigger() override;
+    void mouseMoveEvent(QMouseEvent* e) override;
+    void mousePressEvent(QMouseEvent* e) override;
+    void mouseReleaseEvent(QMouseEvent* e) override;
+    void updateMouseButtonHints() override;
 protected:
+    /*
+       ** Action States.
+      */
+    enum Status {
+        SetPanStart,   /**< Setting Start.  */
+        SetPanning,     /**< Setting panning. */
+        SetPanEnd,      /**< Setting End */
+    };
+
     //RS_Vector v1;
     //RS_Vector v2;
     int x1 = 0;
     int y1 = 0;
     int x2 = 0;
     int y2 = 0;
-	RS2::CursorType doGetMouseCursor(int status) override;
+    RS2::CursorType doGetMouseCursor(int status) override;
 };
-
 #endif

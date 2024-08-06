@@ -39,48 +39,23 @@
  * @author Andrew Mustun
  */
 class RS_ActionLibraryInsert : public RS_PreviewActionInterface {
-Q_OBJECT
-    /**
-     * Action States.
-     */
-    enum Status {
-        SetTargetPoint,    /**< Setting the reference point. */
-        SetAngle,          /**< Setting angle in the command line. */
-        SetFactor          /**< Setting factor in the command line. */
-//SetColumns,        /**< Setting columns in the command line. */
-//SetRows,           /**< Setting rows in the command line. */
-//SetColumnSpacing,  /**< Setting column spacing in the command line. */
-//SetRowSpacing      /**< Setting row spacing in the command line. */
-    };
-
+    Q_OBJECT
 public:
     RS_ActionLibraryInsert(RS_EntityContainer& container,
                            RS_GraphicView& graphicView);
     ~RS_ActionLibraryInsert() override;
 
-    void init(int status=0) override;
-
+    void init(int status) override;
     void reset();
-
     void trigger() override;
-
     void mouseMoveEvent(QMouseEvent* e) override;
-
-    void coordinateEvent(RS_CoordinateEvent* e) override;
     QStringList getAvailableCommands() override;
-
     void updateMouseButtonHints() override;
-
     void setFile(const QString& file);
-
     double getAngle() const;
-
     void setAngle(double a);
-
     double getFactor() const;
-
     void setFactor(double f);
-
 /*int getColumns() {
  return data.cols;
 }
@@ -114,8 +89,19 @@ void setRowSpacing(double rs) {
 }*/
 
 protected:
-//RS_Block* block;
-//RS_InsertData data;
+    /**
+   * Action States.
+   */
+    enum Status {
+        SetTargetPoint,    /**< Setting the reference point. */
+        SetAngle,          /**< Setting angle in the command line. */
+        SetFactor          /**< Setting factor in the command line. */
+//SetColumns,        /**< Setting columns in the command line. */
+//SetRows,           /**< Setting rows in the command line. */
+//SetColumnSpacing,  /**< Setting column spacing in the command line. */
+//SetRowSpacing      /**< Setting row spacing in the command line. */
+    };
+
     struct Points;
     std::unique_ptr<Points> pPoints;
 
@@ -125,7 +111,7 @@ protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
-
 #endif

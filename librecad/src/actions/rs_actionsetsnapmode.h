@@ -42,7 +42,7 @@ public:
                          RS_GraphicView& graphicView,
                          RS2::SnapMode snapMode);
 
-	void init(int status=0) override;
+	void init(int status) override;
 	void trigger() override;
 
 protected:

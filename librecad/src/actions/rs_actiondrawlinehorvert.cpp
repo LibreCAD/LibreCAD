@@ -127,7 +127,7 @@ void RS_ActionDrawLineHorVert::mouseLeftButtonReleaseEvent(int status, QMouseEve
 
 void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
-    init(status - 1);
+    initPrevious(status);
 }
 
 void RS_ActionDrawLineHorVert::updateMouseButtonHints(){

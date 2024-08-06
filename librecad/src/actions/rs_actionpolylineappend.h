@@ -35,78 +35,24 @@ class RS_Polyline;
  *
  * @author Andrew Mustun
  */
-class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {//public RS_PreviewActionInterface {
+class RS_ActionPolylineAppend : public RS_ActionDrawPolyline {
 	Q_OBJECT
-
-    /**
-     * Action States.
-     */
-//	enum Status {
-//     SetPolyline,
-//		   SetStartpoint,   /**< Setting the startpoint.  */
-//		   SetNextPoint	  /**< Setting the endpoint. */
-//	};
-
 public:
 	RS_ActionPolylineAppend(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
-//	~RS_ActionPolylineAppend();
-
-//	void reset();
-
-//	void init(int status=0) override;
-	
-	void trigger() override;
-	
-//	void mouseMoveEvent(QMouseEvent* e) override;
-	void coordinateEvent(RS_CoordinateEvent* e) override;
-//  void commandEvent(RS_CommandEvent* e) override;
-//	QStringList getAvailableCommands() override;
-
-//	void showOptions() override;
-//	void hideOptions() override;
-
-	void updateMouseButtonHints() override;
-
-//	void updateToolBar() override;
-//	void close();
+    void trigger() override;
+    void updateMouseButtonHints() override;
     void undo();
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
     void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
-
+    void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 private:
-	/**
-	 * Line data defined so far.
-	 */
-//	RS_PolylineData data;
-	
 	/**
 	 * Polyline entity we're working on.
 	 */
-//	RS_Polyline* polyline;
     RS_Polyline* originalPolyline = nullptr;
     bool prepend = false;
-	/**
-	 * last point.
-	 */
-//	RS_Vector point;
-
-	/**
-	 * Start point of the series of lines. Used for close function.
-	 */
-//	RS_Vector start;
-
-	/**
-	 * Point history (for undo)
-	 */
-//	QList<RS_Vector> history;
-	
-	/**
-	 * Bulge history (for undo)
-	 */
-//	QList<double> bHistory;
 };
-
 #endif

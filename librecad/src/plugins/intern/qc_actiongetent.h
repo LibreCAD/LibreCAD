@@ -41,27 +41,11 @@
 
 class QC_ActionGetEnt : public RS_ActionInterface {
 	Q_OBJECT
-//public:
-    /**
-     * Action States.
-     */
-/*    enum Status {
-        Select
-    };*/
-
 public:
     QC_ActionGetEnt(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
 
     void updateMouseButtonHints() override;
-
-/*    virtual void init(int status=0);
-	
-    virtual void mouseReleaseEvent(QMouseEvent* e);
-	
-    virtual void updateMouseCursor();
-    virtual void updateToolBar();*/
-
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
 

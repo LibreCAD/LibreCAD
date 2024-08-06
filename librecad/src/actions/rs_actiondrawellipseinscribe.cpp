@@ -239,14 +239,8 @@ void RS_ActionDrawEllipseInscribe::mouseRightButtonReleaseEvent(int status, [[ma
         pPoints->lines.pop_back();
         deletePreview();
     }
-    init(status - 1);
+    initPrevious(status);
 }
-
-//void RS_ActionDrawEllipseInscribe::coordinateEvent(RS_CoordinateEvent* e) {
-
-//}
-
-//fixme, support command line
 
 /*
 void RS_ActionDrawEllipse4Line::commandEvent(RS_CommandEvent* e) {

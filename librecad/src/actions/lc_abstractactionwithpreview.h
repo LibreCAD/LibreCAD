@@ -47,7 +47,6 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
     void finish(bool updateTB) override;
-    void coordinateEvent(RS_CoordinateEvent *event) override;
     void trigger() override;
     void updateMouseButtonHints() override;
     /**
@@ -147,7 +146,6 @@ protected:
 
     virtual bool onMouseMove([[maybe_unused]]QMouseEvent *e, RS_Vector snap, int status);
     virtual void doPreparePreviewEntities([[maybe_unused]]QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status);
-    virtual void onCoordinateEvent(const RS_Vector &coord, bool isZero, int status);
     virtual bool doCheckMayTrigger();
     virtual void doAfterTrigger();
     RS2::CursorType doGetMouseCursor(int status) override;

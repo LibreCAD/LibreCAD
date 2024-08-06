@@ -76,7 +76,7 @@ void RS_ActionModifyDeleteQuick::mouseLeftButtonReleaseEvent([[maybe_unused]]int
 }
 
 void RS_ActionModifyDeleteQuick::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
-    init(status-1);
+    initPrevious(status);
 }
 
 void RS_ActionModifyDeleteQuick::updateMouseButtonHints() {
