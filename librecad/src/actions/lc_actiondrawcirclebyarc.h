@@ -38,11 +38,7 @@ public:
     LC_ActionDrawCircleByArc(RS_EntityContainer& container,RS_GraphicView& graphicView);
     ~LC_ActionDrawCircleByArc() override;
 
-    enum{
-        SetArc
-    };
 
-    void updateMouseButtonHints() override;
 
     bool isReplaceArcByCircle() const{return replaceArcByCircle;};
     void setReplaceArcByCircle(bool value);
@@ -55,6 +51,9 @@ public:
     void setLayerMode(int mode){layerMode = mode;};
     int getLayerMode() const{return layerMode;}
 protected:
+    enum{
+        SetArc
+    };
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doCheckMayTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
@@ -70,7 +69,7 @@ protected:
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
     void doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list) override;
     bool isSetActivePenAndLayerOnTrigger() override;
-
+    void updateMouseButtonHints() override;
 private:
     /** Chosen arc or ellipse arc entity */
     RS_Entity *entity = nullptr;

@@ -44,7 +44,6 @@ public:
 
     bool isDuplicateInPlace() const{return duplicateInplace;};
     void setDuplicateInPlace(bool value){duplicateInplace = value;};
-    void updateMouseButtonHints() override;
     int getPenMode() const {return penMode;};
     void setPenMode(int value){penMode = value;};
     int getLayerMode() const{return layerMode;};
@@ -63,6 +62,7 @@ protected:
     bool isAcceptSelectedEntityToTriggerOnInit(RS_Entity *pEntity) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     void doCreateEntitiesOnTrigger(RS_Entity *entity, QList<RS_Entity *> &list) override;
+    void updateMouseButtonHints() override;
 private:
     /**
      * entity for which duplicate will be created

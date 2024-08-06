@@ -283,7 +283,7 @@ void QG_PrintPreviewOptions::scale(const QString &newScale, bool force) {
     double factor = parseScaleString(scaleToUse, parseOk);
     if (action != nullptr) {
         if (!parseOk) {
-            action->commandMessage(tr("Invalid scale provided"));
+            action->printWarning(tr("Invalid scale provided"));
         } else {
             if (std::abs(factor - action->getScale()) > PRINT_SCALE_STEP) {
                 if (action->setScale(factor, true)) {
@@ -339,7 +339,7 @@ double QG_PrintPreviewOptions::parseScaleString(const QString &scaleText, bool &
 
     factor = std::abs(factor); // do we need negative factor at all?
     if (factor > MAX_PRINT_SCALE){
-        action->commandMessage(tr("Paper scale factor larger than max print ratio"));
+        action->printWarning(tr("Paper scale factor larger than max print ratio"));
         factor = MAX_PRINT_SCALE;
     }
     else if (factor < MIN_PRINT_SCALE){

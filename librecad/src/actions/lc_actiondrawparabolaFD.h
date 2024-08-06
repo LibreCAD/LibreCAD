@@ -40,16 +40,10 @@ public:
     ~LC_ActionDrawParabolaFD() override;
 
     void init(int status) override;
-
     void trigger() override;
-    bool preparePreview();
-
     void mouseMoveEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
-
- //    void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
 protected:
     /**
      * Action States.
@@ -65,5 +59,7 @@ protected:
     std::unique_ptr<Points> pPoints;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
+    bool preparePreview();
 };
 #endif

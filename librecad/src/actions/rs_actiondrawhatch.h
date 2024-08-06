@@ -46,8 +46,6 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-
-    void updateMouseButtonHints() override;
     void setShowArea(bool s);
 protected:
     /**
@@ -60,7 +58,8 @@ protected:
     bool m_bShowArea{true};
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 };
 #endif

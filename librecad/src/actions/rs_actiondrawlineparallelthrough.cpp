@@ -117,7 +117,7 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallelThrough::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineParallelThrough::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity:
             entity = catchEntity(e, RS2::ResolveAll);
@@ -135,7 +135,7 @@ void RS_ActionDrawLineParallelThrough::mouseLeftButtonReleaseEvent(int status, Q
 
 }
 
-void RS_ActionDrawLineParallelThrough::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallelThrough::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     if (entity){
         entity = nullptr;

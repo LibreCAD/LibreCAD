@@ -127,7 +127,7 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
 }
 
 // fixme - complete refactoring
-void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseEntity: {
             auto en = catchEntity(e);
@@ -173,7 +173,7 @@ void RS_ActionPolylineTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
 
 }
 
-void RS_ActionPolylineTrim::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionPolylineTrim::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deleteSnapper();
     deletePreview();
     int newStatus = status - 1;

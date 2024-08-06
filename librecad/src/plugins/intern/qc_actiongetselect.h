@@ -50,19 +50,12 @@ public:
                        RS_GraphicView& graphicView);
 
     ~QC_ActionGetSelect() override;
-
     void init(int status) override;
-
     void mouseReleaseEvent(QMouseEvent* e) override;
     void keyPressEvent(QKeyEvent* e) override;
-
-    void updateMouseButtonHints() override;
-
-
     void setMessage(QString msg);
     bool isCompleted() const{return completed;}
     void getSelected(QList<Plug_Entity *> *se, Doc_plugin_interface* d) const;
-
     void unselectEntities();
 protected:
     /**
@@ -73,6 +66,7 @@ protected:
     };
 
     RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
 private:
     bool completed = false;
     std::unique_ptr<QString> message;

@@ -58,7 +58,7 @@ void RS_ActionSelect::resume(){
     deleteSnapper();
 }
 
-void RS_ActionSelect::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e){
+void RS_ActionSelect::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e){
     initPrevious(status);
 }
 

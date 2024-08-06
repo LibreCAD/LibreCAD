@@ -61,13 +61,14 @@ struct RS_ActionDrawEllipseAxis::Points {
 RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView,
-		bool isArc)
+		bool isArc,
+  RS2::ActionType actionType)
 	:LC_ActionDrawCircleBase("Draw ellipse with axis",
                                container, graphicView)
     ,pPoints(std::make_unique<Points>()){
     pPoints->isArc = isArc;
     pPoints->angle2 = isArc ? 2. * M_PI : 0.;
-    actionType = isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis;
+    this->actionType = isArc ? RS2::ActionDrawEllipseArcAxis : RS2::ActionDrawEllipseAxis;
 }
 
 RS_ActionDrawEllipseAxis::~RS_ActionDrawEllipseAxis() = default;
@@ -224,7 +225,7 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawEllipseAxis::mouseMoveEvent end");
 }
 
-void RS_ActionDrawEllipseAxis::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawEllipseAxis::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     switch (status){
         case SetMajor:
@@ -239,7 +240,7 @@ void RS_ActionDrawEllipseAxis::mouseLeftButtonReleaseEvent(int status, QMouseEve
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawEllipseAxis::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseAxis::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

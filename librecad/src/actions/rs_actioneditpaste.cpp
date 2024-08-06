@@ -90,12 +90,12 @@ void RS_ActionEditPaste::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionEditPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionEditPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     finishOnTrigger = !isControl(e);
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditPaste::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionEditPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

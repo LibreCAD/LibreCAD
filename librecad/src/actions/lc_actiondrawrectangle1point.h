@@ -53,15 +53,12 @@ public:
     ~LC_ActionDrawRectangle1Point() override;
 
     QStringList getAvailableCommands() override;
-
     void setWidth(double value);
     double getWidth()const {return width;};
     void setHeight(double value);
     double getHeight() const{return height;};
-
     void setSizeInner(bool value);
     bool isSizeInner() const{return sizeIsInner;};
-
 protected:
     // width of rect
     double width = 0.0;

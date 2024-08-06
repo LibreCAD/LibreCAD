@@ -97,7 +97,7 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawLinePolygonCenCor::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLinePolygonCenCor::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector coord = snapPoint(e);
     if (status == SetCorner){
         coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
@@ -105,7 +105,7 @@ void RS_ActionDrawLinePolygonCenCor::mouseLeftButtonReleaseEvent(int status, QMo
     fireCoordinateEvent(coord);
 }
 
-void RS_ActionDrawLinePolygonCenCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLinePolygonCenCor::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

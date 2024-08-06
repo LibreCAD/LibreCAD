@@ -47,7 +47,6 @@ public:
     void finish(bool updateTB = true) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
      * Action States.
@@ -65,7 +64,8 @@ protected:
     void previewRefTrimmedEntity(RS_Entity *trimmed, RS_Entity *original);
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 };
 #endif

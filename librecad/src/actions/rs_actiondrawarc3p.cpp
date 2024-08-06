@@ -152,7 +152,7 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDrawArc3P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawArc3P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     switch (status) {
         case SetPoint2:
@@ -166,7 +166,7 @@ void RS_ActionDrawArc3P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionDrawArc3P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArc3P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

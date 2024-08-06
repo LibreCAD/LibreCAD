@@ -69,11 +69,8 @@ public:
 
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-
-    void updateMouseButtonHints() override;
     void close();
     void undo();
-
     void setMode(SegmentMode m);
     int getMode() const;
     void setRadius(double r);
@@ -105,11 +102,12 @@ protected:
     int m_reversed = 1;
     bool m_calculatedSegment = false;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString prepareCommand(RS_CommandEvent *e) const override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 private:
     struct Points;
     std::unique_ptr<Points> pPoints;

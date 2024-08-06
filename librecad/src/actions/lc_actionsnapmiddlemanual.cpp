@@ -112,13 +112,13 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionSnapMiddleManual::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
+void LC_ActionSnapMiddleManual::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     snapped = getSnapAngleAwarePoint(e, m_pPoints->startPoint, snapped);
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionSnapMiddleManual::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void LC_ActionSnapMiddleManual::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
 
     switch (status) {

@@ -192,7 +192,7 @@ bool RS_ActionDrawEllipseInscribe::preparePreview(RS_Line* fourthLineCandidate, 
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseInscribe::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawEllipseInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
 
     if (en != nullptr){
@@ -230,7 +230,7 @@ void RS_ActionDrawEllipseInscribe::mouseLeftButtonReleaseEvent(int status, QMous
     }
 }
 
-void RS_ActionDrawEllipseInscribe::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     if (status > 0){
         clearLines(true);

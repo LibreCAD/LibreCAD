@@ -109,12 +109,12 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
         deleteSnapper();
 }
 
-void LC_ActionEditPasteTransform::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     invokedWithControl = isControl(e);
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionEditPasteTransform::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status, QMouseEvent *e) {
     initPrevious(status);
 }
 

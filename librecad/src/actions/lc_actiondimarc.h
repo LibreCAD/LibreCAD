@@ -40,9 +40,8 @@ public:
     ~LC_ActionDimArc() override;
     void reset()   override;
     void trigger() override;
-    void mouseMoveEvent(QMouseEvent* e)    override;
+    void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
 protected:
     enum Status{
         SetEntity,
@@ -51,9 +50,10 @@ protected:
     RS_Entity* selectedArcEntity = nullptr;
     LC_DimArcData dimArcData;
     void setRadius(const RS_Vector& selectedPosition);
+    void updateMouseButtonHints() override;
     bool doProcessCommand(int status, const QString &command)  override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 #endif //LC_ACTIONDIMARC_H

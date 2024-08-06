@@ -107,7 +107,7 @@ void RS_ActionOrder::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionOrder::mouseMoveEvent end");
 }
 
-void RS_ActionOrder::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionOrder::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseEntity: {
             targetEntity = catchEntity(e);
@@ -127,7 +127,7 @@ void RS_ActionOrder::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     deleteSnapper();
 }
 
-void RS_ActionOrder::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionOrder::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     if (targetEntity) {
         targetEntity->setHighlighted(false);

@@ -124,7 +124,7 @@ void RS_ActionSnapIntersectionManual::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionSnapIntersectionManual::mouseMoveEvent end");
 }
 
-void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSnapIntersectionManual::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     RS_Entity *se = catchEntity(e);
 
@@ -149,7 +149,7 @@ void RS_ActionSnapIntersectionManual::mouseLeftButtonReleaseEvent(int status, QM
     }
 }
 
-void RS_ActionSnapIntersectionManual::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSnapIntersectionManual::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

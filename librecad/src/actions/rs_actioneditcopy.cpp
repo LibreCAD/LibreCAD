@@ -126,12 +126,12 @@ void RS_ActionEditCopyPaste::mouseMoveEvent(QMouseEvent* e) {
         deleteSnapper();
 }
 
-void RS_ActionEditCopyPaste::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     invokedWithControl = isControl(e);
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionEditCopyPaste::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionEditCopyPaste::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

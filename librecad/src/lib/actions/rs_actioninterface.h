@@ -83,24 +83,14 @@ public:
     virtual void setStatus(int status);
     int getStatus() const;
     virtual void trigger();
-    virtual void updateMouseButtonHints();
-    virtual void updateMouseCursor();
     virtual bool isFinished() const;
     virtual void setFinished();
     virtual void finish(bool updateTB = true );
     virtual void setPredecessor(RS_ActionInterface* pre);
     void suspend() override;
     void resume() override;
-    virtual void hideOptions(bool includeSnapOptions = false);
+    virtual void hideOptions();
     virtual void showOptions();
-    void setActionType(RS2::ActionType actionType);
-    bool checkCommand(const QString& cmd, const QString& str,
-                             RS2::ActionType action=RS2::ActionNone);
-    QString command(const QString& cmd);
-    QString msgAvailableCommands();
-    // Accessor for drawing keys
-    int getGraphicVariableInt(const QString& key, int def) const;
-    void commandMessage(const QString &msg) const;
 private:
     /**
      * Current status of the action. After an action has
@@ -112,7 +102,6 @@ private:
      * corner (status 1).
      */
     int status = 0;
-
 protected:
     /** Action name. Used internally for debugging */
     QString name;
@@ -146,14 +135,23 @@ protected:
 
     double snapToAngleStep = 15.0;
 
+    QString msgAvailableCommands();
+    void setActionType(RS2::ActionType actionType);
+    // Accessor for drawing keys
+    int getGraphicVariableInt(const QString& key, int def) const;
+
+    void updateSelectionWidget() const;
+    void updateSelectionWidget(int countSelected, double selectedLength) const;
+
     virtual LC_ActionOptionsWidget* createOptionsWidget();
     void updateOptions();
     void updateOptionsUI(int mode);
 
     virtual RS2::CursorType doGetMouseCursor(int status);
+    void updateMouseCursor();
     void setMouseCursor(const RS2::CursorType &cursor);
-    void updateSelectionWidget() const;
-    void updateSelectionWidget(int countSelected, double selectedLength) const;
+
+    virtual void updateMouseButtonHints();
 
     // simplified mouse widget and command message operations
     void updateMouseWidgetTRBack(const QString &msg,const LC_ModifiersInfo& modifiers = LC_ModifiersInfo::NONE());
@@ -164,8 +162,8 @@ protected:
     static bool isControl(const QInputEvent *e);
     static bool isShift(const QInputEvent *e);
 
-    virtual void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e);
-    virtual void mouseRightButtonReleaseEvent(int status, QMouseEvent * e);
+    virtual void onMouseLeftButtonRelease(int status, QMouseEvent * e);
+    virtual void onMouseRightButtonRelease(int status, QMouseEvent * e);
 
     void updateSnapAngleStep();
     /**
@@ -175,8 +173,14 @@ protected:
  * @return true if event should be accepted, false otherwise
  */
     virtual bool doProcessCommand([[maybe_unused]]int status, const QString &command);
+
+    bool checkCommand(const QString& cmd, const QString& str,
+                      RS2::ActionType action=RS2::ActionNone);
+    QString command(const QString& cmd);
     virtual QString getAdditionalHelpMessage();
     virtual QString prepareCommand(RS_CommandEvent *e) const;
+
+    void commandMessage(const QString &msg) const;
 
     void fireCoordinateEvent(const RS_Vector& coord);
     void fireCoordinateEventForSnap(QMouseEvent *e);
@@ -184,6 +188,4 @@ protected:
     virtual void onCoordinateEvent(int status, bool isZero, const RS_Vector& pos);
     void initPrevious(int status);
 };
-
-
 #endif

@@ -133,11 +133,11 @@ void RS_ActionDrawImage::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDrawImage::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawImage::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawImage::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     finish(false);
 }
 

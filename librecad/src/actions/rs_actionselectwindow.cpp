@@ -145,7 +145,7 @@ void RS_ActionSelectWindow::mousePressEvent(QMouseEvent* e) {
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         pPoints->v2 = toGraph(e);
@@ -154,7 +154,7 @@ void RS_ActionSelectWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     }
 }
 
-void RS_ActionSelectWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectWindow::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectWindow::mouseReleaseEvent()");
     if (status==SetCorner2) {
         deletePreview();

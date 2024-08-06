@@ -47,7 +47,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
     void close();
     void next();
     void undo();
@@ -74,10 +73,11 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
 
     void addHistory(RS_ActionDrawLine::HistoryAction a, const RS_Vector& p, const RS_Vector& c, const int s);
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif

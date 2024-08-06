@@ -45,8 +45,6 @@ class RS_Pen;
     in order to place the marker at a different position 
     along the imaginary line.
 */
-
-
 class LC_ActionSnapMiddleManual : public RS_PreviewActionInterface{
 Q_OBJECT
 public:
@@ -60,7 +58,6 @@ public:
     void mouseMoveEvent    (QMouseEvent* e) override;
     void commandEvent    (RS_CommandEvent*    e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
 signals:
     void signalUnsetSnapMiddleManual();
 protected:
@@ -74,7 +71,8 @@ protected:
     struct Points;
     std::unique_ptr<Points> m_pPoints;
 
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };

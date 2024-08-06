@@ -95,7 +95,6 @@ public:
         RS_GraphicView &graphicView,
         bool forCircle);
 
-    void updateMouseButtonHints() override;
     bool isTickAngleRelative() const{return tickAngleIsRelative;}
     bool isDivideEntity() const{return doDivideEntity;}
     void setTickLength(double len){tickLength = len;}
@@ -205,6 +204,7 @@ protected:
     bool isSetActivePenAndLayerOnTrigger() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     EntityTypeList getCatchEntityTypeList() const;
+    void updateMouseButtonHints() override;
 };
 
 #endif // LC_ACTIONDRAWSLICEDIVIDE_H

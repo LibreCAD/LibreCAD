@@ -68,7 +68,7 @@ void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void LC_ActionPenPick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionPenPick::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (status == SelectEntity){
         // Well, actually, it's possible to use Shift modifier for determining whether pen should be
         // resolved or not.  However, in UI there are two separate actions for consistency of
@@ -84,7 +84,7 @@ void LC_ActionPenPick::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     graphicView->redraw();
 }
 
-void LC_ActionPenPick::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPenPick::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     finish(true);
     initPrevious(status);
     graphicView->redraw();

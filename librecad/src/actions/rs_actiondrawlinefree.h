@@ -47,7 +47,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
      * Action States.
@@ -59,7 +58,8 @@ protected:
     std::unique_ptr<RS_Vector> vertex;
     std::unique_ptr<RS_Polyline> polyline;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 };
 #endif

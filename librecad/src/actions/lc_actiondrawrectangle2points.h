@@ -45,7 +45,6 @@ public:
     void init(int status) override;
     int getSecondPointSnapMode() const{return secondPointSnapMode;};
     void setSecondPointSnapMode(int value);
-
 protected:
     /**
      * position of corner 1

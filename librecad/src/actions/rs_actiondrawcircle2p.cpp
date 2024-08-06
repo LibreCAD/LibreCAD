@@ -132,7 +132,7 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionDrawCircle2P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawCircle2P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector coord = snapPoint(e);
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
@@ -140,7 +140,7 @@ void RS_ActionDrawCircle2P::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     fireCoordinateEvent(coord);
 }
 
-void RS_ActionDrawCircle2P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircle2P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

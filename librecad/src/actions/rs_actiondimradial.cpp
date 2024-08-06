@@ -142,7 +142,7 @@ void RS_ActionDimRadial::mouseMoveEvent(QMouseEvent *e){
 
 const RS_Vector &RS_ActionDimRadial::getDefinitionPoint() const{return edata->definitionPoint;}
 
-void RS_ActionDimRadial::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDimRadial::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntity(e, RS2::ResolveAll);
@@ -171,7 +171,7 @@ void RS_ActionDimRadial::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionDimRadial::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDimRadial::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

@@ -177,7 +177,7 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyTrimAmount::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseTrimEntity: {
             *trimCoord = toGraph(e);
@@ -199,7 +199,7 @@ void RS_ActionModifyTrimAmount::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionModifyTrimAmount::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyTrimAmount::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     initPrevious(status);
 }
 

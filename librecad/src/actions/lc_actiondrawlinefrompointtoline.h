@@ -52,7 +52,6 @@ public:
     double getLength() const{return length;}
     void setEndOffset(double len){endOffset = len;};
     double getEndOffset() const{return endOffset;}
-    void updateMouseButtonHints() override;
 protected:
     // action state
     enum{
@@ -82,6 +81,7 @@ protected:
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
 
     /**
      * Target line to which line will be created

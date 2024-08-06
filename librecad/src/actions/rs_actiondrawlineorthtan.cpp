@@ -127,7 +127,7 @@ void RS_ActionDrawLineOrthTan::clearLines(){
     deletePreview();
 }
 
-void RS_ActionDrawLineOrthTan::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetLine: {
             RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
@@ -152,7 +152,7 @@ void RS_ActionDrawLineOrthTan::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionDrawLineOrthTan::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineOrthTan::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     clearLines();
     if (status == SetLine){
         finish(true);

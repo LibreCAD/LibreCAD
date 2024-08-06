@@ -54,17 +54,13 @@ public:
     void init(int status) override;
     void resume() override;
     void suspend() override;
-
     void keyPressEvent(QKeyEvent* e) override;
     void keyReleaseEvent(QKeyEvent* e) override;
-
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
-
     void commandEvent(RS_CommandEvent* e) override;
     QStringList getAvailableCommands() override;
 
-    void updateMouseButtonHints() override;
     // clear temporary entities for highlighting
     void clearHighLighting();
     enum RS2::EntityType getTypeToSelect();
@@ -95,10 +91,11 @@ protected:
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void goToNeutralStatus();
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 
     void highlightHoveredEntities(QMouseEvent* currentMousePosition);
     void highlightEntity(RS_Entity* entity);
+    void updateMouseButtonHints() override;
 };
 #endif

@@ -145,7 +145,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawCircle4Line::mouseMoveEvent end");
 }
 
-void RS_ActionDrawCircleInscribe::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleInscribe::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Entity *en = catchModifiableEntity(e, RS2::EntityLine);
     if (!en) return;
     if (!(en->isVisible() && isLine(en))) return;
@@ -176,7 +176,7 @@ void RS_ActionDrawCircleInscribe::mouseLeftButtonReleaseEvent(int status, QMouse
     }
 }
 
-void RS_ActionDrawCircleInscribe::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleInscribe::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     if (status > 0){
         pPoints->lines.pop_back();

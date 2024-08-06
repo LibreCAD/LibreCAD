@@ -34,8 +34,8 @@ class LC_ActionDrawStar:public LC_AbstractActionWithPreview{
    Q_OBJECT
 public:
     LC_ActionDrawStar(RS_EntityContainer &container,RS_GraphicView &graphicView);
+    QStringList getAvailableCommands() override;
     double getRadiusInner() const{return innerRadius;};
-    void updateMouseButtonHints() override;
     void setRadiusInner(double d);
     double getRadiusOuter() const{return outerRadius;};
     void setRadiusOuter(double d);
@@ -49,7 +49,6 @@ public:
     void setPolyline(bool value);
     bool isSymmetric() const{return symmetric;};
     void setSymmetric(bool value);
-    QStringList getAvailableCommands() override;
 protected:
     /**
  * Action statuses
@@ -115,6 +114,7 @@ protected:
     void doBack(QMouseEvent *pEvent, int status) override;
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif // LC_ACTIONDRAWSTAR_H

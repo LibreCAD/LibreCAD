@@ -48,7 +48,6 @@ public:
 //        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
-    void updateMouseButtonHints() override;
 
 protected:
     /**
@@ -71,7 +70,8 @@ protected:
 	 */
     void clearLines(bool checkStatus = false);
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 };
 #endif

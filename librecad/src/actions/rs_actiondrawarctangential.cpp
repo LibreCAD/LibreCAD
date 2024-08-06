@@ -192,7 +192,7 @@ RS_Vector RS_ActionDrawArcTangential::forecastArcCenter() const{
     return center;
 }
 
-void RS_ActionDrawArcTangential::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         // set base entity:
         case SetBaseEntity: {
@@ -232,7 +232,7 @@ void RS_ActionDrawArcTangential::mouseLeftButtonReleaseEvent(int status, QMouseE
     }
 }
 
-void RS_ActionDrawArcTangential::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArcTangential::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

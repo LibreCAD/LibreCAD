@@ -323,7 +323,7 @@ void RS_ActionPolylineSegment::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionPolylineSegment::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseEntity:
             targetEntity = catchEntity(e, entityType);
@@ -346,7 +346,7 @@ void RS_ActionPolylineSegment::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionPolylineSegment::mouseRightButtonReleaseEvent(int status,[[maybe_unused]]  QMouseEvent *e) {
+void RS_ActionPolylineSegment::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
     deleteSnapper();
     if (targetEntity){
          graphicView->redraw();

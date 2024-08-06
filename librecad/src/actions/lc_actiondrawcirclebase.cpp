@@ -30,11 +30,11 @@ LC_ActionDrawCircleBase::LC_ActionDrawCircleBase(const char *name, RS_EntityCont
 
 LC_ActionDrawCircleBase::~LC_ActionDrawCircleBase() = default;
 
-void LC_ActionDrawCircleBase::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionDrawCircleBase::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionDrawCircleBase::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawCircleBase::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

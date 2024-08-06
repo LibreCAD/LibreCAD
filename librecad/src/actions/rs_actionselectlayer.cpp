@@ -59,12 +59,12 @@ void RS_ActionSelectLayer::trigger(){
     }
 }
 
-void RS_ActionSelectLayer::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
+void RS_ActionSelectLayer::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     en = catchEntity(e);
     trigger();
 }
 
-void RS_ActionSelectLayer::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionSelectLayer::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     initPrevious(status);
 }
 

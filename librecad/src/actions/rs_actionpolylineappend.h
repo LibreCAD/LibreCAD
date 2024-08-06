@@ -41,13 +41,13 @@ public:
 	RS_ActionPolylineAppend(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
     void trigger() override;
-    void updateMouseButtonHints() override;
     void undo();
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 private:
 	/**
 	 * Polyline entity we're working on.

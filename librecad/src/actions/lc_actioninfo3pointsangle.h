@@ -33,7 +33,6 @@ public:
 
     ~LC_ActionInfo3PointsAngle() override;
     void mouseMoveEvent(QMouseEvent *event) override;
-    void updateMouseButtonHints() override;
     void trigger() override;
 protected:
     enum Status{
@@ -47,8 +46,9 @@ protected:
     RS_Vector point3{false};
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif // LC_ACTIONINFO3POINTSANGLE_H

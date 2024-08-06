@@ -48,7 +48,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
     bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
     void finish(bool updateTB) override;;
@@ -76,10 +75,11 @@ protected:
     void restoreRelZero();
     RS_Vector obtainNearestPointOnEntity(const RS_Vector &snap) const;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
+    void updateMouseButtonHints() override;
 };
 
 #endif

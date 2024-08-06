@@ -47,12 +47,11 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
-
 protected:
     RS_Vector vertexToDelete2 = RS_Vector(false);
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
     void collectEntitiesToRemove(RS_Vector vector, RS_Vector vector1, QList<RS_Entity *> &list);
+    void updateMouseButtonHints() override;
 };
 
 #endif

@@ -50,7 +50,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
 protected:
     enum Status {
         SetLine1,      ///< Choose 1st line
@@ -73,9 +72,10 @@ protected:
     void lineOrder(const RS_Vector &dimPos, RS_LineData& ld1, RS_LineData& ld2);
     int determineQuadrant(const double angle);
     bool setData(const RS_Vector& dimPos, const bool calcCenter = false);
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif

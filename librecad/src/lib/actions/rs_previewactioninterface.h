@@ -54,18 +54,11 @@ public:
         RS_GraphicView &graphicView,
         RS2::ActionType actionType = RS2::ActionNone);
     ~RS_PreviewActionInterface() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void finish(bool updateTB = true) override;
     void suspend() override;
     void resume() override;
     void trigger() override;
-    void drawPreview();
-    void deletePreview();
-
-    void deleteHighlights();
-    void drawHighlights();
-    void addToHighlights(RS_Entity *e, bool enable = true);
-
 protected:
     /**
      * Preview that holds the entities to be previewed.
@@ -80,10 +73,14 @@ protected:
     bool showRefEntitiesOnPreview = false;
     bool highlightEntitiesOnHover = false;
     bool highlightEntitiesRefPointsOnHover = false;
-//    /**
-//     * Current offset of the preview.
-//     */
-//	std::unique_ptr<RS_Vector> offset;
+
+    void drawPreview();
+    void deletePreview();
+
+    void deleteHighlights();
+    void drawHighlights();
+    void addToHighlights(RS_Entity *e, bool enable = true);
+
     bool trySnapToRelZeroCoordinateEvent(const QMouseEvent *e);
     RS_Vector getRelZeroAwarePoint(const QMouseEvent *e, const RS_Vector &pos);
     RS_Vector getSnapAngleAwarePoint(const QMouseEvent *e, const RS_Vector &basepoint, const RS_Vector &pos, bool drawMark = false);
@@ -126,5 +123,4 @@ protected:
     void deleteEntityUndoable(RS_Entity *entity);
     void previewSnapAngleMark(const RS_Vector &center, double angle);
 };
-
 #endif

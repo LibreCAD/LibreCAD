@@ -101,14 +101,14 @@ void RS_ActionModifyEntity::mouseMoveEvent(QMouseEvent *e) {
     drawHighlights();
 }
 
-void RS_ActionModifyEntity::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionModifyEntity::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     en = catchEntity(e);
     if (en != nullptr) {
         trigger();
     }
 }
 
-void RS_ActionModifyEntity::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyEntity::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

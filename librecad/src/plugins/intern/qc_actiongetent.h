@@ -44,8 +44,6 @@ class QC_ActionGetEnt : public RS_ActionInterface {
 public:
     QC_ActionGetEnt(RS_EntityContainer& container,
                         RS_GraphicView& graphicView);
-
-    void updateMouseButtonHints() override;
     void trigger() override;
     void keyPressEvent(QKeyEvent* e) override;
 
@@ -55,8 +53,9 @@ public:
 
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent * e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent * e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
+    void updateMouseButtonHints() override;
 private:
     bool completed;
     QString message;

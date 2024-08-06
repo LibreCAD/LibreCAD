@@ -66,14 +66,14 @@ void RS_ActionSelectSingle::selectionFinishedByKey(QKeyEvent *e, [[maybe_unused]
     actionSelect->keyPressEvent(e);
 }
 
-void RS_ActionSelectSingle::mouseLeftButtonReleaseEvent([[maybe_unused]] int status, QMouseEvent *e) {
+void RS_ActionSelectSingle::onMouseLeftButtonRelease([[maybe_unused]] int status, QMouseEvent *e) {
     entityToSelect = catchEntity(e, catchForSelectionEntityTypes);
     if (entityToSelect != nullptr){
        trigger();
     }
 }
 
-void RS_ActionSelectSingle::mouseRightButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionSelectSingle::onMouseRightButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     finish();
     if (actionSelect->rtti() == RS2::ActionSelect)
         actionSelect->finish();
@@ -95,4 +95,3 @@ bool RS_ActionSelectSingle::isEntityAllowedToSelect(RS_Entity *ent) const {
     else
         return ent ->rtti() == typeToSelect;
 }
-

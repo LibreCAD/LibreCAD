@@ -50,7 +50,6 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
     double getRadius() const;
     void setRadius(double val);
 protected:
@@ -69,5 +68,6 @@ protected:
     bool setRadiusStr(const QString &sr) ;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif

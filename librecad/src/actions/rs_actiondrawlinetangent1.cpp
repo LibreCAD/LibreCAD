@@ -116,7 +116,7 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineTangent1::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineTangent1::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineTangent1::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetPoint: {
             fireCoordinateEventForSnap(e);
@@ -133,7 +133,7 @@ void RS_ActionDrawLineTangent1::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionDrawLineTangent1::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineTangent1::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

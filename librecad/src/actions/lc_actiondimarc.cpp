@@ -122,7 +122,7 @@ void LC_ActionDimArc::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("LC_ActionDimArc::mouseMoveEvent end");
 }
 
-void LC_ActionDimArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDimArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             selectedArcEntity = catchEntity(e, RS2::ResolveAll);
@@ -168,7 +168,7 @@ void LC_ActionDimArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
 
 }
 
-void LC_ActionDimArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDimArc::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

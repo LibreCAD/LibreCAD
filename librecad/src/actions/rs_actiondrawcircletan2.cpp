@@ -207,7 +207,7 @@ RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetCircle1: {
             RS_Entity *en = catchCircle(e);
@@ -243,7 +243,7 @@ void RS_ActionDrawCircleTan2::mouseLeftButtonReleaseEvent(int status, QMouseEven
     }
 }
 
-void RS_ActionDrawCircleTan2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan2::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     if (getStatus() > 0){
 //            pPoints->circles[getStatus() - 1]->setHighlighted(false);

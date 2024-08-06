@@ -36,27 +36,25 @@ class RS_Polyline;
  * @author Andrew Mustun
  */
 class RS_ActionModifyDeleteFree:public RS_ActionInterface {
-	Q_OBJECT
+Q_OBJECT
 
 public:
-	RS_ActionModifyDeleteFree(
-		RS_EntityContainer &container,
-		RS_GraphicView &graphicView);
-	~RS_ActionModifyDeleteFree() override;
-	void init(int status = 0) override;
-	void trigger() override;
-	void updateMouseButtonHints() override;
-
+    RS_ActionModifyDeleteFree(
+        RS_EntityContainer &container,
+        RS_GraphicView &graphicView);
+    ~RS_ActionModifyDeleteFree() override;
+    void init(int status = 0) override;
+    void trigger() override;
 protected:
-	void mouseLeftButtonReleaseEvent(int status, QMouseEvent * e) override;
-	void mouseRightButtonReleaseEvent(int status, QMouseEvent * e) override;
-
+    void onMouseLeftButtonRelease(int status, QMouseEvent * e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent * e) override;
+    void updateMouseButtonHints() override;
 private:
-	RS_Polyline *polyline = nullptr;
-	RS_Entity *e1 = nullptr;
-	RS_Entity *e2 = nullptr;
-	struct Points;
-	std::unique_ptr<Points> pPoints;
+    RS_Polyline *polyline = nullptr;
+    RS_Entity *e1 = nullptr;
+    RS_Entity *e2 = nullptr;
+    struct Points;
+    std::unique_ptr<Points> pPoints;
 };
 
 #endif

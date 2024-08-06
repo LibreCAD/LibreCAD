@@ -47,7 +47,7 @@ protected:
     void finish(bool updateTB) override;
     void clean();
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 };
 #endif // LC_ACTIONPOLYLINEDELETEBASE_H

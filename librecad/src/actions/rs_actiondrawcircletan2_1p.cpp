@@ -214,7 +214,7 @@ RS_Entity *RS_ActionDrawCircleTan2_1P::catchCircle(QMouseEvent *e){
     return en;
 }
 
-void RS_ActionDrawCircleTan2_1P::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawCircleTan2_1P::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetCircle1:
         case SetCircle2: {
@@ -242,7 +242,7 @@ void RS_ActionDrawCircleTan2_1P::mouseLeftButtonReleaseEvent(int status, QMouseE
     }
 }
 
-void RS_ActionDrawCircleTan2_1P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircleTan2_1P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     if (status > 0){
         deletePreview();

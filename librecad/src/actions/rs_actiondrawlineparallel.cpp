@@ -40,15 +40,14 @@
 
 RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 		RS_EntityContainer& container,
-		RS_GraphicView& graphicView)
+		RS_GraphicView& graphicView, RS2::ActionType actionType)
 	:RS_PreviewActionInterface("Draw Parallels", container, graphicView)
 	,parallel(nullptr)
 	,distance(1.0)
 	,number(1)
 	, coord(new RS_Vector{})
-	,entity(nullptr)
-{
-	actionType=RS2::ActionDrawLineParallel;
+	,entity(nullptr){
+    actionType= actionType;
 }
 
 RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;
@@ -116,11 +115,11 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineParallel::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineParallel::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallel::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     trigger();
 }
 
-void RS_ActionDrawLineParallel::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineParallel::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

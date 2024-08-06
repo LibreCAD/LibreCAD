@@ -105,7 +105,7 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void LC_ActionDrawLinePolygonCenTan::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDrawLinePolygonCenTan::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector coord = snapPoint(e);
     if (status ==SetTangent){
         coord = getSnapAngleAwarePoint(e, pPoints->center, coord);
@@ -113,7 +113,7 @@ void LC_ActionDrawLinePolygonCenTan::mouseLeftButtonReleaseEvent(int status, QMo
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawLinePolygonCenTan::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawLinePolygonCenTan::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

@@ -165,7 +165,7 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist2::mouseMoveEvent end");
 }
 
-void RS_ActionInfoDist2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             entity = doCatchEntity(e);
@@ -207,7 +207,7 @@ void RS_ActionInfoDist2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionInfoDist2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist2::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     bool firstIsPoint = selectionMode == FIRST_IS_POINT;

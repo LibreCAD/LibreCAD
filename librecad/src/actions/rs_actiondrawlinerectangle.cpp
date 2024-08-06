@@ -108,11 +108,11 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineRectangle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineRectangle::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawLineRectangle::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawLineRectangle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineRectangle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

@@ -365,14 +365,6 @@ LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
     return new QG_PrintPreviewOptions();
 }
 
-void RS_ActionPrintPreview::showOptions() {
-    RS_ActionInterface::showOptions();
-}
-
-void RS_ActionPrintPreview::hideOptions(bool includeSnap) {
-    RS_ActionInterface::hideOptions(includeSnap);
-}
-
 int RS_ActionPrintPreview::getPagesNumHorizontal() {
     return graphic->getPagesNumHoriz();
 }

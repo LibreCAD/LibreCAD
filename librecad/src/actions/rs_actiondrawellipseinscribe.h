@@ -42,7 +42,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
      * Action States.
@@ -59,8 +58,9 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     // 4 points on ellipse
     bool preparePreview(RS_Line* fourthLineCandidate, std::vector<RS_Vector> &tangent);
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void clearLines(bool checkStatus = false);
+    void updateMouseButtonHints() override;
 };
 #endif

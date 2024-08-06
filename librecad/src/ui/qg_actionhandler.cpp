@@ -482,8 +482,7 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
         case RS2::ActionDrawLineParallel:
         case RS2::ActionDrawCircleParallel:
         case RS2::ActionDrawArcParallel:
-            a= new RS_ActionDrawLineParallel(*document, *view);
-            a->setActionType(id);
+            a= new RS_ActionDrawLineParallel(*document, *view, id);
             break;
         case RS2::ActionDrawLineParallelThrough:
             a = new RS_ActionDrawLineParallelThrough(*document, *view);
@@ -629,12 +628,10 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             a = new RS_ActionDrawArcTangential(*document, *view);
             break;
         case RS2::ActionDrawEllipseAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, false);
-            a->setActionType(id);
+            a = new RS_ActionDrawEllipseAxis(*document, *view, false, id);
             break;
         case RS2::ActionDrawEllipseArcAxis:
-            a = new RS_ActionDrawEllipseAxis(*document, *view, true);
-            a->setActionType(id);
+            a = new RS_ActionDrawEllipseAxis(*document, *view, true, id);
             break;
         case RS2::ActionDrawParabola4Points:
             a = new LC_ActionDrawParabola4Points(*document, *view);
@@ -766,11 +763,9 @@ RS_ActionInterface* QG_ActionHandler::setCurrentAction(RS2::ActionType id) {
             break;
         case RS2::ActionModifyTrim:
             a = new RS_ActionModifyTrim(*document, *view, false);
-            a->setActionType(id);
             break;
         case RS2::ActionModifyTrim2:
             a = new RS_ActionModifyTrim(*document, *view, true);
-            a->setActionType(id);
             break;
         case RS2::ActionModifyTrimAmount:
             a = new RS_ActionModifyTrimAmount(*document, *view);

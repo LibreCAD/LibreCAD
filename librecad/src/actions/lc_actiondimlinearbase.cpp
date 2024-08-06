@@ -118,7 +118,7 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimLinear::mouseMoveEvent end");
 }
 
-void LC_ActionDimLinearBase::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionDimLinearBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     if (status == SetExtPoint2){
         snap = getSnapAngleAwarePoint(e, getExtensionPoint1(), snap);
@@ -131,7 +131,7 @@ void LC_ActionDimLinearBase::mouseLeftButtonReleaseEvent(int status, QMouseEvent
     fireCoordinateEvent(snap);
 }
 
-void LC_ActionDimLinearBase::mouseRightButtonReleaseEvent(int status,[[maybe_unused]] QMouseEvent *e) {
+void LC_ActionDimLinearBase::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

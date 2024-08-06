@@ -54,9 +54,6 @@ public:
 
     bool getGapSnapMode() const {return gapSnapMode;};
     void setGapSnapMode(int mode){gapSnapMode = mode;};
-
-    void updateMouseButtonHints() override;;
-
 protected:
 
     /**
@@ -118,6 +115,7 @@ protected:
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     void doFinish(bool updateTB) override;
     void createPreviewEntities(GapData *data, QList<RS_Entity *> &list, bool startPointNoSelected) const;
+    void updateMouseButtonHints() override;
 };
 
 #endif // LC_ACTIONMODIFYLINEGAP_H

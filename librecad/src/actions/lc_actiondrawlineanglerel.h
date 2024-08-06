@@ -53,8 +53,6 @@ public:
 
     ~LC_ActionDrawLineAngleRel() override;
 
-    void updateMouseButtonHints() override;
-
     void setLineSnapMode(int mode) {  lineSnapMode = mode;};
     int getLineSnapMode() const{return lineSnapMode;};
     void setTickSnapMode(int mode) {tickSnapMode = mode;};
@@ -150,6 +148,7 @@ protected:
     void divideOriginalLine(TickData *pData, QList<RS_Entity *> &list);
     bool isSetActivePenAndLayerOnTrigger() override;
     void doFinish(bool updateTB) override;
+    void updateMouseButtonHints() override;
 };
 
 #endif // LC_ACTIONDRAWLINEANGLEREL_H

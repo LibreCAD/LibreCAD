@@ -51,9 +51,6 @@ public:
 
     LC_ActionModifyLineJoin(RS_EntityContainer& container,RS_GraphicView& graphicView);
     ~LC_ActionModifyLineJoin() override;
-
-    void updateMouseButtonHints() override;
-
     void init(int status) override;
 
     bool isCreatePolyline() const{return createPolyline;};
@@ -70,7 +67,6 @@ public:
 
     void setAttributesSource(int value);
     int getAttributesSource() const{return attributesSource;};
-
 protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void doBack(QMouseEvent *pEvent, int status) override;
@@ -83,7 +79,7 @@ protected:
     bool doCheckMayTrigger() override;
     void doPrepareTriggerEntities(QList<RS_Entity *> &list) override;
     bool isSetActivePenAndLayerOnTrigger() override;
-
+    void updateMouseButtonHints() override;
 private:
     /**
      * Utility structure that describes how the intersection point and snap point are located relative to the line

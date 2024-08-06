@@ -106,7 +106,7 @@ void RS_ActionPolylineAppend::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineAppend::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (status == SetStartpoint){
         originalPolyline = dynamic_cast<RS_Polyline *>(catchEntity(e));
         if (!originalPolyline){
@@ -141,7 +141,7 @@ void RS_ActionPolylineAppend::mouseLeftButtonReleaseEvent(int status, QMouseEven
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionPolylineAppend::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status == SetNextPoint){
         trigger();
     }

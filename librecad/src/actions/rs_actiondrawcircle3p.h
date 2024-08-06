@@ -45,9 +45,7 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircle3P() override;
     void trigger() override;
-    void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
  * Action States.
@@ -65,8 +63,10 @@ protected:
     std::unique_ptr<Points> pPoints;
 
     void reset() override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void preparePreview();
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif

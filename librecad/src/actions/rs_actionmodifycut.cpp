@@ -103,7 +103,7 @@ void RS_ActionModifyCut::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
-void RS_ActionModifyCut::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyCut::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseCutEntity: {
             cutEntity = catchEntity(e);
@@ -133,7 +133,7 @@ void RS_ActionModifyCut::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionModifyCut::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyCut::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

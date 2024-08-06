@@ -155,14 +155,14 @@ void RS_ActionInterface::mousePressEvent(QMouseEvent*) {}
 void RS_ActionInterface::mouseReleaseEvent(QMouseEvent* e){
     Qt::MouseButton button = e->button();
     if (button == Qt::LeftButton){
-        mouseLeftButtonReleaseEvent(status, e);
+        onMouseLeftButtonRelease(status, e);
     } else if (button == Qt::RightButton){
-        mouseRightButtonReleaseEvent(status, e);
+        onMouseRightButtonRelease(status, e);
     }
 }
 
-void RS_ActionInterface::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
-void RS_ActionInterface::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
+void RS_ActionInterface::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent* e){}
 
 /**
  * Called when a key is pressed and this is the current action.
@@ -380,14 +380,10 @@ void RS_ActionInterface::resume() {
 /**
  * Hides the tool options.
  */
-void RS_ActionInterface::hideOptions(bool includeSnapOptions) {
-    if (includeSnapOptions) {
-        hideSnapOptions();
-    }
+void RS_ActionInterface::hideOptions() {
     if (m_optionWidget != nullptr){
         m_optionWidget->hideOptions();
         RS_DIALOGFACTORY->removeOptionsWidget(m_optionWidget.get());
-//        m_optionWidget->deleteLater();
         m_optionWidget.release();
     }
 }

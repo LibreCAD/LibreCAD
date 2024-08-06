@@ -133,7 +133,7 @@ void RS_ActionInfoArea::mouseMoveEvent(QMouseEvent* e) {
     //RS_DEBUG->print("RS_ActionInfoArea::mouseMoveEvent end");
 }
 
-void RS_ActionInfoArea::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoArea::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     if (status == SetNextPoint){
         snap = getSnapAngleAwarePoint(e, ia->back(), snap);
@@ -141,7 +141,7 @@ void RS_ActionInfoArea::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     fireCoordinateEvent(snap);
 }
 
-void RS_ActionInfoArea::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoArea::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

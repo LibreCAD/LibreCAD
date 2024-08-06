@@ -133,7 +133,7 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimLeader::mouseMoveEvent end");
 }
 
-void RS_ActionDimLeader::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDimLeader::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     switch (status){
         case SetStartpoint:{
@@ -151,7 +151,7 @@ void RS_ActionDimLeader::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionDimLeader::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDimLeader::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if (status == SetEndpoint) {
         trigger();
         reset();

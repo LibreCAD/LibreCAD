@@ -193,7 +193,7 @@ void RS_ActionModifyBevel::previewLineModifications(const RS_Entity *original, c
     }
 }
 
-void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyBevel::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Entity *se = catchEntity(e,RS2::EntityLine, RS2::ResolveAllButTextImage);
     if (se != nullptr){
         switch (status) {
@@ -232,7 +232,7 @@ void RS_ActionModifyBevel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionModifyBevel::mouseRightButtonReleaseEvent(int status,[[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     int newStatus = -1;
     switch (status){

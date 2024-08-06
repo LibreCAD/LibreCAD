@@ -108,7 +108,7 @@ void RS_ActionZoomWindow::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionZoomWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
         pPoints->v2 = snapFree(e);
@@ -121,7 +121,7 @@ void RS_ActionZoomWindow::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
     }
 }
 
-void RS_ActionZoomWindow::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionZoomWindow::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionZoomWindow::mouseReleaseEvent()");
     if (status == SetSecondCorner){
         deletePreview();

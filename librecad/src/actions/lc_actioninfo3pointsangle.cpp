@@ -151,7 +151,7 @@ void LC_ActionInfo3PointsAngle::updateMouseButtonHints() {
     }
 }
 
-void LC_ActionInfo3PointsAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     switch (status){
         case SetPoint1:{
@@ -171,7 +171,7 @@ void LC_ActionInfo3PointsAngle::mouseLeftButtonReleaseEvent(int status, QMouseEv
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionInfo3PointsAngle::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease(int status, QMouseEvent *e) {
     setStatus(getStatus() - 1);
 }
 

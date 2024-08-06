@@ -42,7 +42,6 @@ public:
     void trigger() override;
     void finish(bool updateTB) override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
 protected:
     enum Status {
         SetLine,     /**< Choose the line orthogonal to the tangent line */
@@ -57,8 +56,8 @@ protected:
     /** arc/circle/ellipse to generate tangent */
     RS_Entity* circle = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
-
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 };
 #endif

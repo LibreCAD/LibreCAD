@@ -174,7 +174,7 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineBisector::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineBisector::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineBisector::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     switch (status) {
         case SetLine1: {
@@ -198,7 +198,7 @@ void RS_ActionDrawLineBisector::mouseLeftButtonReleaseEvent(int status, QMouseEv
 
 }
 
-void RS_ActionDrawLineBisector::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineBisector::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

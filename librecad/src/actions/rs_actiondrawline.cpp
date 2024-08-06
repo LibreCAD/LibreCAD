@@ -161,7 +161,7 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
     }
 }
 
-void RS_ActionDrawLine::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLine::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snapped = snapPoint(e);
     // Snapping to angle(15*) if shift key is pressed
     if (status == SetEndpoint ) {
@@ -170,7 +170,7 @@ void RS_ActionDrawLine::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionDrawLine::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLine::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     switch (status) {
         default:

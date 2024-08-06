@@ -146,11 +146,11 @@ void RS_ActionDrawMText::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawText::mouseMoveEvent end");
 }
 
-void RS_ActionDrawMText::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawMText::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawMText::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawMText::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     finish(false);
 }

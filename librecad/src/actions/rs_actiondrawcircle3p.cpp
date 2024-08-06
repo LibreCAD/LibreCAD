@@ -154,7 +154,7 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDrawCircle3P::mouseLeftButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircle3P::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     RS_Vector coord = snapPoint(e);
     if (status == SetPoint2){
         coord = getSnapAngleAwarePoint(e, pPoints->point1, coord);
@@ -162,7 +162,7 @@ void RS_ActionDrawCircle3P::mouseLeftButtonReleaseEvent(int status, [[maybe_unus
     fireCoordinateEvent(coord);
 }
 
-void RS_ActionDrawCircle3P::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawCircle3P::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

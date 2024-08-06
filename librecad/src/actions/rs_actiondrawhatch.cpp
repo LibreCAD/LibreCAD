@@ -212,11 +212,11 @@ void RS_ActionDrawHatch::mouseMoveEvent(QMouseEvent*) {
     RS_DEBUG->print("RS_ActionDrawHatch::mouseMoveEvent end");
 }
 
-void RS_ActionDrawHatch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawHatch::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     snapPoint(e);
 }
 
-void RS_ActionDrawHatch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawHatch::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     //deletePreview();
     initPrevious(status);
 }

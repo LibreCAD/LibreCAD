@@ -105,7 +105,7 @@ void RS_ActionDrawLineHorVert::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineHorVert::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineHorVert::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineHorVert::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = snapPoint(e);
 
     switch (status) {
@@ -125,7 +125,7 @@ void RS_ActionDrawLineHorVert::mouseLeftButtonReleaseEvent(int status, QMouseEve
     }
 }
 
-void RS_ActionDrawLineHorVert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineHorVert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

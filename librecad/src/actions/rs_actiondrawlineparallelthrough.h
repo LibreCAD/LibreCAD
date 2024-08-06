@@ -46,7 +46,6 @@ public:
     ~RS_ActionDrawLineParallelThrough() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
     void finish(bool updateTB = true) override;
     int getNumber() const;
@@ -74,9 +73,10 @@ protected:
     Status lastStatus = SetEntity;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };

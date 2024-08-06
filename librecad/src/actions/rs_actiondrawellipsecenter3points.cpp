@@ -151,11 +151,11 @@ bool RS_ActionDrawEllipseCenter3Points::preparePreview(){
     return pPoints->valid;
 }
 
-void RS_ActionDrawEllipseCenter3Points::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawEllipseCenter3Points::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionDrawEllipseCenter3Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawEllipseCenter3Points::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

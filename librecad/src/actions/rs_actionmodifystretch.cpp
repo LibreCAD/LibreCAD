@@ -145,7 +145,7 @@ void RS_ActionModifyStretch::previewStretchRect(bool selected) {
     }
 }
 
-void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionModifyStretch::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     if (status == SetTargetPoint){
         RS_Vector mouse= getSnapAngleAwarePoint(e, pPoints->referencePoint, snapPoint(e));
         fireCoordinateEvent(mouse);
@@ -155,7 +155,7 @@ void RS_ActionModifyStretch::mouseLeftButtonReleaseEvent([[maybe_unused]]int sta
     }
 }
 // fixme - default back - remove as well as from other actions
-void RS_ActionModifyStretch::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyStretch::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

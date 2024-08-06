@@ -32,10 +32,7 @@ class LC_ActionDrawLineSnake :public LC_AbstractActionDrawLine {
 public:
     LC_ActionDrawLineSnake(RS_EntityContainer& container, RS_GraphicView& graphicView, int direction = LC_ActionDrawLineSnake::DIRECTION_NONE);
     ~LC_ActionDrawLineSnake() override;
-    void updateMouseButtonHints() override;
-
     void init(int status) override;
-
     void close();
     void next();
     void undo();
@@ -58,9 +55,8 @@ protected:
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doSetStartPoint(RS_Vector vector) override;
     bool doCheckMayDrawPreview(QMouseEvent *pEvent, int status) override;
-
+    void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
-
 private:
     /// History Actions
     enum HistoryAction {

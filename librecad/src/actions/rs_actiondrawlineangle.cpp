@@ -133,7 +133,7 @@ void RS_ActionDrawLineAngle::mouseMoveEvent(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionDrawLineAngle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (status==SetPos) {
         bool shiftPressed = isShift(e);
         RS_Vector position = snapPoint(e);
@@ -150,7 +150,7 @@ void RS_ActionDrawLineAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent
     }
 }
 
-void RS_ActionDrawLineAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

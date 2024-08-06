@@ -105,7 +105,7 @@ void RS_ActionSelectIntersected::mousePressEvent(QMouseEvent *e){
                     pPoints->v1.x, pPoints->v1.y);
 }
 
-void RS_ActionSelectIntersected::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionSelectIntersected::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (status == SetPoint2){
         pPoints->v2 = snapPoint(e);
@@ -113,7 +113,7 @@ void RS_ActionSelectIntersected::mouseLeftButtonReleaseEvent(int status, QMouseE
     }
 }
 
-void RS_ActionSelectIntersected::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionSelectIntersected::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionSelectIntersected::mouseReleaseEvent()");
     if (getStatus() == SetPoint2){
         deletePreview();

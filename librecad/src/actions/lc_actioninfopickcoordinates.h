@@ -31,15 +31,13 @@ class LC_ActionInfoPickCoordinates:public LC_AbstractActionWithPreview
 public:
     LC_ActionInfoPickCoordinates(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void init(int status) override;
-    void updateMouseButtonHints() override;
     void resume() override;
-
 protected:
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
     void doFinish(bool updateTB) override;
-
+    void updateMouseButtonHints() override;
 private:
     /**
      * collected points

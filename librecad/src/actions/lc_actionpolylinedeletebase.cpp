@@ -47,7 +47,7 @@ void LC_ActionPolylineDeleteBase::getSelectedPolylineVertex(QMouseEvent *e, RS_V
     }
 }
 
-void LC_ActionPolylineDeleteBase::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPolylineDeleteBase::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
 }
 
 RS2::CursorType LC_ActionPolylineDeleteBase::doGetMouseCursor([[maybe_unused]] int status){
@@ -67,7 +67,7 @@ void LC_ActionPolylineDeleteBase::clean(){
     graphicView->redraw();
 }
 
-void LC_ActionPolylineDeleteBase::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPolylineDeleteBase::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     deleteSnapper();
     deletePreview();
     drawPreview();

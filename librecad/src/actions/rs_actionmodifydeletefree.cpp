@@ -105,7 +105,7 @@ void RS_ActionModifyDeleteFree::trigger(){
 }
 
 // fixme - add constants for statuses
-void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e){
+void RS_ActionModifyDeleteFree::onMouseLeftButtonRelease(int status, QMouseEvent *e){
     switch (status) {
         case 0: {
             pPoints->v1 = snapPoint(e);
@@ -143,7 +143,7 @@ void RS_ActionModifyDeleteFree::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionModifyDeleteFree::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *mouse_event){
+void RS_ActionModifyDeleteFree::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *mouse_event){
     initPrevious(status);
 }
 

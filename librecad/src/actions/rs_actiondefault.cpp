@@ -540,7 +540,7 @@ void RS_ActionDefault::mousePressEvent(QMouseEvent *e){
     }
 }
 
-void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDefault::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     pPoints->v2 = toGraph(e);
     switch (status) {
@@ -593,7 +593,7 @@ void RS_ActionDefault::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionDefault::mouseRightButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDefault::onMouseRightButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionDefault::mouseReleaseEvent()");
     //cleanup
     goToNeutralStatus();

@@ -279,7 +279,7 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
     }
 }
 
-void RS_ActionModifyRound::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyRound::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     RS_Entity *se = catchEntity(e, eType, RS2::ResolveAll);
     switch (status) {
@@ -307,7 +307,7 @@ void RS_ActionModifyRound::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionModifyRound::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionModifyRound::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

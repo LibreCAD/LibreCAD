@@ -51,7 +51,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     void preparePreview();
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
     void setSnapPoint(int sp);
     int getSnapPoint() const;
     void setAngle(double a);
@@ -75,10 +74,11 @@ protected:
     std::unique_ptr<Points> pPoints;
     bool persistRelativeZero = false;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
     bool doProcessCommand(int status, const QString &command) override;
+    void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 #endif

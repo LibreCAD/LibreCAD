@@ -43,7 +43,6 @@ public:
     ~LC_ActionDrawLinePolygonCenTan() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
 protected:
     enum Status {
@@ -58,8 +57,9 @@ protected:
     /** Last status before entering text. */
     Status lastStatus = SetCenter;
 
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };

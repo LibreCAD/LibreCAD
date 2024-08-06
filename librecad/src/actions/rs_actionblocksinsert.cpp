@@ -138,11 +138,11 @@ void RS_ActionBlocksInsert::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionBlocksInsert::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionBlocksInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEventForSnap(e);
 }
 
-void RS_ActionBlocksInsert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionBlocksInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

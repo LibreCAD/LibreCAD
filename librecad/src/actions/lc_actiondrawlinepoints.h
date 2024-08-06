@@ -32,9 +32,6 @@ class LC_ActionDrawLinePoints :public LC_AbstractActionDrawLine {
 public:
     LC_ActionDrawLinePoints(RS_EntityContainer &container,RS_GraphicView &graphicView);
     ~LC_ActionDrawLinePoints() override;
-
-    void updateMouseButtonHints() override;
-
     int getPointsCount() const {return pointsCount;};
     void setPointsCount(int count) {pointsCount = count;};
     int getEdgePointsMode() const{return edgePointsMode;};
@@ -47,7 +44,6 @@ public:
     void setPointsDistance(double val){fixedDistance = val;};
     void init(int status) override;
     QStringList getAvailableCommands() override;
-
 protected:
 
     /**
@@ -123,14 +119,13 @@ protected:
     void doAfterTrigger() override;
     RS_Vector doGetRelativeZeroAfterTrigger() override;
     void doSetStartPoint(RS_Vector vector) override;
-
+    void updateMouseButtonHints() override;
     void createPoints(RS_Vector &potentialEndPoint, QList<RS_Entity *> &entitiesList);
     void updatePointsCount(int count);
     void setMajorStatus();
     void updateEdgePointsMode(int mode);
     bool isNonZeroLine(const RS_Vector &possiblePoint) const;
     RS_Vector getPossibleEndPointForAngle(const RS_Vector &snap);
-
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 #endif // LC_ACTIONDRAWLINEPOINTS_H

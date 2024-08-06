@@ -45,7 +45,6 @@ public:
     void init(int status = 0) override;
     void trigger() override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
     double getDistance() const{return distance;}
     void setDistance(double d){distance = d;}
     bool isDistanceTotalLength() const{return distanceIsTotalLength;}
@@ -76,10 +75,11 @@ protected:
     QString cmdDistance3;
     */
     double determineDistance(const RS_AtomicEntity *e) const;
-    LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void updateMouseButtonHints() override;
+    LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif

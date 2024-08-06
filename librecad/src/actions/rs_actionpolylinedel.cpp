@@ -103,7 +103,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineDel::mouseMoveEvent end");
 }
 
-void RS_ActionPolylineDel::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e){
+void RS_ActionPolylineDel::onMouseLeftButtonRelease(int status, QMouseEvent *e){
     switch (status) {
         case SetPolyline: {
             auto en = catchEntity(e);

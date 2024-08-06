@@ -109,7 +109,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionPolylineAdd::mouseMoveEvent end");
 }
 
-void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineAdd::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseSegment: {
             auto en = catchEntity(e);
@@ -154,7 +154,7 @@ void RS_ActionPolylineAdd::mouseLeftButtonReleaseEvent(int status, QMouseEvent *
     }
 }
 
-void RS_ActionPolylineAdd::mouseRightButtonReleaseEvent([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionPolylineAdd::onMouseRightButtonRelease([[maybe_unused]] int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     finish(true);
 }

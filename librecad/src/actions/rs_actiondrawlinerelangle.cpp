@@ -136,7 +136,7 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLineRelAngle::mouseMoveEvent end");
 }
 
-void RS_ActionDrawLineRelAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineRelAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntity(e, enTypeList, RS2::ResolveAll);
@@ -157,7 +157,7 @@ void RS_ActionDrawLineRelAngle::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionDrawLineRelAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineRelAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

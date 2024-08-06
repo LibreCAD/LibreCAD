@@ -50,7 +50,6 @@ public:
     void reset() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
  * Action States.
@@ -66,5 +65,6 @@ protected:
     std::unique_ptr<RS_CircleData> data;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif

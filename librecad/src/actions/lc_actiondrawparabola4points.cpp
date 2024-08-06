@@ -133,13 +133,13 @@ bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
     return pPoints->valid;
 }
 
-void LC_ActionDrawParabola4Points::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     // Proceed to next status
     const RS_Vector &coord = getStatus() != SetAxis ? snapPoint(e) : snapFree(e);
     fireCoordinateEvent(coord);
 }
 
-void LC_ActionDrawParabola4Points::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     deletePreview();
     initPrevious(status);

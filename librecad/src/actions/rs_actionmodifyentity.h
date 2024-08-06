@@ -43,19 +43,17 @@ public:
                           RS_GraphicView& graphicView);
 
     void trigger() override;
-    void updateMouseButtonHints() override;
     void setEntity(RS_Entity* en) {
         this->en=en;
     }
     // display the entity as selected
     void setDisplaySelected(bool selected);
-
     void mouseMoveEvent(QMouseEvent *event) override;
-
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 private:
     RS_Entity* en = nullptr;
 };

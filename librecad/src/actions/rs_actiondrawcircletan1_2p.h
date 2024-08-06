@@ -47,7 +47,6 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     //        void commandEvent(RS_CommandEvent* e) override;
     void finish(bool updateTB = true) override;
-    void updateMouseButtonHints() override;
     //    void setRadius(const double& r);
     double getRadius() const;
 protected:
@@ -66,9 +65,10 @@ protected:
     RS_Entity *catchCircle(QMouseEvent *e);
     RS_AtomicEntity *baseEntity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     RS_Vector getTangentPoint(RS_Vector &creatingCircleCenter, bool fromOriginalCircle) const;
+    void updateMouseButtonHints() override;
 };
 #endif

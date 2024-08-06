@@ -70,11 +70,11 @@ void QC_ActionGetEnt::trigger() {
     }
 }
 
-void QC_ActionGetEnt::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e) {
+void QC_ActionGetEnt::onMouseLeftButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e) {
     en = catchEntity(e);
     trigger();
 }
-void QC_ActionGetEnt::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
+void QC_ActionGetEnt::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent * e){
     completed = true;
     updateMouseButtonHints();
     finish();

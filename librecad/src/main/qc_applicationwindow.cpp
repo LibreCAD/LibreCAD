@@ -1095,7 +1095,8 @@ void QC_ApplicationWindow::slotWindowActivated(QMdiSubWindow* w, bool forced)
             if (graphicView != nullptr) {
                 RS_ActionInterface *ai = graphicView->getCurrentAction();
                 if (ai != nullptr) {
-                    ai->hideOptions(true);
+                    ai->hideOptions();
+                    ai->hideSnapOptions();
                     // actually, this is a "brute force" approach for now.
                     // todo - more intelligent approach is for sure to uncheck the action (for action in progress in  old
                     // todo window without killing action and restore the action toggle state on return to that view.

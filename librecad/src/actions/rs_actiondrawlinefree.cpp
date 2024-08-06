@@ -114,14 +114,14 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
     //}
 }
 
-void RS_ActionDrawLineFree::mouseLeftButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineFree::onMouseLeftButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if(status==Dragging){
         *vertex = {};
         trigger();
     }
 }
 
-void RS_ActionDrawLineFree::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawLineFree::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if (polyline.get()) {
         polyline.reset();
     }

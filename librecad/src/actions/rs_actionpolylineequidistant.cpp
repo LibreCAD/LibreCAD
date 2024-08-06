@@ -317,7 +317,7 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionPolylineEquidistant::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionPolylineEquidistant::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case ChooseEntity:{
             RS_Entity *en = catchEntity(e);
@@ -340,7 +340,7 @@ void RS_ActionPolylineEquidistant::mouseLeftButtonReleaseEvent(int status, QMous
     }
 }
 
-void RS_ActionPolylineEquidistant::mouseRightButtonReleaseEvent(int status,[[maybe_unused]]  QMouseEvent *e) {
+void RS_ActionPolylineEquidistant::onMouseRightButtonRelease(int status, [[maybe_unused]]  QMouseEvent *e) {
     deleteSnapper();
     if (originalEntity){
         graphicView->redraw();

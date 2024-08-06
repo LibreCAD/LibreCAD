@@ -78,7 +78,7 @@ void LC_ActionPenApply::finish(bool updateTB){
     srcEntity = nullptr;
 }
 
-void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     RS_Entity* en= catchEntity(e, RS2::ResolveNone);
 
     if(en != nullptr){
@@ -129,7 +129,7 @@ void LC_ActionPenApply::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, 
     graphicView->redraw();
 }
 
-void LC_ActionPenApply::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     switch (status){
         case (SelectEntity):{
             init(-1);
@@ -164,5 +164,3 @@ void LC_ActionPenApply::updateMouseButtonHints(){
 RS2::CursorType LC_ActionPenApply::doGetMouseCursor([[maybe_unused]] int status){
     return RS2::SelectCursor;
 }
-
-

@@ -49,13 +49,12 @@ public:
 
     void init(int status) override;
     void resume() override;
-//void keyPressEvent(QKeyEvent* e) override;
-    void updateMouseButtonHints() override;
     int countSelected();
     void keyPressEvent(QKeyEvent *e) override;
 protected:
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 private:
     QG_ActionHandler *action_handler = nullptr;
     RS2::ActionType nextAction = RS2::ActionNone;

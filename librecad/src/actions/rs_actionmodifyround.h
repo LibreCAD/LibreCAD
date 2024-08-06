@@ -47,7 +47,6 @@ public:
     void finish(bool updateTB = false) override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
     void setRadius(double r);
     double getRadius() const;
     void setTrim(bool t);
@@ -74,8 +73,9 @@ protected:
     LC_ActionOptionsWidget* createOptionsWidget() override;
     void previewEntityModifications(const RS_Entity *original, RS_Entity *modified, RS_Vector& roundPoint, int mode);
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void updateMouseButtonHints() override;
 };
 #endif

@@ -144,7 +144,7 @@ void RS_ActionDimDiametric::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDimDiametric::mouseMoveEvent end");
 }
 
-void RS_ActionDimDiametric::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDimDiametric::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     switch (status) {
         case SetEntity: {
             RS_Entity *en = catchEntity(e, RS2::ResolveAll);
@@ -171,7 +171,7 @@ void RS_ActionDimDiametric::mouseLeftButtonReleaseEvent(int status, QMouseEvent 
     }
 }
 
-void RS_ActionDimDiametric::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDimDiametric::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

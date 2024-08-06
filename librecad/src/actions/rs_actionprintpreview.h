@@ -70,10 +70,6 @@ public:
     void setPaperScaleFixed(bool fixed);
     bool isPaperScaleFixed();
 
-    void updateMouseButtonHints() override;
-    void showOptions() override;
-    void hideOptions(bool invludeSnapOptions) override;
-
     int getPagesNumHorizontal();
     int getPagesNumVertical();
 
@@ -91,6 +87,7 @@ protected:
     bool hasOptions = false;
     bool m_bPaperOffset = false;
 
+    void updateMouseButtonHints() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     bool doProcessCommand(int status, const QString &command) override;
     QString getAdditionalHelpMessage() override;

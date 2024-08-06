@@ -161,7 +161,7 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
     drawHighlights();
 }
 
-void RS_ActionInfoAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoAngle::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     switch (status) {
         case SetEntity1:
@@ -186,7 +186,7 @@ void RS_ActionInfoAngle::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e)
     }
 }
 
-void RS_ActionInfoAngle::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoAngle::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

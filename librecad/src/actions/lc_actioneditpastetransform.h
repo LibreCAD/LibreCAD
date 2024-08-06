@@ -31,7 +31,6 @@ public:
     LC_ActionEditPasteTransform(RS_EntityContainer& container,
                                 RS_GraphicView& graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
-    void updateMouseButtonHints() override;
     void init(int status) override;
     void trigger() override;
     void setAngle(double value);
@@ -74,10 +73,11 @@ protected:
     std::unique_ptr<PasteData> data;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     LC_ActionOptionsWidget *createOptionsWidget() override;
     void previewMultipleReferencePoints();
+    void updateMouseButtonHints() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
 };
 #endif // LC_ACTIONEDITPASTETRANSFORM_H

@@ -41,11 +41,10 @@ class RS_ActionDrawLineParallel:public RS_PreviewActionInterface {
 public:
     RS_ActionDrawLineParallel(
         RS_EntityContainer &container,
-        RS_GraphicView &graphicView);
+        RS_GraphicView &graphicView, RS2::ActionType actionType);
     ~RS_ActionDrawLineParallel() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
     QStringList getAvailableCommands() override;
     double getDistance() const;
     void setDistance(double d);
@@ -71,9 +70,10 @@ protected:
 /** Original entity. */
     RS_Entity *entity = nullptr;
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
+    void updateMouseButtonHints() override;
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif

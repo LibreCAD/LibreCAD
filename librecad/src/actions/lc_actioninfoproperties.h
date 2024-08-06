@@ -31,21 +31,18 @@ public:
     LC_ActionInfoProperties(RS_EntityContainer &container, RS_GraphicView &graphicView);
     void mouseMoveEvent(QMouseEvent *event) override;
     void init(int status) override;
-    void updateMouseButtonHints() override;
-
 private:
     RS_Entity* highlightedEntity = nullptr;
-
     void updateQuickInfoWidget(RS_Entity *pEntity);
     void clearHighLighting();
     void clearQuickInfoWidget();
     void highlightHoveredEntity(QMouseEvent *event);
     void highlightEntity(RS_Entity *entity);
     void highlightAndShowEntityInfo(QMouseEvent *e);
-
 protected:
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 };
 
 #endif // LC_ACTIONINFOPROPERTIES_H

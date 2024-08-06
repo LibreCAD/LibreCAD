@@ -108,7 +108,7 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionInfoDist::mouseMoveEvent end");
 }
 
-void RS_ActionInfoDist::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionInfoDist::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector snap = snapPoint(e);
     switch (status){
         case SetPoint1:{
@@ -129,7 +129,7 @@ void RS_ActionInfoDist::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) 
     }
 }
 
-void RS_ActionInfoDist::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionInfoDist::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

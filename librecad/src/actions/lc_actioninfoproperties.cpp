@@ -69,14 +69,14 @@ void LC_ActionInfoProperties::init(int status){
     }
 }
 
-void LC_ActionInfoProperties::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void LC_ActionInfoProperties::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     // notify widget
     highlightAndShowEntityInfo(e);
     setStatus(-1);
     finish();
 }
 
-void LC_ActionInfoProperties::mouseRightButtonReleaseEvent([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
+void LC_ActionInfoProperties::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     setStatus(-1);
     finish();
 }

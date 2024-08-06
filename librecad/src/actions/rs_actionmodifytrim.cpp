@@ -44,6 +44,7 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer &container,
         : RS_PreviewActionInterface("Trim Entity",
                                     container, graphicView), trimEntity{nullptr}, limitEntity{nullptr},
           pPoints(std::make_unique<Points>()), both{both} {
+    this->actionType = both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim;
 }
 
 RS_ActionModifyTrim::~RS_ActionModifyTrim() {
@@ -142,7 +143,7 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
     RS_DEBUG->print("RS_ActionModifyTrim::mouseMoveEvent end");
 }
 
-void RS_ActionModifyTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionModifyTrim::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = toGraph(e);
     switch (status) {
         case ChooseLimitEntity: {
@@ -172,7 +173,7 @@ void RS_ActionModifyTrim::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e
     }
 }
 
-void RS_ActionModifyTrim::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionModifyTrim::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

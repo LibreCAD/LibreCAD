@@ -168,7 +168,7 @@ void RS_ActionDrawLineTangent2::mouseMoveEvent(QMouseEvent *e){
     drawHighlights();
 }
 
-void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLineTangent2::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     deleteSnapper();
     switch (status) {
         case SetCircle1: {
@@ -199,7 +199,7 @@ void RS_ActionDrawLineTangent2::mouseLeftButtonReleaseEvent(int status, QMouseEv
     }
 }
 
-void RS_ActionDrawLineTangent2::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionDrawLineTangent2::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deleteSnapper();
     deletePreview();
     if (status == SetCircle1){

@@ -47,7 +47,6 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;
     void mouseReleaseEvent(QMouseEvent* e) override;
-    void updateMouseButtonHints() override;
 protected:
     /*
        ** Action States.
@@ -65,5 +64,6 @@ protected:
     int x2 = 0;
     int y2 = 0;
     RS2::CursorType doGetMouseCursor(int status) override;
+    void updateMouseButtonHints() override;
 };
 #endif

@@ -209,7 +209,7 @@ void RS_ActionDrawArc::snapMouseToDiameter(RS_Vector &mouse, RS_Vector &arcStart
     mouse = diameter.getNearestPointOnEntity(mouse, true);
 }
 
-void RS_ActionDrawArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawArc::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector mouse = snapPoint(e);
     bool shouldFireCoordinateEvent = true;
     switch (status) {
@@ -241,7 +241,7 @@ void RS_ActionDrawArc::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
     }
 }
 
-void RS_ActionDrawArc::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawArc::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     if (status == SetChordLength){
         moveRelativeZero(data->center);

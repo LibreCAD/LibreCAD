@@ -140,7 +140,7 @@ RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter() const{
     return center;
 }
 
-void RS_ActionDrawLinePolygonCorCor::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void RS_ActionDrawLinePolygonCorCor::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     RS_Vector coord = snapPoint(e);
     if (status == SetCorner2){
         coord = getSnapAngleAwarePoint(e, pPoints->corner1, coord);
@@ -148,7 +148,7 @@ void RS_ActionDrawLinePolygonCorCor::mouseLeftButtonReleaseEvent(int status, QMo
     fireCoordinateEvent(coord);
 }
 
-void RS_ActionDrawLinePolygonCorCor::mouseRightButtonReleaseEvent(int status, [[maybe_unused]] QMouseEvent *e) {
+void RS_ActionDrawLinePolygonCorCor::onMouseRightButtonRelease(int status, [[maybe_unused]] QMouseEvent *e) {
     deletePreview();
     initPrevious(status);
 }

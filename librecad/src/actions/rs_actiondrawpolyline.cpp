@@ -171,7 +171,7 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
     RS_DEBUG->print("RS_ActionDrawLinePolyline::mouseMoveEvent end");
 }
 
-void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionDrawPolyline::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
 
     // fixme - correct snap coordinate for line segment drawing!!!!
     RS_Vector mouse = snapPoint(e);
@@ -195,7 +195,7 @@ void RS_ActionDrawPolyline::mouseLeftButtonReleaseEvent([[maybe_unused]]int stat
     fireCoordinateEvent(mouse);
 }
 
-void RS_ActionDrawPolyline::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionDrawPolyline::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     if (equationSettingOn || startPointSettingOn || endPointSettingOn || stepSizeSettingOn){
         equationSettingOn = false;
         startPointSettingOn = false;

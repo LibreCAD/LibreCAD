@@ -89,9 +89,6 @@ public:
     void setRemoveSegment(bool value){removeSegments = value;};
     bool isRemoveSelected() const{return removeSelected;};
     void setRemoveSelected(bool value){removeSelected = value;}
-
-    void updateMouseButtonHints() override;
-
 protected:
     /**
      * Flag that defines whether we should remove segments of entity or just divide entity
@@ -104,8 +101,6 @@ protected:
     bool removeSelected = false;
 
     TriggerData* triggerData = nullptr;
-
-
 
     bool doCheckMayDrawPreview(QMouseEvent *event, int status) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
@@ -132,6 +127,7 @@ protected:
     void doAfterTrigger() override;
     void doFinish(bool updateTB) override;
     RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+    void updateMouseButtonHints() override;
 };
 
 #endif // LC_ACTIONMODIFYBREAKOUTLINE_H

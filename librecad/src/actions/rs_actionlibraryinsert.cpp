@@ -112,11 +112,11 @@ void RS_ActionLibraryInsert::mouseMoveEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionLibraryInsert::mouseLeftButtonReleaseEvent([[maybe_unused]]int status, QMouseEvent *e) {
+void RS_ActionLibraryInsert::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     fireCoordinateEvent(snapPoint(e));
 }
 
-void RS_ActionLibraryInsert::mouseRightButtonReleaseEvent(int status, [[maybe_unused]]QMouseEvent *e) {
+void RS_ActionLibraryInsert::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     initPrevious(status);
 }
 

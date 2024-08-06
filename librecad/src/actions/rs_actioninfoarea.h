@@ -49,7 +49,6 @@ public:
     void trigger() override;
     void display();//display results from current polygon
     void mouseMoveEvent(QMouseEvent *e) override;
-    void updateMouseButtonHints() override;
 protected:
     /**
  * Action States.
@@ -62,8 +61,9 @@ protected:
     std::unique_ptr<RS_InfoArea> ia;
 
     RS2::CursorType doGetMouseCursor(int status) override;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
 };
 #endif

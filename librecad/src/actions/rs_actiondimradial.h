@@ -46,10 +46,8 @@ public:
     ~RS_ActionDimRadial() override;
     void reset() override;
     void trigger() override;
-    void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void updateMouseButtonHints() override;
 protected:
     enum Status {
         SetEntity,     /**< Choose entity. */
@@ -68,9 +66,11 @@ protected:
 
     RS_DimRadial *createDim(RS_EntityContainer *parent) const;
     const RS_Vector &getDefinitionPoint() const;
-    void mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) override;
-    void mouseRightButtonReleaseEvent(int status, QMouseEvent *e) override;
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     bool doProcessCommand(int status, const QString &command) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void updateMouseButtonHints() override;
+    void preparePreview();
 };
 #endif

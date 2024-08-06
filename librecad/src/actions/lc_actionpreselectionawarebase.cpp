@@ -66,7 +66,7 @@ void LC_ActionPreSelectionAwareBase::selectionFinishedByKey([[maybe_unused]]QKey
     }
 }
 
-void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionPreSelectionAwareBase::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
     if (selectionComplete){
         mouseLeftButtonReleaseEventSelected(status, e);
     }
@@ -81,7 +81,7 @@ void LC_ActionPreSelectionAwareBase::mouseLeftButtonReleaseEvent(int status, QMo
     }
 }
 
-void LC_ActionPreSelectionAwareBase::mouseRightButtonReleaseEvent(int status, QMouseEvent *e) {
+void LC_ActionPreSelectionAwareBase::onMouseRightButtonRelease(int status, QMouseEvent *e) {
     if (selectionComplete) {
         mouseRightButtonReleaseEventSelected(status, e);
     }
