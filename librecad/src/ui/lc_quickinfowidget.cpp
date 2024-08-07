@@ -42,6 +42,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 // todo - discover generic way for reliable refresh of entity info widget if entity editing properties/attributes is performed outside of outside of widget
 // (via normal editing actions, mouse operations or custom actions)
 
+#define DEBUG_QUICK_INFO_RAW_NO
+
 LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *> map):
     QWidget(parent),
     ui(new Ui::LC_QuickInfoWidget)
@@ -75,13 +77,14 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     ui->pteInfo->setContextMenuPolicy(Qt::CustomContextMenu);
     connect(ui->cbPointsCoordinatesMode, SIGNAL(currentIndexChanged(int)), this, SLOT(onCoordinateModeIndexChanged(int)));
     ui->pteInfo->setOpenLinks(false);
-    ui->pteInfo->document()->setDefaultStyleSheet("a{ text-decoration: none;}");
-
-    ui->pteInfo->setStyleSheet("background-color: white;");
+    ui->pteInfo->document()->setDefaultStyleSheet("a {text-decoration: none;} body {background-color: white;}");
 
     // raw content control useful for debugging, but not needed in live mode
+#ifdef DEBUG_QUICK_INFO_RAW
+    ui->pteInfo1->setVisible(true);
+#else
     ui->pteInfo1->setVisible(false);
-
+#endif
     // support of invocation of actions via widget toolbar buttons, so assigning actions to controls
     QAction* entityInfoAction = map["EntityInfo"];
 
@@ -185,8 +188,6 @@ void LC_QuickInfoWidget::updateCollectedPointsView(bool forceUpdate){
     ui->pteInfo1->setPlainText(data);
 }
 
-#define DEBUG_QUICK_INFO_RAQ_1
-
 void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView){
     if (forceUpdate){
         if (entityData.hasData()){
@@ -202,7 +203,7 @@ void LC_QuickInfoWidget::updateEntityInfoView(bool forceUpdate, bool updateView)
         if (entityData.hasData()){
             QString data = entityData.generateView();
             ui->pteInfo->setHtml(data);
-#ifdef DEBUG_QUICK_INFO_RAQ
+#ifdef DEBUG_QUICK_INFO_RAW
             ui->pteInfo1->setPlainText(data);
 #endif
         } else {
@@ -788,5 +789,3 @@ void LC_QuickInfoWidget::onEntityPropertiesEdited(unsigned long originalId, unsi
       }
   }
 }
-
-

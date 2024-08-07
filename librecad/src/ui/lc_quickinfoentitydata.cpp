@@ -208,7 +208,7 @@ bool LC_QuickInfoEntityData::processEntity(RS_Entity *en){
  */
 QString LC_QuickInfoEntityData::generateView(){
     int propertiesCount = properties.size();
-    QString data = "<table>";
+    QString data = "<body><table>";
     data.append("<tr><td colspan = '2'><b>").append(entityName).append("</b></td></tr>");
     for (int i = 0; i < propertiesCount; i++) {
         data.append("<tr>");
@@ -238,7 +238,7 @@ QString LC_QuickInfoEntityData::generateView(){
         data.append("</td>");
         data.append("</tr>");
     }
-    data.append("</table>");
+    data.append("</table></body>");
     return data;
 }
 

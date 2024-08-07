@@ -174,7 +174,7 @@ void LC_QuickInfoPointsData::processCoordinate(const RS_Vector &point){
 QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool forceUpdate){
 
     int pointsCount = collectedPoints.size();
-    QString data = "";
+    QString data = "<body>";
     if (pointsCount > 0){
         if (forceUpdate){
             doUpdatePointsAttributes();
@@ -242,6 +242,7 @@ QString LC_QuickInfoPointsData::generateView(bool showDistanceAndAngle, bool for
     else{
         data = tr("No data - select coordinates first...");
     }
+    data.append("</body>");
     return data;
 }
 
