@@ -119,7 +119,7 @@ void LC_PenPaletteModel::update(bool updateNames){
  * @param regexp
  */
 void LC_PenPaletteModel::setFilteringRegexp(QString &regexp){
-    QString pattern = QRegularExpression::wildcardToRegularExpression(regexp);
+    QString pattern =/* QRegularExpression::wildcardToRegularExpression(*/regexp/*)*/;
     m_filteringRegexp->setPattern(pattern);
     QRegularExpression::PatternOptions option = options->ignoreCaseOnMatch
                                                     ? QRegularExpression::CaseInsensitiveOption
@@ -183,8 +183,7 @@ QVariant LC_PenPaletteModel::data(const QModelIndex &index, int role) const{
                 case COLUMNS::COLOR_ICON:
                     return item->getColorIcon();
                 default:
-                    break;
-            }
+                    break;            }
             break;
         case Qt::DisplayRole:
             // names for attributes and pen
@@ -492,17 +491,3 @@ LC_PenItem *LC_PenPaletteModel::getActivePen() const{
 LC_PenItem *LC_PenPaletteModel::createNewItem(QString name){
     return penPaletteData->createNewPenItem(name);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
