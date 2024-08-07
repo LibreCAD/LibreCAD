@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>491</width>
+    <width>522</width>
     <height>268</height>
    </rect>
   </property>
@@ -22,13 +22,19 @@
   <layout class="QFormLayout" name="formLayout_3">
    <item row="0" column="0" colspan="2">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="toolTip">
+      <string/>
+     </property>
      <property name="tabPosition">
       <enum>QTabWidget::North</enum>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="tabNaming">
+      <property name="toolTip">
+       <string>Settings for naming convention that is used to create layers hierarchy based on flat list of layers</string>
+      </property>
       <attribute name="title">
        <string>Naming Convention</string>
       </attribute>
@@ -53,6 +59,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Separator used for split inner name of layer to hierarchical names</string>
          </property>
          <property name="text">
           <string/>
@@ -103,6 +112,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Suffix of layer's name that defines that layer is dimensional</string>
+            </property>
             <property name="maxLength">
              <number>10</number>
             </property>
@@ -123,6 +135,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Suffix of layer's name that defines that layer is informational.</string>
+            </property>
             <property name="maxLength">
              <number>10</number>
             </property>
@@ -142,6 +157,9 @@
               <horstretch>0</horstretch>
               <verstretch>0</verstretch>
              </sizepolicy>
+            </property>
+            <property name="toolTip">
+             <string>Suffix of layer's name that defines that layer is for alternative position.</string>
             </property>
             <property name="maxLength">
              <number>10</number>
@@ -172,6 +190,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Prefix of layer's name that is used if layer with such name exists (say, when duplicate is created)</string>
+            </property>
             <property name="maxLength">
              <number>10</number>
             </property>
@@ -192,6 +213,9 @@
               <verstretch>0</verstretch>
              </sizepolicy>
             </property>
+            <property name="toolTip">
+             <string>Suffix of layer's name that is used if layer with such name exists (say, when duplicate is created)</string>
+            </property>
             <property name="maxLength">
              <number>10</number>
             </property>
@@ -203,12 +227,18 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tabDisplay">
+      <property name="toolTip">
+       <string>Display and operations settings</string>
+      </property>
       <attribute name="title">
        <string>Display and Operations</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_4">
        <item row="0" column="0">
         <widget class="QCheckBox" name="cbShowToolTip">
+         <property name="toolTip">
+          <string>If checked, tooltip will include complete name of layer (with all upper layer levels)</string>
+         </property>
          <property name="text">
           <string>Show full name as ToolTip</string>
          </property>
@@ -216,6 +246,9 @@
        </item>
        <item row="1" column="0">
         <widget class="QCheckBox" name="cbShowTypeIcons">
+         <property name="toolTip">
+          <string>If checked, icons for layer types will be shown</string>
+         </property>
          <property name="text">
           <string>Show layer type icons</string>
          </property>
@@ -228,6 +261,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Indentation for child layers</string>
          </property>
          <property name="text">
           <string>Show indented layer names. Ident size:</string>
@@ -262,6 +298,9 @@
        </item>
        <item row="3" column="0">
         <widget class="QCheckBox" name="cbDragDrop">
+         <property name="toolTip">
+          <string>If checked, drag&amp;drop operations in layers list are enabled and layers hierarchy may be restructutured</string>
+         </property>
          <property name="text">
           <string>Allow restructuring via Drag&amp;Drop</string>
          </property>
@@ -269,6 +308,9 @@
        </item>
        <item row="4" column="0" colspan="2">
         <widget class="QCheckBox" name="cbRenameWithPrimary">
+         <property name="toolTip">
+          <string>If primary layer is renames, secondary layers are renamed too.</string>
+         </property>
          <property name="text">
           <string>Rename secondary layers on primary rename</string>
          </property>
@@ -277,12 +319,18 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tabColors">
+      <property name="toolTip">
+       <string>Various colors settings</string>
+      </property>
       <attribute name="title">
        <string>Colors</string>
       </attribute>
       <layout class="QGridLayout" name="gridLayout_2">
        <item row="2" column="1">
         <widget class="QComboBox" name="cbSelectedItemBgColor">
+         <property name="toolTip">
+          <string>Background color for selected items in layers tree.</string>
+         </property>
          <property name="editable">
           <bool>true</bool>
          </property>
@@ -298,6 +346,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Color for separator lines in layers tree view</string>
          </property>
          <property name="accessibleDescription">
           <string notr="true"/>
@@ -330,6 +381,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Background color for virtual layers items in layers list</string>
+         </property>
          <property name="accessibleDescription">
           <string notr="true"/>
          </property>
@@ -355,6 +409,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Color selection</string>
          </property>
          <property name="text">
           <string/>
@@ -400,6 +457,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Color for items that matches filter conditions</string>
+         </property>
          <property name="accessibleDescription">
           <string notr="true"/>
          </property>
@@ -426,6 +486,9 @@
            <verstretch>0</verstretch>
           </sizepolicy>
          </property>
+         <property name="toolTip">
+          <string>Color selection</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -449,6 +512,9 @@
            <horstretch>0</horstretch>
            <verstretch>0</verstretch>
           </sizepolicy>
+         </property>
+         <property name="toolTip">
+          <string>Color selection</string>
          </property>
          <property name="text">
           <string/>
@@ -478,6 +544,9 @@
        </item>
        <item row="3" column="2">
         <widget class="QPushButton" name="pbActiveLayerBgColor">
+         <property name="toolTip">
+          <string>Color selection</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -489,6 +558,9 @@
        </item>
        <item row="2" column="2">
         <widget class="QPushButton" name="pbSelectedItemsBgColor">
+         <property name="toolTip">
+          <string>Color selection</string>
+         </property>
          <property name="text">
           <string/>
          </property>
@@ -500,6 +572,9 @@
        </item>
        <item row="3" column="0">
         <widget class="QLabel" name="label_8">
+         <property name="toolTip">
+          <string>Background color for active layer item in layers tree</string>
+         </property>
          <property name="text">
           <string>Active layer background color</string>
          </property>
@@ -521,6 +596,9 @@
       </layout>
      </widget>
      <widget class="QWidget" name="tabPens">
+      <property name="toolTip">
+       <string>Pens that will be set for newly created layers of different types.</string>
+      </property>
       <attribute name="title">
        <string>Default Pens</string>
       </attribute>

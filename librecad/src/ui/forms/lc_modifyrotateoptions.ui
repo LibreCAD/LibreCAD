@@ -57,7 +57,7 @@
    <item row="0" column="13">
     <widget class="QCheckBox" name="cbCurrentLayer">
      <property name="toolTip">
-      <string>Appy current or original l;layer to created entities</string>
+      <string>If checked, new enties will be placed on current layer, otherwise they will be in original layers.</string>
      </property>
      <property name="text">
       <string>Use Current Layer</string>
@@ -116,7 +116,7 @@
    <item row="0" column="9">
     <widget class="QCheckBox" name="cbKeepOriginals">
      <property name="toolTip">
-      <string>Keep or remove original selection</string>
+      <string>If checked, original entities will be survive, otherwise they will be removed.</string>
      </property>
      <property name="text">
       <string>Keep Originals</string>
@@ -168,7 +168,7 @@
    <item row="0" column="7">
     <widget class="QCheckBox" name="cbFreeRefAngle">
      <property name="toolTip">
-      <string>Free selection of factor by mouse</string>
+      <string>Free selection of factor should be performed by mouse if checked.</string>
      </property>
      <property name="text">
       <string>Free</string>
@@ -178,7 +178,7 @@
    <item row="0" column="10">
     <widget class="QCheckBox" name="cbMultipleCopies">
      <property name="toolTip">
-      <string>Create multiple copies</string>
+      <string>Multiple copies will be created if checked.</string>
      </property>
      <property name="text">
       <string>Multiple Copies</string>
@@ -188,7 +188,7 @@
    <item row="0" column="12">
     <widget class="QCheckBox" name="cbCurrentAttr">
      <property name="toolTip">
-      <string>Appy current or original attribute to created entities</string>
+      <string>If checked, current attributes will be applied to created entities, othewise original ones will be used. </string>
      </property>
      <property name="text">
       <string>Use Current Attributes</string>

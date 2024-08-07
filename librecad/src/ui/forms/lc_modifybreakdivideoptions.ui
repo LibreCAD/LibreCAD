@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>255</width>
+    <width>246</width>
     <height>22</height>
    </rect>
   </property>
@@ -14,8 +14,14 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -35,6 +41,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbRemoveSegments">
+     <property name="toolTip">
+      <string>If checked, segements between intersection points will be removed. If unchecked - the entitiy will be divided in intersection points. </string>
+     </property>
      <property name="text">
       <string>Remove Segments</string>
      </property>
@@ -42,6 +51,9 @@
    </item>
    <item row="0" column="1">
     <widget class="QCheckBox" name="cbRemoveSelected">
+     <property name="toolTip">
+      <string>If checked, selected segment will be removed. Otherwise, selected segment will survive and remaining segments will be removed. </string>
+     </property>
      <property name="text">
       <string>Remove Selected</string>
      </property>

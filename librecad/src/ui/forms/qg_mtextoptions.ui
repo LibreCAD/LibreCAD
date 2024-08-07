@@ -36,13 +36,13 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -77,6 +77,9 @@
        <height>22</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Text to insert</string>
+     </property>
      <property name="verticalScrollBarPolicy">
       <enum>Qt::ScrollBarAlwaysOff</enum>
      </property>
@@ -102,6 +105,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Rotation angle</string>
      </property>
     </widget>
    </item>

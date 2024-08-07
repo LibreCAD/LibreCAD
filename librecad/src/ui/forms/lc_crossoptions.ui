@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>423</width>
+    <width>406</width>
     <height>24</height>
    </rect>
   </property>
@@ -20,8 +20,14 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -45,6 +51,9 @@
        <width>130</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Defines how to apply dimensions of cross</string>
      </property>
      <property name="maxVisibleItems">
       <number>3</number>
@@ -95,6 +104,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Rotation angle for cross around center</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="3">
@@ -116,6 +128,9 @@
        <width>50</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Vertical dimension of the cross</string>
      </property>
     </widget>
    </item>
@@ -152,6 +167,9 @@
        <width>50</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Horizontal dimension of cross</string>
      </property>
     </widget>
    </item>

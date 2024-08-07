@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>334</width>
-    <height>180</height>
+    <width>371</width>
+    <height>202</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -382,6 +382,9 @@
          <height>22</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Name of pen</string>
+       </property>
       </widget>
      </item>
      <item>
@@ -461,6 +464,9 @@
          <height>0</height>
         </size>
        </property>
+       <property name="toolTip">
+        <string>Filtering pens by name</string>
+       </property>
        <property name="placeholderText">
         <string>Filter...</string>
        </property>
@@ -470,12 +476,28 @@
       </widget>
      </item>
      <item>
+      <spacer name="horizontalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>2</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item>
       <widget class="QCheckBox" name="cbHighlightMode">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
          <horstretch>0</horstretch>
          <verstretch>0</verstretch>
         </sizepolicy>
+       </property>
+       <property name="toolTip">
+        <string>If checked, matched pens are highlighted, otherwise non-matching pens are hidden.</string>
        </property>
        <property name="text">
         <string>Highlight Mode</string>
@@ -488,6 +510,11 @@
  </widget>
  <customwidgets>
   <customwidget>
+   <class>QG_ColorBox</class>
+   <extends>QWidget</extends>
+   <header>qg_colorbox.h</header>
+  </customwidget>
+  <customwidget>
    <class>QG_WidthBox</class>
    <extends>QWidget</extends>
    <header>qg_widthbox.h</header>
@@ -497,17 +524,12 @@
    <extends>QWidget</extends>
    <header>qg_linetypebox.h</header>
   </customwidget>
-  <customwidget>
-   <class>QG_ColorBox</class>
-   <extends>QWidget</extends>
-   <header>qg_colorbox.h</header>
-  </customwidget>
  </customwidgets>
  <resources>
-  <include location="../../res/ui/ui.qrc"/>
   <include location="../../res/actions/actions.qrc"/>
   <include location="../../res/icons/icons.qrc"/>
   <include location="../../res/icons/icons.qrc"/>
+  <include location="../../res/ui/ui.qrc"/>
   <include location="../../res/extui/extui.qrc"/>
  </resources>
  <connections/>

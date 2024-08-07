@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>25</height>
+    <width>643</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -20,14 +20,23 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbAngle">
+     <property name="toolTip">
+      <string>If checked, line of points will be drawn with specified angle</string>
+     </property>
      <property name="text">
       <string>Angle:</string>
      </property>
@@ -69,6 +78,9 @@
       </property>
       <item row="0" column="2">
        <widget class="QCheckBox" name="cbWithinLine">
+        <property name="toolTip">
+         <string>Specifies whether all points should fit between start/end points of line or whether the length of line is calculated based on number of points and distance between points.</string>
+        </property>
         <property name="text">
          <string>Fit Line</string>
         </property>
@@ -93,6 +105,9 @@
           <width>50</width>
           <height>16777215</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Distance between points.</string>
         </property>
         <property name="frame">
          <bool>true</bool>
@@ -122,6 +137,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>Controls how points on the edges (start/end points) should be created.</string>
      </property>
      <item>
       <property name="text">
@@ -165,10 +183,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Angle of line</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="4">
     <widget class="QSpinBox" name="sbPointsCount">
+     <property name="toolTip">
+      <string>Number of points to create</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -204,6 +228,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If checked, fixed specified distance between points will be used. Otherwise, distance will be calculated.</string>
      </property>
      <property name="text">
       <string>Fixed Distance</string>

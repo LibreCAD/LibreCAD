@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>113</width>
+    <width>150</width>
     <height>22</height>
    </rect>
   </property>
@@ -33,13 +33,13 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -62,6 +62,9 @@
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
+     <property name="toolTip">
+      <string>Radius of circle</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -82,5 +85,4 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
-
 </ui>

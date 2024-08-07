@@ -67,7 +67,7 @@
             </sizepolicy>
            </property>
            <property name="toolTip">
-            <string>side length in pixels</string>
+            <string>Side length in pixels</string>
            </property>
            <property name="minimum">
             <number>8</number>
@@ -89,6 +89,9 @@
          </item>
          <item row="2" column="1">
           <widget class="QSpinBox" name="left_toobar_columns_spinbox">
+           <property name="toolTip">
+            <string>Number of columns for actions in left toolbar.</string>
+           </property>
            <property name="minimum">
             <number>4</number>
            </property>

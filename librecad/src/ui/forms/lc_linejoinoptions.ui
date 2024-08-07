@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>660</width>
+    <width>665</width>
     <height>24</height>
    </rect>
   </property>
@@ -20,8 +20,14 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -46,6 +52,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Policy for joining line that was selected first</string>
+     </property>
      <item>
       <property name="text">
        <string>Extend/Trim</string>
@@ -65,6 +74,9 @@
    </item>
    <item row="0" column="8">
     <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, polyline will be created instead of individual lines</string>
+     </property>
      <property name="text">
       <string>Create Polyline</string>
      </property>
@@ -96,6 +108,9 @@
        <width>90</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Defines how pen should be applied to created entities</string>
      </property>
      <item>
       <property name="text">
@@ -139,6 +154,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Policy for the line was selected second</string>
+     </property>
      <item>
       <property name="text">
        <string>Extend/Trim</string>
@@ -158,6 +176,9 @@
    </item>
    <item row="0" column="9">
     <widget class="QCheckBox" name="cbRemoveOriginals">
+     <property name="toolTip">
+      <string>If checked, original lines will be removed</string>
+     </property>
      <property name="text">
       <string>Remove originals</string>
      </property>

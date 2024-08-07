@@ -33,13 +33,13 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -85,6 +85,9 @@
        <width>0</width>
        <height>19</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle of dimension</string>
      </property>
      <property name="text">
       <string/>
@@ -215,4 +218,9 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateAngle(QString)</slot>
+  <slot>setHor()</slot>
+  <slot>setVer()</slot>
+ </slots>
 </ui>

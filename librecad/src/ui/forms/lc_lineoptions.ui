@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>556</width>
+    <width>538</width>
     <height>24</height>
    </rect>
   </property>
@@ -32,8 +32,14 @@
    <string>Line Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -88,6 +94,9 @@
       <property name="topMargin">
        <number>0</number>
       </property>
+      <property name="rightMargin">
+       <number>0</number>
+      </property>
       <property name="bottomMargin">
        <number>0</number>
       </property>
@@ -99,6 +108,9 @@
       </property>
       <item row="0" column="8">
        <widget class="QToolButton" name="bPolyline">
+        <property name="toolTip">
+         <string>Creates polyline from line segments</string>
+        </property>
         <property name="text">
          <string>Polyline</string>
         </property>
@@ -117,6 +129,9 @@
           <width>30</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Vertical line</string>
         </property>
         <property name="text">
          <string>Y</string>
@@ -137,6 +152,9 @@
           <height>0</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Line by specified angle</string>
+        </property>
         <property name="text">
          <string>Angle</string>
         </property>
@@ -155,6 +173,9 @@
           <width>30</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Horizontal line</string>
         </property>
         <property name="text">
          <string>X</string>
@@ -189,7 +210,7 @@
          </sizepolicy>
         </property>
         <property name="toolTip">
-         <string extracomment="Angle is relative to previous segment"/>
+         <string extracomment="Angle is relative to previous segment">If checked, angle is relative to previous segment</string>
         </property>
         <property name="text">
          <string>Rel</string>
@@ -277,6 +298,9 @@
           <height>16777215</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Angle of line</string>
+        </property>
        </widget>
       </item>
       <item row="0" column="2">
@@ -292,6 +316,9 @@
           <width>50</width>
           <height>0</height>
          </size>
+        </property>
+        <property name="toolTip">
+         <string>Line to arbitrary point</string>
         </property>
         <property name="text">
          <string>Point</string>
@@ -371,4 +398,10 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>closeLine()</slot>
+  <slot>undo()</slot>
+  <slot>redo()</slot>
+  <slot>polyline()</slot>
+ </slots>
 </ui>

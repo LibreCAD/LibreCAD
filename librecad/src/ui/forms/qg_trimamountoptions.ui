@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>211</width>
+    <width>244</width>
     <height>24</height>
    </rect>
   </property>
@@ -27,13 +27,13 @@
     <number>3</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -106,6 +106,9 @@
    </item>
    <item>
     <widget class="QCheckBox" name="cbSymmetric">
+     <property name="toolTip">
+      <string>If checked, trim/extension is performed for both sides of line.</string>
+     </property>
      <property name="text">
       <string>Symmetric</string>
      </property>

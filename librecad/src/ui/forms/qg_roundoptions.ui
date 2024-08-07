@@ -36,13 +36,13 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -84,21 +84,9 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leRadius"/>
-   </item>
-   <item>
-    <widget class="Line" name="sep1">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Minimum">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="frameShape">
-      <enum>QFrame::VLine</enum>
-     </property>
-     <property name="frameShadow">
-      <enum>QFrame::Sunken</enum>
+    <widget class="QLineEdit" name="leRadius">
+     <property name="toolTip">
+      <string>Rounding radius</string>
      </property>
     </widget>
    </item>
@@ -140,4 +128,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateData()</slot>
+ </slots>
 </ui>

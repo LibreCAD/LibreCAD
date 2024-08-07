@@ -36,13 +36,13 @@
   </property>
   <layout class="QHBoxLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -84,7 +84,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leLength1"/>
+    <widget class="QLineEdit" name="leLength1">
+     <property name="toolTip">
+      <string>Length of bevel in X direction.</string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="QLabel" name="lLength2">
@@ -97,7 +101,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QLineEdit" name="leLength2"/>
+    <widget class="QLineEdit" name="leLength2">
+     <property name="toolTip">
+      <string>Length of bevel in Y direction. </string>
+     </property>
+    </widget>
    </item>
    <item>
     <widget class="Line" name="sep1">
@@ -169,4 +177,7 @@
    </hints>
   </connection>
  </connections>
+ <slots>
+  <slot>updateData()</slot>
+ </slots>
 </ui>

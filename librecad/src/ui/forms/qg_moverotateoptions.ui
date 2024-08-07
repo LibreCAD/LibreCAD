@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>668</width>
+    <width>832</width>
     <height>24</height>
    </rect>
   </property>
@@ -32,8 +32,14 @@
    <string>Move Rotate Options</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -52,10 +58,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Rotation angle. </string>
+     </property>
     </widget>
    </item>
    <item row="0" column="6">
     <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </string>
+     </property>
      <property name="text">
       <string>Use Current Attributes</string>
      </property>
@@ -76,6 +88,9 @@
    </item>
    <item row="0" column="3">
     <widget class="QCheckBox" name="cbMultipleCopies">
+     <property name="toolTip">
+      <string>If checked, multiple copies will be created. </string>
+     </property>
      <property name="text">
       <string>Multiple Copies</string>
      </property>
@@ -83,6 +98,9 @@
    </item>
    <item row="0" column="7">
     <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="toolTip">
+      <string>If checked, created entities will be placed into current layer, otherwise the will be in original layers. </string>
+     </property>
      <property name="text">
       <string>Use Current Layer</string>
      </property>
@@ -90,6 +108,9 @@
    </item>
    <item row="0" column="4">
     <widget class="QSpinBox" name="sbNumberOfCopies">
+     <property name="toolTip">
+      <string>Number of copies.</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -100,6 +121,9 @@
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will survive, otherwise they will be removed. </string>
+     </property>
      <property name="text">
       <string>Keep Originals</string>
      </property>
@@ -107,6 +131,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbFixedAngle">
+     <property name="toolTip">
+      <string>If checked, fixed rotation angle will be used. Otherwise, it will be defined by moused. </string>
+     </property>
      <property name="text">
       <string>Fixed Angle</string>
      </property>
@@ -114,6 +141,9 @@
    </item>
    <item row="0" column="5">
     <widget class="QCheckBox" name="cbSameAngleForCopies">
+     <property name="toolTip">
+      <string>If checked, all copies will be rotated by the same agle. Otherwise, angle will be proportional to number of each copy. </string>
+     </property>
      <property name="text">
       <string>Same angle for copies</string>
      </property>
@@ -124,5 +154,4 @@
  <layoutdefault spacing="6" margin="11"/>
  <resources/>
  <connections/>
- <slots/>
 </ui>

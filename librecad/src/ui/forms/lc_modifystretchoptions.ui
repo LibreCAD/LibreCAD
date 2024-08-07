@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>91</width>
+    <width>103</width>
     <height>22</height>
    </rect>
   </property>
@@ -14,14 +14,23 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will survive, otherwise they will be removed.</string>
+     </property>
      <property name="text">
       <string>Keep originals</string>
      </property>

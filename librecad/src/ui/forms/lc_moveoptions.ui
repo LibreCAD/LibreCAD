@@ -6,22 +6,31 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>509</width>
-    <height>23</height>
+    <width>530</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will survive, otherwise they will be removed.</string>
+     </property>
      <property name="text">
       <string>Keep Originals</string>
      </property>
@@ -29,6 +38,9 @@
    </item>
    <item row="0" column="4">
     <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="toolTip">
+      <string>If checked, created entities will be placed to current layer. Otherwise, they will be placed into original layers. </string>
+     </property>
      <property name="text">
       <string>Use Current Layer</string>
      </property>
@@ -36,6 +48,9 @@
    </item>
    <item row="0" column="2">
     <widget class="QSpinBox" name="sbNumberOfCopies">
+     <property name="toolTip">
+      <string>Number of copies</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -46,6 +61,9 @@
    </item>
    <item row="0" column="3">
     <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be applied to created entities, owtherwise original ones will be used. </string>
+     </property>
      <property name="text">
       <string>Use Current Attributes</string>
      </property>
@@ -66,6 +84,9 @@
    </item>
    <item row="0" column="1">
     <widget class="QCheckBox" name="cbMultipleCopies">
+     <property name="toolTip">
+      <string>If checked, multiple copies will be created. </string>
+     </property>
      <property name="text">
       <string>Multiple Copies</string>
      </property>

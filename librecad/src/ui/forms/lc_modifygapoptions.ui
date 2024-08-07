@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>591</width>
+    <width>574</width>
     <height>24</height>
    </rect>
   </property>
@@ -14,8 +14,14 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -33,6 +39,9 @@
        <width>60</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Size of the gap, if not free</string>
      </property>
     </widget>
    </item>
@@ -52,6 +61,9 @@
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="cbFree">
+     <property name="toolTip">
+      <string>If cheched, the size of the gap is determined by mouse</string>
+     </property>
      <property name="text">
       <string>Free</string>
      </property>
@@ -71,6 +83,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Distance from snap point</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -82,6 +97,9 @@
    </item>
    <item row="0" column="4">
     <widget class="QComboBox" name="cbLineSnap">
+     <property name="toolTip">
+      <string>Snap point for gap on the line</string>
+     </property>
      <item>
       <property name="text">
        <string>Free</string>
@@ -106,6 +124,9 @@
    </item>
    <item row="0" column="9">
     <widget class="QComboBox" name="cbGapSnap">
+     <property name="toolTip">
+      <string>Snap point of gap to line snap point</string>
+     </property>
      <item>
       <property name="text">
        <string>Start</string>

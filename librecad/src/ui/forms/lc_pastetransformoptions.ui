@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>639</width>
+    <width>743</width>
     <height>22</height>
    </rect>
   </property>
@@ -15,13 +15,13 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>0</number>
@@ -46,6 +46,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Spacing between insertion points of entities in columns.</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="2">
@@ -58,12 +61,15 @@
    <item row="0" column="7">
     <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Spacing X:</string>
+      <string>Spacing:</string>
      </property>
     </widget>
    </item>
    <item row="0" column="12">
     <widget class="QCheckBox" name="cbSameAngles">
+     <property name="toolTip">
+      <string>If checked, the same rotation angle is used for each individual paste and whole array. Otherwise, different angles are used. </string>
+     </property>
      <property name="text">
       <string>Same Angles</string>
      </property>
@@ -134,6 +140,9 @@
    </item>
    <item row="0" column="4">
     <widget class="QCheckBox" name="cbArray">
+     <property name="toolTip">
+      <string>If checked, arrays of copies will be created on paste.</string>
+     </property>
      <property name="text">
       <string>Array</string>
      </property>
@@ -141,6 +150,9 @@
    </item>
    <item row="0" column="6">
     <widget class="QSpinBox" name="sbArrayY">
+     <property name="toolTip">
+      <string>Array rows number.</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -165,6 +177,9 @@
        <width>50</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Spacing between entities insertion points in rows. </string>
      </property>
     </widget>
    </item>
@@ -195,6 +210,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Rotation angle for array.</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="0">
@@ -206,6 +224,9 @@
    </item>
    <item row="0" column="5">
     <widget class="QSpinBox" name="sbArrayX">
+     <property name="toolTip">
+      <string>Array columns number.</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>

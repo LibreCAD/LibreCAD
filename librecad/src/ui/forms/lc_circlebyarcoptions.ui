@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>485</width>
+    <width>478</width>
     <height>24</height>
    </rect>
   </property>
@@ -14,14 +14,23 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="4">
     <widget class="QComboBox" name="cbPen">
+     <property name="toolTip">
+      <string>Pen to apply to created circle</string>
+     </property>
      <item>
       <property name="text">
        <string>Active</string>
@@ -41,6 +50,9 @@
    </item>
    <item row="0" column="1">
     <widget class="QLabel" name="lblRadiusShift">
+     <property name="toolTip">
+      <string>Delta of circle's radius to arc's radius</string>
+     </property>
      <property name="text">
       <string>Radius Shift:</string>
      </property>
@@ -68,6 +80,9 @@
    </item>
    <item row="0" column="6">
     <widget class="QComboBox" name="cbLayer">
+     <property name="toolTip">
+      <string>Layer to which created circle should be placed</string>
+     </property>
      <item>
       <property name="text">
        <string>Active</string>
@@ -98,6 +113,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbReplace">
+     <property name="toolTip">
+      <string>If checked, original arc will be removed</string>
+     </property>
      <property name="text">
       <string>Replace arc</string>
      </property>

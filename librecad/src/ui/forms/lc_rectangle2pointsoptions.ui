@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1240</width>
+    <width>1255</width>
     <height>24</height>
    </rect>
   </property>
@@ -14,14 +14,23 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="11">
     <widget class="QCheckBox" name="cbSnapRadiusCenter">
+     <property name="toolTip">
+      <string>If checked, specifies that snap points should be shifted by radius of corners.</string>
+     </property>
      <property name="text">
       <string>Snap shift</string>
      </property>
@@ -48,6 +57,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Length of bevel in X direction.</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="16">
@@ -59,6 +71,9 @@
    </item>
    <item row="0" column="6">
     <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, the entire rectangle will be drawn as polyline.</string>
+     </property>
      <property name="text">
       <string>Polyline</string>
      </property>
@@ -92,6 +107,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Length of bevel in Y direction. </string>
+     </property>
     </widget>
    </item>
    <item row="0" column="12">
@@ -122,10 +140,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Rectangle rotation angle.</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="1">
     <widget class="QComboBox" name="cbSnapStart">
+     <property name="toolTip">
+      <string>Defines which point of rectangle should be placed into start point position.</string>
+     </property>
      <item>
       <property name="text">
        <string>Corner</string>
@@ -162,10 +186,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Radius of rounded corners. </string>
+     </property>
     </widget>
    </item>
    <item row="0" column="4">
     <widget class="QCheckBox" name="chkFixedBaseAngle">
+     <property name="toolTip">
+      <string>If checked, allows to specify rotation angle for rectangle.</string>
+     </property>
      <property name="text">
       <string>Base Angle:</string>
      </property>
@@ -173,6 +203,9 @@
    </item>
    <item row="0" column="3">
     <widget class="QComboBox" name="cbSnapEnd">
+     <property name="toolTip">
+      <string>Defines which point of rectangle should be placed into end point position. </string>
+     </property>
      <item>
       <property name="text">
        <string>Corner</string>
@@ -197,6 +230,9 @@
    </item>
    <item row="0" column="8">
     <widget class="QComboBox" name="cbCorners">
+     <property name="toolTip">
+      <string>Defines how corners of rectangle should be drawn. </string>
+     </property>
      <item>
       <property name="text">
        <string>Straight</string>
@@ -223,6 +259,9 @@
    </item>
    <item row="0" column="17">
     <widget class="QComboBox" name="cbEdges">
+     <property name="toolTip">
+      <string>Defines which edges of rectangle should be drawn (so it is possible to create just two parallel lines instead of rectangle)</string>
+     </property>
      <item>
       <property name="text">
        <string>Both</string>

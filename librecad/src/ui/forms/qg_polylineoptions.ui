@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>441</width>
-    <height>29</height>
+    <width>622</width>
+    <height>22</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,10 +33,10 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -124,6 +124,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Radius of arc</string>
+     </property>
     </widget>
    </item>
    <item>
@@ -152,6 +155,9 @@
        <width>16777215</width>
        <height>16777215</height>
       </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle of arc</string>
      </property>
     </widget>
    </item>

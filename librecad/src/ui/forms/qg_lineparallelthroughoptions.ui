@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>147</width>
-    <height>23</height>
+    <width>178</width>
+    <height>24</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -33,14 +33,39 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>3</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
+   <property name="rightMargin">
+    <number>0</number>
+   </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
+   <item row="0" column="2">
+    <widget class="QCheckBox" name="cbSymmetric">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>1</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>60</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>If checked, parallels will be created on both sides of entity</string>
+     </property>
+     <property name="text">
+      <string>Symmetric</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="lNumber">
      <property name="sizePolicy">
@@ -57,35 +82,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="1">
-    <widget class="QSpinBox" name="sbNumber">
-     <property name="toolTip">
-      <string>Number of parallels to create</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QCheckBox" name="cbSymmetric">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>1</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>60</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>Symmetric</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="3">
     <spacer name="horizontalSpacer">
      <property name="orientation">
@@ -98,6 +94,16 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="sbNumber">
+     <property name="toolTip">
+      <string>Number of parallels to create</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

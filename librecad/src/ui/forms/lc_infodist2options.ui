@@ -6,16 +6,22 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>90</width>
-    <height>20</height>
+    <width>101</width>
+    <height>22</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -23,7 +29,7 @@
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbOnEntity">
      <property name="toolTip">
-      <string/>
+      <string>If checked, the point will be always inside selected entity</string>
      </property>
      <property name="text">
       <string>Snap On Entity</string>

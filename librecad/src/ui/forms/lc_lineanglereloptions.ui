@@ -34,6 +34,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Offset of tick snap point from intersection point</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="14">
@@ -45,6 +48,9 @@
    </item>
    <item row="0" column="9">
     <widget class="QComboBox" name="cbLineSnapMode">
+     <property name="toolTip">
+      <string>Snap point for position of intersection point between created line and source entity (within original line)</string>
+     </property>
      <item>
       <property name="text">
        <string>Free</string>
@@ -76,6 +82,9 @@
    </item>
    <item row="0" column="5">
     <widget class="QCheckBox" name="cbRelativeAngle">
+     <property name="toolTip">
+      <string>If checked, angle is relative to angle of selected entity</string>
+     </property>
      <property name="text">
       <string>Rel</string>
      </property>
@@ -101,10 +110,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Distance of intersection point from specified line snap point</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="13">
     <widget class="QComboBox" name="cbTickSnapMode">
+     <property name="toolTip">
+      <string>Defines which part of created line will be snapped to intersection point</string>
+     </property>
      <item>
       <property name="text">
        <string>Start</string>
@@ -136,10 +151,16 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Angle of line</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="16">
     <widget class="QCheckBox" name="cbDivide">
+     <property name="toolTip">
+      <string>If checked, original entity will be divided by intersection point.</string>
+     </property>
      <property name="text">
       <string>Divide</string>
      </property>
@@ -159,6 +180,9 @@
        <height>16777215</height>
       </size>
      </property>
+     <property name="toolTip">
+      <string>Length of line</string>
+     </property>
     </widget>
    </item>
    <item row="0" column="12">
@@ -177,6 +201,9 @@
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="cbFree">
+     <property name="toolTip">
+      <string>If checked, the length of line is defined by mouse position instead of setting</string>
+     </property>
      <property name="text">
       <string>Free</string>
      </property>

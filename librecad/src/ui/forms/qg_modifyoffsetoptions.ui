@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>557</width>
+    <width>701</width>
     <height>24</height>
    </rect>
   </property>
@@ -33,19 +33,22 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="4">
     <widget class="QSpinBox" name="sbNumberOfCopies">
+     <property name="toolTip">
+      <string>Number of copies.</string>
+     </property>
      <property name="minimum">
       <number>1</number>
      </property>
@@ -56,6 +59,9 @@
    </item>
    <item row="0" column="5">
     <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </string>
+     </property>
      <property name="text">
       <string>Use Current Attributes</string>
      </property>
@@ -68,6 +74,9 @@
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</string>
      </property>
      <property name="text">
       <string>Fixed Distance</string>
@@ -89,12 +98,15 @@
       </size>
      </property>
      <property name="toolTip">
-      <string>Offset from original entity</string>
+      <string>Distance for offset from original entity</string>
      </property>
     </widget>
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will survive, otherwise they will be removed. </string>
+     </property>
      <property name="text">
       <string>Keep Originals</string>
      </property>
@@ -102,6 +114,9 @@
    </item>
    <item row="0" column="3">
     <widget class="QCheckBox" name="cbMultipleCopies">
+     <property name="toolTip">
+      <string>If checked, multiple copies will be created. </string>
+     </property>
      <property name="text">
       <string>Multiple Copies</string>
      </property>
@@ -122,6 +137,9 @@
    </item>
    <item row="0" column="6">
     <widget class="QCheckBox" name="cbCurrentLayer">
+     <property name="toolTip">
+      <string>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</string>
+     </property>
      <property name="text">
       <string>Use Current Layer</string>
      </property>

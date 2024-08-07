@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>138</width>
+    <width>157</width>
     <height>22</height>
    </rect>
   </property>
@@ -33,10 +33,10 @@
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout">
    <property name="spacing">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="leftMargin">
-    <number>1</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>0</number>
@@ -105,7 +105,11 @@
     </widget>
    </item>
    <item>
-    <widget class="QSpinBox" name="sbNumber"/>
+    <widget class="QSpinBox" name="sbNumber">
+     <property name="toolTip">
+      <string>Number of copies</string>
+     </property>
+    </widget>
    </item>
    <item>
     <spacer name="horizontalSpacer">

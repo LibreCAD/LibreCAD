@@ -44,6 +44,9 @@
    </item>
    <item row="1" column="2">
     <widget class="QLineEdit" name="leName">
+     <property name="toolTip">
+      <string>Name of new layer. In order to create hierarchical layers, include name of virtual layer and layer name separator.</string>
+     </property>
      <property name="text">
       <string/>
      </property>
@@ -86,6 +89,9 @@
           <verstretch>0</verstretch>
          </sizepolicy>
         </property>
+        <property name="toolTip">
+         <string>Layer for various infromational elements, notes, drafts etc.</string>
+        </property>
         <property name="text">
          <string>Informational</string>
         </property>
@@ -96,6 +102,9 @@
       </item>
       <item row="0" column="0">
        <widget class="QRadioButton" name="rbNormal">
+        <property name="toolTip">
+         <string>Normal layer with drawing eleements</string>
+        </property>
         <property name="text">
          <string>Normal</string>
         </property>
@@ -106,6 +115,9 @@
       </item>
       <item row="1" column="0">
        <widget class="QRadioButton" name="rbDimensions">
+        <property name="toolTip">
+         <string>Layer that holds dimensions</string>
+        </property>
         <property name="text">
          <string>Dimensions</string>
         </property>
@@ -116,6 +128,9 @@
       </item>
       <item row="1" column="1">
        <widget class="QRadioButton" name="rbAlternativePosition">
+        <property name="toolTip">
+         <string>Layer with alternate position of entities located on normal layers</string>
+        </property>
         <property name="text">
          <string>Alternative Position</string>
         </property>

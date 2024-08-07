@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>413</width>
+    <width>521</width>
     <height>22</height>
    </rect>
   </property>
@@ -14,14 +14,23 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
+   <property name="leftMargin">
+    <number>0</number>
+   </property>
    <property name="topMargin">
     <number>1</number>
+   </property>
+   <property name="rightMargin">
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
    </property>
    <item row="0" column="1">
     <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If unchecked, original entities will be removed, otherwise they will survive.</string>
+     </property>
      <property name="text">
       <string>Keep Originals</string>
      </property>
@@ -29,6 +38,9 @@
    </item>
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbMirrorToLine">
+     <property name="toolTip">
+      <string>If checked, mirror will be performed by selected line entity.</string>
+     </property>
      <property name="text">
       <string>Mirror to selected line</string>
      </property>
@@ -36,6 +48,9 @@
    </item>
    <item row="0" column="2">
     <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be used for mirrored entities, otherwise - original ones. </string>
+     </property>
      <property name="text">
       <string>Use Current Attributes</string>
      </property>
@@ -43,6 +58,9 @@
    </item>
    <item row="0" column="3">
     <widget class="QCheckBox" name="cbLayer">
+     <property name="toolTip">
+      <string>If checked, mirrored entities will be placed on current layer, otherwise they will be placed into original layers.</string>
+     </property>
      <property name="text">
       <string>User Current Layer</string>
      </property>

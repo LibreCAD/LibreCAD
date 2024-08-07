@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>300</width>
+    <width>332</width>
     <height>22</height>
    </rect>
   </property>
@@ -33,13 +33,13 @@
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <property name="leftMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="topMargin">
     <number>1</number>
    </property>
    <property name="rightMargin">
-    <number>6</number>
+    <number>0</number>
    </property>
    <property name="bottomMargin">
     <number>1</number>
@@ -79,6 +79,9 @@
      </property>
      <property name="font">
       <font/>
+     </property>
+     <property name="toolTip">
+      <string>Point on created line that will be placed into insertion point</string>
      </property>
      <item>
       <property name="text">

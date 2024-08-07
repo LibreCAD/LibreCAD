@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>915</width>
+    <width>1160</width>
     <height>24</height>
    </rect>
   </property>
@@ -85,7 +85,7 @@
    <item row="0" column="7">
     <widget class="QCheckBox" name="cbMultipleCopies">
      <property name="toolTip">
-      <string>Create multiple copies</string>
+      <string>If checked, multiple copies will be created. </string>
      </property>
      <property name="text">
       <string>Multiple Copies</string>
@@ -102,7 +102,7 @@
    <item row="0" column="0">
     <widget class="QCheckBox" name="cbAnglesMirrored">
      <property name="toolTip">
-      <string>Adjust secondary angle so the sum of angles (relative rotation angle) is 0</string>
+      <string>Adjust secondary angle so the sum of angles (relative rotation angle) is 0. With such setting entity will be moved but not rotated.</string>
      </property>
      <property name="text">
       <string>Angles mirrored</string>
@@ -160,7 +160,7 @@
    <item row="0" column="6">
     <widget class="QCheckBox" name="cbKeepOriginals">
      <property name="toolTip">
-      <string>Controls whether originally selected entities should be kept or removed</string>
+      <string>If checked, original entities will survive, otherwise they will be removed. </string>
      </property>
      <property name="text">
       <string>Keep Originals</string>
@@ -179,6 +179,9 @@
    </item>
    <item row="0" column="9">
     <widget class="QCheckBox" name="cbSameAngleForCopies">
+     <property name="toolTip">
+      <string>If checked, the same angle will be used for all copies. Otherwise, it will be increased proportionally to copy number. </string>
+     </property>
      <property name="text">
       <string>Same secondary angle for copies</string>
      </property>
