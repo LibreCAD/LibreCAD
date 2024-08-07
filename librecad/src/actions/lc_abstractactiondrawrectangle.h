@@ -59,7 +59,7 @@ public:
     void setEdgesDrawMode(int mode){edgesDrawMode = mode;};
     int getEdgesDrawMode() const{return edgesDrawMode;};
     void setBaseAngleFixed(bool val) {baseAngleIsFixed = val;};
-    bool isBaseAngleFixed() const {return baseAngleIsFixed;}
+    bool hasBaseAngle() const {return baseAngleIsFixed;}
 protected:
 
     /**
@@ -89,6 +89,7 @@ protected:
         SetRadius,
         SetEdges,
         SetInnerAngle,
+        SetAngleFree,
         LAST_BASE_STATUS [[maybe_unused]]
     };
 
@@ -156,7 +157,7 @@ protected:
                                            bool drawBulge, bool drawComplex,
                                            double radiusX, double radiusY) const;
 
-    virtual RS_Polyline *createPolyline(const RS_Vector &snapPoint) const = 0;
+    virtual RS_Polyline *createPolyline(const RS_Vector &snapPoint)  = 0;
 
     void createShapeData(const RS_Vector &snapPoint);
     virtual void processCommandValue(double value, bool &toMainStatus) = 0;

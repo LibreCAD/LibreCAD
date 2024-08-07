@@ -87,7 +87,7 @@ void LC_Rectangle2PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         lenX = fromDouble(lX);
         lenY = fromDouble(lY);
         snapRadiusCenter = action->isSnapToCornerArcCenter();
-        fixedBaseAngle = action->isBaseAngleFixed();
+        fixedBaseAngle = action->hasBaseAngle();
     }
     else{
         angle = load("Angle", "0");
@@ -283,6 +283,3 @@ void LC_Rectangle2PointsOptions::setSnapToCornerArcCenter(bool value){
     action->setSnapToCornerArcCenter(value);
     ui->cbSnapRadiusCenter->setChecked(value);
 }
-
-
-

@@ -57,10 +57,12 @@ const std::vector<RS_Vector> LC_ActionDrawRectangle1Point::snapPoints {
  * @param snapPoint primary point used for positioning of shape
  * @return positioned polyline
  */
-RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapPoint) const{
+RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapPoint){
 
-    double x = snapPoint.x;
-    double y = snapPoint.y;
+    bool inFreeAngleMode = getStatus() == SetAngleFree;
+
+    double x = inFreeAngleMode ? insertionPoint.x : snapPoint.x;
+    double y = inFreeAngleMode? insertionPoint.y : snapPoint.y;
 
     // calculate half size of required size
     double halfWidth  = width/2;
@@ -115,10 +117,26 @@ RS_Polyline *LC_ActionDrawRectangle1Point::createPolyline(const RS_Vector &snapP
     // move shape so it's reference point will correspond to provided snap point
     polyline->move(moveVector);
 
-    double actualBaseAngle = getActualBaseAngle();
+    double actualBaseAngle = 0.0;
+    if (baseAngleIsFixed){
+        actualBaseAngle = RS_Math::deg2rad(angle);
+        if (angleIsFree){
+            if (inFreeAngleMode){
+                actualBaseAngle = insertionPoint.angleTo(snapPoint);
+                angle = RS_Math::rad2deg(actualBaseAngle);
+                updateOptionsUI(LC_Rectangle1PointOptions::UPDATE_ANGLE);
+            }
+        }
+    }
+
     if (LC_LineMath::isMeaningfulAngle(actualBaseAngle)){
         // now we'll rotate shape on specific angle
-        polyline->rotate(snapPoint, actualBaseAngle);
+        if (inFreeAngleMode){
+            polyline->rotate(insertionPoint, actualBaseAngle);
+        }
+        else {
+            polyline->rotate(snapPoint, actualBaseAngle);
+        }
     }
     return polyline;
 }
@@ -134,11 +152,78 @@ void LC_ActionDrawRectangle1Point::doInitialSnapToRelativeZero(RS_Vector relZero
     finishAction();
 }
 
+RS_Vector LC_ActionDrawRectangle1Point::doGetRelativeZeroAfterTrigger() {
+    if (getStatus() == SetAngleFree){
+        return insertionPoint;
+    }
+    return LC_AbstractActionDrawRectangle::doGetRelativeZeroAfterTrigger();
+}
+
+void LC_ActionDrawRectangle1Point::doAfterTrigger() {
+    LC_AbstractActionDrawRectangle::doAfterTrigger();
+    int newStatus = -1;
+    switch (getStatus()){
+        case SetPoint1:
+            newStatus = controlPressedOnMouseRelease ? -1 : SetPoint1;
+            break;
+        case SetAngleFree:
+            newStatus = controlPressedOnMouseRelease ? SetPoint1 : SetAngleFree;
+            break;
+        default:
+            break;
+    }
+    controlPressedOnMouseRelease = false;
+    setStatus(newStatus);
+}
+
 void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QMouseEvent *e, int status, const RS_Vector &snap){
     switch (status) {
         case SetPoint1: {
+            if (angleIsFree){
+                insertionPoint = snap;
+                setStatus(SetAngleFree);
+            }
+            else{
+                controlPressedOnMouseRelease = isControl(e);
+                createShapeData(snap);
+                trigger();
+            }
+            break;
+        }
+        case SetAngleFree:{
+            controlPressedOnMouseRelease = isControl(e);
             createShapeData(snap);
             trigger();
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+RS_Vector LC_ActionDrawRectangle1Point::doGetMouseSnapPoint(QMouseEvent *e) {
+   RS_Vector result = snapPoint(e);
+   if (getStatus() == SetAngleFree){
+       result = getSnapAngleAwarePoint(e, insertionPoint, result, isMouseMove(e));
+   }
+   return result;
+}
+
+void LC_ActionDrawRectangle1Point::setBaseAngleFree(bool val) {
+    angleIsFree = val;
+    if (getStatus() == SetAngleFree){
+        setStatus(SetPoint1);
+    }
+}
+
+void LC_ActionDrawRectangle1Point::doBack(QMouseEvent *pEvent, int status) {
+    switch (status){
+        case SetAngleFree: {
+            setStatus(SetPoint1);
+            break;
+        }
+        case SetPoint1:{
+            setStatus(-1);
             break;
         }
         default:
@@ -149,13 +234,23 @@ void LC_ActionDrawRectangle1Point::doOnLeftMouseButtonRelease([[maybe_unused]]QM
 void LC_ActionDrawRectangle1Point::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
     createRefSelectablePoint(snap, list);
+    if (status == SetAngleFree){
+        createRefPoint(insertionPoint, list);
+        createRefLine(insertionPoint, snap, list);
+    }
 }
 
 void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coord,[[maybe_unused]] bool isRelativeZero, int status){
     switch (status) {
         case SetPoint1:
-            createShapeData(coord);
-            trigger();
+            if (angleIsFree){
+                insertionPoint = coord;
+                setStatus(SetAngleFree);
+            }
+            else {
+                createShapeData(coord);
+                trigger();
+            }
             break;
         case SetSize: { // size is set from command widget
             double w = LC_LineMath::getMeaningful(coord.x);
@@ -175,6 +270,10 @@ void LC_ActionDrawRectangle1Point::doProcessCoordinateEvent(const RS_Vector &coo
             height = 0.0;
             updateOptions();
             setMainStatus(SetPoint1);
+            break;
+        case SetAngleFree:
+            createShapeData(coord);
+            trigger();
             break;
         default:
             break;
@@ -259,6 +358,9 @@ void LC_ActionDrawRectangle1Point::doUpdateMouseButtonHints(int status){
             break;
         case SetPoint1Snap:
             updateMouseWidgetTRBack(tr("Specify reference point [topl|top|topr|left|middle|right|bottoml|bottom|bottomr]"));
+            break;
+        case SetAngleFree:
+            updateMouseWidgetTRBack(tr("Specify point that defines base angle for rectangle"), MOD_SHIFT_AND_CTRL(LC_ModifiersInfo::MSG_ANGLE_SNAP, tr("Don't keep insertion point")));
             break;
         default:
             updateMouseWidget();

@@ -111,7 +111,7 @@ void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(QMouseEvent *e, RS_
  * @param snapPoint snap point
  * @return
  */
-RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snapPoint) const{
+RS_Polyline *LC_ActionDrawRectangle3Points::createPolyline(const RS_Vector &snapPoint) {
     RS_Polyline* polyline = nullptr;
 
     if (snapPoint.valid){

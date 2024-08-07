@@ -58,7 +58,7 @@ void LC_ActionDrawRectangle2Points::doInitialSnapToRelativeZero(RS_Vector zero){
     setMainStatus(SetPoint2);
 }
 
-RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) const{
+RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snapPoint) {
 
     RS_Vector c2 = snapPoint;
     RS_Vector c1 = corner1;

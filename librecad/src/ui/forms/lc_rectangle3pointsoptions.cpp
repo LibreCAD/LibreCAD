@@ -87,7 +87,7 @@ void LC_Rectangle3PointsOptions::doSetAction(RS_ActionInterface *a, bool update)
         innerAngle = fromDouble(action->getFixedInnerAngle());
         quadrangle = action->isCreateQuadrangle();
         fixedInnerAngle = action->isInnerAngleFixed();
-        fixedBaseAngle = action->isBaseAngleFixed();
+        fixedBaseAngle = action->hasBaseAngle();
     }
     else{
   

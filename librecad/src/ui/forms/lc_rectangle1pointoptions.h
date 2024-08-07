@@ -37,6 +37,10 @@ public:
     explicit LC_Rectangle1PointOptions();
     ~LC_Rectangle1PointOptions() override;
 
+    enum {
+        UPDATE_ANGLE
+    };
+
 public slots:
     void onCornersIndexChanged(int index);
     void onSnapPointIndexChanged(int index);
@@ -49,9 +53,13 @@ public slots:
     void onUsePolylineClicked(bool value);
     void onSnapToCornerArcCenterClicked(bool value);
     void onInnerSizeClicked(bool value);
+    void onFreeAngleClicked(bool value);
     void onEdgesIndexChanged(int index);
     void onBaseAngleFixedClicked(bool value);
     void languageChange() override;
+
+    void updateUI(int mode) override;
+
 protected:
     void doSetAction( RS_ActionInterface * a, bool update) override;
     void doSaveSettings() override;
@@ -69,8 +77,10 @@ private:
     void setUsePolylineToActionAndView(bool value);
     void setSnapToCornerArcCenterToActionAndView(bool value);
     void setSizeInnerToActionAndView(bool value);
+    void setFreeAngleToActionAndView(bool value);
     void setEdgesModeToActionAndView(int index);
     void setBaseAngleFixedToActionAndView(bool angle);
 };
+
 
 #endif // LC_RECTANGLE1POINTOPTIONS_H

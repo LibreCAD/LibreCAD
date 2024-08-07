@@ -29,8 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 class LC_ActionDrawRectangle1Point :public LC_AbstractActionDrawRectangle {
     Q_OBJECT
-
-
 public:
 
     /**
@@ -59,6 +57,8 @@ public:
     double getHeight() const{return height;};
     void setSizeInner(bool value);
     bool isSizeInner() const{return sizeIsInner;};
+    bool isBaseAngleFree(){return angleIsFree;};
+    void setBaseAngleFree(bool val);
 protected:
     // width of rect
     double width = 0.0;
@@ -66,11 +66,17 @@ protected:
     double height = 0.0;
     // flag that indicates that width and rect are applied to external area or excluding corner radius
     bool sizeIsInner = false;
+    // flag that indicates that base angle is set by mouse instead of settings
+    bool angleIsFree = false;
+    // indicates that CTRL is pressed on trigger invocation by mouse
+    bool controlPressedOnMouseRelease = false;
+
+    RS_Vector insertionPoint = RS_Vector{false};
 
     static const std::vector<RS_Vector> snapPoints;
 
     LC_ActionOptionsWidget* createOptionsWidget() override;
-    RS_Polyline *createPolyline(const RS_Vector &snapPoint) const override;
+    RS_Polyline *createPolyline(const RS_Vector &snapPoint) override;
     void doOnLeftMouseButtonRelease(QMouseEvent *e, int status, const RS_Vector &snapPoint) override;
     void processCommandValue(double value, bool &toMainStatus) override;
     bool processCustomCommand(int status, const QString &command,bool &toMainStatus) override;
@@ -80,5 +86,13 @@ protected:
     int doGetStatusForInitialSnapToRelativeZero() override;
     void doInitialSnapToRelativeZero(RS_Vector vector) override;
     void doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status) override;
+
+    RS_Vector doGetMouseSnapPoint(QMouseEvent *e) override;
+
+    void doBack(QMouseEvent *pEvent, int status) override;
+
+    RS_Vector doGetRelativeZeroAfterTrigger() override;
+
+    void doAfterTrigger() override;
 };
 #endif // LC_ACTIONDRAWRECTANGLE1POINT_H
