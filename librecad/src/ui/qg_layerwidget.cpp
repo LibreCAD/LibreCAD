@@ -220,10 +220,12 @@ QG_LayerWidget::QG_LayerWidget(QG_ActionHandler* ah, QWidget* parent,
     layerView->setColumnWidth(QG_LayerModel::COLOR_SAMPLE, QG_LayerModel::ICONWIDTH);
     layerView->verticalHeader()->hide();
 
-    QVBoxLayout* lay = new QVBoxLayout(this);
+    layerView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+
+    auto* lay = new QVBoxLayout(this);
     lay->setContentsMargins(2, 2, 2, 2);
 
-    QHBoxLayout* layButtons = new QHBoxLayout;
+    auto* layButtons = new QHBoxLayout;
     QToolButton* but;
     // show all layer:
     but = new QToolButton(this);
@@ -457,7 +459,7 @@ void QG_LayerWidget::activateLayer(RS_Layer* layer, bool updateScroll) {
  * Called when the user activates (highlights) a layer.
  */
 void QG_LayerWidget::slotActivated(QModelIndex layerIdx /*const QString& layerName*/) {
-    if (!layerIdx.isValid() || layerList==NULL) {
+    if (!layerIdx.isValid() || layerList==nullptr) {
         return;
     }
 
