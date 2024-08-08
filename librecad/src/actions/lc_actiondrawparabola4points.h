@@ -61,6 +61,6 @@ protected:
     void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-    bool preparePreview(const RS_Vector& mouse);
+    bool preparePreview(const RS_Vector& mouse, bool rebuild);
 };
 #endif

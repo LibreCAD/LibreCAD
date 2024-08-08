@@ -31,6 +31,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_line.h"
 #include "rs_preview.h"
 #include "rs_actioninterface.h"
+#include "rs_constructionline.h"
 
 struct LC_ActionDrawParabolaFD::Points {
     RS_Vector focus, startPoint, endPoint, projection;
@@ -48,7 +49,7 @@ struct LC_ActionDrawParabolaFD::Points {
         return {RS_Vector{x, x*x/(4.*h)}.rotate(axis.angle() - M_PI/2) + vertex,
                     RS_Vector{2.*h, x}.rotate(axis.angle() - M_PI/2)};
     }
-    bool SetEnd(const RS_Vector& point) {
+    bool setEnd(const RS_Vector& point) {
         endPoint = point;
         double x0 = getX(startPoint);
         const auto& [p0, t0] = fromX(x0);
@@ -58,7 +59,7 @@ struct LC_ActionDrawParabolaFD::Points {
         return data.valid;
     }
 
-    bool SetStart(const RS_Vector& point) {
+    bool setStart(const RS_Vector& point) {
         startPoint = point;
         double x = getX(startPoint);
         if (std::abs(x) > RS_TOLERANCE) {
@@ -69,15 +70,26 @@ struct LC_ActionDrawParabolaFD::Points {
         return true;
     }
 
-    bool SetDirectrix(RS_Line& line) {
+    bool setDirectrix(RS_Line& line) {
         double dist=RS_MAXDOUBLE;
         projection = line.getNearestPointOnEntity(focus, false, &dist);
-        vertex = (focus + projection) * 0.5;
+        vertex = (focus + projection) * 0.5; // // fixme - sand -  hm.. Why 0.5 is used there?  it's a middle between line and focus for sure, yet what for?
         axis = focus - vertex;
         h = axis.magnitude();
         valid = h > RS_TOLERANCE;
-        if (valid)
+        if (valid) {
             directrix = &line;
+        }
+        return valid;
+    }
+
+    bool setDirectrix(RS_Vector& end) {
+        projection = end;
+//        vertex = (focus + projection) * 0.5;
+        vertex = end;
+        axis = focus - vertex;
+        h = axis.magnitude();
+        valid = h > RS_TOLERANCE;
         return valid;
     }
 };
@@ -101,12 +113,14 @@ LC_ActionDrawParabolaFD::~LC_ActionDrawParabolaFD() = default;
 void LC_ActionDrawParabolaFD::init(int status) {
     RS_PreviewActionInterface::init(status);
     if (pPoints->directrix != nullptr) {
-        switch(getStatus()) {
-        case SetFocus:
-        case SetDirectrix:
-            pPoints->directrix->setHighlighted(false);
-            graphicView->drawEntity(pPoints->directrix);
-            pPoints->directrix = nullptr;
+        switch(status) {
+            case SetFocus:
+            case SetDirectrix: {
+                pPoints->directrix = nullptr;
+                break;
+            }
+            default:
+                break;
         }
     }
 }
@@ -116,7 +130,7 @@ void LC_ActionDrawParabolaFD::trigger() {
 
     deletePreview();
     if(pPoints->data.valid){
-        LC_Parabola* en = new LC_Parabola{container, pPoints->data};
+        auto* en = new LC_Parabola{container, pPoints->data};
         container->addEntity(en);
         addToDocumentUndoable(en);
     }
@@ -128,147 +142,152 @@ void LC_ActionDrawParabolaFD::trigger() {
 }
 
 void LC_ActionDrawParabolaFD::mouseMoveEvent(QMouseEvent* e) {
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
+    deletePreview();
+    deleteHighlights();
     switch (getStatus()) {
         case SetFocus:
             trySnapToRelZeroCoordinateEvent(e);
             break;
-        case SetDirectrix:
-            mouse = snapFree(e);
-            drawSnapper();
+        case SetDirectrix: {
+            mouse = toGraph(e); // tmp - which snap is better there?
+            RS_Entity* entity = catchEntity(e, RS2::EntityLine);
+
+            if (entity != nullptr) {
+                highlightHover(entity);
+            }
+            else{
+                mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse, true);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(pPoints->focus, mouse);
+                }
+            }
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->focus);
+            }
             break;
-        case SetStartPoint:
-            pPoints->SetStart(mouse);
-            preparePreview();
+        }
+        case SetStartPoint: {
+            pPoints->setStart(mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->focus);
+                previewRefPoint(pPoints->vertex);
+                previewRefLine(pPoints->focus, pPoints->vertex);
+
+                RS_Vector rotatedAxis = pPoints->axis;
+                rotatedAxis = rotatedAxis.rotate(M_PI/2);
+                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(pPoints->vertex, pPoints->vertex  + rotatedAxis));
+                RS_Vector projection = tmpLine.getNearestPointOnEntity(mouse, false);
+
+                previewRefPoint(projection);
+                previewRefLine(pPoints->vertex, projection);
+            }
+            LC_Parabola* parabola = preparePreview();
+            if (showRefEntitiesOnPreview) {
+                if (parabola != nullptr) {
+                    RS_Vector startPoint = parabola->getStartpoint();
+                    previewRefSelectablePoint(startPoint);
+                }
+            }
             break;
-        case SetEndPoint:
-            pPoints->SetEnd(mouse);
-            preparePreview();
+        }
+        case SetEndPoint: {
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->focus);
+                previewRefPoint(pPoints->vertex);
+                previewRefLine(pPoints->focus, pPoints->vertex);
+
+                RS_Vector rotatedAxis = pPoints->axis;
+                rotatedAxis = rotatedAxis.rotate(M_PI/2);
+                RS_ConstructionLine tmpLine = RS_ConstructionLine(nullptr, RS_ConstructionLineData(pPoints->vertex, pPoints->vertex  + rotatedAxis));
+
+                RS_Vector projectionStart = tmpLine.getNearestPointOnEntity(pPoints->startPoint, false);
+                RS_Vector projectionEnd = tmpLine.getNearestPointOnEntity(mouse, false);
+                previewRefPoint(projectionStart);
+                previewRefSelectablePoint(projectionEnd);
+                previewRefLine(projectionStart, projectionEnd);
+            }
+            pPoints->setEnd(mouse);
+            LC_Parabola *parabola = preparePreview();
+            if (showRefEntitiesOnPreview) {
+                if (parabola != nullptr) {
+                    RS_Vector startPoint = parabola->getStartpoint();
+                    RS_Vector endPoint = parabola->getEndpoint();
+                    previewRefSelectablePoint(endPoint);
+                    previewRefPoint(startPoint);
+                }
+            }
             break;
+        }
         default:
             break;
     }
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
+    if (pPoints->directrix != nullptr){
+        highlightSelected(pPoints->directrix);
+    }
+    drawHighlights();
+    drawPreview();
 }
 
-bool LC_ActionDrawParabolaFD::preparePreview()
-{
-    deletePreview();
+LC_Parabola* LC_ActionDrawParabolaFD::preparePreview(){
     if (pPoints->data.valid) {
         auto* pl = new LC_Parabola{preview.get(), pPoints->data};
         previewEntity(pl);
-        drawPreview();
+        return pl;
     }
-    return pPoints->valid;
+    return nullptr;
 }
 
-void LC_ActionDrawParabolaFD::mouseReleaseEvent(QMouseEvent* e) {
-    // Proceed to next status
-    if (e->button()==Qt::LeftButton) {
-        if (getStatus() == SetDirectrix) {
-            snapFree(e);
+void LC_ActionDrawParabolaFD::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+    switch (status){
+        case SetDirectrix:{
             RS_Entity* entity = catchEntity(e, RS2::EntityLine);
             if (entity != nullptr) {
-                if (pPoints->SetDirectrix(*static_cast<RS_Line*>(entity))) {
-                    pPoints->directrix->setHighlighted(true);
-                    graphicView->drawEntity(pPoints->directrix);
-                    setStatus(getStatus()+1);
+                if (pPoints->setDirectrix(*dynamic_cast<RS_Line *>(entity))) {
+                    setStatus(status+1);
                 }
             }
-        }else{
+            else{
+                RS_Vector mouse = toGraph(e);  // tmp - should we use free or normal snap there?
+                mouse = getSnapAngleAwarePoint(e, pPoints->focus, mouse);
+                if (pPoints->setDirectrix(mouse)) {
+                    setStatus(status+1);
+                }
+            }
+            break;
+        }
+        default:{
             fireCoordinateEventForSnap(e);
         }
     }
+}
 
-    // Return to last status:
-    else if (e->button()==Qt::RightButton) {
-        deletePreview();
-        init(getStatus()-1);
-    }
+void LC_ActionDrawParabolaFD::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+    deletePreview();
+    initPrevious(status);
 }
 
 void LC_ActionDrawParabolaFD::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     moveRelativeZero(mouse);
     switch (status) {
-    case SetFocus:
-        pPoints->focus = mouse;
-        setStatus(getStatus()+1);
-        break;
-    case SetStartPoint:
-        pPoints->SetStart(mouse);
-        preparePreview();
-        setStatus(status+1);
-        break;
-    case SetEndPoint:
-        if(pPoints->SetEnd(mouse))
-            trigger();
-        break;
-    default:
-        break;
+        case SetFocus:
+            pPoints->focus = mouse;
+            setStatus(getStatus()+1);
+            break;
+        case SetStartPoint:
+            pPoints->setStart(mouse);
+            setStatus(status+1);
+            break;
+        case SetEndPoint:
+            if(pPoints->setEnd(mouse))
+                trigger();
+            break;
+        default:
+            break;
     }
 }
 
 //fixme, support command line
-
-/*
-void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
-    case SetFocus1: {
-            bool ok;
-            double m = RS_Math::eval(c, &ok);
-            if (ok) {
-                ratio = m / major.magnitude();
-                if (!isArc) {
-                    trigger();
-                } else {
-                    setStatus(SetAngle1);
-                }
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    case SetAngle1: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle1 = RS_Math::deg2rad(a);
-                setStatus(SetAngle2);
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    case SetAngle2: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle2 = RS_Math::deg2rad(a);
-                trigger();
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-}
-*/
-
 
 QStringList LC_ActionDrawParabolaFD::getAvailableCommands() {
     return {};
@@ -276,23 +295,23 @@ QStringList LC_ActionDrawParabolaFD::getAvailableCommands() {
 
 void LC_ActionDrawParabolaFD::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetFocus:
-        updateMouseWidgetTRCancel(tr("Specify the focus of parabola"), MOD_SHIFT_RELATIVE_ZERO);
-        break;
-    case SetDirectrix:
-        updateMouseWidgetTRBack(tr("Specify the directrix of parabola"));
-        break;
+        case SetFocus:
+            updateMouseWidgetTRCancel(tr("Specify the focus of parabola"), MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        case SetDirectrix:
+            updateMouseWidgetTRBack(tr("Select line that is parallel to directrix of parabola or set vertex point"));
+            break;
 
-    case SetStartPoint:
-        updateMouseWidgetTRBack(tr("Specify the start point on parabola"));
-        break;
+        case SetStartPoint:
+            updateMouseWidgetTRBack(tr("Specify the start point on parabola"));
+            break;
 
-    case SetEndPoint:
-        updateMouseWidgetTRBack(tr("Specify the end point on parabola"));
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetEndPoint:
+            updateMouseWidgetTRBack(tr("Specify the end point on parabola"));
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 RS2::CursorType LC_ActionDrawParabolaFD::doGetMouseCursor([[maybe_unused]] int status){

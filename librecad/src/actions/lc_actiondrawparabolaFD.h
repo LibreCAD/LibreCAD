@@ -26,6 +26,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_previewactioninterface.h"
 
 class RS_Vector;
+class LC_Parabola;
 
 /**
  * Draw a Parabola by focus and directrix
@@ -42,7 +43,6 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    void mouseReleaseEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
 protected:
     /**
@@ -60,6 +60,10 @@ protected:
     RS2::CursorType doGetMouseCursor(int status) override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
     void updateMouseButtonHints() override;
-    bool preparePreview();
+    LC_Parabola* preparePreview();
+
+    void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;
+
+    void onMouseRightButtonRelease(int status, QMouseEvent *e) override;
 };
 #endif

@@ -42,20 +42,19 @@ struct LC_ActionDrawParabola4Points::Points {
  *
  */
 LC_ActionDrawParabola4Points::LC_ActionDrawParabola4Points(
-        RS_EntityContainer& container,
-        RS_GraphicView& graphicView)
+    RS_EntityContainer& container,
+    RS_GraphicView& graphicView)
     :RS_PreviewActionInterface("Draw parabola from 4 points", container,
                                graphicView,
-                               RS2::ActionDrawParabola4Points)
-    , pPoints(std::make_unique<Points>())
-{
+                               RS2::ActionDrawParabola4Points),
+     pPoints(std::make_unique<Points>()){
 }
 
 LC_ActionDrawParabola4Points::~LC_ActionDrawParabola4Points() = default;
 
 void LC_ActionDrawParabola4Points::init(int status) {
     RS_PreviewActionInterface::init(status);
-    if (getStatus() == SetPoint1)
+    if (status == SetPoint1)
         pPoints->points.clear();
 }
 
@@ -63,72 +62,70 @@ void LC_ActionDrawParabola4Points::trigger() {
     RS_PreviewActionInterface::trigger();
 
     deletePreview();
-    if(getStatus()==SetAxis && pPoints->valid){
-        LC_Parabola* en = new LC_Parabola{container, pPoints->data};
+    if(pPoints->valid){
+        auto* en = new LC_Parabola{container, pPoints->data};
         container->addEntity(en);
-
         addToDocumentUndoable(en);
     }
     RS_Vector rz = graphicView->getRelativeZero();
-       // graphicView->SignVerbor(container) : graphicView->
     graphicView->redraw(RS2::RedrawDrawing);
     moveRelativeZero(rz);
-    drawSnapper();
     setStatus(SetPoint1);
 }
 
 void LC_ActionDrawParabola4Points::mouseMoveEvent(QMouseEvent* e) {
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent begin");
-
     RS_Vector mouse = snapPoint(e);
-    pPoints->points.set(getStatus(),mouse);
-    switch(getStatus()) {
+    deletePreview();
+    int status = getStatus();
+    pPoints->points.set(status, mouse);
+    if (showRefEntitiesOnPreview) {
+        for (int i = 0; i < status;i++) {
+            previewRefPoint(pPoints->points.at(i));
+        }
+    }
+    switch(status) {
         case SetPoint1:
             trySnapToRelZeroCoordinateEvent(e);
             break;
-    case SetPoint2:
-    case SetPoint3:
-        break;
-    case SetPoint4:
-        preparePreview(mouse);
-        break;
-    case SetAxis:
-    {
-        deleteSnapper();
-        RS_Vector m0 = snapFree(e);
-        drawSnapper();
-        preparePreview(m0);
+        case SetPoint2:
+        case SetPoint3:
+            break;
+        case SetPoint4:
+            preparePreview(mouse, true);
+            break;
+        case SetAxis:{
+            RS_Vector m0 = toGraph(e);
+            preparePreview(m0,false);
+            break;
+        }
+        default:
+            break;
     }
-        break;
-    default:
-        break;
-    }
-    //    RS_DEBUG->print("RS_ActionDrawEllipse4Point::mouseMoveEvent end");
+    drawPreview();
 }
 
-bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse){
-    deletePreview();
+bool LC_ActionDrawParabola4Points::preparePreview(const RS_Vector& mouse, bool rebuild){
     pPoints->valid = false;
-    if (getStatus() == SetPoint4 || pPoints->pData.empty())
+    if (rebuild|| pPoints->pData.empty()) {
         pPoints->pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
+    }
     if (!pPoints->pData.empty()) {
         double ds = RS_MAXDOUBLE;
         for(const auto& pd: pPoints->pData) {
-            if (!pd.valid)
-                continue;
-            auto* l = previewLine(pd.GetAxis());
-            double ds0 = RS_MAXDOUBLE;
-            l->getNearestPointOnEntity(mouse, false, &ds0);
-            previewEntity(l);
-            if (ds0 < ds) {
-                pPoints->data = pd;
-                ds = ds0;
-                pPoints->valid = true;
+            if (pd.valid) {
+                const RS_LineData &axis = pd.GetAxis();
+                auto *l = previewRefLine(axis.startpoint, axis.endpoint);
+                double ds0 = RS_MAXDOUBLE;
+                l->getNearestPointOnEntity(mouse, false, &ds0);
+                if (ds0 < ds) {
+                    pPoints->data = pd;
+                    ds = ds0;
+                    pPoints->valid = true;
+                }
             }
         }
         auto* pl = new LC_Parabola{preview.get(), pPoints->data};
         previewEntity(pl);
-        drawPreview();
     }
     return pPoints->valid;
 }
@@ -151,104 +148,47 @@ void LC_ActionDrawParabola4Points::onMouseRightButtonRelease(int status, [[maybe
 }
 
 void LC_ActionDrawParabola4Points::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
-    pPoints->points.resize(status+1);
+    int nextStatus = status + 1;
+    pPoints->points.resize(nextStatus);
     pPoints->points.set(status,mouse);
 
-    switch (getStatus()) {
-    case SetPoint1:
-    case SetPoint2:
-    case SetPoint3:
-        moveRelativeZero(mouse);
-        setStatus(status+1);
-        break;
-    case SetPoint4:
-    {
-        // reject the same point
-        if ((pPoints->points.at(SetPoint4) - pPoints->points.at(SetPoint3)).magnitude() < RS_TOLERANCE)
+    switch (status) {
+        case SetPoint1:
+        case SetPoint2:
+        case SetPoint3: {
+            moveRelativeZero(mouse);
+            setStatus(nextStatus);
             break;
-        auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
-        if (!pData.empty()) {
-            pPoints->pData.clear();
-            std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
-                return data.valid;
-            });
-            if (pPoints->pData.size() == 1) {
-                pPoints->data = pPoints->pData.front();
-                trigger();
-            } else {
-                setStatus(status+1);
-            }
         }
-    }
-        break;
-
-    case SetAxis:
-        trigger();
-
-    default:
-        break;
+        case SetPoint4:    {
+            // reject the same point
+            if ((pPoints->points.at(SetPoint4) - pPoints->points.at(SetPoint3)).magnitude() < RS_TOLERANCE){
+                break;
+            }
+            auto pData = LC_ParabolaData::From4Points({pPoints->points.begin(), pPoints->points.end()});
+            if (!pData.empty()) {
+                pPoints->pData.clear();
+                std::copy_if(pData.cbegin(), pData.cend(), std::back_inserter(pPoints->pData), [](const LC_ParabolaData& data){
+                    return data.valid;
+                });
+                if (pPoints->pData.size() == 1) { // shortcut for single solution
+                    pPoints->data = pPoints->pData.front();
+                    trigger();
+                } else {
+                    setStatus(nextStatus);
+                }
+            }
+            break;
+        }
+        case SetAxis: {
+            trigger();
+        }
+        default:
+            break;
     }
 }
 
 //fixme, support command line
-
-/*
-void RS_ActionDrawEllipse4Point::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
-    case SetFocus1: {
-            bool ok;
-            double m = RS_Math::eval(c, &ok);
-            if (ok) {
-                ratio = m / major.magnitude();
-                if (!isArc) {
-                    trigger();
-                } else {
-                    setStatus(SetAngle1);
-                }
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    case SetAngle1: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle1 = RS_Math::deg2rad(a);
-                setStatus(SetAngle2);
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    case SetAngle2: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle2 = RS_Math::deg2rad(a);
-                trigger();
-            } else {
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-            }
-        }
-        break;
-
-    default:
-        break;
-    }
-}
-*/
-
 
 QStringList LC_ActionDrawParabola4Points::getAvailableCommands() {
     return {};
@@ -256,24 +196,24 @@ QStringList LC_ActionDrawParabola4Points::getAvailableCommands() {
 
 void LC_ActionDrawParabola4Points::updateMouseButtonHints() {
     switch (getStatus()) {
-    case SetPoint1:
-        updateMouseWidgetTRCancel(tr("Specify the first point on parabola"), MOD_SHIFT_RELATIVE_ZERO);
-        break;
-    case SetPoint2:
-        updateMouseWidgetTRBack(tr("Specify the second point on parabola"));
-        break;
-    case SetPoint3:
-        updateMouseWidgetTRBack(tr("Specify the third point on parabola"));
-        break;
-    case SetPoint4:
-        updateMouseWidgetTRBack(tr("Specify the fourth point on parabola"));
-        break;
-    case SetAxis:
-        updateMouseWidgetTRBack(tr("Specify the Axis on parabola"));
-        break;
-    default:
-        updateMouseWidget();
-        break;
+        case SetPoint1:
+            updateMouseWidgetTRCancel(tr("Specify the first point on parabola"), MOD_SHIFT_RELATIVE_ZERO);
+            break;
+        case SetPoint2:
+            updateMouseWidgetTRBack(tr("Specify the second point on parabola"));
+            break;
+        case SetPoint3:
+            updateMouseWidgetTRBack(tr("Specify the third point on parabola"));
+            break;
+        case SetPoint4:
+            updateMouseWidgetTRBack(tr("Specify the fourth point on parabola"));
+            break;
+        case SetAxis:
+            updateMouseWidgetTRBack(tr("Specify the Axis on parabola"));
+            break;
+        default:
+            updateMouseWidget();
+            break;
     }
 }
 RS2::CursorType LC_ActionDrawParabola4Points::doGetMouseCursor([[maybe_unused]] int status){
