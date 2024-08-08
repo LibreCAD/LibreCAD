@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>178</width>
+    <width>187</width>
     <height>24</height>
    </rect>
   </property>
@@ -44,7 +44,7 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="2">
+   <item row="0" column="3">
     <widget class="QCheckBox" name="cbSymmetric">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -66,6 +66,29 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="1">
+    <widget class="QSpinBox" name="sbNumber">
+     <property name="toolTip">
+      <string>Number of parallels to create</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
    <item row="0" column="0">
     <widget class="QLabel" name="lNumber">
      <property name="sizePolicy">
@@ -82,26 +105,10 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="3">
-    <spacer name="horizontalSpacer">
+   <item row="0" column="2">
+    <widget class="Line" name="line">
      <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="0" column="1">
-    <widget class="QSpinBox" name="sbNumber">
-     <property name="toolTip">
-      <string>Number of parallels to create</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>

@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>701</width>
+    <width>728</width>
     <height>24</height>
    </rect>
   </property>
@@ -44,45 +44,6 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="4">
-    <widget class="QSpinBox" name="sbNumberOfCopies">
-     <property name="toolTip">
-      <string>Number of copies.</string>
-     </property>
-     <property name="minimum">
-      <number>1</number>
-     </property>
-     <property name="maximum">
-      <number>100</number>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QCheckBox" name="cbCurrentAttr">
-     <property name="toolTip">
-      <string>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </string>
-     </property>
-     <property name="text">
-      <string>Use Current Attributes</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbFixedDistance">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="toolTip">
-      <string>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</string>
-     </property>
-     <property name="text">
-      <string>Fixed Distance</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QLineEdit" name="leDist">
      <property name="sizePolicy">
@@ -102,27 +63,24 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QCheckBox" name="cbKeepOriginals">
+   <item row="0" column="9">
+    <widget class="QCheckBox" name="cbCurrentLayer">
      <property name="toolTip">
-      <string>If checked, original entities will survive, otherwise they will be removed. </string>
+      <string>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</string>
      </property>
      <property name="text">
-      <string>Keep Originals</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="3">
-    <widget class="QCheckBox" name="cbMultipleCopies">
-     <property name="toolTip">
-      <string>If checked, multiple copies will be created. </string>
-     </property>
-     <property name="text">
-      <string>Multiple Copies</string>
+      <string>Use Current Layer</string>
      </property>
     </widget>
    </item>
    <item row="0" column="7">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="10">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -136,12 +94,75 @@
     </spacer>
    </item>
    <item row="0" column="6">
-    <widget class="QCheckBox" name="cbCurrentLayer">
+    <widget class="QSpinBox" name="sbNumberOfCopies">
      <property name="toolTip">
-      <string>If checked, created entities will be placed into current layer, otherwise they will be in original layers.</string>
+      <string>Number of copies.</string>
+     </property>
+     <property name="minimum">
+      <number>1</number>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="QCheckBox" name="cbKeepOriginals">
+     <property name="toolTip">
+      <string>If checked, original entities will survive, otherwise they will be removed. </string>
      </property>
      <property name="text">
-      <string>Use Current Layer</string>
+      <string>Keep Originals</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbFixedDistance">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="toolTip">
+      <string>If checked, fixes of distance of offset will be used, otherwise it will be defined by mouse.</string>
+     </property>
+     <property name="text">
+      <string>Fixed Distance</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="QCheckBox" name="cbCurrentAttr">
+     <property name="toolTip">
+      <string>If checked, current attributes will be applied to created entities, otherwise original ones will be used. </string>
+     </property>
+     <property name="text">
+      <string>Use Current Attributes</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QCheckBox" name="cbMultipleCopies">
+     <property name="toolTip">
+      <string>If checked, multiple copies will be created. </string>
+     </property>
+     <property name="text">
+      <string>Multiple Copies</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
     </widget>
    </item>

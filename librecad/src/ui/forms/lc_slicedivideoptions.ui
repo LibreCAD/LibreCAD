@@ -26,40 +26,7 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="1" column="6">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Angle:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="4">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Tick Length:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="7">
-    <widget class="QLineEdit" name="leTickAngle">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Angle between tick and selected entity.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="16">
+   <item row="1" column="18">
     <widget class="QFrame" name="frmCircle">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -113,6 +80,39 @@
        </widget>
       </item>
      </layout>
+    </widget>
+   </item>
+   <item row="1" column="13">
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>Offset:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="14">
+    <widget class="QLineEdit" name="leTickOffset">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Offset of tick snap point to intersection point. </string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QLabel" name="label_3">
+     <property name="text">
+      <string>Angle:</string>
+     </property>
     </widget>
    </item>
    <item row="1" column="2">
@@ -177,7 +177,36 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="9">
+   <item row="1" column="20">
+    <widget class="QCheckBox" name="cbDivide">
+     <property name="toolTip">
+      <string>If checked, selected entity will be divided by tick intersection points. </string>
+     </property>
+     <property name="text">
+      <string>Divide</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="5">
+    <widget class="QLineEdit" name="leTickLengh">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Length of tick.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="11">
     <widget class="QLabel" name="label_5">
      <property name="text">
       <string>Tick snap:</string>
@@ -185,6 +214,25 @@
     </widget>
    </item>
    <item row="1" column="8">
+    <widget class="QLineEdit" name="leTickAngle">
+     <property name="minimumSize">
+      <size>
+       <width>30</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>60</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Angle between tick and selected entity.</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="9">
     <widget class="QCheckBox" name="cbRelAngle">
      <property name="toolTip">
       <string>If checked, tick angle is related to selected entity, otherwise it is absolute angle.</string>
@@ -193,6 +241,65 @@
       <string>Rel</string>
      </property>
     </widget>
+   </item>
+   <item row="1" column="19">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Tick Length:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="12">
+    <widget class="QComboBox" name="cbTickSnap">
+     <property name="toolTip">
+      <string>Defines which point of tick should be placed to intersection point with selected entity.</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Start</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Middle</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>End</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="1" column="0">
+    <widget class="QCheckBox" name="cbMode">
+     <property name="toolTip">
+      <string>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </string>
+     </property>
+     <property name="text">
+      <string>Fixed </string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="21">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>0</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
    </item>
    <item row="1" column="1">
     <widget class="QFrame" name="frmCount">
@@ -238,36 +345,7 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="5">
-    <widget class="QLineEdit" name="leTickLengh">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Length of tick.</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="0">
-    <widget class="QCheckBox" name="cbMode">
-     <property name="toolTip">
-      <string>If checked, specified fixed distance between ticks will be used. Otherwise, distance will be calculated based on entity length and ticks count. </string>
-     </property>
-     <property name="text">
-      <string>Fixed </string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="15">
+   <item row="1" column="17">
     <widget class="QFrame" name="frmEdge">
      <property name="frameShape">
       <enum>QFrame::NoFrame</enum>
@@ -325,75 +403,18 @@
      </layout>
     </widget>
    </item>
-   <item row="1" column="18">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>0</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="1" column="17">
-    <widget class="QCheckBox" name="cbDivide">
-     <property name="toolTip">
-      <string>If checked, selected entity will be divided by tick intersection points. </string>
-     </property>
-     <property name="text">
-      <string>Divide</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="12">
-    <widget class="QLineEdit" name="leTickOffset">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>60</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Offset of tick snap point to intersection point. </string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="11">
-    <widget class="QLabel" name="label_4">
-     <property name="text">
-      <string>Offset:</string>
-     </property>
-    </widget>
-   </item>
    <item row="1" column="10">
-    <widget class="QComboBox" name="cbTickSnap">
-     <property name="toolTip">
-      <string>Defines which point of tick should be placed to intersection point with selected entity.</string>
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
-     <item>
-      <property name="text">
-       <string>Start</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Middle</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>End</string>
-      </property>
-     </item>
+    </widget>
+   </item>
+   <item row="1" column="6">
+    <widget class="Line" name="line_3">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
     </widget>
    </item>
   </layout>

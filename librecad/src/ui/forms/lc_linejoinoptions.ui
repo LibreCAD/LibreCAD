@@ -32,6 +32,70 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
+   <item row="0" column="9">
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, polyline will be created instead of individual lines</string>
+     </property>
+     <property name="text">
+      <string>Create Polyline</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QComboBox" name="cbLine2EdgeMode">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>95</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>120</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Policy for the line was selected second</string>
+     </property>
+     <item>
+      <property name="text">
+       <string>Extend/Trim</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>Add segment</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>No change</string>
+      </property>
+     </item>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Line 1:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>Line 2:</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="3">
     <widget class="QComboBox" name="cbLine1EdgeMode">
      <property name="sizePolicy">
@@ -73,23 +137,6 @@
     </widget>
    </item>
    <item row="0" column="8">
-    <widget class="QCheckBox" name="cbPolyline">
-     <property name="toolTip">
-      <string>If checked, polyline will be created instead of individual lines</string>
-     </property>
-     <property name="text">
-      <string>Create Polyline</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="6">
-    <widget class="QLabel" name="label_3">
-     <property name="text">
-      <string>Attributes:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="7">
     <widget class="QComboBox" name="cbAttributesSource">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
@@ -134,71 +181,14 @@
      </item>
     </widget>
    </item>
-   <item row="0" column="5">
-    <widget class="QComboBox" name="cbLine2EdgeMode">
-     <property name="sizePolicy">
-      <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-       <horstretch>0</horstretch>
-       <verstretch>0</verstretch>
-      </sizepolicy>
-     </property>
-     <property name="minimumSize">
-      <size>
-       <width>95</width>
-       <height>0</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>120</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Policy for the line was selected second</string>
-     </property>
-     <item>
-      <property name="text">
-       <string>Extend/Trim</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>Add segment</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>No change</string>
-      </property>
-     </item>
-    </widget>
-   </item>
-   <item row="0" column="9">
-    <widget class="QCheckBox" name="cbRemoveOriginals">
-     <property name="toolTip">
-      <string>If checked, original lines will be removed</string>
-     </property>
+   <item row="0" column="7">
+    <widget class="QLabel" name="label_3">
      <property name="text">
-      <string>Remove originals</string>
+      <string>Attributes:</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="4">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Line 2:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Line 1:</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="10">
+   <item row="0" column="11">
     <spacer name="horizontalSpacer">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -210,6 +200,23 @@
       </size>
      </property>
     </spacer>
+   </item>
+   <item row="0" column="10">
+    <widget class="QCheckBox" name="cbRemoveOriginals">
+     <property name="toolTip">
+      <string>If checked, original lines will be removed</string>
+     </property>
+     <property name="text">
+      <string>Remove originals</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>

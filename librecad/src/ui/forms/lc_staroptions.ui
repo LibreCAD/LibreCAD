@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>552</width>
+    <width>570</width>
     <height>24</height>
    </rect>
   </property>
@@ -26,62 +26,29 @@
    <property name="bottomMargin">
     <number>1</number>
    </property>
-   <item row="0" column="6">
-    <widget class="QCheckBox" name="cbRadiusInner">
-     <property name="toolTip">
-      <string>If checked, inner edges will be rounded. </string>
+   <item row="0" column="10">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
      </property>
-     <property name="text">
-      <string>Radius Inner</string>
+     <property name="sizeType">
+      <enum>QSizePolicy::Expanding</enum>
      </property>
-    </widget>
-   </item>
-   <item row="0" column="5">
-    <widget class="QLineEdit" name="leRadusOuter">
-     <property name="minimumSize">
+     <property name="sizeHint" stdset="0">
       <size>
-       <width>30</width>
-       <height>0</height>
+       <width>0</width>
+       <height>20</height>
       </size>
      </property>
-     <property name="maximumSize">
-      <size>
-       <width>50</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <property name="toolTip">
-      <string>Radius for outer rays (edges).</string>
-     </property>
-    </widget>
+    </spacer>
    </item>
-   <item row="0" column="8">
-    <widget class="QCheckBox" name="cbPolyline">
+   <item row="0" column="0">
+    <widget class="QCheckBox" name="cbSymmertix">
      <property name="toolTip">
-      <string>If checked, the star will be drawn as polyline. </string>
+      <string>If checked, symmetric star will be created.</string>
      </property>
      <property name="text">
-      <string>Polyline</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="4">
-    <widget class="QCheckBox" name="cbRadiusOuter">
-     <property name="toolTip">
-      <string>If checked, outer edges will be rounded. </string>
-     </property>
-     <property name="text">
-      <string>Radius Outer</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="2">
-    <widget class="QSpinBox" name="sbNumber">
-     <property name="toolTip">
-      <string>Number of rays.</string>
-     </property>
-     <property name="minimum">
-      <number>3</number>
+      <string>Symmetric</string>
      </property>
     </widget>
    </item>
@@ -104,16 +71,6 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0">
-    <widget class="QCheckBox" name="cbSymmertix">
-     <property name="toolTip">
-      <string>If checked, symmetric star will be created.</string>
-     </property>
-     <property name="text">
-      <string>Symmetric</string>
-     </property>
-    </widget>
-   </item>
    <item row="0" column="1">
     <widget class="QLabel" name="label">
      <property name="text">
@@ -121,21 +78,78 @@
      </property>
     </widget>
    </item>
+   <item row="0" column="2">
+    <widget class="QSpinBox" name="sbNumber">
+     <property name="toolTip">
+      <string>Number of rays.</string>
+     </property>
+     <property name="minimum">
+      <number>3</number>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="4">
+    <widget class="QCheckBox" name="cbRadiusOuter">
+     <property name="toolTip">
+      <string>If checked, outer edges will be rounded. </string>
+     </property>
+     <property name="text">
+      <string>Radius Outer</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="6">
+    <widget class="QCheckBox" name="cbRadiusInner">
+     <property name="toolTip">
+      <string>If checked, inner edges will be rounded. </string>
+     </property>
+     <property name="text">
+      <string>Radius Inner</string>
+     </property>
+    </widget>
+   </item>
    <item row="0" column="9">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
+    <widget class="QCheckBox" name="cbPolyline">
+     <property name="toolTip">
+      <string>If checked, the star will be drawn as polyline. </string>
      </property>
-     <property name="sizeType">
-      <enum>QSizePolicy::Expanding</enum>
+     <property name="text">
+      <string>Polyline</string>
      </property>
-     <property name="sizeHint" stdset="0">
+    </widget>
+   </item>
+   <item row="0" column="5">
+    <widget class="QLineEdit" name="leRadusOuter">
+     <property name="minimumSize">
       <size>
-       <width>0</width>
-       <height>20</height>
+       <width>30</width>
+       <height>0</height>
       </size>
      </property>
-    </spacer>
+     <property name="maximumSize">
+      <size>
+       <width>50</width>
+       <height>16777215</height>
+      </size>
+     </property>
+     <property name="toolTip">
+      <string>Radius for outer rays (edges).</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="3">
+    <widget class="Line" name="line">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="8">
+    <widget class="Line" name="line_2">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
+     </property>
+    </widget>
    </item>
   </layout>
  </widget>
