@@ -318,8 +318,8 @@ LC_ModifyOperationFlags *RS_ActionModifyMoveRotate::getModifyOperationFlags() {
     return &pPoints->data;
 }
 
-void RS_ActionModifyMoveRotate::setAngleIsFixed(bool b) {
-    angleIsFixed = b;
+void RS_ActionModifyMoveRotate::setAngleIsFree(bool b) {
+    angleIsFixed = !b;
     if (angleIsFixed && getStatus() == SetAngle){
         setStatus(SetTargetPoint);
     }

@@ -44,7 +44,7 @@ QG_MoveRotateOptions::QG_MoveRotateOptions()
     connect(ui->cbCurrentAttr, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbUseCurrentAttributesClicked);
     connect(ui->cbCurrentLayer, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbUseCurrentLayerClicked);
     connect(ui->cbSameAngleForCopies, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbSameAngleForCopiesClicked);
-    connect(ui->cbFixedAngle, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbFixedAngleForClicked);
+    connect(ui->cbFreeAngle, &QCheckBox::clicked, this, &QG_MoveRotateOptions::cbFreeAngleForClicked);
     connect(ui->leAngle, &QLineEdit::editingFinished, this, &QG_MoveRotateOptions::onAngleEditingFinished);
 }
 
@@ -61,18 +61,15 @@ void QG_MoveRotateOptions::languageChange(){
     ui->retranslateUi(this);
 }
 
-
 void QG_MoveRotateOptions::doSaveSettings() {
-    bool angleIsFixed = ui->cbFixedAngle->isChecked();
-    if (angleIsFixed) {
-        save("Angle", ui->leAngle->text());
-    }
+    bool angleIsFree = ui->cbFreeAngle->isChecked();
+    save("Angle", ui->leAngle->text());
     save("UseCurrentLayer", ui->cbCurrentLayer->isChecked());
     save("UseCurrentAttributes", ui->cbCurrentAttr->isChecked());
     save("KeepOriginals", ui->cbKeepOriginals->isChecked());
     save("MultipleCopies", ui->cbMultipleCopies->isChecked());
     save("Copies", ui->sbNumberOfCopies->value());
-    save("FixedAngle", angleIsFixed);
+    save("FreeAngle", angleIsFree);
     save("SameAngleForCopies", ui->cbSameAngleForCopies->isChecked());
 }
 
@@ -87,7 +84,7 @@ void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
     bool useCurrentAttributes;
     int copiesNumber;
     bool sameAngle;
-    bool angleIsFixed;
+    bool angleIsFree;
     if (update){
         useCurrentLayer = action->isUseCurrentLayer();
         useCurrentAttributes  = action->isUseCurrentAttributes();
@@ -95,7 +92,7 @@ void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
         keepOriginals = action->isKeepOriginals();
         useMultipleCopies = action->isUseMultipleCopies();
         sameAngle = action->isUseSameAngleForCopies();
-        angleIsFixed = action->isAngleFixed();
+        angleIsFree = action->isAngleFree();
         angle = fromDouble(RS_Math::rad2deg(action->getAngle()));
     }
     else{
@@ -105,7 +102,7 @@ void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
         useMultipleCopies = loadBool("MultipleCopies", false);
         copiesNumber = loadInt("Copies", 1);
         sameAngle = loadBool("SameAngleForCopies", false);
-        angleIsFixed = loadBool("FixedAngle", true);
+        angleIsFree = loadBool("FreeAngle", true);
         angle = load("Angle", "30");
     }
     setUseMultipleCopiesToActionAndView(useMultipleCopies);
@@ -114,7 +111,7 @@ void QG_MoveRotateOptions::doSetAction(RS_ActionInterface *a, bool update) {
     setUseCurrentAttributesToActionAndView(useCurrentAttributes);
     setKeepOriginalsToActionAndView(keepOriginals);
     setSameAngleForCopiesToActionAndView(sameAngle);
-    setFixedAngleToModelAndView(angleIsFixed);
+    setFreeAngleToModelAndView(angleIsFree);
     setAngleToActionAndView(angle);
 }
 
@@ -156,10 +153,10 @@ void QG_MoveRotateOptions::setKeepOriginalsToActionAndView(bool val) {
     ui->cbKeepOriginals->setChecked(val);
 }
 
-void QG_MoveRotateOptions::setFixedAngleToModelAndView(bool val) {
-    ui->leAngle->setEnabled(val);
-    ui->cbFixedAngle->setChecked(val);
-    action->setAngleIsFixed(val);
+void QG_MoveRotateOptions::setFreeAngleToModelAndView(bool val) {
+    ui->leAngle->setEnabled(!val);
+    ui->cbFreeAngle->setChecked(val);
+    action->setAngleIsFree(val);
 }
 
 void QG_MoveRotateOptions::setSameAngleForCopiesToActionAndView(bool val) {
@@ -192,11 +189,10 @@ void QG_MoveRotateOptions::cbSameAngleForCopiesClicked(bool val) {
     setSameAngleForCopiesToActionAndView(val);
 }
 
-void QG_MoveRotateOptions::cbFixedAngleForClicked(bool val) {
-    setFixedAngleToModelAndView(val);
+void QG_MoveRotateOptions::cbFreeAngleForClicked(bool val) {
+    setFreeAngleToModelAndView(val);
 }
 
 void QG_MoveRotateOptions::on_sbNumberOfCopies_valueChanged(int number) {
     setCopiesNumberToActionAndView(number);
 }
-

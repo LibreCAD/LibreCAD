@@ -54,8 +54,8 @@ public:
     double getAngle() const;
     void setUseSameAngleForCopies(bool b);
     bool isUseSameAngleForCopies();
-    void setAngleIsFixed(bool b);
-    bool isAngleFixed(){return angleIsFixed;};
+    void setAngleIsFree(bool b);
+    bool isAngleFree(){return !angleIsFixed;};
 protected:
     /**
  * Action States.

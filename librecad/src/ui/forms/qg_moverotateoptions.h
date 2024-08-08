@@ -51,7 +51,7 @@ protected:
     void setUseCurrentAttributesToActionAndView(bool val);
     void setKeepOriginalsToActionAndView(bool val);
     void setAngleToActionAndView(QString val);
-    void setFixedAngleToModelAndView(bool val);
+    void setFreeAngleToModelAndView(bool val);
     void setSameAngleForCopiesToActionAndView(bool val);
 protected slots:
     void languageChange() override;
@@ -60,7 +60,7 @@ protected slots:
     void cbUseCurrentAttributesClicked(bool val);
     void cbUseCurrentLayerClicked(bool val);
     void cbSameAngleForCopiesClicked(bool val);
-    void cbFixedAngleForClicked(bool val);
+    void cbFreeAngleForClicked(bool val);
     void on_sbNumberOfCopies_valueChanged(int number);
     void onAngleEditingFinished();
 private:
