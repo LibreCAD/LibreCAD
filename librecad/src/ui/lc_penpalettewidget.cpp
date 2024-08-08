@@ -186,7 +186,7 @@ void LC_PenPaletteWidget::initTableView(){
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::TYPE_ICON), LC_PenPaletteModel::ICON_WIDTH);
     tableView->setColumnWidth(penPaletteModel ->translateColumn(LC_PenPaletteModel::WIDTH_ICON), LC_PenPaletteModel::ICON_WIDTH);
 
-    tableView->setStyleSheet("background-color: white;");
+    tableView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 
     connect(tableView, &QTableView::clicked, this, &LC_PenPaletteWidget::onTableClicked);
     connect(tableView, &QTableView::customContextMenuRequested, this, &LC_PenPaletteWidget::onTableViewContextMenuInvoked);
@@ -1395,10 +1395,3 @@ bool LC_PenPaletteWidget::invokeUnableToSavePenDataDialog(){
     bool result = dlgResult == QMessageBox::Yes;
     return result;
 }
-
-
-
-
-
-
-
