@@ -125,7 +125,7 @@ LC_LayerTreeView *LC_LayerTreeWidget::initTreeView(){
 
     treeView->setContextMenuPolicy(Qt::CustomContextMenu);
 
-    // treeView->setStyleSheet("background-color: white;");
+    treeView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
 
     connect(treeView, SIGNAL(customContextMenuRequested(const QPoint &)), this, SLOT(onCustomContextMenu(QPoint)));
     connect(treeView, &QTreeView::clicked, this, &LC_LayerTreeWidget::slotTreeClicked);
@@ -1955,5 +1955,3 @@ void LC_LayerTreeWidget::invokeSettingsDialog(){
         update();
     }
 }
-
-
