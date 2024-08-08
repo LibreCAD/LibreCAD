@@ -152,7 +152,9 @@ QG_BlockWidget::QG_BlockWidget(QG_ActionHandler* ah, QWidget* parent,
     blockView->horizontalHeader()->setStretchLastSection(true);
     blockView->horizontalHeader()->hide();
 
-    QVBoxLayout* lay = new QVBoxLayout(this);
+    blockView->setStyleSheet("QWidget {background-color: white;}  QScrollBar{ background-color: none }");
+
+    auto* lay = new QVBoxLayout(this);
     lay->setSpacing ( 2 );
     lay->setContentsMargins(2, 2, 2, 2);
 
