@@ -458,6 +458,8 @@ bool RS_ActionInterface::checkCommand(const QString& cmd, const QString& str,
 
 /**
  * Calls command() from the RS_COMMANDS module.
+ * Utility method to reduce dependencies in inherited actions
+ * @param cmd command
  */
  // fixme - check for type and string literal
 QString RS_ActionInterface::command(const QString& cmd) {

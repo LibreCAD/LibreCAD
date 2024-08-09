@@ -139,8 +139,10 @@ void LC_ActionDrawLineSnake::doPreparePreviewEntities([[maybe_unused]]QMouseEven
             break;
     }
     createEntities(possibleEndPoint, list);
-    createRefPoint(pPoints->data.startpoint, list);
-    createRefSelectablePoint(possibleEndPoint, list);
+    if (showRefEntitiesOnPreview) {
+        createRefPoint(pPoints->data.startpoint, list);
+        createRefSelectablePoint(possibleEndPoint, list);
+    }
 
 }
 
@@ -408,20 +410,20 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
 
     if (pPoints->startOffset >= 2){
         msg += "/";
-        msg += getCommand("close");
+        msg += command("close");
     }
     if (pPoints->index() + 1 < pPoints->history.size()){
         if (msg.size() > 0){
             msg += "/";
         }
-        msg += getCommand("redo");
+        msg += command("redo");
     }
     bool hasHistory = pPoints->historyIndex >= 1;
     if (hasHistory){
         if (msg.size() > 0){
             msg += "/";
         }
-        msg += getCommand("undo");
+        msg += command("undo");
     }
 
     switch (getStatus()) {
@@ -430,34 +432,34 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
             break;
         case SetDirection:
             msg += "/";
-            msg += getCommand("p");
+            msg += command("p");
             msg += "/";
-            msg += getCommand("angle");
+            msg += command("angle");
             msg += "/";
-            msg += getCommand("anglerel");
+            msg += command("anglerel");
             updateMouseWidgetTRBack(tr("Specify direction (x or y) or [%1]").arg(msg));
             break;
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
             bool toY = direction == DIRECTION_Y;
             msg += "/";
-            msg += getCommand("p");
+            msg += command("p");
             msg += "/";
-            msg += getCommand("angle");
+            msg += command("angle");
             msg += "/";
-            msg += getCommand("anglerel");
+            msg += command("anglerel");
             if (toX){
                 msg += "/";
-                msg += getCommand("y");
+                msg += command("y");
                 updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("X"), msg));
             } else if (toY){
                 msg += "/";
-                msg += getCommand("x");
+                msg += command("x");
                 updateMouseWidgetTRBack(tr("Specify distance (%1) or [%2]").arg(tr("Y"), msg));
             }
             else if (direction == DIRECTION_ANGLE){
                 msg += "/";
-                msg += getCommand("x");
+                msg += command("x");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
                 updateMouseWidgetTRBack(tr("Specify distance (%1 deg) or [%2]").arg(angleStr, msg), MOD_SHIFT_MIRROR_ANGLE);
             }
@@ -465,27 +467,27 @@ void LC_ActionDrawLineSnake::updateMouseButtonHints(){
         }
         case SetAngle:{
             msg += "/";
-            msg += getCommand("x");
+            msg += command("x");
             msg += "/";
-            msg += getCommand("y");
+            msg += command("y");
             msg += "/";
-            msg += getCommand("p");
+            msg += command("p");
             msg += "/";
-            msg += getCommand("angle");
+            msg += command("angle");
             msg += "/";
-            msg += getCommand("anglerel");
+            msg += command("anglerel");
             updateMouseWidgetTRBack(tr("Specify angle or [%2]").arg(msg));
             break;
         }
         case SetPoint: {
             msg += "/";
-            msg += getCommand("x");
+            msg += command("x");
             msg += "/";
-            msg += getCommand("y");
+            msg += command("y");
             msg += "/";
-            msg += getCommand("angle");
+            msg += command("angle");
             msg += "/";
-            msg += getCommand("anglerel");
+            msg += command("anglerel");
             updateMouseWidgetTRBack(tr("Specify point or [%1]").arg(msg), MOD_SHIFT_ANGLE_SNAP);
             break;
         }

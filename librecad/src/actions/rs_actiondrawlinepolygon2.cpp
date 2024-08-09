@@ -88,18 +88,19 @@ void RS_ActionDrawLinePolygonCorCor::mouseMoveEvent(QMouseEvent* e) {
             if (pPoints->corner1.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->corner1, mouse, true);
                 pPoints->corner2 = mouse;
-                previewRefPoint(pPoints->corner1);
-
-                RS_Vector center = determinePolygonCenter();
-
-                previewRefPoint(center);
-                previewRefSelectablePoint(mouse);
-
-                previewRefLine(mouse, pPoints->corner1);
 
                 RS_Creation creation(preview.get(), nullptr, false);
                 creation.createPolygon2(pPoints->corner1, pPoints->corner2, number);
 
+                if (showRefEntitiesOnPreview) {
+                    RS_Vector center = determinePolygonCenter();
+                    previewRefPoint(pPoints->corner1);
+
+                    previewRefPoint(center);
+                    previewRefSelectablePoint(mouse);
+
+                    previewRefLine(mouse, pPoints->corner1);
+                }
             }
             drawPreview();
             break;

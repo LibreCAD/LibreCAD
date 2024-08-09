@@ -94,9 +94,11 @@ void RS_ActionInfoDist::mouseMoveEvent(QMouseEvent *e){
                 pPoints->point2 = mouse;
 
                 previewLine(pPoints->point1, pPoints->point2);
-                previewRefLine(pPoints->point1, pPoints->point2);
-                previewRefPoint(pPoints->point1);
-                previewRefSelectablePoint(pPoints->point2);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(pPoints->point1, pPoints->point2);
+                    previewRefPoint(pPoints->point1);
+                    previewRefSelectablePoint(pPoints->point2);
+                }
             }
             drawPreview();
             break;

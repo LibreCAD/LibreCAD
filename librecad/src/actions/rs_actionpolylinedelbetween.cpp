@@ -95,7 +95,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
 
             if (vertex.valid){
                 highlightHover(segment);
-                previewRefSelectablePoint(vertex, true);
+                previewRefSelectablePoint(vertex);
             }
             break;
         }
@@ -104,7 +104,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
             RS_Entity *segment;
             getSelectedPolylineVertex(e, vertex, segment);
 
-            previewRefSelectablePoint(vertexToDelete, true);
+            previewRefSelectablePoint(vertexToDelete);
 
             if (vertex.valid){
                 // collect segments between points
@@ -114,7 +114,7 @@ void RS_ActionPolylineDelBetween::mouseMoveEvent(QMouseEvent* e) {
                     for (auto er: entitiesToRemove) {
                         highlightHover(er);
                     }
-                    previewRefSelectablePoint(vertex, true);
+                    previewRefSelectablePoint(vertex);
                     RS_Modification m(*preview, graphicView);
                     m.deletePolylineNodesBetween(*polylineToModify, vertexToDelete, vertex  , true);
                 }

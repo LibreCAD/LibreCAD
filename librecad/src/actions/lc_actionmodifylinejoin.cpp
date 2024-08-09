@@ -83,19 +83,21 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
                         list << polyline;
                     }
 
-                    if (!lineJoinData->parallelLines){
-                        RS_Vector &intersectionPoint = lineJoinData->intersectPoint;
-                        createRefPoint(intersectionPoint, list);
-                    }
+                    if (showRefEntitiesOnPreview) {
+                        if (!lineJoinData->parallelLines) {
+                            RS_Vector &intersectionPoint = lineJoinData->intersectPoint;
+                            createRefPoint(intersectionPoint, list);
+                        }
 
-                    RS_Vector &major1 = lineJoinData->majorPointLine1;
-                    if (major1.valid){
-                        createRefPoint(major1, list);
-                    }
+                        RS_Vector &major1 = lineJoinData->majorPointLine1;
+                        if (major1.valid) {
+                            createRefPoint(major1, list);
+                        }
 
-                    RS_Vector &major2 = lineJoinData->majorPointLine2;
-                    if (major2.valid){
-                        createRefPoint(major2, list);
+                        RS_Vector &major2 = lineJoinData->majorPointLine2;
+                        if (major2.valid) {
+                            createRefPoint(major2, list);
+                        }
                     }
 
                     // we don't need line joint data so far
@@ -120,15 +122,15 @@ void LC_ActionModifyLineJoin::doPreparePreviewEntities(QMouseEvent *e, [[maybe_u
                 RS_Polyline *polyline = linesJoinData->polyline;
                 if (polyline != nullptr){
                     list << polyline->clone();
-                    if (!linesJoinData->parallelLines){
-                        RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
-                        createRefPoint(intersectionPoint, list);
+                    if (showRefEntitiesOnPreview) {
+                        if (!linesJoinData->parallelLines) {
+                            RS_Vector &intersectionPoint = linesJoinData->intersectPoint;
+                            createRefPoint(intersectionPoint, list);
+                        }
+                        createRefPoint(linesJoinData->majorPointLine1, list);
+                        createRefPoint(linesJoinData->majorPointLine2, list);
                     }
-                    createRefPoint(linesJoinData->majorPointLine1, list);
-                    createRefPoint(linesJoinData->majorPointLine2, list);
                 }
-//            } else {
-//                highlightEntity(line1);
             }
             break;
         }
@@ -235,7 +237,7 @@ void LC_ActionModifyLineJoin::doBack(QMouseEvent *pEvent, int status){
             break;
         }
         default:
-            init(getStatus() - 1);
+            initPrevious(status);
     }
 }
 

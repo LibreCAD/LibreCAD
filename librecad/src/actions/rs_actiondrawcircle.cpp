@@ -92,9 +92,11 @@ void RS_ActionDrawCircle::mouseMoveEvent(QMouseEvent* e) {
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
                 previewCircle(*data);
-                previewRefPoint(data->center);
-                previewRefSelectablePoint(mouse);
-                previewRefLine(data->center, mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(data->center);
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(data->center, mouse);
+                }
                 drawPreview();
             }
             break;

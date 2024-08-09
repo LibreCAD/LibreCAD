@@ -201,20 +201,18 @@ protected:
     void unSelectEntities(const QList<RS_Entity *> &entities);
     virtual bool isUnselectEntitiesOnInitTrigger();
     void applyPenAndLayerBySourceEntity(const RS_Entity *source, RS_Entity *target, int penMode, int layerMode) const;
-    QString getCommand(const QString &cmd);
     bool checkMayExpandEntity(const RS_Entity *e, const QString &entityName) const;
     RS_Point* createPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
-    void createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
     RS_Line* createLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
-    void createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
+    RS_Line *createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const;
     virtual void checkAlternativeActionMode(const QMouseEvent *e, int status, bool shiftPressed);
     virtual void clearAlternativeActionMode();
     void updateSnapperAndCoordinateWidget(QMouseEvent *e, int status);
     void doUpdateCoordinateWidgetByMouse(QMouseEvent *e);
-    RS_Line *createLine(const RS_LineData &lineData, QList<RS_Entity *> &list) const;
-    void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list, bool visibleAlways = false) const;
-    bool isMouseMove(QMouseEvent* e);
+    void createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const;
+    void createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
+    void createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const;
+    static bool isMouseMove(QMouseEvent* e);
     void createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const;
 };
-
 #endif // LC_ABSTRACTACTIONWITHPREVIEW_H

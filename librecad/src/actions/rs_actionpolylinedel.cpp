@@ -88,7 +88,7 @@ void RS_ActionPolylineDel::mouseMoveEvent(QMouseEvent *e){
 
             if (vertex.valid){
                 highlightHover(segment);
-                previewRefSelectablePoint(vertex, true);
+                previewRefSelectablePoint(vertex);
                 RS_Modification m(*preview, graphicView);
                 m.deletePolylineNode(*polylineToModify, vertex, true);
             }

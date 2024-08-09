@@ -257,8 +257,10 @@ void LC_ActionDrawCross::doPreparePreviewEntities(QMouseEvent *e, [[maybe_unused
             LC_CrossData crossData = createCrossDataForEntity(en);
             // create lines
             addCrossDataEntities(list, crossData);
-            // ref point
-            createRefPoint(crossData.centerPoint, list);
+            if (showRefEntitiesOnPreview) {
+                // ref point
+                createRefPoint(crossData.centerPoint, list);
+            }
         }
     }
 }

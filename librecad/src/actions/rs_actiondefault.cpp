@@ -295,30 +295,40 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                             clone->trimStartpoint(mouse);
                             pPoints->v2 = clone->getStartpoint();
                             preview->addEntity(clone);
-                            previewRefPoint(clone->getCenter());
+                            if (showRefEntitiesOnPreview) {
+                                previewRefPoint(clone->getCenter());
+                            }
                             addClone = false;
                         } else if (refMovingArc->getEndpoint() == pPoints->v1){
                             clone->trimEndpoint(mouse);
                             pPoints->v2 = clone->getEndpoint();
                             preview->addEntity(clone);
-                            previewRefPoint(clone->getCenter());
+                            if (showRefEntitiesOnPreview) {
+                                previewRefPoint(clone->getCenter());
+                            }
                             addClone = false;
                         }
                         else{ // center
                             pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
-                            previewRefLine(pPoints->v2, pPoints->v1);
+                            if (showRefEntitiesOnPreview) {
+                                previewRefLine(pPoints->v2, pPoints->v1);
+                            }
                         }
                         if (!addClone){
-                            previewRefLine(refMovingArc->getCenter(), pPoints->v2);
-                            previewRefPoint(refMovingArc->getCenter());
+                            if (showRefEntitiesOnPreview) {
+                                previewRefLine(refMovingArc->getCenter(), pPoints->v2);
+                                previewRefPoint(refMovingArc->getCenter());
+                            }
                         }
                     }
                     else{
                         mouse = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
                         pPoints->v2 = mouse;
-                        previewRefLine(pPoints->v2, pPoints->v1);
                         clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
-                        previewRefPoint(clone->getCenter());
+                        if (showRefEntitiesOnPreview) {
+                            previewRefLine(pPoints->v2, pPoints->v1);
+                            previewRefPoint(clone->getCenter());
+                        }
                         preview->addEntity(clone);
                         addClone = false;
                     }
@@ -327,21 +337,25 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
                 // FIXME - add additional processing for dimensions to ensure snapping of dimension lines (same as for creation of dims)
                 default: {
                     pPoints->v2 = getSnapAngleAwarePoint(e, pPoints->v1, mouse, true);
-                    previewRefLine(pPoints->v2, pPoints->v1);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(pPoints->v2, pPoints->v1);
+                    }
                     break;
                 }
             }
 
             updateCoordinateWidgetByRelZero(pPoints->v2);
 
-
             if (addClone){
                 RS_Entity* clone = refMovingEntity->clone();
                 clone->moveRef(pPoints->v1, pPoints->v2 - pPoints->v1);
                 preview->addEntity(clone);
             }
-            previewRefSelectablePoint(pPoints->v2);
-            previewRefPoint(pPoints->v1);
+
+            if (showRefEntitiesOnPreview) {
+                previewRefSelectablePoint(pPoints->v2);
+                previewRefPoint(pPoints->v1);
+            }
 
             drawPreview();
             drawHighlights();
@@ -358,9 +372,11 @@ void RS_ActionDefault::mouseMoveEvent(QMouseEvent *e){
 
             auto *line = new RS_Line(pPoints->v1, pPoints->v2);
             preview->addEntity(line);
-            previewRefLine(pPoints->v1, pPoints->v2);
-            previewRefPoint(pPoints->v1);
-            previewRefSelectablePoint(pPoints->v2);
+            if (showRefEntitiesOnPreview) {
+                previewRefLine(pPoints->v1, pPoints->v2);
+                previewRefPoint(pPoints->v1);
+                previewRefSelectablePoint(pPoints->v2);
+            }
             line->setSelected(true);
 
             drawPreview();

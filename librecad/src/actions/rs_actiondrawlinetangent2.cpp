@@ -64,42 +64,26 @@ RS_ActionDrawLineTangent2::RS_ActionDrawLineTangent2(
 
 RS_ActionDrawLineTangent2::~RS_ActionDrawLineTangent2(){
     init(SetCircle1);
-    /*for (RS_Entity* circle: {m_pPoints->circle1, m_pPoints->circle2})
-    {
-        if (circle != nullptr) {
-            circle->setHighlighted(false);
-            graphicView->drawEntity(circle);
-        }
-    }*/
 }
 
 void RS_ActionDrawLineTangent2::init(int status){
     setStatus(status);
     switch (status) {
         case SetCircle1:
-//        if (m_pPoints->circle1 != nullptr) {
-//            m_pPoints->circle1->setHighlighted(false);
-//            graphicView->drawEntity(m_pPoints->circle1);
-//            m_pPoints->circle1 = nullptr;
-//        }
             cleanup();
             break;
         case SetCircle2:
             m_pPoints->circle2 = nullptr;
             break;
         case SelectLine:
-//        if (m_pPoints->circle2 != nullptr) {
-//            m_pPoints->circle2->setHighlighted(false);
-//            graphicView->drawEntity(m_pPoints->circle2);
-//            m_pPoints->circle2 = nullptr;
-//        }
+            break;
+        default:
             break;
     }
     RS_PreviewActionInterface::init(status);
 }
 
 void RS_ActionDrawLineTangent2::finish(bool updateTB){
-//    clearHighlighted();
     cleanup();
     RS_PreviewActionInterface::finish(updateTB);
 }
@@ -223,8 +207,10 @@ void RS_ActionDrawLineTangent2::preparePreview(QMouseEvent *e){
                 return linePointDist(*lhs, mouse) < linePointDist(*rhs, mouse);
             });
             for (const auto &line: m_pPoints->tangents) {
-                previewRefPoint(line->getData().startpoint);
-                previewRefSelectablePoint(line->getData().endpoint, true);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(line->getData().startpoint);
+                }
+                previewRefSelectablePoint(line->getData().endpoint);
             }
             const RS_LineData &lineData = m_pPoints->tangents.front()->getData();
             previewLine(lineData.startpoint, lineData.endpoint);

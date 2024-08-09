@@ -119,10 +119,12 @@ void RS_ActionDrawLineRelAngle::mouseMoveEvent(QMouseEvent *e){
             double angleRad = RS_Math::deg2rad(angle);
             RS_Line* lineToCreate = creation.createLineRelAngle(*pos,entity, angleRad, length);
 
-            if (lineToCreate != nullptr){
-                auto const vp = entity->getNearestPointOnEntity(*pos, false);
-                previewRefPoint(vp);
-                previewRefPoint(lineToCreate->getEndpoint());
+            if (showRefEntitiesOnPreview) {
+                if (lineToCreate != nullptr) {
+                    auto const vp = entity->getNearestPointOnEntity(*pos, false);
+                    previewRefPoint(vp);
+                    previewRefPoint(lineToCreate->getEndpoint());
+                }
             }
 
             drawPreview();

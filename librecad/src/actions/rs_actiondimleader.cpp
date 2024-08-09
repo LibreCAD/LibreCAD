@@ -118,8 +118,10 @@ void RS_ActionDimLeader::mouseMoveEvent(QMouseEvent *e){
                 }
 
                 RS_Vector const &p = pPoints->points.back();
-                previewRefPoint(p);
-                previewRefSelectablePoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(p);
+                    previewRefSelectablePoint(mouse);
+                }
                 previewLine(p, mouse);
 
                 drawPreview();

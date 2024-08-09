@@ -96,9 +96,11 @@ void RS_ActionModifyOffset::mouseMoveEventSelected(QMouseEvent *e) {
             RS_Modification m(*preview, nullptr, false);
             m.offset(*data, selectedEntities, true, false);
 
-            previewRefPoint(referencePoint);
-            previewRefSelectablePoint(mouse);
-            previewRefLine(referencePoint, mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(referencePoint);
+                previewRefSelectablePoint(mouse);
+                previewRefLine(referencePoint, mouse);
+            }
             break;
         }
         default:

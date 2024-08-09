@@ -81,8 +81,10 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
             entity = catchEntity(e, RS2::ResolveAll);
             if (entity != nullptr){
                 highlightHover(entity);
-                RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
-                previewRefPoint(nearest);
+                if (showRefEntitiesOnPreview) {
+                    RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+                    previewRefPoint(nearest);
+                }
             }
             break;
         }
@@ -94,16 +96,18 @@ void RS_ActionDrawLineParallelThrough::mouseMoveEvent(QMouseEvent *e){
             RS_Creation creation(preview.get(), nullptr, false);
             auto en = creation.createParallelThrough(*coord, number, entity, symmetric);
             if (en != nullptr){
-               RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
-               moveRelativeZero(nearest); // fixme - should we restore original relzero?
-               previewRefPoint(nearest);
-               previewRefLine(nearest, *coord);
+                RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+                moveRelativeZero(nearest); // fixme - should we restore original relzero?
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(nearest);
+                    previewRefLine(nearest, *coord);
 
-               if (symmetric && isLine(entity)){
-                   RS_Vector otherPoint = coord->mirror(entity->getStartpoint(), entity->getEndpoint());
-                   previewRefPoint(otherPoint);
-                   previewRefLine(nearest, otherPoint);
-               }
+                    if (symmetric && isLine(entity)){
+                        RS_Vector otherPoint = coord->mirror(entity->getStartpoint(), entity->getEndpoint());
+                        previewRefPoint(otherPoint);
+                        previewRefLine(nearest, otherPoint);
+                    }
+                }
             }
 
             drawPreview();

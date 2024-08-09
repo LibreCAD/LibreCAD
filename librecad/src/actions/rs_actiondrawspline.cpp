@@ -113,7 +113,7 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
     int status = getStatus();
     switch (status) {
-        case SetStartpoint: {
+        case SetStartPoint: {
             trySnapToRelZeroCoordinateEvent(e);
             break;
         }
@@ -126,12 +126,14 @@ void RS_ActionDrawSpline::mouseMoveEvent(QMouseEvent *e){
                 tmpSpline->update();
                 previewEntity(tmpSpline);
 
-                auto cpts = tmpSpline->getControlPoints();
-                for (size_t i = 0; i < cpts.size() - 1; i++) {
-                    const RS_Vector &vp = cpts[i];
-                    previewRefPoint(vp);
+                if (showRefEntitiesOnPreview) {
+                    auto cpts = tmpSpline->getControlPoints();
+                    for (size_t i = 0; i < cpts.size() - 1; i++) {
+                        const RS_Vector &vp = cpts[i];
+                        previewRefPoint(vp);
+                    }
+                    previewRefSelectablePoint(mouse);
                 }
-                previewRefSelectablePoint(mouse);
                 drawPreview();
             }
             break;
@@ -161,7 +163,7 @@ void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]
 
 void RS_ActionDrawSpline::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
     switch (status) {
-        case SetStartpoint: {
+        case SetStartPoint: {
             //data.startpoint = mouse;
             //point = mouse;
             pPoints->history.clear();
@@ -210,7 +212,7 @@ void RS_ActionDrawSpline::onCoordinateEvent(int status, bool isZero, const RS_Ve
 bool RS_ActionDrawSpline::doProcessCommand(int status, const QString &c) {
     bool accept = false;
     switch (status) {
-        case SetStartpoint: {
+        case SetStartPoint: {
             break;
         }
         case SetNextPoint: {
@@ -236,7 +238,7 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
     QStringList cmd;
 
     switch (getStatus()) {
-        case SetStartpoint:
+        case SetStartPoint:
             break;
         case SetNextPoint: {
             if (pPoints->history.size() >= 2){
@@ -254,7 +256,7 @@ QStringList RS_ActionDrawSpline::getAvailableCommands(){
 
 void RS_ActionDrawSpline::updateMouseButtonHints(){
     switch (getStatus()) {
-        case SetStartpoint: {
+        case SetStartPoint: {
             updateMouseWidgetTRCancel(tr("Specify first control point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
         }

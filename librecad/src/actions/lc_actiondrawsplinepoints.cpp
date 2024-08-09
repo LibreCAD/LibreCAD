@@ -106,12 +106,14 @@ void LC_ActionDrawSplinePoints::mouseMoveEvent(QMouseEvent *e){
             auto *sp = dynamic_cast<LC_SplinePoints *>(pPoints->spline->clone());
             deletePreview();
 
-            for (auto const &v: sp->getPoints()) {
-                previewRefPoint(v);
+            if (showRefEntitiesOnPreview) {
+                for (auto const &v: sp->getPoints()) {
+                    previewRefPoint(v);
+                }
+                previewRefSelectablePoint(mouse);
             }
 
             sp->addPoint(mouse);
-            previewRefSelectablePoint(mouse);
             previewEntity(sp);
             drawPreview();
             break;
@@ -141,13 +143,16 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] b
             if (!pPoints->spline.get()){
                 pPoints->spline.reset(new LC_SplinePoints(container, pPoints->data));
                 pPoints->spline->addPoint(mouse);
-                previewRefPoint(mouse);
+
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(mouse);
+                }
             }
             setStatus(SetNextPoint);
             moveRelativeZero(mouse);
             updateMouseButtonHints();
             break;
-        case SetNextPoint:
+        case SetNextPoint:o
             moveRelativeZero(mouse);
             if (pPoints->spline.get()){
                 pPoints->spline->addPoint(mouse);

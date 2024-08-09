@@ -91,16 +91,17 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetRelativeZeroAfterTrigger(){
 
 void LC_ActionDrawRectangle3Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
-    if (pPoints->corner1Set){
-        createRefPoint(pPoints->corner1, list);
+    if (showRefEntitiesOnPreview) {
+        if (pPoints->corner1Set) {
+            createRefPoint(pPoints->corner1, list);
 
-        if (pPoints->corner2Set){
-            createRefPoint(pPoints->corner2, list);
-            createRefPoint(pPoints->corner4, list);
-            createRefSelectablePoint(snap, list);
-        }
-        else{
-            createRefSelectablePoint(pPoints->corner2, list);
+            if (pPoints->corner2Set) {
+                createRefPoint(pPoints->corner2, list);
+                createRefPoint(pPoints->corner4, list);
+                createRefSelectablePoint(snap, list);
+            } else {
+                createRefSelectablePoint(pPoints->corner2, list);
+            }
         }
     }
 }
@@ -294,8 +295,7 @@ RS_Vector LC_ActionDrawRectangle3Points::doGetMouseSnapPoint(QMouseEvent *e){
                     // we'll do angle snap, yet related ot the base edge, so we'll calculate an angle 
                     // from corner 1 to corner 2 first
                     double baseAngle = pPoints->corner1.angleTo(pPoints->corner2);
-                    // fixme - add mark
-                    snapped = snapToRelativeAngle(baseAngle, snapped, pPoints->corner2);
+                    snapped = snapToRelativeAngle(baseAngle, snapped, pPoints->corner2, isMouseMove(e));
                 }
                 else{ // draw square
                     // width of rect

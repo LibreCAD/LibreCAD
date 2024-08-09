@@ -101,7 +101,9 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
             preview->scale(*referencePoint, {f, f});
             preview->rotate(*referencePoint, data->angle);
 
-            previewMultipleReferencePoints();
+            if (showRefEntitiesOnPreview) {
+                previewMultipleReferencePoints();
+            }
         }
         drawPreview();
     }

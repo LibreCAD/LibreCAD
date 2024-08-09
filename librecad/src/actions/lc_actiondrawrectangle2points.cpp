@@ -176,10 +176,12 @@ RS_Polyline *LC_ActionDrawRectangle2Points::createPolyline(const RS_Vector &snap
 
 void LC_ActionDrawRectangle2Points::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     LC_AbstractActionDrawRectangle::doPreparePreviewEntities(e, snap, list, status);
-    if (corner1Set){
-        createRefPoint(corner1, list);
+    if (showRefEntitiesOnPreview) {
+        if (corner1Set) {
+            createRefPoint(corner1, list);
+        }
+        createRefSelectablePoint(snap, list);
     }
-    createRefSelectablePoint(snap, list);
 }
 
 RS_Vector LC_ActionDrawRectangle2Points::createSecondCornerSnapForGivenRectSize(RS_Vector size){

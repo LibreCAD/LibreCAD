@@ -62,7 +62,7 @@ protected:
       * Action States.
       */
     enum Status {
-        SetStartpoint,   /**< Setting the startpoint.  */
+        SetStartPoint,   /**< Setting the startpoint.  */
         SetNextPoint      /**< Setting the next point. */
     };
     struct Points;

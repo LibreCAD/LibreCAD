@@ -87,8 +87,8 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
                 if (en->getParent() == polylineToModify){
                     highlightHover(en);
                     deletePreview();
-                    previewRefSelectablePoint(en->getStartpoint(), true);
-                    previewRefSelectablePoint(en->getEndpoint(), true);
+                    previewRefSelectablePoint(en->getStartpoint());
+                    previewRefSelectablePoint(en->getEndpoint());
                     drawPreview();
                 }
             }
@@ -103,14 +103,16 @@ void RS_ActionPolylineTrim::mouseMoveEvent(QMouseEvent *e){
                     if (en != Segment1){
                         if (en->isAtomic()){
                             auto candidate = dynamic_cast<RS_AtomicEntity *>(en);
-                            previewRefPoint(Segment1->getStartpoint(), true);
-                            previewRefPoint(Segment1->getEndpoint(), true);
+
+                            previewRefPoint(Segment1->getStartpoint());
+                            previewRefPoint(Segment1->getEndpoint());
+
                             RS_Modification m(*preview, graphicView);
                             auto polyline = m.polylineTrim((RS_Polyline &) *polylineToModify, *Segment1, *candidate, true);
                             if (polyline != nullptr){
                                 highlightHover(en);
-                                previewRefSelectablePoint(candidate->getStartpoint(), true);
-                                previewRefSelectablePoint(candidate->getEndpoint(), true);
+                                previewRefSelectablePoint(candidate->getStartpoint());
+                                previewRefSelectablePoint(candidate->getEndpoint());
                             }
                         }
                     }

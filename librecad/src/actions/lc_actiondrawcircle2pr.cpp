@@ -132,20 +132,22 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
 
             mouse = getSnapAngleAwarePoint(e, pPoints->point1, mouse, true);
-            if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius){
+            if (mouse.distanceTo(pPoints->point1) <= 2. * data->radius) {
                 pPoints->point2 = mouse;
             }
 
-            previewRefPoint(pPoints->point1);
-            previewRefSelectablePoint(pPoints->point2);
-            previewRefLine(pPoints->point1, pPoints->point2);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->point1);
+                previewRefSelectablePoint(pPoints->point2);
+                previewRefLine(pPoints->point1, pPoints->point2);
+            }
 
             RS_Vector altCenter;
             if (preparePreview(mouse, altCenter)){
                 if (data->center.valid){
                     previewCircle(*data);
-                    previewRefSelectablePoint(data->center, true);
-                    previewRefSelectablePoint(altCenter, true);
+                    previewRefSelectablePoint(data->center);
+                    previewRefSelectablePoint(altCenter);
                 }
             }
 
@@ -167,11 +169,14 @@ void LC_ActionDrawCircle2PR::mouseMoveEvent(QMouseEvent *e){
                 if (!existing){
                     deletePreview();
                     previewCircle(*data);
-                    previewRefSelectablePoint(data->center, true);
-                    previewRefSelectablePoint(altCenter, true);
-                    previewRefPoint(pPoints->point1);
-                    previewRefPoint(pPoints->point2);
-                    previewRefLine(pPoints->point1, pPoints->point2);
+                    previewRefSelectablePoint(data->center);
+                    previewRefSelectablePoint(altCenter);
+
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(pPoints->point1);
+                        previewRefPoint(pPoints->point2);
+                        previewRefLine(pPoints->point1, pPoints->point2);
+                    }
                     drawPreview();
                 }
             } else {

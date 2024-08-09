@@ -579,7 +579,7 @@ RS_Polyline *LC_ActionDrawStar::createShapePolyline(RS_Vector &snap, QList<RS_En
             polyline->setNextBulge(innerBulge);
             polyline->addVertex(inner2);
         }
-        if (preview && DRAW_JOIN_POINTS_ON_PREVIEW){
+        if (preview && DRAW_JOIN_POINTS_ON_PREVIEW && showRefEntitiesOnPreview){
             // potential visualization of rounding point
             createRefPoint(inner1, list);
             createRefPoint(inner2, list);

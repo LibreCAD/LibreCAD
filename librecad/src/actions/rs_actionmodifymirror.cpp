@@ -102,11 +102,13 @@ void RS_ActionModifyMirror::previewMirror(const RS_Vector &mirrorLinePoint1, con
     tmpData.axisPoint1 = mirrorLinePoint1;
     tmpData.axisPoint2 = mirrorLinePoint2;
     m.mirror(tmpData, selectedEntities, true);
+    previewLine(mirrorLinePoint1, mirrorLinePoint2);
 
-    this->previewLine(mirrorLinePoint1, mirrorLinePoint2);
-    this->previewRefLine(mirrorLinePoint1, mirrorLinePoint2);
-    this->previewRefPoint(mirrorLinePoint1);
-    this->previewRefSelectablePoint(mirrorLinePoint2);
+    if (showRefEntitiesOnPreview) {
+        previewRefLine(mirrorLinePoint1, mirrorLinePoint2);
+        previewRefPoint(mirrorLinePoint1);
+        previewRefSelectablePoint(mirrorLinePoint2);
+    }
 }
 
 void RS_ActionModifyMirror::mouseLeftButtonReleaseEventSelected(int status, QMouseEvent *e) {

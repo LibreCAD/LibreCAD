@@ -81,13 +81,15 @@ void RS_ActionDrawLinePolygonCenCor::mouseMoveEvent(QMouseEvent* e) {
             deletePreview();
             if (pPoints->center.valid){
                 mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
-                previewRefPoint(pPoints->center);
-                previewRefLine(pPoints->center, mouse);
-                previewRefSelectablePoint(mouse);
                 pPoints->corner = mouse;
                 RS_Creation creation(preview.get(), nullptr, false);
                 creation.createPolygon(pPoints->center, pPoints->corner, number);
 
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->center);
+                    previewRefLine(pPoints->center, mouse);
+                    previewRefSelectablePoint(mouse);
+                }
             }
             drawPreview();
             break;

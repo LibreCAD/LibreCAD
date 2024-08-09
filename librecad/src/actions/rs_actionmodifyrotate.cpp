@@ -87,7 +87,9 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 else {
                     mouse = getRelZeroAwarePoint(e, mouse);
                 }
-                previewRefPoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(mouse);
+                }
 
             } else {
                 if (isControl(e)) {
@@ -97,9 +99,11 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 else {
                     mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
                 }
-                previewRefLine(data->center, mouse);
-                previewRefPoint(data->center);
-                previewRefSelectablePoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(data->center, mouse);
+                    previewRefPoint(data->center);
+                    previewRefSelectablePoint(mouse);
+                }
                 if (!freeAngle){
                     RS_RotateData tmpData = *data;
                     tmpData.refPoint = mouse;
@@ -120,8 +124,10 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     mouse = getSnapAngleAwarePoint(e, data->refPoint, mouse, true);
                 }
                 RS_Vector originalReferencePoint = data->refPoint;
-                previewRefLine(originalReferencePoint, mouse);
-                previewRefPoint(originalReferencePoint);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(originalReferencePoint, mouse);
+                    previewRefPoint(originalReferencePoint);
+                }
                 if (!freeAngle){
                     RS_RotateData tmpData = *data;
                     tmpData.center = mouse;
@@ -136,7 +142,9 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
                     if (isControl(e)) {
                         mouse = center;
                     }
-                    previewRefLine(center, mouse);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(center, mouse);
+                    }
                 }
             }
             break;
@@ -146,28 +154,23 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 
             double radius = data->center.distanceTo(data->refPoint);
 
-//            double rotationAngle = RS_Math::correctAngle((mouse - data->center).angle() - data->angle);
-//            mouse = mouse.rotate(data->center, data->center.angleTo(mouse) + rotationAngle);
-
             double rotationAngle = data->center.angleTo(mouse);
 
-            RS_Vector originalReferencePoint = data->refPoint;
-//            RS_Vector newReferencePoint = originalReferencePoint;
+            if (showRefEntitiesOnPreview) {
+                RS_Vector originalReferencePoint = data->refPoint;
+                RS_Vector xAxisPoint = data->center.relative(radius, 0);
+                RS_Vector circlePoint = data->center.relative(radius, rotationAngle);
+                previewRefSelectablePoint(circlePoint);
 
-//            newReferencePoint.rotate(data->center, rotationAngle);
-            RS_Vector xAxisPoint = data->center.relative(radius, 0);
+                previewRefPoint(xAxisPoint);
+                previewRefLine(data->center, xAxisPoint);
 
-            RS_Vector circlePoint = data->center.relative(radius, rotationAngle);
-            previewRefSelectablePoint(circlePoint);
-
-            previewRefPoint(xAxisPoint);
-            previewRefLine(data->center, xAxisPoint);
-
-            previewRefPoint(originalReferencePoint);
-//            previewRefSelectablePoint(newReferencePoint);
-            previewRefPoint(data->center);
-//            previewRefLine(originalReferencePoint, data->center);
-            previewRefLine(mouse, data->center);
+                previewRefPoint(originalReferencePoint);
+                //            previewRefSelectablePoint(newReferencePoint);
+                previewRefPoint(data->center);
+                //            previewRefLine(originalReferencePoint, data->center);
+                previewRefLine(mouse, data->center);
+            }
 
             currentAngle = rotationAngle;
             updateOptionsUI(LC_ModifyRotateOptions::UpdateMode::UPDATE_ANGLE);
@@ -185,12 +188,13 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
         case SetTargetPoint2ndRotation:{
             mouse = getSnapAngleAwarePoint(e, data->refPoint, mouse, true);
 
-            RS_Vector originalReferencePoint = data->refPoint;
-            previewRefPoint(originalReferencePoint);
-            previewRefLine(originalReferencePoint, mouse);
-
+            if (showRefEntitiesOnPreview) {
+                RS_Vector originalReferencePoint = data->refPoint;
+                previewRefPoint(originalReferencePoint);
+                previewRefLine(originalReferencePoint, mouse);
+                previewRefPoint(data->center);
+            }
             previewRotationCircleAndPoints(data->center, data->refPoint, data->angle);
-            previewRefPoint(data->center);
 
             double secondRotationAngle = /*RS_Math::correctAngle((mouse - data->refPoint).angle() - data->secondAngle);*/(mouse - data->refPoint).angle();
 
@@ -214,14 +218,16 @@ void RS_ActionModifyRotate::mouseMoveEventSelected(QMouseEvent *e) {
 }
 
 void RS_ActionModifyRotate::previewRotationCircleAndPoints(const RS_Vector &center, const RS_Vector &refPoint, double angle) {
-    double radius = center.distanceTo(refPoint);
-    previewRefCircle(center, radius);
-    int numberOfCopies = data->obtainNumberOfCopies();
-    for (int i = 1; i <=numberOfCopies; i++){//
-        RS_Vector rotatedRefPoint = refPoint;
-        double rotationAngle = angle * i;
-        rotatedRefPoint.rotate(center, rotationAngle);
-        previewRefPoint(rotatedRefPoint);
+    if (showRefEntitiesOnPreview) {
+        double radius = center.distanceTo(refPoint);
+        previewRefCircle(center, radius);
+        int numberOfCopies = data->obtainNumberOfCopies();
+        for (int i = 1; i <= numberOfCopies; i++) {//
+            RS_Vector rotatedRefPoint = refPoint;
+            double rotationAngle = angle * i;
+            rotatedRefPoint.rotate(center, rotationAngle);
+            previewRefPoint(rotatedRefPoint);
+        }
     }
 }
 // fixme - sand -  support for focus of options widgets by keyboard...

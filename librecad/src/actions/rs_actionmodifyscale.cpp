@@ -105,7 +105,9 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
                 if (previewData.isotropicScaling){
                     previewData.factor.y = previewData.factor.x;
                 }
-                previewRefPoint(selectionCenter);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(selectionCenter);
+                }
                 showPreview(previewData);
             }
             break;
@@ -115,9 +117,11 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
             previewRefPoint(pPoints->data.referencePoint);
             pPoints->sourcePoint = mouse;
             RS_ScaleData previewData = pPoints->data;
-            determineScaleFactor(previewData, pPoints->data.referencePoint, mouse, mouse);
-            previewRefLine(mouse, pPoints->data.referencePoint);
-            previewRefSelectablePoint(mouse);
+            if (showRefEntitiesOnPreview) {
+                determineScaleFactor(previewData, pPoints->data.referencePoint, mouse, mouse);
+                previewRefLine(mouse, pPoints->data.referencePoint);
+                previewRefSelectablePoint(mouse);
+            }
             showPreview(previewData);
             break;
         }
@@ -129,40 +133,39 @@ void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->sourcePoint, mouse, true); // todo - review whether it's necessary
             }
 
-            // control points
-            previewRefSelectablePoint(pPoints->sourcePoint);
-            previewRefSelectablePoint(mouse);
-            previewRefPoint(pPoints->data.referencePoint);
-
-            RS_ScaleData previewData = pPoints->data;
-
+            if (showRefEntitiesOnPreview) {
+                // control points
+                previewRefSelectablePoint(pPoints->sourcePoint);
+                previewRefSelectablePoint(mouse);
+                previewRefPoint(pPoints->data.referencePoint);
 
 #ifdef DRAW_TRIANGLES_ON_PREVIEW
-            RS_Vector intersectionPoint = RS_Vector(mouse.x, pPoints->data.referencePoint.y);
-            previewRefSelectablePoint(intersectionPoint);
+                RS_Vector intersectionPoint = RS_Vector(mouse.x, pPoints->data.referencePoint.y);
+                previewRefSelectablePoint(intersectionPoint);
 
-            // projections of source points to axis
-            RS_Vector sourceProjectionY = RS_Vector(mouse.x, pPoints->sourcePoint.y);
-            RS_Vector sourceProjectionX = RS_Vector(pPoints->sourcePoint.x, pPoints->data.referencePoint.y);
-            previewRefPoint(sourceProjectionY);
-            previewRefPoint(sourceProjectionX);
+                // projections of source points to axis
+                RS_Vector sourceProjectionY = RS_Vector(mouse.x, pPoints->sourcePoint.y);
+                RS_Vector sourceProjectionX = RS_Vector(pPoints->sourcePoint.x, pPoints->data.referencePoint.y);
+                previewRefPoint(sourceProjectionY);
+                previewRefPoint(sourceProjectionX);
 
-            previewRefSelectableLine(intersectionPoint, sourceProjectionX);
-            previewRefSelectableLine(intersectionPoint, sourceProjectionY);
+                previewRefSelectableLine(intersectionPoint, sourceProjectionX);
+                previewRefSelectableLine(intersectionPoint, sourceProjectionY);
 
-            previewRefLine(intersectionPoint, mouse);
-            previewRefLine(pPoints->data.referencePoint, intersectionPoint);
+                previewRefLine(intersectionPoint, mouse);
+                previewRefLine(pPoints->data.referencePoint, intersectionPoint);
 
-            previewRefLine(pPoints->sourcePoint, sourceProjectionX);
+                previewRefLine(pPoints->sourcePoint, sourceProjectionX);
 #endif
 
-            // source point triangle
-            previewRefLine(pPoints->sourcePoint, pPoints->data.referencePoint);
-            // target point triangle
-            previewRefLine(mouse, pPoints->data.referencePoint);
-            // source to target
-            previewRefSelectableLine(mouse, pPoints->sourcePoint);
-
+                // source point triangle
+                previewRefLine(pPoints->sourcePoint, pPoints->data.referencePoint);
+                // target point triangle
+                previewRefLine(mouse, pPoints->data.referencePoint);
+                // source to target
+                previewRefSelectableLine(mouse, pPoints->sourcePoint);
+            }
+            RS_ScaleData previewData = pPoints->data;
             determineScaleFactor(previewData, pPoints->data.referencePoint, pPoints->sourcePoint, mouse);
             pPoints->targetPoint = mouse;
 
@@ -200,13 +203,15 @@ void RS_ActionModifyScale::showPreview(RS_ScaleData &previewData) {
     RS_Modification m(*preview, graphicView, false);
     m.scale(previewData, selectedEntities, true);
 
-    int numberOfCopies = previewData.obtainNumberOfCopies();
+    if (showRefEntitiesOnPreview) {
+        int numberOfCopies = previewData.obtainNumberOfCopies();
 
-    if (numberOfCopies > 1){
-        for (int i = 1; i <= numberOfCopies; i++){
-            RS_Vector scaledSource = pPoints->sourcePoint;
-            scaledSource.scale(previewData.referencePoint, RS_Math::pow(previewData.factor, i));
-            previewRefPoint(scaledSource);
+        if (numberOfCopies > 1) {
+            for (int i = 1; i <= numberOfCopies; i++) {
+                RS_Vector scaledSource = pPoints->sourcePoint;
+                scaledSource.scale(previewData.referencePoint, RS_Math::pow(previewData.factor, i));
+                previewRefPoint(scaledSource);
+            }
         }
     }
 }

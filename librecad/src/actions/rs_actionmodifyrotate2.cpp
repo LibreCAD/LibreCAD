@@ -77,13 +77,15 @@ void RS_ActionModifyRotate2::mouseMoveEventSelected(QMouseEvent *e) {
         case SetReferencePoint2: {
             if (data->center1.valid){
                 mouse = getSnapAngleAwarePoint(e, data->center1, mouse, true);
-                previewRefPoint(data->center1);
-                previewRefLine(data->center1, mouse);
                 data->center2 = mouse;
-
                 RS_Modification m(*preview, graphicView, false);
                 m.rotate2(*data, selectedEntities, true);
-                previewRefPointsForMultipleCopies(mouse);
+
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(data->center1);
+                    previewRefLine(data->center1, mouse);
+                    previewRefPointsForMultipleCopies(mouse);
+                }
             }
             break;
         }

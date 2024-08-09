@@ -97,8 +97,10 @@ void RS_ActionDrawEllipseCenter3Points::mouseMoveEvent(QMouseEvent *e){
 
     deletePreview();
 
-    for (int i = SetPoint1; i <= status; i++) {
-        previewRefPoint(pPoints->points.at(i - 1));
+    if (showRefEntitiesOnPreview) {
+        for (int i = SetPoint1; i <= status; i++) {
+            previewRefPoint(pPoints->points.at(i - 1));
+        }
     }
 
     previewRefSelectablePoint(mouse);

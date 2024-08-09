@@ -145,22 +145,23 @@ void RS_ActionDrawArcTangential::mouseMoveEvent(QMouseEvent* e) {
             preparePreview();
             if (data->isValid()){
                 auto arc = previewArc(*data);
-                previewRefPoint(data->center);
-                previewRefPoint(arc->getStartpoint());
-                if (byRadius){
-                    previewRefLine(data->center, point);
-                    previewRefSelectablePoint(arc->getEndpoint());
-                    previewRefSelectablePoint(center);
-                }
-                else{
-                    previewRefLine(data->center, arc->getEndpoint());
-                    previewRefLine(data->center, arc->getStartpoint());
-                    RS_Vector nearest = arc->getNearestPointOnEntity(point, false);
-                    previewRefLine(data->center, point);
-                    previewRefSelectablePoint(nearest);
-                    RS_ArcData circleArcData = arc->getData();
-                    std::swap(circleArcData.angle1, circleArcData.angle2);
-                    previewRefArc(circleArcData);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(data->center);
+                    previewRefPoint(arc->getStartpoint());
+                    if (byRadius) {
+                        previewRefLine(data->center, point);
+                        previewRefSelectablePoint(arc->getEndpoint());
+                        previewRefSelectablePoint(center);
+                    } else {
+                        previewRefLine(data->center, arc->getEndpoint());
+                        previewRefLine(data->center, arc->getStartpoint());
+                        RS_Vector nearest = arc->getNearestPointOnEntity(point, false);
+                        previewRefLine(data->center, point);
+                        previewRefSelectablePoint(nearest);
+                        RS_ArcData circleArcData = arc->getData();
+                        std::swap(circleArcData.angle1, circleArcData.angle2);
+                        previewRefArc(circleArcData);
+                    }
                 }
             }
             drawPreview();

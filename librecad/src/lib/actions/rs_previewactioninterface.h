@@ -94,14 +94,14 @@ protected:
     void previewPoint(const RS_Vector &coord);
     RS_Line* previewLine(const RS_Vector &start, const RS_Vector &end);
     RS_Line* previewLine(const RS_LineData &data);
-    void previewRefLine(const RS_Vector &start, const RS_Vector &end);
+    RS_Line* previewRefLine(const RS_Vector &start, const RS_Vector &end);
     void previewRefLines(const std::vector<RS_LineData>& points);
     void previewRefSelectableLine(const RS_Vector &start, const RS_Vector &end);
-    void previewRefPoint(const RS_Vector &coord, bool alwaysVisible = false);
-    void previewRefSelectablePoint(const RS_Vector &coord, bool alwaysVisible = false);
+    void previewRefPoint(const RS_Vector &coord);
+    void previewRefSelectablePoint(const RS_Vector &coord);
     void previewRefPoints(const std::vector<RS_Vector>& points);
     RS_Arc* previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal);
-    RS_Circle* previewRefCircle(const RS_Vector &center, const double radius, bool alwaysVisible = false);
+    RS_Circle* previewRefCircle(const RS_Vector &center, const double radius);
     RS_Arc *previewRefArc(const RS_ArcData &arcData);
     LC_RefEllipse *previewRefEllipse(const RS_EllipseData &arcData);
     void initRefEntitiesMetrics();

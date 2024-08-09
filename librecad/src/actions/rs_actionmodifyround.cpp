@@ -213,18 +213,22 @@ void RS_ActionModifyRound::mouseMoveEvent(QMouseEvent *e){
                         highlightHover(se);
                         auto *arc = roundResult->round;
                         if (arc != nullptr){
+
                             RS_Vector arcStartPoint = arc->getStartpoint();
                             RS_Vector arcEndPoint = arc->getEndpoint();
-                            previewRefPoint(arcStartPoint);
-                            previewRefPoint(arcEndPoint);
-                            previewRefPoint(pPoints->coord1);
-                            previewRefSelectablePoint(coord2);
-                            previewRefPoint(mouse);
-                            previewRefLine(mouse, coord2);
-
+                            if (showRefEntitiesOnPreview) {
+                                previewRefPoint(arcStartPoint);
+                                previewRefPoint(arcEndPoint);
+                                previewRefPoint(pPoints->coord1);
+                                previewRefSelectablePoint(coord2);
+                                previewRefPoint(mouse);
+                                previewRefLine(mouse, coord2);
+                                if (trim){
+                                    previewEntityModifications(entity1, roundResult->trimmed1, arcStartPoint, roundResult->trim1Mode);
+                                    previewEntityModifications(se, roundResult->trimmed2, arcEndPoint, roundResult->trim2Mode);
+                                }
+                            }
                             if (trim){
-                                previewEntityModifications(entity1, roundResult->trimmed1, arcStartPoint, roundResult->trim1Mode);
-                                previewEntityModifications(se, roundResult->trimmed2, arcEndPoint, roundResult->trim2Mode);
                                 preview->removeEntity(roundResult->trimmed1);
                                 preview->removeEntity(roundResult->trimmed2);
                             }
@@ -262,7 +266,9 @@ void RS_ActionModifyRound::previewEntityModifications(const RS_Entity *original,
         }
         else{
             if (mode == LC_RoundResult::TRIM_START){
-                previewRefPoint(original->getStartpoint());
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(original->getStartpoint());
+                }
                 previewLine(original->getStartpoint(), roundPoint);
             }
             else{

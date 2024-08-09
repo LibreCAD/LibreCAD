@@ -76,25 +76,33 @@ void RS_ActionInfoArea::display(){
     }
     switch (ia->size()) {
         case 1: {
-            previewRefSelectablePoint(ia->at(0));
+            if (showRefEntitiesOnPreview) {
+                previewRefSelectablePoint(ia->at(0));
+            }
             break;
         }
         case 2: {
             previewLine(ia->at(0), ia->at(1));
-            previewRefLine(ia->at(0), ia->at(1));
-            previewRefPoint(ia->at(0));
-            previewRefSelectablePoint(ia->at(1));
+            if (showRefEntitiesOnPreview) {
+                previewRefLine(ia->at(0), ia->at(1));
+                previewRefPoint(ia->at(0));
+                previewRefSelectablePoint(ia->at(1));
+            }
             break;
         }
         default: {
             for (int i = 0; i < ia->size(); i++) {
                 previewLine(ia->at(i), ia->at((i + 1) % ia->size()));
-                previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(ia->at(i), ia->at((i + 1) % ia->size()));
+                }
             }
-            for (int i = 0; i < ia->size()-1; i++) {
-                previewRefPoint(ia->at(i));
+            if (showRefEntitiesOnPreview) {
+                for (int i = 0; i < ia->size() - 1; i++) {
+                    previewRefPoint(ia->at(i));
+                }
+                previewRefSelectablePoint(ia->at(ia->size() - 1));
             }
-            previewRefSelectablePoint(ia->at(ia->size()-1));
 
             QString const linear = RS_Units::formatLinear(ia->getCircumference(),
                                                           graphic->getUnit(),

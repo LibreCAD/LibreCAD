@@ -100,7 +100,6 @@ void LC_ActionModifyLineGap::createPreviewEntities(LC_ActionModifyLineGap::GapDa
     createLine(startPoint, endPoint, list);
     createRefLine(startPoint, endPoint, list);
 
-
     // create boundary points for gap for better visibility on preview
     if (startPointNoSelected){
         createRefPoint(startPoint, list);

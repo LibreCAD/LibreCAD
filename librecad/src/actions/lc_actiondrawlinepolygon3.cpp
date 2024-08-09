@@ -46,8 +46,8 @@ struct LC_ActionDrawLinePolygonCenTan::Points {
     RS_Vector corner;
 };
 
-// fixme - support creation of polygone as polyline
-// fixme - support of rounded corners
+// fixme - sand - support creation of polygone as polyline
+// fixme - sand - support of rounded corners?
 
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,
@@ -89,9 +89,11 @@ void LC_ActionDrawLinePolygonCenTan::mouseMoveEvent(QMouseEvent* e) {
                 mouse = getSnapAngleAwarePoint(e, pPoints->center, mouse, true);
                 pPoints->corner = mouse;
 
-                previewRefPoint(pPoints->center);
-                previewRefSelectablePoint(mouse);
-                previewRefLine(pPoints->center, mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->center);
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(pPoints->center, mouse);
+                }
 
                 RS_Creation creation(preview.get(), nullptr, false);
                 creation.createPolygon3(pPoints->center, pPoints->corner, number);

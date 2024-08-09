@@ -114,10 +114,12 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
             mouse = getSnapAngleAwarePoint(e, pPoints->focus1, mouse, true);
 
-            previewRefPoint(pPoints->focus1);
-            previewRefSelectablePoint(mouse);
-            previewLine(pPoints->focus1, mouse);
-            previewRefLine(pPoints->focus1, mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->focus1);
+                previewRefSelectablePoint(mouse);
+                previewLine(pPoints->focus1, mouse);
+                previewRefLine(pPoints->focus1, mouse);
+            }
 
             drawPreview();
             break;
@@ -132,8 +134,10 @@ void RS_ActionDrawEllipseFociPoint::mouseMoveEvent(QMouseEvent *e){
                 previewEllipseReferencePoints(ellipse, true, mouse);
             }
 
-            previewRefPoint(pPoints->focus1);
-            previewRefPoint(pPoints->focus2);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->focus1);
+                previewRefPoint(pPoints->focus2);
+            }
             drawPreview();
             break;
         }

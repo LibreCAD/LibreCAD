@@ -95,8 +95,10 @@ void RS_ActionDrawLineRectangle::mouseMoveEvent(QMouseEvent* e) {
                 pPoints->corner2 = mouse;
                 deletePreview();
                 preview->addRectangle(pPoints->corner1, pPoints->corner2);
-                previewRefPoint(pPoints->corner1);
-                previewRefPoint(pPoints->corner2);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->corner1);
+                    previewRefPoint(pPoints->corner2);
+                }
                 drawPreview();
             }
             break;

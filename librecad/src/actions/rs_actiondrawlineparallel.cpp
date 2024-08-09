@@ -47,7 +47,7 @@ RS_ActionDrawLineParallel::RS_ActionDrawLineParallel(
 	,number(1)
 	, coord(new RS_Vector{})
 	,entity(nullptr){
-    actionType= actionType;
+    this->actionType= actionType;
 }
 
 RS_ActionDrawLineParallel::~RS_ActionDrawLineParallel() = default;
@@ -100,8 +100,10 @@ void RS_ActionDrawLineParallel::mouseMoveEvent(QMouseEvent *e){
                                         entity);
                 if (createdParallel != nullptr){
                     highlightHover(entity);
-                    RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
-                    previewRefPoint(nearest);
+                    if (showRefEntitiesOnPreview) {
+                        RS_Vector nearest = entity->getNearestPointOnEntity(*coord, false);
+                        previewRefPoint(nearest);
+                    }
                 }
                 drawHighlights();
             }

@@ -100,9 +100,11 @@ void RS_ActionDrawLineTangent1::mouseMoveEvent(QMouseEvent* e) {
                 if (tangentLine != nullptr){
                     highlightHover(en);
                     previewEntity(tangent->clone());
-                    previewRefPoint(*point);
-                    previewRefSelectablePoint(tangentPoint, true);
-                    previewRefSelectablePoint(altTangentPoint, true);
+                    previewRefSelectablePoint(tangentPoint);
+                    previewRefSelectablePoint(altTangentPoint);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(*point);
+                    }
                 }
             }
             drawHighlights();

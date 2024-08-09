@@ -109,13 +109,15 @@ void RS_ActionDimAngular::mouseMoveEvent(QMouseEvent* e){
                 highlightSelected(line1);
                 highlightSelected(line2);
 
-                double radius = snap.distanceTo(center);
+                if (showRefEntitiesOnPreview) {
+                    double radius = snap.distanceTo(center);
 
-                // draw reference points for all quadrants
-                for (double angle : angles){
-                    RS_Vector vec = RS_Vector::polar(radius, angle);
-                    RS_Vector refPoint = center+ vec;
-                    previewRefPoint(refPoint);
+                    // draw reference points for all quadrants
+                    for (double angle: angles) {
+                        RS_Vector vec = RS_Vector::polar(radius, angle);
+                        RS_Vector refPoint = center + vec;
+                        previewRefPoint(refPoint);
+                    }
                 }
 
                 previewEntity(d);

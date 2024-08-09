@@ -185,7 +185,9 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
             RS_Entity *circle = new RS_Circle(container, circleData);
             list << circle;
 
-            createRefPoint(circleData.center, list);
+            if (showRefEntitiesOnPreview) {
+                createRefPoint(circleData.center, list);
+            };
 
             entity = arc;
         } else {
@@ -197,7 +199,9 @@ void LC_ActionDrawCircleByArc::doPreparePreviewEntities([[maybe_unused]]QMouseEv
                     auto ellipse = new RS_Ellipse(container, ellipseData);
                     list << ellipse;
 
-                    createRefPoint(ellipse->getCenter(), list);
+                    if (showRefEntitiesOnPreview) {
+                        createRefPoint(ellipse->getCenter(), list);
+                    }
                     entity = ellipseArc;
                 }
             }

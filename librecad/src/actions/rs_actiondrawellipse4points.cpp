@@ -94,8 +94,11 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
         trySnapToRelZeroCoordinateEvent(e);
     }
     deletePreview();
-    for (int i = SetPoint2; i <= status; i++) {
-        previewRefPoint(pPoints->points.at(i - 1));
+
+    if (showRefEntitiesOnPreview) {
+        for (int i = SetPoint2; i <= status; i++) {
+            previewRefPoint(pPoints->points.at(i - 1));
+        }
     }
 
     if (status == SetPoint2){
@@ -112,7 +115,9 @@ void RS_ActionDrawEllipse4Points::mouseMoveEvent(QMouseEvent *e){
                 if (pPoints->valid){
                     previewCircle(pPoints->cData);
 
-                    previewRefPoint(pPoints->cData.center);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(pPoints->cData.center);
+                    }
                 }
                 break;
             }

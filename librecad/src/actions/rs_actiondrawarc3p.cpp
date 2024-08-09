@@ -124,8 +124,10 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
             if (pPoints->point1.valid){ // todo - redundant check
                 previewLine(pPoints->point1, pPoints->point2);
 
-                previewRefPoint(pPoints->point1);
-                previewRefSelectablePoint(pPoints->point2);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->point1);
+                    previewRefSelectablePoint(pPoints->point2);
+                }
             }
             drawPreview();
             break;
@@ -139,10 +141,12 @@ void RS_ActionDrawArc3P::mouseMoveEvent(QMouseEvent *e){
             if (pPoints->data.isValid()){
                 previewArc(pPoints->data);
 
-                previewRefPoint(pPoints->data.center);
-                previewRefPoint(pPoints->point1);
-                previewRefPoint(pPoints->point2);
-                previewRefSelectablePoint(pPoints->point3);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->data.center);
+                    previewRefPoint(pPoints->point1);
+                    previewRefPoint(pPoints->point2);
+                    previewRefSelectablePoint(pPoints->point3);
+                }
             }
             drawPreview();
             break;

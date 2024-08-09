@@ -56,43 +56,41 @@ void LC_ActionDrawCircleBase::reset(){
 }
 
 void LC_ActionDrawCircleBase::previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises, RS_Vector mouse){
-    RS_Vector center = ellipse->getCenter();
-    RS_Vector majorP = ellipse->getMajorP();
-    const RS_Vector &major1 = center - majorP;
-    const RS_Vector &major2 = center + majorP;
-    const RS_Vector &minor1 = ellipse->getMinorPoint();
-    const RS_Vector &minor2 = center - RS_Vector(-majorP.y, majorP.x) * ellipse->getRatio();
+    if (showRefEntitiesOnPreview) {
+        RS_Vector center = ellipse->getCenter();
+        RS_Vector majorP = ellipse->getMajorP();
+        const RS_Vector &major1 = center - majorP;
+        const RS_Vector &major2 = center + majorP;
+        const RS_Vector &minor1 = ellipse->getMinorPoint();
+        const RS_Vector &minor2 = center - RS_Vector(-majorP.y, majorP.x) * ellipse->getRatio();
+        previewRefSelectablePoint(minor1);
+        previewRefSelectablePoint(minor2);
+        previewRefPoint(center);
 
-    previewRefSelectablePoint(minor1);
-    previewRefSelectablePoint(minor2);
-    previewRefPoint(center);
 
-    if (drawAxises){
-        if (mouse.valid){
-            RS_Vector minor;
-            if (minor1.distanceTo(mouse) < minor2.distanceTo(mouse)){
-                minor = minor1;
+        if (drawAxises) {
+            if (mouse.valid) {
+                RS_Vector minor;
+                if (minor1.distanceTo(mouse) < minor2.distanceTo(mouse)) {
+                    minor = minor1;
+                } else {
+                    minor = minor2;
+                }
+
+                previewRefPoint(major1);
+                previewRefPoint(major2);
+
+                previewRefLine(center, minor);
+            } else {
+                previewRefLine(major1, major2);
+                previewRefLine(minor1, minor2);
+                previewRefSelectablePoint(major1);
+                previewRefSelectablePoint(major2);
             }
-            else{
-                minor = minor2;
-            }
 
-            previewRefPoint(major1);
-            previewRefPoint(major2);
-
-            previewRefLine(center, minor);
-        }
-        else {
-            previewRefLine(major1, major2);
-            previewRefLine(minor1, minor2);
+        } else {
             previewRefSelectablePoint(major1);
             previewRefSelectablePoint(major2);
         }
-
     }
-    else{
-        previewRefSelectablePoint(major1);
-        previewRefSelectablePoint(major2);
-    }
-
 }

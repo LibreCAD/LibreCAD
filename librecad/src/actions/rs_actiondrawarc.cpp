@@ -102,8 +102,10 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
                 mouse = getFreeSnapAwarePoint(e, mouse);
                 data->radius = data->center.distanceTo(mouse);
                 deletePreview();
-                previewRefPoint(data->center);
-                previewRefPoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(data->center);
+                    previewRefPoint(mouse);
+                }
                 previewCircle({data->center, data->radius});
                 drawPreview();
             }
@@ -121,10 +123,12 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             }
             previewArc(*data);
 
-            previewRefPoint(data->center);
-            RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
-            previewRefSelectablePoint(startArcPoint);
-            previewRefLine(data->center, mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(data->center);
+                RS_Vector startArcPoint = data->center + RS_Vector::polar(data->radius, data->angle1);
+                previewRefSelectablePoint(startArcPoint);
+                previewRefLine(data->center, mouse);
+            }
 
             drawPreview();
             break;
@@ -134,9 +138,11 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             mouse = getSnapAngleAwarePoint(e, data->center, mouse, true);
             data->angle2 = data->center.angleTo(mouse);
             auto arc = previewArc(*data);
-            previewRefPoints({data->center, arc->getStartpoint()});
-            previewRefSelectablePoint(arc->getEndpoint());
-            previewRefLine(data->center, mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoints({data->center, arc->getStartpoint()});
+                previewRefSelectablePoint(arc->getEndpoint());
+                previewRefLine(data->center, mouse);
+            }
             drawPreview();
             break;
         }
@@ -147,20 +153,23 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             data->angle2 = data->angle1 + angleToMouse;
             auto arc = previewArc(*data);
 
-            previewRefPoint(data->center);
-            previewRefPoint(arc->getStartpoint());
-            previewRefPoint(arc->getEndpoint());
-            RS_Vector nearest = arc->getNearestPointOnEntity(mouse, false);
-            previewRefSelectablePoint(nearest);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(data->center);
+                previewRefPoint(arc->getStartpoint());
+                previewRefPoint(arc->getEndpoint());
+                RS_Vector nearest = arc->getNearestPointOnEntity(mouse, false);
+                previewRefSelectablePoint(nearest);
 
-            double halfRadius = data->radius/2;
-            const RS_Vector &horizontalPoint = data->center + RS_Vector(halfRadius, 0, 0);
-            previewRefLine(data->center, mouse);
-            previewRefLine(data->center, horizontalPoint);
-            previewRefLine(data->center, arc->getEndpoint());
-            previewRefLine(data->center, arc->getStartpoint());
-            previewRefArc(RS_ArcData(data->center, halfRadius, 0, angleToMouse, data->reversed));
-            previewRefArc(RS_ArcData(data->center, halfRadius *1.1 , arc->getAngle1(), arc->getAngle2(), data->reversed));
+                double halfRadius = data->radius / 2;
+                const RS_Vector &horizontalPoint = data->center + RS_Vector(halfRadius, 0, 0);
+                previewRefLine(data->center, mouse);
+                previewRefLine(data->center, horizontalPoint);
+                previewRefLine(data->center, arc->getEndpoint());
+                previewRefLine(data->center, arc->getStartpoint());
+                previewRefArc(RS_ArcData(data->center, halfRadius, 0, angleToMouse, data->reversed));
+                previewRefArc(
+                    RS_ArcData(data->center, halfRadius * 1.1, arc->getAngle1(), arc->getAngle2(), data->reversed));
+            }
 
             drawPreview();
             break;
@@ -175,20 +184,26 @@ void RS_ActionDrawArc::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
             double diameter = data->radius * 2;
             data->angle2 = data->angle1 + asin(distanceFromStartToMouse / diameter) * 2;
-            if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)){
+
+            if (LC_LineMath::isMeaningfulDistance(mouse, arcStart)) {
                 auto arc = previewArc(*data);
-                previewRefPoint(arc->getEndpoint());
-                previewRefLine(arcStart, mouse);
-                previewRefLine(arc->getStartpoint(), arc->getEndpoint());
-                if (LC_LineMath::isMeaningfulDistance(mouse, halfCircleArcEnd)){
-                    previewRefArc(
-                        RS_ArcData(arcStart, distanceFromStartToMouse, arcStart.angleTo(data->center), arcStart.angleTo(arc->getEndpoint()), true));
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(arc->getEndpoint());
+                    previewRefLine(arcStart, mouse);
+                    previewRefLine(arc->getStartpoint(), arc->getEndpoint());
+                    if (LC_LineMath::isMeaningfulDistance(mouse, halfCircleArcEnd)) {
+                        previewRefArc(
+                            RS_ArcData(arcStart, distanceFromStartToMouse, arcStart.angleTo(data->center),
+                                       arcStart.angleTo(arc->getEndpoint()), true));
+                    }
                 }
             }
-            previewRefPoint(arcStart);
-            previewRefPoint(data->center);
-            previewRefSelectablePoint(mouse, true);
-            previewRefPoint(halfCircleArcEnd);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(arcStart);
+                previewRefPoint(data->center);
+                previewRefSelectablePoint(mouse);
+                previewRefPoint(halfCircleArcEnd);
+            }
 
             drawPreview();
             break;

@@ -140,17 +140,21 @@ void RS_ActionInfoAngle::mouseMoveEvent(QMouseEvent *event){
                 RS_VectorSolutions const &sol = RS_Information::getIntersection(entity1, en, false);
                 if (sol.hasValid()){
                     highlightHover(en);
-                    RS_Vector p2 = en->getNearestPointOnEntity(mouse);
-                    previewRefSelectablePoint(p2);
-                    RS_Vector intersection = sol.get(0);
-                    previewRefArc(intersection, pPoints->point1, p2, true);
-                    previewRefPoint(intersection);
-                    previewRefLine(intersection, pPoints->point1);
-                    previewRefLine(intersection, p2);
+                    if (showRefEntitiesOnPreview) {
+                        RS_Vector p2 = en->getNearestPointOnEntity(mouse);
+                        previewRefSelectablePoint(p2);
+                        RS_Vector intersection = sol.get(0);
+                        previewRefArc(intersection, pPoints->point1, p2, true);
+                        previewRefPoint(intersection);
+                        previewRefLine(intersection, pPoints->point1);
+                        previewRefLine(intersection, p2);
+                    }
                 }
             }
             highlightSelected(entity1);
-            previewRefPoint(pPoints->point1);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->point1);
+            }
             break;
         }
         default:

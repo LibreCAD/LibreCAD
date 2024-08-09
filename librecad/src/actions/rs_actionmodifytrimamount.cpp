@@ -128,45 +128,49 @@ void RS_ActionModifyTrimAmount::mouseMoveEvent(QMouseEvent *e){
                     previewEntity(trimmed);
                 }
 
-                RS_Arc* atomicArc = nullptr;
-                RS_Arc*  trimmedArc = nullptr;
-                bool entityIsArc = isArc(atomic);
-                if (entityIsArc){
-                    atomicArc = dynamic_cast<RS_Arc *>(atomic);
-                    trimmedArc = dynamic_cast<RS_Arc *>(trimmed);
-                }
+                if (showRefEntitiesOnPreview) {
+                    RS_Arc *atomicArc = nullptr;
+                    RS_Arc *trimmedArc = nullptr;
+                    bool entityIsArc = isArc(atomic);
+                    if (entityIsArc) {
+                        atomicArc = dynamic_cast<RS_Arc *>(atomic);
+                        trimmedArc = dynamic_cast<RS_Arc *>(trimmed);
+                    }
 
 
-                if (trimStart){
-                    const RS_Vector &originalStart = atomic->getStartpoint();
-                    const RS_Vector &trimmedStart = trimmed->getStartpoint();
-                    previewRefSelectablePoint(trimmedStart);
-                    previewRefPoint(originalStart);
-                    if (!increased){
-                        if (isLine(atomic)){
-                            previewRefLine(originalStart, trimmedStart);
-                        }
-                        else if (entityIsArc){
-                            const RS_ArcData &arcData = RS_ArcData(atomicArc->getCenter(), atomicArc->getRadius(), atomicArc->getAngle1(),
-                                                                   trimmedArc->getAngle1(), atomicArc->isReversed());
-                            previewRefArc(arcData);
+                    if (trimStart) {
+                        const RS_Vector &originalStart = atomic->getStartpoint();
+                        const RS_Vector &trimmedStart = trimmed->getStartpoint();
+                        previewRefSelectablePoint(trimmedStart);
+                        previewRefPoint(originalStart);
+                        if (!increased) {
+                            if (isLine(atomic)) {
+                                previewRefLine(originalStart, trimmedStart);
+                            } else if (entityIsArc) {
+                                const RS_ArcData &arcData = RS_ArcData(atomicArc->getCenter(), atomicArc->getRadius(),
+                                                                       atomicArc->getAngle1(),
+                                                                       trimmedArc->getAngle1(),
+                                                                       atomicArc->isReversed());
+                                previewRefArc(arcData);
+                            }
                         }
                     }
-                }
 
-                if (trimEnd){
-                    const RS_Vector &originalEnd = atomic->getEndpoint();
-                    const RS_Vector &trimmedEnd = trimmed->getEndpoint();
-                    previewRefSelectablePoint(trimmedEnd);
-                    previewRefPoint(originalEnd);
-                    if (!increased){
-                        if (isLine(atomic)){
-                            previewRefLine(originalEnd, trimmedEnd);
-                        }
-                        else if (entityIsArc){
-                            const RS_ArcData &arcData = RS_ArcData(atomicArc->getCenter(), atomicArc->getRadius(), atomicArc->getAngle2(),
-                                                                   trimmedArc->getAngle2(), atomicArc->isReversed());
-                            previewRefArc(arcData);
+                    if (trimEnd) {
+                        const RS_Vector &originalEnd = atomic->getEndpoint();
+                        const RS_Vector &trimmedEnd = trimmed->getEndpoint();
+                        previewRefSelectablePoint(trimmedEnd);
+                        previewRefPoint(originalEnd);
+                        if (!increased) {
+                            if (isLine(atomic)) {
+                                previewRefLine(originalEnd, trimmedEnd);
+                            } else if (entityIsArc) {
+                                const RS_ArcData &arcData = RS_ArcData(atomicArc->getCenter(), atomicArc->getRadius(),
+                                                                       atomicArc->getAngle2(),
+                                                                       trimmedArc->getAngle2(),
+                                                                       atomicArc->isReversed());
+                                previewRefArc(arcData);
+                            }
                         }
                     }
                 }

@@ -150,10 +150,12 @@ void RS_ActionDrawLineBisector::mouseMoveEvent(QMouseEvent *e){
                                                    line2);
                 if (ent != nullptr){
                     highlightHover(line2);
-                    previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
-                    previewRefPoint(ent->getStartpoint());
-                    RS_Vector nearest = line2->getNearestPointOnEntity(mouse, false);
-                    previewRefSelectablePoint(nearest);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(line1->getNearestPointOnEntity(pPoints->coord1));
+                        previewRefPoint(ent->getStartpoint());
+                        RS_Vector nearest = line2->getNearestPointOnEntity(mouse, false);
+                        previewRefSelectablePoint(nearest);
+                    }
                 }
                 drawPreview();
             }

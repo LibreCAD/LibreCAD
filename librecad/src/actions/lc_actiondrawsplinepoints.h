@@ -51,13 +51,6 @@ public:
     void setDegree(int /*deg*/) override{}
 
 protected:
-    /**
-* Action States.
-*/
-    enum Status { // fixme - is it the same as in base action???
-        SetStartPoint,   /**< Setting the startpoint.  */
-        SetNextPoint      /**< Setting the next point. */
-    };
     struct Points;
     std::unique_ptr<Points> pPoints;
 

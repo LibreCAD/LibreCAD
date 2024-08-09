@@ -72,7 +72,7 @@ RS_ActionDrawCircleTan3::RS_ActionDrawCircleTan3(
 RS_ActionDrawCircleTan3::~RS_ActionDrawCircleTan3() = default;
 
 void RS_ActionDrawCircleTan3::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
     if (status >= 0){
         RS_Snapper::suspend();
     }
@@ -84,9 +84,6 @@ void RS_ActionDrawCircleTan3::init(int status){
 
 void RS_ActionDrawCircleTan3::finish(bool updateTB){
     if (pPoints->circles.size() > 0){
-//        for (RS_AtomicEntity *const pc: pPoints->circles)
-//            if (pc) pc->setHighlighted(false);
-
         graphicView->redraw(RS2::RedrawDrawing);
         pPoints->circles.clear();
     }
@@ -148,18 +145,20 @@ void RS_ActionDrawCircleTan3::mouseMoveEvent(QMouseEvent *e){
             deletePreview();
             if (preparePreview()){
                 previewCircle(*pPoints->cData);
-                for (auto &c: pPoints->candidates) {
-                    previewRefSelectablePoint(c->center, true);
-                }
-                for(RS_AtomicEntity* const pc: pPoints->circles) { // highlight already selected
-                    RS_Vector candidateCircleCenter = pPoints->cData->center;
-                    if (isLine(pc)){
-                        previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
-                    }
-                    else {
-                        previewRefPoint(getTangentPoint(candidateCircleCenter, pPoints->cData->radius, pc));
-                    }
 
+                for (auto &c: pPoints->candidates) {
+                    previewRefSelectablePoint(c->center);
+                }
+
+                if (showRefEntitiesOnPreview) {
+                    for (RS_AtomicEntity *const pc: pPoints->circles) { // highlight already selected
+                        RS_Vector candidateCircleCenter = pPoints->cData->center;
+                        if (isLine(pc)) {
+                            previewRefPoint(pc->getNearestPointOnEntity(candidateCircleCenter, false));
+                        } else {
+                            previewRefPoint(getTangentPoint(candidateCircleCenter, pPoints->cData->radius, pc));
+                        }
+                    }
                 }
                 drawPreview();
             }
@@ -375,11 +374,14 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
         case SetCircle2:{
             RS_Entity *en = catchCircle(e);
             if (en != nullptr){
-                pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
-                for (const RS_AtomicEntity *const pc: pPoints->circles)
-                    if (pc == en) continue;
+                pPoints->circles.resize(status);// todo - what for? Why not have fixes size
+                for (const RS_AtomicEntity *const pc: pPoints->circles) {
+                    if (pc == en) {
+                        continue;
+                    }
+                }
                 pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
-                setStatus(getStatus() + 1);
+                setStatus(status + 1);
             }
             break;
         }
@@ -387,14 +389,20 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
             RS_Entity *en = catchCircle(e);
             if (en != nullptr){
                 pPoints->circles.resize(getStatus());// todo - what for? Why not have fixes size
-                for (const RS_AtomicEntity *const pc: pPoints->circles)
-                    if (pc == en) continue;
-
+                for (const RS_AtomicEntity *const pc: pPoints->circles) {
+                    if (pc == en){
+                        continue;
+                    }
+                }
                 if (getData(en)){
                     pPoints->circles.push_back(dynamic_cast<RS_AtomicEntity *>(en));
-//                    pPoints->circles.at(pPoints->circles.size() - 1)->setHighlighted(true);
-//                    graphicView->redraw(RS2::RedrawDrawing);
-                    setStatus(getStatus() + 1);
+                    setStatus(SetCenter);
+                    if (pPoints->centers.size() == 1){
+                        pPoints->coord = pPoints->centers.at(0);
+                        if (preparePreview()) {
+                            trigger();
+                        }
+                    }
                 }
                 else {
                     commandMessage(tr("No common tangential circle for selected entities"));
@@ -416,12 +424,12 @@ void RS_ActionDrawCircleTan3::onMouseLeftButtonRelease(int status, QMouseEvent *
 void RS_ActionDrawCircleTan3::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     // Return to last status:
     if (status > 0){
-        pPoints->circles[getStatus() - 1]->setHighlighted(false);
+        pPoints->circles[status - 1]->setHighlighted(false);
         pPoints->circles.pop_back();
         graphicView->redraw(RS2::RedrawDrawing);
         deletePreview();
     }
-    init(getStatus() - 1);
+    initPrevious(status);
 }
 
 /*

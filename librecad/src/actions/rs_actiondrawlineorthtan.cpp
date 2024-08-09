@@ -62,10 +62,12 @@ void RS_ActionDrawLineOrthTan::trigger(){
     if (!tangent) return;
     RS_PreviewActionInterface::trigger();
 
-    deletePreview();
+
     circle = nullptr;
     RS_Entity *newEntity = new RS_Line(container,
                                        tangent->getData());
+
+    deletePreview();
     newEntity->setLayerToActive();
     newEntity->setPenToActive();
     container->addEntity(newEntity);
@@ -108,9 +110,11 @@ void RS_ActionDrawLineOrthTan::mouseMoveEvent(QMouseEvent *e){
                                                      circle, alternativeTangentPoint);
                 if (tangent != nullptr){
                     previewEntity(tangent);
-                    previewRefSelectablePoint(alternativeTangentPoint, true);
-                    previewRefSelectablePoint(tangent->getEndpoint(), true);
-                    previewRefPoint(tangent->getStartpoint());
+                    previewRefSelectablePoint(alternativeTangentPoint);
+                    previewRefSelectablePoint(tangent->getEndpoint());
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(tangent->getStartpoint());
+                    }
                 }
             }
             drawPreview();
@@ -142,7 +146,7 @@ void RS_ActionDrawLineOrthTan::onMouseLeftButtonRelease(int status, QMouseEvent 
             break;
         }
         case SetCircle: {
-            if (tangent) {
+            if (tangent != nullptr) {
                 trigger();
             }
             break;

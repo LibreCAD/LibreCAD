@@ -151,13 +151,17 @@ void RS_ActionDrawPolyline::mouseMoveEvent(QMouseEvent *e){
             if (pPoints->point.valid){
                 if (fabs(bulge) < RS_TOLERANCE || m_mode == Line){
                     previewLine(pPoints->point, mouse);
-                    previewRefPoint(pPoints->point);
-                    previewRefSelectablePoint(mouse);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(pPoints->point);
+                        previewRefSelectablePoint(mouse);
+                    }
                 } else {
                     auto arc = previewArc(pPoints->arc_data);
-                    previewRefPoint(arc->getCenter());
-                    previewRefPoint(arc->getStartpoint());
-                    previewRefSelectablePoint(arc->getEndpoint());
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(arc->getCenter());
+                        previewRefPoint(arc->getStartpoint());
+                        previewRefSelectablePoint(arc->getEndpoint());
+                    }
                 }
             }
             drawHighlights();

@@ -55,7 +55,7 @@ RS_ActionDrawCircleInscribe::RS_ActionDrawCircleInscribe(
 RS_ActionDrawCircleInscribe::~RS_ActionDrawCircleInscribe() = default;
 
 void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
-    while (pPoints->lines.size()) {
+    while (!pPoints->lines.empty()) {
         if (checkStatus && (int) pPoints->lines.size() <= getStatus())
             break;
         pPoints->lines.pop_back();
@@ -63,9 +63,9 @@ void RS_ActionDrawCircleInscribe::clearLines(bool checkStatus){
 }
 
 void RS_ActionDrawCircleInscribe::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
     if (status >= 0){
-        RS_Snapper::suspend();
+        RS_PreviewActionInterface::suspend();
     }
     clearLines(true);
 }
@@ -128,10 +128,12 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
                     if (preparePreview(line)){
                         highlightHover(en);
                         previewCircle(pPoints->cData);
-                        RS_Vector &center = pPoints->cData.center;
-                        previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
-                        previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
-                        previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
+                        if (showRefEntitiesOnPreview) {
+                            RS_Vector &center = pPoints->cData.center;
+                            previewRefPoint(pPoints->lines[SetLine1]->getNearestPointOnEntity(center, false));
+                            previewRefPoint(pPoints->lines[SetLine2]->getNearestPointOnEntity(center, false));
+                            previewRefPoint(pPoints->lines[SetLine3]->getNearestPointOnEntity(center, false));
+                        }
                         drawPreview();
                     }
                 }

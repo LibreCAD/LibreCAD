@@ -124,9 +124,11 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
             double radius = pPoints->point1.distanceTo(center);
             previewCircle(RS_CircleData(center, radius));
 
-            previewRefPoint(pPoints->point1);
-            previewRefLine(pPoints->point1, mouse);
-            previewRefSelectablePoint(mouse);
+            if (showRefEntitiesOnPreview) {
+                previewRefPoint(pPoints->point1);
+                previewRefLine(pPoints->point1, mouse);
+                previewRefSelectablePoint(mouse);
+            }
 
             drawPreview();
 
@@ -136,17 +138,18 @@ void RS_ActionDrawCircle3P::mouseMoveEvent(QMouseEvent *e){
             pPoints->point3 = mouse;
             preparePreview();
             deletePreview();
-            if (pPoints->data.isValid()){
+            if (pPoints->data.isValid()) {
                 previewCircle(pPoints->data);
-                previewRefPoint(pPoints->data.center);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->data.center);
+                    previewRefPoint(pPoints->point1);
+                    previewRefPoint(pPoints->point2);
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(pPoints->point1, pPoints->data.center);
+                    previewRefLine(pPoints->point2, pPoints->data.center);
+                    previewRefLine(mouse, pPoints->data.center);
+                }
             }
-
-            previewRefPoint(pPoints->point1);
-            previewRefPoint(pPoints->point2);
-            previewRefSelectablePoint(mouse);
-            previewRefLine(pPoints->point1, pPoints->data.center);
-            previewRefLine(pPoints->point2, pPoints->data.center);
-            previewRefLine(mouse, pPoints->data.center);
 
             drawPreview();
             break;

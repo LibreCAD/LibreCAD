@@ -51,7 +51,10 @@
 #include "rs_actioninterface.h"
 #include "lc_refellipse.h"
 
-// fixme - consider more generic support of overlays and containers, so working with preview etc might be more generic.. currently, preview handles both preview and reference points..
+// fixme - sand - consider more generic support of overlays and containers,
+// with them working with preview etc might be more generic.. currently, preview handles both preview and reference points..
+// such context-dependent things line absolute/relative position, angle, snap point info may be added to overlays,
+// as wells as, say direction marks or something similar
 /**
  * Constructor.
  *
@@ -69,7 +72,7 @@ RS_PreviewActionInterface::RS_PreviewActionInterface(const char* name,
     RS_DEBUG->print("RS_PreviewActionInterface::RS_PreviewActionInterface: Setting up action with preview: \"%s\"", name);
 
     // preview is linked to the container for getting access to
-    //   document settings / dictionary variables
+    // document settings / dictionary variables
 
     preview->setLayer(nullptr);
     initRefEntitiesMetrics();
@@ -132,7 +135,6 @@ void RS_PreviewActionInterface::deletePreview(){
  * Draws / deletes the current preview.
  */
 void RS_PreviewActionInterface::drawPreview(){
-// RVT_PORT How does offset work??        painter->setOffset(offset);
     RS_EntityContainer *container = graphicView->getOverlayContainer(RS2::ActionPreviewEntity);
     container->clear();
     container->setOwner(false); // Little hack for now so we don't delete the preview twice
@@ -191,73 +193,6 @@ void RS_PreviewActionInterface::addToHighlights(RS_Entity *e, bool enable){
     }
 }
 
-void RS_PreviewActionInterface::previewRefPoint(const RS_Vector &coord, bool alwaysVisible){
-    if (showRefEntitiesOnPreview || alwaysVisible){ // fixme - temporary, think about disabling on actions
-        auto *point = new LC_RefPoint(this->preview.get(), coord, refPointSize, refPointMode);
-        preview->addEntity(point);
-    }
-}
-
-void RS_PreviewActionInterface::previewRefSelectablePoint(const RS_Vector &coord, bool alwaysVisible){
-    if (showRefEntitiesOnPreview || alwaysVisible){ // fixme - temporary, think about disabling on actions
-        auto *point = new LC_RefPoint(this->preview.get(), coord, refPointSize, refPointMode);
-        point->setHighlighted(true);
-        preview->addEntity(point);
-    }
-}
-
-void RS_PreviewActionInterface::previewRefSelectableLine(const RS_Vector &start, const RS_Vector &end){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *line = new LC_RefLine(this->preview.get(), start, end);
-        line->setHighlighted(true);
-        preview->addEntity(line);
-    }
-}
-
-void RS_PreviewActionInterface::previewPoint(const RS_Vector &coord){
-    auto *point = new RS_Point(this->preview.get(), coord);
-    preview->addEntity(point);
-}
-
-void RS_PreviewActionInterface::previewRefPoints(const std::vector<RS_Vector>& points){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        for (auto v: points) {
-            previewRefPoint(v);
-        }
-    }
-}
-
-void RS_PreviewActionInterface::previewRefLines(const std::vector<RS_LineData>& points){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        for (auto v: points) {
-            previewRefLine(v.startpoint, v.endpoint);
-        }
-    }
-}
-
-void RS_PreviewActionInterface::previewRefLine(const RS_Vector &start, const RS_Vector &end){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *line = new LC_RefLine(this->preview.get(), start, end);
-        preview->addEntity(line);
-    }
-}
-
-RS_Line* RS_PreviewActionInterface::previewLine(const RS_LineData& data){
-    auto *line = new RS_Line(this->preview.get(),data);
-    this->preview->addEntity(line);
-    return line;
-}
-
-RS_Line* RS_PreviewActionInterface::previewLine(const RS_Vector &start, const RS_Vector &end){
-    auto *line = new RS_Line(this->preview.get(), start, end);
-    this->preview->addEntity(line);
-    return line;
-}
-
-void RS_PreviewActionInterface::previewEntity(RS_Entity* en){
-    this->preview->addEntity(en);
-}
-
 bool RS_PreviewActionInterface::trySnapToRelZeroCoordinateEvent(const QMouseEvent *e){
     bool result = false;
     if (isShift(e)){
@@ -274,7 +209,8 @@ RS_Vector RS_PreviewActionInterface::getSnapAngleAwarePoint(const QMouseEvent *e
     RS_Vector result = pos;
     if (isShift(e)){
         RS_Vector freePosition  = toGraph(e); // fixme = test, review and decide whether free snap is actually needed there. May be use snapMode instead of free?
-        if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){ // todo -  with this condition, snap to angle will not work... yet double calc!
+        // todo -  if there are restrictions or snap to grid, snap to angle will not work in snapper... yet this is double calc!
+        if(!(snapMode.restriction != RS2::RestrictNothing || snapMode.snapGrid)){
             result = snapToAngle(freePosition, basepoint, snapToAngleStep);
             if (drawMark){
                 previewSnapAngleMark(basepoint, result);
@@ -314,25 +250,74 @@ RS_Arc* RS_PreviewActionInterface::previewArc(const RS_ArcData &arcData){
 }
 
 RS_Arc* RS_PreviewActionInterface::previewRefArc(const RS_ArcData &arcData){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *arc = new LC_RefArc(preview.get(), arcData);
-        preview->addEntity(arc);
-        return arc;
-    }
-    return nullptr;
+    auto *arc = new LC_RefArc(preview.get(), arcData);
+    preview->addEntity(arc);
+    return arc;
 }
 
 LC_RefEllipse* RS_PreviewActionInterface::previewRefEllipse(const RS_EllipseData &arcData){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *arc = new LC_RefEllipse(preview.get(), arcData);
-        preview->addEntity(arc);
-        return arc;
+    auto *arc = new LC_RefEllipse(preview.get(), arcData);
+    preview->addEntity(arc);
+    return arc;
+}
+
+RS_Line* RS_PreviewActionInterface::previewLine(const RS_LineData& data){
+    auto *line = new RS_Line(this->preview.get(),data);
+    this->preview->addEntity(line);
+    return line;
+}
+
+RS_Line* RS_PreviewActionInterface::previewLine(const RS_Vector &start, const RS_Vector &end){
+    auto *line = new RS_Line(this->preview.get(), start, end);
+    this->preview->addEntity(line);
+    return line;
+}
+
+void RS_PreviewActionInterface::previewEntity(RS_Entity* en){
+    this->preview->addEntity(en);
+}
+
+void RS_PreviewActionInterface::previewRefPoint(const RS_Vector &coord){
+    auto *point = new LC_RefPoint(this->preview.get(), coord, refPointSize, refPointMode);
+    preview->addEntity(point);
+}
+
+void RS_PreviewActionInterface::previewRefSelectablePoint(const RS_Vector &coord){
+    auto *point = new LC_RefPoint(this->preview.get(), coord, refPointSize, refPointMode);
+    point->setHighlighted(true);
+    preview->addEntity(point);
+}
+
+void RS_PreviewActionInterface::previewRefSelectableLine(const RS_Vector &start, const RS_Vector &end){
+    auto *line = new LC_RefLine(this->preview.get(), start, end);
+    line->setHighlighted(true);
+    preview->addEntity(line);
+}
+
+void RS_PreviewActionInterface::previewPoint(const RS_Vector &coord){
+    auto *point = new RS_Point(this->preview.get(), coord);
+    preview->addEntity(point);
+}
+
+void RS_PreviewActionInterface::previewRefPoints(const std::vector<RS_Vector>& points){
+    for (auto v: points) {
+        previewRefPoint(v);
     }
-    return nullptr;
+}
+
+void RS_PreviewActionInterface::previewRefLines(const std::vector<RS_LineData>& points){
+    for (auto v: points) {
+        previewRefLine(v.startpoint, v.endpoint);
+    }
+}
+
+RS_Line* RS_PreviewActionInterface::previewRefLine(const RS_Vector &start, const RS_Vector &end){
+    auto *line = new LC_RefLine(this->preview.get(), start, end);
+    preview->addEntity(line);
+    return line;
 }
 
 RS_Arc* RS_PreviewActionInterface::previewRefArc(const RS_Vector &center, const RS_Vector &startPoint, const RS_Vector &mouse, bool determineReversal){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
         double radius = center.distanceTo(startPoint);
         double angle1 = center.angleTo(mouse);
         double angle2 = center.angleTo(startPoint);
@@ -340,21 +325,16 @@ RS_Arc* RS_PreviewActionInterface::previewRefArc(const RS_Vector &center, const 
         auto arc = new LC_RefArc(preview.get(), RS_ArcData(center, radius, angle1, angle2, reversed));
         preview->addEntity(arc);
         return arc;
-    }
-    return nullptr;
 }
-
-
 
 void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, const RS_Vector &refPoint/*, const RS_Vector &refPoint2*/){
     double angle = center.angleTo(refPoint);
     previewSnapAngleMark(center, angle);
-
 }
 
-// fixme - snap to relative angle support!!!
-void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, double angle) {// fixme - use field/settings for value,
-// fixme - enabling/disabling check by settings
+// fixme - sand - snap to relative angle support!!!
+void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, double angle) {
+// todo - add separate option that will control visibility of mark?
     int radiusInPixels = 20; // todo - move to settings
     int lineInPixels = radiusInPixels * 2; // todo - move to settings
     double radius = graphicView->toGraphDX(radiusInPixels);
@@ -368,14 +348,10 @@ void RS_PreviewActionInterface::previewSnapAngleMark(const RS_Vector &center, do
     previewRefLine(center, center + RS_Vector(lineLength, 0));
 }
 
-
-RS_Circle* RS_PreviewActionInterface::previewRefCircle(const RS_Vector &center, const double radius, [[maybe_unused]]bool alwaysVisible){
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *circle = new LC_RefCircle(preview.get(), center, radius);
-        preview->addEntity(circle);
-        return circle;
-    }
-    return nullptr;
+RS_Circle* RS_PreviewActionInterface::previewRefCircle(const RS_Vector &center, const double radius){
+    auto *circle = new LC_RefCircle(preview.get(), center, radius);
+    preview->addEntity(circle);
+    return circle;
 };
 
 RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePoint(const QMouseEvent *e, const RS_Vector &pos) const{
@@ -406,8 +382,8 @@ void RS_PreviewActionInterface::initRefEntitiesMetrics(){
     refPointMode = RS_SETTINGS->readNumEntry("/RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
     QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
 
-    showRefEntitiesOnPreview = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
-    highlightEntitiesOnHover = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0) != 0;
+    showRefEntitiesOnPreview = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 1);
+    highlightEntitiesOnHover = RS_SETTINGS->readNumEntry("/VisualizeHovering", 1) != 0;
     highlightEntitiesRefPointsOnHover = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1) != 0;
 
     bool ok;

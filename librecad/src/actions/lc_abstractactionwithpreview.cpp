@@ -692,13 +692,6 @@ void LC_AbstractActionWithPreview::unSelectEntities(const QList<RS_Entity*>& ent
         original ->setSelected(false);
     }
 }
-/**
- * Utility method to reduce dependencies in inherited actions
- * @param cmd
- */
-QString LC_AbstractActionWithPreview::getCommand([[maybe_unused]]const QString &cmd){
-    return RS_COMMANDS->command(cmd);
-}
 
 /**
  * Utility method that applies pen and layer to target entity based on provided source entity and provided modes
@@ -796,18 +789,14 @@ RS_Point* LC_AbstractActionWithPreview::createPoint(const RS_Vector &coord, QLis
  * @return
  */
 void LC_AbstractActionWithPreview::createRefPoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
-        auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
-        list << result;
-    }
+    auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
+    list << result;
 }
 
-void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list, bool visibleAlways) const{
-    if (showRefEntitiesOnPreview || visibleAlways){ // fixme - temporary, think about disabling on actions
+void LC_AbstractActionWithPreview::createRefSelectablePoint(const RS_Vector &coord, QList<RS_Entity *> &list) const{
         auto *result = new LC_RefPoint(preview.get(), coord, refPointSize, refPointMode);
         result->setHighlighted(true);
         list << result;
-    }
 }
 
 /**
@@ -830,17 +819,13 @@ RS_Line* LC_AbstractActionWithPreview::createLine(const RS_LineData &lineData, Q
 }
 
 void LC_AbstractActionWithPreview::createRefLine(const RS_Vector &startPoint, const RS_Vector &endPoint, QList<RS_Entity *> &list) const{
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
         auto *result = new LC_RefLine(preview.get(), startPoint, endPoint);
         list << result;
-    }
 }
 
 void LC_AbstractActionWithPreview::createRefArc(const RS_ArcData &data, QList<RS_Entity *> &list) const{
-    if (showRefEntitiesOnPreview){ // fixme - temporary, think about disabling on actions
         auto *result = new LC_RefArc(preview.get(), data);
         list << result;
-    }
 }
 
 bool LC_AbstractActionWithPreview::isMouseMove(QMouseEvent *e){

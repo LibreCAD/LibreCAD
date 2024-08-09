@@ -78,8 +78,10 @@ void LC_ActionDimLinearBase::mouseMoveEvent(QMouseEvent *e){
                 mouse = getSnapAngleAwarePoint(e, extPoint1, mouse, true);
 
                 previewLine(extPoint1, mouse);
-                previewRefLine(extPoint1, mouse);
-                previewRefSelectablePoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(extPoint1, mouse);
+                    previewRefSelectablePoint(mouse);
+                }
 
                 drawPreview();
             }
@@ -215,7 +217,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
     RS_Vector endSnapPoint = getAdjacentDimDimSnapPoint(ownDimP2, snapRange);
     if (endSnapPoint.valid){
         result = dimTangentLine.getNearestPointOnEntity(endSnapPoint);
-        if (forPreview){
+        if (forPreview && showRefEntitiesOnPreview){
             previewRefPoint(endSnapPoint);
         }
     }
@@ -225,7 +227,7 @@ RS_Vector LC_ActionDimLinearBase::adjustDefPointByAdjacentDims(const RS_Vector &
         RS_Vector startSnapPoint = getAdjacentDimDimSnapPoint(ownDimP1, snapRange);
         if (startSnapPoint.valid){
             result = dimTangentLine.getNearestPointOnEntity(startSnapPoint);
-            if (forPreview){
+            if (forPreview && showRefEntitiesOnPreview){
                 previewRefPoint(startSnapPoint);
             }
         }

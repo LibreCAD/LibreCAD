@@ -77,28 +77,33 @@ void LC_ActionInfo3PointsAngle::mouseMoveEvent(QMouseEvent *e) {
         case SetPoint2:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
                 mouse = getSnapAngleAwarePoint(e, point1, mouse, true);
-                previewRefPoint(point1, true);
-                previewRefSelectablePoint(mouse);
-                previewRefLine(point1, mouse);
+                previewRefPoint(point1);
+                if (showRefEntitiesOnPreview) {
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(point1, mouse);
+                }
             }
             break;
         }
         case SetPoint3:{
             if (!trySnapToRelZeroCoordinateEvent(e)) {
                 mouse = getSnapAngleAwarePoint(e, point2, mouse, true);
-                previewRefPoint(point1, true);
-                previewRefPoint(point2, true);
-                previewRefSelectablePoint(mouse, true);
-                previewRefLine(point1, point2);
-                previewRefLine(point2, mouse);
 
-                double distance1 = point2.distanceTo(point1);
-                double distance2 = point2.distanceTo(mouse);
-                if (distance2 < distance1){
-                    previewRefArc(point2, mouse, point1, true);
-                }
-                else {
-                    previewRefArc(point2, point1, mouse, true);
+                previewRefPoint(point1);
+                previewRefPoint(point2);
+                previewRefSelectablePoint(mouse);
+
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(point1, point2);
+                    previewRefLine(point2, mouse);
+
+                    double distance1 = point2.distanceTo(point1);
+                    double distance2 = point2.distanceTo(mouse);
+                    if (distance2 < distance1) {
+                        previewRefArc(point2, mouse, point1, true);
+                    } else {
+                        previewRefArc(point2, point1, mouse, true);
+                    }
                 }
             }
             break;

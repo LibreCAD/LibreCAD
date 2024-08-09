@@ -95,7 +95,7 @@ void RS_ActionPolylineAdd::mouseMoveEvent(QMouseEvent *e){
             auto polyline = dynamic_cast<RS_Polyline *>(catchEntity(e, RS2::EntityPolyline));
             if (polyline == polylineToModify){
                 RS_Vector coordinate = polyline->getNearestPointOnEntity(snap, true);
-                previewRefSelectablePoint(coordinate, true);
+                previewRefSelectablePoint(coordinate);
                 RS_Entity * segment = catchEntity(coordinate, RS2::ResolveAll);
                 highlightHover(segment);
             }

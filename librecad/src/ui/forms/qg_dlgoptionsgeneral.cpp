@@ -133,14 +133,14 @@ void QG_DlgOptionsGeneral::init() {
 
     bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
     cbHideRelativeZero->setChecked(hideRelativeZero);
-    bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 0);
+    bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 1);
     cbVisualizeHovering->setChecked(visualizeHovering);
 
     bool visualizeHoveringRefPoints = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1);
     cbShowRefPointsOnHovering->setChecked(visualizeHoveringRefPoints);
     cbShowRefPointsOnHovering->setEnabled(visualizeHovering);
 
-    bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 0);
+    bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 1);
     cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
 
     // scale grid:

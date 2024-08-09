@@ -300,9 +300,11 @@ void RS_ActionPolylineEquidistant::mouseMoveEvent(QMouseEvent *event){
             highlightHover(en);
             auto polyline = dynamic_cast<RS_Polyline *>(en);
             RS_Vector coord = toGraph(event);
-            RS_Vector nearest = polyline->getNearestPointOnEntity(coord, true);
-            previewRefPoint(nearest);
-            previewRefLine(nearest, coord);
+            if (showRefEntitiesOnPreview) {
+                RS_Vector nearest = polyline->getNearestPointOnEntity(coord, true);
+                previewRefPoint(nearest);
+                previewRefLine(nearest, coord);
+            };
             bool pointOnRightSide = isPointOnRightSideOfPolyline(polyline, coord);
             QList<RS_Polyline *> polylines;
             makeContour(polyline, pointOnRightSide, polylines);

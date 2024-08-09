@@ -117,13 +117,15 @@ void RS_ActionModifyTrim::mouseMoveEvent(QMouseEvent *e) {
                     if (trimResult.result) {
                         trimInvalid = false;
                         highlightHover(se);
-                        previewRefPoint(trimResult.intersection1);
-                        previewRefTrimmedEntity(trimResult.trimmed1, se);
-                        if (trimResult.intersection2.valid) {
-                            previewRefPoint(trimResult.intersection2);
-                        }
-                        if (both) {
-                            previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                        if (showRefEntitiesOnPreview) {
+                            previewRefPoint(trimResult.intersection1);
+                            previewRefTrimmedEntity(trimResult.trimmed1, se);
+                            if (trimResult.intersection2.valid) {
+                                previewRefPoint(trimResult.intersection2);
+                            }
+                            if (both) {
+                                previewRefTrimmedEntity(trimResult.trimmed2, limitEntity);
+                            }
                         }
                     }
                 }

@@ -87,19 +87,20 @@ void RS_ActionModifyMove::mouseMoveEventSelected(QMouseEvent *e) {
                 if (isShift(e)){
                     previewLine(pPoints->referencePoint, mouse);
                 }
-                previewRefSelectablePoint(mouse);
-                previewRefPoint(pPoints->referencePoint);
-                previewRefLine(pPoints->referencePoint, mouse);
-                
-                if (pPoints->data.multipleCopies){
-                    int numCopies = pPoints->data.number;
-                    if (numCopies > 1){
-                        for (int i = 2; i <= numCopies; i++){
-                            previewRefPoint(pPoints->referencePoint + offset*i);
+                if (showRefEntitiesOnPreview) {
+                    previewRefSelectablePoint(mouse);
+                    previewRefPoint(pPoints->referencePoint);
+                    previewRefLine(pPoints->referencePoint, mouse);
+
+                    if (pPoints->data.multipleCopies) {
+                        int numCopies = pPoints->data.number;
+                        if (numCopies > 1) {
+                            for (int i = 2; i <= numCopies; i++) {
+                                previewRefPoint(pPoints->referencePoint + offset * i);
+                            }
                         }
                     }
                 }
-
                 drawPreview();
             }
             break;

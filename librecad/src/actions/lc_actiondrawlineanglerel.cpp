@@ -217,7 +217,7 @@ bool LC_ActionDrawLineAngleRel::doCheckMayDrawPreview[[maybe_unused]]([[maybe_un
  * @param status
  */
 
-//fixme - divide & intersection points (as for liine from point to entity)
+//fixme - divide & intersection points (as for line from point to entity)
 void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vector &snap, QList<RS_Entity *> &list, int status){
     switch (status) {
         case SetLine:{ // line select state
@@ -240,15 +240,16 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
                 auto *previewLine = new RS_Line{container, data->tickLineData};
                 list << previewLine;
 
-                // add reference points
-                if (lineSnapMode == LINE_SNAP_FREE){
-                    createRefSelectablePoint(data->tickSnapPosition, list);
+                if (showRefEntitiesOnPreview) {
+                    // add reference points
+                    if (lineSnapMode == LINE_SNAP_FREE) {
+                        createRefSelectablePoint(data->tickSnapPosition, list);
+                    } else {
+                        createRefPoint(data->tickSnapPosition, list);
+                    }
+                    createRefPoint(data->tickLineData.endpoint, list);
+                    createRefPoint(data->tickLineData.endpoint, list);
                 }
-                else{
-                    createRefPoint(data->tickSnapPosition, list);
-                }
-                createRefPoint(data->tickLineData.endpoint, list);
-                createRefPoint(data->tickLineData.endpoint, list);
 
                 // don't need temporary data, so delete it
                 delete data;
@@ -265,10 +266,12 @@ void LC_ActionDrawLineAngleRel::doPreparePreviewEntities(QMouseEvent *e, RS_Vect
             auto *previewLine = new RS_Line{container, data->tickLineData};
             list<< previewLine;
 
-            // add reference points
-            createRefPoint(data->tickSnapPosition, list);
-            createRefPoint(data->tickLineData.endpoint, list);
-            createRefSelectablePoint(data->tickLineData.endpoint, list);
+            if (showRefEntitiesOnPreview) {
+                // add reference points
+                createRefPoint(data->tickSnapPosition, list);
+                createRefPoint(data->tickLineData.endpoint, list);
+                createRefSelectablePoint(data->tickLineData.endpoint, list);
+            }
 
             // delete temporary data
             delete data;
@@ -449,4 +452,3 @@ void LC_ActionDrawLineAngleRel::updateMouseButtonHints() {
 LC_ActionOptionsWidget* LC_ActionDrawLineAngleRel::createOptionsWidget(){
     return new LC_LineAngleRelOptions();
 }
-

@@ -129,7 +129,9 @@ void LC_ActionDrawSliceDivide::doPreparePreviewEntities([[maybe_unused]]QMouseEv
                         if (doDivideEntity) { // if tick length is zero - it is just divide mode, without ticks
                             // so on preview, we just indicate that we may have divide points
                             // even if tick is present - we'd better highlight division points
-                            createRefPoint(tick.snapPoint, list);
+                            if (showRefEntitiesOnPreview) {
+                                createRefPoint(tick.snapPoint, list);
+                            }
                         }
                     }
                 }

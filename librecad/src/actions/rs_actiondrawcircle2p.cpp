@@ -118,11 +118,13 @@ void RS_ActionDrawCircle2P::mouseMoveEvent(QMouseEvent* e) {
             preparePreview();
             if (data->isValid()){
                 previewCircle(*data);
-                previewRefPoint(data->center);
-                previewRefPoint(pPoints->point1);
-                previewRefSelectablePoint(pPoints->point2);
-                previewRefLine(data->center, pPoints->point1);
-//                    previewRefLine(pPoints->point1, pPoints->point2);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(data->center);
+                    previewRefPoint(pPoints->point1);
+                    previewRefSelectablePoint(pPoints->point2);
+                    previewRefLine(data->center, pPoints->point1);
+                    //                    previewRefLine(pPoints->point1, pPoints->point2);
+                }
             }
             drawPreview();
             break;

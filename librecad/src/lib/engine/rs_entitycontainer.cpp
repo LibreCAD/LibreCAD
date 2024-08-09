@@ -468,10 +468,13 @@ bool RS_EntityContainer::removeEntity(RS_Entity *entity) {
  */
 void RS_EntityContainer::clear() {
     if (autoDelete) {
-        while (!entities.isEmpty())
-            delete entities.takeFirst();
-    } else
+        while (!entities.isEmpty()) {
+            RS_Entity * en = entities.takeFirst();
+            delete en;
+        }
+    } else {
         entities.clear();
+    }
     resetBorders();
 }
 

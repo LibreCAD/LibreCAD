@@ -112,9 +112,11 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                     if (selectionMode == FIRST_IS_POINT){
                         RS_Vector nearest = en->getNearestPointOnEntity(point, nearestPointShouldBeOnEntity);
                         previewLine(nearest, point);
-                        previewRefLine(nearest, point);
-                        previewRefPoint(point);
-                        previewRefSelectablePoint(nearest);
+                        if (showRefEntitiesOnPreview) {
+                            previewRefLine(nearest, point);
+                            previewRefPoint(point);
+                            previewRefSelectablePoint(nearest);
+                        }
                     } else {
                         // no more
                     }
@@ -122,8 +124,10 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
             } else {
                 if (selectionMode == FIRST_IS_POINT){
                     previewLine(snap, point);
-                    previewRefLine(snap, point);
-                    previewRefPoint(point);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefLine(snap, point);
+                        previewRefPoint(point);
+                    }
                 }
             }
             break;
@@ -132,7 +136,9 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
             switch (selectionMode) {
                 case FIRST_IS_POINT: {
                     trySnapToRelZeroCoordinateEvent(e);
-                    previewRefPoint(snap);
+                    if (showRefEntitiesOnPreview) {
+                        previewRefPoint(snap);
+                    }
                     break;
                 }
                 case FIRST_IS_ENTITY: {
@@ -141,10 +147,12 @@ void RS_ActionInfoDist2::mouseMoveEvent(QMouseEvent *e){
                         snap = getRelZeroAwarePoint(e, snap);
                         RS_Vector nearest = obtainNearestPointOnEntity(snap);
                         previewLine(nearest, snap);
-                        previewRefLine(nearest, snap);
-                        previewLine(nearest, snap);
-                        previewRefPoint(nearest);
-                        previewRefSelectablePoint(snap);
+                        if (showRefEntitiesOnPreview) {
+                            previewRefLine(nearest, snap);
+                            previewLine(nearest, snap);
+                            previewRefPoint(nearest);
+                            previewRefSelectablePoint(snap);
+                        }
 
                         // move relative point so we'll have proper distance and angle from entity to point in coordinates widget
                         if (isControl(e)){

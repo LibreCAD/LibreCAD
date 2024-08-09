@@ -110,9 +110,11 @@ void RS_ActionModifyStretch::mouseMoveEvent(QMouseEvent *e){
                 //preview->move(targetPoint-referencePoint);
                 preview->stretch(pPoints->firstCorner, pPoints->secondCorner,
                                  pPoints->targetPoint - pPoints->referencePoint);
-                previewRefPoint(pPoints->referencePoint);
-                previewRefSelectablePoint(pPoints->targetPoint);
-                previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->referencePoint);
+                    previewRefSelectablePoint(pPoints->targetPoint);
+                    previewRefLine(pPoints->referencePoint, pPoints->targetPoint);
+                }
                 drawPreview();
             }
             break;

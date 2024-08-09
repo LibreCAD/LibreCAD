@@ -154,13 +154,15 @@ void RS_ActionDrawEllipseInscribe::mouseMoveEvent(QMouseEvent *e){
                         if (preparePreview(line, tangent)){
                             highlightHover(line);
                             auto ellipse = previewEllipse(pPoints->eData);
-                            RS_Vector ellipseCenter = ellipse->getCenter();
+                            if (showRefEntitiesOnPreview) {
+                                RS_Vector ellipseCenter = ellipse->getCenter();
 
-                            for (const auto &i: tangent) {
-                                previewRefPoint(ellipseCenter + i);
+                                for (const auto &i: tangent) {
+                                    previewRefPoint(ellipseCenter + i);
+                                }
+
+                                previewRefPoint(ellipseCenter);
                             }
-
-                            previewRefPoint(ellipseCenter);
                         } else {
                             // nothing, can't build the ellipse
                         }

@@ -150,8 +150,10 @@ void RS_ActionDrawLine::mouseMoveEvent(QMouseEvent* e){
                 // Snapping to angle(15*) if shift key is pressed
                 mouse = getSnapAngleAwarePoint(e, startPoint, mouse, true);
                 previewLine(startPoint, mouse);
-                previewRefPoint(startPoint);
-                previewRefSelectablePoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(startPoint);
+                    previewRefSelectablePoint(mouse);
+                }
             }
             drawPreview();
             break;

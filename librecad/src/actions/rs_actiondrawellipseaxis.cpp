@@ -142,9 +142,11 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 previewEllipse({pPoints->center, mouse - pPoints->center, 0.5, 0.0,
                                 pPoints->isArc ? 2. * M_PI : 0., false});
 
-                previewRefPoint(pPoints->center);
-                previewRefLine(pPoints->center, mouse);
-                previewRefSelectablePoint(mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->center);
+                    previewRefLine(pPoints->center, mouse);
+                    previewRefSelectablePoint(mouse);
+                }
             }
             drawPreview();
             break;
@@ -161,7 +163,9 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 auto ellipse = previewEllipse({center, pPoints->m_vMajorP, pPoints->ratio,
                                                0., pPoints->isArc ? 2. * M_PI : 0., false});
 
-                previewEllipseReferencePoints(ellipse, true, mouse);
+                if (showRefEntitiesOnPreview) {
+                    previewEllipseReferencePoints(ellipse, true, mouse);
+                }
                 drawPreview();
             }
             break;
@@ -184,9 +188,10 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio,
                                                pPoints->angle1, pPoints->angle1 + 1.0, false});
 
-                previewRefPoint(pPoints->center);
-                previewRefSelectablePoint(ellipse->getStartpoint());
-
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->center);
+                    previewRefSelectablePoint(ellipse->getStartpoint());
+                }
             }
             drawPreview();
             break;
@@ -203,17 +208,17 @@ void RS_ActionDrawEllipseAxis::mouseMoveEvent(QMouseEvent* e) {
                 v.y /= pPoints->ratio;
                 pPoints->angle2 = v.angle(); // + m_vMajorP.angle();
 
-                previewRefLine(pPoints->center, mouse);
-
                 auto ellipse = previewEllipse({pPoints->center, pPoints->m_vMajorP, pPoints->ratio, pPoints->angle1, pPoints->angle2, false});
 
-                previewRefPoint(pPoints->center);
-                auto point = pPoints->center + RS_Vector{pPoints->angle1}.scale({ellipse->getMajorRadius(), /*-*/ellipse->getMinorRadius()});
-                point.rotate(pPoints->center, /*-*/ pPoints->m_vMajorP.angle());
-                previewRefPoint(point);
-
-                previewRefSelectablePoint(ellipse->getEndpoint());
-
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(pPoints->center, mouse);
+                    previewRefPoint(pPoints->center);
+                    auto point = pPoints->center + RS_Vector{pPoints->angle1}.scale(
+                        {ellipse->getMajorRadius(), /*-*/ellipse->getMinorRadius()});
+                    point.rotate(pPoints->center, /*-*/ pPoints->m_vMajorP.angle());
+                    previewRefPoint(point);
+                    previewRefSelectablePoint(ellipse->getEndpoint());
+                }
             }
             drawPreview();
             break;

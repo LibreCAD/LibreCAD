@@ -79,10 +79,12 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 pPoints->data.offset = mouse - pPoints->data.referencePoint;
                 RS_Modification m(*preview, graphicView);
                 m.moveRotate(pPoints->data, selectedEntities, true);
-                previewRefPoint(pPoints->data.referencePoint);
-                previewRefSelectablePoint(mouse);
-                previewRefLine(pPoints->data.referencePoint, mouse);
-                previewRefPointsForMultipleCopies();
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->data.referencePoint);
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(pPoints->data.referencePoint, mouse);
+                    previewRefPointsForMultipleCopies();
+                }
             }
             break;
         }
@@ -93,12 +95,14 @@ void RS_ActionModifyMoveRotate::mouseMoveEventSelected(QMouseEvent *e) {
                 pPoints->data.angle = angle;
                 RS_Modification m(*preview, graphicView);
                 m.moveRotate(pPoints->data, selectedEntities, true);
-                previewRefPoint(pPoints->data.referencePoint);
-                previewRefPoint(pPoints->targetPoint);
-                previewRefSelectablePoint(mouse);
-                previewRefLine(pPoints->targetPoint, mouse);
-                previewRefLine(pPoints->data.referencePoint, pPoints->targetPoint);
-                previewRefPointsForMultipleCopies();
+                if (showRefEntitiesOnPreview) {
+                    previewRefPoint(pPoints->data.referencePoint);
+                    previewRefPoint(pPoints->targetPoint);
+                    previewRefSelectablePoint(mouse);
+                    previewRefLine(pPoints->targetPoint, mouse);
+                    previewRefLine(pPoints->data.referencePoint, pPoints->targetPoint);
+                    previewRefPointsForMultipleCopies();
+                }
                 updateOptions();
             }
             break;

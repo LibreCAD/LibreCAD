@@ -139,22 +139,25 @@ void RS_ActionModifyBevel::mouseMoveEvent(QMouseEvent *e){
                         // bevel
                         previewEntity(bevelResult->bevel);
 
-                        // bevel points
-                        previewRefPoint(bevelResult->bevel->getStartpoint());
-                        previewRefPoint(bevelResult->bevel->getEndpoint());
+                        if (showRefEntitiesOnPreview) {
+                            // bevel points
+                            previewRefPoint(bevelResult->bevel->getStartpoint());
+                            previewRefPoint(bevelResult->bevel->getEndpoint());
 
-                        // lines intersection
-                        previewRefPoint(bevelResult->intersectionPoint);
+                            // lines intersection
+                            previewRefPoint(bevelResult->intersectionPoint);
 
-                        // changes in lines
-                        if (pPoints->data.trim){
-                            previewLineModifications(entity1, bevelResult->trimmed1, bevelResult->trimStart1);
-                            previewLineModifications(atomicCandidate2, bevelResult->trimmed2, bevelResult->trimStart2);
+                            // changes in lines
+                            if (pPoints->data.trim) {
+                                previewLineModifications(entity1, bevelResult->trimmed1, bevelResult->trimStart1);
+                                previewLineModifications(atomicCandidate2, bevelResult->trimmed2,
+                                                         bevelResult->trimStart2);
+                            }
+
+                            // selection points
+                            previewRefSelectablePoint(pPoints->coord1);
+                            previewRefSelectablePoint(se->getNearestPointOnEntity(mouse));
                         }
-
-                        // selection points
-                        previewRefSelectablePoint(pPoints->coord1);
-                        previewRefSelectablePoint(se->getNearestPointOnEntity(mouse), true);
                     }
                     delete bevelResult;
                 }

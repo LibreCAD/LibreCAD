@@ -128,8 +128,10 @@ void LC_ActionDrawLinePoints::doPreparePreviewEntities([[maybe_unused]]QMouseEve
     // draw preview if this is non-zero line
     if (isNonZeroLine(possibleEndPoint)){
         createPoints(possibleEndPoint, list);
-        createRefSelectablePoint(possibleEndPoint, list);
-        createRefPoint(startpoint, list);
+        if (showRefEntitiesOnPreview) {
+            createRefSelectablePoint(possibleEndPoint, list);
+            createRefPoint(startpoint, list);
+        }
     }
 }
 
@@ -511,19 +513,19 @@ void LC_ActionDrawLinePoints::updateMouseButtonHints(){
         case SetDistance: {
             bool toX = direction == DIRECTION_X;
             bool toY = direction == DIRECTION_Y;
-            msg += getCommand("number")+"|";
-            msg += getCommand("angle")+"|";
-            msg += getCommand("p")+"|";
-            msg += getCommand("edges");
+            msg += command("number")+"|";
+            msg += command("angle")+"|";
+            msg += command("p")+"|";
+            msg += command("edges");
             if (toX){
-                msg += "|" + getCommand("y");
+                msg += "|" + command("y");
                 updateMouseWidget(tr("Specify distance (%1)\nor [%2]").arg(tr("X"), msg),tr("Back"));
             } else if (toY){
-                msg += "|" + getCommand("x");
+                msg += "|" + command("x");
                 updateMouseWidget(tr("Specify distance (%1)\nor [%2]").arg(tr("Y"), msg), tr("Back"));
             } else if (direction == DIRECTION_ANGLE){
-                msg += "|" + getCommand("x");
-                msg += "|" + getCommand("y");
+                msg += "|" + command("x");
+                msg += "|" + command("y");
                 QString angleStr = RS_Math::doubleToString(angle, 1);
                 updateMouseWidget(tr("Specify  distance (angle %1 deg)\nor [%2]").arg(angleStr, msg),tr("Back"), MOD_SHIFT_MIRROR_ANGLE);
             }

@@ -210,20 +210,24 @@ void LC_ActionModifyDuplicate::doPreparePreviewEntities(QMouseEvent *e, [[maybe_
                     snapOffset = snap;
 //                }
                 const RS_Vector &center = getEntityCenterPoint(selectedEntity);
-                previewRefLine(center, snap);
-                previewRefPoint(center);
+                if (showRefEntitiesOnPreview) {
+                    previewRefLine(center, snap);
+                    previewRefPoint(center);
+                }
                 RS_Vector offset = determineOffset(snapOffset, center);
                 if (offset.valid){
                     RS_Entity *clone = selectedEntity->clone();
                     clone->move(offset);
-                    const RS_Vector newCenter = getEntityCenterPoint(clone);
-                    previewRefSelectablePoint(newCenter);
-                    RS_EllipseData data = RS_EllipseData();
-                    data.center = center;
-                    data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
-                    data.ratio = std::abs(offsetY / offsetX);
-                    previewRefEllipse(data);
                     list << clone;
+                    if (showRefEntitiesOnPreview) {
+                        const RS_Vector newCenter = getEntityCenterPoint(clone);
+                        previewRefSelectablePoint(newCenter);
+                        RS_EllipseData data = RS_EllipseData();
+                        data.center = center;
+                        data.majorP = RS_Vector(std::abs(offsetX), 0, 0);
+                        data.ratio = std::abs(offsetY / offsetX);
+                        previewRefEllipse(data);
+                    }
                 }
             }
             break;
@@ -271,6 +275,3 @@ RS_Vector LC_ActionModifyDuplicate::doGetMouseSnapPoint(QMouseEvent *e){
     }
     return snapped;
 }
-
-
-
