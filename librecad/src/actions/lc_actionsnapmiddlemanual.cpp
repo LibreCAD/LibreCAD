@@ -91,7 +91,7 @@ void LC_ActionSnapMiddleManual::mouseMoveEvent(QMouseEvent *e){
     RS_Vector mouse = snapPoint(e);
 
     if (getStatus() == SetEndPoint){
-        /* Snapping to an angle of 15 degrees, if the shift key is pressed. */
+        /* Snapping to an angle defined by settings, if the shift key is pressed. */
         mouse = getSnapAngleAwarePoint(e, m_pPoints->startPoint, mouse,true);
 
         deletePreview();
@@ -139,24 +139,25 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
 
     switch (status) {
         case SetPercentage:
-        case SetStartPoint:
+        case SetStartPoint: {
             m_pPoints->startPoint = mouse;
             setStatus(SetEndPoint);
             graphicView->moveRelativeZero(mouse);
             updateMouseButtonHints();
             break;
-
-        case SetEndPoint:
+        }
+        case SetEndPoint: {
             /* Refuse zero length lines. */
-            if ((mouse - m_pPoints->startPoint).squared() > RS_TOLERANCE2){
+            if ((mouse - m_pPoints->startPoint).squared() > RS_TOLERANCE2) {
                 m_pPoints->endPoint = mouse;
 
-                const RS_Vector middleManualPoint = m_pPoints->startPoint + (m_pPoints->endPoint - m_pPoints->startPoint) * m_pPoints->percentage;
+                const RS_Vector middleManualPoint =
+                    m_pPoints->startPoint + (m_pPoints->endPoint - m_pPoints->startPoint) * m_pPoints->percentage;
 
                 moveRelativeZero(middleManualPoint);
 
-                if (predecessor != nullptr){
-                    if (predecessor->getName().compare("Default") != 0){
+                if (predecessor != nullptr) {
+                    if (predecessor->getName().compare("Default") != 0) {
                         signalUnsetSnapMiddleManual();
                         document->setActivePen(m_pPoints->currentAppPen);
                         RS_CoordinateEvent new_e(middleManualPoint);
@@ -169,6 +170,9 @@ void LC_ActionSnapMiddleManual::onCoordinateEvent(int status, [[maybe_unused]]bo
                 updateMouseButtonHints();
                 init(getStatus());
             }
+            break;
+        }
+        default:
             break;
     }
 

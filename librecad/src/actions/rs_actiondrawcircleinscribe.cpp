@@ -205,60 +205,6 @@ bool RS_ActionDrawCircleInscribe::preparePreview(RS_Line* en){
     return valid;
 }
 
-/*
-void RS_ActionDrawCircle4Line::commandEvent(RS_CommandEvent* e) {
-    QString c = e->getCommand().toLower();
-
-    if (checkCommand("help", c)) {
-            RS_DIALOGFACTORY->commandMessage(msgAvailableCommands()
-                                             + getAvailableCommands().join(", "));
-        return;
-    }
-
-    switch (getStatus()) {
-    case SetFocus1: {
-            bool ok;
-            double m = RS_Math::eval(c, &ok);
-            if (ok) {
-                ratio = m / major.magnitude();
-                if (!isArc) {
-                    trigger();
-                } else {
-                    setStatus(SetAngle1);
-                }
-			} else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
-        break;
-
-    case SetAngle1: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle1 = RS_Math::deg2rad(a);
-                setStatus(SetAngle2);
-			} else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
-        break;
-
-    case SetAngle2: {
-            bool ok;
-            double a = RS_Math::eval(c, &ok);
-            if (ok) {
-                angle2 = RS_Math::deg2rad(a);
-                trigger();
-			} else
-                    RS_DIALOGFACTORY->commandMessage(tr("Not a valid expression"));
-        }
-        break;
-
-    default:
-        break;
-    }
-}
-*/
-
 void RS_ActionDrawCircleInscribe::updateMouseButtonHints(){
     switch (getStatus()) {
         case SetLine1:

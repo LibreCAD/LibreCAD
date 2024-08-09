@@ -26,7 +26,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include <QMouseEvent>
 
-// fixme - revork highlighting for all pen actions to support overlay based highlight
 LC_ActionPenPick::LC_ActionPenPick(RS_EntityContainer &container, RS_GraphicView &graphicView, bool resolve)
     :RS_PreviewActionInterface(resolve? "PenPick" : "PenPickApply", container, graphicView){
     resolveMode  = resolve;
@@ -61,8 +60,6 @@ void LC_ActionPenPick::mouseMoveEvent(QMouseEvent *e){
         deleteHighlights();
         if (en != nullptr){
             highlightHover(en);
-            graphicView->drawEntity(en);
-            graphicView->redraw();
         }
         drawHighlights();
     }
