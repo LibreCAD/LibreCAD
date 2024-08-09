@@ -165,8 +165,7 @@ void LC_AbstractActionWithPreview::doUpdateCoordinateWidgetByMouse(QMouseEvent* 
 void LC_AbstractActionWithPreview::performTriggerOnInit(QList<RS_Entity*>  entities){
     QList<RS_Entity*> createdEntities;
     // only valid entities are there, so we can create do trigger action for each of them
-    for (int i = 0; i < entities.length(); i++){
-        RS_Entity* e = entities.at(i);
+    for (auto e: entities){
         doCreateEntitiesOnTrigger(e, createdEntities);
     }
     doPerformOriginalEntitiesDeletionOnInitTrigger(entities);
@@ -253,9 +252,7 @@ void LC_AbstractActionWithPreview::setupAndAddTriggerEntities(const QList<RS_Ent
     // check whether layer and pen should be set to active. If not  - it's up to doPrepareTriggerEntities to perform proper setup of pen and layer
     bool setActiveLayerAndPen = isSetActivePenAndLayerOnTrigger();
     bool undoableTrigger = isUndoableTrigger();
-    for (int i = 0; i < entities.count(); i++) {
-        RS_Entity *ent = entities.at(i);
-
+    for (auto ent: entities) {
         if (setActiveLayerAndPen){
             // do setup
             ent->setLayerToActive();
@@ -593,8 +590,7 @@ void LC_AbstractActionWithPreview::drawPreviewForPoint(QMouseEvent *e, RS_Vector
     // do actual creation of preview entities
     doPreparePreviewEntities(e, snap, entitiesForPreview, getStatus());
     // adding collected entities to preview
-    for (int i =0; i < entitiesForPreview.count(); i++){
-        RS_Entity* ent = entitiesForPreview.at(i);
+    for (auto ent: entitiesForPreview){
         previewEntity(ent);
     }
     // draw
@@ -687,8 +683,7 @@ void LC_AbstractActionWithPreview::setFreeSnap(){
  * @param entities list of entities
  */
 void LC_AbstractActionWithPreview::unSelectEntities(const QList<RS_Entity*>& entities){
-    for (int i = 0; i < entities.count(); i++) {
-        RS_Entity *original = entities.at(i);
+    for (auto original: entities) {
         original ->setSelected(false);
     }
 }

@@ -31,7 +31,7 @@
 #include "rs_dimension.h"
 
 /**
- * Holds the data that defines a linear dimension entity.
+ * Holds the data that defines a linear and aligned dimension entity.
  */
 struct RS_DimLinearData {
     /**

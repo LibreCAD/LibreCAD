@@ -45,6 +45,14 @@ protected:
         SetAngle         /**< Setting the angle in the command line. */
     };
 
+    enum ActionMode{
+        NORMAL,
+        BASELINE,
+        CONTINUE
+    };
+
+    ActionMode actionMode = NORMAL;
+
     virtual RS_Vector getExtensionPoint1() = 0;
     virtual void setExtensionPoint1(RS_Vector p) = 0;
     virtual void setExtensionPoint2(RS_Vector p) = 0;

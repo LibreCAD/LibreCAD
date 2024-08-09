@@ -35,7 +35,6 @@
 #include "rs_line.h"
 #include "rs_preview.h"
 
-// fixme - add reference points
 RS_ActionDrawLineTangent1::RS_ActionDrawLineTangent1(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView)

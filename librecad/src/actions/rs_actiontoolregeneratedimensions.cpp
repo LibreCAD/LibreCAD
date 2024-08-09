@@ -46,7 +46,7 @@ void RS_ActionToolRegenerateDimensions::trigger() {
     RS_DEBUG->print("RS_ActionToolRegenerateDimensions::trigger()");
 
     int num = 0;
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - iteration over all entities in container
 
         if (RS_Information::isDimension(e->rtti()) && e->isVisible()) {
             num++;

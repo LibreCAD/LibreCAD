@@ -146,7 +146,7 @@ void RS_EntityContainer::detach() {
     setOwner(false);
 
     // make deep copies of all entities:
-    for (auto e: entities) {
+    for (auto e: entities) { // fixme - sand -  check, iteration over all entities
         if (!e->getFlag(RS2::FlagTemp)) {
             tmp.append(e->clone());
         }

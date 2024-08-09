@@ -149,13 +149,6 @@ QStringList RS_ActionDimLinear::getAvailableCommands(){
     return cmd;
 }
 
-//void RS_ActionDimLinear::showOptions(){
-////    updateOptions();
-////    RS_ActionInterface::showOptions();
-////
-////    RS_DIALOGFACTORY->requestOptions(this, true, true);
-//}
-
 RS_Vector RS_ActionDimLinear::getExtensionPoint1(){
     return edata->extensionPoint1;
 }

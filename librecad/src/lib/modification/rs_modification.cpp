@@ -2764,7 +2764,7 @@ bool RS_Modification::stretch(const RS_Vector& firstCorner,
     std::vector<RS_Entity*> addList;
 
 // Create new entities
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - sand - iteration over all entities in container
         if (e &&
             e->isVisible() &&
             !e->isLocked() ) {

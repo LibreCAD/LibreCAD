@@ -298,7 +298,6 @@ void RS_ActionModifyScale::onCoordinateEvent(int status, [[maybe_unused]]bool is
         case SetReferencePoint: {
             pPoints->data.referencePoint = mouse;
             graphicView->setRelativeZero(mouse);
-            /// fixme - refactor
             if (isShowModifyActionDialog()) {
                 if (RS_DIALOGFACTORY->requestScaleDialog(pPoints->data)) {
                     tryTrigger();

@@ -80,7 +80,7 @@ void LC_ActionLayersToggleConstruction::deselectEntities(RS_Layer* layer)
 {
     if (!layer) return;
 
-    for(auto e: *container){
+    for(auto e: *container){ // fixme - sand -  iteration over all entities in container
         if (e && e->isVisible() && e->getLayer() == layer) {
 
             if (graphicView) {

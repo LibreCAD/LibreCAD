@@ -57,8 +57,7 @@ bool LC_ActionDrawCircleByArc::isAcceptSelectedEntityToTriggerOnInit(RS_Entity *
 
 void LC_ActionDrawCircleByArc::doPerformOriginalEntitiesDeletionOnInitTrigger(QList<RS_Entity *> &list){
     if (replaceArcByCircle){
-        for (int i = 0; i < list.length(); i++){
-            RS_Entity* e = list.at(i);
+        for (auto e: list){
             deleteOriginalArcOrEllipse(e);
         }
     }

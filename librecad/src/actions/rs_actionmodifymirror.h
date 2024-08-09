@@ -32,10 +32,7 @@
 struct RS_MirrorData;
 
 // fixme - mirror for specific point (via reference point and distance)?
-// fixme - mirror by selected line
-// fixme - own selection of entities instead of select action
-// fixme - remove dialog
-// fixme - options widget
+
 /**
  * This action class can handle user events to mirror entities.
  *
@@ -49,7 +46,7 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionModifyMirror() override;
     void trigger() override;
-    bool isMirrorToExistingLine(){return mirrorToExistingLine;};
+    bool isMirrorToExistingLine() const {return mirrorToExistingLine;};
     void setMirrorToExistingLine(bool value);
 protected:
     /**

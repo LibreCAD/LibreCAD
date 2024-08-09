@@ -28,7 +28,7 @@
 #define RS_ACTIONDRAWLINETANGENT2_H
 
 #include "rs_previewactioninterface.h"
-// fixme - add reference points
+
 /**
  * This action class can handle user events to draw tangents from circle to
  * circle.

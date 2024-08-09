@@ -45,8 +45,6 @@ struct RS_ActionDrawImage::ImageData {
 	QImage img;
 };
 
-// fixme - correct options widget ownership!!!
-
 /**
  * Constructor.
  */
