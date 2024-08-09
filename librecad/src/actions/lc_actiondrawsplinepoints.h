@@ -40,7 +40,7 @@ public:
         RS_GraphicView &graphicView);
     ~LC_ActionDrawSplinePoints() override;
     void reset();
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;

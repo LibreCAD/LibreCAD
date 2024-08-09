@@ -43,7 +43,7 @@ RS_ActionModifyDeleteFree::RS_ActionModifyDeleteFree(
         :RS_ActionInterface("Delete Entities Freehand",
 					container, graphicView)
 		, pPoints(std::make_unique<Points>()){
-	init();
+	init(0);
 }
 
 RS_ActionModifyDeleteFree::~RS_ActionModifyDeleteFree() = default;
@@ -87,7 +87,7 @@ void RS_ActionModifyDeleteFree::trigger(){
                     // draws the new polylines on the screen:
                     graphicView->redraw(RS2::RedrawDrawing);
 
-                    init();
+                    init(0);
 
                     updateSelectionWidget();
                 } else {

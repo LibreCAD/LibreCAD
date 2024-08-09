@@ -43,8 +43,7 @@ public:
     RS_ActionDimension(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~RS_ActionDimension() override;
     virtual void reset();
-    void init(int status = 0) override;
-//    void updateToolBar() override;
+    void init(int status) override;
 
     QString getText() const;
     void setText(const QString &t);

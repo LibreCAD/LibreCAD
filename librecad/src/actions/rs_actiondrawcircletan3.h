@@ -42,7 +42,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan3() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;

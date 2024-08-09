@@ -42,7 +42,7 @@ public:
     RS_ActionPolylineTrim(
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void finish(bool updateTB) override;

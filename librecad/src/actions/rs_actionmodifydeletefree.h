@@ -43,7 +43,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionModifyDeleteFree() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent * e) override;

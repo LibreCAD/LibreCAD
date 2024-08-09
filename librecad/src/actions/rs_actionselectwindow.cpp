@@ -90,7 +90,7 @@ void RS_ActionSelectWindow::trigger(){
             RS_Selection s(*container, graphicView);
             s.selectWindow(typeToSelect, pPoints->v1, pPoints->v2, select, cross);
             updateSelectionWidget();
-            init();
+            init(SetCorner1);
         }
     }
 }

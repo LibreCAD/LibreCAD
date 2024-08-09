@@ -45,7 +45,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionInfoArea() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void display();//display results from current polygon
     void mouseMoveEvent(QMouseEvent *e) override;

@@ -45,7 +45,7 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawSpline() override;
     void reset();
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;

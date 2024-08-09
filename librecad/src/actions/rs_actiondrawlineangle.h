@@ -46,7 +46,7 @@ public:
         RS2::ActionType actionType = RS2::ActionDrawLineAngle);
     ~RS_ActionDrawLineAngle() override;
     void reset();
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     void preparePreview();

@@ -42,7 +42,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionModifyTrimAmount() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     QStringList getAvailableCommands() override;
     double getDistance() const{return distance;}

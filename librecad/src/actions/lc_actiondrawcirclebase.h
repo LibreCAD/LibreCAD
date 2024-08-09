@@ -31,7 +31,7 @@ class LC_ActionDrawCircleBase:public RS_PreviewActionInterface {
 public:
     LC_ActionDrawCircleBase(const char* name, RS_EntityContainer &container, RS_GraphicView &graphicView);
     ~LC_ActionDrawCircleBase() override;
-    void init(int status = 0) override;
+    void init(int status) override;
 protected:
     virtual void reset();
     bool moveRelPointAtCenterAfterTrigger = true; // fixme - move to options?

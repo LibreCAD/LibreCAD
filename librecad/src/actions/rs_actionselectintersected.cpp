@@ -70,7 +70,7 @@ void RS_ActionSelectIntersected::trigger(){
             RS_Selection s(*container, graphicView);
             s.selectIntersected(pPoints->v1, pPoints->v2, select);
             updateSelectionWidget();
-            init();
+            init(SetPoint1);
         }
     }
 }

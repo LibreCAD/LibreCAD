@@ -41,7 +41,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionDrawCircleTan2() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     bool getCenters(RS_Entity* secondEntityCandidate = nullptr);
     bool preparePreview();

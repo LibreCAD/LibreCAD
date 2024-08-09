@@ -70,7 +70,7 @@ void LC_ActionDrawSplinePoints::reset(){
 }
 
 void LC_ActionDrawSplinePoints::init(int status){
-    RS_PreviewActionInterface::init(status);
+    RS_ActionDrawSpline::init(status);
     reset(); // fixme - review reset, try to make it common with base action
 }
 
@@ -152,7 +152,7 @@ void LC_ActionDrawSplinePoints::onCoordinateEvent(int status, [[maybe_unused]] b
             moveRelativeZero(mouse);
             updateMouseButtonHints();
             break;
-        case SetNextPoint:o
+        case SetNextPoint:
             moveRelativeZero(mouse);
             if (pPoints->spline.get()){
                 pPoints->spline->addPoint(mouse);
@@ -196,10 +196,10 @@ QStringList LC_ActionDrawSplinePoints::getAvailableCommands(){
         case SetStartPoint:
             break;
         case SetNextPoint:
-            if (pPoints->data.splinePoints.size() > 0){
+            if (!pPoints->data.splinePoints.empty()){
                 cmd += command("undo");
             }
-            if (pPoints->undoBuffer.size() > 0){
+            if (!pPoints->undoBuffer.empty()){
                 cmd += command("redo");
             }
             if (pPoints->data.splinePoints.size() > 2){
@@ -225,14 +225,14 @@ void LC_ActionDrawSplinePoints::updateMouseButtonHints(){
                 msg += command("close");
                 msg += "/";
             }
-            if (pPoints->data.splinePoints.size() > 0){
+            if (!pPoints->data.splinePoints.empty()){
                 msg += command("undo");
             }
-            if (pPoints->undoBuffer.size() > 0){
+            if (!pPoints->undoBuffer.empty()){
                 msg += command("redo");
             }
 
-            if (pPoints->data.splinePoints.size() > 0){
+            if (!pPoints->data.splinePoints.empty()){
                 updateMouseWidget(tr("Specify next control point or [%1]").arg(msg),tr("Back"));
             } else {
                 updateMouseWidgetTRBack(tr("Specify next control point"));
@@ -278,7 +278,9 @@ void LC_ActionDrawSplinePoints::undo(){
         pPoints->undoBuffer.push_back(v);
         pPoints->spline->removeLastPoint();
 
-        if (!splinePts.size()) setStatus(SetStartPoint);
+        if (splinePts.empty()) {
+            setStatus(SetStartPoint);
+        }
         else {
             v = splinePts.back();
             graphicView->moveRelativeZero(v);

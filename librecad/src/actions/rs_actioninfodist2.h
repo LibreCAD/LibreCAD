@@ -45,7 +45,7 @@ public:
         RS_GraphicView &graphicView,
         bool fromPointToEntity = false);
     ~RS_ActionInfoDist2() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};

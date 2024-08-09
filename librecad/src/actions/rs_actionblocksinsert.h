@@ -42,7 +42,7 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView);
     ~RS_ActionBlocksInsert() override;
-    void init(int status = 0) override;
+    void init(int status) override;
     void reset();
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;

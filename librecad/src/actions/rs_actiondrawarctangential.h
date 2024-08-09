@@ -46,7 +46,7 @@ public:
         RS_GraphicView &graphicView);
     ~RS_ActionDrawArcTangential() override;
     void reset();
-    void init(int status = 0) override;
+    void init(int status) override;
     void trigger() override;
     void preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
