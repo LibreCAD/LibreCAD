@@ -189,7 +189,6 @@ public:
     int getOffsetY() const;
     void centerOffsetX();
     void centerOffsetY();
-    void centerOffsets(const RS_Vector &min, const RS_Vector &size, double factor);
     void centerX(double x);
     void centerY(double y);
 /**

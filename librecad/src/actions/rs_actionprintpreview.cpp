@@ -276,10 +276,10 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 
         // changing scale around the drawing center
         pinBase += graphic->getSize()*(oldScale - f)*0.5;
-//        graphic->setPaperInsertionBase(pinBase);
+        graphic->setPaperInsertionBase(pinBase);
 
         if(autoZoom)
-            graphicView->zoomPage();
+            graphicView->zoomPageEx();
         graphicView->redraw();
         return true;
     }
@@ -358,7 +358,7 @@ void RS_ActionPrintPreview::calcPagesNum() {
 }
 
 void RS_ActionPrintPreview::updateMouseButtonHints() {
-    updateMouseWidget(tr("Position Paper"), "", MOD_SHIFT_AND_CTRL(tr("Move Horizontally"), tr("Move Vertically")));
+    updateMouseWidget(tr("Drag with Left Button to Position Paper or with Middle Button to Pan" ), "", MOD_SHIFT_AND_CTRL(tr("Move Horizontally"), tr("Move Vertically")));
 }
 
 LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {

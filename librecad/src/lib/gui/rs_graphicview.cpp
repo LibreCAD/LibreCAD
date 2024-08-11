@@ -207,35 +207,6 @@ void RS_GraphicView::centerOffsetX() {
     }
 }
 
-void RS_GraphicView::centerOffsets(const RS_Vector &topRight, const RS_Vector &size, double factor) {
-    if (container && !zoomFrozen) {
-//        LC_ERR << "GV SIZ:" <<  getWidth() << " , " << getHeight();
-//        LC_ERR << "GV POS:" <<  getWidth() << " , " << getHeight();
-
-        RS_Graphic* graphic = container->getGraphic();
-        double paperScale = graphic->getPaperScale();
-
-        RS_Vector min = -topRight;
-        double factorX = 1/*paperScale - factor*/;
-
-        RS_Vector sizeScaled = size*factor;
-
-        int visibleWidth = getWidth() - borderLeft - borderRight;
-        int newOffsetX = (int) ((visibleWidth - sizeScaled.x) /2.0  - (min.x*factorX) ) + borderLeft ;
-        offsetX = newOffsetX;
-
-
-        int visibleHeight = getHeight() - borderTop - borderBottom;
-        int newOffsetY = (int) ((visibleHeight - sizeScaled.y) / 2.0 - (min.y*factorX) ) + borderBottom ;
-        offsetY = newOffsetY;
-
-        LC_ERR << "NEW OFFSET:" <<  newOffsetX << " , " << newOffsetY;
-
-//        offsetX = 0;
-//        offsetY = 0;
-    }
-}
-
 /**
  * Centers the drawing in y-direction.
  */
@@ -937,20 +908,23 @@ void RS_GraphicView::zoomPageEx() {
         return;
     }
 
-    const RS_Vector &printAreaSize = graphic->getPrintAreaSize();
+    const RS_Vector &printAreaSize = graphic->getPrintAreaSize(true);
     double paperScale = graphic->getPaperScale();
-    RS_Vector s = printAreaSize / paperScale;
+    RS_Vector printAreaSizeInViewCoordinates = printAreaSize / paperScale;
 
     double fx, fy;
 
-    if (s.x>RS_TOLERANCE) {
-        fx = (getWidth()-borderLeft-borderRight) / s.x;
+    int widthToFit = getWidth()-borderLeft-borderRight;
+
+    if (printAreaSizeInViewCoordinates.x > RS_TOLERANCE) {
+        fx = widthToFit / printAreaSizeInViewCoordinates.x;
     } else {
         fx = 1.0;
     }
 
-    if (s.y>RS_TOLERANCE) {
-        fy = (getHeight()-borderTop-borderBottom) / s.y;
+    int heightToFit = getHeight()-borderTop-borderBottom;
+    if (printAreaSizeInViewCoordinates.y > RS_TOLERANCE) {
+        fy = heightToFit / printAreaSizeInViewCoordinates.y;
     } else {
         fy = 1.0;
     }
@@ -971,16 +945,17 @@ void RS_GraphicView::zoomPageEx() {
     RS_DEBUG->print("f: %f/%f", fx, fy);
 
     const RS_Vector &paperInsertionBase = graphic->getPaperInsertionBase();
-    centerOffsets((paperInsertionBase), printAreaSize, fx);
+
+    offsetX = (int)((getWidth()-borderLeft-borderRight - printAreaSizeInViewCoordinates.x*factor.x)/2.0 +
+                     (paperInsertionBase.x * factor.x / paperScale)) + borderLeft;
+
+    fy = factor.y;
+
+    offsetY = (int)((getHeight() - borderTop - borderBottom - printAreaSizeInViewCoordinates.y*fy)/2.0 +  paperInsertionBase.y*fy / paperScale) + borderBottom;
 
 // fixme - remove debug code
-    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx;
+    LC_ERR << " Zoom Ex " << offsetX << " , " << offsetY << " Factor: " << fx << "  Paper Scale: " << paperScale;
     LC_ERR << "PIB:" <<  paperInsertionBase.x << " , " << paperInsertionBase.y;
-//    centerOffsetX();
-//    centerOffsetY();
-    adjustOffsetControls();
-    adjustZoomControls();
-//    updateGrid();
 
     redraw();
 }
@@ -1570,16 +1545,21 @@ void RS_GraphicView::drawPaper(RS_Painter *painter) {
 
 
     // fixme - remove debug code
+    // drawing zero
     const RS_Vector &zero = RS_Vector(0, 0);
     RS_Vector zeroGui = toGui(RS_Vector(zero)/scale);
     painter->fillRect(zeroGui.x-5, zeroGui.y-5, 10, 10,
                       RS_Color(255, 0, 0));
 
+    // paper base point
     RS_Vector pinsBaseGui = toGui(-RS_Vector(pinsbase)/scale);
 
     painter->fillRect(pinsBaseGui.x-5, pinsBaseGui.y-5, 10, 10,
                       RS_Color(0, 255, 0));
 
+    // ui point
+    painter->fillRect(0, 0, 10, 10,
+                      RS_Color(0, 0, 255));
 }
 
 

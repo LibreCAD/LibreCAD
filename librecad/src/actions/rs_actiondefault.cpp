@@ -672,7 +672,7 @@ void RS_ActionDefault::updateMouseButtonHints(){
             break;
         }
         case Neutral: {
-            updateMouseWidget();
+            updateMouseWidget(tr(""), "",  MOD_SHIFT_AND_CTRL(tr("Scroll horizontally"), tr("Scroll Vertically")));
             break;
         }
         case SetCorner2: {

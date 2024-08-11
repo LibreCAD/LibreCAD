@@ -77,6 +77,7 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions()
     connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onCenterClicked);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onCalcPagesNumClicked);
     connect(ui->bZoomPage, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onZoomToPageClicked);
+    connect(ui->cbTiledPrint, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onTiledPrintClicked);
 
     //make sure user scale is accepted
     ui->cbScale->setInsertPolicy(QComboBox::NoInsert);
@@ -221,6 +222,11 @@ void QG_PrintPreviewOptions::onCenterClicked() {
 
 void QG_PrintPreviewOptions::onZoomToPageClicked() {
     action->zoomToPage();
+}
+
+void QG_PrintPreviewOptions::onTiledPrintClicked(){
+    bool enabled = ui->cbTiledPrint->isChecked();
+    ui->wTiledPrint->setVisible(enabled);
 }
 
 void QG_PrintPreviewOptions::onScaleLineClicked(bool state) {

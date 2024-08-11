@@ -53,6 +53,7 @@ public slots:
     void onScaleFixedClicked(bool fixed);
     void onCalcPagesNumClicked();
     void hideOptions() override;
+    void onTiledPrintClicked();
 protected:
     RS_ActionPrintPreview* action = nullptr;
     void doSaveSettings() override;
