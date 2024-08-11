@@ -546,7 +546,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
 
-			if (recentFiles->indexOf(name) == -1) recentFiles->add(name);
+            if (!recentFiles->contains(name)) {
+                recentFiles->add(name);
+            }
 
 			w->setWindowTitle(format_filename_caption(name) + "[*]");
 			if (w->getGraphicView()->isDraftMode())
@@ -2031,8 +2033,6 @@ void QC_ApplicationWindow::
             emit(gridChanged(graphic->isGridOn()));
         }
 
-        recentFiles->updateRecentFilesMenu();
-
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
 
 
@@ -2417,7 +2417,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 		if (w->getDocument()->isModified() && !hasParent && !closeAll) {
 			doActivate(w);
 			switch (showCloseDialog(w, window_list.count() > 1)) {
-			case QG_ExitDialog::Close:
+            case QG_ExitDialog::Discard:
 				closeAll = true;
 				break;
 			case QG_ExitDialog::SaveAll:
@@ -2551,8 +2551,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(slotFileClosing(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));

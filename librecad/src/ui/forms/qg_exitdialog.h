@@ -43,7 +43,7 @@ public:
     QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_ExitDialog();
 	enum ExitDialogResult {
-		Cancel, Close, Save, SaveAll
+        Cancel, Discard, Save, SaveAll
 	};
 
 public slots:

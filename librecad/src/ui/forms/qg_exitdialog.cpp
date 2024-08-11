@@ -39,7 +39,7 @@
  */
 QG_ExitDialog::QG_ExitDialog(QWidget* parent, bool modal, Qt::WindowFlags fl)
 	: QDialog(parent, fl)
-	, ui(new Ui::QG_ExitDialog{})
+    , ui(std::make_unique<Ui::QG_ExitDialog>())
 {
     setModal(modal);
 	ui->setupUi(this);
@@ -70,23 +70,16 @@ static void makeLetterAccell(QButton *btn)
 
 void QG_ExitDialog::init()
 {
-	setShowSaveAll(false);
+    QG_ExitDialog::setShowSaveAll(false);
 	//set dlg icon
     QMessageBox mb({}, "", "");
 	ui->l_icon->setPixmap( mb.iconPixmap());
-//    bLeave->setIcon(QIcon(":/actions/fileclose.png"));
-    // RVT_PORT makeLetterAccell( bLeave );
-//    bSave->setIcon(QIcon(":/actions/filesave2.png"));
-     // RVT_PORT makeLetterAccell( bSave );
-//    bSaveAs->setIcon(QIcon(":/actions/filesaveas.png"));
-     // RVT_PORT makeLetterAccell( bSaveAs );
-    // RVT_PORT  makeLetterAccell( bCancel );
 }
 
 void QG_ExitDialog::clicked(QAbstractButton * button){
 	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
     switch (bt){
-    case QDialogButtonBox::Close:
+    case QDialogButtonBox::Discard:
         emit accept();
         break;
     case QDialogButtonBox::Save:
@@ -120,15 +113,15 @@ void QG_ExitDialog::setForce(bool force) {
 void QG_ExitDialog::setShowSaveAll(bool show)
 {
 	ui->buttonBox->button(QDialogButtonBox::SaveAll)->setVisible(show);
-	QString close = show ? tr("Close All") : tr("Close");
-	ui->buttonBox->button(QDialogButtonBox::Close)->setText(close);
+    QString discard = show ? tr("Discard All") : tr("Discard");
+    ui->buttonBox->button(QDialogButtonBox::Discard)->setText(discard);
 }
 
 void QG_ExitDialog::slotSaveAll() {
-    done(3);
+    done(SaveAll);
 }
 
 void QG_ExitDialog::slotSave() {
-    done(2);
+    done(Save);
 }
 

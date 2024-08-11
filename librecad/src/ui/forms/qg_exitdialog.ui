@@ -64,7 +64,7 @@
    <item row="1" column="0" colspan="2">
     <widget class="QDialogButtonBox" name="buttonBox">
      <property name="standardButtons">
-      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Close|QDialogButtonBox::Save|QDialogButtonBox::SaveAll</set>
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Discard|QDialogButtonBox::Save|QDialogButtonBox::SaveAll</set>
      </property>
      <property name="centerButtons">
       <bool>true</bool>

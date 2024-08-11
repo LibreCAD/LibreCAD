@@ -23,13 +23,13 @@
 ** This copyright notice MUST APPEAR in all copies of the script!
 **
 **********************************************************************/
-#include "qg_recentfiles.h"
 
 #include <QActionGroup>
 #include <QFileInfo>
 #include <QMenu>
 
 #include "rs_debug.h"
+#include "qg_recentfiles.h"
 #include "rs_settings.h"
 
 /**
@@ -39,7 +39,9 @@
 QG_RecentFiles::QG_RecentFiles(QObject* parent, int number)
     : QObject(parent)
     , number(number)
-{}
+{
+    assert(number > 0);
+}
 
 QG_RecentFiles::~QG_RecentFiles()
 {
@@ -75,21 +77,23 @@ void QG_RecentFiles::add(const QString& filename) {
         if (i0+1==files.size()) return; //do nothing, file already being the last in list
         //move the i0 to the last
         files.erase(files.begin() + i0);
-        files.push_back(filename);
+		files.push_back(filename);
+        updateRecentFilesMenu();
         return;
     }
 
     // append
-    //files.push_back(filename);
     files.append(filename);
     if(files.size() > number)
         files.erase(files.begin(), files.begin() + files.size() - number);
+    if (hasMenuEntries())
+        updateRecentFilesMenu();
     RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
 
 QString QG_RecentFiles::get(int i) const{
-    if (i<files.size()) {
+    if (i>=0 && i<files.size()) {
         return files[i];
     } else {
         return QString("");
@@ -118,7 +122,8 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
     {
         QString filename = RS_SETTINGS->readEntry(QString("/File") +
                                                   QString::number(i+1));
-        if (QFileInfo(filename).exists()) add(filename);
+        if (QFileInfo::exists(filename))
+            add(filename);
     }
     RS_SETTINGS->endGroup();
 
@@ -133,7 +138,7 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
         a->setVisible(false);
         file_menu->addAction(a);
     }
-    if (count()>0) {
+    if (hasMenuEntries()) {
         updateRecentFilesMenu();
     }
 }
@@ -165,5 +170,3 @@ void QG_RecentFiles::updateRecentFilesMenu() {
     saveToSettings();
     RS_DEBUG->print("QG_RecentFiles::updateRecentFilesMenu(): ok\n");
 }
-
-
