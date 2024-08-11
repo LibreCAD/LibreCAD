@@ -75,8 +75,9 @@ void QG_RecentFiles::add(const QString& filename) {
     if (i0>=0) {
 		if (i0+1==files.size()) return; //do nothing, file already being the last in list
         //move the i0 to the last
-		files.erase(files.begin() + i0);
+        files.erase(files.cbegin() + i0);
 		files.push_back(filename);
+        updateRecentFilesMenu();
         return;
     }
 
@@ -84,13 +85,15 @@ void QG_RecentFiles::add(const QString& filename) {
     //files.push_back(filename);
     files.append(filename);
 	if(files.size() > number)
-		files.erase(files.begin(), files.begin() + files.size() - number);
+        files.erase(files.cbegin(), files.cbegin() + files.size() - number);
+    if (hasMenuEntries())
+        updateRecentFilesMenu();
 	RS_DEBUG->print("QG_RecentFiles::add: OK");
 }
 
 
 QString QG_RecentFiles::get(int i) const{
-	if (i<files.size()) {
+    if (i>=0 && i<files.size()) {
 		return files[i];
 	} else {
 		return QString("");
@@ -119,7 +122,8 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
     {
         QString filename = RS_SETTINGS->readEntry(QString("/File") +
                            QString::number(i+1));
-        if (QFileInfo(filename).exists()) add(filename);
+        if (QFileInfo(filename).exists())
+            add(filename);
     }
     RS_SETTINGS->endGroup();
 

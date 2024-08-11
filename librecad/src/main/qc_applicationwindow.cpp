@@ -509,7 +509,9 @@ bool QC_ApplicationWindow::doSave(QC_MDIWindow * w, bool forceSaveAs)
 			statusBar()->showMessage(msg, 2000);
 			commandWidget->appendHistory(msg);
 
-			if (recentFiles->indexOf(name) == -1) recentFiles->add(name);
+            if (!recentFiles->contains(name)) {
+                recentFiles->add(name);
+            }
 
 			w->setWindowTitle(format_filename_caption(name) + "[*]");
 			if (w->getGraphicView()->isDraftMode())
@@ -1952,8 +1954,6 @@ void QC_ApplicationWindow::
             }
             emit(gridChanged(graphic->isGridOn()));
         }
-
-        recentFiles->updateRecentFilesMenu();
 
         RS_DEBUG->print("QC_ApplicationWindow::slotFileOpen: set caption");
 
