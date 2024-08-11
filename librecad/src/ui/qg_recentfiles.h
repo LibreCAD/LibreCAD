@@ -60,8 +60,16 @@ public:
 	int getNumber() const;
 
 	int indexOf(const QString& filename) const;
-	void addFiles(QMenu* file_menu);
+    bool contains(const QString& filename) const
+    {
+        return indexOf(filename) >= 0;
+    }
+    void addFiles(QMenu* file_menu);
 	void updateRecentFilesMenu();
+    bool hasMenuEntries() const
+    {
+        return recentFilesAction.size() > 0;
+    }
 
 private:
     /**
