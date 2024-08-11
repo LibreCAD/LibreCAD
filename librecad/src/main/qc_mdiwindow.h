@@ -114,9 +114,6 @@ public:
 
     bool has_children() const;
 
-signals:
-    void signalClosing(QC_MDIWindow*);
-
 protected:
     void closeEvent(QCloseEvent*) override;
 

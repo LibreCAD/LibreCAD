@@ -37,8 +37,10 @@
 #include <QMdiArea>
 #include <QPainter>
 
+#include "qc_applicationwindow.h"
 #include "qc_mdiwindow.h"
 
+#include "qg_exitdialog.h"
 #include "qg_filedialog.h"
 #include "qg_graphicview.h"
 #include "rs_debug.h"
@@ -79,7 +81,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, Qt::WindowFlags wf
     static unsigned idCounter = 0;
     id = idCounter++;
     setSizePolicy(QSizePolicy::Preferred,QSizePolicy::Preferred);
-	if (document) {
+    if (document != nullptr) {
 		if (document->getLayerList()) {
             // Link the graphic view to the layer widget
             document->getLayerList()->addListener(graphicView);
@@ -103,6 +105,7 @@ QC_MDIWindow::QC_MDIWindow(RS_Document *doc, QWidget *parent, Qt::WindowFlags wf
 QC_MDIWindow::~QC_MDIWindow()
 {
     RS_DEBUG->print("~QC_MDIWindow: begin");
+    try {
     if(!(graphicView != nullptr && graphicView->isCleanUp())){
 
 		//do not clear layer/block lists, if application is being closed
@@ -122,12 +125,16 @@ QC_MDIWindow::~QC_MDIWindow()
 		}
 		document = nullptr;
 	}
+    } catch (...) {
+        LC_ERR<<__func__<<"(): received exception";
+    }
+
     RS_DEBUG->print("~QC_MDIWindow: end");
 }
 
 QG_GraphicView* QC_MDIWindow::getGraphicView() const
 {
-    return (graphicView) ? graphicView : nullptr;
+    return graphicView;
 }
 
 /** @return Pointer to document */
@@ -211,7 +218,7 @@ QList<QC_MDIWindow*>& QC_MDIWindow::getChildWindows()
  */
 QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
     for(auto* w: childWindows){
-		if(w->getGraphicView()->isPrintPreview()){
+        if(w != nullptr && w->getGraphicView()->isPrintPreview()){
 			return w;
 		}
 	}
@@ -225,8 +232,32 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    emit(signalClosing(this));
-    ce->accept(); // handling delegated to QApplication
+    bool cancel = true;
+    bool hasParent = getParentWindow() != nullptr;
+    const auto& appWin = QC_ApplicationWindow::getAppWindow();
+    if (getDocument()->isModified() && !hasParent) {
+        auto value=appWin->showCloseDialog(this);
+        switch (value) {
+        case QG_ExitDialog::Save:
+            cancel = !appWin->doSave(this);
+            break;
+        case QG_ExitDialog::Discard:
+            cancel = false;
+            break;
+        case QG_ExitDialog::Cancel:
+        default:
+            break;
+        }
+    }
+    if (!cancel)
+    {
+        appWin->doClose(this);
+        appWin->doArrangeWindows(RS2::CurrentMode);
+        ce->accept(); // handling delegated to QApplication
+    } else {
+        appWin->slotFileAutoSave();
+        ce->ignore();
+    }
 
     RS_DEBUG->print("QC_MDIWindow::closeEvent end");
 }

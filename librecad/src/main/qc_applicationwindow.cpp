@@ -2339,7 +2339,7 @@ bool QC_ApplicationWindow::slotFileCloseAll()
 		if (w->getDocument()->isModified() && !hasParent && !closeAll) {
 			doActivate(w);
 			switch (showCloseDialog(w, window_list.count() > 1)) {
-			case QG_ExitDialog::Close:
+            case QG_ExitDialog::Discard:
 				closeAll = true;
 				break;
 			case QG_ExitDialog::SaveAll:
@@ -2473,8 +2473,6 @@ void QC_ApplicationWindow::slotFilePrintPreview(bool on)
                 QC_MDIWindow* w = new QC_MDIWindow(parent->getDocument(), mdiAreaCAD, {});
                 mdiAreaCAD->addSubWindow(w);
                 parent->addChildWindow(w);
-                connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-                        this, SLOT(slotFileClosing(QC_MDIWindow*)));
 
                 w->setWindowTitle(tr("Print preview for %1").arg(parent->windowTitle()));
                 w->setWindowIcon(QIcon(":/main/document.png"));

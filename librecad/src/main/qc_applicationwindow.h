@@ -330,6 +330,11 @@ public:
 
     // activates window with given filename of drawing, if any
     void activateWindowWithFile(QString &fileName);
+    int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
+    bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
+    void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
+    void doClose(QC_MDIWindow* w, bool activateNext = true);
+
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
@@ -347,12 +352,8 @@ private:
     /** Helper function for Menu file -> New & New.... */
 	bool slotFileNewHelper(QString fileName, QC_MDIWindow* w = nullptr);
 	// more helpers
-	void doArrangeWindows(RS2::SubWindowMode mode, bool actuallyDont = false);
-	void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
-	bool doSave(QC_MDIWindow* w, bool forceSaveAs = false);
-	void doClose(QC_MDIWindow* w, bool activateNext = true);
+    void setTabLayout(RS2::TabShape s, RS2::TabPosition p);
 	void doActivate(QMdiSubWindow* w);
-	int showCloseDialog(QC_MDIWindow* w, bool showSaveAll = false);
     void enableFileActions(QC_MDIWindow* w);
 
     /**
