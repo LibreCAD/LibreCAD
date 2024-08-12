@@ -65,19 +65,26 @@ QG_PrintPreviewOptions::QG_PrintPreviewOptions()
         ui->cbScale->blockSignals(true);
             scale(ui->cbScale->currentText());
         ui->cbScale->blockSignals(false);
-//        action->center();
     });
         connect(ui->cbScale, &QComboBox::currentIndexChanged, [this](int index){
         ui->cbScale->blockSignals(true);
         scale(ui->cbScale->itemText(index));
         ui->cbScale->blockSignals(false);
-//        action->center();
     });
     connect(ui->bFit, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onFitClicked);
     connect(ui->bCenter, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onCenterClicked);
     connect(ui->bCalcPagesNum, &QPushButton::clicked, this, &QG_PrintPreviewOptions::onCalcPagesNumClicked);
     connect(ui->bZoomPage, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onZoomToPageClicked);
     connect(ui->cbTiledPrint, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onTiledPrintClicked);
+
+    connect(ui->tbSettings, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onSettingsClicked);
+    connect(ui->tbPortait, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onPortraitClicked);
+    connect(ui->tbLandscape, &QToolButton::clicked, this, &QG_PrintPreviewOptions::onLandscapeClicked);
+
+    connect(ui->sbPagesVertical, &QSpinBox::valueChanged, this, &QG_PrintPreviewOptions::onVerticalPagesValueChanges);
+    connect(ui->sbPagessHorizontal, &QSpinBox::valueChanged, this, &QG_PrintPreviewOptions::onHorizontalPagesValueChanges);
+
+    ui->cbTiledPrint->setChecked(false);
 
     //make sure user scale is accepted
     ui->cbScale->setInsertPolicy(QComboBox::NoInsert);
@@ -123,9 +130,7 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
         onBlackWhiteClicked(blackAndWhiteMode);
         updateScaleBox(printScaleFactor);
 
-
-        ui->sbPagessHorizontal->setValue(action->getPagesNumHorizontal());
-        ui->sbPagesVertical->setValue(action->getPagesNumVertical());
+        updatePageNumbers();
     } else {
         paperScaleFixed = loadBool("PrintScaleFixed", false);
         scaleLineWidth = loadBool("ScaleLineWidth", false);
@@ -139,9 +144,8 @@ void QG_PrintPreviewOptions::doSetAction(RS_ActionInterface *a, bool update) {
         onBlackWhiteClicked(blackAndWhiteMode);
 
         scale(scaleFactorStr, true);
-
-//        onCenterClicked();
     }
+    setPaperOrientation(action->isPortrait());
 }
 
 QStringList QG_PrintPreviewOptions::readCustomRatios(bool metric) {
@@ -175,8 +179,8 @@ void QG_PrintPreviewOptions::initializeScaleBoxItems() {
     bool useImperialScales = isUseImperialScales();
     QStringList* scales;
     if (useImperialScales){
-        QStringList imperialScales = {"1:1"/*,"1:2","1:4","1:8","1:16","1:32","1:64","1:128","1:256",
-                                      "2:1", "4:1", "16:1", "32:1", "64:1", "128:1", "256:1"*/};
+        QStringList imperialScales = {"1:1","1:2","1:4","1:8","1:16","1:32","1:64","1:128","1:256",
+                                      "2:1", "4:1", "16:1", "32:1", "64:1", "128:1", "256:1"};
 
         addScalesToCombobox(imperialScales);
         defaultScalesStartIndex = ui->cbScale->count();
@@ -185,9 +189,9 @@ void QG_PrintPreviewOptions::initializeScaleBoxItems() {
         addScalesToCombobox(customScales);
     } else {
         QStringList metricScales = {
-            "1:1",/*"1:2","1:5","1:10","1:20","1:25","1:50","1:75","1:100","1:125","1:150","1:175","1:200","1:250",
+            "1:1","1:2","1:5","1:10","1:20","1:25","1:50","1:75","1:100","1:125","1:150","1:175","1:200","1:250",
             "1:500","1:750","1:1000","1:2500","1:5000","1:7500","1:10000","2:1","5:1","10:1","20:1","25:1","50:1",
-            "75:1","100:1","125:1","150:1","175:1","200:1","250:1","500:1","750:1","1000:1"*/};
+            "75:1","100:1","125:1","150:1","175:1","200:1","250:1","500:1","750:1","1000:1"};
 
         addScalesToCombobox(metricScales);
         defaultScalesStartIndex = ui->cbScale->count();
@@ -227,6 +231,48 @@ void QG_PrintPreviewOptions::onZoomToPageClicked() {
 void QG_PrintPreviewOptions::onTiledPrintClicked(){
     bool enabled = ui->cbTiledPrint->isChecked();
     ui->wTiledPrint->setVisible(enabled);
+    if (!enabled){
+        if (action != nullptr) {
+            if (ui->cFixed) {
+                action->calcPagesNum(false);
+            } else {
+                fitPage();
+            }
+        }
+    }
+}
+
+void QG_PrintPreviewOptions::onSettingsClicked(){
+    action->invokeSettingsDialog();
+}
+
+void QG_PrintPreviewOptions::onPortraitClicked(){
+    bool portrait = ui->tbPortait->isChecked();
+    setPaperOrientation(portrait);
+    action->setPaperOrientation(portrait);
+}
+
+void QG_PrintPreviewOptions::onLandscapeClicked(){
+    bool portrait = !ui->tbLandscape->isChecked();
+    setPaperOrientation(portrait);
+    action->setPaperOrientation(portrait);
+}
+
+void QG_PrintPreviewOptions::setPaperOrientation(bool isPortait){
+     ui->tbLandscape->blockSignals(true);
+     ui->tbPortait->blockSignals(true);
+     ui->tbPortait->setChecked(isPortait);
+     ui->tbLandscape->setChecked(!isPortait);
+    ui->tbLandscape->blockSignals(false);
+    ui->tbPortait->blockSignals(false);
+}
+
+void QG_PrintPreviewOptions::onVerticalPagesValueChanges(int value) {
+    action->setPagesNumVertical(value);
+}
+
+void QG_PrintPreviewOptions::onHorizontalPagesValueChanges(int value) {
+    action->setPagesNumHorizontal(value);
 }
 
 void QG_PrintPreviewOptions::onScaleLineClicked(bool state) {
@@ -249,10 +295,15 @@ void QG_PrintPreviewOptions::onBlackWhiteClicked(bool on) {
 
 void QG_PrintPreviewOptions::onFitClicked() {
     if (!ui->cFixed->isChecked()) {
-        action->fit();
-        updateScaleBox(action->getScale());
+        fitPage();
     }
 }
+
+void QG_PrintPreviewOptions::fitPage() {
+    action->fit();
+    updateScaleBox(action->getScale());
+}
+
 /** print scale fixed to saved value **/
 void QG_PrintPreviewOptions::onScaleFixedClicked(bool fixed){
     action->setPaperScaleFixed(fixed);
@@ -265,11 +316,13 @@ void QG_PrintPreviewOptions::setScaleFixedToUI(bool fixed) {
     if(ui->cFixed->isChecked() != fixed) {
         ui->cFixed->setChecked(fixed);
     }
+    ui->sbPagesVertical->setEnabled(!fixed);
+    ui->sbPagessHorizontal->setEnabled(!fixed);
 }
 
 void QG_PrintPreviewOptions::onCalcPagesNumClicked() {
     if (action != nullptr) {
-        action->calcPagesNum();
+        action->calcPagesNum(true);
     }
 }
 
@@ -415,4 +468,28 @@ bool QG_PrintPreviewOptions::isUseImperialScales() {
 void QG_PrintPreviewOptions::hideOptions() {
     LC_ActionOptionsWidget::hideOptions();
     LC_ERR << " PREVIEW - HIDE OPTIONS";
+}
+
+void QG_PrintPreviewOptions::updateUI(int mode) {
+    switch (mode){
+        case MODE_UPDATE_ORIENTATION: {
+            setPaperOrientation(action->isPortrait());
+            break;
+        }
+        case MODE_UPDATE_PAGE_NUMBERS:{
+            updatePageNumbers();
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+void QG_PrintPreviewOptions::updatePageNumbers() {
+    ui->sbPagessHorizontal->blockSignals(true);
+    ui->sbPagesVertical->blockSignals(true);
+    ui->sbPagessHorizontal->setValue(action->getPagesNumHorizontal());
+    ui->sbPagesVertical->setValue(action->getPagesNumVertical());
+    ui->sbPagessHorizontal->blockSignals(false);
+    ui->sbPagesVertical->blockSignals(false);
 }

@@ -36,7 +36,6 @@
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_settings.h"
-#include "rs_debug.h"
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : LC_ActionFactoryBase(parent, a_handler){

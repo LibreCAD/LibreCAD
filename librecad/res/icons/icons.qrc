@@ -256,5 +256,7 @@
         <file>state_ctrl_yes.svg</file>
         <file>paste_transform.svg</file>
         <file>angle_3_points.svg</file>
+        <file>page_landscape.svg</file>
+        <file>page_portait.svg</file>
     </qresource>
 </RCC>

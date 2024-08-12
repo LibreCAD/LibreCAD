@@ -281,7 +281,8 @@ LC_WidgetFactory::LC_WidgetFactory(QC_ApplicationWindow* main_win,
         "ZoomAuto",
         "ZoomPrevious",
         "ZoomWindow",
-        "ZoomPan"
+        "ZoomPan",
+        "OptionsDrawing"
     });
 
     actionsToDisableInPrintPreview.append(line_actions);

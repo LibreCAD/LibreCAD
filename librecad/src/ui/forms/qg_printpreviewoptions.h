@@ -41,6 +41,12 @@ public:
     QG_PrintPreviewOptions();
     ~QG_PrintPreviewOptions() override;
 
+    enum {
+        MODE_UPDATE_ORIENTATION,
+        MODE_UPDATE_PAGE_NUMBERS
+    };
+
+    void updateUI(int mode) override;
 public slots:
     void onCenterClicked();
     void onZoomToPageClicked();
@@ -54,6 +60,12 @@ public slots:
     void onCalcPagesNumClicked();
     void hideOptions() override;
     void onTiledPrintClicked();
+    void onSettingsClicked();
+    void onPortraitClicked();
+    void onLandscapeClicked();
+    void setPaperOrientation(bool isPortait);
+    void onVerticalPagesValueChanges(int value);
+    void onHorizontalPagesValueChanges(int value);
 protected:
     RS_ActionPrintPreview* action = nullptr;
     void doSaveSettings() override;
@@ -61,7 +73,6 @@ protected:
 protected slots:
     void languageChange() override;
 private:
-    void init();
     int defaultScalesStartIndex = 1;
     std::unique_ptr<Ui::Ui_PrintPreviewOptions> ui;
     bool isUseImperialScales();
@@ -73,6 +84,9 @@ private:
     void setScaleLineToUI(bool state);
     QStringList readCustomRatios(bool metric);
     void saveCustomRatios();
+    void fitPage();
+    void updatePageNumbers();
+
 };
 
 #endif // QG_PRINTPREVIEWOPTIONS_H

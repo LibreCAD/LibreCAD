@@ -62,8 +62,36 @@ RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
 
 RS_ActionPrintPreview::~RS_ActionPrintPreview()=default;
 
+void invokeSettingsDialog();
+
+void zoomPageExWithBorder(int borderSize);
+
 void RS_ActionPrintPreview::init(int status) {
     RS_ActionInterface::init(status);
+}
+
+void RS_ActionPrintPreview::invokeSettingsDialog(){
+    if (graphic) {
+        RS_DIALOGFACTORY->requestOptionsDrawingDialog(*graphic);
+        updateCoordinateWidgetFormat();
+        updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_ORIENTATION);
+        zoomToPage();
+    }
+}
+
+bool RS_ActionPrintPreview::isPortrait(){
+    bool landscape;
+    graphic->getPaperFormat(&landscape);
+    return !landscape;
+}
+
+void RS_ActionPrintPreview::setPaperOrientation(bool portrait) {
+    bool landscape;
+    RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
+    if (landscape != !portrait) {
+        graphic->setPaperFormat(format, !portrait);
+        zoomToPage();
+    }
 }
 
 void RS_ActionPrintPreview::mouseMoveEvent(QMouseEvent* e) {
@@ -226,17 +254,12 @@ void RS_ActionPrintPreview::center() {
     if (graphic) {
         graphic->centerToPage();
         graphicView->zoomPage();
-        graphicView->redraw();
     }
 }
 
 void RS_ActionPrintPreview::zoomToPage(){
     if (graphic) {
         graphicView->zoomPageEx();
-        RS_Vector paperInsertionBase = graphic->getPaperInsertionBase();
-//        graphicView->setOffsetX(-(int)paperInsertionBase.x);
-//        graphicView->setOffsetY(-(int)graphic->getMarginBottom());
-//        graphicView->redraw();
     }
 }
 
@@ -255,10 +278,8 @@ void RS_ActionPrintPreview::fit() {
         }
         else{
             graphic->setPagesNum(1,1);
+            updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
         }
-        //        if(std::abs(f0-graphic->getPaperScale())>RS_TOLERANCE){
-        //only zoomPage when scale changed
-        //        }
         graphic->centerToPage();
         graphicView->zoomPage();
         graphicView->redraw();
@@ -275,15 +296,30 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
         graphic->setPaperScale(f);
 
         // changing scale around the drawing center
-        pinBase += graphic->getSize()*(oldScale - f)*0.5;
-        graphic->setPaperInsertionBase(pinBase);
+//        pinBase += graphic->getSize()*(oldScale - f)*0.5;
+//        graphic->setPaperInsertionBase(pinBase);
 
-        if(autoZoom)
-            graphicView->zoomPageEx();
+        pinBase *= f;
+
+        if(autoZoom) {
+            zoomPageExWithBorder(100);
+        }
         graphicView->redraw();
         return true;
     }
     return false;
+}
+
+void RS_ActionPrintPreview::zoomPageExWithBorder(int borderSize) {
+    int bBottom = this->graphicView->getBorderBottom();
+    int bTop = this->graphicView->getBorderTop();
+    int bLeft = this->graphicView->getBorderLeft();
+    int bRight = this->graphicView->getBorderRight();
+    // just a small usability improvement - we set additional borders on zoom to let the user
+// see that there might be drawing elements around paper
+    this->graphicView->setBorders(borderSize, borderSize, borderSize, borderSize);
+    this->graphicView->zoomPageEx();
+    this->graphicView->setBorders(bLeft, bTop, bRight, bBottom);
 }
 
 double RS_ActionPrintPreview::getScale() const{
@@ -337,32 +373,65 @@ bool RS_ActionPrintPreview::isPaperScaleFixed(){
 }
 
 /** calculate number of pages needed to contain a drawing */
-void RS_ActionPrintPreview::calcPagesNum() {
+void RS_ActionPrintPreview::calcPagesNum(bool multiplePages) {
     if (graphic) {
-        RS_Vector printArea = graphic->getPrintAreaSize(false);
-        RS_Vector graphicSize = graphic->getSize() * graphic->getPaperScale();
-        int pX = ceil(graphicSize.x / printArea.x);
-        int pY = ceil(graphicSize.y / printArea.y);
+        if (multiplePages) {
+            RS_Vector printArea = graphic->getPrintAreaSize(false);
+            RS_Vector graphicSize = graphic->getSize() * graphic->getPaperScale();
+            int pX = ceil(graphicSize.x / printArea.x);
+            int pY = ceil(graphicSize.y / printArea.y);
 
-        if ( pX > 99 || pY > 99) { // fixme - why such limit? Why hardcoded?
-            commandMessage(tr("Limit of pages has been exceeded."));
-            return;
+            if (pX > 99 || pY > 99) { // fixme - why such limit? Why hardcoded?
+                commandMessage(tr("Limit of pages has been exceeded."));
+                return;
+            }
+
+            graphic->setPagesNum(pX, pY);
+            graphic->centerToPage();
+            graphicView->zoomPage();
         }
-
-        graphic->setPagesNum(pX, pY);
-        graphic->centerToPage();
-        graphicView->zoomPage();
-        graphicView->redraw();
+        else {
+            graphic->setPagesNum(1, 1);
+        }
+        updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
         updateOptions();
     }
 }
+// fixme - sand -  review and check why subtle rounding issues occur on some pages values
+void RS_ActionPrintPreview::setPagesNumHorizontal(int pagesCount) {
+    RS_Vector printArea = graphic->getPrintAreaSize(false);
+    RS_Vector graphicSize = graphic->getSize();
+    double paperScale = pagesCount * printArea.x / (graphicSize.x + 5);
+    int vertPagesCount = ceil(graphicSize.y * paperScale / printArea.y);
+    graphic->setPagesNum(pagesCount, vertPagesCount);
+    graphic->setPaperScale(paperScale);
 
-void RS_ActionPrintPreview::updateMouseButtonHints() {
-    updateMouseWidget(tr("Drag with Left Button to Position Paper or with Middle Button to Pan" ), "", MOD_SHIFT_AND_CTRL(tr("Move Horizontally"), tr("Move Vertically")));
+//    zoomPageExWithBorder(100);
+    graphic->centerToPage();
+    graphicView->zoomPage();
+    updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
+    updateOptions();
 }
 
-LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
-    return new QG_PrintPreviewOptions();
+void RS_ActionPrintPreview::setPagesNumVertical(int pagesCount) {
+    RS_Vector printArea = graphic->getPrintAreaSize(false);
+    RS_Vector graphicSize = graphic->getSize();
+    double paperScale = pagesCount * printArea.y / (graphicSize.y + 5);
+
+    int horPagesCount = ceil(graphicSize.x * paperScale / printArea.x);
+
+    double paperScaleHor = horPagesCount * printArea.x / graphicSize.x;
+
+    paperScale = std::min(paperScaleHor, paperScale);
+
+    graphic->setPagesNum(horPagesCount, pagesCount);
+    graphic->setPaperScale(paperScale);
+
+//    zoomPageExWithBorder(100);
+    graphic->centerToPage();
+    graphicView->zoomPage();
+    updateOptionsUI(QG_PrintPreviewOptions::MODE_UPDATE_PAGE_NUMBERS);
+    updateOptions();
 }
 
 int RS_ActionPrintPreview::getPagesNumHorizontal() {
@@ -371,4 +440,11 @@ int RS_ActionPrintPreview::getPagesNumHorizontal() {
 
 int RS_ActionPrintPreview::getPagesNumVertical() {
     return graphic->getPagesNumVert();
+}
+    void RS_ActionPrintPreview::updateMouseButtonHints() {
+        updateMouseWidget(tr("Drag with Left Button to Position Paper or with Middle Button to Pan" ), "", MOD_SHIFT_AND_CTRL(tr("Move Horizontally"), tr("Move Vertically")));
+    }
+
+LC_ActionOptionsWidget* RS_ActionPrintPreview::createOptionsWidget() {
+    return new QG_PrintPreviewOptions();
 }

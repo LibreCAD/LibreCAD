@@ -60,7 +60,7 @@ public:
     bool setScale(double f, bool autoZoom = true);
     double getScale() const;
     void printWarning(const QString& s);
-    void calcPagesNum();
+    void calcPagesNum(bool multiplePages);
     bool isLineWidthScaling();
     void setLineWidthScaling(bool state);
     void setBlackWhite(bool bw);
@@ -71,8 +71,13 @@ public:
     bool isPaperScaleFixed();
 
     int getPagesNumHorizontal();
+    void setPagesNumHorizontal(int pagesCount);
     int getPagesNumVertical();
+    void setPagesNumVertical(int pagesCount);
 
+    void invokeSettingsDialog();
+    bool isPortrait();
+    void setPaperOrientation(bool portrait);
 protected:
     /**
     * Action States.
@@ -92,6 +97,7 @@ protected:
     bool doProcessCommand(int status, const QString &command) override;
     QString getAdditionalHelpMessage() override;
     void onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) override;
+    void zoomPageExWithBorder(int borderSize);
     LC_ActionOptionsWidget* createOptionsWidget() override;
 };
 #endif
