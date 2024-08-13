@@ -180,6 +180,9 @@ void RS_Commands::updateAlias()
     if (aliasName.isEmpty())
         return;
     aliasName += "/librecad.alias";
+    if (!QFileInfo::exists(aliasName))
+        return;
+
     QFile f(aliasName);
     LC_LOG<<__func__<<"(): Command alias file: "<<aliasName;
     auto validateCmd = [this](QString cmd) {
@@ -187,41 +190,34 @@ void RS_Commands::updateAlias()
                || cmdTranslation.count(cmd) == 1;
     };
     std::map<QString, QString> aliasList;
-    if (f.exists()) {
+    if (f.exists() && f.open(QIODevice::ReadOnly)) {
 
         //alias file exists, read user defined alias
-        if (f.open(QIODevice::ReadOnly)) {
-            //        qDebug()<<"alias File: "<<aliasName;
-            QTextStream ts(&f);
-            //check if is empty file or not alias file
-            //            if(!line.isNull() || line == "#LibreCAD alias v1") {
-            //                while (!ts.atEnd())
-            while(!ts.atEnd())
-            {
-                QString line=ts.readLine().trimmed();
-                if (line.isEmpty() || line.at(0)=='#' )
-                    continue;
-                // Read alias
-                static QRegularExpression re(R"(\s)");
-                QStringList txtList = line.split(re,Qt::SkipEmptyParts);
-                if (txtList.size()> 1) {
-                    const QString& alias = txtList[0];
-                    const QString& cmd = txtList[1];
-                    if (validateCmd(cmd)) {
-                        if (commandToAction(alias) != commandToAction(cmd)) {
-                            LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(commandToAction(alias))<<": with "<<alias<<"=" << cmd;
-                        } else {
-                            aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
-                        }
+        QTextStream ts(&f);
+        //check if is empty file or not alias file
+        while(!ts.atEnd())
+        {
+            QString line=ts.readLine().trimmed();
+            if (line.isEmpty() || line.at(0)=='#' )
+                continue;
+            // Read alias
+            static QRegularExpression re(R"(\s)");
+            QStringList txtList = line.split(re,Qt::SkipEmptyParts);
+            if (txtList.size()> 1 && ! txtList[0].startsWith('#')) {
+                const QString& alias = txtList[0];
+                const QString& cmd = txtList[1];
+                if (validateCmd(cmd)) {
+                    if (commandToAction(alias) != commandToAction(cmd)) {
+                        LC_ERR<<__func__<<"(): cannot overwrite existing alias: "<<alias<<"="<<m_actionToCommand.at(commandToAction(alias))<<": with "<<alias<<"=" << cmd;
                     } else {
-                        LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
+                        aliasList[alias] = m_actionToCommand[commandToAction(cmd)];
                     }
+                } else {
+                    LC_ERR<<__func__<<"(): invalid alias, command not found: "<<line;
                 }
             }
-            f.close();
-        } else {
-            LC_ERR<<__func__<<"(): cannot open "<<aliasName;
         }
+        f.close();
     } else {
         //alias file does no exist, create one with translated shortCommands
         writeAliasFile(f, shortCommands, mainCommands);
