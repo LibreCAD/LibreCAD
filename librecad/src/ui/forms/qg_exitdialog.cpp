@@ -80,7 +80,7 @@ void QG_ExitDialog::clicked(QAbstractButton * button){
 	QDialogButtonBox::StandardButton bt = ui->buttonBox->standardButton ( button );
     switch (bt){
     case QDialogButtonBox::Discard:
-        emit accept();
+        done(Discard);
         break;
     case QDialogButtonBox::Save:
         slotSave();
@@ -89,7 +89,7 @@ void QG_ExitDialog::clicked(QAbstractButton * button){
         slotSaveAll();
         break;
     default:
-        emit reject();
+        done(Cancel);
     };
 }
 
