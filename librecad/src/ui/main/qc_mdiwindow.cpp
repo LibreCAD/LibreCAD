@@ -227,7 +227,7 @@ QC_MDIWindow* QC_MDIWindow::getPrintPreview() {
 void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
     RS_DEBUG->print("QC_MDIWindow::closeEvent begin");
 
-    bool cancel = true;
+    bool cancel = false;
     bool hasParent = getParentWindow() != nullptr;
     const auto& appWin = QC_ApplicationWindow::getAppWindow();
     if (getDocument()->isModified() && !hasParent) {
@@ -236,11 +236,11 @@ void QC_MDIWindow::closeEvent(QCloseEvent* ce) {
         case QG_ExitDialog::Save:
             cancel = !appWin->doSave(this);
             break;
-        case QG_ExitDialog::Discard:
-            cancel = false;
+        case QG_ExitDialog::Accepted:
             break;
         case QG_ExitDialog::Cancel:
         default:
+            cancel = true;
             break;
         }
     }
@@ -370,7 +370,6 @@ void QC_MDIWindow::drawChars() {
         RS_InsertData data(ch->getName(), RS_Vector(i*sep,0), RS_Vector(1,1), 0, 1, 1, RS_Vector(0,0));
         RS_Insert* in = new RS_Insert(document, data);
         document->addEntity(in);
-        QFileInfo info(document->getFilename() );
         QString uCode = (ch->getName()).mid(1,4);
         RS_MTextData datatx(RS_Vector(i*sep,-h), h, 4*h, RS_MTextData::VATop,
                            RS_MTextData::HALeft, RS_MTextData::ByStyle, RS_MTextData::AtLeast,

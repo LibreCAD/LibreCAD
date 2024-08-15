@@ -40,7 +40,7 @@ class QG_ExitDialog : public QDialog
     Q_OBJECT
 
 public:
-    QG_ExitDialog(QWidget* parent = 0, bool modal = false, Qt::WindowFlags fl = {});
+    QG_ExitDialog(QWidget* parent = nullptr, bool modal = false, Qt::WindowFlags fl = {});
 	~QG_ExitDialog();
 	enum ExitDialogResult {
         Cancel, Discard, Save, SaveAll
