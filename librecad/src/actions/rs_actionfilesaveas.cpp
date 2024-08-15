@@ -27,7 +27,7 @@
 #include "rs_actionfilesaveas.h"
 #include "rs_debug.h"
 #include "rs_graphic.h"
-
+// fixme - sand - is this actions still in use???
 RS_ActionFileSaveAs::RS_ActionFileSaveAs(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
         :RS_ActionInterface("Save as", container, graphicView) {}

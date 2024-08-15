@@ -162,7 +162,7 @@ void RS_ActionDrawEllipseFociPoint::onMouseRightButtonRelease(int status, [[mayb
 }
 
 void RS_ActionDrawEllipseFociPoint::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    switch (getStatus()) {
+    switch (status) {
         case SetFocus1: {
             moveRelativeZero(mouse);
             pPoints->focus1 = mouse;

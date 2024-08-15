@@ -162,7 +162,7 @@ void RS_ActionModifyStretch::onMouseRightButtonRelease(int status, [[maybe_unuse
     initPrevious(status);
 }
 
-void RS_ActionModifyStretch::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+void RS_ActionModifyStretch::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetFirstCorner: {
             pPoints->firstCorner = mouse;

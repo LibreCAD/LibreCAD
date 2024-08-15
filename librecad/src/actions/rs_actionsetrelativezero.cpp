@@ -63,7 +63,7 @@ void RS_ActionSetRelativeZero::onMouseRightButtonRelease(int status, [[maybe_unu
     initPrevious(status);
 }
 
-void RS_ActionSetRelativeZero::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
+void RS_ActionSetRelativeZero::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     *pt = pos;
     trigger();
     updateMouseButtonHints();

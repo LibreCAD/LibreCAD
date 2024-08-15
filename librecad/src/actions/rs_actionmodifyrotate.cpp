@@ -423,7 +423,7 @@ void RS_ActionModifyRotate::mouseLeftButtonReleaseEventSelected(int status, QMou
     fireCoordinateEvent(snapped);
 }
 
-void RS_ActionModifyRotate::mouseRightButtonReleaseEventSelected(int status, QMouseEvent *e) {
+void RS_ActionModifyRotate::mouseRightButtonReleaseEventSelected(int status, [[maybe_unused]]QMouseEvent *e) {
     deletePreview();
     switch (status)    {
         case SetReferencePoint: {

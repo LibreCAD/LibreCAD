@@ -70,7 +70,8 @@ private:
     void setDefaultShortcuts(QMap<QString, QAction *> &map);
 
     void setupCreatedActions(QMap<QString, QAction *> &map);
+
+    void markActionsShortcutsNotEditable(QMap<QString, QAction *> &map);
 };
 
 #endif
-

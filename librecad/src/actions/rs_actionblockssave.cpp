@@ -102,4 +102,3 @@ void RS_ActionBlocksSave::init(int status) {
     RS_ActionInterface::init(status);
     trigger();
 }
-

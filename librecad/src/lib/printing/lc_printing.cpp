@@ -321,4 +321,3 @@ void LC_Printing::Print(QC_MDIWindow &mdiWindow, PrinterType printerType)
         RS_SETTINGS->writeEntry("/FileName", printer.outputFileName());
     }
 }
-

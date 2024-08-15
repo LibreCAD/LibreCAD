@@ -36,6 +36,7 @@
 #include "qc_applicationwindow.h"
 #include "qg_actionhandler.h"
 #include "rs_settings.h"
+#include "lc_shortcutinfo.h"
 
 LC_ActionFactory::LC_ActionFactory(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler)
     : LC_ActionFactoryBase(parent, a_handler){
@@ -62,7 +63,7 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
     createWidgetActions(a_map, agm->widgets);
     createFileActions(a_map, agm->file);
 
-    foreach (QAction* value, a_map){
+    for (QAction* value: a_map){
        value->setCheckable(true);
     }
 
@@ -81,6 +82,10 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
     setDefaultShortcuts(a_map);
     setupCreatedActions(a_map);
+
+    markActionsShortcutsNotEditable(a_map);
+
+    updateActionShortcutTooltips(a_map, true);
 
     //    action = new QAction(tr("Regenerate Dimension Entities"), disable_group);
 //    connect(action, SIGNAL(triggered()), action_handler, SLOT(slotToolRegenerateDimensions()));
@@ -345,6 +350,7 @@ void LC_ActionFactory::createOptionsActionsUncheckable(QMap<QString, QAction *> 
     createMainWindowActions(map, group, {
         {"OptionsGeneral",   SLOT(slotOptionsGeneral()), "&Application Preferences", ":/icons/settings.svg"},
         {"WidgetOptions",    SLOT(widgetOptionsDialog()),    "Widget Options"},
+        {"ShortcutsOptions",    SLOT(slotOptionsShortcuts()),    "Keyboard Shortcuts", ":/icons/shortcuts_settings.svg"},
         {"DeviceOptions",    SLOT(showDeviceOptions()),      "Device Options"},
         {"ReloadStyleSheet", SLOT(reloadStyleSheet()),   "Reload Style Sheet"}
     });
@@ -451,16 +457,16 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
     if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
         commandLineShortcuts << QKeySequence(Qt::Key_Space);
 
-    std::vector<ActionShortCutInfo> shortcutsList = {
+    std::vector<LC_ShortcutInfo> shortcutsList = {
         {"ModifyRevertDirection", QKeySequence(tr("Ctrl+R"))},
-        {"ModifyDuplicate",QList<QKeySequence>() << QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)<< QKeySequence(Qt::META | Qt::SHIFT | Qt::Key_D)},
+        {"ModifyDuplicate",QKeySequence(Qt::CTRL | Qt::SHIFT | Qt::Key_D)},
         {"OrderBottom", QKeySequence(Qt::Key_End)},
         {"OrderLower", QKeySequence(Qt::Key_PageDown)},
         {"OrderRaise", QKeySequence(Qt::Key_PageUp)},
         {"OrderTop", QKeySequence(Qt::Key_Home)},
         {"SelectAll", QKeySequence::SelectAll},
         // RVT April 29, 2011 - Added esc key to de-select all entities
-        {"DeselectAll", QList<QKeySequence>() << QKeySequence(tr("Ctrl+K"))},
+        {"DeselectAll", QKeySequence(tr("Ctrl+K"))},
         {"EditUndo", QKeySequence::Undo},
         {"EditRedo", QKeySequence::Redo},
         {"EditCut", QKeySequence::Cut},
@@ -481,14 +487,14 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
         // todo - it's better to replace to something different.... ctrl+d is rather for duplicate
         {"ViewDraft", QKeySequence(tr("Ctrl+D","Toggle Draft Mode"))},
         {"ViewStatusBar", QKeySequence(tr("Ctrl+I", "Hide Statusbar"))},
-        {"ModifyDeleteQuick", QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)},
+        {"ModifyDeleteQuick",QKeySequence::Delete  /*QList<QKeySequence>() << QKeySequence::Delete << QKeySequence(Qt::Key_Backspace)*/},
         {"FileNew", QKeySequence::New},
         {"FileOpen", QKeySequence::Open},
         {"FileSave", QKeySequence::Save},
         {"FileSaveAs", QKeySequence::SaveAs},
         {"FilePrint", QKeySequence::Print},
         {"FileQuit", QKeySequence::Quit},
-        {"FocusCommand", commandLineShortcuts},
+        {"FocusCommand", QKeySequence(Qt::CTRL | Qt::Key_M)}, // commandLineShortcuts}, // fixme - restore
 #if defined(Q_OS_LINUX)
         {"Fullscreen", QKeySequence("F11")},
 #else
@@ -505,4 +511,11 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map) {
     }
 
     assignShortcutsToActions(map, shortcutsList);
+}
+
+void LC_ActionFactory::markActionsShortcutsNotEditable(QMap<QString, QAction *> &map) {
+    // placeholder for exclusion of some actions (by name) from editing in shortcuts mapping dialog
+    makeActionsShortcutsNonEditable(map, {
+
+    });
 }

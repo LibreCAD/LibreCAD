@@ -90,10 +90,11 @@ Settings for position of options widgets for Snap Middle and Snap Distance was a
 Modify operations were reworked and dialogs were replaced by options widgets, so now dialogs are not part of action's flow. The code for dialogs is still present and there is a flag that allows old way of options operations, yet, in general, the value of showing dialogs is unclear now.
 
 ### UI in Print-Preview Mode
-Not applicable actions and widgets are now disabled in Print Preview mode.
+Not applicable actions and widgets are now disabled in Print Preview mode, added explicit setting of page orientation, ability to zoom to print area, explicit settings for number of pages in tiled print. 
+While print preview is operational, most probably it requires deeper rework in order to make it more convenient. 
 
 ### Active Action on Tab Switch
-Now switching tab or creation of new drawing finished current active action.
+Now switching tab or creation of new drawing finishes current active action, so no confusion by action that is active in other tab.
 
 ### Selection in selection widget
 Selected entities count/length is updated on layer hiding/displaying to reflect only visible selected entities. 

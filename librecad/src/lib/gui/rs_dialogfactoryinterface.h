@@ -30,6 +30,7 @@
 
 #include "rs.h"
 #include "lc_modifiersinfo.h"
+#include "lc_actiongroupmanager.h"
 #include <QString>
 
 class QWidget;
@@ -358,6 +359,8 @@ public:
      * a dialog for general application options.
      */
     virtual void requestOptionsGeneralDialog() = 0;
+
+    virtual void requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) = 0;
 
     /**
      * This virtual method must be overwritten and must present

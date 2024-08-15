@@ -161,7 +161,7 @@ void RS_ActionDrawSpline::onMouseRightButtonRelease(int status, [[maybe_unused]]
     initPrevious(status);
 }
 
-void RS_ActionDrawSpline::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+void RS_ActionDrawSpline::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetStartPoint: {
             //data.startpoint = mouse;

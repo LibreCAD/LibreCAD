@@ -154,7 +154,7 @@ void RS_ActionDrawLinePolygonCorCor::onMouseRightButtonRelease(int status, [[may
     initPrevious(status);
 }
 
-void RS_ActionDrawLinePolygonCorCor::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+void RS_ActionDrawLinePolygonCorCor::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetCorner1: {
             pPoints->corner1 = mouse;

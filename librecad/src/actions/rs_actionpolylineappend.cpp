@@ -151,7 +151,7 @@ void RS_ActionPolylineAppend::onMouseRightButtonRelease(int status, [[maybe_unus
     initPrevious(status);
 }
 
-void RS_ActionPolylineAppend::onCoordinateEvent(int status, bool isZero, const RS_Vector &mouse) {
+void RS_ActionPolylineAppend::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
     switch (status) {
         case SetStartpoint: {
             getHistory().clear();

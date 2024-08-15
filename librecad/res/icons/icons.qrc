@@ -258,5 +258,6 @@
         <file>angle_3_points.svg</file>
         <file>page_landscape.svg</file>
         <file>page_portait.svg</file>
+        <file>shortcuts_settings.svg</file>
     </qresource>
 </RCC>

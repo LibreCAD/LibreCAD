@@ -124,4 +124,3 @@ void QC_DialogFactory::closeEditBlockWindow(RS_Block* block) {
 
     RS_DEBUG->print("QC_DialogFactory::closeEditBlockWindow: OK");
 }
-

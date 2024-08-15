@@ -682,5 +682,3 @@ std::ostream& operator << (std::ostream& os, const RS_Line& l) {
     os << " Line: " << l.getData() << "\n";
     return os;
 }
-
-

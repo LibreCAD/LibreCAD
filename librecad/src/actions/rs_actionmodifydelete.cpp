@@ -40,7 +40,7 @@ void RS_ActionModifyDelete::trigger() {
     m.remove(selectedEntities);
 }
 
-void RS_ActionModifyDelete::selectionCompleted(bool singleEntity, bool fromInit) {
+void RS_ActionModifyDelete::selectionCompleted(bool singleEntity,  [[maybe_unused]]bool fromInit) {
     trigger();
     if (singleEntity) {
         deselectAll();

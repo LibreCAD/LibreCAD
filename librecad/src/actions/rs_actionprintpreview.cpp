@@ -150,7 +150,7 @@ void RS_ActionPrintPreview::mouseReleaseEvent(QMouseEvent* e) {
     }
 }
 
-void RS_ActionPrintPreview::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void RS_ActionPrintPreview::onCoordinateEvent( [[maybe_unused]]int status,  [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     RS_Vector pinsbase = graphic->getPaperInsertionBase();
     RS_Vector mouse = pos;
     //    qDebug()<<"coordinateEvent= ("<<mouse.x<<", "<<mouse.y<<")";
@@ -168,7 +168,7 @@ void RS_ActionPrintPreview::onCoordinateEvent(int status, bool isZero, const RS_
     graphicView->redraw(RS2::RedrawGrid); // DRAW Grid also draws paper, background items
 }
 
-bool RS_ActionPrintPreview::doProcessCommand(int status, const QString &c) {
+bool RS_ActionPrintPreview::doProcessCommand( [[maybe_unused]]int status, const QString &c) {
     bool accept = true;
     //    qDebug()<<"cmd="<<c;
     if (checkCommand("blackwhite", c)) {
@@ -291,7 +291,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
         if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
         auto pinBase = graphic->getPaperInsertionBase();
-        double oldScale = graphic->getPaperScale();
+        // double oldScale = graphic->getPaperScale();
 
         graphic->setPaperScale(f);
 
@@ -299,7 +299,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
 //        pinBase += graphic->getSize()*(oldScale - f)*0.5;
 //        graphic->setPaperInsertionBase(pinBase);
 
-        pinBase *= f;
+        // pinBase *= f;
 
         if(autoZoom) {
             zoomPageExWithBorder(100);

@@ -76,7 +76,7 @@ void RS_ActionDrawPoint::onMouseRightButtonRelease(int status, [[maybe_unused]]Q
     initPrevious(status);
 }
 
-void RS_ActionDrawPoint::onCoordinateEvent(int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
+void RS_ActionDrawPoint::onCoordinateEvent( [[maybe_unused]]int status, [[maybe_unused]]bool isZero, const RS_Vector &mouse) {
     *pt = mouse;
     trigger();
 }

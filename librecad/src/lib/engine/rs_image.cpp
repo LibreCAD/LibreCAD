@@ -414,4 +414,3 @@ std::ostream& operator << (std::ostream& os, const RS_Image& i) {
     os << " Image: " << i.getData() << "\n";
     return os;
 }
-

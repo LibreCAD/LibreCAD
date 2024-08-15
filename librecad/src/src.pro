@@ -288,15 +288,17 @@ HEADERS += \
     ui/forms/lc_modifybreakdivideoptions.h \
     ui/forms/lc_modifygapoptions.h \
     ui/forms/lc_staroptions.h \
+    ui/lc_action.h \
+    ui/lc_actiongroup.h \    
     ui/lc_optionswidgetsholder.h \
     ui/generic/lc_plaintextedit.h \
     ui/lc_actionfactorybase.h \
-    ui/lc_peninforegistry.h \
-    ui/lc_penpalettedata.h \
-    ui/lc_penpalettemodel.h \
-    ui/lc_penpaletteoptions.h \
-    ui/lc_penpaletteoptionsdialog.h \
-    ui/lc_penpalettewidget.h \
+    ui/widgets/pen_palette/lc_peninforegistry.h \
+    ui/widgets/pen_palette/lc_penpalettedata.h \
+    ui/widgets/pen_palette/lc_penpalettemodel.h \
+    ui/widgets/pen_palette/lc_penpaletteoptions.h \
+    ui/widgets/pen_palette/lc_penpaletteoptionsdialog.h \
+    ui/widgets/pen_palette/lc_penpalettewidget.h \
     ui/forms/lc_layertreeoptionsdialog.h \
     ui/lc_layertreeitem.h \
     ui/lc_layertreemodel.h \
@@ -320,10 +322,17 @@ HEADERS += \
     ui/forms/lc_rectangle3pointsoptions.h \
     actions/lc_abstractactiondrawline.h \
     ui/forms/LC_DlgParabola.h \
-    ui/lc_quickinfowidgetoptions.h \
-    ui/lc_quickinfowidgetoptionsdialog.h\
+    ui/widgets/entity_info/lc_quickinfowidgetoptions.h \
+    ui/widgets/entity_info/lc_quickinfowidgetoptionsdialog.h\
     actions/lc_actiondimlinearbase.h \
-    ui/lc_snapoptionswidgetsholder.h
+    ui/lc_snapoptionswidgetsholder.h \
+    ui/shortcuts/lc_shortcutinfo.h \
+    ui/shortcuts/lc_shortcutbutton.h \
+    ui/shortcuts/lc_shortcutsstorage.h \
+    ui/shortcuts/lc_actionsshortcutsdialog.h \
+    ui/shortcuts/lc_shortcutstreemodel.h \
+    ui/shortcuts/lc_shortcutstreeview.h \
+    ui/shortcuts/lc_shortcuttreeitem.h
 
 SOURCES += \
     actions/lc_abstractactiondrawrectangle.cpp \
@@ -475,14 +484,17 @@ SOURCES += \
     ui/forms/lc_modifybreakdivideoptions.cpp \
     ui/forms/lc_modifygapoptions.cpp \
     ui/forms/lc_staroptions.cpp \
+    ui/lc_action.cpp \
+    ui/lc_actiongroup.cpp \
+    ui/lc_actionslist.cpp \
     ui/lc_optionswidgetsholder.cpp \
     ui/lc_actionfactorybase.cpp \
-    ui/lc_peninforegistry.cpp \
-    ui/lc_penpalettedata.cpp \
-    ui/lc_penpalettemodel.cpp \
-    ui/lc_penpaletteoptions.cpp \
-    ui/lc_penpaletteoptionsdialog.cpp \
-    ui/lc_penpalettewidget.cpp \
+    ui/widgets/pen_palette/lc_peninforegistry.cpp \
+    ui/widgets/pen_palette/lc_penpalettedata.cpp \
+    ui/widgets/pen_palette/lc_penpalettemodel.cpp \
+    ui/widgets/pen_palette/lc_penpaletteoptions.cpp \
+    ui/widgets/pen_palette/lc_penpaletteoptionsdialog.cpp \
+    ui/widgets/pen_palette/lc_penpalettewidget.cpp \
     ui/forms/lc_layerdialog_ex.cpp \
     ui/forms/lc_layertreeoptionsdialog.cpp \
     ui/lc_layertreeitem.cpp \
@@ -500,14 +512,20 @@ SOURCES += \
     ui/forms/lc_rectangle1pointoptions.cpp \
     ui/forms/lc_rectangle2pointsoptions.cpp \
     ui/forms/lc_slicedivideoptions.cpp \
-    ui/lc_quickinfobasedata.cpp \
-    ui/lc_quickinfoentitydata.cpp \
-    ui/lc_quickinfopointsdata.cpp \
-    ui/lc_quickinfowidget.cpp \
-    ui/lc_quickinfowidgetoptions.cpp \
-    ui/lc_quickinfowidgetoptionsdialog.cpp\
+    ui/widgets/entity_info/lc_quickinfobasedata.cpp \
+    ui/widgets/entity_info/lc_quickinfoentitydata.cpp \
+    ui/widgets/entity_info/lc_quickinfopointsdata.cpp \
+    ui/widgets/entity_info/lc_quickinfowidget.cpp \
+    ui/widgets/entity_info/lc_quickinfowidgetoptions.cpp \
+    ui/widgets/entity_info/lc_quickinfowidgetoptionsdialog.cpp\
     actions/lc_actiondimlinearbase.cpp \
-    ui/lc_snapoptionswidgetsholder.cpp
+    ui/lc_snapoptionswidgetsholder.cpp \
+    ui/shortcuts/lc_shortcutbutton.cpp \
+    ui/shortcuts/lc_shortcutsstorage.cpp \
+    ui/shortcuts/lc_actionsshortcutsdialog.cpp \
+    ui/shortcuts/lc_shortcutstreemodel.cpp \
+    ui/shortcuts/lc_shortcutstreeview.cpp \
+    ui/shortcuts/lc_shortcuttreeitem.cpp
 
 
 # ################################################################################
@@ -1114,11 +1132,12 @@ FORMS = ui/forms/qg_commandwidget.ui \
     ui/generic/colorwizard.ui \
     ui/generic/textfileviewer.ui \
     ui/forms/lc_duplicateoptions.ui \
-    ui/lc_penpaletteoptionsdialog.ui \
-    ui/lc_penpalettewidget.ui \
-    ui/lc_quickinfowidget.ui \
-    ui/lc_quickinfowidgetoptionsdialog.ui \
-    ui/lc_snapoptionswidgetsholder.ui
+    ui/widgets/pen_palette/lc_penpaletteoptionsdialog.ui \
+    ui/widgets/pen_palette/lc_penpalettewidget.ui \
+    ui/widgets/entity_info/lc_quickinfowidget.ui \
+    ui/widgets/entity_info/lc_quickinfowidgetoptionsdialog.ui \
+    ui/lc_snapoptionswidgetsholder.ui \
+    ui/shortcuts/lc_actionsshortcutsdialog.ui
 
 # ################################################################################
 # Main

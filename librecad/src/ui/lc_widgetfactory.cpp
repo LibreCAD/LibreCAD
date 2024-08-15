@@ -568,10 +568,12 @@ void LC_WidgetFactory::createMenus(QMenuBar* menu_bar){
 
     auto settings = menu("&Options", menu_bar, {
         "OptionsGeneral",
-        "OptionsDrawing",
+        "ShortcutsOptions",
         "WidgetOptions",
         "DeviceOptions",
-        "ReloadStyleSheet"
+        "ReloadStyleSheet",
+        "",
+        "OptionsDrawing",
     });
 
     auto edit = menu("&Edit", menu_bar, {

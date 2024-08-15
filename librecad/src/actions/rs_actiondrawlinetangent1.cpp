@@ -139,7 +139,7 @@ void RS_ActionDrawLineTangent1::onMouseRightButtonRelease(int status, [[maybe_un
     initPrevious(status);
 }
 
-void RS_ActionDrawLineTangent1::onCoordinateEvent(int status, bool isZero, const RS_Vector &pos) {
+void RS_ActionDrawLineTangent1::onCoordinateEvent(int status,  [[maybe_unused]]bool isZero, const RS_Vector &pos) {
     switch (status) {
         case SetPoint: {
             *point = pos;

@@ -163,7 +163,7 @@ void RS_ActionModifyRotate2::updateMouseButtonHintsForSelection() {
 }
 
 void RS_ActionModifyRotate2::updateMouseButtonHintsForSelected(int status) {
-    switch (getStatus()) {
+    switch (status) {
         case SetReferencePoint1:
             updateMouseWidgetTRCancel(tr("Specify absolute reference point"), MOD_SHIFT_RELATIVE_ZERO);
             break;
@@ -179,7 +179,7 @@ RS2::CursorType RS_ActionModifyRotate2::doGetMouseCursorSelected([[maybe_unused]
     return RS2::CadCursor;
 }
 
-void RS_ActionModifyRotate2::previewRefPointsForMultipleCopies(const RS_Vector &mouse) {
+void RS_ActionModifyRotate2::previewRefPointsForMultipleCopies( [[maybe_unused]]const RS_Vector &mouse) {
     int numPoints = data->number;
     if (!data->multipleCopies) {
         numPoints = 1;

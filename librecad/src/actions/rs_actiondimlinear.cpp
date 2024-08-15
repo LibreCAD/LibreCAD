@@ -37,7 +37,7 @@
 #include "rs_math.h"
 #include "rs_preview.h"
 #include "lc_actiondimlinearbase.h"
-#include "qg_dimlinearoptions.h"
+
 
 /**
  * Constructor.
