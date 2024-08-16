@@ -43,12 +43,12 @@ class QG_SnapToolBar : public QToolBar
 public:
     QG_SnapToolBar(QWidget* parent
                  , QG_ActionHandler* ah
-                 , LC_ActionGroupManager* agm);
+                 , LC_ActionGroupManager* agm,
+                 const QMap<QString, QAction*> &actionMap);
 	~QG_SnapToolBar() = default;
 
-    RS_SnapMode getSnaps ( void ) const;
-    void saveSnapMode(void );
-    virtual void setActionHandler(QG_ActionHandler* ah);
+    RS_SnapMode getSnaps () const;
+    void saveSnapMode();
     bool lockedRelativeZero() const;
     void setLockedRelativeZero(bool on);
     LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
@@ -64,7 +64,8 @@ private slots:
     void slotRestrictNothing(bool checked);
 
 private:
-    QAction* createAction(QString icon, QString tip, QActionGroup* group);
+    QAction* addOwnAction(QString name, const QMap<QString, QAction*> &actionsMap);
+    QAction* justAddAction(QString name, const QMap<QString, QAction*> &actionsMap);
 
     QG_ActionHandler* actionHandler;
 
@@ -82,10 +83,11 @@ private:
     QAction *restrictHorizontal;
     QAction *restrictVertical;
     QAction *restrictOrthogonal;
+    // fixme - it seems that this action is fully redundant... all restrict actions are toggled, the logic is corrected - why it is present in ui?
     QAction *restrictNothing;
     QAction *bRelZero;
     QAction *bLockRelZero;
-	RS_SnapMode snapMode;
+    RS_SnapMode snapMode;
 
 };
 
