@@ -30,24 +30,21 @@ class LC_ActionFactoryBase : public QObject{
 Q_OBJECT
 public:
     LC_ActionFactoryBase(QC_ApplicationWindow* parent, QG_ActionHandler* a_handler);
-
-    static void updateActionShortcutTooltips(const QMap<QString, QAction *> &map, bool enable);
 protected:
-
-    static const char* PROPERTY_SHORTCUT_BACKUP;
-
     struct ActionInfo{
         const char* key;
         RS2::ActionType actionType;
-        const char* text = nullptr;
+        QString text;
         const char* iconName = nullptr;
         const char* themeIconName = nullptr;
         const char* slot = nullptr;
 
-        ActionInfo(const char *actionKey, RS2::ActionType actionType,const char *text, const char *iconName = nullptr, const char *themeIcon = nullptr)
+        ActionInfo(const char *key, const QString &text, const char *iconName):key(key), text(text), iconName(iconName) {}
+
+        ActionInfo(const char *actionKey, RS2::ActionType actionType,const QString& text, const char *iconName = nullptr, const char *themeIcon = nullptr)
             :key(actionKey),actionType(actionType),text(text),iconName(iconName), themeIconName(themeIcon){}
 
-        ActionInfo(const char *actionKey, const char* actionSlot, const char *text, const char *iconName=nullptr, const char *themeIcon = nullptr)
+        ActionInfo(const char *actionKey, const char* actionSlot, const QString& text, const char *iconName=nullptr, const char *themeIcon = nullptr)
             :key(actionKey),actionType(RS2::ActionNone),text(text),iconName(iconName), themeIconName(themeIcon), slot(actionSlot){}
     };
 
@@ -55,26 +52,25 @@ protected:
     QG_ActionHandler* action_handler = nullptr;
     bool using_theme = false;
 
-    QAction* doCreateActionTR(QMap<QString, QAction *> &a_map, const char* name, const char* text, const char *iconName,
-                              const char *themeIconName, QActionGroup *parent, const char* textDisambiguation = nullptr) const;
-
-    QAction *createAction_AH(const char* name, RS2::ActionType actionType, const char* text,
+    QAction *createAction_AH(const char* name, RS2::ActionType actionType, const QString& text,
                              const char *iconName, const char *themeIconName,
                              QActionGroup *parent,
                              QMap<QString, QAction *> &a_map) const;
 
     void createActionHandlerActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const;
     void createMainWindowActions( QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList, bool useToggled = false) const;
-    QAction *createAction_MW(const char *name, const char *slot, const char *text, const char *iconName,  const char *themeIconName,  QActionGroup *parent,
+    QAction *createAction_MW(const char *name, const char *slot, const QString& text, const char *iconName,  const char *themeIconName,  QActionGroup *parent,
         QMap<QString, QAction *> &a_map, bool toggled = false) const;
-
-    void assignShortcutsToActions(const QMap<QString, QAction *> &map,
-                                 std::vector<LC_ShortcutInfo> &shortcutsList) const;
-
 
     void makeActionsShortcutsNonEditable(const QMap<QString, QAction *> &map, const std::vector<const char *> &actionNames);
 
-    static QString strippedActionText(QString s);
+    QAction *justCreateAction(
+        QMap<QString, QAction *> &a_map, const char *name, const QString& text, const char *iconName,
+        const char *themeIconName,
+        QActionGroup *parent) const;
+
+    void
+    createActions(QMap<QString, QAction *> &map, QActionGroup *group, const std::vector<ActionInfo> &actionList) const;
 };
 
 #endif // LC_ACTIONFACTORYBASE_H
