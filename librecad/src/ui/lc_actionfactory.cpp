@@ -286,14 +286,14 @@ void LC_ActionFactory::createPenActions(QMap<QString, QAction *> &map, QActionGr
 
 void LC_ActionFactory::createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group) {
     createActions(map, group, {
-        {"SnapGrid",         tr("Snap on grid"),        ":/icons/snap_grid.svg"},
-        {"SnapMiddleManual", tr("Exclusive Snap Mode"), ":/icons/snap_middle_manual.svg"},
-        {"SnapEnd",          tr("Snap on Endpoints"),   ":/icons/snap_endpoints.svg"},
-        {"SnapEntity",       tr("Snap on Endpoints"),   ":/icons/snap_endpoints.svg"},
-        {"SnapCenter",       tr("Snap Center"),         ":/icons/snap_center.svg"},
-        {"SnapMiddle",       tr("Snap Middle"),         ":/icons/snap_middle.svg"},
-        {"SnapDistance",     tr("Snap Distance"),       ":/icons/snap_distance.svg"},
-        {"SnapIntersection", tr("Snap Intersection"),   ":/icons/snap_intersection.svg"},
+        {"SnapGrid",         tr("Snap on grid"),       ":/icons/snap_grid.svg"},
+        {"SnapMiddleManual", tr("Snap Middle Manual"), ":/icons/snap_middle_manual.svg"},
+        {"SnapEnd",          tr("Snap on Endpoints"),  ":/icons/snap_endpoints.svg"},
+        {"SnapEntity",       tr("Snap on Entity"),     ":/icons/snap_entity.svg"},
+        {"SnapCenter",       tr("Snap Center"),        ":/icons/snap_center.svg"},
+        {"SnapMiddle",       tr("Snap Middle"),        ":/icons/snap_middle.svg"},
+        {"SnapDistance",     tr("Snap Distance"),      ":/icons/snap_distance.svg"},
+        {"SnapIntersection", tr("Snap Intersection"),  ":/icons/snap_intersection.svg"},
     });
 }
 
@@ -569,6 +569,6 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
 void LC_ActionFactory::markNotEditableActionsShortcuts(QMap<QString, QAction *> &map) {
     // placeholder for exclusion of some actions (by name) from editing in shortcuts mapping dialog
     makeActionsShortcutsNonEditable(map, {
-
+        "RestrictNothing"
     });
 }
