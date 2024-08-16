@@ -73,6 +73,7 @@ private slots:
     void setFontsFolder();
     void setTranslationsFolder();
     void setHatchPatternsFolder();
+    void setShortcutsMappingsFoler();
 private:
     bool restartNeeded=false;
     void init();

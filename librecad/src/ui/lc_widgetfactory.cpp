@@ -450,7 +450,7 @@ void LC_WidgetFactory::createStandardToolbars(QG_ActionHandler* action_handler){
         "ZoomOut", "ZoomAuto", "ZoomPrevious", "ZoomWindow", "ZoomPan"
     });
 
-    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager);
+    snap_toolbar = new QG_SnapToolBar(main_window, action_handler, ag_manager,a_map);
     snap_toolbar->setWindowTitle(QC_ApplicationWindow::tr("Snap Selection"));
     snap_toolbar->setSizePolicy(tbPolicy);
     snap_toolbar->setObjectName("snap_toolbar" );
@@ -827,7 +827,7 @@ LC_DockWidget* LC_WidgetFactory::leftDocWidgetTR(const char* title, const QList<
 }
 
 QToolButton*LC_WidgetFactory::toolButtonTR(QToolBar* toolbar, const char* tooltip, const char* icon, const QList<QAction*>& actions){
-    auto * result = new QToolButton;
+    auto * result = new QToolButton(toolbar); // ignore memory warning leak, toolbar will delete button
     result->setPopupMode(QToolButton::InstantPopup);
     result->setIcon(QIcon(icon));
     result->setToolTip(tr(tooltip));

@@ -29,6 +29,7 @@
 #include <QMap>
 #include "rs.h"
 #include "lc_actionfactorybase.h"
+#include "lc_shortcuts_manager.h"
 
 class QActionGroup;
 class QAction;
@@ -67,11 +68,15 @@ private:
     void createViewActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSelectActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
-    void setDefaultShortcuts(QMap<QString, QAction *> &map);
-
+    void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group);
+    void setDefaultShortcuts(QMap<QString, QAction *> &map, const LC_ShortcutsManager& shortcutsManager);
     void setupCreatedActions(QMap<QString, QAction *> &map);
+    void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
 
-    void markActionsShortcutsNotEditable(QMap<QString, QAction *> &map);
+    void createRestrictActions(QMap<QString, QAction *> &map, QActionGroup *group);
+
+    void createOtherActions(QMap<QString, QAction *> &map, QActionGroup *group);
 };
 
 #endif

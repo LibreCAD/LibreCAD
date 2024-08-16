@@ -442,7 +442,7 @@ void LC_LayerTreeWidget::collapseSecondaryLayers(){
 /**
  * Expand items by double click. Custom implementation, since double click for normal layer items
  * will bring edit dialog, and double click on virtual layer item will fully expand all its descendants
- * @brief LC_LayerTreeWidget::slotTreeDoubleClicked
+ * @brief LC_LayerTreeWidget::onTreeDoubleClicked
  * @param index
  */
 void LC_LayerTreeWidget::slotTreeDoubleClicked(QModelIndex index /*const QString& layerName*/){

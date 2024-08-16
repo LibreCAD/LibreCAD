@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>579</width>
-    <height>539</height>
+    <width>748</width>
+    <height>616</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -400,7 +400,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -432,7 +432,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -575,7 +575,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -625,7 +625,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -642,7 +642,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -747,7 +747,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -764,7 +764,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -781,7 +781,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -798,7 +798,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -851,7 +851,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -901,7 +901,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -918,7 +918,7 @@
              <string/>
             </property>
             <property name="icon">
-             <iconset resource="../../../res/ui/ui.qrc">
+             <iconset>
               <normaloff>:/ui/colorxx.png</normaloff>:/ui/colorxx.png</iconset>
             </property>
            </widget>
@@ -953,51 +953,8 @@
        <string>&amp;Paths</string>
       </attribute>
       <layout class="QGridLayout">
-       <item row="5" column="0">
-        <widget class="QLabel" name="label_4">
-         <property name="text">
-          <string>Variable File:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="textLabel4">
-         <property name="text">
-          <string>Fonts:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLineEdit" name="lePathTranslations"/>
-       </item>
-       <item row="3" column="0">
-        <widget class="QLabel" name="textLabel6">
-         <property name="text">
-          <string>Part Libraries:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
        <item row="1" column="2">
         <widget class="QLineEdit" name="lePathHatch"/>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="textLabel7">
-         <property name="text">
-          <string>Template:</string>
-         </property>
-         <property name="wordWrap">
-          <bool>false</bool>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLineEdit" name="leTemplate"/>
        </item>
        <item row="3" column="2">
         <widget class="QLineEdit" name="lePathLibrary">
@@ -1006,10 +963,13 @@
          </property>
         </widget>
        </item>
-       <item row="3" column="3">
-        <widget class="QToolButton" name="btPathLibrary">
+       <item row="0" column="3">
+        <widget class="QToolButton" name="translation_button">
+         <property name="text">
+          <string/>
+         </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset resource="../../../../../res/icons/icons.qrc">
            <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
@@ -1017,37 +977,14 @@
        <item row="2" column="2">
         <widget class="QLineEdit" name="lePathFonts"/>
        </item>
-       <item row="4" column="3">
-        <widget class="QToolButton" name="btTemplate">
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="6" column="2">
-        <spacer name="spacer5_2">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeType">
-          <enum>QSizePolicy::Expanding</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>31</width>
-           <height>71</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="textLabel2">
+       <item row="1" column="3">
+        <widget class="QToolButton" name="hatchpatterns_button">
          <property name="text">
-          <string>Translations:</string>
+          <string/>
          </property>
-         <property name="wordWrap">
-          <bool>false</bool>
+         <property name="icon">
+          <iconset resource="../../../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
        </item>
@@ -1061,8 +998,16 @@
          </property>
         </widget>
        </item>
-       <item row="6" column="0">
-        <spacer name="spacer5">
+       <item row="2" column="3">
+        <widget class="QToolButton" name="fonts_button">
+         <property name="icon">
+          <iconset resource="../../../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <spacer name="spacer5_2">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
          </property>
@@ -1080,40 +1025,116 @@
        <item row="5" column="2">
         <widget class="QLineEdit" name="variablefile_field"/>
        </item>
+       <item row="3" column="3">
+        <widget class="QToolButton" name="btPathLibrary">
+         <property name="icon">
+          <iconset resource="../../../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="2">
+        <widget class="QLineEdit" name="lePathTranslations"/>
+       </item>
+       <item row="7" column="0">
+        <spacer name="spacer5">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeType">
+          <enum>QSizePolicy::Expanding</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>31</width>
+           <height>71</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLineEdit" name="leTemplate"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="textLabel6">
+         <property name="text">
+          <string>Part Libraries:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="textLabel4">
+         <property name="text">
+          <string>Fonts:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="3">
+        <widget class="QToolButton" name="btTemplate">
+         <property name="icon">
+          <iconset resource="../../../../../res/icons/icons.qrc">
+           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+         </property>
+        </widget>
+       </item>
        <item row="5" column="3">
         <widget class="QToolButton" name="variablefile_button">
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset resource="../../../../../res/icons/icons.qrc">
            <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
        </item>
-       <item row="2" column="3">
-        <widget class="QToolButton" name="fonts_button">
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_4">
+         <property name="text">
+          <string>Variable File:</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="3">
-        <widget class="QToolButton" name="translation_button">
+       <item row="4" column="0">
+        <widget class="QLabel" name="textLabel7">
+         <property name="text">
+          <string>Template:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="0">
+        <widget class="QLabel" name="textLabel2">
+         <property name="text">
+          <string>Translations:</string>
+         </property>
+         <property name="wordWrap">
+          <bool>false</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Shortcuts Mappings:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="2">
+        <widget class="QLineEdit" name="leShortcutsMappingDirectory"/>
+       </item>
+       <item row="6" column="3">
+        <widget class="QToolButton" name="tbShortcuts">
          <property name="text">
           <string/>
          </property>
          <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
-           <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="3">
-        <widget class="QToolButton" name="hatchpatterns_button">
-         <property name="text">
-          <string/>
-         </property>
-         <property name="icon">
-          <iconset resource="../../../res/icons/icons.qrc">
+          <iconset resource="../../../../../res/icons/icons.qrc">
            <normaloff>:/icons/open.svg</normaloff>:/icons/open.svg</iconset>
          </property>
         </widget>
@@ -1258,6 +1279,13 @@
              </widget>
             </item>
            </layout>
+          </item>
+          <item>
+           <widget class="QCheckBox" name="cbShowKeyboardShortcutsInToolTips">
+            <property name="text">
+             <string>Show keyboard shortcuts in actions tooltips</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -1523,7 +1551,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_dot.svg</normaloff>:/icons/point_dot.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1564,7 +1592,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_plus.svg</normaloff>:/icons/point_plus.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1605,7 +1633,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_cross.svg</normaloff>:/icons/point_cross.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1646,7 +1674,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_tick.svg</normaloff>:/icons/point_tick.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1687,7 +1715,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_dot_circle.svg</normaloff>:/icons/point_dot_circle.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1728,7 +1756,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_blank_circle.svg</normaloff>:/icons/point_blank_circle.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1769,7 +1797,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_plus_circle.svg</normaloff>:/icons/point_plus_circle.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1810,7 +1838,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_cross_circle.svg</normaloff>:/icons/point_cross_circle.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1851,7 +1879,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_tick_circle.svg</normaloff>:/icons/point_tick_circle.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1892,7 +1920,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_dot_square.svg</normaloff>:/icons/point_dot_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1933,7 +1961,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_blank_square.svg</normaloff>:/icons/point_blank_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -1974,7 +2002,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_plus_square.svg</normaloff>:/icons/point_plus_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2015,7 +2043,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_cross_square.svg</normaloff>:/icons/point_cross_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2056,7 +2084,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_tick_square.svg</normaloff>:/icons/point_tick_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2097,7 +2125,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_dot_circle_square.svg</normaloff>:/icons/point_dot_circle_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2138,7 +2166,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_blank_circle_square.svg</normaloff>:/icons/point_blank_circle_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2179,7 +2207,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_plus_circle_square.svg</normaloff>:/icons/point_plus_circle_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2220,7 +2248,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_cross_circle_square.svg</normaloff>:/icons/point_cross_circle_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2261,7 +2289,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_tick_circle_square.svg</normaloff>:/icons/point_tick_circle_square.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2305,7 +2333,7 @@
                    <string>...</string>
                   </property>
                   <property name="icon">
-                   <iconset resource="../../../res/icons/icons.qrc">
+                   <iconset resource="../../../../../res/icons/icons.qrc">
                     <normaloff>:/icons/point_blank.svg</normaloff>:/icons/point_blank.svg</iconset>
                   </property>
                   <property name="iconSize">
@@ -2529,9 +2557,9 @@
   <tabstop>lePathHatch</tabstop>
  </tabstops>
  <resources>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/icons/icons.qrc"/>
-  <include location="../../../res/ui/ui.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
+  <include location="../../../../../res/icons/icons.qrc"/>
  </resources>
  <connections>
   <connection>

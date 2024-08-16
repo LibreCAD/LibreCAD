@@ -2718,7 +2718,8 @@ void QC_ApplicationWindow::slotOptionsShortcuts(){
  * Shows the dialog for general application preferences.
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
-    RS_DIALOGFACTORY->requestOptionsGeneralDialog();
+    int dialogResult =  RS_DIALOGFACTORY->requestOptionsGeneralDialog();
+//    fixme - sand - emit signal that options changed
 
     RS_SETTINGS->beginGroup("Colors");
     QColor background(RS_SETTINGS->readEntry("/background", RS_Settings::background));

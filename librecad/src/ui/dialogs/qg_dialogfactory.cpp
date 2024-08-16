@@ -1057,10 +1057,11 @@ bool QG_DialogFactory::requestHatchDialog(RS_Hatch* hatch) {
 /**
  * Shows dialog for general application options.
  */
-void QG_DialogFactory::requestOptionsGeneralDialog() {
+int QG_DialogFactory::requestOptionsGeneralDialog() {
     QG_DlgOptionsGeneral dlg(parent);
-    dlg.exec();
+    int result = dlg.exec();
     getSnapOptionsHolder(); // as side effect, should update location of snap options
+    return result;
 }
 
 void QG_DialogFactory::requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) {

@@ -19,27 +19,30 @@
  along with this program; if not, write to the Free Software
  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  ******************************************************************************/
+#ifndef QG_DIMENSIONLABELEDITOR_H
+#define QG_DIMENSIONLABELEDITOR_H
 
-#ifndef LC_OPTIONSWIDGETSHOLDER_H
-#define LC_OPTIONSWIDGETSHOLDER_H
+#include "ui_qg_dimensionlabeleditor.h"
+class RS_Dimension;
 
-#include <QWidget>
-#include "lc_snapoptionswidgetsholder.h"
-
-namespace Ui {
-    class LC_OptionsWidgetsHolder;
-}
-class LC_OptionsWidgetsHolder : public QWidget{
+class QG_DimensionLabelEditor : public QWidget, public Ui::QG_DimensionLabelEditor
+{
     Q_OBJECT
 
 public:
-    explicit LC_OptionsWidgetsHolder(QWidget *parent = nullptr);
-    ~LC_OptionsWidgetsHolder();
-    void addOptionsWidget(QWidget* optionsWidget);
-    void removeOptionsWidget(QWidget* optionsWidget);
-    LC_SnapOptionsWidgetsHolder *getSnapOptionsHolder();
-private:
-    Ui::LC_OptionsWidgetsHolder *ui;
+    QG_DimensionLabelEditor(QWidget* parent = nullptr, Qt::WindowFlags fl = {});
+    ~QG_DimensionLabelEditor();
+
+    void setRadialType(const RS_Dimension&);
+    virtual QString getLabel();
+
+public slots:
+    virtual void setLabel( const QString & l );
+    virtual void insertSign( const QString & s );
+
+protected slots:
+    virtual void languageChange();
+
 };
 
-#endif // LC_OPTIONSWIDGETSHOLDER_H
+#endif // QG_DIMENSIONLABELEDITOR_H

@@ -66,6 +66,8 @@ QG_DlgOptionsGeneral::QG_DlgOptionsGeneral(QWidget* parent, bool modal, Qt::Wind
 
     connect(cbVisualizeHovering, &QCheckBox::stateChanged,
             this, &QG_DlgOptionsGeneral::on_cbVisualizeHoveringClicked);
+
+    connect(tbShortcuts, &QToolButton::clicked, this, &QG_DlgOptionsGeneral::setShortcutsMappingsFoler);
 }
 
 /*
@@ -159,6 +161,10 @@ void QG_DlgOptionsGeneral::init() {
     // preview:
     initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
 
+    checked = RS_SETTINGS->readNumEntry("/ShowKeyboardShortcutsInTooltips", 1) == 1;
+    cbShowKeyboardShortcutsInToolTips->setChecked(checked ? true : false);
+
+
     RS_SETTINGS->endGroup();
 
     RS_SETTINGS->beginGroup("Colors");
@@ -185,6 +191,7 @@ void QG_DlgOptionsGeneral::init() {
     lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
     leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
     variablefile_field->setText(RS_SETTINGS->readEntry("/VariableFile", "").trimmed());
+    leShortcutsMappingDirectory->setText(RS_SETTINGS->readEntry("/ShortcutsMappings", "").trimmed());
     RS_SETTINGS->endGroup();
 
     // units:
@@ -282,6 +289,8 @@ void QG_DlgOptionsGeneral::ok(){
         RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked() ? 1 : 0);
         RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked() ? 1 : 0);
+        RS_SETTINGS->writeEntry("/ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked() ? 1 : 0);
+
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("Colors");
@@ -306,6 +315,7 @@ void QG_DlgOptionsGeneral::ok(){
         RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
         RS_SETTINGS->writeEntry("/Template", leTemplate->text());
         RS_SETTINGS->writeEntry("/VariableFile", variablefile_field->text());
+        RS_SETTINGS->writeEntry("/ShortcutsMappings", leShortcutsMappingDirectory->text());
         RS_SETTINGS->endGroup();
 
         RS_SETTINGS->beginGroup("/Defaults");
@@ -461,6 +471,12 @@ void QG_DlgOptionsGeneral::setHatchPatternsFolder() {
     QString folder = selectFolder("Select Hatch Patterns Folder");
     if (folder != nullptr) {
         lePathHatch->setText(QDir::toNativeSeparators(folder));
+    }
+}
+void QG_DlgOptionsGeneral::setShortcutsMappingsFoler() {
+    QString folder = selectFolder("Select Shortcuts Mappings Folder");
+    if (folder != nullptr) {
+        leShortcutsMappingDirectory->setText(QDir::toNativeSeparators(folder));
     }
 }
 

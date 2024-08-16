@@ -74,7 +74,7 @@ Functionality of dimension action improved, now it's possible lengthen line and 
 
 ### Minor actions improvements
 
-There are lots of minor improvements of existing actions (like support of symmetric mode for "Line Parallel Through Point" and "Lengthen" actions).
+There are lots of minor improvements of existing actions (like support of symmetric mode for "Line Parallel Through Point" and "Lengthen" actions) as well as various bugfixes.
 
 ### Action Option widgets
 
@@ -97,7 +97,14 @@ While print preview is operational, most probably it requires deeper rework in o
 Now switching tab or creation of new drawing finishes current active action, so no confusion by action that is active in other tab.
 
 ### Selection in selection widget
-Selected entities count/length is updated on layer hiding/displaying to reflect only visible selected entities. 
+Selected entities count/length is updated on layer hiding/displaying to reflect only visible selected entities.
+
+### Keyboard Shortcuts Editing - UI
+Now the user may assign keyboard shortcuts to actions via UI  - using Keyboard Shortcuts options dialog.  
+
+### Keyboard Shortcuts in options tooltips
+An option was added to Application Preferences dialog that allows to control whether keyboard shortcuts should be shown as part of the action's tooltip or not. 
+
 
 ### Implementation notes
 The existing code base (for actions) historically contains lots of code duplications and is quite redundant.
@@ -110,8 +117,14 @@ The major intents for such refactoring are
 3) improving code;
 4) using consistent code style and common approaches;
 
+The overall layout of files was also affected. Historically, the amount of files within the same directory reached huge numbers that makes navigation within codebase quite complicated. 
+
+Layout of source files was changed to achieve more granular separation of functionality and simpler navigation. Git history of changes for source files was saved during source code relocation. 
+
 I'm not aware of any functional regressions, so end users should be not affected by refactoring. 
 
-The functionality is stable enough and may be a good candidate at least for night build for wide user testing.
+The functionality is stable enough and may be a good candidate at least for night build for wide user testing. 
 
-However, the changes in the code base are quite significant and most probably the process of comparing/reviewing changes may be challenging.
+However, the changes in the code base are quite significant and most probably the process of comparing/reviewing changes may be challenging. 
+
+It might be also practical to make a new tag for this changes. 

@@ -98,7 +98,6 @@
 #include "lc_actiondrawsplinepoints.h"
 #include "rs_actiondrawtext.h"
 #include "rs_actioneditcopy.h"
-#include "rs_actioneditpaste.h"
 #include "rs_actioneditundo.h"
 #include "lc_actionfileexportmakercam.h"
 #include "rs_actionfilenewtemplate.h"

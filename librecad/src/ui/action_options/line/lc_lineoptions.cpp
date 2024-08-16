@@ -201,5 +201,3 @@ void LC_LineOptions::setAngleRelativeToActionAndView(bool relative){
     action->setAngleIsRelative(relative);
     ui->cbRelAngle->setChecked(relative);
 }
-
-

@@ -65,7 +65,7 @@ public:
 	bool requestMTextDialog(RS_MText*) override {return false;}
 	bool requestTextDialog(RS_Text*) override {return false;}
 	bool requestHatchDialog(RS_Hatch*) override {return false;}
-	void requestOptionsGeneralDialog() override {}
+	int requestOptionsGeneralDialog() override {return -1;}
  void requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) override{}
 	void requestOptionsDrawingDialog(RS_Graphic&) override {}
 	bool requestOptionsMakerCamDialog() override {return false;}
