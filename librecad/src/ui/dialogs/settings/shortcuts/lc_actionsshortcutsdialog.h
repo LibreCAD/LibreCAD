@@ -43,8 +43,8 @@ public:
     void accept() override;
     void reject() override;
 protected slots:
-    void setKeySequence(const QKeySequence &key);
-    void slotFilteringMaskChanged();
+    void onKeySequenceChanged(const QKeySequence &key);
+    void onFilteringMaskChanged();
     void onTreeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected);
     void onResetCurrentItemClicked();
     void onResetAllClicked();
@@ -52,17 +52,19 @@ protected slots:
     void onClearClicked();
     void onImportClicked();
     void onExportClicked();
+    void onRecordButtonToggled(bool on);
 protected:
     Ui::LC_ActionsShortcutsDialog *ui;
     LC_ShortcutsTreeModel *mappingTreeModel;
     QMap<QString, QAction*> &actionsMap;
     LC_ActionGroupManager *actionGroupManager;
     LC_ShortcutTreeItem* currentItem = nullptr;
+    QKeySequence editingKeySequence;
     QString keySequenceToEditString(const QKeySequence &sequence) const;
     void initTreeView();
     void createMappingModel();
-    void slotTreeDoubleClicked(QModelIndex index);
-    void slotTreeClicked(QModelIndex itemIndex);
+    void onTreeDoubleClicked(QModelIndex index);
+    void onTreeClicked(QModelIndex itemIndex);
     void selectItem(LC_ShortcutTreeItem *item);
     void editItem(LC_ShortcutTreeItem *item);
     bool keySequenceIsValid(const QKeySequence &sequence) const;
@@ -72,6 +74,12 @@ protected:
     static QFlags<QFileDialog::Option> getFileDialogOptions();
     static void showIOInfoDialog(bool forImport, bool ok, const QString &message);
     bool checkHasCollisions(LC_ShortcutInfo *shortcutInfo);
+    void applyRecordedKeySequence();
+
+    void reportSaveResult(int saveResult) const;
+
+    void reportLoadResult(int loadResult) const;
+
 };
 
 #endif // LC_ACTIONSSHORTCUTSDIALOG_H
