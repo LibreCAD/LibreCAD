@@ -296,16 +296,16 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Коло &amp;вписане</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до 2 кіл і радіус</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до 2 кіл, 1 точка</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
@@ -5908,7 +5908,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Old Drawing Exchange %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
@@ -6951,7 +6951,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Крива</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -6975,7 +6975,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <source>Line</source>
@@ -6991,7 +6991,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Інше</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -6999,7 +6999,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Обмеження</translation>
     </message>
     <message>
         <source>Select</source>
@@ -7011,7 +7011,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Прив&apos;язка (додатково)</translation>
     </message>
     <message>
         <source>View</source>
@@ -7019,39 +7019,39 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Віджети</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювачі</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Усе</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Не коректні об&apos;єкти видалено:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Олівцева палітра</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрати об&apos;єкти</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати до обраних</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви маєте спочатку визначити відстань.</translation>
     </message>
     <message>
         <source>cal</source>
@@ -7059,19 +7059,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим калькулятора: On</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим калькулятора: Off</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліцензія</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Не знайдено шарів %1</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7785,87 +7785,87 @@ Do you want to replace it?</source>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Користувацький</translation>
     </message>
     <message>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A0</translation>
     </message>
     <message>
         <source>A1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A1</translation>
     </message>
     <message>
         <source>A2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A2</translation>
     </message>
     <message>
         <source>A3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A3</translation>
     </message>
     <message>
         <source>A4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A4</translation>
     </message>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Letter / ANSI A</translation>
     </message>
     <message>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Legal</translation>
     </message>
     <message>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tabloid / ANSI B</translation>
     </message>
     <message>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI C</translation>
     </message>
     <message>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI D</translation>
     </message>
     <message>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI E</translation>
     </message>
     <message>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch A</translation>
     </message>
     <message>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch B</translation>
     </message>
     <message>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch C</translation>
     </message>
     <message>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch D</translation>
     </message>
     <message>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch E</translation>
     </message>
     <message>
         <source>custom</source>
@@ -8896,7 +8896,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загальна відстань %1 менща за відстань між foci</translation>
     </message>
 </context>
 <context>
@@ -8962,7 +8962,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Загальна площа штрихування = %1</translation>
     </message>
 </context>
 <context>
@@ -9020,11 +9020,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відмінити: досягнуто початку історії дій</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо повторити: досягнуто кінця історії дій</translation>
     </message>
 </context>
 <context>
@@ -9087,7 +9087,7 @@ This block cannot be inserted.</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"></translation>
+        <translation>Кількість ліній сектору не у проміжку: </translation>
     </message>
 </context>
 <context>
@@ -9389,39 +9389,39 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Визначте кінцеву точку x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте кількість поліліній</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>формула</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Уведіть формулу, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Визначте початкову точку x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлене значення x не коректне.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлений розмір кроку некоректний.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлене значення x некоректне.</translation>
     </message>
 </context>
 <context>
@@ -9562,7 +9562,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Площа: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -9585,7 +9585,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished">Відстань: %1; прямокутні координати (%2, %3); полярні (%4∠%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
+        <translation>Відстань: %1 Прямокутна: (%2, %3), Полярна: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -9742,7 +9742,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Елемент має бути лінією, дугою, колом, еліпсом або інтерпольованим сплайном.</translation>
     </message>
 </context>
 <context>
@@ -9777,23 +9777,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Батьківсткий елемент другого елементу є nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Один з обраних елементів є nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Батьківський елемент першого елементу є nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перший елемент є nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Другий елемент є nullptr</translation>
     </message>
 </context>
 <context>
@@ -9811,11 +9811,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Клікніть на елементі щоб модифікувати</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -9960,7 +9960,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте перший елемент або радіус &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -10063,7 +10063,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть елемент для упорядкування</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10261,7 +10261,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"></translation>
+        <translation>Полілінію створено</translation>
     </message>
 </context>
 <context>
@@ -10312,43 +10312,43 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у кординатах паперу (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у графічних координатах (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у графічних координатах</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у кординатах паперу</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">: оберіть координати зміщення друку</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation>ввести значення зміщення з командного рядка для зміщення друку</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку ігнорує відносний нуль. Ігнорування &apos;@&apos;</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Друк у монохромі (чорний/білий)</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк у кольорі</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_ActionPrintPreview::calcPagesNum(): Досягнуто ліміту сторінок.</translation>
     </message>
 </context>
 <context>
@@ -10391,11 +10391,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Оберіть для обертання навколо двох осей</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть для розкладання тексту</translation>
     </message>
     <message>
         <source>Select to create block</source>
@@ -10415,15 +10415,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Оберіть для створення відступу</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіт елементи для упорядкування</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть для розкладання блоку</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
@@ -10558,7 +10558,7 @@ This block cannot be inserted.</source>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рамка</translation>
     </message>
 </context>
 <context>
@@ -10613,7 +10613,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Усікти</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -10632,7 +10632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
 </context>
 <context>
@@ -10647,7 +10647,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
@@ -10662,7 +10662,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -10677,7 +10677,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>⌀</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">⌀</translation>
     </message>
     <message>
         <source>°</source>
@@ -10689,7 +10689,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">π</translation>
     </message>
     <message>
         <source>×</source>
@@ -10701,7 +10701,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">…</translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -10712,7 +10712,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10743,7 +10743,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10771,15 +10771,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтервал:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="unfinished">Проміжок між стовпцями:</translation>
+        <translation type="unfinished">Інтервал між стовпцями:</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="unfinished">Відстань між рядами:</translation>
+        <translation type="unfinished">Інтервал між рядами:</translation>
     </message>
 </context>
 <context>
@@ -10790,7 +10790,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10813,7 +10813,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
@@ -10821,7 +10821,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
@@ -10852,7 +10852,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
@@ -10860,7 +10860,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
@@ -10914,7 +10914,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
@@ -10929,7 +10929,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
@@ -10944,7 +10944,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
@@ -10959,7 +10959,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
@@ -10974,7 +10974,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
@@ -10982,7 +10982,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
@@ -11001,7 +11001,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -11027,14 +11027,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Параметри ламаної</translation>
+        <translation>Параметри полілінії</translation>
     </message>
     <message>
         <source>Close</source>
@@ -11062,11 +11062,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -11093,7 +11093,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished">Переключити режим чорний/білий</translation>
+        <translation>Переключити чорний/білий режим</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -11105,11 +11105,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати масштаб друку до товщини ліній</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрахувати кількість аркушів необхідних для друку креслення</translation>
     </message>
 </context>
 <context>
@@ -11124,18 +11124,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Усікти</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування чутливості прив&apos;язки</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -11146,11 +11146,11 @@ This block cannot be inserted.</source>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування чутливості прив&apos;язки</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished">Середніх точок: </translation>
+        <translation>Середніх точок:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
@@ -11165,11 +11165,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ступінь:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Замкнутий</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -11188,7 +11188,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -11199,54 +11199,54 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
+        <translation>Відстань. Від’ємні значення для відсікання, позитивні для витягування.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
+        <translation>Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена остаточна довжина відрізка.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
+        <translation>Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рамка</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Зруйнувати</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Призначити</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновити</translation>
     </message>
 </context>
 </TS>
