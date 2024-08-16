@@ -897,11 +897,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished">Пристрій</translation>
+        <translation>Пристрій</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished">Зберегти</translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
