@@ -1564,9 +1564,6 @@ QC_MDIWindow* QC_ApplicationWindow::slotFileNew(RS_Document* doc) {
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
 
-    connect(w, SIGNAL(signalClosing(QC_MDIWindow*)),
-            this, SLOT(slotFileClosing(QC_MDIWindow*)));
-
     if (w->getDocument()->rtti()==RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block*)(w->getDocument()))->getName()) + "[*]");
     } else {
