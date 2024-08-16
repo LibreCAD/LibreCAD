@@ -2394,6 +2394,8 @@ void QC_ApplicationWindow::slotFilePrint(bool printPDF) {
         return;
     }
 
+    graphic->fitToPage();
+
     statusBar()->showMessage(tr("Printing..."));
     using namespace LC_Printing;
     PrinterType type = printPDF ? PrinterType::PDF : PrinterType::Printer;
