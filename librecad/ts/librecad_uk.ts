@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished">Налаштування</translation>
+        <translation>Налаштування</translation>
     </message>
 </context>
 <context>
@@ -309,11 +309,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до &amp;3 кіл</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична, 2 Т&amp;очки</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
@@ -325,7 +325,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до &amp;дуги</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -393,11 +393,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished">&amp;Багаторядковий текст</translation>
+        <translation>&amp;Багаторядковий текст</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Текст</translation>
+        <translation>&amp;Текст</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
@@ -405,11 +405,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished">Вставити &amp;зображення</translation>
+        <translation>Вставити &amp;зображення</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation type="unfinished">Ви&amp;рівняний</translation>
+        <translation>&amp;Вирівняні</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
@@ -421,15 +421,15 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation type="unfinished">&amp;Радіальний</translation>
+        <translation>&amp;Радіальний</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation type="unfinished">&amp;Діаметральний</translation>
+        <translation>&amp;Діаметральний</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Кутовий</translation>
+        <translation>&amp;Кутовий</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
@@ -437,7 +437,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">А&amp;трибути</translation>
+        <translation>&amp;Атрибути</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
