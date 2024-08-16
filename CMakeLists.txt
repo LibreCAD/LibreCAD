@@ -393,8 +393,8 @@ set(SOURCES
 		librecad/src/actions/drawing/draw/text/rs_actiondrawtext.h
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditcopy.h
-		librecad/src/actions/drawing/edit/rs_actioneditpaste.cpp
-		librecad/src/actions/drawing/edit/rs_actioneditpaste.h
+		librecad/src/actions/not_used/rs_actioneditpaste.cpp
+		librecad/src/actions/not_used/rs_actioneditpaste.h
 		librecad/src/actions/drawing/edit/rs_actioneditundo.cpp
 		librecad/src/actions/drawing/edit/rs_actioneditundo.h
 		librecad/src/actions/file/rs_actionfilenew.cpp
@@ -415,8 +415,8 @@ set(SOURCES
 		librecad/src/actions/drawing/info/rs_actioninfodist.h
 		librecad/src/actions/drawing/info/rs_actioninfodist2.cpp
 		librecad/src/actions/drawing/info/rs_actioninfodist2.h
-		librecad/src/actions/drawing/info/rs_actioninfoinside.cpp
-		librecad/src/actions/drawing/info/rs_actioninfoinside.h
+		librecad/src/actions/not_used/rs_actioninfoinside.cpp
+		librecad/src/actions/not_used/rs_actioninfoinside.h
 		librecad/src/actions/drawing/info/rs_actioninfototallength.cpp
 		librecad/src/actions/drawing/info/rs_actioninfototallength.h
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.cpp
@@ -449,8 +449,8 @@ set(SOURCES
 		librecad/src/actions/drawing/modify/rs_actionmodifydelete.h
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifydeletefree.h
-		librecad/src/actions/drawing/modify/rs_actionmodifydeletequick.cpp
-		librecad/src/actions/drawing/modify/rs_actionmodifydeletequick.h
+		librecad/src/actions/not_used/rs_actionmodifydeletequick.cpp
+		librecad/src/actions/not_used/rs_actionmodifydeletequick.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.cpp
 		librecad/src/actions/drawing/modify/rs_actionmodifyentity.h
 		librecad/src/actions/drawing/modify/rs_actionmodifyexplodetext.cpp
@@ -519,18 +519,18 @@ set(SOURCES
 		librecad/src/actions/drawing/selection/rs_actionselectwindow.h
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.cpp
 		librecad/src/actions/drawing/rel_zero/rs_actionsetrelativezero.h
-		librecad/src/actions/drawing/snap/rs_actionsetsnapmode.cpp
-		librecad/src/actions/drawing/snap/rs_actionsetsnapmode.h
-		librecad/src/actions/drawing/snap/rs_actionsetsnaprestriction.cpp
-		librecad/src/actions/drawing/snap/rs_actionsetsnaprestriction.h
+		librecad/src/actions/not_used/rs_actionsetsnapmode.cpp
+		librecad/src/actions/not_used/rs_actionsetsnapmode.h
+		librecad/src/actions/not_used/rs_actionsetsnaprestriction.cpp
+		librecad/src/actions/not_used/rs_actionsetsnaprestriction.h
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.cpp
 		librecad/src/actions/drawing/snap/rs_actionsnapintersectionmanual.h
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.cpp
 		librecad/src/actions/drawing/draw/dimensions/rs_actiontoolregeneratedimensions.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomauto.h
-		librecad/src/actions/drawing/zoom/rs_actionzoomautoy.cpp
-		librecad/src/actions/drawing/zoom/rs_actionzoomautoy.h
+		librecad/src/actions/not_used/rs_actionzoomautoy.cpp
+		librecad/src/actions/not_used/rs_actionzoomautoy.h
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.cpp
 		librecad/src/actions/drawing/zoom/rs_actionzoomin.h
 		librecad/src/actions/drawing/zoom/rs_actionzoompan.cpp

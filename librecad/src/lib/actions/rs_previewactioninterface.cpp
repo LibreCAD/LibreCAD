@@ -24,13 +24,11 @@
 **
 **********************************************************************/
 
-#include "qg_linerelangleoptions.h"
-#include "rs_creation.h"
-#include "rs_actiondrawlinerelangle.h"
-#include "rs_commands.h"
+
 #include <QApplication>
 #include <QMouseEvent>
-#include "rs_constructionline.h"
+#include "rs_creation.h"
+#include "rs_commands.h"
 #include "rs_arc.h"
 #include "rs_math.h"
 #include "rs_dialogfactory.h"

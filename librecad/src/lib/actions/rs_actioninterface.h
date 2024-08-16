@@ -44,7 +44,7 @@ class RS_Graphic;
 class RS_Document;
 class QAction;
 class QString;
-class LC_ActionOptionsWidget;
+class LC_ActionOptionsWidget; // todo - think about depencency - options in in ui, while this action in lib... quite artificial separation, actually
 
 /**
  * This is the interface that must be implemented for all
