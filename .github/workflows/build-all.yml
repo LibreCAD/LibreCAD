@@ -71,7 +71,7 @@ jobs:
           github_token: ${{ secrets.LC_PUSH_ANALYZER_REPORT }}
           branch: gh-pages
           force: true
-          directory: out        
+          directory: out
 
       - name: Create AppImage
         run: |
