@@ -38,6 +38,13 @@ jobs:
         run: |
           sudo apt-get -qq install clang-10 clang-tools-10
 
+      - name: Set Dark splash
+        # Test setting dark splash screen for `2.2.2_alpha`
+        # Comment this if `master` is used for releases
+        if: github.ref == 'refs/heads/master'
+        run: |
+          cp ${{github.workspace}}/desktop/media/splash/librecad01_dark.png ${{github.workspace}}/librecad/res/main/splash_librecad.png
+
       - name: Build and analyze
         run: |
           export CC=g++
