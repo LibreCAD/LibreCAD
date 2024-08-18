@@ -1,24 +1,31 @@
-/*******************************************************************************
- *
- This file is part of the LibreCAD project, a 2D CAD program
-
- Copyright (C) 2024 LibreCAD.org
- Copyright (C) 2024 sand1024
-
- This program is free software; you can redistribute it and/or
- modify it under the terms of the GNU General Public License
- as published by the Free Software Foundation; either version 2
- of the License, or (at your option) any later version.
-
- This program is distributed in the hope that it will be useful,
- but WITHOUT ANY WARRANTY; without even the implied warranty of
- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- GNU General Public License for more details.
-
- You should have received a copy of the GNU General Public License
- along with this program; if not, write to the Free Software
- Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
- ******************************************************************************/
+/****************************************************************************
+**
+** This file is part of the LibreCAD project, a 2D CAD program
+** 
+** Copyright (C) 2019 Shawn Curry (noneyabiz@mail.wasent.cz)
+** Copyright (C) 2018 Simon Wells (simonrwells@gmail.com)
+** Copyright (C) 2015-2016 ravas (github.com/r-a-v-a-s)
+** Copyright (C) 2015 A. Stebich (librecad@mail.lordofbikes.de)
+** Copyright (C) 2010 R. van Twisk (librecad@rvt.dds.nl)
+** Copyright (C) 2001-2003 RibbonSoft. All rights reserved.
+**
+** This file may be distributed and/or modified under the terms of the
+** GNU General Public License version 2 as published by the Free Software
+** Foundation and appearing in the file gpl-2.0.txt included in the
+** packaging of this file.
+**
+** This program is distributed in the hope that it will be useful,
+** but WITHOUT ANY WARRANTY; without even the implied warranty of
+** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+** GNU General Public License for more details.
+**
+** You should have received a copy of the GNU General Public License
+** along with this program; if not, write to the Free Software
+** Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301  USA
+**
+** This copyright notice MUST APPEAR in all copies of the script!
+**
+**********************************************************************/
 
 // Changes: https://github.com/LibreCAD/LibreCAD/commits/master/librecad/src/main/qc_applicationwindow.cpp
 
@@ -1568,9 +1575,6 @@ QC_MDIWindow *QC_ApplicationWindow::slotFileNew(RS_Document *doc) {
 
     actionHandler->set_view(view);
     actionHandler->set_document(w->getDocument());
-
-    connect(w, SIGNAL(signalClosing(QC_MDIWindow * )),
-            this, SLOT(slotFileClosing(QC_MDIWindow * )));
 
     if (w->getDocument()->rtti() == RS2::EntityBlock) {
         w->setWindowTitle(tr("Block '%1'").arg(((RS_Block *) (w->getDocument()))->getName()) + "[*]");

@@ -24,18 +24,18 @@
     </message>
     <message>
         <source>GroupBox</source>
-        <translation type="unfinished"></translation>
+        <translation>Розкривний список</translation>
     </message>
     <message>
         <source>Set</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування</translation>
     </message>
 </context>
 <context>
     <name>DlgSplinePoints</name>
     <message>
         <source>SplinePoints</source>
-        <translation type="unfinished"></translation>
+        <translation>Точки сплайна</translation>
     </message>
     <message>
         <source>Layer:</source>
@@ -55,7 +55,7 @@
     </message>
     <message>
         <source>Control Points</source>
-        <translation type="unfinished"></translation>
+        <translation>Контрольні точки</translation>
     </message>
     <message>
         <source>Points on Spline</source>
@@ -66,7 +66,7 @@
     <name>LC_ActionDimArc</name>
     <message>
         <source>Select arc entity</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть об&apos;єкт дуги</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -82,7 +82,8 @@
     <message>
         <source>radius=%1 is too small for points selected
 distance between points=%2 is larger than diameter=%3</source>
-        <translation type="unfinished"></translation>
+        <translation>радіус=%1 занадто малий для обраних точок
+відстань між точками=%2 більша за діаметр=%3</translation>
     </message>
     <message>
         <source>Select from two possible circle centers</source>
@@ -94,7 +95,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
     <message>
         <source>Specify second point</source>
@@ -117,7 +118,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Specify a tangent</source>
-        <translation type="unfinished"></translation>
+        <translation>Укажіть дотичну</translation>
     </message>
     <message>
         <source>Enter number:</source>
@@ -156,18 +157,18 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Cannot undo: Not enough entities defined yet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо скасувати: ще не визначено достатньо об’єктів.</translation>
     </message>
     <message>
         <source>Cannot undo: Nothing could be redone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо скасувати: Відсутні дії для відновлення.</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFactory</name>
     <message>
         <source>&amp;Window Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Збільшити</translation>
     </message>
     <message>
         <source>Zoom &amp;Panning</source>
@@ -187,11 +188,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>(De-)Select &amp;Contour</source>
-        <translation type="unfinished"></translation>
+        <translation>Вибір &amp;Контуру</translation>
     </message>
     <message>
         <source>Select Intersected Entities</source>
-        <translation type="unfinished"></translation>
+        <translation>Виберіть об&apos;єкти, що перетинаються</translation>
     </message>
     <message>
         <source>Deselect Intersected Entities</source>
@@ -251,7 +252,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tangent &amp;Orthogonal</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична &amp;Ортогональна</translation>
     </message>
     <message>
         <source>Orthogonal</source>
@@ -263,11 +264,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Багат&amp;окутник (цент, кут)</translation>
     </message>
     <message>
         <source>Polygo&amp;n (Cor,Cor)</source>
-        <translation type="unfinished"></translation>
+        <translation>Багат&amp;окутник (кут, кут)</translation>
     </message>
     <message>
         <source>Center, &amp;Point</source>
@@ -283,7 +284,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>2 Points, Radius</source>
-        <translation type="unfinished"></translation>
+        <translation>2 точки, радіус</translation>
     </message>
     <message>
         <source>3 Points</source>
@@ -291,28 +292,28 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Concentric</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Концентричний</translation>
     </message>
     <message>
         <source>Circle &amp;Inscribed</source>
-        <translation type="unfinished"></translation>
+        <translation>Коло &amp;вписане</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, Radius</source>
         <comment>circle tangential with two circles, and given radius</comment>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до 2 кіл і радіус</translation>
     </message>
     <message>
         <source>Tangential 2 Circles, 1 Point</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до 2 кіл, 1 точка</translation>
     </message>
     <message>
         <source>Tangential &amp;3 Circles</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до &amp;3 кіл</translation>
     </message>
     <message>
         <source>Tangential, 2 P&amp;oints</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична, 2 Т&amp;очки</translation>
     </message>
     <message>
         <source>&amp;Center, Point, Angles</source>
@@ -324,7 +325,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Arc &amp;Tangential</source>
-        <translation type="unfinished"></translation>
+        <translation>Дотична до &amp;дуги</translation>
     </message>
     <message>
         <source>&amp;Ellipse (Axis)</source>
@@ -356,11 +357,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Spline through points</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Сплайн через точки</translation>
     </message>
     <message>
         <source>&amp;Polyline</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Полілінія</translation>
     </message>
     <message>
         <source>&amp;Add node</source>
@@ -368,7 +369,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>A&amp;ppend node</source>
-        <translation type="unfinished">До&amp;повнити вузол</translation>
+        <translation>До&amp;лучити вузол</translation>
     </message>
     <message>
         <source>&amp;Delete node</source>
@@ -384,19 +385,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Create &amp;Equidistant Polylines</source>
-        <translation type="unfinished">Створити &amp;рівновіддалені ламані</translation>
+        <translation>Створити &amp;рівновіддалені полілінії</translation>
     </message>
     <message>
         <source>Create Polyline from Existing &amp;Segments</source>
-        <translation type="unfinished">Створити ламану лінію з &amp;існуючих відрізків</translation>
+        <translation>Створити полілінію з &amp;існуючих відрізків</translation>
     </message>
     <message>
         <source>&amp;MText</source>
-        <translation type="unfinished">&amp;Багаторядковий текст</translation>
+        <translation>&amp;Багаторядковий текст</translation>
     </message>
     <message>
         <source>&amp;Text</source>
-        <translation type="unfinished">&amp;Текст</translation>
+        <translation>&amp;Текст</translation>
     </message>
     <message>
         <source>&amp;Hatch</source>
@@ -404,31 +405,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Insert &amp;Image</source>
-        <translation type="unfinished">Вставити &amp;зображення</translation>
+        <translation>Вставити &amp;зображення</translation>
     </message>
     <message>
         <source>&amp;Aligned</source>
-        <translation type="unfinished">Ви&amp;рівняний</translation>
+        <translation>&amp;Вирівняні</translation>
     </message>
     <message>
         <source>&amp;Linear</source>
-        <translation type="unfinished">&amp;Лінійний</translation>
+        <translation>&amp;Лінійний</translation>
     </message>
     <message>
         <source>&amp;Vertical</source>
-        <translation type="unfinished">&amp;Вертикальна</translation>
+        <translation>&amp;Вертикальний</translation>
     </message>
     <message>
         <source>&amp;Radial</source>
-        <translation type="unfinished">&amp;Радіальний</translation>
+        <translation>&amp;Радіальний</translation>
     </message>
     <message>
         <source>&amp;Diametric</source>
-        <translation type="unfinished">&amp;Діаметральний</translation>
+        <translation>&amp;Діаметральний</translation>
     </message>
     <message>
         <source>&amp;Angular</source>
-        <translation type="unfinished">&amp;Кутовий</translation>
+        <translation>&amp;Кутовий</translation>
     </message>
     <message>
         <source>&amp;Leader</source>
@@ -436,83 +437,83 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Attributes</source>
-        <translation type="unfinished">А&amp;трибути</translation>
+        <translation>&amp;Атрибути</translation>
     </message>
     <message>
         <source>&amp;Delete</source>
-        <translation type="unfinished">Ви&amp;лучити</translation>
+        <translation>Ви&amp;далити</translation>
     </message>
     <message>
         <source>Delete Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити довільну криву</translation>
     </message>
     <message>
         <source>&amp;Move / Copy</source>
-        <translation type="unfinished">&amp;Зрушення/копіювання</translation>
+        <translation>&amp;Перемістити / Скопіювати</translation>
     </message>
     <message>
         <source>Re&amp;vert direction</source>
-        <translation type="unfinished">Звернути напрямок</translation>
+        <translation>Змінити напрямок</translation>
     </message>
     <message>
         <source>Ctrl+R</source>
-        <translation type="unfinished">Ctrl+R</translation>
+        <translation>Ctrl+R</translation>
     </message>
     <message>
         <source>&amp;Rotate</source>
-        <translation type="unfinished">&amp;Обертання</translation>
+        <translation>&amp;Обернути</translation>
     </message>
     <message>
         <source>&amp;Scale</source>
-        <translation type="unfinished">&amp;Масштабувати</translation>
+        <translation>&amp;Масштабувати</translation>
     </message>
     <message>
         <source>&amp;Mirror</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Відзеркалити</translation>
     </message>
     <message>
         <source>Rotate T&amp;wo</source>
-        <translation type="unfinished">Обертати навколо &amp;двох</translation>
+        <translation>Обертати навколо &amp;двох</translation>
     </message>
     <message>
         <source>&amp;Properties</source>
-        <translation type="unfinished">Власти&amp;вості</translation>
+        <translation>&amp;Властивості</translation>
     </message>
     <message>
         <source>&amp;Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Підрізання</translation>
     </message>
     <message>
         <source>&amp;Lengthen</source>
-        <translation type="unfinished">По&amp;довжити</translation>
+        <translation>&amp;Подовжити</translation>
     </message>
     <message>
         <source>&amp;Divide</source>
-        <translation type="unfinished">&amp;Поділ</translation>
+        <translation>&amp;Поділ</translation>
     </message>
     <message>
         <source>&amp;Stretch</source>
-        <translation type="unfinished">&amp;Витягнути</translation>
+        <translation>&amp;Витягнути</translation>
     </message>
     <message>
         <source>&amp;Bevel</source>
-        <translation type="unfinished">&amp;Фаска</translation>
+        <translation>&amp;Фаска</translation>
     </message>
     <message>
         <source>&amp;Fillet</source>
-        <translation type="unfinished"></translation>
+        <translation>Закруглення</translation>
     </message>
     <message>
         <source>&amp;Explode Text into Letters</source>
-        <translation type="unfinished">&amp;Розбити текст на букви</translation>
+        <translation type="unfinished">&amp;Розбити текст на літери</translation>
     </message>
     <message>
         <source>Point inside contour</source>
-        <translation type="unfinished">Точка всередині контуру</translation>
+        <translation>Точка всередині контуру</translation>
     </message>
     <message>
         <source>&amp;Distance Point to Point</source>
-        <translation type="unfinished">&amp;Відстань від точки до точки</translation>
+        <translation>&amp;Відстань від точки до точки</translation>
     </message>
     <message>
         <source>&amp;Distance Entity to Point</source>
@@ -524,19 +525,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Total length of selected entities</source>
-        <translation type="unfinished">Су&amp;марна довжина вибраних об’єктів</translation>
+        <translation>&amp;Загальна довжина обраних об’єктів</translation>
     </message>
     <message>
         <source>Polygonal &amp;Area</source>
-        <translation type="unfinished">&amp;Полігональна область</translation>
+        <translation>&amp;Багатокутний полігон</translation>
     </message>
     <message>
         <source>&amp;Selection pointer</source>
-        <translation type="unfinished">Вказівник &amp;вибору</translation>
+        <translation>Вказівник &amp;обраного</translation>
     </message>
     <message>
         <source>&amp;Undo</source>
-        <translation type="unfinished">&amp;Скасувати</translation>
+        <translation>&amp;Скасувати</translation>
     </message>
     <message>
         <source>&amp;Redo</source>
@@ -556,19 +557,19 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>move to bottom</source>
-        <translation type="unfinished">на задній план</translation>
+        <translation>перенисти на тло</translation>
     </message>
     <message>
         <source>lower after entity</source>
-        <translation type="unfinished">за об&apos;єктом</translation>
+        <translation>перенести під об&apos;єкт</translation>
     </message>
     <message>
         <source>raise over entity</source>
-        <translation type="unfinished">перед об&apos;єктом</translation>
+        <translation>підняти над об&apos;єктом</translation>
     </message>
     <message>
         <source>move to top</source>
-        <translation type="unfinished">на передній план</translation>
+        <translation>преренести догори</translation>
     </message>
     <message>
         <source>&amp;Add Layer</source>
@@ -592,11 +593,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Toggle Layer &amp;Print</source>
-        <translation type="unfinished">Змінити &amp;друк шару</translation>
+        <translation>Перемкнути &amp;друк шару</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути &amp;конструкційний шар</translation>
     </message>
     <message>
         <source>&amp;Add Block</source>
@@ -604,11 +605,11 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Remove Block</source>
-        <translation type="unfinished">Ви&amp;лучити блок</translation>
+        <translation>Ви&amp;далити блок</translation>
     </message>
     <message>
         <source>&amp;Rename Block</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Перейменувати блок</translation>
     </message>
     <message>
         <source>&amp;Edit Block</source>
@@ -624,7 +625,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Toggle Block &amp;Visibility</source>
-        <translation type="unfinished">Змінити &amp;видимість блоку</translation>
+        <translation>Перемкнути &amp;видимість блоку</translation>
     </message>
     <message>
         <source>&amp;Create Block</source>
@@ -636,23 +637,23 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Application Preferences</source>
-        <translation type="unfinished">На&amp;лаштування програми</translation>
+        <translation>На&amp;лаштування програми</translation>
     </message>
     <message>
         <source>Current &amp;Drawing Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування поточного &amp;креслення</translation>
     </message>
     <message>
         <source>&amp;Delete selected</source>
-        <translation type="unfinished">Ви&amp;лучити вибране</translation>
+        <translation>Ви&amp;далити вибране</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Вибр&amp;ати усе</translation>
+        <translation>Обр&amp;ати все</translation>
     </message>
     <message>
         <source>Deselect &amp;all</source>
-        <translation type="unfinished">Скасувати ви&amp;бір усіх об’єктів</translation>
+        <translation type="unfinished">Скасувати ви&amp;бір об’єктів</translation>
     </message>
     <message>
         <source>Ctrl+K</source>
@@ -664,31 +665,31 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Zoom &amp;In</source>
-        <translation type="unfinished">На&amp;близити</translation>
+        <translation>На&amp;близити</translation>
     </message>
     <message>
         <source>Zoom &amp;Out</source>
-        <translation type="unfinished">Від&amp;далити</translation>
+        <translation>Ві&amp;ддалити</translation>
     </message>
     <message>
         <source>&amp;Auto Zoom</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Автоматиче наближення</translation>
     </message>
     <message>
         <source>Previous &amp;View</source>
-        <translation type="unfinished">Попередній &amp;вигляд</translation>
+        <translation>Попередній &amp;вигляд</translation>
     </message>
     <message>
         <source>&amp;Redraw</source>
-        <translation type="unfinished">&amp;Оновити зображення</translation>
+        <translation>&amp;Оновити</translation>
     </message>
     <message>
         <source>&amp;New</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Новий</translation>
     </message>
     <message>
         <source>New From &amp;Template</source>
-        <translation type="unfinished">Новий за &amp;шаблоном</translation>
+        <translation>Новий за &amp;шаблоном</translation>
     </message>
     <message>
         <source>&amp;Open...</source>
@@ -696,7 +697,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Зберегти</translation>
+        <translation>&amp;Зберегти</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
@@ -704,122 +705,122 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Export as image</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Експортувати як зображення</translation>
     </message>
     <message>
         <source>&amp;Close</source>
-        <translation type="unfinished">&amp;Зачинити</translation>
+        <translation>&amp;Зачинити</translation>
     </message>
     <message>
         <source>&amp;Print...</source>
-        <translation type="unfinished">&amp;Друк…</translation>
+        <translation>&amp;Друк…</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт у PDF</translation>
     </message>
     <message>
         <source>Print Pre&amp;view</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;.Попередній перегляд</translation>
     </message>
     <message>
         <source>&amp;Quit</source>
-        <translation type="unfinished">&amp;Вихід</translation>
+        <translation>&amp;Вихід</translation>
     </message>
     <message>
         <source>&amp;Block</source>
-        <translation type="unfinished">&amp;Блок</translation>
+        <translation>&amp;Блок</translation>
     </message>
     <message>
         <source>&amp;Fullscreen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Повноекранний режим</translation>
     </message>
     <message>
         <source>&amp;Grid</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Сітка</translation>
     </message>
     <message>
         <source>Ctrl+G</source>
         <comment>Toggle Grid</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+G</translation>
     </message>
     <message>
         <source>&amp;Draft</source>
-        <translation type="unfinished">&amp;Чернетка</translation>
+        <translation>&amp;Чернетка</translation>
     </message>
     <message>
         <source>&amp;Statusbar</source>
-        <translation type="unfinished">&amp;Рядок стану</translation>
+        <translation>&amp;Рядок стану</translation>
     </message>
     <message>
         <source>Ctrl+I</source>
         <comment>Hide Statusbar</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+I</translation>
     </message>
     <message>
         <source>Focus on &amp;Command Line</source>
-        <translation type="unfinished">Перейти до &amp;командного рядка</translation>
+        <translation>Перейти до &amp;командного рядка</translation>
     </message>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування панелей</translation>
     </message>
     <message>
         <source>Left</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліворуч</translation>
     </message>
     <message>
         <source>Right</source>
-        <translation type="unfinished"></translation>
+        <translation>Праворуч</translation>
     </message>
     <message>
         <source>Top</source>
-        <translation type="unfinished">Верхня</translation>
+        <translation>Верхня</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Знизу</translation>
     </message>
     <message>
         <source>Floating</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремо</translation>
     </message>
     <message>
         <source>Reload Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезавантажити стиль</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри пристрою</translation>
     </message>
     <message>
         <source>Mo&amp;ve and Rotate</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемістит &amp;й обернути</translation>
     </message>
     <message>
         <source>Tr&amp;im Two</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Обрізати обидва</translation>
     </message>
     <message>
         <source>O&amp;ffset</source>
-        <translation type="unfinished"></translation>
+        <translation>Зсув</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювач меню</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювач панелей</translation>
     </message>
     <message>
         <source>Ctrl+D</source>
         <comment>Toggle Draft Mode</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ctrl+D</translation>
     </message>
     <message>
         <source>Pol&amp;ygon (Cen,Tan)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Полігон (Центр, Дотична)</translation>
     </message>
     <message>
         <source>&amp;Arc</source>
@@ -827,98 +828,98 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>&amp;Show all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Показати всі шари</translation>
     </message>
     <message>
         <source>&amp;Hide all layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Приховати всі шари</translation>
     </message>
     <message>
         <source>&amp;Unlock all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Розблокувати все</translation>
     </message>
     <message>
         <source>&amp;Lock all</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Заблокувати все</translation>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Експортувати обрані шари</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт &amp;видимих шарів</translation>
     </message>
     <message>
         <source>&amp;Show all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Показати всі блоки</translation>
     </message>
     <message>
         <source>&amp;Hide all blocks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Приховати всі блоки</translation>
     </message>
     <message>
         <source>Export as CA&amp;M/plain SVG...</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати як CA&amp;M/Plain SVG...</translation>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Закрити всі</translation>
     </message>
     <message>
         <source>Re-dock Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Перезакріпити віджети</translation>
     </message>
     <message>
         <source>Save A&amp;ll...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти &amp;всі...</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionFileExportMakerCam</name>
     <message>
         <source>Export as</source>
-        <translation type="unfinished">Експортувати як</translation>
+        <translation>Експортувати як</translation>
     </message>
 </context>
 <context>
     <name>LC_ActionLayersExport</name>
     <message>
         <source>Saving layer &quot;%1&quot; as &quot;%2&quot; </source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти шар &apos;%1&apos; як &apos;%2&apos; </translation>
     </message>
 </context>
 <context>
     <name>LC_DeviceOptions</name>
     <message>
         <source>Form</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Форма</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation>Пристрій</translation>
     </message>
     <message>
         <source>Save</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти</translation>
     </message>
 </context>
 <context>
     <name>LC_SimpleTests</name>
     <message>
         <source>De&amp;bugging</source>
-        <translation type="unfinished">На&amp;лагодження</translation>
+        <translation>Нала&amp;лагодження</translation>
     </message>
     <message>
         <source>Insert Image</source>
-        <translation type="unfinished">Вставити зображення</translation>
+        <translation>Вставити зображення</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetFactory</name>
     <message>
         <source>Library Browser</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Бібліотеки</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -926,140 +927,140 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Док-панель</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремо</translation>
     </message>
     <message>
         <source>Lines</source>
-        <translation type="unfinished">Лінії</translation>
+        <translation>Лінії</translation>
     </message>
     <message>
         <source>Circles</source>
-        <translation type="unfinished">Кола</translation>
+        <translation>Кола</translation>
     </message>
     <message>
         <source>Freehand</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Довільна крива</translation>
     </message>
     <message>
         <source>Ellipses</source>
-        <translation type="unfinished">Еліпси</translation>
+        <translation>Еліпси</translation>
     </message>
     <message>
         <source>PolyLines</source>
-        <translation type="unfinished"></translation>
+        <translation>Полілінії</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Вибрати</translation>
+        <translation>Вибрати</translation>
     </message>
     <message>
         <source>Dimensions</source>
-        <translation type="unfinished">Розміри</translation>
+        <translation>Розміри</translation>
     </message>
     <message>
         <source>Modify</source>
-        <translation type="unfinished">Змінити</translation>
+        <translation>Змінити</translation>
     </message>
     <message>
         <source>Measure</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вимірювання</translation>
     </message>
 </context>
 <context>
     <name>LC_WidgetOptionsDialog</name>
     <message>
         <source>Widget Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Параметри віджетів</translation>
     </message>
     <message>
         <source>Toolbar</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Панель інструментів</translation>
     </message>
     <message>
         <source>Icon Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір іконок</translation>
     </message>
     <message>
         <source>General</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загальні</translation>
     </message>
     <message>
         <source>Style</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Стиль</translation>
     </message>
     <message>
         <source>Style Sheet</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл стилю</translation>
     </message>
     <message>
         <source>Statusbar</source>
-        <translation type="unfinished">Рядок стану</translation>
+        <translation>Рядок стану</translation>
     </message>
     <message>
         <source>Height</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Висота</translation>
     </message>
     <message>
         <source>Font Size</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розмір шрифту</translation>
     </message>
     <message>
         <source>Input the path of a Qt style sheet.</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте шлях до файлів стилів Qt.</translation>
     </message>
     <message>
         <source>side length in pixels</source>
-        <translation type="unfinished"></translation>
+        <translation>довжина сторони у пікселях</translation>
     </message>
     <message>
         <source>Use themed icons</source>
-        <translation type="unfinished"></translation>
+        <translation>Використовувати тематичні іконки</translation>
     </message>
 </context>
 <context>
     <name>LG_DimzerosBox</name>
     <message>
         <source>select:</source>
-        <translation type="unfinished"></translation>
+        <translation>оберіть:</translation>
     </message>
     <message>
         <source>remove left</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">видалити ліворуч</translation>
     </message>
     <message>
         <source>remove right</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">видалити праворуч</translation>
     </message>
     <message>
         <source>remove 0&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">видалити 0&apos;</translation>
     </message>
     <message>
         <source>remove 0&quot;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">видалити 0&apos;&apos;</translation>
     </message>
 </context>
 <context>
     <name>PolylineEquidistantOptions</name>
     <message>
         <source>Line Relative Angle Options</source>
-        <translation type="unfinished">Параметри лінії під відносним кутом</translation>
+        <translation>Параметри лінії під відносним кутом</translation>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Інтервал:</translation>
     </message>
     <message>
         <source>Distance from original polyline</source>
-        <translation type="unfinished">Відстань від базової ламаної</translation>
+        <translation>Відстань від базової ламаної</translation>
     </message>
     <message>
         <source>Copies:</source>
-        <translation type="unfinished">Копій: </translation>
+        <translation>Копій:</translation>
     </message>
 </context>
 <context>
@@ -1163,7 +1164,7 @@ distance between points=%2 is larger than diameter=%3</source>
     </message>
     <message>
         <source>Tile &amp;Horizontally</source>
-        <translation type="unfinished">Плиткою &amp;горизонтально</translation>
+        <translation>Плиткою &amp;горизонтально</translation>
     </message>
     <message>
         <source>Creating new file...</source>
@@ -1349,65 +1350,67 @@ Auto-save disabled.</source>
     </message>
     <message>
         <source>Draft Mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Режим чернетки</translation>
     </message>
     <message>
         <source>Export as PDF</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт у PDF</translation>
     </message>
     <message>
         <source>Export</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт</translation>
     </message>
     <message>
         <source>Cannot open the file
 %1
 Please check its existence and permissions.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Не вдається відкрити файл
+%1
+Будь ласка, перевірте його існування та дозволи.</translation>
     </message>
     <message>
         <source>File &apos;%1&apos; does not exist. Opening aborted</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл &apos;%1&apos; не існує. Операцію перервано.</translation>
     </message>
     <message>
         <source>Categories</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Категорії</translation>
     </message>
     <message>
         <source>&amp;Order</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Порядок</translation>
     </message>
     <message>
         <source>Order</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Порядок</translation>
     </message>
     <message>
         <source>Select</source>
-        <translation type="unfinished">Вибрати</translation>
+        <translation>Вибрати</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation type="unfinished">Лінія</translation>
+        <translation>Лінія</translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation type="unfinished">Коло</translation>
+        <translation>Коло</translation>
     </message>
     <message>
         <source>&amp;Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Крива</translation>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Крива</translation>
     </message>
     <message>
         <source>Ellipse</source>
-        <translation type="unfinished">Еліпс</translation>
+        <translation>Еліпс</translation>
     </message>
     <message>
         <source>Polyline</source>
-        <translation type="unfinished">Ламана</translation>
+        <translation>Полілінія</translation>
     </message>
     <message>
         <source>Dimension</source>
@@ -1423,233 +1426,234 @@ Please check its existence and permissions.</source>
     </message>
     <message>
         <source>Pen</source>
-        <translation type="unfinished">Перо</translation>
+        <translation>Олівець</translation>
     </message>
     <message>
         <source>Dock Areas</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Док-панелі</translation>
     </message>
     <message>
         <source>Grid Status</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Статус сітки</translation>
     </message>
     <message>
         <source>Toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Панелі інструментів</translation>
     </message>
     <message>
         <source>Dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Док-віджети</translation>
     </message>
     <message>
         <source>Device Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Параметри пристрою</translation>
     </message>
     <message>
         <source>Device</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Пристрій</translation>
     </message>
     <message>
         <source>&amp;Options</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Параметри</translation>
     </message>
     <message>
         <source>Pl&amp;ugins</source>
-        <translation type="unfinished"></translation>
+        <translation>Пл&amp;агіни</translation>
     </message>
     <message>
         <source>Dime&amp;nsion</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Розмір</translation>
     </message>
     <message>
         <source>Dock Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Док-віджети</translation>
     </message>
     <message>
         <source>Recent Files</source>
-        <translation type="unfinished"></translation>
+        <translation>Нещодавні файли</translation>
     </message>
     <message>
         <source>Compiler: Microsoft Visual C++</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Компілятор: Microsoft Visual C++</translation>
     </message>
     <message>
         <source>Boost Version: %1.%2.%3</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Версія Boost: %1.%2.%3</translation>
     </message>
     <message>
         <source>Copy</source>
-        <translation type="unfinished">Копіювати</translation>
+        <translation>Копіювати</translation>
     </message>
     <message>
         <source>Contributors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Співавтори</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ліцензія</translation>
     </message>
     <message>
         <source>System</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Система</translation>
     </message>
     <message>
         <source>Toolbar Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювач панелей</translation>
     </message>
     <message>
         <source>Menu Creator</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювач меню</translation>
     </message>
     <message>
         <source>Menu Assigner</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштування меню</translation>
     </message>
     <message>
         <source>&amp;Tools</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Інструменти</translation>
     </message>
     <message>
         <source>&amp;Drawings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Креслення</translation>
     </message>
     <message>
         <source>Saving drawing: %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Збереження креслення: %1</translation>
     </message>
     <message>
         <source>Save cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Збереження скасовано</translation>
     </message>
     <message>
         <source>Closing Drawing</source>
-        <translation type="unfinished">Закриття креслення</translation>
+        <translation>Закриття креслення</translation>
     </message>
     <message>
         <source>Save changes to the following item?
 %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти зміни до вказаного елемента?
+%1</translation>
     </message>
     <message>
         <source>&amp;Save</source>
-        <translation type="unfinished">&amp;Зберегти</translation>
+        <translation>&amp;Зберегти</translation>
     </message>
     <message>
         <source>Save &amp;as...</source>
-        <translation type="unfinished">Зберегти &amp;як…</translation>
+        <translation>Зберегти &amp;як…</translation>
     </message>
     <message>
         <source>&amp;Save %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Зберегти %1</translation>
     </message>
     <message>
         <source>Save %1 &amp;as...</source>
-        <translation type="unfinished"></translation>
+        <translation>Зберегти %1 &amp;як…</translation>
     </message>
     <message>
         <source>&amp;Window mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Режим вікна</translation>
     </message>
     <message>
         <source>&amp;Layout</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Макет інтерфейсу</translation>
     </message>
     <message>
         <source>Rounded</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Заокруглений</translation>
     </message>
     <message>
         <source>Triangular</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Трикутний</translation>
     </message>
     <message>
         <source>North</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Північ</translation>
     </message>
     <message>
         <source>South</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Південь</translation>
     </message>
     <message>
         <source>East</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Схід</translation>
     </message>
     <message>
         <source>West</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Захід</translation>
     </message>
     <message>
         <source>&amp;Arrange</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Упорядкувати</translation>
     </message>
     <message>
         <source>&amp;Maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Розгорнути</translation>
     </message>
     <message>
         <source>Save All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&quot;Зберегти все&quot; скасовано</translation>
     </message>
     <message>
         <source>Close All cancelled</source>
-        <translation type="unfinished"></translation>
+        <translation>&quot;Закрити все&quot; скасовано</translation>
     </message>
     <message>
         <source>The Code</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Код</translation>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Cmd</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремо</translation>
     </message>
     <message>
         <source>Dock</source>
         <comment>Dock the command widget to the main window</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Док-панель</translation>
     </message>
     <message>
         <source>&amp;Wiki</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Вікі</translation>
     </message>
     <message>
         <source>User&apos;s &amp;Manual</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Посібник &amp;користувача</translation>
     </message>
     <message>
         <source>&amp;Commands</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Команди</translation>
     </message>
     <message>
         <source>&amp;Style Sheets</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Стилі</translation>
     </message>
     <message>
         <source>Wid&amp;gets</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Віджети</translation>
     </message>
     <message>
         <source>&amp;Forum</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Форум</translation>
     </message>
     <message>
         <source>Zulip &amp;Chat</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Zulip &amp;Chat</translation>
     </message>
     <message>
         <source>&amp;Release Information</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Інформація про випуск</translation>
     </message>
     <message>
         <source>On&amp;line</source>
-        <translation type="unfinished"></translation>
+        <translation>Он&amp;лайн</translation>
     </message>
     <message>
         <source>&amp;Donate</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&amp;Донат</translation>
     </message>
 </context>
 <context>
@@ -1657,22 +1661,22 @@ Please check its existence and permissions.</source>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">відміна</translation>
     </message>
 </context>
 <context>
     <name>QG_ActiveLayerName</name>
     <message>
         <source>Selection</source>
-        <translation type="unfinished">Вибір</translation>
+        <translation>Вибір</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Current Layer</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поточний шар</translation>
     </message>
     <message>
         <source>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
@@ -1680,7 +1684,11 @@ Please check its existence and permissions.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Name of Current Active Layer&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Helvetica&apos;; font-size:7pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;Назва поточного шару&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -1780,15 +1788,15 @@ in a separate window</source>
     </message>
     <message>
         <source>Remove block</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити блок</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Фільтр</translation>
     </message>
     <message>
         <source>Looking for matching block names</source>
-        <translation type="unfinished"></translation>
+        <translation>Пошук блоків з відповідною назвою</translation>
     </message>
 </context>
 <context>
@@ -1871,15 +1879,15 @@ in a separate window</source>
     </message>
     <message>
         <source>Custom</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Власний</translation>
     </message>
     <message>
         <source>/ColorBox</source>
-        <translation type="unfinished"></translation>
+        <translation>/Панель кольорів</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрані</translation>
     </message>
 </context>
 <context>
@@ -1893,15 +1901,15 @@ in a separate window</source>
     <name>QG_CommandHistory</name>
     <message>
         <source>&amp;Copy</source>
-        <translation type="unfinished">&amp;Копіювати</translation>
+        <translation>&amp;Копіювати</translation>
     </message>
     <message>
         <source>Select &amp;All</source>
-        <translation type="unfinished">Вибр&amp;ати усе</translation>
+        <translation>Вибр&amp;ати усе</translation>
     </message>
     <message>
         <source>Clear</source>
-        <translation type="unfinished">Очистити</translation>
+        <translation>Очистити</translation>
     </message>
 </context>
 <context>
@@ -1925,19 +1933,19 @@ in a separate window</source>
     <message>
         <source>escape</source>
         <comment>escape, go back from action steps</comment>
-        <translation type="unfinished"></translation>
+        <translation>відміна</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">…</translation>
+        <translation>...</translation>
     </message>
     <message>
         <source>Dock</source>
-        <translation type="unfinished"></translation>
+        <translation>Док-віджет</translation>
     </message>
     <message>
         <source>Float</source>
-        <translation type="unfinished"></translation>
+        <translation>Окремо</translation>
     </message>
     <message>
         <source>Command line</source>
@@ -1945,7 +1953,7 @@ in a separate window</source>
     </message>
     <message>
         <source>Cmd</source>
-        <translation type="unfinished"></translation>
+        <translation>Cmd</translation>
     </message>
 </context>
 <context>
@@ -1991,11 +1999,11 @@ in a separate window</source>
     </message>
     <message>
         <source>⌀ (Diameter)</source>
-        <translation type="unfinished"></translation>
+        <translation>⌀ (Діаметер)</translation>
     </message>
     <message>
         <source>π (Pi)</source>
-        <translation type="unfinished"></translation>
+        <translation>π (Пі)</translation>
     </message>
 </context>
 <context>
@@ -2050,11 +2058,12 @@ in a separate window</source>
     <message>
         <source>Apply attributes also to all sub-entities of selected INSERT.
 This recursively modifies all entities of the Block itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати властивості також до субелементів обраної ВСТАВКИ.
+Це рекурсивно змінює й усі елементи блоку.</translation>
     </message>
     <message>
         <source>Apply attributes Block-deep</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати властивості й до елементів блоку</translation>
     </message>
 </context>
 <context>
@@ -2245,7 +2254,7 @@ This recursively modifies all entities of the Block itself.</source>
     </message>
     <message>
         <source>Select an image file</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть файл зображення</translation>
     </message>
 </context>
 <context>
@@ -2272,7 +2281,12 @@ This recursively modifies all entities of the Block itself.</source>
 &lt;br&gt;
 Please choose the unit you want to use for new drawings and your preferred language.&lt;br&gt;
 (You can changes these settings later.)</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;font size=&quot;+1&quot;&gt;&lt;b&gt;Ласкаво просимо у LibreCAD&lt;/b&gt;
+&lt;/font&gt;
+&lt;br&gt;
+Будь-ласка, оберіть систему одиниць, яку Ви хочете використовувати&lt;br&gt;
+для нових креслень, і бажану мову інтерфейсу та командного рядка.&lt;br&gt;
+(Ви можете змінити це у будь-який час у налаштуваннях програми.)</translation>
     </message>
 </context>
 <context>
@@ -2358,7 +2372,7 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>ID: </source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ID: </translation>
     </message>
 </context>
 <context>
@@ -2957,15 +2971,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Діаметер (⌀)</translation>
     </message>
     <message>
         <source>&amp;Line spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Відступ лінії:</translation>
     </message>
     <message>
         <source>Font Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування шрифтів</translation>
     </message>
     <message>
         <source>Font:</source>
@@ -2973,15 +2987,15 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Text Direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Напрямок тексту</translation>
     </message>
     <message>
         <source>Left to right</source>
-        <translation type="unfinished"></translation>
+        <translation>Зліва направо</translation>
     </message>
     <message>
         <source>Right to left</source>
-        <translation type="unfinished"></translation>
+        <translation>Справа наліво</translation>
     </message>
 </context>
 <context>
@@ -3330,23 +3344,23 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Text style:</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль тексту:</translation>
     </message>
     <message>
         <source>&apos;.&apos; (Period)</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;.&apos; (Крапка)</translation>
     </message>
     <message>
         <source>&apos;,&apos; (Comma)</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;,&apos; (Кома)</translation>
     </message>
     <message>
         <source>Decimal separator:</source>
-        <translation type="unfinished"></translation>
+        <translation>Десятковий роздільник:</translation>
     </message>
     <message>
         <source>Linear units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійні одиниці:</translation>
     </message>
     <message>
         <source>Color:</source>
@@ -3354,67 +3368,67 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Length Factor:</source>
-        <translation type="unfinished"></translation>
+        <translation>Масштаб довжин:</translation>
     </message>
     <message>
         <source>Angular units:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кутові одиниці:</translation>
     </message>
     <message>
         <source>Linear zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійне заокруглення:</translation>
     </message>
     <message>
         <source>Format units</source>
-        <translation type="unfinished"></translation>
+        <translation>Розміри форматів</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Distance gap around text&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Відступи навколо тексту&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text size &amp; position</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір тексту і позиція</translation>
     </message>
     <message>
         <source>Length to enlarge over dimension line</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Довжина збільшення поза розмірною лінією</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dimension arrow size. &lt;a name=&quot;result_box&quot;/&gt;without effect when tick size &lt;a name=&quot;result_box&quot;/&gt;is other than 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Величина ромірної стрілки. &lt;a name=&quot;result_box&quot;/&gt;без ефекту коли розмір&lt;a name=&quot;result_box&quot;/&gt;штриха відмінний від 0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ширина:</translation>
     </message>
     <message>
         <source>Dimension lines, arrows &amp; ticks</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмірні лінії, стрілки і штрихи</translation>
     </message>
     <message>
         <source>Angular zeros:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кутове заокруглення:</translation>
     </message>
     <message>
         <source>Angular precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кутова точність:</translation>
     </message>
     <message>
         <source>Enlarge:</source>
-        <translation type="unfinished"></translation>
+        <translation>Збільшеня:</translation>
     </message>
     <message>
         <source>Offset:</source>
-        <translation type="unfinished"></translation>
+        <translation>Відступ:</translation>
     </message>
     <message>
         <source>Linear precision:</source>
-        <translation type="unfinished"></translation>
+        <translation>Лінійна точність:</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Text alignment &lt;a name=&quot;result_box&quot;/&gt;relative to the dimension line.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Вирівнювання тексту &lt;a name=&quot;result_box&quot;/&gt;відносно розмірної лінії.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Aligned</source>
@@ -3422,107 +3436,107 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Offset from origin point.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Відступ від центру координат.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Text alignment:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вирівнювання тексту:</translation>
     </message>
     <message>
         <source>Extension lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Виносні лінії</translation>
     </message>
     <message>
         <source>Fixed length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Фіксована довжина:</translation>
     </message>
     <message>
         <source>Format</source>
-        <translation type="unfinished"></translation>
+        <translation>Формат</translation>
     </message>
     <message>
         <source>&amp;Height:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Висота:</translation>
     </message>
     <message>
         <source>&amp;Width:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Ширина:</translation>
     </message>
     <message>
         <source>Orientation</source>
-        <translation type="unfinished"></translation>
+        <translation>Орієнтація</translation>
     </message>
     <message>
         <source>Margins</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Поля</translation>
     </message>
     <message>
         <source>Bottom</source>
-        <translation type="unfinished"></translation>
+        <translation>Внизу</translation>
     </message>
     <message>
         <source>Number of pages</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість сторінок</translation>
     </message>
     <message>
         <source>Horizontally:</source>
-        <translation type="unfinished"></translation>
+        <translation>Горизонтально:</translation>
     </message>
     <message>
         <source>Vertically:</source>
-        <translation type="unfinished"></translation>
+        <translation>Вертикально:</translation>
     </message>
     <message>
         <source>fixed extension line length</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">фіксована довжина виносних ліній</translation>
     </message>
     <message>
         <source>&amp;Splines</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Сплайни</translation>
     </message>
     <message>
         <source>&amp;Points</source>
-        <translation type="unfinished">&amp;Точки</translation>
+        <translation>&amp;Точки</translation>
     </message>
     <message>
         <source>Point Style</source>
-        <translation type="unfinished"></translation>
+        <translation>Стиль точок</translation>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">…</translation>
+        <translation>…</translation>
     </message>
     <message>
         <source>Point Size</source>
-        <translation type="unfinished"></translation>
+        <translation>Розмір точок</translation>
     </message>
     <message>
         <source>Dwg Units</source>
-        <translation type="unfinished"></translation>
+        <translation>Одиниці виміру Dwg</translation>
     </message>
     <message>
         <source>Size relative to screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розмір відносно екрану</translation>
     </message>
     <message>
         <source>Size in drawing units</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Розмір в одиницях креслення</translation>
     </message>
     <message>
         <source>(0 =&gt; 5% relative to screen size)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">(0 =&gt;5% відносно розміру екрана)</translation>
     </message>
     <message>
         <source>Architectural (metric)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Архітектурний (метричний)</translation>
     </message>
     <message>
         <source>For the length format &apos;Architectural (metric)&apos;, the unit must be set to Meter.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Для формату довжини «Архітектурний (метричний)» одиницею виміру має бути метр.</translation>
     </message>
     <message>
         <source>Screen %</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Екран %</translation>
     </message>
 </context>
 <context>
@@ -3661,282 +3675,290 @@ Please choose the unit you want to use for new drawings and your preferred langu
     </message>
     <message>
         <source>Graphic Colors</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Графічні кольори</translation>
     </message>
     <message>
         <source>Snap indicator:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Покажчик прив&apos;язки:</translation>
     </message>
     <message>
         <source>Anti-aliasing</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Згладжування</translation>
     </message>
     <message>
         <source>Modify layer of selected entities, at  layer activation</source>
-        <translation type="unfinished"></translation>
+        <translation>Змінити шар обраних об&apos;єктів  під час активації шару</translation>
     </message>
     <message>
         <source>Clear Settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути налаштування</translation>
     </message>
     <message>
         <source>restores program geometry/layout to original state</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">відновити геометрію/макет програми до початкового стану</translation>
     </message>
     <message>
         <source>Layout</source>
-        <translation type="unfinished"></translation>
+        <translation>Макет</translation>
     </message>
     <message>
         <source>restores the program to its original state</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">відновлює початковий стан програми</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Усе</translation>
     </message>
     <message>
         <source>Scrollbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Смуги прокрутки</translation>
     </message>
     <message>
         <source>Snap indicator lines</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Лінії-індикатори прив&apos;язки</translation>
     </message>
     <message>
         <source>Snap indicator shape</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Форма покажчика прив&apos;язки</translation>
     </message>
     <message>
         <source>Hide cursor when snapping</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приховати курсор під час прив’язки</translation>
     </message>
     <message>
         <source>Start in tab mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запуск у режимі вкладок</translation>
     </message>
     <message>
         <source>Startup</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Запуск</translation>
     </message>
     <message>
         <source>Display loading screen</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Показати екран завантаження</translation>
     </message>
     <message>
         <source>Start with main window maximized</source>
-        <translation type="unfinished"></translation>
+        <translation>Запуск із повністю розгорнутим вікном</translation>
     </message>
     <message>
         <source>Enable CAD dockwidgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Увімкнути док-віджети CAD</translation>
     </message>
     <message>
         <source>Enable CAD toolbars</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Увімкнути панелі інструментів CAD</translation>
     </message>
     <message>
         <source>#1E90FF</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">#1E90FF</translation>
     </message>
     <message>
         <source>Clear settings</source>
-        <translation type="unfinished"></translation>
+        <translation>Скинути налаштування</translation>
     </message>
     <message>
         <source>This will also include custom menus and toolbars. Continue?</source>
-        <translation type="unfinished"></translation>
+        <translation>Це також включатиме користувацькі меню та панелі. Продовжити?</translation>
     </message>
     <message>
         <source>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When enabled, activating a layer would modify all selected entities to that new layer. To change layer of multiple entities: first select needed entities; activate a layer in the layer widget. This makes all selected entities modified to belong to the new layer.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;При увімкненні, активація шару змінить шар усіх вибраних об&apos;єктів на новий шар. Щоб змінити шар декількох елементів: спочатку оберіть потрібні об&apos;єкти; активуйте шар у віджеті шарів. Це призведе до того, що всі обрані об&apos;єкти будуть змінені та перенесені на новий шар.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
     <message>
         <source>Variable File:</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл змінних:</translation>
     </message>
     <message>
         <source>Minimal Grid Spacing (p&amp;x):</source>
-        <translation type="unfinished"></translation>
+        <translation>Мінімальний інтервал сітки (пік&amp;селів):</translation>
     </message>
     <message>
         <source>N&amp;umber of preview entities:</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">К&amp;ількість відображуваних елементів:</translation>
     </message>
     <message>
         <source>Don&apos;t use native OS file open dialog</source>
-        <translation type="unfinished"></translation>
+        <translation>Не використовувати діалоги ОС для відкриття файлу</translation>
     </message>
     <message>
         <source>Auto-panning</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто-панорамування</translation>
     </message>
     <message>
         <source>Hide the relative-&amp;zero marker</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Приховати відносний-&amp;нульовий маркер</translation>
     </message>
     <message>
         <source>Alt+Z</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Alt+Z</translation>
     </message>
     <message>
         <source>Visualize the entity under the cursor</source>
-        <translation type="unfinished"></translation>
+        <translation>Візуалізувати елементи під курсором</translation>
     </message>
     <message>
         <source>Mouse-over effects</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Ефекти при наведенні курсора</translation>
     </message>
     <message>
         <source>&amp;Relative-Zero Marker Color:</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Колір маркера відносного нуля:</translation>
     </message>
     <message>
         <source>Auto save time (minutes):</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтервал між авто-збереженнями (хвилин):</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Shift key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати напрямок прокручування під час використання коліщатка миші з клавішею Shift.</translation>
     </message>
     <message>
         <source>Invert horizontal scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати напрямок горизонтальної прокрутки</translation>
     </message>
     <message>
         <source>Inverts scrolling direction when using mouse wheel with Ctrl key.</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати напрямок прокручування під час використання коліщатка миші з клавішею Ctrl.</translation>
     </message>
     <message>
         <source>Invert vertical scrolling direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати напрямок вертикального прокручування</translation>
     </message>
     <message>
         <source>Inverts zoom direction when using mouse wheel.</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати наближення/віддалення під час використання коліщатка миші.</translation>
     </message>
     <message>
         <source>Invert zoom direction</source>
-        <translation type="unfinished"></translation>
+        <translation>Інвертувати напрямок наближення/віддалення</translation>
     </message>
     <message>
         <source>Keyboard Settings</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштування клавіатури</translation>
     </message>
     <message>
         <source>Evaluate commands when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Виконувати команди при натисканні клавіші ПРОБІЛ</translation>
     </message>
     <message>
         <source>Toggle free snap mode when the SPACE BAR is pressed and the command window is empty</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемикати режим довільної прив&apos;язки, якщо натиснуто клавішу ПРОБІЛ і вікно команд порожнє</translation>
     </message>
     <message>
         <source>Toggle free snap mode when SPACE BAR is pressed</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемикати режим довільної прив&apos;язки, якщо натиснуто клавішу ПРОБІЛ</translation>
     </message>
     <message>
         <source>CAD Preferences</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Налаштування CAD</translation>
     </message>
     <message>
         <source>Automatically zoom drawing when opening</source>
-        <translation type="unfinished"></translation>
+        <translation>Авто-наближення креслення при відкритті</translation>
     </message>
 </context>
 <context>
     <name>QG_DlgOptionsMakerCam</name>
     <message>
         <source>Layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Шари</translation>
     </message>
     <message>
         <source>Export invisible layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт невидимих шарів</translation>
     </message>
     <message>
         <source>Export visible construction layers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Експорт видимих конструкційних шарів</translation>
     </message>
     <message>
         <source>Blocks</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Блоки</translation>
     </message>
     <message>
         <source>Convert blocks to safe inline SVG content</source>
-        <translation type="unfinished"></translation>
+        <translation>Перетворити блоки на безпечний вбудований вміст SVG</translation>
     </message>
     <message>
         <source>Ellipses / Ellipse arcs</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Еліпси / Дуги еліпсів</translation>
     </message>
     <message>
         <source>Approximate ellipses and ellipse arcs with cubic béziers</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Згладжування еліпсів і дуг еліпсів за допомогою кубічних кривих Безьє</translation>
     </message>
     <message>
         <source>Export as CAM/plain SVG</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт у CAM/Plain SVG</translation>
     </message>
     <message>
         <source>Default width of elements, mm</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандартна ширина елементів, мм</translation>
     </message>
     <message>
         <source>Images</source>
-        <translation type="unfinished"></translation>
+        <translation>Зображення</translation>
     </message>
     <message>
         <source>Raster Image export</source>
-        <translation type="unfinished"></translation>
+        <translation>Експорт растрового зображення</translation>
     </message>
     <message>
         <source>Dash/Dot Lines</source>
-        <translation type="unfinished"></translation>
+        <translation>Штрихові/Пунктирні лінії</translation>
     </message>
     <message>
         <source>Length of the pattern, mm</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Довжина паттерну, мм</translation>
     </message>
     <message>
         <source>Bake dash/dot lines to SVG path</source>
-        <translation type="unfinished"></translation>
+        <translation>Конвертувати штрихові/пунктирні лінії SVG контури</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 does not hide SVG content 
 that has been set invisibe (&quot;display: none&quot; or &quot;visibility: hidden&quot;).</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM станом на листопад 2014 не приховує вміст SVG 
+який було приховано (&quot;display: none&quot; або &quot;visibility: hidden&quot;).</translation>
     </message>
     <message>
         <source>MakerCAM as of November 2014 cannot correctly deal with blocks,
 because it does not take into account the reference point in the &lt;use&gt;.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM станом на листопад 2014 неможе коректно опрацьовувати блоки,
+тому що не використовує точки відліку системи координат визначеної у &lt;use&gt;.</translation>
     </message>
     <message>
         <source>MakerCAM as of March 2015 cannot display ellipses and ellipse arcs correctly, 
 when they are created using the &lt;ellipse&gt; tag  with a rotation in 
 the &lt;transform&gt; attribute or as &lt;path&gt; using elliptic arc segments.</source>
-        <translation type="unfinished"></translation>
+        <translation>MakerCAM станом на травень 2015 некоректно відображає еліпси та дуги еліпсів, 
+у випадку коли вони створені з використанняс тегу &lt;ellipse&gt; з обертанням у 
+у атрибуті &lt;transform&gt; або як &lt;path&gt; використовуючи сегменти з дуг еліпса.</translation>
     </message>
     <message>
         <source>Exported images can be useful in SVG editors (Inkscape, etc), 
 but avoided in some CAM&apos;s.</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортовані зображення придатні для SVG редакторів (Inkscape, тощо), 
+але не розпізнаються деякими CAM системами .</translation>
     </message>
     <message>
         <source>Many CAM&apos;s(MakerCAM, EleskCAM, LaserWeb) ignore dashed/doted line style, 
 which can be useful in lasercut of plywood or for papercraft. </source>
-        <translation type="unfinished"></translation>
+        <translation>Багато CAM (MakerCAM, EleskCAM, LaserWeb) ігнорує штрихові/пунктирні лінії, 
+які можуть бути користними для лазерної різки фанери або паперотехніки. </translation>
     </message>
     <message>
         <source>Default width of elements can affect some CAM&apos;s/SVG Editors, 
 but ignored by other</source>
-        <translation type="unfinished"></translation>
+        <translation>Стандартна ширина елементів розпізнається дякими CAM/SVG редакторами, 
+але ігнорується іншими</translation>
     </message>
     <message>
         <source>Length of line pattern related to zoom, 
 so default step value required for baking</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина паттерну ліній залежить від наближення, 
+тож стандарртний крок необхідний для конвертації</translation>
     </message>
 </context>
 <context>
@@ -4761,11 +4783,11 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Diameter (⌀)</source>
-        <translation type="unfinished"></translation>
+        <translation>Діаметер (⌀)</translation>
     </message>
     <message>
         <source>A&amp;ligned</source>
-        <translation type="unfinished"></translation>
+        <translation>В&amp;ирівняно</translation>
     </message>
     <message>
         <source>&amp;Middle</source>
@@ -4784,7 +4806,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Close All</source>
-        <translation type="unfinished"></translation>
+        <translation>Закрити всі</translation>
     </message>
     <message>
         <source>Close</source>
@@ -4811,7 +4833,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>Jww Drawing %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Jww Drawing %1</translation>
     </message>
     <message>
         <source>Drawing Exchange %1</source>
@@ -4864,7 +4886,7 @@ so default step value required for baking</source>
     <name>QG_GraphicView</name>
     <message>
         <source>Edit Properties</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати властивості</translation>
     </message>
 </context>
 <context>
@@ -4931,7 +4953,7 @@ so default step value required for baking</source>
     </message>
     <message>
         <source>B&amp;lack</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Чорний</translation>
     </message>
 </context>
 <context>
@@ -4958,11 +4980,12 @@ so default step value required for baking</source>
     <message>
         <source>A Construction Layer has entities of infinite straight lines intended to be used for geometric construction.
 The contents of a Construction Layer should not appear in printout.</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструкційний шар має елементи безкінечних прямих ліній призначені для геометричних побудов.
+Вміст конструкційного шару не має відображатися при друці.</translation>
     </message>
     <message>
         <source>Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Конструкційний шар</translation>
     </message>
 </context>
 <context>
@@ -5009,43 +5032,43 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Edit Layer &amp;Attributes</source>
-        <translation type="unfinished"></translation>
+        <translation>Редагувати &amp;атрибути шару</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Visibility</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути &amp;видимість шару</translation>
     </message>
     <message>
         <source>Toggle Layer &amp;Printing</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути &amp;друк шару</translation>
     </message>
     <message>
         <source>Toggle &amp;Construction Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Перемкнути &amp;контрукційність шару</translation>
     </message>
     <message>
         <source>Unlock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Розблокувати усі шари</translation>
     </message>
     <message>
         <source>Lock all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Заблокувати усі шари</translation>
     </message>
     <message>
         <source>Remove layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити шар</translation>
     </message>
     <message>
         <source>Filter</source>
-        <translation type="unfinished"></translation>
+        <translation>Фільтр</translation>
     </message>
     <message>
         <source>&amp;Unlock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Розблокувати усі шари</translation>
     </message>
     <message>
         <source>&amp;Lock all Layers</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Заблокувати усі шари</translation>
     </message>
     <message>
         <source>Toggle Layer Loc&amp;k</source>
@@ -5053,11 +5076,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>&amp;Export Selected Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>&amp;Експортувати обрані шари</translation>
     </message>
     <message>
         <source>Export &amp;Visible Layer(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Експортувати &amp;видимі шари</translation>
     </message>
 </context>
 <context>
@@ -5072,11 +5095,11 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Refresh</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновити</translation>
     </message>
     <message>
         <source>Rebuild</source>
-        <translation type="unfinished"></translation>
+        <translation>Перебудувати</translation>
     </message>
 </context>
 <context>
@@ -5175,27 +5198,27 @@ The contents of a Construction Layer should not appear in printout.</source>
     </message>
     <message>
         <source>Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Пунктирна (мініатюрна)</translation>
     </message>
     <message>
         <source>Dash (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Шрихова (мініатюрна)</translation>
     </message>
     <message>
         <source>Dash Dot (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Штрих-пунктирна (мініатюрна)</translation>
     </message>
     <message>
         <source>Divide (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Роздільна (мініатюрна)</translation>
     </message>
     <message>
         <source>Center (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Осьова (мініатюрна)</translation>
     </message>
     <message>
         <source>Border (tiny)</source>
-        <translation type="unfinished"></translation>
+        <translation>Гранична (мініатюрна)</translation>
     </message>
 </context>
 <context>
@@ -5218,7 +5241,11 @@ The contents of a Construction Layer should not appear in printout.</source>
 p, li { white-space: pre-wrap; }
 &lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
 &lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Hint about left/right mouse button actions&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;!DOCTYPE HTML PUBLIC &quot;-//W3C//DTD HTML 4.0//EN&quot; &quot;http://www.w3.org/TR/REC-html40/strict.dtd&quot;&gt;
+&lt;html&gt;&lt;head&gt;&lt;meta name=&quot;qrichtext&quot; content=&quot;1&quot; /&gt;&lt;style type=&quot;text/css&quot;&gt;
+p, li { white-space: pre-wrap; }
+&lt;/style&gt;&lt;/head&gt;&lt;body style=&quot; font-family:&apos;Ubuntu&apos;; font-size:11pt; font-weight:400; font-style:normal;&quot;&gt;
+&lt;p style=&quot; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;&quot;&gt;&lt;span style=&quot; font-family:&apos;Helvetica&apos;; font-size:9pt;&quot;&gt;Підказка про дію лівої/правої кнопки миші&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</translation>
     </message>
 </context>
 <context>
@@ -5240,7 +5267,7 @@ p, li { white-space: pre-wrap; }
     <name>QG_PolylineOptions</name>
     <message>
         <source>wrong action type</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">некоректний тип дії</translation>
     </message>
 </context>
 <context>
@@ -5401,19 +5428,19 @@ p, li { white-space: pre-wrap; }
     </message>
     <message>
         <source>Exclusive Snap Mode</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим екслюзивної прив&apos;язки</translation>
     </message>
     <message>
         <source>Relative zero position is %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Позиція вілносного нуля %1</translation>
     </message>
     <message>
         <source>locked</source>
-        <translation type="unfinished"></translation>
+        <translation>заблоковано</translation>
     </message>
     <message>
         <source>unlocked</source>
-        <translation type="unfinished"></translation>
+        <translation>розблоковано</translation>
     </message>
 </context>
 <context>
@@ -5587,51 +5614,52 @@ p, li { white-space: pre-wrap; }
     <message>
         <source>Layer &quot;%1&quot; and all entities on it will be removed.
 This action can NOT be undone.</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар &quot;%1&quot; і усі елементи на ньому будуть видалені.
+Ця дія НЕ може бути відміненою.</translation>
     </message>
     <message>
         <source>Layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар &quot;0&quot; не можна видалити.</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n layer(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Видалити %n шар</numerusform>
+            <numerusform>Видалити %n шари</numerusform>
+            <numerusform>Видалити %n шарів</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed layers and all entities on them will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перераховані шари і усі елементи на них буде видалено.</translation>
     </message>
     <message>
         <source>Warning: this action can NOT be undone!</source>
-        <translation type="unfinished"></translation>
+        <translation>Застереження: цю дію НЕ можна відмінити!</translation>
     </message>
     <message>
         <source>Warning: layer &quot;0&quot; can never be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Застереження: шар &quot;0&quot; не можна видалити.</translation>
     </message>
     <message>
         <source>Layers for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Шари для видалення:</translation>
     </message>
     <message numerus="yes">
         <source>Remove %n block(s)</source>
-        <translation type="unfinished">
-            <numerusform></numerusform>
-            <numerusform></numerusform>
-            <numerusform></numerusform>
+        <translation>
+            <numerusform>Видалити %n блок</numerusform>
+            <numerusform>Видалити %n блоки</numerusform>
+            <numerusform>Видалити %n блоків</numerusform>
         </translation>
     </message>
     <message>
         <source>Listed blocks and all their entities will be removed.</source>
-        <translation type="unfinished"></translation>
+        <translation>Перераховані блоки і всі їхні елементи буде видалено.</translation>
     </message>
     <message>
         <source>Blocks for removal:</source>
-        <translation type="unfinished"></translation>
+        <translation>Блоки для видалення:</translation>
     </message>
 </context>
 <context>
@@ -5880,7 +5908,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Old Drawing Exchange %1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Old Drawing Exchange %1</translation>
     </message>
     <message>
         <source>Opened dwg file version %1.</source>
@@ -5932,23 +5960,23 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Hatch failed due to a gap=%1 between (%2, %3) and (%4, %5)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Штрихування не застосовано бо промжки=%1 від (%2, %3) і до (%4, %5)</translation>
     </message>
     <message>
         <source>Warning</source>
-        <translation type="unfinished">Попередження</translation>
+        <translation>Застереження</translation>
     </message>
     <message>
         <source>error reading blocks in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання блоку у файлі dwg</translation>
     </message>
     <message>
         <source>error reading objects in dwg file</source>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання об&apos;єктів у фалі dwg</translation>
     </message>
     <message>
         <source>: duplicated command: %1 is already taken by %2</source>
-        <translation type="unfinished"></translation>
+        <translation>: дублювання команди: %1 вже застосовано через %2</translation>
     </message>
     <message>
         <source>point</source>
@@ -5968,92 +5996,92 @@ Do you want to replace it?</source>
     <message>
         <source>li</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>лі</translation>
     </message>
     <message>
         <source>l</source>
         <comment>draw line</comment>
-        <translation type="unfinished"></translation>
+        <translation>л</translation>
     </message>
     <message>
         <source>polyline</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished">ламана</translation>
+        <translation>полілінія</translation>
     </message>
     <message>
         <source>pl</source>
         <comment>draw polyline</comment>
-        <translation type="unfinished"></translation>
+        <translation>пл</translation>
     </message>
     <message>
         <source>free</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>вільно</translation>
     </message>
     <message>
         <source>fhl</source>
         <comment>draw freehand line</comment>
-        <translation type="unfinished"></translation>
+        <translation>влн</translation>
     </message>
     <message>
         <source>spline</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>сплайн</translation>
     </message>
     <message>
         <source>spl</source>
         <comment>draw spline</comment>
-        <translation type="unfinished"></translation>
+        <translation>спл</translation>
     </message>
     <message>
         <source>spline2</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>сплайн2</translation>
     </message>
     <message>
         <source>stp</source>
         <comment>spline through points</comment>
-        <translation type="unfinished"></translation>
+        <translation>счт</translation>
     </message>
     <message>
         <source>ptp</source>
         <comment>parallel through point</comment>
-        <translation type="unfinished"></translation>
+        <translation>пчт</translation>
     </message>
     <message>
         <source>bisect</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>розділ</translation>
     </message>
     <message>
         <source>bi</source>
         <comment>angle bisector</comment>
-        <translation type="unfinished"></translation>
+        <translation>рі</translation>
     </message>
     <message>
         <source>tanpc</source>
         <comment>tangent point and circle</comment>
-        <translation type="unfinished"></translation>
+        <translation>тантк</translation>
     </message>
     <message>
         <source>ortho</source>
         <comment>perpendicular line</comment>
-        <translation type="unfinished"></translation>
+        <translation>орто</translation>
     </message>
     <message>
         <source>rect</source>
         <comment>draw rectangle</comment>
-        <translation type="unfinished"></translation>
+        <translation>прямо</translation>
     </message>
     <message>
         <source>polygon2v</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>полігон2т</translation>
     </message>
     <message>
         <source>poly2</source>
         <comment>polygon by 2 vertices</comment>
-        <translation type="unfinished"></translation>
+        <translation>полі2</translation>
     </message>
     <message>
         <source>circle</source>
@@ -6068,57 +6096,57 @@ Do you want to replace it?</source>
     <message>
         <source>c2</source>
         <comment>circle 2 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>ко2</translation>
     </message>
     <message>
         <source>c3</source>
         <comment>circle 3 points</comment>
-        <translation type="unfinished"></translation>
+        <translation>ко3</translation>
     </message>
     <message>
         <source>tan3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>тан3</translation>
     </message>
     <message>
         <source>ct3</source>
         <comment>circle tangent to 3</comment>
-        <translation type="unfinished"></translation>
+        <translation>кот3</translation>
     </message>
     <message>
         <source>ellipseinscribed</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>еліпсвписаний</translation>
     </message>
     <message>
         <source>ei</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ев</translation>
     </message>
     <message>
         <source>ie</source>
         <comment>inscribed ellipse</comment>
-        <translation type="unfinished"></translation>
+        <translation>ве</translation>
     </message>
     <message>
         <source>hatch</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>штрх</translation>
     </message>
     <message>
         <source>ha</source>
         <comment>draw hatch</comment>
-        <translation type="unfinished"></translation>
+        <translation>шт</translation>
     </message>
     <message>
         <source>mtext</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>мтекст</translation>
     </message>
     <message>
         <source>mtxt</source>
         <comment>draw mtext</comment>
-        <translation type="unfinished"></translation>
+        <translation>мткт</translation>
     </message>
     <message>
         <source>text</source>
@@ -6128,67 +6156,67 @@ Do you want to replace it?</source>
     <message>
         <source>txt</source>
         <comment>draw text</comment>
-        <translation type="unfinished"></translation>
+        <translation>ткс</translation>
     </message>
     <message>
         <source>regen</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>реген</translation>
     </message>
     <message>
         <source>redraw</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished">перерисувати</translation>
+        <translation>оновити</translation>
     </message>
     <message>
         <source>rg</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>он</translation>
     </message>
     <message>
         <source>zr</source>
         <comment>zoom - redraw</comment>
-        <translation type="unfinished"></translation>
+        <translation>нб</translation>
     </message>
     <message>
         <source>zoomwindow</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>вмістити</translation>
     </message>
     <message>
         <source>zw</source>
         <comment>zoom - window</comment>
-        <translation type="unfinished"></translation>
+        <translation>вм</translation>
     </message>
     <message>
         <source>zoomauto</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>навто</translation>
     </message>
     <message>
         <source>za</source>
         <comment>zoom - auto</comment>
-        <translation type="unfinished"></translation>
+        <translation>на</translation>
     </message>
     <message>
         <source>zoompan</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>нпано</translation>
     </message>
     <message>
         <source>zp</source>
         <comment>zoom - pan</comment>
-        <translation type="unfinished"></translation>
+        <translation>нп</translation>
     </message>
     <message>
         <source>zoomprevious</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>нпопер</translation>
     </message>
     <message>
         <source>zv</source>
         <comment>zoom - previous</comment>
-        <translation type="unfinished"></translation>
+        <translation>нпо</translation>
     </message>
     <message>
         <source>kill</source>
@@ -6198,7 +6226,7 @@ Do you want to replace it?</source>
     <message>
         <source>k</source>
         <comment>kill all actions</comment>
-        <translation type="unfinished"></translation>
+        <translation>в</translation>
     </message>
     <message>
         <source>undo</source>
@@ -6218,72 +6246,72 @@ Do you want to replace it?</source>
     <message>
         <source>r</source>
         <comment>redo cycle</comment>
-        <translation type="unfinished"></translation>
+        <translation>по</translation>
     </message>
     <message>
         <source>dimaligned</source>
         <comment>dimension - aligned</comment>
-        <translation type="unfinished"></translation>
+        <translation>рвідносно</translation>
     </message>
     <message>
         <source>dimhorizontal</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>ргориз</translation>
     </message>
     <message>
         <source>dh</source>
         <comment>dimension - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>рг</translation>
     </message>
     <message>
         <source>dimvertical</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>рвертик</translation>
     </message>
     <message>
         <source>dv</source>
         <comment>dimension - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>рв</translation>
     </message>
     <message>
         <source>dimlinear</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>рлін</translation>
     </message>
     <message>
         <source>dl</source>
         <comment>dimension - linear</comment>
-        <translation type="unfinished"></translation>
+        <translation>рл</translation>
     </message>
     <message>
         <source>dimangular</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>ркут</translation>
     </message>
     <message>
         <source>dan</source>
         <comment>dimension - angular</comment>
-        <translation type="unfinished"></translation>
+        <translation>рк</translation>
     </message>
     <message>
         <source>dimradial</source>
         <comment>dimension - radial</comment>
-        <translation type="unfinished"></translation>
+        <translation>ррад</translation>
     </message>
     <message>
         <source>dimdiametric</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>рдіа</translation>
     </message>
     <message>
         <source>dimdiameter</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>рдіаметер</translation>
     </message>
     <message>
         <source>dd</source>
         <comment>dimension - diametric</comment>
-        <translation type="unfinished"></translation>
+        <translation>рд</translation>
     </message>
     <message>
         <source>dimleader</source>
@@ -6298,57 +6326,57 @@ Do you want to replace it?</source>
     <message>
         <source>dimregen</source>
         <comment>dimension - regenerate</comment>
-        <translation type="unfinished"></translation>
+        <translation>роновити</translation>
     </message>
     <message>
         <source>restrictnothing</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>безобмежень</translation>
     </message>
     <message>
         <source>rn</source>
         <comment>restrict - nothing</comment>
-        <translation type="unfinished"></translation>
+        <translation>бо</translation>
     </message>
     <message>
         <source>restrictorthogonal</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>обмежорто</translation>
     </message>
     <message>
         <source>rr</source>
         <comment>restrict - orthogonal</comment>
-        <translation type="unfinished"></translation>
+        <translation>оо</translation>
     </message>
     <message>
         <source>restricthorizontal</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>обмежгориз</translation>
     </message>
     <message>
         <source>rh</source>
         <comment>restrict - horizontal</comment>
-        <translation type="unfinished"></translation>
+        <translation>ог</translation>
     </message>
     <message>
         <source>restrictvertical</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>обмежверт</translation>
     </message>
     <message>
         <source>rv</source>
         <comment>restrict - vertical</comment>
-        <translation type="unfinished"></translation>
+        <translation>ов</translation>
     </message>
     <message>
         <source>mv</source>
         <comment>modify - move (copy)</comment>
-        <translation type="unfinished"></translation>
+        <translation>пкоп</translation>
     </message>
     <message>
         <source>bev</source>
         <comment>modify - bevel</comment>
-        <translation type="unfinished"></translation>
+        <translation>обріз</translation>
     </message>
     <message>
         <source>ch</source>
@@ -6923,7 +6951,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Curve</source>
-        <translation type="unfinished"></translation>
+        <translation>Крива</translation>
     </message>
     <message>
         <source>Edit</source>
@@ -6947,7 +6975,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Layer</source>
-        <translation type="unfinished"></translation>
+        <translation>Шар</translation>
     </message>
     <message>
         <source>Line</source>
@@ -6963,7 +6991,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Other</source>
-        <translation type="unfinished"></translation>
+        <translation>Інше</translation>
     </message>
     <message>
         <source>Polyline</source>
@@ -6971,7 +6999,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Restriction</source>
-        <translation type="unfinished"></translation>
+        <translation>Обмеження</translation>
     </message>
     <message>
         <source>Select</source>
@@ -6983,7 +7011,7 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Snap Extras</source>
-        <translation type="unfinished"></translation>
+        <translation>Прив&apos;язка (додатково)</translation>
     </message>
     <message>
         <source>View</source>
@@ -6991,39 +7019,39 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Widgets</source>
-        <translation type="unfinished"></translation>
+        <translation>Віджети</translation>
     </message>
     <message>
         <source>Creators</source>
-        <translation type="unfinished"></translation>
+        <translation>Створювачі</translation>
     </message>
     <message>
         <source>All</source>
-        <translation type="unfinished"></translation>
+        <translation>Усе</translation>
     </message>
     <message>
         <source>Invalid objects removed:</source>
-        <translation type="unfinished"></translation>
+        <translation>Не коректні об&apos;єкти видалено:</translation>
     </message>
     <message>
         <source>Pen Wizard</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Олівцева палітра</translation>
     </message>
     <message>
         <source>Select objects</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрати об&apos;єкти</translation>
     </message>
     <message>
         <source>Apply to selected</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати до обраних</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
+        <translation>Видалити</translation>
     </message>
     <message>
         <source>You must input a distance first.</source>
-        <translation type="unfinished"></translation>
+        <translation>Ви маєте спочатку визначити відстань.</translation>
     </message>
     <message>
         <source>cal</source>
@@ -7031,19 +7059,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Calculator mode: On</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим калькулятора: On</translation>
     </message>
     <message>
         <source>Calculator mode: Off</source>
-        <translation type="unfinished"></translation>
+        <translation>Режим калькулятора: Off</translation>
     </message>
     <message>
         <source>License</source>
-        <translation type="unfinished"></translation>
+        <translation>Ліцензія</translation>
     </message>
     <message>
         <source>No %1 layers found</source>
-        <translation type="unfinished"></translation>
+        <translation>Не знайдено шарів %1</translation>
     </message>
     <message>
         <source>line2p</source>
@@ -7757,87 +7785,87 @@ Do you want to replace it?</source>
     <message>
         <source>Custom</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation>Користувацький</translation>
     </message>
     <message>
         <source>A0</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A0</translation>
     </message>
     <message>
         <source>A1</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A1</translation>
     </message>
     <message>
         <source>A2</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A2</translation>
     </message>
     <message>
         <source>A3</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A3</translation>
     </message>
     <message>
         <source>A4</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">A4</translation>
     </message>
     <message>
         <source>Letter / ANSI A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Letter / ANSI A</translation>
     </message>
     <message>
         <source>Legal</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Legal</translation>
     </message>
     <message>
         <source>Tabloid / ANSI B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Tabloid / ANSI B</translation>
     </message>
     <message>
         <source>ANSI C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI C</translation>
     </message>
     <message>
         <source>ANSI D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI D</translation>
     </message>
     <message>
         <source>ANSI E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">ANSI E</translation>
     </message>
     <message>
         <source>Arch A</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch A</translation>
     </message>
     <message>
         <source>Arch B</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch B</translation>
     </message>
     <message>
         <source>Arch C</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch C</translation>
     </message>
     <message>
         <source>Arch D</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch D</translation>
     </message>
     <message>
         <source>Arch E</source>
         <comment>Paper format</comment>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Arch E</translation>
     </message>
     <message>
         <source>custom</source>
@@ -7926,131 +7954,131 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>DWG support is not complete!</source>
-        <translation type="unfinished"></translation>
+        <translation>Пітримка DWG не повноцінна!</translation>
     </message>
     <message>
         <source>If this file fails to open try an older DWG format</source>
-        <translation type="unfinished"></translation>
+        <translation>Якщо цей файл не відкриється спробуйте старішу версію DWG формату</translation>
     </message>
     <message>
         <source>or try to find a converter to make it a DXF file.</source>
-        <translation type="unfinished"></translation>
+        <translation>або спробуйте знайти конвертер для перетворення у DXF.</translation>
     </message>
     <message>
         <source>Information</source>
-        <translation type="unfinished"></translation>
+        <translation>Інформація</translation>
     </message>
     <message>
         <source>Error</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Помилка</translation>
     </message>
     <message>
         <source>Import error:</source>
         <comment>fileImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Помилка імпорту:</translation>
     </message>
     <message>
         <source>Anyhow, there are some entities identified.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>У будь-якому випадку, деякі елементи ідентифіковано.</translation>
     </message>
     <message>
         <source>If you open the file now, the drawing may be not complete or unusable.</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Якщо відкриєте файл зараз, креслення може бути не заврешеним або не придатним.</translation>
     </message>
     <message>
         <source>Ignore error and open the file?</source>
         <comment>dwgImport</comment>
-        <translation type="unfinished"></translation>
+        <translation>Ігнорувати помилку і відкрити файл?</translation>
     </message>
     <message>
         <source>no DXF/DWG error</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>DXF/DWG без помилок</translation>
     </message>
     <message>
         <source>error opening DXF/DWG file</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка відкриття DXF/DWG</translation>
     </message>
     <message>
         <source>unsupported DXF/DWG file version</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>не підтримувана версія DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG meta data</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання метаданних DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG file header</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання заголовку DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG header dara</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання данних заголовку DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG object map</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>поилка читання мапи об&apos;єктів DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG classes</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання класів DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG tables</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання таблиць DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG blocks</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання блоків DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG entities</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання елементів DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG objects</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання об&apos;єктів DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG sections</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання секцій DXF/DWG</translation>
     </message>
     <message>
         <source>error reading DXF/DWG code</source>
         <comment>RS_FilterDXFRW</comment>
-        <translation type="unfinished"></translation>
+        <translation>помилка читання коду DXF/DWG</translation>
     </message>
     <message>
         <source>undefined error</source>
         <comment>RS_FilterInterface</comment>
-        <translation type="unfinished"></translation>
+        <translation>невизначена помилка</translation>
     </message>
     <message>
         <source>usage: </source>
-        <translation type="unfinished"></translation>
+        <translation>використання: </translation>
     </message>
     <message>
         <source> [options] &lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation> [опції] &lt;dxf_файли&gt;</translation>
     </message>
     <message>
         <source> *.dxf</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished"> *.dxf</translation>
     </message>
     <message>
         <source>-- print all dxf files to pdf files with the same names.</source>
@@ -8066,91 +8094,91 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Auto fit and center drawing to page.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Вписування і центрування креслення.</translation>
     </message>
     <message>
         <source>Auto center drawing on page.</source>
-        <translation type="unfinished"></translation>
+        <translation>Центрування креслення.</translation>
     </message>
     <message>
         <source>Print grayscale.</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк у сірих тонах.</translation>
     </message>
     <message>
         <source>Print monochrome (black/white).</source>
-        <translation type="unfinished"></translation>
+        <translation>Монохромний друк (чорний/білий).</translation>
     </message>
     <message>
         <source>Paper size (Width x Height) in mm.</source>
         <comment>WxH</comment>
-        <translation type="unfinished"></translation>
+        <translation>Розмір паперу (ширина x висота) у мм.</translation>
     </message>
     <message>
         <source>Output resolution (DPI).</source>
         <comment>integer</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вихідна роздільність (DPI).</translation>
     </message>
     <message>
         <source>Output scale. E.g.: 0.01 (for 1:100 scale).</source>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний масштаб. Напр.: 0.01 (для М 1:100).</translation>
     </message>
     <message>
         <source>Paper margins in mm (integer or float).</source>
-        <translation type="unfinished"></translation>
+        <translation>Поля аркуша у мм (цілі або дробові).</translation>
     </message>
     <message>
         <source>Print on multiple pages (Horiz. x Vert.).</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк на кількох аркушах (гориз. x верт.).</translation>
     </message>
     <message>
         <source>Output PDF file.</source>
         <comment>file</comment>
-        <translation type="unfinished"></translation>
+        <translation>Вихідний PDF файл.</translation>
     </message>
     <message>
         <source>Target output directory.</source>
-        <translation type="unfinished"></translation>
+        <translation>Цільова вихідна тека.</translation>
     </message>
     <message>
         <source>&lt;dxf_files&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;dxf_файли&gt;</translation>
     </message>
     <message>
         <source>Input DXF file(s)</source>
-        <translation type="unfinished"></translation>
+        <translation>Вхідні DXF файли</translation>
     </message>
     <message>
         <source>Keycode mode</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Режим кейкодів</translation>
     </message>
     <message>
         <source>Load command file</source>
-        <translation type="unfinished"></translation>
+        <translation>Завантажити файл команд</translation>
     </message>
     <message>
         <source>Paste multiple commands</source>
-        <translation type="unfinished"></translation>
+        <translation>Вставка мультикоманд</translation>
     </message>
     <message>
         <source>Combine all layers</source>
-        <translation type="unfinished"></translation>
+        <translation>Комбінувати усі шари</translation>
     </message>
     <message>
         <source>File &quot;%1&quot; already exists. Do you want to replace it?</source>
-        <translation type="unfinished"></translation>
+        <translation>Файл &quot;%1&quot; вже існує. Ви хочете замінити його?</translation>
     </message>
     <message>
         <source>/CustomColor%1</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">/ВласнийКолір%1</translation>
     </message>
     <message>
         <source>Custom Picked</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрані</translation>
     </message>
     <message>
         <source>noname</source>
         <comment>default layer name</comment>
-        <translation type="unfinished"></translation>
+        <translation>без імені</translation>
     </message>
 </context>
 <context>
@@ -8204,17 +8232,19 @@ Do you want to replace it?</source>
     </message>
     <message>
         <source>Block cannot contain an insert of itself.</source>
-        <translation type="unfinished"></translation>
+        <translation>Блок не може містити вставку самого себе.</translation>
     </message>
     <message>
         <source> has nested insert of current block in:
 </source>
-        <translation type="unfinished"></translation>
+        <translation> має вкладені вставки поточного блоку у:
+</translation>
     </message>
     <message>
         <source>
 This block cannot be inserted.</source>
-        <translation type="unfinished"></translation>
+        <translation>
+Цей блок вставити неможливо.</translation>
     </message>
 </context>
 <context>
@@ -8506,7 +8536,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify point on circle</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте точку на колі</translation>
     </message>
 </context>
 <context>
@@ -8583,15 +8613,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>radius=%1 is invalid (expression)</source>
-        <translation type="unfinished"></translation>
+        <translation>радіус=%1 не коректний (формула)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (negative)</source>
-        <translation type="unfinished"></translation>
+        <translation>радіус=%1 не коректний (від&apos;ємний)</translation>
     </message>
     <message>
         <source>radius=%1 is invalid (zero)</source>
-        <translation type="unfinished"></translation>
+        <translation>радус=%1 не коректний (нульовий)</translation>
     </message>
 </context>
 <context>
@@ -8668,23 +8698,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Invalid expression &apos;%1&apos; for radius</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоректна формула &apos;%1&apos; для радіуса</translation>
     </message>
     <message>
         <source>Invalid negative radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Некоректний відємний радіус &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Invalid zero radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не коректний нульовий радіус &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No tangent circle possible for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Не можливе тангентальне коло для радіусу &apos;%1&apos;</translation>
     </message>
     <message>
         <source>No common tangential circle for radius &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Відсутнє пов&apos;язане тангенційно коло до радіусу &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -8862,11 +8892,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>specify a point on ellipse, or total distance to foci</source>
-        <translation type="unfinished"></translation>
+        <translation>визначте точку на еліпсі, або загальну відстань до foci</translation>
     </message>
     <message>
         <source>Total distance %1 is smaller than distance between foci</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Загальна відстань %1 менща за відстань між foci</translation>
     </message>
 </context>
 <context>
@@ -8932,7 +8962,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Total hatch area = %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Загальна площа штрихування = %1</translation>
     </message>
 </context>
 <context>
@@ -8990,11 +9020,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Cannot undo: Begin of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо відмінити: досягнуто початку історії дій</translation>
     </message>
     <message>
         <source>Cannot redo: End of history reached</source>
-        <translation type="unfinished"></translation>
+        <translation>Неможливо повторити: досягнуто кінця історії дій</translation>
     </message>
 </context>
 <context>
@@ -9057,7 +9087,7 @@ This block cannot be inserted.</source>
     <message>
         <source>Number sector lines not in range: </source>
         <comment>number of bisector to create must be in [1, 200]</comment>
-        <translation type="unfinished"></translation>
+        <translation>Кількість ліній сектору не у проміжку: </translation>
     </message>
 </context>
 <context>
@@ -9359,39 +9389,39 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Enter the end point x</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Визначте кінцеву точку x</translation>
     </message>
     <message>
         <source>Enter number of polylines</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте кількість поліліній</translation>
     </message>
     <message>
         <source>equation</source>
-        <translation type="unfinished"></translation>
+        <translation>формула</translation>
     </message>
     <message>
         <source>Enter an equation, f(x)</source>
-        <translation type="unfinished"></translation>
+        <translation>Уведіть формулу, f(x)</translation>
     </message>
     <message>
         <source>x</source>
-        <translation type="unfinished"></translation>
+        <translation>x</translation>
     </message>
     <message>
         <source>Enter the start point x</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Визначте початкову точку x</translation>
     </message>
     <message>
         <source>The entered x is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлене значення x не коректне.</translation>
     </message>
     <message>
         <source>The step size entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлений розмір кроку некоректний.</translation>
     </message>
     <message>
         <source>The value x entered is invalid.</source>
-        <translation type="unfinished"></translation>
+        <translation>Встановлене значення x некоректне.</translation>
     </message>
 </context>
 <context>
@@ -9532,7 +9562,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Area: %1 %2^2</source>
-        <translation type="unfinished"></translation>
+        <translation>Площа: %1 %2^2</translation>
     </message>
 </context>
 <context>
@@ -9555,7 +9585,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance: %1 Cartesian: (%2 , %3), Polar: (%4&lt;%5)</source>
-        <translation type="unfinished">Відстань: %1; прямокутні координати (%2, %3); полярні (%4∠%5  {1 ?} {2 ?} {3)?} {4&lt;?} {5)?}</translation>
+        <translation>Відстань: %1 Прямокутна: (%2, %3), Полярна: (%4&lt;%5)</translation>
     </message>
 </context>
 <context>
@@ -9712,7 +9742,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Entity must be a line, arc, circle, ellipse or interpolation spline.</source>
-        <translation type="unfinished"></translation>
+        <translation>Елемент має бути лінією, дугою, колом, еліпсом або інтерпольованим сплайном.</translation>
     </message>
 </context>
 <context>
@@ -9747,23 +9777,23 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Parent of second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Батьківсткий елемент другого елементу є nullptr</translation>
     </message>
     <message>
         <source>One of the chosen entities is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Один з обраних елементів є nullptr</translation>
     </message>
     <message>
         <source>Parent of first entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation>Батьківський елемент першого елементу є nullptr</translation>
     </message>
     <message>
         <source>First entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Перший елемент є nullptr</translation>
     </message>
     <message>
         <source>Second entity is nullptr</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Другий елемент є nullptr</translation>
     </message>
 </context>
 <context>
@@ -9781,11 +9811,11 @@ This block cannot be inserted.</source>
     <name>RS_ActionModifyEntity</name>
     <message>
         <source>Click on entity to modify</source>
-        <translation type="unfinished"></translation>
+        <translation>Клікніть на елементі щоб модифікувати</translation>
     </message>
     <message>
         <source>Cancel</source>
-        <translation type="unfinished"></translation>
+        <translation>Скасувати</translation>
     </message>
 </context>
 <context>
@@ -9930,7 +9960,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Specify first entity or enter radius &lt;%1&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>Визначте перший елемент або радіус &lt;%1&gt;</translation>
     </message>
 </context>
 <context>
@@ -10033,7 +10063,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Choose entity for order</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть елемент для упорядкування</translation>
     </message>
     <message>
         <source>Cancel</source>
@@ -10231,7 +10261,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Polyline created</source>
-        <translation type="unfinished"></translation>
+        <translation>Полілінію створено</translation>
     </message>
 </context>
 <context>
@@ -10282,43 +10312,43 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Printout offset in paper coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у кординатах паперу (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates by (%1, %2)</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у графічних координатах (%1, %2)</translation>
     </message>
     <message>
         <source>Printout offset in graph coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у графічних координатах</translation>
     </message>
     <message>
         <source>Printout offset in paper coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку у кординатах паперу</translation>
     </message>
     <message>
         <source>: select printout offset coordinates</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">: оберіть координати зміщення друку</translation>
     </message>
     <message>
         <source>type in offset from command line to offset printout</source>
-        <translation type="unfinished"></translation>
+        <translation>ввести значення зміщення з командного рядка для зміщення друку</translation>
     </message>
     <message>
         <source>Printout offset ignores relative zero. Ignoring &apos;@&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Зміщення друку ігнорує відносний нуль. Ігнорування &apos;@&apos;</translation>
     </message>
     <message>
         <source>Printout in Black/White</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Друк у монохромі (чорний/білий)</translation>
     </message>
     <message>
         <source>Printout in color</source>
-        <translation type="unfinished"></translation>
+        <translation>Друк у кольорі</translation>
     </message>
     <message>
         <source>RS_ActionPrintPreview::calcPagesNum(): Limit of pages has been exceeded.</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">RS_ActionPrintPreview::calcPagesNum(): Досягнуто ліміту сторінок.</translation>
     </message>
 </context>
 <context>
@@ -10361,11 +10391,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select for two axis rotation</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Оберіть для обертання навколо двох осей</translation>
     </message>
     <message>
         <source>Select to explode text</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть для розкладання тексту</translation>
     </message>
     <message>
         <source>Select to create block</source>
@@ -10385,15 +10415,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Select to create offset</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Оберіть для створення відступу</translation>
     </message>
     <message>
         <source>Select entities to order</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіт елементи для упорядкування</translation>
     </message>
     <message>
         <source>Select to explode block</source>
-        <translation type="unfinished"></translation>
+        <translation>Оберіть для розкладання блоку</translation>
     </message>
     <message>
         <source>Select to revert direction</source>
@@ -10528,7 +10558,7 @@ This block cannot be inserted.</source>
     <name>TextFileViewer</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рамка</translation>
     </message>
 </context>
 <context>
@@ -10583,7 +10613,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Усікти</translation>
     </message>
     <message>
         <source>Length 1:</source>
@@ -10602,7 +10632,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
 </context>
 <context>
@@ -10617,7 +10647,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
     <message>
         <source>Radius of tangential circle</source>
@@ -10632,7 +10662,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -10647,7 +10677,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>⌀</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">⌀</translation>
     </message>
     <message>
         <source>°</source>
@@ -10659,7 +10689,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>π</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">π</translation>
     </message>
     <message>
         <source>×</source>
@@ -10671,7 +10701,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>...</source>
-        <translation type="unfinished">…</translation>
+        <translation type="unfinished">...</translation>
     </message>
 </context>
 <context>
@@ -10682,7 +10712,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10713,7 +10743,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10741,15 +10771,15 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Spacing:</source>
-        <translation type="unfinished"></translation>
+        <translation>Інтервал:</translation>
     </message>
     <message>
         <source>Column Spacing</source>
-        <translation type="unfinished">Проміжок між стовпцями:</translation>
+        <translation type="unfinished">Інтервал між стовпцями:</translation>
     </message>
     <message>
         <source>Row Spacing</source>
-        <translation type="unfinished">Відстань між рядами:</translation>
+        <translation type="unfinished">Інтервал між рядами:</translation>
     </message>
 </context>
 <context>
@@ -10760,7 +10790,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Rotation Angle</source>
@@ -10783,7 +10813,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
@@ -10791,7 +10821,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
@@ -10822,7 +10852,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of bisector</source>
@@ -10830,7 +10860,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of bisectors to create</source>
@@ -10884,7 +10914,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
@@ -10899,7 +10929,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of parallels to create</source>
@@ -10914,7 +10944,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
@@ -10929,7 +10959,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Number:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кількість:</translation>
     </message>
     <message>
         <source>Number of edges</source>
@@ -10944,7 +10974,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Line angle</source>
@@ -10952,7 +10982,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Length of line</source>
@@ -10971,7 +11001,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -10997,14 +11027,14 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
     <name>Ui_PolylineOptions</name>
     <message>
         <source>Polyline Options</source>
-        <translation type="unfinished">Параметри ламаної</translation>
+        <translation>Параметри полілінії</translation>
     </message>
     <message>
         <source>Close</source>
@@ -11032,11 +11062,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
     <message>
         <source>Counter Clockwise</source>
@@ -11063,7 +11093,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Toggle Black / White mode</source>
-        <translation type="unfinished">Переключити режим чорний/білий</translation>
+        <translation>Переключити чорний/білий режим</translation>
     </message>
     <message>
         <source>Center to page</source>
@@ -11075,11 +11105,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Apply Print Scale to line width</source>
-        <translation type="unfinished"></translation>
+        <translation>Застосувати масштаб друку до товщини ліній</translation>
     </message>
     <message>
         <source>Calculate number of pages needed to contain the drawing</source>
-        <translation type="unfinished"></translation>
+        <translation>Обрахувати кількість аркушів необхідних для друку креслення</translation>
     </message>
 </context>
 <context>
@@ -11094,18 +11124,18 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Trim</source>
-        <translation type="unfinished"></translation>
+        <translation>Усікти</translation>
     </message>
     <message>
         <source>Radius:</source>
-        <translation type="unfinished"></translation>
+        <translation>Радіус:</translation>
     </message>
 </context>
 <context>
     <name>Ui_SnapDistOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування чутливості прив&apos;язки</translation>
     </message>
     <message>
         <source>Distance:</source>
@@ -11116,11 +11146,11 @@ This block cannot be inserted.</source>
     <name>Ui_SnapMiddleOptions</name>
     <message>
         <source>Snap Distance Options</source>
-        <translation type="unfinished"></translation>
+        <translation>Налаштування чутливості прив&apos;язки</translation>
     </message>
     <message>
         <source>Middle Points:</source>
-        <translation type="unfinished">Середніх точок: </translation>
+        <translation>Середніх точок:</translation>
     </message>
     <message>
         <source>Number of equidistant division points</source>
@@ -11135,11 +11165,11 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Degree:</source>
-        <translation type="unfinished"></translation>
+        <translation>Ступінь:</translation>
     </message>
     <message>
         <source>Closed</source>
-        <translation type="unfinished"></translation>
+        <translation>Замкнутий</translation>
     </message>
     <message>
         <source>Undo</source>
@@ -11158,7 +11188,7 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Angle:</source>
-        <translation type="unfinished"></translation>
+        <translation>Кут:</translation>
     </message>
 </context>
 <context>
@@ -11169,54 +11199,54 @@ This block cannot be inserted.</source>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending.</source>
-        <translation type="unfinished">Відстань. Від’ємні значення для відсікання, позитивні для витягування. </translation>
+        <translation>Відстань. Від’ємні значення для відсікання, позитивні для витягування.</translation>
     </message>
     <message>
         <source>Length:</source>
-        <translation type="unfinished"></translation>
+        <translation>Довжина:</translation>
     </message>
     <message>
         <source>Distance. Negative values for trimming, positive values for extending. Negative sign is ignored when trimming to final total length.</source>
-        <translation type="unfinished">Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена ​​остаточна довжина відрізка.</translation>
+        <translation>Відстань. Негативні значення для обрізки, позитивні для подовження. Негативний знак не враховується, коли встановлена остаточна довжина відрізка.</translation>
     </message>
     <message>
         <source>The input length is used as total length after trimming, instead of length increase</source>
-        <translation type="unfinished">Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення.</translation>
+        <translation>Використовувати введену довжину як остаточну довжину відрізка після обрізки, замість розміру збільшення</translation>
     </message>
 </context>
 <context>
     <name>WidgetCreator</name>
     <message>
         <source>Frame</source>
-        <translation type="unfinished"></translation>
+        <translation type="unfinished">Рамка</translation>
     </message>
     <message>
         <source>&gt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&gt;</translation>
     </message>
     <message>
         <source>&lt;</source>
-        <translation type="unfinished"></translation>
+        <translation>&lt;</translation>
     </message>
     <message>
         <source>Name</source>
-        <translation type="unfinished"></translation>
+        <translation>Назва</translation>
     </message>
     <message>
         <source>Create</source>
-        <translation type="unfinished"></translation>
+        <translation>Створити</translation>
     </message>
     <message>
         <source>Destroy</source>
-        <translation type="unfinished"></translation>
+        <translation>Зруйнувати</translation>
     </message>
     <message>
         <source>Assign</source>
-        <translation type="unfinished"></translation>
+        <translation>Призначити</translation>
     </message>
     <message>
         <source>Update</source>
-        <translation type="unfinished"></translation>
+        <translation>Оновити</translation>
     </message>
 </context>
 </TS>
