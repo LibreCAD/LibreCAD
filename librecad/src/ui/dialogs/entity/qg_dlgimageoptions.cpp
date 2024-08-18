@@ -58,37 +58,35 @@ void QG_ImageOptionsDialog::init() {
     updateEnabled = false;
     useResolution = true;
 
-    RS_SETTINGS->beginGroup("/Export");
-    if (RS_SETTINGS->readEntry("/UseResolution", "1")=="1") {
-        cbResolution->setCurrentIndex(cbResolution->findText(QString("%1").arg(RS_SETTINGS->readEntry("/Resolution","1"))));
-	}
-    else {
-		leWidth->setText(RS_SETTINGS->readEntry("/Width", "640"));
-        leHeight->setText(RS_SETTINGS->readEntry("/Height", "480"));
+    LC_GROUP_GUARD("Export");
+    {
+        if (LC_GET_BOOL("UseResolution", true)) {
+            cbResolution->setCurrentIndex(cbResolution->findText(QString("%1").arg(LC_GET_STR("Resolution", "1"))));
+        } else {
+            leWidth->setText(LC_GET_STR("Width", "640"));
+            leHeight->setText(LC_GET_STR("Height", "480"));
+        }
+        if (LC_GET_BOOL("BlackBackground")) {
+            rbBlack->setChecked(true);
+            rbWhite->setChecked(false);
+        } else {
+            rbBlack->setChecked(false);
+            rbWhite->setChecked(true);
+        }
+        if (LC_GET_BOOL("BlackWhite", true)) {
+            rbBlackWhite->setChecked(true);
+            rbColoured->setChecked(false);
+        } else {
+            rbBlackWhite->setChecked(false);
+            rbColoured->setChecked(true);
+        }
+        leLeftRight->setText(LC_GET_STR("BorderLeftRight", "5"));
+        leTopBottom->setText(LC_GET_STR("BorderTopBottom", "5"));
+        if (LC_GET_STR("BorderSameSize", "1") == "1") {
+            cbSameBorders->setChecked(true);
+            sameBordersChanged();
+        }
     }
-    if (RS_SETTINGS->readEntry("/BlackBackground", "0")=="1") {
-        rbBlack->setChecked(true);
-        rbWhite->setChecked(false);
-    }
-    else {
-    	rbBlack->setChecked(false);
-		rbWhite->setChecked(true);
-    }
-    if (RS_SETTINGS->readEntry("/BlackWhite", "1")=="1") {
-        rbBlackWhite->setChecked(true);
-        rbColoured->setChecked(false);
-    }
-    else {
-    	rbBlackWhite->setChecked(false);
-    	rbColoured->setChecked(true);
-    }
-    leLeftRight->setText(RS_SETTINGS->readEntry("/BorderLeftRight", "5"));
-    leTopBottom->setText(RS_SETTINGS->readEntry("/BorderTopBottom", "5"));
-    if (RS_SETTINGS->readEntry("/BorderSameSize", "1")=="1") {
-        cbSameBorders->setChecked(true);
-        sameBordersChanged();
-    }
-    RS_SETTINGS->endGroup();
 
     updateEnabled = true;
 }
@@ -104,18 +102,18 @@ void QG_ImageOptionsDialog::setGraphicSize(const RS_Vector& s) {
 }
 
 void QG_ImageOptionsDialog::ok() {
-    RS_SETTINGS->beginGroup("/Export");
-    RS_SETTINGS->writeEntry("/UseResolution", (int)useResolution);
-    RS_SETTINGS->writeEntry("/Resolution", cbResolution->currentText());
-    RS_SETTINGS->writeEntry("/Width", leWidth->text());
-    RS_SETTINGS->writeEntry("/Height", leHeight->text());
-    RS_SETTINGS->writeEntry("/BorderLeftRight", leLeftRight->text());
-    RS_SETTINGS->writeEntry("/BorderTopBottom", leTopBottom->text());
-    RS_SETTINGS->writeEntry("/BorderSameSize", (int)cbSameBorders->isChecked());
-    RS_SETTINGS->writeEntry("/BlackBackground", (int)rbBlack->isChecked());
-    RS_SETTINGS->writeEntry("/BlackWhite", (int)rbBlackWhite->isChecked());
-    RS_SETTINGS->endGroup();
-
+    LC_GROUP_GUARD("Export");
+    {
+        LC_SET("UseResolution", useResolution);
+        LC_SET("Resolution", cbResolution->currentText());
+        LC_SET("Width", leWidth->text());
+        LC_SET("Height", leHeight->text());
+        LC_SET("BorderLeftRight", leLeftRight->text());
+        LC_SET("BorderTopBottom", leTopBottom->text());
+        LC_SET("BorderSameSize", cbSameBorders->isChecked());
+        LC_SET("BlackBackground", rbBlack->isChecked());
+        LC_SET("BlackWhite", rbBlackWhite->isChecked());
+    }
     accept();
 }
 
@@ -137,27 +135,27 @@ void QG_ImageOptionsDialog::borderChanged() {
 
 void QG_ImageOptionsDialog::sizeChanged() {
     if (updateEnabled) {
-		updateEnabled = false;
+        updateEnabled = false;
         useResolution = false;
-		cbResolution->setCurrentIndex(cbResolution->findText("auto"));
-		updateEnabled = true;
+        cbResolution->setCurrentIndex(cbResolution->findText("auto"));
+        updateEnabled = true;
     }
 }
 
 void  QG_ImageOptionsDialog::resolutionChanged() {
     if (updateEnabled) {
-		updateEnabled = false;
-		bool ok = false;
-		double res = RS_Math::eval(cbResolution->currentText(), &ok);
-		if (!ok) {
-			res = 1.0;
-		}
-		int w = RS_Math::round(res * graphicSize.x);
-		int h = RS_Math::round(res * graphicSize.y);
+        updateEnabled = false;
+        bool ok = false;
+        double res = RS_Math::eval(cbResolution->currentText(), &ok);
+        if (!ok) {
+            res = 1.0;
+        }
+        int w = RS_Math::round(res * graphicSize.x);
+        int h = RS_Math::round(res * graphicSize.y);
         useResolution = true;
-		leWidth->setText(QString("%1").arg(w));
-		leHeight->setText(QString("%1").arg(h));
-		updateEnabled = true;
+        leWidth->setText(QString("%1").arg(w));
+        leHeight->setText(QString("%1").arg(h));
+        updateEnabled = true;
     }
 }
 

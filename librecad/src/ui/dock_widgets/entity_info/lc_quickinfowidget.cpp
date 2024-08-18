@@ -107,10 +107,11 @@ LC_QuickInfoWidget::LC_QuickInfoWidget(QWidget *parent, QMap<QString, QAction *>
     options->load();
     entityData.setOptions(options);
 
-    RS_SETTINGS->beginGroup("/QuickInfoWidget");
-    entityData.setCoordinatesMode(RS_SETTINGS->readNumEntry("/EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
-    pointsData.setCoordinatesMode(RS_SETTINGS->readNumEntry("/PointsCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
-    RS_SETTINGS->endGroup();
+    LC_GROUP_GUARD("QuickInfoWidget");
+    {
+        entityData.setCoordinatesMode(LC_GET_INT("EntityCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
+        pointsData.setCoordinatesMode(LC_GET_INT("PointsCoordinatesMode", LC_QuickInfoBaseData::COORD_ABSOLUTE));
+    }
 
     // initial message
     showNoDataMessage();
@@ -237,16 +238,16 @@ void LC_QuickInfoWidget::onClearAll(){
  * @param index
  */
 void LC_QuickInfoWidget::onCoordinateModeIndexChanged(int index){
-    RS_SETTINGS->beginGroup("/QuickInfoWidget");
-    if (widgetMode == MODE_ENTITY_INFO){
-       setEntityPointsCoordinateViewMode(index);
-       RS_SETTINGS->writeEntry("/EntityCoordinatesMode", index);
+    LC_GROUP_GUARD("QuickInfoWidget");
+    {
+        if (widgetMode == MODE_ENTITY_INFO) {
+            setEntityPointsCoordinateViewMode(index);
+            LC_SET("EntityCoordinatesMode", index);
+        } else if (widgetMode == MODE_COORDINATE_COLLECTING) {
+            setCollectedPointsCoordinateViewMode(index);
+            LC_SET("PointsCoordinatesMode", index);
+        }
     }
-    else if (widgetMode == MODE_COORDINATE_COLLECTING){
-       setCollectedPointsCoordinateViewMode(index);
-       RS_SETTINGS->writeEntry("/PointsCoordinatesMode", index);
-    }
-    RS_SETTINGS->endGroup();
 }
 
 /**

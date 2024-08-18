@@ -1203,7 +1203,7 @@ bool QG_ActionHandler::command(const QString& cmd)
 
     if (cmd.isEmpty())
     {
-        if (snap_toolbar != nullptr && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+        if (snap_toolbar != nullptr && LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace")) {
             RS_DEBUG->print("QG_ActionHandler::command: toggle Snap Free: begin");
             RS_SnapMode smFree = {};
             RS_SnapMode smGV = snap_toolbar->getSnaps();

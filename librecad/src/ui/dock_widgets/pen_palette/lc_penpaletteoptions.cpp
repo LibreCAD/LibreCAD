@@ -31,35 +31,33 @@ void LC_PenPaletteOptions:: loadFromSettings(){
 
     LC_PenPaletteOptions defaults;
 
-    RS_SETTINGS->beginGroup("PenPaletteWidget");
+    LC_GROUP_GUARD("PenPaletteWidget");
+    {
+        activeItemBGColor = QColor(LC_GET_STR("activeItemBgColor", defaults.activeItemBGColor.name()));
+        matchedItemColor = QColor(LC_GET_STR("matchedItemBgColor", defaults.matchedItemColor.name()));
+        itemsGridColor = QColor(LC_GET_STR("gridColor", defaults.itemsGridColor.name()));
 
-    activeItemBGColor = QColor(RS_SETTINGS->readEntry("/activeItemBgColor", defaults.activeItemBGColor.name()));
-    matchedItemColor = QColor(RS_SETTINGS->readEntry("/matchedItemBgColor", defaults.matchedItemColor.name()));    
-    itemsGridColor =  QColor(RS_SETTINGS->readEntry("/gridColor", defaults.itemsGridColor.name()));
+        showToolTip = LC_GET_BOOL("showToolTip", defaults.showToolTip);
 
-    showToolTip = RS_SETTINGS->readNumEntry("/showToolTip", defaults.showToolTip ? 1:0) == 1;
-    
-    showColorName = RS_SETTINGS->readNumEntry("/showColorNameCol", defaults.showColorName ? 1:0) == 1;    
-    showColorIcon = RS_SETTINGS->readNumEntry("/showColorIconCol", defaults.showColorIcon ? 1:0) == 1;
+        showColorName = LC_GET_BOOL("showColorNameCol", defaults.showColorName);
+        showColorIcon = LC_GET_BOOL("showColorIconCol", defaults.showColorIcon);
 
-    showTypeName = RS_SETTINGS->readNumEntry("/showLineTypeNameCol", defaults.showTypeName ? 1:0) == 1;
-    showTypeIcon = RS_SETTINGS->readNumEntry("/showLineTypeIconCol", defaults.showTypeIcon ? 1:0) == 1;
+        showTypeName = LC_GET_BOOL("showLineTypeNameCol", defaults.showTypeName);
+        showTypeIcon = LC_GET_BOOL("showLineTypeIconCol", defaults.showTypeIcon);
 
-    showWidthName = RS_SETTINGS->readNumEntry("/showLineWidthNameCol", defaults.showWidthName ? 1:0) == 1;
-    showWidthIcon = RS_SETTINGS->readNumEntry("/showLineWidthIconCol", defaults.showWidthIcon ? 1:0) == 1;
+        showWidthName = LC_GET_BOOL("showLineWidthNameCol", defaults.showWidthName);
+        showWidthIcon = LC_GET_BOOL("showLineWidthIconCol", defaults.showWidthIcon);
 
-    showEntireRowBold = RS_SETTINGS->readNumEntry("/showEntireActiveRowBold", defaults.showEntireRowBold ? 1:0) == 1;
-    filterIsInHighlightMode = RS_SETTINGS->readNumEntry("/filterInHighlightsMode", defaults.filterIsInHighlightMode ? 1 : 0) == 1;
-    ignoreCaseOnMatch = RS_SETTINGS->readNumEntry("/ignoreCaseOnMatch", defaults.ignoreCaseOnMatch ? 1:0) == 1;
-    showNoSelectionMessage = RS_SETTINGS->readNumEntry("/showNoSelectionMessage", defaults.showNoSelectionMessage ? 1:0) == 1;
+        showEntireRowBold = LC_GET_BOOL("showEntireActiveRowBold", defaults.showEntireRowBold);
+        filterIsInHighlightMode = LC_GET_BOOL("filterInHighlightsMode", defaults.filterIsInHighlightMode);
+        ignoreCaseOnMatch = LC_GET_BOOL("ignoreCaseOnMatch", defaults.ignoreCaseOnMatch);
+        showNoSelectionMessage = LC_GET_BOOL("showNoSelectionMessage", defaults.showNoSelectionMessage);
 
-    colorNameDisplayMode = RS_SETTINGS->readNumEntry("/colorDisplayMode", defaults.colorNameDisplayMode);
-    doubleClickOnTableMode = RS_SETTINGS->readNumEntry("/doubleClickOnTableMode", defaults.doubleClickOnTableMode);
+        colorNameDisplayMode = LC_GET_INT("colorDisplayMode", defaults.colorNameDisplayMode);
+        doubleClickOnTableMode = LC_GET_INT("doubleClickOnTableMode", defaults.doubleClickOnTableMode);
 
-    pensFileName = RS_SETTINGS->readEntry("/pensFile", defaults.pensFileName);
-
-    RS_SETTINGS->endGroup();
-
+        pensFileName = LC_GET_STR("pensFile", defaults.pensFileName);
+    }
 }
 
 /**
@@ -68,34 +66,31 @@ void LC_PenPaletteOptions:: loadFromSettings(){
 void LC_PenPaletteOptions::saveToSettings(){
     LC_PenPaletteOptions defaults;
 
-    RS_SETTINGS->beginGroup("PenPaletteWidget");
+    LC_GROUP_GUARD("PenPaletteWidget");
+    {
+        LC_SET("activeItemBgColor", activeItemBGColor.name());
+        LC_SET("matchedItemBgColor", matchedItemColor.name());
+        LC_SET("gridColor", itemsGridColor.name());
 
-    RS_SETTINGS->writeEntry("/activeItemBgColor", activeItemBGColor.name());
-    RS_SETTINGS->writeEntry("/matchedItemBgColor", matchedItemColor.name());
-    RS_SETTINGS->writeEntry("/gridColor", itemsGridColor.name());
+        LC_SET("showToolTip", showToolTip);
 
-    RS_SETTINGS->writeEntry("/showToolTip", showToolTip ? 1 : 0);
+        LC_SET("showColorNameCol", showColorName);
+        LC_SET("showColorIconCol", showColorIcon);
 
-    RS_SETTINGS->writeEntry("/showColorNameCol", showColorName ? 1 : 0);
-    RS_SETTINGS->writeEntry("/showColorIconCol", showColorIcon ? 1 : 0);
+        LC_SET("showLineTypeNameCol", showTypeName);
+        LC_SET("showLineTypeIconCol", showTypeIcon);
 
-    RS_SETTINGS->writeEntry("/showLineTypeNameCol", showTypeName ? 1 : 0);
-    RS_SETTINGS->writeEntry("/showLineTypeIconCol", showTypeIcon ? 1 : 0);
+        LC_SET("showLineWidthNameCol", showWidthName);
+        LC_SET("showLineWidthIconCol", showWidthIcon);
 
-    RS_SETTINGS->writeEntry("/showLineWidthNameCol", showWidthName ? 1 : 0);
-    RS_SETTINGS->writeEntry("/showLineWidthIconCol", showWidthIcon ? 1 : 0);
+        LC_SET("showEntireActiveRowBold", showEntireRowBold);
+        LC_SET("filterInHighlightsMode", filterIsInHighlightMode);
+        LC_SET("ignoreCaseOnMatch", ignoreCaseOnMatch);
+        LC_SET("showNoSelectionMessage", showNoSelectionMessage);
 
-    RS_SETTINGS->writeEntry("/showEntireActiveRowBold", showEntireRowBold ? 1 : 0);
-    RS_SETTINGS->writeEntry("/filterInHighlightsMode", filterIsInHighlightMode ? 1 : 0);
-    RS_SETTINGS->writeEntry("/ignoreCaseOnMatch", ignoreCaseOnMatch ? 1 : 0);
-    RS_SETTINGS->writeEntry("/showNoSelectionMessage", showNoSelectionMessage ? 1 : 0);
+        LC_SET("colorDisplayMode", colorNameDisplayMode);
+        LC_SET("doubleClickOnTableMode", doubleClickOnTableMode);
 
-    RS_SETTINGS->writeEntry("/colorDisplayMode", colorNameDisplayMode);
-    RS_SETTINGS->writeEntry("/doubleClickOnTableMode", doubleClickOnTableMode);
-
-
-    RS_SETTINGS->writeEntry("/pensFile", pensFileName);
-
-    RS_SETTINGS->endGroup();
+        LC_SET("pensFile", pensFileName);
+    }
 }
-

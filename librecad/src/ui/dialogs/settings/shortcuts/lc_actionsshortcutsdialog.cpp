@@ -253,8 +253,7 @@ void LC_ActionsShortcutsDialog::showIOInfoDialog(bool forImport,bool ok, const Q
 }
 
 QFileDialog::Options LC_ActionsShortcutsDialog::getFileDialogOptions() {
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
-    bool useQtFileDialog = RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 0) != 0;
+    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults", "UseQtFileOpenDialog");
     QFileDialog::Options options;
     options.setFlag(QFileDialog::DontUseNativeDialog, useQtFileDialog);
     return options;
@@ -387,35 +386,37 @@ void LC_ActionsShortcutsDialog::reject() {
 }
 
 void LC_ActionsShortcutsDialog::saveDialogPosition() const {
-    RS_SETTINGS->beginGroup("/ShortcutsDialog");
-    RS_SETTINGS->writeEntry("/CustomPosition", 1) ;
+    LC_GROUP_GUARD("ShortcutsDialog");
+    {
+        LC_SET("CustomPosition", true);
 
-    const QPoint &point = pos();
-    const QSize &size = QWidget::size();
+        const QPoint &point = pos();
+        const QSize &size = QWidget::size();
 
-    int x = point.x();
-    int y = point.y();
-    int h = size.height();
-    int w = size.width();
-    RS_SETTINGS->writeEntry("/CustomX", x);
-    RS_SETTINGS->writeEntry("/CustomY", y);
-    RS_SETTINGS->writeEntry("/CustomHeight", h);
-    RS_SETTINGS->writeEntry("/CustomWidth", w);
-    RS_SETTINGS->endGroup();
+        int x = point.x();
+        int y = point.y();
+        int h = size.height();
+        int w = size.width();
+        LC_SET("CustomX", x);
+        LC_SET("CustomY", y);
+        LC_SET("CustomHeight", h);
+        LC_SET("CustomWidth", w);
+    }
 }
 
 void LC_ActionsShortcutsDialog::loadDialogPosition() {
-    RS_SETTINGS->beginGroup("/ShortcutsDialog");
-    bool hasSettings = RS_SETTINGS->readNumEntry("/CustomPosition", 0) == 1;
-    if (hasSettings){
-        int x = RS_SETTINGS->readNumEntry("/CustomX", 0);
-        int y = RS_SETTINGS->readNumEntry("/CustomY", 0);
-        int h = RS_SETTINGS->readNumEntry("/CustomHeight", 0);
-        int w = RS_SETTINGS->readNumEntry("/CustomWidth", 0);
-        if (x > 0 &&  y > 0 && h > 0 && w > 0){
-            move(x, y);
-            resize(w, h);
+    LC_GROUP_GUARD("ShortcutsDialog");
+    {
+        bool hasSettings = LC_GET_BOOL("CustomPosition");
+        if (hasSettings) {
+            int x = LC_GET_INT("CustomX", 0);
+            int y = LC_GET_INT("CustomY", 0);
+            int h = LC_GET_INT("CustomHeight", 0);
+            int w = LC_GET_INT("CustomWidth", 0);
+            if (x > 0 && y > 0 && h > 0 && w > 0) {
+                move(x, y);
+                resize(w, h);
+            }
         }
     }
-    RS_SETTINGS->endGroup();
 }

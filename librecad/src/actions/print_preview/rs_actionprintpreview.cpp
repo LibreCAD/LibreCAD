@@ -45,14 +45,14 @@ struct RS_ActionPrintPreview::Points {
  */
 RS_ActionPrintPreview::RS_ActionPrintPreview(RS_EntityContainer& container,
                                              RS_GraphicView& graphicView)
-    :RS_ActionInterface("Print Preview",
-                        container, graphicView, RS2::ActionFilePrintPreview)
+    :RS_ActionInterface("Print Preview",container, graphicView, RS2::ActionFilePrintPreview)
     , pPoints(std::make_unique<Points>()){
-    RS_SETTINGS->beginGroup("/PrintPreview");
-    bool fixed = (RS_SETTINGS->readNumEntry("/PrintScaleFixed", 0) != 0);
-    RS_SETTINGS->endGroup();
-    if (!fixed)
+
+    bool fixed = LC_GET_ONE_BOOL("PrintPreview", "PrintScaleFixed");
+
+    if (!fixed) {
         fit();
+    }
     setPaperScaleFixed(fixed);
 }
 

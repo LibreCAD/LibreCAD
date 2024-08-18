@@ -58,9 +58,9 @@ void QG_DimLinearOptions::languageChange()
 }
 
 void QG_DimLinearOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Dimension");
+    LC_GROUP("Dimension");
 	RS_SETTINGS->writeEntry("/Angle", ui->leAngle->text());
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 }
 
 void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
@@ -71,9 +71,9 @@ void QG_DimLinearOptions::setAction(RS_ActionInterface* a, bool update) {
         if (!update) {
             sa = QString("%1").arg(RS_Math::rad2deg(action->getAngle()));
         } else {
-            RS_SETTINGS->beginGroup("/Dimension");
+            LC_GROUP("Dimension");
             sa = RS_SETTINGS->readEntry("/Angle", "0.0");
-            RS_SETTINGS->endGroup();
+            LC_GROUP_END();
         }
 		ui->leAngle->setText(sa);
     } else {

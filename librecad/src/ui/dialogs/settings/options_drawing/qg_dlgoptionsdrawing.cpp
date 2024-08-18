@@ -71,23 +71,24 @@ QG_DlgOptionsDrawing::QG_DlgOptionsDrawing(QWidget* parent, bool modal, Qt::Wind
 /*
  *  Destroys the object and frees any allocated resources
  */
-QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
-{
+QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing(){
     // no need to delete child widgets, Qt does it all for us
-    auto guard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    RS_SETTINGS->writeEntry("/IsometricGrid", rbIsometricGrid->isChecked()?QString("1"):QString("0"));
-    RS2::CrosshairType chType(RS2::TopCrosshair);
-    if(rbCrosshairLeft->isChecked()) {
-        chType=RS2::LeftCrosshair;
-    }else if (rbCrosshairTop->isChecked()) {
-        chType=RS2::TopCrosshair;
-    }else if (rbCrosshairRight->isChecked()) {
-        chType=RS2::RightCrosshair;
-    }
-    RS_SETTINGS->writeEntry("/CrosshairType", QString::number(static_cast<int>(chType)));
-	if(spacing->valid){
-		RS_SETTINGS->writeEntry("/GridSpacingX", spacing->x);
-		RS_SETTINGS->writeEntry("/GridSpacingY", spacing->y);
+    LC_GROUP_GUARD("Appearance");
+    {
+        LC_SET("IsometricGrid", rbIsometricGrid->isChecked() ? QString("1") : QString("0"));
+        RS2::CrosshairType chType(RS2::TopCrosshair);
+        if (rbCrosshairLeft->isChecked()) {
+            chType = RS2::LeftCrosshair;
+        } else if (rbCrosshairTop->isChecked()) {
+            chType = RS2::TopCrosshair;
+        } else if (rbCrosshairRight->isChecked()) {
+            chType = RS2::RightCrosshair;
+        }
+        LC_SET("CrosshairType", QString::number(static_cast<int>(chType)));
+        if (spacing->valid) {
+            LC_SET("GridSpacingX", spacing->x);
+            LC_SET("GridSpacingY", spacing->y);
+        }
     }
 }
 
@@ -95,21 +96,20 @@ QG_DlgOptionsDrawing::~QG_DlgOptionsDrawing()
  *  Sets the strings of the subwidgets using the current
  *  language.
  */
-void QG_DlgOptionsDrawing::languageChange()
-{
+void QG_DlgOptionsDrawing::languageChange(){
     retranslateUi(this);
 }
 
 void QG_DlgOptionsDrawing::init() {
-	graphic = nullptr;
+    graphic = nullptr;
 
     // precision list:
-	for (int i=0; i<=8; i++)
+    for (int i=0; i<=8; i++)
         *listPrec1 << QString("%1").arg(0.0,0,'f', i);
 
     // Main drawing unit:
     for (int i=RS2::None; i<RS2::LastUnit; i++) {
-		cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
+        cbUnit->addItem(RS_Units::unitToString(static_cast<RS2::Unit>(i)));
     }
 
     // init units combobox:
@@ -144,28 +144,25 @@ void QG_DlgOptionsDrawing::init() {
     cbDimTxSty->init();
 }
 
-
 /**
  * Sets the graphic and updates the GUI to match the drawing.
  */
-void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
-{
+void QG_DlgOptionsDrawing::setGraphic(RS_Graphic *g) {
     graphic = g;
 
-    if (graphic==nullptr)
-    {
+    if (graphic == nullptr) {
         RS_DEBUG->print(RS_Debug::D_ERROR, " QG_DlgOptionsDrawing::setGraphic(nullptr)\n");
         return;
     }
 
     // main drawing unit:
     int insunits = graphic->getVariableInt("$INSUNITS", 0);
-    cbUnit->setCurrentIndex( cbUnit->findText(
-                                 RS_Units::unitToString(RS_FilterDXFRW::numberToUnit(insunits))));
+    cbUnit->setCurrentIndex(cbUnit->findText(
+        RS_Units::unitToString(RS_FilterDXFRW::numberToUnit(insunits))));
 
     // units / length format:
     int lunits = graphic->getVariableInt("$LUNITS", 2);
-    cbLengthFormat->setCurrentIndex(lunits-1);
+    cbLengthFormat->setCurrentIndex(lunits - 1);
 
     // units length precision:
     int luprec = graphic->getVariableInt("$LUPREC", 4);
@@ -184,8 +181,8 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     // paper format:
     bool landscape;
     RS2::PaperFormat format = graphic->getPaperFormat(&landscape);
-	RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int)format);
-    cbPaperFormat->setCurrentIndex((int)format);
+    RS_DEBUG->print("QG_DlgOptionsDrawing::setGraphic: paper format is: %d", (int) format);
+    cbPaperFormat->setCurrentIndex((int) format);
 
     // paper orientation:
     rbLandscape->blockSignals(true);
@@ -195,71 +192,71 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
         rbPortrait->setChecked(true);
     }
     rbLandscape->blockSignals(false);
-	if(format==RS2::Custom){
-        RS_Vector s=graphic->getPaperSize();
-        lePaperWidth->setText(QString("%1").setNum(s.x,'g',5));
-        lePaperHeight->setText(QString("%1").setNum(s.y,'g',5));
-		lePaperWidth->setEnabled(true);
-		lePaperHeight->setEnabled(true);
-	}else{
-		lePaperWidth->setEnabled(false);
-		lePaperHeight->setEnabled(false);
-	}
+    if (format == RS2::Custom) {
+        RS_Vector s = graphic->getPaperSize();
+        lePaperWidth->setText(QString("%1").setNum(s.x, 'g', 5));
+        lePaperHeight->setText(QString("%1").setNum(s.y, 'g', 5));
+        lePaperWidth->setEnabled(true);
+        lePaperHeight->setEnabled(true);
+    } else {
+        lePaperWidth->setEnabled(false);
+        lePaperHeight->setEnabled(false);
+    }
 
     // Grid:
     cbGridOn->setChecked(graphic->isGridOn());
-    //    RS_SETTINGS->beginGroup("/Appearance");
+    //    LC_GROUP("Appearance");
     //    cbIsometricGrid->setChecked(static_cast<bool>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)));
-    //    RS_SETTINGS->endGroup();
+    //    LC_GROUP_END();
 
     //    graphic->setIsometricGrid(cbIsometricGrid->isChecked());
     rbIsometricGrid->setChecked(graphic->isIsometricGrid());
-    rbOrthogonalGrid->setChecked(! rbIsometricGrid->isChecked());
+    rbOrthogonalGrid->setChecked(!rbIsometricGrid->isChecked());
 
 
     rbIsometricGrid->setDisabled(!cbGridOn->isChecked());
     rbOrthogonalGrid->setDisabled(!cbGridOn->isChecked());
-    RS2::CrosshairType chType=graphic->getCrosshairType();
-    switch(chType){
-    case RS2::LeftCrosshair:
-        rbCrosshairLeft->setChecked(true);
-        break;
-    case RS2::TopCrosshair:
-        rbCrosshairTop->setChecked(true);
-        break;
-        //    case RS2::RightCrosshair:
-        //        rbCrosshairRight->setChecked(true);
-        //        break;
-    default:
-        rbCrosshairRight->setChecked(true);
-        break;
+    RS2::CrosshairType chType = graphic->getCrosshairType();
+    switch (chType) {
+        case RS2::LeftCrosshair:
+            rbCrosshairLeft->setChecked(true);
+            break;
+        case RS2::TopCrosshair:
+            rbCrosshairTop->setChecked(true);
+            break;
+            //    case RS2::RightCrosshair:
+            //        rbCrosshairRight->setChecked(true);
+            //        break;
+        default:
+            rbCrosshairRight->setChecked(true);
+            break;
     }
-    if(rbOrthogonalGrid->isChecked() || ! cbGridOn->isChecked() ){
+    if (rbOrthogonalGrid->isChecked() || !cbGridOn->isChecked()) {
         rbCrosshairLeft->setDisabled(true);
         rbCrosshairTop->setDisabled(true);
         rbCrosshairRight->setDisabled(true);
-    }else{
+    } else {
         rbCrosshairLeft->setDisabled(false);
         rbCrosshairTop->setDisabled(false);
         rbCrosshairRight->setDisabled(false);
     }
 
-	*spacing = graphic->getVariableVector("$GRIDUNIT",
-												   {0.0,0.0});
-	cbXSpacing->setEditText( QString("%1").arg(spacing->x));
-	cbYSpacing->setEditText( QString("%1").arg(spacing->y));
+    *spacing = graphic->getVariableVector("$GRIDUNIT",
+                                          {0.0, 0.0});
+    cbXSpacing->setEditText(QString("%1").arg(spacing->x));
+    cbYSpacing->setEditText(QString("%1").arg(spacing->y));
 
-    if (cbXSpacing->currentText()=="0") {
+    if (cbXSpacing->currentText() == "0") {
         cbXSpacing->setEditText(tr("auto"));
     }
-    if (cbYSpacing->currentText()=="0") {
+    if (cbYSpacing->currentText() == "0") {
         cbYSpacing->setEditText(tr("auto"));
     }
     cbXSpacing->setEnabled(cbGridOn->isChecked() && rbOrthogonalGrid->isChecked());
     cbYSpacing->setEnabled(cbGridOn->isChecked());
 
     // dimension text height:
-	RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
+    RS2::Unit unit = static_cast<RS2::Unit>(cbUnit->currentIndex());
 
     // dimension general factor:
     double dimfactor = graphic->getVariableDouble("$DIMLFAC", 1.0);
@@ -313,22 +310,22 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     double dimfxl = graphic->getVariableDouble("$DIMFXL",
                                                RS_Units::convert(1.0, RS2::Millimeter, unit));
     cbDimFxL->setValue(dimfxl);
-    int dimfxlon = graphic->getVariableInt("$DIMFXLON",0);
-    if (dimfxlon > 0){
+    int dimfxlon = graphic->getVariableInt("$DIMFXLON", 0);
+    if (dimfxlon > 0) {
         cbDimFxL->setEnabled(true);
         cbDimFxLon->setChecked(true);
     } else {
         cbDimFxL->setEnabled(false);
         cbDimFxLon->setChecked(false);
     }
-    int dimlwd = graphic->getVariableInt("$DIMLWD",-2); //default ByBlock
+    int dimlwd = graphic->getVariableInt("$DIMLWD", -2); //default ByBlock
     cbDimLwD->setWidth(RS2::intToLineWidth(dimlwd));
-    int dimlwe = graphic->getVariableInt("$DIMLWE",-2); //default ByBlock
+    int dimlwe = graphic->getVariableInt("$DIMLWE", -2); //default ByBlock
     cbDimLwE->setWidth(RS2::intToLineWidth(dimlwe));
 
     // Dimensions / length format:
     int dimlunit = graphic->getVariableInt("$DIMLUNIT", lunits);
-    cbDimLUnit->setCurrentIndex(dimlunit-1);
+    cbDimLUnit->setCurrentIndex(dimlunit - 1);
 
     // Dimensions length precision:
     int dimdec = graphic->getVariableInt("$DIMDEC", luprec);
@@ -362,7 +359,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     QString dimtxsty = graphic->getVariableString("$DIMTXSTY", "standard");
     cbDimTxSty->setFont(dimtxsty);
     int dimdsep = graphic->getVariableInt("$DIMDSEP", 0);
-    (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) :  cbDimDSep->setCurrentIndex(0);
+    (dimdsep == 44) ? cbDimDSep->setCurrentIndex(1) : cbDimDSep->setCurrentIndex(0);
 
     // spline line segments per patch:
     int splinesegs = graphic->getVariableInt("$SPLINESEGS", 8);
@@ -380,7 +377,7 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     cbEncoding->setEditText(encoding);
     */
 
-	updatePaperSize();
+    updatePaperSize();
     updateUnitLabels();
 
     // Paper margins
@@ -394,91 +391,91 @@ void QG_DlgOptionsDrawing::setGraphic(RS_Graphic* g)
     sbPagesNumH->setValue(graphic->getPagesNumHoriz());
     sbPagesNumV->setValue(graphic->getPagesNumVert());
 
-	// Points drawing style:
-	int pdmode = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
-	double pdsize = graphic->getVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
+// Points drawing style:
+    int pdmode = graphic->getVariableInt("$PDMODE", LC_DEFAULTS_PDMode);
+    double pdsize = graphic->getVariableDouble("$PDSIZE", LC_DEFAULTS_PDSize);
 
-	// Set button checked for the currently selected point style
-	switch(pdmode) {
-	case DXF_FORMAT_PDMode_CentreDot:
-	default:
-		bDot->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_CentreBlank:
-		bBlank->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_CentrePlus:
-		bPlus->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_CentreCross:
-		bCross->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_CentreTick:
-		bTick->setChecked(true);
-		break;
+// Set button checked for the currently selected point style
+    switch (pdmode) {
+        case DXF_FORMAT_PDMode_CentreDot:
+        default:
+            bDot->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreBlank:
+            bBlank->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentrePlus:
+            bPlus->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreCross:
+            bCross->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_CentreTick:
+            bTick->setChecked(true);
+            break;
 
-	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot):
-		bDotCircle->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank):
-		bBlankCircle->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus):
-		bPlusCircle->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross):
-		bCrossCircle->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick):
-		bTickCircle->setChecked(true);
-		break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreDot):
+            bDotCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreCross):
+            bCrossCircle->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircle(DXF_FORMAT_PDMode_CentreTick):
+            bTickCircle->setChecked(true);
+            break;
 
-	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot):
-		bDotSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank):
-		bBlankSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus):
-		bPlusSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross):
-		bCrossSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick):
-		bTickSquare->setChecked(true);
-		break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot):
+            bDotSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreCross):
+            bCrossSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreTick):
+            bTickSquare->setChecked(true);
+            break;
 
-	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot):
-		bDotCircleSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank):
-		bBlankCircleSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus):
-		bPlusCircleSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross):
-		bCrossCircleSquare->setChecked(true);
-		break;
-	case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick):
-		bTickCircleSquare->setChecked(true);
-		break;
-	}
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreDot):
+            bDotCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreBlank):
+            bBlankCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentrePlus):
+            bPlusCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreCross):
+            bCrossCircleSquare->setChecked(true);
+            break;
+        case DXF_FORMAT_PDMode_EncloseCircleSquare(DXF_FORMAT_PDMode_CentreTick):
+            bTickCircleSquare->setChecked(true);
+            break;
+    }
 
-	// Fill points display size value string, and set button checked for screen-size 
-	// relative vs. absolute drawing units radio buttons. Negative pdsize => value
-	// gives points size as percent of screen size; positive pdsize => value gives
-	// points size in absolute drawing units; pdsize == 0 implies points size to be
-	// 5% relative to screen size.
-	if ( pdsize <= 0.0 )
-		rbRelSize->setChecked(true);
-	else
-		rbAbsSize->setChecked(true);
-	lePointSize->setText(QString::number(pdsize >= 0.0 ? pdsize : - pdsize));
+// Fill points display size value string, and set button checked for screen-size
+// relative vs. absolute drawing units radio buttons. Negative pdsize => value
+// gives points size as percent of screen size; positive pdsize => value gives
+// points size in absolute drawing units; pdsize == 0 implies points size to be
+// 5% relative to screen size.
+    if (pdsize <= 0.0)
+        rbRelSize->setChecked(true);
+    else
+        rbAbsSize->setChecked(true);
+    lePointSize->setText(QString::number(pdsize >= 0.0 ? pdsize : -pdsize));
 
-	// Set the appropriate text for the display size value label
-	updateLPtSzUnits();
+// Set the appropriate text for the display size value label
+    updateLPtSzUnits();
 }
 
 

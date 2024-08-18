@@ -81,9 +81,9 @@ void QG_ArcOptions::setReversedToActionAndView(bool reversed){
 
 /*void QG_ArcOptions::init() {
 	data = nullptr;
-    RS_SETTINGS->beginGroup("/Draw");
+    LC_GROUP("Draw");
     bool reversed = RS_SETTINGS->readNumEntry("/ArcReversed", 0);
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 
     rbNeg->setChecked(reversed);
 }*/
@@ -95,4 +95,3 @@ void QG_ArcOptions::setReversedToActionAndView(bool reversed){
 void QG_ArcOptions::onDirectionChanged(bool /*pos*/){
     setReversedToActionAndView( ui->rbNeg->isChecked());
 }
-

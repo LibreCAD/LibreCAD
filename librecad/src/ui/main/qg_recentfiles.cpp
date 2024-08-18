@@ -53,11 +53,12 @@ QG_RecentFiles::~QG_RecentFiles()
 }
 
 void QG_RecentFiles::saveToSettings() const {
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<count(); ++i) {
-        RS_SETTINGS->writeEntry(QString("/File") + QString::number(i+1), get(i));
+    LC_GROUP_GUARD("RecentFiles");
+    {
+        for (int i = 0; i < count(); ++i) {
+            LC_SET(QString("/File") + QString::number(i + 1), get(i));
+        }
     }
-    RS_SETTINGS->endGroup();
 }
 
 /**
@@ -117,15 +118,14 @@ void QG_RecentFiles::addFiles(QMenu* file_menu)
 {
     RS_DEBUG->print("QG_RecentFiles::addFiles()");
 
-    RS_SETTINGS->beginGroup("/RecentFiles");
-    for (int i=0; i<number; ++i)
+    LC_GROUP_GUARD("RecentFiles");
     {
-        QString filename = RS_SETTINGS->readEntry(QString("/File") +
-                                                  QString::number(i+1));
-        if (QFileInfo::exists(filename))
-            add(filename);
+        for (int i = 0; i < number; ++i) {
+            QString filename = LC_GET_STR(QString("/File") + QString::number(i + 1));
+            if (QFileInfo::exists(filename))
+                add(filename);
+        }
     }
-    RS_SETTINGS->endGroup();
 
     QActionGroup* a_group = new QActionGroup(this);
     connect(a_group, SIGNAL(triggered(QAction*)),

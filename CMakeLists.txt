@@ -909,8 +909,8 @@ set(SOURCES
 		librecad/src/ui/action_options/line/qg_lineparalleloptions.h
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.cpp
 		librecad/src/ui/action_options/line/qg_lineparallelthroughoptions.h
-		librecad/src/ui/action_options/line/qg_linepolygon2options.cpp
-		librecad/src/ui/action_options/line/qg_linepolygon2options.h
+        librecad/src/ui/not_used/qg_linepolygon2options.cpp
+        librecad/src/ui/not_used/qg_linepolygon2options.h
 		librecad/src/ui/action_options/line/qg_linepolygonoptions.cpp
 		librecad/src/ui/action_options/line/qg_linepolygonoptions.h
 		librecad/src/ui/action_options/line/qg_linerelangleoptions.cpp

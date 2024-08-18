@@ -180,9 +180,8 @@ void QG_LibraryWidget::scanTree() {
         appendTree(nullptr, directory);
     }
 
-    RS_SETTINGS->beginGroup("/Paths");
-    QString customPath=RS_SETTINGS->readEntry("/Library", "");
-    RS_SETTINGS->endGroup();
+    QString customPath= LC_GET_ONE_STR("Paths", "Library", "");
+
     if(customPath.size()>0){
         //todo: make the custom path more flexible
         appendTree(nullptr,customPath);

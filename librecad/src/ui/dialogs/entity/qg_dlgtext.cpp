@@ -144,17 +144,16 @@ void QG_DlgText::reject() {
 
 void QG_DlgText::destroy() {
     if (isNew&&saveSettings) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
-        RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
-        RS_SETTINGS->writeEntry("/TextAlignmentT", getAlignment());
-        RS_SETTINGS->writeEntry("/TextWidthRelation", leWidthRel->text());
-        RS_SETTINGS->writeEntry("/TextStringT", teText->text());
-        RS_SETTINGS->writeEntry("/TextAngle", leAngle->text());
-        RS_SETTINGS->endGroup();
+        LC_GROUP_GUARD("Draw");{
+            LC_SET("TextHeight", leHeight->text());
+            LC_SET("TextFont", cbFont->currentText());
+            LC_SET("TextAlignmentT", getAlignment());
+            LC_SET("TextWidthRelation", leWidthRel->text());
+            LC_SET("TextStringT", teText->text());
+            LC_SET("TextAngle", leAngle->text());
+        }
     }
 }
-
 
 /**
  * Sets the text entity represented by this dialog.
@@ -178,29 +177,29 @@ void QG_DlgText::setText(RS_Text& t, bool isNew) {
         wPen->hide();
         lLayer->hide();
         cbLayer->hide();
-        RS_SETTINGS->beginGroup("/Draw");
-        //default font depending on locale
-        //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
-        QByteArray iso = RS_System::localeToISO( QLocale::system().name().toLocal8Bit() );
+        LC_GROUP_GUARD("Draw");{
+            //default font depending on locale
+            //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
+            QByteArray iso = RS_System::localeToISO(QLocale::system().name().toLocal8Bit());
 //        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
-        if (iso=="ISO8859-1") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "normallatin1");
-        } else if (iso=="ISO8859-2") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "normallatin2");
-        } else if (iso=="ISO8859-7") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "greekc");
-        } else if (iso=="KOI8-U" || iso=="KOI8-R") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "cyrillic_ii");
-        } else {
-             fon = RS_SETTINGS->readEntry("/TextFont", "standard");
-                }
-        height = RS_SETTINGS->readEntry("/TextHeight", "1.0");
-        def = RS_SETTINGS->readEntry("/TextDefault", "1");
-        alignment = RS_SETTINGS->readEntry("/TextAlignmentT", "7");
-        widthRelation = RS_SETTINGS->readEntry("/TextWidthRelation", "1");
-        str = RS_SETTINGS->readEntry("/TextStringT", "");
-        angle = RS_SETTINGS->readEntry("/TextAngle", "0");
-        RS_SETTINGS->endGroup();
+            if (iso == "ISO8859-1") {
+                fon = LC_GET_STR("TextFont", "normallatin1");
+            } else if (iso == "ISO8859-2") {
+                fon = LC_GET_STR("TextFont", "normallatin2");
+            } else if (iso == "ISO8859-7") {
+                fon = LC_GET_STR("TextFont", "greekc");
+            } else if (iso == "KOI8-U" || iso == "KOI8-R") {
+                fon = LC_GET_STR("TextFont", "cyrillic_ii");
+            } else {
+                fon = LC_GET_STR("TextFont", "standard");
+            }
+            height = LC_GET_STR("TextHeight", "1.0");
+            def = LC_GET_STR("TextDefault", "1");
+            alignment = LC_GET_STR("TextAlignmentT", "7");
+            widthRelation = LC_GET_STR("TextWidthRelation", "1");
+            str = LC_GET_STR("TextStringT", "");
+            angle = LC_GET_STR("TextAngle", "0");
+        }
     } else {
         fon = text->getStyle();
         setFont(fon);
@@ -493,4 +492,3 @@ void QG_DlgText::insertChar() {
 //    teText->textCursor().insertText( QString("%1").arg(QChar(c)) );
     teText->insert( QString("%1").arg(QChar(c)) );
 }
-

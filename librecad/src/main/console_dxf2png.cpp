@@ -103,7 +103,7 @@ int console_dxf2png(int argc, char* argv[])
 
     QFileInfo prgInfo(QFile::decodeName(argv[0]));
     QString prgDir(prgInfo.absolutePath());
-    RS_SETTINGS->init(app.organizationName(), app.applicationName());
+    RS_Settings::init(app.organizationName(), app.applicationName());
     RS_SYSTEM->init(app.applicationName(), app.applicationVersion(),
         XSTR(QC_APPDIR), prgDir.toLatin1().data());
 
@@ -193,7 +193,7 @@ int console_dxf2png(int argc, char* argv[])
     LC_LOG<< "QC_ApplicationWindow::slotFileExport()";
 
     // read default settings:
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Export");
+    LC_GROUP_GUARD("Export"); // fixme settings
     QString defDir = dxfFileInfo.path();
 
     // find out extension:

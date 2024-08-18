@@ -70,7 +70,7 @@ void QG_LineParallelThroughOptions::doSetAction(RS_ActionInterface *a, bool upda
         } else {
             copyNumber = loadInt("Number", 1);
             symmetric = loadBool("Symmetric", false);
-            RS_SETTINGS->endGroup();
+            LC_GROUP_END();
         }
         setSymmetricToActionAndView(symmetric);
         setCopyNumberToActionAndView(copyNumber);

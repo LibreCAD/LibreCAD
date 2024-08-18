@@ -54,9 +54,9 @@ void LC_ActionOptionsWidget::setAction(RS_ActionInterface *a, bool update){
         RS2::ActionType actionType = a->rtti();
         if (checkActionRttiValid(actionType)){
             // that should be ok for the most of the actions as most probably they will rely on the same group
-            RS_SETTINGS->beginGroup(getSettingsGroupName());
+            LC_GROUP(getSettingsGroupName());
             doSetAction(a, update);
-            RS_SETTINGS->endGroup();
+            LC_GROUP_END();
         }
         else{
             RS_DEBUG->print(RS_Debug::D_ERROR, typeid(*this).name(), "::setAction: wrong action type");
@@ -77,9 +77,9 @@ bool LC_ActionOptionsWidget::checkActionRttiValid([[maybe_unused]]RS2::ActionTyp
  * by wrapping it by settings begin/end group calls.
  */
 void LC_ActionOptionsWidget::saveSettings(){
-    RS_SETTINGS->beginGroup(getSettingsGroupName());
+    LC_GROUP(getSettingsGroupName());
     doSaveSettings();
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 }
 
 /**
@@ -140,7 +140,7 @@ QString LC_ActionOptionsWidget::fromDouble(double value){
  */
 QString LC_ActionOptionsWidget::load(QString name, QString defaultValue){
     QString key = getSettingsOptionNamePrefix() + name;
-    return RS_SETTINGS->readEntry(key, defaultValue);
+    return LC_GET_STR(key, defaultValue);
 }
 
 /**
@@ -151,28 +151,25 @@ QString LC_ActionOptionsWidget::load(QString name, QString defaultValue){
  */
 int LC_ActionOptionsWidget::loadInt(QString name, int defaultValue){
     QString key = getSettingsOptionNamePrefix() + name;
-    return RS_SETTINGS->readNumEntry(key, defaultValue);
+    return LC_GET_INT(key, defaultValue);
 }
 
 bool LC_ActionOptionsWidget::loadBool(QString name, bool defaultValue){
     QString key = getSettingsOptionNamePrefix() + name;
-    return RS_SETTINGS->readNumEntry(key, defaultValue ? 1: 0)  == 1 ? true : false;
+    return LC_GET_INT(key, defaultValue ? 1 : 0) == 1 ? true : false;
 }
 
 void LC_ActionOptionsWidget::save(QString name, QString value){
     QString key = getSettingsOptionNamePrefix() + name;
-    RS_SETTINGS->writeEntry(key, value);
+    LC_SET(key, value);
 }
 
 void LC_ActionOptionsWidget::save(QString name, int value){
     QString key = getSettingsOptionNamePrefix() + name;
-    RS_SETTINGS->writeEntry(key, value);
+    LC_SET(key, value);
 }
 
 void LC_ActionOptionsWidget::save(QString name, bool value){
     QString key = getSettingsOptionNamePrefix() + name;
-    RS_SETTINGS->writeEntry(key, value ? 1: 0);
+    LC_SET(key, value ? 1 : 0);
 }
-
-
-

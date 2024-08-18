@@ -504,7 +504,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
 void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const LC_ShortcutsManager& shortcutsManager) {
     QList<QKeySequence> commandLineShortcuts;
     commandLineShortcuts << QKeySequence(Qt::CTRL | Qt::Key_M) << QKeySequence(Qt::Key_Colon);
-    if (!RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false))
+    if (LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace"))
         commandLineShortcuts << QKeySequence(Qt::Key_Space);
 
     std::vector<LC_ShortcutInfo> shortcutsList = {

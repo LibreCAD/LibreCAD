@@ -35,13 +35,10 @@
  * Constructor.
  */
 RS_Preview::RS_Preview(RS_EntityContainer* parent)
-        : RS_EntityContainer(parent, true)
-{
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Appearance");
-    maxEntities = RS_SETTINGS->readNumEntry("/MaxPreview", 100);
+        : RS_EntityContainer(parent, true){
 
-    groupGuard = RS_SETTINGS->beginGroupGuard("/Colors");
-    RS_Color highLight = QColor(RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
+    maxEntities = LC_GET_ONE_INT("Appearance", "MaxPreview", 100);
+    RS_Color highLight = QColor(LC_GET_ONE_STR("Colors", "highlight", RS_Settings::highlight));
     setPen(RS_Pen(highLight, RS2::Width00, RS2::SolidLine));
 }
 
@@ -117,10 +114,11 @@ void RS_Preview::addEntity(RS_Entity* entity) {
     }
 }
 
-void RS_Preview::clear(){
-    if (isOwner()){
-        while (!referenceEntities.isEmpty())
+void RS_Preview::clear() {
+    if (isOwner()) {
+        while (!referenceEntities.isEmpty()) {
             delete referenceEntities.takeFirst();
+        }
     } else {
         referenceEntities.clear();
     }
@@ -144,9 +142,8 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
  * Adds all entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addAllFrom(RS_EntityContainer& container) {
-	int c=0;
-	for(auto e: container){
-
+    unsigned int c=0;
+    for(auto e: container){
         if (c<maxEntities) {
             RS_Entity* clone = e->clone();
             clone->setSelected(false);
@@ -163,9 +160,8 @@ void RS_Preview::addAllFrom(RS_EntityContainer& container) {
  * Adds all selected entities from 'container' to the preview (unselected).
  */
 void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
-	int c=0;
-	for(auto e: container){
-
+    unsigned int c=0;
+    for(auto e: container){
         if (e->isSelected() && c<maxEntities) {
             RS_Entity* clone = e->clone();
             clone->setSelected(false);
@@ -184,22 +180,18 @@ void RS_Preview::addSelectionFrom(RS_EntityContainer& container) {
  */
 void RS_Preview::addStretchablesFrom(RS_EntityContainer& container,
                                      const RS_Vector& v1, const RS_Vector& v2) {
-    int c=0;
+    unsigned int c=0;
 
-	for(auto e: container){
+    for (auto e: container) {
+        if (e->isVisible() && e->rtti() != RS2::EntityHatch &&
+            ((e->isInWindow(v1, v2)) || e->hasEndpointsWithinWindow(v1, v2)) &&
+            c < maxEntities) {
 
-        if (e->isVisible() &&
-                e->rtti()!=RS2::EntityHatch &&
-                ((e->isInWindow(v1, v2)) ||
-                 e->hasEndpointsWithinWindow(v1, v2)) &&
-
-                c<maxEntities) {
-
-            RS_Entity* clone = e->clone();
+            RS_Entity *clone = e->clone();
             //clone->setSelected(false);
             clone->reparent(this);
 
-            c+=clone->countDeep();
+            c += clone->countDeep();
             addEntity(clone);
             // clone might be nullptr after this point
         }
@@ -213,8 +205,7 @@ void RS_Preview::draw(RS_Painter* painter, RS_GraphicView* view,
         return;
     }
 
-    foreach (auto e, entities)
-    {
+    for (auto e: entities){
         e->draw(painter, view, patternOffset);
     }
 }

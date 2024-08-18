@@ -25,36 +25,36 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 void LC_QuickInfoOptions::load(){
     RS_Pen highlightPen;
 
-    RS_SETTINGS->beginGroup("/QuickInfoWidget");
-    displayDistanceAndAngle = RS_SETTINGS->readNumEntry("/ShowDistanceAndAngle", 1) == 1;
-    displayEntityBoundaries = RS_SETTINGS->readNumEntry("/ShowEntityBoundaries", 1) == 1;
-    displayPointsPath = RS_SETTINGS->readNumEntry("/ShowPointsPathOnPreview", 1) == 1;
-    displayPolylineDetailed = RS_SETTINGS->readNumEntry("/ShowPolylineDetails", 1) == 1;
-    selectEntitiesInDefaultActionByCTRL = RS_SETTINGS->readNumEntry("/SelectEntityInDefaultAction", 1) == 1;
-    autoSelectEntitiesInDefaultAction = RS_SETTINGS->readNumEntry("/AutoSelectEntityInDefaultAction",   1) == 1;
+    LC_GROUP_GUARD("QuickInfoWidget");
+    {
+        displayDistanceAndAngle = LC_GET_BOOL("ShowDistanceAndAngle", true);
+        displayEntityBoundaries = LC_GET_BOOL("ShowEntityBoundaries", true);
+        displayPointsPath = LC_GET_BOOL("ShowPointsPathOnPreview", true);
+        displayPolylineDetailed = LC_GET_BOOL("ShowPolylineDetails", true);
+        selectEntitiesInDefaultActionByCTRL = LC_GET_BOOL("SelectEntityInDefaultAction", true);
+        autoSelectEntitiesInDefaultAction = LC_GET_BOOL("AutoSelectEntityInDefaultAction", true);
 
-    RS_Color color = QColor(RS_SETTINGS->readEntry("/penHighlightColor", "red"));
-    RS2::LineType lineType = static_cast<RS2::LineType> (RS_SETTINGS->readNumEntry("/penHighlightLineType", RS2::LineType::SolidLine));
-    RS2::LineWidth lineWidth = static_cast<RS2::LineWidth> (RS_SETTINGS->readNumEntry("/penHighlightLineWidth", RS2::LineWidth::WidthDefault));
+        RS_Color color = QColor(LC_GET_STR("penHighlightColor", "red"));
+        RS2::LineType lineType = static_cast<RS2::LineType> (LC_GET_INT("penHighlightLineType", RS2::LineType::SolidLine));
+        RS2::LineWidth lineWidth = static_cast<RS2::LineWidth> (LC_GET_INT("penHighlightLineWidth", RS2::LineWidth::WidthDefault));
 
-    highlightPen = RS_Pen(color, lineWidth, lineType);
-
-    RS_SETTINGS->endGroup();
+        highlightPen = RS_Pen(color, lineWidth, lineType);
+    }
 
     pen = highlightPen;
 }
 
 void LC_QuickInfoOptions::save() const{
-    RS_SETTINGS->beginGroup("/QuickInfoWidget");
-    RS_SETTINGS->writeEntry("/ShowDistanceAndAngle", displayDistanceAndAngle ? 1 : 0);
-    RS_SETTINGS->writeEntry("/ShowEntityBoundaries", displayEntityBoundaries ? 1 : 0);
-    RS_SETTINGS->writeEntry("/ShowPointsPathOnPreview", displayPointsPath ? 1 : 0);
-    RS_SETTINGS->writeEntry("/ShowPolylineDetails", displayPolylineDetailed ? 1 : 0);
-
-    RS_SETTINGS->writeEntry("/SelectEntityInDefaultAction", selectEntitiesInDefaultActionByCTRL ? 1 : 0);
-    RS_SETTINGS->writeEntry("/AutoSelectEntityInDefaultAction",  autoSelectEntitiesInDefaultAction? 1 : 0);
-    RS_SETTINGS->writeEntry("/penHighlightColor", pen.getColor().name());
-    RS_SETTINGS->writeEntry("/penHighlightLineType", pen.getLineType());
-    RS_SETTINGS->writeEntry("/penHighlightLineWidth", pen.getWidth());
-    RS_SETTINGS->endGroup();
+    LC_GROUP_GUARD("QuickInfoWidget");
+    {
+        LC_SET("ShowDistanceAndAngle", displayDistanceAndAngle);
+        LC_SET("ShowEntityBoundaries", displayEntityBoundaries);
+        LC_SET("ShowPointsPathOnPreview", displayPointsPath);
+        LC_SET("ShowPolylineDetails", displayPolylineDetailed);
+        LC_SET("SelectEntityInDefaultAction", selectEntitiesInDefaultActionByCTRL);
+        LC_SET("AutoSelectEntityInDefaultAction", autoSelectEntitiesInDefaultAction);
+        LC_SET("penHighlightColor", pen.getColor().name());
+        LC_SET("penHighlightLineType", pen.getLineType());
+        LC_SET("penHighlightLineWidth", pen.getWidth());
+    }
 }

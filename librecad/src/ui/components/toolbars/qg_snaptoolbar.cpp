@@ -93,9 +93,8 @@ QG_SnapToolBar::QG_SnapToolBar(QWidget* parent, QG_ActionHandler* ah, LC_ActionG
     connect(bLockRelZero, &QAction::triggered, actionHandler, &QG_ActionHandler::slotLockRelativeZero);
 
     //restore snapMode from saved preferences
-    RS_SETTINGS->beginGroup("/Snap");
-    setSnaps( RS_SnapMode::fromInt( RS_SETTINGS->readNumEntry( "/SnapMode", 0)));
-    RS_SETTINGS->endGroup();
+
+    setSnaps( RS_SnapMode::fromInt(LC_GET_ONE_INT("Snap", "SnapMode", 0)));
 }
 
 void QG_SnapToolBar::slotUnsetSnapMiddleManual(){
@@ -105,9 +104,7 @@ void QG_SnapToolBar::slotUnsetSnapMiddleManual(){
 void QG_SnapToolBar::saveSnapMode(){
     //@write default snap mode from prefrences.
     unsigned int snapFlags {RS_SnapMode::toInt( getSnaps())};
-    RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/SnapMode",QString::number(snapFlags));
-    RS_SETTINGS->endGroup();
+    LC_SET_ONE("Snap", "SnapMode", QString::number(snapFlags));
     // no need to delete child widgets, Qt does it all for us
 }
 

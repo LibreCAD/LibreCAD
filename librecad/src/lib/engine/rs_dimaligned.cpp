@@ -107,10 +107,10 @@ RS_VectorSolutions RS_DimAligned::getRefPoints() const
  */
 QString RS_DimAligned::getMeasuredLabel() {
 	double dist = edata.extensionPoint1.distanceTo(edata.extensionPoint2) * getGeneralFactor();
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
-    RS_SETTINGS->endGroup();
+    // fixme - refactor to single time initialization
+    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)) {
+        dist = RS_Units::convert(dist);
+    }
 
     RS_Graphic* graphic = getGraphic();
     QString ret;

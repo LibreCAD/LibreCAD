@@ -154,28 +154,30 @@ void QG_ColorBox::init(bool showByLayer, bool showUnchanged) {
     slotColorChanged(currentIndex());
 }
 
-void QG_ColorBox::readCustomColorSettings()
-{
-    auto guard = RS_SETTINGS->beginGroupGuard(tr("/ColorBox"));
-    for(size_t i=0; i<Max_Custom_Colors; i++) {
-        QString colorName = customColorName.arg(i);
-        int color = RS_SETTINGS->readNumEntry(colorName, -1);
-        if (color < 0)
-            break;
-        addColor(static_cast<QRgb>(color), tr("Custom Picked"));
+void QG_ColorBox::readCustomColorSettings(){
+    LC_GROUP_GUARD("/ColorBox");
+    {
+        for (size_t i = 0; i < Max_Custom_Colors; i++) {
+            QString colorName = customColorName.arg(i);
+            int color = LC_GET_INT(colorName, -1);
+            if (color < 0) {
+                break;
+            }
+            addColor(static_cast<QRgb>(color), tr("Custom Picked"));
+        }
     }
 }
 
-void QG_ColorBox::writeCustomColorSettings()
-{
-    auto guard = RS_SETTINGS->beginGroupGuard(tr("/ColorBox"));
-    int customIndex=0;
-    for (int cIndex = colorIndexStart; cIndex < count(); cIndex++)
+void QG_ColorBox::writeCustomColorSettings(){
+    LC_GROUP_GUARD("/ColorBox");
     {
-        if (itemText(cIndex) == customItemText) {
-            QColor itemColor = itemData(cIndex).value<QColor>();
-            QString colorName = customColorName.arg(customIndex++);
-            RS_SETTINGS->writeEntry(std::move(colorName), QString("%1").arg(itemColor.rgb() % 0x80000000));
+        int customIndex = 0;
+        for (int cIndex = colorIndexStart; cIndex < count(); cIndex++) {
+            if (itemText(cIndex) == customItemText) {
+                QColor itemColor = itemData(cIndex).value<QColor>();
+                QString colorName = customColorName.arg(customIndex++);
+                LC_SET(std::move(colorName), QString("%1").arg(itemColor.rgb() % 0x80000000));
+            }
         }
     }
 }
@@ -183,8 +185,7 @@ void QG_ColorBox::writeCustomColorSettings()
 /**
  * Sets the color shown in the combobox to the given color.
  */
-void QG_ColorBox::setColor(const RS_Color& color)
-{
+void QG_ColorBox::setColor(const RS_Color& color){
     *currentColor = color;
     int lastItem = count()-1;
     if (itemText(lastItem) == userColorText){ // we had user color already in combobox, remove it first
@@ -221,8 +222,7 @@ void QG_ColorBox::setColor(const RS_Color& color)
 /**
  * generate icon from color, then add to color box
  */
-void QG_ColorBox::addColor(QColor color, QString text)
-{
+void QG_ColorBox::addColor(QColor color, QString text){
     QPixmap pixmap(":/ui/color00.png");
     int width = pixmap.width();
     int height = pixmap.height();
@@ -231,8 +231,7 @@ void QG_ColorBox::addColor(QColor color, QString text)
     addItem(QIcon(pixmap), text, color);
 }
 
-int QG_ColorBox::findColor(const RS_Color& color)
-{
+int QG_ColorBox::findColor(const RS_Color& color){
     for (int cIndex = colorIndexStart; cIndex < count(); cIndex++)
     {
         //searching for the color, allowing difference up to 2
@@ -242,8 +241,7 @@ int QG_ColorBox::findColor(const RS_Color& color)
     return count();
 }
 
-int QG_ColorBox::addCustomColor(const RS_Color& color)
-{
+int QG_ColorBox::addCustomColor(const RS_Color& color){
     int current = findColor(color);
     if (current < count())
         return current;
@@ -262,7 +260,6 @@ int QG_ColorBox::addCustomColor(const RS_Color& color)
 
     return count() - 1;
 }
-
 
 /**
  * Sets the color of the pixmap next to the "By Layer" item
@@ -286,8 +283,6 @@ void QG_ColorBox::setLayerColor(const RS_Color& color) {
         slotColorChanged(currentIndex());
     }
 }
-
-
 
 /**
  * Called when the color has changed. This method
@@ -348,8 +343,6 @@ void QG_ColorBox::slotColorChanged(int index) {
     emit colorChanged(*currentColor);
 }
 
-
-
 RS_Color QG_ColorBox::getColor() const{
     return *currentColor;
 }
@@ -363,5 +356,3 @@ int QG_ColorBox::addTemporaryCustomColor(const RS_Color& color)
     int index = count() - 1;
     return index;
 }
-
-

@@ -163,7 +163,7 @@ void QG_CommandEdit::keyPressEvent(QKeyEvent* e)
         processInput(text());
         break;
     case Qt::Key_Space:
-        if (RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", true))
+        if (LC_GET_BOOL("Keyboard/EvaluateCommandOnSpace", true))
             processInput(text());
         else if (!text().isEmpty())
             QLineEdit::keyPressEvent(e);
@@ -420,5 +420,3 @@ void QG_CommandEdit::modifiedPaste()
     txt.replace("\n", ";");
     setText(txt);
 }
-
-

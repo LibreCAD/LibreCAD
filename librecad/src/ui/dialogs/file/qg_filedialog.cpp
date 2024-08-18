@@ -131,11 +131,11 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 //    bool fileAccepted = false;
     setAcceptMode ( QFileDialog::AcceptOpen );
     // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/Open",
-                                              RS_SYSTEM->getHomeDir());
-    QString open_filter = RS_SETTINGS->readEntry("/OpenFilter", fDxfrw);
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Paths"); // fixme - settings
+    QString defDir = LC_GET_STR("Open",
+                                          RS_SYSTEM->getHomeDir());
+    QString open_filter = LC_GET_STR("OpenFilter", fDxfrw);
+    LC_GROUP_END();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     QString fn = "";
@@ -175,10 +175,11 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
         }
 
     // store new default settings:
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Open", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/OpenFilter", selectedNameFilter());
-        RS_SETTINGS->endGroup();
+        LC_GROUP_GUARD("Paths");
+        {
+            LC_SET("Open", QFileInfo(fn).absolutePath());
+            LC_SET("OpenFilter", selectedNameFilter());
+        }
     }
 
     RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.toLatin1().data());
@@ -192,12 +193,10 @@ QString QG_FileDialog::getOpenFile(RS2::FormatType* type){
 QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setAcceptMode ( QFileDialog::AcceptSave );
     // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/Save",
-                                              RS_SYSTEM->getHomeDir());
+
+    QString defDir = LC_GET_ONE_STR("Paths", "Save",RS_SYSTEM->getHomeDir());
 /*    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
                                                  "Drawing Exchange DXF 2000 (*.dxf)");*/
-    RS_SETTINGS->endGroup();
 
     if(!defDir.endsWith("/") && !defDir.endsWith("\\"))
         defDir += QDir::separator();
@@ -235,7 +234,7 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
     setNameFilters(filters);
     selectNameFilter(fDxfrw2007);
     selectFile(fn);
-	auto ext=getExtension(ftype);
+    auto ext=getExtension(ftype);
     if(ext.size()==4){
         if(ext[0]=='.') ext.remove(0,1);
     }
@@ -261,10 +260,9 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
         fn += getExtension(ftype);
 
     // store new default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    RS_SETTINGS->writeEntry("/Save", fi.absolutePath());
+
+    LC_SET_ONE("Paths", "Save", fi.absolutePath());
     //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-    RS_SETTINGS->endGroup();
 
     return fn;
 }
@@ -282,16 +280,17 @@ QString QG_FileDialog::getSaveFile(RS2::FormatType* type){
  */
 QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/Save",
-                                              RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry("/SaveFilter",
-                                                 "Drawing Exchange DXF 2007 (*.dxf)");
-    //QString defFilter = "Drawing Exchange (*.dxf)";
-    RS_SETTINGS->endGroup();
+    QString defDir, defFilter;
+    LC_GROUP("Paths");
+    {
+        defDir = LC_GET_STR("Save",RS_SYSTEM->getHomeDir());
+        defFilter = LC_GET_STR("SaveFilter","Drawing Exchange DXF 2007 (*.dxf)");
+        //QString defFilter = "Drawing Exchange (*.dxf)";
+    }
+    LC_GROUP_END();
 
     // prepare file save as dialog:
-    QFileDialog* fileDlg = new QFileDialog(parent,"Save as");
+    auto* fileDlg = new QFileDialog(parent,"Save as");
     QStringList filters;
     bool done = false;
     bool cancel = false;
@@ -312,7 +311,7 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
     fileDlg->setWindowTitle(QObject::tr("Save Drawing As"));
     fileDlg->setDirectory(defDir);
     fileDlg->setAcceptMode(QFileDialog::AcceptSave);
-	fileDlg->selectNameFilter(defFilter);
+    fileDlg->selectNameFilter(defFilter);
 
     // run dialog:
     do {
@@ -393,18 +392,13 @@ QString QG_FileDialog::getSaveFileName(QWidget* parent, RS2::FormatType* type) {
 
     // store new default settings:
     if (!cancel) {
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Save", QFileInfo(fn).absolutePath());
+        LC_SET_ONE("Paths","Save", QFileInfo(fn).absolutePath());
         //RS_SETTINGS->writeEntry("/SaveFilter", fileDlg->selectedFilter());
-        RS_SETTINGS->endGroup();
     }
 
     delete fileDlg;
-
     return fn;
 }
-
-
 
 /**
  * Shows a dialog for choosing a file name. Opening the file is up to
@@ -417,13 +411,13 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
     RS_DEBUG->print("QG_FileDialog::getOpenFileName");
 
     // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/Open",
-                                              RS_SYSTEM->getHomeDir());
+    LC_GROUP("Paths"); // fixme - settings
+    QString defDir = LC_GET_STR("Open",
+                                          RS_SYSTEM->getHomeDir());
     //QString defFilter = RS_SETTINGS->readEntry("/OpenFilter",
     //                      "Drawing Exchange (*.dxf *.DXF)");
     QString defFilter = "Drawing Exchange (*.dxf)";
-    RS_SETTINGS->endGroup();
+    LC_GROUP_END();
 
     RS_DEBUG->print("defDir: %s", defDir.toLatin1().data());
     RS_DEBUG->print("defFilter: %s", defFilter.toLatin1().data());
@@ -501,10 +495,10 @@ QString QG_FileDialog::getOpenFileName(QWidget* parent, RS2::FormatType* type) {
 
     // store new default settings:
     if (!cancel) {
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Open", QFileInfo(fn).absolutePath());
-        RS_SETTINGS->writeEntry("/OpenFilter", fileDlg->selectedNameFilter());
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Paths");
+        LC_SET("Open", QFileInfo(fn).absolutePath());
+        LC_SET("OpenFilter", fileDlg->selectedNameFilter());
+        LC_GROUP_END();
     }
 
     RS_DEBUG->print("QG_FileDialog::getOpenFileName: fileName: %s", fn.toLatin1().data());

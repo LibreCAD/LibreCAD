@@ -137,9 +137,7 @@ void QG_DialogFactory::hideSnapOptions(){
 
 LC_SnapOptionsWidgetsHolder* QG_DialogFactory::getSnapOptionsHolder(){
     LC_SnapOptionsWidgetsHolder* result = nullptr;
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool useSnapToolbar = RS_SETTINGS->readNumEntry("/showSnapOptionsInSnapToolbar", 0) == 1;
-    RS_SETTINGS->endGroup();
+    bool useSnapToolbar = LC_GET_ONE_BOOL("Appearance", "showSnapOptionsInSnapToolbar", false);
     if (useSnapToolbar){
         result = snapOptionsWidgetHolderSnapToolbar;
     }
@@ -636,15 +634,14 @@ QList<RS_Block*> QG_DialogFactory::requestSelectedBlocksRemovalDialog(
  * @return File name with path and extension to determine the file type
  *         or an empty string if the dialog was cancelled.
  */
-QString QG_DialogFactory::requestImageOpenDialog()
-{
+QString QG_DialogFactory::requestImageOpenDialog(){
     QString strFileName = "";
 
     // read default settings:
-    RS_SETTINGS->beginGroup("/Paths");
-    QString defDir = RS_SETTINGS->readEntry("/OpenImage", RS_SYSTEM->getHomeDir());
-    QString defFilter = RS_SETTINGS->readEntry( "/ImageFilter", "");
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Paths");
+    QString defDir = LC_GET_STR("OpenImage", RS_SYSTEM->getHomeDir());
+    QString defFilter = LC_GET_STR("ImageFilter", "");
+    LC_GROUP_END();
 
     QStringList filters;
     QString all = "";
@@ -681,16 +678,14 @@ QString QG_DialogFactory::requestImageOpenDialog()
             strFileName = strSelectedFiles.first();
 
         // store new default settings:
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/OpenImage", QFileInfo(strFileName).absolutePath());
-        RS_SETTINGS->writeEntry("/ImageFilter", fileDlg.selectedNameFilter());
-        RS_SETTINGS->endGroup();
+        LC_GROUP_GUARD("Paths");
+        {
+            LC_SET("OpenImage", QFileInfo(strFileName).absolutePath());
+            LC_SET("ImageFilter", fileDlg.selectedNameFilter());
+        }
     }
-
     return strFileName;
 }
-
-
 
 /**
  * Shows attributes options dialog presenting the given data.

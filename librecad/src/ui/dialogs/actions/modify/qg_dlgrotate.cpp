@@ -65,15 +65,14 @@ void QG_DlgRotate::languageChange()
 }
 
 void QG_DlgRotate::init() {
-    RS_SETTINGS->beginGroup("/Modify");
-    copies = RS_SETTINGS->readEntry("/RotateCopies", "10");
-    numberMode = RS_SETTINGS->readNumEntry("/RotateMode", 0);
-    angle = RS_SETTINGS->readEntry("/RotateAngle", "90.0");
-    useCurrentLayer =
-        (bool)RS_SETTINGS->readNumEntry("/RotateUseCurrentLayer", 0);
-    useCurrentAttributes =
-        (bool)RS_SETTINGS->readNumEntry("/RotateUseCurrentAttributes", 0);
-    RS_SETTINGS->endGroup();
+    LC_GROUP_GUARD("Modify");
+    {
+        copies = LC_GET_STR("RotateCopies", "10");
+        numberMode = LC_GET_INT("RotateMode", 0);
+        angle = LC_GET_STR("RotateAngle", "90.0");
+        useCurrentLayer = LC_GET_BOOL("RotateUseCurrentLayer");
+        useCurrentAttributes = LC_GET_BOOL("RotateUseCurrentAttributes");
+    }
 
     switch (numberMode) {
     case 0:
@@ -95,22 +94,21 @@ void QG_DlgRotate::init() {
 }
 
 void QG_DlgRotate::destroy() {
-    RS_SETTINGS->beginGroup("/Modify");
-    RS_SETTINGS->writeEntry("/RotateCopies", leNumber->text());
-    if (rbMove->isChecked()) {
-        numberMode = 0;
-    } else if (rbCopy->isChecked()) {
-        numberMode = 1;
-    } else {
-        numberMode = 2;
+    LC_GROUP_GUARD("Modify");
+    {
+        LC_SET("RotateCopies", leNumber->text());
+        if (rbMove->isChecked()) {
+            numberMode = 0;
+        } else if (rbCopy->isChecked()) {
+            numberMode = 1;
+        } else {
+            numberMode = 2;
+        }
+        LC_SET("RotateMode", numberMode);
+        LC_SET("RotateAngle", leAngle->text());
+        LC_SET("RotateUseCurrentLayer", cbCurrentLayer->isChecked());
+        LC_SET("RotateUseCurrentAttributes", cbCurrentAttributes->isChecked());
     }
-    RS_SETTINGS->writeEntry("/RotateMode", numberMode);
-    RS_SETTINGS->writeEntry("/RotateAngle", leAngle->text());
-    RS_SETTINGS->writeEntry("/RotateUseCurrentLayer",
-                            (int)cbCurrentLayer->isChecked());
-    RS_SETTINGS->writeEntry("/RotateUseCurrentAttributes",
-                            (int)cbCurrentAttributes->isChecked());
-    RS_SETTINGS->endGroup();
 }
 
 void QG_DlgRotate::setData(RS_RotateData* d) {
@@ -134,4 +132,3 @@ void QG_DlgRotate::updateData() {
     data->useCurrentAttributes = cbCurrentAttributes->isChecked();
     data->useCurrentLayer = cbCurrentLayer->isChecked();
 }
-

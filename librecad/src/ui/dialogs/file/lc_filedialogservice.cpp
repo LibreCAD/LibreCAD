@@ -38,129 +38,128 @@
 namespace {
 
 /* Constant variables initialization - START */
-QStringList filtersStringList = {
-    /* Drawing filters */
-    "Drawing Exchange DXF 2007 (*.dxf)",
-    "Drawing Exchange DXF 2004 (*.dxf)",
-    "Drawing Exchange DXF 2000 (*.dxf)",
-    "Drawing Exchange DXF R14 (*.dxf)",
-    "Drawing Exchange DXF R12 (*.dxf)",
+    QStringList filtersStringList = {
+        /* Drawing filters */
+        "Drawing Exchange DXF 2007 (*.dxf)",
+        "Drawing Exchange DXF 2004 (*.dxf)",
+        "Drawing Exchange DXF 2000 (*.dxf)",
+        "Drawing Exchange DXF R14 (*.dxf)",
+        "Drawing Exchange DXF R12 (*.dxf)",
 
-    #ifdef DWGSUPPORT
-    "DWG Drawing (*.dwg)",
-    #endif
+#ifdef DWGSUPPORT
+        "DWG Drawing (*.dwg)",
+#endif
 
-    "LFF Font (*.lff)",
-    "QCAD Font (*.cxf)"
+        "LFF Font (*.lff)",
+        "QCAD Font (*.cxf)"
 
-    #ifdef JWW_WRITE_SUPPORT
-    , "JWW Drawing (*.jww)"
-    #endif
-};
+#ifdef JWW_WRITE_SUPPORT
+        , "JWW Drawing (*.jww)"
+#endif
+    };
 
-QList<RS2::FormatType> filtersTypeList =
-{
-    /* Drawing filters */
-    RS2::FormatDXFRW,
-    RS2::FormatDXFRW2004,
-    RS2::FormatDXFRW2000,
-    RS2::FormatDXFRW14,
-    RS2::FormatDXFRW12,
+    QList<RS2::FormatType> filtersTypeList =
+        {
+            /* Drawing filters */
+            RS2::FormatDXFRW,
+            RS2::FormatDXFRW2004,
+            RS2::FormatDXFRW2000,
+            RS2::FormatDXFRW14,
+            RS2::FormatDXFRW12,
 
-    #ifdef DWGSUPPORT
-    RS2::FormatDWG,
-    #endif
+#ifdef DWGSUPPORT
+            RS2::FormatDWG,
+#endif
 
-    RS2::FormatLFF,
-    RS2::FormatCXF
+            RS2::FormatLFF,
+            RS2::FormatCXF
 
-    #ifdef JWW_WRITE_SUPPORT
-    , RS2::FormatJWW
-    #endif
-};
+#ifdef JWW_WRITE_SUPPORT
+            , RS2::FormatJWW
+#endif
+        };
 
 
 /*
         Number of values pertaining to the open file dialog mode,
         as defined in one of the relevant lists below.
     */
-[[maybe_unused]] const int numberOf_openFileModes = 0;
+    [[maybe_unused]] const int numberOf_openFileModes = 0;
 
-const QStringList filterSettingsPaths =
-{
-    /* List of open modes. */
-
-
-    /* List of save modes. */
-    "/SaveDrawingFilter",               /* SaveDrawing mode           */
-    "/SaveDrawingFilter",               /* ExportLayersSelected mode  */
-    "/SaveDrawingFilter"                /* ExportLayersVisible mode   */
-};
-
-const QStringList fileIOSettingsPaths =
-{
-    /* List of open modes. */
+    const QStringList filterSettingsPaths =
+        {
+            /* List of open modes. */
 
 
-    /* List of save modes. */
-    "/Save",                            /* SaveDrawing mode           */
-    "/Save",                            /* ExportLayersSelected mode  */
-    "/Save"                             /* ExportLayersVisible mode   */
-};
+            /* List of save modes. */
+            "/SaveDrawingFilter",               /* SaveDrawing mode           */
+            "/SaveDrawingFilter",               /* ExportLayersSelected mode  */
+            "/SaveDrawingFilter"                /* ExportLayersVisible mode   */
+        };
 
-const int defaultFilters_indices[] =
-{
-    /* List of open modes. */
-
-
-    /* List of save modes. */
-    0,                                  /* SaveDrawing mode           */
-    0,                                  /* ExportLayersSelected mode  */
-    0                                   /* ExportLayersVisible mode   */
-};
-
-const QStringList fileDialogTitles =
-{
-    /* List of open modes. */
+    const QStringList fileIOSettingsPaths =
+        {
+            /* List of open modes. */
 
 
-    /* List of save modes. */
-    "Save Drawing as",                  /* SaveDrawing mode           */
-    "Export selected layer(s)",         /* ExportLayersSelected mode  */
-    "Export visible layer(s)"           /* ExportLayersVisible mode   */
-};
+            /* List of save modes. */
+            "/Save",                            /* SaveDrawing mode           */
+            "/Save",                            /* ExportLayersSelected mode  */
+            "/Save"                             /* ExportLayersVisible mode   */
+        };
+
+    const int defaultFilters_indices[] =
+        {
+            /* List of open modes. */
+
+
+            /* List of save modes. */
+            0,                                  /* SaveDrawing mode           */
+            0,                                  /* ExportLayersSelected mode  */
+            0                                   /* ExportLayersVisible mode   */
+        };
+
+    const QStringList fileDialogTitles =
+        {
+            /* List of open modes. */
+
+
+            /* List of save modes. */
+            "Save Drawing as",                  /* SaveDrawing mode           */
+            "Export selected layer(s)",         /* ExportLayersSelected mode  */
+            "Export visible layer(s)"           /* ExportLayersVisible mode   */
+        };
 
 /* Constant variables initialization - END */
-void updateFileExtension(LC_FileDialogService::FileDialogResult& result, const QString& selectedFilter)
-{
+    void updateFileExtension(LC_FileDialogService::FileDialogResult& result, const QString& selectedFilter)
+    {
 
-    QString saveFileExtension = selectedFilter.mid (selectedFilter.lastIndexOf ('.'));
-    saveFileExtension.chop(1);
+        QString saveFileExtension = selectedFilter.mid (selectedFilter.lastIndexOf ('.'));
+        saveFileExtension.chop(1);
 
-    result.fileExtension = saveFileExtension;
+        result.fileExtension = saveFileExtension;
 
-    if (!result.fileName.endsWith(result.fileExtension, Qt::CaseInsensitive))
-        result.filePath += result.fileExtension;
-    if (result.fileName.endsWith(saveFileExtension))
-        result.fileName.resize(result.fileName.size() - result.fileExtension.size());
-}
+        if (!result.fileName.endsWith(result.fileExtension, Qt::CaseInsensitive))
+            result.filePath += result.fileExtension;
+        if (result.fileName.endsWith(saveFileExtension))
+            result.fileName.resize(result.fileName.size() - result.fileExtension.size());
+    }
 
-RS2::FormatType getFormatType(const QString& formatString)
-{
-    int index = filtersStringList.indexOf(formatString);
-    return (index >= 0 && index < filtersTypeList.count()) ? filtersTypeList.at(index) : RS2::FormatDXFRW;
-}
+    RS2::FormatType getFormatType(const QString& formatString)
+    {
+        int index = filtersStringList.indexOf(formatString);
+        return (index >= 0 && index < filtersTypeList.count()) ? filtersTypeList.at(index) : RS2::FormatDXFRW;
+    }
 
-std::pair<QString, QString> readDefaultDirFilter()
-{
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/Paths");
-    QString defaultDir    = RS_SETTINGS->readEntry( "/Save",
-                                                    QDir::toNativeSeparators (QDir::homePath()));
-
-    QString defaultFilter = RS_SETTINGS->readEntry( "/SaveDrawingFilter",
-                                                    filtersStringList.at(0));
-    return {defaultDir, defaultFilter};
-}
+    std::pair<QString, QString> readDefaultDirFilter()
+    {
+        LC_GROUP_GUARD("Paths");
+        {
+            QString defaultDir = LC_GET_STR("Save", QDir::toNativeSeparators(QDir::homePath()));
+            QString defaultFilter = LC_GET_STR("SaveDrawingFilter", filtersStringList.at(0));
+            return {defaultDir, defaultFilter};
+        }
+    }
 }
 
 /*
@@ -204,11 +203,10 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
 
 
     /* Reading from default settings - START */
-    {
-        auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
-        bool useQtFileDialog = RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 0) != 0;
-        saveFileDialog->setOption (QFileDialog::DontUseNativeDialog, useQtFileDialog);
-    }
+
+    bool useQtFileDialog = LC_GET_ONE_BOOL("Defaults","UseQtFileOpenDialog");
+    saveFileDialog->setOption (QFileDialog::DontUseNativeDialog, useQtFileDialog);
+
     /* Reading from default settings - END */
 
 
@@ -216,8 +214,7 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
     /* Styling the QFileDialog widget - START LC_FileDialogService*/
     std::unique_ptr<QCheckBox> checkBox_combinedSave;
 
-    if ((fileDialogMode == ExportLayersSelected) || (fileDialogMode == ExportLayersVisible))
-    {
+    if ((fileDialogMode == ExportLayersSelected) || (fileDialogMode == ExportLayersVisible))    {
         checkBox_combinedSave = std::make_unique<QCheckBox>(QObject::tr("Combine all layers"));
 
         saveFileDialog->layout()->addWidget(checkBox_combinedSave.get());
@@ -226,12 +223,10 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
 
 
     FileDialogResult result{};
-    while (true)
-    {
-        if (saveFileDialog->QFileDialog::exec() == QDialog::Accepted)
-        {
-            result.filePath = QDir::toNativeSeparators (QFileInfo (saveFileDialog->QFileDialog::selectedFiles().at(0)).absoluteFilePath());
-            result.dirPath  = QFileInfo(result.filePath).absolutePath();
+    while (true) {
+        if (saveFileDialog->QFileDialog::exec() == QDialog::Accepted) {
+            result.filePath = QDir::toNativeSeparators(QFileInfo(saveFileDialog->QFileDialog::selectedFiles().at(0)).absoluteFilePath());
+            result.dirPath = QFileInfo(result.filePath).absolutePath();
             result.fileName = QFileInfo(result.filePath).fileName();
 
             const QString selectedFilter = saveFileDialog->QFileDialog::selectedNameFilter();
@@ -244,14 +239,13 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
             /* File save mode. */
             //#if !defined (Q_OS_WIN) && !defined(Q_OS_MACOS)
             /* Confirm if the user wants to overwrite an existing file. */
-            if (QFileInfo(result.filePath).exists())
-            {
+            if (QFileInfo(result.filePath).exists()) {
                 int replaceFileResponse = QMessageBox::warning(
-                            nullptr,
-                            fileDialogTitles.at (fileDialogMode),
-                            QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(result.fileName),
-                            QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel
-                            );
+                    nullptr,
+                    fileDialogTitles.at(fileDialogMode),
+                    QObject::tr(R"(File "%1" already exists. Do you want to replace it?)").arg(result.fileName),
+                    QMessageBox::Yes | QMessageBox::No | QMessageBox::Cancel, QMessageBox::Cancel
+                );
 
                 if (replaceFileResponse != QMessageBox::Yes)
                     continue;
@@ -262,17 +256,17 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
                 result.checkState = checkBox_combinedSave->checkState();
 
             /* Writing to path settings - START */
+
+            LC_GROUP_GUARD("Paths");
             {
-                auto groupGuard = RS_SETTINGS->beginGroupGuard("/Paths");
-                RS_SETTINGS->writeEntry(fileIOSettingsPaths.at(fileDialogMode), result.dirPath);
-                RS_SETTINGS->writeEntry(filterSettingsPaths.at(fileDialogMode), selectedFilter);
+                LC_SET(fileIOSettingsPaths.at(fileDialogMode), result.dirPath);
+                LC_SET(filterSettingsPaths.at(fileDialogMode), selectedFilter);
             }
+
             /* Writing to path settings - END */
 
             break;
-        }
-        else
-        {
+        } else {
             result = {};
             break;
         }
@@ -282,4 +276,3 @@ LC_FileDialogService::FileDialogResult LC_FileDialogService::getFileDetails (Fil
 
     return result;
 }
-

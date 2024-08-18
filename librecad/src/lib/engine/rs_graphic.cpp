@@ -57,14 +57,15 @@ RS_Graphic::RS_Graphic(RS_EntityContainer* parent)
         pagesNumH(1),
         pagesNumV(1) {
 
-    RS_SETTINGS->beginGroup("/Defaults");
-    setUnit(RS_Units::stringToUnit(RS_SETTINGS->readEntry("/Unit", "None")));
-    RS_SETTINGS->endGroup();
-    RS_SETTINGS->beginGroup("/Appearance");
-    //$ISOMETRICGRID == $SNAPSTYLE
-    addVariable("$SNAPSTYLE", static_cast<int>(RS_SETTINGS->readNumEntry("/IsometricGrid", 0)), 70);
-    crosshairType = static_cast<RS2::CrosshairType>(RS_SETTINGS->readNumEntry("/CrosshairType", 0));
-    RS_SETTINGS->endGroup();
+
+    setUnit(RS_Units::stringToUnit(LC_GET_ONE_STR("Defaults", "Unit", "None")));
+
+    {
+        LC_GROUP_GUARD("Appearance");
+        //$ISOMETRICGRID == $SNAPSTYLE
+        addVariable("$SNAPSTYLE", static_cast<int>(LC_GET_INT("IsometricGrid", 0)), 70);
+        crosshairType = static_cast<RS2::CrosshairType>(LC_GET_INT("CrosshairType", 0));
+    }
     RS2::Unit unit = getUnit();
 
     if (unit == RS2::Inch) {
@@ -325,9 +326,9 @@ bool RS_Graphic::save(bool isAutoSave) {
             }
 
             actualName = filename;
-            auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
-            if (RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1) != 0)
+            if (LC_GET_ONE_BOOL("Defaults","AutoBackupDocument", true)) {
                 BackupDrawingFile(filename);
+            }
         }
 
         /*	Save drawing file if able to created associated object.
@@ -735,11 +736,13 @@ void RS_Graphic::setPaperInsertionBase(const RS_Vector& p) {
  * @return Paper size in graphic units.
  */
 RS_Vector RS_Graphic::getPaperSize() {
-    RS_SETTINGS->beginGroup("/Print");
     bool okX,okY;
-    double sX = RS_SETTINGS->readEntry("/PaperSizeX", "0.0").toDouble(&okX);
-    double sY = RS_SETTINGS->readEntry("/PaperSizeY", "0.0").toDouble(&okY);
-    RS_SETTINGS->endGroup();
+    double sX, sY;
+    LC_GROUP_GUARD("Print");
+    {
+        sX = LC_GET_STR("PaperSizeX", "0.0").toDouble(&okX);
+        sY = LC_GET_STR("PaperSizeY", "0.0").toDouble(&okY);
+    }
     RS_Vector def ;
     if(okX&&okY && sX>RS_TOLERANCE && sY>RS_TOLERANCE) {
         def=RS_Units::convert(RS_Vector(sX,sY),
@@ -764,10 +767,11 @@ void RS_Graphic::setPaperSize(const RS_Vector& s) {
     //set default paper size
     RS_Vector def = RS_Units::convert(s,
                                      getUnit(), RS2::Millimeter);
-    RS_SETTINGS->beginGroup("/Print");
-    RS_SETTINGS->writeEntry("/PaperSizeX", def.x);
-    RS_SETTINGS->writeEntry("/PaperSizeY", def.y);
-    RS_SETTINGS->endGroup();
+    LC_GROUP_GUARD("Print");
+    {
+        LC_SET("PaperSizeX", def.x);
+        LC_SET("PaperSizeY", def.y);
+    }
 }
 
 /**

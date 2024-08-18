@@ -375,21 +375,22 @@ RS_Vector RS_PreviewActionInterface::getFreeSnapAwarePointAlt(const QMouseEvent 
 }
 
 void RS_PreviewActionInterface::initRefEntitiesMetrics(){
-    RS_SETTINGS->beginGroup("/Appearance");
-    // Points drawing style:
-    refPointMode = RS_SETTINGS->readNumEntry("/RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
-    QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
+    LC_GROUP_GUARD("Appearance");
+    {
+        // Points drawing style:
+        refPointMode = LC_GET_INT("RefPointType", DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
+        QString pdsizeStr = LC_GET_STR("RefPointSize", "2.0");
 
-    showRefEntitiesOnPreview = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 1);
-    highlightEntitiesOnHover = RS_SETTINGS->readNumEntry("/VisualizeHovering", 1) != 0;
-    highlightEntitiesRefPointsOnHover = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1) != 0;
+        showRefEntitiesOnPreview = LC_GET_BOOL("VisualizePreviewRefPoints", true);
+        highlightEntitiesOnHover = LC_GET_BOOL("VisualizeHovering", true);
+        highlightEntitiesRefPointsOnHover = LC_GET_BOOL("VisualizeHoveringRefPoints", true);
 
-    bool ok;
-    refPointSize = RS_Math::eval(pdsizeStr, &ok);
-    if (!ok){
-        refPointSize = LC_DEFAULTS_PDSize;
+        bool ok;
+        refPointSize = RS_Math::eval(pdsizeStr, &ok);
+        if (!ok) {
+            refPointSize = LC_DEFAULTS_PDSize;
+        }
     }
-    RS_SETTINGS->endGroup();
 }
 
 /**

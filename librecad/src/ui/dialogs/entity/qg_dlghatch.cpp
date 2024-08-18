@@ -82,27 +82,25 @@ void QG_DlgHatch::showEvent ( QShowEvent * e) {
 void QG_DlgHatch::setHatch(RS_Hatch& h, bool isNew) {
     hatch = &h;
     this->isNew = isNew;
-
-    RS_SETTINGS->beginGroup("/Draw");
-    QString enablePrev = RS_SETTINGS->readEntry("/HatchPreview", "0");
-    RS_SETTINGS->endGroup();
+    // fixme - change to bool option
+    QString enablePrev = LC_GET_ONE_STR("Draw","HatchPreview", "0");
 
     cbEnablePreview->setChecked(enablePrev=="1");
 
     // read defaults from config file:
     if (isNew) {
-        RS_SETTINGS->beginGroup("/Draw");
-        QString solid = RS_SETTINGS->readEntry("/HatchSolid", "0");
-        QString pat = RS_SETTINGS->readEntry("/HatchPattern", "ANSI31");
-        QString scale = RS_SETTINGS->readEntry("/HatchScale", "1.0");
-        QString angle = RS_SETTINGS->readEntry("/HatchAngle", "0.0");
-        RS_SETTINGS->endGroup();
-
-        cbSolid->setChecked(solid=="1");
-        setPattern(pat);
-        leScale->setText(scale);
-        leAngle->setText(angle);
-        leHatchArea->setText("");
+        LC_GROUP_GUARD("Draw");
+        {
+            QString solid = LC_GET_STR("HatchSolid", "0");
+            QString pat = LC_GET_STR("HatchPattern", "ANSI31");
+            QString scale = LC_GET_STR("HatchScale", "1.0");
+            QString angle = LC_GET_STR("HatchAngle", "0.0");
+            cbSolid->setChecked(solid=="1");
+            setPattern(pat);
+            leScale->setText(scale);
+            leAngle->setText(angle);
+            leHatchArea->setText("");
+        }
     }
     // initialize dialog based on given hatch:
     else {
@@ -128,8 +126,7 @@ void QG_DlgHatch::updateHatch() {
     }
 }
 
-void QG_DlgHatch::showArea()
-{
+void QG_DlgHatch::showArea(){
     double area = hatch->getTotalArea();
     if (!RS_Math::equal(area, RS_MAXDOUBLE)) {
         QString number = QString::number(hatch->getTotalArea(), 'g', 10);
@@ -193,15 +190,13 @@ void QG_DlgHatch::updatePreview() {
     gvPreview->zoomAuto();
 }
 
-void QG_DlgHatch::saveSettings()
-{
-    if (isNew)
-    {
-        RS_SETTINGS->beginGroupGuard("/Draw");
-        RS_SETTINGS->writeEntry("/HatchSolid", cbSolid->isChecked());
-        RS_SETTINGS->writeEntry("/HatchPattern", cbPattern->currentText());
-        RS_SETTINGS->writeEntry("/HatchScale", leScale->text());
-        RS_SETTINGS->writeEntry("/HatchAngle", leAngle->text());
-        RS_SETTINGS->writeEntry("/HatchPreview", cbEnablePreview->isChecked());
+void QG_DlgHatch::saveSettings(){
+    if (isNew){
+        LC_GROUP_GUARD("Draw");
+        LC_SET("HatchSolid", cbSolid->isChecked());
+        LC_SET("HatchPattern", cbPattern->currentText());
+        LC_SET("HatchScale", leScale->text());
+        LC_SET("HatchAngle", leAngle->text());
+        LC_SET("HatchPreview", cbEnablePreview->isChecked());
     }
 }

@@ -96,103 +96,107 @@ void QG_DlgOptionsGeneral::init() {
         }
     }
 
-    RS_SETTINGS->beginGroup("/Appearance");
+    LC_GROUP("Appearance");
+    {
+        // set current language:
+        QString def_lang = "en";
+        QString lang = LC_GET_STR("Language", def_lang);
+        cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
 
-    // set current language:
-    QString def_lang = "en";
-    QString lang = RS_SETTINGS->readEntry("/Language", def_lang);
-    cbLanguage->setCurrentIndex(cbLanguage->findText(RS_SYSTEM->symbolToLanguage(lang)));
+        QString langCmd = LC_GET_STR("LanguageCmd", def_lang);
+        cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
 
-    QString langCmd = RS_SETTINGS->readEntry("/LanguageCmd", def_lang);
-    cbLanguageCmd->setCurrentIndex(cbLanguageCmd->findText(RS_SYSTEM->symbolToLanguage(langCmd)));
+        // graphic view:
 
-    // graphic view:
+        // Snap Indicators
+        bool indicator_lines_state = LC_GET_BOOL("indicator_lines_state", true);
+        indicator_lines_checkbox->setChecked(indicator_lines_state);
 
-    // Snap Indicators
-    bool indicator_lines_state = RS_SETTINGS->readNumEntry("/indicator_lines_state", 1);
-    indicator_lines_checkbox->setChecked(indicator_lines_state);
+        QString indicator_lines_type = LC_GET_STR("indicator_lines_type", "Crosshair");
+        int index = indicator_lines_combobox->findText(indicator_lines_type);
+        indicator_lines_combobox->setCurrentIndex(index);
 
-    QString indicator_lines_type = RS_SETTINGS->readEntry("/indicator_lines_type", "Crosshair");
-    int index = indicator_lines_combobox->findText(indicator_lines_type);
-    indicator_lines_combobox->setCurrentIndex(index);
+        bool indicator_shape_state = LC_GET_BOOL("indicator_shape_state", true);
+        indicator_shape_checkbox->setChecked(indicator_shape_state);
 
-    bool indicator_shape_state = RS_SETTINGS->readNumEntry("/indicator_shape_state", 1);
-    indicator_shape_checkbox->setChecked(indicator_shape_state);
+        QString indicator_shape_type = LC_GET_STR("indicator_shape_type", "Circle");
+        index = indicator_shape_combobox->findText(indicator_shape_type);
+        indicator_shape_combobox->setCurrentIndex(index);
 
-    QString indicator_shape_type = RS_SETTINGS->readEntry("/indicator_shape_type", "Circle");
-    index = indicator_shape_combobox->findText(indicator_shape_type);
-    indicator_shape_combobox->setCurrentIndex(index);
+        bool cursor_hiding = LC_GET_BOOL("cursor_hiding");
+        cursor_hiding_checkbox->setChecked(cursor_hiding);
 
-    bool cursor_hiding = RS_SETTINGS->readNumEntry("/cursor_hiding", 0);
-    cursor_hiding_checkbox->setChecked(cursor_hiding);
+        bool showSnapOptionsInSnapToolbar = LC_GET_BOOL("showSnapOptionsInSnapToolbar");
+        cbShowSnapOptionsInSnapBar->setChecked(showSnapOptionsInSnapToolbar);
 
-    bool showSnapOptionsInSnapToolbar = RS_SETTINGS->readNumEntry("/showSnapOptionsInSnapToolbar", 0);
-    cbShowSnapOptionsInSnapBar->setChecked(showSnapOptionsInSnapToolbar);
+        bool hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
+        cbHideRelativeZero->setChecked(hideRelativeZero);
 
-    bool hideRelativeZero = RS_SETTINGS->readNumEntry("/hideRelativeZero", 0);
-    cbHideRelativeZero->setChecked(hideRelativeZero);
-    bool visualizeHovering = RS_SETTINGS->readNumEntry("/VisualizeHovering", 1);
-    cbVisualizeHovering->setChecked(visualizeHovering);
+        bool visualizeHovering = LC_GET_BOOL("VisualizeHovering", true);
+        cbVisualizeHovering->setChecked(visualizeHovering);
 
-    bool visualizeHoveringRefPoints = RS_SETTINGS->readNumEntry("/VisualizeHoveringRefPoints", 1);
-    cbShowRefPointsOnHovering->setChecked(visualizeHoveringRefPoints);
-    cbShowRefPointsOnHovering->setEnabled(visualizeHovering);
+        bool visualizeHoveringRefPoints = LC_GET_BOOL("VisualizeHoveringRefPoints", true);
+        cbShowRefPointsOnHovering->setChecked(visualizeHoveringRefPoints);
+        cbShowRefPointsOnHovering->setEnabled(visualizeHovering);
 
-    bool visualizePreviewRefPoints = RS_SETTINGS->readNumEntry("/VisualizePreviewRefPoints", 1);
-    cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
+        bool visualizePreviewRefPoints = LC_GET_BOOL("VisualizePreviewRefPoints", true);
+        cbDisplayRefPoints->setChecked(visualizePreviewRefPoints);
 
-    // scale grid:
-    QString scaleGrid = RS_SETTINGS->readEntry("/ScaleGrid", "1");
-    cbScaleGrid->setChecked(scaleGrid == "1");
-    QString minGridSpacing = RS_SETTINGS->readEntry("/MinGridSpacing", "10");
-    cbMinGridSpacing->setCurrentIndex(cbMinGridSpacing->findText(minGridSpacing));
+        // scale grid:
+        QString scaleGrid = LC_GET_STR("ScaleGrid", "1");
+        cbScaleGrid->setChecked(scaleGrid == "1");
+        QString minGridSpacing = LC_GET_STR("MinGridSpacing", "10");
+        cbMinGridSpacing->setCurrentIndex(cbMinGridSpacing->findText(minGridSpacing));
 
-    int checked = RS_SETTINGS->readNumEntry("/Antialiasing");
-    cb_antialiasing->setChecked(checked ? true : false);
+        bool checked = LC_GET_BOOL("Antialiasing");
+        cb_antialiasing->setChecked(checked);
 
-    checked = RS_SETTINGS->readNumEntry("/UnitlessGrid", 0);
-    cb_unitless_grid->setChecked(checked ? true : false);
-    checked = RS_SETTINGS->readNumEntry("/Autopanning");
-    cb_autopanning->setChecked(checked ? true : false);
+        checked = LC_GET_BOOL("UnitlessGrid");
+        cb_unitless_grid->setChecked(checked);
 
-    checked = RS_SETTINGS->readNumEntry("/ScrollBars");
-    scrollbars_check_box->setChecked(checked ? true : false);
+        checked = LC_GET_BOOL("Autopanning");
+        cb_autopanning->setChecked(checked);
 
-    // preview:
-    initComboBox(cbMaxPreview, RS_SETTINGS->readEntry("/MaxPreview", "100"));
+        checked = LC_GET_INT("ScrollBars");
+        scrollbars_check_box->setChecked(checked);
 
-    checked = RS_SETTINGS->readNumEntry("/ShowKeyboardShortcutsInTooltips", 1) == 1;
-    cbShowKeyboardShortcutsInToolTips->setChecked(checked ? true : false);
+        // preview:
+        initComboBox(cbMaxPreview, LC_GET_STR("MaxPreview", "100"));
 
+        checked = LC_GET_BOOL("ShowKeyboardShortcutsInTooltips", true);
+        cbShowKeyboardShortcutsInToolTips->setChecked(checked);
+    }
+    LC_GROUP_END();
 
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Colors");
+    {
+        initComboBox(cbBackgroundColor, LC_GET_STR("background", RS_Settings::background));
+        initComboBox(cbGridColor, LC_GET_STR("grid", RS_Settings::grid));
+        initComboBox(cbMetaGridColor, LC_GET_STR("meta_grid", RS_Settings::meta_grid));
+        initComboBox(cbSelectedColor, LC_GET_STR("select", RS_Settings::select));
+        initComboBox(cbHighlightedColor, LC_GET_STR("highlight", RS_Settings::highlight));
+        initComboBox(cbStartHandleColor, LC_GET_STR("start_handle", RS_Settings::start_handle));
+        initComboBox(cbHandleColor, LC_GET_STR("handle", RS_Settings::handle));
+        initComboBox(cbEndHandleColor, LC_GET_STR("end_handle", RS_Settings::end_handle));
+        initComboBox(cbRelativeZeroColor, LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
+        initComboBox(cbPreviewRefColor, LC_GET_STR("previewReferencesColor", RS_Settings::previewRefColor));
+        initComboBox(cbPreviewRefHighlightColor,
+                     LC_GET_STR("previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
+        initComboBox(cb_snap_color, LC_GET_STR("snap_indicator", RS_Settings::snap_indicator));
+    }
+    LC_GROUP_END();
 
-    RS_SETTINGS->beginGroup("Colors");
-    initComboBox(cbBackgroundColor, RS_SETTINGS->readEntry("/background", RS_Settings::background));
-    initComboBox(cbGridColor, RS_SETTINGS->readEntry("/grid", RS_Settings::grid));
-    initComboBox(cbMetaGridColor, RS_SETTINGS->readEntry("/meta_grid", RS_Settings::meta_grid));
-    initComboBox(cbSelectedColor, RS_SETTINGS->readEntry("/select", RS_Settings::select));
-    initComboBox(cbHighlightedColor, RS_SETTINGS->readEntry("/highlight", RS_Settings::highlight));
-    initComboBox(cbStartHandleColor, RS_SETTINGS->readEntry("/start_handle", RS_Settings::start_handle));
-    initComboBox(cbHandleColor, RS_SETTINGS->readEntry("/handle", RS_Settings::handle));
-    initComboBox(cbEndHandleColor, RS_SETTINGS->readEntry("/end_handle", RS_Settings::end_handle));
-    initComboBox(cbRelativeZeroColor, RS_SETTINGS->readEntry("/relativeZeroColor", RS_Settings::relativeZeroColor));
-    initComboBox(cbPreviewRefColor, RS_SETTINGS->readEntry("/previewReferencesColor", RS_Settings::previewRefColor));
-    initComboBox(cbPreviewRefHighlightColor,
-                 RS_SETTINGS->readEntry("/previewReferencesHighlightColor", RS_Settings::previewRefHighlightColor));
-    initComboBox(cb_snap_color, RS_SETTINGS->readEntry("/snap_indicator", RS_Settings::snap_indicator));
-    RS_SETTINGS->endGroup();
-
-    RS_SETTINGS->beginGroup("/Paths");
-
-    lePathTranslations->setText(RS_SETTINGS->readEntry("/Translations", ""));
-    lePathHatch->setText(RS_SETTINGS->readEntry("/Patterns", ""));
-    lePathFonts->setText(RS_SETTINGS->readEntry("/Fonts", ""));
-    lePathLibrary->setText(RS_SETTINGS->readEntry("/Library", "").trimmed());
-    leTemplate->setText(RS_SETTINGS->readEntry("/Template", "").trimmed());
-    variablefile_field->setText(RS_SETTINGS->readEntry("/VariableFile", "").trimmed());
-    leShortcutsMappingDirectory->setText(RS_SETTINGS->readEntry("/ShortcutsMappings", "").trimmed());
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Paths");
+    {
+        lePathTranslations->setText(LC_GET_STR("Translations", ""));
+        lePathHatch->setText(LC_GET_STR("Patterns", ""));
+        lePathFonts->setText(LC_GET_STR("Fonts", ""));
+        lePathLibrary->setText(LC_GET_STR("Library", "").trimmed());
+        leTemplate->setText(LC_GET_STR("Template", "").trimmed());
+        variablefile_field->setText(LC_GET_STR("VariableFile", "").trimmed());
+        leShortcutsMappingDirectory->setText(LC_GET_STR("ShortcutsMappings", "").trimmed());
+    }
+    LC_GROUP_END();
 
     // units:
     for (int i = RS2::None; i < RS2::LastUnit; i++) {
@@ -204,42 +208,52 @@ void QG_DlgOptionsGeneral::init() {
 
     QString def_unit = "Millimeter";
 
-    RS_SETTINGS->beginGroup("/Defaults");
+    LC_GROUP("Defaults");
+    {
 //    cbUnit->setCurrentIndex( cbUnit->findText(QObject::tr( RS_SETTINGS->readEntry("/Unit", def_unit) )) );
-    cbUnit->setCurrentIndex(cbUnit->findText(QObject::tr(RS_SETTINGS->readEntry("/Unit", def_unit).toUtf8().data())));
-    // Auto save timer
-    cbAutoSaveTime->setValue(RS_SETTINGS->readNumEntry("/AutoSaveTime", 5));
-    cbAutoBackup->setChecked(RS_SETTINGS->readNumEntry("/AutoBackupDocument", 1));
-    cbUseQtFileOpenDialog->setChecked(RS_SETTINGS->readNumEntry("/UseQtFileOpenDialog", 1));
-    cbWheelScrollInvertH->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0));
-    cbWheelScrollInvertV->setChecked(RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0));
-    cbInvertZoomDirection->setChecked(RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0));
-    cbAngleSnap->setCurrentIndex(RS_SETTINGS->readNumEntry("/AngleSnapStep", 3));
-
-    RS_SETTINGS->endGroup();
+        cbUnit->setCurrentIndex(cbUnit->findText(QObject::tr(LC_GET_STR("Unit", def_unit).toUtf8().data())));
+        // Auto save timer
+        cbAutoSaveTime->setValue(LC_GET_INT("AutoSaveTime", 5));
+        cbAutoBackup->setChecked(LC_GET_BOOL("AutoBackupDocument", true));
+        cbUseQtFileOpenDialog->setChecked(LC_GET_BOOL("UseQtFileOpenDialog", true));
+        cbWheelScrollInvertH->setChecked(LC_GET_BOOL("WheelScrollInvertH"));
+        cbWheelScrollInvertV->setChecked(LC_GET_BOOL("WheelScrollInvertV"));
+        cbInvertZoomDirection->setChecked(LC_GET_BOOL("InvertZoomDirection"));
+        cbAngleSnap->setCurrentIndex(LC_GET_INT("AngleSnapStep", 3));
+    }
+    LC_GROUP_END();
 
 //update entities to selected entities to the current active layer
-    RS_SETTINGS->beginGroup("/Modify");
-    auto toActive = RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0);
-    cbToActiveLayer->setChecked(toActive == 1);
-    RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked() ? 1 : 0);
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Modify");
+    {
+        auto toActive = LC_GET_BOOL("ModifyEntitiesToActiveLayer");
+        cbToActiveLayer->setChecked(toActive);
+        LC_SET("ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked());
+    }
+    LC_GROUP_END();
 
-    RS_SETTINGS->beginGroup("/CADPreferences");
-    cbAutoZoomDrawing->setChecked(RS_SETTINGS->readNumEntry("/AutoZoomDrawing"));
-    RS_SETTINGS->endGroup();
+    LC_GROUP("CADPreferences");
+    {
+        cbAutoZoomDrawing->setChecked(LC_GET_BOOL("AutoZoomDrawing"));
+    }
+    LC_GROUP_END();
 
-    RS_SETTINGS->beginGroup("Startup");
-    cbSplash->setChecked(RS_SETTINGS->readNumEntry("/ShowSplash", 1) == 1);
-    tab_mode_check_box->setChecked(RS_SETTINGS->readNumEntry("/TabMode", 0));
-    maximize_checkbox->setChecked(RS_SETTINGS->readNumEntry("/Maximize", 0));
-    left_sidebar_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableLeftSidebar", 1));
-    cad_toolbars_checkbox->setChecked(RS_SETTINGS->readNumEntry("/EnableCADToolbars", 1));
-    cbOpenLastFiles->setChecked(RS_SETTINGS->readNumEntry("/OpenLastOpenedFiles", 1));
-    RS_SETTINGS->endGroup();
+    LC_GROUP("Startup");
+    {
+        cbSplash->setChecked(LC_GET_BOOL("ShowSplash", true));
+        tab_mode_check_box->setChecked(LC_GET_BOOL("TabMode"));
+        maximize_checkbox->setChecked(LC_GET_BOOL("Maximize"));
+        left_sidebar_checkbox->setChecked(LC_GET_BOOL("EnableLeftSidebar", true));
+        cad_toolbars_checkbox->setChecked(LC_GET_BOOL("EnableCADToolbars", true));
+        cbOpenLastFiles->setChecked(LC_GET_BOOL("OpenLastOpenedFiles", true));
+    }
+    LC_GROUP_END();
 
-    cbEvaluateOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/EvaluateCommandOnSpace", false));
-    cbToggleFreeSnapOnSpace->setChecked(RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false));
+    LC_GROUP("Keyboard");
+    {
+        cbEvaluateOnSpace->setChecked(LC_GET_BOOL("EvaluateCommandOnSpace"));
+        cbToggleFreeSnapOnSpace->setChecked(LC_GET_BOOL("ToggleFreeSnapOnSpace"));
+    }
 
     initReferencePoints();
 
@@ -269,88 +283,103 @@ void QG_DlgOptionsGeneral::setTemplateFile() {
 void QG_DlgOptionsGeneral::ok(){
     if (RS_Settings::save_is_allowed){
         //RS_SYSTEM->loadTranslation(cbLanguage->currentText());
-        RS_SETTINGS->beginGroup("/Appearance");
-        RS_SETTINGS->writeEntry("/ScaleGrid", QString("%1").arg((int) cbScaleGrid->isChecked()));
-        RS_SETTINGS->writeEntry("/hideRelativeZero", QString("%1").arg((int) cbHideRelativeZero->isChecked()));
-        RS_SETTINGS->writeEntry("/VisualizeHovering", QString{cbVisualizeHovering->isChecked() ? "1" : "0"});
-        RS_SETTINGS->writeEntry("/VisualizeHoveringRefPoints", QString{cbShowRefPointsOnHovering->isChecked() ? "1" : "0"});
-        RS_SETTINGS->writeEntry("/VisualizePreviewRefPoints", QString{cbDisplayRefPoints->isChecked() ? "1" : "0"});
-        RS_SETTINGS->writeEntry("/MinGridSpacing", cbMinGridSpacing->currentText());
-        RS_SETTINGS->writeEntry("/MaxPreview", cbMaxPreview->currentText());
-        RS_SETTINGS->writeEntry("/Language", cbLanguage->itemData(cbLanguage->currentIndex()));
-        RS_SETTINGS->writeEntry("/LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()));
-        RS_SETTINGS->writeEntry("/indicator_lines_state", indicator_lines_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/indicator_lines_type", indicator_lines_combobox->currentText());
-        RS_SETTINGS->writeEntry("/indicator_shape_state", indicator_shape_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/indicator_shape_type", indicator_shape_combobox->currentText());
-        RS_SETTINGS->writeEntry("/cursor_hiding", cursor_hiding_checkbox->isChecked());
-        RS_SETTINGS->writeEntry("/showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
-        RS_SETTINGS->writeEntry("/UnitlessGrid", cb_unitless_grid->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/Antialiasing", cb_antialiasing->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/Autopanning", cb_autopanning->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/ScrollBars", scrollbars_check_box->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked() ? 1 : 0);
+        LC_GROUP("Appearance");
+        {
+            LC_SET("ScaleGrid", cbScaleGrid->isChecked());
+            LC_SET("hideRelativeZero", cbHideRelativeZero->isChecked());
+            LC_SET("VisualizeHovering", cbVisualizeHovering->isChecked());
+            LC_SET("VisualizeHoveringRefPoints", cbShowRefPointsOnHovering->isChecked());
+            LC_SET("VisualizePreviewRefPoints", cbDisplayRefPoints->isChecked());
+            LC_SET("MinGridSpacing", cbMinGridSpacing->currentText());
+            LC_SET("MaxPreview", cbMaxPreview->currentText());
+            LC_SET("Language", cbLanguage->itemData(cbLanguage->currentIndex()).toString());
+            LC_SET("LanguageCmd", cbLanguageCmd->itemData(cbLanguageCmd->currentIndex()).toString());
+            LC_SET("indicator_lines_state", indicator_lines_checkbox->isChecked());
+            LC_SET("indicator_lines_type", indicator_lines_combobox->currentText());
+            LC_SET("indicator_shape_state", indicator_shape_checkbox->isChecked());
+            LC_SET("indicator_shape_type", indicator_shape_combobox->currentText());
+            LC_SET("cursor_hiding", cursor_hiding_checkbox->isChecked());
+            LC_SET("showSnapOptionsInSnapToolbar", cbShowSnapOptionsInSnapBar->isChecked());
+            LC_SET("UnitlessGrid", cb_unitless_grid->isChecked());
+            LC_SET("Antialiasing", cb_antialiasing->isChecked());
+            LC_SET("Autopanning", cb_autopanning->isChecked());
+            LC_SET("ScrollBars", scrollbars_check_box->isChecked());
+            LC_SET("ShowKeyboardShortcutsInTooltips", cbShowKeyboardShortcutsInToolTips->isChecked());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Colors");
+        {
+            LC_SET("background", cbBackgroundColor->currentText());
+            LC_SET("grid", cbGridColor->currentText());
+            LC_SET("meta_grid", cbMetaGridColor->currentText());
+            LC_SET("select", cbSelectedColor->currentText());
+            LC_SET("highlight", cbHighlightedColor->currentText());
+            LC_SET("start_handle", cbStartHandleColor->currentText());
+            LC_SET("handle", cbHandleColor->currentText());
+            LC_SET("end_handle", cbEndHandleColor->currentText());
+            LC_SET("relativeZeroColor", cbRelativeZeroColor->currentText());
+            LC_SET("previewReferencesColor", cbPreviewRefColor->currentText());
+            LC_SET("previewReferencesHighlightColor", cbPreviewRefHighlightColor->currentText());
+            LC_SET("snap_indicator", cb_snap_color->currentText());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->beginGroup("Colors");
-        RS_SETTINGS->writeEntry("/background", cbBackgroundColor->currentText());
-        RS_SETTINGS->writeEntry("/grid", cbGridColor->currentText());
-        RS_SETTINGS->writeEntry("/meta_grid", cbMetaGridColor->currentText());
-        RS_SETTINGS->writeEntry("/select", cbSelectedColor->currentText());
-        RS_SETTINGS->writeEntry("/highlight", cbHighlightedColor->currentText());
-        RS_SETTINGS->writeEntry("/start_handle", cbStartHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/handle", cbHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/end_handle", cbEndHandleColor->currentText());
-        RS_SETTINGS->writeEntry("/relativeZeroColor", cbRelativeZeroColor->currentText());
-        RS_SETTINGS->writeEntry("/previewReferencesColor", cbPreviewRefColor->currentText());
-        RS_SETTINGS->writeEntry("/previewReferencesHighlightColor", cbPreviewRefHighlightColor->currentText());
-        RS_SETTINGS->writeEntry("/snap_indicator", cb_snap_color->currentText());
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Paths");
+        {
+            LC_SET("Translations", lePathTranslations->text());
+            LC_SET("Patterns", lePathHatch->text());
+            LC_SET("Fonts", lePathFonts->text());
+            LC_SET("Library", lePathLibrary->text());
+            LC_SET("Template", leTemplate->text());
+            LC_SET("VariableFile", variablefile_field->text());
+            LC_SET("ShortcutsMappings", leShortcutsMappingDirectory->text());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->beginGroup("/Paths");
-        RS_SETTINGS->writeEntry("/Translations", lePathTranslations->text());
-        RS_SETTINGS->writeEntry("/Patterns", lePathHatch->text());
-        RS_SETTINGS->writeEntry("/Fonts", lePathFonts->text());
-        RS_SETTINGS->writeEntry("/Library", lePathLibrary->text());
-        RS_SETTINGS->writeEntry("/Template", leTemplate->text());
-        RS_SETTINGS->writeEntry("/VariableFile", variablefile_field->text());
-        RS_SETTINGS->writeEntry("/ShortcutsMappings", leShortcutsMappingDirectory->text());
-        RS_SETTINGS->endGroup();
-
-        RS_SETTINGS->beginGroup("/Defaults");
-        RS_SETTINGS->writeEntry("/Unit",
-                                RS_Units::unitToString(RS_Units::stringToUnit(cbUnit->currentText()), false/*untr.*/));
-        RS_SETTINGS->writeEntry("/AutoSaveTime", cbAutoSaveTime->value());
-        RS_SETTINGS->writeEntry("/AutoBackupDocument", cbAutoBackup->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/WheelScrollInvertH", cbWheelScrollInvertH->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/WheelScrollInvertV", cbWheelScrollInvertV->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/InvertZoomDirection", cbInvertZoomDirection->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/AngleSnapStep", cbAngleSnap ->currentIndex());
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Defaults");
+        {
+            LC_SET("Unit", RS_Units::unitToString(RS_Units::stringToUnit(cbUnit->currentText()), false/*untr.*/));
+            LC_SET("AutoSaveTime", cbAutoSaveTime->value());
+            LC_SET("AutoBackupDocument", cbAutoBackup->isChecked());
+            LC_SET("UseQtFileOpenDialog", cbUseQtFileOpenDialog->isChecked());
+            LC_SET("WheelScrollInvertH", cbWheelScrollInvertH->isChecked());
+            LC_SET("WheelScrollInvertV", cbWheelScrollInvertV->isChecked());
+            LC_SET("InvertZoomDirection", cbInvertZoomDirection->isChecked());
+            LC_SET("AngleSnapStep", cbAngleSnap->currentIndex());
+        }
+        LC_GROUP_END();
 
         //update entities to selected entities to the current active layer
-        RS_SETTINGS->beginGroup("/Modify");
-        RS_SETTINGS->writeEntry("/ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked() ? 1 : 0);
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Modify");
+        {
+            LC_SET("ModifyEntitiesToActiveLayer", cbToActiveLayer->isChecked());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->beginGroup("/CADPreferences");
-        RS_SETTINGS->writeEntry("/AutoZoomDrawing", cbAutoZoomDrawing->isChecked() ? 1 : 0);
-        RS_SETTINGS->endGroup();
+        LC_GROUP("CADPreferences");
+        {
+            LC_SET("AutoZoomDrawing", cbAutoZoomDrawing->isChecked());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->beginGroup("Startup");
-        RS_SETTINGS->writeEntry("/ShowSplash", cbSplash->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/TabMode", tab_mode_check_box->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/Maximize", maximize_checkbox->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/EnableLeftSidebar", left_sidebar_checkbox->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/EnableCADToolbars", cad_toolbars_checkbox->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/OpenLastOpenedFiles", cbOpenLastFiles->isChecked() ? 1 : 0);
-        RS_SETTINGS->endGroup();
+        LC_GROUP("Startup");
+        {
+            LC_SET("ShowSplash", cbSplash->isChecked());
+            LC_SET("TabMode", tab_mode_check_box->isChecked());
+            LC_SET("Maximize", maximize_checkbox->isChecked());
+            LC_SET("EnableLeftSidebar", left_sidebar_checkbox->isChecked());
+            LC_SET("EnableCADToolbars", cad_toolbars_checkbox->isChecked());
+            LC_SET("OpenLastOpenedFiles", cbOpenLastFiles->isChecked());
+        }
+        LC_GROUP_END();
 
-        RS_SETTINGS->writeEntry("/Keyboard/EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked() ? 1 : 0);
-        RS_SETTINGS->writeEntry("/Keyboard/ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked() ? 1 : 0);
-
+        LC_GROUP("Keyboard");
+        {
+            LC_SET("EvaluateCommandOnSpace", cbEvaluateOnSpace->isChecked());
+            LC_SET("ToggleFreeSnapOnSpace", cbToggleFreeSnapOnSpace->isChecked());
+        }
+        LC_GROUP_END();
         saveReferencePoints();
     }
 
@@ -518,13 +547,14 @@ void QG_DlgOptionsGeneral::onAutoBackupChanged([[maybe_unused]] int state) {
 }
 
 void QG_DlgOptionsGeneral::initReferencePoints() {
-
-    RS_SETTINGS->beginGroup("/Appearance");
-    // Points drawing style:
-    int pdmode = RS_SETTINGS->readNumEntry("/RefPointType",
-                                           DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
-    QString pdsizeStr = RS_SETTINGS->readEntry("/RefPointSize", "2.0");
-    RS_SETTINGS->endGroup();
+    int pdmode;
+    QString pdsizeStr;
+    LC_GROUP_GUARD("Appearance");
+    {
+        // Points drawing style:
+        pdmode = LC_GET_INT("RefPointType",DXF_FORMAT_PDMode_EncloseSquare(DXF_FORMAT_PDMode_CentreDot));
+        pdsizeStr= LC_GET_STR("RefPointSize", "2.0");
+    }
 
 // Set button checked for the currently selected point style
     switch (pdmode) {
@@ -684,11 +714,12 @@ void QG_DlgOptionsGeneral::saveReferencePoints() {
 
     QString pdsizeStr = QString::number(pdsize);
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    // Points drawing style:
-    RS_SETTINGS->writeEntry("/RefPointType", pdmode);
-    RS_SETTINGS->writeEntry("/RefPointSize", pdsizeStr);
-    RS_SETTINGS->endGroup();
+    LC_GROUP_GUARD("Appearance");
+    {
+        // Points drawing style:
+        LC_SET("RefPointType", pdmode);
+        LC_SET("RefPointSize", pdsizeStr);
+    }
 
 }
 

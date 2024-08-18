@@ -65,9 +65,7 @@ int LC_ShortcutsManager::loadShortcuts(const QString &filename, QMap<QString, QK
 }
 
 void LC_ShortcutsManager::updateActionTooltips(const QMap<QString, QAction *> &actionsMap) const {
-    RS_SETTINGS->beginGroup("/Appearance");
-    bool showShortcutsInActionsTooltips = RS_SETTINGS->readNumEntry("/ShowKeyboardShortcutsInTooltips", 1) == 1;
-    RS_SETTINGS->endGroup();
+    bool showShortcutsInActionsTooltips = LC_GET_ONE_BOOL("Appearance","ShowKeyboardShortcutsInTooltips", true);
     updateActionShortcutTooltips(actionsMap, showShortcutsInActionsTooltips);
 }
 
@@ -165,13 +163,11 @@ QString LC_ShortcutsManager::strippedActionText(QString s) const{
 }
 
 QString LC_ShortcutsManager::getShortcutsMappingsFolder() const {
-    RS_SETTINGS->beginGroup("/Paths");
-    QString result = RS_SETTINGS->readEntry("/ShortcutsMappings", QDir::homePath());
-    RS_SETTINGS->endGroup();
+    QString result = LC_GET_ONE_STR("Paths","ShortcutsMappings", QDir::homePath());
     return result;
 }
 
 QString LC_ShortcutsManager::getDefaultShortcutsFileName() const {
-    return getShortcutsMappingsFolder() + "/default.lcs";
-
+    QString path =  getShortcutsMappingsFolder() + "/default.lcs";
+    return QDir::toNativeSeparators(path);
 }

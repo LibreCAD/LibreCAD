@@ -53,16 +53,12 @@ void QG_SnapDistOptions::languageChange(){
 }
 
 void QG_SnapDistOptions::saveSettings() {
-    RS_SETTINGS->beginGroup("/Snap");
-    RS_SETTINGS->writeEntry("/Distance", ui->leDist->text());
-    RS_SETTINGS->endGroup();
+    LC_SET_ONE("Snap", "Distance", ui->leDist->text());
 }
 
 void QG_SnapDistOptions::useSnapDistanceValue(double* d) {
     dist = d;
-    RS_SETTINGS->beginGroup("/Snap");
-    QString distance = RS_SETTINGS->readEntry("/Distance", "1.0");
-    RS_SETTINGS->endGroup();
+    QString distance = LC_GET_ONE_STR("Snap","Distance", "1.0");
 
     *dist= RS_Math::eval(distance, 1.0);
     QString value = QString::number(*dist, 'g', 6);

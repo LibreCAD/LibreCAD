@@ -131,7 +131,7 @@ bool QG_CommandWidget::eventFilter(QObject */*obj*/, QEvent *event)
         case Qt::Key_Escape:
             return false;
         case Qt::Key_Space:
-            if (!hasFocus() && RS_SETTINGS->readNumEntry("/Keyboard/ToggleFreeSnapOnSpace", false)) {
+            if (!hasFocus() && LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace", false)) {
                 // do not take focus here
                 spacePressed();
                 e->accept();

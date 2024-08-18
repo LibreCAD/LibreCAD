@@ -100,12 +100,12 @@ void RS_DimLinear::setAngle(double a) {
  */
 QString RS_DimLinear::getMeasuredLabel() {
     // direction of dimension line
-	RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
+    RS_Vector dirDim = RS_Vector::polar(100.0, edata.angle);
 
     // construction line for dimension line
-	RS_ConstructionLine dimLine(nullptr,
-								RS_ConstructionLineData(data.definitionPoint,
-														data.definitionPoint + dirDim));
+    RS_ConstructionLine dimLine(nullptr,
+                                RS_ConstructionLineData(data.definitionPoint,
+                                                        data.definitionPoint + dirDim));
 
     RS_Vector dimP1 = dimLine.getNearestPointOnEntity(edata.extensionPoint1);
     RS_Vector dimP2 = dimLine.getNearestPointOnEntity(edata.extensionPoint2);
@@ -113,30 +113,31 @@ QString RS_DimLinear::getMeasuredLabel() {
     // Definitive dimension line:
     double dist = dimP1.distanceTo(dimP2) * getGeneralFactor();
 
-    RS_SETTINGS->beginGroup("/Appearance");
-    if (RS_SETTINGS->readNumEntry("/UnitlessGrid", 1) != 1) dist = RS_Units::convert(dist);
-    RS_SETTINGS->endGroup();
+//    fixme - try to read settings once during action lifecycle
+    if (!LC_GET_ONE_BOOL("Appearance", "UnitlessGrid", true)){
+        dist = RS_Units::convert(dist);
+    }
 
-        RS_Graphic* graphic = getGraphic();
+    RS_Graphic* graphic = getGraphic();
 
     QString ret;
-        if (graphic) {
-            int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
-            int dimdec = getGraphicVariableInt("$DIMDEC", 4);
-            int dimzin = getGraphicVariableInt("$DIMZIN", 1);
-            RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
-            ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
-            if (format == RS2::Decimal)
-                ret = stripZerosLinear(ret, dimzin);
-            //verify if units are decimal and comma separator
-            if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
-                if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
-                    ret.replace(QChar('.'), QChar(','));
-            }
+    if (graphic) {
+        int dimlunit = getGraphicVariableInt("$DIMLUNIT", 2);
+        int dimdec = getGraphicVariableInt("$DIMDEC", 4);
+        int dimzin = getGraphicVariableInt("$DIMZIN", 1);
+        RS2::LinearFormat format = graphic->getLinearFormat(dimlunit);
+        ret = RS_Units::formatLinear(dist, getGraphicUnit(), format, dimdec);
+        if (format == RS2::Decimal)
+            ret = stripZerosLinear(ret, dimzin);
+        //verify if units are decimal and comma separator
+        if (format == RS2::Decimal || format == RS2::ArchitecturalMetric){
+            if (getGraphicVariableInt("$DIMDSEP", 0) == 44)
+                ret.replace(QChar('.'), QChar(','));
         }
-        else {
+    }
+    else {
         ret = QString("%1").arg(dist);
-        }
+    }
 
     return ret;
 }

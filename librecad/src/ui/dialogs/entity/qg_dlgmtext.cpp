@@ -143,25 +143,23 @@ void QG_DlgMText::reject() {
 
 void QG_DlgMText::destroy() {
     if (isNew && saveSettings) {
-        RS_SETTINGS->beginGroup("/Draw");
-        RS_SETTINGS->writeEntry("/TextHeight", leHeight->text());
-        RS_SETTINGS->writeEntry("/TextFont", cbFont->currentText());
-        RS_SETTINGS->writeEntry("/TextDefault", (int)cbDefault->isChecked());
-        RS_SETTINGS->writeEntry("/TextAlignment", getAlignment());
-        //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
-        //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
-        RS_SETTINGS->writeEntry("/TextLineSpacingFactor",
-                                leLineSpacingFactor->text());
-        RS_SETTINGS->writeEntry("/TextString", teText->toPlainText());
-        //RS_SETTINGS->writeEntry("/TextShape", getShape());
-        RS_SETTINGS->writeEntry("/TextAngle", leAngle->text());
-        //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
-        const QString leftToRight{rbLeftToRight->isChecked() ? "1" : "0"};
-        RS_SETTINGS->writeEntry("/TextLeftToRight", leftToRight);
-        RS_SETTINGS->endGroup();
+        LC_GROUP_GUARD("Draw");
+        {
+            LC_SET("TextHeight", leHeight->text());
+            LC_SET("TextFont", cbFont->currentText());
+            LC_SET("TextDefault", (int) cbDefault->isChecked());
+            LC_SET("TextAlignment", getAlignment());
+            //RS_SETTINGS->writeEntry("/TextLetterSpacing", leLetterSpacing->text());
+            //RS_SETTINGS->writeEntry("/TextWordSpacing", leWordSpacing->text());
+            LC_SET("TextLineSpacingFactor", leLineSpacingFactor->text());
+            LC_SET("TextString", teText->toPlainText());
+            //RS_SETTINGS->writeEntry("/TextShape", getShape());
+            LC_SET("TextAngle", leAngle->text());
+            //RS_SETTINGS->writeEntry("/TextRadius", leRadius->text());
+            LC_SET("TextLeftToRight", rbLeftToRight->isChecked());
+        }
     }
 }
-
 
 /**
  * Sets the text entity represented by this dialog.
@@ -186,34 +184,35 @@ void QG_DlgMText::setText(RS_MText& t, bool isNew) {
         wPen->hide();
         lLayer->hide();
         cbLayer->hide();
-        RS_SETTINGS->beginGroup("/Draw");
-        //default font depending on locale
-        //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
-        QByteArray iso = RS_System::localeToISO( QLocale::system().name().toLocal8Bit() );
+        LC_GROUP("Draw");
+        {
+            //default font depending on locale
+            //default font depending on locale (RLZ-> check this: QLocale::system().name() returns "fr_FR")
+            QByteArray iso = RS_System::localeToISO(QLocale::system().name().toLocal8Bit());
 //        QByteArray iso = RS_System::localeToISO( QTextCodec::locale() );
-        if (iso=="ISO8859-1") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "normallatin1");
-        } else if (iso=="ISO8859-2") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "normallatin2");
-        } else if (iso=="ISO8859-7") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "greekc");
-        } else if (iso=="KOI8-U" || iso=="KOI8-R") {
-             fon = RS_SETTINGS->readEntry("/TextFont", "cyrillic_ii");
-        } else {
-             fon = RS_SETTINGS->readEntry("/TextFont", "standard");
-                }
-        height = RS_SETTINGS->readEntry("/TextHeight", "1.0");
-        def = RS_SETTINGS->readEntry("/TextDefault", "1");
-        alignment = RS_SETTINGS->readEntry("/TextAlignment", "1");
-        //letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
-        //wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
-        lineSpacingFactor = RS_SETTINGS->readEntry("/TextLineSpacingFactor", "1");
-        str = RS_SETTINGS->readEntry("/TextString", "");
-        //shape = RS_SETTINGS->readEntry("/TextShape", "0");
-        angle = RS_SETTINGS->readEntry("/TextAngle", "0");
-        //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
-        // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
-        RS_SETTINGS->endGroup();
+            if (iso == "ISO8859-1") {
+                fon = LC_GET_STR("TextFont", "normallatin1");
+            } else if (iso == "ISO8859-2") {
+                fon = LC_GET_STR("TextFont", "normallatin2");
+            } else if (iso == "ISO8859-7") {
+                fon = LC_GET_STR("TextFont", "greekc");
+            } else if (iso == "KOI8-U" || iso == "KOI8-R") {
+                fon = LC_GET_STR("TextFont", "cyrillic_ii");
+            } else {
+                fon = LC_GET_STR("TextFont", "standard");
+            }
+            height = LC_GET_STR("TextHeight", "1.0");
+            def = LC_GET_STR("TextDefault", "1");
+            alignment = LC_GET_STR("TextAlignment", "1");
+            //letterSpacing = RS_SETTINGS->readEntry("/TextLetterSpacing", "0");
+            //wordSpacing = RS_SETTINGS->readEntry("/TextWordSpacing", "0");
+            lineSpacingFactor = LC_GET_STR("TextLineSpacingFactor", "1");
+            str = LC_GET_STR("TextString", "");
+            //shape = RS_SETTINGS->readEntry("/TextShape", "0");
+            angle = LC_GET_STR("TextAngle", "0");
+            //radius = RS_SETTINGS->readEntry("/TextRadius", "10");
+            // leftToRight = RS_SETTINGS->readNumEntry("/TextLeftToRight", 1);
+        }
     } else {
         fon = text->getStyle();
         setFont(fon);
@@ -478,4 +477,3 @@ bool QG_DlgMText::eventFilter(QObject *obj, QEvent *event) {
     }
     return false;
 }
-

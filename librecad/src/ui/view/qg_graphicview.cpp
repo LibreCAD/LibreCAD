@@ -816,9 +816,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         {
             if (e->modifiers()==Qt::ControlModifier)
             {
-                RS_SETTINGS->beginGroup("/Defaults");
-                bool invZoom = (RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1);
-                RS_SETTINGS->endGroup();
+                // fixme - move from events to settings
+                bool invZoom = LC_GET_ONE_BOOL("Defaults", "InvertZoomDirection");
 
                 // Hold ctrl to zoom. 1 % per pixel
                 double v = (invZoom) ? (numPixels.y() / zoomWheelDivisor) : (-numPixels.y() / zoomWheelDivisor);
@@ -836,22 +835,20 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
             }
             else
             {
-                RS_SETTINGS->beginGroup("/Defaults");
-                bool inv_h = (RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0) == 1);
-                bool inv_v = (RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0) == 1);
-                RS_SETTINGS->endGroup();
+                // fixme - move from events to settings
+                LC_GROUP_GUARD("Defaults");
+                bool inv_h = LC_GET_BOOL("WheelScrollInvertH");
+                bool inv_v = LC_GET_BOOL("WheelScrollInvertV");
 
                 int hDelta = (inv_h) ? -numPixels.x() : numPixels.x();
                 int vDelta = (inv_v) ? -numPixels.y() : numPixels.y();
 
                 // scroll by scrollbars: issue #479 (it has its own issues)
-                if (scrollbars)
-                {
+                if (scrollbars){
                     hScrollBar->setValue(hScrollBar->value() - hDelta);
                     vScrollBar->setValue(vScrollBar->value() - vDelta);
                 }
-                else
-                {
+                else {
                     setCurrentAction(new RS_ActionZoomScroll(hDelta, vDelta,
                                                              *container, *this));
                 }
@@ -888,8 +885,6 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
         direction= (angleDeltaX > 0) ? RS2::Left : RS2::Right;
     }
 
-
-
     // fixme - potentially, we can support mouses with two mouse wheels later if this will be reasonable.
     // fixme - however, it looks as a kind of overkill - using on single vertical mouse wheel for scroll seems to be fine//
 /*
@@ -917,11 +912,13 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
 
     if (scroll && scrollbars) {
 		//scroll by scrollbars: issue #479
-
-        RS_SETTINGS->beginGroup("/Defaults");
-        bool inv_h = (RS_SETTINGS->readNumEntry("/WheelScrollInvertH", 0) == 1);
-        bool inv_v = (RS_SETTINGS->readNumEntry("/WheelScrollInvertV", 0) == 1);
-        RS_SETTINGS->endGroup();
+        // fixme - move from events to settings
+        bool inv_h, inv_v;
+        LC_GROUP_GUARD("Defaults");
+        {
+            inv_h = LC_GET_BOOL("WheelScrollInvertH");
+            inv_v = LC_GET_BOOL("WheelScrollInvertV");
+        }
 
         int delta = 0;
 
@@ -938,8 +935,8 @@ void QG_GraphicView::wheelEvent(QWheelEvent *e) {
     }
     // zoom in / out:
     else if (e->modifiers()==0) {
-        auto groupGuard = RS_SETTINGS->beginGroupGuard("/Defaults");
-        bool invZoom = RS_SETTINGS->readNumEntry("/InvertZoomDirection", 0) == 1;
+        // fixme - remove settings to one time retrieval
+        bool invZoom = LC_GET_ONE_BOOL("Defaults","InvertZoomDirection");
 
         RS2::ZoomDirection zoomDirection = ((angleDeltaY > 0) != invZoom) ? RS2::In : RS2::Out;
 
@@ -1188,9 +1185,7 @@ void QG_GraphicView::getPixmapForView(std::unique_ptr<QPixmap>& pm)
 }
 
 void QG_GraphicView::layerActivated(RS_Layer *layer) {
-	RS_SETTINGS->beginGroup("/Modify");
-	bool toActivated= (RS_SETTINGS->readNumEntry("/ModifyEntitiesToActiveLayer", 0)==1);
-	RS_SETTINGS->endGroup();
+	bool toActivated= LC_GET_ONE_BOOL("Modify","ModifyEntitiesToActiveLayer");
 
 	if(!toActivated) return;
     RS_EntityContainer *container = this->getContainer();
@@ -1243,25 +1238,21 @@ void QG_GraphicView::layerActivated(RS_Layer *layer) {
  * usually that's very fast since we only paint the buffer we
  * have from the last call..
  */
-void QG_GraphicView::paintEvent(QPaintEvent *)
-{
-
+void QG_GraphicView::paintEvent(QPaintEvent *){
     // Re-Create or get the layering pixmaps
     getPixmapForView(PixmapLayer1);
     getPixmapForView(PixmapLayer2);
     getPixmapForView(PixmapLayer3);
 
     // Draw Layer 1
-    if (redrawMethod & RS2::RedrawGrid)
-    {
+    if (redrawMethod & RS2::RedrawGrid) {
         PixmapLayer1->fill(getBackground());
         RS_PainterQt painter1(PixmapLayer1.get());
         drawLayer1((RS_Painter*)&painter1);
         painter1.end();
     }
 
-    if (redrawMethod & RS2::RedrawDrawing)
-    {
+    if (redrawMethod & RS2::RedrawDrawing) {
         view_rect = LC_Rect(toGraph(0, 0),
                             toGraph(getWidth(), getHeight()));
         // DRaw layer 2
@@ -1453,10 +1444,11 @@ void QG_GraphicView::startAutoPanTimer(QMouseEvent *event)
 
 bool QG_GraphicView::isAutoPan(QMouseEvent *event) const
 {
-    if (event == nullptr)
+    if (event == nullptr) {
         return false;
-    RS_SETTINGS->beginGroupGuard("/Appearance");
-    const bool autopanEnabled = (bool) RS_SETTINGS->readNumEntry("/Autopanning", 0);
+    }
+
+    const bool autopanEnabled = LC_GET_ONE_BOOL("Appearance", "Autopanning");
 
     if (!autopanEnabled)
         return false;

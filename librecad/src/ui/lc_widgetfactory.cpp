@@ -50,8 +50,7 @@
 namespace {
     // only enable the penpallet by settings
     bool usePenPallet() {
-        auto guard= RS_SETTINGS->beginGroupGuard("/CustomToolbars");
-        return RS_SETTINGS->readNumEntry("/UsePenPallet", 1) == 1;
+        return LC_GET_ONE_BOOL("CustomToolbars", "UsePenPallet", true);
     }
 } // namespace
 

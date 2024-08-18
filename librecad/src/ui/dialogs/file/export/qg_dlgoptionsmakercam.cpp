@@ -1,26 +1,24 @@
-/****************************************************************************
-**
-** This file is part of the LibreCAD project, a 2D CAD program
-**
-** Copyright (C) 2014 Christian Luginbühl (dinkel@pimprecords.com)
-** Copyright (C) 2018 Andrey Yaromenok (ayaromenok@gmail.com)
-**
-**
-** This program is free software; you can redistribute it and/or modify
-** it under the terms of the GNU General Public License as published by
-** the Free Software Foundation; either version 2 of the License, or
-** (at your option) any later version.
-**
-** This program is distributed in the hope that it will be useful,
-** but WITHOUT ANY WARRANTY; without even the implied warranty of
-** MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-** GNU General Public License for more details.
-**
-** You should have received a copy of the GNU General Public License along
-** with this program; if not, write to the Free Software Foundation, Inc.,
-** 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301 USA.
-**
-**********************************************************************/
+/*******************************************************************************
+ *
+ This file is part of the LibreCAD project, a 2D CAD program
+
+ Copyright (C) 2024 LibreCAD.org
+ Copyright (C) 2024 sand1024
+
+ This program is free software; you can redistribute it and/or
+ modify it under the terms of the GNU General Public License
+ as published by the Free Software Foundation; either version 2
+ of the License, or (at your option) any later version.
+
+ This program is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ GNU General Public License for more details.
+
+ You should have received a copy of the GNU General Public License
+ along with this program; if not, write to the Free Software
+ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ ******************************************************************************/
 
 #include "qg_dlgoptionsmakercam.h"
 
@@ -60,33 +58,32 @@ void QG_DlgOptionsMakerCam::cancel() {
 
 void QG_DlgOptionsMakerCam::loadSettings() {
 
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
-
-    updateCheckbox(checkInvisibleLayers, "ExportInvisibleLayers", 0);
-    updateCheckbox(checkConstructionLayers, "ExportConstructionLayers", 0);
-    updateCheckbox(checkBlocksInline, "WriteBlocksInline", 1);
-    updateCheckbox(checkEllipsesToBeziers, "ConvertEllipsesToBeziers", 1);
-    updateCheckbox(checkImages, "ExportImages", 0);
-    updateCheckbox(checkDashDotLines, "BakeDashDotLines", 0);
-    updateCheckbox(checkPoint, "ExportPoints", 0);
-    updateDoubleSpinBox(dSpinBoxDefaultElementWidth, "DefaultElementWidth", 1.0);
-    updateDoubleSpinBox(dSpinBoxDashLinePatternLength, "DefaultDashLinePatternLength", 2.5);
+    LC_GROUP_GUARD("ExportMakerCam");
+    {
+        // fixme - review settings
+        updateCheckbox(checkInvisibleLayers, "ExportInvisibleLayers", 0);
+        updateCheckbox(checkConstructionLayers, "ExportConstructionLayers", 0);
+        updateCheckbox(checkBlocksInline, "WriteBlocksInline", 1);
+        updateCheckbox(checkEllipsesToBeziers, "ConvertEllipsesToBeziers", 1);
+        updateCheckbox(checkImages, "ExportImages", 0);
+        updateCheckbox(checkDashDotLines, "BakeDashDotLines", 0);
+        updateCheckbox(checkPoint, "ExportPoints", 0);
+        updateDoubleSpinBox(dSpinBoxDefaultElementWidth, "DefaultElementWidth", 1.0);
+        updateDoubleSpinBox(dSpinBoxDashLinePatternLength, "DefaultDashLinePatternLength", 2.5);
+    }
 }
 
 void QG_DlgOptionsMakerCam::updateCheckbox(QCheckBox* checkbox, QString name, int defaultValue) {
-
-    checkbox->setChecked(RS_SETTINGS->readNumEntry("/" + name, defaultValue) ? true : false);
+    checkbox->setChecked(LC_GET_INT("" + name, defaultValue) ? true : false);
 }
 
 void QG_DlgOptionsMakerCam::updateDoubleSpinBox(QDoubleSpinBox* dSpinBox, QString name, double defaultValue) {
-
-    dSpinBox->setValue(RS_SETTINGS->readEntry("/" + name, QString::number(defaultValue)).toDouble());
+    dSpinBox->setValue(LC_GET_STR("" + name, QString::number(defaultValue)).toDouble());
 }
 
 void QG_DlgOptionsMakerCam::saveSettings() {
-
-    auto groupGuard = RS_SETTINGS->beginGroupGuard("/ExportMakerCam");
-
+    // fixme - review settings
+    LC_GROUP_GUARD("ExportMakerCam");{
     saveBoolean("ExportInvisibleLayers", checkInvisibleLayers);
     saveBoolean("ExportConstructionLayers", checkConstructionLayers);
     saveBoolean("WriteBlocksInline", checkBlocksInline);
@@ -96,13 +93,13 @@ void QG_DlgOptionsMakerCam::saveSettings() {
     saveBoolean("ExportPoints", checkPoint);
     saveDouble("DefaultElementWidth", dSpinBoxDefaultElementWidth);
     saveDouble("DefaultDashLinePatternLength", dSpinBoxDashLinePatternLength);
+    }
 }
 
 void QG_DlgOptionsMakerCam::saveBoolean(QString name, QCheckBox* checkbox) {
-
-    RS_SETTINGS->writeEntry("/" + name, checkbox->isChecked() ? 1 : 0);
+    LC_SET("" + name, checkbox->isChecked());
 }
 
 void QG_DlgOptionsMakerCam::saveDouble(QString name, QDoubleSpinBox* dSpinBox) {
-    RS_SETTINGS->writeEntry("/" + name, dSpinBox->value());
+    LC_SET("" + name, dSpinBox->value());
 }
