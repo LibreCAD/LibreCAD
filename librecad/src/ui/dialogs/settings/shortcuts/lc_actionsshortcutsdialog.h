@@ -58,16 +58,18 @@ protected:
     LC_ShortcutsTreeModel *mappingTreeModel;
     LC_ActionGroupManager *actionGroupManager;
     LC_ShortcutTreeItem* currentItem = nullptr;
+    int selectedRow = -1;
+    int selectedParentRow = -1;
     QKeySequence editingKeySequence;
     QString keySequenceToEditString(const QKeySequence &sequence) const;
     void initTreeView();
     void createMappingModel();
     void onTreeDoubleClicked(QModelIndex index);
     void onTreeClicked(QModelIndex itemIndex);
-    void selectItem(LC_ShortcutTreeItem *item);
+    void selectItem(LC_ShortcutTreeItem *item, int selectedRow, int parentRow);
     void editItem(LC_ShortcutTreeItem *item);
     bool keySequenceIsValid(const QKeySequence &sequence) const;
-    void rebuildModel();
+    void rebuildModel(bool restoreSelection);
     void saveDialogPosition() const;
     void loadDialogPosition();
     static QFlags<QFileDialog::Option> getFileDialogOptions();
@@ -76,6 +78,8 @@ protected:
     void applyRecordedKeySequence();
     void reportSaveResult(int saveResult) const;
     void reportLoadResult(int loadResult) const;
+
+    void doSelectItem(const QModelIndex &itemIndex);
 };
 
 #endif // LC_ACTIONSSHORTCUTSDIALOG_H

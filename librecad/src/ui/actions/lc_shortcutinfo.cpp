@@ -72,14 +72,14 @@ int LC_ShortcutInfo::translateModifiers(Qt::KeyboardModifiers state,
 
 
 bool LC_ShortcutInfo::hasTheSameKey(QKeySequence sequenceToTest) {
-    collision = false;
+    bool result = false;
     if (key.isEmpty()){
         if (!defaultKey.isEmpty()){
-            collision = defaultKey == sequenceToTest;
+            result = defaultKey == sequenceToTest;
         }
     }
     else{
-        collision = key == sequenceToTest;
+        result = key == sequenceToTest;
     }
-    return collision;
+    return result;
 }

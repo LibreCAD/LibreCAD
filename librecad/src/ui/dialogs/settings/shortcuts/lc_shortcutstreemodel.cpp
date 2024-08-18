@@ -80,7 +80,10 @@ void LC_ShortcutsTreeModel::rebuildModel(LC_ActionGroupManager *pManager){
                     shortcuts[actionName] = shortcutInfo;
                 }
                 if (filterForConflicts) {
-                    if (!shortcutInfo->hasCollision()) {
+                    if (shortcutInfo->hasCollision()) {
+//                        LC_ERR << shortcutInfo->getName();
+                    }
+                    else{
                         continue;
                     }
                 }
@@ -266,24 +269,22 @@ void LC_ShortcutsTreeModel::resetAllToDefault() {
 
 bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
     bool hasCollisions = false;
+    for (auto currentShortcut: shortcuts){
+        currentShortcut->setCollision(false);
+    }
     if (shortcutInfo != nullptr) { // simple check, for this shortcut only
         QKeySequence keyToTest = shortcutInfo->getKey();
         for (auto *shortcut: shortcuts) {
             if (shortcut != shortcutInfo) {
                 if (shortcut->hasTheSameKey(keyToTest)) {
+                    shortcut->setCollision(true);
                     hasCollisions = true;
-                } else {
-                    shortcut->setCollision(false);
                 }
             }
         }
         shortcutInfo->setCollision(hasCollisions);
     }
     else { // checking for all possible duplicates
-        for (auto currentShortcut: shortcuts){
-            currentShortcut->setCollision(false);
-        }
-
         for (auto currentShortcut: shortcuts){
             if (currentShortcut->hasCollision()){
                 continue;
@@ -292,9 +293,10 @@ bool LC_ShortcutsTreeModel::checkForCollisions(LC_ShortcutInfo *shortcutInfo) {
             for (auto anotherShortcut: shortcuts){
                 if (anotherShortcut != currentShortcut){
                     if (anotherShortcut->hasTheSameKey(keyToTest)){
+                        hasCollisions = true;
                         currentShortcut->setCollision(true);
                         anotherShortcut->setCollision(true);
-                        hasCollisions = true;
+//                        LC_ERR << currentShortcut->getName() << " and " << anotherShortcut->getName();
                     }
                 }
             }

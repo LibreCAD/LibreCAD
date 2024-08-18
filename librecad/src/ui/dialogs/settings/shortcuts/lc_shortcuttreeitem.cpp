@@ -51,6 +51,14 @@ QString LC_ShortcutTreeItem::getName() {
     return text;
 }
 
+void LC_ShortcutTreeItem::clearShortcut(){
+    shortcutInfo->clear();
+}
+
+void LC_ShortcutTreeItem::resetShortcutToDefault(){
+    shortcutInfo->resetToDefault();
+}
+
 LC_ShortcutInfo* LC_ShortcutTreeItem::getShortcutInfo() {
     return shortcutInfo;
 }

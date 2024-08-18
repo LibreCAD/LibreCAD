@@ -51,6 +51,8 @@ public:
     void setMatched(bool val){matched = val;};
     bool isGroup() const;
     QString getShortcutViewString();
+    void clearShortcut();
+    void resetShortcutToDefault();
 protected:
     // parent item
     LC_ShortcutTreeItem *parentItem = nullptr;

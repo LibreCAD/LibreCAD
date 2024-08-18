@@ -49,7 +49,8 @@ public:
     void setKey(QKeySequence newKey);
     bool isModified(){return modified;}
     void clear();
-    bool hasCollision(){return collision;};    void setCollision(bool val){collision = val;};
+    bool hasCollision(){return collision;};
+    void setCollision(bool val){collision = val;};
     static int translateModifiers(Qt::KeyboardModifiers state,const QString &text);
     bool hasTheSameKey(QKeySequence sequenceToTest);
 protected:

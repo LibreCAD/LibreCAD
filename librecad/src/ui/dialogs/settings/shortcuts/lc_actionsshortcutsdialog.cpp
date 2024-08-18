@@ -29,11 +29,9 @@
 #include "lc_actionfactorybase.h"
 #include "lc_shortcutsstorage.h"
 
-// fixme - updating tooltips on options dialog
-// fixme - clear button behavior
-// fixme - shortcuts dispatching
-// fixme - complex sequences conflicts? How to ensure that conflicts will not occur if key sequences overlapped partially?
-// fixme - crash on double click on reset button
+// fixme - general application-wise shortcuts dispatching and keyboards support
+// todo - complex sequences conflicts? How to ensure that conflicts will not occur if key sequences overlapped partially?
+
 
 LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
     QWidget *parent, LC_ActionGroupManager *pManager)
@@ -110,6 +108,11 @@ void LC_ActionsShortcutsDialog::createMappingModel()  {
 }
 
 void LC_ActionsShortcutsDialog::onTreeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected){
+    const QModelIndexList &indexesList = selected.indexes();
+    if (!indexesList.isEmpty()){
+        const QModelIndex &firstIndex = indexesList.first();
+        doSelectItem(firstIndex);
+    }
 }
 
 void LC_ActionsShortcutsDialog::onResetCurrentItemClicked(){
@@ -118,19 +121,21 @@ void LC_ActionsShortcutsDialog::onResetCurrentItemClicked(){
            ui->leKeySequence->setText(currentItem->getShortcutViewString());
        }
        else {
-           currentItem->getShortcutInfo()->resetToDefault();
+           currentItem->resetShortcutToDefault();
            ui->leKeySequence->setText(currentItem->getShortcutViewString());
-           rebuildModel();
+           checkHasCollisions(currentItem->getShortcutInfo());
+           rebuildModel(true);
        }
    }
 };
 
 void LC_ActionsShortcutsDialog::onClearClicked() {
     if (currentItem != nullptr){
-        currentItem->getShortcutInfo()->clear();
+        currentItem->clearShortcut();
         ui->leKeySequence->setText("");
         editingKeySequence = QKeySequence();
-        rebuildModel();
+        checkHasCollisions(currentItem->getShortcutInfo());
+        rebuildModel(true);
     }
 }
 
@@ -148,7 +153,7 @@ void LC_ActionsShortcutsDialog::onImportClicked() {
     if (loadResult == LC_ShortcutsStorage::OK){
         // todo - what is more correct? replace or merge shortcuts? Provide UI for this?
         mappingTreeModel->applyShortcuts(shortcutsMap, false);
-        rebuildModel();
+        rebuildModel(false);
     }
     shortcutsMap.clear();
 }
@@ -215,13 +220,14 @@ void LC_ActionsShortcutsDialog::reportSaveResult(int saveResult) const {
 void LC_ActionsShortcutsDialog::onResetAllClicked() {
     mappingTreeModel->resetAllToDefault();
     mappingTreeModel->setFilterForConflicts(false);
-    rebuildModel();
+    rebuildModel(false);
 }
 
 void LC_ActionsShortcutsDialog::onTreeDoubleClicked(QModelIndex index ){
     if (index.isValid()){
         LC_ShortcutTreeItem *item = mappingTreeModel->getItemForIndex(index);
-        selectItem(item);
+        const QModelIndex &parentIndex = mappingTreeModel->parent(index);
+        selectItem(item, index.row(), parentIndex.row());
         if (item->isGroup()){ //  expand children if group
             ui->tvMappingsTree -> expandRecursively(index,1);
         } else {
@@ -233,16 +239,21 @@ void LC_ActionsShortcutsDialog::onTreeDoubleClicked(QModelIndex index ){
 
 void LC_ActionsShortcutsDialog::onTreeClicked(QModelIndex itemIndex ){
     if (itemIndex.isValid()) {
-        LC_ShortcutTreeItem *layerItem = mappingTreeModel->getItemForIndex(itemIndex);
-        selectItem(layerItem);
+        doSelectItem(itemIndex);
     }
+}
+
+void LC_ActionsShortcutsDialog::doSelectItem(const QModelIndex &itemIndex) {
+    LC_ShortcutTreeItem *layerItem = mappingTreeModel->getItemForIndex(itemIndex);
+    const QModelIndex &parentIndex = mappingTreeModel->parent(itemIndex);
+    selectItem(layerItem, itemIndex.row(), parentIndex.row());
 }
 
 void LC_ActionsShortcutsDialog::onFilteringMaskChanged(){
     QString mask = ui->leFilter->text();
     bool highlightMode = ui->cbMatchHighlight->isChecked();
     mappingTreeModel->setFilteringRegexp(mask, highlightMode);
-    rebuildModel();
+    rebuildModel(false);
 }
 
 void LC_ActionsShortcutsDialog::onRecordButtonToggled(bool on) {
@@ -264,10 +275,12 @@ QFileDialog::Options LC_ActionsShortcutsDialog::getFileDialogOptions() {
     return options;
 }
 
-void LC_ActionsShortcutsDialog::selectItem(LC_ShortcutTreeItem *item) {
-    if (item->isGroup()){
+void LC_ActionsShortcutsDialog::selectItem(LC_ShortcutTreeItem *item, int row, int parentRow) {
+    if (item == nullptr || item->isGroup()){
         ui->gbShortcut->setVisible(false);
         currentItem = nullptr;
+        selectedRow = -1;
+        selectedParentRow = -1;
     }
     else{
         ui->gbShortcut->setVisible(true);
@@ -278,6 +291,8 @@ void LC_ActionsShortcutsDialog::selectItem(LC_ShortcutTreeItem *item) {
         ui->lblActionIcon->setPixmap(item->getIcon().pixmap(height,height));
         ui->leKeySequence->setText(item->getShortcutViewString());
         currentItem = item;
+        selectedRow = row;
+        selectedParentRow = parentRow;
     }
 }
 
@@ -286,7 +301,7 @@ void LC_ActionsShortcutsDialog::editItem(LC_ShortcutTreeItem *item) {
     ui->btnRecord->setFocus();
 }
 
-void LC_ActionsShortcutsDialog::rebuildModel() {
+void LC_ActionsShortcutsDialog::rebuildModel(bool restoreSelection) {
     LC_ShortcutsTreeView* treeView = ui->tvMappingsTree;
     QScrollBar *verticalScrollBar = treeView->verticalScrollBar();
     int yPos = verticalScrollBar->value();
@@ -295,6 +310,21 @@ void LC_ActionsShortcutsDialog::rebuildModel() {
     mappingTreeModel->rebuildModel(actionGroupManager);
 //        treeView->restoreTreeExpansionState(treeExpansionState);
 //    }
+    if (restoreSelection){
+        QItemSelectionModel *selectionModel = treeView->selectionModel();
+        const QModelIndex &parentIndex = mappingTreeModel->index(selectedParentRow, 0, QModelIndex());
+        if (parentIndex.isValid()){
+            const QModelIndex &index = mappingTreeModel->index(selectedRow, 0, parentIndex);
+            selectionModel->select(index, QItemSelectionModel::Select | QItemSelectionModel::Rows);
+        }
+        else{
+            selectItem(nullptr, -1, -1);
+        }
+
+    }
+    else{
+        selectItem(nullptr, -1, -1);
+    }    
     treeView->expandAll();
     verticalScrollBar->setValue(yPos);
     treeView->viewport()->update();
@@ -306,6 +336,7 @@ void LC_ActionsShortcutsDialog::applyRecordedKeySequence(){
         shortcutInfo->setKey(editingKeySequence);
         if (shortcutInfo->isModified()){
             checkHasCollisions(shortcutInfo);
+            rebuildModel(true);
         }
     }
     editingKeySequence = QKeySequence();
@@ -338,13 +369,12 @@ bool LC_ActionsShortcutsDialog::checkHasCollisions(LC_ShortcutInfo *shortcutInfo
         mappingTreeModel->setFilterForConflicts(false);
         ui->lblMessage->setText("");
     }
-    rebuildModel();
     return hasCollisions;
 }
 
 void LC_ActionsShortcutsDialog::showConflicts(){
     mappingTreeModel->setFilterForConflicts(true);
-    rebuildModel();
+    rebuildModel(false);
 }
 
 bool LC_ActionsShortcutsDialog::keySequenceIsValid(const QKeySequence &sequence) const {
@@ -365,13 +395,18 @@ QString LC_ActionsShortcutsDialog::keySequenceToEditString(const QKeySequence &s
 }
 
 void LC_ActionsShortcutsDialog::accept() {
-    if (!checkHasCollisions(nullptr)){
+    if (checkHasCollisions(nullptr)) {
+        rebuildModel(false);
+    }
+    else{
         saveDialogPosition();
         if (mappingTreeModel->isModified()) {
             QMap<QString, LC_ShortcutInfo *> shortcuts = mappingTreeModel->getShortcuts();
             int saveResult = actionGroupManager->saveShortcuts(shortcuts);
-            // fixme - sand - might be ugly, as it is for default settings... think and review 
-            reportSaveResult(saveResult);
+            // might be ugly to show OK result, as it is for default settings... think and review later
+            if (saveResult != LC_ShortcutsStorage::OK) {
+                reportSaveResult(saveResult);
+            }
         }
         QDialog::accept();
     }
