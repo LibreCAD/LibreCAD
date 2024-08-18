@@ -38,7 +38,7 @@ class LC_ActionsShortcutsDialog : public QDialog{
     Q_OBJECT
 
 public:
-    explicit LC_ActionsShortcutsDialog(QWidget *parent, QMap<QString, QAction *> &map, LC_ActionGroupManager *pManager);
+    explicit LC_ActionsShortcutsDialog(QWidget *parent, LC_ActionGroupManager *pManager);
     ~LC_ActionsShortcutsDialog() override;
     void accept() override;
     void reject() override;
@@ -56,7 +56,6 @@ protected slots:
 protected:
     Ui::LC_ActionsShortcutsDialog *ui;
     LC_ShortcutsTreeModel *mappingTreeModel;
-    QMap<QString, QAction*> &actionsMap;
     LC_ActionGroupManager *actionGroupManager;
     LC_ShortcutTreeItem* currentItem = nullptr;
     QKeySequence editingKeySequence;
@@ -75,11 +74,8 @@ protected:
     static void showIOInfoDialog(bool forImport, bool ok, const QString &message);
     bool checkHasCollisions(LC_ShortcutInfo *shortcutInfo);
     void applyRecordedKeySequence();
-
     void reportSaveResult(int saveResult) const;
-
     void reportLoadResult(int loadResult) const;
-
 };
 
 #endif // LC_ACTIONSSHORTCUTSDIALOG_H

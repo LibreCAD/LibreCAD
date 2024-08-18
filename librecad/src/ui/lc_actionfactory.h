@@ -70,7 +70,7 @@ private:
     void createEditActionsUncheckable(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapActions(QMap<QString, QAction *> &map, QActionGroup *group);
     void createSnapExtraActions(QMap<QString, QAction *> &map, QActionGroup *group);
-    void setDefaultShortcuts(QMap<QString, QAction *> &map, const LC_ShortcutsManager& shortcutsManager);
+    void setDefaultShortcuts(QMap<QString, QAction *> &map, LC_ActionGroupManager* agm);
     void setupCreatedActions(QMap<QString, QAction *> &map);
     void markNotEditableActionsShortcuts(QMap<QString, QAction *> &map);
 

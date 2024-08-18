@@ -129,14 +129,14 @@ public slots:
     void slotTile();
     void slotTileHorizontal();
     void slotTileVertical();
-	void slotSetMaximized();
+    void slotSetMaximized();
 
-	void slotTabShapeRounded();
-	void slotTabShapeTriangular();
-	void slotTabPositionNorth();
-	void slotTabPositionSouth();
-	void slotTabPositionEast();
-	void slotTabPositionWest();
+    void slotTabShapeRounded();
+    void slotTabShapeTriangular();
+    void slotTabPositionNorth();
+    void slotTabPositionSouth();
+    void slotTabPositionEast();
+    void slotTabPositionWest();
 
     void slotToggleTab();
     void slotZoomAuto();
@@ -146,7 +146,7 @@ public slots:
     void slotEnableActions(bool enable);
 
     /** generates a new document for a graphic. */
-	QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
+    QC_MDIWindow* slotFileNew(RS_Document* doc=nullptr);
     /** generates a new document based in predefined template */
     void slotFileNewNew();
     /** generates a new document based in selected template */
@@ -165,7 +165,7 @@ public slots:
     /** saves a document under a different filename*/
     void slotFileSaveAs();
 	/** saves all open documents; return false == operation cancelled **/
-	bool slotFileSaveAll();
+    bool slotFileSaveAll();
     /** auto-save document */
     void slotFileAutoSave();
     /** exports the document as bitmap */
@@ -208,7 +208,7 @@ public slots:
      * update layer name when active layer changed
      */
     void slotUpdateActiveLayer();
-	void execPlug();
+    void execPlug();
 
     //void invokeLinkList();
 
@@ -260,15 +260,15 @@ public:
     /**
      * @return Pointer to MdiArea.
      */
-	QMdiArea const* getMdiArea() const;
-	QMdiArea* getMdiArea();
+    QMdiArea const* getMdiArea() const;
+    QMdiArea* getMdiArea();
 
     /**
 	 * @return Pointer to the currently active MDI Window or nullptr if no
      * MDI Window is active.
      */
-	const QC_MDIWindow* getMDIWindow() const;
-	QC_MDIWindow* getMDIWindow();
+    const QC_MDIWindow* getMDIWindow() const;
+    QC_MDIWindow* getMDIWindow();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -276,8 +276,8 @@ public:
      * @return Pointer to the graphic view of the currently active document
 	 * window or nullptr if no window is available.
      */
-	const RS_GraphicView* getGraphicView() const;
-	RS_GraphicView* getGraphicView();
+    const RS_GraphicView* getGraphicView() const;
+    RS_GraphicView* getGraphicView();
 
     /**
      * Implementation from RS_MainWindowInterface (and QS_ScripterHostInterface).
@@ -285,15 +285,15 @@ public:
      * @return Pointer to the graphic document of the currently active document
 	 * window or nullptr if no window is available.
      */
-	const RS_Document* getDocument() const;
-	RS_Document* getDocument();
+    const RS_Document* getDocument() const;
+    RS_Document* getDocument();
 
     /**
      * Creates a new document. Implementation from RS_MainWindowInterface.
      */
-	void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
+    void createNewDocument(const QString& fileName = QString(), RS_Document* doc=nullptr);
 
- QG_PenToolBar* getPenToolBar() {return penToolBar;};
+    QG_PenToolBar* getPenToolBar() {return penToolBar;};
 
     void redrawAll();
     void updateGrids();
@@ -343,8 +343,8 @@ public:
 protected:
     void closeEvent(QCloseEvent*) override;
     //! \{ accept drop files to open
-     void dropEvent(QDropEvent* e) override;
-     void dragEnterEvent(QDragEnterEvent * event) override;
+    void dropEvent(QDropEvent* e) override;
+    void dragEnterEvent(QDragEnterEvent * event) override;
     void changeEvent(QEvent* event) override;
     //! \}
 
@@ -375,7 +375,7 @@ private:
         LC_SimpleTests* m_pSimpleTest {nullptr};
     #endif
 
-    QMap<QString, QAction*> a_map;
+    QMap<QString, QAction*> a_map; // todo - move actionmap to ActionManager
     LC_ActionGroupManager* ag_manager {nullptr};
 
     /** Pointer to the application window (this). */

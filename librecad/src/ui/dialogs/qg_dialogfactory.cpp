@@ -1059,8 +1059,8 @@ int QG_DialogFactory::requestOptionsGeneralDialog() {
     return result;
 }
 
-void QG_DialogFactory::requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) {
-    LC_ActionsShortcutsDialog dlg(parent, map, pManager);
+void QG_DialogFactory::requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) {
+    LC_ActionsShortcutsDialog dlg(parent, pManager);
     dlg.exec();
 }
 

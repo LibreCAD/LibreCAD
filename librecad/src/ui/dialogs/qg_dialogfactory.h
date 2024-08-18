@@ -148,7 +148,7 @@ public:
     bool requestTextDialog(RS_Text* text) override;
     bool requestHatchDialog(RS_Hatch* hatch) override;
     int requestOptionsGeneralDialog() override;
-    void requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) override;
+    void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) override;
     void requestOptionsDrawingDialog(RS_Graphic& graphic) override;
     bool requestOptionsMakerCamDialog() override;
 

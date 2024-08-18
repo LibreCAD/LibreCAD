@@ -25,6 +25,7 @@
 #include "lc_actiongroupmanager.h"
 #include "qc_applicationwindow.h"
 #include "lc_actiongroup.h"
+#include "lc_shortcuts_manager.h"
 
 
 namespace Sorting
@@ -35,7 +36,7 @@ namespace Sorting
 }
 
 LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
-    : QObject(parent)
+    :QObject(parent)
     , block(new LC_ActionGroup(this,tr("Block"),tr("Block related operations"), nullptr))
     , circle(new LC_ActionGroup(this,tr("Circle"),tr("Circle drawing commands"),":/icons/circle.svg"))
     , curve(new LC_ActionGroup(this,tr("Curve"), tr("Curve drawing commands"), ":/icons/line_freehand.svg"))
@@ -70,6 +71,8 @@ LC_ActionGroupManager::LC_ActionGroupManager(QC_ApplicationWindow *parent)
     for (auto ag: toolGroups()) {
         connect( ag, &QActionGroup::triggered, parent, &QC_ApplicationWindow::relayAction);
     }
+
+    shortcutsManager = LC_ShortcutsManager();
 }
 
 void LC_ActionGroupManager::sortGroupsByName(QList<LC_ActionGroup *> &list) {
@@ -143,4 +146,37 @@ void LC_ActionGroupManager::toggleTools(bool state) {
             action->setDisabled(state);
         }
     }
+}
+
+void LC_ActionGroupManager::onOptionsChanged() {
+    shortcutsManager.updateActionTooltips(a_map);
+}
+
+void LC_ActionGroupManager::assignShortcutsToActions(QMap<QString, QAction *> &map, std::vector<LC_ShortcutInfo> &shortcutsList) {
+    shortcutsManager.assignShortcutsToActions(map, shortcutsList);
+}
+
+int LC_ActionGroupManager::loadShortcuts(const QMap<QString, QAction *> &map) {
+    a_map = map;
+    int loadResult = shortcutsManager.loadShortcuts(a_map);
+    return loadResult;
+}
+
+int LC_ActionGroupManager::loadShortcuts(const QString &fileName, QMap<QString, QKeySequence> *result) {
+    int loadResult = shortcutsManager.loadShortcuts(fileName, result);
+    return loadResult;
+}
+
+int LC_ActionGroupManager::saveShortcuts(const QList<LC_ShortcutInfo*> &shortcutsList, const QString &fileName) {
+    int saveResult = shortcutsManager.saveShortcuts(fileName, shortcutsList);
+    return saveResult;
+}
+
+int LC_ActionGroupManager::saveShortcuts(QMap<QString, LC_ShortcutInfo *> shortcutsMap) {
+    int saveResult = shortcutsManager.saveShortcuts(shortcutsMap, a_map);
+    return saveResult;
+}
+
+const QString LC_ActionGroupManager::getShortcutsMappingsFolder() {
+    return shortcutsManager.getShortcutsMappingsFolder();
 }

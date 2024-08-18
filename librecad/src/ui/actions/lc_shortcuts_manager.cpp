@@ -110,13 +110,11 @@ void LC_ShortcutsManager::updateActionShortcutTooltips(const QMap<QString, QActi
         for (auto [key, action]: map.asKeyValueRange()) {
             if (action != nullptr) {
                 if (!action->shortcut().isEmpty()) {
+                    // action uses a custom tooltip. Backup so that we can restore it later.
                     QString tooltip = action->property(PROPERTY_SHORTCUT_BACKUP).toString();
                     if (tooltip.isEmpty()) {
                         tooltip = action->toolTip();
-                        if (tooltip != strippedActionText(action->text())) {
-                            action->setProperty(PROPERTY_SHORTCUT_BACKUP,
-                                                action->toolTip());  // action uses a custom tooltip. Backup so that we can restore it later.
-                        }
+                        action->setProperty(PROPERTY_SHORTCUT_BACKUP, action->toolTip());
                     }
                     QColor shortcutTextColor = QApplication::palette().color(QPalette::ToolTipText);
                     QString shortCutTextColorName;

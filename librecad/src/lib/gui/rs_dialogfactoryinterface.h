@@ -360,7 +360,7 @@ public:
      */
     virtual int requestOptionsGeneralDialog() = 0;
 
-    virtual void requestKeyboardShortcutsDialog(QMap<QString, QAction *> map, LC_ActionGroupManager *pManager) = 0;
+    virtual void requestKeyboardShortcutsDialog(LC_ActionGroupManager *pManager) = 0;
 
     /**
      * This virtual method must be overwritten and must present

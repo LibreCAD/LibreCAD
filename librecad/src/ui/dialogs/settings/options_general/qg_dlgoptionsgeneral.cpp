@@ -386,7 +386,7 @@ void QG_DlgOptionsGeneral::ok(){
         LC_GROUP_END();
         saveReferencePoints();
     }
-
+    RS_SETTINGS->emitOptionsChanged();
     if (restartNeeded == true) {
         QMessageBox::warning(this, tr("Preferences"),
                              tr("Please restart the application to apply all changes."));

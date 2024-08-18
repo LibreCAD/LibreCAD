@@ -87,12 +87,9 @@ void LC_ActionFactory::fillActionContainer(QMap<QString, QAction*>& a_map, LC_Ac
 
 
     setupCreatedActions(a_map);
+    setDefaultShortcuts(a_map, agm);
 
-    const LC_ShortcutsManager &manager = LC_ShortcutsManager();
-
-    setDefaultShortcuts(a_map, manager);
-
-    int loadResult = manager.loadShortcuts(a_map);
+    agm->loadShortcuts(a_map);
 
     // todo - may we report errors somehow there?
 
@@ -501,7 +498,7 @@ void LC_ActionFactory::setupCreatedActions(QMap<QString, QAction *> &map) {
     connect(main_window, &QC_ApplicationWindow::windowsChanged, map["OptionsDrawing"], &QAction::setEnabled);
 }
 
-void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const LC_ShortcutsManager& shortcutsManager) {
+void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, LC_ActionGroupManager* agm) {
     QList<QKeySequence> commandLineShortcuts;
     commandLineShortcuts << QKeySequence(Qt::CTRL | Qt::Key_M) << QKeySequence(Qt::Key_Colon);
     if (LC_GET_BOOL("Keyboard/ToggleFreeSnapOnSpace"))
@@ -563,7 +560,7 @@ void LC_ActionFactory::setDefaultShortcuts(QMap<QString, QAction*>& map, const L
         shortcutsList.push_back({"FileSaveAll", shortcut});
     }
 
-    shortcutsManager.assignShortcutsToActions(map, shortcutsList);
+    agm->assignShortcutsToActions(map, shortcutsList);
 }
 
 void LC_ActionFactory::markNotEditableActionsShortcuts(QMap<QString, QAction *> &map) {

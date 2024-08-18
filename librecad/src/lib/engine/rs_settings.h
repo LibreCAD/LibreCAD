@@ -137,7 +137,6 @@ public:
 
 signals:
     void optionChanged(const QString& groupName, const QString &propertyName, QVariant oldValue, QVariant newValue);
-
     void optionsChanged();
 
 private:

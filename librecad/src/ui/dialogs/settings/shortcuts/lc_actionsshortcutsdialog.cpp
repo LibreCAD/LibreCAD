@@ -27,14 +27,18 @@
 #include "lc_actionsshortcutsdialog.h"
 #include "ui_lc_actionsshortcutsdialog.h"
 #include "lc_actionfactorybase.h"
-#include "lc_shortcuts_manager.h"
 #include "lc_shortcutsstorage.h"
 
+// fixme - updating tooltips on options dialog
+// fixme - clear button behavior
+// fixme - shortcuts dispatching
+// fixme - complex sequences conflicts? How to ensure that conflicts will not occur if key sequences overlapped partially?
+// fixme - crash on double click on reset button
+
 LC_ActionsShortcutsDialog::LC_ActionsShortcutsDialog(
-    QWidget *parent, QMap<QString, QAction *> &map, LC_ActionGroupManager *pManager)
+    QWidget *parent, LC_ActionGroupManager *pManager)
     : QDialog(parent)
     , ui(new Ui::LC_ActionsShortcutsDialog)
-    ,actionsMap(map)
     ,actionGroupManager(pManager){
     ui->setupUi(this);
     createMappingModel();
@@ -132,12 +136,12 @@ void LC_ActionsShortcutsDialog::onClearClicked() {
 
 void LC_ActionsShortcutsDialog::onImportClicked() {
     QFileDialog::Options options = getFileDialogOptions();
-    const LC_ShortcutsManager &manager = LC_ShortcutsManager();
-    const QString &dir = manager.getShortcutsMappingsFolder();
+
+    const QString &dir = actionGroupManager->getShortcutsMappingsFolder();
     QString fileName = QFileDialog::getOpenFileName(this, tr("Select file to save mapping"), dir, "LibreCAD Shortcuts (*.lcs)", nullptr,options);
 
     QMap<QString, QKeySequence> shortcutsMap;
-    int loadResult = manager.loadShortcuts(fileName, &shortcutsMap);
+    int loadResult = actionGroupManager->loadShortcuts(fileName, &shortcutsMap);
 
     reportLoadResult(loadResult);
 
@@ -151,13 +155,14 @@ void LC_ActionsShortcutsDialog::onImportClicked() {
 
 void LC_ActionsShortcutsDialog::onExportClicked() {
     QFileDialog::Options options = getFileDialogOptions();
-    const LC_ShortcutsManager &manager = LC_ShortcutsManager();
-    const QString &dir = manager.getShortcutsMappingsFolder();
+
+    const QString &dir = actionGroupManager->getShortcutsMappingsFolder();
     QString fileName = QFileDialog::getSaveFileName(this, tr("Select file to save mapping"), dir, "LibreCAD Shortcuts (*.lcs)", nullptr, options);
 
     QList<LC_ShortcutInfo*> shortcutsList;
     mappingTreeModel->collectShortcuts(shortcutsList);
-    int saveResult = manager.saveShortcuts(fileName, shortcutsList);
+
+    int saveResult = actionGroupManager->saveShortcuts(shortcutsList, fileName);
     shortcutsList.clear();
     reportSaveResult(saveResult);
 }
@@ -364,8 +369,7 @@ void LC_ActionsShortcutsDialog::accept() {
         saveDialogPosition();
         if (mappingTreeModel->isModified()) {
             QMap<QString, LC_ShortcutInfo *> shortcuts = mappingTreeModel->getShortcuts();
-            const LC_ShortcutsManager &shortcutsManager = LC_ShortcutsManager();
-            int saveResult = shortcutsManager.saveShortcuts(shortcuts, actionsMap);
+            int saveResult = actionGroupManager->saveShortcuts(shortcuts);
             // fixme - sand - might be ugly, as it is for default settings... think and review 
             reportSaveResult(saveResult);
         }

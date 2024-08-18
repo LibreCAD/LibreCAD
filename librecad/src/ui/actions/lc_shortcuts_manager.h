@@ -37,14 +37,13 @@ public:
     int loadShortcuts(const QString &filename, QMap<QString, QKeySequence> *result) const;
     int loadShortcuts(QMap<QString, QAction *> &map) const;
     QString getShortcutsMappingsFolder() const;
+    void updateActionTooltips(const QMap<QString, QAction *> &actionsMap) const;
 protected:
 
     static const char* PROPERTY_SHORTCUT_BACKUP;
-
     void applyShortcutsMapToActionsMap(QMap<QString, LC_ShortcutInfo *> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
     void updateActionShortcutTooltips(const QMap<QString, QAction *> &map, bool enable) const;
     QString strippedActionText(QString s) const;
-    void updateActionTooltips(const QMap<QString, QAction *> &actionsMap) const;
     QString getDefaultShortcutsFileName() const;
     void applyKeySequencesMapToActionsMap(QMap<QString, QKeySequence> &shortcuts, QMap<QString, QAction *> &actionsMap) const;
 };

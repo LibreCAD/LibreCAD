@@ -123,13 +123,15 @@
 /**
  * Constructor. Initializes the app.
  */
-QC_ApplicationWindow::QC_ApplicationWindow()
-    : ag_manager(new LC_ActionGroupManager(this))
-    , actionHandler(new QG_ActionHandler(this))
+QC_ApplicationWindow::QC_ApplicationWindow():
+     actionHandler(new QG_ActionHandler(this))
     , current_subwindow(nullptr)
     , pen_wiz(new LC_PenWizard(QObject::tr("Pen Wizard"), this))
 {
     RS_DEBUG->print("QC_ApplicationWindow::QC_ApplicationWindow");
+
+    ag_manager = new LC_ActionGroupManager(this);
+    connect(RS_SETTINGS, &RS_Settings::optionsChanged, ag_manager, &LC_ActionGroupManager::onOptionsChanged);
 
 #ifdef _WINDOWS
 	qt_ntfs_permission_lookup++; // turn checking on
@@ -2633,7 +2635,7 @@ void QC_ApplicationWindow::slotViewStatusBar(bool toggle) {
 }
 
 void QC_ApplicationWindow::slotOptionsShortcuts() {
-    RS_DIALOGFACTORY->requestKeyboardShortcutsDialog(a_map, ag_manager);
+    RS_DIALOGFACTORY->requestKeyboardShortcutsDialog(ag_manager);
 }
 
 /**
