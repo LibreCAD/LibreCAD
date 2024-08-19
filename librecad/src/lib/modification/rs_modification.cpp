@@ -300,13 +300,11 @@ void RS_Modification::revertDirection() {
 }
 
 void RS_Modification::revertDirection(const std::vector<RS_Entity*> &entitiesList){
-    std::vector<RS_Entity*> addList;
-    bool invalidContainer {true};
+    std::vector<RS_Entity*> addList;    
     for(auto e: entitiesList) {
             RS_Entity* ec = e->clone();
             ec->revertDirection();
-            addList.push_back(ec);
-            invalidContainer = false;
+            addList.push_back(ec);            
     }
 
     deleteOriginalAndAddNewEntities(addList, entitiesList,false, true);
@@ -1877,7 +1875,7 @@ RS_Polyline *RS_Modification::polylineTrim(
  * Moves all selected entities with the given data for the move
  * modification.
  */
-bool RS_Modification::move(RS_MoveData &data, bool previewOnly, RS_EntityContainer* previewContainer){
+bool RS_Modification::move(RS_MoveData &data, bool previewOnly, [[maybe_unused]]RS_EntityContainer* previewContainer){
     if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::move: no valid container");
@@ -1929,7 +1927,7 @@ bool RS_Modification::move(RS_MoveData& data, const std::vector<RS_Entity*> &ent
  *
  *@Author: Dongxu Li
  */
-bool RS_Modification::offset(const RS_OffsetData& data, bool previewOnly, RS_EntityContainer* previewContainer) {
+bool RS_Modification::offset(const RS_OffsetData& data, [[maybe_unused]]bool previewOnly,[[maybe_unused]] RS_EntityContainer* previewContainer) {
     if (container == nullptr) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::offset: no valid container");
@@ -2179,7 +2177,7 @@ bool RS_Modification::mirror(RS_MirrorData& data, const std::vector<RS_Entity*> 
 /**
  * Rotates entities around two centers with the given parameters.
  */
-bool RS_Modification::rotate2(RS_Rotate2Data& data, bool forPreviewOnly) {
+bool RS_Modification::rotate2(RS_Rotate2Data& data,[[maybe_unused]] bool forPreviewOnly) {
     if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::rotate2: no valid container");
@@ -2249,7 +2247,7 @@ void RS_Modification::deleteOriginalAndAddNewEntities(const std::vector<RS_Entit
 /**
  * Moves and rotates entities with the given parameters.
  */
-bool RS_Modification::moveRotate(RS_MoveRotateData& data, bool previewOnly, RS_EntityContainer* previewContainer) {
+bool RS_Modification::moveRotate(RS_MoveRotateData& data, bool previewOnly, [[maybe_unused]]RS_EntityContainer* previewContainer) {
     if (!container) {
         RS_DEBUG->print(RS_Debug::D_WARNING,
                         "RS_Modification::moveRotate: no valid container");

@@ -62,7 +62,7 @@ RS_ActionDrawEllipseAxis::RS_ActionDrawEllipseAxis(
 		RS_EntityContainer& container,
 		RS_GraphicView& graphicView,
 		bool isArc,
-  RS2::ActionType actionType)
+        [[maybe_unused]]RS2::ActionType actionType)
 	:LC_ActionDrawCircleBase("Draw ellipse with axis",
                                container, graphicView)
     ,pPoints(std::make_unique<Points>()){

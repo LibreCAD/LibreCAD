@@ -33,7 +33,7 @@ void LC_InfoDist2Options::doSaveSettings(){
     save("NearestIsOnEntity", ui->cbOnEntity->isChecked());
 }
 
-void LC_InfoDist2Options::onOnEntityClicked(bool value){
+void LC_InfoDist2Options::onOnEntityClicked([[maybe_unused]]bool value){
     if (action != nullptr){
         setOnEntitySnapToActionAndView(ui->cbOnEntity->isChecked());
     }

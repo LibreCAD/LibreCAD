@@ -215,7 +215,7 @@ void LC_ActionDrawRectangle1Point::setBaseAngleFree(bool val) {
     }
 }
 
-void LC_ActionDrawRectangle1Point::doBack(QMouseEvent *pEvent, int status) {
+void LC_ActionDrawRectangle1Point::doBack([[maybe_unused]]QMouseEvent *e, int status) {
     switch (status){
         case SetAngleFree: {
             setStatus(SetPoint1);

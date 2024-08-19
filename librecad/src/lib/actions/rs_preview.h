@@ -53,7 +53,7 @@ public:
     void addReferenceEntitiesToContainer(RS_EntityContainer* container);
     void clear() override;
 private:
-    int maxEntities = 0;
+    unsigned int maxEntities = 0;
     QList<RS_Entity*> referenceEntities;
 };
 #endif

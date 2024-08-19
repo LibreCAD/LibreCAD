@@ -200,7 +200,7 @@ bool RS_ActionDrawCircleTan2::preparePreview(){
 }
 
 RS_Entity *RS_ActionDrawCircleTan2::catchCircle(QMouseEvent *e){
-    RS_Entity *en = catchModifiableEntity(e, enTypeList);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
+    RS_Entity *en = catchModifiableEntity(e, enTypeList);  // fixme - sand - check whether snap is used for entity selection?  Ensure free snap?
     if (!en) return nullptr;
     if (!en->isVisible()) return nullptr;
     for (int i = 0; i < getStatus(); i++) {
@@ -289,7 +289,7 @@ double RS_ActionDrawCircleTan2::getRadius() const{
     return pPoints->cData.radius;
 }
 
-// fixme - move to base class or util - and reuse among other actions
+// fixme - sand -  move to base class or util - and reuse among other actions
 RS_Vector RS_ActionDrawCircleTan2::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle){
     bool calcTangentFromOriginalCircle = (creatingCircleCenter.distanceTo(circle->getCenter()) < circle->getRadius()) &&
                                          (creatingCircleRadius < circle->getRadius());

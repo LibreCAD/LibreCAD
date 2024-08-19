@@ -8,7 +8,7 @@
 // todo - previous versions. I'm not sure that this is popular command, yet still...
 // fixme - think and decide which way of setting secondary angle is more convenient...
 
-LC_Rotate2Options::LC_Rotate2Options(QWidget *parent)
+LC_Rotate2Options::LC_Rotate2Options()
     : LC_ActionOptionsWidgetBase(RS2::ActionModifyRotate2, "/Modify", "/Rotate2")
     , ui(new Ui::LC_Rotate2Options)
 {

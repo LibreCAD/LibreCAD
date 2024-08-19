@@ -26,8 +26,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 LC_Rectangle2PointsOptions::LC_Rectangle2PointsOptions() :
     LC_ActionOptionsWidgetBase(RS2::ActionDrawRectangle2Points, "/Draw", "/Rectangle2Points"),
-    action(nullptr),
-    ui(new Ui::LC_Rectangle2PointsOptions){
+    ui(new Ui::LC_Rectangle2PointsOptions),
+    action(nullptr){
     ui->setupUi(this);
 
     connect(ui->leRadius, &QLineEdit::editingFinished, this, &LC_Rectangle2PointsOptions::onRadiusEditingFinished);

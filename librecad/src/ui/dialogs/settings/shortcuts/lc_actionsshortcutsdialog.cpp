@@ -107,7 +107,7 @@ void LC_ActionsShortcutsDialog::createMappingModel()  {
     mappingTreeModel->rebuildModel(actionGroupManager);
 }
 
-void LC_ActionsShortcutsDialog::onTreeViewSelectionChanged(const QItemSelection &selected, const QItemSelection &deselected){
+void LC_ActionsShortcutsDialog::onTreeViewSelectionChanged(const QItemSelection &selected, [[maybe_unused]] const QItemSelection &deselected){
     const QModelIndexList &indexesList = selected.indexes();
     if (!indexesList.isEmpty()){
         const QModelIndex &firstIndex = indexesList.first();
@@ -151,7 +151,7 @@ void LC_ActionsShortcutsDialog::onImportClicked() {
     reportLoadResult(loadResult);
 
     if (loadResult == LC_ShortcutsStorage::OK){
-        // todo - what is more correct? replace or merge shortcuts? Provide UI for this?
+        // todo - what is more convenient? replace completely by imported or merge existing and imported shortcuts? Provide confirmation policy dialog for this?
         mappingTreeModel->applyShortcuts(shortcutsMap, false);
         rebuildModel(false);
     }
@@ -296,7 +296,7 @@ void LC_ActionsShortcutsDialog::selectItem(LC_ShortcutTreeItem *item, int row, i
     }
 }
 
-void LC_ActionsShortcutsDialog::editItem(LC_ShortcutTreeItem *item) {
+void LC_ActionsShortcutsDialog::editItem([[maybe_unused]]LC_ShortcutTreeItem *item) {
     ui->btnRecord->setChecked(true);
     ui->btnRecord->setFocus();
 }

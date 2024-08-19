@@ -2643,45 +2643,47 @@ void QC_ApplicationWindow::slotOptionsShortcuts() {
  */
 void QC_ApplicationWindow::slotOptionsGeneral() {
     int dialogResult = RS_DIALOGFACTORY->requestOptionsGeneralDialog();
-//    fixme - sand - emit signal that options changed
 
-    LC_GROUP("Colors");
-    QColor background(LC_GET_STR("background", RS_Settings::background));
-    QColor gridColor(LC_GET_STR("grid", RS_Settings::grid));
-    QColor metaGridColor(LC_GET_STR("meta_grid", RS_Settings::meta_grid));
-    QColor selectedColor(LC_GET_STR("select", RS_Settings::select));
-    QColor highlightedColor(LC_GET_STR("highlight", RS_Settings::highlight));
-    QColor startHandleColor(LC_GET_STR("start_handle", RS_Settings::start_handle));
-    QColor handleColor(LC_GET_STR("handle", RS_Settings::handle));
-    QColor endHandleColor(LC_GET_STR("end_handle", RS_Settings::end_handle));
-    QColor relativeZeroColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
-    LC_GROUP_END();
+    if (dialogResult == QDialog::Accepted){
+        LC_GROUP("Colors");
+        QColor background(LC_GET_STR("background", RS_Settings::background));
+        QColor gridColor(LC_GET_STR("grid", RS_Settings::grid));
+        QColor metaGridColor(LC_GET_STR("meta_grid", RS_Settings::meta_grid));
+        QColor selectedColor(LC_GET_STR("select", RS_Settings::select));
+        QColor highlightedColor(LC_GET_STR("highlight", RS_Settings::highlight));
+        QColor startHandleColor(LC_GET_STR("start_handle", RS_Settings::start_handle));
+        QColor handleColor(LC_GET_STR("handle", RS_Settings::handle));
+        QColor endHandleColor(LC_GET_STR("end_handle", RS_Settings::end_handle));
+        QColor relativeZeroColor(LC_GET_STR("relativeZeroColor", RS_Settings::relativeZeroColor));
+        LC_GROUP_END();
 
-    LC_GROUP("Appearance");
-    bool antialiasing = LC_GET_BOOL("Antialiasing");
-    bool hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
-    LC_GROUP_END();
+        LC_GROUP("Appearance");
+        bool antialiasing = LC_GET_BOOL("Antialiasing");
+        bool hideRelativeZero = LC_GET_BOOL("hideRelativeZero");
+        LC_GROUP_END();
 
-    emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
+        emit signalEnableRelativeZeroSnaps(!hideRelativeZero);
 
-    QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
-    for (int i = 0; i < windows.size(); ++i) {
-        QC_MDIWindow *m = qobject_cast<QC_MDIWindow *>(windows.at(i));
-        if (m) {
-            QG_GraphicView *gv = m->getGraphicView();
-            if (gv) {
-                gv->setBackground(background);
-                gv->setGridColor(gridColor);
-                gv->setMetaGridColor(metaGridColor);
-                gv->setSelectedColor(selectedColor);
-                gv->setHighlightedColor(highlightedColor);
-                gv->setStartHandleColor(startHandleColor);
-                gv->setHandleColor(handleColor);
-                gv->setEndHandleColor(endHandleColor);
-                gv->setRelativeZeroColor(relativeZeroColor);
-                gv->setRelativeZeroHiddenState(hideRelativeZero);
-                gv->setAntialiasing(antialiasing);
-                gv->redraw(RS2::RedrawGrid);
+
+        QList<QMdiSubWindow *> windows = mdiAreaCAD->subWindowList();
+        for (int i = 0; i < windows.size(); ++i) {
+            QC_MDIWindow *m = qobject_cast<QC_MDIWindow *>(windows.at(i));
+            if (m) {
+                QG_GraphicView *gv = m->getGraphicView();
+                if (gv) {
+                    gv->setBackground(background);
+                    gv->setGridColor(gridColor);
+                    gv->setMetaGridColor(metaGridColor);
+                    gv->setSelectedColor(selectedColor);
+                    gv->setHighlightedColor(highlightedColor);
+                    gv->setStartHandleColor(startHandleColor);
+                    gv->setHandleColor(handleColor);
+                    gv->setEndHandleColor(endHandleColor);
+                    gv->setRelativeZeroColor(relativeZeroColor);
+                    gv->setRelativeZeroHiddenState(hideRelativeZero);
+                    gv->setAntialiasing(antialiasing);
+                    gv->redraw(RS2::RedrawGrid);
+                }
             }
         }
     }

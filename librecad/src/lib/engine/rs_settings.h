@@ -33,8 +33,8 @@
 
 #include <QString>
 #include <QObject>
+#include <QVariant>
 
-class QVariant;
 class QSettings;
 
 // ---------------------------------------------------------------------------
@@ -123,8 +123,7 @@ public:
     int readInt(const QString& key, int def= 0);
     int readIntSingle(const QString &group, const QString &key, int def);
     QString readStrSingle(const QString &group, const QString &key, const QString &def);
-    QString readStr(const QString& key,
-                    const QString& def = QString());
+    QString readStr(const QString& key,const QString& def = QString());
     bool readBool(const QString &key, bool defaultValue = false);
     bool readBoolSingle(const QString& group, const QString &key, bool defaultValue = false);
 

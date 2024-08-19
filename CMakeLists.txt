@@ -415,8 +415,8 @@ set(SOURCES
 		librecad/src/actions/drawing/info/rs_actioninfodist.h
 		librecad/src/actions/drawing/info/rs_actioninfodist2.cpp
 		librecad/src/actions/drawing/info/rs_actioninfodist2.h
-		librecad/src/actions/not_used/rs_actioninfoinside.cpp
-		librecad/src/actions/not_used/rs_actioninfoinside.h
+        librecad/src/actions/drawing/info/rs_actioninfoinside.cpp
+        librecad/src/actions/drawing/info/rs_actioninfoinside.h
 		librecad/src/actions/drawing/info/rs_actioninfototallength.cpp
 		librecad/src/actions/drawing/info/rs_actioninfototallength.h
         librecad/src/actions/dock_widgets/layer/rs_actionlayersadd.cpp

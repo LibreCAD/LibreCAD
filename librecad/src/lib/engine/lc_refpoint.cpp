@@ -5,7 +5,7 @@
 LC_RefPoint::LC_RefPoint(RS_EntityContainer* parent,
                         const RS_Vector & d,
                         double size, int mode)
-    :RS_Point(parent, RS_PointData(d)), pdsize{size}, pdmode{mode} {
+    :RS_Point(parent, RS_PointData(d)), pdmode{mode},pdsize{size}  {
     calculateBorders ();
 }
 

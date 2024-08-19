@@ -28,7 +28,6 @@
 #define RS_ACTIONSELECTSINGLE_H
 
 #include <QList>
-#include "rs_previewactioninterface.h"
 #include "rs_actionselectbase.h"
 
 /**

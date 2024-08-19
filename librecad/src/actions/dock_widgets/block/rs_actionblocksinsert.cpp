@@ -146,7 +146,7 @@ void RS_ActionBlocksInsert::onMouseRightButtonRelease(int status, [[maybe_unused
     initPrevious(status);
 }
 
-void RS_ActionBlocksInsert::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
+void RS_ActionBlocksInsert::onCoordinateEvent([[maybe_unused]]int status, [[maybe_unused]] bool isZero, const RS_Vector &pos) {
     data->insertionPoint = pos;
     trigger();
 }

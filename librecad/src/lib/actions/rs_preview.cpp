@@ -144,7 +144,7 @@ void RS_Preview::addCloneOf(RS_Entity* entity) {
 void RS_Preview::addAllFrom(RS_EntityContainer& container) {
     unsigned int c=0;
     for(auto e: container){
-        if (c<maxEntities) {
+        if (c < maxEntities) {
             RS_Entity* clone = e->clone();
             clone->setSelected(false);
             clone->reparent(this);

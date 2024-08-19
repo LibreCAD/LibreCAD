@@ -66,7 +66,7 @@ void RS_ActionDrawArc3P::reset() {
 }
 
 void RS_ActionDrawArc3P::init(int status) {
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
     //reset();
 }
 
@@ -204,7 +204,7 @@ bool RS_ActionDrawArc3P::doProcessCommand([[maybe_unused]]int status, const QStr
     if (checkCommand("center", c, rtti())) {
         accept = true;
         finish(false);
-        // fixme - review why this action is called
+        // fixme - review why this action is called ther
         graphicView->setCurrentAction(new RS_ActionDrawArc(*container, *graphicView));
     }
     return accept;

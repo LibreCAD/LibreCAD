@@ -176,7 +176,7 @@ void LC_ActionInfo3PointsAngle::onMouseLeftButtonRelease(int status, QMouseEvent
     fireCoordinateEvent(snapped);
 }
 
-void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionInfo3PointsAngle::onMouseRightButtonRelease([[maybe_unused]]int status, [[maybe_unused]]QMouseEvent *e) {
     setStatus(getStatus() - 1);
 }
 

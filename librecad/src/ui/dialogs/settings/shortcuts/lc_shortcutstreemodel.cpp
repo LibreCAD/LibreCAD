@@ -108,7 +108,7 @@ Qt::ItemFlags LC_ShortcutsTreeModel::flags(const QModelIndex &index) const {
     return QAbstractItemModel::flags(index);
 }
 
-int LC_ShortcutsTreeModel::columnCount(const QModelIndex &parent) const {
+int LC_ShortcutsTreeModel::columnCount([[maybe_unused]]const QModelIndex &parent) const {
     return LAST;
 }
 

@@ -51,9 +51,6 @@ struct RS_ActionDrawCircleTan3::Points {
 		std::vector<std::shared_ptr<RS_CircleData> > candidates;
 		RS_VectorSolutions centers;
 };
-
-
-
 /**
  * Constructor.
  *
@@ -93,7 +90,7 @@ void RS_ActionDrawCircleTan3::trigger(){
 
     RS_PreviewActionInterface::trigger();
 
-    RS_Circle *circle = new RS_Circle(container, *pPoints->cData);
+    auto circle = new RS_Circle(container, *pPoints->cData);
 
     container->addEntity(circle);
 

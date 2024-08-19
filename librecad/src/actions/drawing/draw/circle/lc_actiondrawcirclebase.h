@@ -34,7 +34,7 @@ public:
     void init(int status) override;
 protected:
     virtual void reset();
-    bool moveRelPointAtCenterAfterTrigger = true; // fixme - move to options?
+    bool moveRelPointAtCenterAfterTrigger = true; // todo - move to options?
     void previewEllipseReferencePoints(const RS_Ellipse *ellipse, bool drawAxises = false, RS_Vector mouse=RS_Vector(false));
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

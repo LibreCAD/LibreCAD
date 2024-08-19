@@ -44,7 +44,7 @@
 #include "rs_actioninterface.h"
 #include "qg_arcoptions.h"
 
-// fixme - add proper options for the action
+// fixme - sand -  expand actions options widget to support all possible settings (like angle, radius, start angle, end/total angle, chordlen)
 RS_ActionDrawArc::RS_ActionDrawArc(
     RS_EntityContainer &container,
     RS_GraphicView &graphicView)

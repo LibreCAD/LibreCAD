@@ -107,7 +107,7 @@ void RS_ActionDrawCircleInscribe::mouseMoveEvent(QMouseEvent *e){
     for(RS_AtomicEntity* const pc: pPoints->lines) { // highlight already selected
         highlightSelected(pc);
     }
-    auto en = catchModifiableEntity(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap
+    auto en = catchModifiableEntity(e, RS2::EntityLine);  // fixme - check whether snap is used for entity selection?  Ensure free snap?
 
     if (en != nullptr){
         auto *line = dynamic_cast<RS_Line *>(en);

@@ -46,8 +46,8 @@ struct LC_ActionDrawLinePolygonCenTan::Points {
     RS_Vector corner;
 };
 
-// fixme - sand - support creation of polygone as polyline
-// fixme - sand - support of rounded corners?
+// TODO - sand - support creation of polygone as polyline
+// TODO - sand - support of rounded corners?
 
 LC_ActionDrawLinePolygonCenTan::LC_ActionDrawLinePolygonCenTan(
     RS_EntityContainer& container,

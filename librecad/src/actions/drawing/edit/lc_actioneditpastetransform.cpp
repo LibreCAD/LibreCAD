@@ -111,12 +111,12 @@ void LC_ActionEditPasteTransform::mouseMoveEvent(QMouseEvent *e) {
         deleteSnapper();
 }
 
-void LC_ActionEditPasteTransform::onMouseLeftButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseLeftButtonRelease([[maybe_unused]]int status, QMouseEvent *e) {
     invokedWithControl = isControl(e);
     fireCoordinateEventForSnap(e);
 }
 
-void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status, QMouseEvent *e) {
+void LC_ActionEditPasteTransform::onMouseRightButtonRelease(int status,[[maybe_unused]] QMouseEvent *e) {
     initPrevious(status);
 }
 
@@ -125,7 +125,7 @@ void LC_ActionEditPasteTransform::onCoordinateEvent([[maybe_unused]]int status, 
     trigger();
 }
 
-RS2::CursorType LC_ActionEditPasteTransform::doGetMouseCursor(int status) {
+RS2::CursorType LC_ActionEditPasteTransform::doGetMouseCursor([[maybe_unused]]int status) {
     return RS2::CadCursor;
 }
 

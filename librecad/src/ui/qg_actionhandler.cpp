@@ -107,7 +107,7 @@
 #include "rs_actioninfoarea.h"
 #include "rs_actioninfodist.h"
 #include "rs_actioninfodist2.h"
-#include "librecad/src/actions/not_used/rs_actioninfoinside.h"
+#include "rs_actioninfoinside.h"
 #include "rs_actioninfototallength.h"
 #include "rs_actionlayersadd.h"
 #include "rs_actionlayersedit.h"

@@ -28,7 +28,7 @@
 
 #include <QMouseEvent>
 
-#include "libraries/muparser/include/muParser.h"
+#include "muParser.h"
 
 #include "rs_actiondrawpolyline.h"
 #include "rs_arc.h"

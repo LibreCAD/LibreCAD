@@ -13,7 +13,7 @@ class LC_Rotate2Options : public LC_ActionOptionsWidgetBase{
     Q_OBJECT
 
 public:
-    explicit LC_Rotate2Options(QWidget *parent = nullptr);
+    explicit LC_Rotate2Options();
     ~LC_Rotate2Options();
 
 public slots:
