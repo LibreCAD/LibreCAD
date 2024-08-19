@@ -48,7 +48,7 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
-    bool isUseNearestPointOnEntity(){return nearestPointShouldBeOnEntity;};
+    bool isUseNearestPointOnEntity() const {return nearestPointShouldBeOnEntity;};
     void setUseNearestPointOnEntity(bool value){nearestPointShouldBeOnEntity = value;}
     void finish(bool updateTB) override;;
 protected:

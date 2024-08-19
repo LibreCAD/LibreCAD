@@ -58,11 +58,11 @@ void RS_ActionDrawCircleCR::reset(){
 }
 
 void RS_ActionDrawCircleCR::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
 }
 
 void RS_ActionDrawCircleCR::trigger(){
-    RS_PreviewActionInterface::trigger();
+    LC_ActionDrawCircleBase::trigger();
 
     auto *circle = new RS_Circle(container,
                                       *data);

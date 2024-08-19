@@ -119,7 +119,7 @@ RS_Vector RS_ActionDrawLinePolygonCorCor::determinePolygonCenter() const{
     rotatedCorner2 = rotatedCorner2.rotate(this->pPoints->corner1, -edgeAngle);
 
     // half inner angle of polygon
-    double angleFromCornerToCenter = RS_Math::deg2rad(90 * (this->number - 2) / this->number);
+    double angleFromCornerToCenter = RS_Math::deg2rad((90.0 * (this->number - 2)) / this->number);
 
     // middle point of edge
     RS_Vector edgeCenter = (this->pPoints->corner1 + rotatedCorner2) * 0.5;

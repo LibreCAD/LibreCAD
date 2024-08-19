@@ -46,10 +46,6 @@ void LC_ActionModifyLineJoin::init(int status){
  */
 RS_Line *LC_ActionModifyLineJoin::catchLine(QMouseEvent *e){
     RS_Entity *en = catchModifiableEntity(e, lineType);
-    if (en != nullptr){
-         int rtti = en->rtti();
-         rtti++;
-    }
     RS_Line *snappedLine = nullptr;
     if (isLine(en)){
         snappedLine = dynamic_cast<RS_Line *>(en);

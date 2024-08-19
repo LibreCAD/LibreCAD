@@ -35,7 +35,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_abstractactiondrawline.h"
 #include "lc_lineoptions.h"
 #include "lc_actiondrawlinesnake.h"
-#include "rs_previewactioninterface.h"
 
 LC_ActionDrawLineSnake::LC_ActionDrawLineSnake(
     RS_EntityContainer &container,
@@ -364,6 +363,8 @@ bool LC_ActionDrawLineSnake::doProcessCommandValue(int status, const QString &c)
             result = processAngleValueInput(c);
             break;
         }
+        default:
+            break;
     }
     return result;
 }

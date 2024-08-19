@@ -57,7 +57,7 @@ public:
     double getHeight() const{return height;};
     void setSizeInner(bool value);
     bool isSizeInner() const{return sizeIsInner;};
-    bool isBaseAngleFree(){return angleIsFree;};
+    bool isBaseAngleFree() const {return angleIsFree;};
     void setBaseAngleFree(bool val);
 protected:
     // width of rect

@@ -49,8 +49,8 @@ public:
     void setSetYDirectionState();
     void setAngleValue(double value);
     void setAngle(double value){angle = value;};
-    double getAngle();
-    bool isAngleRelative();
+    double getAngle() const;
+    bool isAngleRelative() const;
     void setAngleIsRelative(bool value);
     virtual bool mayStart();
     bool doProcessCommand(int status, const QString &c) override;

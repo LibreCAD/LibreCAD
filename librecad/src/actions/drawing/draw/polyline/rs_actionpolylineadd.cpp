@@ -44,7 +44,7 @@ RS_ActionPolylineAdd::RS_ActionPolylineAdd(RS_EntityContainer& container,
 RS_ActionPolylineAdd::~RS_ActionPolylineAdd() = default;
 
 void RS_ActionPolylineAdd::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     polylineToModify = nullptr;
     addSegment = nullptr;
     *addCoord = {};

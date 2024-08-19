@@ -286,7 +286,7 @@ bool RS_ActionPrintPreview::setScale(double f, bool autoZoom) {
     if (graphic) {
         if(std::abs(f - graphic->getPaperScale()) < RS_TOLERANCE )
             return false;
-        auto pinBase = graphic->getPaperInsertionBase();
+//        auto pinBase = graphic->getPaperInsertionBase();
         // double oldScale = graphic->getPaperScale();
 
         graphic->setPaperScale(f);

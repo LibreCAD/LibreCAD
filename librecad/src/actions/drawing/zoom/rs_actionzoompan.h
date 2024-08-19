@@ -42,7 +42,7 @@ public:
                      RS_GraphicView& graphicView);
 
     void init(int status) override;
-    void finish(bool updateTB = true ) override;
+    void finish(bool updateTB) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
     void mousePressEvent(QMouseEvent* e) override;

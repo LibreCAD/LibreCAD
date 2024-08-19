@@ -22,7 +22,6 @@
 
 #include <QMouseEvent>
 #include "rs_polyline.h"
-#include "rs_modification.h"
 #include "rs_graphicview.h"
 #include "lc_actionpolylinedeletebase.h"
 

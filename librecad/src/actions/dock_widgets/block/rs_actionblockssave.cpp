@@ -21,12 +21,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include <QApplication>
 
 #include "qc_applicationwindow.h"
-#include "qc_mdiwindow.h"
 #include "qg_blockwidget.h"
 #include "qg_filedialog.h"
 #include "rs_actionblockssave.h"
 #include "rs_debug.h"
-#include "rs_dialogfactory.h"
 #include "rs_graphic.h"
 #include "rs_insert.h"
 
@@ -36,12 +34,12 @@ RS_ActionBlocksSave::RS_ActionBlocksSave(RS_EntityContainer& container,
         :RS_ActionInterface("Edit Block", container, graphicView) {}
 
 /*recursive add blocks in graphic*/
-void RS_ActionBlocksSave::addBlock(RS_Insert* in, RS_Graphic* g) {
-    for(auto e: *in){
+void RS_ActionBlocksSave::addBlock(RS_Insert *in, RS_Graphic *g) {
+    for (auto e: *in) {
         if (e->rtti() == RS2::EntityInsert) {
-            RS_Insert * in=static_cast<RS_Insert *>(e);
-            addBlock(in,g);
-            g->addBlock(in->getBlockForInsert());
+            auto *insert = static_cast<RS_Insert *>(e);
+            addBlock(insert, g);
+            g->addBlock(insert->getBlockForInsert());
         }
     }
 }
@@ -68,7 +66,7 @@ void RS_ActionBlocksSave::trigger() {
                  e = b->nextEntity(RS2::ResolveNone)) {
                 g.addEntity(e);
                 if (e->rtti() == RS2::EntityInsert) {
-                    RS_Insert *in = static_cast<RS_Insert *>(e);
+                    auto *in = static_cast<RS_Insert *>(e);
                     g.addBlock(in->getBlockForInsert());
                     addBlock(in,&g);
                 }

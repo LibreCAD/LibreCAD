@@ -47,7 +47,7 @@ RS_ActionPolylineDel::RS_ActionPolylineDel(RS_EntityContainer& container,
 RS_ActionPolylineDel::~RS_ActionPolylineDel() = default;
 
 void RS_ActionPolylineDel::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     if (status <= SetPolyline){
         polylineToModify = nullptr;
     }

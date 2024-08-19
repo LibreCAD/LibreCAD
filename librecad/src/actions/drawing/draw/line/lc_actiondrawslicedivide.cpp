@@ -439,7 +439,7 @@ void LC_ActionDrawSliceDivide::prepareLineTicks(RS_Line *line){
     if (fixedDistance){
         // for fixed distance between ticks, adjust length and ticks count
         segmentLength = distance;
-        segmentsCount = lineLength / segmentLength + 1;
+        segmentsCount = std::ceil(lineLength / segmentLength + 1);
 //        remainingPartOfLine = lineLength - (segmentLength + 1)* segmentsCount;
     }
     else {

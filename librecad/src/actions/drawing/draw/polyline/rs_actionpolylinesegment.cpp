@@ -59,7 +59,7 @@ RS_ActionPolylineSegment::RS_ActionPolylineSegment(RS_EntityContainer& container
 }
 
 void RS_ActionPolylineSegment::init(int status){
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     if (initWithTarget){
         initWithTarget = false;
         convertPolyline(container, targetEntity, false);
@@ -135,8 +135,9 @@ RS_Vector RS_ActionPolylineSegment::appendPol(RS_Polyline *current, RS_Polyline 
                 bulge = ((RS_Arc *) e)->getBulge() * -1;
             else
                 bulge = ((RS_Arc *) e)->getBulge();
-        } else
+        } else {
             bulge = 0.0;
+        }
         if (reversed)
             current->addVertex(e->getEndpoint(), bulge, false);
         else
@@ -220,8 +221,8 @@ RS_Polyline* RS_ActionPolylineSegment::convertPolyline(RS_EntityContainer* cnt, 
     remaining.clear();
 
     bool closed = false;
-    RS_Polyline *newPolyline;
-    if (document){
+    RS_Polyline *newPolyline = nullptr;
+    if (document != nullptr){
         if (!createOnly){
             document->startUndoCycle();
         }

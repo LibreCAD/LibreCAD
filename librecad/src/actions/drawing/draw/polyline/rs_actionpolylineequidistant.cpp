@@ -67,15 +67,15 @@ void RS_ActionPolylineEquidistant::init(int status){
  *
  * @author Rallaz
  */
-RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double dist){
+RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, RS_Entity *orgEntity, double distance){
     if (isArc(orgEntity) && isArc(newEntity)){
         auto *arc = (RS_Arc *) newEntity;
         double r0 = ((RS_Arc *) orgEntity)->getRadius();
         double r;
         if (((RS_Arc *) orgEntity)->isReversed())
-            r = r0 + dist;
+            r = r0 + distance;
         else
-            r = r0 - dist;
+            r = r0 - distance;
         if (r < 0)
             return nullptr;
         arc->setData(((RS_Arc *) orgEntity)->getData());
@@ -86,8 +86,8 @@ RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, R
         auto *line0 = (RS_Line *) orgEntity;
         auto *line1 = (RS_Line *) newEntity;
         RS_Vector v0 = line0->getStartpoint();
-        RS_Vector v1(v0.x, v0.y + dist);
-        RS_Vector v2(v0.x + line0->getLength(), v0.y + dist);
+        RS_Vector v1(v0.x, v0.y + distance);
+        RS_Vector v2(v0.x + line0->getLength(), v0.y + distance);
         line1->setStartpoint(v1);
         line1->setEndpoint(v2);
         line1->rotate(v0, line0->getAngle1());
@@ -107,7 +107,6 @@ RS_Entity *RS_ActionPolylineEquidistant::calculateOffset(RS_Entity *newEntity, R
  */
 RS_Vector RS_ActionPolylineEquidistant::calculateIntersection(RS_Entity* first,RS_Entity* last) {
     RS_VectorSolutions vsol;
-    RS_Vector v(false);
     vsol = RS_Information::getIntersection(first, last, false);
     if (vsol.getNumber()==0) {
         //Parallel entities

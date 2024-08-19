@@ -67,7 +67,7 @@ struct LC_ActionSnapMiddleManual::Points {
 
 LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual(
     RS_EntityContainer &container,
-    RS_GraphicView &graphicView, RS_Pen input_currentAppPen):
+    RS_GraphicView &graphicView, RS_Pen input_currentAppPen): // todo - is copy of pen really necessary there?
     RS_PreviewActionInterface("Snap Middle Manual", container, graphicView, RS2::ActionSnapMiddleManual),
     m_pPoints{std::make_unique<Points>(input_currentAppPen)}{
     RS_DEBUG->print("LC_ActionSnapMiddleManual::LC_ActionSnapMiddleManual");

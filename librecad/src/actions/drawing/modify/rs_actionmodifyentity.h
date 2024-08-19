@@ -43,8 +43,8 @@ public:
                           RS_GraphicView& graphicView);
 
     void trigger() override;
-    void setEntity(RS_Entity* en) {
-        this->en=en;
+    void setEntity(RS_Entity* entity) {
+        en=entity;
     }
     // display the entity as selected
     void setDisplaySelected(bool selected);

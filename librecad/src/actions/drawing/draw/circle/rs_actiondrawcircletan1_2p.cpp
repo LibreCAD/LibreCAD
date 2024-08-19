@@ -32,7 +32,6 @@
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 namespace {
     //list of entity types supported by current action
@@ -469,7 +468,6 @@ RS2::CursorType RS_ActionDrawCircleTan1_2P::doGetMouseCursor(int status){
         case SetPoint1:
         case SetPoint2:
             return RS2::CadCursor;
-            break;
         default:
             return RS2::NoCursorChange;
     }

@@ -56,8 +56,8 @@ protected:
     std::unique_ptr<RS_DimAlignedData> edata;
 /** Last status before entering text. */
     Status lastStatus = SetExtPoint1;
-    void setExtensionPoint1(RS_Vector p);
-    void setExtensionPoint2(RS_Vector p);
+    void setExtensionPoint1(RS_Vector p) override;
+    void setExtensionPoint2(RS_Vector p) override;
     RS_Entity *createDim(RS_EntityContainer* parent) override;
     RS_Vector getExtensionPoint1() override;
     RS_Vector getExtensionPoint2() override;

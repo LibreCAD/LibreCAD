@@ -48,7 +48,7 @@ public:
 
     void init(int status) override;
     void trigger() override;
-    void finish(bool updateTB = false) override;
+    void finish(bool updateTB) override;
     void mouseMoveEvent(QMouseEvent* e) override;
     QStringList getAvailableCommands() override;
     void setLength1(double l1);

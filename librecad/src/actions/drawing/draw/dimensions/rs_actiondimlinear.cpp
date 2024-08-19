@@ -24,8 +24,6 @@
 **
 **********************************************************************/
 
-#include <QMouseEvent>
-
 #include "rs_actiondimlinear.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"

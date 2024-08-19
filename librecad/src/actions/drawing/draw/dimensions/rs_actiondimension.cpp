@@ -28,7 +28,6 @@
 #include "rs_dialogfactory.h"
 #include "rs_dimension.h"
 #include "rs_graphicview.h"
-#include "rs_actioninterface.h"
 #include "qg_dimoptions.h"
 
 namespace {
@@ -108,7 +107,7 @@ QString RS_ActionDimension::getText() const{
     }
 
     if (!tol1.isEmpty() || !tol2.isEmpty()){
-        l += QString("\\S%1\\%2;").arg(tol1).arg(tol2);
+        l += QString("\\S%1\\%2;").arg(tol1,tol2);
     }
 
     return l;

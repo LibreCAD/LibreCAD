@@ -36,7 +36,6 @@
 #include "rs_graphicview.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_settings.h"
 #include "rs_actioninterface.h"
 #include "qg_arctangentialoptions.h"
 
@@ -230,6 +229,8 @@ void RS_ActionDrawArcTangential::onMouseLeftButtonRelease(int status, QMouseEven
             fireCoordinateEvent(point);
             break;
         }
+        default:
+            break;
     }
 }
 

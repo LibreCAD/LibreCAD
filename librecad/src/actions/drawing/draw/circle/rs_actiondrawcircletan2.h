@@ -49,7 +49,7 @@ public:
 
 //        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
     void setRadius(double);
     double getRadius() const;
 protected:
@@ -66,7 +66,7 @@ protected:
     std::unique_ptr<Points> pPoints;
 
     RS_Entity *catchCircle(QMouseEvent *e);
-    RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle);
+    RS_Vector getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity * circle);
     LC_ActionOptionsWidget* createOptionsWidget() override;
     RS2::CursorType doGetMouseCursor(int status) override;
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

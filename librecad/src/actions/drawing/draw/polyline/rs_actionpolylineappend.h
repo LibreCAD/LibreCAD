@@ -41,7 +41,7 @@ public:
 	RS_ActionPolylineAppend(RS_EntityContainer& container,
 						RS_GraphicView& graphicView);
     void trigger() override;
-    void undo();
+    void undo() override;
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:
     void onMouseLeftButtonRelease(int status, QMouseEvent *e) override;

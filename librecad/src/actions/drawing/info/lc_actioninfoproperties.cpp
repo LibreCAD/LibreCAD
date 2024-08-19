@@ -98,7 +98,7 @@ void LC_ActionInfoProperties::highlightAndShowEntityInfo(QMouseEvent *e){
 
 void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
 {
-    bool shouldShowQuickInfoWidget = true; // todo- check for visible?
+    bool shouldShowQuickInfoWidget = true; // todo - read from options as there will be support
 
     RS_Entity* entity = catchEntity(event);
     if (entity == nullptr)
@@ -117,7 +117,7 @@ void LC_ActionInfoProperties::highlightHoveredEntity(QMouseEvent* event)
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = graphicView->toGraphDX( 0.01*std::min(graphicView->getWidth(), graphicView->getHeight()));
+    double screenTolerance = graphicView->toGraphDX( (int)(0.01*std::min(graphicView->getWidth(), graphicView->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
 

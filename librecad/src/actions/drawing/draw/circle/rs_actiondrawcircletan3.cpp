@@ -29,7 +29,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_graphicview.h"
 #include "rs_information.h"
 #include "rs_line.h"
-#include "rs_point.h"
 #include "rs_preview.h"
 #include "lc_quadratic.h"
 #include "rs_actioninterface.h"
@@ -79,7 +78,7 @@ void RS_ActionDrawCircleTan3::init(int status){
 }
 
 void RS_ActionDrawCircleTan3::finish(bool updateTB){
-    if (pPoints->circles.size() > 0){
+    if (!pPoints->circles.empty()){
         graphicView->redraw(RS2::RedrawDrawing);
         pPoints->circles.clear();
     }
@@ -255,7 +254,7 @@ bool RS_ActionDrawCircleTan3::getData(RS_Entity *testThirdEntity){
                 lc2 = line2->getQuadratic();
 //intersection 0, 1
                 sol1 = LC_Quadratic::getIntersection(lc0, lc1);
-                if (!sol1.size()){
+                if (sol1.empty()){
                     return false;
                 }
                 RS_Vector const v1 = sol1.at(0);

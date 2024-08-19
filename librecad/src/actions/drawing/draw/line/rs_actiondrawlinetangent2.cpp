@@ -35,7 +35,6 @@
 #include "rs_line.h"
 #include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineTangent2::Points {
     /** Closest tangent. */

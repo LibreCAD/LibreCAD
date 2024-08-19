@@ -32,7 +32,6 @@
 #include "rs_graphicview.h"
 #include "rs_polyline.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 RS_ActionDrawLineFree::RS_ActionDrawLineFree(RS_EntityContainer& container,
         RS_GraphicView& graphicView)
@@ -47,7 +46,7 @@ RS_ActionDrawLineFree::~RS_ActionDrawLineFree() = default;
 
 void RS_ActionDrawLineFree::trigger(){
     deleteSnapper();
-    if (polyline.get()){
+    if (polyline.get() != nullptr){
         deletePreview();
 
         polyline->endPolyline();
@@ -58,8 +57,7 @@ void RS_ActionDrawLineFree::trigger(){
             addToDocumentUndoable(ent);
 
             graphicView->redraw(RS2::RedrawDrawing);
-            RS_DEBUG->print("RS_ActionDrawLineFree::trigger():"
-                            " polyline added: %lu", ent->getId());
+            RS_DEBUG->print("RS_ActionDrawLineFree::trigger(): polyline added: %lu", ent->getId());
         }
         polyline.reset();
     }
@@ -99,9 +97,7 @@ void RS_ActionDrawLineFree::mousePressEvent(QMouseEvent* e) {
                 // fall-through
             case Dragging:
                 *vertex = snapPoint(e);
-                polyline.reset(new RS_Polyline(container,
-                                               RS_PolylineData(*vertex, *vertex, 0))
-                );
+                polyline.reset(new RS_Polyline(container, RS_PolylineData(*vertex, *vertex, false)));
                 polyline->setLayerToActive();
                 polyline->setPenToActive();
                 break;
@@ -122,7 +118,7 @@ void RS_ActionDrawLineFree::onMouseLeftButtonRelease(int status, [[maybe_unused]
 }
 
 void RS_ActionDrawLineFree::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
-    if (polyline.get()) {
+    if (polyline.get() != nullptr) {
         polyline.reset();
     }
     initPrevious(status);

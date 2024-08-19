@@ -60,7 +60,7 @@ void RS_ActionModifyBevel::finish(bool updateTB){
 }
 
 void RS_ActionModifyBevel::init(int status) {
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
 
     //snapMode = RS2::SnapFree;
     snapMode.restriction = RS2::RestrictNothing;
@@ -247,6 +247,8 @@ void RS_ActionModifyBevel::onMouseRightButtonRelease(int status, [[maybe_unused]
         case SetLength1:
         case SetLength2:
             newStatus = lastStatus;
+            break;
+        default:
             break;
     }
     setStatus(newStatus);

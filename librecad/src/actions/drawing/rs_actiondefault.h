@@ -49,7 +49,7 @@ public:
                      RS_GraphicView& graphicView);
     ~RS_ActionDefault() override;
 
-    void finish(bool /*updateTB*/ = true ) override{}
+    void finish(bool) override{}
 
     void init(int status) override;
     void resume() override;

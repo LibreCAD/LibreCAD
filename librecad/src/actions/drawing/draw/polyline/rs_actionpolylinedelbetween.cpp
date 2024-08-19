@@ -43,7 +43,7 @@ RS_ActionPolylineDelBetween::RS_ActionPolylineDelBetween(RS_EntityContainer& con
 RS_ActionPolylineDelBetween::~RS_ActionPolylineDelBetween()=default;
 
 void RS_ActionPolylineDelBetween::init(int status){
-    RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     if (status == SetPolyline){
         polylineToModify = nullptr;
         vertexToDelete = RS_Vector(false);
@@ -227,8 +227,8 @@ void RS_ActionPolylineDelBetween::collectEntitiesToRemove(RS_Vector first, RS_Ve
     if (first.distanceTo(second) > RS_TOLERANCE){
         bool found = false;
         for (unsigned int i = 0; i < polylineToModify->count(); i++){
-            RS_Entity* en = polylineToModify->entityAt(i);
-            RS_Vector start = en->getStartpoint();
+            auto* en = polylineToModify->entityAt(i);
+            auto start = en->getStartpoint();
 
             if (start == first || start == second){
                 found = !found;

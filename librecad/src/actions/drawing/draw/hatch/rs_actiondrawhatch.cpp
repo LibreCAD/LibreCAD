@@ -86,15 +86,13 @@ void RS_ActionDrawHatch::trigger() {
 
     RS_DEBUG->print("RS_ActionDrawHatch::trigger()");
 
-    RS_Entity* e;
-
     // deselect unhatchable entities:
     for(auto e: *container) { // fixme - sand -  iteration over all entities in container
         if (e->isSelected() && !hatchAble(e))
             e->setSelected(false);
     }
 
-    for (e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+    for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
          e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected() && !hatchAble(e))
             e->setSelected(false);
@@ -102,7 +100,7 @@ void RS_ActionDrawHatch::trigger() {
 
     // look for selected contours:
     bool haveContour = false;
-    for (e=container->firstEntity(RS2::ResolveAll); e != nullptr;
+    for (auto e=container->firstEntity(RS2::ResolveAll); e != nullptr;
          e=container->nextEntity(RS2::ResolveAll)) {
         if (e->isSelected()) {
             haveContour = true;
@@ -121,7 +119,7 @@ void RS_ActionDrawHatch::trigger() {
     loop->setPen(RS_Pen(RS2::FlagInvalid));
 
     // add selected contour:
-    for (RS_Entity* e=container->firstEntity(RS2::ResolveAll); e;
+    for (auto e=container->firstEntity(RS2::ResolveAll); e;
          e=container->nextEntity(RS2::ResolveAll)) {
 
         if (e->isSelected()){

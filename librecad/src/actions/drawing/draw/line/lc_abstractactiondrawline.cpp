@@ -163,7 +163,7 @@ void LC_AbstractActionDrawLine::setAngleIsRelative(bool value){
  * Return whether specified angle is relative
  * @return
  */
-bool LC_AbstractActionDrawLine::isAngleRelative(){
+bool LC_AbstractActionDrawLine::isAngleRelative() const{
     return angleIsRelative;
 }
 
@@ -234,7 +234,7 @@ void LC_AbstractActionDrawLine::setStatusForValidStartPoint(int newStatus){
     }
 }
 
-double LC_AbstractActionDrawLine::getAngle(){
+double LC_AbstractActionDrawLine::getAngle() const{
     return angle;
 }
 

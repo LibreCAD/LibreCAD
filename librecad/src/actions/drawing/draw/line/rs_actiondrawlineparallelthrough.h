@@ -47,10 +47,10 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
     int getNumber() const;
     void setNumber(int n);
-    bool isSymmetric(){return symmetric;};
+    bool isSymmetric() const {return symmetric;};
     void setSymmetric(bool value){symmetric = value;};
 protected:
     enum Status {

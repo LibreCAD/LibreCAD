@@ -70,7 +70,8 @@ public:
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
     void close();
-    void undo();
+
+    virtual void undo();
     void setMode(SegmentMode m);
     int getMode() const;
     void setRadius(double r);

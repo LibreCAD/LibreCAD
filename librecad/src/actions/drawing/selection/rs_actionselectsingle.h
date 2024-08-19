@@ -42,12 +42,12 @@ public:
         RS_EntityContainer &container,
         RS_GraphicView &graphicView,
         RS_ActionInterface *actionSelect = nullptr,
-        QList<RS2::EntityType> entityTypeList = {});
+        const QList<RS2::EntityType> &entityTypeList = {});
     RS_ActionSelectSingle(
         enum RS2::EntityType typeToSelect, RS_EntityContainer &container,
         RS_GraphicView &graphicView,
         RS_ActionInterface *actionSelect = nullptr,
-        QList<RS2::EntityType> entityTypeList = {});
+        const QList<RS2::EntityType> &entityTypeList = {});
     void trigger() override;
     enum RS2::EntityType getTypeToSelect();
     void mouseMoveEvent(QMouseEvent *event) override;

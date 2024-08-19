@@ -30,10 +30,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_point.h"
-#include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 #include "qg_circletan2options.h"
 
 namespace {
@@ -76,9 +73,11 @@ void RS_ActionDrawCircleTan2::init(int status){
 }
 
 void RS_ActionDrawCircleTan2::finish(bool updateTB){
-    if (pPoints->circles.size() > 0){
-        for (auto p: pPoints->circles) {
-            if (p) p->setHighlighted(false);
+    if (!pPoints->circles.empty()){
+        for (auto p: pPoints->circles) { // todo - check whether we really need this?
+            if (p != nullptr){
+                p->setHighlighted(false);
+            }
         }
         graphicView->redraw(RS2::RedrawDrawing);
         pPoints->circles.clear();
@@ -290,7 +289,7 @@ double RS_ActionDrawCircleTan2::getRadius() const{
 }
 
 // fixme - sand -  move to base class or util - and reuse among other actions
-RS_Vector RS_ActionDrawCircleTan2::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, RS_AtomicEntity *const circle){
+RS_Vector RS_ActionDrawCircleTan2::getTangentPoint(RS_Vector creatingCircleCenter, double creatingCircleRadius, const RS_AtomicEntity *circle){
     bool calcTangentFromOriginalCircle = (creatingCircleCenter.distanceTo(circle->getCenter()) < circle->getRadius()) &&
                                          (creatingCircleRadius < circle->getRadius());
     const RS_Vector &circleCenter = circle->getCenter();

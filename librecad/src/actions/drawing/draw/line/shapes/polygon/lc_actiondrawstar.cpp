@@ -241,8 +241,8 @@ void LC_ActionDrawStar::addPolylineToEntitiesList(RS_Polyline *polyline, QList<R
 
 // defines whether debug visualization of rounding calculation logic will be included into preview.(DEBUG_OUTPUT_DRAW_OUTER)
 // THESE SHOULD NOT BE DEFINED IN PRODUCTION MODE!!
-#define DEBUG_OUTPUT_DRAW_OUTER_1
-#define DEBUG_OUTPUT_DRAW_INNER_1
+#define DEBUG_OUTPUT_DRAW_OUTER_NO
+#define DEBUG_OUTPUT_DRAW_INNER_NO
 
 // basically, that's convenient for debug purposes, but also provides the user more clear indication
 // why, for example, roundings disappears - so probably it's better to have this mode enabled

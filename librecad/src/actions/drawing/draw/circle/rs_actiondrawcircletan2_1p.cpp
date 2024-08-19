@@ -34,7 +34,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "lc_quadratic.h"
 
 #include "rs_actiondrawcircletan2_1p.h"
-#include "rs_actioninterface.h"
 
 namespace {
 
@@ -130,9 +129,11 @@ bool RS_ActionDrawCircleTan2_1P::getCenters(){
                 }
             }
         }
-        if (validBranch) pPoints->centers.push_back(vp);
+        if (validBranch) {
+            pPoints->centers.push_back(vp);
+        }
     }
-    return pPoints->centers.size() > 0;
+    return !pPoints->centers.empty();
 }
 
 void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
@@ -163,8 +164,9 @@ void RS_ActionDrawCircleTan2_1P::mouseMoveEvent(QMouseEvent *e){
         default:
             return;
     }
-    for (RS_AtomicEntity *const circle: pPoints->circles)
+    for (RS_AtomicEntity *const circle: pPoints->circles) {
         highlightSelected(circle);
+    }
 
     drawHighlights();
     deletePreview();

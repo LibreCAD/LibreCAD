@@ -44,7 +44,7 @@ public:
     void init(int status) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent* e) override;
-    bool isRemoveOriginals(){return removeOriginals;};
+    bool isRemoveOriginals() const {return removeOriginals;};
     void setRemoveOriginals(bool val){removeOriginals = val;};
 protected:
     /**

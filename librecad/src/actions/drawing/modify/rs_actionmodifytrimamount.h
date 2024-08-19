@@ -50,7 +50,7 @@ public:
     bool isDistanceTotalLength() const{return distanceIsTotalLength;}
     void setDistanceIsTotalLength(bool on){distanceIsTotalLength = on;}
     void setSymmetricDistance(bool val){symmetricDistance = val;};
-    bool isSymmetricDistance(){return symmetricDistance;};
+    bool isSymmetricDistance() const {return symmetricDistance;};
     void mouseMoveEvent(QMouseEvent *event) override;
 
 protected:

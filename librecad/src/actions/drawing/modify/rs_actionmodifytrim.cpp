@@ -47,8 +47,7 @@ RS_ActionModifyTrim::RS_ActionModifyTrim(RS_EntityContainer &container,
     this->actionType = both ? RS2::ActionModifyTrim2 : RS2::ActionModifyTrim;
 }
 
-RS_ActionModifyTrim::~RS_ActionModifyTrim() {
-}
+RS_ActionModifyTrim::~RS_ActionModifyTrim() = default;
 
 void RS_ActionModifyTrim::init(int status) {
     snapMode.clear();

@@ -53,14 +53,14 @@ RS_ActionDrawEllipse4Points::RS_ActionDrawEllipse4Points(
 RS_ActionDrawEllipse4Points::~RS_ActionDrawEllipse4Points() = default;
 
 void RS_ActionDrawEllipse4Points::init(int status) {
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
     if(getStatus() == SetPoint1) {
         pPoints->points.clear();
     }
 }
 
 void RS_ActionDrawEllipse4Points::trigger(){
-    RS_PreviewActionInterface::trigger();
+    LC_ActionDrawCircleBase::trigger();
     RS_Entity *en;
     if (getStatus() == SetPoint4 && pPoints->evalid){
         en = new RS_Ellipse(container, pPoints->eData);

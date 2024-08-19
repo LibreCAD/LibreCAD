@@ -27,9 +27,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_coordinateevent.h"
 #include "rs_dialogfactory.h"
 #include "rs_graphicview.h"
-#include "rs_point.h"
 #include "rs_preview.h"
-#include "rs_previewactioninterface.h"
 
 struct LC_ActionDrawCircle2PR::Points
 {
@@ -64,7 +62,7 @@ void LC_ActionDrawCircle2PR::init(int status){
 }
 
 void LC_ActionDrawCircle2PR::trigger(){
-    RS_PreviewActionInterface::trigger();
+    RS_ActionDrawCircleCR::trigger();
 
     auto *circle = new RS_Circle(container, *data);
     circle->setLayerToActive();
@@ -202,8 +200,6 @@ void LC_ActionDrawCircle2PR::onMouseRightButtonRelease(int status, [[maybe_unuse
 }
 
 void LC_ActionDrawCircle2PR::onCoordinateEvent(int status, [[maybe_unused]] bool isZero, const RS_Vector &mouse) {
-    double distance = 0.0;
-
     switch (status) {
         case SetPoint1: {
             pPoints->point1 = mouse;
@@ -212,7 +208,7 @@ void LC_ActionDrawCircle2PR::onCoordinateEvent(int status, [[maybe_unused]] bool
             break;
         }
         case SetPoint2: {
-            distance = mouse.distanceTo(pPoints->point1);
+            double distance = mouse.distanceTo(pPoints->point1);
             if (distance <= 2. * data->radius){
                 pPoints->point2 = mouse;
                 moveRelativeZero(mouse);

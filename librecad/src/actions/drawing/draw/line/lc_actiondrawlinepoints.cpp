@@ -165,7 +165,7 @@ void LC_ActionDrawLinePoints::createPoints(RS_Vector &potentialEndPoint, QList<R
         segmentLength = fixedDistance;
         if (withinLineMode){
             // calculate required number of points dynamically based on length of line and distance
-            numberOfPoints = distanceAll / segmentLength;
+            numberOfPoints = std::ceil(distanceAll / segmentLength);
         }
     }
     else{

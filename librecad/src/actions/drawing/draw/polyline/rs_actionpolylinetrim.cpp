@@ -44,7 +44,7 @@ RS_ActionPolylineTrim::RS_ActionPolylineTrim(RS_EntityContainer& container,
 }
 
 void RS_ActionPolylineTrim::init(int status) {
-        RS_ActionInterface::init(status);
+    RS_PreviewActionInterface::init(status);
     polylineToModify = nullptr;
     Segment1 = Segment2 = nullptr;
 }

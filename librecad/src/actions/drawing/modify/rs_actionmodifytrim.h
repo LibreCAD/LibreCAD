@@ -44,7 +44,7 @@ public:
         bool both = false);
     ~RS_ActionModifyTrim() override;
     void init(int status) override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:

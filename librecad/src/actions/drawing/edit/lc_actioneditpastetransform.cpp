@@ -53,18 +53,18 @@ void LC_ActionEditPasteTransform::trigger() {
 
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
-    double arrayAngle = data->arrayAngle;
+
 
     RS_Vector xArrayVector;
     RS_Vector yArrayVector;
     if (data->arrayCreated){
+        double arrayAngle = data->arrayAngle;
         xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
         yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
     }
     else{
         numX = 1;
         numY = 1;
-        arrayAngle = 0;
     }
 
     document->startUndoCycle();
@@ -162,11 +162,11 @@ LC_ActionOptionsWidget *LC_ActionEditPasteTransform::createOptionsWidget() {retu
 void LC_ActionEditPasteTransform::previewMultipleReferencePoints() {
     int numX = data->arrayXCount;
     int numY = data->arrayYCount;
-    double arrayAngle = data->arrayAngle;
 
     RS_Vector xArrayVector;
     RS_Vector yArrayVector;
     if (data->arrayCreated) {
+        double arrayAngle = data->arrayAngle;
         xArrayVector = RS_Vector::polar(data->arraySpacing.x, arrayAngle);
         yArrayVector = RS_Vector::polar(data->arraySpacing.y, arrayAngle + M_PI_2);
     }
@@ -175,7 +175,6 @@ void LC_ActionEditPasteTransform::previewMultipleReferencePoints() {
         yArrayVector = RS_Vector(0,0,0);
         numX = 1;
         numY = 1;
-        arrayAngle = 0;
     }
 
     for (int x = 0; x < numX; x++){

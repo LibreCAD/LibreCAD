@@ -49,7 +49,7 @@ public:
     void mouseMoveEvent(QMouseEvent* e) override;
 
 //        void commandEvent(RS_CommandEvent* e) override;
-    void finish(bool updateTB=true) override;
+    void finish(bool updateTB) override;
 protected:
     /**
      * Action States.

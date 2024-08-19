@@ -83,7 +83,7 @@ void RS_ActionModifyScale::trigger() {
     updateSelectionWidget();
 }
 
-#define DRAW_TRIANGLES_ON_PREVIEW_1
+#define DRAW_TRIANGLES_ON_PREVIEW_NO
 
 void RS_ActionModifyScale::mouseMoveEventSelected(QMouseEvent* e) {
     RS_DEBUG->print("RS_ActionModifyScale::mouseMoveEvent begin");

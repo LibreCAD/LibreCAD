@@ -25,8 +25,6 @@
 **********************************************************************/
 
 
-#include <QMouseEvent>
-
 #include "rs_actiondimaligned.h"
 #include "rs_commandevent.h"
 #include "rs_constructionline.h"

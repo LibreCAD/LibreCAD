@@ -32,7 +32,6 @@
 #include "rs_graphicview.h"
 #include "rs_line.h"
 #include "rs_preview.h"
-#include "rs_actioninterface.h"
 
 struct RS_ActionDrawLineHorVert::Points {
 	/**
@@ -71,7 +70,7 @@ void RS_ActionDrawLineHorVert::init(int status){
 void RS_ActionDrawLineHorVert::trigger(){
     RS_PreviewActionInterface::trigger();
 
-    RS_Line *line = new RS_Line(container, pPoints->data);
+    auto *line = new RS_Line(container, pPoints->data);
     line->setLayerToActive();
     line->setPenToActive();
     container->addEntity(line);

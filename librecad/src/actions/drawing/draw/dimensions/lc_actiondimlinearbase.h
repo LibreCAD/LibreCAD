@@ -30,7 +30,7 @@ class LC_ActionDimLinearBase:public RS_ActionDimension {
 Q_OBJECT
 public:
     LC_ActionDimLinearBase(const char *name, RS_EntityContainer &container, RS_GraphicView &graphicView);
-    ~LC_ActionDimLinearBase();
+    ~LC_ActionDimLinearBase() override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
 protected:

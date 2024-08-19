@@ -47,7 +47,7 @@ public:
 
 //        void coordinateEvent(RS_CoordinateEvent* e) override;
 //    void commandEvent(RS_CommandEvent* e) override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
 
 protected:
     /**

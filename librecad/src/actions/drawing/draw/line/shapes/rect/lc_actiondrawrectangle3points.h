@@ -47,7 +47,7 @@ public:
 
     void init(int status) override;
 
-    int getEndZeroPointCorner(){return endRelativeZeroPointCorner;};
+    int getEndZeroPointCorner() const {return endRelativeZeroPointCorner;};
     void setEndZeroPointCorner(int value){endRelativeZeroPointCorner = value;};
 
     void setCreateQuadrangle(bool value) {createQuadrangle = value;};

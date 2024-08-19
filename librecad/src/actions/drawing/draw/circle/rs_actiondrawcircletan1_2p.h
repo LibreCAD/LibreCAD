@@ -46,7 +46,7 @@ public:
     bool preparePreview();
     void mouseMoveEvent(QMouseEvent *e) override;
     //        void commandEvent(RS_CommandEvent* e) override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
     //    void setRadius(const double& r);
     double getRadius() const;
 protected:

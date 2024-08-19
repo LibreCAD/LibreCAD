@@ -64,7 +64,7 @@ void RS_ActionDrawEllipseInscribe::clearLines(bool checkStatus){
 }
 
 void RS_ActionDrawEllipseInscribe::init(int status){
-    RS_PreviewActionInterface::init(status);
+    LC_ActionDrawCircleBase::init(status);
     if (status >= 0){
         RS_Snapper::suspend();
     }
@@ -73,11 +73,11 @@ void RS_ActionDrawEllipseInscribe::init(int status){
 
 void RS_ActionDrawEllipseInscribe::finish(bool updateTB){
     clearLines(false);
-    RS_PreviewActionInterface::finish(updateTB);
+    LC_ActionDrawCircleBase::finish(updateTB);
 }
 
 void RS_ActionDrawEllipseInscribe::trigger(){
-    RS_PreviewActionInterface::trigger();
+    LC_ActionDrawCircleBase::trigger();
 
     auto *ellipse = new RS_Ellipse(container, pPoints->eData);
 

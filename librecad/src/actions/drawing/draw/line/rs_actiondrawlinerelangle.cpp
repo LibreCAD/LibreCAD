@@ -38,7 +38,6 @@
 #include "rs_preview.h"
 #include "qg_linerelangleoptions.h"
 #include "rs_previewactioninterface.h"
-#include "rs_actioninterface.h"
 
 namespace {
 

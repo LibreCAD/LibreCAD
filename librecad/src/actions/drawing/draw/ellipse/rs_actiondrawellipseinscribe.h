@@ -41,7 +41,7 @@ public:
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
 protected:
     /**
      * Action States.

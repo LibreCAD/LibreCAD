@@ -276,7 +276,7 @@ void LC_ActionLayersExport::trigger()
         if (saveWasSuccessful)
         {
             RS_DIALOGFACTORY->commandMessage(
-                tr(R"(Saving layer "%1" as "%2" )").arg(copiedLayers).arg(modifiedFilePath));
+                tr(R"(Saving layer "%1" as "%2" )").arg(copiedLayers, modifiedFilePath));
         } else {
             RS_DEBUG->print(RS_Debug::D_ERROR, "LC_ActionLayersExport::trigger: Error encountered while exporting layers");
             return;

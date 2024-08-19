@@ -35,7 +35,6 @@
 #include "rs_line.h"
 #include "rs_math.h"
 #include "rs_preview.h"
-#include "rs_settings.h"
 #include "qg_lineangleoptions.h"
 #include "rs_actioninterface.h"
 

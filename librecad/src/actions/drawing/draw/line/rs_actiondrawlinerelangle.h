@@ -48,7 +48,7 @@ public:
         bool fixedAngle = false);
     ~RS_ActionDrawLineRelAngle() override;
     RS2::ActionType rtti() const override;
-    void finish(bool updateTB = true) override;
+    void finish(bool updateTB) override;
     void trigger() override;
     void mouseMoveEvent(QMouseEvent *e) override;
     QStringList getAvailableCommands() override;

@@ -27,7 +27,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 #include "rs_coordinateevent.h"
 #include "rs_debug.h"
 #include "rs_dialogfactory.h"
-#include "rs_point.h"
 #include "rs_ellipse.h"
 #include "rs_graphicview.h"
 #include "rs_preview.h"

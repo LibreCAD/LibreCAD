@@ -175,7 +175,7 @@ void RS_ActionDefault::highlightHoveredEntities(QMouseEvent *event){
                                      ? minimumHoverTolerance
                                      : hoverTolerance;
 
-    double screenTolerance = graphicView->toGraphDX(0.01 * std::min(graphicView->getWidth(), graphicView->getHeight()));
+    double screenTolerance = graphicView->toGraphDX((int)(0.01 * std::min(graphicView->getWidth(), graphicView->getHeight())));
     hoverTolerance_adjusted = std::min(hoverTolerance_adjusted, screenTolerance);
     bool isPointOnEntity = false;
     RS_Vector currentMousePosition = toGraph(event);
@@ -626,7 +626,7 @@ void RS_ActionDefault::goToNeutralStatus(){
 
 // fixme - review and cleanup
 void RS_ActionDefault::commandEvent(RS_CommandEvent *e){
-    QString c = e->getCommand().toLower();
+//    QString c = e->getCommand().toLower();
 
     // if the current action can't deal with the command,
     //   it might be intended to launch a new command

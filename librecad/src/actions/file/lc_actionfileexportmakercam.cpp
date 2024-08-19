@@ -36,7 +36,7 @@
 
 namespace {
 
-    bool getSetting(QString entry) {
+    bool getSetting(const QString &entry) {
         return LC_GET_INT("" + entry, 0);
     }
 

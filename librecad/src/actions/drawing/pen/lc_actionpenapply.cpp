@@ -74,7 +74,7 @@ void LC_ActionPenApply::mouseMoveEvent(QMouseEvent *e){
  * @param updateTB
  */
 void LC_ActionPenApply::finish(bool updateTB){
-    RS_ActionInterface::finish(updateTB);
+    RS_PreviewActionInterface::finish(updateTB);
     srcEntity = nullptr;
 }
 
@@ -131,7 +131,7 @@ void LC_ActionPenApply::onMouseLeftButtonRelease([[maybe_unused]]int status, QMo
 
 void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QMouseEvent *e) {
     switch (status){
-        case (SelectEntity):{
+        case SelectEntity:{
             init(-1);
             break;
         }
@@ -145,6 +145,8 @@ void LC_ActionPenApply::onMouseRightButtonRelease(int status, [[maybe_unused]]QM
             }
             break;
         }
+        default:
+            break;
     }
     graphicView->redraw();
 }
