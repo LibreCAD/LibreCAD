@@ -1337,6 +1337,7 @@ const RS_LineTypePattern *RS_GraphicView::getPattern(RS2::LineType t) {
 void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     int const zr = 20;
 
+    // fixme - sand -  move colors for axis extensions to settings!!!
     RS_Pen pen_xAxis (RS_Color(255,0,0), RS2::Width00, RS2::SolidLine);
     pen_xAxis.setScreenWidth(0);
 
@@ -1348,7 +1349,7 @@ void RS_GraphicView::drawAbsoluteZero(RS_Painter *painter){
     if (((originPoint.x + zr) < 0) || ((originPoint.x - zr) > getWidth()))  return;
     if (((originPoint.y + zr) < 0) || ((originPoint.y - zr) > getHeight())) return;
 
-    // fixme - remove reading settings from drawing code! With cashing of settings the cast of the call is less important, yet still...
+    // fixme - sand - remove reading settings from drawing code! With cashing of settings the cast of the call is less important, yet still...
     const bool extendAxisLines = LC_GET_ONE_BOOL("Appearance", "ExtendAxisLines", false);
 
     double xAxisPoints [2];
